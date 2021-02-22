@@ -1,0 +1,13 @@
+.env
+venv/
+__pycache__
+BOT_TOKEN.session-journal
+BOT_TOKEN.session
+*.mp3
+*.webm
+*.webp
+*.mp4
+*.tgs
+logs-ultroid.txt
+.vscode/*
+ultroid-log.txt
