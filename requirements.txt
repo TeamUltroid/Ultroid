@@ -1,4 +1,4 @@
-py-Ultroid==2021.02.21
+py-Ultroid==2021.2.22
 asyncurban
 carbonnow
 cairosvg
@@ -20,7 +20,6 @@ psutil
 pytz
 requests>=2.18.4
 scikit-image
-search-engine-parser
 speedtest-cli==2.1.2
 telegraph
 validators
