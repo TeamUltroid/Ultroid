@@ -109,6 +109,12 @@ async def _(event):
 
 @ultroid_cmd(pattern="bots ?(.*)")
 async def _(ult):
+    await ult.edit("`...`")
+    if ult.is_private:
+        user = await ult.get_chat()
+        if not user.bot:
+            return await ult.edit("`Seariously ?`")
+
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
     to_write_chat = await ult.get_input_chat()
