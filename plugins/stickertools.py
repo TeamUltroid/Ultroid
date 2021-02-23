@@ -83,17 +83,8 @@ async def waifu(animu):
         else:
             await xx.edit("`You haven't written any article, Waifu is going away.`")
             return
-    animus = [0, 1, 3, 7, 9, 13, 22, 34, 35, 36, 37, 43, 44, 45, 52, 53, 55]
-    t1 = "#" + (str(random.choice(animus)))
-    animus2 = [0, 11, 12, 19, 20, 21, 22, 23, 28, 32, 33]
-    t2 = "$" + (str(random.choice(animus2)))
-    animus3 = [10, 14, 19]
-    t3 = "&" + (str(random.choice(animus3)))
-    animus4 = [0, 3, 9, 15]
-    t4 = "%" + (str(random.choice(animus4)))
-    t5 = "*" + (str(random.choice(animus4)))
-    # to increase probability of getting sticker from special category
-    finalcall = random.choice([t1, t2, t3, t4, t5, t1])
+    waifus = [32,33,37,40,41,42,58,20]
+    finalcall = "#" + (str(random.choice(waifus)))
     try:
         sticcers = await ultroid_bot.inline_query(
             "stickerizerbot", f"{finalcall}{(deEmojify(text))}"
