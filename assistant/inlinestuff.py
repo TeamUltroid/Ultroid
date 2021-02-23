@@ -277,7 +277,7 @@ async def clip(e):
     quer = quer.replace(" ", "+")
     sear = f"https://clipartix.com/search/{quer}"
     html = urlopen(sear)
-    bs = BeautifulSoup(html, "lxml", from_encoding="utf-8")
+    bs = BeautifulSoup(html, "html.parser", from_encoding="utf-8")
     resul = bs.find_all("img", "attachment-full size-full")
     buil = e.builder
     hm = []
