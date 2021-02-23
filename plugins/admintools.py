@@ -24,13 +24,17 @@
     Kick the user from the chat.
 
 • `{i}pin <reply to message>`
-    Pin the message in the chat.
+    Pin the message in the chat
+    for silent pin use (.pin silent).
 
 • `{i}unpin (all) <reply to message>`
     Unpin the message(s) in the chat.
 
 • `{i}purge <reply to message>`
     Purge all messages from the replied message.
+
+• `{i}purgeme <reply to message>`
+    Purge Only your messages from the replied message.
 
 • `{i}purgeall <reply to msg/input>`
     Delete all msgs of replied user.
@@ -274,32 +278,42 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin($| (.*))",
+    pattern="pin ?(.*),
 )
 async def pin(msg):
-    x = await eor(msg, "`Processing...`")
     if not msg.is_private:
         # for pin(s) in private messages
         await msg.get_chat()
     cht = await ultroid_bot.get_entity(msg.chat_id)
     xx = msg.reply_to_msg_id
     if not msg.is_reply:
-        return await x.edit("`Reply to a message to pin it.`")
+        return await eor(msg, "`Reply to a message to pin it.`")
     ch = msg.pattern_match.group(1)
-    slnt = False
-    if ch == "loud":
+    if  ch != "silent":
         slnt = True
-    try:
-        await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
-    except BadRequestError:
-        return await x.edit("`Hmm, I'm have no rights here...`")
-    except Exception as e:
-        return await x.edit(f"**ERROR:**`{str(e)}`")
-    await x.edit(f"`Pinned` [this message](https://t.me/c/{cht.id}/{xx})!")
-
+        x = await eor(msg, "`Processing...`")
+        try:
+            await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
+        except BadRequestError:
+            return await x.edit("`Hmm, I'm have no rights here...`")
+        except Exception as e:
+            return await x.edit(f"**ERROR:**`{str(e)}`")
+        await x.edit(f"`Pinned` [this message](https://t.me/c/{cht.id}/{xx})!")
+    else:
+        try:
+            await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
+        except BadRequestError:
+            return await x.edit("`Hmm, I'm have no rights here...`")
+        except Exception as e:
+            return await x.edit(f"**ERROR:**`{str(e)}`")
+        try: 
+            await msg.delete()
+        except BaseException:
+            pass
+ 
 
 @ultroid_cmd(
-    pattern="unpin($| (.*))",
+    pattern="unpin ?(.*)",
 )
 async def unp(ult):
     xx = await eor(ult, "`Processing...`")
@@ -339,6 +353,33 @@ async def fastpurger(purg):
     if not purg.reply_to_msg_id:
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in ultroid_bot.iter_messages(chat, min_id=purg.reply_to_msg_id):
+        msgs.append(msg)
+        count = count + 1
+        msgs.append(purg.reply_to_msg_id)
+        if len(msgs) == 100:
+            await ultroid_bot.delete_messages(chat, msgs)
+            msgs = []
+
+    if msgs:
+        await ultroid_bot.delete_messages(chat, msgs)
+    done = await ultroid_bot.send_message(
+        purg.chat_id,
+        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+    )
+    await asyncio.sleep(5)
+    await done.delete()
+
+
+@ultroid_cmd(
+    pattern="purgeme$",
+)
+async def fastpurgerme(purg):
+    chat = await purg.get_input_chat()
+    msgs = []
+    count = 0
+    if not purg.reply_to_msg_id:
+        return await eod(purg, "`Reply to a message to purge from.`", time=10)
+    async for msg in ultroid_bot.iter_messages(chat, from_user="me", min_id=purg.reply_to_msg_id):
         msgs.append(msg)
         count = count + 1
         msgs.append(purg.reply_to_msg_id)
