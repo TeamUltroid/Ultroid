@@ -5,6 +5,22 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+✘ Commands Available -
+
+• `{i}a` or `{i}approve`
+    To Approve Someone In PM.
+
+• `{i}da` or `{i}disapprove`
+    To Disapprove Someone In PM.
+
+• `{i}block`
+    To Block Someone in PM.
+
+• `{i}unblock`
+    To Unblock Someone in PM.
+"""
+
 from pyUltroid.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
@@ -274,3 +290,7 @@ if sett == "True" and sett != "False":
                 Var.LOG_CHANNEL,
                 f"[{name0}](tg://user?id={replied_user.id}) was unblocked!.",
             )
+
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
