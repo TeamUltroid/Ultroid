@@ -313,7 +313,7 @@ async def pin(msg):
  
 
 @ultroid_cmd(
-    pattern="unpin ?(.*)",
+    pattern="unpin($| (.*))",
 )
 async def unp(ult):
     xx = await eor(ult, "`Processing...`")
