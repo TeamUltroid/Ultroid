@@ -301,8 +301,8 @@ async def pin(msg):
         return await x.edit("`Hmm, I'm have no rights here...`")
     except Exception as e:
         return await x.edit(f"**ERROR:**`{str(e)}`")
-    await x.delete()
-    
+    await x.edit(f"`Pinned` [this message](https://t.me/c/{cht.id}/{xx})!")
+
 @ultroid_cmd(
     pattern="dpin($| (.*))",
 )
