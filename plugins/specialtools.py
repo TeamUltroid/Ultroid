@@ -226,7 +226,7 @@ async def _(event):
 async def wall(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, "`Give something to search")
+        return await eor(event, "`Give me something to search..`")
     nn = await eor(event, "`Processing Keep Patience...`")
     query = f"hd {inp}"
     gi = googleimagesdownload()
