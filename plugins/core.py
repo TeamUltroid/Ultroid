@@ -52,7 +52,7 @@ async def inline_handler(event):
                         buttons=[
                             [
                                 Button.switch_inline(
-                                    "Search Again..?", query="send all", same_peer=True
+                                    "Search Again..?", query="send ", same_peer=True
                                 )
                             ]
                         ],
