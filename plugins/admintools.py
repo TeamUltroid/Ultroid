@@ -271,12 +271,8 @@ async def pin(msg):
         await msg.get_chat()
     cht = await ultroid_bot.get_entity(msg.chat_id)
     xx = msg.reply_to_msg_id
-    tt = msg.text
-    kk = tt[4]
-    if kk == "g":
-        return
     if not msg.is_reply:
-        return await eor(msg, "`Reply to a message to pin it.`")
+        return
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
