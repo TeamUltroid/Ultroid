@@ -263,7 +263,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin (?: |$)(.*)",
+    pattern="pin ?(.*)",
 )
 async def pin(msg):
     if not msg.is_private:
@@ -271,6 +271,10 @@ async def pin(msg):
         await msg.get_chat()
     cht = await ultroid_bot.get_entity(msg.chat_id)
     xx = msg.reply_to_msg_id
+    tt = msg.text
+    kk = tt[4]
+    if kk == "g":
+        return
     if not msg.is_reply:
         return await eor(msg, "`Reply to a message to pin it.`")
     ch = msg.pattern_match.group(1)
@@ -288,9 +292,9 @@ async def pin(msg):
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
         except BadRequestError:
-            return await x.edit("`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm, I'm have no rights here...`")
         except Exception as e:
-            return await x.edit(f"**ERROR:**`{str(e)}`")
+            return await eor(msg, f"**ERROR:**`{str(e)}`")
         try:
             await msg.delete()
         except BaseException:
