@@ -15,7 +15,7 @@ A stable pluggable Telegram userbot, based on Telethon.
 <details>
 <summary>More Info</summary>
 <br>
-  Documentation soon..  <br />
+  <b>Documentation</b> - <a href="https://ultroid.netlify.app">ultroid.netlify.app</a>  <br />
 </details>
 
 # Deploy 
