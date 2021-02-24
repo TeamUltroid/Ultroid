@@ -5,12 +5,12 @@ A stable pluggable Telegram userbot, based on Telethon.
   <img src="./resources/extras/logo_rdm.png" alt="TeamUltroid">
 </p>
 
-[![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=social)](https://github.com/TeamUltroid/Ultroid/stargazers)
-[![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=social)](https://github.com/TeamUltroid/Ultroid/fork)
+[![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/stargazers)
+[![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/fork)
 [![Python Version](https://img.shields.io/badge/Python-v3.9-blue)](https://www.python.org/)
-[![Contributors](https://img.shields.io/github/contributors/TeamUltroid/Ultroid)](https://github.com/TeamUltroid/Ultroid/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/graphs/contributors)
 [![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE)
-[![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid)](https://github.com/TeamUltroid/Ultroid/)
+[![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)
 
 <details>
 <summary>More Info</summary>
