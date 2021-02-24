@@ -29,7 +29,7 @@ apt-get autoremove --purge
 echo '
         •• Cloning Repository
 '
-git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+git clone -b beta https://github.com/New-dev0/Ultroid.git /root/TeamUltroid/
 
 echo '
 	•• Getting Libraries and Installing
