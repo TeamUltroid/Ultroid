@@ -29,16 +29,9 @@ async def gsearch(q_event):
     except IndexError:
         kkkk = q_event.builder.article(
             title="Search Something",
-            thumb=wb(
-                gugirl,
-                0,
-                "image/jpeg",
-                []),
+            thumb=wb(gugirl, 0, "image/jpeg", []),
             text="**Gᴏᴏɢʟᴇ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                query="go ",
-                same_peer=True),
+            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="go ", same_peer=True),
         )
         await q_event.answer([kkkk])
     searcher = []
@@ -150,16 +143,9 @@ async def _(e):
     except IndexError:
         kkkk = e.builder.article(
             title="Search Something",
-            thumb=wb(
-                ps,
-                0,
-                "image/jpeg",
-                []),
+            thumb=wb(ps, 0, "image/jpeg", []),
             text="**Pʟᴀʏ Sᴛᴏʀᴇ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                query="app ",
-                same_peer=True),
+            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="app ", same_peer=True),
         )
         await e.answer([kkkk])
     foles = []
@@ -212,10 +198,7 @@ async def _(e):
         kkkk = e.builder.article(
             title="Search Something",
             text="**Mᴏᴅᴅᴇᴅ Aᴘᴘs**\n\nYou didn't search anything",
-            buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                query="mods ",
-                same_peer=True),
+            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="mods ", same_peer=True),
         )
         await e.answer([kkkk])
     page = 1

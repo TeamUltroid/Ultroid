@@ -42,14 +42,18 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
 else:
-    UNAPPROVED_MSG = """
+    UNAPPROVED_MSG = (
+        """
 **PMSecurity of {}!**
 
-"""f"""{Redis("PM_MSG")}""""""
+"""
+        f"""{Redis("PM_MSG")}"""
+        """
 
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
+    )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
 
@@ -77,9 +81,7 @@ if sett == "True" and sett != "False":
             return
         if not is_approved(e.chat_id):
             approve_user(e.chat_id)
-            async for message in e.client.iter_messages(
-                e.chat_id, search=UND
-            ):
+            async for message in e.client.iter_messages(e.chat_id, search=UND):
                 await message.delete()
             if Var.LOG_CHANNEL:
                 name = await e.client.get_entity(e.chat_id)
@@ -183,9 +185,7 @@ if sett == "True" and sett != "False":
             if not is_approved(uid):
                 approve_user(uid)
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                async for message in apprvpm.client.iter_messages(
-                    user.id, search=UND
-                ):
+                async for message in apprvpm.client.iter_messages(user.id, search=UND):
                     await message.delete()
                 await asyncio.sleep(3)
                 await apprvpm.delete()
@@ -290,7 +290,6 @@ if sett == "True" and sett != "False":
                 Var.LOG_CHANNEL,
                 f"[{name0}](tg://user?id={replied_user.id}) was unblocked!.",
             )
-
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})

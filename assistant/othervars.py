@@ -18,7 +18,7 @@ async def otvaar(event):
         buttons=[
             [Button.inline("Tag Logger", data="taglog")],
             [Button.inline("PM Permit", data="pmset")],
-            [Button.inline("SuperFban", data="sfban")]
+            [Button.inline("SuperFban", data="sfban")],
         ],
     )
 
@@ -75,11 +75,13 @@ async def pmofff(event):
 @callback("sfban")
 @owner
 async def sfban(event):
-    await event.edit("SuperFban Settings:",
-                     buttons=[
-                         [Button.inline("FBan Group", data="sfgrp")],
-                         [Button.inline("Exclude Feds", data="sfexf")]
-                     ])
+    await event.edit(
+        "SuperFban Settings:",
+        buttons=[
+            [Button.inline("FBan Group", data="sfgrp")],
+            [Button.inline("Exclude Feds", data="sfexf")],
+        ],
+    )
 
 
 @callback("sfgrp")
@@ -90,7 +92,9 @@ async def sfgrp(event):
     var = "FBAN_GROUP_ID"
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
-        await conv.send_message(f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back.")
+        await conv.send_message(
+            f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back."
+        )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
@@ -109,7 +113,9 @@ async def sfexf(event):
     var = "EXCLUDE_FED"
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
-        await conv.send_message(f"Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.")
+        await conv.send_message(
+            f"Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back."
+        )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message

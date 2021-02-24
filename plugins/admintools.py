@@ -289,7 +289,7 @@ async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, "`Reply to a message to pin it.`")
     ch = msg.pattern_match.group(1)
-    if  ch != "silent":
+    if ch != "silent":
         slnt = True
         x = await eor(msg, "`Processing...`")
         try:
@@ -306,11 +306,11 @@ async def pin(msg):
             return await x.edit("`Hmm, I'm have no rights here...`")
         except Exception as e:
             return await x.edit(f"**ERROR:**`{str(e)}`")
-        try: 
+        try:
             await msg.delete()
         except BaseException:
             pass
- 
+
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
@@ -379,7 +379,9 @@ async def fastpurgerme(purg):
     count = 0
     if not purg.reply_to_msg_id:
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
-    async for msg in ultroid_bot.iter_messages(chat, from_user="me", min_id=purg.reply_to_msg_id):
+    async for msg in ultroid_bot.iter_messages(
+        chat, from_user="me", min_id=purg.reply_to_msg_id
+    ):
         msgs.append(msg)
         count = count + 1
         msgs.append(purg.reply_to_msg_id)

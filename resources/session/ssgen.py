@@ -17,8 +17,7 @@ API_HASH = input("Enter API HASH: ")
 
 with TelegramClient(StringSession(), API_ID, API_HASH) as client:
     ult = client.send_message("me", client.session.save())
-    ult.reply(
-        "The above is the `SESSION` for your current session.\nVisit @TheUltroid")
+    ult.reply("The above is the `SESSION` for your current session.\nVisit @TheUltroid")
     print("")
     print("String Session for the current login has been generated.")
     print("Check your Telegram Saved messages for your SESSION.")
