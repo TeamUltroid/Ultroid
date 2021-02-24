@@ -1,4 +1,3 @@
-
 py-Ultroid==2021.2.24
 asyncurban
 carbonnow
@@ -27,5 +26,5 @@ validators
 youtube_dl
 youtube-search-python
 google-api-python-client==1.7.11
-oauth2client==4.1.3
+oauth2client==4.1.3p
 httplib2==0.13.1
