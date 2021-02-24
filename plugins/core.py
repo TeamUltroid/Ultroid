@@ -9,7 +9,9 @@
 ✘ Commands Available -
 
 • `{i}install <reply to plugin>`
-    To install the plugin.
+    To install the plugin,
+   `{i}install f`
+    To force Install.
 
 • `{i}uninstall <plugin name>`
     To unload and remove the plugin.
