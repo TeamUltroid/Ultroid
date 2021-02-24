@@ -116,9 +116,9 @@ async def name(event):
     name = "PM Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation."
+            "**PM Text**\nEnter the new Pmpermit text.\n\nUse /cancel to terminate the operation."
         )
-        response = conv.wait_event(events.NewMessage(chats=pruu))
+        response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
@@ -137,7 +137,7 @@ async def media(event):
     name = "PM Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as alive media.\n\nUse /cancel to terminate the operation."
+            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as Pmpermit media.\n\nUse /cancel to terminate the operation."
         )
         response = await conv.get_response()
         try:
