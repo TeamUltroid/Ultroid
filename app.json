@@ -4,7 +4,7 @@
     "logo": "https://telegra.ph/file/1518e15421d21c5afd9af.jpg",
     "keywords": ["Telethon", "telegram", "userbot", "python"],
     "repository": "https://github.com/TeamUltroid/Ultroid",
-    "website": "https://ultroid.now.sh/",
+    "website": "https://ultroid.netlify.app/",
     "success_url": "https://t.me/TheUltroid",
     "stack": "container",
     "env": {
