@@ -272,9 +272,12 @@ async def pin(msg):
     cht = await ultroid_bot.get_entity(msg.chat_id)
     xx = msg.reply_to_msg_id
     tt = msg.text
-    kk = tt[4]
-    if kk == "g":
-        return
+    try:
+        kk = tt[4]
+        if kk == "g":
+            return
+    except BaseException:
+        pass
     if not msg.is_reply:
         return
     ch = msg.pattern_match.group(1)
