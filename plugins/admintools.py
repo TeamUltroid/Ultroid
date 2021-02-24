@@ -264,7 +264,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin($| (.*))",
+    pattern="pin$",
 )
 async def pin(msg):
     if not msg.is_private:
@@ -274,7 +274,8 @@ async def pin(msg):
     xx = msg.reply_to_msg_id
     if not msg.is_reply:
         return await eor(msg, "`Reply to a message to pin it.`")
-    ch = msg.pattern_match.group(1)
+    tt = msg.text
+    ch = tt[5:]
     if ch != "silent":
         slnt = True
         x = await eor(msg, "`Processing...`")
