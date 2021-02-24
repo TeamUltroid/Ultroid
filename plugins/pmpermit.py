@@ -197,6 +197,8 @@ if sett == "True" and sett != "False":
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 async for message in apprvpm.client.iter_messages(user.id, search=UND):
                     await message.delete()
+                async for message in apprvpm.client.iter_messages(user.id, search=UNS):
+                    await message.delete()
                 await asyncio.sleep(3)
                 await apprvpm.delete()
                 if Var.LOG_CHANNEL:
