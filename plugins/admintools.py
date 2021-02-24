@@ -264,7 +264,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin($ |(.*))",
+    pattern="pin($| (.*))",
 )
 async def pin(msg):
     if not msg.is_private:
@@ -274,8 +274,7 @@ async def pin(msg):
     xx = msg.reply_to_msg_id
     if not msg.is_reply:
         return await eor(msg, "`Reply to a message to pin it.`")
-    tt = msg.text
-    ch = tt[5:]
+    ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
         x = await eor(msg, "`Processing...`")
@@ -387,20 +386,19 @@ async def fastpurgerme(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeall($ |(.*))",
+    pattern="purgeall$",
 )
 async def _(e):
     xx = await eor(e, "`Processing...`")
     if e.reply_to_msg_id:
         input = (await e.get_reply_message()).sender_id
+        user = (await e.client.get_entity(input)).first_name
         try:
             nos = 0
             async for x in e.client.iter_messages(e.chat_id, from_user=input):
                 await e.client.delete_messages(e.chat_id, x)
                 nos += 1
-            await e.client.send_message(
-                e.chat_id, f"**Purged {nos} msgs of {input} from here**"
-            )
+            await xx.edit(f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input}))
         except ValueError:
             return await eod(xx, str(er), time=5)
     else:
