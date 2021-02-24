@@ -35,7 +35,7 @@ if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
-if not Redis("PM_MSG"):
+if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {}!**
 Please wait for me to respnd or you will be blocked and reported as spam!!
@@ -47,7 +47,7 @@ else:
 **PMSecurity of {}!**
 
 """
-        f"""{Redis("PM_MSG")}"""
+        f"""{Redis("PM_TEXT")}"""
         """
 
 Please wait for me to respnd or you will be blocked and reported as spam!!
@@ -56,6 +56,7 @@ You have {}/{} warnings!"""
     )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
+UNS = "You were spamming my Master's PM, which I didn't like."
 
 WARNS = 3
 NO_REPLY = "Reply to someone's msg or try this commmand in private."
@@ -86,6 +87,8 @@ if sett == "True" and sett != "False":
             approve_user(e.chat_id)
             async for message in e.client.iter_messages(e.chat_id, search=UND):
                 await message.delete()
+            async for message in e.client.iter_messages(e.chat_id, search=UNS):
+                await message.delete()
             if Var.LOG_CHANNEL:
                 name = await e.client.get_entity(e.chat_id)
                 name0 = str(name.first_name)
@@ -110,6 +113,10 @@ if sett == "True" and sett != "False":
                 if event.text != prevmsg:
                     async for message in event.client.iter_messages(
                         user.id, search=UND
+                    ):
+                        await message.delete()
+                    async for message in event.client.iter_messages(
+                        user.id, search=UNS
                     ):
                         await message.delete()
                     await event.client.send_file(
