@@ -1,4 +1,18 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+✘ Commands Available -
+
+• `{i}autopic <search query>`
+    will change your profile pic at defined intervals.
+    search query required.
+
+"""
 from . import *
 import urllib
 import os 
@@ -28,3 +42,5 @@ async def autopic(e):
         await ultroid_bot(functions.photos.UploadProfilePhotoRequest( file))
         os.system("rm -rf autopic.jpg")
         await asyncio.sleep(1100)
+        
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
