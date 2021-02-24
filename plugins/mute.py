@@ -43,7 +43,9 @@ async def watcher(event):
         await event.delete()
 
 
-@ultroid_cmd(pattern="dmute ?(.*)")
+@ultroid_cmd(
+    pattern="dmute ?(.*)",
+)
 async def startmute(event):
     xx = await eor(event, "`Muting...`")
     private = False
@@ -79,7 +81,9 @@ async def startmute(event):
         await eod(xx, "Error: " + f"`{str(e)}`")
 
 
-@ultroid_cmd(pattern="undmute ?(.*)")
+@ultroid_cmd(
+    pattern="undmute ?(.*)",
+)
 async def endmute(event):
     xx = await eor(event, "`Unmuting...`")
     private = False
@@ -104,7 +108,10 @@ async def endmute(event):
         await eod(xx, "Error: " + f"`{str(e)}`")
 
 
-@ultroid_cmd(pattern="tmute")
+@ultroid_cmd(
+    pattern="tmute",
+    groups_only=True,
+)
 async def _(e):
     xx = await eor(e, "`Muting...`")
     huh = e.text.split(" ")
@@ -143,7 +150,10 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(pattern="unmute ?(.*)")
+@ultroid_cmd(
+    pattern="unmute ?(.*)",
+    groups_only=True,
+)
 async def _(e):
     xx = await eor(e, "`Unmuting...`")
     input = int(e.pattern_match.group(1)) if e.pattern_match.group(1) else None
@@ -171,7 +181,10 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(pattern="mute ?(.*)")
+@ultroid_cmd(
+    pattern="mute ?(.*)",
+    groups_only=True,
+)
 async def _(e):
     xx = await eor(e, "`Muting...`")
     input = int(e.pattern_match.group(1)) if e.pattern_match.group(1) else None
