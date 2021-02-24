@@ -264,7 +264,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin$",
+    pattern="pin",
 )
 async def pin(msg):
     if not msg.is_private:
@@ -387,14 +387,12 @@ async def fastpurgerme(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeall ?(.*)",
+    pattern="purgeall$",
 )
 async def _(e):
-    input = e.pattern_match.group(1)
     xx = await eor(e, "`Processing...`")
     if e.reply_to_msg_id:
         input = (await e.get_reply_message()).sender_id
-    if input:
         try:
             nos = 0
             async for x in e.client.iter_messages(e.chat_id, from_user=input):
@@ -408,8 +406,8 @@ async def _(e):
     else:
         return await eod(
             xx,
-            "Reply to someone's msg or give their id to delete all msgs from this chat",
-            time=10,
+            "`Reply to someone's msg to delete.`",
+            time=5,
         )
 
 
@@ -426,7 +424,7 @@ async def delete_it(delme):
             await eod(
                 delme,
                 f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`",
-                time=10,
+                time=5,
             )
 
 
