@@ -240,7 +240,6 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDON Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ",
                 cache_time=0,
                 alert=True,
-                link_preview=False,
             )
 
     @callback("rstrt")
@@ -296,7 +295,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @owner
     async def backr(event):
         xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 4)
-        current_page_number = 0
+        current_page_number = int(upage)
         buttons = paginate_help(current_page_number, PLUGINS, "helpme")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
@@ -304,7 +303,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @owner
     async def backr(event):
         xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
-        current_page_number = 0
+        current_page_number = int(addpage)
         buttons = paginate_addon(current_page_number, ADDONS, "addon")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
@@ -427,6 +426,8 @@ def paginate_help(page_number, loaded_plugins, prefix):
     multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
     mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
     helpable_plugins = []
+    global upage
+    upage = page_number
     for p in loaded_plugins:
         if not p.startswith("_"):
             helpable_plugins.append(p)
@@ -459,6 +460,14 @@ def paginate_help(page_number, loaded_plugins, prefix):
                 ),
             )
         ]
+    else:
+        pairs = pairs[
+            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
+        ] + [
+            (
+                Button.inline("-Bᴀᴄᴋ-", data="open"),
+            )
+        ]
     return pairs
 
 
@@ -468,6 +477,8 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
     mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
     helpable_plugins = []
+    global addpage
+    addpage = page_number
     for p in loaded_plugins:
         if not p.startswith("_"):
             helpable_plugins.append(p)
@@ -498,6 +509,14 @@ def paginate_addon(page_number, loaded_plugins, prefix):
                 Button.inline(
                     "Nᴇxᴛ ->", data="{}_next({})".format(prefix, modulo_page)
                 ),
+            )
+        ]
+    else:
+        pairs = pairs[
+            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
+        ] + [
+            (
+                Button.inline("-Bᴀᴄᴋ-", data="open"),
             )
         ]
     return pairs

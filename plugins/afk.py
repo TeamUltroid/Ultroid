@@ -57,17 +57,17 @@ async def set_not_afk(event):
                 shite = await ultroid_bot.send_message(event.chat_id, file=pic)
                 shites = await ultroid_bot.send_message(
                     event.chat_id,
-                    "`No Longer Afk`\n\nWas afk for~`" + total_afk_time + "`",
+                    "`No Longer Afk`\n\nWas afk for~ " + total_afk_time + "`",
                 )
             else:
                 shite = await ultroid_bot.send_message(
                     event.chat_id,
-                    "`No Longer Afk`\n\nWas afk for~`" + total_afk_time + "`",
+                    "`No Longer Afk`\n\nWas afk for~ " + total_afk_time + "`",
                     file=pic,
                 )
         except BaseException:
             shite = await ultroid_bot.send_message(
-                event.chat_id, "`No Longer Afk`\nWas afk for" + total_afk_time + "`"
+                event.chat_id, "`No Longer Afk \nWas afk for " + total_afk_time + "`"
             )
         try:
             try:
@@ -133,7 +133,7 @@ async def on_afk(event):
             message_to_reply = (
                 f"__Master #AFK since__ `{total_afk_time}`\n\n"
                 + f"__"
-                + f"\n\n**Reason:- **{reason}"
+                + f"\n\n**Reason:- `**{reason}`"
             )
         else:
             message_to_reply = f"__Master #AFK since__ `{total_afk_time}`\n\n" + f"__"

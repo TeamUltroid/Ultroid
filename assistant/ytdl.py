@@ -13,7 +13,8 @@ import time
 
 from pyUltroid.functions.all import *
 from telethon import Button
-from telethon.tl.types import DocumentAttributeAudio, InputWebDocument as wb
+from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 

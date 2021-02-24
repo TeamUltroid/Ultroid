@@ -21,15 +21,53 @@ export DEBIAN_FRONTEND=noninteractive
 export TZ=Asia/Kolkata
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-apt-get update
-apt-get upgrade -y
-apt-get install -y --no-install-recommends ffmpeg neofetch mediainfo megatools
-apt-get autoremove --purge
+apt update && apt upgrade -y && apt install --no-install-recommends -y \
+    debian-keyring \
+    debian-archive-keyring \
+    bash \
+    curl \
+    git \
+    util-linux \
+    libffi-dev \
+    libjpeg-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
+    linux-headers-amd64 \
+    musl-dev \
+    musl \
+    neofetch \
+    python3-lxml \
+    postgresql \
+    postgresql-client \
+    libpq-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    openssl \
+    pv \
+    jq \
+    wget \
+    python3-dev \
+    libreadline-dev \
+    libyaml-dev \
+    zlib1g \
+    ffmpeg \
+    libssl-dev \
+    libgconf-2-4 \
+    libxi6 \
+    zlib1g-dev \
+    xvfb \
+    unzip \
+    make \
+    libopus0 \
+    libopus-dev \
+    gcc
 
 echo '
         •• Cloning Repository
 '
-git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+
+git clone https://github.com/Teamultroid/Ultroid.git /root/TeamUltroid/
 
 echo '
 	•• Getting Libraries and Installing

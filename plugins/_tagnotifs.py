@@ -5,10 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon import  events, custom
+from telethon import custom, events
 from telethon.utils import get_display_name
 
 from . import *
+
 
 @ultroid_bot.on(
     events.NewMessage(
@@ -36,7 +37,7 @@ async def all_messages_catcher(e):
                 NEEDTOLOG,
                 cap,
                 link_preview=False,
-                buttons=[[custom.Button.url(btx, msg)]]
+                buttons=[[custom.Button.url(btx, msg)]],
             )
         except BaseException:
             if e.text:
@@ -44,11 +45,7 @@ async def all_messages_catcher(e):
             else:
                 cap = f"{xx} tagged you in {yy}\n\n [📨Message📨]({msg})"
             try:
-                await ultroid_bot.send_message(
-                    NEEDTOLOG,
-                    cap,
-                    link_preview=False
-                )
+                await ultroid_bot.send_message(NEEDTOLOG, cap, link_preview=False)
             except BaseException:
                 pass
     else:

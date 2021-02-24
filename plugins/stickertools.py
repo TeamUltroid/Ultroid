@@ -83,7 +83,7 @@ async def waifu(animu):
         else:
             await xx.edit("`You haven't written any article, Waifu is going away.`")
             return
-    waifus = [32,33,37,40,41,42,58,20]
+    waifus = [32, 33, 37, 40, 41, 42, 58, 20]
     finalcall = "#" + (str(random.choice(waifus)))
     try:
         sticcers = await ultroid_bot.inline_query(
