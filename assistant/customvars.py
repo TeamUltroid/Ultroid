@@ -49,7 +49,7 @@ async def name(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
 
 
 @callback("alvmed")
@@ -125,7 +125,7 @@ async def name(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
 
 
 @callback("alvmedd")
