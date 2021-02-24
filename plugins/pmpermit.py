@@ -77,7 +77,7 @@ if sett == "True" and sett != "False":
     @ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda e: e.is_private))
     async def autoappr(e):
         miss = await e.get_chat()
-        if miss.bot:
+        if miss.bot or miss.is_self:
             return
         mssg = e.text
         if mssg in PMCMDS:  # do not approve if outgoing is a command.
@@ -97,7 +97,7 @@ if sett == "True" and sett != "False":
     @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def permitpm(event):
         user = await event.get_chat()
-        if user.bot:
+        if user.bot or user.is_self:
             return
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
