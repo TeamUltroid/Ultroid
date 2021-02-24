@@ -26,13 +26,13 @@
 
 import os
 
-from telethon.tl.custom import Button
+from telethon import Button
 
 from . import *
 
 
 @in_pattern(
-    "send (.*)",
+    "send ?(.*)",
 )
 @in_owner
 async def inline_handler(event):
@@ -40,7 +40,7 @@ async def inline_handler(event):
     input_str = event.pattern_match.group(1)
     plug = [*PLUGINS]
     plugs = []
-    if input_str == "all":
+    if input_str == None or input_str == "":
         for i in plug:
             try:
                 plugs.append(
@@ -96,17 +96,17 @@ async def inline_handler(event):
 
 
 @ultroid_cmd(
-    pattern="install$",
+    pattern="install",
 )
 async def install(event):
     await safeinstall(event)
 
 
 @ultroid_cmd(
-    pattern=r"unload (?P<shortname>\w+)$",
+    pattern=r"unload ?(.*)",
 )
 async def unload(event):
-    shortname = event.pattern_match["shortname"]
+    shortname = event.pattern_match.group(1)
     if not shortname:
         await eor(event, "`Give name of plugin which u want to unload`")
         return
@@ -126,10 +126,10 @@ async def unload(event):
 
 
 @ultroid_cmd(
-    pattern=r"uninstall (?P<shortname>\w+)$",
+    pattern=r"uninstall ?(.*)",
 )
 async def uninstall(event):
-    shortname = event.pattern_match["shortname"]
+    shortname = event.pattern_match.group(1)
     if not shortname:
         await eor(event, "`Give name of plugin which u want to uninstall`")
         return
@@ -150,7 +150,7 @@ async def uninstall(event):
 
 
 @ultroid_cmd(
-    pattern=r"load (?P<shortname>\w+)$",
+    pattern=r"load ?(.*)",
 )
 async def load(event):
     shortname = event.pattern_match["shortname"]
