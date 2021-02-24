@@ -33,7 +33,7 @@ from . import *
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await event.edit("Give something to search")
+        return await event.edit("`Give something to search..`")
     x = await eor(event, "`searching..`")
     gs = GoogleSearch()
     res = await gs.async_search(f"{inp}")
@@ -52,7 +52,7 @@ async def google(event):
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
-        return await eor(event, "`Give something to search")
+        return await eor(event, "`Give something to search...`")
     nn = await eor(event, "`Processing Keep Patience...`")
     if ";" in query:
         try:
@@ -79,7 +79,7 @@ async def goimg(event):
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await eor(event, "`Reply to any Image`")
+        return await eor(event, "`Reply to an Image`")
     ult = await eor(event, "`Processing...`")
     dl = await bot.download_media(reply)
     img = Image.open(dl)
