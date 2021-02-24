@@ -387,7 +387,7 @@ async def fastpurgerme(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeall$",
+    pattern="purgeall($ |(.*))",
 )
 async def _(e):
     xx = await eor(e, "`Processing...`")
