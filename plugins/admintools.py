@@ -25,7 +25,7 @@
 
 • `{i}pin <reply to message>`
     Pin the message in the chat
-    for silent pin use (.pin silent).
+    for silent pin use ({i}pin silent).
 
 • `{i}unpin (all) <reply to message>`
     Unpin the message(s) in the chat.
@@ -278,7 +278,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin ?(.*),
+    pattern="pin ?(.*)",
 )
 async def pin(msg):
     if not msg.is_private:
