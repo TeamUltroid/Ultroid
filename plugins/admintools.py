@@ -263,7 +263,7 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="pin ?(.*)",
+    pattern="pin (?: |$)(.*)",
 )
 async def pin(msg):
     if not msg.is_private:
