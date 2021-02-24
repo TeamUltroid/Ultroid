@@ -20,7 +20,6 @@ import re
 import urllib
 
 from bs4 import BeautifulSoup as bs
-from pyUltroid.functions.autopic import animepp, returnpage
 from requests import get
 from telethon import functions
 
