@@ -30,12 +30,6 @@
 • `{i}unpin (all) <reply to message>`
     Unpin the message(s) in the chat.
 
-• `{i}dpin <reply to message>`
-    Pin the message in the chat Silently.
-
-• `{i}dunpin (all) <reply to message>`
-    Unpin the message(s) in the chat Silently.
-
 • `{i}purge <reply to message>`
     Purge all messages from the replied message.
 
