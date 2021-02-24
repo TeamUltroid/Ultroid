@@ -240,7 +240,6 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDON Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ",
                 cache_time=0,
                 alert=True,
-                link_preview=False,
             )
 
     @callback("rstrt")
