@@ -36,9 +36,8 @@
 • `{i}purgeme <reply to message>`
     Purge Only your messages from the replied message.
 
-• `{i}purgeall <reply to msg/input>`
+• `{i}purgeall <reply to message>`
     Delete all msgs of replied user.
-    Delete all msgs of input user
 
 • `{i}del <reply to message>`
     Delete the replied message.
