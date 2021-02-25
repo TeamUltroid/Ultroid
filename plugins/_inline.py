@@ -166,7 +166,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "Sᴇɴᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs",
-                    query="send all",
+                    query="send",
                     same_peer=True,
                 )
             ],
