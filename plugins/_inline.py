@@ -31,8 +31,8 @@ helps = """
 Pʟᴜɢɪɴs ~ {}**
 """
 
-
-if Var.ADDONS:
+add_ons = udB.get("ADDONS")
+if add_ons:
     zhelps = """
 [Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
 
