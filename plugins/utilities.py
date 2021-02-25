@@ -568,7 +568,7 @@ async def _(event):
     if len(the_real_message) > 4096:
         with io.BytesIO(str.encode(the_real_message)) as out_file:
             out_file.name = "json-ult.txt"
-            await borg.send_file(
+            await ultroid_bot.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
