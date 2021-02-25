@@ -120,7 +120,7 @@ async def uconverter(event):
         cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
     else:
-        await xx.edit("**Please select from gif/img**")
+        return await xx.edit("**Please select from gif/img**")
     process = await asyncio.create_subprocess_exec(
         *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
