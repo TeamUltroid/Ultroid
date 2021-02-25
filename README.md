@@ -27,7 +27,7 @@ A stable pluggable Telegram userbot, based on Telethon.
 - Get your `SESSION` from [here](https://repl.it/@TeamUltroid/UltroidStringSession#main.py).   
 and click the below button!  <br />  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FTeamUltroid%2FUltroid%2Ftree%2Fbugs&template=https%3A%2F%2Fgithub.com%2FTeamUltroid%2FUltroid)
 
 ## Deploy Locally
 - Get your `API_ID` and `API_HASH` from [here](https://my.telegram.org/)
