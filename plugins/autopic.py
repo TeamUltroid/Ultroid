@@ -35,7 +35,7 @@ async def autopic(e):
     if len(clls) == 0:
         return await eor(e, f"No Results found for `{search}`")
     if not len(clls)==1:
-        num random.randrange(0, len(clls) - 1)
+        num=random.randrange(0, len(clls) - 1)
     else:
         num=0
     page = clls[num]
