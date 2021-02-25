@@ -16,13 +16,7 @@
 import asyncio
 import os
 import random
-import re
-import urllib
-
-from bs4 import BeautifulSoup as bs
-from requests import get
 from telethon import functions
-
 from . import *
 
 
