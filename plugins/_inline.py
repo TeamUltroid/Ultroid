@@ -60,7 +60,7 @@ async def e(o):
         b = o.builder
         uptime = grt((time.time() - start_time))
         ALIVEMSG = """
-**The Ultroid Userbot...**\n\n
+**The Ultroid Userbot...**\n
 ✵ **Owner** - `{}`
 ✵ **Ultroid** - `{}`
 ✵ **UpTime** - `{}`
@@ -82,6 +82,9 @@ async def e(o):
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+                buttons = [[Button.url(text="❤️ Support Group ❤️",url="t.me/UltroidSupport"),
+                            Button.url(text="🔷 Repo 🔷",url="https://github.com/Teamultroid/Ultroid")],
+                           [Button.inline(text="⚜️ Help ⚜️",data="open")]]
             )
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
