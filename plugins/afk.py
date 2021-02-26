@@ -9,7 +9,7 @@
 ✘ Commands Available -
 
 • `{i}afk <optional reason>`
-    afk means away from keyboard,
+    AFK means away from keyboard,
     After u active this if Someting tag or msg u then It auto Reply Him/her,
     (Note : By Reply To any media U can set media afk too).
 

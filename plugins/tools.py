@@ -20,21 +20,19 @@
 • `{i}bots`
     Shows the number of bots in the current chat with their perma-link.
 
-• `{i}hl`
-    {i}hl <link> hyperlinks the message by editing the message with a blank text.
+• `{i}hl <a link>`
+    Embeds the link with a whitespace as message.
 
 • `{i}id`
     Reply a Sticker to Get Its Id
     Reply a User to Get His Id
     Without Replying You Will Get the Chat's Id
 
-• `{i}sg`
-    Reply The User to Get His Name History
+• `{i}sg <reply to a user>`
+    Get His Name History of the replied user.
 
-• `{i}tr <dest lang code> <input>`
-    Reply to a message with `{i}tr <lang code>`
-    Use `{i}tr <dest lang code> <input>`
-    To get translated message.
+• `{i}tr <dest lang code> <(reply to) a message>`
+    Get translated message.
 """
 
 import asyncio
