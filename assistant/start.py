@@ -107,7 +107,7 @@ async def setting(event):
         "Choose from the below options -",
         buttons=[
             [custom.Button.inline("Alive Customisation", data="alvcstm")],
-            [custom.Button.inline("PM Customisation", data="alvcstmm")],
+            [custom.Button.inline("PM Customisation", data="pmcstm")],
             [custom.Button.inline("API Keys", data="apiset")],
             [custom.Button.inline("Other Vars.", data="otvars")],
         ],
