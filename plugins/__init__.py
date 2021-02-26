@@ -17,7 +17,7 @@ from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
 
 start_time = time.time()
-ultroid_version = "v0.0.1"
+ultroid_version = "v0.0.3"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
