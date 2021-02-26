@@ -432,7 +432,6 @@ async def ultdestroy(event):
         reply_to=event.reply_to_msg_id,
     )
     await xx.delete()
-    os.remove("ultroid.tgs")
     os.remove("json.json")
     os.remove(roid)
 
