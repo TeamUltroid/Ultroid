@@ -15,8 +15,10 @@ from . import *
 async def apiset(event):
     await event.edit(
         "Choose which API you want to set.",
-        buttons=[[Button.inline("Remove.bg", data="rmbg")]],
-    )
+        buttons=[
+            [Button.inline("Remove.bg", data="rmbg")],
+            [custom.Button.inline("« Back", data="setter")]
+            ])
 
 
 # remove.bg api

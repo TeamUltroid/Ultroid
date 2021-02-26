@@ -19,8 +19,8 @@ async def otvaar(event):
             [Button.inline("Tag Logger", data="taglog")],
             [Button.inline("PM Permit", data="pmset")],
             [Button.inline("SuperFban", data="sfban")],
-        ],
-    )
+            [Button.inline("« Back", data="setter")]
+        ])
 
 
 @callback("taglog")
@@ -52,6 +52,7 @@ async def pmset(event):
         buttons=[
             [Button.inline("Turn PMPermit On", data="pmon")],
             [Button.inline("Turn PMPermit Off", data="pmoff")],
+            [Button.inline("« Back", data="otvars")]
         ],
     )
 
@@ -80,6 +81,7 @@ async def sfban(event):
         buttons=[
             [Button.inline("FBan Group", data="sfgrp")],
             [Button.inline("Exclude Feds", data="sfexf")],
+            [Button.inline("« Back", data="otvars")]
         ],
     )
 

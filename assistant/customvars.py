@@ -27,6 +27,7 @@ async def alvcs(event):
             [Button.inline("Alive Text", data="alvtx")],
             [Button.inline("Alive Media", data="alvmed")],
             [Button.inline("Delete Alive Media", data="delmed")],
+            [Button.inline("« Back", data="allcstms")]
         ],
     )
 
@@ -103,6 +104,7 @@ async def alvcs(event):
             [Button.inline("PM Text", data="pmtxt")],
             [Button.inline("Pm Media", data="pmmed")],
             [Button.inline("Delete PM Media", data="delpmmed")],
+            [Button.inline("« Back", data="allcstms")]
         ],
     )
 
