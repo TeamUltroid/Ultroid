@@ -106,9 +106,18 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [custom.Button.inline("Alive Customisation", data="alvcstm")],
-            [custom.Button.inline("PM Customisation", data="pmcstm")],
+            [custom.Button.inline("Customisations", data="allcstms")],
             [custom.Button.inline("API Keys", data="apiset")],
             [custom.Button.inline("Other Vars.", data="otvars")],
         ],
     )
+
+@callback("allcstms")
+@owner
+async def all(event):
+    await event.edit(
+        "All Customisable Stuff.",
+        buttons=[
+            [custom.Button.inline("Alive", data="alvcstm")],
+            [custom.Button.inline("PM Permit", data="pmcstm")]
+            ])
