@@ -463,11 +463,7 @@ def paginate_help(page_number, loaded_plugins, prefix):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
-            )
-        ]
+        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
     return pairs
 
 
@@ -514,9 +510,5 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
-            )
-        ]
+        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
     return pairs

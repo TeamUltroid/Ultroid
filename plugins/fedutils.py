@@ -30,6 +30,7 @@ from . import *
 
 bot = "@MissRose_bot"
 
+
 @ultroid_cmd(pattern="superfban ?(.*)")
 async def _(event):
     msg = await eor(event, "Starting a Mass-FedBan...")
@@ -331,6 +332,7 @@ async def _(event):
         f"SuperUnFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB"
     )
 
+
 @ultroid_cmd(pattern="fstat ?(.*)")
 async def _(event):
     ok = await event.edit("`Checking...`")
@@ -363,7 +365,7 @@ async def _(event):
                         event.chat_id,
                         audio,
                         caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
-                        link_preview=False
+                        link_preview=False,
                     )
                 else:
                     await ultroid.send_message(event.chat_id, audio.text)
@@ -371,6 +373,7 @@ async def _(event):
                 await event.delete()
             except YouBlockedUserError:
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
+
 
 @ultroid_cmd(pattern="fedinfo ?(.*)")
 async def _(event):
@@ -386,5 +389,6 @@ async def _(event):
             await ok.edit(audio.text + "\n\nFedInfo Excracted by Ultroid")
         except YouBlockedUserError:
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
