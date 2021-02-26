@@ -260,7 +260,7 @@ async def stats(
     pattern="paste( (.*)|$)",
 )
 async def _(event):
-    xx = await eor(event, "` 《 Pasteing to nekobin... 》 `")
+    xx = await eor(event, "` 《 Pasting to nekobin... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     if input_str:
         message = input_str
