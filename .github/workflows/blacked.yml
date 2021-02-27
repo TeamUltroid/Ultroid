@@ -26,4 +26,6 @@ jobs:
           commit_options: '--no-verify'
           repository: .
           commit_user_name: buddhhu
-          commit_user_email: amitsharma123234@gmail.com
+          commit_user_email: buddhhu@ultroid.tech
+
+
