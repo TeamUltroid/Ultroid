@@ -1,0 +1,29 @@
+name: blacked.cum
+
+on: push
+
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install black
+        run: |
+          pip install black
+      - name: lint with isort and black
+        run: |
+          black plugins/* assistant/*
+      # commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'cum with me'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: buddhhu
+          commit_user_email: amitsharma123234@gmail.com
