@@ -82,9 +82,8 @@ async def e(o):
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                buttons = [[Button.url(text="❤️ Support Group ❤️",url="t.me/UltroidSupport"),
-                            Button.url(text="🔷 Repo 🔷",url="https://github.com/Teamultroid/Ultroid")],
-                           [Button.inline(text="⚜️ Help ⚜️",data="open")]]
+                buttons = [[Button.url(text="Support Group",url="t.me/UltroidSupport")],
+                            [Button.url(text="Repo",url="https://github.com/Teamultroid/Ultroid")]]
             )
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
