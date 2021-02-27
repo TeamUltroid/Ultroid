@@ -399,9 +399,10 @@ async def ultdround(event):
 )
 async def ultdestroy(event):
     ult = await event.get_reply_message()
-    if not (ult and ("tgsticker" in ult.media.document.mime_type)):
-        await eor(event, "`Reply to Animated Sticker Only...`")
-        return
+    if not event.is_reply:
+        return await eor(event, "`Reply to Animated Sticker Only...`")
+    if not (ult.media and ult.media.document and "tgsticker" in ult.media.document.mime_type):
+        return await eor(event,'`Reply to Animated Sticker only`')
     roid = await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")
     os.system("lottie_convert.py ultroid.tgs json.json")
