@@ -582,9 +582,10 @@ async def _(event):
     else:
         await eor(event, f"```{the_real_message}```")
 
+
 @ultroid_cmd(pattern="suggest")
 async def sugg(event):
-    if (await event.get_reply_message()):
+    if await event.get_reply_message():
         msgid = (await event.get_reply_message()).id
         try:
             await ultroid.send_message(
@@ -593,16 +594,20 @@ async def sugg(event):
                     poll=Poll(
                         id=12345,
                         question="Do you agree to the replied suggestion?",
-                        answers=[
-                            PollAnswer('Yes', b'1'),
-                            PollAnswer('No', b'2')
-                            ])),
-                reply_to=msgid
-                )
+                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
+                    )
+                ),
+                reply_to=msgid,
+            )
         except Exception as e:
-            return await eod(event, f"`Oops, you can't send polls here!\n\n{str(e)}`", time=5)
+            return await eod(
+                event, f"`Oops, you can't send polls here!\n\n{str(e)}`", time=5
+            )
         await event.delete()
     else:
-        return await eod(event, "`Please reply to a message to make a suggestion poll!`", time=5)
+        return await eod(
+            event, "`Please reply to a message to make a suggestion poll!`", time=5
+        )
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})

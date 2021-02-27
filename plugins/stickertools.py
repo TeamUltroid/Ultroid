@@ -108,9 +108,9 @@ async def waifu(animu):
 async def uconverter(event):
     xx = await eor(event, "`Processing...`")
     a = await event.get_reply_message()
-    ok = ["image/webp","application/x-tgsticker"]
+    ok = ["image/webp", "application/x-tgsticker"]
     if not (a.media and a.media.document and a.media.document.mime_type in ok):
-        return await eor(event,'`Reply to a Sticker...`')
+        return await eor(event, "`Reply to a Sticker...`")
     input = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
     if "gif" in input:

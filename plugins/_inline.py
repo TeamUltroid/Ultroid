@@ -82,8 +82,14 @@ async def e(o):
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                buttons = [[Button.url(text="Support Group",url="t.me/UltroidSupport")],
-                            [Button.url(text="Repo",url="https://github.com/Teamultroid/Ultroid")]]
+                buttons=[
+                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
+                    [
+                        Button.url(
+                            text="Repo", url="https://github.com/Teamultroid/Ultroid"
+                        )
+                    ],
+                ],
             )
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
@@ -465,11 +471,7 @@ def paginate_help(page_number, loaded_plugins, prefix):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
-            )
-        ]
+        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
     return pairs
 
 
@@ -516,9 +518,5 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
-            )
-        ]
+        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
     return pairs

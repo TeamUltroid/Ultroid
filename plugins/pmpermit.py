@@ -76,7 +76,7 @@ async def permitpm(event):
     if user.bot or user.is_self:
         return
     apprv = is_approved(user.id)
-    if apprv and (Redis("PMLOG")=="True"):
+    if apprv and (Redis("PMLOG") == "True"):
         await event.forward_to(Var.LOG_CHANNEL)
 
 

@@ -303,7 +303,7 @@ async def pin(msg):
         except BaseException:
             pass
 
-    
+
 @ultroid_cmd(
     pattern="unpin($| (.*))",
 )
@@ -404,7 +404,9 @@ async def _(e):
             async for x in e.client.iter_messages(e.chat_id, from_user=input):
                 await e.client.delete_messages(e.chat_id, x)
                 nos += 1
-            await xx.edit(f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input})")
+            await xx.edit(
+                f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input})"
+            )
         except ValueError:
             return await eod(xx, str(er), time=5)
     else:
