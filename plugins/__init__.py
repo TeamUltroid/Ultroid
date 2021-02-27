@@ -15,6 +15,7 @@ from pyUltroid.functions.all import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
+from pyUltroid.dB import *
 
 start_time = time.time()
 ultroid_version = "v0.0.3"
