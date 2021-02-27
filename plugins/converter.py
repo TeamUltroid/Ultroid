@@ -38,8 +38,8 @@ from PIL import Image
 
 from . import *
 
-@ultroid_cmd(pattern="rename ?(.*)")
 
+@ultroid_cmd(pattern="rename ?(.*)")
 async def imak(event):
 
     reply = await event.get_reply_message()
@@ -62,7 +62,7 @@ async def imak(event):
 
     image = await ultroid_bot.download_media(reply)
 
-    os.rename(image,inp)
+    os.rename(image, inp)
 
     await ultroid_bot.send_file(event.chat_id, inp, reply_to=reply)
 
@@ -70,8 +70,8 @@ async def imak(event):
 
     await xx.delete()
 
-@ultroid_cmd(pattern="mtoi$")
 
+@ultroid_cmd(pattern="mtoi$")
 async def imak(event):
 
     reply = await event.get_reply_message()
@@ -88,7 +88,7 @@ async def imak(event):
 
     file = "ult.png"
 
-    if image.endswith((".webp",".png")):
+    if image.endswith((".webp", ".png")):
 
         c = Image.open(image)
 
@@ -96,7 +96,7 @@ async def imak(event):
 
     else:
 
-        img = cv2.VideoCapture(image) 
+        img = cv2.VideoCapture(image)
 
         ult, roid = img.read()
 
@@ -110,12 +110,8 @@ async def imak(event):
 
     os.remove(image)
 
-  
-
-  
 
 @ultroid_cmd(pattern="mtos$")
-
 async def smak(event):
 
     reply = await event.get_reply_message()
@@ -132,7 +128,7 @@ async def smak(event):
 
     file = "ult.webp"
 
-    if image.endswith((".webp",".png",".jpg")):
+    if image.endswith((".webp", ".png", ".jpg")):
 
         c = Image.open(image)
 
@@ -140,7 +136,7 @@ async def smak(event):
 
     else:
 
-        img = cv2.VideoCapture(image) 
+        img = cv2.VideoCapture(image)
 
         ult, roid = img.read()
 
@@ -154,6 +150,5 @@ async def smak(event):
 
     os.remove(image)
 
-    
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
