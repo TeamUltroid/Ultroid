@@ -27,7 +27,7 @@ async def alvcs(event):
             [Button.inline("Alive Text", data="alvtx")],
             [Button.inline("Alive Media", data="alvmed")],
             [Button.inline("Delete Alive Media", data="delmed")],
-            [Button.inline("« Back", data="allcstms")]
+            [Button.inline("« Back", data="allcstms")],
         ],
     )
 
@@ -50,7 +50,9 @@ async def name(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
+            await conv.send_message(
+                "{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR)
+            )
 
 
 @callback("alvmed")
@@ -95,7 +97,6 @@ async def dell(event):
         return await event.edit("Something went wrong...")
 
 
-
 @callback("pmcstm")
 @owner
 async def alvcs(event):
@@ -105,7 +106,7 @@ async def alvcs(event):
             [Button.inline("PM Text", data="pmtxt")],
             [Button.inline("Pm Media", data="pmmed")],
             [Button.inline("Delete PM Media", data="delpmmed")],
-            [Button.inline("« Back", data="allcstms")]
+            [Button.inline("« Back", data="allcstms")],
         ],
     )
 
@@ -128,7 +129,9 @@ async def name(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
+            await conv.send_message(
+                "{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR)
+            )
 
 
 @callback("pmmed")
@@ -161,8 +164,6 @@ async def media(event):
                 return await conv.send_message("Terminated.")
         await setit(event, var, url)
         await conv.send_message("{} has been set.".format(name))
-
-
 
 
 @callback("delpmmed")

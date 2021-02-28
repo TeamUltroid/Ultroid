@@ -17,8 +17,9 @@ async def apiset(event):
         "Choose which API you want to set.",
         buttons=[
             [Button.inline("Remove.bg", data="rmbg")],
-            [custom.Button.inline("« Back", data="setter")]
-            ])
+            [custom.Button.inline("« Back", data="setter")],
+        ],
+    )
 
 
 # remove.bg api

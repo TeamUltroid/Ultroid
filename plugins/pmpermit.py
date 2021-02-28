@@ -56,7 +56,7 @@ You have {}/{} warnings!"""
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
 UNS = "You were spamming my Master's PM, which I didn't like."
-#1
+# 1
 
 WARNS = 3
 NO_REPLY = "Reply to someone's msg or try this commmand in private."

@@ -52,6 +52,7 @@ async def ultroid(event):
         ],
     )
 
+
 # aah, repeat the codes..
 @callback("mainmenu")
 @owner
@@ -66,6 +67,7 @@ async def ultroid(event):
             [Button.inline("Broadcast", data="bcast")],
         ],
     )
+
 
 @callback("stat")
 @owner
@@ -123,9 +125,10 @@ async def setting(event):
             [Button.inline("Customisations", data="allcstms")],
             [Button.inline("API Keys", data="apiset")],
             [Button.inline("Other Vars.", data="otvars")],
-            [Button.inline("« Back", data="mainmenu")]
+            [Button.inline("« Back", data="mainmenu")],
         ],
     )
+
 
 @callback("allcstms")
 @owner
@@ -135,5 +138,6 @@ async def all(event):
         buttons=[
             [Button.inline("Alive", data="alvcstm")],
             [Button.inline("PM Permit", data="pmcstm")],
-            [Button.inline("« Back", data="setter")]
-            ])
+            [Button.inline("« Back", data="setter")],
+        ],
+    )
