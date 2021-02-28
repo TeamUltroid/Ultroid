@@ -236,9 +236,12 @@ async def uunban(ult):
 )
 async def kck(ult):
     tt = ult.text
-    tx = tt[5]
-    if tx:
-        return
+    try:
+        tx = tt[5]
+        if tx:
+            return
+    except BaseException:
+        pass
     xx = await eor(ult, "`Processing...`")
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
