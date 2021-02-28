@@ -31,7 +31,7 @@ from . import *
 async def _(ult):
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.sender.id != ultroid_bot.uid:
-        return await eor(ult,'`You are sudo user, You cant add anyone as sudo`')
+        return await eor(ult, "`You are sudo user, You cant add anyone as sudo`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender.id
