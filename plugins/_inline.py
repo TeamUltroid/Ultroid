@@ -22,9 +22,9 @@ from . import *
 
 # ================================================#
 notmine = "This bot is for {}".format(OWNER_NAME)
-ULTROID_PIC = "https://telegra.ph/file/11245cacbffe92e5d5b14.jpg"
+ULTROID_PIC = "https://telegra.ph/file/d10f1ddcfbae709f2ed49.jpg"
 helps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
+[CONTACT ME](t.me/ChankitSaini)
 
 **Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
 
@@ -34,7 +34,7 @@ Pʟᴜɢɪɴs ~ {}**
 
 if Var.ADDONS:
     zhelps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
+[CONTACT ME](t.me/ChankitSaini)
 
 **Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
 
@@ -42,7 +42,7 @@ Aᴅᴅᴏɴs ~ {}**
 """
 else:
     zhelps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
+[CONTACT ME](t.me/ChankitSaini)
 
 **Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
 
@@ -78,7 +78,7 @@ async def e(o):
         res = [
             b.article(
                 title="Ultroid Userbot",
-                url="https://t.me/TeamUltroid",
+                url="https://t.me/ChankitSaini"https://t.me/TeamUltroid",
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
