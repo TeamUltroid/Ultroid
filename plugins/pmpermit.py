@@ -193,7 +193,9 @@ if sett == "True" and sett != "False":
             replied_user = await apprvpm.client.get_entity(reply.sender_id)
             aname = replied_user.id
             if str(aname) in DEVLIST:
-                return await eor(apprvpm, "Lol, He is my Developer\nHe is auto Approved")
+                return await eor(
+                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                )
             name0 = str(replied_user.first_name)
             uid = replied_user.id
             if not is_approved(uid):
@@ -209,7 +211,9 @@ if sett == "True" and sett != "False":
             user = await apprvpm.get_chat()
             aname = await apprvpm.client.get_entity(user.id)
             if str(user.id) in DEVLIST:
-                return await eor(apprvpm, "Lol, He is my Developer\nHe is auto Approved")
+                return await eor(
+                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                )
             name0 = str(aname.first_name)
             uid = user.id
             if not is_approved(uid):
@@ -246,7 +250,9 @@ if sett == "True" and sett != "False":
             replied_user = await e.client.get_entity(reply.sender_id)
             aname = replied_user.id
             if str(aname) in DEVLIST:
-                return await eor(e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`")
+                return await eor(
+                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                )
             name0 = str(replied_user.first_name)
             if is_approved(replied_user.id):
                 disapprove_user(replied_user.id)
@@ -265,7 +271,9 @@ if sett == "True" and sett != "False":
             bbb = await e.get_chat()
             aname = await e.client.get_entity(bbb.id)
             if str(bbb.id) in DEVLIST:
-                return await eor(e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`")
+                return await eor(
+                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                )
             name0 = str(aname.first_name)
             if is_approved(bbb.id):
                 disapprove_user(bbb.id)
@@ -291,7 +299,9 @@ if sett == "True" and sett != "False":
             replied_user = await block.client.get_entity(reply.sender_id)
             aname = replied_user.id
             if str(aname) in DEVLIST:
-                return await eor(block, "`Lol, He is my Developer\nHe Can't Be Blocked`")
+                return await eor(
+                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                )
             name0 = str(replied_user.first_name)
             await block.client(BlockRequest(replied_user.id))
             await block.edit("`You've been blocked!`")
@@ -299,7 +309,9 @@ if sett == "True" and sett != "False":
         elif block.is_private:
             bbb = await block.get_chat()
             if str(bbb.id) in DEVLIST:
-                return await eor(block, "`Lol, He is my Developer\nHe Can't Be Blocked`")
+                return await eor(
+                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                )
             await block.client(BlockRequest(bbb.id))
             aname = await block.client.get_entity(bbb.id)
             await block.edit("`You've been blocked!`")
