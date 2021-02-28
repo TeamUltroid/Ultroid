@@ -21,12 +21,12 @@ from telethon.tl.types import InputWebDocument
 from . import *
 
 # ================================================#
-notmine = "This bot is for {}".format(OWNER_NAME)
-ULTROID_PIC = "https://telegra.ph/file/11245cacbffe92e5d5b14.jpg"
+ notmine = "This the bot of{}".format(OWNER_NAME)
+ULTROID_PIC = "https://telegra.ph/file/2d304b10df21fd423361a.jpg"
 helps = """
 [Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
 
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
+**Heʟᴘ Mᴇɴᴜ Oғ the bot of @sahil_hun_bc {}.
 
 Pʟᴜɢɪɴs ~ {}**
 """
@@ -36,7 +36,7 @@ if Var.ADDONS:
     zhelps = """
 [Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
 
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
+**Hᴇʟᴘ Mᴇɴᴜ Oғ the bot of @sahil_hun_bc{}.
 
 Aᴅᴅᴏɴs ~ {}**
 """
@@ -44,7 +44,7 @@ else:
     zhelps = """
 [Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
 
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
+**Hᴇʟᴘ Mᴇɴᴜ Oғ the bot of @sahil_hun_bc{}.
 
 Aᴅᴅᴏɴs ~ {}
 
@@ -60,10 +60,10 @@ async def e(o):
         b = o.builder
         uptime = grt((time.time() - start_time))
         ALIVEMSG = """
-**The Ultroid Userbot...**\n\n
-✵ **Owner** - `{}`
-✵ **Ultroid** - `{}`
-✵ **UpTime** - `{}`
+**Mera naam jaane ki koi jarurat nhi h apko ok!*\n\n
+✵ **Owner ya ni m ** - `{}`
+✵ **mera bot ** - `{}`
+✵ **kitni der k utha hua h ** - `{}`
 ✵ **Python** - `{}`
 ✵ **Telethon** - `{}`
 ✵ **Branch** - `{}`
@@ -150,13 +150,13 @@ if Var.BOT_USERNAME is not None and asst is not None:
         start = datetime.now()
         end = datetime.now()
         ms = (end - start).microseconds / 1000
-        pin = f"🌋Pɪɴɢ = {ms}ms"
+        pin = f"♈Pɪɴɢ♈ = {ms}ms"
         await event.answer(pin, cache_time=0, alert=True)
 
     @callback("upp")
     async def _(event):
         uptime = grt((time.time() - start_time))
-        pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
+        pin = f"🆙Uᴘᴛɪᴍᴇ🆙= {uptime}"
         await event.answer(pin, cache_time=0, alert=True)
 
     @callback("inlone")
