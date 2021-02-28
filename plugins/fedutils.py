@@ -386,7 +386,7 @@ async def _(event):
             await conv.send_message("/fedinfo " + sysarg)
             audio = await conv.get_response()
             await ultroid.send_read_acknowledge(bot)
-            await ok.edit(audio.text + "\n\nFedInfo Excracted by Ultroid")
+            await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
