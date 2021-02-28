@@ -67,20 +67,20 @@ except BaseException:
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = grt((time.time() - start_time))
-    header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "zinda hun bs kush"
     als = """
-**The Ultroid Userbot...**
+**Name mt puchna bot of @sahil_hun_bc**
 
 **{}**
 
-┏━━━━━━━━━━━━━━━━━━━━━━
+┏━━Hello━━━━━━━━
 ┣ **Owner** - `{}`
 ┣ **Version** - `{}`
 ┣ **UpTime** - `{}`
 ┣ **Python** - `{}`
 ┣ **Telethon** - `{}`
 ┣ **Branch** - `{}`
-┗━━━━━━━━━━━━━━━━━━━━━━
+┗━━━━━━━━━━━━
 """.format(
         header,
         OWNER_NAME,
@@ -208,8 +208,8 @@ async def dyno_usage(dyno):
     FREE = humanbytes(free)
     return await eod(
         dyn,
-        "**⚙️ Dyno Usage ⚙️**:\n\n"
-        + f" -> `Dyno usage for`  **{Var.HEROKU_APP_NAME}**:\n"
+        "**♈Dyno♈**:\n\n"
+        + f" -> `Dyno usage of`  **{Var.HEROKU_APP_NAME}**:\n"
         + f"     •  `{AppHours}`**h**  `{AppMinutes}`**m**  "
         + f"**|**  [`{AppPercentage}`**%**]"
         + "\n\n"
