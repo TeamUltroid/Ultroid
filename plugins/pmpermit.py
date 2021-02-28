@@ -35,9 +35,22 @@ if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
-if not Redis("PM_MSG"):
+
+    
+if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {}!**
+Please wait for me to respnd or you will be blocked and reported as spam!!
+
+You have {}/{} warnings!"""
+else:
+    UNAPPROVED_MSG = (
+        """
+
+"""
+        f"""{Redis("PM_TEXT")}"""
+        """
+
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
@@ -56,6 +69,12 @@ You have {}/{} warnings!"""
     )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
+#=======
+    )
+
+UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
+UNS = "You were spamming my Master's PM, which I didn't like."
+#1
 
 WARNS = 3
 NO_REPLY = "Reply to someone's msg or try this commmand in private."
@@ -88,7 +107,7 @@ if sett == "True" and sett != "False":
     @ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda e: e.is_private))
     async def autoappr(e):
         miss = await e.get_chat()
-        if miss.bot or miss.is_self:
+        if miss.bot or miss.is_self or miss.verified:
             return
         mssg = e.text
         if mssg in PMCMDS:  # do not approve if outgoing is a command.
@@ -96,6 +115,8 @@ if sett == "True" and sett != "False":
         if not is_approved(e.chat_id):
             approve_user(e.chat_id)
             async for message in e.client.iter_messages(e.chat_id, search=UND):
+                await message.delete()
+            async for message in e.client.iter_messages(e.chat_id, search=UNS):
                 await message.delete()
             if Var.LOG_CHANNEL:
                 name = await e.client.get_entity(e.chat_id)
@@ -108,7 +129,7 @@ if sett == "True" and sett != "False":
     @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def permitpm(event):
         user = await event.get_chat()
-        if user.bot or user.is_self:
+        if user.bot or user.is_self or user.verified:
             return
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
@@ -121,6 +142,11 @@ if sett == "True" and sett != "False":
                 if event.text != prevmsg:
                     async for message in event.client.iter_messages(
                         user.id, search=UND
+                    ):
+                        await message.delete()
+
+                    async for message in event.client.iter_messages(
+                        user.id, search=UNS
                     ):
                         await message.delete()
                     await event.client.send_file(
@@ -200,6 +226,9 @@ if sett == "True" and sett != "False":
                 approve_user(uid)
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 async for message in apprvpm.client.iter_messages(user.id, search=UND):
+
+                    await message.delete()
+                async for message in apprvpm.client.iter_messages(user.id, search=UNS):
                     await message.delete()
                 await asyncio.sleep(3)
                 await apprvpm.delete()

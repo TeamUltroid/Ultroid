@@ -46,12 +46,26 @@ async def ultroid(event):
         event.chat_id,
         f"Hi {OWNER_NAME}. Please browse through the options",
         buttons=[
-            [custom.Button.inline("Settings ⚙️", data="setter")],
-            [custom.Button.inline("Stats", data="stat")],
-            [custom.Button.inline("Broadcast", data="bcast")],
+            [Button.inline("Settings ⚙️", data="setter")],
+            [Button.inline("Stats", data="stat")],
+            [Button.inline("Broadcast", data="bcast")],
         ],
     )
 
+# aah, repeat the codes..
+@callback("mainmenu")
+@owner
+async def ultroid(event):
+    if event.is_group:
+        return
+    await event.edit(
+        f"Hi {OWNER_NAME}. Please browse through the options",
+        buttons=[
+            [Button.inline("Settings ⚙️", data="setter")],
+            [Button.inline("Stats", data="stat")],
+            [Button.inline("Broadcast", data="bcast")],
+        ],
+    )
 
 @callback("stat")
 @owner
@@ -106,9 +120,20 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [custom.Button.inline("Alive Customisation", data="alvcstm")],
-            [custom.Button.inline("PM Customisation", data="alvcstmm")],
-            [custom.Button.inline("API Keys", data="apiset")],
-            [custom.Button.inline("Other Vars.", data="otvars")],
+            [Button.inline("Customisations", data="allcstms")],
+            [Button.inline("API Keys", data="apiset")],
+            [Button.inline("Other Vars.", data="otvars")],
+            [Button.inline("« Back", data="mainmenu")]
         ],
     )
+
+@callback("allcstms")
+@owner
+async def all(event):
+    await event.edit(
+        "All Customisable Stuff.",
+        buttons=[
+            [Button.inline("Alive", data="alvcstm")],
+            [Button.inline("PM Permit", data="pmcstm")],
+            [Button.inline("« Back", data="setter")]
+            ])

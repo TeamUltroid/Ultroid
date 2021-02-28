@@ -15,12 +15,20 @@
     Un-FBan the person across all feds in which you are admin.
 
 Specify FBan Group and Feds to exclude in the assistant.
+
+• `{i}fstat <username/id/reply to user>`
+    Collect fed stat of the person in Rose.
+
+• `{i}fedinfo <(fedid)>`
+    Collect federation info of the given fed id, or of the fed you own, from Rose.
 """
 
 import asyncio
 import os
-
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from . import *
+
+bot = "@MissRose_bot"
 
 
 @ultroid_cmd(pattern="superfban ?(.*)")
@@ -323,6 +331,64 @@ async def _(event):
     await msg.edit(
         f"SuperUnFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB"
     )
+
+
+@ultroid_cmd(pattern="fstat ?(.*)")
+async def _(event):
+    ok = await event.edit("`Checking...`")
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        sysarg = str(previous_message.sender_id)
+        user = f"[user](tg://user?id={sysarg})"
+        if event.pattern_match.group(1):
+            sysarg += f" {event.pattern_match.group(1)}"
+    else:
+        sysarg = event.pattern_match.group(1)
+        user = sysarg
+    if sysarg == "":
+        await ok.edit(
+            "`Give me someones id, or reply to somones message to check his/her fedstat.`"
+        )
+        return
+    else:
+        async with ultroid.conversation(bot) as conv:
+            try:
+                await conv.send_message("/start")
+                await conv.get_response()
+                await conv.send_message("/fedstat " + sysarg)
+                audio = await conv.get_response()
+                if "Looks like" in audio.text:
+                    await audio.click(0)
+                    await asyncio.sleep(2)
+                    audio = await conv.get_response()
+                    await ultroid.send_file(
+                        event.chat_id,
+                        audio,
+                        caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
+                        link_preview=False,
+                    )
+                else:
+                    await ultroid.send_message(event.chat_id, audio.text)
+                await ultroid.send_read_acknowledge(bot)
+                await event.delete()
+            except YouBlockedUserError:
+                await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
+
+
+@ultroid_cmd(pattern="fedinfo ?(.*)")
+async def _(event):
+    ok = await event.edit("`Extracting information...`")
+    sysarg = event.pattern_match.group(1)
+    async with ultroid.conversation(bot) as conv:
+        try:
+            await conv.send_message("/start")
+            await conv.get_response()
+            await conv.send_message("/fedinfo " + sysarg)
+            audio = await conv.get_response()
+            await ultroid.send_read_acknowledge(bot)
+            await ok.edit(audio.text + "\n\nFedInfo Excracted by Ultroid")
+        except YouBlockedUserError:
+            await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})

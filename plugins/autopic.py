@@ -9,8 +9,7 @@
 ✘ Commands Available -
 
 • `{i}autopic <search query>`
-    will change your profile pic at defined intervals.
-    search query required.
+    Will change your profile pic at defined intervals with pics related to the given topic.
 
 """
 import asyncio
@@ -41,7 +40,7 @@ async def autopic(e):
         animepp(page["href"])
         file = await ultroid_bot.upload_file("autopic.jpg")
         await ultroid_bot(functions.photos.UploadProfilePhotoRequest(file))
-        os.system("rm -rf autopic.jpg")
+        os.remove("autopic.jpg")
         await asyncio.sleep(1100)
 
 

@@ -68,7 +68,9 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
 echo '
         •• Cloning Repository
 '
+
 git clone -b beta https://github.com/Teamultroid/Ultroid.git /root/TeamUltroid/
+
 
 echo '
 	•• Getting Libraries and Installing

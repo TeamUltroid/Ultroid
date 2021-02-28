@@ -245,7 +245,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             await event.edit(f"{halp}", buttons=buttons, link_preview=False)
         else:
             await event.answer(
-                "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDON Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ",
+                "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDONS Wɪᴛʜ Vᴀʟᴜᴇ True",
                 cache_time=0,
                 alert=True,
             )

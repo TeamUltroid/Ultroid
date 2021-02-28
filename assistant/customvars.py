@@ -27,6 +27,7 @@ async def alvcs(event):
             [Button.inline("Alive Text", data="alvtx")],
             [Button.inline("Alive Media", data="alvmed")],
             [Button.inline("Delete Alive Media", data="delmed")],
+            [Button.inline("« Back", data="allcstms")]
         ],
     )
 
@@ -49,7 +50,7 @@ async def name(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
 
 
 @callback("alvmed")
@@ -94,20 +95,22 @@ async def dell(event):
         return await event.edit("Something went wrong...")
 
 
-@callback("alvcstmm")
+
+@callback("pmcstm")
 @owner
 async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
         buttons=[
-            [Button.inline("PM Text", data="alvtxx")],
-            [Button.inline("Pm Media", data="alvmedd")],
-            [Button.inline("Delete PM Media", data="delmedd")],
+            [Button.inline("PM Text", data="pmtxt")],
+            [Button.inline("Pm Media", data="pmmed")],
+            [Button.inline("Delete PM Media", data="delpmmed")],
+            [Button.inline("« Back", data="allcstms")]
         ],
     )
 
 
-@callback("alvtxx")
+@callback("pmtxt")
 @owner
 async def name(event):
     await event.delete()
@@ -116,19 +119,19 @@ async def name(event):
     name = "PM Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation."
+            "**PM Text**\nEnter the new Pmpermit text.\n\nUse /cancel to terminate the operation."
         )
-        response = conv.wait_event(events.NewMessage(chats=pruu))
+        response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR))
 
 
-@callback("alvmedd")
+@callback("pmmed")
 @owner
 async def media(event):
     await event.delete()
@@ -137,7 +140,7 @@ async def media(event):
     name = "PM Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as alive media.\n\nUse /cancel to terminate the operation."
+            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as pmpermit media.\n\nUse /cancel to terminate the operation."
         )
         response = await conv.get_response()
         try:
@@ -160,7 +163,9 @@ async def media(event):
         await conv.send_message("{} has been set.".format(name))
 
 
-@callback("delmedd")
+
+
+@callback("delpmmed")
 @owner
 async def dell(event):
     try:

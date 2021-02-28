@@ -173,7 +173,7 @@ async def _(ult):
     pattern="listsudo$",
 )
 async def _(ult):
-    ok = await eor(ult, "`...")
+    ok = await eor(ult, "`...`")
     sudos = get_sudos()
     if "" in sudos:
         return await ok.edit("`No SUDO User was assigned ...`")

@@ -391,7 +391,6 @@ async def ultdround(event):
     await xx.delete()
     os.remove(file)
     os.remove("ult.webp")
-    os.remove(ultt)
 
 
 @ultroid_cmd(
