@@ -26,7 +26,7 @@ async def ult(ult):
                 output = "**Plugin** - `{}`\n".format(plug)
                 for i in HELP[plug]:
                     output += i
-                output += "\n© @TheUltroid"
+                output += "\n© @ChankitSaini"
                 await eor(ult, output)
             elif plug in CMD_HELP:
                 kk = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
