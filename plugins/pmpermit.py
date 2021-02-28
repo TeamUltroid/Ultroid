@@ -36,40 +36,22 @@ if Redis("PMPIC"):
 else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
 
-    
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {}!**
+
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
 else:
     UNAPPROVED_MSG = (
         """
-
-"""
+**PMSecurity of {}!**"""
         f"""{Redis("PM_TEXT")}"""
         """
-
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
-else:
-    UNAPPROVED_MSG = (
-        """
-**PMSecurity of {}!**
-
-"""
-        f"""{Redis("PM_MSG")}"""
-        """
-
-Please wait for me to respnd or you will be blocked and reported as spam!!
-
-You have {}/{} warnings!"""
-    )
-
-UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
-#=======
     )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
