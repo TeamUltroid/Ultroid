@@ -1,7 +1,7 @@
-# Ultroid - UserBot
+# Ultroid - UserBot Edited by @ChankitSaini
 # Copyright (C) 2020 TeamUltroid
 #
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ and https://github.com/ChankitSaini/QueerAIUltroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
@@ -61,8 +61,8 @@ async def e(o):
         uptime = grt((time.time() - start_time))
         ALIVEMSG = """
 **The Ultroid Userbot...**\n\n
-✵ **Owner** - `{}`
-✵ **Ultroid** - `{}`
+✵ **My Owner** - `{}`
+✵ **QueerAI** - `{}`
 ✵ **UpTime** - `{}`
 ✵ **Python** - `{}`
 ✵ **Telethon** - `{}`
@@ -77,14 +77,14 @@ async def e(o):
         )
         res = [
             b.article(
-                title="Ultroid Userbot",
-                url="https://t.me/ChankitSaini"https://t.me/TeamUltroid",
-                description="Userbot | Telethon ",
+                title="QueerAI",
+                url="https://t.me/ChankitSaini",
+                description="QueerAI | ChankitSaini ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
             )
         ]
-        await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+        await o.answer(res, switch_pm=f"👥 QueerAI PORTAL", switch_pm_param="start")
 
 
 if Var.BOT_USERNAME is not None and asst is not None:
@@ -104,12 +104,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}**",
                 buttons=[
                     [
-                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                        Button.inline(" Pʟᴜɢɪɴs", data="hrrrr"),
+                        Button.inline(" Aᴅᴅᴏɴs", data="frrr"),
                     ],
-                    [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr")],
-                    [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
-                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+                    [Button.inline("Oᴡɴᴇʀ ᴛᴏᴏʟꜱ", data="ownr")],
+                    [Button.inline("Iɴʟɪɴᴇ Pʟᴜɢɪɴs", data="inlone")],
+                    [Button.inline("Cʟᴏꜱᴇ", data="close")],
                 ],
             )
             await event.answer([result] if result else None)
@@ -137,10 +137,10 @@ if Var.BOT_USERNAME is not None and asst is not None:
         await event.edit(
             buttons=[
                 [
-                    Button.inline("•Pɪɴɢ•", data="pkng"),
-                    Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
+                    Button.inline("Pɪɴɢ", data="pkng"),
+                    Button.inline("Uᴘᴛɪᴍᴇ", data="upp"),
                 ],
-                [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
+                [Button.inline("Rᴇsᴛᴀʀᴛ", data="rstrt")],
                 [Button.inline("<- Bᴀᴄᴋ", data="open")],
             ],
         )
@@ -150,13 +150,13 @@ if Var.BOT_USERNAME is not None and asst is not None:
         start = datetime.now()
         end = datetime.now()
         ms = (end - start).microseconds / 1000
-        pin = f"🌋Pɪɴɢ = {ms}ms"
+        pin = f"Pɪɴɢ = {ms}ms"
         await event.answer(pin, cache_time=0, alert=True)
 
     @callback("upp")
     async def _(event):
         uptime = grt((time.time() - start_time))
-        pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
+        pin = f"Uᴘᴛɪᴍᴇ = {uptime}"
         await event.answer(pin, cache_time=0, alert=True)
 
     @callback("inlone")
@@ -173,42 +173,42 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
-                    query="app telegram",
+                    query="app Telegram",
                     same_peer=True,
                 )
             ],
             [
                 Button.switch_inline(
                     "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
-                    query="mods minecraft",
+                    query="mods DR. Driving",
                     same_peer=True,
                 )
             ],
             [
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
-                    query="go TeamUltroid",
+                    query="go Chankit Saini",
                     same_peer=True,
                 )
             ],
             [
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
-                    query="yahoo TeamUltroid",
+                    query="yahoo Chankit Saini",
                     same_peer=True,
                 )
             ],
             [
                 Button.switch_inline(
                     "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                    query="yt How to Deploy Ultroid Userbot",
+                    query="yt The Unofficials",
                     same_peer=True,
                 )
             ],
             [
                 Button.switch_inline(
                     "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
-                    query="clipart frog",
+                    query="clipart CM",
                     same_peer=True,
                 )
             ],
@@ -237,7 +237,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             await event.edit(f"{halp}", buttons=buttons, link_preview=False)
         else:
             await event.answer(
-                "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDON Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ",
+                "Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDON Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ",
                 cache_time=0,
                 alert=True,
                 link_preview=False,
@@ -313,12 +313,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
     async def opner(event):
         buttons = [
             [
-                Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                Button.inline(" Pʟᴜɢɪɴs ", data="hrrrr"),
+                Button.inline(" Aᴅᴅᴏɴs", data="frrr"),
             ],
-            [Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr")],
-            [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+            [Button.inline("Oᴡɴᴇʀ Tᴏᴏʟꜱ", data="ownr")],
+            [Button.inline("Iɴʟɪɴᴇ Pʟᴜɢɪɴs", data="inlone")],
+            [Button.inline("Cʟᴏꜱᴇ", data="close")],
         ]
         await event.edit(
             f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nOꜰꜰɪᴄɪᴀʟ Pʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nUɴᴏꜰꜰɪᴄɪᴀʟ Pʟᴜɢɪɴs ~ {len(ADDONS)}**",
@@ -352,14 +352,14 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = "{} has no detailed help...".format(plugin_name)
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TheUltroid"
+        reply_pop_up_alert += "\n© @ChankitSaini"
         try:
             if event.query.user_id in sed:
                 await event.edit(
                     reply_pop_up_alert,
                     buttons=[
                         Button.inline("<- Bᴀᴄᴋ", data="back"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                        Button.inline("Cʟᴏꜱᴇ", data="close"),
                     ],
                 )
             else:
@@ -392,7 +392,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 try:
                     if plugin_name in LIST:
                         help_string = (
-                            f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
+                            f"Plugin Name-{plugin_name}\n\n Commands Available-\n\n"
                         )
                         for d in LIST[plugin_name]:
                             help_string += Var.HNDLR + d
@@ -403,14 +403,14 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = "{} has no detailed help...".format(plugin_name)
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TheUltroid"
+        reply_pop_up_alert += "\n© @ChankitSaini"
         try:
             if event.query.user_id in sed:
                 await event.edit(
                     reply_pop_up_alert,
                     buttons=[
                         Button.inline("<- Bᴀᴄᴋ", data="buck"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                        Button.inline("Cʟᴏꜱᴇ", data="close"),
                     ],
                 )
             else:
