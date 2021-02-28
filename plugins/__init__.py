@@ -39,6 +39,8 @@ on = Var.SUDO
 
 if Var.SUDO:
     sed = [ultroid_bot.uid, *sudos]
+elif Var.BOT_MODE:
+    sed = [Var.OWNER_ID]
 else:
     sed = [ultroid_bot.uid]
 
