@@ -65,7 +65,7 @@ import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon import functions
-from telethon.errors.rpcerrorlist import BotInlineDisabledError, BotResponseTimeoutError
+from telethon.errors.rpcerrorlist import BotInlineDisabledError, BotResponseTimeoutError,BotMethodInvalidError as bmi
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
@@ -314,6 +314,8 @@ async def _(event):
         await xx.delete()
     except BotInlineDisabledError or BotResponseTimeoutError:  # incase the bot doesnt respond
         await xx.edit(reply_text)
+    except bmi :
+        await xx.edit(f"**Inline Not Available as You Are in Bot Mode\nPasted To Nekobin**\n**~ Pasted to Nekobin : **[neko](https://nekobin.com/{key})\n**~ Raw url : **[Raw](https://nekobin.com/raw/{key})")
 
 
 @ultroid_cmd(
