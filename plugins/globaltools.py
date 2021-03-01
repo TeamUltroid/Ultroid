@@ -106,16 +106,16 @@ async def gcast(event):
     if not xx:
         return eor(event, "`Give some text to Globally Broadcast`")
     tt = event.text
-    msg = tt[5:]
+    msg = tt[6:]
     kk = await eor(event, "`Globally Broadcasting Msg...`")
-    async for x in borg.iter_dialogs():
+    async for x in ultroid_bot.iter_dialogs():
         er = 0
         done = 0
         if x.is_group:
             chat = x.id
             try:
-                await ultroid_bot.send_message(chat, msg)
                 done += 1
+                await ultroid_bot.send_message(chat, msg)
             except:
                 er += 1
                 pass
