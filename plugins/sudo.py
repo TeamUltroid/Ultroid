@@ -30,13 +30,13 @@ from . import *
 )
 async def _(ult):
     if Var.BOT_MODE == True:
-        if event.sender.id is not Var.OWNER_ID:
-            return await eor(event, "You are sudo user, You cant add other sudo user.")
-        else:
-            if event.sender.id is not ultroid_bot.uid:
-                return await eor(
-                    event, "You are sudo user, You cant add other sudo user."
-                )
+        try:
+            if event.sender_id != Var.OWNER_ID:
+                return await eor(ult, "You are sudo user, You cant add other sudo user.")
+        except BaseException:
+            pass
+    if event.sender_id != ultroid_bot.uid:
+        return await eor(ult, "You are sudo user, You cant add other sudo user.")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
