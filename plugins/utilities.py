@@ -67,6 +67,7 @@ from telegraph import upload_file as uf
 from telethon import functions
 from telethon.errors.rpcerrorlist import (
     BotInlineDisabledError,
+    ChatSendInlineForbiddenError,
     BotResponseTimeoutError,
     BotMethodInvalidError as bmi,
 )
@@ -312,15 +313,16 @@ async def _(event):
             .get("key")
         )
     q = f"paste-{key}"
+    reply_text=f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
-    except BotInlineDisabledError or BotResponseTimeoutError:  # incase the bot doesnt respond
+    except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
         await xx.edit(reply_text)
     except bmi:
         await xx.edit(
-            f"**Inline Not Available as You Are in Bot Mode\nPasted To Nekobin**\n**~ Pasted to Nekobin : **[neko](https://nekobin.com/{key})\n**~ Raw url : **[Raw](https://nekobin.com/raw/{key})"
+            f"**Inline Not Available as You Are in Bot Mode\Psated to Nekobin :**\n{reply_text}"
         )
 
 
