@@ -104,12 +104,17 @@ if Var.BOT_USERNAME is not None and asst is not None:
         result = None
         query = event.text
         if event.query.user_id in sed and query.startswith("ultd"):
+            z = []
+            for x in LIST.values():
+                for y in x:
+                    z.append(y)
+            cmd = len(z)
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
                 url="https://t.me/TheUltroid",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}**",
+                text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {cmd}**",
                 buttons=[
                     [
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
