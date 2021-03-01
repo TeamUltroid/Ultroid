@@ -13,6 +13,9 @@
 
 • `{i}ungban <reply user/ username>`
     Unban Globally.
+
+• `{i}gcast <Message>`
+    Globally Send that msg in all grps.
 """
 
 from telethon import events
@@ -95,6 +98,28 @@ async def _(e):
     await xx.edit(
         f"`Gbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nAdded to gbanwatch.`"
     )
+
+
+@ultroid_cmd(pattern="gcast ?(.*)")
+async def gcast(event):
+    xx = event.pattern_match.group(1)
+    if not xx:
+        return eor(event, "`Give some text to Globally Broadcast`")
+    tt = event.text
+    msg = tt[5:]
+    kk = await eor(event, "`Globally Broadcasting Msg...`")
+    async for x in borg.iter_dialogs():
+        er = 0
+        done = 0
+        if x.is_group:
+            chat = x.id
+            try:
+                await ultroid_bot.send_message(chat, msg)
+                done += 1
+            except:
+                er += 1
+                pass
+    await kk.edit( f"Done in {done} chats, error in {er} chat(s)")
 
 
 @ultroid_bot.on(events.ChatAction)
