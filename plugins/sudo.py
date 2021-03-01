@@ -32,7 +32,9 @@ async def _(ult):
     if Var.BOT_MODE == True:
         try:
             if event.sender_id != Var.OWNER_ID:
-                return await eor(ult, "You are sudo user, You cant add other sudo user.")
+                return await eor(
+                    ult, "You are sudo user, You cant add other sudo user."
+                )
         except BaseException:
             pass
     if event.sender_id != ultroid_bot.uid:
