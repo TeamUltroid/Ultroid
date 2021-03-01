@@ -52,6 +52,7 @@ async def pmset(event):
         "PMPermit Settings:",
         buttons=[
             [Button.inline("Turn PMPermit On", data="pmon")],
+            [Button.inline("Customize PMPermit", data="pmcstm")],
             [Button.inline("Turn PMPermit Off", data="pmoff")],
             [Button.inline("« Back", data="otvars")],
         ],
