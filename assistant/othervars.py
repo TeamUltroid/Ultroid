@@ -16,10 +16,10 @@ async def otvaar(event):
     await event.edit(
         "Other Variables to set for @TheUltroid:",
         buttons=[
-            [Button.inline("Tag Logger", data="taglog")],
-            [Button.inline("PM Permit", data="pmset")],
-            [Button.inline("SuperFban", data="sfban")],
-            [Button.inline("« Back", data="setter")],
+            [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
+            [Button.inline("Pᴍ Pᴇʀᴍɪᴛ", data="pmset")],
+            [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
@@ -51,10 +51,10 @@ async def pmset(event):
     await event.edit(
         "PMPermit Settings:",
         buttons=[
-            [Button.inline("Turn PMPermit On", data="pmon")],
-            [Button.inline("Customize PMPermit", data="pmcstm")],
-            [Button.inline("Turn PMPermit Off", data="pmoff")],
-            [Button.inline("« Back", data="otvars")],
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
+            [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
@@ -81,9 +81,9 @@ async def sfban(event):
     await event.edit(
         "SuperFban Settings:",
         buttons=[
-            [Button.inline("FBan Group", data="sfgrp")],
-            [Button.inline("Exclude Feds", data="sfexf")],
-            [Button.inline("« Back", data="otvars")],
+            [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
+            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
