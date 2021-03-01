@@ -206,5 +206,3 @@ async def pmlogof(event):
         return await event.edit("Done! PMLOGGER Stopped!!")
     except BaseException:
         return await event.edit("Something went wrong...")
-
-
