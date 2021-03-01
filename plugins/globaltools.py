@@ -119,7 +119,7 @@ async def gcast(event):
             except:
                 er += 1
                 pass
-    await kk.edit( f"Done in {done} chats, error in {er} chat(s)")
+    await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
 @ultroid_bot.on(events.ChatAction)

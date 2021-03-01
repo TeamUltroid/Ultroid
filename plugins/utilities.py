@@ -313,7 +313,7 @@ async def _(event):
             .get("key")
         )
     q = f"paste-{key}"
-    reply_text=f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+    reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
