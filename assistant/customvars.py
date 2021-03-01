@@ -24,10 +24,10 @@ async def alvcs(event):
     await event.edit(
         "Customise your {}alive. Choose from the below options -".format(Var.HNDLR),
         buttons=[
-            [Button.inline("Alive Text", data="alvtx")],
-            [Button.inline("Alive Media", data="alvmed")],
-            [Button.inline("Delete Alive Media", data="delmed")],
-            [Button.inline("« Back", data="allcstms")],
+            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
+            [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅᴜᴀ", data="alvmed")],
+            [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
+            [Button.inline("« Bᴀᴄᴋ", data="allcstms")],
         ],
     )
 
@@ -103,11 +103,11 @@ async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
         buttons=[
-            [Button.inline("PM Text", data="pmtxt")],
-            [Button.inline("Pm Media", data="pmmed")],
+            [Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt")],
+            [Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
             [Button.inline("PMLOGGER", data="pml")],
-            [Button.inline("Delete PM Media", data="delpmmed")],
-            [Button.inline("« Back", data="allcstms")],
+            [Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
+            [Button.inline("« Bᴀᴄᴋ", data="allcstms")],
         ],
     )
 
@@ -185,7 +185,7 @@ async def alvcs(event):
         buttons=[
             [Button.inline("PMLOGGER ON", data="pmlog")],
             [Button.inline("PMLOGGER OFF", data="pmlogof")],
-            [Button.inline("« Back", data="pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
 
