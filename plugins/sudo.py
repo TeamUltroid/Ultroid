@@ -30,13 +30,16 @@ from . import *
 )
 async def _(ult):
     if Var.BOT_MODE == True:
-        if ult.sender.id is not Var.OWNER_ID:
-            return await eor(ult, "You are sudo user, You cant add other sudo user.")
-        else:
-            if ult.sender.id is not ultroid_bot.uid:
+        try:
+            if ult.sender_id==Var.OWNER_ID:
                 return await eor(
                     ult, "You are sudo user, You cant add other sudo user."
                 )
+        except BaseException:
+            pass
+    else:
+        if ult.sender_id != ultroid_bot.uid:
+            return await eor(ult, "You are sudo user, You cant add other sudo user.")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
@@ -109,13 +112,16 @@ async def _(ult):
 )
 async def _(ult):
     if Var.BOT_MODE == True:
-        if ult.sender.id is not Var.OWNER_ID:
-            return await eor(ult, "You are sudo user, You cant remove other sudo user.")
-        else:
-            if ult.sender.id is not ultroid_bot.uid:
+        try:
+            if ult.sender_id!=Var.OWNER_ID:
                 return await eor(
-                    ult, "You are sudo user, You cant remove other sudo user."
+                    ult, "You are sudo user, You cant add other sudo user."
                 )
+        except BaseException:
+            pass
+    else:
+        if ult.sender_id != ultroid_bot.uid:
+            return await eor(ult, "You are sudo user, You cant add other sudo user.")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
