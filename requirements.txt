@@ -1,4 +1,4 @@
-py-Ultroid==8.9b0
+py-Ultroid==9.0b0
 asyncurban
 carbonnow
 cairosvg
