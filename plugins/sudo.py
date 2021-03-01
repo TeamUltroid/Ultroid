@@ -29,7 +29,7 @@ from . import *
     pattern="addsudo ?(.*)",
 )
 async def _(ult):
-    if ult.sender.id != ultroid_bot.uid:
+    if ult.sender.id != ultroid_bot.uid or ult.sender.id != Var.OWNER_ID:
         return await eor(ult, "`You are sudo user, You cant add other sudo user.`")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
@@ -103,7 +103,7 @@ async def _(ult):
 )
 async def _(ult):
     ok = await eor(ult, "`Updating SUDO Users List ...`")
-    if ult.sender.id != ultroid_bot.uid:
+    if ult.sender.id != ultroid_bot.uid or ult.sender.id != Var.OWNER_ID:
         return await eor(ult, "`Removing someone is in the hand of owner !!`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
