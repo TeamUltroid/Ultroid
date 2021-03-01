@@ -183,8 +183,8 @@ async def alvcs(event):
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
-            [Button.inline("PMLOGGER ON", data="pmtxt")],
-            [Button.inline("PMLOGGER OFF", data="pmmed")],
+            [Button.inline("PMLOGGER ON", data="pmlog")],
+            [Button.inline("PMLOGGER OFF", data="pmlogof")],
             [Button.inline("« Back", data="pmcstm")],
         ],
     )
