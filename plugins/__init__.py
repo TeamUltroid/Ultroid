@@ -23,27 +23,6 @@ ultroid_version = "v0.0.3"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
-# sudo
-ok = udB.get("SUDOS")
-if ok:
-    SUDO_USERS = set(int(x) for x in ok.split())
-else:
-    SUDO_USERS = ""
-
-if SUDO_USERS:
-    sudos = list(SUDO_USERS)
-else:
-    sudos = ""
-
-on = Var.SUDO
-
-if Var.SUDO:
-    sed = [ultroid_bot.uid, *sudos]
-elif Var.BOT_MODE:
-    sed = [Var.OWNER_ID]
-else:
-    sed = [ultroid_bot.uid]
-
 
 def grt(seconds: int) -> str:
     count = 0
