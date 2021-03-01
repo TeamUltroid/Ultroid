@@ -105,6 +105,7 @@ async def alvcs(event):
         buttons=[
             [Button.inline("PM Text", data="pmtxt")],
             [Button.inline("Pm Media", data="pmmed")],
+            [Button.inline("PMLOGGER", data="pml")],
             [Button.inline("Delete PM Media", data="delpmmed")],
             [Button.inline("« Back", data="allcstms")],
         ],
@@ -174,3 +175,36 @@ async def dell(event):
         return await event.edit("Done!")
     except BaseException:
         return await event.edit("Something went wrong...")
+
+
+@callback("pml")
+@owner
+async def alvcs(event):
+    await event.edit(
+        "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
+        buttons=[
+            [Button.inline("PMLOGGER ON", data="pmtxt")],
+            [Button.inline("PMLOGGER OFF", data="pmmed")],
+            [Button.inline("« Back", data="pmcstm")],
+        ],
+    )
+
+
+@callback("pmlog")
+@owner
+async def pmlog(event):
+    var = "PMLOG"
+    await setit(event, var, "True")
+    await event.edit(f"Done!! PMLOGGER  Started!!")
+
+
+@callback("pmlogof")
+@owner
+async def pmlogof(event):
+    try:
+        udB.delete("PMLOG")
+        return await event.edit("Done! PMLOGGER Stopped!!")
+    except BaseException:
+        return await event.edit("Something went wrong...")
+
+
