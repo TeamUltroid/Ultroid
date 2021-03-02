@@ -25,6 +25,7 @@ from pyUltroid.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
+from telethon.utils import get_display_name
 
 from . import *
 
@@ -37,21 +38,22 @@ else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
 
 if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = """
-**PMSecurity of {}!**
+    UNAPPROVED_MSG = f"""
+**PMSecurity of {OWNER_NAME}!**
 
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {}/{} warnings!"""
+You have {wrn}/{WARNS} warnings!"""
 else:
     UNAPPROVED_MSG = (
-        """
-**PMSecurity of {}!**"""
-        f"""{Redis("PM_TEXT")}"""
-        """
+        f"""
+**PMSecurity of {OWNER_NAME}!**
+        
+{Redis("PM_TEXT")}
+
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {}/{} warnings!"""
+You have {wrn}/{WARNS} warnings!"""
     )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
@@ -119,6 +121,11 @@ if sett == "True" and sett != "False":
             return
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
+            name = user.first_name
+            fullname = (user.first_name, user.last_name)
+            username = user.username
+            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+            count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id]
             except KeyError:
@@ -138,7 +145,7 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                        caption=UNAPPROVED_MSG,
                     )
                 elif event.text == prevmsg:
                     async for message in event.client.iter_messages(
@@ -148,14 +155,14 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                        caption=UNAPPROVED_MSG,
                     )
                 LASTMSG.update({user.id: event.text})
             else:
                 await event.client.send_file(
                     user.id,
                     PMPIC,
-                    caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                    caption=UNAPPROVED_MSG,
                 )
                 LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
