@@ -17,7 +17,6 @@ async def otvaar(event):
         "Other Variables to set for @TheUltroid:",
         buttons=[
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
-            [Button.inline("Pᴍ Pᴇʀᴍɪᴛ", data="pmset")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],

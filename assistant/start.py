@@ -122,7 +122,7 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("Cᴏsᴛᴏᴍɪᴢᴀᴛɪᴏɴ", data="allcstms")],
+            [Button.inline("Cᴜsᴛᴏᴍɪsᴀᴛɪᴏɴ", data="allcstms")],
             [Button.inline("API ᴋᴇʏs", data="apiset")],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
