@@ -440,7 +440,7 @@ def paginate_help(page_number, loaded_plugins, prefix):
     if emoji:
         multi, mult2i = emoji, emoji
     else:
-    multi, mult2i = "✘", "✘"
+        multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global upage
     upage = page_number
@@ -490,7 +490,7 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     if emoji:
         multi, mult2i = emoji, emoji
     else:
-    multi, mult2i = "✘", "✘"
+        multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global addpage
     addpage = page_number
