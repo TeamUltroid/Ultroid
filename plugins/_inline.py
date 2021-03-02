@@ -436,8 +436,11 @@ if Var.BOT_USERNAME is not None and asst is not None:
 def paginate_help(page_number, loaded_plugins, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
-    mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
+    emoji = Redis("EMOJI_IN_HELP")
+    if emoji:
+        multi, mult2i = emoji, emoji
+    else:
+    multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global upage
     upage = page_number
@@ -483,8 +486,11 @@ def paginate_help(page_number, loaded_plugins, prefix):
 def paginate_addon(page_number, loaded_plugins, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
-    mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
+    emoji = Redis("EMOJI_IN_HELP")
+    if emoji:
+        multi, mult2i = emoji, emoji
+    else:
+    multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global addpage
     addpage = page_number
