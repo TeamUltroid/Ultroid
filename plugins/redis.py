@@ -8,6 +8,8 @@
 """
 ✘ Commands Available -
 
+**DataBase Commands, do not use if you don't know what it is.**
+
 • `{i}setredis key | value`
     Redis Set Value.
     e.g :
@@ -39,7 +41,7 @@ async def _(ult):
     ok = await eor(ult, "`...`")
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
-        data = ult.pattern_match.group(1).split(delim)
+        data = ult.pattern_match.group(1).split(delim, maxsplit=1)
         udB.set(data[0], data[1])
         redisdata = Redis(data[0])
         await ok.edit(
