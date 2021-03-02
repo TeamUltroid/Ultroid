@@ -503,8 +503,10 @@ async def rmbg(event):
     if zz.mode != "RGB":
         zz.convert("RGB")
     zz.save("ult.webp", "webp")
-    await ultroid_bot.send_file(event.chat_id,rmbgp,force_document=True,reply_to=reply)
-    await ultroid_bot.send_file(event.chat_id,"ult.webp",reply_to=reply)
+    await ultroid_bot.send_file(
+        event.chat_id, rmbgp, force_document=True, reply_to=reply
+    )
+    await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
     os.remove(rmbgp)
     os.remove("ult.webp")
     await xx.delete()
