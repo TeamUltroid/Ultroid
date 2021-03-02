@@ -48,7 +48,7 @@ else:
     UNAPPROVED_MSG = (
         """
 **PMSecurity of {}!**"""
-        f"""f"""{Redis("PM_TEXT")}""""""
+        f"""{Redis("PM_TEXT")}"""
         """
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
