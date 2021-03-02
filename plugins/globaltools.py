@@ -212,7 +212,7 @@ async def _(e):
     await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(pattern="unmute ?(.*)")
+@ultroid_cmd(pattern="ungmute ?(.*)")
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
     if e.reply_to_msg_id:
