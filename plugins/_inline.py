@@ -108,7 +108,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             for x in LIST.values():
                 for y in x:
                     z.append(y)
-            cmd = len(z)+10
+            cmd = len(z) + 10
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
