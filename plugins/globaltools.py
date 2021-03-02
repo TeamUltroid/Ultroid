@@ -194,24 +194,23 @@ async def _(e):
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
-        return await eod(
-            xx, "`User is already gmuted.`", time=4
-        )
+        return await eod(xx, "`User is already gmuted.`", time=4)
     async for gmute in e.client.iter_dialogs():
         if gmute.is_group:
             try:
                 await e.client(
                     EditBannedRequest(
-                        gmute.id, userid, ChatBannedRights(until_date=None, send_messages=True)
+                        gmute.id,
+                        userid,
+                        ChatBannedRights(until_date=None, send_messages=True),
                     )
                 )
                 chats += 1
             except:
                 pass
     gmute(userid)
-    await xx.edit(
-        f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`"
-    )
+    await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+
 
 @ultroid_cmd(pattern="unmute ?(.*)")
 async def _(e):
@@ -240,16 +239,17 @@ async def _(e):
             try:
                 await e.client(
                     EditBannedRequest(
-                        ungmute.id, userid, ChatBannedRights(until_date=None, send_messages=False)
+                        ungmute.id,
+                        userid,
+                        ChatBannedRights(until_date=None, send_messages=False),
                     )
                 )
                 chats += 1
             except:
                 pass
     ungmute(userid)
-    await xx.edit(
-        f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`"
-    )
+    await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+
 
 @ultroid_bot.on(events.ChatAction)
 async def _(e):
