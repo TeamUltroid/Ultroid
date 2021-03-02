@@ -113,7 +113,7 @@ if sett == "True" and sett != "False":
 
     @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def permitpm(event):
-        user = await bot.get_entity(event.sender_id
+        user = await event.get_chat()
         if user.bot or user.is_self or user.verified:
             return
         if str(user.id) in DEVLIST:
@@ -123,7 +123,7 @@ if sett == "True" and sett != "False":
             name = user.first_name
             fullname = (user.first_name, user.last_name)
             username = user.username
-            mention = f"[{fullname}](tg://user?id={user.id})"
+            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id]
