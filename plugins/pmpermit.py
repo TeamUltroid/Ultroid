@@ -38,21 +38,22 @@ else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
 
 if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = f"""
-**PMSecurity of {OWNER_NAME}!**
+    UNAPPROVED_MSG = """
+**PMSecurity of {}!**
 
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {wrn}/{WARNS} warnings!"""
+You have {}/{} warnings!"""
 else:
-    UNAPPROVED_MSG = f"""
-**PMSecurity of {OWNER_NAME}!**
-        
-{Redis("PM_TEXT")}
-
+    UNAPPROVED_MSG = (
+        """
+**PMSecurity of {}!**"""
+        f"""{Redis("PM_TEXT")}"""
+        """
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {wrn}/{WARNS} warnings!"""
+You have {}/{} warnings!"""
+    )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
 UNS = "You were spamming my Master's PM, which I didn't like."
@@ -143,7 +144,7 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG,
+                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
                     )
                 elif event.text == prevmsg:
                     async for message in event.client.iter_messages(
@@ -153,14 +154,14 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG,
+                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
                     )
                 LASTMSG.update({user.id: event.text})
             else:
                 await event.client.send_file(
                     user.id,
                     PMPIC,
-                    caption=UNAPPROVED_MSG,
+                    caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
                 )
                 LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
