@@ -33,7 +33,7 @@ from telethon.utils import get_display_name
 
 
 @ultroid_cmd(
-    pattern="tag(on|off|all|rec|admins|owner)?(.*)",
+    pattern="tag(on|off|all|bots|rec|admins|owner)?(.*)",
     groups_only=True,
 )
 async def _(e):
@@ -79,7 +79,7 @@ async def _(e):
             if bb.bot:
                 xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
     if len(xx) > 4096:
-        await eor(e, "`Telegram Word Limits Exceeds.`")
+        await eor(e, "`Telegram Word Limits Exceeds...`")
     else:
         await e.client.send_message(e.chat_id, xx)
         await e.delete()
