@@ -158,9 +158,8 @@ async def gkick(e):
                 chats += 1
             except:
                 pass
-    await xx.edit(
-        f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`"
-    )
+    await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+
 
 @ultroid_bot.on(events.ChatAction)
 async def _(e):
