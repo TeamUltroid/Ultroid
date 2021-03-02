@@ -121,7 +121,7 @@ async def name(event):
     name = "PM Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Text**\nEnter the new Pmpermit text.\n\nUse /cancel to terminate the operation."
+            "**PM Text**\nEnter the new Pmpermit text.\n\nu can use `{name}` `{fullname}` `{count}` `{mention}` `{username}` Too\n\nUse /cancel to terminate the operation."
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
