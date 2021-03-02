@@ -64,9 +64,9 @@ async def _(e):
             rece = rece + 1
             if "rec" in okk:
                 if not (bb.bot or bb.deleted):
-                    xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"             
+                    xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
         if isinstance(y, owner):
-            if "admin" or "owner"  in okk:
+            if "admin" or "owner" in okk:
                 xx += f"\n꧁[{get_display_name(bb)}](tg://user?id={bb.id})꧂"
         if isinstance(y, admin):
             if "admin" in okk:
@@ -83,5 +83,6 @@ async def _(e):
     else:
         await e.client.send_message(e.chat_id, xx)
         await e.delete()
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
