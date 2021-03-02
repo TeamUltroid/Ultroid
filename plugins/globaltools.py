@@ -14,6 +14,9 @@
 • `{i}ungban <reply user/ username>`
     Unban Globally.
 
+• `{i}gkick <reply user/ username>`
+    Globally Kick User.
+
 • `{i}gcast <Message>`
     Globally Send that msg in all grps.
 """
@@ -108,9 +111,9 @@ async def gcast(event):
     tt = event.text
     msg = tt[6:]
     kk = await eor(event, "`Globally Broadcasting Msg...`")
+    er = 0
+    done = 0
     async for x in ultroid_bot.iter_dialogs():
-        er = 0
-        done = 0
         if x.is_group:
             chat = x.id
             try:
@@ -121,6 +124,43 @@ async def gcast(event):
                 pass
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
+
+@ultroid_cmd(pattern="gkick ?(.*)")
+async def gkick(e):
+    xx = await eor(e, "`Gkicking...`")
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+    elif e.pattern_match.group(1):
+        if (e.pattern_match.group(1)).isdigit():
+            try:
+                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+        else:
+            try:
+                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+    else:
+        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+    name = (await e.client.get_entity(userid)).first_name
+    chats = 0
+    if userid == ultroid_bot.uid:
+        return await eod(xx, "`I can't gkick myself.`", time=3)
+    if str(userid) in DEVLIST:
+        return await eod(xx, "`I can't gkick my Developers.`", time=3)
+    if str(userid) in (Redis("SUDOS")).split(" "):
+        return await eod(xx, "`I can't gkick a sudo user.`", time=3)
+    async for gkick in e.client.iter_dialogs():
+        if gkick.is_group or gkick.is_channel:
+            try:
+                await ultroid_bot.kick_participant(gkick.id, userid)
+                chats += 1
+            except:
+                pass
+    await xx.edit(
+        f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`"
+    )
 
 @ultroid_bot.on(events.ChatAction)
 async def _(e):
