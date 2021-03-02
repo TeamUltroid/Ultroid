@@ -14,6 +14,12 @@
 • `{i}ungban <reply user/ username>`
     Unban Globally.
 
+• `{i}gmute <reply user/ username>`
+    Globally Mute the User.
+
+• `{i}ungmute <reply user/ username>`
+    UnMute Globally.
+
 • `{i}gkick <reply user/ username>`
     Globally Kick User.
 
@@ -22,6 +28,8 @@
 """
 
 from telethon import events
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChatBannedRights
 from . import *
 
 
@@ -42,7 +50,7 @@ async def _(e):
             except ValueError as err:
                 return await eod(xx, f"{str(err)}", time=5)
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if not is_gbanned(userid):
@@ -142,7 +150,7 @@ async def gkick(e):
             except ValueError as err:
                 return await eod(xx, f"{str(err)}", time=5)
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
@@ -160,6 +168,88 @@ async def gkick(e):
                 pass
     await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
+
+@ultroid_cmd(pattern="gmute ?(.*)")
+async def _(e):
+    xx = await eor(e, "`Gmuting...`")
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+    elif e.pattern_match.group(1):
+        if (e.pattern_match.group(1)).isdigit():
+            try:
+                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+        else:
+            try:
+                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+    else:
+        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+    name = (await e.client.get_entity(userid)).first_name
+    chats = 0
+    if userid == ultroid_bot.uid:
+        return await eod(xx, "`I can't gmute myself.`", time=3)
+    if str(userid) in DEVLIST:
+        return await eod(xx, "`I can't gmute my Developers.`", time=3)
+    if is_gmuted(userid):
+        return await eod(
+            xx, "`User is already gmuted.`", time=4
+        )
+    async for gmute in e.client.iter_dialogs():
+        if gmute.is_group:
+            try:
+                await e.client(
+                    EditBannedRequest(
+                        gmute.id, userid, ChatBannedRights(until_date=None, send_messages=True)
+                    )
+                )
+                chats += 1
+            except:
+                pass
+    gmute(userid)
+    await xx.edit(
+        f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`"
+    )
+
+@ultroid_cmd(pattern="unmute ?(.*)")
+async def _(e):
+    xx = await eor(e, "`UnGmuting...`")
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+    elif e.pattern_match.group(1):
+        if (e.pattern_match.group(1)).isdigit():
+            try:
+                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+        else:
+            try:
+                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+    else:
+        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+    name = (await e.client.get_entity(userid)).first_name
+    chats = 0
+    if not is_gmuted(userid):
+        return await eod(xx, "`User is not gmuted.`", time=3)
+    async for ungmute in e.client.iter_dialogs():
+        if ungmute.is_group:
+            try:
+                await e.client(
+                    EditBannedRequest(
+                        ungmute.id, userid, ChatBannedRights(until_date=None, send_messages=False)
+                    )
+                )
+                chats += 1
+            except:
+                pass
+    ungmute(userid)
+    await xx.edit(
+        f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`"
+    )
 
 @ultroid_bot.on(events.ChatAction)
 async def _(e):
