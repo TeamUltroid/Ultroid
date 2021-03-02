@@ -107,7 +107,7 @@ if sett == "True" and sett != "False":
                 name0 = str(name.first_name)
                 await e.client.send_message(
                     Var.LOG_CHANNEL,
-                    f"#AutoApproved\nUser - [{name0}](tg://user?id={e.chat_id})",
+                    f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
                 )
 
     @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
