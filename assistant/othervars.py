@@ -18,6 +18,7 @@ async def otvaar(event):
         buttons=[
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
+            [Button.inline("Pᴍ Pᴇʀᴍɪᴛ", data="pmset")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
