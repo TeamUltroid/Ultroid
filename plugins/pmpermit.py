@@ -45,8 +45,7 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {wrn}/{WARNS} warnings!"""
 else:
-    UNAPPROVED_MSG = (
-        f"""
+    UNAPPROVED_MSG = f"""
 **PMSecurity of {OWNER_NAME}!**
         
 {Redis("PM_TEXT")}
@@ -54,7 +53,6 @@ else:
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {wrn}/{WARNS} warnings!"""
-    )
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
 UNS = "You were spamming my Master's PM, which I didn't like."
