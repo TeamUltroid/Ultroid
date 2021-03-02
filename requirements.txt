@@ -4,7 +4,7 @@ carbonnow
 cairosvg
 emoji
 GitPython
-googletrans
+googletrans==4.0.0rc1
 heroku3
 imutils
 lottie
