@@ -158,8 +158,7 @@ async def _(event):
 
 
 async def aexec(code, event):
-    exec(f"async def __aexec(event): " +
-         "".join(f"\n {l}" for l in code.split("\n")))
+    exec(f"async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["__aexec"](event)
 
 
@@ -301,8 +300,7 @@ async def _(event):
     if downloaded_file_name and downloaded_file_name.endswith(".py"):
         data = message
         key = (
-            requests.post("https://nekobin.com/api/documents",
-                          json={"content": data})
+            requests.post("https://nekobin.com/api/documents", json={"content": data})
             .json()
             .get("result")
             .get("key")
@@ -310,8 +308,7 @@ async def _(event):
     else:
         data = message
         key = (
-            requests.post("https://nekobin.com/api/documents",
-                          json={"content": data})
+            requests.post("https://nekobin.com/api/documents", json={"content": data})
             .json()
             .get("result")
             .get("key")
@@ -388,8 +385,7 @@ async def _(event):
         first_name = first_name.replace("\u2060", "")
     last_name = replied_user.user.last_name
     last_name = (
-        last_name.replace("\u2060", "") if last_name else (
-            "Last Name not found")
+        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
     )
     user_bio = replied_user.about
     if user_bio is not None:
@@ -493,7 +489,7 @@ async def rmbg(event):
             stdout, stderr = await process.communicate()
             stderr.decode().strip()
             stdout.decode().strip()
-        elif not dl.endswith(tuple(['.jpg', '.png'])):
+        elif not dl.endswith(tuple([".jpg", ".png"])):
             await xx.edit(f"`Reply {Var.HNDLR} to an Image (JPG/PNG) file...`")
             await asyncio.sleep(5)
             return await xx.delete()
@@ -518,7 +514,9 @@ async def rmbg(event):
             rmbg.write(out.content)
     else:
         error = out.json()
-        await xx.edit(f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`")
+        await xx.edit(
+            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`"
+        )
     zz = Image.open(rmbgp)
     if zz.mode != "RGB":
         zz.convert("RGB")
@@ -568,8 +566,7 @@ async def telegraphcmd(event):
                 tcom = input_str
             else:
                 tcom = "Ultroid"
-            makeit = telegraph.create_page(
-                title=tcom, content=[f"{getmsg.text}"])
+            makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
             await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
         else:
@@ -615,8 +612,7 @@ async def sugg(event):
                     poll=Poll(
                         id=12345,
                         question="Do you agree to the replied suggestion?",
-                        answers=[PollAnswer("Yes", b"1"),
-                                 PollAnswer("No", b"2")],
+                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                     )
                 ),
                 reply_to=msgid,
