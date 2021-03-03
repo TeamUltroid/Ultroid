@@ -14,6 +14,9 @@
 • `{i}remch <all/id/none>`
     Removes the specified chat (current chat if none specified), or all chats.
 
+• `{i}listchannels`
+    To get list of all added chats.
+
 • `{i}broadcast <reply to msg>`
     Send the replied message to all chats in database.
 
@@ -34,7 +37,7 @@ async def broadcast_adder(event):
         lines = raw_text.split("\n")
         length = len(lines)
         for line_number in range(1, length - 2):
-            channel_id = lines[line_number][4:-1]
+            channel_id = lines[line_number][6:-1]
             if not is_channel_added(channel_id):
                 add_channel(channel_id)
         await event.edit("Channels added!")
@@ -63,14 +66,14 @@ async def broadcast_adder(event):
 
 @ultroid_cmd(pattern="remch ?(.*)")
 async def broadcast_remover(event):
-    chat_id = event.pattern_match.group(1)
-    if chat_id == "all":
+    chat = event.pattern_match.group(1)
+    if chat == "all":
         await event.edit("`Removing...`")
         udB.delete("BROADCAST")
         await event.edit("Database cleared.")
         return
-    if is_channel_added(chat_id):
-        rem_channel(chat_id)
+    if is_channel_added(chat):
+        rem_channel(chat)
         await event.edit("Removed from database")
         await asyncio.sleep(3)
         await event.delete()
