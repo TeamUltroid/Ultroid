@@ -57,12 +57,14 @@ async def pmset(event):
         ],
     )
 
+
 @callback("edon")
 @owner
 async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
     await event.edit(f"Done! ADDONS has been turned on!! Please `{hndlr}restart`")
+
 
 @callback("edof")
 @owner
