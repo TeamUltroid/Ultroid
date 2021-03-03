@@ -125,8 +125,10 @@ if Var.BOT_USERNAME is not None and asst is not None:
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
                         Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
                     ],
-                    [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                    Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+                    [
+                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                    ],
                     [
                         Button.url(
                             "⚙️Sᴇᴛᴛɪɴɢs⚙️",
@@ -344,8 +346,10 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
                 Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
             ],
-            [Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
-            Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+            [
+                Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
+                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+            ],
             [
                 Button.url(
                     "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
