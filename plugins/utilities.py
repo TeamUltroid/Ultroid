@@ -58,7 +58,6 @@ import os
 import sys
 import time
 import traceback
-import cv2
 from datetime import datetime as dt
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 import pytz
@@ -480,22 +479,9 @@ async def rmbg(event):
     if event.reply_to_msg_id:
         reply = await event.get_reply_message()
         dl = await ultroid_bot.download_media(reply)
-        if dl.endswith(".webp"):
-            await xx.edit("`Ooo ... Sticker 👀...`")
-            cmd = ["lottie_convert.py", dl, "ult.png"]
-            process = await asyncio.create_subprocess_exec(
-                *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-            )
-            stdout, stderr = await process.communicate()
-            stderr.decode().strip()
-            stdout.decode().strip()
-        elif not dl.endswith(tuple([".jpg", ".png"])):
-            await xx.edit(f"`Reply {Var.HNDLR} to an Image (JPG/PNG) file...`")
-            await asyncio.sleep(5)
-            return await xx.delete()
-        else:
-            kk = Image.open(dl)
-            kk.save("ult.png")
+        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+            os.remove(dl)
+            return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
         out = ReTrieveFile("ult.png")
         os.remove("ult.png")
