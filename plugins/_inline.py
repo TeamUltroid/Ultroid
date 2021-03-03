@@ -50,11 +50,6 @@ Aᴅᴅᴏɴs ~ {}
 
 Gᴏ Aɴᴅ Aᴅᴅ ADDONS Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**
 """
-BN = Var.BOT_USERNAME
-if BN.startswith("@"):
-    B = BN.replace("@","")
-else:
-    B = BN
 # ============================================#
 
 
@@ -114,6 +109,11 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
+            bn = Var.BOT_USERNAME
+            if bn.startswith("@"):
+                bnn = bn.replace("@","")
+            else:
+                bnn = bn
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
@@ -127,7 +127,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     ],
                     [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr")],
                     [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
-                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{B}?start={ultroid_bot.me.id})],
+                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}")],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
             )
@@ -329,6 +329,11 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @callback("open")
     @owner
     async def opner(event):
+        bn = Var.BOT_USERNAME
+        if bn.startswith("@"):
+            bnn = bn.replace("@","")
+        else:
+            bnn = bn
         buttons = [
             [
                 Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
@@ -336,6 +341,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             ],
             [Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr")],
             [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+            [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}")],
             [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
         ]
         z = []
