@@ -53,7 +53,7 @@ async def pmset(event):
         buttons=[
             [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],
             [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
