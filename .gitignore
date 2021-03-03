@@ -11,3 +11,6 @@ BOT_TOKEN.session
 logs-ultroid.txt
 .vscode/*
 ultroid-log.txt
+/*.jpg
+/*.png
+/*.mp4
