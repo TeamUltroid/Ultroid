@@ -58,6 +58,7 @@ import os
 import sys
 import time
 import traceback
+import cv2
 from datetime import datetime as dt
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 import pytz
@@ -157,7 +158,8 @@ async def _(event):
 
 
 async def aexec(code, event):
-    exec(f"async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
+    exec(f"async def __aexec(event): " +
+         "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["__aexec"](event)
 
 
@@ -299,7 +301,8 @@ async def _(event):
     if downloaded_file_name and downloaded_file_name.endswith(".py"):
         data = message
         key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
+            requests.post("https://nekobin.com/api/documents",
+                          json={"content": data})
             .json()
             .get("result")
             .get("key")
@@ -307,7 +310,8 @@ async def _(event):
     else:
         data = message
         key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
+            requests.post("https://nekobin.com/api/documents",
+                          json={"content": data})
             .json()
             .get("result")
             .get("key")
@@ -384,7 +388,8 @@ async def _(event):
         first_name = first_name.replace("\u2060", "")
     last_name = replied_user.user.last_name
     last_name = (
-        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
+        last_name.replace("\u2060", "") if last_name else (
+            "Last Name not found")
     )
     user_bio = replied_user.about
     if user_bio is not None:
@@ -479,12 +484,23 @@ async def rmbg(event):
     if event.reply_to_msg_id:
         reply = await event.get_reply_message()
         dl = await ultroid_bot.download_media(reply)
-        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
-            os.remove(dl)
-            return await xx.edit("`Unsupported Media`")
+        if dl.endswith(".webp"):
+            await xx.edit("`Ooo ... Sticker 👀...`")
+            cmd = ["lottie_convert.py", dl, "ult.png"]
+            process = await asyncio.create_subprocess_exec(
+                *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            )
+            stdout, stderr = await process.communicate()
+            stderr.decode().strip()
+            stdout.decode().strip()
+        elif not dl.endswith(tuple(['.jpg', '.png'])):
+            await xx.edit(f"`Reply {Var.HNDLR} to an Image (JPG/PNG) file...`")
+            await asyncio.sleep(5)
+            return await xx.delete()
+        else:
+            kk = Image.open(dl)
+            kk.save("ult.png")
         await xx.edit("`Sending to remove.bg`")
-        kk = Image.open(dl)
-        kk.save("ult.png")
         out = ReTrieveFile("ult.png")
         os.remove("ult.png")
         os.remove(dl)
@@ -501,7 +517,8 @@ async def rmbg(event):
         with open(rmbgp, "wb") as rmbg:
             rmbg.write(out.content)
     else:
-        await xx.edit(f"**Error ~**`{out.content.decode('UTF-8')}`")
+        error = out.json()
+        await xx.edit(f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`")
     zz = Image.open(rmbgp)
     if zz.mode != "RGB":
         zz.convert("RGB")
@@ -551,7 +568,8 @@ async def telegraphcmd(event):
                 tcom = input_str
             else:
                 tcom = "Ultroid"
-            makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
+            makeit = telegraph.create_page(
+                title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
             await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
         else:
@@ -597,7 +615,8 @@ async def sugg(event):
                     poll=Poll(
                         id=12345,
                         question="Do you agree to the replied suggestion?",
-                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
+                        answers=[PollAnswer("Yes", b"1"),
+                                 PollAnswer("No", b"2")],
                     )
                 ),
                 reply_to=msgid,
