@@ -20,6 +20,7 @@ psutil
 pytz
 requests>=2.18.4
 scikit-image
+selenium
 speedtest-cli==2.1.2
 telegraph
 validators
