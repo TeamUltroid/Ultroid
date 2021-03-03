@@ -206,3 +206,33 @@ async def pmlogof(event):
         return await event.edit("Done! PMLOGGER Stopped!!")
     except BaseException:
         return await event.edit("Something went wrong...")
+
+@callback("pmset")
+@owner
+async def pmset(event):
+    await event.edit(
+        "PMPermit Settings:",
+        buttons=[
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
+            [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    )
+
+@callback("pmon")
+@owner
+async def pmonn(event):
+    var = "PMSETTING"
+    await setit(event, var, "True")
+    await event.edit(f"Done! PMPermit has been turned on!! Please `{hndlr}restart`")
+
+
+
+@callback("pmoff")
+@owner
+async def pmofff(event):
+    var = "PMSETTING"
+    await setit(event, var, "False")
+    await event.edit(f"Done! PMPermit has been turned off!! Please `{hndlr}restart`")
+
