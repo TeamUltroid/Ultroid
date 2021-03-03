@@ -27,10 +27,10 @@
 from telethon.tl.types import ChannelParticipantAdmin as admin
 from telethon.tl.types import ChannelParticipantCreator as owner
 from telethon.tl.types import UserStatusOffline as off
-from telethon.tl.types import UserStatusOnline as on
+from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
-from . import *
+from . import HELP
 
 
 @ultroid_cmd(
@@ -52,7 +52,7 @@ async def _(e):
         users = users + 1
         x = bb.status
         y = bb.participant
-        if isinstance(x, on):
+        if isinstance(x, onn):
             o = o + 1
             if "on" in okk:
                 xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
