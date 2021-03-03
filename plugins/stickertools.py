@@ -435,7 +435,6 @@ async def ultdestroy(event):
     )
     await xx.delete()
     os.remove("json.json")
-    os.remove(roid)
 
 
 @ultroid_cmd(
