@@ -50,6 +50,11 @@ Aᴅᴅᴏɴs ~ {}
 
 Gᴏ Aɴᴅ Aᴅᴅ ADDONS Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**
 """
+BN = Var.BOT_USERNAME
+if BN.startswith("@"):
+    B = BN.replace("@","")
+else:
+    B = BN
 # ============================================#
 
 
@@ -122,6 +127,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     ],
                     [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr")],
                     [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{B}?start={ultroid_bot.me.id})],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
             )
@@ -214,7 +220,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                    query="yt How to Deploy Ultroid Userbot",
+                    query="Ed Sheeran Perfect",
                     same_peer=True,
                 )
             ],
