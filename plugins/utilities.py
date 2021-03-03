@@ -467,7 +467,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern=r"rmbg ?(.*)",
+    pattern=r"rmbg$",
 )
 async def rmbg(event):
     RMBG_API = udB.get("RMBG_API")
@@ -476,24 +476,16 @@ async def rmbg(event):
         return await xx.edit(
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
-    input_str = event.pattern_match.group(1)
-    message_id = event.message.id
     if event.reply_to_msg_id:
-        message_id = event.reply_to_msg_id
-        reply_message = await event.get_reply_message()
-        try:
-            dl_file = await ultroid_bot.download_media(
-                reply_message, TMP_DOWNLOAD_DIRECTORY
-            )
-        except Exception as e:
-            return await xx.edit("**ERROR:**\n`{}`".format(str(e)))
-        else:
-            await xx.edit("`Sending to remove.bg`")
-            output_file_name = ReTrieveFile(dl_file)
-            os.remove(dl_file)
-    elif input_str:
+        reply = await event.get_reply_message()
+        dl = await ultroid_bot.download_media(reply)
+        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+            os.remove(dl)
+            return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
-        output_file_name = ReTrieveURL(input_str)
+        out = ReTrieveFile("ult.png")
+        os.remove("ult.png")
+        os.remove(dl)
     else:
         await xx.edit(
             f"Use `{Var.HNDLR}rmbg` as reply to a pic to remove its background."
@@ -501,25 +493,27 @@ async def rmbg(event):
         await asyncio.sleep(5)
         await xx.delete()
         return
-    contentType = output_file_name.headers.get("content-type")
+    contentType = out.headers.get("content-type")
+    rmbgp = "ult.png"
     if "image" in contentType:
-        with io.BytesIO(output_file_name.content) as remove_bg_image:
-            remove_bg_image.name = "rmbg-ult.png"
-            await ultroid_bot.send_file(
-                event.chat_id,
-                remove_bg_image,
-                force_document=True,
-                supports_streaming=False,
-                allow_cache=False,
-                reply_to=message_id,
-            )
-        await xx.edit("`Done.`")
+        with open(rmbgp, "wb") as rmbg:
+            rmbg.write(out.content)
     else:
+        error = out.json()
         await xx.edit(
-            "RemoveBG returned an error - \n`{}`".format(
-                output_file_name.content.decode("UTF-8")
-            ),
+            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`"
         )
+    zz = Image.open(rmbgp)
+    if zz.mode != "RGB":
+        zz.convert("RGB")
+    zz.save("ult.webp", "webp")
+    await ultroid_bot.send_file(
+        event.chat_id, rmbgp, force_document=True, reply_to=reply
+    )
+    await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
+    os.remove(rmbgp)
+    os.remove("ult.webp")
+    await xx.delete()
 
 
 @ultroid_cmd(
