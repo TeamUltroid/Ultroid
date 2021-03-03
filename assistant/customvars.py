@@ -25,9 +25,9 @@ async def alvcs(event):
         "Customise your {}alive. Choose from the below options -".format(Var.HNDLR),
         buttons=[
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
-            [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅᴜᴀ", data="alvmed")],
+            [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
             [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
@@ -107,7 +107,7 @@ async def alvcs(event):
             [Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
             [Button.inline("PMLOGGER", data="pml")],
             [Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmset")],
         ],
     )
 
@@ -217,7 +217,7 @@ async def pmset(event):
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
             [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
