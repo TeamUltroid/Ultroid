@@ -18,7 +18,7 @@ async def otvaar(event):
         buttons=[
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
-            [Button.inline("Pᴍ Pᴇʀᴍɪᴛ", data="pmset")],
+            [Button.inline("Aᴅᴅᴏɴs", data="eaddon")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
@@ -45,34 +45,31 @@ async def tagloggerr(event):
             await conv.send_message("{} changed to {}".format(name, themssg))
 
 
-@callback("pmset")
+@callback("eaddon")
 @owner
 async def pmset(event):
     await event.edit(
-        "PMPermit Settings:",
+        "ADDONS~ Extra Plugins:",
         buttons=[
-            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
-            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
-            [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],
+            [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
-
-@callback("pmon")
+@callback("edon")
 @owner
-async def pmonn(event):
-    var = "PMSETTING"
+async def eddon(event):
+    var = "ADDONS"
     await setit(event, var, "True")
-    await event.edit(f"Done! PMPermit has been turned on!! Please `{hndlr}restart`")
+    await event.edit(f"Done! ADDONS has been turned on!! Please `{hndlr}restart`")
 
-
-@callback("pmoff")
+@callback("edof")
 @owner
-async def pmofff(event):
-    var = "PMSETTING"
+async def eddof(event):
+    var = "ADDONS"
     await setit(event, var, "False")
-    await event.edit(f"Done! PMPermit has been turned off!! Please `{hndlr}restart`")
+    await event.edit(f"Done! ADDONS has been turned off!! Please `{hndlr}restart`")
 
 
 @callback("sfban")
