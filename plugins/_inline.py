@@ -111,7 +111,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             cmd = len(z) + 10
             bn = Var.BOT_USERNAME
             if bn.startswith("@"):
-                bnn = bn.replace("@","")
+                bnn = bn.replace("@", "")
             else:
                 bnn = bn
             result = builder.article(
@@ -127,7 +127,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     ],
                     [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr")],
                     [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
-                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}")],
+                    [
+                        Button.url(
+                            "⚙️Sᴇᴛᴛɪɴɢs⚙️",
+                            url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
+                        )
+                    ],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
             )
@@ -331,7 +336,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     async def opner(event):
         bn = Var.BOT_USERNAME
         if bn.startswith("@"):
-            bnn = bn.replace("@","")
+            bnn = bn.replace("@", "")
         else:
             bnn = bn
         buttons = [
@@ -341,7 +346,11 @@ if Var.BOT_USERNAME is not None and asst is not None:
             ],
             [Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr")],
             [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
-            [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}")],
+            [
+                Button.url(
+                    "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
+                )
+            ],
             [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
         ]
         z = []
