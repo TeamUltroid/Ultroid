@@ -195,12 +195,12 @@ async def _(e):
         return await eod(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
         return await eod(xx, "`User is already gmuted.`", time=4)
-    async for gmute in e.client.iter_dialogs():
-        if gmute.is_group:
+    async for onmute in e.client.iter_dialogs():
+        if onmute.is_group:
             try:
                 await e.client(
                     EditBannedRequest(
-                        gmute.id,
+                        onmute.id,
                         userid,
                         ChatBannedRights(until_date=None, send_messages=True),
                     )
