@@ -479,7 +479,7 @@ async def rmbg(event):
     if event.reply_to_msg_id:
         reply = await event.get_reply_message()
         dl = await ultroid_bot.download_media(reply)
-        if not dl.endswith("webp", "jpg", "png", "jpeg"):
+        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
             os.remove(dl)
             return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
