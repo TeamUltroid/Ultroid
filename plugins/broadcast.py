@@ -8,10 +8,10 @@
 """
 ✘ Commands Available
 
-• `{i}add <id/reply to list/none>`
+• `{i}addch <id/reply to list/none>`
     Add chat to database. Adds current chat if no id specified.
 
-• `{i}rem <all/id/none>`
+• `{i}remch <all/id/none>`
     Removes the specified chat (current chat if none specified), or all chats.
 
 • `{i}broadcast <reply to msg>`
@@ -25,7 +25,7 @@ import asyncio
 import io
 
 
-@ultroid_cmd(pattern="add ?(.*)")
+@ultroid_cmd(pattern="addch ?(.*)")
 async def broadcast_adder(event):
     if event.reply_to_msg_id:
         await event.edit("`Adding to db...`")
@@ -61,7 +61,7 @@ async def broadcast_adder(event):
         await event.delete()
 
 
-@ultroid_cmd(pattern="rem ?(.*)")
+@ultroid_cmd(pattern="remch ?(.*)")
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
     if chat_id == "all":
