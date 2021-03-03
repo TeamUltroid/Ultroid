@@ -207,6 +207,7 @@ async def pmlogof(event):
     except BaseException:
         return await event.edit("Something went wrong...")
 
+
 @callback("pmset")
 @owner
 async def pmset(event):
@@ -220,6 +221,7 @@ async def pmset(event):
         ],
     )
 
+
 @callback("pmon")
 @owner
 async def pmonn(event):
@@ -228,11 +230,9 @@ async def pmonn(event):
     await event.edit(f"Done! PMPermit has been turned on!! Please `{hndlr}restart`")
 
 
-
 @callback("pmoff")
 @owner
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
     await event.edit(f"Done! PMPermit has been turned off!! Please `{hndlr}restart`")
-
