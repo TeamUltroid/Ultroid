@@ -122,22 +122,10 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("Cᴜsᴛᴏᴍɪsᴀᴛɪᴏɴ", data="allcstms")],
-            [Button.inline("API ᴋᴇʏs", data="apiset")],
-            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-        ],
-    )
-
-
-@callback("allcstms")
-@owner
-async def all(event):
-    await event.edit(
-        "All Customisable Stuff.",
-        buttons=[
+            [Button.inline("API Kᴇʏs", data="apiset")],
             [Button.inline("Aʟɪᴠᴇ", data="alvcstm")],
             [Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmcstm")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
