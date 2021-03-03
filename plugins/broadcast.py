@@ -40,7 +40,7 @@ async def broadcast_adder(event):
             channel_id = lines[line_number][6:-1]
             if not is_channel_added(channel_id):
                 add_channel(channel_id)
-        await eod(xx, "Channels added!",time=3)
+        await eod(xx, "Channels added!", time=3)
         return
     chat_id = event.chat_id
     try:
@@ -51,18 +51,18 @@ async def broadcast_adder(event):
     if not is_channel_added(chat_id):
         x = add_channel(chat_id)
         if x:
-            await eod(xx, "`Added to database!`",time=3)
+            await eod(xx, "`Added to database!`", time=3)
         else:
             await eod(xx, "Error", time=3)
     elif is_channel_added(chat_id):
-        await eod(xx,"`Channel is already is database!`",time=3)
+        await eod(xx, "`Channel is already is database!`", time=3)
 
 
 @ultroid_cmd(pattern="remch ?(.*)")
 async def broadcast_remover(event):
     chat = event.pattern_match.group(1)
     if chat == "all":
-        xx=await eor(event, "`Removing...`")
+        xx = await eor(event, "`Removing...`")
         udB.delete("BROADCAST")
         await xx.edit("Database cleared.")
         return
@@ -71,7 +71,7 @@ async def broadcast_remover(event):
         await eod(event, "Removed from database", time=3)
     elif is_channel_added(event.chat_id):
         rem_channel(event.chat_id)
-        await eod(event, "Removed from database",time=3)
+        await eod(event, "Removed from database", time=3)
     elif not is_channel_added(event.chat_id):
         await eod(event, "Channel is already removed from database. ", time=3)
 
@@ -112,7 +112,7 @@ async def forw(event):
         await eor(event, "Reply to a message to broadcast.")
         return
     channels = get_channels()
-    xx=await eor(event, "Sending...")
+    xx = await eor(event, "Sending...")
     if get_no_channels() == 0:
         return await xx.edit(f"Please add channels by using `{hndlr}add` in them.")
     error_count = 0
@@ -161,10 +161,10 @@ async def sending(event):
     error_count = 0
     sent_count = 0
     if len(channels) == 0:
-        return await eor(event,
-            f"You haven't added any channels. Use `{hndlr}add` in them fist!"
+        return await eor(
+            event, f"You haven't added any channels. Use `{hndlr}add` in them fist!"
         )
-    xx=await eor(event, "Sending....")
+    xx = await eor(event, "Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.sticker or previous_message.poll:
