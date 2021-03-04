@@ -35,7 +35,6 @@ from telethon import events
 from . import *
 
 TOKEN_FILE = "resources/downloads/auth_token.txt"
-TEMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 
 @asst_cmd("auth")
@@ -95,7 +94,7 @@ async def _(event):
         try:
             downloaded_file_name = await event.client.download_media(
                 reply_message,
-                TEMP_DOWNLOAD_DIRECTORY,
+                "resources/downloads",
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(
                         d,
