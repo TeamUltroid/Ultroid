@@ -25,7 +25,7 @@ async def otvaar(event):
             [
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
-            ][Button.inline("« Bᴀᴄᴋ", data="setter")],
+            ],[Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
