@@ -247,7 +247,7 @@ async def _(event):
     if Redis("I_DEV") != "True":
         await eor(
             event,
-            "Developer Restricted!\nIf you know what this does, and want to proceed\n\n set var `I_DEV` as `True`\n\nThis Might Be Dangerous.",
+            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n `{HNDLR}setredis I_DEV True`\n\nThis Might Be Dangerous.",
         )
         return
     xx = await eor(event, "`Processing...`")
@@ -298,7 +298,7 @@ async def _(event):
     if Redis("I_DEV") != "True":
         await eor(
             event,
-            "Developer Restricted!\nIf you know what this does, and want to proceed\n\n set var `I_DEV` as `True`\n\nThis Might Be Dangerous.",
+            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n `{HNDLR}setredis I_DEV True`\n\nThis Might Be Dangerous.",
         )
         return
     xx = await eor(event, "`Processing ...`")
