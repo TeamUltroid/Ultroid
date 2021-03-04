@@ -36,7 +36,7 @@ async def ult(ult):
                 try:
                     x = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
                     for d in LIST[plug]:
-                        x += HNDLDR + d
+                        x += HNDLR + d
                         x += "\n"
                     await eor(ult, x)
                 except BaseException:
@@ -50,7 +50,7 @@ async def ult(ult):
             return await eor(
                 ult,
                 "`The bot did not respond to the inline query.\nConsider using {}restart`".format(
-                    HNDLDR
+                    HNDLR
                 ),
             )
         except dis:

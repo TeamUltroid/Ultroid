@@ -22,7 +22,7 @@ auth_url = r["auth_url"]
 @owner
 async def alvcs(event):
     await event.edit(
-        "Customise your {}alive. Choose from the below options -".format(HNDLDR),
+        "Customise your {}alive. Choose from the below options -".format(HNDLR),
         buttons=[
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
             [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],

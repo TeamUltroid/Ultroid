@@ -85,7 +85,7 @@ async def eddof(event):
 @owner
 async def pmset(event):
     await event.edit(
-        "SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLDR}help sudo`",
+        "SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
         buttons=[
             [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")],
             [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")],

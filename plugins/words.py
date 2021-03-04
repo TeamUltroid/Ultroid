@@ -142,4 +142,4 @@ async def _(event):
         await xx.edit(f"**No result found for** `{word}`")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLDR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

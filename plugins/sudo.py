@@ -211,4 +211,4 @@ async def _(ult):
     return await ok.edit(f"**List of SUDO Users :**\n{msg}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLDR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

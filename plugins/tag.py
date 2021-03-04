@@ -92,4 +92,4 @@ async def _(e):
         await e.delete()
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLDR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
