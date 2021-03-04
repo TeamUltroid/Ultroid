@@ -9,14 +9,14 @@
 """
 ✘ Commands Available
 
-• `{i}ulgdrive <reply/file name>`
+• `{i}upgdrive <reply/file name>`
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
 • `{i}drivesearch <file name>`
     Search file name on Google Drive and get link.
 
-• `{i}uldir <directory name>`
+• `{i}updir <directory name>`
     Upload a directory on Google Drive.
 
 • `{i}gfolder`
