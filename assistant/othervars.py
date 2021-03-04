@@ -63,7 +63,7 @@ async def pmset(event):
 async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
-    await event.edit(f"Done! ADDONS has been turned on!! Please `{hndlr}restart`")
+    await event.edit("Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart")
 
 
 @callback("edof")
@@ -71,7 +71,7 @@ async def eddon(event):
 async def eddof(event):
     var = "ADDONS"
     await setit(event, var, "False")
-    await event.edit(f"Done! ADDONS has been turned off!! Please `{hndlr}restart`")
+    await event.edit("Done! ADDONS has been turned off!! After Setting All Things Do Restart")
 
 
 @callback("sfban")
