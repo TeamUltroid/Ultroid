@@ -51,7 +51,9 @@ async def name(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n\nAfter Setting All Things Do restart".format(name, themssg)
+                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
+                    name, themssg
+                )
             )
 
 
@@ -131,7 +133,9 @@ async def name(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n\nAfter Setting All Things Do restart".format(name, themssg)
+                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
+                    name, themssg
+                )
             )
 
 
