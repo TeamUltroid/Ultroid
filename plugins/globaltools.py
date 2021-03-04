@@ -33,10 +33,14 @@ from telethon.tl.types import ChatBannedRights
 from . import *
 
 
-@ultroid_cmd(pattern="ungban ?(.*)")
+@ultroid_cmd(
+pattern="ungban ?(.*)",
+)
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
-    if e.reply_to_msg_id:
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
@@ -68,10 +72,14 @@ async def _(e):
     )
 
 
-@ultroid_cmd(pattern="gban ?(.*)")
+@ultroid_cmd(
+pattern="gban ?(.*)",
+)
 async def _(e):
     xx = await eor(e, "`Gbanning...`")
-    if e.reply_to_msg_id:
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
@@ -111,7 +119,9 @@ async def _(e):
     )
 
 
-@ultroid_cmd(pattern="gcast ?(.*)")
+@ultroid_cmd(
+pattern="gcast ?(.*)",
+)
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if not xx:
@@ -133,10 +143,14 @@ async def gcast(event):
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
-@ultroid_cmd(pattern="gkick ?(.*)")
+@ultroid_cmd(
+pattern="gkick ?(.*)",
+)
 async def gkick(e):
     xx = await eor(e, "`Gkicking...`")
-    if e.reply_to_msg_id:
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
@@ -169,10 +183,14 @@ async def gkick(e):
     await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(pattern="gmute ?(.*)")
+@ultroid_cmd(
+pattern="gmute ?(.*)",
+)
 async def _(e):
     xx = await eor(e, "`Gmuting...`")
-    if e.reply_to_msg_id:
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
@@ -212,10 +230,14 @@ async def _(e):
     await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(pattern="ungmute ?(.*)")
+@ultroid_cmd(
+pattern="ungmute ?(.*)",
+)
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
-    if e.reply_to_msg_id:
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
@@ -257,7 +279,7 @@ async def _(e):
         user = await e.get_user()
         chat = await e.get_chat()
         if is_gbanned(str(user.id)):
-            if chat.admin_rights.ban_users:
+            if chat.admin_rights:
                 try:
                     await e.client.edit_permissions(
                         chat.id, user.id, view_messages=False
