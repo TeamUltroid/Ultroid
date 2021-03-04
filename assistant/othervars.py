@@ -18,7 +18,8 @@ async def otvaar(event):
         buttons=[
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
-            [Button.inline("Aᴅᴅᴏɴs", data="eaddon")],
+            [Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
+            Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
@@ -77,6 +78,37 @@ async def eddof(event):
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart"
     )
 
+@callback("sudo")
+@owner
+async def pmset(event):
+    await event.edit(
+        "SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{Var.HNDLR}help sudo`",
+        buttons=[
+            [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")],
+            [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        ],
+    )
+
+
+@callback("onsudo")
+@owner
+async def eddon(event):
+    var = "SUDO"
+    await setit(event, var, "True")
+    await event.edit(
+        "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart"
+    )
+
+
+@callback("ofsudo")
+@owner
+async def eddof(event):
+    var = "SUDO"
+    await setit(event, var, "False")
+    await event.edit(
+        "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart"
+    )
 
 @callback("sfban")
 @owner
