@@ -20,11 +20,12 @@ async def otvaar(event):
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
             [
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
-                Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr")
+                Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
             ],
-            [Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
-            Button.inline("Aᴅᴅᴏɴs", data="eaddon"),]
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+            [
+                Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
+                Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
+            ][Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
@@ -47,7 +48,12 @@ async def pluginch(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}\n After Setting All Things Do Restart".format(name, themssg))
+            await conv.send_message(
+                "{} changed to {}\n After Setting All Things Do Restart".format(
+                    name, themssg
+                )
+            )
+
 
 @callback("hhndlr")
 @owner
@@ -68,7 +74,6 @@ async def hndlrr(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message("{} changed to {}".format(name, themssg))
-
 
 
 @callback("taglog")
