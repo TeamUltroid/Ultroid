@@ -42,6 +42,16 @@ async def broadcast_adder(event):
                 add_channel(channel_id)
         await eod(xx, "Channels added!", time=3)
         return
+    else:
+        xx = await eor(event, "`Adding to db...`")
+        raw_text = event.text
+        lines = raw_text.split("\n")
+        length = len(lines)
+        for line_number in range(1, length - 2):
+            channel_id = lines[line_number][6:-1]
+            if not is_channel_added(channel_id):
+                add_channel(channel_id)
+        await eod(xx, "Channels added!", time=3)
     chat_id = event.chat_id
     try:
         if int(chat_id) == Var.LOG_CHANNEL:
