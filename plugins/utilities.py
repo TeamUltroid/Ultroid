@@ -487,9 +487,7 @@ async def rmbg(event):
         os.remove("ult.png")
         os.remove(dl)
     else:
-        await xx.edit(
-            f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
-        )
+        await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
         await asyncio.sleep(5)
         await xx.delete()
         return
