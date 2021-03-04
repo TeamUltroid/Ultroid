@@ -29,8 +29,18 @@ from . import *
     pattern="addsudo ?(.*)",
 )
 async def _(ult):
+    if Var.BOT_MODE == True:
+        try:
+            if ult.sender_id != Var.OWNER_ID:
+                return await eor(
+                    ult, "You are sudo user, You cant add other sudo user."
+                )
+        except BaseException:
+            pass
+    else:
+        if ult.sender_id != ultroid_bot.uid:
+            return await eor(ult, "You are sudo user, You cant add other sudo user.")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
-
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender.id
@@ -101,8 +111,18 @@ async def _(ult):
     pattern="delsudo ?(.*)",
 )
 async def _(ult):
+    if Var.BOT_MODE == True:
+        try:
+            if ult.sender_id != Var.OWNER_ID:
+                return await eor(
+                    ult, "You are sudo user, You cant add other sudo user."
+                )
+        except BaseException:
+            pass
+    else:
+        if ult.sender_id != ultroid_bot.uid:
+            return await eor(ult, "You are sudo user, You cant add other sudo user.")
     ok = await eor(ult, "`Updating SUDO Users List ...`")
-
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender.id
@@ -191,4 +211,4 @@ async def _(ult):
     return await ok.edit(f"**List of SUDO Users :**\n{msg}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

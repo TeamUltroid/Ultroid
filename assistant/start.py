@@ -27,7 +27,7 @@ async def assistant(event):
                 f"Bot started by [{event.sender_id}](tg://user?id={event.sender_id})",
             )
         ok = ""
-        if Var.MSG_FRWD is True:
+        if udB.get("MSG_FRWD") == True:
             ok = "You can contact me using this bot!!"
         if event.is_private and event.sender_id in sed:
             return
@@ -46,11 +46,12 @@ async def ultroid(event):
         event.chat_id,
         f"Hi {OWNER_NAME}. Please browse through the options",
         buttons=[
-            [Button.inline("Settings ⚙️", data="setter")],
-            [Button.inline("Stats", data="stat")],
-            [Button.inline("Broadcast", data="bcast")],
+            [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
+            [Button.inline("Sᴛᴀᴛs", data="stat")],
+            [Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast")],
         ],
     )
+
 
 # aah, repeat the codes..
 @callback("mainmenu")
@@ -61,11 +62,12 @@ async def ultroid(event):
     await event.edit(
         f"Hi {OWNER_NAME}. Please browse through the options",
         buttons=[
-            [Button.inline("Settings ⚙️", data="setter")],
-            [Button.inline("Stats", data="stat")],
-            [Button.inline("Broadcast", data="bcast")],
+            [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
+            [Button.inline("Sᴛᴀᴛs", data="stat")],
+            [Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast")],
         ],
     )
+
 
 @callback("stat")
 @owner
@@ -120,20 +122,12 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("Customisations", data="allcstms")],
-            [Button.inline("API Keys", data="apiset")],
-            [Button.inline("Other Vars.", data="otvars")],
-            [Button.inline("« Back", data="mainmenu")]
+            [Button.inline("API Kᴇʏs", data="apiset")],
+            [
+                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+                Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmset"),
+            ],
+            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
-
-@callback("allcstms")
-@owner
-async def all(event):
-    await event.edit(
-        "All Customisable Stuff.",
-        buttons=[
-            [Button.inline("Alive", data="alvcstm")],
-            [Button.inline("PM Permit", data="pmcstm")],
-            [Button.inline("« Back", data="setter")]
-            ])

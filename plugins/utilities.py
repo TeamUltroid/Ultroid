@@ -46,6 +46,9 @@
 
 • `{i}json <reply to msg>`
     Get the json encoding of the message.
+
+• `{i}suggest <reply to message>`
+    Create a Yes/No poll for the replied suggestion.
 """
 import asyncio
 import calendar
@@ -62,12 +65,16 @@ import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon import functions
-from telethon.errors.rpcerrorlist import BotInlineDisabledError, BotResponseTimeoutError
+from telethon.errors.rpcerrorlist import BotInlineDisabledError
+from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
+from telethon.errors.rpcerrorlist import (BotResponseTimeoutError,
+                                          ChatSendInlineForbiddenError)
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import Channel, Chat, User
+from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
+                               User)
 from telethon.utils import get_input_location
 
 # =================================================================#
@@ -305,12 +312,17 @@ async def _(event):
             .get("key")
         )
     q = f"paste-{key}"
+    reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
-    except BotInlineDisabledError or BotResponseTimeoutError:  # incase the bot doesnt respond
+    except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
         await xx.edit(reply_text)
+    except bmi:
+        await xx.edit(
+            f"**Inline Not Available as You Are in Bot Mode\nPasted to Nekobin :**\n{reply_text}"
+        )
 
 
 @ultroid_cmd(
@@ -454,7 +466,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern=r"rmbg ?(.*)",
+    pattern=r"rmbg$",
 )
 async def rmbg(event):
     RMBG_API = udB.get("RMBG_API")
@@ -463,50 +475,42 @@ async def rmbg(event):
         return await xx.edit(
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
-    input_str = event.pattern_match.group(1)
-    message_id = event.message.id
     if event.reply_to_msg_id:
-        message_id = event.reply_to_msg_id
-        reply_message = await event.get_reply_message()
-        try:
-            dl_file = await ultroid_bot.download_media(
-                reply_message, TMP_DOWNLOAD_DIRECTORY
-            )
-        except Exception as e:
-            return await xx.edit("**ERROR:**\n`{}`".format(str(e)))
-        else:
-            await xx.edit("`Sending to remove.bg`")
-            output_file_name = ReTrieveFile(dl_file)
-            os.remove(dl_file)
-    elif input_str:
+        reply = await event.get_reply_message()
+        dl = await ultroid_bot.download_media(reply)
+        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+            os.remove(dl)
+            return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
-        output_file_name = ReTrieveURL(input_str)
+        out = ReTrieveFile("ult.png")
+        os.remove("ult.png")
+        os.remove(dl)
     else:
-        await xx.edit(
-            f"Use `{Var.HNDLR}rmbg` as reply to a pic to remove its background."
-        )
+        await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
         await asyncio.sleep(5)
         await xx.delete()
         return
-    contentType = output_file_name.headers.get("content-type")
+    contentType = out.headers.get("content-type")
+    rmbgp = "ult.png"
     if "image" in contentType:
-        with io.BytesIO(output_file_name.content) as remove_bg_image:
-            remove_bg_image.name = "rmbg-ult.png"
-            await ultroid_bot.send_file(
-                event.chat_id,
-                remove_bg_image,
-                force_document=True,
-                supports_streaming=False,
-                allow_cache=False,
-                reply_to=message_id,
-            )
-        await xx.edit("`Done.`")
+        with open(rmbgp, "wb") as rmbg:
+            rmbg.write(out.content)
     else:
+        error = out.json()
         await xx.edit(
-            "RemoveBG returned an error - \n`{}`".format(
-                output_file_name.content.decode("UTF-8")
-            ),
+            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`"
         )
+    zz = Image.open(rmbgp)
+    if zz.mode != "RGB":
+        zz.convert("RGB")
+    zz.save("ult.webp", "webp")
+    await ultroid_bot.send_file(
+        event.chat_id, rmbgp, force_document=True, reply_to=reply
+    )
+    await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
+    os.remove(rmbgp)
+    os.remove("ult.webp")
+    await xx.delete()
 
 
 @ultroid_cmd(
@@ -580,4 +584,31 @@ async def _(event):
         await eor(event, f"```{the_real_message}```")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+@ultroid_cmd(pattern="suggest")
+async def sugg(event):
+    if await event.get_reply_message():
+        msgid = (await event.get_reply_message()).id
+        try:
+            await ultroid.send_message(
+                event.chat_id,
+                file=InputMediaPoll(
+                    poll=Poll(
+                        id=12345,
+                        question="Do you agree to the replied suggestion?",
+                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
+                    )
+                ),
+                reply_to=msgid,
+            )
+        except Exception as e:
+            return await eod(
+                event, f"`Oops, you can't send polls here!\n\n{str(e)}`", time=5
+            )
+        await event.delete()
+    else:
+        return await eod(
+            event, "`Please reply to a message to make a suggestion poll!`", time=5
+        )
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -8,18 +8,14 @@
 """
 ✘ Commands Available -
 
-• `{i}autopic <topic>`
+• `{i}autopic <search query>`
     Will change your profile pic at defined intervals with pics related to the given topic.
 
 """
 import asyncio
 import os
 import random
-import re
-import urllib
 
-from bs4 import BeautifulSoup as bs
-from requests import get
 from telethon import functions
 
 from . import *
@@ -33,7 +29,10 @@ async def autopic(e):
     clls = returnpage(search)
     if len(clls) == 0:
         return await eor(e, f"No Results found for `{search}`")
-    num = random.randrange(0, len(clls) - 1)
+    if not len(clls) == 1:
+        num = random.randrange(0, len(clls) - 1)
+    else:
+        num = 0
     page = clls[num]
     title = page["title"]
     a = await eor(
@@ -47,4 +46,4 @@ async def autopic(e):
         await asyncio.sleep(1100)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

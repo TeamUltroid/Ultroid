@@ -8,6 +8,11 @@
 """
 ✘ Commands Available -
 
+**DataBase Commands, do not use if you don't know what it is.**
+
+• `{i}redisusage`
+    Check Storaged Data Capacity.
+
 • `{i}setredis key | value`
     Redis Set Value.
     e.g :
@@ -39,7 +44,7 @@ async def _(ult):
     ok = await eor(ult, "`...`")
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
-        data = ult.pattern_match.group(1).split(delim)
+        data = ult.pattern_match.group(1).split(delim, maxsplit=1)
         udB.set(data[0], data[1])
         redisdata = Redis(data[0])
         await ok.edit(
@@ -112,4 +117,18 @@ async def _(ult):
     await ok.edit("**List of Redis Keys :**\n{}".format(msg))
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+@ultroid_cmd(
+    pattern="redisusage$",
+)
+async def _(ult):
+    ok = await eor(ult, "`Calculating ...`")
+    x = 30 * 1024 * 1024
+    z = 0
+    for n in udB.keys():
+        z += udB.memory_usage(n)
+    a = humanbytes(z) + "/" + humanbytes(x)
+    b = str(round(z / x * 100, 3)) + "%" + "  Used"
+    await ok.edit(f"{a}\n{b}")
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -1,10 +1,10 @@
-py-Ultroid==2021.2.24
+py-Ultroid==2021.3.04
 asyncurban
 carbonnow
 cairosvg
 emoji
 GitPython
-googletrans==3.1.0a0
+googletrans==4.0.0rc1
 heroku3
 imutils
 lottie
@@ -20,6 +20,7 @@ psutil
 pytz
 requests>=2.18.4
 scikit-image
+selenium
 speedtest-cli==2.1.2
 telegraph
 validators

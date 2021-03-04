@@ -61,13 +61,16 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
     make \
     libopus0 \
     libopus-dev \
-    gcc
+    gcc \
+    mediainfo \
+    megatools
 
 echo '
         •• Cloning Repository
 '
 
 git clone https://github.com/Teamultroid/Ultroid.git /root/TeamUltroid/
+
 
 echo '
 	•• Getting Libraries and Installing

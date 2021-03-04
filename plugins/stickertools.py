@@ -14,8 +14,8 @@
 • `{i}tiny <reply to media>`
     To create Tiny stickers.
 
-• `{i}convert <gif/img/sticker>`
-    Reply to animated sticker.
+• `{i}convert <gif/img>`
+    Reply to sticker to convert into gif or image.
 
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
@@ -39,12 +39,10 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendInlineForbiddenError, ChatSendStickersForbiddenError
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    MessageMediaPhoto,
-)
+from telethon.errors import (ChatSendInlineForbiddenError,
+                             ChatSendStickersForbiddenError)
+from telethon.tl.types import (DocumentAttributeFilename,
+                               DocumentAttributeSticker, MessageMediaPhoto)
 
 from . import *
 
@@ -108,19 +106,19 @@ async def waifu(animu):
 async def uconverter(event):
     xx = await eor(event, "`Processing...`")
     a = await event.get_reply_message()
+    ok = ["image/webp", "application/x-tgsticker"]
+    if not (a.media and a.media.document and a.media.document.mime_type in ok):
+        return await eor(event, "`Reply to a Sticker...`")
     input = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
     if "gif" in input:
         cmd = ["lottie_convert.py", b, "something.gif"]
         file = "something.gif"
-    elif "sticker" in input:
-        cmd = ["lottie_convert.py", b, "something.webp"]
-        file = "something.webp"
     elif "img" in input:
         cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
     else:
-        await xx.edit("**Please select from gif/sticker/img**")
+        return await xx.edit("**Please select from gif/img**")
     process = await asyncio.create_subprocess_exec(
         *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -398,9 +396,12 @@ async def ultdround(event):
 )
 async def ultdestroy(event):
     ult = await event.get_reply_message()
-    if not (ult and ("tgsticker" in ult.media.document.mime_type)):
-        await eor(event, "`Reply to Animated Sticker Only...`")
-        return
+    if not event.is_reply:
+        return await eor(event, "`Reply to Animated Sticker Only...`")
+    if not (
+        ult.media and ult.media.document and "tgsticker" in ult.media.document.mime_type
+    ):
+        return await eor(event, "`Reply to Animated Sticker only`")
     roid = await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")
     os.system("lottie_convert.py ultroid.tgs json.json")
@@ -431,9 +432,7 @@ async def ultdestroy(event):
         reply_to=event.reply_to_msg_id,
     )
     await xx.delete()
-    os.remove("ultroid.tgs")
     os.remove("json.json")
-    os.remove(roid)
 
 
 @ultroid_cmd(
@@ -511,4 +510,4 @@ async def ultiny(event):
     os.remove(ik)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

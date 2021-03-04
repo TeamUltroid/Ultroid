@@ -28,7 +28,8 @@ import asyncio
 import os
 
 from telethon.tl import functions
-from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
+from telethon.tl.functions.photos import (DeletePhotosRequest,
+                                          GetUserPhotosRequest)
 from telethon.tl.types import InputPhoto
 
 from . import *
@@ -160,4 +161,4 @@ async def gpoto(e):
         await eor(e, f"ERROR - {str(e)}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
