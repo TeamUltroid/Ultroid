@@ -18,8 +18,10 @@ async def otvaar(event):
         buttons=[
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
-            [Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
-            Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo")],
+            [
+                Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
+                Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
@@ -78,6 +80,7 @@ async def eddof(event):
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart"
     )
 
+
 @callback("sudo")
 @owner
 async def pmset(event):
@@ -109,6 +112,7 @@ async def eddof(event):
     await event.edit(
         "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart"
     )
+
 
 @callback("sfban")
 @owner
