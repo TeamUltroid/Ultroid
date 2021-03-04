@@ -19,12 +19,56 @@ async def otvaar(event):
             [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
             [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
             [
-                Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
+                Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr")
             ],
+            [Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
+            Button.inline("Aᴅᴅᴏɴs", data="eaddon"),]
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
+
+
+@callback("plg")
+@owner
+async def pluginch(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "PLUGIN_CHANNEL"
+    name = "Plugin Channel"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "Send id or username of a channel from where u want to install all plugins\n\nOur Channel~ @ultroidplugins\n\nUse /cancel to cancel."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message("Cancelled!!")
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message("{} changed to {}\n After Setting All Things Do Restart".format(name, themssg))
+
+@callback("hhndlr")
+@owner
+async def hndlrr(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "HNDLR"
+    name = "Handler/ Trigger"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"Send The Symbol Which u want as Handler/Trigger to use bot\nUr Current Handler is [ `{HNDLR}` ]\n\n use /cancel to cancel."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message("Cancelled!!")
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message("{} changed to {}".format(name, themssg))
+
 
 
 @callback("taglog")
@@ -85,7 +129,7 @@ async def eddof(event):
 @owner
 async def pmset(event):
     await event.edit(
-        "SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
+        f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
         buttons=[
             [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")],
             [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")],
