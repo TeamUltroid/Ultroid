@@ -123,8 +123,10 @@ async def setting(event):
         "Choose from the below options -",
         buttons=[
             [Button.inline("API Kᴇʏs", data="apiset")],
-            [Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-            Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmset")],
+            [
+                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+                Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmset"),
+            ],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
