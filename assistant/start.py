@@ -27,7 +27,7 @@ async def assistant(event):
                 f"Bot started by [{event.sender_id}](tg://user?id={event.sender_id})",
             )
         ok = ""
-        if Var.MSG_FRWD is True:
+        if udB.get("MSG_FRWD") == True:
             ok = "You can contact me using this bot!!"
         if event.is_private and event.sender_id in sed:
             return
