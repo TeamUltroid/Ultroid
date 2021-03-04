@@ -22,6 +22,12 @@
 
 • `{i}tagrec`
     Tag recently Active Members.
+
+• `{i}tagon`
+    Tag online Members(work only if privacy off).
+
+• `{i}tagoff`
+    Tag Offline Members(work only if privacy off).
 """
 
 from telethon.tl.types import ChannelParticipantAdmin as admin
