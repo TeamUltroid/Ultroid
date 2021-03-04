@@ -18,9 +18,9 @@ jobs:
 
         with:
 
-          find: "Var.HNDLR"
+          find: "HNDLDR"
 
-          replace: "HNDLDR"
+          replace: "HNDLR"
 
       - name: Create PR
 
@@ -28,7 +28,7 @@ jobs:
 
         with:
 
-          commit_message: 'Everyone knows about the Pros and **Cons** about D bro'
+          commit_message: 'Fuck Typos'
 
           commit_options: '--no-verify'
 
