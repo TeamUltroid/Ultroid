@@ -34,7 +34,7 @@ from . import *
 
 
 @ultroid_cmd(
-pattern="ungban ?(.*)",
+    pattern="ungban ?(.*)",
 )
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
@@ -73,7 +73,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="gban ?(.*)",
+    pattern="gban ?(.*)",
 )
 async def _(e):
     xx = await eor(e, "`Gbanning...`")
@@ -120,7 +120,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="gcast ?(.*)",
+    pattern="gcast ?(.*)",
 )
 async def gcast(event):
     xx = event.pattern_match.group(1)
@@ -144,7 +144,7 @@ async def gcast(event):
 
 
 @ultroid_cmd(
-pattern="gkick ?(.*)",
+    pattern="gkick ?(.*)",
 )
 async def gkick(e):
     xx = await eor(e, "`Gkicking...`")
@@ -184,7 +184,7 @@ async def gkick(e):
 
 
 @ultroid_cmd(
-pattern="gmute ?(.*)",
+    pattern="gmute ?(.*)",
 )
 async def _(e):
     xx = await eor(e, "`Gmuting...`")
@@ -231,7 +231,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="ungmute ?(.*)",
+    pattern="ungmute ?(.*)",
 )
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
