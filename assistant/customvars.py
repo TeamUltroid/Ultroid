@@ -51,7 +51,7 @@ async def name(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR)
+                "{} changed to {}\n\nAfter Setting All Things Do restart".format(name, themssg)
             )
 
 
@@ -131,7 +131,7 @@ async def name(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n\nDo {}restart".format(name, themssg, Var.HNDLR)
+                "{} changed to {}\n\nAfter Setting All Things Do restart".format(name, themssg)
             )
 
 
@@ -227,7 +227,7 @@ async def pmset(event):
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
-    await event.edit(f"Done! PMPermit has been turned on!! Please `{hndlr}restart`")
+    await event.edit(f"Done! PMPermit has been turned on!!")
 
 
 @callback("pmoff")
@@ -235,4 +235,4 @@ async def pmonn(event):
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
-    await event.edit(f"Done! PMPermit has been turned off!! Please `{hndlr}restart`")
+    await event.edit(f"Done! PMPermit has been turned off!!")
