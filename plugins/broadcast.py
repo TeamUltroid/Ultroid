@@ -63,7 +63,7 @@ async def broadcast_adder(event):
         else:
             await eod(xx, "Error", time=3)
     elif is_channel_added(chat_id):
-        await eod(xx, "`Channel is already is database!`", time=3)
+        await eod(xx, "`Channel is already in database!`", time=3)
 
 
 @ultroid_cmd(pattern="remch ?(.*)")
