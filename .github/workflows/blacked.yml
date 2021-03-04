@@ -15,10 +15,11 @@ jobs:
 
       - name: Install black
         run: |
-          pip install black
+          pip install black isort
       - name: lint with isort and black
         run: |
           black plugins/* assistant/*
+          isort plugins/* assistant/*
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
