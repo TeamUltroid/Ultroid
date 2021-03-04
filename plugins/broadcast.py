@@ -31,6 +31,8 @@ from . import *
 
 @ultroid_cmd(pattern="add ?(.*)")
 async def broadcast_adder(event):
+    if "addsudo" in event.text: # weird fix
+        return
     msgg = event.pattern_match.group(1)
     x = await eor(event, "`Adding to db...`")
     aldone = new = crsh = 0
@@ -66,7 +68,7 @@ async def broadcast_adder(event):
             channel_id = lines[line_number][4:-1]
             if not is_channel_added(channel_id):
                 add_channel(channel_id)
-        await event.edit("Channels added!")
+        await x.edit("Channels added!")
         await asyncio.sleep(3)
         await event.delete()
         return
@@ -79,13 +81,13 @@ async def broadcast_adder(event):
     if not is_channel_added(chat_id):
         x = add_channel(chat_id)
         if x:
-            await event.edit("`Added to database!`")
+            await x.edit("`Added to database!`")
         else:
-            await event.edit("Error")
+            await x.edit("Error")
         await asyncio.sleep(3)
         await event.delete()
     elif is_channel_added(chat_id):
-        await event.edit("`Channel is already is database!`")
+        await x.edit("`Channel is already is database!`")
         await asyncio.sleep(3)
         await event.delete()
 
@@ -93,25 +95,26 @@ async def broadcast_adder(event):
 @ultroid_cmd(pattern="rem ?(.*)")
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
+    x = await eor(event, "`Processing...`")
     if chat_id == "all":
-        await event.edit("`Removing...`")
+        await x.edit("`Removing...`")
         udB.delete("BROADCAST")
-        await event.edit("Database cleared.")
+        await x.edit("Database cleared.")
         return
     if is_channel_added(chat_id):
         rem_channel(chat_id)
-        await event.edit("Removed from database")
+        await x.edit("Removed from database")
         await asyncio.sleep(3)
-        await event.delete()
+        await x.delete()
     elif is_channel_added(event.chat_id):
         rem_channel(event.chat_id)
-        await event.edit("Removed from database")
+        await x.edit("Removed from database")
         await asyncio.sleep(3)
-        await event.delete()
+        await x.delete()
     elif not is_channel_added(event.chat_id):
-        await event.edit("Channel is already removed from database. ")
+        await x.edit("Channel is already removed from database. ")
         await asyncio.sleep(3)
-        await event.delete()
+        await x.delete()
 
 
 @ultroid_cmd(pattern="listchannels")
@@ -151,12 +154,12 @@ async def forw(event):
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("Reply to a message to broadcast.")
+        await eor(event, "Reply to a message to broadcast.")
         return
     channels = get_channels()
-    await event.edit("Sending...")
+    x = await eor(event, "Sending...")
     if get_no_channels() == 0:
-        return await event.edit(f"Please add channels by using `{hndlr}add` in them.")
+        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
     error_count = 0
     sent_count = 0
     if event.reply_to_msg_id:
@@ -168,7 +171,7 @@ async def forw(event):
         try:
             await ultroid_bot.forward_messages(int(channel), previous_message)
             sent_count += 1
-            await event.edit(
+            await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
             )
         except Exception as error:
@@ -178,39 +181,40 @@ async def forw(event):
                 )
                 await ultroid_bot.send_message(Var.LOG_CHANNEL, "Error! " + str(error))
                 if error == "The message cannot be empty unless a file is provided":
-                    return await event.edit(
+                    return await x.edit(
                         "For sending files, upload in Saved Messages and reply .forward to it."
                     )
             except BaseException:
                 pass
             error_count += 1
-            await event.edit(
+            await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
             )
-    await event.edit(f"{sent_count} messages sent with {error_count} errors.")
+    await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
         try:
             await ultroid_bot.send_message(Var.LOG_CHANNEL, f"{error_count} Errors")
         except BaseException:
-            await event.edit("Set up log channel for checking errors.")
+            await x.edit("Set up log channel for checking errors.")
 
 
 @ultroid_cmd(pattern="broadcast ?(.*)")
 async def sending(event):
+    x = await eor(event, "`Processing...`")
     if not event.is_reply:
-        return await event.edit("Reply to a message to broadcast.")
+        return await x.edit("Reply to a message to broadcast.")
     channels = get_channels()
     error_count = 0
     sent_count = 0
     if len(channels) == 0:
-        return await event.edit(
+        return await x.edit(
             f"You haven't added any channels. Use `{hndlr}add` in them fist!"
         )
-    await event.edit("Sending....")
+    await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.sticker or previous_message.poll:
-            await event.edit(f"Reply `{hndlr}forward` for stickers and polls.")
+            await x.edit(f"Reply `{hndlr}forward` for stickers and polls.")
             return
         if (
             previous_message.gif
@@ -223,7 +227,7 @@ async def sending(event):
             or previous_message.geo
             or previous_message.invoice
         ):
-            await event.edit(f"Not supported. Try `{hndlr}forward`")
+            await x.edit(f"Not supported. Try `{hndlr}forward`")
             return
         if not previous_message.web_preview and previous_message.photo:
             file = await ultroid_bot.download_file(previous_message.media)
@@ -241,7 +245,7 @@ async def sending(event):
                         )
 
                     sent_count += 1
-                    await event.edit(
+                    await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
                 except Exception as error:
@@ -256,16 +260,16 @@ async def sending(event):
                             error
                             == "The message cannot be empty unless a file is provided"
                         ):
-                            return await event.edit(
+                            return await x.edit(
                                 f"For sending files, upload in Saved Messages and reply {hndlr}forward to in."
                             )
                     except BaseException:
                         pass
                     error_count += 1
-                    await event.edit(
+                    await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
-            await event.edit(f"{sent_count} messages sent with {error_count} errors.")
+            await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 try:
                     await ultroid_bot.send_message(
@@ -281,7 +285,7 @@ async def sending(event):
                         int(channel), raw_text, link_preview=False
                     )
                     sent_count += 1
-                    await event.edit(
+                    await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
                 except Exception as error:
@@ -296,20 +300,20 @@ async def sending(event):
                             error
                             == "The message cannot be empty unless a file is provided"
                         ):
-                            return await event.edit(
+                            return await x.edit(
                                 f"For sending files, upload in Saved Messages and reply {hndlr}forward to in."
                             )
                     except BaseException:
                         pass
                     error_count += 1
-                    await event.edit(
+                    await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
-            await event.edit(f"{sent_count} messages sent with {error_count} errors.")
+            await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 try:
                     await ultroid_bot.send_message(
                         Var.LOG_CHANNEL, f"{error_count} Errors"
                     )
                 except BaseException:
-                    await event.edit("Set up log channel for checking errors.")
+                    await x.edit("Set up log channel for checking errors.")
