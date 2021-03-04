@@ -22,10 +22,10 @@ jobs:
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'cum with me'
+          commit_message: 'Pehli Fursat m nikal'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: buddhhu
+          commit_user_name: Me Buddhhu 
           commit_user_email: buddhhu@ultroid.tech
 
 
