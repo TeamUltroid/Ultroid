@@ -116,17 +116,18 @@ async def _(ult):
         msg += "• `{}`".format(x) + "\n"
     await ok.edit("**List of Redis Keys :**\n{}".format(msg))
 
+
 @ultroid_cmd(
     pattern="redisusage$",
 )
 async def _(ult):
     ok = await eor(ult, "`Calculating ...`")
-    x = 30*1024*1024
+    x = 30 * 1024 * 1024
     z = 0
     for n in udB.keys():
         z += udB.memory_usage(n)
-    a = (humanbytes(z) + "/" + humanbytes(x) )
-    b = (str(round(z/x * 100,3)) + "%" + "  Used")
+    a = humanbytes(z) + "/" + humanbytes(x)
+    b = str(round(z / x * 100, 3)) + "%" + "  Used"
     await ok.edit(f"{a}\n{b}")
 
 
