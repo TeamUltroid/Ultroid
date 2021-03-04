@@ -317,3 +317,5 @@ async def sending(event):
                     )
                 except BaseException:
                     await x.edit("Set up log channel for checking errors.")
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
