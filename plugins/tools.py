@@ -244,7 +244,7 @@ async def _(e):
     pattern="bash",
 )
 async def _(event):
-    if (Var.I_DEV if Var.I_DEV else Redis("I_DEV")) != "True":
+    if Redis("I_DEV") != "True":
         await eor(
             event,
             "Developer Restricted!\nIf you know what this does, and want to proceed\n\n set var `I_DEV` as `True`\n\nThis Might Be Dangerous.",
@@ -295,7 +295,7 @@ async def _(event):
     pattern="eval",
 )
 async def _(event):
-    if (Var.I_DEV if Var.I_DEV else Redis("I_DEV")) != "True":
+    if Redis("I_DEV") != "True":
         await eor(
             event,
             "Developer Restricted!\nIf you know what this does, and want to proceed\n\n set var `I_DEV` as `True`\n\nThis Might Be Dangerous.",
