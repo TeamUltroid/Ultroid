@@ -25,7 +25,9 @@ Specify FBan Group and Feds to exclude in the assistant.
 
 import asyncio
 import os
+
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
 from . import *
 
 bot = "@MissRose_bot"
@@ -391,4 +393,4 @@ async def _(event):
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -31,8 +31,8 @@ helps = """
 Pʟᴜɢɪɴs ~ {}**
 """
 
-
-if Var.ADDONS:
+add_ons = udB.get("ADDONS")
+if add_ons:
     zhelps = """
 [Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
 
@@ -48,7 +48,7 @@ else:
 
 Aᴅᴅᴏɴs ~ {}
 
-Gᴏ Aɴᴅ Aᴅᴅ ADDON Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**
+Gᴏ Aɴᴅ Aᴅᴅ ADDONS Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**
 """
 # ============================================#
 
@@ -60,7 +60,7 @@ async def e(o):
         b = o.builder
         uptime = grt((time.time() - start_time))
         ALIVEMSG = """
-**The Ultroid Userbot...**\n\n
+**The Ultroid Userbot...**\n
 ✵ **Owner** - `{}`
 ✵ **Ultroid** - `{}`
 ✵ **UpTime** - `{}`
@@ -82,6 +82,14 @@ async def e(o):
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+                buttons=[
+                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
+                    [
+                        Button.url(
+                            text="Repo", url="https://github.com/Teamultroid/Ultroid"
+                        )
+                    ],
+                ],
             )
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
@@ -96,19 +104,37 @@ if Var.BOT_USERNAME is not None and asst is not None:
         result = None
         query = event.text
         if event.query.user_id in sed and query.startswith("ultd"):
+            z = []
+            for x in LIST.values():
+                for y in x:
+                    z.append(y)
+            cmd = len(z) + 10
+            bn = Var.BOT_USERNAME
+            if bn.startswith("@"):
+                bnn = bn.replace("@", "")
+            else:
+                bnn = bn
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
                 url="https://t.me/TheUltroid",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}**",
+                text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {cmd}**",
                 buttons=[
                     [
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
                         Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
                     ],
-                    [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr")],
-                    [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+                    [
+                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                    ],
+                    [
+                        Button.url(
+                            "⚙️Sᴇᴛᴛɪɴɢs⚙️",
+                            url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
+                        )
+                    ],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
             )
@@ -166,7 +192,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "Sᴇɴᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs",
-                    query="send all",
+                    query="send",
                     same_peer=True,
                 )
             ],
@@ -201,7 +227,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                    query="yt How to Deploy Ultroid Userbot",
+                    query="Ed Sheeran Perfect",
                     same_peer=True,
                 )
             ],
@@ -310,17 +336,34 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @callback("open")
     @owner
     async def opner(event):
+        bn = Var.BOT_USERNAME
+        if bn.startswith("@"):
+            bnn = bn.replace("@", "")
+        else:
+            bnn = bn
         buttons = [
             [
                 Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
                 Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
             ],
-            [Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr")],
-            [Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+            [
+                Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
+                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+            ],
+            [
+                Button.url(
+                    "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
+                )
+            ],
             [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
         ]
+        z = []
+        for x in LIST.values():
+            for y in x:
+                z.append(y)
+        cmd = len(z) + 10
         await event.edit(
-            f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nOꜰꜰɪᴄɪᴀʟ Pʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nUɴᴏꜰꜰɪᴄɪᴀʟ Pʟᴜɢɪɴs ~ {len(ADDONS)}**",
+            f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {cmd}**",
             buttons=buttons,
             link_preview=False,
         )
@@ -394,7 +437,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                             f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
                         )
                         for d in LIST[plugin_name]:
-                            help_string += Var.HNDLR + d
+                            help_string += HNDLR + d
                             help_string += "\n"
                 except BaseException:
                     pass
@@ -423,8 +466,11 @@ if Var.BOT_USERNAME is not None and asst is not None:
 def paginate_help(page_number, loaded_plugins, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
-    mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
+    emoji = Redis("EMOJI_IN_HELP")
+    if emoji:
+        multi, mult2i = emoji, emoji
+    else:
+        multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global upage
     upage = page_number
@@ -470,8 +516,11 @@ def paginate_help(page_number, loaded_plugins, prefix):
 def paginate_addon(page_number, loaded_plugins, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    multi = os.environ.get("EMOJI_TO_DESPLAY_IN_HELP", "✘")
-    mult2i = os.environ.get("EMOJI2_TO_DESPLAY_IN_HELP", "✘")
+    emoji = Redis("EMOJI_IN_HELP")
+    if emoji:
+        multi, mult2i = emoji, emoji
+    else:
+        multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global addpage
     addpage = page_number

@@ -119,8 +119,8 @@ async def unload(event):
         try:
             un_plug(shortname)
             await eod(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
-        except BaseException:
-            pass
+        except Exception as ex:
+            return await eor(event, str(ex))
     elif zym in lst:
         return await eod(event, "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**", time=3)
     else:
@@ -143,8 +143,8 @@ async def uninstall(event):
             un_plug(shortname)
             await eod(event, f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
             os.remove(f"addons/{shortname}.py")
-        except BaseException:
-            pass
+        except Exception as ex:
+            return await eor(event, str(ex))
     elif zym in lst:
         return await eod(event, "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**", time=3)
     else:
@@ -174,4 +174,4 @@ async def load(event):
         )
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

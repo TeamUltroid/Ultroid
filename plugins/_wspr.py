@@ -45,7 +45,7 @@ async def _(e):
             return await eor(
                 e,
                 "`The bot did not respond to the inline query.\nConsider using {}restart`".format(
-                    Var.HNDLR
+                    HNDLR
                 ),
             )
         except dis:

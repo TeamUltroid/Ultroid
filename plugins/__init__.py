@@ -8,52 +8,20 @@
 import time
 
 from pyUltroid import *
+from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions import *
 from pyUltroid.functions.all import *
+from pyUltroid.functions.broadcast_db import *
+from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
 
 start_time = time.time()
-ultroid_version = "v0.0.1"
+ultroid_version = "v0.0.3"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
-DEVLIST = [
-    "1259468938",
-    "1452145387",
-    "719195224",
-    "1318486004",
-    "1289422521",
-    "1322549723",
-    "611816596",
-    "1003250439",
-    "1152902819",
-    "716243352",
-    "1444249738",
-    "559661211",
-    "881536550",
-    "630654925",
-]
-
-# sudo
-ok = udB.get("SUDOS")
-if ok:
-    SUDO_USERS = set(int(x) for x in ok.split())
-else:
-    SUDO_USERS = ""
-
-if SUDO_USERS:
-    sudos = list(SUDO_USERS)
-else:
-    sudos = ""
-
-on = Var.SUDO
-
-if Var.SUDO:
-    sed = [ultroid_bot.uid, *sudos]
-else:
-    sed = [ultroid_bot.uid]
 
 
 def grt(seconds: int) -> str:

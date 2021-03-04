@@ -25,6 +25,7 @@ from pyUltroid.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
+from telethon.utils import get_display_name
 
 from . import *
 
@@ -35,21 +36,20 @@ if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
+
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {}!**
+
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
 else:
     UNAPPROVED_MSG = (
         """
-**PMSecurity of {}!**
-
-"""
+**PMSecurity of {}!**"""
         f"""{Redis("PM_TEXT")}"""
         """
-
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {}/{} warnings!"""
@@ -57,6 +57,7 @@ You have {}/{} warnings!"""
 
 UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
 UNS = "You were spamming my Master's PM, which I didn't like."
+# 1
 
 WARNS = 3
 NO_REPLY = "Reply to someone's msg or try this commmand in private."
@@ -70,7 +71,18 @@ PMCMDS = [
 ]
 # =================================================================
 
-sett = udB.get("PMSETTING")
+
+@ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+async def permitpm(event):
+    user = await event.get_chat()
+    if user.bot or user.is_self:
+        return
+    apprv = is_approved(user.id)
+    if apprv and (Redis("PMLOG") == "True"):
+        await event.forward_to(Var.LOG_CHANNEL)
+
+
+sett = Redis("PMSETTING")
 if sett is None:
     sett = True
 if sett == "True" and sett != "False":
@@ -79,6 +91,8 @@ if sett == "True" and sett != "False":
     async def autoappr(e):
         miss = await e.get_chat()
         if miss.bot or miss.is_self or miss.verified:
+            return
+        if str(miss.id) in DEVLIST:
             return
         mssg = e.text
         if mssg in PMCMDS:  # do not approve if outgoing is a command.
@@ -94,7 +108,7 @@ if sett == "True" and sett != "False":
                 name0 = str(name.first_name)
                 await e.client.send_message(
                     Var.LOG_CHANNEL,
-                    f"#AutoApproved\nUser - [{name0}](tg://user?id={e.chat_id})",
+                    f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
                 )
 
     @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
@@ -102,8 +116,15 @@ if sett == "True" and sett != "False":
         user = await event.get_chat()
         if user.bot or user.is_self or user.verified:
             return
+        if str(user.id) in DEVLIST:
+            return
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
+            name = user.first_name
+            fullname = (user.first_name, user.last_name)
+            username = user.username
+            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+            count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id]
             except KeyError:
@@ -115,6 +136,7 @@ if sett == "True" and sett != "False":
                         user.id, search=UND
                     ):
                         await message.delete()
+
                     async for message in event.client.iter_messages(
                         user.id, search=UNS
                     ):
@@ -176,6 +198,10 @@ if sett == "True" and sett != "False":
             reply = await apprvpm.get_reply_message()
             replied_user = await apprvpm.client.get_entity(reply.sender_id)
             aname = replied_user.id
+            if str(aname) in DEVLIST:
+                return await eor(
+                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                )
             name0 = str(replied_user.first_name)
             uid = replied_user.id
             if not is_approved(uid):
@@ -190,12 +216,17 @@ if sett == "True" and sett != "False":
         elif apprvpm.is_private:
             user = await apprvpm.get_chat()
             aname = await apprvpm.client.get_entity(user.id)
+            if str(user.id) in DEVLIST:
+                return await eor(
+                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                )
             name0 = str(aname.first_name)
             uid = user.id
             if not is_approved(uid):
                 approve_user(uid)
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 async for message in apprvpm.client.iter_messages(user.id, search=UND):
+
                     await message.delete()
                 async for message in apprvpm.client.iter_messages(user.id, search=UNS):
                     await message.delete()
@@ -224,6 +255,10 @@ if sett == "True" and sett != "False":
             reply = await e.get_reply_message()
             replied_user = await e.client.get_entity(reply.sender_id)
             aname = replied_user.id
+            if str(aname) in DEVLIST:
+                return await eor(
+                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                )
             name0 = str(replied_user.first_name)
             if is_approved(replied_user.id):
                 disapprove_user(replied_user.id)
@@ -241,6 +276,10 @@ if sett == "True" and sett != "False":
         elif e.is_private:
             bbb = await e.get_chat()
             aname = await e.client.get_entity(bbb.id)
+            if str(bbb.id) in DEVLIST:
+                return await eor(
+                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                )
             name0 = str(aname.first_name)
             if is_approved(bbb.id):
                 disapprove_user(bbb.id)
@@ -265,12 +304,20 @@ if sett == "True" and sett != "False":
             reply = await block.get_reply_message()
             replied_user = await block.client.get_entity(reply.sender_id)
             aname = replied_user.id
+            if str(aname) in DEVLIST:
+                return await eor(
+                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                )
             name0 = str(replied_user.first_name)
             await block.client(BlockRequest(replied_user.id))
             await block.edit("`You've been blocked!`")
             uid = replied_user.id
         elif block.is_private:
             bbb = await block.get_chat()
+            if str(bbb.id) in DEVLIST:
+                return await eor(
+                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                )
             await block.client(BlockRequest(bbb.id))
             aname = await block.client.get_entity(bbb.id)
             await block.edit("`You've been blocked!`")
@@ -304,4 +351,4 @@ if sett == "True" and sett != "False":
             )
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
