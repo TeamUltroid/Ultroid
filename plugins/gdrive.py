@@ -80,7 +80,7 @@ async def aut(event):
 
 
 @ultroid_cmd(
-    pattern="ulgdrive ?(.*)",
+    pattern="updrive ?(.*)",
 )
 async def _(event):
     mone = await eor(event, "Processing ...")
@@ -171,7 +171,7 @@ async def sch(event):
 
 
 @ultroid_cmd(
-    pattern="uldir ?(.*)",
+    pattern="updir ?(.*)",
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
