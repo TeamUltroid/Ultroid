@@ -31,7 +31,7 @@ from . import *
 
 @ultroid_cmd(pattern="add ?(.*)")
 async def broadcast_adder(event):
-    if "addsudo" in event.text: # weird fix
+    if "addsudo" in event.text:  # weird fix
         return
     msgg = event.pattern_match.group(1)
     x = await eor(event, "`Adding to db...`")
