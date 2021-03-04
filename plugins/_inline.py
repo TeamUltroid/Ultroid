@@ -437,7 +437,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                             f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
                         )
                         for d in LIST[plugin_name]:
-                            help_string += Var.HNDLR + d
+                            help_string += HNDLDR + d
                             help_string += "\n"
                 except BaseException:
                     pass

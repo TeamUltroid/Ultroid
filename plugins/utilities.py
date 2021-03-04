@@ -488,7 +488,7 @@ async def rmbg(event):
         os.remove(dl)
     else:
         await xx.edit(
-            f"Use `{Var.HNDLR}rmbg` as reply to a pic to remove its background."
+            f"Use `{HNDLDR}rmbg` as reply to a pic to remove its background."
         )
         await asyncio.sleep(5)
         await xx.delete()
@@ -614,4 +614,4 @@ async def sugg(event):
         )
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLDR)}"})
