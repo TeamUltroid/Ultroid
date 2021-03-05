@@ -46,9 +46,10 @@ async def ultroid(event):
         event.chat_id,
         f"Hi {OWNER_NAME}. Please browse through the options",
         buttons=[
-            [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
-            [Button.inline("Sᴛᴀᴛs", data="stat")],
-            [Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast")],
+            [Button.inline("Language 🌐", data="lang"),
+            Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
+            [Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+            Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast")],
         ],
     )
 

@@ -7,7 +7,7 @@
 
 from . import *
 
-# main menuu for setting other vars
+# main menu for setting other vars
 
 
 @callback("otvars")
