@@ -15,6 +15,8 @@ from bs4 import BeautifulSoup
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
+from rextester_py.rextester_aio import UnknownLanguage
+from rextester_py import rexec_aio
 
 from . import *
 
