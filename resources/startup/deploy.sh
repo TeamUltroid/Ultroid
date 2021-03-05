@@ -37,8 +37,6 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
     musl \
     neofetch \
     python3-lxml \
-    postgresql \
-    postgresql-client \
     libpq-dev \
     libcurl4-openssl-dev \
     libxml2-dev \
@@ -62,15 +60,14 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
     libopus0 \
     libopus-dev \
     gcc \
+    zip \
     mediainfo \
     megatools
 
 echo '
         •• Cloning Repository
 '
-
-git clone -b beta https://github.com/Teamultroid/Ultroid.git /root/TeamUltroid/
-
+git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 echo '
 	•• Getting Libraries and Installing
