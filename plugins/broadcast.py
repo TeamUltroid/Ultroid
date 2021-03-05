@@ -79,8 +79,8 @@ async def broadcast_adder(event):
     except BaseException:
         pass
     if not is_channel_added(chat_id):
-        x = add_channel(chat_id)
-        if x:
+        xx = add_channel(chat_id)
+        if xx:
             await x.edit("`Added to database!`")
         else:
             await x.edit("Error")
@@ -317,3 +317,5 @@ async def sending(event):
                     )
                 except BaseException:
                     await x.edit("Set up log channel for checking errors.")
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
