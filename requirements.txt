@@ -1,4 +1,4 @@
-py-Ultroid==11.5-beta
+py-Ultroid==11.6b0
 asyncurban
 carbonnow
 cairosvg
