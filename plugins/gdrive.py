@@ -62,16 +62,17 @@ async def aut(event):
                     return await event.reply("`No Client Secret Found`")
                 udB.set("GDRIVE_CLIENT_ID", id)
                 udB.set("GDRIVE_CLIENT_SECRET", secret)
-                storage = await create_token_file(TOKEN_FILE, event)
-                http = authorize(TOKEN_FILE, storage)
-                f = open(TOKEN_FILE, "r")
-                token_file_data = f.read()
-                udB.set("GDRIVE_TOKEN", token_file_data)
-                return await event.reply("`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`")
+                return await event.reply("`Success`")
             except Exception as exx:
                 return await repl.reply(
                     "`Something went wrong! Send `/auth` again.\nIf same happens contact `@TheUltroid"
                 )
+    storage = await create_token_file(TOKEN_FILE, event)
+    http = authorize(TOKEN_FILE, storage)
+    f = open(TOKEN_FILE, "r")
+    token_file_data = f.read()
+    udB.set("GDRIVE_TOKEN", token_file_data)
+    await event.reply("`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`")
 
 @ultroid_cmd(
     pattern="ugdrive ?(.*)",
