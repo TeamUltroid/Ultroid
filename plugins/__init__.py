@@ -17,6 +17,7 @@ from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
+from strings import get_string
 
 start_time = time.time()
 ultroid_version = "v0.0.3"
