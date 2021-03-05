@@ -9,14 +9,14 @@
 """
 ✘ Commands Available
 
-• `{i}upgdrive <reply/file name>`
+• `{i}ulgdrive <reply/file name>`
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
 • `{i}drivesearch <file name>`
     Search file name on Google Drive and get link.
 
-• `{i}updir <directory name>`
+• `{i}uldir <directory name>`
     Upload a directory on Google Drive.
 
 • `{i}gfolder`
@@ -35,7 +35,6 @@ from telethon import events
 from . import *
 
 TOKEN_FILE = "resources/downloads/auth_token.txt"
-TEMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 
 @asst_cmd("auth")
@@ -80,7 +79,7 @@ async def aut(event):
 
 
 @ultroid_cmd(
-    pattern="updrive ?(.*)",
+    pattern="ulgdrive ?(.*)",
 )
 async def _(event):
     mone = await eor(event, "Processing ...")
@@ -95,7 +94,7 @@ async def _(event):
         try:
             downloaded_file_name = await event.client.download_media(
                 reply_message,
-                TEMP_DOWNLOAD_DIRECTORY,
+                "resources/downloads",
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(
                         d,
@@ -171,7 +170,7 @@ async def sch(event):
 
 
 @ultroid_cmd(
-    pattern="updir ?(.*)",
+    pattern="uldir ?(.*)",
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
