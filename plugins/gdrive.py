@@ -9,14 +9,14 @@
 """
 ✘ Commands Available
 
-• `{i}ulgdrive <reply/file name>`
+• `{i}ugdrive <reply/file name>`
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
 • `{i}drivesearch <file name>`
     Search file name on Google Drive and get link.
 
-• `{i}uldir <directory name>`
+• `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
 • `{i}gfolder`
@@ -79,7 +79,7 @@ async def aut(event):
 
 
 @ultroid_cmd(
-    pattern="ulgdrive ?(.*)",
+    pattern="ugdrive ?(.*)",
 )
 async def _(event):
     mone = await eor(event, "Processing ...")
@@ -170,7 +170,7 @@ async def sch(event):
 
 
 @ultroid_cmd(
-    pattern="uldir ?(.*)",
+    pattern="udir ?(.*)",
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
