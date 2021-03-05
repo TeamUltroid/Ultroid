@@ -26,6 +26,7 @@ async def otvaar(event):
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
             ],
+            [Button.inline("ɢDʀɪᴠᴇ Sᴇᴛ", data="gdrive")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
