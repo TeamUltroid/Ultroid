@@ -4,3 +4,23 @@ natively: English
 authors:
   - xditya
   - rojserbest
+
+afk_1: "`No Longer Afk
+
+Was away for ~ {}`"
+afk_2: "#AFK
+Set AFK mode to False.
+Was AFK for {}`"
+afk_3: "I'm currently AFK.
+Last seen {} ago.`
+
+**Reason:** `{}`"
+afk_4: "`I'm currently AFK.
+
+Last seen {} ago.`"
+afk_5: "`Going AFK.`
+
+**Reason:** `{}`"
+afk_6: "I'm going AFK."
+afk_7: "Currently AFK with reason {}"
+afk_8: "Currently AFK."
