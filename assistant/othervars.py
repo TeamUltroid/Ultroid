@@ -15,75 +15,92 @@ TOKEN_FILE = "resources/downloads/auth_token.txt"
 @callback("authorise")
 @owner
 async def _(e):
-	if not udB.get("GDRIVE_CLIENT_ID"):
-		return await e.edit("Client ID and Secret is Empty.\nFill it First.", buttons=Button.inline("Back", data="gdrive"))
-	storage = await create_token_file(TOKEN_FILE, e)
-	http = authorize(TOKEN_FILE, storage)
-	f = open(TOKEN_FILE, "r")
-	token_file_data = f.read()
-	udB.set("GDRIVE_TOKEN", token_file_data)
-	await e.reply("`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`", buttons=Button.inline("Main Menu", data="setter"))
+    if not udB.get("GDRIVE_CLIENT_ID"):
+        return await e.edit(
+            "Client ID and Secret is Empty.\nFill it First.",
+            buttons=Button.inline("Back", data="gdrive"),
+        )
+    storage = await create_token_file(TOKEN_FILE, e)
+    http = authorize(TOKEN_FILE, storage)
+    f = open(TOKEN_FILE, "r")
+    token_file_data = f.read()
+    udB.set("GDRIVE_TOKEN", token_file_data)
+    await e.reply(
+        "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
+        buttons=Button.inline("Main Menu", data="setter"),
+    )
+
 
 @callback("folderid")
 @owner
 async def _(e):
-	await e.edit("Send your FOLDER ID\n\n"
-	+ "For FOLDER ID:\n"
-	+ "1. Open Google Drive App.\n"
-	+ "2. Create Folder.\n"
-	+ "3. Make that folder public.\n"
-	+ "4. Copy link of that folder."
-	+ "5. Send all characters which is after id= .")
-	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
-		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
-		repl = await reply
-		udB.set("GDRIVE_FOLDER_ID", repl.text)
-		await repl.reply("Success Now You Can Authorise.", buttons=Button.inline("« Back", data="gdrive"))
+    await e.edit(
+        "Send your FOLDER ID\n\n"
+        + "For FOLDER ID:\n"
+        + "1. Open Google Drive App.\n"
+        + "2. Create Folder.\n"
+        + "3. Make that folder public.\n"
+        + "4. Copy link of that folder."
+        + "5. Send all characters which is after id= ."
+    )
+    async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+        repl = await reply
+        udB.set("GDRIVE_FOLDER_ID", repl.text)
+        await repl.reply(
+            "Success Now You Can Authorise.",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
 
 
 @callback("clientsec")
 @owner
 async def _(e):
-	await e.edit("Send your CLIENT SECRET")
-	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
-		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
-		repl = await reply
-		udB.set("GDRIVE_CLIENT_SECRET", repl.text)
-		await repl.reply("Success!\nNow You Can Authorise or add FOLDER ID.", buttons=Button.inline("« Back", data="gdrive"))
+    await e.edit("Send your CLIENT SECRET")
+    async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+        repl = await reply
+        udB.set("GDRIVE_CLIENT_SECRET", repl.text)
+        await repl.reply(
+            "Success!\nNow You Can Authorise or add FOLDER ID.",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
 
 
 @callback("clientid")
 @owner
 async def _(e):
-	await e.edit("Send your CLIENT ID ending with .com")
-	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
-		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
-		repl = await reply
-		if not repl.text.endswith(".com"):
-			return await repl.reply("`Wrong CLIENT ID`")
-		udB.set("GDRIVE_CLIENT_ID", repl.text)
-		await repl.reply("Success now set CLIENT SECRET", buttons=Button.inline("« Back", data="gdrive"))
+    await e.edit("Send your CLIENT ID ending with .com")
+    async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+        repl = await reply
+        if not repl.text.endswith(".com"):
+            return await repl.reply("`Wrong CLIENT ID`")
+        udB.set("GDRIVE_CLIENT_ID", repl.text)
+        await repl.reply(
+            "Success now set CLIENT SECRET",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
 
-		
+
 @callback("gdrive")
 @owner
 async def _(e):
-	await e.edit(
-	"Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
-	buttons=[
-	[
-	Button.inline("CLIENT ID", data="clientid"),
-	Button.inline("CLIENT SECRET", data="clientsec"),
-	],
-	[
-	Button.inline("FOLDER ID", data="folderid"),
-	Button.inline("AUTHORISE", data="authorise"),
-	],
-	[Button.inline("« Back", data="otvars")],
-	],
-	link_preview=False,
-	)
-	
+    await e.edit(
+        "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
+        buttons=[
+            [
+                Button.inline("CLIENT ID", data="clientid"),
+                Button.inline("CLIENT SECRET", data="clientsec"),
+            ],
+            [
+                Button.inline("FOLDER ID", data="folderid"),
+                Button.inline("AUTHORISE", data="authorise"),
+            ],
+            [Button.inline("« Back", data="otvars")],
+        ],
+        link_preview=False,
+    )
 
 
 @callback("otvars")

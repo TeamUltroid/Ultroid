@@ -43,7 +43,10 @@ TOKEN_FILE = "resources/downloads/auth_token.txt"
 async def _(event):
     mone = await eor(event, "Processing ...")
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`")
+        return await eod(
+            mone,
+            f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`",
+        )
     input_str = event.pattern_match.group(1)
     required_file_name = None
     start = datetime.now()
@@ -111,7 +114,10 @@ async def _(event):
 )
 async def sch(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`")
+        return await eod(
+            mone,
+            f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`",
+        )
     http = authorize(TOKEN_FILE, None)
     input_str = event.pattern_match.group(1).strip()
     a = await eor(event, "Searching for {} in G-Drive.".format(input_str))
@@ -133,7 +139,10 @@ async def sch(event):
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`")
+        return await eod(
+            mone,
+            f"`Go to `{Var.BOT_USERNAME}` and send ``/start`` >> Settings >> Features >> Gdrive`",
+        )
     input_str = event.pattern_match.group(1)
     if os.path.isdir(input_str):
         http = authorize(TOKEN_FILE, None)
