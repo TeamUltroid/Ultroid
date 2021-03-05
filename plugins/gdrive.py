@@ -48,7 +48,7 @@ async def aut(event):
             "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET\n\n"
             + "Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space.",
         )
-        async with asst.conversation(ultroid_bot.uid) as conv:
+        async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
             reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
             repl = await reply
             try:
