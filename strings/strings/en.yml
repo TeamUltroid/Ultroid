@@ -5,6 +5,37 @@ authors:
   - xditya
   - rojserbest
 
+# commons
+com_1: "`Processing...`"
+
+# help 
+help_1: "`{}` is not a valid plugin!"
+help_2: "`The bot did not respond to the inline query.\nConsider using {}restart`"
+help_3: "`Please turn on inline mode for your bot from` @Botfather."
+help_4: "Hey, \nYou are on Bot Mode. \nBot Mode Users Cant Get Help Directly ... \nInstead Copy Paste The Following in The Chat and Click The Pop Up \n\n `@{} ultd`"
+
+# inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Pʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}\n\n
+Gᴏ Aɴᴅ Aᴅᴅ `ADDONS` Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**"
+inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
+
+# tagnotif
+tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨Message📨]({})"
+tagnot_2: "{} tagged you in {}\n\n [📨Message📨]({})"
+
+# whisper
+wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
+wspr_2: "Message deleted"
+
 # afk
 afk_1: "`No Longer Afk\n\n
 Was away for ~ {}`"
@@ -22,7 +53,7 @@ afk_6: "I'm going AFK."
 afk_7: "Currently AFK with reason {}"
 afk_8: "Currently AFK."
 
-# alive
+# bot
 alive_1: "**The Ultroid Userbot...**\n\n
 **{}**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
@@ -33,3 +64,17 @@ alive_1: "**The Ultroid Userbot...**\n\n
 ┣ **Telethon** - `{}`\n
 ┣ **Branch** - `{}`\n
 ┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
+ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
+usage: "**⚙️ Dyno Usage ⚙️**:\n\n
+ -> `Dyno usage for`  **{}**:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+ -> `Dyno hours quota remaining this month`:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+**Total Disk Space: {}\n\n**
+**Used: {}  Free: {}\n\n**
+**📊Data Usage📊\n\nUpload: {}\nDown: {}\n\n**
+**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "GoodBye {}.\n`Shutting down...`"

@@ -35,7 +35,7 @@ async def _(e):
         except ValueError as ex:
             return await eor(e, str(ex))
         except AttributeError:
-            return await eor(e, "No username of replied user wad found")
+            return await eor(e, "No username of replied user was found.")
     else:
         put = e.pattern_match.group(1)
     if put:
@@ -44,13 +44,13 @@ async def _(e):
         except rep:
             return await eor(
                 e,
-                "`The bot did not respond to the inline query.\nConsider using {}restart`".format(
+                get_string("help_2").format(
                     HNDLR
                 ),
             )
         except dis:
             return await eor(
-                e, "`Please turn on inline mode for your bot from` @Botfather."
+                e, get_string("help_3")
             )
         await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
         await e.delete()
@@ -126,7 +126,7 @@ async def _(e):
             sur = e.builder.article(
                 title=f"{logi.first_name}",
                 description=desc,
-                text=f"@{logi.username} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated.",
+                text=get_string("wspr_1").format(logi.username),
                 buttons=button,
             )
             buddhhu.append(meme)
@@ -162,7 +162,7 @@ async def _(e):
             except KeyError:
                 pass
             try:
-                await e.edit("Msg deleted")
+                await e.edit(get_string("wspr_2"))
             except np:
                 pass
     else:

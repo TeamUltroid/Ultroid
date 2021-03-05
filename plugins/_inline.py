@@ -23,33 +23,13 @@ from . import *
 # ================================================#
 notmine = "This bot is for {}".format(OWNER_NAME)
 ULTROID_PIC = "https://telegra.ph/file/11245cacbffe92e5d5b14.jpg"
-helps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
-
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
-
-Pʟᴜɢɪɴs ~ {}**
-"""
+helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
 if add_ons:
-    zhelps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
-
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
-
-Aᴅᴅᴏɴs ~ {}**
-"""
+    zhelps = get_string("inline_2")
 else:
-    zhelps = """
-[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)
-
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.
-
-Aᴅᴅᴏɴs ~ {}
-
-Gᴏ Aɴᴅ Aᴅᴅ ADDONS Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**
-"""
+    zhelps = get_string("inline_3")
 # ============================================#
 
 
@@ -59,15 +39,7 @@ async def e(o):
     if len(o.text) == 0:
         b = o.builder
         uptime = grt((time.time() - start_time))
-        ALIVEMSG = """
-**The Ultroid Userbot...**\n
-✵ **Owner** - `{}`
-✵ **Ultroid** - `{}`
-✵ **UpTime** - `{}`
-✵ **Python** - `{}`
-✵ **Telethon** - `{}`
-✵ **Branch** - `{}`
-""".format(
+        ALIVEMSG = get_string("alive_1").format(
             OWNER_NAME,
             ultroid_version,
             uptime,
@@ -119,7 +91,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 description="Help Menu - UserBot | Telethon ",
                 url="https://t.me/TheUltroid",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                text=f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {cmd}**",
+                text=get_string("inline_4").format(OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd),
                 buttons=[
                     [
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
@@ -363,7 +335,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 z.append(y)
         cmd = len(z) + 10
         await event.edit(
-            f"** Bᴏᴛ Oғ {OWNER_NAME}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {len(PLUGINS) - 4}\nAᴅᴅᴏɴs ~ {len(ADDONS)}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {cmd}**",
+            get_string("inline_4").format(OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd),
             buttons=buttons,
             link_preview=False,
         )
@@ -372,7 +344,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @owner
     async def on_plug_in_callback_query_handler(event):
         await event.edit(
-            "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**",
+            get_string("inline_5"),
             buttons=Button.inline("Oᴘᴇɴ Mᴀɪɴ Mᴇɴᴜ Aɢᴀɪɴ", data="open"),
         )
 
