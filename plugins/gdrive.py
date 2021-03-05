@@ -36,7 +36,7 @@ from . import *
 
 TOKEN_FILE = "resources/downloads/auth_token.txt"
 
-@callback("clientsec")
+@callback("authorise")
 async def _(e):
 	if not udB.get("GDRIVE_CLIENT_ID"):
 		return await e.edit("Client ID and Secret is Empty.\nFill it First.", buttons=Button.inline("Back", data="gdrive"))
@@ -60,7 +60,7 @@ async def _(e):
 		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
 		repl = await reply
 		udB.set("GDRIVE_FOLDER_ID", repl.text)
-		await repl.reply("Success Now You Can Authorise.", buttons=Button.inline("Back", data="gdrive"))
+		await repl.reply("Success Now You Can Authorise.", buttons=Button.inline("« Back", data="gdrive"))
 
 
 @callback("clientsec")
@@ -70,7 +70,7 @@ async def _(e):
 		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
 		repl = await reply
 		udB.set("GDRIVE_CLIENT_SECRET", repl.text)
-		await repl.reply("Success!\nNow You Can Authorise or add FOLDER ID.", buttons=Button.inline("Back", data="gdrive"))
+		await repl.reply("Success!\nNow You Can Authorise or add FOLDER ID.", buttons=Button.inline("« Back", data="gdrive"))
 
 
 @callback("clientid")
@@ -82,7 +82,7 @@ async def _(e):
 		if not repl.text.endswith(".com"):
 			return await repl.reply("`Wrong CLIENT ID`")
 		udB.set("GDRIVE_CLIENT_ID", repl.text)
-		await repl.reply("Success now set CLIENT SECRET", buttons=Button.inline("Back", data="gdrive"))
+		await repl.reply("Success now set CLIENT SECRET", buttons=Button.inline("« Back", data="gdrive"))
 
 		
 @callback("gdrive")
@@ -98,7 +98,7 @@ async def _(e):
 	Button.inline("FOLDER ID", data="folderid"),
 	Button.inline("AUTHORISE", data="authorise"),
 	],
-	[Button.inline("Back", data="setter")],
+	[Button.inline("« Back", data="otvars")],
 	],
 	link_preview=False,
 	)
