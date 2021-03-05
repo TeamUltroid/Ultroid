@@ -36,43 +36,73 @@ from . import *
 
 TOKEN_FILE = "resources/downloads/auth_token.txt"
 
+@callback("clientsec")
+async def _(e):
+	if not udB.get("GDRIVE_CLIENT_ID"):
+		return await e.edit("Client ID and Secret is Empty.\nFill it First.", buttons=Button.inline("Back", data="gdrive"))
+	storage = await create_token_file(TOKEN_FILE, e)
+	http = authorize(TOKEN_FILE, storage)
+	f = open(TOKEN_FILE, "r")
+	token_file_data = f.read()
+	udB.set("GDRIVE_TOKEN", token_file_data)
+	await e.reply("`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`", buttons=Button.inline("Main Menu", data="setter"))
 
-@asst_cmd("auth")
-async def aut(event):
-    if event.is_group:
-        return
-    if os.path.exists(TOKEN_FILE):
-        return await event.reply("`You have already authorised with Google Drive`")
-    if Redis("GDRIVE_CLIENT_ID") == None or Redis("GDRIVE_CLIENT_SECRET") == None:
-        await event.reply(
-            "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET\n\n"
-            + "Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space.",
-        )
-        async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
-            reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
-            repl = await reply
-            try:
-                creds = repl.text.split(" ")
-                id = creds[0]
-                if not id.endswith("com"):
-                    return await event.reply("`Wrong Client Id`")
-                try:
-                    secret = creds[1]
-                except IndexError:
-                    return await event.reply("`No Client Secret Found`")
-                udB.set("GDRIVE_CLIENT_ID", id)
-                udB.set("GDRIVE_CLIENT_SECRET", secret)
-                return await event.reply("`Success`")
-            except Exception as exx:
-                return await repl.reply(
-                    "`Something went wrong! Send `/auth` again.\nIf same happens contact `@TheUltroid"
-                )
-    storage = await create_token_file(TOKEN_FILE, event)
-    http = authorize(TOKEN_FILE, storage)
-    f = open(TOKEN_FILE, "r")
-    token_file_data = f.read()
-    udB.set("GDRIVE_TOKEN", token_file_data)
-    await event.reply("`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`")
+@callback("folderid")
+async def _(e):
+	await e.edit("Send your FOLDER ID\n\n"
+	+ "For FOLDER ID:\n"
+	+ "1. Open Google Drive App.\n"
+	+ "2. Create Folder.\n"
+	+ "3. Make that folder public.\n"
+	+ "4. Copy link of that folder."
+	+ "5. Send all characters which is after id= .")
+	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+		repl = await reply
+		udB.set("GDRIVE_FOLDER_ID", repl.text)
+		await repl.reply("Success Now You Can Authorise.", buttons=Button.inline("Back", data="gdrive"))
+
+
+@callback("clientsec")
+async def _(e):
+	await e.edit("Send your CLIENT SECRET")
+	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+		repl = await reply
+		udB.set("GDRIVE_CLIENT_SECRET", repl.text)
+		await repl.reply("Success!\nNow You Can Authorise or add FOLDER ID.", buttons=Button.inline("Back", data="gdrive"))
+
+
+@callback("clientid")
+async def _(e):
+	await e.edit("Send your CLIENT ID ending with .com")
+	async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
+		reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
+		repl = await reply
+		if not repl.text.endswith(".com"):
+			return await repl.reply("`Wrong CLIENT ID`")
+		udB.set("GDRIVE_CLIENT_ID", repl.text)
+		await repl.reply("Success now set CLIENT SECRET", buttons=Button.inline("Back", data="gdrive"))
+
+		
+@callback("gdrive")
+async def _(e):
+	await e.edit(
+	"Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
+	buttons=[
+	[
+	Button.inline("CLIENT ID", data="clientid"),
+	Button.inline("CLIENT SECRET", data="clientsec"),
+	],
+	[
+	Button.inline("FOLDER ID", data="folderid"),
+	Button.inline("AUTHORISE", data="authorise"),
+	],
+	[Button.inline("Back", data="setter")],
+	],
+	link_preview=False,
+	)
+	
 
 @ultroid_cmd(
     pattern="ugdrive ?(.*)",
@@ -80,7 +110,7 @@ async def aut(event):
 async def _(event):
     mone = await eor(event, "Processing ...")
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, f"`Go to `{Var.BOT_USERNAME}` and send ``/auth.`")
+        return await eod(mone, f"`Go to `{Var.BOT_USERNAME}` and send ``/start.` >> Settings >> Features >> Gdrive")
     input_str = event.pattern_match.group(1)
     required_file_name = None
     start = datetime.now()
