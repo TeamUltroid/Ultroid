@@ -9,7 +9,7 @@ authors:
 
 # commons
 com_1: "`Processing...`"
-
+com_2: "`Searching...`"
 # help 
 help_1: "`{}` is not a valid plugin!"
 help_2: "`The bot did not respond to the inline query.\nConsider using {}restart`"
@@ -156,4 +156,43 @@ sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
 sf_20: "`Extracting information...`"
 sf_21: "\n\nFedInfo Extracted by Ultroid"
 
+# gdrive
+gdrive_1: "`You have already authorised with Google Drive`"
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
+Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_3: "`Wrong Client Id`"
+gdrive_4: "`Something went wrong! Send `/auth` again.\nIf same happens contact `@TheUltroid"
+gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
+gdrive_6: "`Go to `{}` and send ``/auth.`"
+gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
 
+# pmpermit
+pmperm_1: "Please wait for me to respnd or you will be blocked and reported as spam!!"
+pmperm_2: "You were spamming my Master's PM, which I didn't like."
+pmperm_3: "Reply to someone's msg or try this commmand in private."
+
+# updater
+upd_1: "`Checking for updates, please wait....`"
+upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
+upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
+upd_4: "`Changelog is too big, view the file to see it.`"
+upd_5: "Use `{}update now` to update."
+upd_6: "{}\n\nUse `{}update now` to update."
+upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+
+# upload download
+udl_1: "`Reply The File/Media u Want to Download..`"
+udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
+udl_3: "`Give a specific path to file`"
+
+# words
+wrd_1: "**Word** - `{}`\n\n**Meanings** - \n"
+wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
+wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
+
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "Choose which API you want to set."
+ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
+ast_3: "Hi {}. Please browse through the options"

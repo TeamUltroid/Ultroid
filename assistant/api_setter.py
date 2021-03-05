@@ -14,7 +14,7 @@ from . import *
 @owner
 async def apiset(event):
     await event.edit(
-        "Choose which API you want to set.",
+        get_string("ast_1"),
         buttons=[
             [Button.inline("Remove.bg", data="rmbg")],
             [custom.Button.inline("« Back", data="setter")],
@@ -34,7 +34,7 @@ async def rmbgapi(event):
     name = "Remove.bg API Key"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
+            get_string("ast_2")
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response

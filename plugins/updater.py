@@ -44,12 +44,11 @@ async def updateme_requirements():
     pattern="update ?(.*)",
 )
 async def upstream(ups):
-    pagal = await eor(ups, "`Checking for updates, please wait....`")
+    pagal = await eor(ups, get_string("upd_1"))
     conf = ups.pattern_match.group(1)
     off_repo = UPSTREAM_REPO_URL
     try:
-        txt = "`Oops.. Updater cannot continue due to "
-        txt += "some problems occured`\n\n**LOGTRACE:**\n"
+        txt = get_string("upd_2")
         repo = Repo()
     except NoSuchPathError as error:
         await eod(pagal, f"{txt}\n`directory {error} is not found`", time=10)
@@ -90,27 +89,27 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "now" not in conf:
         if changelog:
-            changelog_str = f"**New UPDATE available for [[{ac_br}]]({UPSTREAM_REPO_URL}/tree/{ac_br}):\n\nCHANGELOG**\n\n{changelog}"
+            changelog_str = get_string("upd_3").format(ac_br, UPSTREAM_REPO_URL, ac_br, changelog)
             if len(changelog_str) > 4096:
-                await eor(pagal, "`Changelog is too big, view the file to see it.`")
+                await eor(pagal, get_string("upd_4"))
                 file = open("output.txt", "w+")
                 file.write(changelog_str)
                 file.close()
                 await ups.client.send_file(
                     ups.chat_id,
                     "output.txt",
-                    caption=f"Do `{hndlr}update now` to update.",
+                    caption=get_string("upd_5").format(hndlr),
                     reply_to=ups.id,
                 )
                 remove("output.txt")
             else:
                 return await eod(
-                    pagal, f"{changelog_str}\n\nDo `{hndlr}update now` to update."
+                    pagal, get_string("upd_6").format(changelog_str, hndlr)
                 )
         else:
             await eod(
                 pagal,
-                f"\n`Your BOT is`  **up-to-date**  `with`  **[[{ac_br}]]({UPSTREAM_REPO_URL}/tree/{ac_br})**\n",
+                get_string("upd_7").format(ac_br, UPSTREAM_REPO_URL, ac_br),
                 time=10,
             )
             repo.__del__()
@@ -124,7 +123,7 @@ async def upstream(ups):
         if not Var.HEROKU_APP_NAME:
             await eod(
                 pagal,
-                "`Please set up the HEROKU_APP_NAME variable to be able to update userbot.`",
+                "`Please set up the `HEROKU_APP_NAME` variable to be able to update userbot.`",
                 time=10,
             )
             repo.__del__()

@@ -34,7 +34,7 @@ async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
         return await event.edit("`Give something to search..`")
-    x = await eor(event, "`searching..`")
+    x = await eor(event, get_sring("com_2"))
     gs = GoogleSearch()
     res = await gs.async_search(f"{inp}")
     out = ""

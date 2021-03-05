@@ -55,12 +55,12 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 You have {}/{} warnings!"""
     )
 
-UND = "Please wait for me to respnd or you will be blocked and reported as spam!!"
-UNS = "You were spamming my Master's PM, which I didn't like."
+UND = get_string("pmperm_1")
+UNS = get_string("pmperm_2")
 # 1
 
 WARNS = 3
-NO_REPLY = "Reply to someone's msg or try this commmand in private."
+NO_REPLY = get_string("pmperm_3")
 PMCMDS = [
     f"{hndlr}a",
     f"{hndlr}approve",

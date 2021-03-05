@@ -61,7 +61,7 @@ async def ultroid(event):
     if event.is_group:
         return
     await event.edit(
-        f"Hi {OWNER_NAME}. Please browse through the options",
+        get_string("ast_3").format(OWNER_NAME),
         buttons=[
             [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
             [Button.inline("Sᴛᴀᴛs", data="stat")],

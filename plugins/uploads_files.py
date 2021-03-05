@@ -35,14 +35,14 @@ opn = []
     pattern="dl ?(.*)",
 )
 async def download(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     kk = event.pattern_match.group(1)
     s = dt.now()
     k = time.time()
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
-            return await eod(xx, "`Reply The File/Media u Want to Download..`", time=5)
+            return await eod(xx, get_string("udl_1"), time=5)
         else:
             if not kk:
                 d = "resources/downloads/"
@@ -77,19 +77,19 @@ async def download(event):
                 )
     e = datetime.now()
     t = convert((e - s).seconds)
-    await eod(xx, f"Download Successful..\nTo\n`{o}`\nin `{t}`")
+    await eod(xx, get_string("udl_2").format(o, t))
 
 
 @ultroid_cmd(
     pattern="ul ?(.*)",
 )
 async def download(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     kk = event.pattern_match.group(1)
     s = dt.now()
     tt = time.time()
     if not kk:
-        return await eod(xx, "`Give a specific path to file`")
+        return await eod(xx, get_string("udl_3"))
     else:
         try:
             x = await event.client.send_file(
@@ -123,7 +123,7 @@ async def download(event):
 )
 async def _(event):
     input_str = event.text[6:]
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
         if not a.message:
@@ -145,7 +145,7 @@ async def _(event):
     pattern="open$",
 )
 async def _(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
         if a.media:
