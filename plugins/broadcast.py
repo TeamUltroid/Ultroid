@@ -34,10 +34,10 @@ async def broadcast_adder(event):
     if "addsudo" in event.text:  # weird fix
         return
     msgg = event.pattern_match.group(1)
-    x = await eor(event, "`Adding to db...`")
+    x = await eor(event, get_string("bd_1"))
     aldone = new = crsh = 0
     if msgg == "all":
-        await x.edit("`Trying to add all admin channels to db...`")
+        await x.edit(get_string("bd_2"))
         chats = [
             e.entity
             for e in await ultroid.get_dialogs()
@@ -56,7 +56,7 @@ async def broadcast_adder(event):
             except BaseException:
                 pass
         await x.edit(
-            f"**Done.**\nChats already in Database: {get_no_channels()}\nNewly Added: {new}"
+            get_string("bd_3").format(get_no_channels(), new)
         )
         return
     if event.reply_to_msg_id:
@@ -68,7 +68,7 @@ async def broadcast_adder(event):
             channel_id = lines[line_number][4:-1]
             if not is_channel_added(channel_id):
                 add_channel(channel_id)
-        await x.edit("Channels added!")
+        await x.edit(get_string("bd_4"))
         await asyncio.sleep(3)
         await event.delete()
         return
@@ -81,13 +81,13 @@ async def broadcast_adder(event):
     if not is_channel_added(chat_id):
         x = add_channel(chat_id)
         if x:
-            await x.edit("`Added to database!`")
+            await x.edit(get_string("bd_5"))
         else:
             await x.edit("Error")
         await asyncio.sleep(3)
         await event.delete()
     elif is_channel_added(chat_id):
-        await x.edit("`Channel is already is database!`")
+        await x.edit(get_string("bd_6"))
         await asyncio.sleep(3)
         await event.delete()
 
@@ -95,7 +95,7 @@ async def broadcast_adder(event):
 @ultroid_cmd(pattern="rem ?(.*)")
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "`Processing...`")
+    x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit("`Removing...`")
         udB.delete("BROADCAST")

@@ -78,3 +78,11 @@ usage: "**⚙️ Dyno Usage ⚙️**:\n\n
 **📊Data Usage📊\n\nUpload: {}\nDown: {}\n\n**
 **CPU: {}%\nRAM: {}%\nDISK: {}%**"
 shutdown: "GoodBye {}.\n`Shutting down...`"
+
+# broadcast
+bd_1: "`Adding to db...`"
+bd_2: "`Trying to add all admin channels to db...`"
+bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
+bd_4: "Channels added!"
+bd_5: "`Added to database!`"
+bd_6: "`Channel is already is database!`"
