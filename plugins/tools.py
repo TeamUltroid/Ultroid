@@ -273,8 +273,8 @@ async def _(event):
         OUT += f"**• OUTPUT:**\n`{o}`"
     else:
         _o = o.split("\n")
-        o = "`\n".join(_o)
-        OUT += f"**• OUTPUT:**\n{o}"
+        o = "\n".join(_o)
+        OUT += f"**• OUTPUT:**\n`{o}`"
     if len(OUT) > 4096:
         with io.BytesIO(str.encode(OUT)) as out_file:
             out_file.name = "bash.txt"

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 py-Ultroid==11.5-beta
+=======
+py-Ultroid==11.9b0
+>>>>>>> origin/betalang
 asyncurban
 carbonnow
 cairosvg
@@ -29,4 +33,9 @@ youtube-search-python
 google-api-python-client==1.7.11
 oauth2client==4.1.3
 httplib2==0.13.1
+<<<<<<< HEAD
 pyaml
+=======
+rextester-py
+html-telegraph-poster
+>>>>>>> origin/betalang

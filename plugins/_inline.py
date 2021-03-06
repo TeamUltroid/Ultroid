@@ -211,6 +211,13 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 )
             ],
             [
+                Button.switch_inline(
+                    "Rᴇx Tᴇsᴛᴇʀ",
+                    query="rex",
+                    same_peer=True,
+                )
+            ],
+            [
                 Button.inline(
                     "<- Bᴀᴄᴋ",
                     data="open",
@@ -235,7 +242,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             await event.edit(f"{halp}", buttons=buttons, link_preview=False)
         else:
             await event.answer(
-                "• Iɴsᴛᴀʟʟ A Pʟᴜɢɪɴ Mᴀɴᴜᴀʟʟʏ Oʀ Aᴅᴅ Vᴀʀ ADDONS Wɪᴛʜ Vᴀʟᴜᴇ True",
+                f"• Tʏᴘᴇ `{HNDLR}setredis ADDONS True`\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
                 cache_time=0,
                 alert=True,
             )

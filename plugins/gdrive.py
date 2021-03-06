@@ -37,44 +37,6 @@ from . import *
 TOKEN_FILE = "resources/downloads/auth_token.txt"
 
 
-@asst_cmd("auth")
-async def aut(event):
-    if event.is_group:
-        return
-    if os.path.exists(TOKEN_FILE):
-        return await event.reply(get_string("gdrive_1"))
-    if Redis("GDRIVE_CLIENT_ID") == None or Redis("GDRIVE_CLIENT_SECRET") == None:
-        await event.reply(get_string("gdrive_2"))
-        async with asst.conversation(ultroid_bot.uid) as conv:
-            reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
-            repl = await reply
-            try:
-                creds = repl.text.split(" ")
-                id = creds[0]
-                if not id.endswith("com"):
-                    return await event.reply(get_string("gdrive_3"))
-                try:
-                    secret = creds[1]
-                except IndexError:
-                    return await event.reply("`No Client Secret Found`")
-                udB.set("GDRIVE_CLIENT_ID", id)
-                udB.set("GDRIVE_CLIENT_SECRET", secret)
-                return await repl.reply("`Success!` Now send /auth again")
-            except Exception as exx:
-                return await repl.reply(
-                    get_string("gdrive_4")
-                )
-    else:
-        storage = await create_token_file(TOKEN_FILE, event)
-        http = authorize(TOKEN_FILE, storage)
-        f = open(TOKEN_FILE, "r")
-        token_file_data = f.read()
-        udB.set("GDRIVE_TOKEN", token_file_data)
-        await event.reply(
-            get_string("gdrive_5")
-        )
-
-
 @ultroid_cmd(
     pattern="ugdrive ?(.*)",
 )

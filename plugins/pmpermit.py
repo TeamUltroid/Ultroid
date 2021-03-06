@@ -55,6 +55,7 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 You have {}/{} warnings!"""
     )
 
+<<<<<<< HEAD
 UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 # 1
