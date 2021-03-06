@@ -11,6 +11,7 @@ from os import environ, execle, path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+from . import *
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
 requirements_path = path.join(
@@ -69,11 +70,11 @@ async def upstream(ups):
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
-        repo.create_head("main", origin.refs.main)
-        repo.heads.main.set_tracking_branch(origin.refs.main)
-        repo.heads.main.checkout(True)
-    ac_br = repo.active_branch.name
-    if ac_br != "main":
+        repo.create_head("lang", origin.refs.lang)
+        repo.heads.lang.set_tracking_branch(origin.refs.lang)
+        repo.heads.lang.checkout(True)
+    ac_br = repo.active_branch.lang
+    if ac_br != "lang":
         await eod(
             pagal,
             f"**[UPDATER]:**` You are on ({ac_br})\n Please change to main branch.`",
