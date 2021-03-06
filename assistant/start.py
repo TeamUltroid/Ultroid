@@ -63,9 +63,10 @@ async def ultroid(event):
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
         buttons=[
-            [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
-            [Button.inline("Sᴛᴀᴛs", data="stat")],
-            [Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast")],
+            [Button.inline("Language 🌐", data="lang"),
+            Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
+            [Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+            Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast")],
         ],
     )
 
@@ -132,3 +133,9 @@ async def setting(event):
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
+
+
+#@callback("lang")
+#@owner
+#async def lang(e):
+    
