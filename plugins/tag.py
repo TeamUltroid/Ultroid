@@ -36,7 +36,7 @@ from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
-
+import asyncio
 from . import *
 
 
@@ -93,6 +93,7 @@ async def _(e):
         ladybug = [xx[miracul:miracul+limits] for miracul in range(0, len(xx), limits)]#sh1vam
         for miracul in ladybug:
             chatnoir = f"**{lll}** \n{miracul}"
+            await asyncio.sleep(0.7)
             await e.client.send_message(event.chat_id, chatnoir)
             
     else:
