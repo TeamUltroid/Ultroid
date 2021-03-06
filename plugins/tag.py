@@ -52,11 +52,12 @@ async def _(e):
     o = 0
     nn = 0
     rece = 0
+    chat = await e.get_input_chat()
     if lll:
         xx = f"{lll}"
     else:
         xx = ""
-    async for bb in e.client.iter_participants(e.chat_id, 99):
+    async for bb in e.client.iter_participants(chat):
         users = users + 1
         x = bb.status
         y = bb.participant
