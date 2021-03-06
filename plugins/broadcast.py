@@ -79,8 +79,8 @@ async def broadcast_adder(event):
     except BaseException:
         pass
     if not is_channel_added(chat_id):
-        x = add_channel(chat_id)
-        if x:
+        xx = add_channel(chat_id)
+        if xx:
             await x.edit(get_string("bd_5"))
         else:
             await x.edit("Error")
