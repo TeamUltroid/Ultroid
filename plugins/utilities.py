@@ -4,6 +4,8 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+from telethon.tl.types import ChannelParticipantCreator as lbcn
+from telethon.utils import get_display_name
 
 """
 ✘ Commands Available -
@@ -87,6 +89,145 @@ telegraph = Telegraph()
 telegraph.create_account(short_name="Ultroid")
 # ================================================================#
 
+async def miraculous(chat, event):
+    # chat.chats is a list so we use get_entity() to avoid IndexError
+    chat_obj_info = await event.client.get_entity(chat.full_chat.id)
+    broadcast = chat_obj_info.broadcast if hasattr(chat_obj_info, "broadcast") else False
+    chat_type = "Channel" if broadcast else "Group"
+    chat_title = chat_obj_info.title
+    warn_emoji = emojize(":warning:")
+    try:
+        msg_info = await event.client(GetHistoryRequest(peer=chat_obj_info.id, offset_id=0, offset_date=datetime(2010, 1, 1), 
+                                                        add_offset=-1, limit=1, max_id=0, min_id=0, hash=0))
+    except Exception as e:
+        msg_info = None
+        print("Exception:", e)
+    # No chance for IndexError as it checks for msg_info.messages first
+    first_msg_valid = True if msg_info and msg_info.messages and msg_info.messages[0].id == 1 else False
+    # Same for msg_info.users
+    creator_valid = True if first_msg_valid and msg_info.users else False
+    #Sh1vam
+    async for shivam in event.client.iter_participants(await event.get_input_chat()):
+                             lb=shivam.status
+                             cn=shivam.participant
+                             if isinstance(cn, lbcn):
+                                 sh=shivam.id
+                                 iv=shivam.username
+                                 am=shivam.first_name##solbed by Sh1vam
+    creator_id = int(sh)
+    creator_firstname = am
+    creator_username = iv
+    created = msg_info.messages[0].date if first_msg_valid else None
+    former_title = msg_info.messages[0].action.title if first_msg_valid and type(msg_info.messages[0].action) is MessageActionChannelMigrateFrom and msg_info.messages[0].action.title != chat_title else None
+    try:
+        dc_id, location = get_input_location(chat.full_chat.chat_photo)
+    except Exception as e:
+        dc_id = "Unknown"
+        location = str(e)
+    
+    #this is some spaghetti I need to change
+    description = chat.full_chat.about
+    members = chat.full_chat.participants_count if hasattr(chat.full_chat, "participants_count") else chat_obj_info.participants_count
+    admins = chat.full_chat.admins_count if hasattr(chat.full_chat, "admins_count") else None
+    banned_users = chat.full_chat.kicked_count if hasattr(chat.full_chat, "kicked_count") else None
+    restrcited_users = chat.full_chat.banned_count if hasattr(chat.full_chat, "banned_count") else None
+    members_online = chat.full_chat.online_count if hasattr(chat.full_chat, "online_count") else 0
+    group_stickers = chat.full_chat.stickerset.title if hasattr(chat.full_chat, "stickerset") and chat.full_chat.stickerset else None
+    messages_viewable = msg_info.count if msg_info else None
+    messages_sent = chat.full_chat.read_inbox_max_id if hasattr(chat.full_chat, "read_inbox_max_id") else None
+    messages_sent_alt = chat.full_chat.read_outbox_max_id if hasattr(chat.full_chat, "read_outbox_max_id") else None
+    exp_count = chat.full_chat.pts if hasattr(chat.full_chat, "pts") else None
+    username = chat_obj_info.username if hasattr(chat_obj_info, "username") else None
+    bots_list = chat.full_chat.bot_info  # this is a list
+    bots = 0
+    supergroup = "<b>Yes</b>" if hasattr(chat_obj_info, "megagroup") and chat_obj_info.megagroup else "No"
+    slowmode = "<b>Yes</b>" if hasattr(chat_obj_info, "slowmode_enabled") and chat_obj_info.slowmode_enabled else "No"
+    slowmode_time = chat.full_chat.slowmode_seconds if hasattr(chat_obj_info, "slowmode_enabled") and chat_obj_info.slowmode_enabled else None
+    restricted = "<b>Yes</b>" if hasattr(chat_obj_info, "restricted") and chat_obj_info.restricted else "No"
+    verified = "<b>Yes</b>" if hasattr(chat_obj_info, "verified") and chat_obj_info.verified else "No"
+    username = "@{}".format(username) if username else None
+    creator_username = "@{}".format(creator_username) if creator_username else None
+    #end of spaghetti block
+    
+    if admins is None:
+        # use this alternative way if chat.full_chat.admins_count is None, works even without being an admin
+        try:
+            participants_admins = await event.client(GetParticipantsRequest(channel=chat.full_chat.id, filter=ChannelParticipantsAdmins(),
+                                                                            offset=0, limit=0, hash=0))
+            admins = participants_admins.count if participants_admins else None
+        except Exception as e:
+            print("Exception:", e)
+    if bots_list:
+        for bot in bots_list:
+            bots += 1
+
+    caption = "<b>CHAT INFO:</b>\n"
+    caption += f"ID: <code>{chat_obj_info.id}</code>\n"
+    if chat_title is not None:
+        caption += f"{chat_type} name: {chat_title}\n"
+    if former_title is not None:  # Meant is the very first title
+        caption += f"Former name: {former_title}\n"
+    if username is not None:
+        caption += f"{chat_type} type: Public\n"
+        caption += f"Link: {username}\n"
+    else:
+        caption += f"{chat_type} type: Private\n"
+    if creator_username is not None:
+        caption += f"Creator: {creator_username}\n"
+    elif creator_valid:
+        caption += f"Creator: <a href=\"tg://user?id={creator_id}\">{creator_firstname}</a>\n"
+    if created is not None:
+        caption += f"Created: <code>{created.date().strftime('%b %d, %Y')} - {created.time()}</code>\n"
+    else:
+        caption += f"Created: <code>{chat_obj_info.date.date().strftime('%b %d, %Y')} - {chat_obj_info.date.time()}</code> {warn_emoji}\n"
+    caption += f"Data Centre ID: {dc_id}\n"
+    if exp_count is not None:
+        chat_level = int((1+sqrt(1+7*exp_count/14))/2)
+        caption += f"{chat_type} level: <code>{chat_level}</code>\n"
+    if messages_viewable is not None:
+        caption += f"Viewable messages: <code>{messages_viewable}</code>\n"
+    if messages_sent:
+        caption += f"Messages sent: <code>{messages_sent}</code>\n"
+    elif messages_sent_alt:
+        caption += f"Messages sent: <code>{messages_sent_alt}</code> {warn_emoji}\n"
+    if members is not None:
+        caption += f"Members: <code>{members}</code>\n"
+    if admins is not None:
+        caption += f"Administrators: <code>{admins}</code>\n"
+    if bots_list:
+        caption += f"Bots: <code>{bots}</code>\n"
+    if members_online:
+        caption += f"Currently online: <code>{members_online}</code>\n"
+    if restrcited_users is not None:
+        caption += f"Restricted users: <code>{restrcited_users}</code>\n"
+    if banned_users is not None:
+        caption += f"Banned users: <code>{banned_users}</code>\n"
+    if group_stickers is not None:
+        caption += f"{chat_type} stickers: <a href=\"t.me/addstickers/{chat.full_chat.stickerset.short_name}\">{group_stickers}</a>\n"
+    caption += "\n"
+    if not broadcast:
+        caption += f"Slow mode: {slowmode}"
+        if hasattr(chat_obj_info, "slowmode_enabled") and chat_obj_info.slowmode_enabled:
+            caption += f", <code>{slowmode_time}s</code>\n\n"
+        else:
+            caption += "\n\n"
+    if not broadcast:
+        caption += f"Supergroup: {supergroup}\n\n"
+    if hasattr(chat_obj_info, "restricted"):
+        caption += f"Restricted: {restricted}\n"
+        if chat_obj_info.restricted:
+            caption += f"> Platform: {chat_obj_info.restriction_reason[0].platform}\n"
+            caption += f"> Reason: {chat_obj_info.restriction_reason[0].reason}\n"
+            caption += f"> Text: {chat_obj_info.restriction_reason[0].text}\n\n"
+        else:
+            caption += "\n"
+    if hasattr(chat_obj_info, "scam") and chat_obj_info.scam:
+    	caption += "Scam: <b>Yes</b>\n\n"
+    if hasattr(chat_obj_info, "verified"):
+        caption += f"Verified by Telegram: {verified}\n\n"
+    if description:
+        caption += f"Description: \n<code>{description}</code>\n"
+    return caption
 
 @ultroid_cmd(
     pattern="kickme$",
@@ -166,7 +307,7 @@ async def aexec(code, event):
 async def info(event):
     ok = await eor(event, "`...`")
     chat = await get_chatinfo(event)
-    caption = await fetch_info(chat, event)
+    caption = await miraculous(chat, event)
     try:
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
