@@ -9,7 +9,7 @@
 ✘ Commands Available -
 
 • `{i}tagall`
-    Tag Top 100 Members of chat.
+    Tag All Members of chat.
 
 • `{i}tagadmins`
     Tag Admins of that chat.
@@ -45,6 +45,7 @@ from . import *
     groups_only=True,
 )
 async def _(e):
+    await e.delete()
     okk = e.text
     lll = e.pattern_match.group(2)
     users = 0
@@ -87,10 +88,15 @@ async def _(e):
             if bb.bot:
                 xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
     if len(xx) > 4096:
-        await eor(e, "`Telegram Word Limits Exceeds...`")
+        limits = 4096
+        ladybug = [xx[miracul:miracul+limits] for miracul in range(0, len(xx), limits)]#sh1vam
+        for miracul in ladybug:
+            chatnoir = f"**{lll}** \n{miracul}"
+            await e.client.send_message(event.chat_id, chatnoir)
+            
     else:
         await e.client.send_message(e.chat_id, xx)
-        await e.delete()
+        
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
