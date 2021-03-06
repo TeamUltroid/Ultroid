@@ -133,9 +133,3 @@ async def setting(event):
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
-
-
-#@callback("lang")
-#@owner
-#async def lang(e):
-    
