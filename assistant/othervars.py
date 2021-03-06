@@ -90,14 +90,14 @@ async def _(e):
         "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
         buttons=[
             [
-                Button.inline("CLIENT ID", data="clientid"),
-                Button.inline("CLIENT SECRET", data="clientsec"),
+                Button.inline("Cʟɪᴇɴᴛ Iᴅ", data="clientid"),
+                Button.inline("Cʟɪᴇɴᴛ Sᴇᴄʀᴇᴛ", data="clientsec"),
             ],
             [
-                Button.inline("FOLDER ID", data="folderid"),
-                Button.inline("AUTHORISE", data="authorise"),
+                Button.inline("Fᴏʟᴅᴇʀ Iᴅ", data="folderid"),
+                Button.inline("Aᴜᴛʜᴏʀɪsᴇ", data="authorise"),
             ],
-            [Button.inline("« Back", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
         link_preview=False,
     )
@@ -119,7 +119,7 @@ async def otvaar(event):
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
             ],
-            [Button.inline("ɢDʀɪᴠᴇ Sᴇᴛ", data="gdrive")],
+            [Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
