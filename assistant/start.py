@@ -46,10 +46,14 @@ async def ultroid(event):
         event.chat_id,
         get_string("ast_3").format(OWNER_NAME),
         buttons=[
-            [Button.inline("Language 🌐", data="lang"),
-            Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
-            [Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-            Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast")],
+            [
+                Button.inline("Language 🌐", data="lang"),
+                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+            ],
+            [
+                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
+            ],
         ],
     )
 
@@ -63,10 +67,14 @@ async def ultroid(event):
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
         buttons=[
-            [Button.inline("Language 🌐", data="lang"),
-            Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
-            [Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-            Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast")],
+            [
+                Button.inline("Language 🌐", data="lang"),
+                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+            ],
+            [
+                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
+            ],
         ],
     )
 

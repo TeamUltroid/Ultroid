@@ -91,7 +91,9 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 description="Help Menu - UserBot | Telethon ",
                 url="https://t.me/TheUltroid",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                text=get_string("inline_4").format(OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd),
+                text=get_string("inline_4").format(
+                    OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd
+                ),
                 buttons=[
                     [
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
@@ -342,7 +344,9 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 z.append(y)
         cmd = len(z) + 10
         await event.edit(
-            get_string("inline_4").format(OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd),
+            get_string("inline_4").format(
+                OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd
+            ),
             buttons=buttons,
             link_preview=False,
         )

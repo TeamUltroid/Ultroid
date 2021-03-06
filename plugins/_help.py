@@ -49,14 +49,10 @@ async def ult(ult):
         except rep:
             return await eor(
                 ult,
-                get_string("help_2").format(
-                    HNDLR
-                ),
+                get_string("help_2").format(HNDLR),
             )
         except dis:
-            return await eor(
-                ult, get_string("help_3")
-            )
+            return await eor(ult, get_string("help_3"))
         except bmi:
             return await eor(
                 ult,

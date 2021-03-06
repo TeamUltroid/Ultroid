@@ -95,11 +95,7 @@ async def _(event):
                 mone,
                 Redis("GDRIVE_FOLDER_ID"),
             )
-            await mone.edit(
-                get_string("gdrive_7").format(
-                    file_name, g_drive_link
-                )
-            )
+            await mone.edit(get_string("gdrive_7").format(file_name, g_drive_link))
         except Exception as e:
             await mone.edit(f"Exception occurred while uploading to gDrive {e}")
     else:
@@ -145,12 +141,7 @@ async def _(event):
         )
         await DoTeskWithDir(http, input_str, event, dir_id)
         dir_link = "https://drive.google.com/folderview?id={}".format(dir_id)
-        await eod(
-            a,
-            get_string("gdrive_7").format(
-                    input_str, dir_link
-                )
-        )
+        await eod(a, get_string("gdrive_7").format(input_str, dir_link))
     else:
         return await eod(event, f"Directory {input_str} does not seem to exist", time=5)
 

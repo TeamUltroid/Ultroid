@@ -44,14 +44,10 @@ async def _(e):
         except rep:
             return await eor(
                 e,
-                get_string("help_2").format(
-                    HNDLR
-                ),
+                get_string("help_2").format(HNDLR),
             )
         except dis:
-            return await eor(
-                e, get_string("help_3")
-            )
+            return await eor(e, get_string("help_3"))
         await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
         await e.delete()
     else:

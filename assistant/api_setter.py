@@ -33,9 +33,7 @@ async def rmbgapi(event):
     var = "RMBG_API"
     name = "Remove.bg API Key"
     async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            get_string("ast_2")
-        )
+        await conv.send_message(get_string("ast_2"))
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message

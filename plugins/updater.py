@@ -11,6 +11,7 @@ from os import environ, execle, path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+
 from . import *
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
@@ -90,7 +91,9 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "now" not in conf:
         if changelog:
-            changelog_str = get_string("upd_3").format(ac_br, UPSTREAM_REPO_URL, ac_br, changelog)
+            changelog_str = get_string("upd_3").format(
+                ac_br, UPSTREAM_REPO_URL, ac_br, changelog
+            )
             if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
                 file = open("output.txt", "w+")

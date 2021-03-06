@@ -55,9 +55,7 @@ async def broadcast_adder(event):
                             new += 1
             except BaseException:
                 pass
-        await x.edit(
-            get_string("bd_3").format(get_no_channels(), new)
-        )
+        await x.edit(get_string("bd_3").format(get_no_channels(), new))
         return
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()

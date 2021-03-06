@@ -101,8 +101,7 @@ async def set_not_afk(event):
 
 
 @ultroid_bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(
-        e.mentioned or e.is_private))
+    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
 )
 async def on_afk(event):
     if event.fwd_from:
@@ -122,9 +121,7 @@ async def on_afk(event):
     if USER_AFK and not (await event.get_sender()).bot:
         msg = None
         if reason:
-            message_to_reply = (
-                get_string("afk_3").format(total_afk_time, reason)
-            )
+            message_to_reply = get_string("afk_3").format(total_afk_time, reason)
         else:
             message_to_reply = get_string("afk_4").format(total_afk_time)
         try:
@@ -178,8 +175,7 @@ async def _(event):
         pic = None
     if not USER_AFK:
         last_seen_status = await ultroid_bot(
-            functions.account.GetPrivacyRequest(
-                types.InputPrivacyKeyStatusTimestamp())
+            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             afk_time = datetime.datetime.now()
@@ -203,9 +199,7 @@ async def _(event):
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await ultroid_bot.send_message(event.chat_id, file=pic)
-                    await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk_6")
-                    )
+                    await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
                 else:
                     await ultroid_bot.send_message(
                         event.chat_id, get_string("afk_6"), file=pic
@@ -225,9 +219,7 @@ async def _(event):
                         LOG, get_string("afk_7").format(reason), file=pic
                     )
             elif reason:
-                await ultroid_bot.send_message(
-                    LOG, get_string("afk_7").format(reason)
-                )
+                await ultroid_bot.send_message(LOG, get_string("afk_7").format(reason))
             elif pic:
                 if pic.endswith((".tgs", ".webp")):
                     await ultroid_bot.send_message(LOG, file=pic)
