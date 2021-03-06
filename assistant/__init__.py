@@ -9,6 +9,7 @@ from pyUltroid import *
 from pyUltroid.dB.database import Var
 from telethon import Button, custom
 from strings import get_string
+from strings import get_languages
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id

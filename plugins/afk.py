@@ -189,15 +189,15 @@ async def _(event):
                 if pic.endswith((".tgs", ".webp")):
                     await ultroid_bot.send_message(event.chat_id, file=pic)
                     await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk-5").format(reason)
+                        event.chat_id, get_string("afk_5").format(reason)
                     )
                 else:
                     await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk-5").format(reason), file=pic
+                        event.chat_id, get_string("afk_5").format(reason), file=pic
                     )
             except BaseException:
                 await ultroid_bot.send_message(
-                    event.chat_id, get_string("afk-5").format(reason)
+                    event.chat_id, get_string("afk_5").format(reason)
                 )
         else:
             try:

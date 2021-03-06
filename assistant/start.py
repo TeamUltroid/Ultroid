@@ -44,7 +44,7 @@ async def ultroid(event):
         return
     await asst.send_message(
         event.chat_id,
-        f"Hi {OWNER_NAME}. Please browse through the options",
+        get_string("ast_3").format(OWNER_NAME),
         buttons=[
             [Button.inline("Language 🌐", data="lang"),
             Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
@@ -63,9 +63,10 @@ async def ultroid(event):
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
         buttons=[
-            [Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
-            [Button.inline("Sᴛᴀᴛs", data="stat")],
-            [Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast")],
+            [Button.inline("Language 🌐", data="lang"),
+            Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter")],
+            [Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+            Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast")],
         ],
     )
 
