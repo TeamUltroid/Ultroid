@@ -7,13 +7,7 @@
 
 from . import *
 
-<<<<<<< HEAD
-# main menu for setting other vars
-=======
 TOKEN_FILE = "resources/downloads/auth_token.txt"
-
-# main menuu for setting other vars
->>>>>>> origin/betalang
 
 
 @callback("authorise")
