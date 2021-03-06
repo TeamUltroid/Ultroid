@@ -101,8 +101,9 @@ async def _(e):
         return await eod(xx, "`I can't gban myself.`", time=3)
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gban my Developers.`", time=3)
-    if str(userid) in (Redis("SUDOS")).split(" "):
-        return await eod(xx, "`I can't gban a sudo user.`", time=3)
+    if (Redis("SUDOS")):
+        if str(userid) in (Redis("SUDOS")).split(" "):
+            return await eod(xx, "`I can't gban a sudo user.`", time=3)
     if is_gbanned(userid):
         return await eod(
             xx, "`User is already gbanned and added to gbanwatch.`", time=4
