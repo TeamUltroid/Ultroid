@@ -60,10 +60,7 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
     libopus0 \
     libopus-dev \
     gcc \
-<<<<<<< HEAD
-=======
     zip \
->>>>>>> origin/betalang
     mediainfo \
     megatools
 
