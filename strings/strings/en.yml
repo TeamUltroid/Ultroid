@@ -181,7 +181,7 @@ upd_6: "{}\n\nUse `{}update now` to update."
 upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
-udl_1: "`Reply The File/Media u Want to Download..`"
+udl_1: "`Reply to the file/media you want to download...`"
 udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
 udl_3: "`Give a specific path to file`"
 
