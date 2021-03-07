@@ -12,7 +12,7 @@ from os import environ, execle, path, remove
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from . import *
+from . import get_string
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
 requirements_path = path.join(
