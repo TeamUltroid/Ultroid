@@ -77,7 +77,7 @@ async def permitpm(event):
     user = await event.get_chat()
     if user.bot or user.is_self:
         return
-    if (Redis("PMLOG") == "True"):
+    if Redis("PMLOG") == "True":
         await event.forward_to(Var.LOG_CHANNEL)
 
 
