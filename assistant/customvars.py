@@ -76,7 +76,11 @@ async def media(event):
         except BaseException:
             pass
         media = await event.client.download_media(response, "alvpc")
-        if not (response.text).startswith("/") and not response.text == "" and not response.media:
+        if (
+            not (response.text).startswith("/")
+            and not response.text == ""
+            and not response.media
+        ):
             url = response.text
         else:
             try:
@@ -158,7 +162,11 @@ async def media(event):
         except BaseException:
             pass
         media = await event.client.download_media(response, "alvpcc")
-        if not (response.text).startswith("/") and not response.text == "" and not response.media:
+        if (
+            not (response.text).startswith("/")
+            and not response.text == ""
+            and not response.media
+        ):
             url = response.text
         else:
             try:
