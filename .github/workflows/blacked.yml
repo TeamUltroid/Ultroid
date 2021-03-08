@@ -15,11 +15,13 @@ jobs:
 
       - name: Install black
         run: |
-          pip install black isort
+          pip install black isort autoflake
       - name: lint with isort and black
         run: |
           black plugins/* assistant/*
           isort plugins/* assistant/*
+          autoflake --in-place --remove-unused-variables plugins/*
+          autoflake --in-place --remove-unused-variables assistant/*
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
