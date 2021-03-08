@@ -109,10 +109,14 @@ async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
         buttons=[
-            [Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
-            Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
-            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
-            Button.inline("PMLOGGER", data="pml")],
+            [
+                Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
+                Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed"),
+            ],
+            [
+                Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
+                Button.inline("PMLOGGER", data="pml"),
+            ],
             [Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
             [Button.inline("« Bᴀᴄᴋ", data="pmset")],
         ],
@@ -202,6 +206,7 @@ async def apauto(event):
         ],
     )
 
+
 @callback("apon")
 @owner
 async def apon(event):
@@ -231,6 +236,7 @@ async def alvcs(event):
             [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
+
 
 @callback("pmlog")
 @owner
