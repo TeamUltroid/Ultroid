@@ -278,7 +278,6 @@ async def _(e):
                     gban_watch += f"Banned Successfully`"
                 except:
                     pass
-            await e.reply(gban_watch)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
