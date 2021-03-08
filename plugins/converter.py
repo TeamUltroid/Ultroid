@@ -39,7 +39,7 @@ async def imak(event):
     xx = await eor(event, "`Processing...`")
     image = await ultroid_bot.download_media(reply)
     os.rename(image, inp)
-    await ultroid_bot.send_file(event.chat_id, inp, reply_to=reply)
+    await ultroid_bot.send_file(event.chat_id, inp, force_document=True reply_to=reply)
     os.remove(inp)
     await xx.delete()
 
