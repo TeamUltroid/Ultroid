@@ -141,7 +141,6 @@ async def gcast(event):
                 await ultroid_bot.send_message(chat, msg)
             except:
                 er += 1
-                pass
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 

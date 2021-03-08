@@ -409,7 +409,7 @@ async def _(e):
     xx = await eor(e, get_string("com_1"))
     if e.reply_to_msg_id:
         input = (await e.get_reply_message()).sender_id
-        user = (await e.client.get_entity(input)).first_name
+        (await e.client.get_entity(input)).first_name
         try:
             nos = 0
             async for x in e.client.iter_messages(e.chat_id, from_user=input):

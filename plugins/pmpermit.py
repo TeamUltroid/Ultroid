@@ -120,10 +120,10 @@ if sett == "True" and sett != "False":
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
             name = user.first_name
-            fullname = (user.first_name, user.last_name)
-            username = user.username
+            (user.first_name, user.last_name)
+            user.username
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            count = len(get_approved())
+            len(get_approved())
             try:
                 wrn = COUNT_PM[user.id]
             except KeyError:

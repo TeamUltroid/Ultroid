@@ -35,7 +35,7 @@ async def autopic(e):
         num = 0
     page = clls[num]
     title = page["title"]
-    a = await eor(get_string("autopic_3").format(title))
+    await eor(get_string("autopic_3").format(title))
     while True:
         animepp(page["href"])
         file = await ultroid_bot.upload_file("autopic.jpg")

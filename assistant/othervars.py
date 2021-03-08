@@ -19,7 +19,7 @@ async def _(e):
             buttons=Button.inline("Back", data="gdrive"),
         )
     storage = await create_token_file(TOKEN_FILE, e)
-    http = authorize(TOKEN_FILE, storage)
+    authorize(TOKEN_FILE, storage)
     f = open(TOKEN_FILE, "r")
     token_file_data = f.read()
     udB.set("GDRIVE_TOKEN", token_file_data)
