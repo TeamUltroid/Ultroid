@@ -276,6 +276,7 @@ async def _(e):
                     )
                     gban_watch = f"`Gbanned User` [{user.first_name}](tg://user?id={user.id}) `Spotted\n"
                     gban_watch += f"Banned Successfully`"
+                    await e.reply(gban_watch)
                 except:
                     pass
 
