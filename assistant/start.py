@@ -42,9 +42,12 @@ async def assistant(event):
 async def ultroid(event):
     if event.is_group:
         return
+    name = event.sender.first_name
+    if event.sender.last_name:
+        name += f" {event.sender.last_name}"
     await asst.send_message(
         event.chat_id,
-        get_string("ast_3").format(OWNER_NAME),
+        get_string("ast_3").format(name),
         buttons=[
             [
                 Button.inline("Language 🌐", data="lang"),
