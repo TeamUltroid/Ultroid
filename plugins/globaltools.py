@@ -219,13 +219,7 @@ async def _(e):
     async for onmute in e.client.iter_dialogs():
         if onmute.is_group:
             try:
-                await e.client(
-                    EditBannedRequest(
-                        onmute.id,
-                        userid,
-                        ChatBannedRights(until_date=None, send_messages=True),
-                    )
-                )
+                await e.client.edit_permissions(onmute.id, userid, send_messages=False)
                 chats += 1
             except:
                 pass
@@ -262,13 +256,7 @@ async def _(e):
     async for hurr in e.client.iter_dialogs():
         if hurr.is_group:
             try:
-                await e.client(
-                    EditBannedRequest(
-                        hurr.id,
-                        userid,
-                        ChatBannedRights(until_date=None, send_messages=False),
-                    )
-                )
+                await e.client.edit_permissions(hurr.id, userid, send_messages=True)
                 chats += 1
             except:
                 pass
@@ -291,10 +279,6 @@ async def _(e):
                     gban_watch += f"Banned Successfully`"
                 except:
                     pass
-            else:
-                gban_watch = (
-                    f"@admins `Gbanned user` [{user.first_name}]({user.id}) `Spotted.`"
-                )
             await e.reply(gban_watch)
 
 
