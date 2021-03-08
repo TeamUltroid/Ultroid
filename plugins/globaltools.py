@@ -101,9 +101,6 @@ async def _(e):
         return await eod(xx, "`I can't gban myself.`", time=3)
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gban my Developers.`", time=3)
-    if Redis("SUDOS"):
-        if str(userid) in (Redis("SUDOS")).split(" "):
-            return await eod(xx, "`I can't gban a sudo user.`", time=3)
     if is_gbanned(userid):
         return await eod(
             xx, "`User is already gbanned and added to gbanwatch.`", time=4
@@ -172,9 +169,6 @@ async def gkick(e):
         return await eod(xx, "`I can't gkick myself.`", time=3)
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gkick my Developers.`", time=3)
-    if Redis("SUDOS"):
-        if str(userid) in (Redis("SUDOS")).split(" "):
-            return await eod(xx, "`I can't gban a sudo user.`", time=3)
     async for gkick in e.client.iter_dialogs():
         if gkick.is_group or gkick.is_channel:
             try:
