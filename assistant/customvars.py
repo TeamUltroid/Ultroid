@@ -109,9 +109,10 @@ async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
         buttons=[
-            [Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt")],
-            [Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
-            [Button.inline("PMLOGGER", data="pml")],
+            [Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
+            Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
+            Button.inline("PMLOGGER", data="pml")],
             [Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
             [Button.inline("« Bᴀᴄᴋ", data="pmset")],
         ],
@@ -189,6 +190,36 @@ async def dell(event):
         return await event.edit("Something went wrong...")
 
 
+@callback("apauto")
+@owner
+async def apauto(event):
+    await event.edit(
+        "This'll auto approve on outgoing messages",
+        buttons=[
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ OFF", data="apof")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        ],
+    )
+
+@callback("apon")
+@owner
+async def apon(event):
+    var = "AUTOAPPROVE"
+    await setit(event, var, "True")
+    await event.edit(f"Done!! AUTOAPPROVE  Started!!")
+
+
+@callback("apof")
+@owner
+async def apof(event):
+    try:
+        udB.delete("AUTOAPPROVE")
+        return await event.edit("Done! AUTOAPPROVE Stopped!!")
+    except BaseException:
+        return await event.edit("Something went wrong...")
+
+
 @callback("pml")
 @owner
 async def alvcs(event):
@@ -200,7 +231,6 @@ async def alvcs(event):
             [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
-
 
 @callback("pmlog")
 @owner
