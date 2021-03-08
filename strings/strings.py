@@ -6,7 +6,6 @@ from yaml import safe_load
 from pyUltroid import udB
 
 
-selected_language = udB.get("language") or "en"
 languages = {}
 strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
 
@@ -20,7 +19,7 @@ for file in listdir(strings_folder):
 
 def get_string(key: str) -> Any:
     try:
-        return languages[selected_language][key]
+        return languages[(udB.get("language") or "en")][key]
     except KeyError:
         try:
             return languages["en"][key]
