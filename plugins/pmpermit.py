@@ -39,20 +39,20 @@ else:
 
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
-**PMSecurity of {}!**
+**PMSecurity of {ON}!**
 
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {}/{} warnings!"""
+You have {warn}/{twarn} warnings!"""
 else:
     UNAPPROVED_MSG = (
         """
-**PMSecurity of {}!**"""
+**PMSecurity of {on}!**"""
         f"""{Redis("PM_TEXT")}"""
         """
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
-You have {}/{} warnings!"""
+You have {warn}/{twarn} warnings!"""
     )
 
 UND = get_string("pmperm_1")
@@ -89,7 +89,7 @@ if sett == "True" and sett != "False":
     @ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda e: e.is_private))
     async def autoappr(e):
         miss = await e.get_chat()
-        if miss.bot or miss.is_self or miss.verified:
+        if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE")!="True":
             return
         if str(miss.id) in DEVLIST:
             return
@@ -120,10 +120,10 @@ if sett == "True" and sett != "False":
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
             name = user.first_name
-            (user.first_name, user.last_name)
-            user.username
+            fullname = (user.first_name, user.last_name)
+            username = user.username
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            len(get_approved())
+            count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id]
             except KeyError:
@@ -143,7 +143,7 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                        caption=UNAPPROVED_MSG.format(ON=OWNER_NAME, warn=wrn, twarn=WARNS, name=name, fullname=fullname, username=username,count=count,mention=mention),
                     )
                 elif event.text == prevmsg:
                     async for message in event.client.iter_messages(
@@ -153,14 +153,14 @@ if sett == "True" and sett != "False":
                     await event.client.send_file(
                         user.id,
                         PMPIC,
-                        caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                        caption=UNAPPROVED_MSG.format(ON=OWNER_NAME, warn=wrn, twarn=WARNS, name=name, fullname=fullname, username=username,count=count,mention=mention),
                     )
                 LASTMSG.update({user.id: event.text})
             else:
                 await event.client.send_file(
                     user.id,
                     PMPIC,
-                    caption=UNAPPROVED_MSG.format(OWNER_NAME, wrn, WARNS),
+                    caption=UNAPPROVED_MSG.format(ON=OWNER_NAME, warn=wrn, twarn=WARNS, name=name, fullname=fullname, username=username,count=count,mention=mention),
                 )
                 LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
