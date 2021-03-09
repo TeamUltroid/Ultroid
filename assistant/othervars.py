@@ -139,6 +139,8 @@ async def pluginch(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
+        elif themssg.startswith(("/",HNDLR)):
+            return await conv.send_message("Incorrect channel")
         else:
             await setit(event, var, themssg)
             await conv.send_message(
@@ -164,6 +166,10 @@ async def hndlrr(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
+        elif len(themssg) == 1:
+            return await conv.send_message("Incorrect Handler")
+        elif themssg.startswith(("/","\","@","#")):
+            return await conv.send_message("Incorrect Handler")
         else:
             await setit(event, var, themssg)
             await conv.send_message("{} changed to {}".format(name, themssg))
