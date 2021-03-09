@@ -179,7 +179,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
                     query="mods minecraft",
                     same_peer=True,
-                )
+                ),
             ],
             [
                 Button.switch_inline(
@@ -191,7 +191,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
                     query="yahoo TeamUltroid",
                     same_peer=True,
-                )
+                ),
             ],
             [
                 Button.switch_inline(
@@ -210,7 +210,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
                     query="clipart frog",
                     same_peer=True,
-                )
+                ),
             ],
             [
                 Button.inline(
