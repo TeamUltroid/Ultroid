@@ -59,7 +59,7 @@ UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 # 1
 
-WARNS = 3
+WARNS = int(Redis("PMWARNS")) if Redis("PMWARNS") not None else 3
 NO_REPLY = get_string("pmperm_3")
 PMCMDS = [
     f"{hndlr}a",
