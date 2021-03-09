@@ -117,8 +117,10 @@ async def alvcs(event):
                 Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
                 Button.inline("PMLOGGER", data="pml"),
             ],
-            [Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
-             Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
+            [
+                Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
+                Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="pmset")],
         ],
     )
@@ -148,6 +150,7 @@ async def name(event):
                 )
             )
 
+
 @callback("swarn")
 @owner
 async def name(event):
@@ -171,6 +174,7 @@ async def name(event):
                     name, themssg
                 )
             )
+
 
 @callback("pmmed")
 @owner
