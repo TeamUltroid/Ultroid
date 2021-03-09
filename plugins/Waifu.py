@@ -22,7 +22,7 @@ from search_engine_parser import *
 from . import *
 
 @ultroid_cmd(pattern="p")
-async def reverse(event):
+async def p(event):
     reply = await event.get_reply_message()
     if not reply:
         return await eor(event, "`Reply to any Image`")
