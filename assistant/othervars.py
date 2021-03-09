@@ -168,7 +168,7 @@ async def hndlrr(event):
             return await conv.send_message("Cancelled!!")
         elif len(themssg) == 1:
             return await conv.send_message("Incorrect Handler")
-        elif themssg.startswith(("/","\","@","#")):
+        elif themssg.startswith("#","\","/","@"):
             return await conv.send_message("Incorrect Handler")
         else:
             await setit(event, var, themssg)
