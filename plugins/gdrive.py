@@ -34,7 +34,7 @@ from telethon import events
 
 from . import *
 
-TOKEN_FILE = "resources/downloads/auth_token.txt"
+TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @ultroid_cmd(
