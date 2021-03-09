@@ -110,7 +110,7 @@ async def _(ult):
 )
 async def _(ult):
     ok = await eor(ult, "`Fetching Keys ...`")
-    keys = udB.keys()
+    keys = sorted(udB.keys())
     msg = ""
     for x in keys:
         msg += "• `{}`".format(x) + "\n"
