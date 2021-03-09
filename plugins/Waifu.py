@@ -7,12 +7,8 @@
 
 """
 ✘ Commands Available -
-• `{i}google <query>`
-    For doing google search.
-• `{i}img <query>`
-    For doing Images search.
 • `{i}p <query>`
-    Reply an Image or sticker to find its sauce.
+    Reply an waifu image to find its sauce.
 """
 
 import os
@@ -30,7 +26,7 @@ async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
         return await eor(event, "`Reply to any Image`")
-    ult = await eor(event, "`Processing...`")
+    ult = await eor(event, "`khoj rahe`")
     dl = await bot.download_media(reply)
     img = Image.open(dl)
     x, y = img.size
