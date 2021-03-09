@@ -1,12 +1,24 @@
 from telethon import events, functions, types
+
 from . import *
 
-locks = ['sticker', 'msgs', 'media', 'gif', 'games', 'inlines', 'polls', 'invites', 'pin', 'changeinfo']
+locks = [
+    "sticker",
+    "msgs",
+    "media",
+    "gif",
+    "games",
+    "inlines",
+    "polls",
+    "invites",
+    "pin",
+    "changeinfo",
+]
 
 
 @ultroid_cmd(
-pattern="(unl|l)ock",
-groups_only=True,
+    pattern="(unl|l)ock",
+    groups_only=True,
 )
 async def _(event):
     peer_id = event.chat_id
@@ -15,9 +27,11 @@ async def _(event):
     try:
         input = ll[1]
     except IndexError:
-        return await eod(event, f"What do you want to {cmd}.\nDo `{HNDLR}listlocks`", time=5)
+        return await eod(
+            event, f"What do you want to {cmd}.\nDo `{HNDLR}listlocks`", time=5
+        )
     if input not in locks:
-    	return await eod(event, f"Wrong type.\nDo `{HNDLR}listlocks`")
+        return await eod(event, f"Wrong type.\nDo `{HNDLR}listlocks`")
     if cmd == f"{hndlr}lock":
         lul = lucks(input)
         try:
@@ -43,8 +57,8 @@ async def _(event):
 
 
 @ultroid_cmd(
-pattern="listlocks$",
-groups_only=True,
+    pattern="listlocks$",
+    groups_only=True,
 )
 async def _(event):
     res = "**•• Following is the API status of this group.**\n"
