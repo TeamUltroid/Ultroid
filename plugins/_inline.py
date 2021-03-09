@@ -174,9 +174,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
                     query="app telegram",
                     same_peer=True,
-                )
-            ],
-            [
+                ),
                 Button.switch_inline(
                     "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
                     query="mods minecraft",
@@ -188,9 +186,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
                     query="go TeamUltroid",
                     same_peer=True,
-                )
-            ],
-            [
+                ),
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
                     query="yahoo TeamUltroid",
@@ -206,15 +202,13 @@ if Var.BOT_USERNAME is not None and asst is not None:
             ],
             [
                 Button.switch_inline(
-                    "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
-                    query="clipart frog",
-                    same_peer=True,
-                )
-            ],
-            [
-                Button.switch_inline(
                     "Rᴇx Tᴇsᴛᴇʀ",
                     query="rex",
+                    same_peer=True,
+                ),
+                Button.switch_inline(
+                    "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
+                    query="clipart frog",
                     same_peer=True,
                 )
             ],
