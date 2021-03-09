@@ -1,13 +1,12 @@
 import asyncio
-import os
 import re
 import time
+
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
 from . import *
-
 
 
 @ultroid_cmd(
@@ -40,7 +39,9 @@ async def _(event):
         else:
             return await eod(xx, "`Reply to media file`", time=5)
     try:
-        results = await ultroid_bot.inline_query(Var.BOT_USERNAME, f"fl2lnk {file_name}")
+        results = await ultroid_bot.inline_query(
+            Var.BOT_USERNAME, f"fl2lnk {file_name}"
+        )
     except rep:
         return await eor(
             xx,
@@ -60,34 +61,34 @@ async def _(event):
 @in_pattern("fl2lnk ?(.*)")
 @in_owner
 async def _(e):
-	file_path = e.pattern_match.group(1)
-	file_name = file_path.split("/")[-1]
-	bitton = [
-	[
-	Button.inline("anonfiles", data=f"anonfiles//{file_path}"),
-	Button.inline("transfer", data=f"transfer//{file_path}"),
-	],
-	[
-	Button.inline("bayfiles", data=f"bayfiles//{file_path}"),
-	Button.inline("x0", data=f"x0//{file_path}"),
-	],
-	[
-	Button.inline("file.io", data=f"file.io//{file_path}"),
-	Button.inline("siasky", data=f"siasky//{file_path}"),
-	],
-	]
-	try:
-		lnk = e.builder.article(
-		title="fl2lnk",
-		text=f"**File:**\n{file_name}",
-		buttons=bitton,
-		)
-	except:
-		lnk = e.builder.article(
-		title="fl2lnk",
-		text="File not found",
-		)
-	await e.answer([lnk])
+    file_path = e.pattern_match.group(1)
+    file_name = file_path.split("/")[-1]
+    bitton = [
+        [
+            Button.inline("anonfiles", data=f"anonfiles//{file_path}"),
+            Button.inline("transfer", data=f"transfer//{file_path}"),
+        ],
+        [
+            Button.inline("bayfiles", data=f"bayfiles//{file_path}"),
+            Button.inline("x0", data=f"x0//{file_path}"),
+        ],
+        [
+            Button.inline("file.io", data=f"file.io//{file_path}"),
+            Button.inline("siasky", data=f"siasky//{file_path}"),
+        ],
+    ]
+    try:
+        lnk = e.builder.article(
+            title="fl2lnk",
+            text=f"**File:**\n{file_name}",
+            buttons=bitton,
+        )
+    except:
+        lnk = e.builder.article(
+            title="fl2lnk",
+            text="File not found",
+        )
+    await e.answer([lnk])
 
 
 @callback(
@@ -102,4 +103,4 @@ async def _(e):
     file = data.split("//")[1]
     file_name = file.split("/")[-1]
     await e.edit(f"Uploading `{file_name}` on {host}")
-    desc = await dloader(e, host, file)
+    await dloader(e, host, file)
