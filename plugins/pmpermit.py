@@ -58,8 +58,13 @@ You have {warn}/{twarn} warnings!"""
 UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 # 1
-
-WARNS = int(Redis("PMWARNS")) if Redis("PMWARNS") not None else int("3")
+if Redis("PMWARNS"):
+    try:
+        WARNS = int(Redis("PMWARNS"))
+    except BaseException:
+        WARNS = 3
+else:
+    WARNS = 3
 NO_REPLY = get_string("pmperm_3")
 PMCMDS = [
     f"{hndlr}a",
