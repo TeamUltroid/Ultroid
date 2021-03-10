@@ -40,13 +40,14 @@ async def gsearch(q_event):
         await q_event.answer([kkkk])
     searcher = []
     page = re.findall(r"page=\d+", match)
+    cache = False
     try:
         page = page[0]
         page = page.replace("page=", "")
         match = match.replace("page=" + page[0], "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page), cache=False)
+    search_args = (str(match), int(page), bool(cache))
     gsearch = GoogleSearch()
     gresults = await gsearch.async_search(*search_args)
     msg = ""
