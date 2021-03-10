@@ -12,9 +12,9 @@ from urllib.request import urlopen
 import play_scraper
 import requests
 from bs4 import BeautifulSoup
+from pyUltroid.functions import GoogleSearch, YahooSearch
 from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
-from pyUltroid.functions import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
