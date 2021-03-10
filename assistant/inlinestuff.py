@@ -14,7 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
-from search_engine_parser import GoogleSearch, YahooSearch
+from pyUltroid.functions import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -46,7 +46,7 @@ async def gsearch(q_event):
         match = match.replace("page=" + page[0], "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page))
+    search_args = (str(match), int(page), cache=False)
     gsearch = GoogleSearch()
     gresults = await gsearch.async_search(*search_args)
     msg = ""
@@ -142,7 +142,7 @@ async def gsearch(q_event):
         match = match.replace("page=" + page[0], "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page))
+    search_args = (str(match), int(page), cache=False)
     gsearch = YahooSearch()
     gresults = await gsearch.async_search(*search_args)
     msg = ""
