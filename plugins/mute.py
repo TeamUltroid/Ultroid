@@ -57,7 +57,7 @@ async def startmute(event):
             try:
                 userid = input
             except ValueError as x:
-                await xx.edit(str(x))
+                return await xx.edit(str(x))
         else:
             userid = (await event.client.get_entity(input)).id
     elif event.reply_to_msg_id:
@@ -102,7 +102,7 @@ async def endmute(event):
             try:
                 userid = input
             except ValueError as x:
-                await xx.edit(str(x))
+                return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
     elif event.reply_to_msg_id:
