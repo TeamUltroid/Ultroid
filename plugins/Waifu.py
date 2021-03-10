@@ -25,8 +25,8 @@ from . import *
 async def p(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await eor(event, "`Reply to any Image`")
-    ult = await eor(event, "`khoj rahe`")
+        return await eor(event, "`Reply to waifu image`")
+    ult = await eor(event, "`searching waifu`")
     dl = await bot.download_media(reply)
     img = Image.open(dl)
     x, y = img.size
