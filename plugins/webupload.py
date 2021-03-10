@@ -99,7 +99,7 @@ async def _(e):
 @owner
 async def _(e):
     t = (e.data).decode("UTF-8")
-    data = t.split('-')[1]
+    data = t.split("-")[1]
     host = data.split("//")[0]
     file = data.split("//")[1]
     file_name = file.split("/")[-1]
