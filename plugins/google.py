@@ -37,7 +37,7 @@ async def google(event):
         return await event.edit("`Give something to search..`")
     x = await eor(event, get_sring("com_2"))
     gs = GoogleSearch()
-    res = await gs.async_search(f"{inp}")
+    res = await gs.async_search(f"{inp}", cache=False)
     out = ""
     for i in range(len(res["links"])):
         text = res["titles"][i]
