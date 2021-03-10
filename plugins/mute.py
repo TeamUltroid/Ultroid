@@ -156,7 +156,9 @@ async def _(e):
         return await eod(xx, "`I can't mute myself.`", time=3)
     try:
         bun = await ban_time(xx, tme)
-        await e.client.edit_permissions(chat.id, userid, until_date=bun, send_messages=False)
+        await e.client.edit_permissions(
+            chat.id, userid, until_date=bun, send_messages=False
+        )
         await eod(
             xx,
             f"`Successfully Muted` [{name}](tg://user?id={userid}) `in {chat.title} for {tme}`",
@@ -190,7 +192,9 @@ async def _(e):
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     try:
-        await e.client.edit_permissions(chat.id, userid, until_date=None, send_messages=True)
+        await e.client.edit_permissions(
+            chat.id, userid, until_date=None, send_messages=True
+        )
         await eod(
             xx,
             f"`Successfully Unmuted` [{name}](tg://user?id={userid}) `in {chat.title}`",
@@ -226,7 +230,9 @@ async def _(e):
     if userid == ultroid_bot.uid:
         return await eod(xx, "`I can't mute myself.`", time=3)
     try:
-        await e.client.edit_permissions(chat.id, userid, until_date=None, send_messages=False)
+        await e.client.edit_permissions(
+            chat.id, userid, until_date=None, send_messages=False
+        )
         await eod(
             xx,
             f"`Successfully Muted` [{name}](tg://user?id={userid}) `in {chat.title}`",
