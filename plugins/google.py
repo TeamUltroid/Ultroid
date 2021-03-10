@@ -24,6 +24,7 @@ from shutil import rmtree
 import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
+from pyUltroid.functions.parser import GoogleSearch
 
 from strings import get_string
 
