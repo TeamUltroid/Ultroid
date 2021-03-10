@@ -65,16 +65,16 @@ async def _(e):
     file_name = file_path.split("/")[-1]
     bitton = [
         [
-            Button.inline("anonfiles", data=f"anonfiles//{file_path}"),
-            Button.inline("transfer", data=f"transfer//{file_path}"),
+            Button.inline("anonfiles", data=f"ful-anonfiles//{file_path}"),
+            Button.inline("transfer", data=f"ful-transfer//{file_path}"),
         ],
         [
-            Button.inline("bayfiles", data=f"bayfiles//{file_path}"),
+            Button.inline("bayfiles", data=f"ful-bayfiles//{file_path}"),
             Button.inline("x0", data=f"x0//{file_path}"),
         ],
         [
-            Button.inline("file.io", data=f"file.io//{file_path}"),
-            Button.inline("siasky", data=f"siasky//{file_path}"),
+            Button.inline("file.io", data=f"ful-file.io//{file_path}"),
+            Button.inline("siasky", data=f"ful-siasky//{file_path}"),
         ],
     ]
     try:
@@ -93,12 +93,13 @@ async def _(e):
 
 @callback(
     re.compile(
-        "(.*)",
+        "ful-(.*)",
     ),
 )
 @owner
 async def _(e):
-    data = (e.data).decode("UTF-8")
+    t = (e.data).decode("UTF-8")
+    data = t.split('-')[1]
     host = data.split("//")[0]
     file = data.split("//")[1]
     file_name = file.split("/")[-1]
