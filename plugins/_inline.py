@@ -196,7 +196,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                    query="Ed Sheeran Perfect",
+                    query="yt Ed Sheeran Perfect",
                     same_peer=True,
                 )
             ],
