@@ -39,7 +39,7 @@ async def autopic(e):
     page = clls[num]
     title = page["title"]
     await eor(get_string("autopic_3").format(title))
-    udB.set("AUTOPIC","True")
+    udB.set("AUTOPIC", "True")
     while True:
         ge = udB.get("AUTOPIC")
         if not ge == "True":
@@ -55,9 +55,9 @@ async def autopic(e):
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if not gt == "True":
-        return await eor(ult,"`AUTOPIC was not in used !!`")
-    udB.set("AUTOPIC","None")
-    await eor(ult,"`AUTOPIC Stopped !!`")
+        return await eor(ult, "`AUTOPIC was not in used !!`")
+    udB.set("AUTOPIC", "None")
+    await eor(ult, "`AUTOPIC Stopped !!`")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
