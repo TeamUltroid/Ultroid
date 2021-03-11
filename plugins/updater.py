@@ -71,11 +71,11 @@ async def upstream(ups):
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
-        repo.create_head("beta", origin.refs.beta)
-        repo.heads.beta.set_tracking_branch(origin.refs.beta)
-        repo.heads.beta.checkout(True)
+        repo.create_head("main", origin.refs.main)
+        repo.heads.main.set_tracking_branch(origin.refs.main)
+        repo.heads.main.checkout(True)
     ac_br = repo.active_branch.name
-    if ac_br != "beta":
+    if ac_br != "main":
         await eod(
             pagal,
             f"**[UPDATER]:**` You are on ({ac_br})\n Please change to beta branch.`",
