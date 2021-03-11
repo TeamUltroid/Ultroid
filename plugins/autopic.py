@@ -11,6 +11,9 @@
 • `{i}autopic <search query>`
     Will change your profile pic at defined intervals with pics related to the given topic.
 
+• `{i}stoppic`
+    Stop the AutoPic command.
+
 """
 import asyncio
 import os
@@ -36,12 +39,25 @@ async def autopic(e):
     page = clls[num]
     title = page["title"]
     await eor(get_string("autopic_3").format(title))
+    udB.set("AUTOPIC","True")
     while True:
+        ge = udB.get("AUTOPIC")
+        if not ge == "True":
+            return
         animepp(page["href"])
         file = await ultroid_bot.upload_file("autopic.jpg")
         await ultroid_bot(functions.photos.UploadProfilePhotoRequest(file))
         os.remove("autopic.jpg")
         await asyncio.sleep(1100)
+
+
+@ultroid_cmd(pattern="stoppic$")
+async def stoppo(ult):
+    gt = udB.get("AUTOPIC")
+    if not gt == "True":
+        return await eor(ult,"`AUTOPIC was not in used !!`")
+    udB.set("AUTOPIC","None")
+    await eor(ult,"`AUTOPIC Stopped !!`")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
