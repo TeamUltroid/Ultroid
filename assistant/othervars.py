@@ -127,11 +127,37 @@ async def otvaar(event):
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
             ],
-            [Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive")],
+            [Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
+            Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
+@callback("emoj")
+@owner
+async def emoji(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "EMOJI_IN_HELP"
+    name = f"Emoji in `{HNDLR}help` menu"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "Send emoji u want to set 🙃.\n\nUse /cancel to cancel."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message("Cancelled!!")
+        elif themssg.startswith(("/", HNDLR)):
+            return await conv.send_message("Incorrect Emoji")
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message(
+                "{} changed to {}\n After Setting All Things Do Restart".format(
+                    name, themssg
+                )
+            )
 
 @callback("plg")
 @owner
