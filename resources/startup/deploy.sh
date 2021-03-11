@@ -62,7 +62,8 @@ apt update && apt upgrade -y && apt install --no-install-recommends -y \
     gcc \
     zip \
     mediainfo \
-    megatools
+    megatools \
+    p7zip-full
 
 echo '
         •• Cloning Repository
@@ -73,8 +74,6 @@ git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 echo '
 	•• Getting Libraries and Installing
 '
-pip install --upgrade pip setuptools wheel
-pip install search-engine-parser==0.6.2
 pip install -r /root/TeamUltroid/requirements.txt
 
 echo "
