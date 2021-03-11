@@ -13,6 +13,8 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 @callback("authorise")
 @owner
 async def _(e):
+    if not e.is_private:
+        return
     if not udB.get("GDRIVE_CLIENT_ID"):
         return await e.edit(
             "Client ID and Secret is Empty.\nFill it First.",
