@@ -99,7 +99,7 @@ if sett == "True" and sett != "False":
         if str(miss.id) in DEVLIST:
             return
         mssg = e.text
-        if mssg in PMCMDS:  # do not approve if outgoing is a command.
+        if mssg.startswith(HNDLR):  # do not approve if outgoing is a command.
             return
         if not is_approved(e.chat_id):
             approve_user(e.chat_id)
