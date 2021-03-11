@@ -34,6 +34,8 @@ async def _(e):
 @callback("folderid")
 @owner
 async def _(e):
+    if not e.is_private:
+        return
     await e.edit(
         "Send your FOLDER ID\n\n"
         + "For FOLDER ID:\n"
@@ -56,6 +58,8 @@ async def _(e):
 @callback("clientsec")
 @owner
 async def _(e):
+    if not e.is_private:
+        return
     await e.edit("Send your CLIENT SECRET")
     async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
@@ -70,6 +74,8 @@ async def _(e):
 @callback("clientid")
 @owner
 async def _(e):
+    if not e.is_private:
+        return
     await e.edit("Send your CLIENT ID ending with .com")
     async with ultroid_bot.asst.conversation(ultroid_bot.uid) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=ultroid_bot.uid))
@@ -86,6 +92,8 @@ async def _(e):
 @callback("gdrive")
 @owner
 async def _(e):
+    if not e.is_private:
+        return
     await e.edit(
         "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
         buttons=[
