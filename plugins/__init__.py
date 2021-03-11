@@ -21,7 +21,7 @@ from pyUltroid.utils import *
 from strings import get_string
 
 start_time = time.time()
-ultroid_version = "v0.0.3"
+ultroid_version = "v0.0.4"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
