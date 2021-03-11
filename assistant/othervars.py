@@ -158,7 +158,7 @@ async def emoji(event):
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name,
                     themssg,
-                    button=[Button.inline("« Bᴀᴄᴋ", data="setter")],
+                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
             )
 
@@ -187,7 +187,7 @@ async def pluginch(event):
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name,
                     themssg,
-                    button=[Button.inline("« Bᴀᴄᴋ", data="setter")],
+                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
             )
 
@@ -218,7 +218,7 @@ async def hndlrr(event):
                 "{} changed to {}".format(
                     name,
                     themssg,
-                    button=[Button.inline("« Bᴀᴄᴋ", data="setter")],
+                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
             )
 
@@ -241,7 +241,8 @@ async def tagloggerr(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}".format(name, themssg,button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+                ))
 
 
 @callback("eaddon")
@@ -263,8 +264,9 @@ async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
     await event.edit(
-        "Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart"
-    )
+        "Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart",button=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
+                )
+    
 
 
 @callback("edof")
@@ -273,8 +275,9 @@ async def eddof(event):
     var = "ADDONS"
     await setit(event, var, "False")
     await event.edit(
-        "Done! ADDONS has been turned off!! After Setting All Things Do Restart"
-    )
+        "Done! ADDONS has been turned off!! After Setting All Things Do Restart",button=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
+                )
+    
 
 
 @callback("sudo")
@@ -296,7 +299,7 @@ async def eddon(event):
     var = "SUDO"
     await setit(event, var, "True")
     await event.edit(
-        "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart"
+        "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart",button=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
     )
 
 
@@ -306,8 +309,8 @@ async def eddof(event):
     var = "SUDO"
     await setit(event, var, "False")
     await event.edit(
-        "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart"
-    )
+        "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart", button=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
+                )
 
 
 @callback("sfban")
@@ -341,7 +344,8 @@ async def sfgrp(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}".format(name, themssg,button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+                ))
 
 
 @callback("sfexf")
@@ -362,4 +366,5 @@ async def sfexf(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}".format(name, themssg,button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+                ))
