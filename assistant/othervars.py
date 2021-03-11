@@ -127,11 +127,14 @@ async def otvaar(event):
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
             ],
-            [Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
-            Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive")],
+            [
+                Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
+                Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
+
 
 @callback("emoj")
 @owner
@@ -141,9 +144,7 @@ async def emoji(event):
     var = "EMOJI_IN_HELP"
     name = f"Emoji in `{HNDLR}help` menu"
     async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "Send emoji u want to set 🙃.\n\nUse /cancel to cancel."
-        )
+        await conv.send_message("Send emoji u want to set 🙃.\n\nUse /cancel to cancel.")
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
@@ -158,6 +159,7 @@ async def emoji(event):
                     name, themssg
                 )
             )
+
 
 @callback("plg")
 @owner
