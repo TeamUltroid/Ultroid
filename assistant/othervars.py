@@ -156,11 +156,10 @@ async def emoji(event):
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
-                )
-            
+                    name, themssg
+                ),
+                button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("plg")
@@ -185,11 +184,10 @@ async def pluginch(event):
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
-                )
-            
+                    name, themssg
+                ),
+                button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("hhndlr")
@@ -215,12 +213,9 @@ async def hndlrr(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
-                )
-            
+                "{} changed to {}".format(name, themssg),
+                button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("taglog")
@@ -242,12 +237,9 @@ async def tagloggerr(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
-                )
-            
+                "{} changed to {}".format(name, themssg),
+                button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("eaddon")
@@ -352,12 +344,9 @@ async def sfgrp(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
-                )
-            
+                "{} changed to {}".format(name, themssg),
+                button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+            )
 
 
 @callback("sfexf")
@@ -379,9 +368,6 @@ async def sfexf(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(
-                    name,
-                    themssg),
-                    button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
-                )
-            
+                "{} changed to {}".format(name, themssg),
+                button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+            )
