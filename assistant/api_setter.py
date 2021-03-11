@@ -24,6 +24,7 @@ async def apiset(event):
 
 # remove.bg api
 
+
 @callback("rmbg")
 @owner
 async def rmbgapi(event):
