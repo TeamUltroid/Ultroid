@@ -156,7 +156,7 @@ async def emoji(event):
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name, themssg
+                    name, themssg,button= [Button.inline("« Bᴀᴄᴋ", data="setter")],
                 )
             )
 
@@ -183,7 +183,7 @@ async def pluginch(event):
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name, themssg
+                    name, themssg,button= [Button.inline("« Bᴀᴄᴋ", data="setter")],
                 )
             )
 
@@ -210,7 +210,8 @@ async def hndlrr(event):
             return await conv.send_message("Incorrect Handler")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message("{} changed to {}".format(name, themssg,button= [Button.inline("« Bᴀᴄᴋ", data="setter")],
+                ))
 
 
 @callback("taglog")
