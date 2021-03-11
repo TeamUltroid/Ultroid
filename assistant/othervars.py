@@ -157,10 +157,10 @@ async def emoji(event):
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
-            )
+            
 
 
 @callback("plg")
@@ -186,10 +186,10 @@ async def pluginch(event):
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
-            )
+            
 
 
 @callback("hhndlr")
@@ -217,10 +217,10 @@ async def hndlrr(event):
             await conv.send_message(
                 "{} changed to {}".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
-            )
+            
 
 
 @callback("taglog")
@@ -244,10 +244,10 @@ async def tagloggerr(event):
             await conv.send_message(
                 "{} changed to {}".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
                 )
-            )
+            
 
 
 @callback("eaddon")
@@ -354,10 +354,10 @@ async def sfgrp(event):
             await conv.send_message(
                 "{} changed to {}".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
                 )
-            )
+            
 
 
 @callback("sfexf")
@@ -381,7 +381,7 @@ async def sfexf(event):
             await conv.send_message(
                 "{} changed to {}".format(
                     name,
-                    themssg,
+                    themssg),
                     button=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
                 )
-            )
+            
