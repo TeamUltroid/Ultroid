@@ -156,9 +156,13 @@ async def name(event):
 async def name(event):
     m = range(1, 10)
     tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
-    lst = list(zip(tultd [::3], tultd[1::3], tultd [2::3]))
-    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")]) 
-    await event.edit("Select the number of warnings for a user before getting blocked in PMs.", buttons=lst)
+    lst = list(zip(tultd[::3], tultd[1::3], tultd[2::3]))
+    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")])
+    await event.edit(
+        "Select the number of warnings for a user before getting blocked in PMs.",
+        buttons=lst,
+    )
+
 
 @callback(re.compile(b"wrns_(.*)"))
 @owner
@@ -166,7 +170,9 @@ async def set_wrns(event):
     value = event.data_match.group(1).decode("UTF-8")
     dn = udB.set("PMWARNS", value)
     if dn:
-        await event.edit(f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.")
+        await event.edit(
+            f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned."
+        )
     else:
         await event.edit(f"Something went wrong, please check your {hndlr}logs!")
 
