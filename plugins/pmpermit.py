@@ -45,15 +45,15 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {warn}/{twarn} warnings!"""
 else:
-    UNAPPROVED_MSG = """
-**PMSecurity of {ON}!**
-
-{Redis("PM_TEXT")}
-
+    UNAPPROVED_MSG = (
+        """
+**PMSecurity of {ON}!**"""
+        f"""{Redis("PM_TEXT")}"""
+        """
 Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {warn}/{twarn} warnings!"""
-
+    )
 
 UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
@@ -130,9 +130,9 @@ if sett == "True" and sett != "False":
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
             try:
-                wrn = COUNT_PM[user.id] + 1
+                wrn = COUNT_PM[user.id]
             except KeyError:
-                wrn = 1
+                wrn = 0
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
@@ -199,7 +199,7 @@ if sett == "True" and sett != "False":
                 COUNT_PM.update({user.id: 1})
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
-            if COUNT_PM[user.id] >= WARNS:
+            if COUNT_PM[user.id] > WARNS:
                 await event.respond(
                     "`You were spamming my Master's PM, which I didn't like.`\n`You have been BLOCKED and reported as SPAM, until further notice.`"
                 )
