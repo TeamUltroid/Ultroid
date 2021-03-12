@@ -75,13 +75,13 @@ async def upstream(ups):
         repo.heads.main.set_tracking_branch(origin.refs.main)
         repo.heads.main.checkout(True)
     ac_br = repo.active_branch.name
-#    if ac_br != "main":
-#        await eod(
-#            pagal,
-#            f"**[UPDATER]:**` You are on ({ac_br})\n Please change to the main branch.`",
-#        )
-#        repo.__del__()
-#        return
+    #    if ac_br != "main":
+    #        await eod(
+    #            pagal,
+    #            f"**[UPDATER]:**` You are on ({ac_br})\n Please change to the main branch.`",
+    #        )
+    #        repo.__del__()
+    #        return
     try:
         repo.create_remote("upstream", off_repo)
     except BaseException:
