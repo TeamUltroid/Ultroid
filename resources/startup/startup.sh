@@ -6,12 +6,11 @@
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
  
 echo "
- 
-        +-+ +-+ +-+ +-+ +-+ +-+ +-+
-        |U| |L| |T| |R| |O| |I| |D|
-        +-+ +-+ +-+ +-+ +-+ +-+ +-+
- 
- 
+            ┏┳┓╋┏┓╋╋╋╋┏┓┏┓
+            ┃┃┣┓┃┗┳┳┳━╋╋┛┃
+            ┃┃┃┗┫┏┫┏┫╋┃┃╋┃
+            ┗━┻━┻━┻┛┗━┻┻━┛
+
       Visit @TheUltroid for updates!!
 
 "
