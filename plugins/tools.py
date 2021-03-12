@@ -263,20 +263,21 @@ async def _(event):
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
-    OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
+    OUT = f"<b>☞ BASH\n\n• COMMAND:</b>\n<code>{cmd}</code> \n\n"
     e = stderr.decode()
     if e:
-        OUT += f"**• ERROR:** \n`{e}`\n"
+        OUT += f"<b>• ERROR:</b> \n<code>{e}</code>\n"
     o = stdout.decode()
     if not o and not e:
         o = "Success"
-        OUT += f"**• OUTPUT:**\n`{o}`"
+        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</b>"
     else:
         _o = o.split("\n")
         o = "\n".join(_o)
-        OUT += f"**• OUTPUT:**\n`{o}`"
+        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</code>"
     if len(OUT) > 4096:
-        with io.BytesIO(str.encode(OUT)) as out_file:
+        ultd = OUT.replace("<code>", "").replace("</code>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+        with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
                 event.chat_id,
@@ -288,7 +289,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, OUT)
+        await eod(xx, OUT, parse_mode="html")
 
 
 @ultroid_cmd(
@@ -298,7 +299,7 @@ async def _(event):
     if Redis("I_DEV") != "True":
         await eor(
             event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n `{HNDLR}setredis I_DEV True`\n\nThis Might Be Dangerous.",
+            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n {HNDLR}setredis I_DEV True\n\nThis Might Be Dangerous.",
         )
         return
     xx = await eor(event, "`Processing ...`")
@@ -332,12 +333,13 @@ async def _(event):
     else:
         evaluation = "Success"
     final_output = (
-        "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "<i>►</i> <b>EVAL</b>\n<code>{}</code>\n\n<i>►</i><b>OUTPUT</b>: \n<code>{}</code>".format(
             cmd, evaluation
         )
     )
     if len(final_output) > 4096:
-        with io.BytesIO(str.encode(final_output)) as out_file:
+        ultd = final_output.replace("<code>", "").replace("</code>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+        with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await ultroid_bot.send_file(
                 event.chat_id,
@@ -349,7 +351,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, final_output)
+        await eod(xx, final_output, parse_mode="html")
 
 
 async def aexec(code, event):
