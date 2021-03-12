@@ -29,7 +29,7 @@ import io
 from . import *
 
 
-@ultroid_cmd(pattern="add ?(.*)")
+@ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
 async def broadcast_adder(event):
     if "addsudo" in event.text:  # weird fix
         return
@@ -47,12 +47,12 @@ async def broadcast_adder(event):
             try:
                 if i.broadcast:
                     if i.creator or i.admin_rights:
-                        if is_channel_added(i.id):
-                            aldone += 1
-                        else:
+                        if not is_channel_added(i.id):
+                            new += 1
                             cid = f"-100{i.id}"
                             add_channel(int(cid))
-                            new += 1
+                        else:
+                            pass
             except BaseException:
                 pass
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
@@ -90,7 +90,7 @@ async def broadcast_adder(event):
         await event.delete()
 
 
-@ultroid_cmd(pattern="rem ?(.*)")
+@ultroid_cmd(pattern="rem ?(.*)", allow_sudo=False)
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
@@ -132,7 +132,8 @@ async def list_all(event):
         msg += f"=> **{name}** [`{channel}`]\n"
     msg += f"\nTotal {get_no_channels()} channels."
     if len(msg) > 4096:
-        with io.BytesIO(str.encode(msg)) as out_file:
+        MSG = msg.replace("*", "").replace("`", "")
+        with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
             await ultroid_bot.send_file(
                 event.chat_id,
@@ -147,7 +148,7 @@ async def list_all(event):
         await x.edit(msg)
 
 
-@ultroid_cmd(pattern="forward ?(.*)")
+@ultroid_cmd(pattern="forward ?(.*)", allow_sudo=False)
 async def forw(event):
     if event.fwd_from:
         return
@@ -196,7 +197,7 @@ async def forw(event):
             await x.edit("Set up log channel for checking errors.")
 
 
-@ultroid_cmd(pattern="broadcast ?(.*)")
+@ultroid_cmd(pattern="broadcast ?(.*)", allow_sudo=False)
 async def sending(event):
     x = await eor(event, "`Processing...`")
     if not event.is_reply:
@@ -204,10 +205,8 @@ async def sending(event):
     channels = get_channels()
     error_count = 0
     sent_count = 0
-    if len(channels) == 0:
-        return await x.edit(
-            f"You haven't added any channels. Use `{hndlr}add` in them fist!"
-        )
+    if get_no_channels() == 0:
+        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
     await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
