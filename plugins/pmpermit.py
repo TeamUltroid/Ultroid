@@ -130,7 +130,7 @@ if sett == "True" and sett != "False":
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
             try:
-                wrn = COUNT_PM[user.id]
+                wrn = COUNT_PM[user.id] + 1
             except KeyError:
                 wrn = 1
             if user.id in LASTMSG:
