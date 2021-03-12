@@ -41,7 +41,7 @@ if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
 
-Please wait for me to respnd or you will be blocked and reported as spam!!
+Please wait for me to respond or you will be blocked and reported as spam!!
 
 You have {warn}/{twarn} warnings!"""
 else:
@@ -52,9 +52,9 @@ else:
 
 {Redis("PM_TEXT")}
 """
-        """
+"""
 
-Please wait for me to respnd or you will be blocked and reported as spam!!
+Please wait for me to respond or you will be blocked and reported as spam!!
 
 You have {warn}/{twarn} warnings!"""
     )
@@ -87,6 +87,9 @@ async def permitpm(event):
     if user.bot or user.is_self:
         return
     if Redis("PMLOG") == "True":
+        pl = udB.get("PMLOGGROUP")
+        if pl is not None:
+            return await event.forward_to(pl)
         await event.forward_to(Var.LOG_CHANNEL)
 
 
