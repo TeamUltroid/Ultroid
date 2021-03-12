@@ -45,7 +45,7 @@ Please wait for me to respnd or you will be blocked and reported as spam!!
 
 You have {warn}/{twarn} warnings!"""
 else:
-    UNAPPROVED_MSG = f"""
+    UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
 
 {Redis("PM_TEXT")}
