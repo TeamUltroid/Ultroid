@@ -132,7 +132,7 @@ if sett == "True" and sett != "False":
             try:
                 wrn = COUNT_PM[user.id]
             except KeyError:
-                wrn = 0
+                wrn = 1
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
@@ -199,7 +199,7 @@ if sett == "True" and sett != "False":
                 COUNT_PM.update({user.id: 1})
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
-            if COUNT_PM[user.id] > WARNS:
+            if COUNT_PM[user.id] >= WARNS:
                 await event.respond(
                     "`You were spamming my Master's PM, which I didn't like.`\n`You have been BLOCKED and reported as SPAM, until further notice.`"
                 )
