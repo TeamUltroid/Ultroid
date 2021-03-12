@@ -157,9 +157,7 @@ async def emoji(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n".format(
-                    name, themssg
-                ),
+                "{} changed to {}\n".format(name, themssg),
                 buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
             )
 
