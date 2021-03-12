@@ -204,10 +204,8 @@ if sett == "True" and sett != "False":
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
-                async for message in event.client.iter_messages(
-                        user.id, search=UND
-                    ):
-                        await message.delete()
+                async for message in event.client.iter_messages(user.id, search=UND):
+                    await message.delete()
                 await event.respond(
                     "`You were spamming my Master's PM, which I didn't like.`\n`You have been BLOCKED and reported as SPAM, until further notice.`"
                 )
