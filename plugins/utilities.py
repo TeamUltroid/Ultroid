@@ -320,9 +320,7 @@ async def _(event):
     except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
         await xx.edit(reply_text)
     except bmi:
-        await xx.edit(
-            f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}"
-        )
+        await xx.edit(f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}")
 
 
 @ultroid_cmd(

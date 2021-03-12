@@ -128,11 +128,11 @@ async def _(ult):
         log.write(app.get_log())
     ok = app.get_log()
     key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": ok})
-            .json()
-            .get("result")
-            .get("key")
-        )
+        requests.post("https://nekobin.com/api/documents", json={"content": ok})
+        .json()
+        .get("result")
+        .get("key")
+    )
     url = f"https://nekobin.com/{key}"
     await ult.client.send_file(
         ult.chat_id,
