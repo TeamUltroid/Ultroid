@@ -117,8 +117,8 @@ async def otvaar(event):
     await event.edit(
         "Other Variables to set for @TheUltroid:",
         buttons=[
-            [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
-            [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
+            [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
+            Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
             [
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
                 Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
