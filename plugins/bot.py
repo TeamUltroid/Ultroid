@@ -127,10 +127,13 @@ async def _(ult):
     with open("logs-ultroid.txt", "w") as log:
         log.write(app.get_log())
     ok = app.get_log()
-    message = ok
-    url = "https://del.dog/documents"
-    r = requests.post(url, data=message.encode("UTF-8")).json()
-    url = f"https://del.dog/{r['key']}"
+    key = (
+            requests.post("https://nekobin.com/api/documents", json={"content": ok})
+            .json()
+            .get("result")
+            .get("key")
+        )
+    url = f"https://nekobin.com/{key}"
     await ult.client.send_file(
         ult.chat_id,
         "logs-ultroid.txt",

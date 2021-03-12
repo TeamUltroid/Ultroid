@@ -321,7 +321,7 @@ async def _(event):
         await xx.edit(reply_text)
     except bmi:
         await xx.edit(
-            f"**Inline Not Available as You Are in Bot Mode\nPasted to Nekobin :**\n{reply_text}"
+            f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}"
         )
 
 
