@@ -276,7 +276,14 @@ async def _(event):
         o = "\n".join(_o)
         OUT += f"<b>• OUTPUT:</b>\n<code>{o}</code>"
     if len(OUT) > 4096:
-        ultd = OUT.replace("<code>", "").replace("</code>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+        ultd = (
+            OUT.replace("<code>", "")
+            .replace("</code>", "")
+            .replace("<b>", "")
+            .replace("</b>", "")
+            .replace("<i>", "")
+            .replace("</i>", "")
+        )
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
@@ -332,13 +339,18 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = (
-        "<i>►</i> <b>EVAL</b>\n<code>{}</code>\n\n<i>►</i><b>OUTPUT</b>: \n<code>{}</code>".format(
-            cmd, evaluation
-        )
+    final_output = "<i>►</i> <b>EVAL</b>\n<code>{}</code>\n\n<i>►</i><b>OUTPUT</b>: \n<code>{}</code>".format(
+        cmd, evaluation
     )
     if len(final_output) > 4096:
-        ultd = final_output.replace("<code>", "").replace("</code>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+        ultd = (
+            final_output.replace("<code>", "")
+            .replace("</code>", "")
+            .replace("<b>", "")
+            .replace("</b>", "")
+            .replace("<i>", "")
+            .replace("</i>", "")
+        )
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await ultroid_bot.send_file(
