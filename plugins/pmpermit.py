@@ -187,6 +187,8 @@ if sett == "True" and sett != "False":
                     )
                 LASTMSG.update({user.id: event.text})
             else:
+                async for message in event.client.iter_messages(user.id, search=UND):
+                    await message.delete()
                 await event.client.send_file(
                     user.id,
                     PMPIC,
