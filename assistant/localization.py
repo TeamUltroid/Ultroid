@@ -28,6 +28,7 @@ async def setlang(event):
 
 
 @callback(re.compile(b"set_(.*)"))
+@owner
 async def settt(event):
     lang = event.data_match.group(1).decode("UTF-8")
     languages = get_languages()

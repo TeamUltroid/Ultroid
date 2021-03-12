@@ -154,26 +154,21 @@ async def name(event):
 @callback("swarn")
 @owner
 async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "PMWARNS"
-    name = "Warns Count"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**Wans Number**\nEnter the Number of Warns for Pmpermit.\n\nUse /cancel to terminate the operation."
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                    name, themssg
-                )
-            )
+    m = range(1, 10)
+    tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
+    lst = list(zip(tultd [::3], tultd[1::3], tultd [2::3]))
+    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")]) 
+    await event.edit("Select the number of warnings for a user before getting blocked in PMs.", buttons=lst)
+
+@callback(re.compile(b"wrns_(.*)"))
+@owner
+async def set_wrns(event):
+    value = event.data_match.group(1).decode("UTF-8")
+    dn = udB.set("PMWARNS", value)
+    if dn:
+        await event.edit(f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.")
+    else:
+        await event.edit(f"Something went wrong, please check your {hndlr}logs!")
 
 
 @callback("pmmed")
