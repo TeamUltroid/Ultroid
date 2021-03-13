@@ -174,7 +174,7 @@ async def _(e):
         c = await a.download_media(
             "resources/downloads/",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, toime, "**Dᴏᴡɴʟᴏᴀᴅɪɴɢ...**")
+                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
             ),
         )
         await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
@@ -223,7 +223,7 @@ async def _(e):
             video_note=True,
             reply_to=a,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, taime, "**Uᴘʟᴏᴀᴅɪɴɢ...**")
+                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ...")
             ),
         )
         await z.delete()
