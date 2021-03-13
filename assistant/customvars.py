@@ -7,7 +7,8 @@
 
 import os
 
-from telegraph import Telegraph, upload_file as upl
+from telegraph import Telegraph
+from telegraph import upload_file as upl
 
 from . import *
 
