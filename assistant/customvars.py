@@ -289,9 +289,8 @@ async def pmlogof(event):
 @callback("ppmset")
 @owner
 async def pmset(event):
-    await event.edit(
-        "PMPermit Settings:",
-        buttons=[
+    await event.edit("PMPermit Settings:",
+         buttons=[
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
             [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
