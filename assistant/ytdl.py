@@ -131,7 +131,7 @@ async def _(sur):
             getter,
             f"{ytdl_data['id']}.mp3",
             thumb=thumb,
-            caption=f"**{ytdl_data['title']}\n{convert(ytdl_data['duration'])}\n{ytdl_data['uploader']}**",
+            caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(
@@ -185,7 +185,7 @@ async def _(fuk):
             getter,
             f"{ytdl_data['id']}.mp4",
             thumb=f"./resources/extras/ultroid.jpg",
-            caption=f"**{ytdl_data['title']}\n{convert(ytdl_data['duration'])}\n{ytdl_data['uploader']}**",
+            caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
             supports_streaming=True,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(d, t, fuk, c_time, "Uploading..", f"{ytdl_data['title']}.mp4")
