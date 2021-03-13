@@ -14,7 +14,7 @@ from . import *
 
 # outgoing
 
-
+"""
 @asst.on(events.NewMessage(func=lambda e: e.is_private))
 async def on_out_mssg(event):
     x = await event.get_reply_message()
@@ -41,3 +41,15 @@ async def on_out_mssg(event):
             )
         else:
             await asst.send_message(to_user, to_send, reply_to=x.reply_to_msg_id)
+"""
+@asst.on(events.NewMessage(func=lambda e: e.is_private))
+async def on_out_mssg(event):
+    x = await event.get_reply_message()
+    if x is None:
+        return
+    if event.sender_id == OWNER_ID:
+        if event.raw_text.startswith("/"):
+            return
+        y = udB.get(str(x))
+        await asst.send_message(int(y), event.raw_text)
+    
