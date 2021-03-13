@@ -12,7 +12,9 @@ from urllib.request import urlopen
 import play_scraper
 import requests
 from bs4 import BeautifulSoup
-from search_engine_parser import GoogleSearch, YahooSearch
+from pyUltroid.functions.parser import GoogleSearch, YahooSearch
+from rextester_py import rexec_aio
+from rextester_py.rextester_aio import UnknownLanguage
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -21,6 +23,74 @@ from . import *
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
+ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
+
+
+@in_pattern("fl2lnk ?(.*)")
+@in_owner
+async def _(e):
+    file_path = e.pattern_match.group(1)
+    file_name = file_path.split("/")[-1]
+    bitton = [
+        [
+            Button.inline("anonfiles", data=f"flanonfiles//{file_path}"),
+            Button.inline("transfer", data=f"fltransfer//{file_path}"),
+        ],
+        [
+            Button.inline("bayfiles", data=f"flbayfiles//{file_path}"),
+            Button.inline("x0", data=f"flx0//{file_path}"),
+        ],
+        [
+            Button.inline("file.io", data=f"flfile.io//{file_path}"),
+            Button.inline("siasky", data=f"flsiasky//{file_path}"),
+        ],
+    ]
+    try:
+        lnk = e.builder.article(
+            title="fl2lnk",
+            text=f"**File:**\n{file_name}",
+            buttons=bitton,
+        )
+    except:
+        lnk = e.builder.article(
+            title="fl2lnk",
+            text="File not found",
+        )
+    await e.answer([lnk])
+
+
+@callback(
+    re.compile(
+        "fl(.*)",
+    ),
+)
+@owner
+async def _(e):
+    t = (e.data).decode("UTF-8")
+    data = t[2:]
+    host = data.split("//")[0]
+    file = data.split("//")[1]
+    file_name = file.split("/")[-1]
+    await e.edit(f"Uploading `{file_name}` on {host}")
+    await dloader(e, host, file)
+
+
+@in_pattern("repo")
+@in_owner
+async def repo(e):
+    res = [
+        await e.builder.article(
+            title="Ultroid Userbot",
+            description="Userbot | Telethon",
+            thumb=wb(ultpic, 0, "image/jpeg", []),
+            text="• **ULTROID USERBOT** •",
+            buttons=[
+                [Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid")],
+                [Button.url("Support", url="t.me/UltroidSupport")],
+            ],
+        )
+    ]
+    await e.answer(res)
 
 
 @in_pattern("go")
@@ -38,13 +108,14 @@ async def gsearch(q_event):
         await q_event.answer([kkkk])
     searcher = []
     page = re.findall(r"page=\d+", match)
+    cache = False
     try:
         page = page[0]
         page = page.replace("page=", "")
         match = match.replace("page=" + page[0], "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page))
+    search_args = (str(match), int(page), bool(cache))
     gsearch = GoogleSearch()
     gresults = await gsearch.async_search(*search_args)
     msg = ""
@@ -79,6 +150,44 @@ async def gsearch(q_event):
     await q_event.answer(searcher)
 
 
+@in_pattern("rex")
+@in_owner
+async def rextester(event):
+    builder = event.builder
+    try:
+        omk = event.text.split(" ", maxsplit=1)[1]
+        if omk is not None:
+            if "|" in omk:
+                lang, code = omk.split("|")
+            else:
+                lang = "python 3"
+                code = omk
+            output = await rexec_aio(lang, code)
+            stats = output.stats
+            if output.errors is not None:
+                outputt = output.errors
+                resultm = builder.article(
+                    title="Code",
+                    description=f"Language-`{lang}` & Code-`{code}`",
+                    text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nErrors:\n`{outputt}`\n\nStats:\n`{stats}`",
+                )
+            else:  # By @ProgrammingError
+                outputt = output.results
+                resultm = builder.article(
+                    title="Code",  # By @ProgrammingError
+                    description=f"Language-`{lang}` & Code-`{code}`",
+                    text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`\n\nStats:\n`{stats}`",
+                )
+            await event.answer([resultm])
+    except UnknownLanguage:
+        resultm = builder.article(
+            title="Error",  # By @ProgrammingError
+            description="Invalid language choosen",
+            text="The list of valid languages are\n\nc#, vb.net, f#, java, python, c (gcc), \nc++ (gcc), php, pascal, objective-c, haskell, \nruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, \nscheme, node.js, python 3, octave, c (clang), \nc++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, \nbash, ada, erlang, elixir, ocaml, \nkotlin, brainfuck, fortran\n\n\n Format to use Rextester is `@Yourassistantusername rex langcode|code`",
+        )
+        await event.answer([resultm])
+
+
 @in_pattern("yahoo")
 @in_owner
 async def gsearch(q_event):
@@ -96,13 +205,14 @@ async def gsearch(q_event):
         await q_event.answer([kkkk])
     searcher = []
     page = re.findall(r"page=\d+", match)
+    cache = False
     try:
         page = page[0]
         page = page.replace("page=", "")
         match = match.replace("page=" + page[0], "")
     except IndexError:
         page = 1
-    search_args = (str(match), int(page))
+    search_args = (str(match), int(page), bool(cache))
     gsearch = YahooSearch()
     gresults = await gsearch.async_search(*search_args)
     msg = ""

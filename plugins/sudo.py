@@ -137,7 +137,7 @@ async def _(ult):
                 f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User(s)**"
             )
         else:
-            return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BROKE ITSELF`")
+            return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`")
 
     args = ult.pattern_match.group(1)
 

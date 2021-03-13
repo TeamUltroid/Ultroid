@@ -101,8 +101,6 @@ async def _(e):
         return await eod(xx, "`I can't gban myself.`", time=3)
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gban my Developers.`", time=3)
-    if str(userid) in (Redis("SUDOS")).split(" "):
-        return await eod(xx, "`I can't gban a sudo user.`", time=3)
     if is_gbanned(userid):
         return await eod(
             xx, "`User is already gbanned and added to gbanwatch.`", time=4
@@ -140,7 +138,6 @@ async def gcast(event):
                 await ultroid_bot.send_message(chat, msg)
             except:
                 er += 1
-                pass
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
@@ -172,8 +169,6 @@ async def gkick(e):
         return await eod(xx, "`I can't gkick myself.`", time=3)
     if str(userid) in DEVLIST:
         return await eod(xx, "`I can't gkick my Developers.`", time=3)
-    if str(userid) in (Redis("SUDOS")).split(" "):
-        return await eod(xx, "`I can't gkick a sudo user.`", time=3)
     async for gkick in e.client.iter_dialogs():
         if gkick.is_group or gkick.is_channel:
             try:
@@ -217,13 +212,7 @@ async def _(e):
     async for onmute in e.client.iter_dialogs():
         if onmute.is_group:
             try:
-                await e.client(
-                    EditBannedRequest(
-                        onmute.id,
-                        userid,
-                        ChatBannedRights(until_date=None, send_messages=True),
-                    )
-                )
+                await e.client.edit_permissions(onmute.id, userid, send_messages=False)
                 chats += 1
             except:
                 pass
@@ -260,13 +249,7 @@ async def _(e):
     async for hurr in e.client.iter_dialogs():
         if hurr.is_group:
             try:
-                await e.client(
-                    EditBannedRequest(
-                        hurr.id,
-                        userid,
-                        ChatBannedRights(until_date=None, send_messages=False),
-                    )
-                )
+                await e.client.edit_permissions(hurr.id, userid, send_messages=True)
                 chats += 1
             except:
                 pass
@@ -287,13 +270,9 @@ async def _(e):
                     )
                     gban_watch = f"`Gbanned User` [{user.first_name}](tg://user?id={user.id}) `Spotted\n"
                     gban_watch += f"Banned Successfully`"
+                    await e.reply(gban_watch)
                 except:
                     pass
-            else:
-                gban_watch = (
-                    f"@admins `Gbanned user` [{user.first_name}]({user.id}) `Spotted.`"
-                )
-            await e.reply(gban_watch)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

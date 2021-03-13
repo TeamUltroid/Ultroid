@@ -7,7 +7,8 @@
 
 import os
 
-from telegraph import Telegraph, upload_file
+from telegraph import Telegraph
+from telegraph import upload_file as upl
 
 from . import *
 
@@ -76,11 +77,15 @@ async def media(event):
         except BaseException:
             pass
         media = await event.client.download_media(response, "alvpc")
-        if not (response.text).startswith("/") and not response.text == "":
+        if (
+            not (response.text).startswith("/")
+            and not response.text == ""
+            and not response.media
+        ):
             url = response.text
         else:
             try:
-                x = upload_file(media)
+                x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
@@ -105,10 +110,18 @@ async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
         buttons=[
-            [Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt")],
-            [Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed")],
-            [Button.inline("PMLOGGER", data="pml")],
-            [Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed")],
+            [
+                Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
+                Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed"),
+            ],
+            [
+                Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
+                Button.inline("PMLOGGER", data="pml"),
+            ],
+            [
+                Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
+                Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="pmset")],
         ],
     )
@@ -139,6 +152,32 @@ async def name(event):
             )
 
 
+@callback("swarn")
+@owner
+async def name(event):
+    m = range(1, 10)
+    tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
+    lst = list(zip(tultd[::3], tultd[1::3], tultd[2::3]))
+    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")])
+    await event.edit(
+        "Select the number of warnings for a user before getting blocked in PMs.",
+        buttons=lst,
+    )
+
+
+@callback(re.compile(b"wrns_(.*)"))
+@owner
+async def set_wrns(event):
+    value = int(event.data_match.group(1).decode("UTF-8"))
+    dn = udB.set("PMWARNS", value)
+    if dn:
+        await event.edit(
+            f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned."
+        )
+    else:
+        await event.edit(f"Something went wrong, please check your {hndlr}logs!")
+
+
 @callback("pmmed")
 @owner
 async def media(event):
@@ -157,12 +196,18 @@ async def media(event):
                 return await conv.send_message("Operation cancelled!!")
         except BaseException:
             pass
+        media = await event.client.download_media(response, "alvpcc")
+        if (
+            not (response.text).startswith("/")
+            and not response.text == ""
+            and not response.media
+        ):
         media = await event.client.download_media(response, "pmpcc")
         if not (response.text).startswith("/") and not response.text == "":
             url = response.text
         else:
             try:
-                x = upload_file(media)
+                x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
@@ -177,6 +222,37 @@ async def dell(event):
     try:
         udB.delete("PMPIC")
         return await event.edit("Done!")
+    except BaseException:
+        return await event.edit("Something went wrong...")
+
+
+@callback("apauto")
+@owner
+async def apauto(event):
+    await event.edit(
+        "This'll auto approve on outgoing messages",
+        buttons=[
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ OFF", data="apof")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        ],
+    )
+
+
+@callback("apon")
+@owner
+async def apon(event):
+    var = "AUTOAPPROVE"
+    await setit(event, var, "True")
+    await event.edit(f"Done!! AUTOAPPROVE  Started!!")
+
+
+@callback("apof")
+@owner
+async def apof(event):
+    try:
+        udB.delete("AUTOAPPROVE")
+        return await event.edit("Done! AUTOAPPROVE Stopped!!")
     except BaseException:
         return await event.edit("Something went wrong...")
 

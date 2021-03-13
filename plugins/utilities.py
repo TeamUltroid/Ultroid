@@ -115,7 +115,7 @@ async def date(event):
     pattern="calc",
 )
 async def _(event):
-    x = await eor(event, "...")
+    x = await eor(event, get_string("com_1"))
     cmd = event.text.split(" ", maxsplit=1)[1]
     event.message.id
     if event.reply_to_msg_id:
@@ -164,7 +164,7 @@ async def aexec(code, event):
     pattern="chatinfo(?: |$)(.*)",
 )
 async def info(event):
-    ok = await eor(event, "`...`")
+    ok = await eor(event, get_string("com_1"))
     chat = await get_chatinfo(event)
     caption = await fetch_info(chat, event)
     try:
@@ -320,9 +320,7 @@ async def _(event):
     except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
         await xx.edit(reply_text)
     except bmi:
-        await xx.edit(
-            f"**Inline Not Available as You Are in Bot Mode\nPasted to Nekobin :**\n{reply_text}"
-        )
+        await xx.edit(f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}")
 
 
 @ultroid_cmd(
@@ -330,7 +328,7 @@ async def _(event):
 )
 async def _(event):
     input_str = event.pattern_match.group(1)
-    xx = await eor(event, "`Pasting...`")
+    xx = await eor(event, get_string("com_1"))
     message = "SYNTAX: `.paste <long text to include>`"
     if input_str:
         message = input_str
@@ -439,7 +437,7 @@ async def _(event):
     groups_only=True,
 )
 async def _(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     to_add_users = ult.pattern_match.group(1)
     if not ult.is_channel and ult.is_group:
         for user_id in to_add_users.split(" "):
@@ -470,7 +468,7 @@ async def _(ult):
 )
 async def rmbg(event):
     RMBG_API = udB.get("RMBG_API")
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if not RMBG_API:
         return await xx.edit(
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
@@ -518,7 +516,7 @@ async def rmbg(event):
 )
 async def telegraphcmd(event):
     input_str = event.pattern_match.group(1)
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         getmsg = await event.get_reply_message()
         if getmsg.photo or getmsg.video or getmsg.gif:

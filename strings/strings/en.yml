@@ -1,0 +1,198 @@
+name: English
+natively: English
+
+authors:
+  - xditya
+  - rojserbest
+  - sppidy
+  - ProgrammingError
+
+# commons
+com_1: "`Processing...`"
+com_2: "`Searching...`"
+# help 
+help_1: "`{}` is not a valid plugin!"
+help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
+help_3: "`Please turn on inline mode for your bot from` @Botfather."
+help_4: "Hey, \nYou are on Bot Mode. \nBot Mode Users Cant Get Help Directly ... \nInstead Copy Paste The Following in The Chat and Click The Pop Up \n\n `@{} ultd`"
+
+# autopic
+autopic_1: "Heya Give me some Text .."
+autopic_2: "No Results found for `{}`"
+autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
+
+# inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Pʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}\n\n
+Gᴏ Aɴᴅ Aᴅᴅ `ADDONS` Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**"
+inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
+
+# tagnotif
+tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨Message📨]({})"
+tagnot_2: "{} tagged you in {}\n\n [📨Message📨]({})"
+
+# whisper
+wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
+wspr_2: "Message deleted"
+
+# afk
+afk_1: "`No Longer Afk\n\n
+Was away for ~ {}`"
+afk_2: "#AFK\n
+Set AFK mode to False.\n
+Was AFK for {}`"
+afk_3: "I'm currently AFK.\n
+Last seen {} ago.`\n\n
+**Reason:** `{}`"
+afk_4: "`I'm currently AFK.\n\n
+Last seen {} ago.`"
+afk_5: "`Going AFK.`\n\n
+**Reason:** `{}`"
+afk_6: "I'm going AFK."
+afk_7: "Currently AFK with reason {}"
+afk_8: "Currently AFK."
+
+# bot
+alive_1: "**The Ultroid Userbot...**\n\n
+**{}**\n\n
+┏━━━━━━━━━━━━━━━━━━━━━\n
+┣ **Owner** - `{}`\n
+┣ **Version** - `{}`\n
+┣ **UpTime** - `{}`\n
+┣ **Python** - `{}`\n
+┣ **Telethon** - `{}`\n
+┣ **Branch** - `{}`\n
+┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
+ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
+usage: "**⚙️ Dyno Usage ⚙️**:\n\n
+ -> `Dyno usage for`  **{}**:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+ -> `Dyno hours quota remaining this month`:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+**Total Disk Space: {}\n\n**
+**Used: {}  Free: {}\n\n**
+**📊Data Usage📊\n\nUpload: {}\nDown: {}\n\n**
+**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "GoodBye {}.\n`Shutting down...`"
+
+# broadcast
+bd_1: "`Adding to db...`"
+bd_2: "`Trying to add all admin channels to db...`"
+bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
+bd_4: "Channels added!"
+bd_5: "`Added to database!`"
+bd_6: "`Channel is already is database!`"
+
+# carbon
+carbon_1: "Processing"
+carbon_2: "Carbonised by [{}](tg://user?id={})"
+
+# chats
+chats_1: "`Processing...`"
+chats_2: "`Cant delete this chat`"
+chats_3: "`I m not an admin`"
+chats_4: "#Deleted\nDeleted {}"
+chats_5: "Your [{}]({}) Group Made Boss!"
+chats_6: "Join @TeamUltroid"
+chats_6: "Your [{}]({}) Group/Channel Has been made Boss!"
+
+# converter
+cvt_1: "Reply to any media/Document."
+cvt_2: "Give The name nd extension of file"
+cvt_3: "`Processing...`"
+cvt_4: "Reply to any media."
+
+# core
+core_1: "Module Found"
+core_2: "{}.py use .paste to paste in neko and raw.."
+core_3: "Search Again..?"
+core_4: "Module {} Found"
+core_5: "{}.py use .paste to paste in neko and raw.."
+core_6: "Module {}.py Not Found"
+core_7: "No Such Module"
+core_8: "No Module Named {}.py"
+core_9: "`Give name of plugin which u want to unload`"
+core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_11: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_12: "**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{}`"
+core_13: "`Give name of plugin which u want to uninstall`"
+core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_16: "`Give name of plugin which u want to load`"
+core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
+core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
+
+# fedutils
+sf_1: "Starting a Mass-FedBan..."
+sf_2: "`No user designated!`"
+sf_3: "You can't ban my dev you noob!!"
+sf_4: "`Seems like rose isn't responding, or, the plugin is misbehaving`"
+sf_5: "You can only use fed commands once every 5 minutes"
+sf_6: "Try again after 5 mins."
+sf_7: "Unable to collect FedAdminList. Retrying ({}/3)..."
+sf_8: "Error"
+sf_9: "Unable to collect FedAdminList."
+sf_10: "FBaning in {} feds."
+sf_11: "Specified FBan Group ID is incorrect."
+sf_12: "{} Excluded."
+sf_13: "Error in removing FedAdmin file.\n{}"
+sf_14: "SuperFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_15: "Starting a Mass-UnFedBan..."
+sf_16: "SuperUnFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_17: "`Give me someones id, or reply to somones message to check his/her fedstat.`"
+sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
+sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+sf_20: "`Extracting information...`"
+sf_21: "\n\nFedInfo Extracted by Ultroid"
+
+# gdrive
+gdrive_1: "`You have already authorised with Google Drive`"
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
+Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_3: "`Wrong Client Id`"
+gdrive_4: "`Something went wrong! Send `/auth` again.\nIf same happens contact `@TheUltroid"
+gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
+gdrive_6: "`Go to `{}` and send ``/auth.`"
+gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
+
+# pmpermit
+pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
+pmperm_2: "You were spamming my Master's PM, which I didn't like.\nYou have been BLOCKED and reported as SPAM, until further notice."
+pmperm_3: "Reply to someone's msg or try this commmand in private."
+
+# updater
+upd_1: "`Checking for updates, please wait....`"
+upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
+upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
+upd_4: "`Changelog is too big, view the file to see it.`"
+upd_5: "Use `{}update now` to update."
+upd_6: "{}\n\nUse `{}update now` to update."
+upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+
+# upload download
+udl_1: "`Reply to the file/media you want to download...`"
+udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
+udl_3: "`Give a specific path to file`"
+
+# words
+wrd_1: "**Word** - `{}`\n\n**Meanings** - \n"
+wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
+wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
+
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "Choose which API you want to set."
+ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
+ast_3: "Hi {}. Please browse through the options"

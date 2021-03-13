@@ -61,7 +61,7 @@ from . import *
     groups_only=True,
 )
 async def prmte(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
     isCreator = chat.creator
@@ -103,7 +103,7 @@ async def prmte(ult):
     groups_only=True,
 )
 async def dmote(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
     isCreator = chat.creator
@@ -145,7 +145,7 @@ async def dmote(ult):
     groups_only=True,
 )
 async def bban(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
     isCreator = chat.creator
@@ -195,7 +195,7 @@ async def bban(ult):
     groups_only=True,
 )
 async def uunban(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
     isCreator = chat.creator
@@ -242,7 +242,7 @@ async def kck(ult):
             return
     except BaseException:
         pass
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     chat = await ult.get_chat()
     isAdmin = chat.admin_rights
     isCreator = chat.creator
@@ -294,7 +294,7 @@ async def pin(msg):
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
-        x = await eor(msg, "`Processing...`")
+        x = await eor(msg, get_string("com_1"))
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
         except BadRequestError:
@@ -319,7 +319,7 @@ async def pin(msg):
     pattern="unpin($| (.*))",
 )
 async def unp(ult):
-    xx = await eor(ult, "`Processing...`")
+    xx = await eor(ult, get_string("com_1"))
     if not ult.is_private:
         # for (un)pin(s) in private messages
         await ult.get_chat()
@@ -406,10 +406,10 @@ async def fastpurgerme(purg):
     pattern="purgeall$",
 )
 async def _(e):
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     if e.reply_to_msg_id:
         input = (await e.get_reply_message()).sender_id
-        user = (await e.client.get_entity(input)).first_name
+        (await e.client.get_entity(input)).first_name
         try:
             nos = 0
             async for x in e.client.iter_messages(e.chat_id, from_user=input):

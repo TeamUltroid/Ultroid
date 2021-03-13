@@ -7,7 +7,108 @@
 
 from . import *
 
-# main menuu for setting other vars
+TOKEN_FILE = "resources/auths/auth_token.txt"
+
+
+@callback("authorise")
+@owner
+async def _(e):
+    if not e.is_private:
+        return
+    if not udB.get("GDRIVE_CLIENT_ID"):
+        return await e.edit(
+            "Client ID and Secret is Empty.\nFill it First.",
+            buttons=Button.inline("Back", data="gdrive"),
+        )
+    storage = await create_token_file(TOKEN_FILE, e)
+    authorize(TOKEN_FILE, storage)
+    f = open(TOKEN_FILE, "r")
+    token_file_data = f.read()
+    udB.set("GDRIVE_TOKEN", token_file_data)
+    await e.reply(
+        "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
+        buttons=Button.inline("Main Menu", data="setter"),
+    )
+
+
+@callback("folderid")
+@owner
+async def _(e):
+    if not e.is_private:
+        return
+    await e.edit(
+        "Send your FOLDER ID\n\n"
+        + "For FOLDER ID:\n"
+        + "1. Open Google Drive App.\n"
+        + "2. Create Folder.\n"
+        + "3. Make that folder public.\n"
+        + "4. Copy link of that folder."
+        + "5. Send all characters which is after id= ."
+    )
+    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
+        repl = await reply
+        udB.set("GDRIVE_FOLDER_ID", repl.text)
+        await repl.reply(
+            "Success Now You Can Authorise.",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
+
+
+@callback("clientsec")
+@owner
+async def _(e):
+    if not e.is_private:
+        return
+    await e.edit("Send your CLIENT SECRET")
+    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
+        repl = await reply
+        udB.set("GDRIVE_CLIENT_SECRET", repl.text)
+        await repl.reply(
+            "Success!\nNow You Can Authorise or add FOLDER ID.",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
+
+
+@callback("clientid")
+@owner
+async def _(e):
+    if not e.is_private:
+        return
+    await e.edit("Send your CLIENT ID ending with .com")
+    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
+        repl = await reply
+        if not repl.text.endswith(".com"):
+            return await repl.reply("`Wrong CLIENT ID`")
+        udB.set("GDRIVE_CLIENT_ID", repl.text)
+        await repl.reply(
+            "Success now set CLIENT SECRET",
+            buttons=Button.inline("« Back", data="gdrive"),
+        )
+
+
+@callback("gdrive")
+@owner
+async def _(e):
+    if not e.is_private:
+        return
+    await e.edit(
+        "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
+        buttons=[
+            [
+                Button.inline("Cʟɪᴇɴᴛ Iᴅ", data="clientid"),
+                Button.inline("Cʟɪᴇɴᴛ Sᴇᴄʀᴇᴛ", data="clientsec"),
+            ],
+            [
+                Button.inline("Fᴏʟᴅᴇʀ Iᴅ", data="folderid"),
+                Button.inline("Aᴜᴛʜᴏʀɪsᴇ", data="authorise"),
+            ],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        ],
+        link_preview=False,
+    )
 
 
 @callback("otvars")
@@ -16,8 +117,10 @@ async def otvaar(event):
     await event.edit(
         "Other Variables to set for @TheUltroid:",
         buttons=[
-            [Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog")],
-            [Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban")],
+            [
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
+                Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban"),
+            ],
             [
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
                 Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
@@ -26,9 +129,37 @@ async def otvaar(event):
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
             ],
+            [
+                Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
+                Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
+
+
+@callback("emoj")
+@owner
+async def emoji(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "EMOJI_IN_HELP"
+    name = f"Emoji in `{HNDLR}help` menu"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message("Send emoji u want to set 🙃.\n\nUse /cancel to cancel.")
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message("Cancelled!!")
+        elif themssg.startswith(("/", HNDLR)):
+            return await conv.send_message("Incorrect Emoji")
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message(
+                "{} changed to {}\n".format(name, themssg),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("plg")
@@ -47,12 +178,15 @@ async def pluginch(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
+        elif themssg.startswith(("/", HNDLR)):
+            return await conv.send_message("Incorrect channel")
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name, themssg
-                )
+                ),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
             )
 
 
@@ -72,9 +206,16 @@ async def hndlrr(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
+        elif len(themssg) == 1:
+            return await conv.send_message("Incorrect Handler")
+        elif themssg.startswith(("/", "#", "@")):
+            return await conv.send_message("Incorrect Handler")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message(
+                "{} changed to {}".format(name, themssg),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("taglog")
@@ -95,7 +236,10 @@ async def tagloggerr(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message(
+                "{} changed to {}".format(name, themssg),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            )
 
 
 @callback("eaddon")
@@ -117,7 +261,8 @@ async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
     await event.edit(
-        "Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart"
+        "Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
     )
 
 
@@ -127,7 +272,8 @@ async def eddof(event):
     var = "ADDONS"
     await setit(event, var, "False")
     await event.edit(
-        "Done! ADDONS has been turned off!! After Setting All Things Do Restart"
+        "Done! ADDONS has been turned off!! After Setting All Things Do Restart",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
     )
 
 
@@ -150,7 +296,8 @@ async def eddon(event):
     var = "SUDO"
     await setit(event, var, "True")
     await event.edit(
-        "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart"
+        "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
     )
 
 
@@ -160,7 +307,8 @@ async def eddof(event):
     var = "SUDO"
     await setit(event, var, "False")
     await event.edit(
-        "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart"
+        "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
     )
 
 
@@ -195,7 +343,10 @@ async def sfgrp(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message(
+                "{} changed to {}".format(name, themssg),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+            )
 
 
 @callback("sfexf")
@@ -216,4 +367,7 @@ async def sfexf(event):
             return await conv.send_message("Cancelled!!")
         else:
             await setit(event, var, themssg)
-            await conv.send_message("{} changed to {}".format(name, themssg))
+            await conv.send_message(
+                "{} changed to {}".format(name, themssg),
+                buttons=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+            )

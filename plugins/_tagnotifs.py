@@ -41,9 +41,9 @@ async def all_messages_catcher(e):
             )
         except BaseException:
             if e.text:
-                cap = f"{xx} tagged you in {yy}\n\n```{e.text}```\n\n[📨Message📨]({msg})"
+                cap = get_string("tagnot_1").format(xx, yy, e.text, msg)
             else:
-                cap = f"{xx} tagged you in {yy}\n\n [📨Message📨]({msg})"
+                cap = get_string("tagnot_2").format(xx, yy, msg)
             try:
                 await ultroid_bot.send_message(NEEDTOLOG, cap, link_preview=False)
             except BaseException:
