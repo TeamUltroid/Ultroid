@@ -1,3 +1,23 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+• `{i}webupload`
+      .
+
+• `{i}fl2link`
+     .
+
+"""
+
+
+
 import asyncio
 import re
 import time
@@ -10,7 +30,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="wupload",
+    pattern="webupload",
 )
 async def _(event):
     xx = await eor(event, "`Processing...`")
@@ -105,3 +125,5 @@ async def _(e):
     file_name = file.split("/")[-1]
     await e.edit(f"Uploading `{file_name}` on {host}")
     await dloader(e, host, file)
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
