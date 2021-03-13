@@ -37,11 +37,13 @@ if Redis("PMPIC"):
 else:
     PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
 
+UND = get_string("pmperm_1")
+
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
 
-Please wait for me to respond or you will be blocked and reported as spam!!
+{UND}
 
 You have {warn}/{twarn} warnings!"""
 else:
@@ -54,21 +56,20 @@ else:
 """
         """
 
-Please wait for me to respond or you will be blocked and reported as spam!!
+{UND}
 
 You have {warn}/{twarn} warnings!"""
     )
 
-UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 # 1
 if Redis("PMWARNS"):
     try:
         WARNS = int(Redis("PMWARNS"))
     except BaseException:
-        WARNS = 3
+        WARNS = 4
 else:
-    WARNS = 3
+    WARNS = 4
 NO_REPLY = get_string("pmperm_3")
 PMCMDS = [
     f"{hndlr}a",
@@ -159,6 +160,7 @@ if sett == "True" and sett != "False":
                             ON=OWNER_NAME,
                             warn=wrn,
                             twarn=WARNS,
+                            UND = UND,
                             name=name,
                             fullname=fullname,
                             username=username,
@@ -178,6 +180,7 @@ if sett == "True" and sett != "False":
                             ON=OWNER_NAME,
                             warn=wrn,
                             twarn=WARNS,
+                            UND = UND,
                             name=name,
                             fullname=fullname,
                             username=username,
@@ -196,6 +199,7 @@ if sett == "True" and sett != "False":
                         ON=OWNER_NAME,
                         warn=wrn,
                         twarn=WARNS,
+                        UND=UND,
                         name=name,
                         fullname=fullname,
                         username=username,
@@ -211,9 +215,7 @@ if sett == "True" and sett != "False":
             if COUNT_PM[user.id] >= WARNS:
                 async for message in event.client.iter_messages(user.id, search=UND):
                     await message.delete()
-                await event.respond(
-                    "`You were spamming my Master's PM, which I didn't like.`\n`You have been BLOCKED and reported as SPAM, until further notice.`"
-                )
+                await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
                     del LASTMSG[user.id]
