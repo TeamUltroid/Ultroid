@@ -196,14 +196,12 @@ async def media(event):
                 return await conv.send_message("Operation cancelled!!")
         except BaseException:
             pass
-        media = await event.client.download_media(response, "alvpcc")
+        media = await event.client.download_media(response, "pmpc")
         if (
             not (response.text).startswith("/")
             and not response.text == ""
             and not response.media
         ):
-            media = await event.client.download_media(response, "pmpcc")
-        if not (response.text).startswith("/") and not response.text == "":
             url = response.text
         else:
             try:
