@@ -47,7 +47,7 @@ async def e(o):
             Repo().active_branch,
         )
         res = [
-            b.article(
+                await b.article(
                 title="Ultroid Userbot",
                 url="https://t.me/TeamUltroid",
                 description="Userbot | Telethon ",
