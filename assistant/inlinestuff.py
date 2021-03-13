@@ -23,6 +23,19 @@ from . import *
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
+ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
+
+@in_pattern("repo")
+@in_owner
+async def repo(e):
+    res = [await e.builder.article(title="Ultroid Userbot",
+                                   description="Userbot | Telethon",
+                                   thumb=wb(ultpic, 0, "image/jpeg", []),
+                                   text="• **ULTROID USERBOT** •",
+                                   buttons=[[Button.url("Repo",url="https://github.com/TeamUltroid/Ultroid")],
+                                            [Button.url("Support",url="t.me/UltroidSupport")]]
+                                  )]
+    await e.answer(res)
 
 
 @in_pattern("go")
