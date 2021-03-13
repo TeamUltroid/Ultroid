@@ -138,7 +138,7 @@ async def setting(event):
             [Button.inline("API Kᴇʏs", data="apiset")],
             [
                 Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-                Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmcstm"),
+                Button.inline("PᴍPᴇʀᴍɪᴛ", data="pmset"),
             ],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
