@@ -202,7 +202,7 @@ async def media(event):
             and not response.text == ""
             and not response.media
         ):
-        media = await event.client.download_media(response, "pmpcc")
+            media = await event.client.download_media(response, "pmpcc")
         if not (response.text).startswith("/") and not response.text == "":
             url = response.text
         else:
