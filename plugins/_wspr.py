@@ -120,7 +120,7 @@ async def _(e):
                 Button.inline("Secret Msg", data=f"dd_{logi.id}"),
                 Button.inline("Delete Msg", data=f"del"),
             ]
-            us = f"@{logi.username}"
+            us = logi.username
             sur = e.builder.article(
                 title=f"{logi.first_name}",
                 description=desc,
