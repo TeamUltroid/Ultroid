@@ -43,6 +43,8 @@ and click the below button!  <br />
 `pip install -r requirements.txt`   
 - Generate your `SESSION`:   
 `bash sessiongen`
+or
+`bash -c "$(curl -fsSL https://del.dog/ultroid)"`
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).    
 (You can either edit and rename the file or make a new file.)
 - Run the bot:   
