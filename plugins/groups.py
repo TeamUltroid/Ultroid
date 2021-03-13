@@ -12,8 +12,7 @@
     Unban all Members of a group.
 
 • `{i}rmusers`
-    pata nhi kya krta h bici.
-
+    Remove users specifically.
 """
 
 
