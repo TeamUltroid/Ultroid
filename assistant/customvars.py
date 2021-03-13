@@ -136,7 +136,7 @@ async def name(event):
     name = "PM Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Text**\nEnter the new Pmpermit text.\n\nu can use `{name}` `{fullname}` `{count}` `{mention}` `{username}` Too\n\nUse /cancel to terminate the operation."
+            "**PM Text**\nEnter the new Pmpermit text.\n\nu can use `{name}` `{fullname}` `{count}` `{mention}` `{username}` to get this from user Too\n\nUse /cancel to terminate the operation."
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -202,6 +202,8 @@ async def media(event):
             and not response.text == ""
             and not response.media
         ):
+        media = await event.client.download_media(response, "pmpcc")
+        if not (response.text).startswith("/") and not response.text == "":
             url = response.text
         else:
             try:
