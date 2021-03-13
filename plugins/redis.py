@@ -113,7 +113,10 @@ async def _(ult):
     keys = sorted(udB.keys())
     msg = ""
     for x in keys:
-        msg += "• `{}`".format(x) + "\n"
+        if x.isdigit():
+            pass
+        else:
+            msg += "• `{}`".format(x) + "\n"
     await ok.edit("**List of Redis Keys :**\n{}".format(msg))
 
 
