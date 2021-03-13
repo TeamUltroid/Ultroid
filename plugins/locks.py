@@ -40,7 +40,7 @@ async def _(event):
                     peer=peer_id, banned_rights=lul
                 )
             )
-            await eod(event, f"Locked {input}", time=5)
+            await eod(event, f"Locked `{input}`", time=5)
         except Exception as e:
             await eod(event, str(e), time=5)
     if cmd == f"{hndlr}unlock":
@@ -51,7 +51,7 @@ async def _(event):
                     peer=peer_id, banned_rights=lul
                 )
             )
-            await eod(event, f"Unocked {input}", time=5)
+            await eod(event, f"Unlocked `{input}`", time=5)
         except Exception as e:
             await eod(event, str(e), time=5)
 
@@ -66,7 +66,7 @@ async def _(event):
     try:
         current_api_locks = current_chat.default_banned_rights
     except AttributeError as e:
-        await eod(event, str(e))
+        return await eod(event, str(e))
     else:
         res += "    **msgs**:    `{}`\n".format(current_api_locks.send_messages)
         res += "    **media**:    `{}`\n".format(current_api_locks.send_media)
