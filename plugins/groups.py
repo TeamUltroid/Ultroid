@@ -1,3 +1,22 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+• `{i}unbanall`
+    Unban all Members of a group.
+
+• `{i}rmusers`
+    pata nhi kya krta h bici.
+
+"""
+
+
 from telethon import events
 from telethon.tl import functions, types
 from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
@@ -180,3 +199,6 @@ async def _(event):
         required_string += f"**••Empty**  `Name with deleted Account`\n"
         required_string += f"**••None**  `Last Seen A Long Time Ago`\n"
     await eod(xx, required_string)
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
