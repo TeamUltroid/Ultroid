@@ -17,7 +17,7 @@ REPOMSG = (
 )
 
 
-@ultroid_cmd(pattern="(repo|ultroid)$")
+@ultroid_cmd(pattern="repo$")
 async def repify(e):
     try:
         q = await ultroid_bot.inline_query(Var.BOT_USERNAME, "repo")

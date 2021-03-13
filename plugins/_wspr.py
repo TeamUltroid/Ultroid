@@ -18,6 +18,7 @@ from telethon.tl.types import UserStatusLastWeek as lw
 from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as on
 from telethon.tl.types import UserStatusRecently as rec
+from . import *
 
 snap = {}
 buddhhu = []
@@ -119,10 +120,11 @@ async def _(e):
                 Button.inline("Secret Msg", data=f"dd_{logi.id}"),
                 Button.inline("Delete Msg", data=f"del"),
             ]
+            us = logi.username
             sur = e.builder.article(
                 title=f"{logi.first_name}",
                 description=desc,
-                text=get_string("wspr_1").format(logi.username),
+                text=get_string("wspr_1").format(us),
                 buttons=button,
             )
             buddhhu.append(meme)
