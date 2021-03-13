@@ -50,6 +50,6 @@ async def on_out_mssg(event):
     if event.sender_id == OWNER_ID:
         if event.raw_text.startswith("/"):
             return
-        y = udB.get(str(x))
+        y = udB.get(str(x.id))
         await asst.send_message(int(y), event.raw_text)
     
