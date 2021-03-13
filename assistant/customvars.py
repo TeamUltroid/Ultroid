@@ -286,7 +286,7 @@ async def pmlogof(event):
         return await event.edit("Something went wrong...")
 
 
-@callback("pmset")
+@callback("ppmset")
 @owner
 async def pmset(event):
     await event.edit(
