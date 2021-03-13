@@ -14,7 +14,6 @@
 
 
 import asyncio
-import re
 import time
 
 from telethon import Button, events
