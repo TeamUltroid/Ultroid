@@ -76,7 +76,7 @@ async def download(event):
                     ),
                 )
     e = datetime.now()
-    t = time_formatter(((e - s).seconds)*1000)
+    t = time_formatter(((e - s).seconds) * 1000)
     await eod(xx, get_string("udl_2").format(o, t))
 
 
@@ -110,7 +110,7 @@ async def download(event):
         except ValueError as ve:
             return await eod(xx, str(ve))
     e = datetime.now()
-    t = time_formatter(((e - s).seconds)*1000)
+    t = time_formatter(((e - s).seconds) * 1000)
     try:
         await x.edit(f"`{kk}`\nTime Taken: `{t}`")
     except BaseException:
