@@ -167,8 +167,8 @@ gdrive_6: "`Go to `{}` and send ``/auth.`"
 gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
 
 # pmpermit
-pmperm_1: "Please wait for me to respnd or you will be blocked and reported as spam!!"
-pmperm_2: "You were spamming my Master's PM, which I didn't like."
+pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
+pmperm_2: "You were spamming my Master's PM, which I didn't like.\nYou have been BLOCKED and reported as SPAM, until further notice."
 pmperm_3: "Reply to someone's msg or try this commmand in private."
 
 # updater
