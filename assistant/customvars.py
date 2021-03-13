@@ -7,7 +7,7 @@
 
 import os
 
-from telegraph import Telegraph, upload_file
+from telegraph import Telegraph, upload_file as upl
 
 from . import *
 
@@ -84,7 +84,7 @@ async def media(event):
             url = response.text
         else:
             try:
-                x = upload_file(media)
+                x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
@@ -167,7 +167,7 @@ async def name(event):
 @callback(re.compile(b"wrns_(.*)"))
 @owner
 async def set_wrns(event):
-    value = event.data_match.group(1).decode("UTF-8")
+    value = int(event.data_match.group(1).decode("UTF-8"))
     dn = udB.set("PMWARNS", value)
     if dn:
         await event.edit(
@@ -204,7 +204,7 @@ async def media(event):
             url = response.text
         else:
             try:
-                x = upload_file(media)
+                x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
