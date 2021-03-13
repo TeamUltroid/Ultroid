@@ -91,7 +91,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 url="https://t.me/TheUltroid",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
                 text=get_string("inline_4").format(
-                    OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd
+                    OWNER_NAME, len(PLUGINS) - 5, len(ADDONS), cmd
                 ),
                 buttons=[
                     [
@@ -224,7 +224,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @callback("hrrrr")
     @owner
     async def on_plug_in_callback_query_handler(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 4)
+        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
         buttons = paginate_help(0, PLUGINS, "helpme")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
@@ -294,7 +294,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @callback("back")
     @owner
     async def backr(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 4)
+        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
         current_page_number = int(upage)
         buttons = paginate_help(current_page_number, PLUGINS, "helpme")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
@@ -338,7 +338,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
         cmd = len(z) + 10
         await event.edit(
             get_string("inline_4").format(
-                OWNER_NAME, len(PLUGINS) - 4, len(ADDONS), cmd
+                OWNER_NAME, len(PLUGINS) - 5, len(ADDONS), cmd
             ),
             buttons=buttons,
             link_preview=False,
