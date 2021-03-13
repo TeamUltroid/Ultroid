@@ -29,9 +29,9 @@ async def on_out_mssg(event):
             # if sending media
             bot_api_file_id = pack_bot_file_id(event.media)
             await asst.send_file(
-                to_user,
+                int(to_user),
                 file=bot_api_file_id,
                 caption=event.text
             )
         else:
-            await asst.send_message(to_user, to_send)
+            await asst.send_message(int(to_user), to_send)
