@@ -15,8 +15,6 @@
 
 import asyncio
 import time
-
-from telethon import Button, events
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
