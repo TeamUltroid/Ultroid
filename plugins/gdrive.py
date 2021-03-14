@@ -30,7 +30,6 @@ import os
 import time
 from datetime import datetime
 
-
 from . import *
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
