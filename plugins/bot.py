@@ -78,7 +78,7 @@ async def lol(ult):
         Repo().active_branch,
     )
     if pic is None:
-        return await ult.edit(als)
+        return await eor(ult, als)
     try:
         await ult.delete()
     except: 
