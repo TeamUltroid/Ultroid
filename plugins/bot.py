@@ -43,6 +43,7 @@ import psutil
 import requests
 from git import Repo
 from telethon import __version__
+from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 
 from . import *
 
@@ -77,15 +78,25 @@ async def lol(ult):
         __version__,
         Repo().active_branch,
     )
-    if pic is None:
-        await ult.edit(als)
-    elif pic is not None and "telegra" in pic:
-        await ult.delete()
-        await ult.reply(als, file=pic)
-    else:
-        await ult.delete()
-        await ultroid_bot.send_message(ult.chat_id, file=pic)
-        await ultroid_bot.send_message(ult.chat_id, als)
+    try:
+        if pic is None:
+            await ult.edit(als)
+        elif pic is not None and "telegra" in pic:
+            await ult.delete()
+            await ult.reply(als, file=pic)
+        else:
+            await ult.delete()
+            await ultroid_bot.send_message(ult.chat_id, file=pic)
+            await ultroid_bot.send_message(ult.chat_id, als)
+    except MessageDeleteForbiddenError:
+        if pic is None:
+            await ult.reply(als)
+        elif pic is not None and "telegra" in pic:
+            await ult.reply(als, file=pic)
+        else:
+            await ultroid_bot.send_message(ult.chat_id, file=pic)
+            await ultroid_bot.send_message(ult.chat_id, als)
+        
 
 
 @ultroid_cmd(
