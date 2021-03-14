@@ -34,7 +34,9 @@ async def all_messages_catcher(e):
             cap = f"{xx} tagged you in {yy}\n\n```{e.text}```\nㅤ"
         else:
             cap = f"{xx} tagged you in {yy}"
+
         btx = "📨 View Message"
+        
         try:
             if e.text:
                 cap = get_string("tagnot_1").format(xx, yy, e.text, msg)
