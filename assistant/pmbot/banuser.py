@@ -6,7 +6,7 @@ async def banhammer(event):
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")
-    target = int(udB.get(str(x.id))
+    target = int(udB.get(str(x.id)))
     if not is_blacklisted(target):
         blacklist_user(target)
         await asst.send_message(event.chat_id, f"#BAN\nUser - {target}")
@@ -23,7 +23,7 @@ async def banhammer(event):
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")
-    target = int(udB.get(str(x.id))
+    target = int(udB.get(str(x.id)))
     if is_blacklisted(target):
         rem_blacklist(target)
         await asst.send_message(event.chat_id, f"#UNBAN\nUser - {target}")
