@@ -47,7 +47,7 @@ and click the below button!  <br />
      or   
     `bash -c "$(curl -fsSL https://del.dog/ultroid)"`   
   - For Windows Users:   
-    `cd desktop ; wget https://raw.githubusercontent.com/TeamUltroid/Ultroid/main/resources/session/ssgen.py -o ultroid.py ; python ultroid.py`   
+    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`   
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).    
 (You can either edit and rename the file or make a new file.)
 - Run the bot:   
