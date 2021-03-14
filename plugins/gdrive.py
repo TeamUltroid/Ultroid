@@ -36,7 +36,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @ultroid_cmd(
-pattern="listdrive$",
+    pattern="listdrive$",
 )
 async def files(event):
     if not os.path.exists(TOKEN_FILE):
