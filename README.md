@@ -51,7 +51,10 @@ and click the below button!  <br />
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).    
 (You can either edit and rename the file or make a new file.)
 - Run the bot:   
-`bash resources/startup/startup.sh`
+  - Linux Users:   
+   `bash resources/startup/startup.sh`
+  - Windows Users:   
+    `python(3) -m pyUltroid`
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 
