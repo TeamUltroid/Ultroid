@@ -22,13 +22,9 @@ async def assistant(event):
     else:
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
-            await asst.send_message(
-                OWNER_ID,
-                f"Bot started by [{event.sender_id}](tg://user?id={event.sender_id})",
-            )
         ok = ""
-        if udB.get("MSG_FRWD") == True:
-            ok = "You can contact me using this bot!!"
+        if udB.get("PMBOT") == "True":
+            ok = "You can contact my master using this bot!!"
         if event.is_private and event.sender_id in sed:
             return
         await event.reply(
