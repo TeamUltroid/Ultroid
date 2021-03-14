@@ -14,6 +14,7 @@ from . import *
 
 # outgoing
 
+
 @asst.on(events.NewMessage(func=lambda e: e.is_private))
 async def on_out_mssg(event):
     x = await event.get_reply_message()
@@ -28,10 +29,6 @@ async def on_out_mssg(event):
         if event.text is not None and event.media:
             # if sending media
             bot_api_file_id = pack_bot_file_id(event.media)
-            await asst.send_file(
-                int(to_user),
-                file=bot_api_file_id,
-                caption=event.text
-            )
+            await asst.send_file(int(to_user), file=bot_api_file_id, caption=event.text)
         else:
             await asst.send_message(int(to_user), to_send)

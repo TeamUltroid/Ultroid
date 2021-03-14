@@ -31,8 +31,6 @@
 from pyUltroid.functions.all import ban_time
 from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from telethon import events
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
 
 from . import *
 

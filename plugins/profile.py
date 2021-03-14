@@ -151,7 +151,7 @@ async def remove_profilepic(delpfp):
 @ultroid_cmd(pattern="gpoto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e,"`Processing...`")
+    a = await eor(e, "`Processing...`")
     try:
         okla = await ultroid_bot.download_profile_photo(
             ult, "profile.jpg", download_big=True

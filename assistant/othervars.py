@@ -372,6 +372,7 @@ async def sfexf(event):
                 buttons=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
             )
 
+
 # Ultroid - UserBot
 # Copyright (C) 2020 TeamUltroid
 #
@@ -663,8 +664,9 @@ async def pmlogof(event):
 @callback("ppmset")
 @owner
 async def pmset(event):
-    await event.edit("PMPermit Settings:",
-         buttons=[
+    await event.edit(
+        "PMPermit Settings:",
+        buttons=[
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
             [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
@@ -687,6 +689,7 @@ async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
     await event.edit(f"Done! PMPermit has been turned off!!")
+
 
 @callback("chatbot")
 @owner

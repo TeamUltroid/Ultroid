@@ -16,8 +16,7 @@
 """
 
 
-from telethon import events
-from telethon.tl import functions, types
+from telethon.tl import functions
 from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
                                UserStatusEmpty, UserStatusLastMonth,
                                UserStatusLastWeek, UserStatusOffline,

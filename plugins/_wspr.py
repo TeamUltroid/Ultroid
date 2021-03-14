@@ -18,6 +18,7 @@ from telethon.tl.types import UserStatusLastWeek as lw
 from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as on
 from telethon.tl.types import UserStatusRecently as rec
+
 from . import *
 
 snap = {}

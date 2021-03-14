@@ -8,7 +8,7 @@
 from datetime import datetime
 
 from pyUltroid.functions.asst_fns import *
-from telethon import Button, custom, events
+from telethon import Button, events
 
 from plugins import *
 
@@ -18,8 +18,15 @@ from . import *
 @asst_cmd("start")
 async def assistant(event):
     if event.is_group and event.sender_id in sed:
-        bnn = ((await asst.get_me()).username)
-        return await event.reply("`I dont work in groups`",buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️",url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}")])
+        bnn = (await asst.get_me()).username
+        return await event.reply(
+            "`I dont work in groups`",
+            buttons=[
+                Button.url(
+                    "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
+                )
+            ],
+        )
     else:
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
@@ -132,8 +139,10 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("API Kᴇʏs", data="apiset"),
-             Button.inline("Cʜᴀʀ Bᴏᴛ", data="chatbot")],
+            [
+                Button.inline("API Kᴇʏs", data="apiset"),
+                Button.inline("Cʜᴀʀ Bᴏᴛ", data="chatbot"),
+            ],
             [
                 Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
                 Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),

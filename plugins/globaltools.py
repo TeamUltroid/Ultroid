@@ -28,8 +28,6 @@
 """
 
 from telethon import events
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
 
 from . import *
 

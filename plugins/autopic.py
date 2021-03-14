@@ -31,7 +31,7 @@ async def autopic(e):
         return await eor(e, get_string("autopic_1"))
     clls = returnpage(search)
     if len(clls) == 0:
-        return await eor(e,get_string("autopic_2").format(search))
+        return await eor(e, get_string("autopic_2").format(search))
     if not len(clls) == 1:
         num = random.randrange(0, len(clls) - 1)
     else:
