@@ -25,7 +25,7 @@ async def all_messages_catcher(e):
             return
         y = await ultroid_bot.get_entity(e.chat_id)
         if y.username:
-            yy = f"[{get_display_name(y)}](https://t.me/{y.username}")"
+            yy = f"[{get_display_name(y)}](https://t.me/{y.username})"
         else:
             yy = f"{get_display_name(y)}"
         xx = f"[{get_display_name(x)}](tg://user?id={x.id})"
