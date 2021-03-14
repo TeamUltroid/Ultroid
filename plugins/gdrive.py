@@ -19,6 +19,9 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
+• `{i}listdrive
+    List all GDrive files.
+
 • `{i}gfolder`
     Link to your Google Drive Folder.
     If added then all uploaded files will be placed here.
@@ -36,7 +39,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @ultroid_cmd(
-    pattern="listdrive$",
+pattern="listdrive$",
 )
 async def files(event):
     if not os.path.exists(TOKEN_FILE):
