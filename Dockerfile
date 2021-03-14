@@ -6,5 +6,5 @@
 FROM ultroidteam/ultroid:0.0.3
 RUN git clone https://github.com/TeamUltroid/Ultroid.git --single-branch -b beta /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
-RUN pip install py-Ultroid==13.2b0
+RUN pip install py-Ultroid==13.3b0
 CMD ["bash", "resources/startup/startup.sh"]
