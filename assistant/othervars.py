@@ -687,3 +687,37 @@ async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
     await event.edit(f"Done! PMPermit has been turned off!!")
+
+@callback("chatbot")
+@owner
+async def chbot(event):
+    await event.edit(
+        f"From This Feature U can chat with ppls Via ur Assistant Bot.",
+        buttons=[
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    )
+
+
+@callback("onchbot")
+@owner
+async def chon(event):
+    var = "PMBOT"
+    await setit(event, var, "True")
+    await event.edit(
+        "Done! Now u Can Chat With People Via This Bot",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+    )
+
+
+@callback("ofchbot")
+@owner
+async def chon(event):
+    var = "PMBOT"
+    await setit(event, var, "False")
+    await event.edit(
+        "Done! Chat People Via This Bot Stopped.",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+    )
