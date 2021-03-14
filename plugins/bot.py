@@ -79,10 +79,6 @@ async def lol(ult):
     )
     if pic is None:
         return await eor(ult, als)
-    try:
-        await ult.delete()
-    except: 
-        pass
     elif pic is not None and "telegra" in pic:
         await ult.reply(als, file=pic)
     else:
