@@ -8,8 +8,6 @@
 # https://github.com/xditya/TeleBot/blob/master/telebot/plugins/mybot/pmbot/outgoing.py
 
 from telethon import events
-from telethon.utils import pack_bot_file_id
-
 from . import *
 
 # outgoing
@@ -20,15 +18,14 @@ async def on_out_mssg(event):
     x = await event.get_reply_message()
     if x is None:
         return
-    to_send = event.raw_text
     who = event.sender_id
     if who == OWNER_ID:
         if to_send.startswith("/"):
             return
         to_user = udB.get(str(x.id))
-        if event.text is not None and event.media:
-            # if sending media
-            bot_api_file_id = pack_bot_file_id(event.media)
-            await asst.send_file(int(to_user), file=bot_api_file_id, caption=event.text)
+        if event.media and not event.text:
+            await asst.send_file(int(to_user), event.media)
+        elif event.media and event.text:
+            await asst.send_file(int(to_user), event.media, caption=event.text)
         else:
-            await asst.send_message(int(to_user), to_send)
+            await asst.send_message(int(to_user), event.text)
