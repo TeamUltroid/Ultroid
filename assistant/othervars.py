@@ -206,7 +206,7 @@ async def hndlrr(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
-        elif len(themssg) == 1:
+        elif len(themssg) == 2:
             return await conv.send_message("Incorrect Handler")
         elif themssg.startswith(("/", "#", "@")):
             return await conv.send_message("Incorrect Handler")
