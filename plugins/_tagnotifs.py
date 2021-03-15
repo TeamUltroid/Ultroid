@@ -27,7 +27,7 @@ async def all_messages_catcher(e):
         if y.username:
             yy = f"[{get_display_name(y)}](https://t.me/{y.username})"
         else:
-            yy = f"{get_display_name(y)}"
+            yy = f"[{get_display_name(y)}](https://t.me/c/{y.id}/{e.id})"
         xx = f"[{get_display_name(x)}](tg://user?id={x.id})"
         msg = f"https://t.me/c/{y.id}/{e.id}"
         if e.text:
