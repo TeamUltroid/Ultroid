@@ -104,7 +104,7 @@ async def endmute(event):
         else:
             userid = (await event.client.get_entity(input)).id
     elif event.reply_to_msg_id:
-        userid = reply.sender_id
+        userid = (await event.get_reply_message()).sender_id
     elif private is True:
         userid = event.chat_id
     else:
