@@ -497,7 +497,7 @@ async def alvcs(event):
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
-            [Button.inline("« Bᴀᴄᴋ", data="pmset")],
+            [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
         ],
     )
 
