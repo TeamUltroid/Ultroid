@@ -13,7 +13,7 @@ import play_scraper
 import requests
 from bs4 import BeautifulSoup
 from pyUltroid.functions.parser import GoogleSearch, YahooSearch
-from rextester_py import rexec_aio
+from rextester_py import rexec_aio, get_langs
 from rextester_py.rextester_aio import UnknownLanguage
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
@@ -158,12 +158,14 @@ async def rextester(event):
         omk = event.text.split(" ", maxsplit=1)[1]
         if omk is not None:
             if "|" in omk:
-                lang, code = omk.split("|")
+                lang, codee = omk.split("|")
             else:
                 lang = "python 3"
-                code = omk
+                codee = omk
             if lang == php:
-                code = f"<?php\n{omk}\n?>"
+                code = f"<?php {codee} ?>"
+            else:
+                code = codee
             output = await rexec_aio(lang, code)
             stats = output.stats
             if output.errors is not None:
@@ -185,8 +187,7 @@ async def rextester(event):
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
-            text="The list of valid languages are\n\nc#, vb.net, f#, java, python, c (gcc), \nc++ (gcc), php, pascal, objective-c, haskell, \nruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, \nscheme, node.js, python 3, octave, c (clang), \nc++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, \nbash, ada, erlang, elixir, ocaml, \nkotlin, brainfuck, fortran\n\n\n Format to use Rextester is `@Yourassistantusername rex langcode|code`",
-        )
+            text=get_langs())
         await event.answer([resultm])
 
 
