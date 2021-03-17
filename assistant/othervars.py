@@ -596,7 +596,8 @@ async def dell(event):
         udB.delete("PMPIC")
         return await event.edit("Done!")
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit("Something went wrong...",
+                               buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs",data="setter")]])
 
 
 @callback("apauto")
@@ -617,7 +618,8 @@ async def apauto(event):
 async def apon(event):
     var = "AUTOAPPROVE"
     await setit(event, var, "True")
-    await event.edit(f"Done!! AUTOAPPROVE  Started!!")
+    await event.edit(f"Done!! AUTOAPPROVE  Started!!",
+                    buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]])
 
 
 @callback("apof")
@@ -625,9 +627,11 @@ async def apon(event):
 async def apof(event):
     try:
         udB.delete("AUTOAPPROVE")
-        return await event.edit("Done! AUTOAPPROVE Stopped!!")
+        return await event.edit("Done! AUTOAPPROVE Stopped!!",
+                               buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]])
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit("Something went wrong...",
+                               buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs",data="setter")]])
 
 
 @callback("pml")
@@ -648,7 +652,8 @@ async def alvcs(event):
 async def pmlog(event):
     var = "PMLOG"
     await setit(event, var, "True")
-    await event.edit(f"Done!! PMLOGGER  Started!!")
+    await event.edit(f"Done!! PMLOGGER  Started!!",
+                    buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]])
 
 
 @callback("pmlogof")
@@ -656,9 +661,11 @@ async def pmlog(event):
 async def pmlogof(event):
     try:
         udB.delete("PMLOG")
-        return await event.edit("Done! PMLOGGER Stopped!!")
+        return await event.edit("Done! PMLOGGER Stopped!!",
+                                buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]])
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit("Something went wrong...",
+                               buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs",data="setter")]])
 
 
 @callback("ppmset")
@@ -680,7 +687,8 @@ async def pmset(event):
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
-    await event.edit(f"Done! PMPermit has been turned on!!")
+    await event.edit(f"Done! PMPermit has been turned on!!",
+                    buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]])
 
 
 @callback("pmoff")
@@ -688,7 +696,8 @@ async def pmonn(event):
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
-    await event.edit(f"Done! PMPermit has been turned off!!")
+    await event.edit(f"Done! PMPermit has been turned off!!",
+                    buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]])
 
 
 @callback("chatbot")
