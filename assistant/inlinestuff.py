@@ -13,7 +13,7 @@ import play_scraper
 import requests
 from bs4 import BeautifulSoup
 from pyUltroid.functions.parser import GoogleSearch, YahooSearch
-from rextester_py import rexec_aio, get_langs
+from rextester_py import get_langs, rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
@@ -187,7 +187,8 @@ async def rextester(event):
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
-            text=get_langs())
+            text=get_langs(),
+        )
         await event.answer([resultm])
 
 
