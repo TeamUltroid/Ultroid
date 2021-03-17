@@ -66,7 +66,6 @@ requests-futures==1.0.0
 git+https://github.com/ProgrammingError/rextester_py.git
 rfc3986==1.4.0
 rsa==4.7.2
-screen
 search-engine-parser==0.6.2
 selenium==3.141.0
 six==1.15.0

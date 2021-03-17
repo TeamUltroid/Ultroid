@@ -75,7 +75,6 @@ def start():
     os.system('pip install -r local-requirements.txt')
     clear_screen()
     print(a)
-    os.system("screen -S Ultroid")
     print("\nStarting Ultroid...")
     os.system("python -m pyUltroid")
 
