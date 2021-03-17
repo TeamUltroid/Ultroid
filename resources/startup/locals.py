@@ -1,3 +1,4 @@
+#/usr/bin/python3
 # Ultroid - UserBot
 # Copyright (C) 2020 TeamUltroid
 #
@@ -76,7 +77,7 @@ def start():
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")
-    os.system("python -m pyUltroid")
+    os.system("python3 -m pyUltroid")
 
 def do_input(var):
     val = input(f"Enter your {var}: ")
@@ -109,7 +110,7 @@ def check_for_py():
 
 def gen_session():
     print("\nProcessing...")
-    os.system("cd Ultroid && python resources/session/ssgen.py")
+    os.system("cd Ultroid && python3 resources/session/ssgen.py")
     return
 
 start()
