@@ -42,8 +42,9 @@ import heroku3
 import psutil
 import requests
 from git import Repo
-from telethon import __version__
 from pyUltroid import __version__ as UltVer
+from telethon import __version__
+
 from . import *
 
 HEROKU_API = None
