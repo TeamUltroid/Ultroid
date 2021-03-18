@@ -27,7 +27,7 @@ def start():
     print("Welcome to Ultroid, lets start setting up!\n\n")
     print("Cloning the repository...\n\n")
     try:
-        os.system('git clone -b beta https://github.com/TeamUltroid/Ultroid && cd Ultroid')
+        os.system('git clone https://github.com/TeamUltroid/Ultroid && cd Ultroid')
     except Exception as e:
         print(f"ERROR\n{str(e)}")
     print("\n\nDone")
