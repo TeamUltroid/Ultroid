@@ -11,8 +11,9 @@ import time
 from datetime import datetime
 from math import ceil
 from platform import python_version as pyver
-from pyUltroid import __version__ as UltVer
+
 from git import Repo
+from pyUltroid import __version__ as UltVer
 from support import *
 from telethon import Button, __version__
 from telethon.tl.types import InputWebDocument
