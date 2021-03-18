@@ -263,26 +263,23 @@ async def _(event):
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
-    OUT = f"<b>☞ BASH\n\n• COMMAND:</b>\n<code>{cmd}</code> \n\n"
+    OUT = f"**☞ BASH**\n\n• COMMAND:**\n`{cmd}` \n\n"
     e = stderr.decode()
     if e:
-        OUT += f"<b>• ERROR:</b> \n<code>{e}</code>\n"
+        OUT += f"**• ERROR:** \n`{e}`\n"
     o = stdout.decode()
     if not o and not e:
         o = "Success"
-        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</b>"
+        OUT += f"**• OUTPUT:**\n`{o}`"
     else:
         _o = o.split("\n")
-        o = "\n".join(_o)
-        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</code>"
+        o = "`\n".join(_o)
+        OUT += f"**• OUTPUT:**\n{o}"
     if len(OUT) > 4096:
         ultd = (
-            OUT.replace("<code>", "")
-            .replace("</code>", "")
-            .replace("<b>", "")
-            .replace("</b>", "")
-            .replace("<i>", "")
-            .replace("</i>", "")
+            final_output.replace("`", "")
+            .replace("*", "")
+            .replace("__", "")
         )
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
@@ -339,17 +336,15 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = "<i>►</i> <b>EVAL</b>\n<code>{}</code>\n\n<i>►</i><b>OUTPUT</b>: \n<code>{}</code>".format(
-        cmd, evaluation
-    )
+    final_output = (
+        "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+            cmd, evaluation
+        ))
     if len(final_output) > 4096:
         ultd = (
-            final_output.replace("<code>", "")
-            .replace("</code>", "")
-            .replace("<b>", "")
-            .replace("</b>", "")
-            .replace("<i>", "")
-            .replace("</i>", "")
+            final_output.replace("`", "")
+            .replace("*", "")
+            .replace("__", "")
         )
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
@@ -363,7 +358,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, final_output, parse_mode="html")
+        await eod(xx, final_output)
 
 
 async def aexec(code, event):
