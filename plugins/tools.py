@@ -289,7 +289,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, OUT, parse_mode="html")
+        await eod(xx, OUT)
 
 
 @ultroid_cmd(
