@@ -30,9 +30,7 @@
     Turn off your bot.
 """
 
-import asyncio
 import math
-import os
 import shutil
 import time
 from datetime import datetime as dt
@@ -130,9 +128,14 @@ async def _(ult):
         .get("key")
     )
     url = f"https://nekobin.com/{key}"
-    await ultroid.send_file(ult.chat_id, file="ultroid.log", caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!")
+    await ultroid.send_file(
+        ult.chat_id,
+        file="ultroid.log",
+        caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
+    )
     await xx.edit("Done")
     await xx.delete()
+
 
 @ultroid_cmd(
     pattern="usage$",
