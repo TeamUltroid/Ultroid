@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 from math import ceil
 from platform import python_version as pyver
-
+from pyUltroid import __version__ as UltVer
 from git import Repo
 from support import *
 from telethon import Button, __version__
@@ -43,6 +43,7 @@ async def e(o):
             header,
             OWNER_NAME,
             ultroid_version,
+            UltVer,
             uptime,
             pyver(),
             __version__,
