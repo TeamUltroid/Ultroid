@@ -94,8 +94,6 @@ async def lol(ult):
 async def _(event):
     start = dt.now()
     x = await eor(event, "`Pong !`")
-    if event.fwd_from:
-        return
     end = dt.now()
     ms = (end - start).microseconds / 1000
     uptime = grt((time.time() - start_time))
