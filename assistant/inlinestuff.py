@@ -12,7 +12,8 @@ from urllib.request import urlopen
 import play_scraper
 import requests
 from bs4 import BeautifulSoup
-from pyUltroid.functions.parser import GoogleSearch, YahooSearch
+from search_engine_parser.core.engines.google import Search as GoogleSearch
+from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 from rextester_py import get_langs, rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
 from telethon import Button
