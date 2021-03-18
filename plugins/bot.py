@@ -81,9 +81,11 @@ async def lol(ult):
         return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
         await ult.reply(als, file=pic)
+        await ult.delete()
     else:
         await ultroid_bot.send_message(ult.chat_id, file=pic)
         await ultroid_bot.send_message(ult.chat_id, als)
+        await ult.delete()
 
 
 @ultroid_cmd(
