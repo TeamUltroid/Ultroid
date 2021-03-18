@@ -66,6 +66,7 @@ alive_1: "**The Ultroid Userbot...**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
 ┣ **Owner** - `{}`\n
 ┣ **Version** - `{}`\n
+┣ **Py-Ultroid** - `{}`\n
 ┣ **UpTime** - `{}`\n
 ┣ **Python** - `{}`\n
 ┣ **Telethon** - `{}`\n
