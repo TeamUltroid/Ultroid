@@ -43,7 +43,7 @@ import psutil
 import requests
 from git import Repo
 from telethon import __version__
-
+from pyUltroid import __version__ as UltVer
 from . import *
 
 HEROKU_API = None
@@ -72,6 +72,7 @@ async def lol(ult):
         header,
         OWNER_NAME,
         ultroid_version,
+        UltVer,
         uptime,
         pyver(),
         __version__,
