@@ -13,19 +13,21 @@
 
 """
 
-from . import *
 import requests
+
+from . import *
+
 
 @ultroid_cmd(pattern="webshot")
 async def webss(event):
     xx = await eor(event, get_string("com_1"))
-    mssg = event.text.split(' ', maxsplit=2)
+    mssg = event.text.split(" ", maxsplit=2)
     try:
         xurl = mssg[1]
     except IndexError:
         return await eod(xx, "`Give a URL please!`", time=5)
     try:
-        response = requests.get(xurl)
+        requests.get(xurl)
     except requests.ConnectionError:
         return await eod(xx, "Invalid URL!", time=5)
     except requests.exceptions.MissingSchema:
@@ -44,5 +46,9 @@ async def webss(event):
         crt_at = ok["created_at"]
     except:
         return await eod(xx, "Something Went Wrong :(", time=10)
-    await xx.reply(f"**WebShot Generated**\n**Url**: {xurl}\n**Created at**: {crt_at}", file=sshot, link_preview=False)
+    await xx.reply(
+        f"**WebShot Generated**\n**Url**: {xurl}\n**Created at**: {crt_at}",
+        file=sshot,
+        link_preview=False,
+    )
     await xx.delete()
