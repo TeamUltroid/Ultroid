@@ -273,8 +273,8 @@ async def _(event):
         OUT += f"**• OUTPUT:**\n`{o}`"
     else:
         _o = o.split("\n")
-        o = "`\n".join(_o)
-        OUT += f"**• OUTPUT:**\n{o}"
+        o = "\n".join(_o)
+        OUT += f"**• OUTPUT:**\n```{o}```"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
