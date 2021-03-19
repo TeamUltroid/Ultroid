@@ -276,7 +276,7 @@ async def _(event):
         o = "`\n".join(_o)
         OUT += f"**• OUTPUT:**\n{o}"
     if len(OUT) > 4096:
-        ultd = final_output.replace("`", "").replace("*", "").replace("__", "")
+        ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
@@ -338,7 +338,7 @@ async def _(event):
         )
     )
     if len(final_output) > 4096:
-        ultd = final_output.replace("`", "").replace("*", "").replace("__", "")
+        ultd = final_output.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await ultroid_bot.send_file(
@@ -370,8 +370,6 @@ async def aexec(code, event):
     pattern="sg(?: |$)(.*)",
 )
 async def lastname(steal):
-    if steal.fwd_from:
-        return
     if not steal.reply_to_msg_id:
         await steal.edit("Reply to any user message.")
         return
