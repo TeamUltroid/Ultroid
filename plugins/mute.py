@@ -186,7 +186,7 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     try:
@@ -222,7 +222,7 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     if userid == ultroid_bot.uid:
