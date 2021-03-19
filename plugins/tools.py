@@ -367,7 +367,7 @@ async def aexec(code, event):
 
 
 @ultroid_cmd(
-    pattern="sg(?: |$)(.*)",
+    pattern="sg$",
 )
 async def lastname(steal):
     if not steal.reply_to_msg_id:
