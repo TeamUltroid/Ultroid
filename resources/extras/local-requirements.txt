@@ -13,6 +13,7 @@ lottie
 lxml
 moviepy
 numpy
+opencv-python-headless
 Pillow>=7.0.0
 play-scraper
 PyDictionary
@@ -21,6 +22,7 @@ psutil
 pyaml
 pytz
 requests>=2.18.4
+git+https://github.com/buddhhu/search-engine-parser.git
 git+https://github.com/ProgrammingError/rextester_py.git
 scikit-image
 speedtest-cli==2.1.2
