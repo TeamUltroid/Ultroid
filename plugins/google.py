@@ -25,6 +25,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from search_engine_parser import GoogleSearch
+from search_engine_parser.core.utils import get_rand_user_agent as grua
 
 from strings import get_string
 
@@ -94,8 +95,8 @@ async def reverse(event):
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
-        },
+            "User-Agent": grua(),
+    },
     )
     xx = bs(response.text, "html.parser")
     div = xx.find("div", {"class": "r5a77d"})
