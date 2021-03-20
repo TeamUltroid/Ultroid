@@ -263,18 +263,18 @@ async def _(event):
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
-    OUT = f"**☞ BASH**\n\n• COMMAND:**\n`{cmd}` \n\n"
+    OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     e = stderr.decode()
     if e:
         OUT += f"**• ERROR:** \n`{e}`\n"
     o = stdout.decode()
-    if not o and not e:
-        o = "Success"
+    if not o:
+        o = "`Success`"
         OUT += f"**• OUTPUT:**\n`{o}`"
     else:
         _o = o.split("\n")
         o = "\n".join(_o)
-        OUT += f"**• OUTPUT:**\n```{o}```"
+        OUT += f"**• OUTPUT:**\n`{o}`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
