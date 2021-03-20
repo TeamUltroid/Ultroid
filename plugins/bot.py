@@ -41,8 +41,8 @@ import psutil
 import requests
 from git import Repo
 from pyUltroid import __version__ as UltVer
-from telethon import __version__
 from search_engine_parser.core.utils import get_rand_user_agent as grua
+from telethon import __version__
 
 from . import *
 
