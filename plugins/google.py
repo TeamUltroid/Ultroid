@@ -96,7 +96,7 @@ async def reverse(event):
         loc,
         headers={
             "User-Agent": grua(),
-    },
+        },
     )
     xx = bs(response.text, "html.parser")
     div = xx.find("div", {"class": "r5a77d"})
