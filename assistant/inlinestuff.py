@@ -13,7 +13,7 @@ import play_scraper
 import requests
 from bs4 import BeautifulSoup
 from pyUltroid.functions.parser import GoogleSearch, YahooSearch
-from rextester_py import rexec_aio, get_langs
+from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
@@ -32,6 +32,8 @@ objective-c, ocaml, octave, oracle, pascal,
 perl, php, postgresql, prolog, python,
 python3, r, ruby, scala, scheme, sql server,
 swift, tcl, vb.net"""
+
+
 @in_pattern("fl2lnk ?(.*)")
 @in_owner
 async def _(e):
