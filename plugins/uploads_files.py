@@ -77,7 +77,10 @@ async def download(event):
                 )
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    await eod(xx, get_string("udl_2").format(o, t))
+    if t:
+        await eod(xx, get_string("udl_2").format(o, t))
+    else:
+        await eod(xx, f"Downloaded `{o}` in `0 second(s)`")
 
 
 @ultroid_cmd(
@@ -96,6 +99,8 @@ async def download(event):
                 event.chat_id,
                 kk,
                 caption=kk,
+                force_document=True,
+                thumb="resources/extras/logo_rdm.png",
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(
                         d,
@@ -115,7 +120,10 @@ async def download(event):
         await x.edit(f"`{kk}`\nTime Taken: `{t}`")
     except BaseException:
         pass
-    await eod(xx, f"Uploaded `{kk}` in `{t}`", time=5)
+    if t:
+        await eod(xx, f"Uploaded `{kk}` in `{t}`", time=5)
+    else:
+        await eod(xx, f"Uploaded `{kk}` in `0 second(s)`")
 
 
 @ultroid_cmd(
