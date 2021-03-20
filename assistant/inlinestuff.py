@@ -12,9 +12,9 @@ from urllib.request import urlopen
 import play_scraper
 import requests
 from bs4 import BeautifulSoup
-from rextester_py import get_langs, rexec_aio
+from pyUltroid.functions.parser import GoogleSearch, YahooSearch
+from rextester_py import rexec_aio, get_langs
 from rextester_py.rextester_aio import UnknownLanguage
-from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -24,8 +24,14 @@ gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
-
-
+rex_langs = """ada, bash, brainfuck, c (clang), c, c (vc),
+c#, c++ (clang), c++, c++ (vc++), d, elixir,
+erlang, f#, fortran, go, haskell, java, js,
+kotlin, lisp, lua, mysql, nasm, node,
+objective-c, ocaml, octave, oracle, pascal,
+perl, php, postgresql, prolog, python,
+python3, r, ruby, scala, scheme, sql server,
+swift, tcl, vb.net"""
 @in_pattern("fl2lnk ?(.*)")
 @in_owner
 async def _(e):
@@ -160,9 +166,9 @@ async def rextester(event):
             if "|" in omk:
                 lang, codee = omk.split("|")
             else:
-                lang = "python 3"
+                lang = "python3"
                 codee = omk
-            if lang == php:
+            if lang == "php":
                 code = f"<?php {codee} ?>"
             else:
                 code = codee
@@ -187,7 +193,7 @@ async def rextester(event):
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
-            text=get_langs(),
+            text=f"The list of valid languages are\n\n{rex_langs}\n\n\nFormat to use Rextester is `@Yourassistantusername rex langcode|code`",
         )
         await event.answer([resultm])
 
