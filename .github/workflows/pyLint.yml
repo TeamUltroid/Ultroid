@@ -1,4 +1,4 @@
-name: blacked.cum
+name: pyLint
 
 on: push
 
@@ -26,8 +26,8 @@ jobs:
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Pehli Fursat m nikal'
+          commit_message: 'pyLint: auto-fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: Me Buddhhu 
-          commit_user_email: buddhhu@ultroid.tech
+          commit_user_name: TeamUltroid 
+          commit_user_email: teamultroid@ultroid.tech
