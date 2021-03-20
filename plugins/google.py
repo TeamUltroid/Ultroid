@@ -95,7 +95,7 @@ async def reverse(event):
     response = requests.get(
         loc,
         headers={
-            "User-Agent": grua(),
+            "User-Agent": grua()
         },
     )
     xx = bs(response.text, "html.parser")
