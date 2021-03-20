@@ -20,8 +20,8 @@
 
 import re
 
-from telethon.tl.functions.users import GetFullUserRequest
 from pyUltroid.misc._decorators import sed
+from telethon.tl.functions.users import GetFullUserRequest
 
 from . import *
 
