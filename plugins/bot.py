@@ -42,6 +42,7 @@ import requests
 from git import Repo
 from pyUltroid import __version__ as UltVer
 from telethon import __version__
+from search_engine_parser.core.utils import get_rand_user_agent as grua
 
 from . import *
 
@@ -144,11 +145,7 @@ async def dyno_usage(dyno):
     if not HEROKU_API and HEROKU_APP_NAME:
         return
     dyn = await eor(dyno, "`Processing...`")
-    useragent = (
-        "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/80.0.3987.149 Mobile Safari/537.36"
-    )
+    useragent = grua()
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
