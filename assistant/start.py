@@ -142,7 +142,7 @@ async def setting(event):
         buttons=[
             [
                 Button.inline("API Kᴇʏs", data="apiset"),
-                Button.inline("Cʜᴀʀ Bᴏᴛ", data="chatbot"),
+                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
             ],
             [
                 Button.inline("Aʟɪᴠᴇ", data="alvcstm"),

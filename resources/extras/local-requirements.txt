@@ -13,12 +13,12 @@ lottie
 lxml
 moviepy
 numpy
-opencv-python-headless
 Pillow>=7.0.0
 play-scraper
 PyDictionary
 PyPDF2
 psutil
+pyyaml
 pytz
 requests>=2.18.4
 git+https://github.com/ProgrammingError/rextester_py.git
