@@ -35,6 +35,8 @@ opn = []
     pattern="dl ?(.*)",
 )
 async def download(event):
+    if not event.is_reply:
+        return await eor(event, "`Reply to a Media Message`")
     xx = await eor(event, get_string("com_1"))
     kk = event.pattern_match.group(1)
     s = dt.now()
