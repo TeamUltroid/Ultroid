@@ -16,7 +16,6 @@ client = TelegramClient(
     Var.API_ID,
     Var.API_HASH,
 )
-client.start()
 
 
 async def get_entity(chat):
@@ -97,3 +96,4 @@ def main():
 
 
 main()
+client.loop.run_until_disconnected()
