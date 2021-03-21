@@ -29,7 +29,7 @@ inline_2: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
 inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
 **帮助菜单 {}.\n\n
 附加组件 ~ {}\n\n
-去添加 `附加组件` 值为 true 的 var**"
+去添加 `附加组件` var为true的值**"
 inline_4: "**{}的机器人\n\n主菜单\n\n插件 ~ {}\n附加组件 ~ {}\n命令总数 ~ {}**"
 inline_5: "**菜单已关闭**"
 
