@@ -92,7 +92,7 @@ async def websocket_handler(request):
 def main():
     app = web.Application()
     app.router.add_route('GET', '/', websocket_handler)
-    web.run_app(app, port=27737)
+    web.run_app(app, port=os.environ['PORT'])
 
 
 main()
