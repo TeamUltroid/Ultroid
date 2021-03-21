@@ -68,6 +68,10 @@ async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = grt((time.time() - start_time))
     header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    y = (Repo().active_branch)
+    xx = (Repo().remotes[0].config_reader.get('url'))
+    rep = (xx.replace(".git",f"/tree/{y}"))
+    kk = f"[{y}]({rep})"
     als = (get_string("alive_1")).format(
         header,
         OWNER_NAME,
@@ -76,7 +80,7 @@ async def lol(ult):
         uptime,
         pyver(),
         __version__,
-        Repo().active_branch,
+        kk,
     )
     if pic is None:
         return await eor(ult, als)
