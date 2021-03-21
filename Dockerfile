@@ -17,4 +17,5 @@ RUN pip install py-Ultroid==13.9b0
 RUN pip uninstall rextester-py -y
 RUN pip install git+https://github.com/ProgrammingError/rextester_py.git
 RUN pip install git+https://github.com/buddhhu/search-engine-parser.git
+RUN pip install gingerit
 CMD ["bash", "resources/startup/startup.sh"]
