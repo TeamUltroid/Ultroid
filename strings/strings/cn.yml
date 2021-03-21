@@ -2,7 +2,8 @@ name: Chinese
 natively: Chinese
 
 authors:
-  - junbaor,stevenliuit
+  - junbaor
+  - stevenliuit
 
 # commons
 com_1: "`处理中 ...`"
