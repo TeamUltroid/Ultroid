@@ -2,20 +2,20 @@ name: Chinese
 natively: Chinese
 
 authors:
-  - junbaor
   - stevenliuit
+  - junbaor
 
 # commons
 com_1: "`处理中...`"
 com_2: "`搜索中...`"
 # help 
 help_1: "`{}` 不是一个有效的插件!"
-help_2: "bot没有响应内联查询.\n考虑使用 `{}重启`"
+help_2: "bot 没有响应内联查询.\n考虑使用 `{}重启`"
 help_3: "`请从中为您的机器人打开内联模式` @Botfather."
 help_4: "嘿, \n你是机器人模式. \n机器人模式用户无法直接获得帮助 ... \n而不是复制粘贴在聊天下面，并点击弹出窗口 \n\n `@{} ultd`"
 
 # autopic
-autopic_1: "嘿，给我发短信 .."
+autopic_1: "嘿，给我发信息 .."
 autopic_2: "找不到的结果 `{}`"
 autopic_3: "有收藏吗 `{}` 与您的搜索相关 !\n开始自选 !"
 
@@ -29,7 +29,7 @@ inline_2: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
 inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
 **帮助菜单 {}.\n\n
 附加组件 ~ {}\n\n
-去添加 `附加组件` 值为true的var**"
+去添加 `附加组件` 值为 true 的 var**"
 inline_4: "** Bot 的 {}\n\n主菜单\n\nplugins ~ {}\n附加组件 ~ {}\n命令总数 ~ {}**"
 inline_5: "**菜单已关闭**"
 
@@ -64,10 +64,10 @@ alive_1: "**Ultroid 用户机器人...**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
 ┣ **所有者** - `{}`\n
 ┣ **版本** - `{}`\n
-┣ **UpTime** - `{}`\n
+┣ **启动时间** - `{}`\n
 ┣ **Python** - `{}`\n
 ┣ **Telethon** - `{}`\n
-┣ **Branch** - `{}`\n
+┣ **分支** - `{}`\n
 ┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid 日志.\n粘贴 [here]({}) too!"
 ping: "**Pong !!** `{}毫秒`\n**Uptime** - `{}`"
@@ -113,10 +113,10 @@ cvt_4: "回复任何媒体."
 
 # core
 core_1: "发现模块"
-core_2: "{}.py 使用 .paste 粘贴在neko和raw.."
+core_2: "{}.py 使用 .paste 粘贴在 neko 和 raw .."
 core_3: "再次搜索..?"
 core_4: "发现模块 {}"
-core_5: "{}.py 使用 .paste 粘贴在neko和raw.."
+core_5: "{}.py 使用 .paste 粘贴在 neko 和 raw .."
 core_6: "没找到 {}.py 模块"
 core_7: "没有该模块"
 core_8: "没有发现名称是 {}.py 的模块"
