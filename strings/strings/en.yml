@@ -69,7 +69,7 @@ alive_1: "**The Ultroid Userbot...**\n\n
 ┣ **UpTime** - `{}`\n
 ┣ **Python** - `{}`\n
 ┣ **Telethon** - `{}`\n
-┣ **Branch** - {}\n
+┣ **Branch** - `{}`\n
 ┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
