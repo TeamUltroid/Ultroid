@@ -30,7 +30,7 @@ inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
 **帮助菜单 {}.\n\n
 附加组件 ~ {}\n\n
 去添加 `附加组件` 值为 true 的 var**"
-inline_4: "** Bot 的 {}\n\n主菜单\n\nplugins ~ {}\n附加组件 ~ {}\n命令总数 ~ {}**"
+inline_4: "** Bot 的 {}\n\n主菜单\n\n插件 ~ {}\n附加组件 ~ {}\n命令总数 ~ {}**"
 inline_5: "**菜单已关闭**"
 
 # tagnotif
