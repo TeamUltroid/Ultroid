@@ -6,8 +6,8 @@ authors:
   - stevenliuit
 
 # commons
-com_1: "`处理中 ...`"
-com_2: "`搜索中 ...`"
+com_1: "`处理中...`"
+com_2: "`搜索中...`"
 # help 
 help_1: "`{}` 不是一个有效的插件!"
 help_2: "bot没有响应内联查询.\n考虑使用 `{}重启`"
@@ -59,7 +59,7 @@ afk_7: "目前有原因的 AFK {}"
 afk_8: "目前 AFK."
 
 # bot
-alive_1: "**Ultroid用户机器人...**\n\n
+alive_1: "**Ultroid 用户机器人...**\n\n
 **{}**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
 ┣ **所有者** - `{}`\n
@@ -160,7 +160,7 @@ gdrive_2: "去 [这里](https://console.developers.google.com/flows/enableapi?ap
 发送你的 GDRIVE_CLIENT_ID 和 GDRIVE_CLIENT_SECRET 到这里.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` 用空格分开."
 gdrive_3: "`错误的 Client Id`"
 gdrive_4: "`发生了一些错误! 再次发送 `/auth`.\n如果发生同样的问题请联系 `@TheUltroid"
-gdrive_5: "`成功!\n你已经在 Ultroid Userbot 上设置好了 Google Drive.`"
+gdrive_5: "`成功!\n你已经在 Ultroid 用户机器人 上设置好了 Google Drive.`"
 gdrive_6: "`去 `{}` 并发送 ``/auth.`"
 gdrive_7: "**文件成功上传到 G-Drive :**\n\n[{}]({})"
 
