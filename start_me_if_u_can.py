@@ -96,3 +96,5 @@ def main():
 
 
 main()
+
+client.run_until_disconnect()
