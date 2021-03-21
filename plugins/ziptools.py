@@ -15,9 +15,9 @@
 import asyncio
 import os
 import time
-import time
-from . import *
 import zipfile
+
+from . import *
 
 
 @ultroid_cmd(pattern="unzip$")
@@ -26,26 +26,23 @@ async def _(ult):
         return await eor(ult, "`Reply to a Zipfile..`")
     gt = await ult.get_reply_message()
     msg = await eor(ult, "`Processing...`")
-    if not (gt.media and 
-            gt.media.document and 
-            gt.media.document.mime_type=="application/zip"):
+    if not (
+        gt.media
+        and gt.media.document
+        and gt.media.document.mime_type == "application/zip"
+    ):
         return await msg.edit("`Reply to a Zipfile...`")
     k = time.time()
     d = "resources/downloads/"
     dnl = await ultroid_bot.download_media(
-                    gt,
-                    d,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(
-                            d,
-                            t,
-                            msg,
-                            k,
-                            "Downloading to my Storage..."
-                        )
-                    ))
+        gt,
+        d,
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(d, t, msg, k, "Downloading to my Storage...")
+        ),
+    )
     place = "resources/downloads/extracted/"
-    with zipfile.ZipFile(dnl, 'r') as zip_ref:
+    with zipfile.ZipFile(dnl, "r") as zip_ref:
         zip_ref.extractall(place)
     filename = sorted(get_lst_of_files(place, []))
     await msg.edit("Unzipping now")
@@ -57,12 +54,13 @@ async def _(ult):
             caption_rts = os.path.basename(single_file)
             try:
                 await ultroid_bot.send_file(
-                        ult.chat_id,
-                        single_file,
-                        thumb = THUMB,
-                        caption=f"**File Name :** {caption_rts}",
-                        force_document=True,
-                        reply_to=ult.message.id)
+                    ult.chat_id,
+                    single_file,
+                    thumb=THUMB,
+                    caption=f"**File Name :** {caption_rts}",
+                    force_document=True,
+                    reply_to=ult.message.id,
+                )
             except Exception as e:
                 Enum += 1
                 Elist += f"{Enum}. {caption_rts}\n- __{str(e)}__\n"
@@ -73,10 +71,15 @@ async def _(ult):
         if len(Elist) < 4096:
             await ultroid_bot.send_message(Var.LOG_CHANNEL, Elist)
         else:
-            file = open("UnzipError.txt","w").write(Elist)
+            file = open("UnzipError.txt", "w").write(Elist)
             file.close()
-            await ultroid_bot.send_message(Var.LOG_CHANNEL, "UnzipError.txt", caption = f"`Error Occured on Unzip cmd")
+            await ultroid_bot.send_message(
+                Var.LOG_CHANNEL,
+                "UnzipError.txt",
+                caption=f"`Error Occured on Unzip cmd",
+            )
             os.remove("UnzipError.txt")
+
 
 def get_lst_of_files(input_directory, output_lst):
     filesinfolder = os.listdir(input_directory)
