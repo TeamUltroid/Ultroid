@@ -1,0 +1,195 @@
+name: Chinese
+natively: Chinese
+
+authors:
+  - junbaor,stevenliuit
+
+# commons
+com_1: "`处理中 ...`"
+com_2: "`搜索中 ...`"
+# help 
+help_1: "`{}` 不是一个有效的插件!"
+help_2: "bot没有响应内联查询.\n考虑使用 `{}restart`"
+help_3: "`请从中为您的机器人打开内联模式` @Botfather."
+help_4: "嘿, \n你是机器人模式. \n机器人模式用户无法直接获得帮助 ... \n而不是复制粘贴在聊天下面，并点击弹出窗口 \n\n `@{} ultd`"
+
+# autopic
+autopic_1: "嘿，给我发短信 .."
+autopic_2: "找不到的结果 `{}`"
+autopic_3: "有收藏吗 `{}` 与您的搜索相关 !\n启动Autopic !"
+
+# inline
+inline_1: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+plugins ~ {}**"
+inline_2: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+addons ~ {}**"
+inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+addons ~ {}\n\n
+去添加 `addons` 值为true的var**"
+inline_4: "** Bot 的 {}\n\n主菜单\n\nplugins ~ {}\naddons ~ {}\n命令总数 ~ {}**"
+inline_5: "**菜单已关闭**"
+
+# tagnotif
+tagnot_1: "{} 把你带进来 {}\n\n```{}```\n\n[📨消息📨]({})"
+tagnot_2: "{} 把你带进来 {}\n\n [📨消息📨]({})"
+
+# whisper
+wspr_1: "@{} 给你的秘密信息.\n阅读后删除邮件.\n否则下一条消息将不会更新."
+wspr_2: "消息 删除"
+
+# afk
+afk_1: "`不再 AFK\n\n
+他离开了 ~ {}`"
+afk_2: "#AFK\n
+将AFK模式设置为False\n
+使用AFK是为了 {}`"
+afk_3: "我现在是 AFK.\n
+上次看到 {} 前.`\n\n
+**原因:** `{}`"
+afk_4: "`我现在是 AFK.\n\n
+上次看到 {} 前.`"
+afk_5: "`去 AFK.`\n\n
+**原因:** `{}`"
+afk_6: "我要去 AFK."
+afk_7: "目前有原因的 AFK {}"
+afk_8: "目前 AFK."
+
+# bot
+alive_1: "**Ultroid用户机器人...**\n\n
+**{}**\n\n
+┏━━━━━━━━━━━━━━━━━━━━━\n
+┣ **Owner** - `{}`\n
+┣ **Version** - `{}`\n
+┣ **UpTime** - `{}`\n
+┣ **Python** - `{}`\n
+┣ **Telethon** - `{}`\n
+┣ **Branch** - `{}`\n
+┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid 日志.\nPasted [here]({}) too!"
+ping: "**Pong !!** `{}毫秒`\n**Uptime** - `{}`"
+usage: "**⚙️ Dyno 用法 ⚙️**:\n\n
+ -> `Dyno 用法 for`  **{}**:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+ -> `本月剩余的Dyno小时配额`:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+**总磁盘空间: {}\n\n**
+**Used: {}  Free: {}\n\n**
+**📊Data 用法\n\nUpload: {}\nDown: {}\n\n**
+**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "GoodBye {}.\n`Shutting down...`"
+
+# broadcast
+bd_1: "`添加到数据库...`"
+bd_2: "`尝试将所有管理频道添加到数据库...`"
+bd_3: "**完成.**\n数据库中已存在聊天记录: {}\n新增: {}"
+bd_4: "已添加频道!"
+bd_5: "`已添加到数据库!`"
+bd_6: "`频道已经在数据库!`"
+
+# carbon
+carbon_1: "处理"
+carbon_2: "Carbonised by [{}](tg://user?id={})"
+
+# chats
+chats_1: "`正在处理...`"
+chats_2: "`无法删除此聊天`"
+chats_3: "`I m not an admin`"
+chats_4: "#Deleted\nDeleted {}"
+chats_5: "Your [{}]({}) Group Made Boss!"
+chats_6: "Join @TeamUltroid"
+chats_6: "Your [{}]({}) Group/Channel Has been made Boss!"
+
+# converter
+cvt_1: "Reply to any media/Document."
+cvt_2: "Give The name nd extension of file"
+cvt_3: "`Processing...`"
+cvt_4: "Reply to any media."
+
+# core
+core_1: "Module Found"
+core_2: "{}.py use .paste to paste in neko and raw.."
+core_3: "Search Again..?"
+core_4: "Module {} Found"
+core_5: "{}.py use .paste to paste in neko and raw.."
+core_6: "Module {}.py Not Found"
+core_7: "No Such Module"
+core_8: "No Module Named {}.py"
+core_9: "`Give name of plugin which u want to unload`"
+core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_11: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_12: "**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{}`"
+core_13: "`Give name of plugin which u want to uninstall`"
+core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_16: "`Give name of plugin which u want to load`"
+core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
+core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
+
+# fedutils
+sf_1: "Starting a Mass-FedBan..."
+sf_2: "`No user designated!`"
+sf_3: "You can't ban my dev you noob!!"
+sf_4: "`Seems like rose isn't responding, or, the plugin is misbehaving`"
+sf_5: "You can only use fed commands once every 5 minutes"
+sf_6: "Try again after 5 mins."
+sf_7: "Unable to collect FedAdminList. Retrying ({}/3)..."
+sf_8: "Error"
+sf_9: "Unable to collect FedAdminList."
+sf_10: "FBaning in {} feds."
+sf_11: "Specified FBan Group ID is incorrect."
+sf_12: "{} Excluded."
+sf_13: "Error in removing FedAdmin file.\n{}"
+sf_14: "SuperFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_15: "Starting a Mass-UnFedBan..."
+sf_16: "SuperUnFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_17: "`Give me someones id, or reply to somones message to check his/her fedstat.`"
+sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
+sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+sf_20: "`Extracting information...`"
+sf_21: "\n\nFedInfo Extracted by Ultroid"
+
+# gdrive
+gdrive_1: "`You have already authorised with Google Drive`"
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
+Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_3: "`Wrong Client Id`"
+gdrive_4: "`Something went wrong! Send `/auth` again.\nIf same happens contact `@TheUltroid"
+gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
+gdrive_6: "`Go to `{}` and send ``/auth.`"
+gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
+
+# pmpermit
+pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
+pmperm_2: "You were spamming my Master's PM, which I didn't like.\nYou have been BLOCKED and reported as SPAM, until further notice."
+pmperm_3: "Reply to someone's msg or try this commmand in private."
+
+# updater
+upd_1: "`正在检查更新, 请稍等....`"
+upd_2: "`哎呀, 出现一些问题无法继续更新.`\n\n**LOGTRACE:**\n"
+upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
+upd_4: "`Changelog is too big, view the file to see it.`"
+upd_5: "Use `{}update now` to update."
+upd_6: "{}\n\nUse `{}update now` to update."
+upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+
+# upload download
+udl_1: "`回复你想下载的文件或媒体...`"
+udl_2: "下载成功..\nTo\n`{}`\nin `{}`"
+udl_3: "`给出文件的具体路径`"
+
+# words
+wrd_1: "**Word** - `{}`\n\n**含义** - \n"
+wrd_2: "**Word** - `{}`\n\n**同义词** - \n"
+wrd_3: "**Word** - `{}`\n\n**反义词** - \n"
+
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "选择你要设置的 API."
+ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\n使用 /cancel 终止操作."
+ast_3: "Hi {}. 请浏览以下选项"
