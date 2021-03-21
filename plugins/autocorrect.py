@@ -1,11 +1,23 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available
+
+• `{i}autocorrect`
+    To on/off Autocorrect Feature.
+
+"""
 
 from . import *
 from gingerit.gingerit import GingerIt
 from telethon import events
 from googletrans import Translator
 tr = Translator()
-
-
 
 
 @ultroid_cmd(pattern="autocorrect")
@@ -22,15 +34,18 @@ async def acc(e):
 async def gramme(event):
     if Redis("AUTOCORRECT")!="True":
         return
-     t = event.text
-     if t.startswith((HNDLR, ".","?","#","_","*","'","@","[","(","+")):
+    t = event.text
+    tt = tr.translate(t)
+    if t.startswith((HNDLR, ".","?","#","_","*","'","@","[","(","+")):
         return
-     if t.endswith(("..")):
+    if t.endswith(("..")):
         return
-     tt = tr.translate(t)
-     if tt.src != "en":
-         return
-     xx = GingerIt()
-     x = xx.parse(t)
-     res = (x['result'])
-     await event.edit(res)
+    if tt.src != "en":
+        return
+    xx = GingerIt()
+    x = xx.parse(t)
+    res = (x['result'])
+    await event.edit(res)
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
