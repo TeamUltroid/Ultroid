@@ -97,4 +97,4 @@ def main():
 
 main()
 
-client.run_until_disconnect()
+client.run_until_disconnected()
