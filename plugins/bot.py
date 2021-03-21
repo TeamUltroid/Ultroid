@@ -71,7 +71,7 @@ async def lol(ult):
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f"[{y}]({rep})"
+    kk = f" ` [{y}]({rep}) ` "
     als = (get_string("alive_1")).format(
         header,
         OWNER_NAME,
