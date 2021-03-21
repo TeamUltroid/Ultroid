@@ -3,7 +3,6 @@ import os
 from json.decoder import JSONDecodeError
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from dotenv import load_dotenv
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetFullChannelRequest
