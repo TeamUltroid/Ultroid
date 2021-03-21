@@ -77,9 +77,9 @@ async def lol(ult):
         OWNER_NAME,
         ultroid_version,
         UltVer,
-        uptime,
         pyver(),
         __version__,
+        uptime,
         kk,
     )
     if pic is None:
