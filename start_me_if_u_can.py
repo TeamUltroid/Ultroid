@@ -94,6 +94,5 @@ def main():
     app.router.add_route('GET', '/', websocket_handler)
     web.run_app(app, port=os.environ['PORT'])
 
-
-main()
 client.loop.run_until_disconnected()
+main()
