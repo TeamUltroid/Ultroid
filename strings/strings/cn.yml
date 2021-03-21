@@ -69,7 +69,7 @@ alive_1: "**Ultroid用户机器人...**\n\n
 ┣ **Telethon** - `{}`\n
 ┣ **Branch** - `{}`\n
 ┗━━━━━━━━━━━━━━━━━━━━━"
-log: "**Heroku** Ultroid 日志.\nPasted [here]({}) too!"
+log: "**Heroku** Ultroid 日志.\n粘贴 [here]({}) too!"
 ping: "**Pong !!** `{}毫秒`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno 用法 ⚙️**:\n\n
  -> `Dyno 用法 for`  **{}**:\n
@@ -100,10 +100,10 @@ carbon_2: "Carbonised by [{}](tg://user?id={})"
 chats_1: "`处理中...`"
 chats_2: "`无法删除此聊天`"
 chats_3: "`我不是管理员`"
-chats_4: "#Deleted\nDeleted {}"
-chats_5: "Your [{}]({}) Group Made Boss!"
+chats_4: "#已删除\n已删除 {}"
+chats_5: "你的 [{}]({}) 组已经成为了 Boss!"
 chats_6: "加入 @TeamUltroid"
-chats_6: "Your [{}]({}) Group/Channel Has been made Boss!"
+chats_6: "您的 [{}]({}) 组/频道 已经成为 Boss!"
 
 # converter
 cvt_1: "回复任一媒体或文件."
@@ -113,10 +113,10 @@ cvt_4: "回复任何媒体."
 
 # core
 core_1: "发现模块"
-core_2: "{}.py use .paste to paste in neko and raw.."
+core_2: "{}.py 使用 .paste 粘贴在neko和raw.."
 core_3: "再次搜索..?"
 core_4: "发现模块 {}"
-core_5: "{}.py use .paste to paste in neko and raw.."
+core_5: "{}.py 使用 .paste 粘贴在neko和raw.."
 core_6: "没找到 {}.py 模块"
 core_7: "没有该模块"
 core_8: "没有发现名称是 {}.py 的模块"
@@ -145,14 +145,14 @@ sf_10: "FBaning in {} feds."
 sf_11: "指定的 FBan Group ID 不正常."
 sf_12: "{} 排除."
 sf_13: "移除 FedAdmin 文件时出错.\n{}"
-sf_14: "SuperFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_14: "SuperFBan 已完成.\n总计 Feds - {}.\n不包括 - {}.\n 受影响的 {} feds.\n#TB"
 sf_15: "启动 Mass-UnFedBan..."
-sf_16: "SuperUnFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_16: "SuperUnFBan 已完成.\n总计 Feds - {}.\n不包括 - {}.\n 受影响的 {} feds.\n#TB"
 sf_17: "`给我一个ID, 或者回复某人的信息查看他/她的 fedstat.`"
-sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
+sf_18: "列表 feds {} 已被禁止.\n\n使用Ultroid收集."
 sf_19: "**错误**\n `Unblock` @MissRose_Bot ` 再试一次!"
 sf_20: "`提取信息中...`"
-sf_21: "\n\nFedInfo Extracted by Ultroid"
+sf_21: "\n\n由Ultroid提取的FedInfo"
 
 # gdrive
 gdrive_1: "`你已经授权过 Google Drive`"
@@ -176,7 +176,7 @@ upd_3: "**有新的更新可用 [[{}]]({}/tree/{}):\n\n更新日志**\n\n{}"
 upd_4: "`变更日志太大，查看文件才能看到.`"
 upd_5: "使用 `{}update now` 更新."
 upd_6: "{}\n\n使用 `{}update now` 更新."
-upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_7: "\n`你的BOT是`  **up-to-date**  `与`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
 udl_1: "`回复你想下载的文件或媒体...`"
