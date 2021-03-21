@@ -14,8 +14,9 @@ from pyUltroid import Var, udB
 client = TelegramClient(
     StringSession(udB.get("VC_SESSION")),
     Var.API_ID,
-    Var.API_HASH
+    Var.API_HASH,
 )
+client.start()
 
 
 async def get_entity(chat):
@@ -96,5 +97,3 @@ def main():
 
 
 main()
-
-client.run_until_disconnected()
