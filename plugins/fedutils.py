@@ -360,7 +360,9 @@ async def _(event):
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
                 if audio.message.startswith("This command can only be used once"):
-                    return await ok.edit("Oops, you can use this command only once every minute!")
+                    return await ok.edit(
+                        "Oops, you can use this command only once every minute!"
+                    )
                 elif "Looks like" in audio.text:
                     await audio.click(0)
                     await asyncio.sleep(2)
