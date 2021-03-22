@@ -47,8 +47,9 @@ async def webss(event):
     except:
         return await eod(xx, "Something Went Wrong :(", time=10)
     await xx.reply(
-        f"**WebShot Generated**\n**Url**: {xurl}\n**Created at**: {crt_at}",
+        f"**WebShot Generated**\n**URL**: {xurl}\n**Created at**: {crt_at}",
         file=sshot,
         link_preview=False,
+        force_document=True,
     )
     await xx.delete()
