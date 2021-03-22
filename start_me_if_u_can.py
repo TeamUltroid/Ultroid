@@ -9,26 +9,23 @@ from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest
 from telethon.tl.functions.phone import JoinGroupCallRequest
 from telethon.tl.types import DataJSON
-from pyUltroid import Var, udB
-
-client = TelegramClient(StringSession(udB.get("VC_SESSION")), api_id=Var.API_ID, api_hash=Var.API_HASH)
-
+from pyUltroid import udB, vcbot
 
 async def get_entity(chat):
     try:
-        return await client.get_input_entity(chat['id'])
+        return await vcbot.get_input_entity(chat['id'])
     except ValueError:
         if 'username' in chat:
-            return await client.get_entity(chat['username'])
+            return await vcbot.get_entity(chat['username'])
         raise
 
 
 async def join_call(data):
     chat = await get_entity(data['chat'])
-    full_chat = await client(GetFullChannelRequest(chat))
+    full_chat = await vcbot(GetFullChannelRequest(chat))
     call = await client(GetGroupCallRequest(full_chat.full_chat.call))
 
-    result = await client(
+    result = await vcbot(
         JoinGroupCallRequest(
             call=call.call,
             muted=False,
@@ -91,5 +88,6 @@ def main():
     app.router.add_route('GET', '/', websocket_handler)
     web.run_app(app, port=os.environ.get("PORT", 6969))
 
-client.start()
-main()
+if udB.get("VC_SESSION"):
+    vcbot.start()
+    main()
