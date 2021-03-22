@@ -11,11 +11,8 @@ from telethon.tl.functions.phone import JoinGroupCallRequest
 from telethon.tl.types import DataJSON
 from pyUltroid import Var, udB
 
-client = TelegramClient(
-    StringSession(udB.get("VC_SESSION")),
-    Var.API_ID,
-    Var.API_HASH,
-)
+with TelegramClient(StringSession(udB.get("VC_SESSION")),Var.API_ID,Var.API_HASH) as client:
+    client.start()
 
 
 async def get_entity(chat):
@@ -94,5 +91,4 @@ def main():
     app.router.add_route('GET', '/', websocket_handler)
     web.run_app(app, port=os.environ['PORT'])
 
-client.run_until_disconnected()
 main()
