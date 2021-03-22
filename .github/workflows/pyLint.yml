@@ -1,0 +1,33 @@
+name: pyLint
+
+on: push
+
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install black
+        run: |
+          pip install black isort autoflake
+      - name: lint with isort and black
+        run: |
+          black plugins/* assistant/*
+          isort plugins/* assistant/*
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/pmbot/*
+      # commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'pyLint: auto-fixes'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: TeamUltroid 
+          commit_user_email: teamultroid@ultroid.tech

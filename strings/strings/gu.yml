@@ -3,6 +3,8 @@ natively: ગુજરાતી
 
 authors:
   - buddhhu
+  - iXD4RK
+  - Shivam_Patel
 
 # commons
 com_1: "`પ્રક્રિયા...`"
@@ -123,11 +125,11 @@ core_7: "આવા કોઈ મોડ્યુલ નથી"
 core_8: "{} નામનું કોઈ મોડ્યુલ નથી"
 core_9: "`તમે અનલોડ કરવા માંગો છો તે પ્લગઇનનું નામ આપો`"
 core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
-core_11: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
-core_12: "**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{}`"
-core_13: "`Give name of plugin which u want to uninstall`"
+core_11: "**તમે સત્તાવાર પ્લગને અનલોડ કરી શકતા નથી**"
+core_12: "**આ નામવાળી કોઈ પ્લગઇન નથી** `{}`"
+core_13: "`તમે કાઢવા કરવા માંગો છો તે પ્લગઇનનું નામ આપો`"
 core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
-core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_15: "**તમે સત્તાવાર પ્લગને કાઢી કરી શકતા નથી**"
 core_16: "`તમે અનલોડ કરવા માંગો છો તે પ્લગઇનનું નામ આપો`"
 core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
 core_18: "`{}` **લોડ કરી શકાયું નહીં નીચેની ભૂલને કારણે**\n`{}`"
@@ -161,28 +163,28 @@ gdrive_2: "[અહીં](https://console.developers.google.com/flows/enableapi?
 GDRIVE_CLIENT_ID અને GDRIVE_CLIENT_SECRET આવી રીતે મોકલો.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` જગ્યા દ્વારા અલગ."
 gdrive_3: "`Client ID ખોટું છે`"
 gdrive_4: "`કંઈક ખોટું થયું! `/auth` ફરીથી મોકલો.\nIf same happens contact `@TheUltroid"
-gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
+gdrive_5: "`સફળ! \ N તમે બધા અલ્ટ્રોઇડ યુઝરબotટથી ગૂગલ ડ્રાઇવનો ઉપયોગ કરવા માટે તૈયાર છો.`"
 gdrive_6: "`Go to `{}` and send ``/auth.`"
-gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
+gdrive_7: "**જી ડ્રાઇવ પર સફળતાપૂર્વક ફાઇલ અપલોડ કરી :**\n\n[{}]({})"
 
 # pmpermit
-pmperm_1: "Please wait for me to respnd or you will be blocked and reported as spam!!"
-pmperm_2: "You were spamming my Master's PM, which I didn't like."
-pmperm_3: "Reply to someone's msg or try this commmand in private."
+pmperm_1: "કૃપા કરીને મને રાહતની રાહ જુઓ અથવા તમને અવરોધિત કરવામાં આવશે અને સ્પામ તરીકે જાણ કરવામાં આવશે !! "
+pmperm_2: "તમે મારા માસ્ટરના વડા પ્રધાનને સ્પામ કરી રહ્યા હતા, જે મને ગમતું નથી. "
+pmperm_3: "કોઈના નામનો જવાબ આપો અથવા ખાનગીમાં આ કમાન્ડ અજમાવો. "
 
 # updater
-upd_1: "`Checking for updates, please wait....`"
-upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
-upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
-upd_4: "`Changelog is too big, view the file to see it.`"
-upd_5: "Use `{}update now` to update."
-upd_6: "{}\n\nUse `{}update now` to update."
+upd_1: "`અપડેટ્સ માટે તપાસી રહ્યું છે, કૃપા કરી પ્રતીક્ષા કરો .... `"
+upd_2: "`અરેરે .. કેટલીક સમસ્યાઓના કારણે અપડેટર ચાલુ રાખી શકશે નહીં.`\n\n**LOGTRACE:**\n"
+upd_3: "**માટે નવી નવી તારીખ ઉપલબ્ધ છે [[{}]]({}/tree/{}):\n\nચેન્જલોગ **\n\n{}"
+upd_4: "`ચેન્જલોગ ખૂબ મોટો છે, તેને જોવા માટે ફાઇલ જુઓ"
+upd_5: "Use `{}update now` અપડેટ કરવા."
+upd_6: "{}\n\nUse `{}update now` અપડેટ કરવા."
 upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
-udl_1: "`Reply to the file/media you want to download...`"
-udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
-udl_3: "`Give a specific path to file`"
+udl_1: "`તમે ડાઉનલોડ કરવા માંગો છો તે ફાઇલ / મીડિયાને જવાબ આપો ...`"
+udl_2: "ડાઉનલોડ સફળ ..\nTo\n`{}`\nin `{}`"
+udl_3: "`ફાઇલ કરવા માટે એક વિશિષ્ટ પાથ આપો -"
 
 # words
 wrd_1: "**Word** - `{}`\n\n**Meanings** - \n"
@@ -192,6 +194,6 @@ wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
 # ---------------------------------------------------#
 
 # assisant
-ast_1: "Choose which API you want to set."
-ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
-ast_3: "Hi {}. Please browse through the options"
+ast_1: "તમે કયું API સેટ કરવા માંગો છો તે પસંદ કરો."
+ast_2: "**remove.bg API**\nથી તમારી API કી દાખલ કરો remove.bg.\n\nUse /cancel ઓપરેશન સમાપ્ત કરવા માટે."
+ast_3: "Hi {}. કૃપા કરીને વિકલ્પો દ્વારા બ્રાઉઝ કરો "

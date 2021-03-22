@@ -29,4 +29,5 @@ async def on_new_mssg(event):
     elif who == OWNER_ID:
         return
     else:
-        await event.forward_to(OWNER_ID)
+        xx = await event.forward_to(OWNER_ID)
+        udB.set(str(xx.id), str(who))

@@ -31,8 +31,6 @@
 from pyUltroid.functions.all import ban_time
 from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from telethon import events
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
 
 from . import *
 
@@ -106,7 +104,7 @@ async def endmute(event):
         else:
             userid = (await event.client.get_entity(input)).id
     elif event.reply_to_msg_id:
-        userid = reply.sender_id
+        userid = (await event.get_reply_message()).sender_id
     elif private is True:
         userid = event.chat_id
     else:
@@ -188,7 +186,7 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     try:
@@ -224,7 +222,7 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     if userid == ultroid_bot.uid:

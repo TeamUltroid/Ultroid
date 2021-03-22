@@ -13,6 +13,7 @@ from math import ceil
 from platform import python_version as pyver
 
 from git import Repo
+from pyUltroid import __version__ as UltVer
 from support import *
 from telethon import Button, __version__
 from telethon.tl.types import InputWebDocument
@@ -38,16 +39,19 @@ async def e(o):
     if len(o.text) == 0:
         b = o.builder
         uptime = grt((time.time() - start_time))
+        header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
         ALIVEMSG = get_string("alive_1").format(
+            header,
             OWNER_NAME,
             ultroid_version,
+            UltVer,
             uptime,
             pyver(),
             __version__,
             Repo().active_branch,
         )
         res = [
-                await b.article(
+            await b.article(
                 title="Ultroid Userbot",
                 url="https://t.me/TeamUltroid",
                 description="Userbot | Telethon ",

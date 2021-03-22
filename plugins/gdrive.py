@@ -19,6 +19,9 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
+• `{i}listdrive
+    List all GDrive files.
+
 • `{i}gfolder`
     Link to your Google Drive Folder.
     If added then all uploaded files will be placed here.
@@ -30,11 +33,19 @@ import os
 import time
 from datetime import datetime
 
-from telethon import events
-
 from . import *
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
+
+
+@ultroid_cmd(
+    pattern="listdrive$",
+)
+async def files(event):
+    if not os.path.exists(TOKEN_FILE):
+        return await eod(event, get_string("gdrive_6").format(Var.BOT_USERNAME))
+    http = authorize(TOKEN_FILE, None)
+    await eor(event, list_files(http))
 
 
 @ultroid_cmd(

@@ -8,7 +8,8 @@
 from datetime import datetime
 
 from pyUltroid.functions.asst_fns import *
-from telethon import Button, custom, events
+from pyUltroid.misc._decorators import sed
+from telethon import Button, events
 
 from plugins import *
 
@@ -18,17 +19,21 @@ from . import *
 @asst_cmd("start")
 async def assistant(event):
     if event.is_group and event.sender_id in sed:
-        return await eor(event, "`I dont work in groups`")
+        bnn = (await asst.get_me()).username
+        return await event.reply(
+            "`I dont work in groups`",
+            buttons=[
+                Button.url(
+                    "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
+                )
+            ],
+        )
     else:
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
-            await asst.send_message(
-                OWNER_ID,
-                f"Bot started by [{event.sender_id}](tg://user?id={event.sender_id})",
-            )
         ok = ""
-        if udB.get("MSG_FRWD") == True:
-            ok = "You can contact me using this bot!!"
+        if udB.get("PMBOT") == "True":
+            ok = "You can contact my master using this bot!!"
         if event.is_private and event.sender_id in sed:
             return
         await event.reply(
@@ -135,7 +140,10 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("API Kᴇʏs", data="apiset")],
+            [
+                Button.inline("API Kᴇʏs", data="apiset"),
+                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+            ],
             [
                 Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
                 Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),

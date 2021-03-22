@@ -5,7 +5,19 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import os
+
+from telegraph import Telegraph
+from telegraph import upload_file as upl
+
 from . import *
+
+# --------------------------------------------------------------------#
+telegraph = Telegraph()
+r = telegraph.create_account(short_name="Ultroid")
+auth_url = r["auth_url"]
+# --------------------------------------------------------------------#
+
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -51,7 +63,7 @@ async def _(e):
         udB.set("GDRIVE_FOLDER_ID", repl.text)
         await repl.reply(
             "Success Now You Can Authorise.",
-            buttons=Button.inline("« Back", data="gdrive"),
+            buttons=get_back_button("gdrive"),
         )
 
 
@@ -67,7 +79,7 @@ async def _(e):
         udB.set("GDRIVE_CLIENT_SECRET", repl.text)
         await repl.reply(
             "Success!\nNow You Can Authorise or add FOLDER ID.",
-            buttons=Button.inline("« Back", data="gdrive"),
+            buttons=get_back_button("gdrive"),
         )
 
 
@@ -85,7 +97,7 @@ async def _(e):
         udB.set("GDRIVE_CLIENT_ID", repl.text)
         await repl.reply(
             "Success now set CLIENT SECRET",
-            buttons=Button.inline("« Back", data="gdrive"),
+            buttons=get_back_button("gdrive"),
         )
 
 
@@ -151,14 +163,18 @@ async def emoji(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("otvars")
+            )
         elif themssg.startswith(("/", HNDLR)):
-            return await conv.send_message("Incorrect Emoji")
+            return await conv.send_message(
+                "Incorrect Emoji", buttons=get_back_button("otvars")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n".format(name, themssg),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+                buttons=get_back_button("otvars"),
             )
 
 
@@ -177,16 +193,20 @@ async def pluginch(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("otvars")
+            )
         elif themssg.startswith(("/", HNDLR)):
-            return await conv.send_message("Incorrect channel")
+            return await conv.send_message(
+                "Incorrect channel", buttons=get_back_button("otvars")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
                     name, themssg
                 ),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+                buttons=get_back_button("otvars"),
             )
 
 
@@ -205,16 +225,22 @@ async def hndlrr(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("otvars")
+            )
         elif len(themssg) > 1:
-            return await conv.send_message("Incorrect Handler")
+            return await conv.send_message(
+                "Incorrect Handler", buttons=get_back_button("otvars")
+            )
         elif themssg.startswith(("/", "#", "@")):
-            return await conv.send_message("Incorrect Handler")
+            return await conv.send_message(
+                "This cannot be used as handler", buttons=get_back_button("otvars")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}".format(name, themssg),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+                buttons=get_back_button("otvars"),
             )
 
 
@@ -233,12 +259,14 @@ async def tagloggerr(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("otvars")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}".format(name, themssg),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="otvars")],
+                buttons=get_back_button("otvars"),
             )
 
 
@@ -262,7 +290,7 @@ async def eddon(event):
     await setit(event, var, "True")
     await event.edit(
         "Done! ADDONS has been turned on!!\n\n After Setting All Things Do Restart",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
+        buttons=get_back_button("eaddon"),
     )
 
 
@@ -273,7 +301,7 @@ async def eddof(event):
     await setit(event, var, "False")
     await event.edit(
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="eaddon")],
+        buttons=get_back_button("eaddon"),
     )
 
 
@@ -297,7 +325,7 @@ async def eddon(event):
     await setit(event, var, "True")
     await event.edit(
         "Done! SUDO MODE has been turned on!!\n\n After Setting All Things Do Restart",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
+        buttons=get_back_button("sudo"),
     )
 
 
@@ -308,7 +336,7 @@ async def eddof(event):
     await setit(event, var, "False")
     await event.edit(
         "Done! SUDO MODE has been turned off!! After Setting All Things Do Restart",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="sudo")],
+        buttons=get_back_button("sudo"),
     )
 
 
@@ -340,12 +368,14 @@ async def sfgrp(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("sfban")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}".format(name, themssg),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+                buttons=get_back_button("sfban"),
             )
 
 
@@ -364,33 +394,15 @@ async def sfexf(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("sfban")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}".format(name, themssg),
-                buttons=[Button.inline("« Bᴀᴄᴋ", data="sfban")],
+                buttons=get_back_button("sfban"),
             )
-
-# Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-import os
-
-from telegraph import Telegraph
-from telegraph import upload_file as upl
-
-from . import *
-
-# --------------------------------------------------------------------#
-telegraph = Telegraph()
-r = telegraph.create_account(short_name="Ultroid")
-auth_url = r["auth_url"]
-# --------------------------------------------------------------------#
 
 
 @callback("alvcstm")
@@ -422,13 +434,16 @@ async def name(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("alvcstm")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
                     name, themssg
-                )
+                ),
+                buttons=get_back_button("alvcstm"),
             )
 
 
@@ -447,7 +462,9 @@ async def media(event):
         try:
             themssg = response.message.message
             if themssg == "/cancel":
-                return await conv.send_message("Operation cancelled!!")
+                return await conv.send_message(
+                    "Operation cancelled!!", buttons=get_back_button("alvcstm")
+                )
         except BaseException:
             pass
         media = await event.client.download_media(response, "alvpc")
@@ -463,9 +480,13 @@ async def media(event):
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
-                return await conv.send_message("Terminated.")
+                return await conv.send_message(
+                    "Terminated.", buttons=get_back_button("alvcstm")
+                )
         await setit(event, var, url)
-        await conv.send_message("{} has been set.".format(name))
+        await conv.send_message(
+            "{} has been set.".format(name), buttons=get_back_button("alvcstm")
+        )
 
 
 @callback("delmed")
@@ -473,9 +494,11 @@ async def media(event):
 async def dell(event):
     try:
         udB.delete("ALIVE_PIC")
-        return await event.edit("Done!")
+        return await event.edit("Done!", buttons=get_back_button("alvcstm"))
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit(
+            "Something went wrong...", buttons=get_back_button("alvcstm")
+        )
 
 
 @callback("pmcstm")
@@ -496,7 +519,7 @@ async def alvcs(event):
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
-            [Button.inline("« Bᴀᴄᴋ", data="pmset")],
+            [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
         ],
     )
 
@@ -516,13 +539,16 @@ async def name(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message("Cancelled!!")
+            return await conv.send_message(
+                "Cancelled!!", buttons=get_back_button("pmcstm")
+            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
                     name, themssg
-                )
+                ),
+                buttons=get_back_button("pmcstm"),
             )
 
 
@@ -546,10 +572,14 @@ async def set_wrns(event):
     dn = udB.set("PMWARNS", value)
     if dn:
         await event.edit(
-            f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned."
+            f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
+            buttons=get_back_button("pmcstm"),
         )
     else:
-        await event.edit(f"Something went wrong, please check your {hndlr}logs!")
+        await event.edit(
+            f"Something went wrong, please check your {hndlr}logs!",
+            buttons=get_back_button("pmcstm"),
+        )
 
 
 @callback("pmmed")
@@ -567,7 +597,9 @@ async def media(event):
         try:
             themssg = response.message.message
             if themssg == "/cancel":
-                return await conv.send_message("Operation cancelled!!")
+                return await conv.send_message(
+                    "Operation cancelled!!", buttons=get_back_button("pmcstm")
+                )
         except BaseException:
             pass
         media = await event.client.download_media(response, "pmpc")
@@ -583,9 +615,13 @@ async def media(event):
                 url = f"https://telegra.ph/{x[0]}"
                 os.remove(media)
             except BaseException:
-                return await conv.send_message("Terminated.")
+                return await conv.send_message(
+                    "Terminated.", buttons=get_back_button("pmcstm")
+                )
         await setit(event, var, url)
-        await conv.send_message("{} has been set.".format(name))
+        await conv.send_message(
+            "{} has been set.".format(name), buttons=get_back_button("pmcstm")
+        )
 
 
 @callback("delpmmed")
@@ -593,9 +629,12 @@ async def media(event):
 async def dell(event):
     try:
         udB.delete("PMPIC")
-        return await event.edit("Done!")
+        return await event.edit("Done!", buttons=get_back_button("pmcstm"))
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit(
+            "Something went wrong...",
+            buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
+        )
 
 
 @callback("apauto")
@@ -616,7 +655,10 @@ async def apauto(event):
 async def apon(event):
     var = "AUTOAPPROVE"
     await setit(event, var, "True")
-    await event.edit(f"Done!! AUTOAPPROVE  Started!!")
+    await event.edit(
+        f"Done!! AUTOAPPROVE  Started!!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+    )
 
 
 @callback("apof")
@@ -624,9 +666,15 @@ async def apon(event):
 async def apof(event):
     try:
         udB.delete("AUTOAPPROVE")
-        return await event.edit("Done! AUTOAPPROVE Stopped!!")
+        return await event.edit(
+            "Done! AUTOAPPROVE Stopped!!",
+            buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+        )
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit(
+            "Something went wrong...",
+            buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
+        )
 
 
 @callback("pml")
@@ -647,7 +695,9 @@ async def alvcs(event):
 async def pmlog(event):
     var = "PMLOG"
     await setit(event, var, "True")
-    await event.edit(f"Done!! PMLOGGER  Started!!")
+    await event.edit(
+        f"Done!! PMLOGGER  Started!!", buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]]
+    )
 
 
 @callback("pmlogof")
@@ -655,16 +705,22 @@ async def pmlog(event):
 async def pmlogof(event):
     try:
         udB.delete("PMLOG")
-        return await event.edit("Done! PMLOGGER Stopped!!")
+        return await event.edit(
+            "Done! PMLOGGER Stopped!!", buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]]
+        )
     except BaseException:
-        return await event.edit("Something went wrong...")
+        return await event.edit(
+            "Something went wrong...",
+            buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
+        )
 
 
 @callback("ppmset")
 @owner
 async def pmset(event):
-    await event.edit("PMPermit Settings:",
-         buttons=[
+    await event.edit(
+        "PMPermit Settings:",
+        buttons=[
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
             [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
@@ -678,7 +734,10 @@ async def pmset(event):
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
-    await event.edit(f"Done! PMPermit has been turned on!!")
+    await event.edit(
+        f"Done! PMPermit has been turned on!!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+    )
 
 
 @callback("pmoff")
@@ -686,4 +745,42 @@ async def pmonn(event):
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
-    await event.edit(f"Done! PMPermit has been turned off!!")
+    await event.edit(
+        f"Done! PMPermit has been turned off!!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+    )
+
+
+@callback("chatbot")
+@owner
+async def chbot(event):
+    await event.edit(
+        f"From This Feature U can chat with ppls Via ur Assistant Bot.",
+        buttons=[
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    )
+
+
+@callback("onchbot")
+@owner
+async def chon(event):
+    var = "PMBOT"
+    await setit(event, var, "True")
+    await event.edit(
+        "Done! Now u Can Chat With People Via This Bot",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+    )
+
+
+@callback("ofchbot")
+@owner
+async def chon(event):
+    var = "PMBOT"
+    await setit(event, var, "False")
+    await event.edit(
+        "Done! Chat People Via This Bot Stopped.",
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+    )

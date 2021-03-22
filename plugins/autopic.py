@@ -28,17 +28,17 @@ from . import *
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
-        return await eor(get_string("autopic_1"))
+        return await eor(e, get_string("autopic_1"))
     clls = returnpage(search)
     if len(clls) == 0:
-        return await eor(get_string("autopic_2").format(search))
+        return await eor(e, get_string("autopic_2").format(search))
     if not len(clls) == 1:
         num = random.randrange(0, len(clls) - 1)
     else:
         num = 0
     page = clls[num]
     title = page["title"]
-    await eor(get_string("autopic_3").format(title))
+    await eor(e, get_string("autopic_3").format(title))
     udB.set("AUTOPIC", "True")
     while True:
         ge = udB.get("AUTOPIC")

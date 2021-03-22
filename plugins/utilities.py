@@ -480,8 +480,7 @@ async def rmbg(event):
             os.remove(dl)
             return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
-        out = ReTrieveFile("ult.png")
-        os.remove("ult.png")
+        out = ReTrieveFile(dl)
         os.remove(dl)
     else:
         await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")

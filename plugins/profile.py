@@ -20,7 +20,7 @@
 • `{i}delpfp <n>(optional)`
     Delete one profile pic, if no value given, else delete n number of pics.
 
-• `{i}gpoto <username>`
+• `{i}poto <username>`
     Upload the photo of Chat/User if Available.
 """
 
@@ -148,10 +148,13 @@ async def remove_profilepic(delpfp):
     await ok.delete()
 
 
-@ultroid_cmd(pattern="gpoto ?(.*)")
+@ultroid_cmd(pattern="poto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e,"`Processing...`")
+    a = await eor(e, "`Processing...`")
+    if not ult and e.is_reply:
+        gs = await e.get_reply_message()
+        ult = gs.sender_id
     try:
         okla = await ultroid_bot.download_profile_photo(
             ult, "profile.jpg", download_big=True
@@ -159,8 +162,8 @@ async def gpoto(e):
         await a.delete()
         await ultroid_bot.send_message(e.chat_id, file=okla)
         os.remove(okla)
-    except Exception as e:
-        await eor(e, f"ERROR - {str(e)}")
+    except Exception as er:
+        await eor(e, f"ERROR - {str(er)}")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -337,7 +337,7 @@ async def _(event):
 
 @ultroid_cmd(pattern="fstat ?(.*)")
 async def _(event):
-    ok = await event.edit("`Checking...`")
+    ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         sysarg = str(previous_message.sender_id)
@@ -359,7 +359,11 @@ async def _(event):
                 await conv.get_response()
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
-                if "Looks like" in audio.text:
+                if audio.message.startswith("This command can only be used once"):
+                    return await ok.edit(
+                        "Oops, you can use this command only once every minute!"
+                    )
+                elif "Looks like" in audio.text:
                     await audio.click(0)
                     await asyncio.sleep(2)
                     audio = await conv.get_response()
@@ -369,10 +373,11 @@ async def _(event):
                         caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
                         link_preview=False,
                     )
+                    await ok.delete()
                 else:
-                    await ultroid.send_message(event.chat_id, audio.text)
+                    okk = await conv.get_edit()
+                    await ok.edit(okk.message)
                 await ultroid.send_read_acknowledge(bot)
-                await event.delete()
             except YouBlockedUserError:
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 

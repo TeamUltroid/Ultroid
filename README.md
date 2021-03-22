@@ -41,17 +41,22 @@ and click the below button!  <br />
 `. ./venv/bin/activate`
 - Install the requirements:   <br />
 `pip install -r requirements.txt`   
-- Generate your `SESSION`:   
-`bash sessiongen`
-or
-`bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+- Generate your `SESSION`:  
+  - For Linux users:   
+    `bash sessiongen`   
+     or   
+    `bash -c "$(curl -fsSL https://del.dog/ultroid)"`   
+  - For Windows Users:   
+    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`   
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).    
 (You can either edit and rename the file or make a new file.)
 - Run the bot:   
-`bash resources/startup/startup.sh`
+  - Linux Users:   
+   `bash resources/startup/startup.sh`
+  - Windows Users:   
+    `python(3) -m pyUltroid`
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 
 # Credits
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon](https://github.com/LonamiWebs/Telethon)
-
