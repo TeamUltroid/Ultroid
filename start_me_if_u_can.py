@@ -12,7 +12,7 @@ from telethon.tl.types import DataJSON
 from pyUltroid import Var, udB
 
 with TelegramClient(StringSession(udB.get("VC_SESSION")),Var.API_ID,Var.API_HASH) as client:
-    client.start()
+    client.run_until_disconnected()
 
 
 async def get_entity(chat):
