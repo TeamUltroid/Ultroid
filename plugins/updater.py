@@ -176,6 +176,6 @@ async def upstream(ups):
             "`Successfully Updated!\nBot is restarting... Wait for a second!`",
         )
         # Spin a new instance of bot
-        args = [sys.executable, "python -m pyUltroid"]
+        args = [sys.executable, "./resources/startup/startup.sh"]
         execle(sys.executable, *args, environ)
         return
