@@ -20,6 +20,8 @@ from telethon.tl.types import UserStatusOnline as on
 from telethon.tl.types import UserStatusRecently as rec
 from . import *
 
+from . import *
+
 snap = {}
 buddhhu = []
 

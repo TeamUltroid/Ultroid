@@ -12,9 +12,9 @@ from urllib.request import urlopen
 import play_scraper
 import requests
 from bs4 import BeautifulSoup
-from pyUltroid.functions.parser import GoogleSearch, YahooSearch
 from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
+from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -24,6 +24,14 @@ gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
+rex_langs = """ada, bash, brainfuck, c (clang), c, c (vc),
+c#, c++ (clang), c++, c++ (vc++), d, elixir,
+erlang, f#, fortran, go, haskell, java, js,
+kotlin, lisp, lua, mysql, nasm, node,
+objective-c, ocaml, octave, oracle, pascal,
+perl, php, postgresql, prolog, python,
+python3, r, ruby, scala, scheme, sql server,
+swift, tcl, vb.net"""
 
 
 @in_pattern("fl2lnk ?(.*)")
@@ -158,10 +166,14 @@ async def rextester(event):
         omk = event.text.split(" ", maxsplit=1)[1]
         if omk is not None:
             if "|" in omk:
-                lang, code = omk.split("|")
+                lang, codee = omk.split("|")
             else:
-                lang = "python 3"
-                code = omk
+                lang = "python3"
+                codee = omk
+            if lang == "php":
+                code = f"<?php {codee} ?>"
+            else:
+                code = codee
             output = await rexec_aio(lang, code)
             stats = output.stats
             if output.errors is not None:
@@ -183,7 +195,7 @@ async def rextester(event):
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
-            text="The list of valid languages are\n\nc#, vb.net, f#, java, python, c (gcc), \nc++ (gcc), php, pascal, objective-c, haskell, \nruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, \nscheme, node.js, python 3, octave, c (clang), \nc++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, \nbash, ada, erlang, elixir, ocaml, \nkotlin, brainfuck, fortran\n\n\n Format to use Rextester is `@Yourassistantusername rex langcode|code`",
+            text=f"The list of valid languages are\n\n{rex_langs}\n\n\nFormat to use Rextester is `@Yourassistantusername rex langcode|code`",
         )
         await event.answer([resultm])
 
