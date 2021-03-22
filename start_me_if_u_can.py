@@ -3,8 +3,6 @@ import os
 from json.decoder import JSONDecodeError
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from telethon import TelegramClient
-from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest
 from telethon.tl.functions.phone import JoinGroupCallRequest
@@ -23,7 +21,7 @@ async def get_entity(chat):
 async def join_call(data):
     chat = await get_entity(data['chat'])
     full_chat = await vcbot(GetFullChannelRequest(chat))
-    call = await client(GetGroupCallRequest(full_chat.full_chat.call))
+    call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
 
     result = await vcbot(
         JoinGroupCallRequest(
