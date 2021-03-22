@@ -32,7 +32,7 @@ async def join_call(data):
         JoinGroupCallRequest(
             call=call.call,
             muted=False,
-            join_as='me'
+            join_as='me',
             params=DataJSON(
                 data=json.dumps({
                     'ufrag': data['ufrag'],
