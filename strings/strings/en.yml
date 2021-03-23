@@ -36,8 +36,8 @@ inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅ�
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 
 # tagnotif
-tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨Message📨]({})"
-tagnot_2: "{} tagged you in {}\n\n [📨Message📨]({})"
+tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
+tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
 
 # whisper
 wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
@@ -170,7 +170,7 @@ gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
 # pmpermit
 pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
 pmperm_2: "You were spamming my Master's PM, which I didn't like.\nYou have been BLOCKED and reported as SPAM, until further notice."
-pmperm_3: "Reply to someone's msg or try this commmand in private."
+pmperm_3: "Reply to someone's msg or try this command in private."
 
 # updater
 upd_1: "`Checking for updates, please wait....`"
