@@ -37,7 +37,7 @@ inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 
 # tagnotif
 tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨Message📨]({})"
-tagnot_2: "{} tagged you in {}\n\n [📨Message📨]({})"
+tagnot_2: "{} tagged you in {}\n\n"
 
 # whisper
 wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
