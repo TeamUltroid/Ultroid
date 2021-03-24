@@ -94,7 +94,7 @@ async def reverse(event):
     loc = grs.headers.get("Location")
     response = requests.get(
         loc,
-        headers={"User-Agent": grua()},
+        headers={"User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36"},
     )
     xx = bs(response.text, "html.parser")
     div = xx.find("div", {"class": "r5a77d"})
