@@ -4,10 +4,10 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
+from pyUltroid import vcbot
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
 from telethon.tl.types import DataJSON
-from pyUltroid import vcbot
 
 if vcbot:
 
