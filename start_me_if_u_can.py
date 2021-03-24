@@ -7,11 +7,7 @@ from aiohttp.http_websocket import WSMsgType
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
 from telethon.tl.types import DataJSON
-
-try:
-    from pyUltroid import vcbot
-except:
-    pass
+from pyUltroid import vcbot
 
 if vcbot:
 
