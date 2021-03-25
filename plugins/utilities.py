@@ -49,6 +49,9 @@
 
 • `{i}suggest <reply to message>`
     Create a Yes/No poll for the replied suggestion.
+
+• `{i}ipinfo <ip address>`
+    Get info about that IP address.
 """
 import asyncio
 import calendar
@@ -606,6 +609,44 @@ async def sugg(event):
         return await eod(
             event, "`Please reply to a message to make a suggestion poll!`", time=5
         )
+
+@ultroid_cmd(pattern="ipinfo ?(.*)")
+async def ipinfo(event):
+    xx = await eor(event, get_string("com_1"))
+    ip = event.text.split(' ')
+    ipaddr = ""
+    try:
+        ipaddr = ip[1]
+    except:
+        return await eod(xx, "`Give me an IP address you noob!`", time=5)
+    if ipaddr is "":
+        return
+    url = f"https://ipinfo.io/{ipaddr}/geo"
+    det = requests.get(url).json()
+    try:
+        ip = det['ip']
+        city = det['city']
+        region = det['region']
+        country = det['country']
+        cord = det['loc']
+        zipc = det['postal']
+        tz = det['timezone']
+        await xx.edit("""
+**IP Details Fetched.**
+
+**IP:** `{}`
+**City:** `{}`
+**Region:** `{}`
+**Country:** `{}`
+**Co-ordinates:** `{}`
+**Postal Code:** `{}`
+**Time Zone:** `{}`
+""".format(ip, city, region, country, cord, zipc, tz)
+)
+    except:
+        err = det['error']['title']
+        msg = det['error']['messsage']
+        await eod(xx, f"ERROR:\n{err}\n{msg}")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
