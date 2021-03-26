@@ -11,12 +11,6 @@ from telethon.tl.types import DataJSON
 
 if vcbot:
 
-    async def start():
-        await vcbot.start()
-        myself = await vcbot.get_me()
-        my_id = myself.id
-        my_name = myself.first_name
-
     async def get_entity(chat):
         try:
             return await vcbot.get_input_entity(chat["id"])
@@ -95,6 +89,5 @@ if vcbot:
         app.router.add_route("GET", "/", websocket_handler)
         web.run_app(app, port=os.environ.get("PORT", 6969))
 
-    vcbot.loop.run_until_complete(start())
-    vcbot.run_until_disconnected()
+    vcbot.start()
     main()
