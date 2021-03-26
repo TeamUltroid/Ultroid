@@ -14,8 +14,8 @@ if vcbot:
     async def start():
         await vcbot.start()
         myself = await vcbot.get_me()
-        myself.id
-        myself.first_name
+        my_id = myself.id
+        my_name = myself.first_name
 
     async def get_entity(chat):
         try:
