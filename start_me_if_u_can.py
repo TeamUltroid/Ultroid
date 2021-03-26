@@ -10,12 +10,12 @@ from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallReques
 from telethon.tl.types import DataJSON
 
 if vcbot:
+
     async def start():
         await vcbot.start()
         myself = await vcbot.get_me()
-        my_id = myself.id
-        my_name = myself.first_name
-        
+        myself.id
+        myself.first_name
 
     async def get_entity(chat):
         try:
