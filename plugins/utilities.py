@@ -610,10 +610,11 @@ async def sugg(event):
             event, "`Please reply to a message to make a suggestion poll!`", time=5
         )
 
+
 @ultroid_cmd(pattern="ipinfo ?(.*)")
 async def ipinfo(event):
     xx = await eor(event, get_string("com_1"))
-    ip = event.text.split(' ')
+    ip = event.text.split(" ")
     ipaddr = ""
     try:
         ipaddr = ip[1]
@@ -624,14 +625,15 @@ async def ipinfo(event):
     url = f"https://ipinfo.io/{ipaddr}/geo"
     det = requests.get(url).json()
     try:
-        ip = det['ip']
-        city = det['city']
-        region = det['region']
-        country = det['country']
-        cord = det['loc']
-        zipc = det['postal']
-        tz = det['timezone']
-        await xx.edit("""
+        ip = det["ip"]
+        city = det["city"]
+        region = det["region"]
+        country = det["country"]
+        cord = det["loc"]
+        zipc = det["postal"]
+        tz = det["timezone"]
+        await xx.edit(
+            """
 **IP Details Fetched.**
 
 **IP:** `{}`
@@ -641,11 +643,13 @@ async def ipinfo(event):
 **Co-ordinates:** `{}`
 **Postal Code:** `{}`
 **Time Zone:** `{}`
-""".format(ip, city, region, country, cord, zipc, tz)
-)
+""".format(
+                ip, city, region, country, cord, zipc, tz
+            )
+        )
     except:
-        err = det['error']['title']
-        msg = det['error']['messsage']
+        err = det["error"]["title"]
+        msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
 
 

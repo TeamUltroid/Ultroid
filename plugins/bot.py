@@ -44,6 +44,7 @@ from pyUltroid import __version__ as UltVer
 from search_engine_parser.core.utils import get_rand_user_agent as grua
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+
 from . import *
 
 HEROKU_API = None
@@ -97,6 +98,7 @@ async def lol(ult):
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als)
+
 
 @ultroid_cmd(
     pattern="ping$",
