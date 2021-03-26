@@ -43,7 +43,7 @@ from git import Repo
 from pyUltroid import __version__ as UltVer
 from search_engine_parser.core.utils import get_rand_user_agent as grua
 from telethon import __version__
-
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from . import *
 
 HEROKU_API = None
@@ -85,13 +85,18 @@ async def lol(ult):
     if pic is None:
         return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
-        await ult.reply(als, file=pic)
-        await ult.delete()
+        try:
+            await ult.reply(als, file=pic)
+            await ult.delete()
+        except ChatSendMediaForbiddenError:
+            await eor(ult, als)
     else:
-        await ultroid_bot.send_message(ult.chat_id, file=pic)
-        await ultroid_bot.send_message(ult.chat_id, als)
-        await ult.delete()
-
+        try:
+            await ultroid_bot.send_message(ult.chat_id, file=pic)
+            await ultroid_bot.send_message(ult.chat_id, als)
+            await ult.delete()
+        except ChatSendMediaForbiddenError:
+            await eor(ult, als)
 
 @ultroid_cmd(
     pattern="ping$",

@@ -21,7 +21,7 @@ async def on_out_mssg(event):
         return
     who = event.sender_id
     if who == OWNER_ID:
-        if to_send.startswith("/"):
+        if event.text.startswith("/"):
             return
         to_user = udB.get(str(x.id))
         if event.media and not event.text:
