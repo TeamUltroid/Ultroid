@@ -14,19 +14,20 @@
 """
 
 import requests
-from . import *
 from bs4 import BeautifulSoup as bs
+
+from . import *
 
 
 @ultroid_cmd(pattern="gadget ?(.*)")
 async def mobs(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        await eor(e, "Please Give a Mobile Name to look for." )
+        await eor(e, "Please Give a Mobile Name to look for.")
     query = mat.replace(" ", "%20")
     jwala = f"https://gadgets.ndtv.com/search?searchtext={query}"
     c = requests.get(jwala).content
-    b = bs(c, "html.parser",from_encoding="utf-8")
+    b = bs(c, "html.parser", from_encoding="utf-8")
     bt = await eor(e, "`Processing...`")
     try:
         out = "**📱 Mobile / Gadgets Search**\n\n"
@@ -43,8 +44,8 @@ async def mobs(e):
             ty = fp.findNext()
             out += f"- **{ty.text}** - `{ty.findNext().text}`\n"
         out += "_"
-        await ultroid_bot.send_file(e.chat_id,file=imu,caption=out)
-        if e.sender_id== ultroid_bot.uid:
+        await ultroid_bot.send_file(e.chat_id, file=imu, caption=out)
+        if e.sender_id == ultroid_bot.uid:
             await bt.delete()
     except Exception as a:
         print(a)
