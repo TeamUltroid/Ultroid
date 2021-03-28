@@ -94,7 +94,7 @@ async def reverse(event):
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         },
     )
     xx = bs(response.text, "html.parser")
