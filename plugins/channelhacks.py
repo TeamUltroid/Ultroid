@@ -37,13 +37,15 @@
 """
 
 import asyncio
-from . import *
+
 from pyUltroid.function.ch_db import *
-        
+
+from . import *
+
 
 @ultroid_bot.on(events.NewMessage())
 async def _(e):
-    if not udB.get("AUTOPOST")=="True":
+    if not udB.get("AUTOPOST") == "True":
         return
     x = get_source_channels()
     th = await e.get_chat()
@@ -60,57 +62,57 @@ async def _(e):
             else:
                 await ultroid_bot.send_file(int(ys), e.media)
         except Exception as e:
-            await ultroid_bot.send_message(bot.me.id,str(e))
- 
-    
+            await ultroid_bot.send_message(bot.me.id, str(e))
+
+
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
     z = await eor(e, "`processing..`")
-    a,b = x.split("|")
+    a, b = x.split("|")
     try:
-      c = int(a)
+        c = int(a)
     except Exception:
-      try:
-          c = (await ultroid_bot.get_entity(a)).id
-      except Exception:
-          await z.edit("invalid Channel given")
-          return
+        try:
+            c = (await ultroid_bot.get_entity(a)).id
+        except Exception:
+            await z.edit("invalid Channel given")
+            return
     try:
-      d = int(b)
+        d = int(b)
     except Exception:
-      try:
-          d = (await ultroid_bot.get_entity(b)).id
-      except Exception:
-          await z.edit("invalid Channel given")
-          return
-    async for msg in ultroid_bot.iter_messages(int(c),reverse=True):
-      try:
-        await asyncio.sleep(.5)
-        await ultroid_bot.send_message(int(d), msg)
-      except:
-        pass
+        try:
+            d = (await ultroid_bot.get_entity(b)).id
+        except Exception:
+            await z.edit("invalid Channel given")
+            return
+    async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
+        try:
+            await asyncio.sleep(0.5)
+            await ultroid_bot.send_message(int(d), msg)
+        except:
+            pass
     await z.edit("Done")
-  
+
 
 @ultroid_cmd(pattern="asource (.*)")
 async def source(e):
     x = e.pattern_match.group(1)
     try:
-      y = int(x)
+        y = int(x)
     except Exception:
-      try:
-          y = int((await bot.get_entity(x)).id)
-      except Exception as es:
-          print(es)
-          return
+        try:
+            y = int((await bot.get_entity(x)).id)
+        except Exception as es:
+            print(es)
+            return
     if not is_source_channel_added(y):
         add_source_channel(y)
         await eor(e, "Source added succesfully")
     elif is_source_channel_added(y):
         await eor(e, "Source channel already added")
-        
- 
+
+
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
@@ -121,13 +123,13 @@ async def dd(event):
         await x.edit("Source database cleared.")
         return
     try:
-      y = int(chat_id)
+        y = int(chat_id)
     except Exception:
-      try:
-          y = int((await bot.get_entity(chat_id)).id)
-      except Exception as es:
-          print(es)
-          return
+        try:
+            y = int((await bot.get_entity(chat_id)).id)
+        except Exception as es:
+            print(es)
+            return
     if is_source_channel_added(y):
         rem_source_channel(y)
         await x.edit("Source removed from database")
@@ -142,7 +144,8 @@ async def dd(event):
         await x.edit("Source channel is already removed from database. ")
         await asyncio.sleep(3)
         await x.delete()
-        
+
+
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
     x = await eor(event, "`Calculating...`")
@@ -174,26 +177,26 @@ async def list_all(event):
             await x.delete()
     else:
         await x.edit(msg)
-        
-        
+
+
 @ultroid_cmd(pattern="adest (.*)")
 async def destination(e):
     x = e.pattern_match.group(1)
     try:
-      y = int(x)
+        y = int(x)
     except Exception:
-      try:
-          y = int((await bot.get_entity(x)).id)
-      except Exception as es:
-          print(es)
-          return
+        try:
+            y = int((await bot.get_entity(x)).id)
+        except Exception as es:
+            print(es)
+            return
     if not is_destination_added(y):
         add_destination(y)
         await eor(e, "Destination added succesfully")
     elif is_destination_added(y):
         await eor(e, "Destination channel already added")
-        
- 
+
+
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
@@ -204,13 +207,13 @@ async def dd(event):
         await x.edit("Destinations database cleared.")
         return
     try:
-      y = int(chat_id)
+        y = int(chat_id)
     except Exception:
-      try:
-          y = int((await bot.get_entity(chat_id)).id)
-      except Exception as es:
-          print(es)
-          return
+        try:
+            y = int((await bot.get_entity(chat_id)).id)
+        except Exception as es:
+            print(es)
+            return
     if is_destination_added(y):
         rem_destination(y)
         await x.edit("Destination removed from database")
@@ -225,7 +228,8 @@ async def dd(event):
         await x.edit("Destination channel is already removed from database. ")
         await asyncio.sleep(3)
         await x.delete()
-        
+
+
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     x = await eor(event, "`Calculating...`")
@@ -256,7 +260,7 @@ async def list_all(event):
             )
             await x.delete()
     else:
-        await x.edit(msg)     
-        
-        
+        await x.edit(msg)
+
+
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
