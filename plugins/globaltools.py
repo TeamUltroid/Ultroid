@@ -25,6 +25,9 @@
 
 • `{i}gcast <Message>`
     Globally Send that msg in all grps.
+
+• `{i}gucast <Message>`
+    Globally Send that msg in all Ur Chat Users.
 """
 
 from telethon import events
@@ -130,6 +133,29 @@ async def gcast(event):
     done = 0
     async for x in ultroid_bot.iter_dialogs():
         if x.is_group:
+            chat = x.id
+            try:
+                done += 1
+                await ultroid_bot.send_message(chat, msg)
+            except:
+                er += 1
+    await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
+
+
+@ultroid_cmd(
+    pattern="gucast ?(.*)",
+)
+async def gucast(event):
+    xx = event.pattern_match.group(1)
+    if not xx:
+        return eor(event, "`Give some text to Globally Broadcast`")
+    tt = event.text
+    msg = tt[6:]
+    kk = await eor(event, "`Globally Broadcasting Msg...`")
+    er = 0
+    done = 0
+    async for x in ultroid_bot.iter_dialogs():
+        if x.is_user and not x.entity.bot:
             chat = x.id
             try:
                 done += 1
