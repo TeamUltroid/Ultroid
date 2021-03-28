@@ -98,7 +98,7 @@ async def reverse(event):
         },
     )
     xx = bs(response.text, "html.parser")
-    div = xx.find("div", {"class": "r5a77d"})
+    div = xx.find_all("div", {"class": "r5a77d"})[0]
     alls = div.find("a")
     link = alls["href"]
     text = alls.text
