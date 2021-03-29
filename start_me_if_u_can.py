@@ -37,10 +37,12 @@ if vcbot:
     async def join_call(data):
         try:
             chat = await get_entity(data["chat"])
-            full_chat = await vcbot(GetFullChannelRequest(chat))
-            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except Exception as ex:
             return await leave_call(data, "`" + str(ex) + "`")
+        full_chat = await vcbot(GetFullChannelRequest(chat))
+        call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        if not call:
+           return await leave_call(data, "`Start VC bsdk...`")
 
         result = await vcbot(
             JoinGroupCallRequest(
