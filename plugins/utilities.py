@@ -620,7 +620,7 @@ async def ipinfo(event):
         ipaddr = ip[1]
     except:
         return await eod(xx, "`Give me an IP address you noob!`", time=5)
-    if ipaddr is "":
+    if ipaddr == "":
         return
     url = f"https://ipinfo.io/{ipaddr}/geo"
     det = requests.get(url).json()
