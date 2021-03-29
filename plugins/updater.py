@@ -7,7 +7,7 @@
 
 import asyncio
 import sys
-from os import environ, execle, path, remove
+from os import path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
@@ -176,6 +176,6 @@ async def upstream(ups):
             "`Successfully Updated!\nBot is restarting... Wait for a second!`",
         )
         # Spin a new instance of bot
-        args = [sys.executable, "./resources/startup/startup.sh"]
+        [sys.executable, "./resources/startup/startup.sh"]
         execl(executable, executable, "-m", "pyUltroid")
         return
