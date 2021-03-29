@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import vcbot
+from pyUltroid import vcbot, ultroid_bot as bot
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
 from telethon.tl.types import DataJSON
@@ -19,10 +19,28 @@ if vcbot:
                 return await vcbot.get_entity(chat["username"])
             raise
 
+    async def leave_call(data, text):
+        try:
+            await bot.asst.send_message(
+                entity=data['chat']['id'],
+                message=text,
+            )
+        except:
+            pass
+        try:
+            await bot.asst.delete_dialog(
+                entity=data['chat']['id']
+            )
+        except:
+            pass
+
     async def join_call(data):
-        chat = await get_entity(data["chat"])
-        full_chat = await vcbot(GetFullChannelRequest(chat))
-        call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        try:
+            chat = await get_entity(data["chat"])
+            full_chat = await vcbot(GetFullChannelRequest(chat))
+            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        except Exception as ex:
+            return await leave_call(data, "`" + str(ex) + "`")
 
         result = await vcbot(
             JoinGroupCallRequest(
