@@ -81,7 +81,7 @@ async def _(event):
 @owner
 async def _(sur):
     url = sur.pattern_match.group(1).decode("UTF-8")
-    getter = sur.sender_id
+    sur.sender_id
     opts = {
         "format": "bestaudio",
         "addmetadata": True,
@@ -157,7 +157,7 @@ async def _(sur):
 @owner
 async def _(fuk):
     url = fuk.pattern_match.group(1).decode("UTF-8")
-    getter = fuk.sender_id
+    fuk.sender_id
     event = fuk
     chat = (await event.get_chat()).id
     opts = {
