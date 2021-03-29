@@ -177,5 +177,5 @@ async def upstream(ups):
         )
         # Spin a new instance of bot
         args = [sys.executable, "./resources/startup/startup.sh"]
-        execle(sys.executable, *args, environ)
+        execl(executable, executable, "-m", "pyUltroid")
         return
