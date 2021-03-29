@@ -127,8 +127,10 @@ async def _(sur):
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*"
         )
-        await asst.send_file(
-            getter,
+        cht = await sur.get_chat()
+        chat = cht.id
+        await ultroid_bot.send_file(
+            chat,
             f"{ytdl_data['id']}.mp3",
             thumb=thumb,
             caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
@@ -146,7 +148,7 @@ async def _(sur):
         )
         os.system(f"rm {ytdl_data['id']}.mp*")
         await sur.edit(
-            f"Get Your requested file **{ytdl_data['title']}** from here {Var.BOT_USERNAME} ",
+            f"**{ytdl_data['title']}** Uploaded Successfully !",
             buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
         )
 
@@ -156,6 +158,8 @@ async def _(sur):
 async def _(fuk):
     url = fuk.pattern_match.group(1).decode("UTF-8")
     getter = fuk.sender_id
+    event = fuk
+    chat = (await event.get_chat()).id
     opts = {
         "format": "best",
         "addmetadata": True,
@@ -181,8 +185,8 @@ async def _(fuk):
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*"
         )
-        await asst.send_file(
-            getter,
+        await ultroid_bot.send_file(
+            chat,
             f"{ytdl_data['id']}.mp4",
             thumb=f"./resources/extras/ultroid.jpg",
             caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
@@ -193,6 +197,6 @@ async def _(fuk):
         )
         os.remove(f"{ytdl_data['id']}.mp4")
         await fuk.edit(
-            f"Get Your requested file **{ytdl_data['title']}** from here {Var.BOT_USERNAME} ",
+            f"**{ytdl_data['title']}** Uploaded Successfully !",
             buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
         )
