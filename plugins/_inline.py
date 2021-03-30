@@ -109,7 +109,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     [
                         Button.url(
                             "⚙️Sᴇᴛᴛɪɴɢs⚙️",
-                            url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
+                            url=f"https://t.me/{bnn}?start=set",
                         )
                     ],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
