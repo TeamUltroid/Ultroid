@@ -109,7 +109,7 @@ async def _(sur):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except DownloadError as err:
-        return await await sur.edit(f"**ERROR While Downloading\n\n- {str(err)}")
+        return await sur.edit(f"**ERROR While Downloading\n\n- {str(err)}")
     jpg = f"{ytdl_data['id']}.mp3.jpg"
     png = f"{ytdl_data['id']}.mp3.png"
     webp = f"{ytdl_data['id']}.mp3.webp"
@@ -198,8 +198,12 @@ async def _(fuk):
     }
     video = True
     await dler(fuk)
-    with YoutubeDL(opts) as ytdl:
-        ytdl_data = ytdl.extract_info(url)
+
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url)
+    except DownloadError as err:
+        return await sur.edit(f"**ERROR While Downloading\n\n- {str(err)}")
 
     c_time = time.time()
     if video:
