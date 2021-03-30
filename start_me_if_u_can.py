@@ -19,17 +19,6 @@ if vcbot:
                 return await vcbot.get_entity(chat["username"])
             raise
 
-    async def leave_call(data, text):
-        try:
-            
-        except:
-            pass
-        try:
-            await bot.asst.delete_dialog(
-                entity=data['chat']['id']
-            )
-        except:
-            pass
 
     async def join_call(data):
         try:
