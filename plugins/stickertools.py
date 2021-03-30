@@ -14,7 +14,7 @@
 • `{i}tiny <reply to media>`
     To create Tiny stickers.
 
-• `{i}convert <gif/img>`
+• `{i}convert <gif/img/sticker>`
     Reply to sticker to convert into gif or image.
 
 • `{i}kang <reply to image/sticker>`
@@ -117,8 +117,11 @@ async def uconverter(event):
     elif "img" in input:
         cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
+    elif "sticker" in input:
+        cmd = ["lottie_convert.py", b, "something.webp"]
+        file = "something.webp"
     else:
-        return await xx.edit("**Please select from gif/img**")
+        return await xx.edit("**Please select from gif/img/sticker**")
     process = await asyncio.create_subprocess_exec(
         *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
