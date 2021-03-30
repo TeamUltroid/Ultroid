@@ -13,12 +13,12 @@ import time
 
 from pyUltroid.functions.all import *
 from telethon import Button
+from telethon.errors import UserNotParticipantError
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
-from youtubesearchpython import VideosSearch
-from telethon.errors import UserNotParticipantError
 from youtube_dl.utils import DownloadError
+from youtubesearchpython import VideosSearch
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 
@@ -153,9 +153,11 @@ async def _(sur):
                     )
                 ],
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, sur, c_time, "Uploading..",
-                             f"{ytdl_data['title']}.mp3")
-                ))
+                    progress(
+                        d, t, sur, c_time, "Uploading..", f"{ytdl_data['title']}.mp3"
+                    )
+                ),
+            )
         except UserNotParticipantError:
             await asst.send_file(
                 sur.sender_id,
@@ -168,12 +170,13 @@ async def _(sur):
                         duration=int(ytdl_data["duration"]),
                         title=str(ytdl_data["title"]),
                         performer=str(ytdl_data["uploader"]),
-                    )])
+                    )
+                ],
+            )
         os.system(f"rm {ytdl_data['id']}.mp*")
         await sur.edit(
             MSG,
-            buttons=Button.switch_inline(
-                "Search More", query="yt ", same_peer=True),
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
         )
 
 
@@ -227,22 +230,26 @@ async def _(fuk):
                 caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
                 supports_streaming=True,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, fuk, c_time, "Uploading..",
-                             f"{ytdl_data['title']}.mp4")
-                ))
+                    progress(
+                        d, t, fuk, c_time, "Uploading..", f"{ytdl_data['title']}.mp4"
+                    )
+                ),
+            )
         except UserNotParticipantError:
-            await asst.send_file(chat,
-                                 f"{ytdl_data['id']}.mp4",
-                                 thumb=f"./resources/extras/ultroid.jpg",
-                                 caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
-                                 supports_streaming=True,
-                                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                                     progress(d, t, fuk, c_time, "Uploading..",
-                                              f"{ytdl_data['title']}.mp4")
-                                 ))
+            await asst.send_file(
+                chat,
+                f"{ytdl_data['id']}.mp4",
+                thumb=f"./resources/extras/ultroid.jpg",
+                caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
+                supports_streaming=True,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d, t, fuk, c_time, "Uploading..", f"{ytdl_data['title']}.mp4"
+                    )
+                ),
+            )
         os.remove(f"{ytdl_data['id']}.mp4")
         await fuk.edit(
             MSG,
-            buttons=Button.switch_inline(
-                "Search More", query="yt ", same_peer=True),
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
         )
