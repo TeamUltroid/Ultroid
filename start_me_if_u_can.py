@@ -9,7 +9,7 @@ from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
 from telethon.tl.types import DataJSON
 
-bot = TelegramClient(None  Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
+bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
 
 
 if vcbot:
