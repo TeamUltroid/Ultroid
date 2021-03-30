@@ -40,7 +40,10 @@ if vcbot:
         except Exception as ex:
             return await leave_call(data, "`" + str(ex) + "`")
         full_chat = await vcbot(GetFullChannelRequest(chat))
-        call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        try:
+            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        except:
+            call = None
         if not call:
            return await leave_call(data, "`Start VC bsdk...`")
 
