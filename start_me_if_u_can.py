@@ -21,10 +21,7 @@ if vcbot:
 
     async def leave_call(data, text):
         try:
-            await bot.asst.send_message(
-                entity=data['chat']['id'],
-                message=text,
-            )
+            
         except:
             pass
         try:
@@ -38,17 +35,17 @@ if vcbot:
         try:
             chat = await get_entity(data["chat"])
         except Exception as ex:
-            return await leave_call(data, "`" + str(ex) + "`")
+            return await bot.asst.send_message(data['chat']['id'], "`" + str(ex) + "`")
         try:
             full_chat = await vcbot(GetFullChannelRequest(chat))
         except Exception as ex:
-            return await leave_call(data, "`" + str(ex) + "`")
+            return await bot.asst.send_message(data['chat']['id'], "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except:
             call = None
         if not call:
-           return await leave_call(data, "`Start VC bsdk...`")
+           return await bot.asst.send_message(data['chat']['id'], "`Ay MeowDarChod\nVC start kr na.`")
 
         result = await vcbot(
             JoinGroupCallRequest(
