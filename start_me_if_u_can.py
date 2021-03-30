@@ -39,7 +39,10 @@ if vcbot:
             chat = await get_entity(data["chat"])
         except Exception as ex:
             return await leave_call(data, "`" + str(ex) + "`")
-        full_chat = await vcbot(GetFullChannelRequest(chat))
+        try:
+            full_chat = await vcbot(GetFullChannelRequest(chat))
+        except Exception as ex:
+            return await leave_call(data, "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except:
