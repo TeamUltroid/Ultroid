@@ -16,8 +16,10 @@ from plugins import *
 from . import *
 
 
-@asst_cmd("start")
+@asst_cmd("start ?(.*)")
 async def assistant(event):
+    if event.pattern_match.group(1):
+        return
     if event.is_group and event.sender_id in sed:
         bnn = (await asst.get_me()).username
         return await event.reply(
@@ -42,9 +44,11 @@ async def assistant(event):
         )
 
 
-@asst_cmd("start")
+@asst_cmd("start ?(.*)")
 @owner
 async def ultroid(event):
+    if event.pattern_match.group(1):
+        return
     if event.is_group:
         return
     name = event.sender.first_name
@@ -138,6 +142,25 @@ Failed for {fail} user(s)."""
 @owner
 async def setting(event):
     await event.edit(
+        "Choose from the below options -",
+        buttons=[
+            [
+                Button.inline("API Kᴇʏs", data="apiset"),
+                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+            ],
+            [
+                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+                Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+            ],
+            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+        ],
+    )
+
+@asst_cmd("start set")
+@owner
+async def set(event):
+    await event.reply(
         "Choose from the below options -",
         buttons=[
             [
