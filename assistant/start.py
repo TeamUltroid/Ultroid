@@ -16,17 +16,15 @@ from plugins import *
 from . import *
 
 
-@asst_cmd("start ?(.*)")
+@asst_cmd("start")
 async def assistant(event):
-    if event.pattern_match.group(1):
-        return
     if event.is_group and event.sender_id in sed:
         bnn = (await asst.get_me()).username
         return await event.reply(
             "`I dont work in groups`",
             buttons=[
                 Button.url(
-                    "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}"
+                    "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set"
                 )
             ],
         )
