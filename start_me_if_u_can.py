@@ -4,10 +4,13 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import vcbot, ultroid_bot as bot
+from pyUltroid import vcbot, Var
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
 from telethon.tl.types import DataJSON
+
+bot = TelegramClient(None  Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
+
 
 if vcbot:
 
@@ -24,17 +27,17 @@ if vcbot:
         try:
             chat = await get_entity(data["chat"])
         except Exception as ex:
-            return await bot.asst.send_message(data['chat']['id'], "`" + str(ex) + "`")
+            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
         try:
             full_chat = await vcbot(GetFullChannelRequest(chat))
         except Exception as ex:
-            return await bot.asst.send_message(data['chat']['id'], "`" + str(ex) + "`")
+            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except:
             call = None
         if not call:
-           return await bot.asst.send_message(data['chat']['id'], "`Ay MeowDarChod\nVC start kr na.`")
+           return await bot.send_message(data['chat']['id'], "`Ay MeowDarChod\nVC start kr na.`")
 
         result = await vcbot(
             JoinGroupCallRequest(
