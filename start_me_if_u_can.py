@@ -40,29 +40,32 @@ if vcbot:
         if not call:
            return await bot.send_message(data['chat']['id'], "`Ay MeowDarChod\nVC start kr na.`")
 
-        result = await vcbot(
-            JoinGroupCallRequest(
-                call=call.call,
-                muted=False,
-                join_as="me",
-                params=DataJSON(
-                    data=json.dumps(
-                        {
-                            "ufrag": data["ufrag"],
-                            "pwd": data["pwd"],
-                            "fingerprints": [
-                                {
-                                    "hash": data["hash"],
-                                    "setup": data["setup"],
-                                    "fingerprint": data["fingerprint"],
-                                }
-                            ],
-                            "ssrc": data["source"],
-                        }
+        try:
+            result = await vcbot(
+                JoinGroupCallRequest(
+                    call=call.call,
+                    muted=False,
+                    join_as="me",
+                    params=DataJSON(
+                        data=json.dumps(
+                            {
+                                "ufrag": data["ufrag"],
+                                "pwd": data["pwd"],
+                                "fingerprints": [
+                                    {
+                                        "hash": data["hash"],
+                                        "setup": data["setup"],
+                                        "fingerprint": data["fingerprint"],
+                                    }
+                                ],
+                                "ssrc": data["source"],
+                            }
+                        ),
                     ),
                 ),
-            ),
-        )
+            )
+        except Exception as ex:
+            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
 
         transport = json.loads(result.updates[0].call.params.data)["transport"]
 
