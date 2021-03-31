@@ -14,7 +14,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get install -y nodejs sudo
 RUN git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
-RUN pip install py-Ultroid==14.8b0
+RUN pip install py-Ultroid==14.9b0
 RUN pip install -U Telethon
 RUN pip install gingerit
 RUN pip install git+https://github.com/buddhhu/search-engine-parser.git
