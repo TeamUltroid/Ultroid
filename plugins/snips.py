@@ -77,4 +77,4 @@ async def notes(e):
                 await ultroid_bot.send_message(e.chat_id, k)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
