@@ -5,13 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import random
-import re
+from random import randrange
+from re import compile as re_compile
+from re import findall
 from urllib.request import urlopen
 
-import play_scraper
 import requests
 from bs4 import BeautifulSoup
+from play_scraper import search
 from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
 from search_engine_parser import GoogleSearch, YahooSearch
@@ -68,7 +69,7 @@ async def _(e):
 
 
 @callback(
-    re.compile(
+    re_compile(
         "fl(.*)",
     ),
 )
@@ -115,7 +116,7 @@ async def gsearch(q_event):
         )
         await q_event.answer([kkkk])
     searcher = []
-    page = re.findall(r"page=\d+", match)
+    page = findall(r"page=\d+", match)
     cache = False
     try:
         page = page[0]
@@ -222,7 +223,7 @@ async def gsearch(q_event):
         )
         await q_event.answer([kkkk])
     searcher = []
-    page = re.findall(r"page=\d+", match)
+    page = findall(r"page=\d+", match)
     cache = False
     try:
         page = page[0]
@@ -283,7 +284,7 @@ async def _(e):
         )
         await e.answer([kkkk])
     foles = []
-    aap = play_scraper.search(f)
+    aap = search(f)
     for z in aap:
         name = z["title"]
         desc = z["description"]
@@ -337,7 +338,7 @@ async def _(e):
         await e.answer([kkkk])
     page = 1
     start = (page - 1) * 3 + 1
-    urd = random.randrange(1, 3)
+    urd = randrange(1, 3)
     if urd == 1:
         da = "AIzaSyAyDBsY3WRtB5YPC6aB_w8JAy6ZdXNc6FU"
     if urd == 2:
@@ -347,7 +348,7 @@ async def _(e):
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = requests.get(url).json()
     search_items = data.get("items")
-    play_scraper.search(quer)
+    search(quer)
     modss = []
     for a in search_items:
         title = a.get("title")
