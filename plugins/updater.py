@@ -7,7 +7,7 @@
 
 import asyncio
 import sys
-from os import path, remove, execl
+from os import execl, path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
@@ -16,7 +16,8 @@ from . import get_string
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
 requirements_path = path.join(
-    path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
+    path.dirname(path.dirname(path.dirname(__file__))),
+    "requirements.txt",
 )
 
 
@@ -92,7 +93,10 @@ async def upstream(ups):
     if "now" not in conf:
         if changelog:
             changelog_str = get_string("upd_3").format(
-                ac_br, UPSTREAM_REPO_URL, ac_br, changelog
+                ac_br,
+                UPSTREAM_REPO_URL,
+                ac_br,
+                changelog,
             )
             if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
@@ -108,7 +112,8 @@ async def upstream(ups):
                 remove("output.txt")
             else:
                 return await eod(
-                    pagal, get_string("upd_6").format(changelog_str, hndlr)
+                    pagal,
+                    get_string("upd_6").format(changelog_str, hndlr),
                 )
         else:
             await eod(
@@ -145,12 +150,14 @@ async def upstream(ups):
             repo.__del__()
             return
         await eor(
-            pagal, "`Userbot dyno build in progress, please wait for it to complete.`"
+            pagal,
+            "`Userbot dyno build in progress, please wait for it to complete.`",
         )
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + Var.HEROKU_API + "@"
+            "https://",
+            "https://api:" + Var.HEROKU_API + "@",
         )
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")

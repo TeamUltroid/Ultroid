@@ -34,7 +34,9 @@ async def _(event):
     p = 0
     (await event.get_chat()).title
     async for i in event.client.iter_participants(
-        event.chat_id, filter=ChannelParticipantsKicked, aggressive=True
+        event.chat_id,
+        filter=ChannelParticipantsKicked,
+        aggressive=True,
     ):
         try:
             await event.client.edit_permissions(event.chat_id, i, view_messages=True)
@@ -77,7 +79,7 @@ async def _(event):
             if "empty" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     y -= 1
@@ -88,7 +90,7 @@ async def _(event):
             if "month" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     m -= 1
@@ -99,7 +101,7 @@ async def _(event):
             if "week" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     w -= 1
@@ -110,7 +112,7 @@ async def _(event):
             if "offline" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     o -= 1
@@ -121,7 +123,7 @@ async def _(event):
             if "online" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     q -= 1
@@ -132,7 +134,7 @@ async def _(event):
             if "recently" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     r -= 1
@@ -143,7 +145,7 @@ async def _(event):
             if "bot" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     b -= 1
@@ -154,7 +156,7 @@ async def _(event):
             if "deleted" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     d -= 1
@@ -165,7 +167,7 @@ async def _(event):
             if "none" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        functions.channels.EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     n -= 1

@@ -18,14 +18,14 @@ A stable pluggable Telegram userbot, based on Telethon.
   <b>Documentation</b> - <a href="https://ultroid.tech">ultroid.tech</a>  <br />
 </details>
 
-# Deploy 
+# Deploy
 - [Heroku](https://github.com/TeamUltroid/Ultroid#Deploy-to-Heroku)
 - [Local Machine](https://github.com/TeamUltroid/Ultroid#Deploy-Locally)
 
 ## Deploy to Heroku
-- Get your `API_ID` and `API_HASH` from [here](https://my.telegram.org/)    
-- Get your `SESSION` from [here](https://repl.it/@TeamUltroid/UltroidStringSession#main.py).   
-and click the below button!  <br />  
+- Get your `API_ID` and `API_HASH` from [here](https://my.telegram.org/)
+- Get your `SESSION` from [here](https://repl.it/@TeamUltroid/UltroidStringSession#main.py).
+and click the below button!  <br />
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
@@ -37,23 +37,23 @@ and click the below button!  <br />
 - Go to the cloned folder: <br />
 `cd Ultroid`
 - Create a virtual env:   <br />
-`virtualenv -p /usr/bin/python3 venv`   
+`virtualenv -p /usr/bin/python3 venv`
 `. ./venv/bin/activate`
 - Install the requirements:   <br />
-`pip install -r requirements.txt`   
-- Generate your `SESSION`:  
-  - For Linux users:   
-    `bash sessiongen`   
-     or   
-    `bash -c "$(curl -fsSL https://del.dog/ultroid)"`   
-  - For Windows Users:   
-    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`   
-- Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).    
+`pip install -r requirements.txt`
+- Generate your `SESSION`:
+  - For Linux users:
+    `bash sessiongen`
+     or
+    `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+  - For Windows Users:
+    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`
+- Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
 (You can either edit and rename the file or make a new file.)
-- Run the bot:   
-  - Linux Users:   
+- Run the bot:
+  - Linux Users:
    `bash resources/startup/startup.sh`
-  - Windows Users:   
+  - Windows Users:
     `python(3) -m pyUltroid`
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />

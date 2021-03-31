@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import vcbot, Var
+from pyUltroid import Var, vcbot
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
@@ -23,22 +23,24 @@ if vcbot:
                 return await vcbot.get_entity(chat["username"])
             raise
 
-
     async def join_call(data):
         try:
             chat = await get_entity(data["chat"])
         except Exception as ex:
-            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
             full_chat = await vcbot(GetFullChannelRequest(chat))
         except Exception as ex:
-            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except:
             call = None
         if not call:
-           return await bot.send_message(data['chat']['id'], "`Ay MeowDarChod\nVC start kr na.`")
+            return await bot.send_message(
+                data["chat"]["id"],
+                "`Ay MeowDarChod\nVC start kr na.`",
+            )
 
         try:
             result = await vcbot(
@@ -56,16 +58,16 @@ if vcbot:
                                         "hash": data["hash"],
                                         "setup": data["setup"],
                                         "fingerprint": data["fingerprint"],
-                                    }
+                                    },
                                 ],
                                 "ssrc": data["source"],
-                            }
+                            },
                         ),
                     ),
                 ),
             )
         except Exception as ex:
-            return await bot.send_message(data['chat']['id'], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
 
         transport = json.loads(result.updates[0].call.params.data)["transport"]
 

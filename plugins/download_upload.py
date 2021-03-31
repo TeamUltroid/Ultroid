@@ -14,21 +14,13 @@
 • `{i}dl <filename(optional)>`
     Reply to file to download.
 
-• `{i}save <filename.ext>`
-    Reply to a text msg to save it in a file.
-
-• `{i}open`
-    Reply to a file to reveal it's text.
 """
 
 import asyncio
-import os
 import time
 from datetime import datetime as dt
 
 from . import *
-
-opn = []
 
 
 @ultroid_cmd(
@@ -58,7 +50,7 @@ async def download(event):
                             xx,
                             k,
                             "Downloading...",
-                        )
+                        ),
                     ),
                 )
             else:
@@ -74,7 +66,7 @@ async def download(event):
                             k,
                             "Downloading...",
                             file_name=d,
-                        )
+                        ),
                     ),
                 )
     e = datetime.now()
@@ -111,7 +103,7 @@ async def download(event):
                         tt,
                         "Uploading...",
                         file_name=kk,
-                    )
+                    ),
                 ),
             )
         except ValueError as ve:
@@ -126,60 +118,6 @@ async def download(event):
         await eod(xx, f"Uploaded `{kk}` in `{t}`", time=5)
     else:
         await eod(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-
-@ultroid_cmd(
-    pattern="save",
-)
-async def _(event):
-    input_str = event.text[6:]
-    xx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        a = await event.get_reply_message()
-        if not a.message:
-            return await xx.edit("`Reply to a message`")
-        else:
-            b = open(input_str, "w")
-            b.write(str(a.message))
-            b.close()
-            await xx.edit(f"**Packing into** `{input_str}`")
-            await asyncio.sleep(2)
-            await xx.edit(f"**Uploading** `{input_str}`")
-            await asyncio.sleep(2)
-            await event.client.send_file(event.chat_id, input_str)
-            await xx.delete()
-            os.remove(input_str)
-
-
-@ultroid_cmd(
-    pattern="open$",
-)
-async def _(event):
-    xx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        a = await event.get_reply_message()
-        if a.media:
-            b = await a.download_media()
-            c = open(b, "r")
-            d = c.read()
-            c.close()
-            n = 4096
-            for bkl in range(0, len(d), n):
-                opn.append(d[bkl : bkl + n])
-            for bc in opn:
-                await event.client.send_message(
-                    event.chat_id,
-                    f"```{bc}```",
-                    reply_to=event.reply_to_msg_id,
-                )
-            await event.delete()
-            opn.clear()
-            os.remove(b)
-            await xx.delete()
-        else:
-            return await eod(xx, "`Reply to a readable file`", time=10)
-    else:
-        return await eod(xx, "`Reply to a readable file`", time=10)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -10,7 +10,7 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
-# help 
+# help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
@@ -106,7 +106,6 @@ chats_3: "`I m not an admin`"
 chats_4: "#Deleted\nDeleted {}"
 chats_5: "Your [{}]({}) Group Made Boss!"
 chats_6: "Join @TeamUltroid"
-chats_6: "Your [{}]({}) Group/Channel Has been made Boss!"
 
 # converter
 cvt_1: "Reply to any media/Document."

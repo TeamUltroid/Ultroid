@@ -12,7 +12,9 @@
 
 from pyUltroid.functions.notes_db import *
 from telethon.utils import pack_bot_file_id
+
 from . import *
+
 
 @ultroid_cmd(pattern="addnote ?(.*)")
 async def an(e):
@@ -33,30 +35,30 @@ async def an(e):
     else:
         add_note(int(chat), wrd, wt.text)
     await eor(e, "done")
-    
-    
+
+
 @ultroid_cmd(pattern="remnote ?(.*)")
 async def rn(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-       return await eor(e, "fuk off bici")
+        return await eor(e, "fuk off bici")
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)
     await eor(e, "done")
-    
-    
+
+
 @ultroid_cmd(pattern="listnote")
 async def lsnote(e):
     x = list_note(e.chat_id)
     if x:
         sd = "Notes Found In This Chats Are\n\n"
-        await eor(e, sd+x)
+        await eor(e, sd + x)
     else:
         await eor(e, "No Notes Found Here")
-        
-        
+
+
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
     xx = e.text
@@ -66,14 +68,14 @@ async def notes(e):
     chat = e.chat_id
     x = get_notes(int(chat))
     if x:
-      if " " in xx:
-          xx = xx.split(" ")[0]
-      k = get_reply(chat, xx)
-      if k:
-          try:
-              await ultroid_bot.send_file(int(chat),k)          
-          except:
-              await ultroid_bot.send_message(int(chat), k)
-              
+        if " " in xx:
+            xx = xx.split(" ")[0]
+        k = get_reply(chat, xx)
+        if k:
+            try:
+                await ultroid_bot.send_file(int(chat), k)
+            except:
+                await ultroid_bot.send_message(int(chat), k)
+
+
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=Var.HNDLR)}"})
-              

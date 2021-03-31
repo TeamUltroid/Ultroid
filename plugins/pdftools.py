@@ -83,7 +83,9 @@ async def pdfseimg(event):
             pw.write(f)
         os.remove(pdfp)
         await event.client.send_file(
-            event.chat_id, "ult.png", reply_to=event.reply_to_msg_id
+            event.chat_id,
+            "ult.png",
+            reply_to=event.reply_to_msg_id,
         )
         os.remove("ult.png")
         await xx.delete()
@@ -107,11 +109,13 @@ async def pdfsetxt(event):
             for page_num in range(pdf.numPages):
                 pageObj = pdf.getPage(page_num)
                 txt = pageObj.extractText()
-                f.write("Page {0}\n".format(page_num + 1))
+                f.write("Page {}\n".format(page_num + 1))
                 f.write("".center(100, "-"))
                 f.write(txt)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
@@ -128,7 +132,9 @@ async def pdfsetxt(event):
         with open(text, "w") as f:
             f.write(str)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
@@ -141,7 +147,9 @@ async def pdfsetxt(event):
         with open(text, "w") as f:
             f.write(str)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
@@ -172,7 +180,9 @@ async def imgscan(event):
     image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
     edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
     contours, hierarchy = cv2.findContours(
-        edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        edges,
+        cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE,
     )
     polygons = []
     for cnt in contours:
@@ -183,7 +193,8 @@ async def imgscan(event):
         simplified_cnt = sortedPoly[0]
     if len(simplified_cnt) == 4:
         cropped_image = four_point_transform(
-            original_image, simplified_cnt.reshape(4, 2) * ratio
+            original_image,
+            simplified_cnt.reshape(4, 2) * ratio,
         )
         gray_image = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
         T = threshold_local(gray_image, 11, offset=10, method="gaussian")
@@ -209,7 +220,8 @@ async def savepdf(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
         await eor(
-            event, "`Reply to Images/pdf which u want to merge as a single pdf..`"
+            event,
+            "`Reply to Images/pdf which u want to merge as a single pdf..`",
         )
         return
     ultt = await ok.download_media()
@@ -225,20 +237,23 @@ async def savepdf(event):
         image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
         edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
         contours, hierarchy = cv2.findContours(
-            edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+            edges,
+            cv2.RETR_EXTERNAL,
+            cv2.CHAIN_APPROX_SIMPLE,
         )
         polygons = []
         for cnt in contours:
             hull = cv2.convexHull(cnt)
             polygons.append(
-                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False)
+                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False),
             )
             sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
             simplified_cnt = sortedPoly[0]
         if len(simplified_cnt) == 4:
             cropped_image = four_point_transform(
-                original_image, simplified_cnt.reshape(4, 2) * ratio
+                original_image,
+                simplified_cnt.reshape(4, 2) * ratio,
             )
             gray_image = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
             T = threshold_local(gray_image, 11, offset=10, method="gaussian")

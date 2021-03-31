@@ -46,7 +46,8 @@ async def google(event):
         des = res["descriptions"][i]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     await x.edit(
-        f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}", link_preview=False
+        f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}",
+        link_preview=False,
     )
 
 
@@ -88,13 +89,15 @@ async def reverse(event):
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}
     grs = requests.post(
-        "https://www.google.com/searchbyimage/upload", files=file, allow_redirects=False
+        "https://www.google.com/searchbyimage/upload",
+        files=file,
+        allow_redirects=False,
     )
     loc = grs.headers.get("Location")
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
     xx = bs(response.text, "html.parser")
@@ -113,7 +116,10 @@ async def reverse(event):
     pth = gi.download(args)
     ok = pth[0][text]
     await event.client.send_file(
-        event.chat_id, ok, album=True, caption="Similar Images Realted to Search"
+        event.chat_id,
+        ok,
+        album=True,
+        caption="Similar Images Realted to Search",
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)

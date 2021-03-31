@@ -70,7 +70,7 @@ async def _(e):
                 pass
     ungban(userid)
     await xx.edit(
-        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`"
+        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
 
 
@@ -104,7 +104,9 @@ async def _(e):
         return await eod(xx, "`I can't gban my Developers.`", time=3)
     if is_gbanned(userid):
         return await eod(
-            xx, "`User is already gbanned and added to gbanwatch.`", time=4
+            xx,
+            "`User is already gbanned and added to gbanwatch.`",
+            time=4,
         )
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
@@ -115,7 +117,7 @@ async def _(e):
                 pass
     gban(userid)
     await xx.edit(
-        f"`Gbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nAdded to gbanwatch.`"
+        f"`Gbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nAdded to gbanwatch.`",
     )
 
 
@@ -290,7 +292,9 @@ async def _(e):
             if chat.admin_rights:
                 try:
                     await e.client.edit_permissions(
-                        chat.id, user.id, view_messages=False
+                        chat.id,
+                        user.id,
+                        view_messages=False,
                     )
                     gban_watch = f"`Gbanned User` [{user.first_name}](tg://user?id={user.id}) `Spotted\n"
                     gban_watch += f"Banned Successfully`"

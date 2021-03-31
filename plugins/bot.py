@@ -67,7 +67,7 @@ except BaseException:
 )
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
-    uptime = grt((time.time() - start_time))
+    uptime = grt(time.time() - start_time)
     header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
@@ -108,7 +108,7 @@ async def _(event):
     x = await eor(event, "`Pong !`")
     end = dt.now()
     ms = (end - start).microseconds / 1000
-    uptime = grt((time.time() - start_time))
+    uptime = grt(time.time() - start_time)
     await x.edit(get_string("ping").format(ms, uptime))
 
 
@@ -167,7 +167,7 @@ async def dyno_usage(dyno):
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await dyno.edit(
-            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
+            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n",
         )
     result = r.json()
     quota = result["account_quota"]

@@ -153,7 +153,8 @@ async def _(event):
 **SOLUTION**:
 `{}`
 """.format(
-        cmd, evaluation
+        cmd,
+        evaluation,
     )
     await x.edit(final_output)
 
@@ -356,7 +357,7 @@ async def _(event):
     url = "https://hastebin.com/documents"
     r = requests.post(url, data=message).json()
     url = f"https://hastebin.com/{r['key']}"
-    await xx.edit("**Pasted to Hastebin** : [Link]({})".format(url))
+    await xx.edit(f"**Pasted to Hastebin** : [Link]({url})")
 
 
 @ultroid_cmd(
@@ -370,8 +371,11 @@ async def _(event):
         return False
     replied_user_profile_photos = await event.client(
         GetUserPhotosRequest(
-            user_id=replied_user.user.id, offset=42, max_id=0, limit=80
-        )
+            user_id=replied_user.user.id,
+            offset=42,
+            max_id=0,
+            limit=80,
+        ),
     )
     replied_user_profile_photos_count = "NaN"
     try:
@@ -447,8 +451,10 @@ async def _(ult):
             try:
                 await ultroid_bot(
                     functions.messages.AddChatUserRequest(
-                        chat_id=ult.chat_id, user_id=user_id, fwd_limit=1000000
-                    )
+                        chat_id=ult.chat_id,
+                        user_id=user_id,
+                        fwd_limit=1000000,
+                    ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
@@ -458,8 +464,9 @@ async def _(ult):
             try:
                 await ultroid_bot(
                     functions.channels.InviteToChannelRequest(
-                        channel=ult.chat_id, users=[user_id]
-                    )
+                        channel=ult.chat_id,
+                        users=[user_id],
+                    ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
@@ -498,14 +505,17 @@ async def rmbg(event):
     else:
         error = out.json()
         await xx.edit(
-            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`"
+            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`",
         )
     zz = Image.open(rmbgp)
     if zz.mode != "RGB":
         zz.convert("RGB")
     zz.save("ult.webp", "webp")
     await ultroid_bot.send_file(
-        event.chat_id, rmbgp, force_document=True, reply_to=reply
+        event.chat_id,
+        rmbgp,
+        force_document=True,
+        reply_to=reply,
     )
     await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
     os.remove(rmbgp)
@@ -533,7 +543,7 @@ async def telegraphcmd(event):
             await xx.edit(amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
-            ab = open(getit, "r")
+            ab = open(getit)
             cd = ab.read()
             ab.close()
             if input_str:
@@ -596,18 +606,22 @@ async def sugg(event):
                         id=12345,
                         question="Do you agree to the replied suggestion?",
                         answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
-                    )
+                    ),
                 ),
                 reply_to=msgid,
             )
         except Exception as e:
             return await eod(
-                event, f"`Oops, you can't send polls here!\n\n{str(e)}`", time=5
+                event,
+                f"`Oops, you can't send polls here!\n\n{str(e)}`",
+                time=5,
             )
         await event.delete()
     else:
         return await eod(
-            event, "`Please reply to a message to make a suggestion poll!`", time=5
+            event,
+            "`Please reply to a message to make a suggestion poll!`",
+            time=5,
         )
 
 
@@ -644,8 +658,14 @@ async def ipinfo(event):
 **Postal Code:** `{}`
 **Time Zone:** `{}`
 """.format(
-                ip, city, region, country, cord, zipc, tz
-            )
+                ip,
+                city,
+                region,
+                country,
+                cord,
+                zipc,
+                tz,
+            ),
         )
     except:
         err = det["error"]["title"]
