@@ -29,7 +29,7 @@ async def dm(e):
         await eod(e, "`⚜️Message Delivered!`", time=4)
     for i in c[1:]:
         msg += i + " "
-    if msg == ""
+    if msg == "":
         return
     try:
         await ultroid_bot.send_message(chat_id, msg)
