@@ -15,7 +15,7 @@
 from . import *
 
 
-@ultroid_cmd(pattern="save")
+@ultroid_cmd(pattern="save$")
 async def saf(e):
     x = await e.get_reply_message()
     if not x:
