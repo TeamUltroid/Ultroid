@@ -87,10 +87,10 @@ async def prmte(ult):
                     pin_messages=True,
                 ),
                 rank,
-            )
+            ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is now an admin in {ult.chat.title} with title {rank}.`"
+            f"[{user.first_name}](tg://user?id={user.id}) `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to promote you.`")
@@ -129,10 +129,10 @@ async def dmote(ult):
                     pin_messages=None,
                 ),
                 rank,
-            )
+            ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is no longer an admin in {ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to demote you.`")
@@ -166,7 +166,7 @@ async def bban(ult):
                     until_date=None,
                     view_messages=True,
                 ),
-            )
+            ),
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to ban a user.`")
@@ -178,15 +178,15 @@ async def bban(ult):
             await reply.delete()
     except BadRequestError:
         return await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
         )
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
         )
 
 
@@ -214,7 +214,7 @@ async def uunban(ult):
                     until_date=None,
                     view_messages=None,
                 ),
-            )
+            ),
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to unban a user.`")
@@ -222,11 +222,11 @@ async def uunban(ult):
         await xx.edit("`I couldn't get who he is!`")
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
         )
 
 
@@ -261,15 +261,15 @@ async def kck(ult):
         return await xx.edit("`I don't have the right to kick a user.`")
     except Exception as e:
         return await xx.edit(
-            f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`"
+            f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`",
         )
 
 
@@ -383,7 +383,9 @@ async def fastpurgerme(purg):
     if not purg.reply_to_msg_id:
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in ultroid_bot.iter_messages(
-        chat, from_user="me", min_id=purg.reply_to_msg_id
+        chat,
+        from_user="me",
+        min_id=purg.reply_to_msg_id,
     ):
         msgs.append(msg)
         count = count + 1
@@ -416,7 +418,7 @@ async def _(e):
                 await e.client.delete_messages(e.chat_id, x)
                 nos += 1
             await xx.edit(
-                f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input})"
+                f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input})",
             )
         except ValueError:
             return await eod(xx, str(er), time=5)

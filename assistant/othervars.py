@@ -34,7 +34,7 @@ async def _(e):
         )
     storage = await create_token_file(TOKEN_FILE, e)
     authorize(TOKEN_FILE, storage)
-    f = open(TOKEN_FILE, "r")
+    f = open(TOKEN_FILE)
     token_file_data = f.read()
     udB.set("GDRIVE_TOKEN", token_file_data)
     await e.reply(
@@ -55,7 +55,7 @@ async def _(e):
         + "2. Create Folder.\n"
         + "3. Make that folder public.\n"
         + "4. Copy link of that folder."
-        + "5. Send all characters which is after id= ."
+        + "5. Send all characters which is after id= .",
     )
     async with ultroid_bot.asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
@@ -164,16 +164,18 @@ async def emoji(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("otvars")
+                "Cancelled!!",
+                buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
             return await conv.send_message(
-                "Incorrect Emoji", buttons=get_back_button("otvars")
+                "Incorrect Emoji",
+                buttons=get_back_button("otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n".format(name, themssg),
+                f"{name} changed to {themssg}\n",
                 buttons=get_back_button("otvars"),
             )
 
@@ -187,24 +189,27 @@ async def pluginch(event):
     name = "Plugin Channel"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "Send id or username of a channel from where u want to install all plugins\n\nOur Channel~ @ultroidplugins\n\nUse /cancel to cancel."
+            "Send id or username of a channel from where u want to install all plugins\n\nOur Channel~ @ultroidplugins\n\nUse /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("otvars")
+                "Cancelled!!",
+                buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
             return await conv.send_message(
-                "Incorrect channel", buttons=get_back_button("otvars")
+                "Incorrect channel",
+                buttons=get_back_button("otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name, themssg
+                    name,
+                    themssg,
                 ),
                 buttons=get_back_button("otvars"),
             )
@@ -219,27 +224,30 @@ async def hndlrr(event):
     name = "Handler/ Trigger"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Send The Symbol Which u want as Handler/Trigger to use bot\nUr Current Handler is [ `{HNDLR}` ]\n\n use /cancel to cancel."
+            f"Send The Symbol Which u want as Handler/Trigger to use bot\nUr Current Handler is [ `{HNDLR}` ]\n\n use /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("otvars")
+                "Cancelled!!",
+                buttons=get_back_button("otvars"),
             )
         elif len(themssg) > 1:
             return await conv.send_message(
-                "Incorrect Handler", buttons=get_back_button("otvars")
+                "Incorrect Handler",
+                buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
             return await conv.send_message(
-                "This cannot be used as handler", buttons=get_back_button("otvars")
+                "This cannot be used as handler",
+                buttons=get_back_button("otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(name, themssg),
+                f"{name} changed to {themssg}",
                 buttons=get_back_button("otvars"),
             )
 
@@ -253,19 +261,20 @@ async def tagloggerr(event):
     name = "Tag Log Group"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add your assistant and make it admin.\nGet the `{hndlr}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel."
+            f"Make a group, add your assistant and make it admin.\nGet the `{hndlr}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("otvars")
+                "Cancelled!!",
+                buttons=get_back_button("otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(name, themssg),
+                f"{name} changed to {themssg}",
                 buttons=get_back_button("otvars"),
             )
 
@@ -362,19 +371,20 @@ async def sfgrp(event):
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back."
+            f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("sfban")
+                "Cancelled!!",
+                buttons=get_back_button("sfban"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(name, themssg),
+                f"{name} changed to {themssg}",
                 buttons=get_back_button("sfban"),
             )
 
@@ -388,19 +398,20 @@ async def sfexf(event):
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
         await conv.send_message(
-            f"Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back."
+            f"Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("sfban")
+                "Cancelled!!",
+                buttons=get_back_button("sfban"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}".format(name, themssg),
+                f"{name} changed to {themssg}",
                 buttons=get_back_button("sfban"),
             )
 
@@ -409,7 +420,7 @@ async def sfexf(event):
 @owner
 async def alvcs(event):
     await event.edit(
-        "Customise your {}alive. Choose from the below options -".format(HNDLR),
+        f"Customise your {HNDLR}alive. Choose from the below options -",
         buttons=[
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
             [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
@@ -428,20 +439,22 @@ async def name(event):
     name = "Alive Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation."
+            "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("alvcstm")
+                "Cancelled!!",
+                buttons=get_back_button("alvcstm"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                    name, themssg
+                    name,
+                    themssg,
                 ),
                 buttons=get_back_button("alvcstm"),
             )
@@ -456,14 +469,15 @@ async def media(event):
     name = "Alive Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Alive Media**\nSend me a pic/gif/bot api id of sticker to set as alive media.\n\nUse /cancel to terminate the operation."
+            "**Alive Media**\nSend me a pic/gif/bot api id of sticker to set as alive media.\n\nUse /cancel to terminate the operation.",
         )
         response = await conv.get_response()
         try:
             themssg = response.message.message
             if themssg == "/cancel":
                 return await conv.send_message(
-                    "Operation cancelled!!", buttons=get_back_button("alvcstm")
+                    "Operation cancelled!!",
+                    buttons=get_back_button("alvcstm"),
                 )
         except BaseException:
             pass
@@ -481,11 +495,13 @@ async def media(event):
                 os.remove(media)
             except BaseException:
                 return await conv.send_message(
-                    "Terminated.", buttons=get_back_button("alvcstm")
+                    "Terminated.",
+                    buttons=get_back_button("alvcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
-            "{} has been set.".format(name), buttons=get_back_button("alvcstm")
+            f"{name} has been set.",
+            buttons=get_back_button("alvcstm"),
         )
 
 
@@ -497,7 +513,8 @@ async def dell(event):
         return await event.edit("Done!", buttons=get_back_button("alvcstm"))
     except BaseException:
         return await event.edit(
-            "Something went wrong...", buttons=get_back_button("alvcstm")
+            "Something went wrong...",
+            buttons=get_back_button("alvcstm"),
         )
 
 
@@ -533,20 +550,22 @@ async def name(event):
     name = "PM Text"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Text**\nEnter the new Pmpermit text.\n\nu can use `{name}` `{fullname}` `{count}` `{mention}` `{username}` to get this from user Too\n\nUse /cancel to terminate the operation."
+            "**PM Text**\nEnter the new Pmpermit text.\n\nu can use `{name}` `{fullname}` `{count}` `{mention}` `{username}` to get this from user Too\n\nUse /cancel to terminate the operation.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Cancelled!!", buttons=get_back_button("pmcstm")
+                "Cancelled!!",
+                buttons=get_back_button("pmcstm"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                    name, themssg
+                    name,
+                    themssg,
                 ),
                 buttons=get_back_button("pmcstm"),
             )
@@ -591,14 +610,15 @@ async def media(event):
     name = "PM Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as pmpermit media.\n\nUse /cancel to terminate the operation."
+            "**PM Media**\nSend me a pic/gif/bot api id of sticker to set as pmpermit media.\n\nUse /cancel to terminate the operation.",
         )
         response = await conv.get_response()
         try:
             themssg = response.message.message
             if themssg == "/cancel":
                 return await conv.send_message(
-                    "Operation cancelled!!", buttons=get_back_button("pmcstm")
+                    "Operation cancelled!!",
+                    buttons=get_back_button("pmcstm"),
                 )
         except BaseException:
             pass
@@ -616,11 +636,13 @@ async def media(event):
                 os.remove(media)
             except BaseException:
                 return await conv.send_message(
-                    "Terminated.", buttons=get_back_button("pmcstm")
+                    "Terminated.",
+                    buttons=get_back_button("pmcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
-            "{} has been set.".format(name), buttons=get_back_button("pmcstm")
+            f"{name} has been set.",
+            buttons=get_back_button("pmcstm"),
         )
 
 
@@ -696,7 +718,8 @@ async def pmlog(event):
     var = "PMLOG"
     await setit(event, var, "True")
     await event.edit(
-        f"Done!! PMLOGGER  Started!!", buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]]
+        f"Done!! PMLOGGER  Started!!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
     )
 
 
@@ -706,7 +729,8 @@ async def pmlogof(event):
     try:
         udB.delete("PMLOG")
         return await event.edit(
-            "Done! PMLOGGER Stopped!!", buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]]
+            "Done! PMLOGGER Stopped!!",
+            buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
         )
     except BaseException:
         return await event.edit(

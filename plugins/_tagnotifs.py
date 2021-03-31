@@ -15,7 +15,7 @@ from . import *
     events.NewMessage(
         incoming=True,
         func=lambda e: (e.mentioned),
-    )
+    ),
 )
 async def all_messages_catcher(e):
     if udB.get("TAG_LOG") is not None:

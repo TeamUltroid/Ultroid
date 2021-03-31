@@ -38,7 +38,7 @@ async def _(ult):
         gt,
         d,
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, msg, k, "Downloading to my Storage...")
+            progress(d, t, msg, k, "Downloading to my Storage..."),
         ),
     )
     place = "resources/downloads/extracted/"

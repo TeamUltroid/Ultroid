@@ -136,7 +136,7 @@ async def _(event):
     try:
         mean = await urban.get_word(word)
         await xx.edit(
-            f"**Text**: `{mean.word}`\n\n**Meaning**: `{mean.definition}`\n\n**Example**: __{mean.example}__"
+            f"**Text**: `{mean.word}`\n\n**Meaning**: `{mean.definition}`\n\n**Example**: __{mean.example}__",
         )
     except asyncurban.WordNotFoundError:
         await xx.edit(f"**No result found for** `{word}`")

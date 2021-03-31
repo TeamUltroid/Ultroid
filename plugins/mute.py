@@ -10,16 +10,16 @@
 
 • `{i}mute <reply to msg/ user id>`
     Mute user in current chat.
-   
+
 • `{i}unmute <reply to msg/ user id>`
     Unmute user in current chat.
-   
+
 • `{i}dmute <reply to msg/ user id>`
     Mute user in current chat by deleting msgs.
-   
+
 • `{i}undmute <reply to msg/ use id>`
     Unmute dmuted user in current chat.
-   
+
 • `{i}tmute <time> <reply to msg/ use id>`
     time - m- minutes
            h- hours
@@ -155,7 +155,10 @@ async def _(e):
     try:
         bun = await ban_time(xx, tme)
         await e.client.edit_permissions(
-            chat.id, userid, until_date=bun, send_messages=False
+            chat.id,
+            userid,
+            until_date=bun,
+            send_messages=False,
         )
         await eod(
             xx,
@@ -191,7 +194,10 @@ async def _(e):
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     try:
         await e.client.edit_permissions(
-            chat.id, userid, until_date=None, send_messages=True
+            chat.id,
+            userid,
+            until_date=None,
+            send_messages=True,
         )
         await eod(
             xx,
@@ -229,7 +235,10 @@ async def _(e):
         return await eod(xx, "`I can't mute myself.`", time=3)
     try:
         await e.client.edit_permissions(
-            chat.id, userid, until_date=None, send_messages=False
+            chat.id,
+            userid,
+            until_date=None,
+            send_messages=False,
         )
         await eod(
             xx,

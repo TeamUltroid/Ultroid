@@ -58,7 +58,7 @@ async def download(event):
                             xx,
                             k,
                             "Downloading...",
-                        )
+                        ),
                     ),
                 )
             else:
@@ -74,7 +74,7 @@ async def download(event):
                             k,
                             "Downloading...",
                             file_name=d,
-                        )
+                        ),
                     ),
                 )
     e = datetime.now()
@@ -111,7 +111,7 @@ async def download(event):
                         tt,
                         "Uploading...",
                         file_name=kk,
-                    )
+                    ),
                 ),
             )
         except ValueError as ve:
@@ -160,7 +160,7 @@ async def _(event):
         a = await event.get_reply_message()
         if a.media:
             b = await a.download_media()
-            c = open(b, "r")
+            c = open(b)
             d = c.read()
             c.close()
             n = 4096

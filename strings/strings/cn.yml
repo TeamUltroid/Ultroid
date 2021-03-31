@@ -8,7 +8,7 @@ authors:
 # commons
 com_1: "`处理中...`"
 com_2: "`搜索中...`"
-# help 
+# help
 help_1: "`{}` 不是一个有效的插件!"
 help_2: "机器人没有响应内联查询.\n考虑使用 `{}重启`"
 help_3: "`请从中为您的机器人打开内联模式` @Botfather."
@@ -104,7 +104,6 @@ chats_3: "`我不是管理员`"
 chats_4: "#已删除\n已删除 {}"
 chats_5: "你的 [{}]({}) 组已经成为了 Boss!"
 chats_6: "加入 @TeamUltroid"
-chats_6: "您的 [{}]({}) 组/频道 已经成为 Boss!"
 
 # converter
 cvt_1: "回复任一媒体或文件."

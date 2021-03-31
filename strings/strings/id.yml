@@ -7,7 +7,7 @@ authors:
 # commons
 com_1: "`Memproses...`"
 com_2: "`Sedang Mencari...`"
-# help 
+# help
 help_1: "`{}` bukan plugin yang valid!"
 help_2: "Bot tidak menanggapi inline kueri.\nLebih baik untuk menggunakan `{}restart`"
 help_3: "`Tolong aktifkan inline mode bot Anda dari` @Botfather."
@@ -102,7 +102,6 @@ chats_3: "`Gua bukan admin`"
 chats_4: "#Terhapus\nTerhapus {}"
 chats_5: "Anda [{}]({}) Grup telah dibuat oleh boss!"
 chats_6: "Join @TeamUltroid"
-chats_6: "Anda [{}]({}) Grup/Channel Telah dibuat oleh Bos!"
 
 # converter
 cvt_1: "Balas ke media/Dokumen apapun."

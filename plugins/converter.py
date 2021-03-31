@@ -10,7 +10,7 @@
 
 • `{i}rename <file name with extension>`
     rename the file
-    
+
 • `{i}mtoi <reply to media>`
     media to image conversion
 

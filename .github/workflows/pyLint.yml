@@ -29,5 +29,5 @@ jobs:
           commit_message: 'pyLint: auto-fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: TeamUltroid 
+          commit_user_name: TeamUltroid
           commit_user_email: teamultroid@ultroid.tech

@@ -40,7 +40,7 @@ async def gramme(event):
     tt = tr.translate(t)
     if t.startswith((HNDLR, ".", "?", "#", "_", "*", "'", "@", "[", "(", "+")):
         return
-    if t.endswith(("..")):
+    if t.endswith(".."):
         return
     if tt.src != "en":
         return

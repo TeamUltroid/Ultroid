@@ -91,14 +91,17 @@ async def _(event):
             await eor(
                 event,
                 "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`".format(
-                    str(event.chat_id), str(r_msg.sender.id), bot_api_file_id
+                    str(event.chat_id),
+                    str(r_msg.sender.id),
+                    bot_api_file_id,
                 ),
             )
         else:
             await eor(
                 event,
                 "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
-                    str(event.chat_id), str(r_msg.sender.id)
+                    str(event.chat_id),
+                    str(r_msg.sender.id),
                 ),
             )
     else:
@@ -120,7 +123,7 @@ async def _(ult):
     if not input_str:
         chat = to_write_chat
     else:
-        mentions = "**Bots in **{}: \n".format(input_str)
+        mentions = f"**Bots in **{input_str}: \n"
         try:
             chat = await ultroid_bot.get_entity(input_str)
         except Exception as e:
@@ -128,15 +131,20 @@ async def _(ult):
             return None
     try:
         async for x in ultroid_bot.iter_participants(
-            chat, filter=ChannelParticipantsBots
+            chat,
+            filter=ChannelParticipantsBots,
         ):
             if isinstance(x.participant, ChannelParticipantAdmin):
                 mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
-                    x.first_name, x.id, x.id
+                    x.first_name,
+                    x.id,
+                    x.id,
                 )
             else:
                 mentions += "\n [{}](tg://user?id={}) `{}`".format(
-                    x.first_name, x.id, x.id
+                    x.first_name,
+                    x.id,
+                    x.id,
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
@@ -174,7 +182,7 @@ async def _(e):
         c = await a.download_media(
             "resources/downloads/",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
+                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ..."),
             ),
         )
         await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
@@ -193,7 +201,9 @@ async def _(e):
             "comp.mp3",
         ]
         proess = await asyncio.create_subprocess_exec(
-            *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
         stdout, stderr = await proess.communicate()
         stderr.decode().strip()
@@ -210,7 +220,9 @@ async def _(e):
             "circle.mp4",
         ]
         process = await asyncio.create_subprocess_exec(
-            *mcd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            *mcd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
         stdout, stderr = await process.communicate()
         stderr.decode().strip()
@@ -223,7 +235,7 @@ async def _(e):
             video_note=True,
             reply_to=a,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ...")
+                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ..."),
             ),
         )
         await z.delete()
@@ -260,7 +272,9 @@ async def _(event):
         reply_to_id = event.reply_to_msg_id
     time.time() + 100
     process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
     )
     stdout, stderr = await process.communicate()
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
@@ -334,7 +348,8 @@ async def _(event):
         evaluation = "Success"
     final_output = (
         "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
-            cmd, evaluation
+            cmd,
+            evaluation,
         )
     )
     if len(final_output) > 4096:
@@ -360,7 +375,7 @@ async def aexec(code, event):
     exec(
         f"async def __aexec(e, client): "
         + "\n message = event = e"
-        + "".join(f"\n {l}" for l in code.split("\n"))
+        + "".join(f"\n {l}" for l in code.split("\n")),
     )
 
     return await locals()["__aexec"](e, e.client)
@@ -406,7 +421,8 @@ async def lastname(steal):
                     await lol.edit(respond.message)
                     await lol.reply(response.message)
             await steal.client.delete_messages(
-                conv.chat_id, [msg.id, responds.id, respond.id, response.id]
+                conv.chat_id,
+                [msg.id, responds.id, respond.id, response.id],
             )
     except TimeoutError:
         return await lol.edit("Error: @SangMataInfo_bot is not responding!.")

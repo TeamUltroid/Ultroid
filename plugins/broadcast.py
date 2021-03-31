@@ -176,12 +176,13 @@ async def forw(event):
         except Exception as error:
             try:
                 await ultroid_bot.send_message(
-                    Var.LOG_CHANNEL, f"Error in sending at {channel}."
+                    Var.LOG_CHANNEL,
+                    f"Error in sending at {channel}.",
                 )
                 await ultroid_bot.send_message(Var.LOG_CHANNEL, "Error! " + str(error))
                 if error == "The message cannot be empty unless a file is provided":
                     return await x.edit(
-                        "For sending files, upload in Saved Messages and reply .forward to it."
+                        "For sending files, upload in Saved Messages and reply .forward to it.",
                     )
             except BaseException:
                 pass
@@ -248,17 +249,19 @@ async def sending(event):
                 except Exception as error:
                     try:
                         await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL, f"Error in sending at {channel}."
+                            Var.LOG_CHANNEL,
+                            f"Error in sending at {channel}.",
                         )
                         await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL, "Error! " + str(error)
+                            Var.LOG_CHANNEL,
+                            "Error! " + str(error),
                         )
                         if (
                             error
                             == "The message cannot be empty unless a file is provided"
                         ):
                             return await x.edit(
-                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in."
+                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in.",
                             )
                     except BaseException:
                         pass
@@ -270,7 +273,8 @@ async def sending(event):
             if error_count > 0:
                 try:
                     await ultroid_bot.send_message(
-                        Var.LOG_CHANNEL, f"{error_count} Errors"
+                        Var.LOG_CHANNEL,
+                        f"{error_count} Errors",
                     )
                 except BaseException:
                     pass
@@ -279,7 +283,9 @@ async def sending(event):
             for channel in channels:
                 try:
                     await ultroid_bot.send_message(
-                        int(channel), raw_text, link_preview=False
+                        int(channel),
+                        raw_text,
+                        link_preview=False,
                     )
                     sent_count += 1
                     await x.edit(
@@ -288,17 +294,19 @@ async def sending(event):
                 except Exception as error:
                     try:
                         await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL, f"Error in sending at {channel}."
+                            Var.LOG_CHANNEL,
+                            f"Error in sending at {channel}.",
                         )
                         await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL, "Error! " + str(error)
+                            Var.LOG_CHANNEL,
+                            "Error! " + str(error),
                         )
                         if (
                             error
                             == "The message cannot be empty unless a file is provided"
                         ):
                             return await x.edit(
-                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in."
+                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in.",
                             )
                     except BaseException:
                         pass
@@ -310,7 +318,8 @@ async def sending(event):
             if error_count > 0:
                 try:
                     await ultroid_bot.send_message(
-                        Var.LOG_CHANNEL, f"{error_count} Errors"
+                        Var.LOG_CHANNEL,
+                        f"{error_count} Errors",
                     )
                 except BaseException:
                     await x.edit("Set up log channel for checking errors.")

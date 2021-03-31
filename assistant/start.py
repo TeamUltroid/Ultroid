@@ -22,11 +22,7 @@ async def assistant(event):
         bnn = (await asst.get_me()).username
         return await event.reply(
             "`I dont work in groups`",
-            buttons=[
-                Button.url(
-                    "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set"
-                )
-            ],
+            buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set")],
         )
     else:
         if not is_added(event.sender_id) and event.sender_id not in sed:
@@ -95,7 +91,7 @@ async def botstat(event):
     ok = len(get_all_users())
     msg = """Ultroid Assistant - Stats
 Total Users - {}""".format(
-        ok
+        ok,
     )
     await event.answer(msg, cache_time=0, alert=True)
 
@@ -107,7 +103,7 @@ async def bdcast(event):
     await event.edit(f"Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
-            "Enter your broadcast message.\nUse /cancel to stop the broadcast."
+            "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
         )
         response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
         response = await response
@@ -132,7 +128,7 @@ async def bdcast(event):
 Broadcast completed in {time_taken} seconds.
 Total Users in Bot - {len(ok)}
 Sent to {success} users.
-Failed for {fail} user(s)."""
+Failed for {fail} user(s).""",
             )
 
 
@@ -154,6 +150,7 @@ async def setting(event):
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
+
 
 @asst_cmd("start set")
 @owner

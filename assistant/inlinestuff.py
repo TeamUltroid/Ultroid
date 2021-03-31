@@ -96,7 +96,7 @@ async def repo(e):
                 [Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid")],
                 [Button.url("Support", url="t.me/UltroidSupport")],
             ],
-        )
+        ),
     ]
     await e.answer(res)
 
@@ -144,14 +144,18 @@ async def gsearch(q_event):
                         [Button.url("Lɪɴᴋ", url=f"{link}")],
                         [
                             Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="go ", same_peer=True
+                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                                query="go ",
+                                same_peer=True,
                             ),
                             Button.switch_inline(
-                                "Sʜᴀʀᴇ", query=f"go {match}", same_peer=False
+                                "Sʜᴀʀᴇ",
+                                query=f"go {match}",
+                                same_peer=False,
                             ),
                         ],
                     ],
-                )
+                ),
             )
         except IndexError:
             break
@@ -211,7 +215,9 @@ async def gsearch(q_event):
             thumb=wb(yeah, 0, "image/jpeg", []),
             text="**Yᴀʜᴏᴏ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
             buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="yahoo ", same_peer=True
+                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                query="yahoo ",
+                same_peer=True,
             ),
         )
         await q_event.answer([kkkk])
@@ -245,14 +251,18 @@ async def gsearch(q_event):
                         [Button.url("Lɪɴᴋ", url=f"{link}")],
                         [
                             Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="yahoo ", same_peer=True
+                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                                query="yahoo ",
+                                same_peer=True,
                             ),
                             Button.switch_inline(
-                                "Sʜᴀʀᴇ", query=f"yahoo {match}", same_peer=False
+                                "Sʜᴀʀᴇ",
+                                query=f"yahoo {match}",
+                                same_peer=False,
                             ),
                         ],
                     ],
-                )
+                ),
             )
         except IndexError:
             break
@@ -355,14 +365,18 @@ async def _(e):
                     [Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}")],
                     [
                         Button.switch_inline(
-                            "Mᴏʀᴇ Mᴏᴅs", query="mods ", same_peer=True
+                            "Mᴏʀᴇ Mᴏᴅs",
+                            query="mods ",
+                            same_peer=True,
                         ),
                         Button.switch_inline(
-                            "Sʜᴀʀᴇ", query=f"mods {quer}", same_peer=False
+                            "Sʜᴀʀᴇ",
+                            query=f"mods {quer}",
+                            same_peer=False,
                         ),
                     ],
                 ],
-            )
+            ),
         )
     await e.answer(modss)
 
@@ -377,7 +391,9 @@ async def clip(e):
             title="Search Something",
             text="**Cʟɪᴘᴀʀᴛ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
             buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="clipart ", same_peer=True
+                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                query="clipart ",
+                same_peer=True,
             ),
         )
         await e.answer([kkkk])
