@@ -1,0 +1,30 @@
+name: blacked.cum
+
+on: push
+
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install black
+        run: |
+          pip install black
+      - name: lint with isort and black
+        run: |
+          black .
+      # commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'White Lint'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: teamultroid
+          commit_user_email: teamultroid@ultroid.tech
+   
