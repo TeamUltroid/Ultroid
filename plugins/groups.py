@@ -17,16 +17,10 @@
 
 
 from telethon.tl import functions
-from telethon.tl.types import (
-    ChannelParticipantsKicked,
-    ChatBannedRights,
-    UserStatusEmpty,
-    UserStatusLastMonth,
-    UserStatusLastWeek,
-    UserStatusOffline,
-    UserStatusOnline,
-    UserStatusRecently,
-)
+from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
+                               UserStatusEmpty, UserStatusLastMonth,
+                               UserStatusLastWeek, UserStatusOffline,
+                               UserStatusOnline, UserStatusRecently)
 
 from . import *
 

@@ -70,15 +70,14 @@ from telegraph import upload_file as uf
 from telethon import functions
 from telethon.errors.rpcerrorlist import BotInlineDisabledError
 from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
-from telethon.errors.rpcerrorlist import (
-    BotResponseTimeoutError,
-    ChatSendInlineForbiddenError,
-)
+from telethon.errors.rpcerrorlist import (BotResponseTimeoutError,
+                                          ChatSendInlineForbiddenError)
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
+from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
+                               User)
 from telethon.utils import get_input_location
 
 # =================================================================#

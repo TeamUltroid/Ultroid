@@ -28,7 +28,8 @@ import asyncio
 import os
 
 from telethon.tl import functions
-from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
+from telethon.tl.functions.photos import (DeletePhotosRequest,
+                                          GetUserPhotosRequest)
 from telethon.tl.types import InputPhoto
 
 from . import *
