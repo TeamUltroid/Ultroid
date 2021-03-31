@@ -26,13 +26,11 @@
 
 """
 
+import asyncio
 import os
 
 import cv2
 from PIL import Image
-import asyncio
-import time
-from datetime import datetime as dt
 
 from . import *
 
@@ -100,6 +98,7 @@ async def smak(event):
     os.remove(file)
     os.remove(image)
 
+
 @ultroid_cmd(
     pattern="doc",
 )
@@ -152,5 +151,6 @@ async def _(event):
             return await eod(xx, "`Reply to a readable file`", time=10)
     else:
         return await eod(xx, "`Reply to a readable file`", time=10)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

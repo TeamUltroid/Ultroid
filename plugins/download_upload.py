@@ -17,12 +17,10 @@
 """
 
 import asyncio
-import os
 import time
 from datetime import datetime as dt
 
 from . import *
-
 
 
 @ultroid_cmd(
@@ -120,8 +118,6 @@ async def download(event):
         await eod(xx, f"Uploaded `{kk}` in `{t}`", time=5)
     else:
         await eod(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
