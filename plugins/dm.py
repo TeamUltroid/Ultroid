@@ -18,7 +18,7 @@ from . import *
 async def dm(e):
     d = e.pattern_match.group(1)
     c = d.split(" ")
-    c[0]
+    chat_id = c[0]
     try:
         chat_id = int(chat_id)
     except BaseException:
