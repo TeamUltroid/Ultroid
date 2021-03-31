@@ -1,4 +1,4 @@
-name: blacked.cum
+name: pyLint
 
 on: push
 
@@ -15,16 +15,17 @@ jobs:
 
       - name: Install black
         run: |
-          pip install black
+          pip install black isort autoflake
       - name: lint with isort and black
         run: |
           black .
+          isort .
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'White Lint'
+          commit_message: 'pyLint: auto-fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: teamultroid
+          commit_user_name: TeamUltroid
           commit_user_email: teamultroid@ultroid.tech
-   
