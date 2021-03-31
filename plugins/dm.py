@@ -18,11 +18,10 @@ from . import *
 async def dm(e):
     d = e.pattern_match.group(1)
     c = d.split(" ")
-    chat_id = c[0]
     try:
-        chat_id = int(chat_id)
-    except BaseException:
-        pass
+        chat_id = await get_user_id(c[0])
+    except Exception as ex:
+        return await eod(e, "`" + str(ex) + "`", time=5)
     msg = ""
     masg = await e.get_reply_message()
     if e.reply_to_msg_id:
@@ -38,7 +37,7 @@ async def dm(e):
     except BaseException:
         await eod(
             e,
-            "{i}dm (username/id) (text)\n\n{i}dm (username/id) <reply to msg>",
+            "`{i}help dm`",
             time=4,
         )
 
