@@ -50,6 +50,8 @@ and click the below button!  <br />
     `bash sessiongen`
      or
     `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+  - For Termux users:
+    `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
   - For Windows Users:
     `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
