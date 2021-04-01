@@ -115,7 +115,7 @@ async def _(event):
     os.remove("ult.jpg")
     os.remove(image)
     if "status" in r.json():
-        return await event.edit( r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`)
+        return await event.edit( r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`")
     r_json = r.json()["output_url"]
     await ultroid_bot.send_file(event.chat_id, r_json , reply_to=reply)
     await xx.delete()
