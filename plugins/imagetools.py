@@ -94,6 +94,7 @@ async def sketch(e):
     os.remove(file)
     os.remove("ultroid.png")
 
+
 @ultroid_cmd(pattern="color$")
 async def _(event):
     reply = await event.get_reply_message()
@@ -101,7 +102,7 @@ async def _(event):
         return await eor(event, "`Reply To a Black nd White Image`")
     xx = await eor(event, "`Coloring image 🎨🖌️...`")
     image = await ultroid_bot.download_media(reply.media)
-    img = cv2.VideoCapture(image) 
+    img = cv2.VideoCapture(image)
     ret, frame = img.read()
     cv2.imwrite("ult.jpg", frame)
     if udB.get("DEEP_API"):
@@ -111,13 +112,16 @@ async def _(event):
     r = requests.post(
         "https://api.deepai.org/api/colorizer",
         files={"image": open("ult.jpg", "rb")},
-        headers={"api-key": key})
+        headers={"api-key": key},
+    )
     os.remove("ult.jpg")
     os.remove(image)
     if "status" in r.json():
-        return await event.edit( r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`")
+        return await event.edit(
+            r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`"
+        )
     r_json = r.json()["output_url"]
-    await ultroid_bot.send_file(event.chat_id, r_json , reply_to=reply)
+    await ultroid_bot.send_file(event.chat_id, r_json, reply_to=reply)
     await xx.delete()
 
 
