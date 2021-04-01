@@ -13,8 +13,9 @@
     gives a glitchy gif.
 
 """
-from . import *
 import asyncio
+
+from . import *
 
 
 @ultroid_cmd(pattern="glitch$")
@@ -29,9 +30,12 @@ async def _(e):
         cmd,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
-        )
+    )
     await process.communicate()
-    await ultroid_bot.send_file(e.chat_id, "ult.gif", force_document=False, reply_to=reply)
+    await ultroid_bot.send_file(
+        e.chat_id, "ult.gif", force_document=False, reply_to=reply
+    )
     await xx.delete()
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
