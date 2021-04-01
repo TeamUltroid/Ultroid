@@ -8,6 +8,14 @@
 """
 ✘ Commands Available -
 
+• `{i}blacklist <word><reply to a message>`
+    blacklist the choosen word.
+
+• `{i}remblacklist <word>`
+    Remove the blacklisted user..
+
+• `{i}listblacklist`
+    list all blacklisted word.
 """
 
 import re
@@ -22,10 +30,10 @@ async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Give the word to blacklist..`")
     wrd = e.text[10:]
     add_blacklist(int(chat), wrd)
-    await eor(e, "done")
+    await eor(e, "Done")
 
 
 @ultroid_cmd(pattern="remblacklist ?(.*)")
@@ -33,7 +41,7 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Give the word to remove from blacklist..`")
     rem_blacklist(int(chat), wrd)
     await eor(e, "done")
 
