@@ -11,6 +11,7 @@ A stable pluggable Telegram userbot, based on Telethon.
 [![Contributors](https://img.shields.io/github/contributors/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/graphs/contributors)
 [![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE)
 [![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)
+[![Sparkline](https://stars.medv.io/TeamUltroid/Ultroid.svg)](https://stars.medv.io/TeamUltroid/Ultroid)
 
 <details>
 <summary>More Info</summary>
