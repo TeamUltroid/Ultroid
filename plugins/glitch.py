@@ -21,7 +21,7 @@ from . import *
 
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
-    reply = await event.get_reply_message()
+    reply = await e.get_reply_message()
     if not reply.media:
         return await eor(e, "reply to any media")
     xx = await eor(e, "`Gliching...`")
