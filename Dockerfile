@@ -15,7 +15,7 @@ RUN apt-get install -y nodejs sudo
 RUN git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
 RUN pip install py-Ultroid==14.9b0 gingerit -U Telethon
-RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me && rm -r glitch_me
+RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 RUN pip install git+https://github.com/buddhhu/search-engine-parser.git
 RUN git clone https://github.com/buddhhu/vcjsbot
 RUN mv vcjsbot/* .
