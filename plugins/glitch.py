@@ -16,7 +16,7 @@
 import asyncio
 
 from . import *
-
+import os
 
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
@@ -36,6 +36,8 @@ async def _(e):
         e.chat_id, "ult.gif", force_document=False, reply_to=reply
     )
     await xx.delete()
+    os.remove(ok)
+    os.remove("ult.gif")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
