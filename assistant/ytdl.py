@@ -108,12 +108,7 @@ async def _(sur):
         "logtostderr": False,
     }
     song = True
-    await dler(sur)
-    try:
-        with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
-    except DownloadError as err:
-        return await sur.edit(f"**ERROR While Downloading\n\n- {str(err)}")
+    ytdl_data = await dler(sur, opts, url)
     jpg = f"{ytdl_data['id']}.mp3.jpg"
     png = f"{ytdl_data['id']}.mp3.png"
     webp = f"{ytdl_data['id']}.mp3.webp"
@@ -209,13 +204,7 @@ async def _(fuk):
         "quiet": True,
     }
     video = True
-    await dler(fuk)
-
-    try:
-        with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
-    except DownloadError as err:
-        return await sur.edit(f"**ERROR While Downloading\n\n- {str(err)}")
+    ytdl_data = await dler(fuk, opts, url)
 
     c_time = time.time()
     if video:
@@ -225,10 +214,10 @@ async def _(fuk):
         \nby *{ytdl_data['uploader']}*",
         )
         MSG = f"**{ytdl_data['title']}** Uploaded Successfully !"
-        chat = event.chat_id
+        chat = fuk.chat_id
         whome = ultroid_bot
         if event.is_private and event.sender_id != ultroid_bot.uid:
-            chat = event.sender_id
+            chat = fuk.sender_id
             whome = asst
             MSG += f"\nGet at {Var.BOT_USERNAME}"
         try:
