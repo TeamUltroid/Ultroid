@@ -8,6 +8,14 @@
 """
 ✘ Commands Available -
 
+• `{i}addfilter <word><reply to a message>`
+    add the used word as filter relating to replied message.
+
+• `{i}remfilter <word>`
+    Remove the filtered user..
+
+• `{i}listfilters`
+    list all filters.
 """
 
 from pyUltroid.functions.filter_db import *
@@ -22,7 +30,7 @@ async def af(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Use this command word to set as filter and reply...`")
     try:
         rem_filter(int(chat), wrd)
     except:
@@ -40,12 +48,12 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Give the filter to remove..`")
     rem_filter(int(chat), wrd)
     await eor(e, "done")
 
 
-@ultroid_cmd(pattern="listfilter")
+@ultroid_cmd(pattern="listfilter$")
 async def lsnote(e):
     x = list_filter(e.chat_id)
     if x:
