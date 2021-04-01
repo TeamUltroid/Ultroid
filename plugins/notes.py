@@ -8,6 +8,14 @@
 """
 ✘ Commands Available -
 
+• `{i}addnote <word><reply to a message>`
+    add note in the used chat with replied message and choosen word.
+
+• `{i}remnote <word>`
+    Remove the note from used chat.
+
+• `{i}listnote`
+    list all notes.
 """
 
 from pyUltroid.functions.notes_db import *
@@ -22,7 +30,7 @@ async def an(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Use this Command with Reply and word to use a note.`")
     if "#" in wrd:
         wrd = wrd.replace("#", "")
     try:
@@ -42,14 +50,14 @@ async def rn(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "fuk off bici")
+        return await eor(e, "`Give me the note handler which you want to remove.`")
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)
     await eor(e, "done")
 
 
-@ultroid_cmd(pattern="listnote")
+@ultroid_cmd(pattern="listnote$")
 async def lsnote(e):
     x = list_note(e.chat_id)
     if x:
