@@ -16,8 +16,6 @@ from telethon import Button
 from telethon.errors import UserNotParticipantError
 from telethon.tl.types import DocumentAttributeAudio
 from telethon.tl.types import InputWebDocument as wb
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import DownloadError
 from youtubesearchpython import VideosSearch
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
