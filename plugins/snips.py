@@ -8,6 +8,14 @@
 """
 ✘ Commands Available -
 
+• `{i}addsnip <word><reply to a message>`
+    add the used word as snip relating to replied message.
+
+• `{i}remsnip <word>`
+    Remove the snip word..
+
+• `{i}listsnip`
+    list all snips.
 """
 
 from pyUltroid.functions.snips_db import *
@@ -21,7 +29,7 @@ async def an(e):
     wrd = e.pattern_match.group(1)
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eor(e, "fuk off bici")
+        return await eor(e, "Give word to set as snip and reply to a message.")
     if "$" in wrd:
         wrd = wrd.replace("$", "")
     try:
@@ -40,7 +48,7 @@ async def an(e):
 async def rs(e):
     wrd = e.pattern_match.group(1)
     if not wrd:
-        return await eor(e, "fuk off bici")
+        return await eor(e, "Give the word to remove...")
     if wrd.startswith("$"):
         wrd = wrd.replace("$", "")
     rem_snip(wrd)
