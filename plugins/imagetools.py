@@ -8,14 +8,17 @@
 """
 ✘ Commands Available -
 
+• `{i}grey <reply to any media>`
+    To make it black nd white.
+
+• `{i}color <reply to any Black nd White media>`
+    To make it Colorfull.
+
 • `{i}toon <reply to any media>`
     To make it toon.
 
 • `{i}danger <reply to any media>`
     To make it look Danger.
-
-• `{i}grey <reply to any media>`
-    To make it black nd white.
 
 • `{i}negative <reply to any media>`
     To make negative image.
@@ -90,6 +93,32 @@ async def sketch(e):
     await xx.delete()
     os.remove(file)
     os.remove("ultroid.png")
+
+@ultroid_cmd(pattern="color$")
+async def _(event):
+    reply = await event.get_reply_message()
+    if not reply.media:
+        return await eor(event, "`Reply To a Black nd White Image`")
+    xx = await eor(event, "`Coloring image 🎨🖌️...`")
+    image = await ultroid_bot.download_media(reply.media)
+    img = cv2.VideoCapture(image) 
+    ret, frame = img.read()
+    cv2.imwrite("ult.jpg", frame)
+    if udB.get("DEEP_API"):
+        key = Redis("DEEP_API")
+    else:
+        key = "quickstart-QUdJIGlzIGNvbWluZy4uLi4K"
+    r = requests.post(
+        "https://api.deepai.org/api/colorizer",
+        files={"image": open("ult.jpg", "rb")},
+        headers={"api-key": key})
+    os.remove("ult.jpg")
+    os.remove(image)
+    if "status" in r.json():
+        return await event.edit( r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`)
+    r_json = r.json()["output_url"]
+    await ultroid_bot.send_file(event.chat_id, r_json , reply_to=reply)
+    await xx.delete()
 
 
 @ultroid_cmd(
