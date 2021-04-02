@@ -68,10 +68,6 @@ import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon import functions
-from telethon.errors.rpcerrorlist import BotInlineDisabledError
-from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
-from telethon.errors.rpcerrorlist import (BotResponseTimeoutError,
-                                          ChatSendInlineForbiddenError)
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
