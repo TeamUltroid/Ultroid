@@ -45,11 +45,14 @@ async def google(event):
         url = res["links"][i]
         des = res["descriptions"][i]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
-    await x.edit(
-        f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}",
-        link_preview=False,
-    )
-
+    omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
+    opn = []
+    for bkl in range(0, len(omk), 4095):
+        opn.append(omk[bkl : bkl + 4095])
+    for bc in opn:
+        await ultroid_bot.send_message(event.chat_id, bc, link_preview=False)
+    await x.delete()
+    opn.clear()
 
 @ultroid_cmd(pattern="img ?(.*)")
 async def goimg(event):
