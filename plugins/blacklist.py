@@ -64,11 +64,6 @@ async def lsnote(e):
 async def bl(e):
     xx = e.text
     chat = e.chat_id
-    async for l in ultroid_bot.iter_participants(
-        e.chat_id, filter=ChannelParticipantsAdmins
-    ):
-        if l.id == e.sender_id:
-            return
     x = get_blacklist(int(chat))
     if x and xx:
         if " " in xx:
@@ -76,19 +71,29 @@ async def bl(e):
             for c in xx:
                 try:
                     kk = re.search(str(c), str(x), flags=re.IGNORECASE)
-                except:
+                except BaseException:
                     pass
             try:
                 if kk:
+                    async for l in ultroid_bot.iter_participants(
+                        e.chat_id, filter=ChannelParticipantsAdmins
+                    ):
+                        if l.id == e.sender_id:
+                            return
                     await e.delete()
-            except:
+            except BaseException:
                 pass
         else:
             k = re.search(xx, x, flags=re.IGNORECASE)
             if k:
+                async for l in ultroid_bot.iter_participants(
+                    e.chat_id, filter=ChannelParticipantsAdmins
+                ):
+                    if l.id == e.sender_id:
+                        return
                 try:
                     await e.delete()
-                except:
+                except BaseException:
                     pass
 
 
