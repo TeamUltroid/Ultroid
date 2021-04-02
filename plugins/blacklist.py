@@ -8,20 +8,23 @@
 """
 ✘ Commands Available -
 
-• `{i}blacklist <word><reply to a message>`
-    blacklist the choosen word.
+• `{i}blacklist <word/all words with a space>`
+    blacklist the choosen word in that chat.
 
 • `{i}remblacklist <word>`
-    Remove the blacklisted user..
+    Remove the word from blacklist..
 
 • `{i}listblacklist`
-    list all blacklisted word.
+    list all blacklisted words.
+
+  'if a person uses blacklist Word his/her msg will be deleted'
+  'And u Must be Admin in that Chat'
 """
 
 import re
 
 from pyUltroid.functions.blacklist_db import *
-
+from telethon.tl.types import ChannelParticipantsAdmins
 from . import *
 
 
@@ -60,6 +63,9 @@ async def lsnote(e):
 async def bl(e):
     xx = e.text
     chat = e.chat_id
+    async for l in ultroid_bot.iter_participants(e.chat_id, filter=ChannelParticipantsAdmins):
+        if l.id == e.sender_id:
+            return
     x = get_blacklist(int(chat))
     if x and xx:
         if " " in xx:
