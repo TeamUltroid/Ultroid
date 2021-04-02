@@ -38,10 +38,6 @@ async def get_the_addons_lol(event):
     await xx.edit("Packed. Now loading the plugin..")
     shortname = name_of_it.split(".")[0]
     try:
-        try:
-            un_plug(shortname)
-        except BaseException:
-            pass
         load_addons(shortname)
         await eod(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=3)
     except Exception as e:
