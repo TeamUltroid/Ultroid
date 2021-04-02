@@ -16,10 +16,13 @@
 
 • `{i}listsnip`
     list all snips.
+
+• Use :
+    type `$(ur snip word)` get setted reply.
 """
 
 from pyUltroid.functions.snips_db import *
-from telethon.utils import pack_bot_file_id
+from telethon.utils import resolve_bot_file_id , pack_bot_file_id
 
 from . import *
 
@@ -77,12 +80,10 @@ async def notes(e):
             xx = xx.split(" ")[0]
         k = get_reply(xx)
         if k:
-            try:
-                await e.delete()
+            if resolve_bot_file_id(k):
                 await ultroid_bot.send_file(e.chat_id, k)
-            except:
                 await e.delete()
-                await ultroid_bot.send_message(e.chat_id, k)
-
+            else:
+                await e.edit(k)
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
