@@ -19,7 +19,7 @@
 """
 
 from pyUltroid.functions.filter_db import *
-from telethon.utils import pack_bot_file_id
+from telethon.utils import pack_bot_file_id, resolve_bot_file_id
 
 from . import *
 
@@ -76,20 +76,17 @@ async def fl(e):
                     k = get_reply(int(chat), c)
                     if k:
                         kk = k
-            try:
-                await ultroid_bot.send_file(int(chat), kk)
-            except:
-                try:
-                    await ultroid_bot.send_message(int(chat), kk)
-                except:
-                    pass
+            if resolve_bot_file_id(k):
+                await e.reply(file=k)
+            else:
+                await e.reply(k)
         else:
             k = get_reply(chat, xx)
             if k:
-                try:
-                    await ultroid_bot.send_file(int(chat), k)
-                except:
-                    await ultroid_bot.send_message(int(chat), k)
+                if resolve_bot_file_id(k):
+                    await e.reply(file=k)
+                else:
+                    await e.reply(k)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
