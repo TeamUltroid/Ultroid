@@ -19,7 +19,7 @@
 """
 
 from pyUltroid.functions.notes_db import *
-from telethon.utils import resolve_bot_file_id , pack_bot_file_id
+from telethon.utils import pack_bot_file_id, resolve_bot_file_id
 
 from . import *
 
