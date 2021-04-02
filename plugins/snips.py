@@ -22,7 +22,7 @@
 """
 
 from pyUltroid.functions.snips_db import *
-from telethon.utils import resolve_bot_file_id , pack_bot_file_id
+from telethon.utils import pack_bot_file_id, resolve_bot_file_id
 
 from . import *
 
@@ -85,5 +85,6 @@ async def notes(e):
                 await e.delete()
             else:
                 await e.edit(k)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
