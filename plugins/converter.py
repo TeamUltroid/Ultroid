@@ -28,7 +28,7 @@
 
 import asyncio
 import os
-
+import requests
 import cv2
 from PIL import Image
 
@@ -134,23 +134,18 @@ async def _(event):
             c = open(b)
             d = c.read()
             c.close()
-            n = 4096
-            for bkl in range(0, len(d), n):
-                opn.append(d[bkl : bkl + n])
-            for bc in opn:
-                await event.client.send_message(
-                    event.chat_id,
-                    f"```{bc}```",
-                    reply_to=event.reply_to_msg_id,
-                )
-            await event.delete()
-            opn.clear()
-            os.remove(b)
-            await xx.delete()
+            try:
+                await xx.edit(f"```{d}```")
+            except BaseException:
+                key = (requests.post("https://nekobin.com/api/documents", json={"content": d})
+                      .json()
+                      .get("result")
+                      .get("key"))
+                await xx.edit(f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})")
         else:
-            return await eod(xx, "`Reply to a readable file`", time=10)
+            return await eod(xx, "`Reply to a readable file`", time=5)
     else:
-        return await eod(xx, "`Reply to a readable file`", time=10)
+        return await eod(xx, "`Reply to a readable file`", time=5)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
