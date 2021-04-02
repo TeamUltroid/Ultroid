@@ -54,6 +54,7 @@ async def google(event):
     await x.delete()
     opn.clear()
 
+
 @ultroid_cmd(pattern="img ?(.*)")
 async def goimg(event):
     query = event.pattern_match.group(1)
