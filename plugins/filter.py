@@ -75,7 +75,7 @@ async def fl(e):
                 if c in x:
                     k = get_reply(int(chat), c)
                     if k:
-                        kk = k
+                        pass
             if resolve_bot_file_id(k):
                 await e.reply(file=k)
             else:
