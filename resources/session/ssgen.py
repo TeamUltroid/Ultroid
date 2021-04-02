@@ -34,13 +34,11 @@ try:
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
 
-    import telethon
 
     x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
 except:
     print("Installing Telethon...")
     os.system("pip install telethon")
-    import telethon
 
     x = "\bDone. Installed and imported Telethon."
 if os.name == "posix":
@@ -51,8 +49,8 @@ else:
 print(a)
 print(x)
 
-from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError
-
+from telethon.errors.rpcerrorlist import (ApiIdInvalidError,
+                                          PhoneNumberInvalidError)
 # the imports
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient

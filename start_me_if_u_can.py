@@ -7,7 +7,8 @@ from aiohttp.http_websocket import WSMsgType
 from pyUltroid import Var, vcbot
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.functions.phone import GetGroupCallRequest, JoinGroupCallRequest
+from telethon.tl.functions.phone import (GetGroupCallRequest,
+                                         JoinGroupCallRequest)
 from telethon.tl.types import DataJSON
 
 bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)

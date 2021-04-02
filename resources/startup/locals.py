@@ -82,7 +82,6 @@ def start():
         f = open("Ultroid/.env", "w")
         f.write(all_done)
         f.close
-        pass
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
