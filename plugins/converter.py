@@ -28,8 +28,9 @@
 
 import asyncio
 import os
-import requests
+
 import cv2
+import requests
 from PIL import Image
 
 from . import *
@@ -137,11 +138,17 @@ async def _(event):
             try:
                 await xx.edit(f"```{d}```")
             except BaseException:
-                key = (requests.post("https://nekobin.com/api/documents", json={"content": d})
-                      .json()
-                      .get("result")
-                      .get("key"))
-                await xx.edit(f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})")
+                key = (
+                    requests.post(
+                        "https://nekobin.com/api/documents", json={"content": d}
+                    )
+                    .json()
+                    .get("result")
+                    .get("key")
+                )
+                await xx.edit(
+                    f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
+                )
         else:
             return await eod(xx, "`Reply to a readable file`", time=5)
     else:
