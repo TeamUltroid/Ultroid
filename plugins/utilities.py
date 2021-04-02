@@ -96,9 +96,9 @@ telegraph.create_account(short_name="Ultroid")
     groups_only=True,
 )
 async def leave(ult):
-    x = ultroid_bot.me
-    name = x.first_name
-    await eor(ult, f"`{name} has left this group, bye!!.`")
+    if ult.sender_id != ultroid_bot.uid:
+        return
+    await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
 
@@ -321,10 +321,8 @@ async def _(event):
         ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
-    except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
+    except BaseException:
         await xx.edit(reply_text)
-    except bmi:
-        await xx.edit(f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}")
 
 
 @ultroid_cmd(
