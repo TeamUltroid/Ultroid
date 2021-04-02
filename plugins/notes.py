@@ -16,6 +16,10 @@
 
 • `{i}listnote`
     list all notes.
+
+• Use :
+   set notes in group so all can use it.
+   type `#(Keyword of note)` to get it
 """
 
 from pyUltroid.functions.notes_db import *
@@ -81,9 +85,9 @@ async def notes(e):
         k = get_reply(chat, xx)
         if k:
             if resolve_bot_file_id(k):
-                await ultroid_bot.send_file(int(chat), k)
+                await e.reply(file=k)
             else:
-                await ultroid_bot.send_message(int(chat), k)
+                await e.reply(k)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
