@@ -34,7 +34,6 @@ try:
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
 
-
     x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
 except:
     print("Installing Telethon...")

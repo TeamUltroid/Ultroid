@@ -25,6 +25,7 @@ import re
 
 from pyUltroid.functions.blacklist_db import *
 from telethon.tl.types import ChannelParticipantsAdmins
+
 from . import *
 
 
@@ -63,7 +64,9 @@ async def lsnote(e):
 async def bl(e):
     xx = e.text
     chat = e.chat_id
-    async for l in ultroid_bot.iter_participants(e.chat_id, filter=ChannelParticipantsAdmins):
+    async for l in ultroid_bot.iter_participants(
+        e.chat_id, filter=ChannelParticipantsAdmins
+    ):
         if l.id == e.sender_id:
             return
     x = get_blacklist(int(chat))
