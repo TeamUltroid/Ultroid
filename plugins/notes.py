@@ -19,7 +19,7 @@
 """
 
 from pyUltroid.functions.notes_db import *
-from telethon.utils import pack_bot_file_id
+from telethon.utils import resolve_bot_file_id , pack_bot_file_id
 
 from . import *
 
@@ -80,9 +80,9 @@ async def notes(e):
             xx = xx.split(" ")[0]
         k = get_reply(chat, xx)
         if k:
-            try:
+            if resolve_bot_file_id(k):
                 await ultroid_bot.send_file(int(chat), k)
-            except:
+            else:
                 await ultroid_bot.send_message(int(chat), k)
 
 
