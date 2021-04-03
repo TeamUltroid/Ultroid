@@ -85,7 +85,7 @@ PMCMDS = [
 @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def permitpm(event):
     user = await event.get_chat()
-    if user.bot or user.is_self:
+    if user.bot or user.is_self or user.verified:
         return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
@@ -239,7 +239,7 @@ if sett == "True" and sett != "False":
                     name0 = str(name.first_name)
                     await event.client.send_message(
                         Var.LOG_CHANNEL,
-                        f"[{name0}](tg://user?id={user.id}) was blocked for spamming.",
+                        f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                     )
 
     @ultroid_cmd(pattern="(a|approve)(?: |$)")
