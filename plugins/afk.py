@@ -119,7 +119,8 @@ async def on_afk(event):
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         return False
-    if USER_AFK and not (await event.get_sender()).bot:
+    sender = await event.get_sender()
+    if USER_AFK and not (sender.bot or sender.verified):
         msg = None
         if reason:
             message_to_reply = get_string("afk_3").format(total_afk_time, reason)
