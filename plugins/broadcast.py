@@ -174,7 +174,7 @@ async def forw(event):
             await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
             )
-        except Exception as error:
+        except Exception:
             try:
                 await ultroid_bot.send_message(
                     Var.LOG_CHANNEL,
