@@ -21,7 +21,7 @@ async def all_messages_catcher(e):
     if udB.get("TAG_LOG") is not None:
         NEEDTOLOG = int(udB.get("TAG_LOG"))
         x = await ultroid_bot.get_entity(e.sender_id)
-        if x.bot:
+        if x.bot or x.verified:
             return
         y = await ultroid_bot.get_entity(e.chat_id)
         if y.username:
