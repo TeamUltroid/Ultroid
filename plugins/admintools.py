@@ -50,8 +50,8 @@ import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
-from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest
-from telethon.tl.types import ChatAdminRights, ChatBannedRights
+from telethon.tl.functions.channels import EditAdminRequest
+from telethon.tl.types import ChatAdminRights
 
 from . import *
 
@@ -63,7 +63,7 @@ from . import *
 )
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
+    await ult.get_chat()
     user, rank = await get_user_info(ult)
     if not rank:
         rank = "Admin"
@@ -101,7 +101,7 @@ async def prmte(ult):
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
+    await ult.get_chat()
     user, rank = await get_user_info(ult)
     if not rank:
         rank = "Not Admin"
@@ -139,14 +139,14 @@ async def dmote(ult):
 )
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to ban him!`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
     try:
-        await ultroid_bot.edit_permissions(ult.chat_id,user.id,view_messages=False)
+        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=False)
     except BadRequestError:
         return await xx.edit("`I don't have the right to ban a user.`")
     except UserIdInvalidError:
@@ -176,12 +176,12 @@ async def bban(ult):
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to unban him!`")
     try:
-        await ultroid_bot.edit_permissions(ult.chat_id,user.id,view_messages=True)
+        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=True)
     except BadRequestError:
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
@@ -205,7 +205,7 @@ async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
         return
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
@@ -328,7 +328,11 @@ async def fastpurger(purg):
         await ultroid_bot.delete_messages(chat, msgs)
     done = await ultroid_bot.send_message(
         purg.chat_id,
-        "__Fast purge complete!__\n**Purged** `" + str(delm) + "` **of** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `"
+        + str(delm)
+        + "` **of** `"
+        + str(count)
+        + "` **messages.**",
     )
     await asyncio.sleep(5)
     await done.delete()
