@@ -13,9 +13,6 @@ dev-install:
 	@pre-commit
 	@pre-commit install
 
-run:
-	@python3 -m alita
-
 update:
 	@git pull
 	@pip3 install --upgrade pip setuptools wheel
