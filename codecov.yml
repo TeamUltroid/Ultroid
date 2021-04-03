@@ -1,2 +1,13 @@
 codecov:
-  token: a4aba5d5-7917-4c95-a990-6c5d4df4e258
+  require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        threshold: 5
+    patch: false
