@@ -30,13 +30,14 @@ from . import *
 
 @ultroid_cmd(pattern="addnote ?(.*)")
 async def an(e):
-    if not e._chat.admin_rights:
-        return await eod(e, "`You Are Not Admin Here.", time=5)
+    if e.is_group:
+        if not e._chat.admin_rights:
+            return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = e.pattern_match.group(1)
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, "`Use this Command with Reply and word to use a note.`")
+        return await eod(e, "`Use this Command with Reply and word to use a note.`")
     if "#" in wrd:
         wrd = wrd.replace("#", "")
     try:
@@ -53,12 +54,13 @@ async def an(e):
 
 @ultroid_cmd(pattern="remnote ?(.*)")
 async def rn(e):
-    if not e._chat.admin_rights:
-        return await eod(e, "`You Are Not Admin Here.", time=5)
+    if e.is_group:
+        if not e._chat.admin_rights:
+            return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "`Give me the note handler which you want to remove.`")
+        return await eod(e, "`Give me the note handler which you want to remove.`")
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)
@@ -67,8 +69,9 @@ async def rn(e):
 
 @ultroid_cmd(pattern="listnote$")
 async def lsnote(e):
-    if not e._chat.admin_rights:
-        return await eod(e, "`You Are Not Admin Here.", time=5)
+    if e.is_group:
+        if not e._chat.admin_rights:
+            return await eod(e, "`You Are Not Admin Here.", time=5)
     x = list_note(e.chat_id)
     if x:
         sd = "Notes Found In This Chats Are\n\n"
@@ -79,6 +82,9 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
+    if e.is_group:
+        if not e._chat.admin_rights:
+            return
     xx = e.text
     if not xx.startswith("#"):
         return
