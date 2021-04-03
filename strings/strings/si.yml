@@ -68,7 +68,6 @@ alive_1: "**The Ultroid Userbot...**\n\n
 ┣ **Python** - `{}`\n
 ┣ **Telethon** - `{}`\n
 ┣ **Branch** - `{}`\n
-┣ ** සිංහල add කරෙ [@sithum batrow](t.me/sibatrow)**
 ┗━━━━━━━━━━━━━━━━━━━━━"
 log: " Ultroid userbot ගේ **Heroku** Logs.\n[මෙතනත් ]({}) paste කර ඇත!"
 ping: "** වැඩ වැඩ මහත්තයො ** Pong !! ** `{}ms`\n**Uptime** - `{}`"

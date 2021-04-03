@@ -16,3 +16,4 @@ ultroid-log.txt
 /*.mp4
 addons/*
 ultroid.log
+target/npmlist.json
