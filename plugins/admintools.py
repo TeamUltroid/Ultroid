@@ -253,6 +253,8 @@ async def kck(ult):
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
+    if user.id == ultroid_bot.uid:
+        return await xx.edit("`You Can't kick urself`")
     await xx.edit("`Kicking...`")
     try:
         await ultroid_bot.kick_participant(ult.chat_id, user.id)
