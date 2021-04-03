@@ -18,9 +18,9 @@
 import asyncio
 from datetime import datetime
 
+from pyUltroid.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl import functions, types
-from pyUltroid.functions.pmpermit_db import *
 
 from . import *
 
