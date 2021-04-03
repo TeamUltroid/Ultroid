@@ -108,6 +108,12 @@ async def download(event):
             )
         except ValueError as ve:
             return await eod(xx, str(ve))
+        except BaseException:
+            try:
+                await ultroid_bot.send_message(event.chat_id, kk)
+                return await kk.delete()
+            except BaseException:
+                pass
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     try:
