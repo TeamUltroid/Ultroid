@@ -133,7 +133,7 @@ if sett == "True" and sett != "False":
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
             name = user.first_name
-            if user.lastname:
+            if user.last_name:
                 fullname = f"{name} {user.last_name}"
             else:
                 fullname = name
