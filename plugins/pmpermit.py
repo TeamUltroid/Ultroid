@@ -35,7 +35,7 @@ LASTMSG = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
-    PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
+    PMPIC = "https://telegra.ph/file/031957757a4f6a5191040.jpg"
 
 UND = get_string("pmperm_1")
 
