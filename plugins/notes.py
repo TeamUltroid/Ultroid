@@ -30,6 +30,8 @@ from . import *
 
 @ultroid_cmd(pattern="addnote ?(.*)")
 async def an(e):
+    if not e._chat.admin_rights:
+        return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = e.pattern_match.group(1)
     wt = await e.get_reply_message()
     chat = e.chat_id
@@ -51,6 +53,8 @@ async def an(e):
 
 @ultroid_cmd(pattern="remnote ?(.*)")
 async def rn(e):
+    if not e._chat.admin_rights:
+        return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
@@ -63,6 +67,8 @@ async def rn(e):
 
 @ultroid_cmd(pattern="listnote$")
 async def lsnote(e):
+    if not e._chat.admin_rights:
+        return await eod(e, "`You Are Not Admin Here.", time=5)
     x = list_note(e.chat_id)
     if x:
         sd = "Notes Found In This Chats Are\n\n"
@@ -85,7 +91,10 @@ async def notes(e):
         k = get_reply(chat, xx)
         if k:
             if resolve_bot_file_id(k):
-                await e.reply(file=k)
+                try:
+                    await e.reply(file=k)
+                except BaseException:
+                    pass
             else:
                 await e.reply(k)
 
