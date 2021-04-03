@@ -166,8 +166,6 @@ async def forw(event):
     sent_count = 0
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        previous_message.message
-        previous_message.raw_text
     error_count = 0
     for channel in channels:
         try:
@@ -182,11 +180,6 @@ async def forw(event):
                     Var.LOG_CHANNEL,
                     f"Error in sending at {channel}.",
                 )
-                await ultroid_bot.send_message(Var.LOG_CHANNEL, "Error! " + str(error))
-                if error == "The message cannot be empty unless a file is provided":
-                    return await x.edit(
-                        "For sending files, upload in Saved Messages and reply .forward to it.",
-                    )
             except BaseException:
                 pass
             error_count += 1
