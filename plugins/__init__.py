@@ -20,6 +20,13 @@ from pyUltroid.utils import *
 
 from strings import get_string
 
+try:
+    import glitch_me
+except ModuleNotFoundError:
+    os.system(
+        "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
+    )
+
 start_time = time.time()
 ultroid_version = "v0.0.4"
 OWNER_NAME = ultroid_bot.me.first_name
