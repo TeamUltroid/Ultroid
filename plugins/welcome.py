@@ -20,8 +20,7 @@ async def setwel(event):
 
 @ultroid_cmd(pattern="clearwelcome$")
 async def clearwel(event):
-    prv = get_welcome(event.chat_id)
-    if prv is None:
+    if not get_welcome(event.chat_id):
         await eod(event, "`No welcome was set!`", time=5)
     delete_welcome(event.chat_id)
     await eod(event, "`Welcome Note Deleted`")
@@ -29,17 +28,19 @@ async def clearwel(event):
 
 @ultroid_cmd(pattern="listwelcome$")
 async def listwel(event):
-    prv, prc = get_welcome(event.chat_id)
-    if get_welcome(event.chat_id) is None:
+    wel = get_welcome(event.chat_id)
+    if not wel:
         await eod(event, "`No welcome was set!`", time=5)
-    await event.reply(f"**Welcome Note in this chat**\n\n`{prv}`", file=prc)
+    msgg = wel["welcome"]
+    med = wel["media"]
+    await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
 
 @ultroid_bot.on(events.ChatAction())
 async def _(event):
     wel = get_welcome(event.chat_id)
-    if get_welcome(event.chat_id):
+    if wel:
         if event.user_joined:
             user = await event.get_user()
             chat = await event.get_chat()
