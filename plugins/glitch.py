@@ -19,7 +19,6 @@ import os
 from . import *
 
 
-
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
     reply = await e.get_reply_message()
