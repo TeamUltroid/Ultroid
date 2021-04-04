@@ -1,8 +1,7 @@
-
+from pyUltroid.functions.welcome_db import *
+from telethon.utils import get_display_name, pack_bot_file_id
 
 from . import *
-from pyUltroid.functions.welcome_db import *
-from telethon.utils import pack_bot_file_id, get_display_name
 
 
 @ultroid_cmd(pattern="setwelcome")
@@ -36,6 +35,7 @@ async def listwel(event):
     await event.reply(f"**Welcome Note in this chat**\n\n`{prv}`", file=None)
     await event.delete()
 
+
 @ultroid_bot.on(events.ChatAction())
 async def _(event):
     wel = get_welcome(event.chat_id)
@@ -60,8 +60,14 @@ async def _(event):
                 username = mention
             userid = user.id
             await event.reply(
-                wel.format(mention=mention, title=title, count=count, name=name, fullname=fullname, username=username, userid=userid),
-                file=None
+                wel.format(
+                    mention=mention,
+                    title=title,
+                    count=count,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                ),
+                file=None,
             )
-            
-
