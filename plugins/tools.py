@@ -46,7 +46,7 @@ import cv2
 import emoji
 from googletrans import Translator
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots, User
 from telethon.utils import pack_bot_file_id
 
 from . import *
@@ -386,7 +386,7 @@ async def aexec(code, event):
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
-    if not (steal.is_reply and mat):
+    if not (steal.is_reply or mat):
         await eor(steal, "`Use this command with reply or give Username/id...`")
         return
     if mat:
@@ -396,10 +396,10 @@ async def lastname(steal):
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    if message.sender.bot:
-        await steal.edit("Reply to actual users message.")
-        return
-    lol = await eor(steal, "Processingg !!!!!")
+    check = await ultroid_bot.get_entity(user_id)
+    if not isinstance(check, User) or check.bot:
+        return await eor(steal, "Reply to Actual User's Message !")
+    lol = await eor(steal, "`Processing !...`")
     try:
         async with ultroid_bot.conversation(chat) as conv:
             try:
