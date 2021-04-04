@@ -18,12 +18,6 @@ import os
 
 from . import *
 
-try:
-    pass
-except ModuleNotFoundError:
-    os.system(
-        "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
-    )
 
 
 @ultroid_cmd(pattern="glitch$")
