@@ -28,7 +28,7 @@
     Reply a User to Get His Id
     Without Replying You Will Get the Chat's Id
 
-• `{i}sg <reply to a user>`
+• `{i}sg <reply to a user><username/id>`
     Get His Name History of the replied user.
 
 • `{i}tr <dest lang code> <(reply to) a message>`
@@ -382,15 +382,19 @@ async def aexec(code, event):
 
 
 @ultroid_cmd(
-    pattern="sg$",
+    pattern="sg ?(.*)",
 )
 async def lastname(steal):
-    if not steal.reply_to_msg_id:
-        await steal.edit("Reply to any user message.")
+    mat = steal.pattern_match.group(1)
+    if not (steal.is_reply and mat):
+        await eor(steal, "`Use this command with reply or give Username/id...`")
         return
+    if mat:
+        user_id = await get_user_id(mat)
     message = await steal.get_reply_message()
+    if message:
+        user_id = message.sender.id
     chat = "@SangMataInfo_bot"
-    user_id = message.sender.id
     id = f"/search_id {user_id}"
     if message.sender.bot:
         await steal.edit("Reply to actual users message.")
