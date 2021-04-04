@@ -41,7 +41,7 @@ async def listwel(event):
 async def _(event):
     wel = get_welcome(event.chat_id)
     if wel:
-        if event.user_joined:
+        if event.user_joined or event.user_added:
             user = await event.get_user()
             chat = await event.get_chat()
             title = chat.title if chat.title else "this chat"
