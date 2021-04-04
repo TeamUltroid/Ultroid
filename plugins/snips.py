@@ -85,7 +85,8 @@ async def notes(e):
         if k:
             msg = k["msg"]
             media = k["media"]
-            if e.get_reply_message():
+            rep = await e.get_reply_message()
+            if rep:
                 await e.reply(msg, file=media)
             else:
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
