@@ -41,9 +41,12 @@ async def an(e):
         pass
     if wt.media:
         ok = pack_bot_file_id(wt.media)
-        add_snip(wrd, ok)
+        if wt.text:
+           add_snip(wrd, wt.text, ok)
+        else:
+           add_snip(wrd, None, ok)
     else:
-        add_snip(wrd, wt.text)
+        add_snip(wrd, wt.text, None)
     await eor(e, "done")
 
 
@@ -80,11 +83,12 @@ async def notes(e):
             xx = xx.split(" ")[0]
         k = get_reply(xx)
         if k:
-            if resolve_bot_file_id(k):
-                await ultroid_bot.send_file(e.chat_id, k)
-                await e.delete()
+            msg = k["msg"]
+            media = k["media"]
+            if e.get_reply_message():
+                await e.reply(msg, file=media)
             else:
-                await e.edit(k)
-
+                await ultroid_bot.send_message(e.chat_id, msg, file=media)
+                await e.delete()
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
