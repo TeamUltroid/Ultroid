@@ -11,7 +11,7 @@ async def setwel(event):
     if event.is_private:
         return await eod(x, "Please use this in a group and not PMs!", time=10)
     if r and r.media:
-        add_welcome(event.chat_id, r.message, pack_bot_file_id(msg.media))
+        add_welcome(event.chat_id, r.message, pack_bot_file_id(r.media))
         await eor(x, "`Welcome note saved`")
     else:
         add_welcome(event.chat_id, event.text.split(" ", maxsplit=1)[1], None)
