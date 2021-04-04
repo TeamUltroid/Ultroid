@@ -38,7 +38,7 @@ async def listwel(event):
 
 @ultroid_bot.on(events.ChatAction())
 async def _(event):
-    wel, med = get_welcome(event.chat_id)
+    wel = get_welcome(event.chat_id)
     if get_welcome(event.chat_id):
         if event.user_joined:
             user = await event.get_user()
@@ -58,9 +58,11 @@ async def _(event):
                 username = f"@{uu}"
             else:
                 username = mention
+            msgg = wel["welcome"]
+            med = wel["media"]
             userid = user.id
             await event.reply(
-                wel.format(
+                msgg.format(
                     mention=mention,
                     title=title,
                     count=count,
