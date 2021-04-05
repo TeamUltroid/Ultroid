@@ -42,7 +42,7 @@ async def an(e):
         pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
-        if "pic" or "gif" in wut:
+        if wut.startswith(("pic", "gif")):
             dl = await bot.download_media(wt.media)
             variable = uf(dl)
             m = "https://telegra.ph" + variable[0]
