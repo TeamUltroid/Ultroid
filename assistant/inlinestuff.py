@@ -65,7 +65,7 @@ async def _(e):
                 fullname = z.full_name
                 code = z.codename
                 link = f"https://orangefox.download/device/{code}"
-                text = f"**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ•[•]({of})** {fullname}\n"
+                text = f"**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ•[•]({ofox})** {fullname}\n"
                 text += f"**••Cᴏᴅᴇɴᴀᴍᴇ••** {code}\n"
                 text += f"**••Bᴜɪʟᴅ Tʏᴘᴇ••** {release}\n"
                 text += f"**••Vᴇʀsɪᴏɴ••** {ver}\n"
