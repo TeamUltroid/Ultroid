@@ -4,7 +4,7 @@
 <h1 align="center">
   <b>Ultroid - UserBot</b>
 </h1>
-*A stable pluggable Telegram userbot, based on Telethon.*
+<b>A stable pluggable Telegram userbot, based on Telethon.</b>   
 [![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
 [![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
 [![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)   
