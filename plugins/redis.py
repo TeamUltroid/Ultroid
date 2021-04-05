@@ -115,7 +115,7 @@ async def _(ult):
     keys = sorted(udB.keys())
     msg = ""
     for x in keys:
-        if x.isdigit():
+        if x.isdigit() or x.startswith("-"):
             pass
         else:
             msg += f"• `{x}`" + "\n"
