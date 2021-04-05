@@ -67,7 +67,10 @@ if vcbot:
                     ),
                 ),
             )
-            await bot.send_message(Var.LOG_CHANNEL, f"`Joined Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`")
+            await bot.send_message(
+                Var.LOG_CHANNEL,
+                f"`Joined Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
+            )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
 
