@@ -60,6 +60,7 @@ ws.on('message', response => {
         }
         case 'left_vc': {
             cache.delete(data.chat_id);
+            break;
         }
         default:
             break;
@@ -224,6 +225,7 @@ export const leaveVc = (chatId: number) => {
             _: 'leave',
             data: {
                 source: source,
+                chat: chatId
             },
         };
         ws.send(JSON.stringify(data));

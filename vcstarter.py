@@ -95,20 +95,7 @@ if vcbot:
         try:
             chat = await get_entity(data["chat"])
         except Exception as ex:
-            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
-        try:
-            full_chat = await vcbot(GetFullChannelRequest(chat))
-        except Exception as ex:
-            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
-        try:
-            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
-        except:
-            call = None
-        if not call:
-            return await bot.send_message(
-                data["chat"]["id"],
-                "`I can't access voice chat.`",
-            )
+            return await bot.send_message(data["chat"], "`" + str(ex) + "`")
 
         try:
             result = await vcbot(
@@ -119,12 +106,12 @@ if vcbot:
             )
             await bot.send_message(
                 Var.LOG_CHANNEL,
-                f"`Left Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
+                f"`Left Voice Chat in {(await bot.get_entity(data['chat'])).title}`",
             )
         except Exception as ex:
-            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"], "`" + str(ex) + "`")
 
-        return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
+        return {"_": "left_vc", "data": {"chat_id": data["chat"]}}
 
     async def websocket_handler(request):
         ws = web.WebSocketResponse()
