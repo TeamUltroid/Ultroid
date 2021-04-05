@@ -13,7 +13,7 @@ async def setwel(event):
         return await eod(x, "Please use this in a group and not PMs!", time=10)
     if r and r.media:
         wut = mediainfo(r.media)
-        if "pic" or "gif" in wut:
+        if wut.startswith(("pic", "gif")):
             dl = await bot.download_media(r.media)
             variable = uf(dl)
             m = "https://telegra.ph" + variable[0]
