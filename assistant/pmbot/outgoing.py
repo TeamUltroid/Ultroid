@@ -24,9 +24,10 @@ async def on_out_mssg(event):
         if event.text.startswith("/"):
             return
         to_user = udB.get(str(x.id))
-        if event.media and not event.text:
-            await asst.send_file(int(to_user), event.media)
-        elif event.media and event.text:
-            await asst.send_file(int(to_user), event.media, caption=event.text)
+        if event.media:
+            if event.text:
+                await asst.send_file(int(to_user), event.media, caption=event.text)
+            else:
+                await asst.send_file(int(to_user), event.media)
         else:
             await asst.send_message(int(to_user), event.text)
