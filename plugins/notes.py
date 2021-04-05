@@ -23,8 +23,8 @@
 """
 
 from pyUltroid.functions.notes_db import *
-from telethon.utils import pack_bot_file_id, resolve_bot_file_id
 from telegraph import upload_file as uf
+from telethon.utils import pack_bot_file_id
 
 from . import *
 
