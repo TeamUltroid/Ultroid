@@ -20,7 +20,7 @@
 
 from pyUltroid.functions.filter_db import *
 from telegraph import upload_file as uf
-from telethon.utils import pack_bot_file_id, resolve_bot_file_id
+from telethon.utils import pack_bot_file_id
 
 from . import *
 
