@@ -92,11 +92,12 @@ async def fl(e):
                 if c in x:
                     k = get_reply(int(chat), c)
                     if k:
-                        pass
-            if resolve_bot_file_id(k):
-                await e.reply(file=k)
-            else:
-                await e.reply(k)
+                        kk = k
+            if kk:
+                msg = k["msg"]
+                media = k["media"]
+                await e.reply(msg, file=media)
+
         else:
             k = get_reply(chat, xx)
             if k:
