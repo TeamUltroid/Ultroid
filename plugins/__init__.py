@@ -12,16 +12,14 @@ from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions import *
 from pyUltroid.functions.all import *
-from pyUltroid.functions.all import ban_time
-from pyUltroid.functions.blacklist_db import *
 from pyUltroid.functions.broadcast_db import *
 from pyUltroid.functions.gban_mute_db import *
-from pyUltroid.functions.goodbye_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from pyUltroid.functions.sudos import *
-from pyUltroid.functions.welcome_db import *
 from pyUltroid.utils import *
+from pyUltroid.functions.welcome_db import *
+from pyUltroid.functions.welcome_db import *
+from pyUltroid.functions.goodbye_db import *
 
 from strings import get_string
 
