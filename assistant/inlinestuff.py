@@ -12,19 +12,18 @@ from urllib.request import urlopen
 
 import requests
 from bs4 import BeautifulSoup
+from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
 from rextester_py import rexec_aio
 from rextester_py.rextester_aio import UnknownLanguage
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
-from orangefoxapi import OrangeFoxAPI
-from . import humanbytes as hb
-from telethon.tl.types import InputWebDocument as wb
-from telethon import events, Button
-from . import *
 
-ofox = 'https://telegra.ph/file/231f0049fcd722824f13b.jpg'
+from . import *
+from . import humanbytes as hb
+
+ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
@@ -39,6 +38,7 @@ python3, r, ruby, scala, scheme, sql server,
 swift, tcl, vb.net"""
 
 ofox_api = OrangeFoxAPI()
+
 
 @in_pattern("ofox")
 @in_owner
@@ -55,7 +55,7 @@ async def _(e):
         await e.answer([kkkk])
     a = ofox_api.releases(codename=phone)
     c = ofox_api.devices(codename=phone)
-    if len(a.data) >0:
+    if len(a.data) > 0:
         fox = []
         for b in a.data:
             ver = b.version
@@ -70,10 +70,29 @@ async def _(e):
                 text += f"**••Bᴜɪʟᴅ Tʏᴘᴇ••** {release}\n"
                 text += f"**••Vᴇʀsɪᴏɴ••** {ver}\n"
                 text += f"**••Sɪᴢᴇ••** {size}\n"
-                fox.append(await e.builder.article(title=f"{fullname}",description=f"{ver}\n{release}",text=text,thumb=wb(of, 0, 'image/jpeg', []),link_preview=True,buttons=[Button.url('Dᴏᴡɴʟᴏᴀᴅ', url=f"{link}"),Button.switch_inline('Sᴇᴀʀᴄʜ Aɢᴀɪɴ', query='ofox ', same_peer=True)]))
+                fox.append(
+                    await e.builder.article(
+                        title=f"{fullname}",
+                        description=f"{ver}\n{release}",
+                        text=text,
+                        thumb=wb(of, 0, "image/jpeg", []),
+                        link_preview=True,
+                        buttons=[
+                            Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
+                            Button.switch_inline(
+                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True
+                            ),
+                        ],
+                    )
+                )
         await e.answer(fox)
     else:
-        sed = e.builder.article(title="Not Found",description="Wrong Codename",text="OʀᴀɴɢFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ Yᴏᴜʀ Pʜᴏɴᴇ Is Eɪᴛʜᴇʀ Nᴏᴛ Oғғɪᴄɪᴀʟʟʏ Bᴜɪʟᴛ Oʀ Yᴏᴜ Hᴀᴠᴇ Eɴᴛᴇʀᴇᴅ Wʀᴏɴɢ Cᴏᴅᴇɴᴀᴍᴇ",buttons=Button.switch_inline('Sᴇᴀʀᴄʜ Aɢᴀɪɴ', query='ofox ', same_peer=True))
+        sed = e.builder.article(
+            title="Not Found",
+            description="Wrong Codename",
+            text="OʀᴀɴɢFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ Yᴏᴜʀ Pʜᴏɴᴇ Is Eɪᴛʜᴇʀ Nᴏᴛ Oғғɪᴄɪᴀʟʟʏ Bᴜɪʟᴛ Oʀ Yᴏᴜ Hᴀᴠᴇ Eɴᴛᴇʀᴇᴅ Wʀᴏɴɢ Cᴏᴅᴇɴᴀᴍᴇ",
+            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
+        )
         await e.answer([sed])
 
 
