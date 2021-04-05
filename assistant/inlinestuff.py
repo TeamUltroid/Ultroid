@@ -40,12 +40,11 @@ swift, tcl, vb.net"""
 ofox_api = OrangeFoxAPI()
 
 
-@in_pattern("ofox")
+@in_pattern("ofox ?(.*)")
 @in_owner
 async def _(e):
-    try:
-        match = e.text.split(" ", maxsplit=1)[1]
-    except IndexError:
+    match = e.pattern_match.group(1)
+    if not match or match == "":
         kkkk = e.builder.article(
             title="Enter Device Codename",
             thumb=wb(ofox, 0, "image/jpeg", []),
