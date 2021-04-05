@@ -29,9 +29,6 @@
 • `{i}paste`
     Include long text / Reply to text file.
 
-• `{i}hastebin`
-    Include long text / Reply to text file.
-
 • `{i}info <username/userid>`
     Reply to someone's msg.
 
@@ -319,39 +316,6 @@ async def _(event):
         await xx.delete()
     except BaseException:
         await xx.edit(reply_text)
-
-
-@ultroid_cmd(
-    pattern="hastebin ?(.*)",
-)
-async def _(event):
-    input_str = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
-    message = "SYNTAX: `.paste <long text to include>`"
-    if input_str:
-        message = input_str
-    elif event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        if previous_message.media:
-            downloaded_file_name = await event.client.download_media(
-                previous_message,
-                "./resources/downloads",
-            )
-            m_list = None
-            with open(downloaded_file_name, "rb") as fd:
-                m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
-            os.remove(downloaded_file_name)
-        else:
-            message = previous_message.message
-    else:
-        message = "SYNTAX: `.hastebin <long text to include>`"
-    url = "https://hastebin.com/documents"
-    r = requests.post(url, data=message).json()
-    url = f"https://hastebin.com/{r['key']}"
-    await xx.edit(f"**Pasted to Hastebin** : [Link]({url})")
 
 
 @ultroid_cmd(
