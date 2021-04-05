@@ -26,7 +26,7 @@
 - [Local Machine](#Deploy-Locally)
 
 # Documentation 
-The documentation can be found [here.](https://ultroid.org/)
+[![Document](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
 
 # Tutorial 
 - Full Tutorial - [![Full Tutorial](https://img.shields.io/badge/Watch%20Now-blue)](https://www.youtube.com/watch?v=9wF7k9qA0Q4)
