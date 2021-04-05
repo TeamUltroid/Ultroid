@@ -7,6 +7,7 @@
 
 import asyncio
 import sys
+
 from os import execl, path, remove
 
 from git import Repo
@@ -183,5 +184,5 @@ async def upstream(ups):
             "`Successfully Updated!\nBot is restarting... Wait for a second!`",
         )
         # Spin a new instance of bot
-        execl(executable, executable, "-m", "pyUltroid")
+        execl(sys.executable, sys.executable, "-m", "pyUltroid")
         return
