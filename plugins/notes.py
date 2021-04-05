@@ -24,6 +24,7 @@
 
 from pyUltroid.functions.notes_db import *
 from telethon.utils import pack_bot_file_id, resolve_bot_file_id
+from telegraph import upload_file as uf
 
 from . import *
 
@@ -44,11 +45,27 @@ async def an(e):
         rem_note(int(chat), wrd)
     except:
         pass
-    if wt.media:
-        ok = pack_bot_file_id(wt.media)
-        add_note(int(chat), wrd, ok)
+    if wt and wt.media:
+        wut = mediainfo(wt.media)
+        if "pic" or "gif" in wut:
+            dl = await bot.download_media(wt.media)
+            variable = uf(dl)
+            m = "https://telegra.ph" + variable[0]
+        elif wut == "video":
+            if wt.media.document.size > 8 * 1000 * 1000:
+                return await eod(x, "`Unsupported Media`")
+            else:
+                dl = await bot.download_media(wt.media)
+                variable = uf(dl)
+                m = "https://telegra.ph" + variable[0]
+        else:
+            m = pack_bot_file_id(wt.media)
+        if wt.text:
+            add_note(int(chat), wrd, wt.text, m)
+        else:
+            add_note(int(chat), wrd, None, m)
     else:
-        add_note(int(chat), wrd, wt.text)
+        add_note(int(chat), wrd, wt.text, None)
     await eor(e, "done")
 
 
@@ -96,13 +113,14 @@ async def notes(e):
             xx = xx.split(" ")[0]
         k = get_reply(chat, xx)
         if k:
-            if resolve_bot_file_id(k):
-                try:
-                    await e.reply(file=k)
-                except BaseException:
-                    pass
+            msg = k["msg"]
+            media = k["media"]
+            rep = await e.get_reply_message()
+            if rep:
+                await e.reply(msg, file=media)
             else:
-                await e.reply(k)
+                await ultroid_bot.send_message(e.chat_id, msg, file=media)
+                await e.delete()
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
