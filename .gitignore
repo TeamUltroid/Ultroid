@@ -14,6 +14,6 @@ ultroid-log.txt
 /*.jpg
 /*.png
 /*.mp4
-addons/*
+addons/
 ultroid.log
 target/npmlist.json
