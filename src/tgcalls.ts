@@ -1,6 +1,6 @@
 import { Chat } from 'typegram';
 import { exec as _exec, spawn } from 'child_process';
-import { JoinVoiceCallResponse } from 'tgcalls/lib/types';
+import { JoinVoiceCallParams,JoinVoiceCallResponse } from 'tgcalls/lib/types';
 import { Stream, TGCalls } from 'tgcalls';
 import env from './env';
 import WebSocket from 'ws';
@@ -39,7 +39,7 @@ interface CachedConnection {
     queue: Queue[];
     currentSong: CurrentSong | null;
     joinResolve?: (value: JoinVoiceCallResponse) => void;
-    source?: number
+    joinedPayload?: JoinVoiceCallParams<{ chat: Chat.SupergroupChat; }>
 }
 
 const ws = new WebSocket(env.WEBSOCKET_URL);
@@ -151,7 +151,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     };
 
     connection.joinVoiceCall = payload => {
-        cachedConnection.source = payload.source;
+        cachedConnection.joinedPayload = payload;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
 
@@ -212,11 +212,18 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         }
     });
     stream.on('leave', async () => {
+        let payload = cachedConnection.joinedPayload;
+        if (!payload) return;
         const data = {
             _: 'join',
             data: {
-                source: cachedConnection.source,
-                chat: chat,
+                ufrag: payload.ufrag,
+                pwd: payload.pwd,
+                hash: payload.hash,
+                setup: payload.setup,
+                fingerprint: payload.fingerprint,
+                source: payload.source,
+                chat: payload.params.chat,
             },
         };
         ws.send(JSON.stringify(data));
