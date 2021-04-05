@@ -39,15 +39,14 @@ async def webss(event):
             except requests.ConnectionError:
                 return await eod(xx, "Invalid URL!", time=5)
 
-    lnk = f"https://screenshotapi.net/api/v1/screenshot?url={xurl}"
+    lnk = f"https://shot.screenshotapi.net/screenshot?url={xurl}"
     ok = requests.get(lnk).json()
     try:
         sshot = ok["screenshot"]
-        crt_at = ok["created_at"]
     except:
         return await eod(xx, "Something Went Wrong :(", time=10)
     await xx.reply(
-        f"**WebShot Generated**\n**URL**: {xurl}\n**Created at**: {crt_at}",
+        f"**WebShot Generated**\n**URL**: {xurl}",
         file=sshot,
         link_preview=False,
         force_document=True,
