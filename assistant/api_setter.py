@@ -17,7 +17,7 @@ async def apiset(event):
         get_string("ast_1"),
         buttons=[
             [Button.inline("Remove.bg", data="rmbg")],
-            [custom.Button.inline("« Back", data="setter")],
+            [Button.inline("« Back", data="setter")],
         ],
     )
 
