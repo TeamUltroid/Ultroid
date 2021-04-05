@@ -104,7 +104,6 @@ async def bl(e):
                     if l.id == e.sender_id:
                         return
                 await e.delete()
-                
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
