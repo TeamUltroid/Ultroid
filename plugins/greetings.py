@@ -127,6 +127,7 @@ async def _(event):
                 file=med,
             )
 
+
 @ultroid_cmd(pattern="setgoodbye")
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
