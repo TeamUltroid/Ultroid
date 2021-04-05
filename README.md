@@ -2,7 +2,7 @@
 A stable pluggable Telegram userbot, based on Telethon.
 
 <p align="center">
-  <img src="./resources/extras/logo_readme.jpg" width="700" height="700" alt="TeamUltroid Logo">
+  <img src="./resources/extras/logo_readme.jpg" alt="TeamUltroid Logo">
 </p>
 <h1 align="center">
   <b>Ultroid - UserBot</b>
