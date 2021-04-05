@@ -94,10 +94,11 @@ Different ways to get your `SESSION`:
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 
-# Credits
-* [Lonami](https://github.com/LonamiWebs/) for [Telethon](https://github.com/LonamiWebs/Telethon)
-
 # License
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
 
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)
+
+# Credits
+* [TeamUltroid-Devs](https://t.me/UltroidDevs) for [Ultroid-Userbot](https://t.me/TeamUltroid)
+* [Lonami](https://github.com/LonamiWebs/) for [Telethon](https://github.com/LonamiWebs/Telethon)
