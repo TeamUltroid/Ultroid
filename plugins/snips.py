@@ -23,6 +23,7 @@
 
 from pyUltroid.functions.snips_db import *
 from telethon.utils import pack_bot_file_id
+from telegraph import upload_file as uf
 
 from . import *
 
@@ -39,12 +40,25 @@ async def an(e):
         rem_snip(int(chat), wrd)
     except:
         pass
-    if wt.media:
-        ok = pack_bot_file_id(wt.media)
-        if wt.text:
-            add_snip(wrd, wt.text, ok)
+    if wt and wt.media:
+        wut = mediainfo(wt.media)
+        if "pic" or "gif" in wut:
+            dl = await bot.download_media(wt.media)
+            variable = uf(dl)
+            m = "https://telegra.ph" + variable[0]
+        elif wut == "video":
+            if wt.media.document.size > 8 * 1000 * 1000:
+                return await eod(x, "`Unsupported Media`")
+            else:
+                dl = await bot.download_media(wt.media)
+                variable = uf(dl)
+                m = "https://telegra.ph" + variable[0]
         else:
-            add_snip(wrd, None, ok)
+            m = pack_bot_file_id(wt.media)
+        if wt.text:
+            add_snip(wrd, wt.text, m)
+        else:
+            add_snip(wrd, None, m)
     else:
         add_snip(wrd, wt.text, None)
     await eor(e, "done")
