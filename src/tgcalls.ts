@@ -1,6 +1,6 @@
 import { Chat } from 'typegram';
 import { exec as _exec, spawn } from 'child_process';
-import { JoinVoiceCallParams, JoinVoiceCallResponse } from 'tgcalls/lib/types';
+import { JoinVoiceCallResponse } from 'tgcalls/lib/types';
 import { Stream, TGCalls } from 'tgcalls';
 import env from './env';
 import WebSocket from 'ws';
@@ -39,7 +39,7 @@ interface CachedConnection {
     queue: Queue[];
     currentSong: CurrentSong | null;
     joinResolve?: (value: JoinVoiceCallResponse) => void;
-    joinedPayload?: JoinVoiceCallParams<{ chat: Chat.SupergroupChat; }>
+    source?: number;
 }
 
 const ws = new WebSocket(env.WEBSOCKET_URL);
@@ -151,7 +151,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     };
 
     connection.joinVoiceCall = payload => {
-        cachedConnection.joinedPayload = payload;
+        cachedConnection.source = payload.source;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
 
@@ -212,6 +212,13 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         }
     });
     stream.on('leave', () => {
+        const data = {
+            _: 'leave',
+            data: {
+                source: cachedConnection.source,
+            },
+        };
+        ws.send(JSON.stringify(data));
         connection.close();
     });
 };
