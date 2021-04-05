@@ -67,7 +67,7 @@ ws.on('message', response => {
 const downloadSong = async (url: string): Promise<DownloadedSong> => {
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
-        const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `ytsearch:"${url}"`]);
+        const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `${url}`]);
 
         ytdl.stderr.on('data', data => console.error(data.toString()));
 
