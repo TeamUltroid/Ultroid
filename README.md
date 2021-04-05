@@ -43,8 +43,8 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Deploy Locally
-- [Traditional Method](#Local-Deploy--Traditional-Method)
-- [Easy Method](#Local-Deploy-Easy-Method)
+- [Traditional Method](#local-deploy---traditional-method)
+- [Easy Method](#local-deploy---easy-method)
 
 ### Local Deploy - Easy Method
 - Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
