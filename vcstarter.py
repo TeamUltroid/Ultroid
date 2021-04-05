@@ -91,6 +91,7 @@ if vcbot:
         }
 
     async def leave_vc(data):
+        await bot.send_message(Var.LOG_CHANNEL,"Received Leave Request")
         try:
             chat = await get_entity(data["chat"])
         except Exception as ex:
