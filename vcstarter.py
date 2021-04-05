@@ -75,7 +75,9 @@ if vcbot:
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
 
-        await bot.send_message(Var.LOG_CHANNEL, "`" + str(result.updates[0].call.params.data) + "`")
+        await bot.send_message(
+            Var.LOG_CHANNEL, "`" + str(result.updates[0].call.params.data) + "`"
+        )
 
         transport = json.loads(result.updates[0].call.params.data)["transport"]
 
