@@ -113,13 +113,6 @@ if vcbot:
             result = await vcbot(
                 LeaveGroupCallRequest(
                     call=call.call,
-                    # source=DataJSON(
-                    #     data=json.dumps(
-                    #         {
-                    #             "ssrc": data["source"],
-                    #         },
-                    #     ),
-                    # ),
                     source=data["source"],
                 ),
             )
