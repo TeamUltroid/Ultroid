@@ -1,6 +1,6 @@
 from pyUltroid.functions.welcome_db import *
-from telethon.utils import get_display_name, pack_bot_file_id
 from telegraph import upload_file as uf
+from telethon.utils import get_display_name, pack_bot_file_id
 
 from . import *
 
@@ -15,15 +15,15 @@ async def setwel(event):
         wut = mediainfo(r.media)
         if "pic" or "gif" in wut:
             dl = await bot.download_media(r.media)
-            variable = uf(dl)               
+            variable = uf(dl)
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
-            if r.media.document.size > 8 * 1000 *1000:
-                 return await eod(x, "`Unsupported Media`")
+            if r.media.document.size > 8 * 1000 * 1000:
+                return await eod(x, "`Unsupported Media`")
             else:
-                 dl = await bot.download_media(r.media)
-                 variable = uf(dl)               
-                 m = "https://telegra.ph" + variable[0]
+                dl = await bot.download_media(r.media)
+                variable = uf(dl)
+                m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
@@ -32,7 +32,7 @@ async def setwel(event):
             add_welcome(event.chat_id, None, m)
         await eor(x, "`Welcome note saved`")
     elif r.text:
-        add_welcome(event.chat_id, r.message , None)
+        add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
         await eod(x, "`Reply to message which u want to set as welcome`")
