@@ -208,18 +208,13 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
             } catch (err) {
                 console.error(err);
             }
-            cachedConnection.currentSong = null;
         }
-    });
-    stream.on('leave',async () => {
-        stream.finish();
-        connection.close();
     });
 };
 
 export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
-        const { stream, source } = cache.get(chatId)!;
+        const { stream, source, connection } = cache.get(chatId)!;
         const data = {
             _: 'leave',
             data: {
@@ -227,7 +222,8 @@ export const leaveVc = (chatId: number) => {
             },
         };
         ws.send(JSON.stringify(data));
-        stream.emit('leave');
+        stream.finish();
+        connection.close();
         cache.delete(chatId);
     }
     return false;
