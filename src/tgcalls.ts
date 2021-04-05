@@ -213,7 +213,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     });
     stream.on('leave', async () => {
         const data = {
-            _: 'join',
+            _: 'leave',
             data: {
                 source: cachedConnection.source,
                 chat: chat,
