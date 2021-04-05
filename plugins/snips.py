@@ -61,7 +61,7 @@ async def an(e):
             add_snip(wrd, None, m)
     else:
         add_snip(wrd, wt.text, None)
-    await eor(e, "done")
+    await eor(e, f"Done : snip `${wrd}` Saved.")
 
 
 @ultroid_cmd(pattern="remsnip ?(.*)")
@@ -72,7 +72,7 @@ async def rs(e):
     if wrd.startswith("$"):
         wrd = wrd.replace("$", "")
     rem_snip(wrd)
-    await eor(e, "done")
+    await eor(e, f"Done : snip `${wrd}` Removed.")
 
 
 @ultroid_cmd(pattern="listsnip")
@@ -101,7 +101,7 @@ async def notes(e):
             media = k["media"]
             rep = await e.get_reply_message()
             if rep:
-                await e.reply(msg, file=media)
+                await rep.reply(msg, file=media)
             else:
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
                 await e.delete()
