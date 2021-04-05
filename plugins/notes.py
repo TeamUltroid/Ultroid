@@ -66,7 +66,7 @@ async def an(e):
             add_note(int(chat), wrd, None, m)
     else:
         add_note(int(chat), wrd, wt.text, None)
-    await eor(e, "done")
+    await eor(e, f"Done Note : `#{wrd}` saved.")
 
 
 @ultroid_cmd(pattern="remnote ?(.*)")
@@ -81,7 +81,7 @@ async def rn(e):
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)
-    await eor(e, "done")
+    await eor(e, f"Done Note: `#{wrd}` Removed.")
 
 
 @ultroid_cmd(pattern="listnote$")
@@ -115,12 +115,7 @@ async def notes(e):
         if k:
             msg = k["msg"]
             media = k["media"]
-            rep = await e.get_reply_message()
-            if rep:
-                await e.reply(msg, file=media)
-            else:
-                await ultroid_bot.send_message(e.chat_id, msg, file=media)
-                await e.delete()
+            await e.reply(msg, file=media)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
