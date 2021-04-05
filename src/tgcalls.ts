@@ -1,6 +1,6 @@
 import { Chat } from 'typegram';
 import { exec as _exec, spawn } from 'child_process';
-import { JoinVoiceCallParams,JoinVoiceCallResponse } from 'tgcalls/lib/types';
+import { JoinVoiceCallParams, JoinVoiceCallResponse } from 'tgcalls/lib/types';
 import { Stream, TGCalls } from 'tgcalls';
 import env from './env';
 import WebSocket from 'ws';
@@ -211,22 +211,8 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
             cachedConnection.currentSong = null;
         }
     });
-    stream.on('leave', async () => {
-        let payload = cachedConnection.joinedPayload;
-        if (!payload) return;
-        const data = {
-            _: 'leave',
-            data: {
-                ufrag: payload.ufrag,
-                pwd: payload.pwd,
-                hash: payload.hash,
-                setup: payload.setup,
-                fingerprint: payload.fingerprint,
-                source: payload.source,
-                chat: payload.params.chat,
-            },
-        };
-        ws.send(JSON.stringify(data));
+    stream.on('leave', () => {
+        connection.close();
     });
 };
 
@@ -234,7 +220,7 @@ export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
         stream.emit('leave');
-        return true;
+        cache.delete(chatId);
     }
     return false;
 }
