@@ -40,7 +40,7 @@ async def af(e):
         return await eod(e, "`Give the word to blacklist..`")
     wrd = e.text[10:]
     add_blacklist(int(chat), wrd)
-    await eor(e, "Done")
+    await eor(e, f"Done : `{wrd}` Blacklisted here.")
 
 
 @ultroid_cmd(pattern="remblacklist ?(.*)")
@@ -53,7 +53,7 @@ async def rf(e):
     if not wrd:
         return await eod(e, "`Give the word to remove from blacklist..`")
     rem_blacklist(int(chat), wrd)
-    await eor(e, "done")
+    await eor(e, f"Done : `{wrd}` Removed from Blacklist.")
 
 
 @ultroid_cmd(pattern="listblacklist")
@@ -103,10 +103,8 @@ async def bl(e):
                 ):
                     if l.id == e.sender_id:
                         return
-                try:
-                    await e.delete()
-                except BaseException:
-                    pass
+                await e.delete()
+                
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
