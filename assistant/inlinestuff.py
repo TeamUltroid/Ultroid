@@ -53,8 +53,8 @@ async def _(e):
             buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
         )
         await e.answer([kkkk])
-    a = ofox_api.releases(codename=phone)
-    c = ofox_api.devices(codename=phone)
+    a = ofox_api.releases(codename=match)
+    c = ofox_api.devices(codename=match)
     if len(a.data) > 0:
         fox = []
         for b in a.data:
