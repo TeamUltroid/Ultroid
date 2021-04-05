@@ -20,6 +20,7 @@
 
 from pyUltroid.functions.filter_db import *
 from telethon.utils import pack_bot_file_id, resolve_bot_file_id
+from telegraph import upload_file as uf
 
 from . import *
 
@@ -35,11 +36,27 @@ async def af(e):
         rem_filter(int(chat), wrd)
     except:
         pass
-    if wt.media:
-        ok = pack_bot_file_id(wt.media)
-        add_filter(int(chat), wrd, ok)
+    if wt and wt.media:
+        wut = mediainfo(wt.media)
+        if wut.startswith(("pic", "gif")):
+            dl = await bot.download_media(wt.media)
+            variable = uf(dl)
+            m = "https://telegra.ph" + variable[0]
+        elif wut == "video":
+            if wt.media.document.size > 8 * 1000 * 1000:
+                return await eod(x, "`Unsupported Media`")
+            else:
+                dl = await bot.download_media(wt.media)
+                variable = uf(dl)
+                m = "https://telegra.ph" + variable[0]
+        else:
+            m = pack_bot_file_id(wt.media)
+        if wt.text:
+            add_filter(int(chat), wrd, wt.text, m)
+        else:
+            add_filter(int(chat), wrd, None, m)
     else:
-        add_filter(int(chat), wrd, wt.text)
+        add_filter(int(chat), wrd, wt.text, None)
     await eor(e, "done")
 
 
@@ -83,10 +100,9 @@ async def fl(e):
         else:
             k = get_reply(chat, xx)
             if k:
-                if resolve_bot_file_id(k):
-                    await e.reply(file=k)
-                else:
-                    await e.reply(k)
+            msg = k["msg"]
+            media = k["media"]
+            await e.reply(msg, file=media)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
