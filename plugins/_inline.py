@@ -221,6 +221,13 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 ),
             ],
             [
+                Button.switch_inline(
+                    "OʀᴀɴɢᴇFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ",
+                    query="ofox beryllium",
+                    same_peer=True,
+                ),
+            ],
+            [
                 Button.inline(
                     "<- Bᴀᴄᴋ",
                     data="open",
