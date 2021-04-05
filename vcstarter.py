@@ -129,14 +129,9 @@ if vcbot:
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
 
-        transport = json.loads(result.updates[0].call.params.data)["transport"]
+        json.loads(result.updates[0].call.params.data)["transport"]
 
-        return {
-            "_": "left_vc",
-            "data": {
-                "chat_id": data["chat"]["id"]
-            }
-        }
+        return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
 
     async def websocket_handler(request):
         ws = web.WebSocketResponse()
