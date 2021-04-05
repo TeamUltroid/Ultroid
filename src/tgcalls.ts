@@ -55,7 +55,6 @@ ws.on('message', response => {
             if (connection) {
                 connection.joinResolve?.(data);
             }
-
             break;
         }
 
@@ -204,9 +203,22 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
             }
         } else {
             cachedConnection.currentSong = null;
+            leaveVc(chat.id);
         }
     });
 };
+
+export const leaveVc = (chatID: number) => {
+    const data = {
+        _: 'leave',
+        data: {
+            chat: {
+                id: chatID 
+            }
+        },
+    };
+    ws.send(JSON.stringify(data));
+}
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
     if (!cache.has(chat.id)) {

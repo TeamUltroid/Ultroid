@@ -17,3 +17,4 @@ ultroid-log.txt
 addons/
 ultroid.log
 target/npmlist.json
+node_modules

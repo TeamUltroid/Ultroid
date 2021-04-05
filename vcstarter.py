@@ -132,16 +132,10 @@ if vcbot:
         transport = json.loads(result.updates[0].call.params.data)["transport"]
 
         return {
-            "_": "get_left",
+            "_": "left_vc",
             "data": {
-                "chat_id": data["chat"]["id"],
-                "transport": {
-                    "ufrag": transport["ufrag"],
-                    "pwd": transport["pwd"],
-                    "fingerprints": transport["fingerprints"],
-                    "candidates": transport["candidates"],
-                },
-            },
+                "chat_id": data["chat"]["id"]
+            }
         }
 
     async def websocket_handler(request):
