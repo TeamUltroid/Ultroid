@@ -75,7 +75,7 @@ async def _(e):
                         title=f"{fullname}",
                         description=f"{ver}\n{release}",
                         text=text,
-                        thumb=wb(of, 0, "image/jpeg", []),
+                        thumb=wb(ofox, 0, "image/jpeg", []),
                         link_preview=True,
                         buttons=[
                             Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
