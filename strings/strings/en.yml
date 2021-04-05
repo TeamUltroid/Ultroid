@@ -48,7 +48,7 @@ afk_1: "`No Longer Afk\n\n
 Was away for ~ {}`"
 afk_2: "#AFK\n
 Set AFK mode to False.\n
-Was AFK for {}`"
+Was AFK for `{}`"
 afk_3: "`I'm currently AFK.\n
 Last seen {} ago.`\n\n
 **Reason:** `{}`"
