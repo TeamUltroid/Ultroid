@@ -215,7 +215,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         let payload = cachedConnection.joinedPayload;
         if (!payload) return;
         const data = {
-            _: 'join',
+            _: 'leave',
             data: {
                 ufrag: payload.ufrag,
                 pwd: payload.pwd,
