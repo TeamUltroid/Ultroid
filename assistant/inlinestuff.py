@@ -18,9 +18,13 @@ from rextester_py.rextester_aio import UnknownLanguage
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
-
+from orangefoxapi import OrangeFoxAPI
+from . import humanbytes as hb
+from telethon.tl.types import InputWebDocument as wb
+from telethon import events, Button
 from . import *
 
+ofox = 'https://telegra.ph/file/231f0049fcd722824f13b.jpg'
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
@@ -33,6 +37,44 @@ objective-c, ocaml, octave, oracle, pascal,
 perl, php, postgresql, prolog, python,
 python3, r, ruby, scala, scheme, sql server,
 swift, tcl, vb.net"""
+
+ofox_api = OrangeFoxAPI()
+
+@in_pattern("ofox")
+@in_owner
+async def _(e):
+    try:
+        match = e.text.split(" ", maxsplit=1)[1]
+    except IndexError:
+        kkkk = e.builder.article(
+            title="Enter Device Codename",
+            thumb=wb(ofox, 0, "image/jpeg", []),
+            text="**OFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ**\n\nYou didn't search anything",
+            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
+        )
+        await e.answer([kkkk])
+    a = ofox_api.releases(codename=phone)
+    c = ofox_api.devices(codename=phone)
+    if len(a.data) >0:
+        fox = []
+        for b in a.data:
+            ver = b.version
+            release = b.type
+            size = hb(b.size)
+            for z in c.data:
+                fullname = z.full_name
+                code = z.codename
+                link = f"https://orangefox.download/device/{code}"
+                text = f"**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ•[•]({of})** {fullname}\n"
+                text += f"**••Cᴏᴅᴇɴᴀᴍᴇ••** {code}\n"
+                text += f"**••Bᴜɪʟᴅ Tʏᴘᴇ••** {release}\n"
+                text += f"**••Vᴇʀsɪᴏɴ••** {ver}\n"
+                text += f"**••Sɪᴢᴇ••** {size}\n"
+                fox.append(await e.builder.article(title=f"{fullname}",description=f"{ver}\n{release}",text=text,thumb=wb(of, 0, 'image/jpeg', []),link_preview=True,buttons=[Button.url('Dᴏᴡɴʟᴏᴀᴅ', url=f"{link}"),Button.switch_inline('Sᴇᴀʀᴄʜ Aɢᴀɪɴ', query='ofox ', same_peer=True)]))
+        await e.answer(fox)
+    else:
+        sed = e.builder.article(title="Not Found",description="Wrong Codename",text="OʀᴀɴɢFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ Yᴏᴜʀ Pʜᴏɴᴇ Is Eɪᴛʜᴇʀ Nᴏᴛ Oғғɪᴄɪᴀʟʟʏ Bᴜɪʟᴛ Oʀ Yᴏᴜ Hᴀᴠᴇ Eɴᴛᴇʀᴇᴅ Wʀᴏɴɢ Cᴏᴅᴇɴᴀᴍᴇ",buttons=Button.switch_inline('Sᴇᴀʀᴄʜ Aɢᴀɪɴ', query='ofox ', same_peer=True))
+        await e.answer([sed])
 
 
 @in_pattern("fl2lnk ?(.*)")
