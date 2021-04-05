@@ -1,5 +1,6 @@
 from pyUltroid.functions.welcome_db import *
 from telethon.utils import get_display_name, pack_bot_file_id
+from telegraph import upload_file as uf
 
 from . import *
 
@@ -11,11 +12,30 @@ async def setwel(event):
     if event.is_private:
         return await eod(x, "Please use this in a group and not PMs!", time=10)
     if r and r.media:
-        add_welcome(event.chat_id, r.message, pack_bot_file_id(r.media))
+        wut = mediainfo(r.media)
+        if "pic" or "gif" in wut:
+            dl = await bot.download_media(r.media)
+            variable = uf(dl)               
+            m = "https://telegra.ph" + variable[0]
+        elif wut == "video":
+            if r.media.document.size > 8 * 1000 *1000:
+                 return await eod(x, "`Unsupported Media`")
+            else:
+                 dl = await bot.download_media(r.media)
+                 variable = uf(dl)               
+                 m = "https://telegra.ph" + variable[0]
+        else:
+            m = pack_bot_file_id(r.media)
+        if r.text:
+            add_welcome(event.chat_id, r.message, m)
+        else:
+            add_welcome(event.chat_id, None, m)
+        await eor(x, "`Welcome note saved`")
+    elif r.text:
+        add_welcome(event.chat_id, r.message , None)
         await eor(x, "`Welcome note saved`")
     else:
-        add_welcome(event.chat_id, event.text.split(" ", maxsplit=1)[1], None)
-        await eor(x, "`Welcome note saved`")
+        await eod(x, "`Reply to message which u want to set as welcome`")
 
 
 @ultroid_cmd(pattern="clearwelcome$")
@@ -26,7 +46,7 @@ async def clearwel(event):
     await eod(event, "`Welcome Note Deleted`")
 
 
-@ultroid_cmd(pattern="listwelcome$")
+@ultroid_cmd(pattern="getwelcome$")
 async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
