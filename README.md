@@ -100,7 +100,7 @@ Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 # Credits
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon](https://github.com/LonamiWebs/Telethon)
 
-# Licensing
+# License
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
 
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)
