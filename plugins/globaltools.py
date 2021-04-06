@@ -152,7 +152,7 @@ async def gucast(event):
     if not xx:
         return eor(event, "`Give some text to Globally Broadcast`")
     tt = event.text
-    msg = tt[6:]
+    msg = tt[7:]
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
