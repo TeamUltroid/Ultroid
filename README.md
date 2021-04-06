@@ -5,7 +5,7 @@
   <b>Ultroid - UserBot</b>
 </h1>
 
-<b>A stable pluggable Telegram userbot, based on Telethon.</b>   
+<b>A stable pluggable Telegram userbot + vc music bot, based on Telethon.</b>   
 
 [![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
 [![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
