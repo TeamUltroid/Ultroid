@@ -5,6 +5,8 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+"""
 
 from pyUltroid.functions.vc_sudos import (add_vcsudo, del_vcsudo, get_vcsudos,
                                           is_vcsudo)
