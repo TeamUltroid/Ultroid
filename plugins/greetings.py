@@ -28,9 +28,10 @@
 • `{i}getgoodbye` 
     Get the goodbye message in the current chat.
 
-Note: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.
-
 """
+Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters."
+
+
 import os
 
 from telegraph import upload_file as uf
@@ -225,4 +226,4 @@ async def _(event):
             )
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"} + Note)
