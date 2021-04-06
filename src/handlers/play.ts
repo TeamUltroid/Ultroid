@@ -1,3 +1,12 @@
+/**
+* Ultroid - UserBot
+* Copyright (C) 2020 TeamUltroid
+*
+* This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+* PLease read the GNU Affero General Public License in
+* <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+**/
+
 import { Composer, deunionize, Markup } from 'telegraf';
 import { addToQueue, getQueue } from '../tgcalls';
 import { getCurrentSong } from '../tgcalls';

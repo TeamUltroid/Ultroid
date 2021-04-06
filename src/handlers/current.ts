@@ -1,9 +1,18 @@
+/**
+* Ultroid - UserBot
+* Copyright (C) 2020 TeamUltroid
+*
+* This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+* PLease read the GNU Affero General Public License in
+* <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+**/
+
 import { Composer, Markup } from 'telegraf';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import escapeHtml from '@youtwitface/escape-html';
 
-export const songHandler = Composer.command('current',async ctx => {
+export const songHandler = Composer.command('current', async ctx => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {
