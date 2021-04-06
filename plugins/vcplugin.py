@@ -14,6 +14,9 @@
 • `{i}stopvc`
     Stop Group Call in a group.
 
+• `{i}playvc`
+    Start Voice Chat Bot to receive Commands.
+
 • `{i}vcinvite`
     Invite all members of group in Group Call.
     (You must be joined)
@@ -23,6 +26,10 @@
 
 • `{i}rmvcaccess <id/username/reply to msg>`
     Remove access of Voice Chat Bot.
+
+• **Voice Chat Bot Commands**
+   `/play ytsearch:song name`
+   `/play youtube link`
 
 """
 
@@ -59,6 +66,14 @@ async def _(e):
         await eor(e, "`Voice Chat Stopped...`")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
+
+
+@ultroid_cmd(
+pattern="playvc$",
+)
+async def _(e):
+    await eor(e, "`VC bot started...`")
+    await bash("npm start")
 
 
 @ultroid_cmd(
