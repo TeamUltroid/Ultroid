@@ -28,10 +28,20 @@ if vcbot:
     async def join_call(data):
         try:
             chat = await get_entity(data["chat"])
+        except ValueError:
+            stree = (await vcbot.get_me()).first_name
+            return await bot.send_message(
+                data["chat"]["id"], f"Please add {stree} in this group.`"
+            )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
             full_chat = await vcbot(GetFullChannelRequest(chat))
+        except ValueError:
+            stree = (await vcbot.get_me()).first_name
+            return await bot.send_message(
+                data["chat"]["id"], f"Please add {stree} in this group.`"
+            )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
@@ -71,16 +81,6 @@ if vcbot:
             await bot.send_message(
                 Var.LOG_CHANNEL,
                 f"`Joined Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
-            )
-        except ChannelPrivateError:
-            stree = (await vcbot.get_me()).first_name
-            return await bot.send_message(
-                data["chat"]["id"], f"Please add {stree} in this group.`"
-            )
-        except ValueError:
-            stree = (await vcbot.get_me()).first_name
-            return await bot.send_message(
-                data["chat"]["id"], f"Please add {stree} in this group.`"
             )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
