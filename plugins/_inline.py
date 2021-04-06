@@ -389,7 +389,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = f"{plugin_name} has no detailed help..."
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TheUltroid"
+        reply_pop_up_alert += "\n© @TeamUltroid"
         try:
             if event.query.user_id in sed:
                 await event.edit(
@@ -440,7 +440,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = f"{plugin_name} has no detailed help..."
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TheUltroid"
+        reply_pop_up_alert += "\n© @TeamUltroid"
         try:
             if event.query.user_id in sed:
                 await event.edit(
