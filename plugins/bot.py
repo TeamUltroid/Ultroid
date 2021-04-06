@@ -124,11 +124,15 @@ async def cmds(event):
     pattern="restart (s|)",
 )
 async def restartbt(ult):
-    type_of_group = e.pattern_match.group(1)
+    type_of_group = ult.pattern_match.group(1)
     run = subprocess.call
     if type_of_group == "s":
-        run(["pkill", "python3"])
-        run(["python3", "-m", "pyUltroid"])
+        try:
+            run(["pkill", "python3"])
+            run(["python3", "-m", "pyUltroid"])
+            await eor("Soft Restarted Successfully!")
+        except:
+            await eor("Umm Some Problems! Send the logs in Ultroid Support")
     else:
         await restart(ult)
 
