@@ -88,6 +88,7 @@ async def fl(e):
     if x:
         if " " in xx:
             xx = xx.split(" ")
+            kk = ""
             for c in xx:
                 if c in x:
                     k = get_reply(int(chat), c)
