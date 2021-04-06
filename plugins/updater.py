@@ -90,7 +90,9 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "now" not in conf:
         if changelog:
-            changelog_str = changelog + f"\n\nUse <code>{hndlr}update now</code> to update!"
+            changelog_str = (
+                changelog + f"\n\nUse <code>{hndlr}update now</code> to update!"
+            )
             if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
                 file = open("output.txt", "w+")
@@ -104,11 +106,7 @@ async def upstream(ups):
                 )
                 remove("output.txt")
             else:
-                return await eod(
-                    pagal,
-                    changelog_str,
-                    parse_mode="html"
-                )
+                return await eod(pagal, changelog_str, parse_mode="html")
         else:
             await eod(
                 pagal,
