@@ -68,8 +68,6 @@ ws.on('message', response => {
             break;
         }
         case 'left_vc': {
-            const { connection } = cache.get(data.chat_id)!;
-            connection.close();
             cache.delete(data.chat.id);
             break;
         }
@@ -231,10 +229,11 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
             _: 'leave',
             data: {
                 source: cachedConnection.source,
+                chat: chat
             },
         };
         ws.send(JSON.stringify(data));
-        connection.close();
+        cachedConnection.connection.close();
     });
 };
 
