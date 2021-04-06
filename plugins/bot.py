@@ -33,7 +33,6 @@
 
 import math
 import shutil
-import subprocess
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
@@ -126,11 +125,10 @@ async def cmds(event):
 )
 async def restartbt(ult):
     type_of_group = ult.pattern_match.group(1)
-    run = subprocess.call
     if type_of_group == "s":
+       await eor(ult, "`Restarting...`")
         try:
-            run(["pkill", "python3"])
-            run(["python3", "-m", "pyUltroid"])
+            await bash("pkill python3 && python3 -m pyUltroid")
             await eor(ult, "Soft Restarted Successfully!")
         except:
             await eod(ult, "Umm Some Problems! Send the logs in Ultroid Support")
