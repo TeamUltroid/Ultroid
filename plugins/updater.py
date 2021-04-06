@@ -9,7 +9,6 @@ import asyncio
 import sys
 from os import execl, path, remove
 
-
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
