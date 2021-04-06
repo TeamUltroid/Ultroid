@@ -172,4 +172,3 @@ async def set(event):
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
-
