@@ -4,7 +4,14 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+"""
+✘ Commands Available -
+• `{i}update`
+    See changelogs if any update is available.
 
+• `{i}update now`
+    (Force)Update your bots to the latest version.
+"""
 import asyncio
 import sys
 from os import execl, path, remove
@@ -180,3 +187,5 @@ async def upstream(ups):
         # Spin a new instance of bot
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
         return
+
+    HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
