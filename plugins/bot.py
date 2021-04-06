@@ -126,6 +126,7 @@ async def cmds(event):
 async def restartbt(ult):
     await restart(ult)
 
+
 @ultroid_cmd(
     pattern="logs$",
 )
