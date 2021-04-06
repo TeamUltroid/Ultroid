@@ -20,6 +20,7 @@
 
 import re
 
+from pyUltroid.misc._decorators import sed
 from telethon.tl.functions.users import GetFullUserRequest
 
 from . import *
@@ -33,7 +34,8 @@ async def _(ult):
         try:
             if ult.sender_id != Var.OWNER_ID:
                 return await eor(
-                    ult, "You are sudo user, You cant add other sudo user."
+                    ult,
+                    "You are sudo user, You cant add other sudo user.",
                 )
         except BaseException:
             pass
@@ -50,11 +52,12 @@ async def _(ult):
             return await ok.edit("You cant add yourself as Sudo User...")
         elif is_sudo(id):
             return await ok.edit(
-                f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`"
+                f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`",
             )
         elif add_sudo(id):
+            udB.set("SUDO", "True")
             return await ok.edit(
-                f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**"
+                f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**",
             )
         else:
             return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BROKE ITSELF`")
@@ -97,11 +100,12 @@ async def _(ult):
         return await ok.edit("`Invalid UserID`")
     elif is_sudo(id):
         return await ok.edit(
-            f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`"
+            f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`",
         )
     elif add_sudo(id):
+        udB.set("SUDO", "True")
         return await ok.edit(
-            f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**"
+            f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**\n\nDo Restart",
         )
     else:
         return await ok.edit(f"**Failed to add `{id}` as SUDO User ... **")
@@ -115,7 +119,8 @@ async def _(ult):
         try:
             if ult.sender_id != Var.OWNER_ID:
                 return await eor(
-                    ult, "You are sudo user, You cant add other sudo user."
+                    ult,
+                    "You are sudo user, You cant add other sudo user.",
                 )
         except BaseException:
             pass
@@ -130,11 +135,11 @@ async def _(ult):
         sed.remove(id)
         if not is_sudo(id):
             return await ok.edit(
-                f"[{user.user.first_name}](tg://user?id={id}) `wasn't a SUDO User ...`"
+                f"[{user.user.first_name}](tg://user?id={id}) `wasn't a SUDO User ...`",
             )
         elif del_sudo(id):
             return await ok.edit(
-                f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User(s)**"
+                f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User(s)**",
             )
         else:
             return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`")
@@ -179,11 +184,11 @@ async def _(ult):
         return await ok.edit("`Invalid UserID`")
     elif not is_sudo(id):
         return await ok.edit(
-            f"[{user.user.first_name}](tg://user?id={id}) wasn't a SUDO user ..."
+            f"[{user.user.first_name}](tg://user?id={id}) wasn't a SUDO user ...",
         )
     elif del_sudo(id):
         return await ok.edit(
-            f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User**"
+            f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User**",
         )
     else:
         return await ok.edit(f"**Failed to Remove `{id}` as SUDO User ... **")
@@ -208,7 +213,12 @@ async def _(ult):
             msg += f"• [{user.user.first_name}](tg://user?id={i}) ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    return await ok.edit(f"**List of SUDO Users :**\n{msg}")
+    m = udB.get("SUDO") if udB.get("SUDO") else "False"
+    if m == "False":
+        m = "[False](https://telegra.ph/Ultroid-04-06)"
+    return await ok.edit(
+        f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
+    )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

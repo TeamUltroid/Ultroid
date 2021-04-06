@@ -18,6 +18,7 @@
     View all plugin names.
 
 • `{i}restart`
+    s - soft restart
     To restart your bot.
 
 • `{i}logs`
@@ -30,9 +31,7 @@
     Turn off your bot.
 """
 
-import asyncio
 import math
-import os
 import shutil
 import time
 from datetime import datetime as dt
@@ -42,7 +41,10 @@ import heroku3
 import psutil
 import requests
 from git import Repo
+from pyUltroid import __version__ as UltVer
+from search_engine_parser.core.utils import get_rand_user_agent as grua
 from telethon import __version__
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
 
@@ -66,26 +68,37 @@ except BaseException:
 )
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
-    uptime = grt((time.time() - start_time))
+    uptime = grt(time.time() - start_time)
     header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    y = Repo().active_branch
+    xx = Repo().remotes[0].config_reader.get("url")
+    rep = xx.replace(".git", f"/tree/{y}")
+    kk = f" `[{y}]({rep})` "
     als = (get_string("alive_1")).format(
         header,
         OWNER_NAME,
         ultroid_version,
+        UltVer,
         uptime,
         pyver(),
         __version__,
-        Repo().active_branch,
+        kk,
     )
     if pic is None:
-        await ult.edit(als)
+        return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
-        await ult.delete()
-        await ult.reply(als, file=pic)
+        try:
+            await ult.reply(als, file=pic)
+            await ult.delete()
+        except ChatSendMediaForbiddenError:
+            await eor(ult, als)
     else:
-        await ult.delete()
-        await ultroid_bot.send_message(ult.chat_id, file=pic)
-        await ultroid_bot.send_message(ult.chat_id, als)
+        try:
+            await ultroid_bot.send_message(ult.chat_id, file=pic)
+            await ultroid_bot.send_message(ult.chat_id, als)
+            await ult.delete()
+        except ChatSendMediaForbiddenError:
+            await eor(ult, als)
 
 
 @ultroid_cmd(
@@ -94,11 +107,9 @@ async def lol(ult):
 async def _(event):
     start = dt.now()
     x = await eor(event, "`Pong !`")
-    if event.fwd_from:
-        return
     end = dt.now()
     ms = (end - start).microseconds / 1000
-    uptime = grt((time.time() - start_time))
+    uptime = grt(time.time() - start_time)
     await x.edit(get_string("ping").format(ms, uptime))
 
 
@@ -121,41 +132,32 @@ async def restartbt(ult):
 )
 async def _(ult):
     xx = await eor(ult, "`Processing...`")
-    if HEROKU_API is None and HEROKU_APP_NAME is None:
-        return await xx.edit("Please set `HEROKU_APP_NAME` and `HEROKU_API` in vars.")
-    await xx.edit("`Downloading Logs...`")
-    with open("logs-ultroid.txt", "w") as log:
-        log.write(app.get_log())
-    ok = app.get_log()
+    with open("ultroid.log") as f:
+        k = f.read()
     key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": ok})
+        requests.post("https://nekobin.com/api/documents", json={"content": k})
         .json()
         .get("result")
         .get("key")
     )
     url = f"https://nekobin.com/{key}"
-    await ult.client.send_file(
+    await ultroid.send_file(
         ult.chat_id,
-        "logs-ultroid.txt",
-        reply_to=ult.id,
-        caption=get_string("log").format(url),
+        file="ultroid.log",
+        caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
     )
-    await xx.edit("`Uploading...`")
-    await asyncio.sleep(1)
+    await xx.edit("Done")
     await xx.delete()
-    return os.remove("logs-ultroid.txt")
 
 
 @ultroid_cmd(
     pattern="usage$",
 )
 async def dyno_usage(dyno):
+    if not HEROKU_API and HEROKU_APP_NAME:
+        return
     dyn = await eor(dyno, "`Processing...`")
-    useragent = (
-        "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/80.0.3987.149 Mobile Safari/537.36"
-    )
+    useragent = grua()
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
@@ -166,7 +168,7 @@ async def dyno_usage(dyno):
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await dyno.edit(
-            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
+            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n",
         )
     result = r.json()
     quota = result["account_quota"]

@@ -54,11 +54,13 @@ async def inline_handler(event):
                         buttons=[
                             [
                                 Button.switch_inline(
-                                    "Search Again..?", query="send ", same_peer=True
-                                )
-                            ]
+                                    "Search Again..?",
+                                    query="send ",
+                                    same_peer=True,
+                                ),
+                            ],
                         ],
-                    )
+                    ),
                 )
             except BaseException:
                 pass
@@ -73,9 +75,11 @@ async def inline_handler(event):
                 buttons=[
                     [
                         Button.switch_inline(
-                            "Search Again..?", query="send ", same_peer=True
-                        )
-                    ]
+                            "Search Again..?",
+                            query="send ",
+                            same_peer=True,
+                        ),
+                    ],
                 ],
             )
             await event.answer([ultroid])
@@ -88,9 +92,11 @@ async def inline_handler(event):
                 buttons=[
                     [
                         Button.switch_inline(
-                            "Search Again", query="send ", same_peer=True
-                        )
-                    ]
+                            "Search Again",
+                            query="send ",
+                            same_peer=True,
+                        ),
+                    ],
                 ],
             )
             await event.answer([ultroidcode])

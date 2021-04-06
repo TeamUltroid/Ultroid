@@ -25,11 +25,12 @@
 
 • `{i}gcast <Message>`
     Globally Send that msg in all grps.
+
+• `{i}gucast <Message>`
+    Globally Send that msg in all Ur Chat Users.
 """
 
 from telethon import events
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
 
 from . import *
 
@@ -69,7 +70,7 @@ async def _(e):
                 pass
     ungban(userid)
     await xx.edit(
-        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`"
+        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
 
 
@@ -103,7 +104,9 @@ async def _(e):
         return await eod(xx, "`I can't gban my Developers.`", time=3)
     if is_gbanned(userid):
         return await eod(
-            xx, "`User is already gbanned and added to gbanwatch.`", time=4
+            xx,
+            "`User is already gbanned and added to gbanwatch.`",
+            time=4,
         )
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
@@ -114,7 +117,7 @@ async def _(e):
                 pass
     gban(userid)
     await xx.edit(
-        f"`Gbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nAdded to gbanwatch.`"
+        f"`Gbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nAdded to gbanwatch.`",
     )
 
 
@@ -132,6 +135,29 @@ async def gcast(event):
     done = 0
     async for x in ultroid_bot.iter_dialogs():
         if x.is_group:
+            chat = x.id
+            try:
+                done += 1
+                await ultroid_bot.send_message(chat, msg)
+            except:
+                er += 1
+    await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
+
+
+@ultroid_cmd(
+    pattern="gucast ?(.*)",
+)
+async def gucast(event):
+    xx = event.pattern_match.group(1)
+    if not xx:
+        return eor(event, "`Give some text to Globally Broadcast`")
+    tt = event.text
+    msg = tt[7:]
+    kk = await eor(event, "`Globally Broadcasting Msg...`")
+    er = 0
+    done = 0
+    async for x in ultroid_bot.iter_dialogs():
+        if x.is_user and not x.entity.bot:
             chat = x.id
             try:
                 done += 1
@@ -266,7 +292,9 @@ async def _(e):
             if chat.admin_rights:
                 try:
                     await e.client.edit_permissions(
-                        chat.id, user.id, view_messages=False
+                        chat.id,
+                        user.id,
+                        view_messages=False,
                     )
                     gban_watch = f"`Gbanned User` [{user.first_name}](tg://user?id={user.id}) `Spotted\n"
                     gban_watch += f"Banned Successfully`"

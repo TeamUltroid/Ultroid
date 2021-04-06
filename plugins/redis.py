@@ -49,8 +49,9 @@ async def _(ult):
         redisdata = Redis(data[0])
         await ok.edit(
             "Redis Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
-                data[0], redisdata
-            )
+                data[0],
+                redisdata,
+            ),
         )
     except BaseException:
         await ok.edit("`Something Went Wrong`")
@@ -66,7 +67,7 @@ async def _(ult):
         return await ult.edit(f"Please use `{hndlr}getkeys <keyname>`")
     try:
         value = Redis(val)
-        await ok.edit("Key: `{}`\nValue: `{}`".format(val, value))
+        await ok.edit(f"Key: `{val}`\nValue: `{value}`")
     except BaseException:
         await ok.edit("`Something Went Wrong`")
 
@@ -96,8 +97,9 @@ async def _(ult):
             udB.rename(data[0], data[1])
             await ok.edit(
                 "Redis Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
-                    data[0], data[1]
-                )
+                    data[0],
+                    data[1],
+                ),
             )
         except BaseException:
             await ok.edit("Something went wrong ...")
@@ -113,8 +115,11 @@ async def _(ult):
     keys = sorted(udB.keys())
     msg = ""
     for x in keys:
-        msg += "• `{}`".format(x) + "\n"
-    await ok.edit("**List of Redis Keys :**\n{}".format(msg))
+        if x.isdigit() or x.startswith("-"):
+            pass
+        else:
+            msg += f"• `{x}`" + "\n"
+    await ok.edit(f"**List of Redis Keys :**\n{msg}")
 
 
 @ultroid_cmd(

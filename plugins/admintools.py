@@ -50,8 +50,8 @@ import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
-from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest
-from telethon.tl.types import ChatAdminRights, ChatBannedRights
+from telethon.tl.functions.channels import EditAdminRequest
+from telethon.tl.types import ChatAdminRights
 
 from . import *
 
@@ -59,15 +59,11 @@ from . import *
 @ultroid_cmd(
     pattern="promote ?(.*)",
     groups_only=True,
+    admins_only=True,
 )
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
-    isAdmin = chat.admin_rights
-    isCreator = chat.creator
-    if not isAdmin and not isCreator:
-        return await xx.edit("`Hmm, I'm not an admin here...`")
-    await xx.edit("`Promoting...`")
+    await ult.get_chat()
     user, rank = await get_user_info(ult)
     if not rank:
         rank = "Admin"
@@ -87,10 +83,10 @@ async def prmte(ult):
                     pin_messages=True,
                 ),
                 rank,
-            )
+            ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is now an admin in {ult.chat.title} with title {rank}.`"
+            f"[{user.first_name}](tg://user?id={user.id}) `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to promote you.`")
@@ -101,15 +97,11 @@ async def prmte(ult):
 @ultroid_cmd(
     pattern="demote ?(.*)",
     groups_only=True,
+    admins_only=True,
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
-    isAdmin = chat.admin_rights
-    isCreator = chat.creator
-    if not isAdmin and not isCreator:
-        return await xx.edit("`Hmm, I'm not an admin here...`")
-    await xx.edit("`Demoting...`")
+    await ult.get_chat()
     user, rank = await get_user_info(ult)
     if not rank:
         rank = "Not Admin"
@@ -129,10 +121,10 @@ async def dmote(ult):
                     pin_messages=None,
                 ),
                 rank,
-            )
+            ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is no longer an admin in {ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to demote you.`")
@@ -143,31 +135,18 @@ async def dmote(ult):
 @ultroid_cmd(
     pattern="ban ?(.*)",
     groups_only=True,
+    admins_only=True,
 )
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
-    isAdmin = chat.admin_rights
-    isCreator = chat.creator
-    if not isAdmin and not isCreator:
-        return await xx.edit("`Hmm, I'm not an admin here...`")
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to ban him!`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
-    await xx.edit("`Getting user info...`")
     try:
-        await ultroid_bot(
-            EditBannedRequest(
-                ult.chat_id,
-                user.id,
-                ChatBannedRights(
-                    until_date=None,
-                    view_messages=True,
-                ),
-            )
-        )
+        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=False)
     except BadRequestError:
         return await xx.edit("`I don't have the right to ban a user.`")
     except UserIdInvalidError:
@@ -178,82 +157,62 @@ async def bban(ult):
             await reply.delete()
     except BadRequestError:
         return await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
         )
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
         )
 
 
 @ultroid_cmd(
     pattern="unban ?(.*)",
     groups_only=True,
+    admins_only=True,
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
-    isAdmin = chat.admin_rights
-    isCreator = chat.creator
-    if not isAdmin and not isCreator:
-        return await xx.edit("`Hmm, I'm not an admin here...`")
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to unban him!`")
-    await xx.edit("`Getting user info...`")
     try:
-        await ultroid_bot(
-            EditBannedRequest(
-                ult.chat_id,
-                user.id,
-                ChatBannedRights(
-                    until_date=None,
-                    view_messages=None,
-                ),
-            )
-        )
+        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=True)
     except BadRequestError:
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
         )
 
 
 @ultroid_cmd(
     pattern="kick ?(.*)",
     groups_only=True,
+    admins_only=True,
 )
 async def kck(ult):
-    tt = ult.text
-    try:
-        tx = tt[5]
-        if tx:
-            return
-    except BaseException:
-        pass
+    if ult.text == f"{HNDLR}kickme":
+        return
     xx = await eor(ult, get_string("com_1"))
-    chat = await ult.get_chat()
-    isAdmin = chat.admin_rights
-    isCreator = chat.creator
-    if not isAdmin and not isCreator:
-        return await xx.edit("`Hmm, I'm not an admin here...`")
+    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
-    await xx.edit("`Kicking...`")
+    if user.id == ultroid_bot.uid:
+        return await xx.edit("`You Can't kick urself`")
     try:
         await ultroid_bot.kick_participant(ult.chat_id, user.id)
         await asyncio.sleep(0.5)
@@ -261,15 +220,15 @@ async def kck(ult):
         return await xx.edit("`I don't have the right to kick a user.`")
     except Exception as e:
         return await xx.edit(
-            f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`"
+            f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`\n**Reason**: `{reason}`"
+            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`"
+            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`",
         )
 
 
@@ -367,7 +326,11 @@ async def fastpurger(purg):
         await ultroid_bot.delete_messages(chat, msgs)
     done = await ultroid_bot.send_message(
         purg.chat_id,
-        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `"
+        + str(len(msgs))
+        + "` **of** `"
+        + str(count)
+        + "` **messages.**",
     )
     await asyncio.sleep(5)
     await done.delete()
@@ -383,7 +346,9 @@ async def fastpurgerme(purg):
     if not purg.reply_to_msg_id:
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in ultroid_bot.iter_messages(
-        chat, from_user="me", min_id=purg.reply_to_msg_id
+        chat,
+        from_user="me",
+        min_id=purg.reply_to_msg_id,
     ):
         msgs.append(msg)
         count = count + 1
@@ -409,14 +374,14 @@ async def _(e):
     xx = await eor(e, get_string("com_1"))
     if e.reply_to_msg_id:
         input = (await e.get_reply_message()).sender_id
-        (await e.client.get_entity(input)).first_name
+        name = (await e.client.get_entity(input)).first_name
         try:
             nos = 0
             async for x in e.client.iter_messages(e.chat_id, from_user=input):
                 await e.client.delete_messages(e.chat_id, x)
                 nos += 1
             await xx.edit(
-                f"**Purged **`{nos}`** msgs of **[{input}](tg://user?id={input})"
+                f"**Purged **`{nos}`** msgs of **[{name}](tg://user?id={input})",
             )
         except ValueError:
             return await eod(xx, str(er), time=5)

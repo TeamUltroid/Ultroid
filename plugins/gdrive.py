@@ -19,6 +19,9 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
+• `{i}listdrive`
+    List all GDrive files.
+
 • `{i}gfolder`
     Link to your Google Drive Folder.
     If added then all uploaded files will be placed here.
@@ -30,11 +33,19 @@ import os
 import time
 from datetime import datetime
 
-from telethon import events
-
 from . import *
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
+
+
+@ultroid_cmd(
+    pattern="listdrive$",
+)
+async def files(event):
+    if not os.path.exists(TOKEN_FILE):
+        return await eod(event, get_string("gdrive_6").format(Var.BOT_USERNAME))
+    http = authorize(TOKEN_FILE, None)
+    await eor(event, list_files(http))
 
 
 @ultroid_cmd(
@@ -70,7 +81,7 @@ async def _(event):
         ms = (end - start).seconds
         required_file_name = downloaded_file_name
         await mone.edit(
-            "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
+            f"Downloaded to `{downloaded_file_name}` in {ms} seconds.",
         )
     elif input_str:
         input_str = input_str.strip()
@@ -78,10 +89,12 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             required_file_name = input_str
-            await mone.edit("Found `{}` in {} seconds.".format(input_str, ms))
+            await mone.edit(f"Found `{input_str}` in {ms} seconds.")
         else:
             return await eod(
-                mone, "File Not found in local server. Give me a file path :((", time=5
+                mone,
+                "File Not found in local server. Give me a file path :((",
+                time=5,
             )
     if required_file_name:
         http = authorize(TOKEN_FILE, None)
@@ -110,13 +123,14 @@ async def sch(event):
         return await eod(event, get_string("gdrive_6").format(Var.BOT_USERNAME))
     http = authorize(TOKEN_FILE, None)
     input_str = event.pattern_match.group(1).strip()
-    a = await eor(event, "Searching for {} in G-Drive.".format(input_str))
+    a = await eor(event, f"Searching for {input_str} in G-Drive.")
     if Redis("GDRIVE_FOLDER_ID") is not None:
         query = "'{}' in parents and (title contains '{}')".format(
-            Redis("GDRIVE_FOLDER_ID"), input_str
+            Redis("GDRIVE_FOLDER_ID"),
+            input_str,
         )
     else:
-        query = "title contains '{}'".format(input_str)
+        query = f"title contains '{input_str}'"
     try:
         msg = await gsearch(http, query, input_str)
         return await a.edit(str(msg))
@@ -133,14 +147,14 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if os.path.isdir(input_str):
         http = authorize(TOKEN_FILE, None)
-        a = await eor(event, "Uploading `{}` to G-Drive...".format(input_str))
+        a = await eor(event, f"Uploading `{input_str}` to G-Drive...")
         dir_id = await create_directory(
             http,
             os.path.basename(os.path.abspath(input_str)),
             Redis("GDRIVE_FOLDER_ID"),
         )
         await DoTeskWithDir(http, input_str, event, dir_id)
-        dir_link = "https://drive.google.com/folderview?id={}".format(dir_id)
+        dir_link = f"https://drive.google.com/folderview?id={dir_id}"
         await eod(a, get_string("gdrive_7").format(input_str, dir_link))
     else:
         return await eod(event, f"Directory {input_str} does not seem to exist", time=5)
@@ -152,7 +166,7 @@ async def _(event):
 async def _(event):
     if Redis("GDRIVE_FOLDER_ID"):
         folder_link = "https://drive.google.com/folderview?id=" + Redis(
-            "GDRIVE_FOLDER_ID"
+            "GDRIVE_FOLDER_ID",
         )
         await eod(event, "`Here is Your G-Drive Folder link : `\n" + folder_link)
     else:

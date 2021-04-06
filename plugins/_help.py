@@ -23,7 +23,7 @@ async def ult(ult):
     if plug:
         try:
             if plug in HELP:
-                output = "**Plugin** - `{}`\n".format(plug)
+                output = f"**Plugin** - `{plug}`\n"
                 for i in HELP[plug]:
                     output += i
                 output += "\n© @TheUltroid"

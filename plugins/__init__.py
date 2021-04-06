@@ -14,14 +14,23 @@ from pyUltroid.functions import *
 from pyUltroid.functions.all import *
 from pyUltroid.functions.broadcast_db import *
 from pyUltroid.functions.gban_mute_db import *
+from pyUltroid.functions.goodbye_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
+from pyUltroid.functions.welcome_db import *
 from pyUltroid.utils import *
 
 from strings import get_string
 
+try:
+    import glitch_me
+except ModuleNotFoundError:
+    os.system(
+        "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
+    )
+
 start_time = time.time()
-ultroid_version = "v0.0.4"
+ultroid_version = "v0.0.5"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 

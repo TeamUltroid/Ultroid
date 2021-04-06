@@ -29,9 +29,6 @@
 • `{i}paste`
     Include long text / Reply to text file.
 
-• `{i}hastebin`
-    Include long text / Reply to text file.
-
 • `{i}info <username/userid>`
     Reply to someone's msg.
 
@@ -49,6 +46,9 @@
 
 • `{i}suggest <reply to message>`
     Create a Yes/No poll for the replied suggestion.
+
+• `{i}ipinfo <ip address>`
+    Get info about that IP address.
 """
 import asyncio
 import calendar
@@ -65,10 +65,6 @@ import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon import functions
-from telethon.errors.rpcerrorlist import BotInlineDisabledError
-from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
-from telethon.errors.rpcerrorlist import (BotResponseTimeoutError,
-                                          ChatSendInlineForbiddenError)
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
@@ -93,9 +89,9 @@ telegraph.create_account(short_name="Ultroid")
     groups_only=True,
 )
 async def leave(ult):
-    x = ultroid_bot.me
-    name = x.first_name
-    await eor(ult, f"`{name} has left this group, bye!!.`")
+    if ult.sender_id != ultroid_bot.uid:
+        return
+    await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
 
@@ -150,7 +146,8 @@ async def _(event):
 **SOLUTION**:
 `{}`
 """.format(
-        cmd, evaluation
+        cmd,
+        evaluation,
     )
     await x.edit(final_output)
 
@@ -317,43 +314,8 @@ async def _(event):
         ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
-    except BotInlineDisabledError or BotResponseTimeoutError or ChatSendInlineForbiddenError:  # handling possible exceptions
+    except BaseException:
         await xx.edit(reply_text)
-    except bmi:
-        await xx.edit(f"**Inline Not Available as You Are in Bot Mode\n\n{reply_text}")
-
-
-@ultroid_cmd(
-    pattern="hastebin ?(.*)",
-)
-async def _(event):
-    input_str = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
-    message = "SYNTAX: `.paste <long text to include>`"
-    if input_str:
-        message = input_str
-    elif event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        if previous_message.media:
-            downloaded_file_name = await event.client.download_media(
-                previous_message,
-                "./resources/downloads",
-            )
-            m_list = None
-            with open(downloaded_file_name, "rb") as fd:
-                m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
-            os.remove(downloaded_file_name)
-        else:
-            message = previous_message.message
-    else:
-        message = "SYNTAX: `.hastebin <long text to include>`"
-    url = "https://hastebin.com/documents"
-    r = requests.post(url, data=message).json()
-    url = f"https://hastebin.com/{r['key']}"
-    await xx.edit("**Pasted to Hastebin** : [Link]({})".format(url))
 
 
 @ultroid_cmd(
@@ -367,8 +329,11 @@ async def _(event):
         return False
     replied_user_profile_photos = await event.client(
         GetUserPhotosRequest(
-            user_id=replied_user.user.id, offset=42, max_id=0, limit=80
-        )
+            user_id=replied_user.user.id,
+            offset=42,
+            max_id=0,
+            limit=80,
+        ),
     )
     replied_user_profile_photos_count = "NaN"
     try:
@@ -444,8 +409,10 @@ async def _(ult):
             try:
                 await ultroid_bot(
                     functions.messages.AddChatUserRequest(
-                        chat_id=ult.chat_id, user_id=user_id, fwd_limit=1000000
-                    )
+                        chat_id=ult.chat_id,
+                        user_id=user_id,
+                        fwd_limit=1000000,
+                    ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
@@ -455,8 +422,9 @@ async def _(ult):
             try:
                 await ultroid_bot(
                     functions.channels.InviteToChannelRequest(
-                        channel=ult.chat_id, users=[user_id]
-                    )
+                        channel=ult.chat_id,
+                        users=[user_id],
+                    ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
@@ -475,13 +443,12 @@ async def rmbg(event):
         )
     if event.reply_to_msg_id:
         reply = await event.get_reply_message()
-        dl = await ultroid_bot.download_media(reply)
+        dl = await ultroid_bot.download_media(reply.media)
         if not dl.endswith(("webp", "jpg", "png", "jpeg")):
             os.remove(dl)
             return await xx.edit("`Unsupported Media`")
         await xx.edit("`Sending to remove.bg`")
-        out = ReTrieveFile("ult.png")
-        os.remove("ult.png")
+        out = ReTrieveFile(dl)
         os.remove(dl)
     else:
         await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
@@ -496,14 +463,17 @@ async def rmbg(event):
     else:
         error = out.json()
         await xx.edit(
-            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`"
+            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`",
         )
     zz = Image.open(rmbgp)
     if zz.mode != "RGB":
         zz.convert("RGB")
     zz.save("ult.webp", "webp")
     await ultroid_bot.send_file(
-        event.chat_id, rmbgp, force_document=True, reply_to=reply
+        event.chat_id,
+        rmbgp,
+        force_document=True,
+        reply_to=reply,
     )
     await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
     os.remove(rmbgp)
@@ -531,7 +501,7 @@ async def telegraphcmd(event):
             await xx.edit(amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
-            ab = open(getit, "r")
+            ab = open(getit)
             cd = ab.read()
             ab.close()
             if input_str:
@@ -594,19 +564,71 @@ async def sugg(event):
                         id=12345,
                         question="Do you agree to the replied suggestion?",
                         answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
-                    )
+                    ),
                 ),
                 reply_to=msgid,
             )
         except Exception as e:
             return await eod(
-                event, f"`Oops, you can't send polls here!\n\n{str(e)}`", time=5
+                event,
+                f"`Oops, you can't send polls here!\n\n{str(e)}`",
+                time=5,
             )
         await event.delete()
     else:
         return await eod(
-            event, "`Please reply to a message to make a suggestion poll!`", time=5
+            event,
+            "`Please reply to a message to make a suggestion poll!`",
+            time=5,
         )
+
+
+@ultroid_cmd(pattern="ipinfo ?(.*)")
+async def ipinfo(event):
+    xx = await eor(event, get_string("com_1"))
+    ip = event.text.split(" ")
+    ipaddr = ""
+    try:
+        ipaddr = ip[1]
+    except:
+        return await eod(xx, "`Give me an IP address you noob!`", time=5)
+    if ipaddr == "":
+        return
+    url = f"https://ipinfo.io/{ipaddr}/geo"
+    det = requests.get(url).json()
+    try:
+        ip = det["ip"]
+        city = det["city"]
+        region = det["region"]
+        country = det["country"]
+        cord = det["loc"]
+        zipc = det["postal"]
+        tz = det["timezone"]
+        await xx.edit(
+            """
+**IP Details Fetched.**
+
+**IP:** `{}`
+**City:** `{}`
+**Region:** `{}`
+**Country:** `{}`
+**Co-ordinates:** `{}`
+**Postal Code:** `{}`
+**Time Zone:** `{}`
+""".format(
+                ip,
+                city,
+                region,
+                country,
+                cord,
+                zipc,
+                tz,
+            ),
+        )
+    except:
+        err = det["error"]["title"]
+        msg = det["error"]["messsage"]
+        await eod(xx, f"ERROR:\n{err}\n{msg}")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

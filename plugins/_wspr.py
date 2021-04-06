@@ -18,6 +18,7 @@ from telethon.tl.types import UserStatusLastWeek as lw
 from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as on
 from telethon.tl.types import UserStatusRecently as rec
+
 from . import *
 
 snap = {}
@@ -98,7 +99,9 @@ async def _(e):
             button = [
                 Button.url("Private", url=f"t.me/{username}"),
                 Button.switch_inline(
-                    "Secret msg", query=f"msg {query} wspr ", same_peer=True
+                    "Secret msg",
+                    query=f"msg {query} wspr ",
+                    same_peer=True,
                 ),
             ]
             sur = e.builder.article(
@@ -132,7 +135,8 @@ async def _(e):
             snap.update({logi.id: desc})
         except ValueError:
             sur = e.builder.article(
-                title="Type ur msg", text=f"You Didn't Type Your Msg"
+                title="Type ur msg",
+                text=f"You Didn't Type Your Msg",
             )
     await e.answer([sur])
 

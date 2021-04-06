@@ -35,7 +35,7 @@ LASTMSG = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
-    PMPIC = "https://telegra.ph/file/94f6a4aeb21ce2d58dd41.jpg"
+    PMPIC = "https://telegra.ph/file/031957757a4f6a5191040.jpg"
 
 UND = get_string("pmperm_1")
 
@@ -85,7 +85,7 @@ PMCMDS = [
 @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def permitpm(event):
     user = await event.get_chat()
-    if user.bot or user.is_self:
+    if user.bot or user.is_self or user.verified:
         return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
@@ -133,8 +133,11 @@ if sett == "True" and sett != "False":
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
             name = user.first_name
-            fullname = (user.first_name, user.last_name)
-            username = user.username
+            if user.last_name:
+                fullname = f"{name} {user.last_name}"
+            else:
+                fullname = name
+            username = f"@{user.username}"
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
             try:
@@ -145,12 +148,14 @@ if sett == "True" and sett != "False":
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
                     async for message in event.client.iter_messages(
-                        user.id, search=UND
+                        user.id,
+                        search=UND,
                     ):
                         await message.delete()
 
                     async for message in event.client.iter_messages(
-                        user.id, search=UNS
+                        user.id,
+                        search=UNS,
                     ):
                         await message.delete()
                     await event.client.send_file(
@@ -170,7 +175,8 @@ if sett == "True" and sett != "False":
                     )
                 elif event.text == prevmsg:
                     async for message in event.client.iter_messages(
-                        user.id, search=UND
+                        user.id,
+                        search=UND,
                     ):
                         await message.delete()
                     await event.client.send_file(
@@ -233,7 +239,7 @@ if sett == "True" and sett != "False":
                     name0 = str(name.first_name)
                     await event.client.send_message(
                         Var.LOG_CHANNEL,
-                        f"[{name0}](tg://user?id={user.id}) was blocked for spamming.",
+                        f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                     )
 
     @ultroid_cmd(pattern="(a|approve)(?: |$)")
@@ -244,7 +250,8 @@ if sett == "True" and sett != "False":
             aname = replied_user.id
             if str(aname) in DEVLIST:
                 return await eor(
-                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                    apprvpm,
+                    "Lol, He is my Developer\nHe is auto Approved",
                 )
             name0 = str(replied_user.first_name)
             uid = replied_user.id
@@ -262,7 +269,8 @@ if sett == "True" and sett != "False":
             aname = await apprvpm.client.get_entity(user.id)
             if str(user.id) in DEVLIST:
                 return await eor(
-                    apprvpm, "Lol, He is my Developer\nHe is auto Approved"
+                    apprvpm,
+                    "Lol, He is my Developer\nHe is auto Approved",
                 )
             name0 = str(aname.first_name)
             uid = user.id
@@ -301,19 +309,20 @@ if sett == "True" and sett != "False":
             aname = replied_user.id
             if str(aname) in DEVLIST:
                 return await eor(
-                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                    e,
+                    "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
                 )
             name0 = str(replied_user.first_name)
             if is_approved(replied_user.id):
                 disapprove_user(replied_user.id)
                 await e.edit(
-                    f"[{name0}](tg://user?id={replied_user.id}) `Disaproved to PM!`"
+                    f"[{name0}](tg://user?id={replied_user.id}) `Disaproved to PM!`",
                 )
                 await asyncio.sleep(5)
                 await e.delete()
             else:
                 await e.edit(
-                    f"[{name0}](tg://user?id={replied_user.id}) was never approved!"
+                    f"[{name0}](tg://user?id={replied_user.id}) was never approved!",
                 )
                 await asyncio.sleep(5)
                 await e.delete()
@@ -322,7 +331,8 @@ if sett == "True" and sett != "False":
             aname = await e.client.get_entity(bbb.id)
             if str(bbb.id) in DEVLIST:
                 return await eor(
-                    e, "`Lol, He is my Developer\nHe Can't Be DisApproved.`"
+                    e,
+                    "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
                 )
             name0 = str(aname.first_name)
             if is_approved(bbb.id):
@@ -350,7 +360,8 @@ if sett == "True" and sett != "False":
             aname = replied_user.id
             if str(aname) in DEVLIST:
                 return await eor(
-                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                    block,
+                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
                 )
             name0 = str(replied_user.first_name)
             await block.client(BlockRequest(replied_user.id))
@@ -360,7 +371,8 @@ if sett == "True" and sett != "False":
             bbb = await block.get_chat()
             if str(bbb.id) in DEVLIST:
                 return await eor(
-                    block, "`Lol, He is my Developer\nHe Can't Be Blocked`"
+                    block,
+                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
                 )
             await block.client(BlockRequest(bbb.id))
             aname = await block.client.get_entity(bbb.id)
@@ -375,7 +387,8 @@ if sett == "True" and sett != "False":
             pass
         if Var.LOG_CHANNEL:
             await block.client.send_message(
-                Var.LOG_CHANNEL, f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})"
+                Var.LOG_CHANNEL,
+                f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
             )
 
     @ultroid_cmd(pattern="unblock$")

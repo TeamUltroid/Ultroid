@@ -1,1 +1,1 @@
-from .strings import get_string, get_languages
+from .strings import get_languages, get_string

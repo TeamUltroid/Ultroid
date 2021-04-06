@@ -10,7 +10,7 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
-# help 
+# help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
@@ -36,8 +36,8 @@ inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅ�
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 
 # tagnotif
-tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨Message📨]({})"
-tagnot_2: "{} tagged you in {}\n\n [📨Message📨]({})"
+tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
+tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
 
 # whisper
 wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
@@ -48,8 +48,8 @@ afk_1: "`No Longer Afk\n\n
 Was away for ~ {}`"
 afk_2: "#AFK\n
 Set AFK mode to False.\n
-Was AFK for {}`"
-afk_3: "I'm currently AFK.\n
+Was AFK for `{}`"
+afk_3: "`I'm currently AFK.\n
 Last seen {} ago.`\n\n
 **Reason:** `{}`"
 afk_4: "`I'm currently AFK.\n\n
@@ -66,6 +66,7 @@ alive_1: "**The Ultroid Userbot...**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
 ┣ **Owner** - `{}`\n
 ┣ **Version** - `{}`\n
+┣ **Py-Ultroid** - `{}`\n
 ┣ **UpTime** - `{}`\n
 ┣ **Python** - `{}`\n
 ┣ **Telethon** - `{}`\n
@@ -105,7 +106,6 @@ chats_3: "`I m not an admin`"
 chats_4: "#Deleted\nDeleted {}"
 chats_5: "Your [{}]({}) Group Made Boss!"
 chats_6: "Join @TeamUltroid"
-chats_6: "Your [{}]({}) Group/Channel Has been made Boss!"
 
 # converter
 cvt_1: "Reply to any media/Document."
@@ -169,7 +169,7 @@ gdrive_7: "**Successfully Uploaded File on G-Drive :**\n\n[{}]({})"
 # pmpermit
 pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
 pmperm_2: "You were spamming my Master's PM, which I didn't like.\nYou have been BLOCKED and reported as SPAM, until further notice."
-pmperm_3: "Reply to someone's msg or try this commmand in private."
+pmperm_3: "Reply to someone's msg or try this command in private."
 
 # updater
 upd_1: "`Checking for updates, please wait....`"

@@ -1,10 +1,8 @@
 from os import listdir, path
 from typing import Any, Dict, List, Union
 
-from yaml import safe_load
-
 from pyUltroid import udB
-
+from yaml import safe_load
 
 languages = {}
 strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
@@ -13,7 +11,7 @@ for file in listdir(strings_folder):
     if file.endswith(".yml"):
         code = file[:-4]
         languages[code] = safe_load(
-            open(path.join(strings_folder, file), encoding="UTF-8")
+            open(path.join(strings_folder, file), encoding="UTF-8"),
         )
 
 

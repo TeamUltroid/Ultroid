@@ -8,7 +8,8 @@
 from datetime import datetime
 
 from pyUltroid.functions.asst_fns import *
-from telethon import Button, custom, events
+from pyUltroid.misc._decorators import sed
+from telethon import Button, events
 
 from plugins import *
 
@@ -18,17 +19,17 @@ from . import *
 @asst_cmd("start")
 async def assistant(event):
     if event.is_group and event.sender_id in sed:
-        return await eor(event, "`I dont work in groups`")
+        bnn = (await asst.get_me()).username
+        return await event.reply(
+            "`I dont work in groups`",
+            buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set")],
+        )
     else:
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
-            await asst.send_message(
-                OWNER_ID,
-                f"Bot started by [{event.sender_id}](tg://user?id={event.sender_id})",
-            )
         ok = ""
-        if udB.get("MSG_FRWD") == True:
-            ok = "You can contact me using this bot!!"
+        if udB.get("PMBOT") == "True":
+            ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
         if event.is_private and event.sender_id in sed:
             return
         await event.reply(
@@ -37,9 +38,11 @@ async def assistant(event):
         )
 
 
-@asst_cmd("start")
+@asst_cmd("start ?(.*)")
 @owner
 async def ultroid(event):
+    if event.pattern_match.group(1):
+        return
     if event.is_group:
         return
     name = event.sender.first_name
@@ -88,7 +91,7 @@ async def botstat(event):
     ok = len(get_all_users())
     msg = """Ultroid Assistant - Stats
 Total Users - {}""".format(
-        ok
+        ok,
     )
     await event.answer(msg, cache_time=0, alert=True)
 
@@ -100,7 +103,7 @@ async def bdcast(event):
     await event.edit(f"Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
-            "Enter your broadcast message.\nUse /cancel to stop the broadcast."
+            "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
         )
         response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
         response = await response
@@ -125,7 +128,7 @@ async def bdcast(event):
 Broadcast completed in {time_taken} seconds.
 Total Users in Bot - {len(ok)}
 Sent to {success} users.
-Failed for {fail} user(s)."""
+Failed for {fail} user(s).""",
             )
 
 
@@ -135,12 +138,37 @@ async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=[
-            [Button.inline("API Kᴇʏs", data="apiset")],
+            [
+                Button.inline("API Kᴇʏs", data="apiset"),
+                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+            ],
             [
                 Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
                 Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
             ],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
+            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+        ],
+    )
+
+
+@asst_cmd("start set")
+@owner
+async def set(event):
+    await event.reply(
+        "Choose from the below options -",
+        buttons=[
+            [
+                Button.inline("API Kᴇʏs", data="apiset"),
+                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+            ],
+            [
+                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+                Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+            ],
+            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )

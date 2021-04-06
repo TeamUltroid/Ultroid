@@ -24,7 +24,7 @@ from shutil import rmtree
 import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
-from pyUltroid.functions.parser import GoogleSearch
+from search_engine_parser import GoogleSearch
 
 from strings import get_string
 
@@ -45,9 +45,14 @@ async def google(event):
         url = res["links"][i]
         des = res["descriptions"][i]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
-    await x.edit(
-        f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}", link_preview=False
-    )
+    omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
+    opn = []
+    for bkl in range(0, len(omk), 4095):
+        opn.append(omk[bkl : bkl + 4095])
+    for bc in opn:
+        await ultroid_bot.send_message(event.chat_id, bc, link_preview=False)
+    await x.delete()
+    opn.clear()
 
 
 @ultroid_cmd(pattern="img ?(.*)")
@@ -88,17 +93,19 @@ async def reverse(event):
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}
     grs = requests.post(
-        "https://www.google.com/searchbyimage/upload", files=file, allow_redirects=False
+        "https://www.google.com/searchbyimage/upload",
+        files=file,
+        allow_redirects=False,
     )
     loc = grs.headers.get("Location")
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
     xx = bs(response.text, "html.parser")
-    div = xx.find("div", {"class": "r5a77d"})
+    div = xx.find_all("div", {"class": "r5a77d"})[0]
     alls = div.find("a")
     link = alls["href"]
     text = alls.text
@@ -113,7 +120,10 @@ async def reverse(event):
     pth = gi.download(args)
     ok = pth[0][text]
     await event.client.send_file(
-        event.chat_id, ok, album=True, caption="Similar Images Realted to Search"
+        event.chat_id,
+        ok,
+        album=True,
+        caption="Similar Images Realted to Search",
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)
