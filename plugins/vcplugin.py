@@ -6,6 +6,24 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 """
+✘ Commands Available -
+
+• `{i}startvc`
+    Start Group Call in a group.
+
+• `{i}stopvc`
+    Stop Group Call in a group.
+
+• `{i}vcinvite`
+    Invite all members of group in Group Call.
+    (You must be joined)
+
+• `{i}vcaccess <id/username/reply to msg>`
+    Give access of Voice Chat Bot.
+
+• `{i}rmvcaccess <id/username/reply to msg>`
+    Remove access of Voice Chat Bot.
+
 """
 
 from pyUltroid.functions.vc_sudos import (add_vcsudo, del_vcsudo, get_vcsudos,
