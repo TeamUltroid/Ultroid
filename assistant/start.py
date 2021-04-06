@@ -29,7 +29,7 @@ async def assistant(event):
             add_user(event.sender_id)
         ok = ""
         if udB.get("PMBOT") == "True":
-            ok = "You can contact my master using this bot!!"
+            ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
         if event.is_private and event.sender_id in sed:
             return
         await event.reply(
