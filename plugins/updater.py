@@ -22,14 +22,12 @@ requirements_path = path.join(
 
 
 async def gen_chlog(repo, diff):
+    ac_br = repo.active_branch.name
     ch_log = ""
-    ch = f"**Ultroid {ultroid_version} updates:**\n\n"
+    ch = f"**Ultroid {ultroid_version} updates for [[{ac_br}]]({UPSTREAM_REPO_URL}/tree/{ac_br}):**"
     d_form = "%d/%m/%y || %H:%M"
     for c in repo.iter_commits(diff):
-        ch_log += f"💬 **{c.count()}** "
-        ch_log += f"🗓 **[{c.committed_datetime.strftime(d_form)}]\n"
-        ch_log += f"[{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c})** "
-        ch_log += f"👨‍💻 `{c.author}`\n\n"
+        ch_log += f"\n\n💬 **{c.count()}** 🗓 **[{c.committed_datetime.strftime(d_form)}]**\n**[{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c})** 👨‍💻 `{c.author}`"
     if ch_log:
         return str(ch + ch_log)
     else:
@@ -92,12 +90,7 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "now" not in conf:
         if changelog:
-            changelog_str = get_string("upd_3").format(
-                ac_br,
-                UPSTREAM_REPO_URL,
-                ac_br,
-                changelog,
-            )
+            changelog_str = changelog
             if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
                 file = open("output.txt", "w+")
