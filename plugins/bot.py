@@ -126,7 +126,7 @@ async def cmds(event):
 async def restartbt(ult):
     type_of_group = ult.pattern_match.group(1)
     if type_of_group == "s":
-       await eor(ult, "`Restarting...`")
+        await eor(ult, "`Restarting...`")
         try:
             await bash("pkill python3 && python3 -m pyUltroid")
             await eor(ult, "Soft Restarted Successfully!")
