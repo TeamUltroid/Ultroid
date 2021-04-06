@@ -214,7 +214,9 @@ async def _(ult):
         else:
             msg += f"• `{i}` -> Invalid User\n"
     m = udB.get("SUDO") if udB.get("SUDO") else "False"
-    return await ok.edit(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}")
+    if m == "False":
+        m = "[False](https://telegra.ph/Ultroid-04-06)"
+    return await ok.edit(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview = False)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
