@@ -19,7 +19,7 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
-• `{i}listdrive
+• `{i}listdrive`
     List all GDrive files.
 
 • `{i}gfolder`
