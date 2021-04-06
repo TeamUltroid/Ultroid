@@ -31,7 +31,7 @@
 Note: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.
 
 """
-
+import os
 from telegraph import upload_file as uf
 from telethon.utils import get_display_name, pack_bot_file_id
 
@@ -49,6 +49,7 @@ async def setwel(event):
         if wut.startswith(("pic", "gif")):
             dl = await bot.download_media(r.media)
             variable = uf(dl)
+            os.remove(dl)
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
@@ -56,6 +57,7 @@ async def setwel(event):
             else:
                 dl = await bot.download_media(r.media)
                 variable = uf(dl)
+                os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(r.media)
@@ -140,6 +142,7 @@ async def setgb(event):
         if wut.startswith(("pic", "gif")):
             dl = await bot.download_media(r.media)
             variable = uf(dl)
+            os.remove(dl)
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
@@ -147,6 +150,7 @@ async def setgb(event):
             else:
                 dl = await bot.download_media(r.media)
                 variable = uf(dl)
+                os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(r.media)
