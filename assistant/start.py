@@ -147,6 +147,7 @@ async def setting(event):
                 Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
             ],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
@@ -167,6 +168,8 @@ async def set(event):
                 Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
             ],
             [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
             [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
         ],
     )
+
