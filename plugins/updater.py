@@ -11,7 +11,6 @@ from os import execl, path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
-
 from . import *
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
