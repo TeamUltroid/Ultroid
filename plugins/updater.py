@@ -96,7 +96,7 @@ async def upstream(ups):
                 changelog + f"\n\nUse <code>{hndlr}update now</code> to update!"
             )
             tldr_str = tl_chnglog + f"\n\nUse {hndlr}update now to update!"
-            if len(changelog_str) > 409:
+            if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
                 file = open(f"ultroid_updates.txt", "w+")
                 file.write(tldr_str)
