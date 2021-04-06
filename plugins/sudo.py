@@ -55,6 +55,7 @@ async def _(ult):
                 f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`",
             )
         elif add_sudo(id):
+            udB.set("SUDO", "True")
             return await ok.edit(
                 f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**",
             )
@@ -212,7 +213,8 @@ async def _(ult):
             msg += f"• [{user.user.first_name}](tg://user?id={i}) ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    return await ok.edit(f"**List of SUDO Users :**\n{msg}")
+    m = udB.get("SUDO")
+    return await ok.edit(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
