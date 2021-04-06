@@ -59,7 +59,9 @@ ws.on('message', response => {
             break;
         }
         case 'left_vc': {
-            cache.delete(data.chat_id);
+            const { connection } = cache.get(data.chat.id)!;
+            connection.close();
+            cache.delete(data.chat.id);
             break;
         }
         default:
@@ -211,9 +213,6 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
                 leaveVc(chat.id);
             } catch (err) {
                 console.error(err);
-            } finally {
-                connection.close();
-                cache.delete(chat.id);
             }
         }
         stream.on('leave', () => {
