@@ -32,7 +32,7 @@ from . import *
 
 @ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
 async def broadcast_adder(event):
-    if not event.text[5] == " ":  # weird fix
+    if not event.text[4] == " ":  # weird fix
         return
     msgg = event.pattern_match.group(1)
     x = await eor(event, get_string("bd_1"))
@@ -153,8 +153,6 @@ async def list_all(event):
 
 @ultroid_cmd(pattern="forward ?(.*)", allow_sudo=False)
 async def forw(event):
-    if event.fwd_from:
-        return
     if not event.is_reply:
         await eor(event, "Reply to a message to broadcast.")
         return
