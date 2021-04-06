@@ -80,21 +80,16 @@ async def bl(e):
     if x and xx:
         if " " in xx:
             xx = xx.split(" ")
+            kk = ""
             for c in xx:
-                try:
-                    kk = re.search(str(c), str(x), flags=re.IGNORECASE)
-                except BaseException:
-                    pass
-            try:
-                if kk:
-                    async for l in ultroid_bot.iter_participants(
-                        e.chat_id, filter=ChannelParticipantsAdmins
-                    ):
-                        if l.id == e.sender_id:
-                            return
-                    await e.delete()
-            except BaseException:
-                pass
+                kk = re.search(str(c), str(x), flags=re.IGNORECASE)
+            if kk:
+                async for l in ultroid_bot.iter_participants(
+                    e.chat_id, filter=ChannelParticipantsAdmins
+                ):
+                    if l.id == e.sender_id:
+                        return
+                await e.delete()
         else:
             k = re.search(xx, x, flags=re.IGNORECASE)
             if k:
