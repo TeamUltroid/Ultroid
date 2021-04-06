@@ -21,7 +21,7 @@
 from pyUltroid.functions.filter_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-
+import os
 from . import *
 
 
@@ -48,6 +48,7 @@ async def af(e):
             else:
                 dl = await bot.download_media(wt.media)
                 variable = uf(dl)
+                os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
