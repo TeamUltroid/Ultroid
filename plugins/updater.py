@@ -25,10 +25,7 @@ async def gen_chlog(repo, diff):
     ch_log = f"**Ultroid {ultroid_version} updates:**\n\n"
     d_form = "%d/%m/%y || %H:%M"
     for c in repo.iter_commits(diff):
-        ch_log += f"""
-💬 **{c.count()}** 🗓 **[{c.committed_datetime.strftime(d_form)}]**
-**[{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c})** 👨‍💻 `{c.author}`\n\n
-"""
+        ch_log += f"💬 **{c.count()}** 🗓 **[{c.committed_datetime.strftime(d_form)}]**\n**[{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c})** 👨‍💻 `{c.author}`\n\n"
     return ch_log
 
 
