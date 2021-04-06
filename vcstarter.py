@@ -93,9 +93,17 @@ if vcbot:
     async def leave_vc(data):
         await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
         try:
-            await get_entity(data["chat"])
+            await get_entity(data["chat"]["id"])
         except Exception as ex:
-            return await bot.send_message(data["chat"], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+        try:
+            full_chat = await vcbot(GetFullChannelRequest(chat))
+        except Exception as ex:
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+        try:
+            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+        except:
+            call = None
 
         try:
             result = await vcbot(
@@ -106,10 +114,10 @@ if vcbot:
             )
             await bot.send_message(
                 Var.LOG_CHANNEL,
-                f"`Left Voice Chat in {(await bot.get_entity(data['chat'])).title}`",
+                f"`Left Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
             )
         except Exception as ex:
-            return await bot.send_message(data["chat"], "`" + str(ex) + "`")
+            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
 
         return {"_": "left_vc", "data": {"chat_id": data["chat"]}}
 
