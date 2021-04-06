@@ -59,8 +59,8 @@ ws.on('message', response => {
             break;
         }
         case 'left_vc': {
-            const { connection } = cache.get(data.chat.id)!;
-            connection.close();
+            // const { connection } = cache.get(data.chat.id)!;
+            // connection.close();
             cache.delete(data.chat.id);
             break;
         }
