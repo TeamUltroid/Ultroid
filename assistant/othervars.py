@@ -809,3 +809,45 @@ async def chon(event):
         "Done! Chat People Via This Bot Stopped.",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
     )
+
+@callback("vcb")
+@owner
+async def vcb(event):
+    await event.edit(
+        f"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
+        buttons=[
+            [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
+            [Button.inline("WEBSOCKET", data="vcw")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+        link_preview=False,
+    )
+
+@callback("vcs")
+@owner
+async def name(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "VC_SESSION"
+    name = "VC SESSION"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button("vcb"),
+            )
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message(
+                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
+                    name,
+                    themssg,
+                ),
+                buttons=get_back_button("vcb"),
+            )
