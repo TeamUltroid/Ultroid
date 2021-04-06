@@ -25,7 +25,7 @@ async def gen_chlog(repo, diff):
     ch_log = ""
     d_form = "On %d/%m/%y at %H:%M:%S"
     for c in repo.iter_commits(diff):
-        ch_log += f"**#{c.count()}** : {c.committed_datetime.strftime(d_form)} : [{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}) by `{c.author}`\n"
+        ch_log += f"**#{c.count()}** : `{c.committed_datetime.strftime(d_form)}` : [{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}) by `</{c.author}>`\n"
     return ch_log
 
 
@@ -76,13 +76,6 @@ async def upstream(ups):
         repo.heads.main.set_tracking_branch(origin.refs.main)
         repo.heads.main.checkout(True)
     ac_br = repo.active_branch.name
-    #    if ac_br != "main":
-    #        await eod(
-    #            pagal,
-    #            f"**[UPDATER]:**` You are on ({ac_br})\n Please change to the main branch.`",
-    #        )
-    #        repo.__del__()
-    #        return
     try:
         repo.create_remote("upstream", off_repo)
     except BaseException:
