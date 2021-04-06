@@ -73,9 +73,9 @@ if vcbot:
                 f"`Joined Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
             )
         except ChannelPrivateError:
-            str = (await vcbot.get_me()).first_name
+            stree = (await vcbot.get_me()).first_name
             return await bot.send_message(
-                data["chat"]["id"], f"Please add {str} in this group.`"
+                data["chat"]["id"], f"Please add {stree} in this group.`"
             )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
