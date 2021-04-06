@@ -21,6 +21,7 @@
    set notes in group so all can use it.
    type `#(Keyword of note)` to get it
 """
+import os
 
 from pyUltroid.functions.notes_db import *
 from telegraph import upload_file as uf
@@ -50,6 +51,7 @@ async def an(e):
         if wut.startswith(("pic", "gif")):
             dl = await bot.download_media(wt.media)
             variable = uf(dl)
+            os.remove(dl)
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
@@ -57,6 +59,7 @@ async def an(e):
             else:
                 dl = await bot.download_media(wt.media)
                 variable = uf(dl)
+                os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
