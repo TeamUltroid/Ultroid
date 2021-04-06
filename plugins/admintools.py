@@ -312,7 +312,6 @@ async def fastpurger(purg):
     chat = await purg.get_input_chat()
     msgs = []
     count = 0
-    delm = 0
     if not purg.reply_to_msg_id:
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in ultroid_bot.iter_messages(chat, min_id=purg.reply_to_msg_id):
@@ -322,14 +321,13 @@ async def fastpurger(purg):
         if len(msgs) == 100:
             await ultroid_bot.delete_messages(chat, msgs)
             msgs = []
-            delm += 1
 
     if msgs:
         await ultroid_bot.delete_messages(chat, msgs)
     done = await ultroid_bot.send_message(
         purg.chat_id,
         "__Fast purge complete!__\n**Purged** `"
-        + str(delm)
+        + str(len(msgs))
         + "` **of** `"
         + str(count)
         + "` **messages.**",
