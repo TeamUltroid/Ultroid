@@ -1,4 +1,4 @@
-py-Ultroid==2021.4.6
+-U py-Ultroid
 gingerit
 Telethon==1.21.1
 git+https://github.com/buddhhu/search-engine-parser.git
