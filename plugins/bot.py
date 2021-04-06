@@ -17,7 +17,8 @@
 • `{i}cmds`
     View all plugin names.
 
-• `{i}restart`
+• `{i}restart (s| )`
+    s - soft restart
     To restart your bot.
 
 • `{i}logs`
@@ -120,10 +121,16 @@ async def cmds(event):
 
 
 @ultroid_cmd(
-    pattern="restart$",
+    pattern="restart (s|)",
 )
 async def restartbt(ult):
-    await restart(ult)
+    type_of_group = e.pattern_match.group(1)
+    run = subprocess.call
+    if type_of_group == "s":
+        run(["pkill", "python3"])
+        run(["python3", "-m", "pyUltroid"])
+    else:
+        await restart(ult)
 
 
 @ultroid_cmd(
