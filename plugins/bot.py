@@ -131,9 +131,9 @@ async def restartbt(ult):
         try:
             run(["pkill", "python3"])
             run(["python3", "-m", "pyUltroid"])
-            await eor("Soft Restarted Successfully!")
+            await eor(ult, "Soft Restarted Successfully!")
         except:
-            await eor("Umm Some Problems! Send the logs in Ultroid Support")
+            await eod(ult, "Umm Some Problems! Send the logs in Ultroid Support")
     else:
         await restart(ult)
 
