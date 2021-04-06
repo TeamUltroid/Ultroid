@@ -14,6 +14,7 @@ for file in listdir(strings_folder):
             open(path.join(strings_folder, file), encoding="UTF-8"),
         )
 
+
 def get_string(key: str) -> Any:
     try:
         return languages[(udB.get("language") or "en")][key]
