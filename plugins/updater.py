@@ -4,7 +4,14 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+"""
+✘ Commands Available -
+• `{i}update`
+    See changelogs if any update is available.
 
+• `{i}update now`
+    (Force)Update your bots to the latest version.
+"""
 import asyncio
 import sys
 from os import execl, path, remove
@@ -12,7 +19,7 @@ from os import execl, path, remove
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from . import get_string, ultroid_version
+from . import HELP, get_string, ultroid_version
 
 UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
 requirements_path = path.join(
@@ -33,7 +40,7 @@ async def gen_chlog(repo, diff):
     if ch_log:
         return str(ch + ch_log), str(ch_tl + tldr_log)
     else:
-        return ch_log
+        return ch_log, tldr_log
 
 
 async def updateme_requirements():
@@ -180,3 +187,6 @@ async def upstream(ups):
         # Spin a new instance of bot
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
         return
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
