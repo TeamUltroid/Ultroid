@@ -213,7 +213,7 @@ async def _(ult):
             msg += f"• [{user.user.first_name}](tg://user?id={i}) ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    m = udB.get("SUDO")
+    m = udB.get("SUDO") if udB.get("SUDO") else "False"
     return await ok.edit(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}")
 
 
