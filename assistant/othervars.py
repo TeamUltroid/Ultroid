@@ -810,6 +810,7 @@ async def chon(event):
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
     )
 
+
 @callback("vcb")
 @owner
 async def vcb(event):
@@ -822,6 +823,7 @@ async def vcb(event):
         ],
         link_preview=False,
     )
+
 
 @callback("vcs")
 @owner
