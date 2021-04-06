@@ -33,7 +33,7 @@ async def gen_chlog(repo, diff):
     if ch_log:
         return str(ch + ch_log), str(ch_tl + tldr_log)
     else:
-        return ch_log
+        return ch_log, tldr_log
 
 
 async def updateme_requirements():
