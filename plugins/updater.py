@@ -24,10 +24,10 @@ requirements_path = path.join(
 async def gen_chlog(repo, diff):
     ac_br = repo.active_branch.name
     ch_log = ""
-    ch = f"**Ultroid {ultroid_version} updates for [[{ac_br}]]({UPSTREAM_REPO_URL}/tree/{ac_br}):**"
+    ch = f"<b>Ultroid {ultroid_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
     d_form = "%d/%m/%y || %H:%M"
     for c in repo.iter_commits(diff):
-        ch_log += f"\n\n💬 **{c.count()}** 🗓 **[{c.committed_datetime.strftime(d_form)}]**\n**[{c.summary}]({UPSTREAM_REPO_URL.rstrip('/')}/commit/{c})** 👨‍💻 `{c.author}`"
+        ch_log += f"\n\n💬 <b>{c.count()}</b> 🗓 <b>[{c.committed_datetime.strftime(d_form)}]</b>\n<b><a href={UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}>[{c.summary}]</a></b> 👨‍💻 <code>{c.author}</code>"
     if ch_log:
         return str(ch + ch_log)
     else:
@@ -90,7 +90,7 @@ async def upstream(ups):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "now" not in conf:
         if changelog:
-            changelog_str = changelog
+            changelog_str = changelog + f"\n\nUse <code>{hndlr}update now</code> to update!"
             if len(changelog_str) > 4096:
                 await eor(pagal, get_string("upd_4"))
                 file = open("output.txt", "w+")
@@ -106,7 +106,8 @@ async def upstream(ups):
             else:
                 return await eod(
                     pagal,
-                    get_string("upd_6").format(changelog_str, hndlr),
+                    changelog_str,
+                    parse_mode="html"
                 )
         else:
             await eod(
