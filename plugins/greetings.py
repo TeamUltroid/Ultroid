@@ -29,6 +29,7 @@
     Get the goodbye message in the current chat.
 
 Note: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.
+
 """
 
 from telegraph import upload_file as uf
