@@ -59,8 +59,8 @@ ws.on('message', response => {
             break;
         }
         case 'left_vc': {
-            // const { connection } = cache.get(data.chat.id)!;
-            // connection.close();
+            const { connection } = cache.get(data.chat_id)!;
+            connection.close();
             cache.delete(data.chat.id);
             break;
         }
@@ -214,18 +214,18 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
             } catch (err) {
                 console.error(err);
             }
+            cachedConnection.currentSong = null;
         }
-        stream.on('leave', () => {
-            let { source } = cachedConnection;
-            const data = {
-                _: 'leave',
-                data: {
-                    source: source,
-                    chat: chat
-                },
-            };
-            ws.send(JSON.stringify(data));
-        })
+    });
+    stream.on('leave', () => {
+        const data = {
+            _: 'leave',
+            data: {
+                source: cachedConnection.source,
+            },
+        };
+        ws.send(JSON.stringify(data));
+        connection.close();
     });
 };
 
@@ -233,7 +233,7 @@ export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
         stream.emit('leave');
-        return true;
+        cache.delete(chatId);
     }
     return false;
 }
