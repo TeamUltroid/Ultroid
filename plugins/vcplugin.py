@@ -69,7 +69,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="playvc$",
+    pattern="playvc$",
 )
 async def _(e):
     await eor(e, "`VC bot started...`")
