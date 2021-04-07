@@ -132,6 +132,8 @@ async def _(event):
                     ),
                     file=med,
                 )
+            else:
+                await event.reply(file=med)
 
 
 @ultroid_cmd(pattern="setgoodbye")
@@ -226,6 +228,8 @@ async def _(event):
                     ),
                     file=med,
                 )
+            else:
+                await event.reply(file=med)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})
