@@ -16,6 +16,8 @@ from . import *
 
 @ultroid_cmd(pattern="dm ?(.*)")
 async def dm(e):
+    if not e.text[3]==" ": # weird fix
+        return
     d = e.pattern_match.group(1)
     c = d.split(" ")
     try:
