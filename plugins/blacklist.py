@@ -71,9 +71,6 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def bl(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return
     xx = e.text
     chat = e.chat_id
     x = get_blacklist(int(chat))
