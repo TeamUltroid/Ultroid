@@ -14,7 +14,7 @@
 • `{i}remfilter <word>`
     Remove the filtered user..
 
-• `{i}listfilters`
+• `{i}listfilter`
     list all filters.
 """
 
