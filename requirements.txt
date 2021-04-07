@@ -1,6 +1,5 @@
-py-Ultroid
+py-Ultroid==16.60b0
 gingerit
-Flask
 Telethon==1.21.1
 git+https://github.com/buddhhu/search-engine-parser.git
 git+https://github.com/buddhhu/ofox.git
