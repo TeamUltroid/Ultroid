@@ -29,7 +29,7 @@ from . import *
 
 @ultroid_cmd(pattern="addfilter ?(.*)")
 async def af(e):
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
@@ -65,7 +65,7 @@ async def af(e):
 
 @ultroid_cmd(pattern="remfilter ?(.*)")
 async def rf(e):
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
         return await eor(e, "`Give the filter to remove..`")
@@ -85,7 +85,7 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def fl(e):
-    xx = e.text
+    xx = (e.text).lower()
     chat = e.chat_id
     x = get_filter(int(chat))
     if x:
