@@ -102,9 +102,6 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return
     xx = e.text
     if not xx.startswith("#"):
         return
