@@ -119,18 +119,19 @@ async def _(event):
             msgg = wel["welcome"]
             med = wel["media"]
             userid = user.id
-            await event.reply(
-                msgg.format(
-                    mention=mention,
-                    group=title,
-                    count=count,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    userid=userid,
-                ),
-                file=med,
-            )
+            if msgg:
+                await event.reply(
+                    msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    ),
+                    file=med,
+                )
 
 
 @ultroid_cmd(pattern="setgoodbye")
@@ -212,18 +213,19 @@ async def _(event):
             msgg = wel["goodbye"]
             med = wel["media"]
             userid = user.id
-            await event.reply(
-                msgg.format(
-                    mention=mention,
-                    group=title,
-                    count=count,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    userid=userid,
-                ),
-                file=med,
-            )
+            if msgg:
+                await event.reply(
+                    msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    ),
+                    file=med,
+                )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})
