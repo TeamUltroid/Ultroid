@@ -106,11 +106,10 @@ async def set_not_afk(event):
     events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
 )
 async def on_afk(event):
-    if event.fwd_from:
-        return
     if event.is_private:
-        if not is_approved(event.chat_id):
-            return
+        if Redis("PMSETTING")==True:
+            if not is_approved(event.chat_id):
+                return
     global USER_AFK
     global afk_time
     global last_afk_message
