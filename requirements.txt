@@ -1,4 +1,4 @@
-py-Ultroid==16.9b0
+py-Ultroid==17.0b0
 Flask
 gingerit
 Telethon==1.21.1
