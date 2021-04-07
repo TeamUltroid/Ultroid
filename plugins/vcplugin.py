@@ -72,10 +72,11 @@ async def _(e):
     pattern="playvc$",
 )
 async def _(e):
-    await eor(e, "`VC bot started...`")
+    zz = await eor(e, "`VC bot started...`")
     er, out = await bash("npm start")
     LOGS.warning(er)
     LOGS.info(out)
+    await zz.edit(f"Failed {er}")
 
 @ultroid_cmd(
     pattern="vcinvite$",
