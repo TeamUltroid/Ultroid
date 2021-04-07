@@ -155,8 +155,6 @@ async def on_afk(event):
 
 @ultroid_cmd(pattern=r"afk ?(.*)")
 async def _(event):
-    if event.fwd_from:
-        return
     reply = await event.get_reply_message()
     global USER_AFK
     global afk_time
