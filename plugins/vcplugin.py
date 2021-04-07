@@ -73,8 +73,9 @@ async def _(e):
 )
 async def _(e):
     await eor(e, "`VC bot started...`")
-    await bash("npm start")
-
+    er, out = await bash("npm start")
+    LOGS.warning(er)
+    LOGS.info(out)
 
 @ultroid_cmd(
     pattern="vcinvite$",
