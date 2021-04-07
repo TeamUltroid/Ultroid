@@ -34,7 +34,7 @@ async def af(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You are Not Admin Here`")
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not (wrd):
         return await eod(e, "`Give the word to blacklist..`")
@@ -48,7 +48,7 @@ async def rf(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You are Not Admin Here`")
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
         return await eod(e, "`Give the word to remove from blacklist..`")
@@ -71,9 +71,9 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def bl(e):
-    xx = e.text
     chat = e.chat_id
     x = get_blacklist(int(chat))
+    xx = (e.text).lower()
     if x and xx:
         if " " in xx:
             xx = xx.split(" ")
