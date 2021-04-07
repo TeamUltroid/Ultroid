@@ -1,21 +1,26 @@
-import json
-import os
-from json.decoder import JSONDecodeError
+#Adding Flask If Websocket is on and vcbot is brrr
 
-from aiohttp import web
-from aiohttp.http_websocket import WSMsgType
+
 from pyUltroid import Var, vcbot
 from telethon import TelegramClient
-from telethon.errors import ChannelPrivateError
-from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.functions.phone import (GetGroupCallRequest,
-                                         JoinGroupCallRequest)
-from telethon.tl.types import DataJSON
 
 bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
 
 
 if vcbot:
+
+    import json
+    import os
+    from json.decoder import JSONDecodeError
+
+    from aiohttp import web
+    from aiohttp.http_websocket import WSMsgType
+
+    from telethon.errors import ChannelPrivateError
+    from telethon.tl.functions.channels import GetFullChannelRequest
+    from telethon.tl.functions.phone import (GetGroupCallRequest,
+                                         JoinGroupCallRequest)
+    from telethon.tl.types import DataJSON
 
     async def get_entity(chat):
         try:
@@ -162,3 +167,6 @@ if vcbot:
 
     vcbot.start()
     main()
+
+else:
+    from flask import Flask
