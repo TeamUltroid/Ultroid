@@ -164,7 +164,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     };
 
     connection.joinVoiceCall = payload => {
-        // cachedConnection.source = payload.source;
+        cachedConnection.source = payload.source;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
 
