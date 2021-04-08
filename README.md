@@ -46,7 +46,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ### Local Deploy - Easy Method
 - Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
 - Windows - `cd desktop ; wget https://del.dog/raw/ultroid-termux -o locals.py ; python locals.py`
-- Termux - `sh -c "$(curl -fsSL https://del.dog/raw/ultroid-termux)"`
+- Termux - `sh -c "$(curl -fsSL https://del.dog/raw/ultroid-termux-deploy)"`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
