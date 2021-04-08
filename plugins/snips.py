@@ -37,10 +37,6 @@ async def an(e):
         return await eor(e, "Give word to set as snip and reply to a message.")
     if "$" in wrd:
         wrd = wrd.replace("$", "")
-    try:
-        rem_snip(int(chat), wrd)
-    except:
-        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
