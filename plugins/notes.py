@@ -42,10 +42,6 @@ async def an(e):
         return await eod(e, "`Use this Command with Reply and word to use a note.`")
     if "#" in wrd:
         wrd = wrd.replace("#", "")
-    try:
-        rem_note(int(chat), wrd)
-    except:
-        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
