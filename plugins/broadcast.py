@@ -32,8 +32,6 @@ from . import *
 
 @ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
 async def broadcast_adder(event):
-    if not event.text[4] == " ":  # weird fix
-        return
     msgg = event.pattern_match.group(1)
     x = await eor(event, get_string("bd_1"))
     aldone = new = crsh = 0
@@ -58,6 +56,18 @@ async def broadcast_adder(event):
                 pass
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
         return
+    if msgg is None:
+        try:
+            i = await event.get_chat()
+            if i.broadcast == True:
+                if i.creator or i.admin_rights:
+                    if not is_channel_added(i.id):
+                        cid = f"-100{i.id}"
+                        add_channel(int(cid))
+                    else:
+                        pass
+        except BaseException:
+            pass
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         raw_text = previous_message.text
@@ -102,6 +112,18 @@ async def broadcast_remover(event):
         udB.delete("BROADCAST")
         await x.edit("Database cleared.")
         return
+    if chat_id is None:
+        try:
+            i = await event.get_chat()
+            if i.broadcast == True:
+                if i.creator or i.admin_rights:
+                    if is_channel_added(i.id):
+                        cid = f"-100{i.id}"
+                        rem_channel(int(cid))
+                    else:
+                        pass
+        except BaseException:
+            pass
     if is_channel_added(chat_id):
         rem_channel(chat_id)
         await x.edit("Removed from database")
