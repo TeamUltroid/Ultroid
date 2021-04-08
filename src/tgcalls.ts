@@ -67,10 +67,10 @@ ws.on('message', response => {
             }
             break;
         }
-        // case 'left_vc': {
-        //     cache.delete(data.chat.id);
-        //     break;
-        // }
+        case 'left_vc': {
+            cache.delete(data.chat.id);
+            break;
+        }
         default:
             break;
     }
@@ -216,34 +216,34 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
                 stream.emit('finish');
             }
         } else {
-            // try {
-            //     leaveVc(chat.id);
-            // } catch (err) {
-            //     console.error(err);
-            // }
+            try {
+                leaveVc(chat.id);
+            } catch (err) {
+                console.error(err);
+            }
             cachedConnection.currentSong = null;
         }
     });
-    // stream.on('leave', () => {
-    //     const data = {
-    //         _: 'leave',
-    //         data: {
-    //             source: cachedConnection.source,
-    //             chat: chat
-    //         },
-    //     };
-    //     ws.send(JSON.stringify(data));
-    // });
+    stream.on('leave', () => {
+        const data = {
+            _: 'leave',
+            data: {
+                source: cachedConnection.source,
+                chat: chat
+            },
+        };
+        ws.send(JSON.stringify(data));
+    });
 };
 
-// export const leaveVc = (chatId: number) => {
-//     if (cache.has(chatId)) {
-//         const { stream } = cache.get(chatId)!;
-//         stream.emit('leave');
-//         cache.delete(chatId);
-//     }
-//     return false;
-// }
+export const leaveVc = (chatId: number) => {
+    if (cache.has(chatId)) {
+        const { stream } = cache.get(chatId)!;
+        stream.emit('leave');
+        cache.delete(chatId);
+    }
+    return false;
+}
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
     if (!cache.has(chat.id)) {
