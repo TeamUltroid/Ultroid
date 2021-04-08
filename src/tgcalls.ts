@@ -233,7 +233,6 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     //         },
     //     };
     //     ws.send(JSON.stringify(data));
-    //     cachedConnection.connection.close();
     // });
 };
 
