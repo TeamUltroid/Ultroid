@@ -34,10 +34,6 @@ async def af(e):
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(e, "`Use this command word to set as filter and reply...`")
-    try:
-        rem_filter(int(chat), wrd)
-    except:
-        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
