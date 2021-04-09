@@ -68,7 +68,7 @@ async def setwel(event):
         else:
             add_welcome(event.chat_id, None, m)
         await eor(x, "`Welcome note saved`")
-    elif r.text:
+    elif r and r.text:
         add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
