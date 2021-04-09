@@ -38,7 +38,7 @@ async def assistant(event):
                 buttons=[Button.url("Know More", url="https://t.me/TeamUltroid")],
             )
         else:
-            u = await ultroid_bot.get_entity(event.sender_id)
+            u = await event.client.get_entity(event.chat_id)
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
