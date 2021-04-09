@@ -39,7 +39,7 @@ async def assistant(event):
             )
         else:
             u = await ultroid_bot.get_entity(event.sender_id)
-            me = f"[{get_display_name(bot.me)}](tg://user?id={bot.uid})"
+            me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
                 Redis("STARTMSG").format(me=me,mention=mention),
