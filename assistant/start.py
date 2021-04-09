@@ -16,21 +16,21 @@ from plugins import *
 from . import *
 
 
-@asst_cmd("start")
+@asst_cmd("start$")
 async def assistant(event):
-    if event.is_group and event.sender_id in sed:
+    if event.text and event.is_group and event.sender_id in sed:
         bnn = (await asst.get_me()).username
         return await event.reply(
-            "`I dont work in groups`",
+            "`I don't work in groups`",
             buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set")],
         )
     else:
-        if not is_added(event.sender_id) and event.sender_id not in sed:
+        if event.text and not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
         ok = ""
         if udB.get("PMBOT") == "True":
             ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
-        if event.is_private and event.sender_id in sed:
+        if event.text and event.is_private and event.sender_id in sed:
             return
         await event.reply(
             f"Hey there, this is Ultroid Assistant of {OWNER_NAME}!\n\n{ok}",
