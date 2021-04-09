@@ -144,6 +144,7 @@ async def _(ult):
     await ultroid.send_file(
         ult.chat_id,
         file="ultroid.log",
+        thumb="resources/extras/logo_rdm.png",
         caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
     )
     await xx.edit("Done")
