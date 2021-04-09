@@ -33,15 +33,20 @@ async def _(ult):
     if Var.BOT_MODE == True:
         try:
             if ult.sender_id != Var.OWNER_ID:
-                return await eor(
+                return await eod(
                     ult,
-                    "You are sudo user, You cant add other sudo user.",
+                    "`Sudo users can't add new sudos!`",
+                    time=10
                 )
         except BaseException:
             pass
     else:
         if ult.sender_id != ultroid_bot.uid:
-            return await eor(ult, "You are sudo user, You cant add other sudo user.")
+            return await eod(
+                    ult,
+                    "`Sudo users can't add new sudos!`",
+                    time=10
+                )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
@@ -60,7 +65,7 @@ async def _(ult):
                 f"**Added [{user.user.first_name}](tg://user?id={id}) as SUDO User**",
             )
         else:
-            return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BROKE ITSELF`")
+            return await ok.edit("`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`")
 
     args = ult.pattern_match.group(1).strip()
 
