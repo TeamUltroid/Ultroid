@@ -147,6 +147,8 @@ if sett == "True" and sett != "False":
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
+                    if "PMSecurity" in event.text:
+                        return
                     async for message in event.client.iter_messages(
                         user.id,
                         search=UND,

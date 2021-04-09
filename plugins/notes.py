@@ -35,17 +35,13 @@ async def an(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You Are Not Admin Here.", time=5)
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
         return await eod(e, "`Use this Command with Reply and word to use a note.`")
     if "#" in wrd:
         wrd = wrd.replace("#", "")
-    try:
-        rem_note(int(chat), wrd)
-    except:
-        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -77,7 +73,7 @@ async def rn(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You Are Not Admin Here.", time=5)
-    wrd = e.pattern_match.group(1)
+    wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
         return await eod(e, "`Give me the note handler which you want to remove.`")
@@ -105,7 +101,7 @@ async def notes(e):
     xx = e.text
     if not xx.startswith("#"):
         return
-    xx = xx.replace("#", "")
+    xx = (xx.replace("#", "")).lower()
     chat = e.chat_id
     x = get_notes(int(chat))
     if x:

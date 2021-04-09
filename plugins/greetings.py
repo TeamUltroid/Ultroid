@@ -68,7 +68,7 @@ async def setwel(event):
         else:
             add_welcome(event.chat_id, None, m)
         await eor(x, "`Welcome note saved`")
-    elif r.text:
+    elif r and r.text:
         add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
@@ -119,18 +119,21 @@ async def _(event):
             msgg = wel["welcome"]
             med = wel["media"]
             userid = user.id
-            await event.reply(
-                msgg.format(
-                    mention=mention,
-                    group=title,
-                    count=count,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    userid=userid,
-                ),
-                file=med,
-            )
+            if msgg:
+                await event.reply(
+                    msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    ),
+                    file=med,
+                )
+            else:
+                await event.reply(file=med)
 
 
 @ultroid_cmd(pattern="setgoodbye")
@@ -161,7 +164,7 @@ async def setgb(event):
         else:
             add_goodbye(event.chat_id, None, m)
         await eor(x, "`Goodbye note saved`")
-    elif r.text:
+    elif r and r.text:
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goddbye note saved`")
     else:
@@ -212,18 +215,21 @@ async def _(event):
             msgg = wel["goodbye"]
             med = wel["media"]
             userid = user.id
-            await event.reply(
-                msgg.format(
-                    mention=mention,
-                    group=title,
-                    count=count,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    userid=userid,
-                ),
-                file=med,
-            )
+            if msgg:
+                await event.reply(
+                    msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    ),
+                    file=med,
+                )
+            else:
+                await event.reply(file=med)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})

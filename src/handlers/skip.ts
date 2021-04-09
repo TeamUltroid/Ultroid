@@ -29,7 +29,8 @@ export const skipCBHandler = Composer.action(/^skip:[a-zA-Z0-9.\-_]+$/, checkExp
         await ctx.answerCbQuery("Skipped ...");
         setTimeout(async () => await ctx.deleteMessage(), 1000);
     } else {
-        await ctx.answerCbQuery("There's no song playing..")
+        await ctx.answerCbQuery("There's no song playing..");
+        setTimeout(async () => await ctx.deleteMessage(), 1000);
     }
 })
 

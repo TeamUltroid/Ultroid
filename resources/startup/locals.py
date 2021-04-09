@@ -72,20 +72,19 @@ def start():
     print(all_done)
     isitdone = input("\n\nIs it all correct? [y/n]")
     if isitdone == "y":
-        f = open("Ultroid/.env", "w")
+        f = open(".env", "w") #https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f.write(all_done)
         f.close
     elif isitdone == "n":
         print("Oh, let's redo these then -_-")
         start()
     else:
-        f = open("Ultroid/.env", "w")
+        f = open(".env", "w") #https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f.write(all_done)
         f.close
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
-    os.system("cd Ultroid")
     os.system("pip3 install -r ./resources/extras/local-requirements.txt")
     clear_screen()
     print(a)
@@ -133,7 +132,7 @@ def check_for_py():
 
 def gen_session():
     print("\nProcessing...")
-    os.system("cd Ultroid && python3 resources/session/ssgen.py")
+    os.system("python3 resources/session/ssgen.py") #https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
     return
 
 

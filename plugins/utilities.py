@@ -266,6 +266,8 @@ async def stats(
 async def _(event):
     xx = await eor(event, "` 《 Pasting to nekobin... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
+    if not (input_str or event.is_reply):
+        return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
     if input_str:
         message = input_str
         downloaded_file_name = None
