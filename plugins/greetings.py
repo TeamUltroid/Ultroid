@@ -164,7 +164,7 @@ async def setgb(event):
         else:
             add_goodbye(event.chat_id, None, m)
         await eor(x, "`Goodbye note saved`")
-    elif r.text:
+    elif r and r.text:
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goddbye note saved`")
     else:
