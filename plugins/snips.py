@@ -78,7 +78,7 @@ async def rs(e):
 async def lsnote(e):
     x = list_snip()
     if x:
-        sd = "SNIPS Found In This Chats Are\n\n"
+        sd = "SNIPS Found :\n\n"
         await eor(e, sd + x)
     else:
         await eor(e, "No Snips Found Here")
