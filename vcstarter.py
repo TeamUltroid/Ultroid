@@ -6,10 +6,10 @@ from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
 from pyUltroid import Var, vcbot
 from telethon import TelegramClient
-from telethon.errors import ChannelPrivateError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.phone import (GetGroupCallRequest,
-                                         JoinGroupCallRequest)
+                                         JoinGroupCallRequest,
+                                         LeaveGroupCallRequest)
 from telethon.tl.types import DataJSON
 
 bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
@@ -29,10 +29,10 @@ if vcbot:
         try:
             chat = await get_entity(data["chat"])
             full_chat = await vcbot(GetFullChannelRequest(chat))
-        except ValueError:
-            stree = (await vcbot.get_me()).first_name
-            return await bot.send_message(
-                data["chat"]["id"], f"`Please add {stree} in this group.`"
+        except ValueError:	
+            stree = (await vcbot.get_me()).first_name	
+            return await bot.send_message(	
+                data["chat"]["id"], f"`Please add {stree} in this group.`"	
             )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
@@ -93,16 +93,25 @@ if vcbot:
         }
 
     async def leave_vc(data):
-        await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
         try:
-            await get_entity(data["chat"]["id"])
+            chat = await get_entity(data["chat"])
             full_chat = await vcbot(GetFullChannelRequest(chat))
+        except ValueError:	
+            stree = (await vcbot.get_me()).first_name	
+            return await bot.send_message(	
+                data["chat"]["id"], f"`Please add {stree} in this group.`"	
+            )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
         except:
             call = None
+        if not call:
+            return await bot.send_message(
+                data["chat"]["id"],
+                "`I can't access voice chat.`",
+            )
 
         try:
             result = await vcbot(
