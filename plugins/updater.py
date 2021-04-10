@@ -86,9 +86,9 @@ async def upstream(ups):
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
-        repo.create_head("main", origin.refs.main)
-        repo.heads.main.set_tracking_branch(origin.refs.main)
-        repo.heads.main.checkout(True)
+        repo.create_head("dev", origin.refs.dev)
+        repo.heads.dev.set_tracking_branch(origin.refs.dev)
+        repo.heads.dev.checkout(True)
     ac_br = repo.active_branch.name
     try:
         repo.create_remote("upstream", off_repo)
