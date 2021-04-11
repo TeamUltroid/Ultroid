@@ -9,7 +9,7 @@
 
 import { Chat } from 'typegram';
 import { exec as _exec, spawn } from 'child_process';
-import { JoinVoiceCallParams, JoinVoiceCallResponse } from 'tgcalls/lib/types';
+import { JoinVoiceCallResponse } from 'tgcalls/lib/types';
 import { Stream, TGCalls } from 'tgcalls';
 import env from './env';
 import WebSocket from 'ws';
@@ -48,7 +48,8 @@ interface CachedConnection {
     queue: Queue[];
     currentSong: CurrentSong | null;
     joinResolve?: (value: JoinVoiceCallResponse) => void;
-    joinedPayload?: JoinVoiceCallParams<{ chat: Chat.SupergroupChat; }>
+    source?: number;
+    leftVC: boolean
 }
 
 const ws = new WebSocket(env.WEBSOCKET_URL);
@@ -67,6 +68,9 @@ ws.on('message', response => {
             }
             break;
         }
+        // case 'left_vc': {
+        //     break;
+        // }
         default:
             break;
     }
@@ -157,10 +161,11 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         stream,
         queue,
         currentSong: null,
+        leftVC: false
     };
 
     connection.joinVoiceCall = payload => {
-        cachedConnection.joinedPayload = payload;
+        cachedConnection.source = payload.source;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
 
@@ -221,7 +226,15 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         }
     });
     stream.on('leave', () => {
-        connection.close();
+        const data = {
+            _: 'leave',
+            data: {
+                source: cachedConnection.source,
+                chat: chat
+            },
+        };
+        ws.send(JSON.stringify(data));
+        cachedConnection.leftVC = true;
     });
 };
 
@@ -229,7 +242,6 @@ export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
         stream.emit('leave');
-        cache.delete(chatId);
     }
     return false;
 }
@@ -241,6 +253,11 @@ export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Que
     }
 
     const connection = cache.get(chat.id)!;
+    if (connection.leftVC) {
+        cache.delete(chat.id);
+        await createConnection(chat);
+        return addToQueue(chat, url, by);
+    }
     const { stream, queue } = connection;
 
     let songInfo: DownloadedSong['info'];
