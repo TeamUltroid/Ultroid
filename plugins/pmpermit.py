@@ -130,7 +130,7 @@ async def permitpm(event):
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
         if pl is not None:
-            return await event.forward_to(pl)
+            return await event.forward_to(int(pl))
         await event.forward_to(Var.LOG_CHANNEL)
 
 
