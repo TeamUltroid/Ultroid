@@ -14,7 +14,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get install -y nodejs sudo
 RUN git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
-RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
+RUN git clone -b dev https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 RUN pip install -r requirements.txt
 RUN npm install -g npm@7.8.0 && npm install
 RUN npm run build
