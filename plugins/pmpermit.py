@@ -27,8 +27,8 @@
     Start logging again from that user.
 """
 
-from pyUltroid.functions.pmpermit_db import *
 from pyUltroid.functions.logusers_db import *
+from pyUltroid.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
@@ -88,8 +88,9 @@ PMCMDS = [
 ]
 # =================================================================
 
+
 @ultroid_cmd(
-pattern="logpm$",
+    pattern="logpm$",
 )
 async def _(e):
     if not e.is_private:
@@ -100,8 +101,9 @@ async def _(e):
     else:
         return await eod(e, "`Wasn logging msgs from here.`", time=3)
 
+
 @ultroid_cmd(
-pattern="nologpm$",
+    pattern="nologpm$",
 )
 async def _(e):
     if not e.is_private:
@@ -114,10 +116,10 @@ async def _(e):
 
 
 @ultroid_bot.on(
-events.NewMessage(
-incoming=True, 
-func=lambda e: e.is_private,
-),
+    events.NewMessage(
+        incoming=True,
+        func=lambda e: e.is_private,
+    ),
 )
 async def permitpm(event):
     user = await event.get_chat()
@@ -138,10 +140,10 @@ if sett is None:
 if sett == "True" and sett != "False":
 
     @ultroid_bot.on(
-    events.NewMessage(
-    outgoing=True,
-    func=lambda e: e.is_private,
-    ),
+        events.NewMessage(
+            outgoing=True,
+            func=lambda e: e.is_private,
+        ),
     )
     async def autoappr(e):
         miss = await e.get_chat()
@@ -167,10 +169,10 @@ if sett == "True" and sett != "False":
                 )
 
     @ultroid_bot.on(
-    events.NewMessage(
-    incoming=True,
-    func=lambda e: e.is_private,
-    ),
+        events.NewMessage(
+            incoming=True,
+            func=lambda e: e.is_private,
+        ),
     )
     async def permitpm(event):
         user = await event.get_chat()
@@ -293,7 +295,7 @@ if sett == "True" and sett != "False":
                     )
 
     @ultroid_cmd(
-    pattern="(a|approve)(?: |$)",
+        pattern="(a|approve)(?: |$)",
     )
     async def approvepm(apprvpm):
         if apprvpm.reply_to_msg_id:
@@ -354,7 +356,7 @@ if sett == "True" and sett != "False":
             await apprvpm.edit(NO_REPLY)
 
     @ultroid_cmd(
-    pattern="(da|disapprove)(?: |$)",
+        pattern="(da|disapprove)(?: |$)",
     )
     async def disapprovepm(e):
         if e.reply_to_msg_id:
@@ -407,7 +409,7 @@ if sett == "True" and sett != "False":
             await e.edit(NO_REPLY)
 
     @ultroid_cmd(
-    pattern="block$",
+        pattern="block$",
     )
     async def blockpm(block):
         if block.reply_to_msg_id:
@@ -448,7 +450,7 @@ if sett == "True" and sett != "False":
             )
 
     @ultroid_cmd(
-    pattern="unblock$",
+        pattern="unblock$",
     )
     async def unblockpm(unblock):
         if unblock.reply_to_msg_id:
