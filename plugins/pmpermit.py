@@ -19,6 +19,12 @@
 
 • `{i}unblock`
     To Unblock Someone in PM.
+
+• `{i}nologpm`
+    To stop logging from that user.
+
+• `{i}logpm`
+    Start logging again from that user.
 """
 
 from pyUltroid.functions.pmpermit_db import *
@@ -88,7 +94,7 @@ pattern="logpm$",
 async def _(e):
     if not e.is_private:
         return await eod(e, "`Use me in Private.`", time=3)
-    if is_logged(str(e.chat_id)):
+    if is_logger(str(e.chat_id)):
         nolog_user(str(e.chat_id))
         return await eod(e, "`Now I Will log msgs from here.`", time=3)
     else:
@@ -100,7 +106,7 @@ pattern="nologpm$",
 async def _(e):
     if not e.is_private:
         return await eod(e, "`Use me in Private.`", time=3)
-    if not is_logged(str(e.chat_id)):
+    if not is_logger(str(e.chat_id)):
         log_user(str(e.chat_id))
         return await eod(e, "`Now I Won't log msgs from here.`", time=3)
     else:
@@ -117,7 +123,7 @@ async def permitpm(event):
     user = await event.get_chat()
     if user.bot or user.is_self or user.verified:
         return
-    if is_logged(user.id):
+    if is_logger(user.id):
         return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
