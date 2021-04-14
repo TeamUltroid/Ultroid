@@ -12,11 +12,15 @@
    To get info about it.
 """
 
-from . import *
 import os
+
 from telegraph import Telegraph
+
+from . import *
+
 telegraph = Telegraph()
 telegraph.create_account(short_name="Ultroid")
+
 
 @ultroid_cmd(pattern="mediainfo$")
 async def mi(e):
@@ -33,7 +37,6 @@ async def mi(e):
     if er:
         return await ee.edit(f"[{xx}]({url})", link_preview=False)
     await ee.edit(f"[{xx}]({url})\n\n{out}")
-    
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

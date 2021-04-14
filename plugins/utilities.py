@@ -69,8 +69,7 @@ from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
-                               User)
+from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
 
 # =================================================================#
@@ -592,7 +591,7 @@ async def ipinfo(event):
     ipaddr = ""
     try:
         ipaddr = ip[1]
-    except:
+    except BaseException:
         return await eod(xx, "`Give me an IP address you noob!`", time=5)
     if ipaddr == "":
         return
@@ -627,7 +626,7 @@ async def ipinfo(event):
                 tz,
             ),
         )
-    except:
+    except BaseException:
         err = det["error"]["title"]
         msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")

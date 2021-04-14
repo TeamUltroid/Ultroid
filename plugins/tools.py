@@ -46,8 +46,7 @@ import cv2
 import emoji
 from googletrans import Translator
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import (ChannelParticipantAdmin,
-                               ChannelParticipantsBots, User)
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots, User
 from telethon.utils import pack_bot_file_id
 
 from . import *

@@ -33,8 +33,7 @@
 
 """
 
-from pyUltroid.functions.vc_sudos import (add_vcsudo, del_vcsudo, get_vcsudos,
-                                          is_vcsudo)
+from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -78,6 +77,7 @@ async def _(e):
     LOGS.info(out)
     await zz.edit(f"Failed {er}")
 
+
 @ultroid_cmd(
     pattern="vcinvite$",
     groups_only=True,
@@ -94,7 +94,7 @@ async def _(e):
         try:
             await e.client(invitetovc(call=await get_call(e), users=p))
             z += 6
-        except:
+        except BaseException:
             pass
     await ok.edit(f"`Invited {z} users`")
 

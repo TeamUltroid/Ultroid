@@ -73,7 +73,7 @@ async def startmute(event):
             return await eor(xx, "`No proper admin rights...`", time=5)
     elif "creator" in vars(chat):
         pass
-    elif private == True:
+    elif private:
         pass
     else:
         return await eod(xx, "`No proper admin rights...`", time=5)
@@ -128,11 +128,11 @@ async def _(e):
     huh = e.text.split(" ")
     try:
         tme = huh[1]
-    except:
+    except BaseException:
         return await eod(xx, "`Time till mute?`", time=5)
     try:
         input = huh[2]
-    except:
+    except BaseException:
         pass
     chat = await e.get_chat()
     if e.reply_to_msg_id:

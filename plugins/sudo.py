@@ -30,23 +30,15 @@ from . import *
     pattern="addsudo ?(.*)",
 )
 async def _(ult):
-    if Var.BOT_MODE == True:
+    if Var.BOT_MODE:
         try:
             if ult.sender_id != Var.OWNER_ID:
-                return await eod(
-                    ult,
-                    "`Sudo users can't add new sudos!`",
-                    time=10
-                )
+                return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
         except BaseException:
             pass
     else:
         if ult.sender_id != ultroid_bot.uid:
-            return await eod(
-                    ult,
-                    "`Sudo users can't add new sudos!`",
-                    time=10
-                )
+            return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
@@ -120,7 +112,7 @@ async def _(ult):
     pattern="delsudo ?(.*)",
 )
 async def _(ult):
-    if Var.BOT_MODE == True:
+    if Var.BOT_MODE:
         try:
             if ult.sender_id != Var.OWNER_ID:
                 return await eor(

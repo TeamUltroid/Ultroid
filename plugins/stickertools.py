@@ -39,10 +39,12 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon.errors import (ChatSendInlineForbiddenError,
-                             ChatSendStickersForbiddenError)
-from telethon.tl.types import (DocumentAttributeFilename,
-                               DocumentAttributeSticker, MessageMediaPhoto)
+from telethon.errors import ChatSendInlineForbiddenError, ChatSendStickersForbiddenError
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    DocumentAttributeSticker,
+    MessageMediaPhoto,
+)
 
 from . import *
 

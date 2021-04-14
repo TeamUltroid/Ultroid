@@ -11,6 +11,7 @@ from pyUltroid.functions.asst_fns import *
 from pyUltroid.misc._decorators import sed
 from telethon import Button, events
 from telethon.utils import get_display_name
+
 from plugins import *
 
 from . import *
@@ -29,7 +30,7 @@ async def assistant(event):
             add_user(event.sender_id)
         ok = ""
         if event.is_private and event.sender_id in sed:
-                return
+            return
         if not udB.get("STARTMSG"):
             if udB.get("PMBOT") == "True":
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
@@ -42,9 +43,10 @@ async def assistant(event):
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
-                Redis("STARTMSG").format(me=me,mention=mention),
+                Redis("STARTMSG").format(me=me, mention=mention),
                 buttons=[Button.url("Know More", url="https://t.me/TeamUltroid")],
             )
+
 
 @asst_cmd("start ?(.*)")
 @owner

@@ -15,7 +15,7 @@
 • `{i}clearwelcome`
     Delete the welcome in the current chat.
 
-• `{i}getwelcome` 
+• `{i}getwelcome`
     Get the welcome message in the current chat.
 
 ---- GoodByes ----
@@ -25,19 +25,18 @@
 • `{i}cleargoodbye`
     Delete the goodbye in the current chat.
 
-• `{i}getgoodbye` 
+• `{i}getgoodbye`
     Get the goodbye message in the current chat.
 
 """
-Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
-
-
 import os
 
 from telegraph import upload_file as uf
 from telethon.utils import get_display_name, pack_bot_file_id
 
 from . import *
+
+Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
 
 @ultroid_cmd(pattern="setwelcome")

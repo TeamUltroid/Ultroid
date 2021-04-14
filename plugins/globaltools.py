@@ -66,7 +66,7 @@ async def _(e):
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=True)
                 chats += 1
-            except:
+            except BaseException:
                 pass
     ungban(userid)
     await xx.edit(
@@ -113,7 +113,7 @@ async def _(e):
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=False)
                 chats += 1
-            except:
+            except BaseException:
                 pass
     gban(userid)
     await xx.edit(
@@ -139,7 +139,7 @@ async def gcast(event):
             try:
                 done += 1
                 await ultroid_bot.send_message(chat, msg)
-            except:
+            except BaseException:
                 er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
@@ -162,7 +162,7 @@ async def gucast(event):
             try:
                 done += 1
                 await ultroid_bot.send_message(chat, msg)
-            except:
+            except BaseException:
                 er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
@@ -200,7 +200,7 @@ async def gkick(e):
             try:
                 await ultroid_bot.kick_participant(gkick.id, userid)
                 chats += 1
-            except:
+            except BaseException:
                 pass
     await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
@@ -240,7 +240,7 @@ async def _(e):
             try:
                 await e.client.edit_permissions(onmute.id, userid, send_messages=False)
                 chats += 1
-            except:
+            except BaseException:
                 pass
     gmute(userid)
     await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
@@ -277,7 +277,7 @@ async def _(e):
             try:
                 await e.client.edit_permissions(hurr.id, userid, send_messages=True)
                 chats += 1
-            except:
+            except BaseException:
                 pass
     ungmute(userid)
     await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
@@ -299,7 +299,7 @@ async def _(e):
                     gban_watch = f"`Gbanned User` [{user.first_name}](tg://user?id={user.id}) `Spotted\n"
                     gban_watch += f"Banned Successfully`"
                     await e.reply(gban_watch)
-                except:
+                except BaseException:
                     pass
 
 
