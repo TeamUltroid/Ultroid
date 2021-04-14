@@ -30,13 +30,13 @@ async def mi(e):
     xx = mediainfo(r.media)
     makeit = telegraph.create_page(title="Mediainfo", content=[str(r.media)])
     url = makeit["url"]
-    ee = await eor(e, f"[{xx}]({url})\n\n`Loading More...`")
+    ee = await eor(e, f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     dl = await ultroid_bot.download_media(r.media)
     out, er = await bash(f"mediainfo {dl}")
     os.remove(dl)
     if er:
-        return await ee.edit(f"[{xx}]({url})", link_preview=False)
-    await ee.edit(f"[{xx}]({url})\n\n{out}")
+        return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
+    await ee.edit(f"**[{xx}]({url})**\n\n{out}")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
