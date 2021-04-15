@@ -18,8 +18,11 @@ from . import *
     ),
 )
 async def all_messages_catcher(e):
-    if udB.get("TAG_LOG") is not None:
-        NEEDTOLOG = int(udB.get("TAG_LOG"))
+    if udB.get("TAG_LOG"):
+        try:
+            NEEDTOLOG = int(udB.get("TAG_LOG"))
+        except Exception:
+            return LOGS.warning("you given Wrong Grp/Channel ID in TAG_LOG.")
         x = await ultroid_bot.get_entity(e.sender_id)
         if x.bot or x.verified:
             return

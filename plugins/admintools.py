@@ -30,6 +30,12 @@
 • `{i}unpin (all) <reply to message>`
     Unpin the message(s) in the chat.
 
+• `{i}pinned`
+   Get pinned message in the current chat.
+
+• `{i}listpinned`
+   Get all pinned messages in current chat.
+
 • `{i}purge <reply to message>`
     Purge all messages from the replied message.
 
@@ -51,7 +57,7 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
 from telethon.tl.functions.channels import EditAdminRequest
-from telethon.tl.types import ChatAdminRights
+from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
 
@@ -425,6 +431,50 @@ async def editer(edit):
             await edit.delete()
             break
         i = i + 1
+
+
+@ultroid_cmd(pattern="pinned")
+async def get_pinned(event):
+    x = await eor(event, get_string("com_1"))
+    chat_id = (str(event.chat_id)).replace("-100", "")
+    chat_name = (await event.get_chat()).title
+    tem = ""
+    c = 0
+
+    async for i in ultroid.iter_messages(
+        event.chat_id, filter=InputMessagesFilterPinned
+    ):
+        c += 1
+        tem += f"The pinned message in {chat_name} can be found <a href=https://t.me/c/{chat_id}/{i.id}>here.</a>"
+        if c == 1:
+            return await x.edit(tem, parse_mode="html")
+
+    if tem == "":
+        return await eod(x, "There is no pinned message in chat!", time=5)
+
+
+@ultroid_cmd(pattern="listpinned")
+async def get_all_pinned(event):
+    x = await eor(event, get_string("com_1"))
+    chat_id = (str(event.chat_id)).replace("-100", "")
+    chat_name = (await event.get_chat()).title
+    a = ""
+    c = 1
+    async for i in ultroid.iter_messages(
+        event.chat_id, filter=InputMessagesFilterPinned
+    ):
+        a += f"{c}. <a href=https://t.me/c/{chat_id}/{i.id}>Go to message.</a>\n"
+        c += 1
+
+    if c == 1:
+        m = f"<b>The pinned message in {chat_name}:</b>\n\n"
+    else:
+        m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
+
+    if a == "":
+        return await eod(x, "There is no message pinned in this group!", time=5)
+
+    await x.edit(m + a, parse_mode="html")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -121,7 +121,7 @@ async def _(e):
             text=f"**File:**\n{file_name}",
             buttons=bitton,
         )
-    except:
+    except BaseException:
         lnk = e.builder.article(
             title="fl2lnk",
             text="File not found",

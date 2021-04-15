@@ -42,7 +42,7 @@ async def inline_handler(event):
     input_str = event.pattern_match.group(1)
     plug = [*PLUGINS]
     plugs = []
-    if input_str == None or input_str == "":
+    if input_str is None or input_str == "":
         for i in plug:
             try:
                 plugs.append(

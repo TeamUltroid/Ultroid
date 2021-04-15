@@ -67,10 +67,10 @@ from telegraph import upload_file as uf
 from telethon import functions
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import LeaveChannelRequest
+from telethon.tl.functions.channels import LeaveChannelRequest, InviteToChannelRequest
+from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
-                               User)
+from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
 
 # =================================================================#
@@ -266,6 +266,8 @@ async def stats(
 async def _(event):
     xx = await eor(event, "` 《 Pasting to nekobin... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
+    if not (input_str or event.is_reply):
+        return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
     if input_str:
         message = input_str
         downloaded_file_name = None
@@ -408,7 +410,7 @@ async def _(ult):
         for user_id in to_add_users.split(" "):
             try:
                 await ultroid_bot(
-                    functions.messages.AddChatUserRequest(
+                    AddChatUserRequest(
                         chat_id=ult.chat_id,
                         user_id=user_id,
                         fwd_limit=1000000,
@@ -421,7 +423,7 @@ async def _(ult):
         for user_id in to_add_users.split(" "):
             try:
                 await ultroid_bot(
-                    functions.channels.InviteToChannelRequest(
+                    InviteToChannelRequest(
                         channel=ult.chat_id,
                         users=[user_id],
                     ),
@@ -590,7 +592,7 @@ async def ipinfo(event):
     ipaddr = ""
     try:
         ipaddr = ip[1]
-    except:
+    except BaseException:
         return await eod(xx, "`Give me an IP address you noob!`", time=5)
     if ipaddr == "":
         return
@@ -625,7 +627,7 @@ async def ipinfo(event):
                 tz,
             ),
         )
-    except:
+    except BaseException:
         err = det["error"]["title"]
         msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
