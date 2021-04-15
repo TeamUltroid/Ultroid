@@ -1,4 +1,4 @@
-py-Ultroid==2021.4.15.1
+py-Ultroid==2021.4.16
 gingerit
 Telethon==1.21.1
 git+https://github.com/buddhhu/search-engine-parser.git
@@ -7,5 +7,3 @@ git+https://github.com/ProgrammingError/rextester_py.git
 google-assistant-grpc
 tenacity
 google-assistant-sdk
-
-
