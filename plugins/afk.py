@@ -20,7 +20,9 @@ from datetime import datetime
 
 from pyUltroid.functions.pmpermit_db import *
 from telethon import events
-from telethon.tl import functions, types
+from telethon.tl.functions.account import GetPrivacyRequest
+from telethon.tl.types import InputPrivacyKeyStatusTimestamp, PrivacyValueAllowAll
+
 
 from . import *
 
@@ -182,9 +184,9 @@ async def _(event):
         pic = None
     if not USER_AFK:
         last_seen_status = await ultroid_bot(
-            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp()),
+            GetPrivacyRequest(InputPrivacyKeyStatusTimestamp()),
         )
-        if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
+        if isinstance(last_seen_status.rules, PrivacyValueAllowAll):
             afk_time = datetime.datetime.now()
         USER_AFK = f"yes: {reason} {pic}"
         if reason:
