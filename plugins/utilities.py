@@ -67,7 +67,8 @@ from telegraph import upload_file as uf
 from telethon import functions
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import LeaveChannelRequest
+from telethon.tl.functions.channels import LeaveChannelRequest, InviteToChannelRequest
+from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
@@ -409,7 +410,7 @@ async def _(ult):
         for user_id in to_add_users.split(" "):
             try:
                 await ultroid_bot(
-                    functions.messages.AddChatUserRequest(
+                    AddChatUserRequest(
                         chat_id=ult.chat_id,
                         user_id=user_id,
                         fwd_limit=1000000,
@@ -422,7 +423,7 @@ async def _(ult):
         for user_id in to_add_users.split(" "):
             try:
                 await ultroid_bot(
-                    functions.channels.InviteToChannelRequest(
+                    InviteToChannelRequest(
                         channel=ult.chat_id,
                         users=[user_id],
                     ),
