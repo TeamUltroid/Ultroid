@@ -14,12 +14,8 @@
 
 import os
 
-from telegraph import Telegraph
-
 from . import *
 
-telegraph = Telegraph()
-telegraph.create_account(short_name="Ultroid")
 
 
 @ultroid_cmd(pattern="mediainfo$")
@@ -28,8 +24,8 @@ async def mi(e):
     if not (r and r.media):
         return await eod(e, "`Reply to any media`")
     xx = mediainfo(r.media)
-    makeit = telegraph.create_page(title="Mediainfo", content=[str(r.media)])
-    url = makeit["url"]
+    murl = r.media.stringify()
+    url = html("Mediainfo", "Ultroid", f"<code>{murl}</code>")
     ee = await eor(e, f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     dl = await ultroid_bot.download_media(r.media)
     out, er = await bash(f"mediainfo {dl}")
