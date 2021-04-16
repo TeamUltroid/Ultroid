@@ -18,10 +18,8 @@
     List all sudo users.
 """
 
-import re
 
 from pyUltroid.misc._decorators import sed
-from telethon.tl.functions.users import GetFullUserRequest
 
 from . import *
 
@@ -62,7 +60,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = (await ult.client.get_entity(int(id))).first_name
-        except:
+        except BaseException:
             name = ""
         sed.append(id)
         mmm = ""
@@ -84,6 +82,7 @@ async def _(ult):
         await eod(ok, mmm, time=5)
     else:
         return await eod(ok, "`Reply to a msg or add it's id/username.`", time=5)
+
 
 @ultroid_cmd(
     pattern="delsudo ?(.*)",
@@ -122,7 +121,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = (await ult.client.get_entity(int(id))).first_name
-        except:
+        except BaseException:
             name = ""
         sed.remove(id)
         mmm = ""
@@ -149,10 +148,9 @@ async def _(ult):
     sudos = Redis("SUDOS")
     if sudos == "" or sudos is None:
         return await eod(ult, "`No SUDO User was assigned ...`", time=5)
-    sumos = sudos.split(' ')
+    sumos = sudos.split(" ")
     msg = ""
     for i in sumos:
-        user = ""
         try:
             name = (await ult.client.get_entity(int(i))).first_name
         except BaseException:

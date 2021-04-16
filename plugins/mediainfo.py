@@ -17,7 +17,6 @@ import os
 from . import *
 
 
-
 @ultroid_cmd(pattern="mediainfo$")
 async def mi(e):
     r = await e.get_reply_message()

@@ -23,7 +23,6 @@ from telethon import events
 from telethon.tl.functions.account import GetPrivacyRequest
 from telethon.tl.types import InputPrivacyKeyStatusTimestamp, PrivacyValueAllowAll
 
-
 from . import *
 
 global USER_AFK
