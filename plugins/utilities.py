@@ -64,10 +64,9 @@ import pytz
 import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
-from telethon import functions
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import InviteToChannelRequest, LeaveChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest, LeaveChannelRequest, GetAdminedPublicChannelsRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
@@ -178,7 +177,7 @@ async def info(event):
     pattern="listreserved$",
 )
 async def _(event):
-    result = await ultroid_bot(functions.channels.GetAdminedPublicChannelsRequest())
+    result = await ultroid_bot(GetAdminedPublicChannelsRequest())
     output_str = ""
     r = result.chats
     for channel_obj in r:
