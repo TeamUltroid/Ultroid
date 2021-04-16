@@ -19,7 +19,7 @@ import asyncio
 import os
 import random
 
-from telethon import functions
+from telethon.functions.photos import UploadProfilePhotoRequest
 
 from . import *
 
@@ -46,7 +46,7 @@ async def autopic(e):
             return
         animepp(page["href"])
         file = await ultroid_bot.upload_file("autopic.jpg")
-        await ultroid_bot(functions.photos.UploadProfilePhotoRequest(file))
+        await ultroid_bot(UploadProfilePhotoRequest(file))
         os.remove("autopic.jpg")
         await asyncio.sleep(1100)
 
