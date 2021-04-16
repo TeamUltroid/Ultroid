@@ -12,7 +12,7 @@ FROM ultroidteam/ultroid:0.0.3
 #    rm chromedriver.zip
 RUN curl --silent --location https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get install -y nodejs
-RUN git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
 RUN pip install -r requirements.txt
