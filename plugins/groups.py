@@ -85,7 +85,7 @@ async def _(event):
             if "empty" in input_str:
                 try:
                     await event.client(
-                       EditBannedRequest(event.chat_id, i, rights),
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     y -= 1
