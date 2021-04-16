@@ -23,8 +23,12 @@
 
 
 from telethon.errors import ChatAdminRequiredError as no_admin
-from telethon.tl.functions.messages import DeleteChatUserRequest, CreateChatRequest, ExportChatInviteRequest
 from telethon.tl.functions.channels import DeleteChannelRequest
+from telethon.tl.functions.messages import (
+    CreateChatRequest,
+    DeleteChatUserRequest,
+    ExportChatInviteRequest,
+)
 
 from . import *
 
