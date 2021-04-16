@@ -27,7 +27,8 @@
 import asyncio
 import os
 
-from telethon.tl import functions
+from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
 from telethon.tl.types import InputPhoto
 
@@ -45,7 +46,7 @@ async def _(ult):
     ok = await eor(ult, "...")
     set = ult.pattern_match.group(1)
     try:
-        await ultroid_bot(functions.account.UpdateProfileRequest(about=set))
+        await ultroid_bot(UpdateProfileRequest(about=set))
         await ok.edit(f"Profile bio changed to\n`{set}`")
     except Exception as ex:
         await ok.edit("Error occured.\n`{}`".format(str(ex)))
@@ -68,7 +69,7 @@ async def _(ult):
         first_name, last_name = names.split("//", 1)
     try:
         await ultroid_bot(
-            functions.account.UpdateProfileRequest(
+            UpdateProfileRequest(
                 first_name=first_name,
                 last_name=last_name,
             ),
@@ -102,7 +103,7 @@ async def _(ult):
             await ok.edit("`Uploading it to my profile...`")
             file = await ultroid_bot.upload_file(photo)
             try:
-                await ultroid_bot(functions.photos.UploadProfilePhotoRequest(file))
+                await ultroid_bot(UploadProfilePhotoRequest(file))
             except Exception as ex:
                 await ok.edit("Error occured.\n`{}`".format(str(ex)))
             else:
