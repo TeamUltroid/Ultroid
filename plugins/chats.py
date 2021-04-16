@@ -23,7 +23,8 @@
 
 
 from telethon.errors import ChatAdminRequiredError as no_admin
-from telethon.tl import functions
+from telethon.tl.functions.messages import DeleteChatUserRequest, CreateChatRequest, ExportChatInviteRequest
+from telethon.tl.functions.channels import DeleteChannelRequest
 
 from . import *
 
@@ -35,7 +36,7 @@ from . import *
 async def _(e):
     xx = await eor(e, "`Processing...`")
     try:
-        await e.client(functions.channels.DeleteChannelRequest(e.chat_id))
+        await e.client(DeleteChannelRequest(e.chat_id))
     except TypeError:
         return await eod(xx, "`Cant delete this chat`", time=10)
     except no_admin:
@@ -51,7 +52,7 @@ async def _(e):
     xx = await eor(e, "`Processing...`")
     try:
         r = await e.client(
-            functions.messages.ExportChatInviteRequest(e.chat_id),
+            ExportChatInviteRequest(e.chat_id),
         )
     except no_admin:
         return await eod(xx, "`I m not an admin`", time=10)
@@ -68,20 +69,20 @@ async def _(e):
     if type_of_group == "b":
         try:
             r = await e.client(
-                functions.messages.CreateChatRequest(
+                CreateChatRequest(
                     users=["@missrose_bot"],
                     title=group_name,
                 ),
             )
             created_chat_id = r.chats[0].id
             await e.client(
-                functions.messages.DeleteChatUserRequest(
+                DeleteChatUserRequest(
                     chat_id=created_chat_id,
                     user_id="@missrose_bot",
                 ),
             )
             result = await e.client(
-                functions.messages.ExportChatInviteRequest(
+                ExportChatInviteRequest(
                     peer=created_chat_id,
                 ),
             )
@@ -94,7 +95,7 @@ async def _(e):
     elif type_of_group == "g" or type_of_group == "c":
         try:
             r = await e.client(
-                functions.channels.CreateChannelRequest(
+                CreateChannelRequest(
                     title=group_name,
                     about="Join @TeamUltroid",
                     megagroup=False if type_of_group == "c" else True,
@@ -102,7 +103,7 @@ async def _(e):
             )
             created_chat_id = r.chats[0].id
             result = await e.client(
-                functions.messages.ExportChatInviteRequest(
+                ExportChatInviteRequest(
                     peer=created_chat_id,
                 ),
             )
