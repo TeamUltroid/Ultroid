@@ -50,7 +50,7 @@ async def _(ult):
         if id == ultroid_bot.me.id:
             mmm += "You cant add yourself as Sudo User..."
         elif is_sudo(id):
-            mmm += f"[{user.user.first_name}](tg://user?id={id}) `is already a SUDO User ...`"
+            mmm += f"[{name}](tg://user?id={id}) `is already a SUDO User ...`"
         elif add_sudo(id):
             udB.set("SUDO", "True")
             mmm += f"**Added [{name}](tg://user?id={id}) as SUDO User**"
@@ -104,7 +104,7 @@ async def _(ult):
         if not is_sudo(id):
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         elif del_sudo(id):
-            mmm += f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User(s)**"
+            mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
@@ -117,7 +117,7 @@ async def _(ult):
         if not is_sudo(id):
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         elif del_sudo(id):
-            mmm += f"**Removed [{user.user.first_name}](tg://user?id={id}) from SUDO User(s)**"
+            mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
