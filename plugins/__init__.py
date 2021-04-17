@@ -7,7 +7,6 @@
 
 import time
 
-from pyUltroid import *
 from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions.all import *
