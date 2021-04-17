@@ -15,6 +15,7 @@ RUN apt-get install -y nodejs
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
+RUN pip uninstall speedtest-cli -y
 RUN pip install -r requirements.txt
 RUN rm -rf /usr/local/lib/python3.9/site-packages/.wh*
 RUN npm install -g npm@7.9.0 && npm install
