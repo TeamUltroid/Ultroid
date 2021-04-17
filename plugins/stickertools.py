@@ -140,7 +140,7 @@ async def uconverter(event):
 
 
 @ultroid_cmd(
-    pattern="kang",
+    pattern="kang$",
 )
 async def hehe(args):
     xx = await eor(args, "`Processing...`")
