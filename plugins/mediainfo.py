@@ -27,11 +27,12 @@ async def mi(e):
     url = make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
     ee = await eor(e, f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     dl = await ultroid_bot.download_media(r.media)
-    out, er = await bash(f"mediainfo {dl}")
+    out, er = await bash(f"mediainfo {dl} --Output=HTML")
+    urll = make_html_telegraph("Mediainfo, "Ultroid", out)
     os.remove(dl)
     if er:
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
-    await ee.edit(f"**[{xx}]({url})**\n\n{out}")
+    await ee.edit(f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
