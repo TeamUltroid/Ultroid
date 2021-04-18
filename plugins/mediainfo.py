@@ -32,7 +32,9 @@ async def mi(e):
     os.remove(dl)
     if er:
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
-    await ee.edit(f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False)
+    await ee.edit(
+        f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
+    )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
