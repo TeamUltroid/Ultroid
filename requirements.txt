@@ -1,4 +1,4 @@
-py-Ultroid==2021.4.16
+py-Ultroid==18.3b0
 gingerit
 Telethon==1.21.1
 speedtest-cli==2.1.3
