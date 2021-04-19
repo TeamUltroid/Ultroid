@@ -72,9 +72,9 @@ async def download(event):
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
-        await eod(xx, get_string("udl_2").format(o, t))
+        await eor(xx, get_string("udl_2").format(o, t))
     else:
-        await eod(xx, f"Downloaded `{o}` in `0 second(s)`")
+        await eor(xx, f"Downloaded `{o}` in `0 second(s)`")
 
 
 @ultroid_cmd(
@@ -121,9 +121,9 @@ async def download(event):
     except BaseException:
         pass
     if t:
-        await eod(xx, f"Uploaded `{kk}` in `{t}`", time=5)
+        await eor(xx, f"Uploaded `{kk}` in `{t}`", time=5)
     else:
-        await eod(xx, f"Uploaded `{kk}` in `0 second(s)`")
+        await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
