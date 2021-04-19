@@ -61,6 +61,9 @@
        "worker": {
          "quantity": 1,
          "size": "free"
-        }
+        },
+       "web": {
+         "quantity": 0,
+         "size": "free"
     }
 }
