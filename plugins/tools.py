@@ -148,7 +148,7 @@ async def _(ult):
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await eod(ult, mentions)
+    await eor(ult, mentions)
 
 
 @ultroid_cmd(pattern="hl")
@@ -157,7 +157,7 @@ async def _(ult):
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eod(ult, "`Input some link`", time=5)
-    await eod(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
+    await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
 @ultroid_cmd(
@@ -303,7 +303,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, OUT)
+        await eor(xx, OUT)
 
 
 @ultroid_cmd(
@@ -366,7 +366,7 @@ async def _(event):
             )
             await xx.delete()
     else:
-        await eod(xx, final_output)
+        await eor(xx, final_output)
 
 
 async def aexec(code, event):
