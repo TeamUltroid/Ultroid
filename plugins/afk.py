@@ -174,7 +174,7 @@ async def _(event):
     afk_time = None
     last_afk_message = {}
     last_afk_msg = {}
-    afk_end = {}
+    afk_end = back
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     reason = event.pattern_match.group(1)
