@@ -10,6 +10,7 @@ from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from telethon.tl.custom import Button
+
 from . import *
 
 
@@ -44,8 +45,11 @@ async def ult(ult):
             await eor(ult, "Error 🤔 occured.")
     else:
         if Var.BOT_MODE:
-            await ultroid_bot.send_message(ult.chat_id, f"Bot of {ultroid_bot.me.first_name}",
-                                          buttons=[Button.inline(text="Open Help", data="open")])
+            await ultroid_bot.send_message(
+                ult.chat_id,
+                f"Bot of {ultroid_bot.me.first_name}",
+                buttons=[Button.inline(text="Open Help", data="open")],
+            )
             return
         try:
             results = await ultroid_bot.inline_query(tgbot, "ultd")
