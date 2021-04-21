@@ -783,7 +783,7 @@ async def chbot(event):
         buttons=[
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏɴᴇ", data="bwel")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
