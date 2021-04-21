@@ -8,9 +8,8 @@
 from pyUltroid.dB.database import Var
 from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
-from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-
+from telethon.tl.custom import Button
 from . import *
 
 
@@ -44,6 +43,10 @@ async def ult(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
+        if Var.BOT_MODE:
+            await ultroid_bot.send_message(ult.chat_id, f"Bot of {ultroid_bot.me.first_name}",
+                                          buttons=[Button.inline(text="Open Help", data="open")])
+            return
         try:
             results = await ultroid_bot.inline_query(tgbot, "ultd")
         except rep:
@@ -53,10 +56,5 @@ async def ult(ult):
             )
         except dis:
             return await eor(ult, get_string("help_3"))
-        except bmi:
-            return await eor(
-                ult,
-                get_string("help_4").format(tgbot),
-            )
         await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
         await ult.delete()
