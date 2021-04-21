@@ -14,7 +14,6 @@ com_2: "`Searching...`"
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
-help_4: "Hey, \nYou are on Bot Mode. \nBot Mode Users Cant Get Help Directly ... \nInstead Copy Paste The Following in The Chat and Click The Pop Up \n\n `@{} ultd`"
 
 # autopic
 autopic_1: "Heya Give me some Text .."
