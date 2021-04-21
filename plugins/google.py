@@ -26,6 +26,7 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from search_engine_parser import GoogleSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
+
 from strings import get_string
 
 from . import *
