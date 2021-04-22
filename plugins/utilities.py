@@ -87,11 +87,7 @@ telegraph.create_account(short_name="Ultroid")
 # ================================================================#
 
 
-@ultroid_cmd(
-    pattern="kickme$",
-    groups_only=True,
-    allow_sudo=False
-)
+@ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
 async def leave(ult):
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))

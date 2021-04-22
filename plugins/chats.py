@@ -39,7 +39,7 @@ from . import *
 )
 async def _(e):
     if BOT_MODE:
-	return await eor(e, "You Cant Use This Command in BOT_MODE")
+        return await eor(e, "You Cant Use This Command in BOT_MODE")
     xx = await eor(e, "`Processing...`")
     try:
         await e.client(DeleteChannelRequest(e.chat_id))
@@ -70,7 +70,7 @@ async def _(e):
 )
 async def _(e):
     if BOT_MODE:
-	return await eor(e, "You Cant use this Command in BOT_MODE")
+        return await eor(e, "You Cant use this Command in BOT_MODE")
     type_of_group = e.pattern_match.group(1)
     group_name = e.pattern_match.group(2)
     xx = await eor(e, "`Processing...`")
