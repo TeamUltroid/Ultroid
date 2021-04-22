@@ -90,10 +90,9 @@ telegraph.create_account(short_name="Ultroid")
 @ultroid_cmd(
     pattern="kickme$",
     groups_only=True,
+    allow_sudo=False
 )
 async def leave(ult):
-    if ult.sender_id != ultroid_bot.uid:
-        return
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
@@ -181,6 +180,8 @@ async def info(event):
     pattern="listreserved$",
 )
 async def _(event):
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT MODE")
     result = await ultroid_bot(GetAdminedPublicChannelsRequest())
     output_str = ""
     r = result.chats
@@ -198,6 +199,8 @@ async def _(event):
 async def stats(
     event: NewMessage.Event,
 ) -> None:
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     ok = await eor(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
@@ -407,6 +410,8 @@ async def _(event):
     groups_only=True,
 )
 async def _(ult):
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     xx = await eor(ult, get_string("com_1"))
     to_add_users = ult.pattern_match.group(1)
     if not ult.is_channel and ult.is_group:
