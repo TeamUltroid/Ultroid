@@ -44,7 +44,7 @@ async def ult(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
-        if Var.BOT_MODE:
+        if BOT_MODE:
             await ultroid_bot.send_message(
                 ult.chat_id,
                 f"Bot of {ultroid_bot.me.first_name}",
