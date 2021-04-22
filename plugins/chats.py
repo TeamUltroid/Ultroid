@@ -9,7 +9,7 @@
 ✘ Commands Available -
 
 • `{i}delchat`
-	Delete the group this cmd is used in.
+    Delete the group this cmd is used in.
 
 • `{i}getlink`
     Get link of group this cmd is used in.
@@ -38,9 +38,8 @@ from . import *
     groups_only=True,
 )
 async def _(e):
-	if BOT_MODE:
-		await eor(e, "You Cant Use This Command in BOT_MODE")
-		return
+    if BOT_MODE:
+	return await eor(e, "You Cant Use This Command in BOT_MODE")
     xx = await eor(e, "`Processing...`")
     try:
         await e.client(DeleteChannelRequest(e.chat_id))
