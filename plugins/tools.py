@@ -385,6 +385,8 @@ async def aexec(code, event):
     pattern="sg ?(.*)",
 )
 async def lastname(steal):
+    if BOT_MODE:
+        return await eor(steal, "`You cant Use This command in BOT_MODE..`")
     mat = steal.pattern_match.group(1)
     if not (steal.is_reply or mat):
         await eor(steal, "`Use this command with reply or give Username/id...`")
