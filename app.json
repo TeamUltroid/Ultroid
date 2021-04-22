@@ -56,14 +56,15 @@
             "description": "Create a private group. Add @missrose_bot and your BOT_USERNAME bot. Do /id. Paste that here",
             "value": ""
         }
-      },
-      "formation": {
-       "worker": {
-         "quantity": 1,
-         "size": "free"
+    },
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
         },
-       "web": {
-         "quantity": 0,
-         "size": "free"
+        "web": {
+            "quantity": 0,
+            "size": "free"
+        }
     }
 }
