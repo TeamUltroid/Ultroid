@@ -19,7 +19,7 @@ import asyncio
 import os
 import random
 
-from telethon.functions.photos import UploadProfilePhotoRequest
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
 
