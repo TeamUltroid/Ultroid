@@ -8,9 +8,10 @@
 from pyUltroid.dB.database import Var
 from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
+from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from telethon.tl.custom import Button
-from telethon.errors.rpcerrorlist import BotMethodInvalidError
+
 from . import *
 
 
@@ -44,7 +45,7 @@ async def ult(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
-        #if BOT_MODE:
+        # if BOT_MODE:
         #    await ultroid_bot.send_message(
         #        ult.chat_id,
         #        f"Bot of {ultroid_bot.me.first_name}",
@@ -73,10 +74,14 @@ async def ult(ult):
                     cmd,
                 ),
                 buttons=[
-                    [Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                    Button.inline("• Aᴅᴅᴏɴs", data="frrr")],
-                    [Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                    Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone")],
+                    [
+                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                    ],
+                    [
+                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                    ],
                     [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set")],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
