@@ -37,38 +37,26 @@ async def download(event):
         ok = await event.get_reply_message()
         if not ok.media:
             return await eod(xx, get_string("udl_1"), time=5)
-        else:
-            if not kk:
-                d = "resources/downloads/"
-                o = await event.client.download_media(
-                    ok,
-                    d,
+        file = a.media.document
+        filename = a.file.name
+        try:
+            with open(filename, "wb") as fk:
+                await download_file(
+                    client= event.client,
+                    location=file,
+                    out=fk,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                         progress(
                             d,
                             t,
                             xx,
-                            k,
+                            c,
                             "Downloading...",
+                            ),
                         ),
-                    ),
-                )
-            else:
-                d = f"resources/downloads/{kk}"
-                o = await event.client.download_media(
-                    ok,
-                    d,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(
-                            d,
-                            t,
-                            xx,
-                            k,
-                            "Downloading...",
-                            file_name=d,
-                        ),
-                    ),
-                )
+                    )
+        except Exception as ex:
+            return await eod(xx, "`" + str(ex) + "`", time=5)
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
