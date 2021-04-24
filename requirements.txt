@@ -5,6 +5,3 @@ speedtest-cli==2.1.3
 git+https://github.com/buddhhu/search-engine-parser.git
 git+https://github.com/buddhhu/ofox.git
 git+https://github.com/ProgrammingError/rextester_py.git
-google-assistant-grpc
-tenacity
-google-assistant-sdk
