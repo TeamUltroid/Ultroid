@@ -64,9 +64,9 @@ async def download(event):
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
-        await eor(xx, get_string("udl_2").format(o, t))
+        await eor(xx, get_string("udl_2").format(filename, t))
     else:
-        await eor(xx, f"Downloaded `{o}` in `0 second(s)`")
+        await eor(xx, f"Downloaded `{filename}` in `0 second(s)`")
 
 
 @ultroid_cmd(
