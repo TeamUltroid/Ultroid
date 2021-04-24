@@ -30,15 +30,17 @@ async def download(event):
     if not event.is_reply:
         return await eor(event, "`Reply to a Media Message`")
     xx = await eor(event, get_string("com_1"))
-    event.pattern_match.group(1)
     s = dt.now()
-    time.time()
+    k = time.time()
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
             return await eod(xx, get_string("udl_1"), time=5)
         file = a.media.document
-        filename = a.file.name
+        if event.pattern_match.group(1):
+            filename = event.pattern_match.group(1)
+        else:
+            filename = a.file.name
         try:
             with open(filename, "wb") as fk:
                 await download_file(
@@ -50,7 +52,7 @@ async def download(event):
                             d,
                             t,
                             xx,
-                            c,
+                            k,
                             "Downloading...",
                         ),
                     ),
