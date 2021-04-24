@@ -1,4 +1,4 @@
-py-Ultroid==19.1b0
+py-Ultroid==19.2b0
 gingerit
 speedtest-cli==2.1.3
 git+https://github.com/buddhhu/search-engine-parser.git
