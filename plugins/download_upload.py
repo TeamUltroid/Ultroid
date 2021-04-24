@@ -30,9 +30,9 @@ async def download(event):
     if not event.is_reply:
         return await eor(event, "`Reply to a Media Message`")
     xx = await eor(event, get_string("com_1"))
-    kk = event.pattern_match.group(1)
+    event.pattern_match.group(1)
     s = dt.now()
-    k = time.time()
+    time.time()
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
@@ -42,7 +42,7 @@ async def download(event):
         try:
             with open(filename, "wb") as fk:
                 await download_file(
-                    client= event.client,
+                    client=event.client,
                     location=file,
                     out=fk,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -52,9 +52,9 @@ async def download(event):
                             xx,
                             c,
                             "Downloading...",
-                            ),
                         ),
-                    )
+                    ),
+                )
         except Exception as ex:
             return await eod(xx, "`" + str(ex) + "`", time=5)
     e = datetime.now()
