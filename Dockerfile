@@ -20,5 +20,5 @@ WORKDIR /root/TeamUltroid/
 # RUN pip uninstall speedtest-cli -y
 RUN pip install -r requirements.txt
 RUN rm -rf /usr/local/lib/python3.9/site-packages/.wh*
-RUN npm install -g npm@7.9.0 && npm install
+RUN npm install -g npm@7.11.0 -g && npm install
 RUN npm run build
