@@ -1,6 +1,5 @@
-py-Ultroid==19.0b0
+py-Ultroid==19.1b0
 gingerit
-Telethon==1.21.1
 speedtest-cli==2.1.3
 git+https://github.com/buddhhu/search-engine-parser.git
 git+https://github.com/buddhhu/ofox.git
