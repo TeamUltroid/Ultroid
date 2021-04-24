@@ -36,11 +36,11 @@ async def download(event):
         ok = await event.get_reply_message()
         if not ok.media:
             return await eod(xx, get_string("udl_1"), time=5)
-        file = a.media.document
+        file = ok.media.document
         if event.pattern_match.group(1):
             filename = event.pattern_match.group(1)
         else:
-            filename = a.file.name
+            filename = ok.file.name
         try:
             with open(filename, "wb") as fk:
                 await download_file(
