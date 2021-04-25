@@ -29,7 +29,7 @@ except ModuleNotFoundError:
     )
 
 start_time = time.time()
-ultroid_version = "v0.0.5"
+ultroid_version = "v0.0.6"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
