@@ -42,7 +42,13 @@ async def download(event):
         else:
             filename = ok.file.name
         try:
-            result = await downloader("resources/downloads/" + filename, file, xx, k, "Downloading " + filename + "...")
+            result = await downloader(
+                "resources/downloads/" + filename,
+                file,
+                xx,
+                k,
+                "Downloading " + filename + "...",
+            )
         except Exception as ex:
             return await eod(xx, "`" + str(ex) + "`", time=5)
     e = datetime.now()
