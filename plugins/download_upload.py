@@ -36,7 +36,10 @@ async def download(event):
         ok = await event.get_reply_message()
         if not ok.media:
             return await eod(xx, get_string("udl_1"), time=5)
-        file = ok.media.document
+        try:
+            file = ok.media.document
+        except AttributeError:
+            file = ok.media.photo
         if event.pattern_match.group(1):
             filename = event.pattern_match.group(1)
         else:
