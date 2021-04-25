@@ -20,8 +20,6 @@ import asyncio
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions._FastTelethon import download_file
-
 from . import *
 
 
@@ -29,7 +27,7 @@ from . import *
     pattern="dl ?(.*)",
 )
 async def download(event):
-    if not event.is_reply:
+    if not event.reply_to_msg_id:
         return await eor(event, "`Reply to a Media Message`")
     xx = await eor(event, get_string("com_1"))
     s = dt.now()
@@ -44,29 +42,15 @@ async def download(event):
         else:
             filename = ok.file.name
         try:
-            with open(filename, "wb") as fk:
-                await download_file(
-                    client=event.client,
-                    location=file,
-                    out=fk,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(
-                            d,
-                            t,
-                            xx,
-                            k,
-                            "Downloading...",
-                        ),
-                    ),
-                )
+            result = await downloader("resources/downloads/" + filename, file, xx, k, "Downloading " + filename + "...")
         except Exception as ex:
             return await eod(xx, "`" + str(ex) + "`", time=5)
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
-        await eor(xx, get_string("udl_2").format(filename, t))
+        await eor(xx, get_string("udl_2").format(result.name, t))
     else:
-        await eor(xx, f"Downloaded `{filename}` in `0 second(s)`")
+        await eor(xx, f"Downloaded `{result.name}` in `0 second(s)`")
 
 
 @ultroid_cmd(
