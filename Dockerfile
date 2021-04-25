@@ -5,6 +5,8 @@
 
 FROM programmingerror/ultroid:v0.0.1
 
+ENV TZ=Asia/Kolkata
+
 RUN apt-get install aria2 -y
 
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
