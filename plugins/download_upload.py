@@ -16,7 +16,6 @@
 
 """
 
-import asyncio
 import time
 from datetime import datetime as dt
 
@@ -81,7 +80,8 @@ async def download(event):
                 res,
                 caption=kk,
                 force_document=True,
-                thumb="resources/extras/logo_rdm.png")
+                thumb="resources/extras/logo_rdm.png",
+            )
         except ValueError as ve:
             return await eod(xx, str(ve))
         except BaseException:
