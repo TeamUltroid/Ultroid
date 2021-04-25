@@ -74,23 +74,14 @@ async def download(event):
         return await eod(xx, get_string("udl_3"))
     else:
         try:
+            res = await uploader(kk, kk, tt, xx, "Uploading...")
+            await xx.delete()
             x = await event.client.send_file(
                 event.chat_id,
-                kk,
+                res,
                 caption=kk,
                 force_document=True,
-                thumb="resources/extras/logo_rdm.png",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        xx,
-                        tt,
-                        "Uploading...",
-                        file_name=kk,
-                    ),
-                ),
-            )
+                thumb="resources/extras/logo_rdm.png")
         except ValueError as ve:
             return await eod(xx, str(ve))
         except BaseException:
