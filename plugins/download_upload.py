@@ -53,7 +53,7 @@ async def download(event):
             )
         else:
             d = "resources/downloads/"
-            o = await event.client.download_media(
+            result.name = await event.client.download_media(
                 ok,
                 d,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
