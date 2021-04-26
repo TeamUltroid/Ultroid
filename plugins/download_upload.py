@@ -53,7 +53,7 @@ async def download(event):
             )
         else:
             d = "resources/downloads/"
-            result.name = await event.client.download_media(
+            result = await event.client.download_media(
                 ok,
                 d,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -69,9 +69,9 @@ async def download(event):
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
-        await eor(xx, get_string("udl_2").format(result.name, t))
+        await eor(xx, get_string("udl_2").format(result, t))
     else:
-        await eor(xx, f"Downloaded `{result.name}` in `0 second(s)`")
+        await eor(xx, f"Downloaded `{result}` in `0 second(s)`")
 
 
 @ultroid_cmd(
