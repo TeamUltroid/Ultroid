@@ -27,11 +27,3 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors
         flake8 . --count --select=E999 --show-source --statistics
-  shellcheck:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@master
-    - name: Check for install script errors
-      uses: ludeeus/action-shellcheck@master
