@@ -1,4 +1,4 @@
-py-Ultroid==19.8b0
+py-Ultroid==19.9b0
 gingerit
 speedtest-cli==2.1.3
 gdown
