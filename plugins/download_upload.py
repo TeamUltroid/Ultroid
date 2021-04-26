@@ -35,15 +35,19 @@ async def download(event):
         ok = await event.get_reply_message()
         if not ok.media:
             return await eod(xx, get_string("udl_1"), time=5)
-        try:
+        if hasattr(ok.media, "document"):
             file = ok.media.document
-        except AttributeError:
-            file = ok.media.photo
-        if event.pattern_match.group(1):
-            filename = event.pattern_match.group(1)
-        else:
-            filename = ok.file.name
-        try:
+            mime_type = file.mime_type
+            filename = replied.file.name
+            if not filename:
+                if "audio" in mime_type:
+                    filename = (
+                        "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
+                    )
+                elif "video" in mime_type:
+                    filename = (
+                        "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+                    )
             result = await downloader(
                 "resources/downloads/" + filename,
                 file,
@@ -51,8 +55,21 @@ async def download(event):
                 k,
                 "Downloading " + filename + "...",
             )
-        except Exception as ex:
-            return await eod(xx, "`" + str(ex) + "`", time=5)
+        else:
+            d = "resources/downloads/"
+            o = await event.client.download_media(
+                ok,
+                d,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d,
+                        t,
+                        xx,
+                        k,
+                        "Downloading...",
+                    ),
+                ),
+            )
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
