@@ -44,9 +44,9 @@ async def autopic(e):
             try:
                 kar = await ultroid_bot.download_media(et.webpage.photo)
             except AttributeError:
-                mn=await ultroid_bot.send_message(Var.LOG_CHANNEL, au)
-                await asyncio.sleep(2) 
-                h=await ultroid_bot(getweb(mn.message))
+                mn = await ultroid_bot.send_message(Var.LOG_CHANNEL, au)
+                await asyncio.sleep(2)
+                h = await ultroid_bot(getweb(mn.message))
                 kar = await ultroid_bot.download_media(h.webpage.photo)
                 await mn.delete()
             file = await ultroid_bot.upload_file(kar)
