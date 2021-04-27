@@ -20,7 +20,7 @@ import os
 import random
 
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
-
+from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from . import *
 
 
@@ -29,26 +29,24 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"))
-    clls = returnpage(search)
+    clls = autopicsearch(search)
     if len(clls) == 0:
         return await eor(e, get_string("autopic_2").format(search))
-    if not len(clls) == 1:
-        num = random.randrange(0, len(clls) - 1)
-    else:
-        num = 0
-    page = clls[num]
     title = page["title"]
-    await eor(e, get_string("autopic_3").format(title))
+    await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     while True:
         ge = udB.get("AUTOPIC")
         if not ge == "True":
             return
-        animepp(page["href"])
-        file = await ultroid_bot.upload_file("autopic.jpg")
-        await ultroid_bot(UploadProfilePhotoRequest(file))
-        os.remove("autopic.jpg")
-        await asyncio.sleep(1100)
+        for lie in clls:
+            au ='https://unsplash.com' + lie['href']
+            et = await ultroid_bot(getweb(au))
+            kar = await ultroid_bot.download_media(et.webpage.photo)
+            file = await ultroid_bot.upload_file(kar)
+            await ultroid_bot(UploadProfilePhotoRequest(file))
+            os.remove(kar)
+            await asyncio.sleep(1100)
 
 
 @ultroid_cmd(pattern="stoppic$")
