@@ -17,10 +17,10 @@
 """
 import asyncio
 import os
-import random
 
-from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
+
 from . import *
 
 
@@ -32,7 +32,7 @@ async def autopic(e):
     clls = autopicsearch(search)
     if len(clls) == 0:
         return await eor(e, get_string("autopic_2").format(search))
-    title = page["title"]
+    page["title"]
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     while True:
@@ -40,7 +40,7 @@ async def autopic(e):
         if not ge == "True":
             return
         for lie in clls:
-            au ='https://unsplash.com' + lie['href']
+            au = "https://unsplash.com" + lie["href"]
             et = await ultroid_bot(getweb(au))
             kar = await ultroid_bot.download_media(et.webpage.photo)
             file = await ultroid_bot.upload_file(kar)
