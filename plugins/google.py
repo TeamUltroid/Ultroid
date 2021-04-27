@@ -69,7 +69,7 @@ async def goimg(event):
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
-            query = query.split(';')[0]
+            query = query.split(";")[0]
         except BaseExceptaion:
             lmt = 5
     else:
