@@ -8,10 +8,10 @@
 """
 ✘ Commands Available -
 
-• `{i}autopic <search query>`
+• {i}autopic <search query>
     Will change your profile pic at defined intervals with pics related to the given topic.
 
-• `{i}stoppic`
+• {i}stoppic
     Stop the AutoPic command.
 
 """
@@ -24,7 +24,7 @@ from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from . import *
 
 
-@ultroid_cmd(pattern="autopic ?(.*)")
+@ultroid_cmd(pattern="apc ?(.*)")
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
@@ -41,7 +41,14 @@ async def autopic(e):
         for lie in clls:
             au = "https://unsplash.com" + lie["href"]
             et = await ultroid_bot(getweb(au))
-            kar = await ultroid_bot.download_media(et.webpage.photo)
+            try:
+                kar = await ultroid_bot.download_media(et.webpage.photo)
+            except AttributeError:
+                mn=await ultroid_bot.send_message(Var.LOG_CHANNEL, au)
+                await asyncio.sleep(2) 
+                h=await ultroid_bot(getweb(mn.message))
+                kar = await ultroid_bot.download_media(h.webpage.photo)
+                await mn.delete()
             file = await ultroid_bot.upload_file(kar)
             await ultroid_bot(UploadProfilePhotoRequest(file))
             os.remove(kar)
@@ -52,9 +59,9 @@ async def autopic(e):
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if not gt == "True":
-        return await eor(ult, "`AUTOPIC was not in used !!`")
+        return await eor(ult, "AUTOPIC was not in used !!")
     udB.set("AUTOPIC", "None")
-    await eor(ult, "`AUTOPIC Stopped !!`")
+    await eor(ult, "AUTOPIC Stopped !!")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
