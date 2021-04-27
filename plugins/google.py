@@ -12,6 +12,7 @@
     For doing google search.
 
 • `{i}img <query>`
+  `{i}img <query> ; <no of results>`
     For doing Images search.
 
 • `{i}reverse <query>`
@@ -68,6 +69,7 @@ async def goimg(event):
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
+            query = query.split(';')[0]
         except BaseExceptaion:
             lmt = 5
     else:
