@@ -24,7 +24,7 @@ from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from . import *
 
 
-@ultroid_cmd(pattern="apc ?(.*)")
+@ultroid_cmd(pattern="autopic ?(.*)")
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
