@@ -32,7 +32,6 @@ async def autopic(e):
     clls = autopicsearch(search)
     if len(clls) == 0:
         return await eor(e, get_string("autopic_2").format(search))
-    page["title"]
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     while True:
