@@ -160,6 +160,8 @@ async def on_afk(event):
 
 @ultroid_cmd(pattern=r"afk ?(.*)")
 async def _(event):
+    if not is_fullsudo(event.sender_id):
+        return await eor(event, "`This Command Is Sudo Restricted.`")
     reply = await event.get_reply_message()
     global USER_AFK
     global afk_time
