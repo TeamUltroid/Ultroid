@@ -7,6 +7,7 @@
 
 import os
 import re
+import requests
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
@@ -21,6 +22,24 @@ auth_url = r["auth_url"]
 
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
+
+@callback(re.compile("paste-(.*)"))
+@owner
+async def _(e):
+    ok = e.data_match.group(1)
+    hmm = open(ok)
+    hmmm = hmm.read()
+    hmm.close()
+    key = requests.post("https://nekobin.com/api/documents", json={"content": d}).json().get("result").get("key")
+    await e.edit(
+        f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
+        buttons=Button.switch_inline(
+            "Search Again..?",
+            query="send ",
+            same_peer=True,
+            ),
+        link_preview=False,
+        )
 
 
 @callback("authorise")
