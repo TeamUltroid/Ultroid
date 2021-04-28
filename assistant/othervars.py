@@ -24,7 +24,7 @@ auth_url = r["auth_url"]
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
-@callback(re.compile("paste-(.*)"))
+@callback(re.compile("pasta-(.*)"))
 @owner
 async def _(e):
     ok = e.data_match.group(1)
