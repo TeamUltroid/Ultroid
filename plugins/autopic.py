@@ -22,6 +22,9 @@ from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
+import requests as r
+from bs4 import beautifulSoup as bs
+import urllib
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -44,11 +47,12 @@ async def autopic(e):
             try:
                 kar = await ultroid_bot.download_media(et.webpage.photo)
             except AttributeError:
-                mn = await ultroid_bot.send_message(Var.LOG_CHANNEL, au)
-                await asyncio.sleep(2)
-                h = await ultroid_bot(getweb(mn.message))
-                kar = await ultroid_bot.download_media(h.webpage.photo)
-                await mn.delete()
+                ct = r.get(au).content
+                bsc = bs(ct, "html.parser", from_encoding="utf-8")
+                ft = bsc.find_all("img","_2UpQX")
+                li = ft[0]['src']
+                kar = "autopic.png"
+                urllib.request.urlretrieve(li, kar)
             file = await ultroid_bot.upload_file(kar)
             await ultroid_bot(UploadProfilePhotoRequest(file))
             os.remove(kar)
