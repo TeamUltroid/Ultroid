@@ -34,8 +34,7 @@ async def searchunsl(ult):
     tep = await eor(ult, '`Processing... `') 
     res = autopicsearch(query)
     if len(res) ==0:
-        return await 
-(ult, 'No Results Found !') 
+        return await eod(ult, 'No Results Found !') 
     qas = res[:num]
     dir = 'resources/downloads'
     CL = []
@@ -51,5 +50,6 @@ async def searchunsl(ult):
         nl+=1
     await bot.send_file(ult.chat_id, CL,caption=f'Uploaded {len(qas)} Images\n', album=True)
     await tep.delete()
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
