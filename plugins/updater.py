@@ -117,7 +117,7 @@ async def upstream(ups):
                 remove(f"ultroid_updates.txt")
                 return
             else:
-                return await eod(pagal, changelog_str, parse_mode="html")
+                return await eor(pagal, changelog_str, parse_mode="html")
         else:
             await eod(
                 pagal,
