@@ -107,6 +107,8 @@ async def inline_handler(event):
     pattern="install",
 )
 async def install(event):
+    if not is_fullsudo(event.sender_id):
+        return await eod(event, "`This Command Is Sudo Restricted.`")
     await safeinstall(event)
 
 
