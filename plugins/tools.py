@@ -74,7 +74,7 @@ async def _(event):
     try:
         tt = translator.translate(text, dest=lan)
         output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
-        await eod(xx, output_str)
+        await eor(xx, output_str)
     except Exception as exc:
         await eod(xx, str(exc), time=10)
 
