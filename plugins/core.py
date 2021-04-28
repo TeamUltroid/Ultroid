@@ -26,7 +26,7 @@
     Shows you a help menu (like this) for every plugin.
 """
 
-import os
+import os, glob
 
 from telethon import Button
 
@@ -40,23 +40,34 @@ from . import *
 async def inline_handler(event):
     builder = event.builder
     input_str = event.pattern_match.group(1)
-    plug = [*PLUGINS]
+    m = glob.glob('plugins/*')
+    plug = []
+    for t in m:
+        h = t.split("/")
+        if not h[1].startswith("_"):
+            plug.append(t)
     plugs = []
     if input_str is None or input_str == "":
         for i in plug:
             try:
                 plugs.append(
                     await event.builder.document(
-                        f"./plugins/{i}.py",
+                        f"{i}",
                         title=f"{i}.py",
                         description=f"Module Found",
-                        text=f"{i}.py use .paste to paste in neko and raw..",
+                        text=f"{i}.py use below button to paste in neko and raw..",
                         buttons=[
                             [
                                 Button.switch_inline(
                                     "Search Again..?",
                                     query="send ",
                                     same_peer=True,
+                                ),
+                            ],
+                            [
+                                Button.inline(
+                                    "Paste?",
+                                    data=f"pasta-{i}",
                                 ),
                             ],
                         ],
@@ -68,16 +79,22 @@ async def inline_handler(event):
     else:
         try:
             ultroid = builder.document(
-                f"./plugins/{input_str}.py",
+                f"plugins/{input_str}.py",
                 title=f"{input_str}.py",
                 description=f"Module {input_str} Found",
-                text=f"{input_str}.py use .paste to paste in neko and raw..",
+                text=f"{input_str}.py use below button to paste in neko and raw..",
                 buttons=[
                     [
                         Button.switch_inline(
                             "Search Again..?",
                             query="send ",
                             same_peer=True,
+                        ),
+                    ],
+                    [
+                        Button.inline(
+                            "Paste?",
+                            data=f"pasta-plugins/{input_str}.py",
                         ),
                     ],
                 ],
