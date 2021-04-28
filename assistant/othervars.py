@@ -29,10 +29,10 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 async def _(e):
     ok = e.data_match.group(1)
     hmm = open(ok)
-    hmm.read()
+    hmmm = hmm.read()
     hmm.close()
     key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": d})
+        requests.post("https://nekobin.com/api/documents", json={"content": hmmm})
         .json()
         .get("result")
         .get("key")
