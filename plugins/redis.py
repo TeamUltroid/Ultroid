@@ -41,6 +41,8 @@ from . import *
     pattern="setredis ?(.*)",
 )
 async def _(ult):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`...`")
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
@@ -61,6 +63,8 @@ async def _(ult):
     pattern="getredis ?(.*)",
 )
 async def _(ult):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`Fetching data from Redis`")
     val = ult.pattern_match.group(1)
     if val == "":
@@ -76,6 +80,8 @@ async def _(ult):
     pattern="delredis ?(.*)",
 )
 async def _(ult):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`Deleting data from Redis ...`")
     try:
         key = ult.pattern_match.group(1)
@@ -89,6 +95,8 @@ async def _(ult):
     pattern="renredis ?(.*)",
 )
 async def _(ult):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`...`")
     delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
     data = ult.pattern_match.group(1).split(delim)
@@ -111,6 +119,8 @@ async def _(ult):
     pattern="getkeys$",
 )
 async def _(ult):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`Fetching Keys ...`")
     keys = sorted(udB.keys())
     msg = ""
