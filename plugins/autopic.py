@@ -31,7 +31,7 @@ from . import *
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
-        return await eof(e, get_string("autopic_1"))
+        return await eod(e, get_string("autopic_1"))
     clls = autopicsearch(search)
     if len(clls) == 0:
         return await eod(e, get_string("autopic_2").format(search))
