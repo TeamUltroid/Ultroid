@@ -20,7 +20,7 @@ import os
 import urllib
 
 import requests as r
-from bs4 import beautifulSoup as bs
+from bs4 import BeautifulSoup as bs
 from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
