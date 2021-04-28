@@ -26,7 +26,8 @@
     Shows you a help menu (like this) for every plugin.
 """
 
-import os, glob
+import glob
+import os
 
 from telethon import Button
 
@@ -40,7 +41,7 @@ from . import *
 async def inline_handler(event):
     builder = event.builder
     input_str = event.pattern_match.group(1)
-    m = glob.glob('plugins/*')
+    m = glob.glob("plugins/*")
     plug = []
     for t in m:
         h = t.split("/")
