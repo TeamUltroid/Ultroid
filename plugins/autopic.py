@@ -17,14 +17,14 @@
 """
 import asyncio
 import os
+import urllib
 
+import requests as r
+from bs4 import beautifulSoup as bs
 from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
-import requests as r
-from bs4 import beautifulSoup as bs
-import urllib
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -49,8 +49,8 @@ async def autopic(e):
             except AttributeError:
                 ct = r.get(au).content
                 bsc = bs(ct, "html.parser", from_encoding="utf-8")
-                ft = bsc.find_all("img","_2UpQX")
-                li = ft[0]['src']
+                ft = bsc.find_all("img", "_2UpQX")
+                li = ft[0]["src"]
                 kar = "autopic.png"
                 urllib.request.urlretrieve(li, kar)
             file = await ultroid_bot.upload_file(kar)
