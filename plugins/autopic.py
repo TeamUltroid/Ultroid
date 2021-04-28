@@ -28,10 +28,10 @@ from . import *
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
-        return await eor(e, get_string("autopic_1"))
+        return await eof(e, get_string("autopic_1"))
     clls = autopicsearch(search)
     if len(clls) == 0:
-        return await eor(e, get_string("autopic_2").format(search))
+        return await eod(e, get_string("autopic_2").format(search))
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     while True:
@@ -59,9 +59,9 @@ async def autopic(e):
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if not gt == "True":
-        return await eor(ult, "AUTOPIC was not in used !!")
+        return await eod(ult, "AUTOPIC was not in used !!")
     udB.set("AUTOPIC", "None")
-    await eor(ult, "AUTOPIC Stopped !!")
+    await eod(ult, "AUTOPIC Stopped !!")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
