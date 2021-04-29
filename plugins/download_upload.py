@@ -51,9 +51,10 @@ async def download(event):
                 k,
                 "Downloading " + filename + "...",
             )
+            file_name = result.name
         else:
             d = "resources/downloads/"
-            result = await event.client.download_media(
+            file_name = await event.client.download_media(
                 ok,
                 d,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -71,7 +72,7 @@ async def download(event):
     if t:
         await eor(xx, get_string("udl_2").format(result, t))
     else:
-        await eor(xx, f"Downloaded `{result}` in `0 second(s)`")
+        await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
 
 
 @ultroid_cmd(
@@ -95,20 +96,10 @@ async def download(event):
                 force_document=True,
                 thumb="resources/extras/logo_rdm.png",
             )
-        except ValueError as ve:
+        except Exception as ve:
             return await eod(xx, str(ve))
-        except BaseException:
-            try:
-                await ultroid_bot.send_message(event.chat_id, kk)
-                return await kk.delete()
-            except BaseException:
-                pass
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    try:
-        await x.edit(f"`{kk}`\nTime Taken: `{t}`")
-    except BaseException:
-        pass
     if t:
         await eor(xx, f"Uploaded `{kk}` in `{t}`", time=5)
     else:
