@@ -639,16 +639,17 @@ async def ipinfo(event):
         msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
 
+
 @ultroid_cmd(pattern="get")
 async def get_var(event):
     x = await eor(event, get_string("com_1"))
     try:
-        opt = event.text.split(' ', maxsplit=2)[1]
+        opt = event.text.split(" ", maxsplit=2)[1]
     except IndexError:
         return await x.edit("get what?")
     if opt == "var":
         try:
-            varname = event.text.split(' ', maxsplit=2)[2]
+            varname = event.text.split(" ", maxsplit=2)[2]
         except IndexError:
             return await x.edit("Give me a var name!")
         c = 0
@@ -656,18 +657,22 @@ async def get_var(event):
         val = udB.get(varname)
         if val is not None:
             c += 1
-            return await x.edit(f"**Variable** - {varname}\n**Value**: {val}\n**Type**: Redis Key.")
+            return await x.edit(
+                f"**Variable** - {varname}\n**Value**: {val}\n**Type**: Redis Key."
+            )
         # try env vars
         val = os.getenv(varname)
         if val is not None:
             c += 1
-            return await x.edit(f"**Variable** - {varname}\n**Value**: {val}\n**Type**: Env Var.")
+            return await x.edit(
+                f"**Variable** - {varname}\n**Value**: {val}\n**Type**: Env Var."
+            )
 
         if c == 0:
             return await x.edit("Such a var doesn't exist!")
     elif opt == "type":
         try:
-            varname = event.text.split(' ', maxsplit=2)[2]
+            varname = event.text.split(" ", maxsplit=2)[2]
         except IndexError:
             return await x.edit("Give me a var name!")
         c = 0
