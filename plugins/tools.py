@@ -256,7 +256,7 @@ async def _(e):
     pattern="bash",
 )
 async def _(event):
-    if not is_fullsudo(event.sender_id):
+    if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
@@ -312,7 +312,7 @@ async def _(event):
     pattern="eval",
 )
 async def _(event):
-    if not is_fullsudo(event.sender_id):
+    if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
