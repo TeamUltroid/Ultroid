@@ -62,26 +62,22 @@ async def _(event):
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         try:
-            downloaded_file_name = await event.client.download_media(
-                reply_message,
-                "resources/downloads",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        mone,
-                        dddd,
-                        "Downloading...",
-                    ),
-                ),
-            )
-        except Exception as e:
+            downloaded_file_name = await downloader(
+                "resources/downloads/"+reply_message.file.name,
+                reply_message.media.document,
+                mone,
+                dddd,
+                "Downloading...",
+                )
+            filename = downloaded_file_name.name
+        except TypeError:
+            filename = await event.client.download_media("resources/downloads", reply_message.media)
             return await eod(mone, str(e), time=10)
         end = datetime.now()
         ms = (end - start).seconds
-        required_file_name = downloaded_file_name
+        required_file_name = filename
         await mone.edit(
-            f"Downloaded to `{downloaded_file_name}` in {ms} seconds.",
+            f"Downloaded to `{filename}` in {ms} seconds.",
         )
     elif input_str:
         input_str = input_str.strip()
