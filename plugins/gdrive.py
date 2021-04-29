@@ -28,7 +28,6 @@
 """
 
 
-import asyncio
 import os
 import time
 from datetime import datetime
@@ -63,15 +62,17 @@ async def _(event):
         reply_message = await event.get_reply_message()
         try:
             downloaded_file_name = await downloader(
-                "resources/downloads/"+reply_message.file.name,
+                "resources/downloads/" + reply_message.file.name,
                 reply_message.media.document,
                 mone,
                 dddd,
                 "Downloading...",
-                )
+            )
             filename = downloaded_file_name.name
         except TypeError:
-            filename = await event.client.download_media("resources/downloads", reply_message.media)
+            filename = await event.client.download_media(
+                "resources/downloads", reply_message.media
+            )
         except Exception as e:
             return await eod(mone, str(e), time=10)
         end = datetime.now()
