@@ -16,7 +16,7 @@
 
 • `{i}listgbanned`
    List all GBanned users.
-   
+
 • `{i}gmute <reply user/ username>`
     Globally Mute the User.
 
@@ -33,10 +33,12 @@
     Globally Send that msg in all Ur Chat Users.
 """
 
+import os
+
 from telethon import events
 
 from . import *
-import os
+
 
 @ultroid_cmd(
     pattern="ungban ?(.*)",
@@ -87,13 +89,13 @@ async def _(e):
     if e.is_private:
         userid = (await e.get_chat()).id
         try:
-            reason = e.text.split(' ', maxsplit=1)[1]
+            reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
             reason = ""
     elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
         try:
-            reason = e.text.split(' ', maxsplit=1)[1]
+            reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
             reason = ""
     elif e.pattern_match.group(1):
@@ -108,7 +110,7 @@ async def _(e):
             except ValueError as err:
                 return await eod(xx, f"{str(err)}", time=5)
         try:
-            reason = e.text.split(' ', maxsplit=2)[2]
+            reason = e.text.split(" ", maxsplit=2)[2]
         except IndexError:
             reason = ""
     else:
@@ -318,7 +320,7 @@ async def _(e):
                     reason = get_gban_reason(user.id)
                     gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
                     if reason is not None:
-                        gban_watch +=f"**Reason**: {reason}\n\n"
+                        gban_watch += f"**Reason**: {reason}\n\n"
                     gban_watch += f"`User Banned.`"
                     await e.reply(gban_watch)
                 except BaseException:
@@ -335,12 +337,12 @@ async def list_gengbanned(event):
     for i in users:
         try:
             name = (await ultroid.get_entity(int(i))).first_name
-        except:
+        except BaseException:
             name = i
-        msg += "**User**: "+ name + "\n"
+        msg += "**User**: " + name + "\n"
         reason = get_gban_reason(i)
         if reason is not None:
-            msg +=f"**Reason**: {reason}\n\n"
+            msg += f"**Reason**: {reason}\n\n"
         else:
             msg += "\n"
     gbanned_users = f"**List of users GBanned by {OWNER_NAME}**:\n\n{msg}"
@@ -348,10 +350,14 @@ async def list_gengbanned(event):
         f = open("gbanned.txt", "w")
         f.write(gbanned_users.replace("`", "").replace("*", ""))
         f.close()
-        await x.reply(file="gbanned.txt", caption=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})")
-        os.remove("gbanned.txt") 
+        await x.reply(
+            file="gbanned.txt",
+            caption=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+        )
+        os.remove("gbanned.txt")
         await x.delete()
     else:
         await x.edit(gbanned_users)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
