@@ -70,7 +70,7 @@ async def download(event):
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t:
-        await eor(xx, get_string("udl_2").format(result, t))
+        await eor(xx, get_string("udl_2").format(file_name, t))
     else:
         await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
 
