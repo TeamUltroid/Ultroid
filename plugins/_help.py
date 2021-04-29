@@ -23,18 +23,18 @@ async def ult(ult):
     if plug:
         try:
             if plug in HELP:
-                output = f"**Plugin** - `{plug}`\n"
+                output = f"**plugin** - `{plug}`\n"
                 for i in HELP[plug]:
                     output += i
-                output += "\n© @TeamUltroid"
+                output += "\n© @levinachannel"
                 await eor(ult, output)
             elif plug in CMD_HELP:
-                kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
+                kk = f"Plugin Name-{plug}\n\n📚 Commands Available -\n\n"
                 kk += str(CMD_HELP[plug])
                 await eor(ult, kk)
             else:
                 try:
-                    x = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
+                    x = f"Plugin Name-{plug}\n\n📚 Commands Available -\n\n"
                     for d in LIST[plug]:
                         x += HNDLR + d
                         x += "\n"
