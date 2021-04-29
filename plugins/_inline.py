@@ -218,7 +218,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     "OʀᴀɴɢᴇFᴏx🦊",
                     query="ofox beryllium",
                     same_peer=True,
-                )
+                ),
             ],
             [
                 Button.inline(
