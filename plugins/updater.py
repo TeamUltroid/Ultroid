@@ -174,7 +174,7 @@ async def upstream(ups):
             repo.__del__()
             return
         except Exception as exc:
-            return await eod(pagal, "`"+str(exc)+"`")
+            return await eod(pagal, "`" + str(exc) + "`")
         await eod(pagal, "`Successfully Updated!\nRestarting, please wait...`", time=60)
     else:
         # Classic Updater, pretty straightforward.
