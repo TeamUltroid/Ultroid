@@ -130,7 +130,7 @@ async def _(ult):
     keys = sorted(udB.keys())
     msg = ""
     for x in keys:
-        if x.isdigit() or x.startswith("-"):
+        if x.isdigit() or x.startswith("-") or x.startswith("GBAN_REASON_"):
             pass
         else:
             msg += f"• `{x}`" + "\n"
