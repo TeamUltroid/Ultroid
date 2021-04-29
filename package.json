@@ -15,7 +15,7 @@
     "@youtwitface/escape-html": "^1.0.0",
     "dotenv": "^8.2.0",
     "envalid": "^7.0.0",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "telegraf": "^4.0.2",
     "tgcalls": "^0.1.2",
     "ws": "^7.4.3"
