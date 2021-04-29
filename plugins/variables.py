@@ -7,8 +7,10 @@
 • `{i}get keys`
    Get all redis keys.
 """
-from . import *
 import os
+
+from . import *
+
 
 @ultroid_cmd(pattern="get")
 async def get_var(event):
@@ -66,7 +68,7 @@ async def get_var(event):
             return await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
         else:
             return await eod(x, "No such key!", time=5)
-    
+
     elif opt == "keys":
         keys = sorted(udB.keys())
         msg = ""
@@ -76,5 +78,6 @@ async def get_var(event):
             else:
                 msg += f"• `{i}`" + "\n"
         await x.edit(f"**List of Redis Keys :**\n{msg}")
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
