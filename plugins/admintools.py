@@ -350,17 +350,23 @@ async def fastpurgerme(purg):
     if num and not purg.is_reply:
         try:
             nnt = int(num)
-        except:
-            await eod(purg, '`Give a Valid Input.. `')
+        except BaseException:
+            await eod(purg, "`Give a Valid Input.. `")
             return
-        async for mm in ultroid_bot.iter_messages(purg.chat_id, limit=nnt,from_user='me'):
+        async for mm in ultroid_bot.iter_messages(
+            purg.chat_id, limit=nnt, from_user="me"
+        ):
             await mm.delete()
         return
     chat = await purg.get_input_chat()
     msgs = []
     count = 0
     if not (purg.reply_to_msg_id or num):
-        return await eod(purg, "`Reply to a message to purge from or use it like ``purgeme <num>`", time=10)
+        return await eod(
+            purg,
+            "`Reply to a message to purge from or use it like ``purgeme <num>`",
+            time=10,
+        )
     async for msg in ultroid_bot.iter_messages(
         chat,
         from_user="me",
