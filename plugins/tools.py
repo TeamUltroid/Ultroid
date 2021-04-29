@@ -56,7 +56,7 @@ from . import *
     pattern="tr",
 )
 async def _(event):
-    if not event.text[3]==" ":
+    if not event.text[3] == " ":
         return
     input = event.text[4:6]
     txt = event.text[7:]
