@@ -7,3 +7,5 @@ git+https://github.com/ProgrammingError/rextester_py.git
 google-assistant-grpc
 tenacity
 google-assistant-sdk
+beautifulsoup4
+requests
