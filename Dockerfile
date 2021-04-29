@@ -17,5 +17,7 @@ WORKDIR /root/TeamUltroid/
 
 RUN pip install -r requirements.txt
 
-RUN npm install -g npm@7.11.1 -g && npm install
+RUN npm install -g npm@7.11.1 -g
+RUN npm install -g heroku
+RUN npm install
 RUN npm run build
