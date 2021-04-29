@@ -19,17 +19,11 @@
     `{i}setredis hi there`
     `{i}setredis hi there | ultroid here`
 
-• `{i}getredis key`
-    Redis Get Value
-
 • `{i}delredis key`
     Delete Key from Redis DB
 
 • `{i}renredis old keyname | new keyname`
     Update Key Name
-
-• `{i}getkeys`
-    Get the list of keys stored in Redis
 """
 
 import re
@@ -56,24 +50,6 @@ async def _(ult):
                 redisdata,
             ),
         )
-    except BaseException:
-        await ok.edit("`Something Went Wrong`")
-
-
-@ultroid_cmd(
-    pattern="getredis ?(.*)",
-)
-async def _(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
-    ok = await eor(ult, "`Fetching data from Redis`")
-    val = ult.pattern_match.group(1)
-    if val == "":
-        return await ult.edit(f"Please use `{hndlr}getkeys <keyname>`")
-    try:
-        value = Redis(val)
-        await ok.edit(f"Key: `{val}`\nValue: `{value}`")
     except BaseException:
         await ok.edit("`Something Went Wrong`")
 
@@ -117,24 +93,6 @@ async def _(ult):
             await ok.edit("Something went wrong ...")
     else:
         await ok.edit("Key not found")
-
-
-@ultroid_cmd(
-    pattern="getkeys$",
-)
-async def _(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
-    ok = await eor(ult, "`Fetching Keys ...`")
-    keys = sorted(udB.keys())
-    msg = ""
-    for x in keys:
-        if x.isdigit() or x.startswith("-") or x.startswith("GBAN_REASON_"):
-            pass
-        else:
-            msg += f"• `{x}`" + "\n"
-    await ok.edit(f"**List of Redis Keys :**\n{msg}")
 
 
 @ultroid_cmd(
