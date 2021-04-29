@@ -587,6 +587,8 @@ async def name(event):
                 buttons=get_back_button("pmcstm"),
             )
         else:
+            if len(themssg) > 4090:
+                return await conv.send_message("Message too long!\nGive a shorter message please!!", buttons=get_back_button("pmcstm"))
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
