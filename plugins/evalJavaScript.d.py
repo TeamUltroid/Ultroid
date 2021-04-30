@@ -4,10 +4,15 @@ from threading import Thread
 
 from . import *
 
-async def evalJs(event, startTime: float, command: str = '',):
-    os.system(f'node ecmaHelper/eval.d.js {command}')
-    result = open('./ecmaHelper/evalJs.result.d.txt', encoding='utf-8')
-    if str(result.read()) == '':
+
+async def evalJs(
+    event,
+    startTime: float,
+    command: str = "",
+):
+    os.system(f"node ecmaHelper/eval.d.js {command}")
+    result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8")
+    if str(result.read()) == "":
         await eor(
             event,
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
@@ -18,13 +23,14 @@ async def evalJs(event, startTime: float, command: str = '',):
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`{str(result.read())}`",
         )
     result.close()
-    file = open('./ecmaHelper/evalJs.result.d.txt', encoding='utf-8')
-    file.write('')
+    file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8")
+    file.write("")
     file.close()
-    
-    
 
-@ultroid_cmd(pattern="js",)
+
+@ultroid_cmd(
+    pattern="js",
+)
 async def _(event):
     start = time.time()
     if not event.out and not is_fullsudo(event.sender_id):
@@ -41,5 +47,11 @@ async def _(event):
     except IndexError:
         return await eod(xx, "`Give some js cmd`", time=7)
     if cmd and cmd != "":
-        jsThread = Thread(target=evalJs(event, command=cmd, startTime=start,))
+        jsThread = Thread(
+            target=evalJs(
+                event,
+                command=cmd,
+                startTime=start,
+            )
+        )
         jsThread.start()
