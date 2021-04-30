@@ -74,16 +74,19 @@ alive_1: "**The Ultroid Userbot...**\n\n
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n
- -> `Dyno usage for`  **{}**:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
- -> `Dyno hours quota remaining this month`:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
-**Total Disk Space: {}\n\n**
-**Used: {}  Free: {}\n\n**
-**📊Data Usage📊\n\nUpload: {}\nDown: {}\n\n**
-**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+-> **Dyno usage for** `{}`:\n
+  •  **{}h**  **{}m** |** `[{}%]`\n
+-> **Dyno hours quota remaining this month**:\n
+  •  **{}h**  **{}m |** `[{}%]`\n\n
+**Total Disk Space**: `{}`\n
+**Used**: `{}`\n
+**Free**: `{}`\n\n
+**📊 Data Usage 📊\n
+**Upload**: `{}`\n
+**Down**: `{}`\n\n
+**CPU**: `{}%`\n
+**RAM**: `{}%`\n
+**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
 
 # broadcast
