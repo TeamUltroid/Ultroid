@@ -203,12 +203,12 @@ async def def_logs(ult):
     await xx.delete()
 
 
-@ultroid_cmd(
+"""@ultroid_cmd(
     pattern="shutdown$",
 )
 async def shht(event):
     await eor(event, get_string("shutdown").format(OWNER_NAME))
-    await ultroid_bot.disconnect()
+    await ultroid_bot.disconnect()"""
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
