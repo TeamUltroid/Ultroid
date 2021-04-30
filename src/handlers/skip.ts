@@ -32,6 +32,7 @@ export const skipCBHandler = Composer.action(/^skip:[a-zA-Z0-9.\-_]+$/, checkExp
     } else {
         await ctx.answerCbQuery("There's no song playing..");
         setTimeout(async () => await ctx.deleteMessage(), 1000);
+        leaveVc(chat.id);
     }
 })
 
