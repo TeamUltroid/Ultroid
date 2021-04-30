@@ -11,13 +11,15 @@
    Get redis usage.
 """
 
-from . import *
 import math
 import shutil
+
 import heroku3
 import psutil
 import requests
 from search_engine_parser.core.utils import get_rand_user_agent as grua
+
+from . import *
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
@@ -32,11 +34,12 @@ except BaseException:
     HEROKU_API = None
     HEROKU_APP_NAME = None
 
+
 @ultroid_cmd(pattern="usage")
 async def usage_finder(event):
     x = await eor(event, get_string("com_1"))
     try:
-        opt = event.text.split(' ', maxsplit=1)[1]
+        opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await x.edit(get_full_usage())
 
@@ -58,11 +61,14 @@ def heroku_usage():
         "User-Agent": useragent,
         "Authorization": f"Bearer {Var.HEROKU_API}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
-        }
+    }
     her_url = f"https://api.heroku.com/accounts/{user_id}/actions/get-quota"
     r = requests.get(her_url, headers=headers)
     if r.status_code != 200:
-        return True, f"**ERROR**\n`{r.reason}`",
+        return (
+            True,
+            f"**ERROR**\n`{r.reason}`",
+        )
     result = r.json()
     quota = result["account_quota"]
     quota_used = result["quota_used"]
@@ -92,22 +98,23 @@ def heroku_usage():
     USED = humanbytes(used)
     FREE = humanbytes(free)
     return True, get_string("usage").format(
-            Var.HEROKU_APP_NAME,
-            AppHours,
-            AppMinutes,
-            AppPercentage,
-            hours,
-            minutes,
-            percentage,
-            TOTAL,
-            USED,
-            FREE,
-            upload,
-            down,
-            cpuUsage,
-            memory,
-            disk,
-        )
+        Var.HEROKU_APP_NAME,
+        AppHours,
+        AppMinutes,
+        AppPercentage,
+        hours,
+        minutes,
+        percentage,
+        TOTAL,
+        USED,
+        FREE,
+        upload,
+        down,
+        cpuUsage,
+        memory,
+        disk,
+    )
+
 
 def redis_usage():
     x = 30 * 1024 * 1024
@@ -118,6 +125,7 @@ def redis_usage():
     b = str(round(z / x * 100, 3)) + "%"
     return f"**REDIS**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
 
+
 def get_full_usage():
     is_hk, hk = heroku_usage()
     if is_hk is False:
@@ -125,5 +133,5 @@ def get_full_usage():
     else:
         her = hk
     rd = redis_usage()
-    msg = her+"\n\n"+rd
+    msg = her + "\n\n" + rd
     return msg

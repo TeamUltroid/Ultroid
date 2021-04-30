@@ -28,18 +28,14 @@
     Turn off your bot.
 """
 
-import math
-import shutil
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
 
 import heroku3
-import psutil
 import requests
 from git import Repo
 from pyUltroid import __version__ as UltVer
-from search_engine_parser.core.utils import get_rand_user_agent as grua
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
