@@ -128,6 +128,18 @@ async def restartbt(ult):
     else:
         await restart(ult)
 
+@ultroid_cmd(
+    pattern="shutdown (.*)"
+)
+async def shutdownbot(ult):
+    dyno = event.pattern_match.group(1)
+    if dyno:
+        if dyno not in ["web", "worker"]:
+            await eor(ult, "Invalid Dyno Type specified !")
+            return
+        await shutdown(ult, dyno)
+    else:
+        await shutdown(ult)
 
 @ultroid_cmd(
     pattern="logs",
