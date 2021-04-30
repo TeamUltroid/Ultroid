@@ -10,14 +10,14 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get install aria2 -y
 
-RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b vc-setup https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
 
 RUN pip install -r requirements.txt
 
-RUN npm install -g npm@7.11.1 -g
+RUN npm install -g npm@7.11.2 -g
 RUN npm install -g heroku
 RUN npm install
 RUN npm run build
