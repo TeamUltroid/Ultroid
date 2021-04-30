@@ -32,6 +32,7 @@ async def update(eve):
     ups_rem = repo.remote("upstream")
     if Var.HEROKU_API:
         import heroku3
+
         heroku = heroku3.from_key(Var.HEROKU_API)
         heroku_app = None
         heroku_applications = heroku.apps()
