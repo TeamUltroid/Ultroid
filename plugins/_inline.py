@@ -15,7 +15,7 @@ from platform import python_version as pyver
 from git import Repo
 from pyUltroid import __version__ as UltVer
 from support import *
-from telethon import Button, __version__
+from telethon import Button, __version__, events
 from telethon.tl.types import InputWebDocument
 
 from . import *
@@ -33,10 +33,9 @@ else:
 # ============================================#
 
 
-@inline
 @in_owner
+@ultroid_bot.asst.on(events.InlineQuery(pattern=None))
 async def e(o):
-    if len(o.text) == 0:
         b = o.builder
         uptime = grt(time.time() - start_time)
         header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
