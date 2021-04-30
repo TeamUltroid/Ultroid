@@ -1,10 +1,9 @@
 const { appendFileSync, truncate } = require('fs');
-
 console.log("Command -> `" + String(process.argv.slice(2)).replace(',', ' ') + '`');
 
 const evalJs = eval(String(process.argv.slice(2)).replace(',', ' '));
 
-truncate('Ernest/NodeHelper/bash_output.txt', 0, function() { 
+truncate('./ecmaHelper/evalJs.result.d.txt', 0, function() { 
     console.log('File Content Deleted');
 }); 
 
