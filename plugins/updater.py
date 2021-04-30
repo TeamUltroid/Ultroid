@@ -26,7 +26,7 @@ async def _(e):
     else:
         await eor(
             e,
-            '<code>Your BOT is </code><strong>up-to-date</strong> with <strong><a href="https://github.com/TeamUltroid/Ultroid/tree/dev">[Dev]</a></strong>',
+            '<code>Your BOT is </code><strong>up-to-date</strong><code> with </code><strong><a href="https://github.com/TeamUltroid/Ultroid/tree/dev">[Dev]</a></strong>',
             parse_mode="html",
             link_preview=False,
         )
