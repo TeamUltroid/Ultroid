@@ -134,7 +134,7 @@ async def restartbt(ult):
 )
 async def get_logs(event):
     try:
-        opt = event.text.split(' ', maxsplit=1)[1]
+        opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await def_logs(event)
     if opt == "heroku":
@@ -144,26 +144,31 @@ async def get_logs(event):
     else:
         await def_logs(event)
 
+
 async def heroku_logs(event):
     if HEROKU_API is None and HEROKU_APP_NAME is None:
-        return await eor(event, "Please set `HEROKU_APP_NAME` and `HEROKU_API` in vars.")
+        return await eor(
+            event, "Please set `HEROKU_APP_NAME` and `HEROKU_API` in vars."
+        )
     await eor(event, "`Downloading Logs...`")
     ok = app.get_log()
     with open("ultroid-heroku.log", "w") as log:
         log.write(ok)
     key = (
         requests.post("https://nekobin.com/api/documents", json={"content": ok})
-            .json()
-            .get("result")
-            .get("key")
+        .json()
+        .get("result")
+        .get("key")
     )
     url = f"https://nekobin.com/{key}"
-    await ultroid.send_file(event.chat_id,
-                            file="ultroid-heroku.log",
-                            thumb="resources/extras/logo_rdm.png",
-                            caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
-                            )
+    await ultroid.send_file(
+        event.chat_id,
+        file="ultroid-heroku.log",
+        thumb="resources/extras/logo_rdm.png",
+        caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
+    )
     os.remove("ultroid-heroku.log")
+
 
 async def def_logs(ult):
     xx = await eor(ult, "`Processing...`")
