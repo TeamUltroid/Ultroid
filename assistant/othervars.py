@@ -25,13 +25,13 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @callback("updatenow")
+@owner
 async def update(eve):
     repo = Repo()
     ac_br = repo.active_branch
     ups_rem = repo.remote("upstream")
     if Var.HEROKU_API:
         import heroku3
-
         heroku = heroku3.from_key(Var.HEROKU_API)
         heroku_app = None
         heroku_applications = heroku.apps()
@@ -75,12 +75,13 @@ async def update(eve):
 
 
 @callback("changes")
+@owner
 async def changes(okk):
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + f"\n\nUse <code>{hndlr}update now</code> to update!"
-    tldr_str = tl_chnglog + f"\n\nUse {hndlr}update now to update!"
+    changelog_str = changelog + f"\n\nClick the below button to update!"
+    tldr_str = tl_chnglog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 4096:
         await okk.edit(get_string("upd_4"))
         file = open(f"ultroid_updates.txt", "w+")
@@ -96,7 +97,7 @@ async def changes(okk):
     else:
         await okk.edit(
             changelog_str,
-            buttons=Button.inline("Update Now ?", data="updatenow"),
+            buttons=Button.inline("Update Now", data="updatenow"),
             parse_mode="html",
         )
 
@@ -157,7 +158,7 @@ async def _(e):
         + "1. Open Google Drive App.\n"
         + "2. Create Folder.\n"
         + "3. Make that folder public.\n"
-        + "4. Copy link of that folder."
+        + "4. Copy link of that folder.\n"
         + "5. Send all characters which is after id= .",
     )
     async with ultroid_bot.asst.conversation(e.sender_id) as conv:
