@@ -1,4 +1,4 @@
-py-Ultroid==21.0b0
+git+https://CrazyCreatorr:Drrstrange1@github.com/CrazyCreatorr/pyUltroid
 gingerit
 speedtest-cli==2.1.3
 gdown
