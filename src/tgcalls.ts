@@ -241,10 +241,11 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     });
 };
 
-export const leaveVc = (chatId: number) => {
+export const leaveVc = (chatId: number, exitVcCommand: boolean = false) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
         stream.emit('leave');
+        process.exit(0);
     }
     return false;
 }
