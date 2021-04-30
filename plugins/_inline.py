@@ -36,38 +36,38 @@ else:
 @in_owner
 @ultroid_bot.asst.on(events.InlineQuery(pattern=None))
 async def e(o):
-        b = o.builder
-        uptime = grt(time.time() - start_time)
-        header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
-        ALIVEMSG = get_string("alive_1").format(
-            header,
-            OWNER_NAME,
-            ultroid_version,
-            UltVer,
-            uptime,
-            pyver(),
-            __version__,
-            Repo().active_branch,
-        )
-        res = [
-            await b.article(
-                title="Ultroid Userbot",
-                url="https://t.me/TeamUltroid",
-                description="Userbot | Telethon ",
-                text=ALIVEMSG,
-                thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                buttons=[
-                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
-                    [
-                        Button.url(
-                            text="Repo",
-                            url="https://github.com/Teamultroid/Ultroid",
-                        ),
-                    ],
+    b = o.builder
+    uptime = grt(time.time() - start_time)
+    header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    ALIVEMSG = get_string("alive_1").format(
+        header,
+        OWNER_NAME,
+        ultroid_version,
+        UltVer,
+        uptime,
+        pyver(),
+        __version__,
+        Repo().active_branch,
+    )
+    res = [
+        await b.article(
+            title="Ultroid Userbot",
+            url="https://t.me/TeamUltroid",
+            description="Userbot | Telethon ",
+            text=ALIVEMSG,
+            thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+            buttons=[
+                [Button.url(text="Support Group", url="t.me/UltroidSupport")],
+                [
+                    Button.url(
+                        text="Repo",
+                        url="https://github.com/Teamultroid/Ultroid",
+                    ),
                 ],
-            ),
-        ]
-        await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+            ],
+        ),
+    ]
+    await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 if Var.BOT_USERNAME is not None and asst is not None:
