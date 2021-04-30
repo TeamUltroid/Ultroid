@@ -128,9 +128,8 @@ async def restartbt(ult):
     else:
         await restart(ult)
 
-@ultroid_cmd(
-    pattern="shutdown (.*)"
-)
+
+@ultroid_cmd(pattern="shutdown (.*)")
 async def shutdownbot(ult):
     dyno = event.pattern_match.group(1)
     if dyno:
@@ -140,6 +139,7 @@ async def shutdownbot(ult):
         await shutdown(ult, dyno)
     else:
         await shutdown(ult)
+
 
 @ultroid_cmd(
     pattern="logs",
