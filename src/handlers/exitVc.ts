@@ -10,7 +10,7 @@
 import { Composer } from 'telegraf';
 import { leaveVc } from '../tgcalls';
 
-export const skipCBHandler = Composer.action('exitVc', async ctx => {
+export const exitVcHandler = Composer.action('exitVc', async ctx => {
     const chat = ctx.callbackQuery.message?.chat;
 
     if (!chat) {
@@ -27,7 +27,7 @@ export const skipCBHandler = Composer.action('exitVc', async ctx => {
     ctx.reply("Left Voice Chat.");
 })
 
-export const skipCommand = Composer.command('exitVc', async ctx => {
+export const exitCommand = Composer.command('exitVc', async ctx => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {

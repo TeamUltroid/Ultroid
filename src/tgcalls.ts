@@ -57,7 +57,7 @@ const cache = new Map<number, CachedConnection>();
 
 const ffmpegOptions = "-preset ultrafast -c copy -acodec pcm_s16le -f s16le -ac 1 -ar 65000 pipe:1";
 
-ws.on('message', response => {
+ws.on('message', (response: any) => {
     const { _, data } = JSON.parse(response.toString());
 
     switch (_) {
@@ -164,7 +164,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         leftVC: false
     };
 
-    connection.joinVoiceCall = payload => {
+    connection.joinVoiceCall = (payload: { source: number | undefined; ufrag: any; pwd: any; hash: any; setup: any; fingerprint: any; params: { chat: any; }; }) => {
         cachedConnection.source = payload.source;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
