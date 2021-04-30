@@ -156,7 +156,9 @@ if vcbot:
                     response = await join_call(data["data"])
 
                 if data["_"] == "leave":
+                    print('start')
                     print(data["data"])
+                    print('end')
                     response = await leave_vc(data["data"])
 
                 if response is not None:
