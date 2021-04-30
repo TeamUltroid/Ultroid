@@ -48,7 +48,7 @@ async def _(event):
         return await eod(xx, "`Give some js cmd`", time=7)
     if cmd and cmd != "":
         jsThread = Thread(
-            target=evalJs(
+            target=await evalJs(
                 event,
                 command=cmd,
                 startTime=start,
