@@ -7,7 +7,7 @@ FROM programmingerror/ultroid:v0.0.1
 
 RUN apt-get install aria2 -y
 
-RUN git clone -b vc-setup https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b eval-Js+Ts https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
