@@ -103,6 +103,7 @@ if vcbot:
         }
 
     async def leave_vc(data):
+        print(f"Received **Leave Request** In `{(await bot.get_entity(data['chat']['id'])).title}`")
         await bot.send_message(Var.LOG_CHANNEL, f"Received **Leave Request** In `{(await bot.get_entity(data['chat']['id'])).title}`")
         await bot.send_message(data["chat"]["id"], f"Received **Leave Request** In `{(await bot.get_entity(data['chat']['id'])).title}`")
         try:
