@@ -12,7 +12,7 @@ import { addToQueue, getQueue } from '../tgcalls';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import { logger as log } from '../bot';
-import escapeHtml from '@youtwitface/escape-html';
+import escapeHtml from 'escapeHtml';
 
 export const playHandler = Composer.command('play', async ctx => {
     const { chat } = ctx.message;
@@ -22,7 +22,7 @@ export const playHandler = Composer.command('play', async ctx => {
         return;
     }
 
-    const [commandEntity] = ctx.message.entities!;
+    const [ commandEntity ] = ctx.message.entities!;
     const text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
 
     if (!text) {

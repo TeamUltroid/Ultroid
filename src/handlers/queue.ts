@@ -9,7 +9,7 @@
 
 import { Composer } from 'telegraf';
 import { getQueue } from '../tgcalls';
-import escapeHtml from '@youtwitface/escape-html';
+import escapeHtml from 'escapeHtml';
 import { getDuration } from '../utils';
 
 export const queueHandler = Composer.command('queue', async ctx => {

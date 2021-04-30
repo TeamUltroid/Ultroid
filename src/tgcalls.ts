@@ -17,7 +17,7 @@ import { Readable } from 'stream';
 import { bot } from './bot';
 import { Markup } from 'telegraf';
 import { getDuration } from './utils';
-import escapeHtml from '@youtwitface/escape-html';
+import escapeHtml from 'escapeHtml';
 
 interface DownloadedSong {
     stream: Readable;
@@ -208,7 +208,10 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
                     ...Markup.inlineKeyboard([
                         [
                             Markup.button.callback('Pause', `pause:${id}`),
-                            Markup.button.callback('Skip', `skip:${id}`)
+                            Markup.button.callback('Skip', `skip:${id}`),
+                        ],
+                        [
+                            Markup.button.callback('Close', `exitVc`),
                         ]
                     ])
                 })
