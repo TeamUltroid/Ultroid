@@ -21,8 +21,11 @@
     s - soft restart
     To restart your bot.
 
-• `{i}logs`
-    Get the last 100 lines from heroku logs.
+• `{i}logs (sys)`
+    Get the full terminal logs.
+
+• `{i}logs heroku`
+   Get the latest 100 lines of heroku logs.
 
 • `{i}shutdown`
     Turn off your bot.
@@ -131,9 +134,42 @@ async def restartbt(ult):
 
 
 @ultroid_cmd(
-    pattern="logs$",
+    pattern="logs",
 )
-async def _(ult):
+async def get_logs(event):
+    try:
+        opt = event.text.split(' ', maxsplit=1)[1]
+    except IndexError:
+        return await def_logs(event)
+    if opt == "heroku":
+        await heroku_logs(event)
+    elif opt == "sys":
+        await def_logs(event)
+    else:
+        await def_logs(event)
+
+async def heroku_logs(event):
+    if HEROKU_API is None and HEROKU_APP_NAME is None:
+        return await eor(event, "Please set `HEROKU_APP_NAME` and `HEROKU_API` in vars.")
+    await eor(event, "`Downloading Logs...`")
+    ok = app.get_log()
+    with open("ultroid-heroku.log", "w") as log:
+        log.write(ok)
+    key = (
+        requests.post("https://nekobin.com/api/documents", json={"content": ok})
+            .json()
+            .get("result")
+            .get("key")
+    )
+    url = f"https://nekobin.com/{key}"
+    await ultroid.send_file(event.chat_id,
+                            file="ultroid-heroku.log",
+                            thumb="resources/extras/logo_rdm.png",
+                            caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
+                            )
+    os.remove("ultroid-heroku.log")
+
+async def def_logs(ult):
     xx = await eor(ult, "`Processing...`")
     with open("ultroid.log") as f:
         k = f.read()
@@ -148,7 +184,7 @@ async def _(ult):
         ult.chat_id,
         file="ultroid.log",
         thumb="resources/extras/logo_rdm.png",
-        caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
+        caption=f"**Ultroid Logs.**\nPasted [here]({url}) too!",
     )
     await xx.edit("Done")
     await xx.delete()
