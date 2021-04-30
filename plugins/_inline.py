@@ -210,19 +210,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
             ],
             [
                 Button.switch_inline(
-                    "Rᴇx Tᴇsᴛᴇʀ",
-                    query="rex",
-                    same_peer=True,
-                ),
-                Button.switch_inline(
                     "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
                     query="clipart frog",
                     same_peer=True,
                 ),
-            ],
-            [
                 Button.switch_inline(
-                    "OʀᴀɴɢᴇFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ",
+                    "OʀᴀɴɢᴇFᴏx🦊",
                     query="ofox beryllium",
                     same_peer=True,
                 ),
