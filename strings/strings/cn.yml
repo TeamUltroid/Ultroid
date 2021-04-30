@@ -1,0 +1,196 @@
+name: Chinese
+natively: 简体中文
+
+authors:
+  - stevenliuit
+  - junbaor
+
+# commons
+com_1: "`处理中...`"
+com_2: "`搜索中...`"
+# help
+help_1: "`{}` 不是一个有效的插件!"
+help_2: "机器人没有响应内联查询.\n考虑使用 `{}重启`"
+help_3: "`请从中为您的机器人打开内联模式` @Botfather."
+help_4: "嘿, \n你是机器人模式. \n机器人模式用户无法直接获得帮助 ... \n而不是复制粘贴在聊天下面，并点击弹出窗口 \n\n `@{} ultd`"
+
+# autopic
+autopic_1: "嘿，给我发信息 .."
+autopic_2: "找不到的结果 `{}`"
+autopic_3: "有收藏吗 `{}` 与您的搜索相关 !\n开始自选 !"
+
+# inline
+inline_1: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+插件 ~ {}**"
+inline_2: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+附加组件 ~ {}**"
+inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+**帮助菜单 {}.\n\n
+附加组件 ~ {}\n\n
+去添加 `附加组件` var为true的值**"
+inline_4: "**{}的机器人\n\n主菜单\n\n插件 ~ {}\n附加组件 ~ {}\n命令总数 ~ {}**"
+inline_5: "**菜单已关闭**"
+
+# tagnotif
+tagnot_1: "{} 把你带进来 {}\n\n```{}```\n\n[📨消息📨]({})"
+tagnot_2: "{} 把你带进来 {}\n\n [📨消息📨]({})"
+
+# whisper
+wspr_1: "@{} 给你的秘密信息.\n阅读后删除邮件.\n否则下一条消息将不会更新."
+wspr_2: "消息 删除"
+
+# afk
+afk_1: "`不再 AFK\n\n
+他离开了 ~ {}`"
+afk_2: "#AFK\n
+将AFK模式设置为False\n
+使用AFK是为了 {}`"
+afk_3: "我现在是 AFK.\n
+上次看到 {} 前.`\n\n
+**原因:** `{}`"
+afk_4: "`我现在是 AFK.\n\n
+上次看到 {} 前.`"
+afk_5: "`去 AFK.`\n\n
+**原因:** `{}`"
+afk_6: "我要去 AFK."
+afk_7: "目前有原因的 AFK {}"
+afk_8: "目前 AFK."
+
+# bot
+alive_1: "**Ultroid 用户机器人...**\n\n
+**{}**\n\n
+┏━━━━━━━━━━━━━━━━━━━━━\n
+┣ **所有者** - `{}`\n
+┣ **版本** - `{}`\n
+┣ **启动时间** - `{}`\n
+┣ **正常运行时间** - `{}`\n
+┣ **Python** - `{}`\n
+┣ **Telethon** - `{}`\n
+┣ **分支** - `{}`\n
+┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid 日志.\n粘贴 [here]({}) too!"
+ping: "**Pong !!** `{}毫秒`\n**Uptime** - `{}`"
+usage: "**⚙️ Dyno 用法 ⚙️**:\n\n
+ -> `Dyno 用法 for`  **{}**:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+ -> `本月剩余的Dyno小时配额`:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+**总磁盘空间: {}\n\n**
+**Used: {}  Free: {}\n\n**
+**📊Data 用法\n\n上传: {}\n下载: {}\n\n**
+**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "拜拜 {}.\n`关闭...`"
+
+# broadcast
+bd_1: "`添加到数据库...`"
+bd_2: "`尝试将所有管理频道添加到数据库...`"
+bd_3: "**完成.**\n数据库中已存在聊天记录: {}\n新增: {}"
+bd_4: "已添加频道!"
+bd_5: "`已添加到数据库!`"
+bd_6: "`频道已经在数据库!`"
+
+# carbon
+carbon_1: "处理"
+carbon_2: "Carbonised by [{}](tg://user?id={})"
+
+# chats
+chats_1: "`处理中...`"
+chats_2: "`无法删除此聊天`"
+chats_3: "`我不是管理员`"
+chats_4: "#已删除\n已删除 {}"
+chats_5: "你的 [{}]({}) 组已经成为了 Boss!"
+chats_6: "加入 @TeamUltroid"
+
+# converter
+cvt_1: "回复任一媒体或文件."
+cvt_2: "给出文件的名称和扩展名"
+cvt_3: "`处理中...`"
+cvt_4: "回复任何媒体."
+
+# core
+core_1: "发现模块"
+core_2: "{}.py 使用 .paste 粘贴在 neko 和 raw .."
+core_3: "再次搜索..?"
+core_4: "发现模块 {}"
+core_5: "{}.py 使用 .paste 粘贴在 neko 和 raw .."
+core_6: "没找到 {}.py 模块"
+core_7: "没有该模块"
+core_8: "没有发现名称是 {}.py 的模块"
+core_9: "`给出你要卸载的插件名称`"
+core_10: "**卸载** `{}` **成功.**"
+core_11: "**你不能不加载官方的插件**"
+core_12: "**无插件** `{}`"
+core_13: "`给出你要卸载的插件名称`"
+core_14: "**卸载** `{}` **成功.**"
+core_15: "**你不能卸载官方的插件**"
+core_16: "`给出你要加载的插件名称`"
+core_17: "**加载成功** `{}`"
+core_18: "**无法加载** `{}` **因为以下错误.**\n`{}`"
+
+# fedutils
+sf_1: "启动 Mass-FedBan..."
+sf_2: "`没有指定用户!`"
+sf_3: "你不能禁止我的开发，你这个笨蛋！!!"
+sf_4: "`好像是 rose 没有相应, 或者插件的行为不正常`"
+sf_5: "您只能每5分钟使用一次fed指令"
+sf_6: "5分钟后再试一次."
+sf_7: "无法收集 FedAdminList. 重试中 ({}/3)..."
+sf_8: "错误"
+sf_9: "无法收集 FedAdminList."
+sf_10: "FBaning in {} feds."
+sf_11: "指定的 FBan Group ID 不正常."
+sf_12: "{} 排除."
+sf_13: "移除 FedAdmin 文件时出错.\n{}"
+sf_14: "SuperFBan 已完成.\n总计 Feds - {}.\n不包括 - {}.\n 受影响的 {} feds.\n#TB"
+sf_15: "启动 Mass-UnFedBan..."
+sf_16: "SuperUnFBan 已完成.\n总计 Feds - {}.\n不包括 - {}.\n 受影响的 {} feds.\n#TB"
+sf_17: "`给我一个ID, 或者回复某人的信息查看他/她的 fedstat.`"
+sf_18: "列表 feds {} 已被禁止.\n\n使用Ultroid收集."
+sf_19: "**错误**\n `Unblock` @MissRose_Bot ` 再试一次!"
+sf_20: "`提取信息中...`"
+sf_21: "\n\n由Ultroid提取的FedInfo"
+
+# gdrive
+gdrive_1: "`你已经授权过 Google Drive`"
+gdrive_2: "去 [这里](https://console.developers.google.com/flows/enableapi?apiid=drive) 获取你的 `GDRIVE_CLIENT_ID` 和 `GDRIVE_CLIENT_SECRET`\n\n
+发送你的 GDRIVE_CLIENT_ID 和 GDRIVE_CLIENT_SECRET 到这里.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` 用空格分开."
+gdrive_3: "`错误的 Client Id`"
+gdrive_4: "`发生了一些错误! 再次发送 `/auth`.\n如果发生同样的问题请联系 `@TheUltroid"
+gdrive_5: "`成功!\n你已经在 Ultroid 用户机器人 上设置好了 Google Drive.`"
+gdrive_6: "`去 `{}` 并发送 ``/auth.`"
+gdrive_7: "**文件成功上传到 G-Drive :**\n\n[{}]({})"
+
+# pmpermit
+pmperm_1: "请等待我的回复，否则你会被屏蔽并被举报为垃圾信息!!"
+pmperm_2: "你在我主人的邮箱里乱发信息, 我不喜欢这样.\n你已经被屏蔽, 并被报告为垃圾信息, 直到进一步的通知."
+pmperm_3: "回复别人的消息或在私聊里试试这个命令."
+
+# updater
+upd_1: "`正在检查更新, 请稍等....`"
+upd_2: "`哎呀, 出现一些问题无法继续更新.`\n\n**日志跟踪:**\n"
+upd_3: "**有新的更新可用 [[{}]]({}/tree/{}):\n\n更新日志**\n\n{}"
+upd_4: "`变更日志太大，查看文件才能看到.`"
+upd_5: "使用 `{}update now` 更新."
+upd_6: "{}\n\n使用 `{}update now` 更新."
+upd_7: "\n`你的机器人是`  **up-to-date**  `与`  **[[{}]]({}/tree/{})**\n"
+
+# upload download
+udl_1: "`回复你想下载的文件或媒体...`"
+udl_2: "下载成功..\nTo\n`{}`\nin `{}`"
+udl_3: "`给出文件的具体路径`"
+
+# words
+wrd_1: "**Word** - `{}`\n\n**含义** - \n"
+wrd_2: "**Word** - `{}`\n\n**同义词** - \n"
+wrd_3: "**Word** - `{}`\n\n**反义词** - \n"
+
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "选择你要设置的 API."
+ast_2: "**remove.bg API**\n输入你的 remove.bg API key .\n\n使用 /cancel 终止操作."
+ast_3: "Hi {}. 请浏览以下选项"

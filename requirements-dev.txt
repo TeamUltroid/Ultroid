@@ -1,0 +1,6 @@
+-r requirements.txt
+black
+isort
+pre-commit
+pyclean
+pylint

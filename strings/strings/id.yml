@@ -1,0 +1,194 @@
+name: Indonesia
+natively: Indonesia
+
+authors:
+  - itsmenandos
+
+# commons
+com_1: "`Memproses...`"
+com_2: "`Sedang Mencari...`"
+# help
+help_1: "`{}` bukan plugin yang valid!"
+help_2: "Bot tidak menanggapi inline kueri.\nLebih baik untuk menggunakan `{}restart`"
+help_3: "`Tolong aktifkan inline mode bot Anda dari` @Botfather."
+help_4: "Heioo...., \nAnda sedang mengaktifkan Mode Bot. \nPengguna Mode Bot tidak dapat mendapatkan bantuan secara langsung ... \nLebih baik cipy dan paste yang berikut di obrolan dan Klik Pop Up \n\n `@{} ultd`"
+
+# autopic
+autopic_1: "Haisss, beri aku suatu kata .."
+autopic_2: "Tidak ada hasil yang ditemukan untuk `{}`"
+autopic_3: "Mendapatkan koleksi `{}` yang terkait dengan penelusuran Anda !\nMemulai Autopic !"
+
+# inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Pʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
+**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+Aᴅᴅᴏɴs ~ {}\n\n
+Pᴇʀɢɪ Dᴀɴ Tᴀᴍʙᴀʜᴋᴀɴ `ADDONS` Vᴀʀ Dᴇɴɢᴀɴ Vᴀʟᴜᴇ Tʀᴜᴇ**"
+inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_5: "**Mᴇɴᴜ Tᴇʟᴀʜ Dɪᴛᴜᴛᴜᴘ**"
+
+# tagnotif
+tagnot_1: "{} menandai anda dalam {}\n\n```{}```\n\n[📨Message📨]({})"
+tagnot_2: "{} menandai anda dalam {}\n\n [📨Message📨]({})"
+
+# whisper
+wspr_1: "@{} pesan rahasia buatmu.\nHapus pesanmu setelah membaca.\nAtau pesan selanjutnya tidak bisa diterima."
+wspr_2: "Pesan dihapus!"
+
+# afk
+afk_1: "`Tidak Lagi Afk\n\n
+Karena ~ {}`"
+afk_2: "#AFK\n
+Menyetel AFK mode ke False.\n
+AFK untuk {}`"
+afk_3: "Gua lagi AFK.\n
+Terakhir dilihat {} yang lalu.`\n\n
+**Karena:** `{}`"
+afk_4: "`Gua lagi AFK.\n\n
+Terakhir dilihat {} yang lalu.`"
+afk_5: "`AFK dulu.`\n\n
+**Karena:** `{}`"
+afk_6: "AFK dulu gua."
+afk_7: "Lagi Afk karena {}"
+afk_8: "Lagi AFK."
+
+# bot
+alive_1: "**The Ultroid Userbot...**\n\n
+**{}**\n\n
+┏━━━━━━━━━━━━━━━━━━━━━\n
+┣ **Pemilik** - `{}`\n
+┣ **Versi** - `{}`\n
+┣ **UpTime** - `{}`\n
+┣ **Python** - `{}`\n
+┣ **Telethon** - `{}`\n
+┣ **Branch** - `{}`\n
+┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
+ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
+usage: "**⚙️ Dyno Usage ⚙️**:\n\n
+ -> `Pemakaian Dyno Untuk`  **{}**:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+ -> `Sisa kuota jam dyno bulan ini`:\n
+     •  `{}`**h**  `{}`**m**
+**|**  [`{}`**%**]\n\n
+**Total Ruang Disk: {}\n\n**
+**Terpakai: {}  Kosong: {}\n\n**
+**📊Penggunaan Data📊\n\nUpload: {}\nDown: {}\n\n**
+**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "GoodBye {}.\n`Sedang Mematikan bot...`"
+
+# broadcast
+bd_1: "`Menambahkan ke database...`"
+bd_2: "`Mencoba menambahkan semua channel admin ke database...`"
+bd_3: "**Berhasil.**\nChats sudah ada dalam Database: {}\nBaru ditambahkan: {}"
+bd_4: "Channels ditambahkan!"
+bd_5: "`Menambahkan ke database!`"
+bd_6: "`Channel sudah ada dalam database!`"
+
+# carbon
+carbon_1: "Memproses..."
+carbon_2: "Carbonised oleh [{}](tg://user?id={})"
+
+# chats
+chats_1: "`Memproses...`"
+chats_2: "`Tidak bisa menghapus chat ini zzzz`"
+chats_3: "`Gua bukan admin`"
+chats_4: "#Terhapus\nTerhapus {}"
+chats_5: "Anda [{}]({}) Grup telah dibuat oleh boss!"
+chats_6: "Join @TeamUltroid"
+
+# converter
+cvt_1: "Balas ke media/Dokumen apapun."
+cvt_2: "Beri Nama dan ekstensi file"
+cvt_3: "`Memproses...`"
+cvt_4: "Balas ke media."
+
+# core
+core_1: "`Modul ditemukan`"
+core_2: "{}.py gunakan .paste untuk menempel di neko dan raw.."
+core_3: "`Cari lagi..?`"
+core_4: "Modul {} ditemukan"
+core_5: "{}.py gunakan .paste untuk menempel di neko dan raw.."
+core_6: "Modul {}.py tidak ada"
+core_7: "Tidak Ada Modul Seperti Itu"
+core_8: "Ga ada modul yang namanya {}.py"
+core_9: "`Beri tau nama plugin yang ingin Anda unload`"
+core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Bᴇʀʜᴀsɪʟ.**"
+core_11: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bɪsᴀ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_12: "**Tɪᴅᴀᴋ Aᴅᴀ Pʟᴜɢɪɴ Yᴀɴɢ Bᴇʀɴᴀᴍᴀ** `{}`"
+core_13: "`Beri tau nama plugin yang ingin Anda uninstall`"
+core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Bᴇʀʜᴀsɪʟ.**"
+core_15: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bɪsᴀ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_16: "`Beri tau nama plugin yang ingin Anda load`"
+core_17: "**Bᴇʀʜᴀsɪʟ Dɪ Lᴏᴀᴅ** `{}`"
+core_18: "**Tidak dapat diload** `{}` **karena kesalahan berikut.**\n`{}`"
+
+# fedutils
+sf_1: "Memulai Mass-FedBan..."
+sf_2: "`Tidak ada pengguna yang dipilih!`"
+sf_3: "Lu gabisa banned Developer gua!! dasar Noob"
+sf_4: "`Sepertinya Rose tidak merespons atau plugin bermasalah`"
+sf_5: "Anda hanya dapat menggunakan perintah fed satu kali setiap 5 menit"
+sf_6: "Coba lagi dalam 5 menit."
+sf_7: "Tidak dapat mengumpulkan FedAdminList. Sedang Mencoba lagi ({}/3)..."
+sf_8: "Kesalahan"
+sf_9: "Tidak dapat mengumpulkan FedAdminList."
+sf_10: "FBaning dalam {} feds."
+sf_11: "ID Grup FBan yang ditentukan salah."
+sf_12: "{} Pengecualian."
+sf_13: "Kesalahan dalam menghapus file FedAdmin.\n{}"
+sf_14: "SuperFBan Selesai.\nTotal Feds - {}.\nPengecualian - {}.\n Pengaruh {} feds.\n#TB"
+sf_15: "Memulai Mass-UnFedBan..."
+sf_16: "SuperUnFBan Selesai.\nTotal Feds - {}.\nPengecualian - {}.\n Pengaruh {} feds.\n#TB"
+sf_17: "`Beri saya id seseorang, atau balas pesan seseorang untuk memeriksa fedstatnya.`"
+sf_18: "Daftar feds {} telah dibanned.\n\nDikumpulkan menggunakan Ultroid."
+sf_19: "**Kesalahan**\n `Unblock` @MissRose_Bot `dan coba lagi!"
+sf_20: "`Mengekstrak informasi...`"
+sf_21: "\n\nFedInfo diekstrak oleh Ultroid"
+
+# gdrive
+gdrive_1: "`Anda telah memberi otorisasi dengan Google Drive`"
+gdrive_2: "Pergi [kesini](https://console.developers.google.com/flows/enableapi?apiid=drive) dan dapatkan `GDRIVE_CLIENT_ID` dan `GDRIVE_CLIENT_SECRET` kamu\n\n
+Kirim GDRIVE_CLIENT_ID dan GDRIVE_CLIENT_SECRET kamu seperti ini.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` dipisahkan dengan spasi."
+gdrive_3: "`Client Id salah anjim`"
+gdrive_4: "`Terjadi kesalahan! Kirim `/auth` lagi.\nJika masih sama, harap hubungi `@TheUltroid"
+gdrive_5: "`Berhasil!\nAnda siap untuk menggunakan Google Drive dengan Ultroid Userbot.`"
+gdrive_6: "`Pergi ke `{}` dan kirim ``/auth.`"
+gdrive_7: "**File Berhasil Diupload kedalam G-Drive :**\n\n[{}]({})"
+
+# pmpermit
+pmperm_1: "Harap tunggu saya merespons atau Anda akan diblokir dan dilaporkan sebagai spam!!"
+pmperm_2: "Anda telah melakukan spamming pada pesan Boss saya."
+pmperm_3: "Balas pesan seseorang atau coba perintah ini secara pribadi."
+
+# updater
+upd_1: "`Memeriksa pembaruan, harap tunggu....`"
+upd_2: "`Oops.. Updater tidak dapat melanjutkan karena beberapa masalah.`\n\n**LOGTRACE:**\n"
+upd_3: "**UPDATE baru tersedia untuk [[{}]]({}/tree/{}):\n\nPERUBAHAN:**\n\n{}"
+upd_4: "`Perubahan log terlalu besar, lihat file untuk melihatnya.`"
+upd_5: "Gunakan `{}update now` untuk update bot."
+upd_6: "{}\n\nGunakan `{}update now` untuk update bot."
+upd_7: "\n`BOT Anda sudah`  **paling-terbaru**  `dengan`  **[[{}]]({}/tree/{})**\n"
+
+# upload download
+udl_1: "`Balas ke file/media yang ingin Anda download...`"
+udl_2: "Download Berhasil..\nTo\n`{}`\nin `{}`"
+udl_3: "`Berikan tempat penyimpanan khusus ke file`"
+
+# words
+wrd_1: "**Kata** - `{}`\n\n**Arti** - \n"
+wrd_2: "**Kata** - `{}`\n\n**Sinonim** - \n"
+wrd_3: "**Kata** - `{}`\n\n**Antonim** - \n"
+
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "Pilih API yang ingin Anda setel."
+ast_2: "**remove.bg API**\nMasukkan API key Anda dari remove.bg.\n\nGunakan /cancel untuk membatalkan."
+ast_3: "Woii {}. Silakan telusuri opsi"
