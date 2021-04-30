@@ -13,6 +13,7 @@
 """
 
 import re
+from datetime import datetime as dr
 
 import requests as r
 from bs4 import BeautifulSoup as bs
@@ -31,6 +32,9 @@ async def diela(e):
         month = match.split("/")[1]
         li += "/days/2021/" + month + "/" + date
         te = f"♻️ **Events for {match}/2021**\n\n"
+    else:
+        da = dr.today().strftime("%F").split("-")
+        li += "/days/2021/" + da[1] + "/" + da[2]
     ct = r.get(li).content
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))

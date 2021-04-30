@@ -1,12 +1,19 @@
 """
 ✘ Commands Available -
 
-• `{i}get (var|type|redis) <variable name>`
-   Get variable type/value/redis key-value/redis keys.
+• `{i}get var <variable name>`
+   Get value of the given variable name.
+
+• `{i}get type <variable name>`
+   Get variable type.
+
+• `{i}get redis <key>`
+   Get redis value of the given key.
 
 • `{i}get keys`
    Get all redis keys.
 """
+
 import os
 
 from . import *
