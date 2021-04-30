@@ -241,13 +241,19 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     });
 };
 
-export const leaveVc = (chatId: number, exitVcCommand: boolean = false) => {
+export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
-        stream.emit('leave');
+        try {
+            stream.emit('leave');
+        } catch (error) {
+            console.log(error.toString);
+            stream.emit('leave');
+        }
         process.exit(0);
+    } else {
+        return false;
     }
-    return false;
 }
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {

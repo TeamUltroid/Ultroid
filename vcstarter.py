@@ -132,7 +132,7 @@ if vcbot:
             )
             await bot.send_message(
                 Var.LOG_CHANNEL,
-                f"`Left Voice Chat in `{(await bot.get_entity(data['chat']['id'])).title}`",
+                f"Left Voice Chat in `{(await bot.get_entity(data['chat']['id'])).title}`",
             )
         except Exception as ex:
             return await bot.send_message(
@@ -158,9 +158,6 @@ if vcbot:
                     response = await join_call(data["data"])
 
                 if data["_"] == "leave":
-                    print('start')
-                    print(data["data"])
-                    print('end')
                     response = await leave_vc(data["data"])
 
                 if response is not None:
