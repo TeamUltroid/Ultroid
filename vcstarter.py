@@ -18,6 +18,7 @@ bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOK
 
 
 if vcbot:
+
     async def get_entity(chat):
         try:
             return await vcbot.get_input_entity(chat["id"])
@@ -100,6 +101,7 @@ if vcbot:
                 },
             },
         }
+
     async def leave_vc(data):
         await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
         try:
@@ -154,7 +156,7 @@ if vcbot:
                     response = await join_call(data["data"])
 
                 if data["_"] == "leave":
-                    print(data['data'])
+                    print(data["data"])
                     response = await leave_vc(data["data"])
 
                 if response is not None:
