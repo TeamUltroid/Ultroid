@@ -12,7 +12,7 @@ import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import escapeHtml from '@youtwitface/escape-html';
 
-export const songHandler = Composer.command('song', async ctx => {
+export const songHandler = Composer.command('current', async ctx => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {
