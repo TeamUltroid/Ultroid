@@ -8,7 +8,7 @@
 **/
 
 import { Composer } from 'telegraf';
-import { getQueue } from '../tgcalls';
+import { getQueue, leaveVc } from '../tgcalls';
 import escapeHtml from '@youtwitface/escape-html';
 import { getDuration } from '../utils';
 
@@ -29,4 +29,8 @@ export const queueHandler = Composer.command('queue', async ctx => {
             : 'The queue is empty.';
 
     await ctx.replyWithHTML(message, { disable_web_page_preview: true });
+
+    if (queue?.length == 0) {
+     leaveVc(chat.id)   
+    }
 });

@@ -39,7 +39,7 @@ export const songHandler = Composer.command('song', async ctx => {
                 Markup.button.callback('Skip', `skip:${id}`),
             ],
             [
-                Markup.button.callback('Close', `exitVc`),
+                Markup.button.callback('Exit', `exitVc`),
             ]
         ])
     })

@@ -211,7 +211,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
                             Markup.button.callback('Skip', `skip:${id}`),
                         ],
                         [
-                            Markup.button.callback('Close', `exitVc`),
+                            Markup.button.callback('Exit', `exitVc`),
                         ]
                     ])
                 })
@@ -310,7 +310,7 @@ export const getQueue = (chatId: number): Queue[] | null => {
         const { queue } = cache.get(chatId)!;
         return Array.from(queue);
     }
-    return null;
+    return [];
 };
 
 export const removeQueue = (chatId: number, id: number): boolean => {
