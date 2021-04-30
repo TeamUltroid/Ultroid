@@ -10,8 +10,8 @@ async def evalJs(
     startTime: float,
     command: str = "",
 ):
-    os.system(f"node ecmaHelper/eval.d.js {command}")
-    result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8")
+    os.system(f"node ../ecmaHelper/eval.d.js {command}")
+    result = open("../ecmaHelper/evalJs.result.d.txt", encoding="utf-8")
     if str(result.read()) == "":
         await eor(
             event,
