@@ -136,7 +136,7 @@ async def shutdownbot(ult):
     except IndexError:
         dyno = None
     if dyno:
-        if dyno not in ["userbot", "vcbot"]:
+        if dyno not in ["userbot", "vcbot", "web", "worker"]:
             await eor(ult, "Invalid Dyno Type specified !")
             return
         await shutdown(ult, dyno)
