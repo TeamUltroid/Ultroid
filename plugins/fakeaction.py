@@ -10,7 +10,7 @@
 
 • `{i}ftyping <time/in secs>`
     `Show Fake Typing in current chat. `
-    
+
 • `{i}faudio <time/in secs>`
     `Show Fake Recording Action in current chat. `
 
@@ -34,8 +34,8 @@ async def _(e):
     await eod(e, f"Starting Fake Typing For {t} sec.")
     async with e.client.action(e.chat_id, "typing"):
         await asyncio.sleep(t)
-        
-        
+
+
 @ultroid_cmd(pattern="faudio ?(.*)")
 async def _(e):
     t = e.pattern_match.group(1)
@@ -45,8 +45,9 @@ async def _(e):
         t = int(t)
     await eod(e, f"Starting Fake audio recording For {t} sec.")
     async with e.client.action(e.chat_id, "record-audio"):
-        await asyncio.sleep(t)       
- 
+        await asyncio.sleep(t)
+
+
 @ultroid_cmd(pattern="fvideo ?(.*)")
 async def _(e):
     t = e.pattern_match.group(1)
@@ -56,8 +57,8 @@ async def _(e):
         t = int(t)
     await eod(e, f"Starting Fake video recording For {t} sec.")
     async with e.client.action(e.chat_id, "record-video"):
-        await asyncio.sleep(t)       
-        
+        await asyncio.sleep(t)
+
 
 @ultroid_cmd(pattern="fgame ?(.*)")
 async def _(e):
@@ -68,7 +69,7 @@ async def _(e):
         t = int(t)
     await eod(e, f"Starting Fake Game Playing For {t} sec.")
     async with e.client.action(e.chat_id, "game"):
-        await asyncio.sleep(t) 
-        
-        
+        await asyncio.sleep(t)
+
+
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
