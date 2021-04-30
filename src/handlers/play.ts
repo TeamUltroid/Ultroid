@@ -52,6 +52,9 @@ export const playHandler = Composer.command('play', async ctx => {
                         [
                             Markup.button.callback('Pause', `pause:${id}`),
                             Markup.button.callback('Skip', `skip:${id}`)
+                        ],
+                        [
+                            Markup.button.callback('Exit', `exitVc`),
                         ]
                     ])
                 })
