@@ -310,9 +310,7 @@ async def _(event):
         await eor(xx, OUT)
 
 
-@ultroid_cmd(
-    pattern="eval",
-)
+@ultroid_cmd(pattern="eval",)
 async def _(event):
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
