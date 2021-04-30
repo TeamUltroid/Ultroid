@@ -10,7 +10,7 @@
 import { Context, MiddlewareFn } from 'telegraf';
 import { getCurrentSong } from '../tgcalls';
 import { logger as log } from '../bot';
-import escapeHtml from 'escapeHtml';
+import escapeHtml from '@youtwitface/escape-html';
 
 const checkExpired: MiddlewareFn<Context> = async (ctx, next) => {
     if (ctx.callbackQuery) {

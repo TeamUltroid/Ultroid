@@ -10,7 +10,7 @@
 import { Composer, Markup } from 'telegraf';
 import { pause, getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
-import escapeHtml from 'escapeHtml';
+import escapeHtml from '@youtwitface/escape-html';
 import checkExpired from '../middlewares/checkExpired';
 
 export const pauseCBHandler = Composer.action(/^pause:[a-zA-Z0-9.\-_]+$/, checkExpired, async ctx => {

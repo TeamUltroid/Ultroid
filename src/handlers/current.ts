@@ -10,7 +10,7 @@
 import { Composer, Markup } from 'telegraf';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
-import escapeHtml from 'escapeHtml';
+import escapeHtml from '@youtwitface/escape-html';
 
 export const songHandler = Composer.command('current', async ctx => {
     const { chat } = ctx.message;

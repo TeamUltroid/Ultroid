@@ -12,7 +12,7 @@ import { addToQueue, getQueue } from '../tgcalls';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import { logger as log } from '../bot';
-import escapeHtml from 'escapeHtml';
+import escapeHtml from '@youtwitface/escape-html';
 
 export const playHandler = Composer.command('play', async ctx => {
     const { chat } = ctx.message;

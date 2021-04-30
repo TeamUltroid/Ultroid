@@ -17,7 +17,7 @@ import { Readable } from 'stream';
 import { bot } from './bot';
 import { Markup } from 'telegraf';
 import { getDuration } from './utils';
-import escapeHtml from 'escapeHtml';
+import escapeHtml from '@youtwitface/escape-html';
 
 interface DownloadedSong {
     stream: Readable;
