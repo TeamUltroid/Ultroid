@@ -146,7 +146,10 @@ if Var.BOT_USERNAME is not None and asst is not None:
                     Button.inline("•Pɪɴɢ•", data="pkng"),
                     Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
                 ],
-                [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
+                [
+                    Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt"),
+                    Button.inline("•Uᴘᴅᴀᴛᴇ•", data="changes"),
+                ],
                 [Button.inline("<- Bᴀᴄᴋ", data="open")],
             ],
         )
