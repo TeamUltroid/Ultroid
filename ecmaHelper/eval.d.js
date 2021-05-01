@@ -10,7 +10,7 @@ truncate('./ecmaHelper/evalJs.run.js', 0, function() {
 });
 truncate('./ecmaHelper/evalJs.result.d.txt', 0, function() { 
     console.log('Result File Truncated');
-}); 
+});
 
 const evalJs = exec('node ./ecmaHelper/evalJs.run.js');
 

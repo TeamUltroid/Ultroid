@@ -22,7 +22,7 @@ async def evalJs(event, startTime: float, command: str = "",):
     else:
         await eor(
             event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`{str(result.read())}`",
+            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`{result.read()}`",
         )
     result.close()
     file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='w')
