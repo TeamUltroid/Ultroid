@@ -26,9 +26,10 @@
 
 import asyncio
 import io
-from . import *
 
 from telethon.tl.types import InputMediaUploadedPhoto
+
+from . import *
 
 
 @ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
