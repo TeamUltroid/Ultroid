@@ -7,15 +7,10 @@ from . import *
 
 
 async def evalJs(event, startTime: float, command: str = "",):
-    os.system("ls")
-    return await eor(
-        event,
-        f"{command}",
-    )
-    os.system(f"node ./ecmaHelper/eval.d.js {command}")
+    os.system(f"node ./ecmaHelper/eval.d.js {str(command)}")
     if not os.path.exists('./ecmaHelper/evalJs.result.d.txt'):
         return await eor(
-            event,
+            event,=
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
         )
     result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='r')
@@ -52,11 +47,8 @@ async def _(event):
     except IndexError:
         return await eod(xx, "`Give some js cmd`", time=7)
     if cmd and cmd != "":
-        jsThread = Thread(
-            target=await evalJs(
-                event,
-                command=cmd,
-                startTime=start,
-            )
+        await evalJs(
+            event,
+            command=cmd,
+            startTime=start,
         )
-        jsThread.start()
