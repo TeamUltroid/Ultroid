@@ -10,9 +10,11 @@ truncate('./ecmaHelper/evalJs.result.d.txt', 0, function() {
 
 
 evalJs.stdout.on('data', (data) => {
+    console.log("data")
     appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${data.toString()}\n`, () => {});
 })
 
 evalJs.stdout.on('error', (error) => {
+    console.log("error")
     appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${error.message}\n`, () => {});
 })
