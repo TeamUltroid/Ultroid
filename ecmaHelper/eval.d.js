@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const { appendFileSync, truncate, writeFile } = require('fs');
+const { appendFile, truncate, writeFile } = require('fs');
 console.log("Command -> `" + String(process.argv.slice(2)).replace(',', ' ').replace('"', '\'') + '`');
 (async () => {
     const evalJs = exec('node ./ecmaHelper/evalJs.run.js');
@@ -19,12 +19,12 @@ console.log("Command -> `" + String(process.argv.slice(2)).replace(',', ' ').rep
     
     evalJs.stdout.on('data', (data) => {
         console.log(data)
-        appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${data.toString()}\n`, () => {});
+        appendFile('./ecmaHelper/evalJs.result.d.txt', `${data.toString()}\n`, () => {});
     })
     
     evalJs.stderr.on('data', (error) => {
         console.log(error.toString())
-        appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${error.toString()}\n`, () => {});
+        appendFile('./ecmaHelper/evalJs.result.d.txt', `${error.toString()}\n`, () => {});
     }) 
 })()
 

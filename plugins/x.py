@@ -10,7 +10,7 @@ async def evalJs(
     command: str = "",
 ):
     finalCommand = str(command).replace('"', "'")
-    os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
+    await os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
     if not os.path.exists("./ecmaHelper/evalJs.result.d.txt"):
         return await eor(
             event,
