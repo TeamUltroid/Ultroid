@@ -7,6 +7,7 @@ from . import *
 
 
 async def evalJs(event, startTime: float, command: str = "",):
+    os.system("ls")
     return await eor(
         event,
         f"{command}",
