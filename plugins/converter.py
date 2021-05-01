@@ -149,6 +149,7 @@ async def _(event):
                 await xx.edit(
                     f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
                 )
+            os.remove(b)
         else:
             return await eod(xx, "`Reply to a readable file`", time=5)
     else:
