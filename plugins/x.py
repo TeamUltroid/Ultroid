@@ -10,7 +10,7 @@ async def evalJs(event, startTime: float, command: str = "",):
     os.system(f"node ./ecmaHelper/eval.d.js {str(command)}")
     if not os.path.exists('./ecmaHelper/evalJs.result.d.txt'):
         return await eor(
-            event,=
+            event,
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
         )
     result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='r')
