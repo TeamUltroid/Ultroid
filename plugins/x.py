@@ -16,22 +16,29 @@ async def evalJs(
         "./ecmaHelper/evalJs.result.d.txt",
         force_document=True,
     )
-    if not os.path.exists("./ecmaHelper/evalJs.result.d.txt"):
-        return await eor(
-            event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
-        )
-    result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="r")
-    print("here is result:", result.read())
-    if str(result.read()) == "":
-        await eor(
-            event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
-        )
+    if os.path.exists("./ecmaHelper/evalJs.result.d.txt"):
+        result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="r")
+        print("here is result:", result.read())
+        if result.read() == "":
+            await eor(
+                event,
+                f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: No Output`",
+            )
+        else:
+            if len(result.read()) >= 2001:
+                await eor(
+                    event,
+                    f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
+                )
+            else:
+                await eor(
+                    event,
+                    f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`{result.read()}`",
+                )
     else:
         await eor(
             event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`{result.read()}`",
+            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
     result.close()
     file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
