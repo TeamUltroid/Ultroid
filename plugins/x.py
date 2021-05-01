@@ -25,7 +25,7 @@ async def evalJs(event, startTime: float, command: str = "",):
         )
     result.close()
     file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='w')
-    file.write("")
+    file.write("'use-strict';\n")
     file.close()
 
 
