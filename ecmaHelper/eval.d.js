@@ -15,7 +15,7 @@ truncate('./ecmaHelper/evalJs.result.d.txt', 0, function() {
 const evalJs = exec('node ./ecmaHelper/evalJs.run.js');
 
 evalJs.stdout.on('data', (data) => {
-    console.log("data")
+    console.log(data)
     appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${data.toString()}\n`, () => {});
 })
 
