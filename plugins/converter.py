@@ -51,7 +51,9 @@ async def imak(event):
         await eor(event, "Give The name nd extension of file")
         return
     xx = await eor(event, "`Processing...`")
-    image = await downloader(reply.file.name, reply.media.document, event, t, "Downloading...")
+    image = await downloader(
+        reply.file.name, reply.media.document, event, t, "Downloading..."
+    )
     os.rename(image.name, inp)
     k = time.time()
     xxx = await uploader(inp, inp, k, event, "Uploading...")
