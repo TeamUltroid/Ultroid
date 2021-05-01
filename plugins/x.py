@@ -10,7 +10,7 @@ async def evalJs(
     command: str = "",
 ):
     finalCommand = str(command).replace('"', "'")
-    await os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
+    os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
     await ultroid_bot.send_file(
         event.chat.id,
         "./ecmaHelper/evalJs.result.d.txt",
