@@ -38,7 +38,10 @@ async def download(event):
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
-            filename = ok.file.name
+            if event.pattern_match.group(1):
+                filename = event.pattern_match.group(1)
+            else:
+                filename = ok.file.name
             if not filename:
                 if "audio" in mime_type:
                     filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
@@ -69,7 +72,7 @@ async def download(event):
             )
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t:
+    if t != "":
         await eor(xx, get_string("udl_2").format(file_name, t))
     else:
         await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
@@ -100,7 +103,7 @@ async def download(event):
             return await eod(xx, str(ve))
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t:
+    if t != "":
         await eor(xx, f"Uploaded `{kk}` in `{t}`", time=5)
     else:
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
