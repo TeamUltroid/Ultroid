@@ -7,10 +7,10 @@ truncate('./ecmaHelper/evalJs.result.d.txt', 0, function() {
     console.log('File Content Deleted');
 }); 
 
-bash.stdout.on('data', (data) => {
+evalJs.stdout.on('data', (data) => {
     appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${data.toString()}\n`, () => {});
 })
 
-bash.stdout.on('error', (error) => {
+evalJs.stdout.on('error', (error) => {
     appendFileSync('./ecmaHelper/evalJs.result.d.txt', `${error.message}\n`, () => {});
 })
