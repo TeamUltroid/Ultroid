@@ -146,7 +146,11 @@ async def repo(e):
             text="• **ULTROID USERBOT** •",
             buttons=[
                 [Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid")],
-                [Button.url("Addons", url="https://github.com/TeamUltroid/UltroidAddons")],
+                [
+                    Button.url(
+                        "Addons", url="https://github.com/TeamUltroid/UltroidAddons"
+                    )
+                ],
                 [Button.url("Support", url="t.me/UltroidSupport")],
             ],
         ),
