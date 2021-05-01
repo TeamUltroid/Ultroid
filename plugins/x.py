@@ -7,6 +7,10 @@ from . import *
 
 
 async def evalJs(event, startTime: float, command: str = "",):
+    return await eor(
+        event,
+        f"{command}",
+    )
     os.system(f"node ./ecmaHelper/eval.d.js {command}")
     if not os.path.exists('./ecmaHelper/evalJs.result.d.txt'):
         return await eor(
