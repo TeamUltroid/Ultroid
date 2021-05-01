@@ -28,6 +28,7 @@
 
 import asyncio
 import os
+import time
 
 import cv2
 import requests
@@ -41,6 +42,7 @@ opn = []
 @ultroid_cmd(pattern="rename ?(.*)")
 async def imak(event):
     reply = await event.get_reply_message()
+    t = time.time()
     if not reply:
         await eor(event, "Reply to any media/Document.")
         return
@@ -49,9 +51,11 @@ async def imak(event):
         await eor(event, "Give The name nd extension of file")
         return
     xx = await eor(event, "`Processing...`")
-    image = await ultroid_bot.download_media(reply)
-    os.rename(image, inp)
-    await ultroid_bot.send_file(event.chat_id, inp, force_document=True, reply_to=reply)
+    image = await downloader(reply.file.name, reply.media.document, event, t, "Downloading...")
+    os.rename(image.name, inp)
+    k = time.time()
+    xxx = await uploader(inp, inp, k, event, "Uploading...")
+    await ultroid_bot.send_file(event.chat_id, xxx, force_document=True, reply_to=reply)
     os.remove(inp)
     await xx.delete()
 
