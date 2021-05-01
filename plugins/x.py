@@ -4,15 +4,19 @@ import time
 from . import *
 
 
-async def evalJs(event, startTime: float, command: str = "",):
+async def evalJs(
+    event,
+    startTime: float,
+    command: str = "",
+):
     finalCommand = str(command).replace('"', "'")
-    os.system(f"node ./ecmaHelper/eval.d.js \"{finalCommand}\"")
-    if not os.path.exists('./ecmaHelper/evalJs.result.d.txt'):
+    os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
+    if not os.path.exists("./ecmaHelper/evalJs.result.d.txt"):
         return await eor(
             event,
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
         )
-    result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='r')
+    result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="r")
     if str(result.read()) == "":
         await eor(
             event,
@@ -24,12 +28,14 @@ async def evalJs(event, startTime: float, command: str = "",):
             f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`{result.read()}`",
         )
     result.close()
-    file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode='w')
+    file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
     file.write("'use-strict';\n")
     file.close()
 
 
-@ultroid_cmd(pattern="js",)
+@ultroid_cmd(
+    pattern="js",
+)
 async def _(event):
     start = time.time()
     if not event.out and not is_fullsudo(event.sender_id):
