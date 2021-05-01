@@ -1,13 +1,12 @@
 import os
-import sys
 import time
-from threading import Thread
 
 from . import *
 
 
 async def evalJs(event, startTime: float, command: str = "",):
-    os.system(f"node ./ecmaHelper/eval.d.js {str(command)}")
+    finalCommand = str(command).replace('"', "'")
+    os.system(f"node ./ecmaHelper/eval.d.js {finalCommand}")
     if not os.path.exists('./ecmaHelper/evalJs.result.d.txt'):
         return await eor(
             event,

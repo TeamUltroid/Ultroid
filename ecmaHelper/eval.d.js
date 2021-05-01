@@ -1,5 +1,5 @@
 const { appendFileSync, truncate } = require('fs');
-console.log("Command -> `" + String(process.argv.slice(2)).replace(',', ' ') + '`');
+console.log("Command -> `" + String(process.argv.slice(2)).replace(',', ' ').replace('"', '') + '`');
 
 const evalJs = eval(String(process.argv.slice(2)).replace(',', ' '));
 
