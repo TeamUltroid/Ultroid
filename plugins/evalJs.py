@@ -12,10 +12,14 @@ async def evalJs(
     startTime: float,
     command: str = "",
 ):
-    scriptFile = open('./src/ecmaHelper/evalJs.run.js', 'w', encoding='utf-8',)
+    scriptFile = open(
+        "./src/ecmaHelper/evalJs.run.js",
+        "w",
+        encoding="utf-8",
+    )
     scriptFile.write(str(command))
     scriptFile.close()
-    os.system(f'node ./src/ecmaHelper/eval.d.js')
+    os.system(f"node ./src/ecmaHelper/eval.d.js")
     await ultroid_bot.send_file(
         event.chat.id,
         "./src/ecmaHelper/evalJs.result.d.txt",
