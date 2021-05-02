@@ -20,21 +20,21 @@ async def evalJs(
     scriptFile.write(str(command))
     scriptFile.close()
     os.system(f"node ./src/ecmaHelper/eval.d.js")
-    await ultroid_bot.send_file(
-        event.chat.id,
-        "./src/ecmaHelper/evalJs.result.d.txt",
-        force_document=True,
-    )
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
-        await eor(
-            event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
+        await ultroid_bot.send_file(
+            event.chat.id,
+            "./src/ecmaHelper/evalJs.result.d.txt",
+            force_document=True,
+            caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
         )
     else:
-        await eor(
-            event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
+        await ultroid_bot.send_file(
+            event.chat.id,
+            "./src/ecmaHelper/evalJs.result.d.txt",
+            force_document=True,
+            caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
+    await event.delete()
     file = open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
     file.write("'use-strict';\n")
     file.close()

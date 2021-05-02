@@ -4,10 +4,6 @@ const { appendFile, truncate } = require('fs');
     const evalJs = exec('node ./ecmaHelper/evalJs.run.js');
     
     truncate('./src/ecmaHelper/evalJs.result.d.txt', 0, function() { 
-        console.log('Script File Truncated');
-    });
-    
-    truncate('./src/ecmaHelper/evalJs.result.d.txt', 0, function() { 
         console.log('Result File Truncated');
     });
     
