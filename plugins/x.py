@@ -1,6 +1,9 @@
+# Inbuilt
 import os
 import time
+from threading import Thread
 
+# Ultroid
 from . import *
 
 
@@ -9,64 +12,54 @@ async def evalJs(
     startTime: float,
     command: str = "",
 ):
-    finalCommand = str(command).replace('"', "'")
-    os.system(f'node ./ecmaHelper/eval.d.js "{finalCommand}"')
+    scriptFile = open('./src/ecmaHelper/evalJs.run.js', 'w', encoding='utf-8',)
+    scriptFile.write(str(command))
+    scriptFile.close()
+    os.system(f'node ./src/ecmaHelper/eval.d.js')
     await ultroid_bot.send_file(
         event.chat.id,
-        "./ecmaHelper/evalJs.result.d.txt",
+        "./src/ecmaHelper/evalJs.result.d.txt",
         force_document=True,
     )
-    if os.path.exists("./ecmaHelper/evalJs.result.d.txt"):
-        result = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="r")
-        print("here is result:", result.read())
-        if result.read() == "":
-            await eor(
-                event,
-                f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: No Output`",
-            )
-        else:
-            if len(result.read()) >= 2001:
-                await eor(
-                    event,
-                    f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result: **\n`[Warning]: No Output`",
-                )
-            else:
-                await eor(
-                    event,
-                    f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`{result.read()}`",
-                )
+    if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
+        await eor(
+            event,
+            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
+        )
     else:
         await eor(
             event,
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n• timeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
+            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
-    result.close()
-    file = open("./ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
+    file = open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
     file.write("'use-strict';\n")
     file.close()
 
 
+# The Command Is `.js`
 @ultroid_cmd(
     pattern="js",
 )
-async def _(event):
+async def evaluateJs(event):
     start = time.time()
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
-    if Redis("I_JS_DEV") != "True":
+    if Redis("iAmECMAdev") != "True":
         await eor(
             event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n {HNDLR}setredis I_JS_DEV True\n\nThis Might Be Dangerous.",
+            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n {HNDLR}setredis iAmECMAdev True\n\nThis Might Be Dangerous.",
         )
         return
-    xx = await eor(event, "`Processing ...`")
+    xx = await eor(event, "`Running Thread ...`")
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`Give some js cmd`", time=7)
+        return await eod(xx, "`Give some JS command`", time=7)
     if cmd and cmd != "":
-        await evalJs(
-            event,
-            command=cmd,
-            startTime=start,
-        )
+        Thread(
+            target=await evalJs(
+                event,
+                command=cmd,
+                startTime=start,
+            )
+        ).start()
