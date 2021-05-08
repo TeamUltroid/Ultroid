@@ -5,7 +5,7 @@
 
 FROM programmingerror/ultroid:v0.0.1
 
-RUN git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b beta https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
