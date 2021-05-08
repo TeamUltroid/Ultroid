@@ -3,20 +3,20 @@
 # Copyright (C) 2020 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# Please read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+# Please read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 # Standalone file for facilitating local deploys.
 
 import os
 
 a = r"""
-  _    _ _ _             _     _
- | |  | | | |           (_)   | |
- | |  | | | |_ _ __ ___  _  __| |
- | |  | | | __| '__/ _ \| |/ _  |
- | |__| | | |_| | | (_) | | (_| |
-  \____/|_|\__|_|  \___/|_|\__,_|
+ 
+╔═══╗╔╗──╔╗╔═╗─╔╗╔═══╗
+║╔═╗║║╚╗╔╝║║║╚╗║║║╔═╗║
+║╚═╝║╚╗╚╝╔╝║╔╗╚╝║║║─║║
+║╔╗╔╝─╚╗╔╝─║║╚╗║║║║─║║
+║║║╚╗──║║──║║─║║║║╚═╝║
+╚╝╚═╝──╚╝──╚╝─╚═╝╚═══╝
 """
 
 
@@ -26,14 +26,14 @@ def start():
     check_for_py()
 
     print(f"{a}\n\n")
-    print("Welcome to Ultroid, lets start setting up!\n\n")
+    print("Welcome to RYNO, lets start setting up!\n\n")
     print("Cloning the repository...\n\n")
     try:
-        os.system("git clone https://github.com/TeamUltroid/Ultroid && cd Ultroid")
+        os.system("git clone https://github.com/RYNO-X/RYNO && cd RYNO")
     except Exception as e:
         print(f"ERROR\n{str(e)}")
     print("\n\nDone")
-    os.system("cd Ultroid")
+    os.system("cd RYNO")
     clear_screen()
     print(a)
     print("\n\nLet's start!\n")
@@ -64,7 +64,7 @@ def start():
         "REDIS_PASSWORD",
         "LOG_CHANNEL",
     ]
-    all_done = "# Ultroid Environment Variables.\n# Do not delete this file.\n\n"
+    all_done = "# RYNO Environment Variables.\n# Do not delete this file.\n\n"
     for i in varrs:
         all_done += do_input(i)
     clear_screen()
@@ -73,26 +73,25 @@ def start():
     print(all_done)
     isitdone = input("\n\nIs it all correct? [y/n]")
     if isitdone == "y":
-        # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
-        f = open(".env", "w")
+        f = open("RYNO/.env", "w")
         f.write(all_done)
         f.close
     elif isitdone == "n":
         print("Oh, let's redo these then -_-")
         start()
     else:
-        # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
-        f = open(".env", "w")
+        f = open("RYNO/.env", "w")
         f.write(all_done)
         f.close
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
+    os.system("cd RYNO")
     os.system("pip3 install -r ./resources/extras/local-requirements.txt")
     clear_screen()
     print(a)
-    print("\nStarting Ultroid...")
-    os.system("python3 -m pyUltroid")
+    print("\nStarting RYNO...")
+    os.system("python3 -m pyRYNO")
 
 
 def do_input(var):
@@ -120,7 +119,7 @@ def check_for_py():
                 "Enter Choice:\n1. Continue, python is installed.\n2. Exit and install python.\n",
             ),
         )
-    except BaseException:
+    except:
         print("Please run the script again, and enter the choice as a number!!")
         exit(0)
     if ch == 1:
@@ -135,8 +134,7 @@ def check_for_py():
 
 def gen_session():
     print("\nProcessing...")
-    # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
-    os.system("python3 resources/session/ssgen.py")
+    os.system("cd RYNO && python3 resources/session/ssgen.py")
     return
 
 
