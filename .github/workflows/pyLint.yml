@@ -31,6 +31,6 @@ jobs:
           commit_options: '--no-verify'
           repository: .
           commit_user_name: buddhhu
-          commit_user_email: buddhhu@ultroid.tech
-          commit_author: buddhhu <buddhhu@ultroid.tech>
-          Co-authored-by: Danish <danish@ultroid.tech>
+          commit_user_email: 48654350+buddhhu@users.noreply.github.com
+          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>
+          
