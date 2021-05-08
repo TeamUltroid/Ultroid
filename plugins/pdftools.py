@@ -25,8 +25,8 @@
 """
 
 import os
-import time
 import shutil
+import time
 
 import cv2
 import imutils
@@ -53,7 +53,6 @@ async def pdfseimg(event):
         return
     xx = await eor(event, "Processing...")
     file = ok.media.document
-    mime_type = file.mime_type
     k = time.time()
     filename = "hehe.pdf"
     result = await downloader(
@@ -62,7 +61,8 @@ async def pdfseimg(event):
         xx,
         k,
         "Downloading " + filename + "...",
-        )
+    )
+    await result.delete()
     pdfp = "pdf/hehe.pdf"
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
@@ -107,7 +107,6 @@ async def pdfsetxt(event):
         return
     xx = await eor(event, "`Processing...`")
     file = ok.media.document
-    mime_type = file.mime_type
     k = time.time()
     filename = ok.file.name
     result = await downloader(
@@ -116,7 +115,8 @@ async def pdfsetxt(event):
         xx,
         k,
         "Downloading " + filename + "...",
-        )
+    )
+    await result.delete()
     dl = result.name
     if not msg:
         pdf = PdfFileReader(dl)
