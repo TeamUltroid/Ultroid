@@ -58,6 +58,7 @@ async def autopic(e):
             os.remove(kar)
             await asyncio.sleep(1111)
 
+
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
