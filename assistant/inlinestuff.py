@@ -121,7 +121,7 @@ async def _(e):
             text=f"**File:**\n{file_name}",
             buttons=bitton,
         )
-    except BaseException:
+    except:
         lnk = e.builder.article(
             title="fl2lnk",
             text="File not found",
@@ -150,13 +150,13 @@ async def _(e):
 async def repo(e):
     res = [
         await e.builder.article(
-            title="Ultroid Userbot",
+            title="RYNO Userbot",
             description="Userbot | Telethon",
             thumb=wb(ultpic, 0, "image/jpeg", []),
-            text="• **ULTROID USERBOT** •",
+            text="• **RYNO USERBOT** •",
             buttons=[
-                [Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid")],
-                [Button.url("Support", url="t.me/UltroidSupport")],
+                [Button.url("Repo", url="https://github.com/RYNO-X/RYNO")],
+                [Button.url("Support", url="t.me/OFFICIALRYNO")],
             ],
         ),
     ]

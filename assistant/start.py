@@ -7,10 +7,9 @@
 
 from datetime import datetime
 
-from pyUltroid.functions.asst_fns import *
-from pyUltroid.misc._decorators import sed
+from pyRYNO.functions.asst_fns import *
+from pyRYNO.misc._decorators import sed
 from telethon import Button, events
-from telethon.utils import get_display_name
 
 from plugins import *
 
@@ -29,23 +28,14 @@ async def assistant(event):
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
         ok = ""
+        if udB.get("PMBOT") == "True":
+            ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
         if event.is_private and event.sender_id in sed:
             return
-        if not udB.get("STARTMSG"):
-            if udB.get("PMBOT") == "True":
-                ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
-            await event.reply(
-                f"Hey there, this is Ultroid Assistant of {OWNER_NAME}!\n\n{ok}",
-                buttons=[Button.url("Know More", url="https://t.me/TeamUltroid")],
-            )
-        else:
-            u = await event.client.get_entity(event.chat_id)
-            me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
-            mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
-            await event.reply(
-                Redis("STARTMSG").format(me=me, mention=mention),
-                buttons=[Button.url("Know More", url="https://t.me/TeamUltroid")],
-            )
+        await event.reply(
+            f"Hey there, this is RYNO Assistant of {OWNER_NAME}!\n\n{ok}",
+            buttons=[Button.url("Know More", url="https://t.me/OFFICIALRYNO")],
+        )
 
 
 @asst_cmd("start ?(.*)")
@@ -99,7 +89,7 @@ async def ultroid(event):
 @owner
 async def botstat(event):
     ok = len(get_all_users())
-    msg = """Ultroid Assistant - Stats
+    msg = """RYNO Assistant - Stats
 Total Users - {}""".format(
         ok,
     )

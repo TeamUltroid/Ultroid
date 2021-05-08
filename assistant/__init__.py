@@ -5,9 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyUltroid import *
-from pyUltroid.dB.database import Var
-from pyUltroid.functions.all import *
+from pyRYNO import *
+from pyRYNO.dB.database import Var
+from pyRYNO.functions.all import *
 from telethon import Button, custom
 
 from strings import get_languages, get_string

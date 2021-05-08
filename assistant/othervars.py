@@ -38,7 +38,7 @@ async def _(e):
     token_file_data = f.read()
     udB.set("GDRIVE_TOKEN", token_file_data)
     await e.reply(
-        "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
+        "`Success!\nYou are all set to use Google Drive with RYNO Userbot.`",
         buttons=Button.inline("Main Menu", data="setter"),
     )
 
@@ -127,7 +127,7 @@ async def _(e):
 @owner
 async def otvaar(event):
     await event.edit(
-        "Other Variables to set for @TheUltroid:",
+        "Other Variables to set for @OFFICIALRYNO:",
         buttons=[
             [
                 Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
@@ -779,45 +779,14 @@ async def pmofff(event):
 @owner
 async def chbot(event):
     await event.edit(
-        f"From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
+        f"From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/OFFICIALRYNO)",
         buttons=[
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏɴᴇ", data="bwel")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
     )
-
-
-@callback("bwel")
-@owner
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "STARTMSG"
-    name = "Bot Welcome Message:"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**BOT WELCOME MSG**\nEnter the msg which u want to show when someone start your assistant Bot.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("chatbot"),
-            )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                "{} changed to {}".format(
-                    name,
-                    themssg,
-                ),
-                buttons=get_back_button("chatbot"),
-            )
 
 
 @callback("onchbot")
@@ -846,7 +815,7 @@ async def chon(event):
 @owner
 async def vcb(event):
     await event.edit(
-        f"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
+        f"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/OFFICIALRYNO)",
         buttons=[
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
             [Button.inline("WEBSOCKET", data="vcw")],
