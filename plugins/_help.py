@@ -5,11 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyUltroid.dB.database import Var
 from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
-from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
+from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
+from telethon.tl.custom import Button
 
 from . import *
 
@@ -19,7 +19,7 @@ from . import *
 )
 async def ult(ult):
     plug = ult.pattern_match.group(1)
-    tgbot = Var.BOT_USERNAME
+    tgbot = asst.me.username
     if plug:
         try:
             if plug in HELP:
@@ -38,14 +38,50 @@ async def ult(ult):
                     for d in LIST[plug]:
                         x += HNDLR + d
                         x += "\n"
+                    x += "\n© @TeamUltroid"
                     await eor(ult, x)
                 except BaseException:
                     await eod(ult, get_string("help_1").format(plug), time=5)
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
+        # if BOT_MODE:
+        #    await ultroid_bot.send_message(
+        #        ult.chat_id,
+        #        f"Bot of {ultroid_bot.me.first_name}",
+        #        buttons=[Button.inline(text="Open Help", data="open")],
+        #    )
+        #    return
         try:
             results = await ultroid_bot.inline_query(tgbot, "ultd")
+        except BotMethodInvalidError:
+            z = []
+            for x in LIST.values():
+                for y in x:
+                    z.append(y)
+            cmd = len(z) + 10
+            bnn = asst.me.username
+            return await ultroid_bot.send_message(
+                ult.chat_id,
+                get_string("inline_4").format(
+                    OWNER_NAME,
+                    len(PLUGINS) - 5,
+                    len(ADDONS),
+                    cmd,
+                ),
+                buttons=[
+                    [
+                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                    ],
+                    [
+                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                    ],
+                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set")],
+                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+                ],
+            )
         except rep:
             return await eor(
                 ult,
@@ -53,10 +89,5 @@ async def ult(ult):
             )
         except dis:
             return await eor(ult, get_string("help_3"))
-        except bmi:
-            return await eor(
-                ult,
-                get_string("help_4").format(tgbot),
-            )
         await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
         await ult.delete()

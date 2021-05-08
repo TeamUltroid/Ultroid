@@ -7,7 +7,6 @@
 
 import time
 
-from pyUltroid import *
 from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions.all import *
@@ -28,10 +27,15 @@ except ModuleNotFoundError:
         "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
     )
 
+
 start_time = time.time()
-ultroid_version = "v0.0.5"
+ultroid_version = "v0.0.6"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
+
+List = []
+Dict = {}
+N = 0
 
 
 def grt(seconds: int) -> str:

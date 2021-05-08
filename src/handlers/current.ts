@@ -36,7 +36,10 @@ export const songHandler = Composer.command('current', async ctx => {
         ...Markup.inlineKeyboard([
             [
                 Markup.button.callback('Pause', `pause:${id}`),
-                Markup.button.callback('Skip', `skip:${id}`)
+                Markup.button.callback('Skip', `skip:${id}`),
+            ],
+            [
+                Markup.button.callback('Exit', `exitVc`),
             ]
         ])
     })

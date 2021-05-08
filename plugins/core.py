@@ -40,44 +40,38 @@ from . import *
 async def inline_handler(event):
     builder = event.builder
     input_str = event.pattern_match.group(1)
-    plug = [*PLUGINS]
-    plugs = []
     if input_str is None or input_str == "":
-        for i in plug:
-            try:
-                plugs.append(
-                    await event.builder.document(
-                        f"./plugins/{i}.py",
-                        title=f"{i}.py",
-                        description=f"Module Found",
-                        text=f"{i}.py use .paste to paste in neko and raw..",
-                        buttons=[
-                            [
-                                Button.switch_inline(
-                                    "Search Again..?",
-                                    query="send ",
-                                    same_peer=True,
-                                ),
-                            ],
-                        ],
-                    ),
-                )
-            except BaseException:
-                pass
+        plugs = await event.builder.article(
+            title=f"Which plugin?",
+            text="No Module",
+            buttons=[
+                Button.switch_inline(
+                    "Search Again..?",
+                    query="send ",
+                    same_peer=True,
+                ),
+            ],
+        )
         await event.answer(plugs)
     else:
         try:
             ultroid = builder.document(
-                f"./plugins/{input_str}.py",
+                f"plugins/{input_str}.py",
                 title=f"{input_str}.py",
                 description=f"Module {input_str} Found",
-                text=f"{input_str}.py use .paste to paste in neko and raw..",
+                text=f"{input_str}.py use below button to paste in neko and raw..",
                 buttons=[
                     [
                         Button.switch_inline(
                             "Search Again..?",
                             query="send ",
                             same_peer=True,
+                        ),
+                    ],
+                    [
+                        Button.inline(
+                            "Paste?",
+                            data=f"pasta-plugins/{input_str}.py",
                         ),
                     ],
                 ],
@@ -107,6 +101,8 @@ async def inline_handler(event):
     pattern="install",
 )
 async def install(event):
+    if not is_fullsudo(event.sender_id):
+        return await eod(event, "`This Command Is Sudo Restricted.`")
     await safeinstall(event)
 
 

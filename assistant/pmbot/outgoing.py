@@ -14,7 +14,7 @@ from . import *
 # outgoing
 
 
-@asst.on(events.NewMessage(func=lambda e: e.is_private))
+@asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def on_out_mssg(event):
     x = await event.get_reply_message()
     if x is None:

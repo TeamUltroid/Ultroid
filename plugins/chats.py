@@ -9,7 +9,7 @@
 ✘ Commands Available -
 
 • `{i}delchat`
-	Delete the group this cmd is used in.
+    Delete the group this cmd is used in.
 
 • `{i}getlink`
     Get link of group this cmd is used in.
@@ -23,8 +23,12 @@
 
 
 from telethon.errors import ChatAdminRequiredError as no_admin
-from telethon.tl.functions.messages import DeleteChatUserRequest, CreateChatRequest, ExportChatInviteRequest
-from telethon.tl.functions.channels import DeleteChannelRequest
+from telethon.tl.functions.channels import CreateChannelRequest, DeleteChannelRequest
+from telethon.tl.functions.messages import (
+    CreateChatRequest,
+    DeleteChatUserRequest,
+    ExportChatInviteRequest,
+)
 
 from . import *
 
@@ -34,6 +38,8 @@ from . import *
     groups_only=True,
 )
 async def _(e):
+    if BOT_MODE:
+        return await eor(e, "You Cant Use This Command in BOT_MODE")
     xx = await eor(e, "`Processing...`")
     try:
         await e.client(DeleteChannelRequest(e.chat_id))
@@ -63,6 +69,8 @@ async def _(e):
     pattern="create (b|g|c)(?: |$)(.*)",
 )
 async def _(e):
+    if BOT_MODE:
+        return await eor(e, "You Cant use this Command in BOT_MODE")
     type_of_group = e.pattern_match.group(1)
     group_name = e.pattern_match.group(2)
     xx = await eor(e, "`Processing...`")

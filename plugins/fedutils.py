@@ -84,7 +84,7 @@ async def _(event):
         if str(FBAN) in DEVLIST:
             await msg.edit("You can't ban my dev you noob!!")
             return
-        elif FBAN.startswith("@"):
+        elif isinstance(FBAN, str):
             try:
                 x = await ultroid_bot(GetFullUserRequest(FBAN))
                 uid = x.user.id
@@ -187,7 +187,7 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{str(e)}")
     await msg.edit(
-        f"SuperFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
+        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
@@ -335,7 +335,7 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{str(e)}")
     await msg.edit(
-        f"SuperUnFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
+        f"SuperUnFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 

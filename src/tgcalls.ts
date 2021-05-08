@@ -54,10 +54,10 @@ interface CachedConnection {
 
 const ws = new WebSocket(env.WEBSOCKET_URL);
 const cache = new Map<number, CachedConnection>();
-
+var connection: TGCalls<{ chat: Chat.SupergroupChat; }>;
 const ffmpegOptions = "-preset ultrafast -c copy -acodec pcm_s16le -f s16le -ac 1 -ar 65000 pipe:1";
 
-ws.on('message', response => {
+ws.on('message', (response: any) => {
     const { _, data } = JSON.parse(response.toString());
 
     switch (_) {
@@ -68,9 +68,9 @@ ws.on('message', response => {
             }
             break;
         }
-        // case 'left_vc': {
-        //     break;
-        // }
+        case 'left_vc': {
+            break;
+        }
         default:
             break;
     }
@@ -116,9 +116,11 @@ export const getSongInfo = async (url: string): Promise<DownloadedSong['info']> 
         const ytdlChunks: string[] = [];
         const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `ytsearch:"${url}"`]);
 
-        ytdl.stderr.on('data', data => console.error(data.toString()));
+        ytdl.stderr.on('data', (data) => {
+            console.error(data.toString())
+        });
 
-        ytdl.stdout.on('data', data => {
+        ytdl.stdout.on('data', (data) => {
             ytdlChunks.push(data.toString());
         });
 
@@ -140,12 +142,16 @@ export const getSongInfo = async (url: string): Promise<DownloadedSong['info']> 
     });
 };
 
-const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
+export const closeConnection = async(): Promise<void> => {
+    connection.close();
+}
+
+const createConnection = async(chat: Chat.SupergroupChat): Promise<void> => {
     if (cache.has(chat.id)) {
         return;
     }
 
-    const connection = new TGCalls({ chat });
+    connection = new TGCalls({ chat });
     const stream = new Stream();
     const queue: {
         url: string,
@@ -164,7 +170,7 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
         leftVC: false
     };
 
-    connection.joinVoiceCall = payload => {
+    connection.joinVoiceCall = (payload: { source: number | undefined; ufrag: any; pwd: any; hash: any; setup: any; fingerprint: any; params: { chat: any; }; }) => {
         cachedConnection.source = payload.source;
         return new Promise(resolve => {
             cachedConnection.joinResolve = resolve;
@@ -208,7 +214,10 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
                     ...Markup.inlineKeyboard([
                         [
                             Markup.button.callback('Pause', `pause:${id}`),
-                            Markup.button.callback('Skip', `skip:${id}`)
+                            Markup.button.callback('Skip', `skip:${id}`),
+                        ],
+                        [
+                            Markup.button.callback('Exit', `exitVc`),
                         ]
                     ])
                 })
@@ -241,9 +250,16 @@ const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
 export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
         const { stream } = cache.get(chatId)!;
-        stream.emit('leave');
+        try {
+            stream.emit('leave');
+        } catch (error) {
+            console.log(error.toString());
+            stream.emit('leave');
+        }
+        process.exit(0);
+    } else {
+        return false;
     }
-    return false;
 }
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
@@ -300,7 +316,7 @@ export const getQueue = (chatId: number): Queue[] | null => {
         const { queue } = cache.get(chatId)!;
         return Array.from(queue);
     }
-    return null;
+    return [];
 };
 
 export const removeQueue = (chatId: number, id: number): boolean => {

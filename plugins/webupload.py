@@ -53,7 +53,7 @@ async def _(event):
             return await eod(xx, "`Reply to media file`", time=5)
     try:
         results = await ultroid_bot.inline_query(
-            Var.BOT_USERNAME,
+            asst.me.username,
             f"fl2lnk {file_name}",
         )
     except rep:

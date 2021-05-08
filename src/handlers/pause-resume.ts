@@ -43,6 +43,9 @@ export const pauseCBHandler = Composer.action(/^pause:[a-zA-Z0-9.\-_]+$/, checkE
                 [
                     Markup.button.callback('Resume', `pause:${id}`),
                     Markup.button.callback('Skip', `skip${id}`)
+                ],
+                [
+                    Markup.button.callback('Exit', `exitVc`),
                 ]
             ])
         });
@@ -57,6 +60,9 @@ export const pauseCBHandler = Composer.action(/^pause:[a-zA-Z0-9.\-_]+$/, checkE
                 [
                     Markup.button.callback('Pause', `pause:${id}`),
                     Markup.button.callback('Skip', `skip:${id}`)
+                ],
+                [
+                    Markup.button.callback('Exit', `exitVc`),
                 ]
             ])
         });

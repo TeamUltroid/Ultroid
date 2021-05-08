@@ -5,8 +5,10 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import os
+import re
+from os import execl, remove
 
+import requests
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
@@ -20,6 +22,109 @@ auth_url = r["auth_url"]
 
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
+
+
+@callback("updatenow")
+@owner
+async def update(eve):
+    repo = Repo()
+    ac_br = repo.active_branch
+    ups_rem = repo.remote("upstream")
+    if Var.HEROKU_API:
+        import heroku3
+
+        heroku = heroku3.from_key(Var.HEROKU_API)
+        heroku_app = None
+        heroku_applications = heroku.apps()
+        for app in heroku_applications:
+            if app.name == Var.HEROKU_APP_NAME:
+                heroku_app = app
+        if heroku_app is None:
+            await eve.edit("`Invalid Heroku credentials for updating userbot dyno.`")
+            repo.__del__()
+            return
+        await eve.edit(
+            "`Userbot dyno build in progress, please wait for it to complete.`"
+        )
+        ups_rem.fetch(ac_br)
+        repo.git.reset("--hard", "FETCH_HEAD")
+        heroku_git_url = heroku_app.git_url.replace(
+            "https://", "https://api:" + Var.HEROKU_API + "@"
+        )
+        if "heroku" in repo.remotes:
+            remote = repo.remote("heroku")
+            remote.set_url(heroku_git_url)
+        else:
+            remote = repo.create_remote("heroku", heroku_git_url)
+        try:
+            remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
+        except GitCommandError as error:
+            await eve.edit(f"`Here is the error log:\n{error}`")
+            repo.__del__()
+            return
+        await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
+    else:
+        try:
+            ups_rem.pull(ac_br)
+        except GitCommandError:
+            repo.git.reset("--hard", "FETCH_HEAD")
+        await updateme_requirements()
+        await eve.edit(
+            "`Successfully Updated!\nBot is restarting... Wait for a second!`"
+        )
+        execl(sys.executable, sys.executable, "-m", "pyUltroid")
+
+
+@callback("changes")
+@owner
+async def changes(okk):
+    repo = Repo.init()
+    ac_br = repo.active_branch
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog_str = changelog + f"\n\nClick the below button to update!"
+    tldr_str = tl_chnglog + f"\n\nClick the below button to update!"
+    if len(changelog_str) > 1024:
+        await okk.edit(get_string("upd_4"))
+        file = open(f"ultroid_updates.txt", "w+")
+        file.write(tldr_str)
+        file.close()
+        await okk.edit(
+            get_string("upd_5"),
+            file="ultroid_updates.txt",
+            buttons=Button.inline("Update Now", data="updatenow"),
+        )
+        remove(f"ultroid_updates.txt")
+        return
+    else:
+        await okk.edit(
+            changelog_str,
+            buttons=Button.inline("Update Now", data="updatenow"),
+            parse_mode="html",
+        )
+
+
+@callback(re.compile("pasta-(.*)"))
+@owner
+async def _(e):
+    ok = e.data_match.group(1)
+    hmm = open(ok)
+    hmmm = hmm.read()
+    hmm.close()
+    key = (
+        requests.post("https://nekobin.com/api/documents", json={"content": hmmm})
+        .json()
+        .get("result")
+        .get("key")
+    )
+    await e.edit(
+        f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
+        buttons=Button.switch_inline(
+            "Search Again..?",
+            query="send ",
+            same_peer=True,
+        ),
+        link_preview=False,
+    )
 
 
 @callback("authorise")
@@ -54,7 +159,7 @@ async def _(e):
         + "1. Open Google Drive App.\n"
         + "2. Create Folder.\n"
         + "3. Make that folder public.\n"
-        + "4. Copy link of that folder."
+        + "4. Copy link of that folder.\n"
         + "5. Send all characters which is after id= .",
     )
     async with ultroid_bot.asst.conversation(e.sender_id) as conv:
@@ -492,7 +597,7 @@ async def media(event):
             try:
                 x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
-                os.remove(media)
+                remove(media)
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
@@ -561,6 +666,11 @@ async def name(event):
                 buttons=get_back_button("pmcstm"),
             )
         else:
+            if len(themssg) > 4090:
+                return await conv.send_message(
+                    "Message too long!\nGive a shorter message please!!",
+                    buttons=get_back_button("pmcstm"),
+                )
             await setit(event, var, themssg)
             await conv.send_message(
                 "{} changed to {}\n\nAfter Setting All Things Do restart".format(
@@ -633,7 +743,7 @@ async def media(event):
             try:
                 x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
-                os.remove(media)
+                remove(media)
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
@@ -783,7 +893,7 @@ async def chbot(event):
         buttons=[
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏɴᴇ", data="bwel")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,

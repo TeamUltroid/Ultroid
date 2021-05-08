@@ -64,10 +64,13 @@ import pytz
 import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
-from telethon import functions
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import LeaveChannelRequest, InviteToChannelRequest
+from telethon.tl.functions.channels import (
+    GetAdminedPublicChannelsRequest,
+    InviteToChannelRequest,
+    LeaveChannelRequest,
+)
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
@@ -84,13 +87,8 @@ telegraph.create_account(short_name="Ultroid")
 # ================================================================#
 
 
-@ultroid_cmd(
-    pattern="kickme$",
-    groups_only=True,
-)
+@ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
 async def leave(ult):
-    if ult.sender_id != ultroid_bot.uid:
-        return
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
@@ -178,7 +176,9 @@ async def info(event):
     pattern="listreserved$",
 )
 async def _(event):
-    result = await ultroid_bot(functions.channels.GetAdminedPublicChannelsRequest())
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT MODE")
+    result = await ultroid_bot(GetAdminedPublicChannelsRequest())
     output_str = ""
     r = result.chats
     for channel_obj in r:
@@ -195,6 +195,8 @@ async def _(event):
 async def stats(
     event: NewMessage.Event,
 ) -> None:
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     ok = await eor(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
@@ -313,7 +315,7 @@ async def _(event):
     q = f"paste-{key}"
     reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     try:
-        ok = await ultroid_bot.inline_query(Var.BOT_USERNAME, q)
+        ok = await ultroid_bot.inline_query(asst.me.username, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException:
@@ -404,6 +406,8 @@ async def _(event):
     groups_only=True,
 )
 async def _(ult):
+    if BOT_MODE:
+        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     xx = await eor(ult, get_string("com_1"))
     to_add_users = ult.pattern_match.group(1)
     if not ult.is_channel and ult.is_group:

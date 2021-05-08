@@ -14,7 +14,6 @@ com_2: "`Searching...`"
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
-help_4: "Hey, \nYou are on Bot Mode. \nBot Mode Users Cant Get Help Directly ... \nInstead Copy Paste The Following in The Chat and Click The Pop Up \n\n `@{} ultd`"
 
 # autopic
 autopic_1: "Heya Give me some Text .."
@@ -31,7 +30,7 @@ Aᴅᴅᴏɴs ~ {}**"
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
 **Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
 Aᴅᴅᴏɴs ~ {}\n\n
-Gᴏ Aɴᴅ Aᴅᴅ `ADDONS` Vᴀʀ Wɪᴛʜ Vᴀʟᴜᴇ Tʀᴜᴇ**"
+Dᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 
@@ -75,16 +74,19 @@ alive_1: "**The Ultroid Userbot...**\n\n
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n
- -> `Dyno usage for`  **{}**:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
- -> `Dyno hours quota remaining this month`:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
-**Total Disk Space: {}\n\n**
-**Used: {}  Free: {}\n\n**
-**📊Data Usage📊\n\nUpload: {}\nDown: {}\n\n**
-**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+-> **Dyno usage for** `{}`:\n
+  •  **{}h**  **{}m** |** `[{}%]`\n
+-> **Dyno hours quota remaining this month**:\n
+  •  **{}h**  **{}m |** `[{}%]`\n\n
+**Total Disk Space**: `{}`\n
+**Used**: `{}`\n
+**Free**: `{}`\n\n
+**📊 Data Usage 📊\n
+**Upload**: `{}`\n
+**Down**: `{}`\n\n
+**CPU**: `{}%`\n
+**RAM**: `{}%`\n
+**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
 
 # broadcast
@@ -176,8 +178,8 @@ upd_1: "`Checking for updates, please wait....`"
 upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
 upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
 upd_4: "`Changelog is too big, view the file to see it.`"
-upd_5: "Use `{}update now` to update."
-upd_6: "{}\n\nUse `{}update now` to update."
+upd_5: "Click the below button to update."
+upd_6: "Click the below button to update."
 upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
 
 # upload download

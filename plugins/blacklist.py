@@ -21,10 +21,8 @@
   'And u Must be Admin in that Chat'
 """
 
-import re
 
 from pyUltroid.functions.blacklist_db import *
-from telethon.tl.types import ChannelParticipantsAdmins
 
 from . import *
 
@@ -34,12 +32,14 @@ async def af(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You are Not Admin Here`")
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
         return await eod(e, "`Give the word to blacklist..`")
-    wrd = e.text[10:]
-    add_blacklist(int(chat), wrd)
+    wrd = e.text[11:]
+    heh = wrd.split(" ")
+    for z in heh:
+        add_blacklist(int(chat), z.lower())
     await eor(e, f"Done : `{wrd}` Blacklisted here.")
 
 
@@ -48,11 +48,14 @@ async def rf(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You are Not Admin Here`")
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
         return await eod(e, "`Give the word to remove from blacklist..`")
-    rem_blacklist(int(chat), wrd)
+    wrd = e.text[14:]
+    heh = wrd.split(" ")
+    for z in heh:
+        rem_blacklist(int(chat), z.lower())
     await eor(e, f"Done : `{wrd}` Removed from Blacklist.")
 
 
@@ -73,29 +76,13 @@ async def lsnote(e):
 async def bl(e):
     chat = e.chat_id
     x = get_blacklist(int(chat))
-    xx = (e.text).lower()
-    if x and xx:
-        if " " in xx:
-            xx = xx.split(" ")
-            kk = ""
-            for c in xx:
-                kk = re.search(str(c), str(x), flags=re.IGNORECASE)
-            if kk:
-                async for l in ultroid_bot.iter_participants(
-                    e.chat_id, filter=ChannelParticipantsAdmins
-                ):
-                    if l.id == e.sender_id:
-                        return
+    if x and e.text:
+        xx = ((e.text).lower()).split()
+        yy = x.split("$|")
+        for z in xx:
+            if z in yy:
                 await e.delete()
-        else:
-            k = re.search(xx, x, flags=re.IGNORECASE)
-            if k:
-                async for l in ultroid_bot.iter_participants(
-                    e.chat_id, filter=ChannelParticipantsAdmins
-                ):
-                    if l.id == e.sender_id:
-                        return
-                await e.delete()
+                break
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -22,10 +22,6 @@
             "description": "You api hash, from my.telegram.org or @ScrapperRoBot.",
             "value": ""
         },
-        "BOT_USERNAME": {
-            "description": "Make a bot from @BotFather, and enter it's username here, with '@'",
-            "value": ""
-        },
         "BOT_TOKEN": {
             "description": "Make a bot from @BotFather, and enter it's api token here.",
             "value": ""
@@ -55,6 +51,16 @@
         "LOG_CHANNEL": {
             "description": "Create a private group. Add @missrose_bot and your BOT_USERNAME bot. Do /id. Paste that here",
             "value": ""
+        }
+    },
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        },
+        "web": {
+            "quantity": 0,
+            "size": "free"
         }
     }
 }

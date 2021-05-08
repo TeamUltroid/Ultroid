@@ -14,8 +14,6 @@ import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
-from rextester_py import rexec_aio
-from rextester_py.rextester_aio import UnknownLanguage
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
@@ -28,14 +26,6 @@ gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
-rex_langs = """ada, bash, brainfuck, c (clang), c, c (vc),
-c#, c++ (clang), c++, c++ (vc++), d, elixir,
-erlang, f#, fortran, go, haskell, java, js,
-kotlin, lisp, lua, mysql, nasm, node,
-objective-c, ocaml, octave, oracle, pascal,
-perl, php, postgresql, prolog, python,
-python3, r, ruby, scala, scheme, sql server,
-swift, tcl, vb.net"""
 
 ofox_api = OrangeFoxAPI()
 
@@ -156,6 +146,11 @@ async def repo(e):
             text="• **ULTROID USERBOT** •",
             buttons=[
                 [Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid")],
+                [
+                    Button.url(
+                        "Addons", url="https://github.com/TeamUltroid/UltroidAddons"
+                    )
+                ],
                 [Button.url("Support", url="t.me/UltroidSupport")],
             ],
         ),

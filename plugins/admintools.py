@@ -312,13 +312,20 @@ async def unp(ult):
 
 
 @ultroid_cmd(
-    pattern="purge$",
+    pattern="purge ?(.*)",
 )
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
+    match = purg.pattern_match.group(1)
+    if match and purg.text[6] == " ":
+        p = 0
+        async for msg in ultroid_bot.iter_messages(purg.chat_id, limit=int(match)):
+            await msg.delete()
+            p += 0
+        return await eod(purg, f"Purged {p} Messages! ")
     msgs = []
     count = 0
-    if not purg.reply_to_msg_id:
+    if not (purg.reply_to_msg_id or match):
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in ultroid_bot.iter_messages(chat, min_id=purg.reply_to_msg_id):
         msgs.append(msg)
@@ -343,14 +350,33 @@ async def fastpurger(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeme$",
+    pattern="purgeme ?(.*)",
 )
 async def fastpurgerme(purg):
+    num = purg.pattern_match.group(1)
+    if num and not purg.is_reply:
+        try:
+            nnt = int(num)
+        except BaseException:
+            await eod(purg, "`Give a Valid Input.. `")
+            return
+        mp = 0
+        async for mm in ultroid_bot.iter_messages(
+            purg.chat_id, limit=nnt, from_user="me"
+        ):
+            await mm.delete()
+            mp += 1
+        await eod(purg, f"Purged {mp} Messages!")
+        return
     chat = await purg.get_input_chat()
     msgs = []
     count = 0
-    if not purg.reply_to_msg_id:
-        return await eod(purg, "`Reply to a message to purge from.`", time=10)
+    if not (purg.reply_to_msg_id or num):
+        return await eod(
+            purg,
+            "`Reply to a message to purge from or use it like ``purgeme <num>`",
+            time=10,
+        )
     async for msg in ultroid_bot.iter_messages(
         chat,
         from_user="me",

@@ -17,7 +17,7 @@ from . import *
 # if incoming
 
 
-@asst.on(events.NewMessage(func=lambda e: e.is_private))
+@asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def on_new_mssg(event):
     incoming = event.raw_text
     who = event.sender_id

@@ -14,10 +14,9 @@ from telethon.tl.functions.phone import (
 )
 from telethon.tl.types import DataJSON
 
-bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
+if vcbot is not None:
 
-
-if vcbot:
+    bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
 
     async def get_entity(chat):
         try:
@@ -31,9 +30,9 @@ if vcbot:
         try:
             chat = await get_entity(data["chat"])
         except ValueError:
-            stree = (await vcbot.get_me()).first_name
+            name = (await vcbot.get_me()).first_name
             return await bot.send_message(
-                data["chat"]["id"], f"`Please add {stree} in this group.`"
+                data["chat"]["id"], f"Please add `{name}`` in this group."
             )
         except Exception as ex:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
@@ -102,45 +101,39 @@ if vcbot:
             },
         }
 
-        async def leave_vc(data):
-            await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
-            try:
-                await get_entity(data["chat"]["id"])
-            except Exception as ex:
-                return await bot.send_message(
-                    data["chat"]["id"], "Exception in Get_Entity : `" + str(ex) + "`"
-                )
-            try:
-                full_chat = await vcbot(GetFullChannelRequest(chat))
-            except Exception as ex:
-                return await bot.send_message(
+    async def leave_call(data):
+        try:
+            full_chat = await vcbot(
+                GetFullChannelRequest(
                     data["chat"]["id"],
-                    "Exception in GetFullChannelRequest `" + str(ex) + "`",
                 )
-            try:
-                call = full_chat.full_chat.call
-            # call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
-            except BaseException:
-                call = None
-
-            try:
-                result = await vcbot(
-                    LeaveGroupCallRequest(
-                        call=call,
-                        source=data["source"],
-                    ),
-                )
-                await bot.send_message(
-                    Var.LOG_CHANNEL,
-                    f"`Left Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
-                )
-            except Exception as ex:
-                return await bot.send_message(
-                    data["chat"]["id"],
-                    "Exception in LeaveGRoupCallRequest: `" + str(ex) + "`",
-                )
-
-            return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
+            )
+        except Exception as ex:
+            return await bot.send_message(
+                data["chat"]["id"],
+                "Exception in GetFullChannelRequest ```" + str(ex) + "```",
+            )
+        try:
+            call = full_chat.full_chat.call
+        except BaseException:
+            call = None
+        try:
+            await vcbot(
+                LeaveGroupCallRequest(
+                    call=call,
+                    source=data["source"],
+                ),
+            )
+            await bot.send_message(
+                Var.LOG_CHANNEL,
+                f"Left Voice Chat in `{data['chat']['title']}`",
+            )
+        except Exception as ex:
+            return await bot.send_message(
+                data["chat"]["id"],
+                "Exception in LeaveGroupCallRequest: `" + str(ex) + "`",
+            )
+        return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
 
     async def websocket_handler(request):
         ws = web.WebSocketResponse()
@@ -158,8 +151,16 @@ if vcbot:
                 if data["_"] == "join":
                     response = await join_call(data["data"])
 
-                #                if data["_"] == "leave":
-                #                    response = await leave_vc(data["data"])
+                if data["_"] == "leave":
+                    await bot.send_message(
+                        Var.LOG_CHANNEL,
+                        f"Received **Leave Request** In `{data['data']['chat']['title']}`",
+                    )
+                    await bot.send_message(
+                        data["data"]["chat"]["id"],
+                        f"Received **Leave Request** In `{data['data']['chat']['title']}`",
+                    )
+                    response = await leave_call(data["data"])
 
                 if response is not None:
                     await ws.send_json(response)

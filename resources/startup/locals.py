@@ -88,7 +88,7 @@ def start():
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
-    os.system("pip3 install -r ./resources/extras/local-requirements.txt")
+    os.system("pip3 install -r resources/extras/local-requirements.txt")
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")

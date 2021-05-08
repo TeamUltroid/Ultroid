@@ -10,7 +10,7 @@ import re
 import time
 from datetime import datetime
 from math import ceil
-from platform import python_version as pyver
+from platform import python_version as PyVer
 
 from git import Repo
 from pyUltroid import __version__ as UltVer
@@ -26,14 +26,14 @@ ULTROID_PIC = "https://telegra.ph/file/031957757a4f6a5191040.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
-if add_ons:
+if add_ons == "True" or add_ons is None:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
 # ============================================#
 
 
-@inline
+@in_pattern("")
 @in_owner
 async def e(o):
     if len(o.text) == 0:
@@ -46,7 +46,7 @@ async def e(o):
             ultroid_version,
             UltVer,
             uptime,
-            pyver(),
+            PyVer(),
             __version__,
             Repo().active_branch,
         )
@@ -71,7 +71,7 @@ async def e(o):
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
 
-if Var.BOT_USERNAME is not None and asst is not None:
+if asst.me is not None:
 
     @inline
     @in_owner
@@ -85,11 +85,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            bn = Var.BOT_USERNAME
-            if bn.startswith("@"):
-                bnn = bn.replace("@", "")
-            else:
-                bnn = bn
+            bnn = asst.me.username
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
@@ -136,8 +132,6 @@ if Var.BOT_USERNAME is not None and asst is not None:
             )
             await event.answer([result] if result else None)
 
-    @inline
-    @in_owner
     @callback("ownr")
     @owner
     async def setting(event):
@@ -210,19 +204,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
             ],
             [
                 Button.switch_inline(
-                    "Rᴇx Tᴇsᴛᴇʀ",
-                    query="rex",
-                    same_peer=True,
-                ),
-                Button.switch_inline(
                     "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
                     query="clipart frog",
                     same_peer=True,
                 ),
-            ],
-            [
                 Button.switch_inline(
-                    "OʀᴀɴɢᴇFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ",
+                    "OʀᴀɴɢᴇFᴏx🦊",
                     query="ofox beryllium",
                     same_peer=True,
                 ),
@@ -325,11 +312,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
     @callback("open")
     @owner
     async def opner(event):
-        bn = Var.BOT_USERNAME
-        if bn.startswith("@"):
-            bnn = bn.replace("@", "")
-        else:
-            bnn = bn
+        bnn = asst.me.username
         buttons = [
             [
                 Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),

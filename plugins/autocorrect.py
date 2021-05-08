@@ -24,12 +24,14 @@ tr = Translator()
 
 @ultroid_cmd(pattern="autocorrect")
 async def acc(e):
+    if not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
-        await eor(e, "AUTOCORRECT Feature On")
+        await eod(e, "AUTOCORRECT Feature On")
     else:
         udB.delete("AUTOCORRECT")
-        await eor(e, "AUTOCORRECT Feature Off")
+        await eof(e, "AUTOCORRECT Feature Off")
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
@@ -47,7 +49,10 @@ async def gramme(event):
     xx = GingerIt()
     x = xx.parse(t)
     res = x["result"]
-    await event.edit(res)
+    try:
+        await event.edit(res)
+    except BaseException:
+        pass
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

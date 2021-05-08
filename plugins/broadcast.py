@@ -207,37 +207,12 @@ async def sending(event):
     await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        if previous_message.sticker or previous_message.poll:
-            await x.edit(f"Reply `{hndlr}forward` for stickers and polls.")
-            return
-        if (
-            previous_message.gif
-            or previous_message.audio
-            or previous_message.voice
-            or previous_message.video
-            or previous_message.video_note
-            or previous_message.contact
-            or previous_message.game
-            or previous_message.geo
-            or previous_message.invoice
-        ):
-            await x.edit(f"Not supported. Try `{hndlr}forward`")
-            return
-        if not previous_message.web_preview and previous_message.photo:
-            file = await ultroid_bot.download_file(previous_message.media)
-            uploaded_doc = await ultroid_bot.upload_file(file, file_name="img.png")
-            raw_text = previous_message.text
+        if previous_message.poll:
+            return await x.edit(f"Reply `{hndlr}forward` for polls.")
+        if previous_message:
             for channel in channels:
                 try:
-                    if previous_message.photo:
-                        await ultroid_bot.send_file(
-                            int(channel),
-                            InputMediaUploadedPhoto(file=uploaded_doc),
-                            force_document=False,
-                            caption=raw_text,
-                            link_preview=False,
-                        )
-
+                    await ultroid_bot.send_message(int(channel), previous_message)
                     sent_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -246,19 +221,8 @@ async def sending(event):
                     try:
                         await ultroid_bot.send_message(
                             Var.LOG_CHANNEL,
-                            f"Error in sending at {channel}.",
+                            f"Error in sending at {channel}.\n\n{error}",
                         )
-                        await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL,
-                            "Error! " + str(error),
-                        )
-                        if (
-                            error
-                            == "The message cannot be empty unless a file is provided"
-                        ):
-                            return await x.edit(
-                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in.",
-                            )
                     except BaseException:
                         pass
                     error_count += 1
@@ -274,51 +238,6 @@ async def sending(event):
                     )
                 except BaseException:
                     pass
-        else:
-            raw_text = previous_message.text
-            for channel in channels:
-                try:
-                    await ultroid_bot.send_message(
-                        int(channel),
-                        raw_text,
-                        link_preview=False,
-                    )
-                    sent_count += 1
-                    await x.edit(
-                        f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
-                    )
-                except Exception as error:
-                    try:
-                        await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL,
-                            f"Error in sending at {channel}.",
-                        )
-                        await ultroid_bot.send_message(
-                            Var.LOG_CHANNEL,
-                            "Error! " + str(error),
-                        )
-                        if (
-                            error
-                            == "The message cannot be empty unless a file is provided"
-                        ):
-                            return await x.edit(
-                                f"For sending files, upload in Saved Messages and reply {hndlr}forward to in.",
-                            )
-                    except BaseException:
-                        pass
-                    error_count += 1
-                    await x.edit(
-                        f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
-                    )
-            await x.edit(f"{sent_count} messages sent with {error_count} errors.")
-            if error_count > 0:
-                try:
-                    await ultroid_bot.send_message(
-                        Var.LOG_CHANNEL,
-                        f"{error_count} Errors",
-                    )
-                except BaseException:
-                    await x.edit("Set up log channel for checking errors.")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

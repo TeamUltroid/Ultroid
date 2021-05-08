@@ -9,6 +9,7 @@ google-api-python-client==1.7.11
 googletrans==3.1.0a0
 heroku3
 httplib2==0.13.1
+html-telegraph-poster
 lottie
 moviepy
 numpy

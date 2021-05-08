@@ -28,7 +28,6 @@
 """
 
 
-import asyncio
 import os
 import time
 from datetime import datetime
@@ -43,7 +42,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 )
 async def files(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eod(event, get_string("gdrive_6").format(Var.BOT_USERNAME))
+        return await eod(event, get_string("gdrive_6").format(asst.me.username))
     http = authorize(TOKEN_FILE, None)
     await eor(event, list_files(http))
 
@@ -54,7 +53,7 @@ async def files(event):
 async def _(event):
     mone = await eor(event, get_string("com_1"))
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, get_string("gdrive_6").format(Var.BOT_USERNAME))
+        return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     required_file_name = None
     start = datetime.now()
@@ -62,26 +61,25 @@ async def _(event):
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         try:
-            downloaded_file_name = await event.client.download_media(
-                reply_message,
-                "resources/downloads",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        mone,
-                        dddd,
-                        "Downloading...",
-                    ),
-                ),
+            downloaded_file_name = await downloader(
+                "resources/downloads/" + reply_message.file.name,
+                reply_message.media.document,
+                mone,
+                dddd,
+                "Downloading...",
+            )
+            filename = downloaded_file_name.name
+        except TypeError:
+            filename = await event.client.download_media(
+                "resources/downloads", reply_message.media
             )
         except Exception as e:
             return await eod(mone, str(e), time=10)
         end = datetime.now()
         ms = (end - start).seconds
-        required_file_name = downloaded_file_name
+        required_file_name = filename
         await mone.edit(
-            f"Downloaded to `{downloaded_file_name}` in {ms} seconds.",
+            f"Downloaded to `{filename}` in {ms} seconds.",
         )
     elif input_str:
         input_str = input_str.strip()
@@ -120,7 +118,7 @@ async def _(event):
 )
 async def sch(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eod(event, get_string("gdrive_6").format(Var.BOT_USERNAME))
+        return await eod(event, get_string("gdrive_6").format(asst.me.username))
     http = authorize(TOKEN_FILE, None)
     input_str = event.pattern_match.group(1).strip()
     a = await eor(event, f"Searching for {input_str} in G-Drive.")
@@ -143,7 +141,7 @@ async def sch(event):
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eod(mone, get_string("gdrive_6").format(Var.BOT_USERNAME))
+        return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     if os.path.isdir(input_str):
         http = authorize(TOKEN_FILE, None)

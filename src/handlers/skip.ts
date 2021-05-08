@@ -10,6 +10,7 @@
 import { Composer } from 'telegraf';
 import { skip } from '../tgcalls';
 import checkExpired from '../middlewares/checkExpired';
+import { leaveVc } from '../tgcalls';
 
 export const skipCBHandler = Composer.action(/^skip:[a-zA-Z0-9.\-_]+$/, checkExpired, async ctx => {
     const chat = ctx.callbackQuery.message?.chat;
@@ -31,6 +32,7 @@ export const skipCBHandler = Composer.action(/^skip:[a-zA-Z0-9.\-_]+$/, checkExp
     } else {
         await ctx.answerCbQuery("There's no song playing..");
         setTimeout(async () => await ctx.deleteMessage(), 1000);
+        leaveVc(chat.id);
     }
 })
 
@@ -43,4 +45,8 @@ export const skipCommand = Composer.command('skip', async ctx => {
 
     const skipped = skip(chat.id);
     ctx.reply(skipped ? 'Skipped.' : "There's no song playing.");
+
+    if (!skipped) {
+        leaveVc(chat.id);
+    }
 })

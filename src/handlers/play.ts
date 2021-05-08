@@ -18,16 +18,14 @@ export const playHandler = Composer.command('play', async ctx => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {
-        await ctx.reply('I can only play in groups.');
-        return;
+        return await ctx.reply('I can only play in groups.');
     }
 
-    const [commandEntity] = ctx.message.entities!;
+    const [ commandEntity ] = ctx.message.entities!;
     const text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
 
     if (!text) {
-        await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
-        return;
+        return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
     }
 
     const index = await addToQueue(chat, text, {
@@ -52,6 +50,9 @@ export const playHandler = Composer.command('play', async ctx => {
                         [
                             Markup.button.callback('Pause', `pause:${id}`),
                             Markup.button.callback('Skip', `skip:${id}`)
+                        ],
+                        [
+                            Markup.button.callback('Exit', `exitVc`),
                         ]
                     ])
                 })
@@ -66,9 +67,6 @@ export const playHandler = Composer.command('play', async ctx => {
                     `<b>At position ${index}.</b>\n` +
                     `<b>Requested By :</b> <a href="tg://user?id=${from.id}">${from.f_name}</a>`, {
                     disable_web_page_preview: true,
-                    // ...Markup.inlineKeyboard([
-                    //     [Markup.button.callback('Delete from Queue', `delq:${queueId}`)]
-                    // ])
                 });
             } else {
                 await log("Queue not found in " + chat.title)

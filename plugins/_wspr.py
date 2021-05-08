@@ -42,7 +42,7 @@ async def _(e):
         put = e.pattern_match.group(1)
     if put:
         try:
-            results = await ultroid_bot.inline_query(Var.BOT_USERNAME, f"msg {put}")
+            results = await ultroid_bot.inline_query(asst.me.username, f"msg {put}")
         except rep:
             return await eor(
                 e,

@@ -12,6 +12,7 @@
     For doing google search.
 
 • `{i}img <query>`
+  `{i}img <query> ; <no of results>`
     For doing Images search.
 
 • `{i}reverse <query>`
@@ -25,6 +26,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from search_engine_parser import GoogleSearch
+from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
 
 from strings import get_string
 
@@ -38,7 +40,10 @@ async def google(event):
         return await event.edit("`Give something to search..`")
     x = await eor(event, get_string("com_2"))
     gs = GoogleSearch()
-    res = await gs.async_search(f"{inp}", cache=False)
+    try:
+        res = await gs.async_search(f"{inp}", cache=False)
+    except GoglError as e:
+        return await eor(event, str(e))
     out = ""
     for i in range(len(res["links"])):
         text = res["titles"][i]
@@ -64,6 +69,7 @@ async def goimg(event):
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
+            query = query.split(";")[0]
         except BaseExceptaion:
             lmt = 5
     else:
