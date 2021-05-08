@@ -77,7 +77,7 @@ async def goimg(event):
     }
     pth = gi.download(args)
     ok = pth[0][query]
-    await event.client.send_file(event.chat_id, ok, caption=query, album=True)
+    await event.client.send_file(event.chat_id, ok, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 

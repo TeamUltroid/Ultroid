@@ -21,7 +21,7 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from . import HELP, get_string, ultroid_version
 
-UPSTREAM_REPO_URL = "https://github.com/TeamUltroid/Ultroid"
+UPSTREAM_REPO_URL = "https://github.com/RYNO-X/RYNO"
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))),
     "requirements.txt",
@@ -31,8 +31,8 @@ requirements_path = path.join(
 async def gen_chlog(repo, diff):
     ac_br = repo.active_branch.name
     ch_log = tldr_log = ""
-    ch = f"<b>Ultroid {ultroid_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
-    ch_tl = f"Ultroid {ultroid_version} updates for {ac_br}:"
+    ch = f"<b>RYNO {ultroid_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
+    ch_tl = f"RYNO {ultroid_version} updates for {ac_br}:"
     d_form = "%d/%m/%y || %H:%M"
     for c in repo.iter_commits(diff):
         ch_log += f"\n\n💬 <b>{c.count()}</b> 🗓 <b>[{c.committed_datetime.strftime(d_form)}]</b>\n<b><a href={UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}>[{c.summary}]</a></b> 👨‍💻 <code>{c.author}</code>"
@@ -86,9 +86,9 @@ async def upstream(ups):
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
-        repo.create_head("dev", origin.refs.dev)
-        repo.heads.dev.set_tracking_branch(origin.refs.dev)
-        repo.heads.dev.checkout(True)
+        repo.create_head("main", origin.refs.main)
+        repo.heads.main.set_tracking_branch(origin.refs.main)
+        repo.heads.main.checkout(True)
     ac_br = repo.active_branch.name
     try:
         repo.create_remote("upstream", off_repo)
@@ -115,7 +115,6 @@ async def upstream(ups):
                     reply_to=ups.id,
                 )
                 remove(f"ultroid_updates.txt")
-                return
             else:
                 return await eod(pagal, changelog_str, parse_mode="html")
         else:
@@ -186,7 +185,7 @@ async def upstream(ups):
             "`Successfully Updated!\nBot is restarting... Wait for a second!`",
         )
         # Spin a new instance of bot
-        execl(sys.executable, sys.executable, "-m", "pyUltroid")
+        execl(sys.executable, sys.executable, "-m", "pyRYNO")
         return
 
 

@@ -1,31 +1,17 @@
-# Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
-
 • `{i}gban <reply user/ username>`
     Globally Ban User.
-
 • `{i}ungban <reply user/ username>`
     Unban Globally.
-
 • `{i}gmute <reply user/ username>`
     Globally Mute the User.
-
 • `{i}ungmute <reply user/ username>`
     UnMute Globally.
-
 • `{i}gkick <reply user/ username>`
     Globally Kick User.
-
 • `{i}gcast <Message>`
     Globally Send that msg in all grps.
-
 • `{i}gucast <Message>`
     Globally Send that msg in all Ur Chat Users.
 """

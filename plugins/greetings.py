@@ -15,7 +15,7 @@
 • `{i}clearwelcome`
     Delete the welcome in the current chat.
 
-• `{i}getwelcome`
+• `{i}getwelcome` 
     Get the welcome message in the current chat.
 
 ---- GoodByes ----
@@ -25,18 +25,19 @@
 • `{i}cleargoodbye`
     Delete the goodbye in the current chat.
 
-• `{i}getgoodbye`
+• `{i}getgoodbye` 
     Get the goodbye message in the current chat.
 
 """
+Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
+
+
 import os
 
 from telegraph import upload_file as uf
 from telethon.utils import get_display_name, pack_bot_file_id
 
 from . import *
-
-Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
 
 @ultroid_cmd(pattern="setwelcome")
@@ -67,7 +68,7 @@ async def setwel(event):
         else:
             add_welcome(event.chat_id, None, m)
         await eor(x, "`Welcome note saved`")
-    elif r and r.text:
+    elif r.text:
         add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
@@ -118,21 +119,18 @@ async def _(event):
             msgg = wel["welcome"]
             med = wel["media"]
             userid = user.id
-            if msgg:
-                await event.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
-                await event.reply(file=med)
+            await event.reply(
+                msgg.format(
+                    mention=mention,
+                    group=title,
+                    count=count,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                ),
+                file=med,
+            )
 
 
 @ultroid_cmd(pattern="setgoodbye")
@@ -163,7 +161,7 @@ async def setgb(event):
         else:
             add_goodbye(event.chat_id, None, m)
         await eor(x, "`Goodbye note saved`")
-    elif r and r.text:
+    elif r.text:
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goddbye note saved`")
     else:
@@ -214,21 +212,18 @@ async def _(event):
             msgg = wel["goodbye"]
             med = wel["media"]
             userid = user.id
-            if msgg:
-                await event.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
-                await event.reply(file=med)
+            await event.reply(
+                msgg.format(
+                    mention=mention,
+                    group=title,
+                    count=count,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                ),
+                file=med,
+            )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})

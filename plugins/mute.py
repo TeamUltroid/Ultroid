@@ -1,25 +1,13 @@
-# Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
-
 • `{i}mute <reply to msg/ user id>`
     Mute user in current chat.
-
 • `{i}unmute <reply to msg/ user id>`
     Unmute user in current chat.
-
 • `{i}dmute <reply to msg/ user id>`
     Mute user in current chat by deleting msgs.
-
 • `{i}undmute <reply to msg/ use id>`
     Unmute dmuted user in current chat.
-
 • `{i}tmute <time> <reply to msg/ use id>`
     time - m- minutes
            h- hours
@@ -28,8 +16,8 @@
 """
 
 
-from pyUltroid.functions.all import ban_time
-from pyUltroid.functions.mute_db import is_muted, mute, unmute
+from pyRYNO.functions.all import ban_time
+from pyRYNO.functions.mute_db import is_muted, mute, unmute
 from telethon import events
 
 from . import *

@@ -13,7 +13,7 @@ from math import ceil
 from platform import python_version as pyver
 
 from git import Repo
-from pyUltroid import __version__ as UltVer
+from pyRYNO import __version__ as UltVer
 from support import *
 from telethon import Button, __version__
 from telethon.tl.types import InputWebDocument
@@ -22,7 +22,7 @@ from . import *
 
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
-ULTROID_PIC = "https://telegra.ph/file/031957757a4f6a5191040.jpg"
+ULTROID_PIC = "https://telegra.ph/file/d16ced174be071190818b.png"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
@@ -52,23 +52,23 @@ async def e(o):
         )
         res = [
             await b.article(
-                title="Ultroid Userbot",
-                url="https://t.me/TeamUltroid",
+                title="RYNO Userbot",
+                url="https://t.me/OFFICIALRYNO",
                 description="Userbot | Telethon ",
                 text=ALIVEMSG,
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
                 buttons=[
-                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
+                    [Button.url(text="Support Group", url="t.me/OFFICIALRYNO")],
                     [
                         Button.url(
                             text="Repo",
-                            url="https://github.com/Teamultroid/Ultroid",
+                            url="https://github.com/RYNO-X/RYNO",
                         ),
                     ],
                 ],
             ),
         ]
-        await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+        await o.answer(res, switch_pm=f"👥 RYNO PORTAL", switch_pm_param="start")
 
 
 if Var.BOT_USERNAME is not None and asst is not None:
@@ -93,7 +93,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             result = builder.article(
                 title="Help Menu",
                 description="Help Menu - UserBot | Telethon ",
-                url="https://t.me/TheUltroid",
+                url="https://t.me/OFFICIALRYNO",
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
                 text=get_string("inline_4").format(
                     OWNER_NAME,
@@ -192,12 +192,12 @@ if Var.BOT_USERNAME is not None and asst is not None:
             [
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
-                    query="go TeamUltroid",
+                    query="go OFFICIALRYNO",
                     same_peer=True,
                 ),
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
-                    query="yahoo TeamUltroid",
+                    query="yahoo OFFICIALRYNO",
                     same_peer=True,
                 ),
             ],
@@ -389,7 +389,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = f"{plugin_name} has no detailed help..."
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TeamUltroid"
+        reply_pop_up_alert += "\n© @OFFICIALRYNO"
         try:
             if event.query.user_id in sed:
                 await event.edit(
@@ -440,7 +440,7 @@ if Var.BOT_USERNAME is not None and asst is not None:
             reply_pop_up_alert = f"{plugin_name} has no detailed help..."
         else:
             reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TeamUltroid"
+        reply_pop_up_alert += "\n© @OFFICIALRYNO"
         try:
             if event.query.user_id in sed:
                 await event.edit(

@@ -23,7 +23,7 @@
 """
 import os
 
-from pyUltroid.functions.notes_db import *
+from pyRYNO.functions.notes_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
@@ -35,13 +35,17 @@ async def an(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You Are Not Admin Here.", time=5)
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
         return await eod(e, "`Use this Command with Reply and word to use a note.`")
     if "#" in wrd:
         wrd = wrd.replace("#", "")
+    try:
+        rem_note(int(chat), wrd)
+    except:
+        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -73,7 +77,7 @@ async def rn(e):
     if e.is_group:
         if not e._chat.admin_rights:
             return await eod(e, "`You Are Not Admin Here.", time=5)
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
         return await eod(e, "`Give me the note handler which you want to remove.`")
@@ -98,10 +102,13 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
+    if e.is_group:
+        if not e._chat.admin_rights:
+            return
     xx = e.text
     if not xx.startswith("#"):
         return
-    xx = (xx.replace("#", "")).lower()
+    xx = xx.replace("#", "")
     chat = e.chat_id
     x = get_notes(int(chat))
     if x:

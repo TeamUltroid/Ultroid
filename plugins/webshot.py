@@ -43,7 +43,7 @@ async def webss(event):
     ok = requests.get(lnk).json()
     try:
         sshot = ok["screenshot"]
-    except BaseException:
+    except:
         return await eod(xx, "Something Went Wrong :(", time=10)
     await xx.reply(
         f"**WebShot Generated**\n**URL**: {xurl}",

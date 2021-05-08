@@ -38,7 +38,7 @@
 
 import asyncio
 
-from pyUltroid.functions.ch_db import *
+from pyRYNO.functions.ch_db import *
 
 from . import *
 
@@ -88,9 +88,9 @@ async def _(e):
             return
     async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
         try:
-            await asyncio.sleep(0.7)
+            await asyncio.sleep(0.5)
             await ultroid_bot.send_message(int(d), msg)
-        except BaseException:
+        except:
             pass
     await z.edit("Done")
 
@@ -158,7 +158,7 @@ async def list_all(event):
         name = ""
         try:
             name = (await ultroid.get_entity(int(channel))).title
-        except BaseException:
+        except:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
     msg += f"\nTotal {get_no_source_channels()} channels."
@@ -242,7 +242,7 @@ async def list_all(event):
         name = ""
         try:
             name = (await ultroid.get_entity(int(channel))).title
-        except BaseException:
+        except:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
     msg += f"\nTotal {get_no_destinations()} channels."

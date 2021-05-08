@@ -33,7 +33,8 @@
 
 """
 
-from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
+from pyRYNO.functions.vc_sudos import (add_vcsudo, del_vcsudo, get_vcsudos,
+                                          is_vcsudo)
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -71,11 +72,8 @@ async def _(e):
     pattern="playvc$",
 )
 async def _(e):
-    zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("npm start")
-    LOGS.warning(er)
-    LOGS.info(out)
-    await zz.edit(f"Failed {er}")
+    await eor(e, "`VC bot started...`")
+    await bash("npm start")
 
 
 @ultroid_cmd(
@@ -94,7 +92,7 @@ async def _(e):
         try:
             await e.client(invitetovc(call=await get_call(e), users=p))
             z += 6
-        except BaseException:
+        except:
             pass
     await ok.edit(f"`Invited {z} users`")
 

@@ -12,7 +12,7 @@
     Check if your bot is working.
 
 • `{i}ping`
-    Check Ultroid's response time.
+    Check RYNO's response time.
 
 • `{i}cmds`
     View all plugin names.
@@ -41,7 +41,7 @@ import heroku3
 import psutil
 import requests
 from git import Repo
-from pyUltroid import __version__ as UltVer
+from pyRYNO import __version__ as UltVer
 from search_engine_parser.core.utils import get_rand_user_agent as grua
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
@@ -124,11 +124,7 @@ async def cmds(event):
     pattern="restart$",
 )
 async def restartbt(ult):
-    if not Var.HEROKU_API:
-        await eor(ult, "`Restarting..`")
-        await bash("pkill python3 && python3 -m pyUltroid")
-    else:
-        await restart(ult)
+    await restart(ult)
 
 
 @ultroid_cmd(
@@ -136,7 +132,7 @@ async def restartbt(ult):
 )
 async def _(ult):
     xx = await eor(ult, "`Processing...`")
-    with open("ultroid.log") as f:
+    with open("RYNO.log.txt") as f:
         k = f.read()
     key = (
         requests.post("https://nekobin.com/api/documents", json={"content": k})
@@ -147,9 +143,8 @@ async def _(ult):
     url = f"https://nekobin.com/{key}"
     await ultroid.send_file(
         ult.chat_id,
-        file="ultroid.log",
-        thumb="resources/extras/logo_rdm.png",
-        caption=f"**Ultroid Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
+        file="RYNO.log.txt",
+        caption=f"**RYNO Logs.**\nPasted [here](https://nekobin.com/{key}) too!",
     )
     await xx.edit("Done")
     await xx.delete()

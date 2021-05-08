@@ -19,16 +19,9 @@
 
 • `{i}unblock`
     To Unblock Someone in PM.
-
-• `{i}nologpm`
-    To stop logging from that user.
-
-• `{i}logpm`
-    Start logging again from that user.
 """
 
-from pyUltroid.functions.logusers_db import *
-from pyUltroid.functions.pmpermit_db import *
+from pyRYNO.functions.pmpermit_db import *
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
@@ -42,7 +35,7 @@ LASTMSG = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
-    PMPIC = "https://telegra.ph/file/031957757a4f6a5191040.jpg"
+    PMPIC = "https://telegra.ph/file/d16ced174be071190818b.png"
 
 UND = get_string("pmperm_1")
 
@@ -89,48 +82,15 @@ PMCMDS = [
 # =================================================================
 
 
-@ultroid_cmd(
-    pattern="logpm$",
-)
-async def _(e):
-    if not e.is_private:
-        return await eod(e, "`Use me in Private.`", time=3)
-    if is_logger(str(e.chat_id)):
-        nolog_user(str(e.chat_id))
-        return await eod(e, "`Now I Will log msgs from here.`", time=3)
-    else:
-        return await eod(e, "`Wasn logging msgs from here.`", time=3)
-
-
-@ultroid_cmd(
-    pattern="nologpm$",
-)
-async def _(e):
-    if not e.is_private:
-        return await eod(e, "`Use me in Private.`", time=3)
-    if not is_logger(str(e.chat_id)):
-        log_user(str(e.chat_id))
-        return await eod(e, "`Now I Won't log msgs from here.`", time=3)
-    else:
-        return await eod(e, "`Wasn't logging msgs from here.`", time=3)
-
-
-@ultroid_bot.on(
-    events.NewMessage(
-        incoming=True,
-        func=lambda e: e.is_private,
-    ),
-)
+@ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def permitpm(event):
     user = await event.get_chat()
     if user.bot or user.is_self or user.verified:
         return
-    if is_logger(user.id):
-        return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
         if pl is not None:
-            return await event.forward_to(int(pl))
+            return await event.forward_to(pl)
         await event.forward_to(Var.LOG_CHANNEL)
 
 
@@ -139,12 +99,7 @@ if sett is None:
     sett = True
 if sett == "True" and sett != "False":
 
-    @ultroid_bot.on(
-        events.NewMessage(
-            outgoing=True,
-            func=lambda e: e.is_private,
-        ),
-    )
+    @ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda e: e.is_private))
     async def autoappr(e):
         miss = await e.get_chat()
         if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
@@ -168,12 +123,7 @@ if sett == "True" and sett != "False":
                     f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
                 )
 
-    @ultroid_bot.on(
-        events.NewMessage(
-            incoming=True,
-            func=lambda e: e.is_private,
-        ),
-    )
+    @ultroid_bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def permitpm(event):
         user = await event.get_chat()
         if user.bot or user.is_self or user.verified:
@@ -197,8 +147,6 @@ if sett == "True" and sett != "False":
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
-                    if "PMSecurity" in event.text:
-                        return
                     async for message in event.client.iter_messages(
                         user.id,
                         search=UND,
@@ -294,9 +242,7 @@ if sett == "True" and sett != "False":
                         f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                     )
 
-    @ultroid_cmd(
-        pattern="(a|approve)(?: |$)",
-    )
+    @ultroid_cmd(pattern="(a|approve)(?: |$)")
     async def approvepm(apprvpm):
         if apprvpm.reply_to_msg_id:
             reply = await apprvpm.get_reply_message()
@@ -355,9 +301,7 @@ if sett == "True" and sett != "False":
         else:
             await apprvpm.edit(NO_REPLY)
 
-    @ultroid_cmd(
-        pattern="(da|disapprove)(?: |$)",
-    )
+    @ultroid_cmd(pattern="(da|disapprove)(?: |$)")
     async def disapprovepm(e):
         if e.reply_to_msg_id:
             reply = await e.get_reply_message()
@@ -408,9 +352,7 @@ if sett == "True" and sett != "False":
         else:
             await e.edit(NO_REPLY)
 
-    @ultroid_cmd(
-        pattern="block$",
-    )
+    @ultroid_cmd(pattern="block$")
     async def blockpm(block):
         if block.reply_to_msg_id:
             reply = await block.get_reply_message()
@@ -449,9 +391,7 @@ if sett == "True" and sett != "False":
                 f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
             )
 
-    @ultroid_cmd(
-        pattern="unblock$",
-    )
+    @ultroid_cmd(pattern="unblock$")
     async def unblockpm(unblock):
         if unblock.reply_to_msg_id:
             reply = await unblock.get_reply_message()

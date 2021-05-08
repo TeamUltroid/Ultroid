@@ -7,17 +7,18 @@
 
 import time
 
-from pyUltroid import *
-from pyUltroid.dB import *
-from pyUltroid.dB.core import *
-from pyUltroid.functions.all import *
-from pyUltroid.functions.broadcast_db import *
-from pyUltroid.functions.gban_mute_db import *
-from pyUltroid.functions.goodbye_db import *
-from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.sudos import *
-from pyUltroid.functions.welcome_db import *
-from pyUltroid.utils import *
+from pyRYNO import *
+from pyRYNO.dB import *
+from pyRYNO.dB.core import *
+from pyRYNO.functions import *
+from pyRYNO.functions.all import *
+from pyRYNO.functions.broadcast_db import *
+from pyRYNO.functions.gban_mute_db import *
+from pyRYNO.functions.goodbye_db import *
+from pyRYNO.functions.google_image import googleimagesdownload
+from pyRYNO.functions.sudos import *
+from pyRYNO.functions.welcome_db import *
+from pyRYNO.utils import *
 
 from strings import get_string
 

@@ -10,10 +10,10 @@ from telethon.errors import ChatSendInlineForbiddenError
 
 from . import *
 
-REPOMSG = (
-    "• **ULTROID USERBOT** •\n\n",
-    "• Repo - [Click Here](https://github.com/TeamUltroid/Ultroid)\n",
-    "• Support - @UltroidSupport",
+REPOTEXT = (
+    "• **RYNO USERBOT** •\n\n",
+    "• Repo - [Click Here](https://github.com/RYNO-X/RYNO)\n",
+    "• Support - @OFFICIALRYNO",
 )
 
 

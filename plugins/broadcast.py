@@ -32,9 +32,8 @@ from . import *
 
 @ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
 async def broadcast_adder(event):
-    if len(event.text) > 4:
-        if not event.text[4] == " ":  # weird fix
-            return
+    if not event.text[4] == " ":  # weird fix
+        return
     msgg = event.pattern_match.group(1)
     x = await eor(event, get_string("bd_1"))
     aldone = new = crsh = 0
@@ -94,9 +93,8 @@ async def broadcast_adder(event):
 
 @ultroid_cmd(pattern="rem ?(.*)", allow_sudo=False)
 async def broadcast_remover(event):
-    if len(event.text) > 4:
-        if not event.text[4] == " ":  # weird fix
-            return
+    if not event.text[4] == " ":  # weird fix
+        return
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
@@ -132,7 +130,7 @@ async def list_all(event):
         name = ""
         try:
             name = (await ultroid.get_entity(int(channel))).title
-        except BaseException:
+        except:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
     msg += f"\nTotal {get_no_channels()} channels."

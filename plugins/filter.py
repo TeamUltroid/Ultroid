@@ -14,13 +14,13 @@
 • `{i}remfilter <word>`
     Remove the filtered user..
 
-• `{i}listfilter`
+• `{i}listfilters`
     list all filters.
 """
 
 import os
 
-from pyUltroid.functions.filter_db import *
+from pyRYNO.functions.filter_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
@@ -29,11 +29,15 @@ from . import *
 
 @ultroid_cmd(pattern="addfilter ?(.*)")
 async def af(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(e, "`Use this command word to set as filter and reply...`")
+    try:
+        rem_filter(int(chat), wrd)
+    except:
+        pass
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -61,7 +65,7 @@ async def af(e):
 
 @ultroid_cmd(pattern="remfilter ?(.*)")
 async def rf(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
         return await eor(e, "`Give the filter to remove..`")
@@ -81,7 +85,7 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def fl(e):
-    xx = (e.text).lower()
+    xx = e.text
     chat = e.chat_id
     x = get_filter(int(chat))
     if x:

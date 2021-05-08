@@ -39,12 +39,10 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendInlineForbiddenError, ChatSendStickersForbiddenError
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    MessageMediaPhoto,
-)
+from telethon.errors import (ChatSendInlineForbiddenError,
+                             ChatSendStickersForbiddenError)
+from telethon.tl.types import (DocumentAttributeFilename,
+                               DocumentAttributeSticker, MessageMediaPhoto)
 
 from . import *
 
@@ -233,7 +231,7 @@ async def hehe(args):
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
             not in htmlstr
         ):
-            async with ultroid_bot.conversation("@Stickers") as conv:
+            async with ultroid_bot.conversation("Stickers") as conv:
                 await conv.send_message("/addsticker")
                 await conv.get_response()
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
