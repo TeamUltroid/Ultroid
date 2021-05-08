@@ -1,4 +1,4 @@
-from pyUltroid.functions.asst_fns import *
+from pyRYNO.functions.asst_fns import *
 
 from .. import *
 
