@@ -62,6 +62,7 @@ async def pdfseimg(event):
         k,
         "Downloading " + filename + "...",
     )
+    await result.delete()
     pdfp = "pdf/hehe.pdf"
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
@@ -115,6 +116,7 @@ async def pdfsetxt(event):
         k,
         "Downloading " + filename + "...",
     )
+    await result.delete()
     dl = result.name
     if not msg:
         pdf = PdfFileReader(dl)
