@@ -25,12 +25,13 @@
 """
 
 import os
+import time
 import shutil
 
 import cv2
 import imutils
 import numpy as np
-import PIL, time
+import PIL
 from imutils.perspective import four_point_transform
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from skimage.filters import threshold_local
@@ -47,17 +48,24 @@ if not os.path.exists("pdf/"):
 async def pdfseimg(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
-    if not ok and ok.document and ok.document.mime_type == "application/pdf":
+    if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
     xx = await eor(event, "Processing...")
-    tt = time.time()
+    file = ok.media.document
+    k = time.time()
+    filename = "hehe.pdf"
+    result = await downloader(
+        "pdf/" + filename,
+        file,
+        xx,
+        k,
+        "Downloading " + filename + "...",
+        )
+    pdfp = "pdf/hehe.pdf"
+    pdfp.replace(".pdf", "")
+    pdf = PdfFileReader(pdfp)
     if not msg:
-        d = os.path.join("pdf/", "hehe.pdf")
-        await downloader(d,ok,tt, '`Downloading..`')
-        pdfp = "pdf/hehe.pdf"
-        pdfp.replace(".pdf", "")
-        pdf = PdfFileReader(pdfp)
         for num in range(pdf.numPages):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(num))
@@ -73,11 +81,6 @@ async def pdfseimg(event):
         await xx.delete()
     if msg:
         o = int(msg) - 1
-        d = os.path.join("pdf/", "hehe.pdf")
-        await downloader(d, ok, tt, '`Downloading...`')
-        pdfp = "pdf/hehe.pdf"
-        pdfp.replace(".pdf", "")
-        pdf = PdfFileReader(pdfp)
         pw = PdfFileWriter()
         pw.addPage(pdf.getPage(o))
         with open(os.path.join("ult.png"), "wb") as f:
@@ -101,10 +104,19 @@ async def pdfsetxt(event):
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
-    tt = time.time()
     xx = await eor(event, "`Processing...`")
+    file = ok.media.document
+    k = time.time()
+    filename = ok.file.name
+    result = await downloader(
+        filename,
+        file,
+        xx,
+        k,
+        "Downloading " + filename + "...",
+        )
+    dl = result.name
     if not msg:
-        dl = await downloader(ok.file.name,ok,tt,'`Downloading..`')
         pdf = PdfFileReader(dl)
         text = f"{dl.split('.')[0]}.txt"
         with open(text, "w") as f:
@@ -125,7 +137,6 @@ async def pdfsetxt(event):
         return
     if "_" in msg:
         u, d = msg.split("_")
-        dl = await downloader(ok.file.name,ok,tt,'`Downloading..`')
         a = PdfFileReader(dl)
         str = ""
         for i in range(int(u) - 1, int(d)):
@@ -142,7 +153,6 @@ async def pdfsetxt(event):
         os.remove(dl)
     else:
         u = int(msg) - 1
-        dl = await downloader(ok.file.name,ok,tt,'`Downloading..`')
         a = PdfFileReader(dl)
         str = a.getPage(u).extractText()
         text = f"{dl.split('.')[0]} Pg-{msg}.txt"
@@ -166,8 +176,7 @@ async def imgscan(event):
     if not (ok and (ok.media)):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
-    tt = time.time()
-    ultt = await downloader(ok.file.name,ok,tt,'`Downloading..`')
+    ultt = await ok.download_media()
     if not ultt.endswith(("png", "jpg", "jpeg", "webp")):
         await eor(event, "`Reply to a Image only...`")
         os.remove(ultt)
