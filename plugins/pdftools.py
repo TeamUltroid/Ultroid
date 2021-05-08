@@ -62,7 +62,7 @@ async def pdfseimg(event):
         k,
         "Downloading " + filename + "...",
     )
-    await result.delete()
+    await xx.delete()
     pdfp = "pdf/hehe.pdf"
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
@@ -115,7 +115,7 @@ async def pdfsetxt(event):
         k,
         "Downloading " + filename + "...",
     )
-    await result.delete()
+    await xx.delete()
     dl = result.name
     if not msg:
         pdf = PdfFileReader(dl)
@@ -134,7 +134,6 @@ async def pdfsetxt(event):
         )
         os.remove(text)
         os.remove(dl)
-        await xx.delete()
         return
     if "_" in msg:
         u, d = msg.split("_")
