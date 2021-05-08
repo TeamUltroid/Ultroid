@@ -56,7 +56,7 @@ async def autopic(e):
             file = await ultroid_bot.upload_file(kar)
             await ultroid_bot(UploadProfilePhotoRequest(file))
             os.remove(kar)
-            await asyncio.sleep(1111) #shubh ank
+            await asyncio.sleep(1111)  # shubh ank
 
 
 @ultroid_cmd(pattern="stoppic$")
