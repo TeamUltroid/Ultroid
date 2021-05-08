@@ -39,7 +39,6 @@ async def autopic(e):
     udB.set("AUTOPIC", "True")
     while True:
         for lie in clls:
-            for lie in clls:
             ge = udB.get("AUTOPIC")
             if not ge == "True":
                 return
