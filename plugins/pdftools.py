@@ -93,7 +93,6 @@ async def pdfseimg(event):
             reply_to=event.reply_to_msg_id,
         )
         os.remove("ult.png")
-        await xx.delete()
 
 
 @ultroid_cmd(
@@ -167,7 +166,6 @@ async def pdfsetxt(event):
         )
         os.remove(text)
         os.remove(dl)
-    await xx.delete()
 
 
 @ultroid_cmd(
