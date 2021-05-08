@@ -33,3 +33,4 @@ jobs:
           commit_user_name: buddhhu
           commit_user_email: buddhhu@ultroid.tech
           commit_author: buddhhu <buddhhu@ultroid.tech>
+          Co-authored-by: Danish <danish@ultroid.tech>
