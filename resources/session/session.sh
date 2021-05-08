@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# !/bin/bash
 # Ultroid - UserBot
 # Copyright (C) 2020 TeamUltroid
 #
