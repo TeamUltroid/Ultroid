@@ -70,7 +70,7 @@ async def update(eve):
             repo.git.reset("--hard", "FETCH_HEAD")
         await updateme_requirements()
         await eve.edit("`Successfully Updated!\nBot is restarting... Wait for a second!`")
-        os.system("git pull && pip3.9 install -U py-Ultroid"),os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
+        os.system("git pull"),os.system("pip3.9 install -U py-Ultroid"),os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
 @callback("changes")
