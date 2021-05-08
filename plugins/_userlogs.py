@@ -5,13 +5,15 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon.utils import get_display_name
-from telethon.errors.rpcerrorlist import MediaEmptyError as mee
-from . import *
-
 import re
 
+from telethon.errors.rpcerrorlist import MediaEmptyError as mee
+from telethon.utils import get_display_name
+
+from . import *
+
 # taglogger
+
 
 @ultroid_bot.on(
     events.NewMessage(
@@ -39,13 +41,19 @@ async def all_messages_catcher(e):
                 await asst.send_message(
                     NEEDTOLOG,
                     send,
-                    buttons=[[Button.url(who_n, who_l)],[Button.url(where_n, where_l)]],
+                    buttons=[
+                        [Button.url(who_n, who_l)],
+                        [Button.url(where_n, where_l)],
+                    ],
                 )
             else:
                 await asst.send_message(
                     NEEDTOLOG,
                     send,
-                    buttons=[[Button.inline(who_n, data=f"who{x.id}")],[Button.url(where_n, where_l)]],
+                    buttons=[
+                        [Button.inline(who_n, data=f"who{x.id}")],
+                        [Button.url(where_n, where_l)],
+                    ],
                 )
         except mee:
             if x.username:
@@ -53,17 +61,26 @@ async def all_messages_catcher(e):
                 await asst.send_message(
                     NEEDTOLOG,
                     "`Unsupported Media`",
-                    buttons=[[Button.url(who_n, who_l)],[Button.url(where_n, where_l)]],
+                    buttons=[
+                        [Button.url(who_n, who_l)],
+                        [Button.url(where_n, where_l)],
+                    ],
                 )
             else:
                 await asst.send_message(
                     NEEDTOLOG,
                     "`Unsupported Media`",
-                    buttons=[[Button.inline(who_n, data=f"who{x.id}")],[Button.url(where_n, where_l)]],
+                    buttons=[
+                        [Button.inline(who_n, data=f"who{x.id}")],
+                        [Button.url(where_n, where_l)],
+                    ],
                 )
         except Exception as er:
             LOGS.info(str(er))
-            await ultroid_bot.send_message(NEEDTOLOG, f"Please Add Your Assistant Bot - @{asst.me.username} as admin here.") 
+            await ultroid_bot.send_message(
+                NEEDTOLOG,
+                f"Please Add Your Assistant Bot - @{asst.me.username} as admin here.",
+            )
     else:
         return
 
