@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
-from os import execl, remove
+from os import remove
 
 import requests
 from telegraph import Telegraph
@@ -69,8 +69,12 @@ async def update(eve):
         except GitCommandError:
             repo.git.reset("--hard", "FETCH_HEAD")
         await updateme_requirements()
-        await eve.edit("`Successfully Updated!\nBot is restarting... Wait for a second!`")
-        os.system("git pull"),os.system("pip3.9 install -U py-Ultroid"),os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
+        await eve.edit(
+            "`Successfully Updated!\nBot is restarting... Wait for a second!`"
+        )
+        os.system("git pull"), os.system("pip3.9 install -U py-Ultroid"), os.execl(
+            sys.executable, sys.executable, "-m", "pyUltroid"
+        )
 
 
 @callback("changes")

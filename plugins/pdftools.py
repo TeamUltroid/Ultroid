@@ -25,8 +25,8 @@
 """
 
 import os
-import time
 import shutil
+import time
 
 import cv2
 import imutils
@@ -61,7 +61,7 @@ async def pdfseimg(event):
         xx,
         k,
         "Downloading " + filename + "...",
-        )
+    )
     pdfp = "pdf/hehe.pdf"
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
@@ -114,7 +114,7 @@ async def pdfsetxt(event):
         xx,
         k,
         "Downloading " + filename + "...",
-        )
+    )
     dl = result.name
     if not msg:
         pdf = PdfFileReader(dl)

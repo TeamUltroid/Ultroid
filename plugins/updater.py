@@ -10,8 +10,9 @@
     See changelogs if any update is available.
 """
 
-from . import *
 from git import Repo
+
+from . import *
 
 
 @ultroid_cmd(pattern="update$")
