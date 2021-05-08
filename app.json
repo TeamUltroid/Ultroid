@@ -1,7 +1,7 @@
 {
-    "name": "Ultroid UserBot",
+    "name": "RYNO UserBot",
     "description": "Pluggable telegram userbot, made in python using Telethon.",
-    "logo": "https://telegra.ph/file/031957757a4f6a5191040.jpg",
+    "logo": "https://telegra.ph/file/d16ced174be071190818b.png",
     "keywords": [
         "Telethon",
         "telegram",
@@ -9,9 +9,9 @@
         "python",
         "ultroid"
     ],
-    "repository": "https://github.com/TeamUltroid/Ultroid",
+    "repository": "https://github.com/RYNO-X/RYNO",
     "website": "https://ultroid.tech",
-    "success_url": "https://t.me/TheUltroid",
+    "success_url": "https://t.me/OFFICIALRYNO",
     "stack": "container",
     "env": {
         "API_ID": {

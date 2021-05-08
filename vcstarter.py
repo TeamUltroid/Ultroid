@@ -4,14 +4,12 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import Var, vcbot
+from pyRYNO import Var, vcbot
 from telethon import TelegramClient
+from telethon.errors import ChannelPrivateError
 from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.functions.phone import (
-    GetGroupCallRequest,
-    JoinGroupCallRequest,
-    LeaveGroupCallRequest,
-)
+from telethon.tl.functions.phone import (GetGroupCallRequest,
+                                         JoinGroupCallRequest)
 from telethon.tl.types import DataJSON
 
 bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
@@ -48,7 +46,7 @@ if vcbot:
             return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
         try:
             call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
-        except BaseException:
+        except:
             call = None
         if not call:
             return await bot.send_message(
@@ -102,45 +100,36 @@ if vcbot:
             },
         }
 
-        async def leave_vc(data):
-            await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
-            try:
-                await get_entity(data["chat"]["id"])
-            except Exception as ex:
-                return await bot.send_message(
-                    data["chat"]["id"], "Exception in Get_Entity : `" + str(ex) + "`"
-                )
-            try:
-                full_chat = await vcbot(GetFullChannelRequest(chat))
-            except Exception as ex:
-                return await bot.send_message(
-                    data["chat"]["id"],
-                    "Exception in GetFullChannelRequest `" + str(ex) + "`",
-                )
-            try:
-                call = full_chat.full_chat.call
-            # call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
-            except BaseException:
-                call = None
-
-            try:
-                result = await vcbot(
-                    LeaveGroupCallRequest(
-                        call=call,
-                        source=data["source"],
-                    ),
-                )
-                await bot.send_message(
-                    Var.LOG_CHANNEL,
-                    f"`Left Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
-                )
-            except Exception as ex:
-                return await bot.send_message(
-                    data["chat"]["id"],
-                    "Exception in LeaveGRoupCallRequest: `" + str(ex) + "`",
-                )
-
-            return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
+    #    async def leave_vc(data):
+    #        await bot.send_message(Var.LOG_CHANNEL, "Received Leave Request")
+    #        try:
+    #            await get_entity(data["chat"]["id"])
+    #        except Exception as ex:
+    #            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+    #        try:
+    #            full_chat = await vcbot(GetFullChannelRequest(chat))
+    #        except Exception as ex:
+    #            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+    #        try:
+    #            call = await vcbot(GetGroupCallRequest(full_chat.full_chat.call))
+    #        except:
+    #            call = None
+    #
+    #        try:
+    #            result = await vcbot(
+    #                LeaveGroupCallRequest(
+    #                    call=call.call,
+    #                    source=data["source"],
+    #                ),
+    #            )
+    #            await bot.send_message(
+    #                Var.LOG_CHANNEL,
+    #                f"`Left Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
+    #            )
+    #        except Exception as ex:
+    #            return await bot.send_message(data["chat"]["id"], "`" + str(ex) + "`")
+    #
+    #        return {"_": "left_vc", "data": {"chat_id": data["chat"]["id"]}}
 
     async def websocket_handler(request):
         ws = web.WebSocketResponse()

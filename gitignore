@@ -8,14 +8,9 @@ BOT_TOKEN.session
 *.webp
 *.mp4
 *.tgs
-logs-RYNO.txt
+logs-ultroid.txt
 .vscode/*
-RYNO-log.txt
+ultroid-log.txt
 /*.jpg
 /*.png
 /*.mp4
-addons/
-RYNO.log
-target/npmlist.json
-node_modules
-glitch_me/
