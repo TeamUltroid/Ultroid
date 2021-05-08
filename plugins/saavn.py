@@ -34,7 +34,7 @@ async def siesace(e):
     try:
         k = (r.get(url)).json()[0]
     except IndexError:
-        return await eod(e, "`Song Not Found.. `")
+        return await eod(lol, "`Song Not Found.. `")
     title = k["song"]
     urrl = k["media_url"]
     img = k["image"]
