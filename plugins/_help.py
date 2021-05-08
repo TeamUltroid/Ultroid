@@ -14,7 +14,6 @@ from telethon.tl.custom import Button
 from . import *
 
 
-
 @ultroid_cmd(
     pattern="help ?(.*)",
 )
