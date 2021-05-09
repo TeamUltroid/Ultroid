@@ -317,7 +317,7 @@ if sett == "True" and sett != "False":
                     )
 
     @ultroid_cmd(
-        pattern="(start|stop)archive$",
+        pattern="(start|stop|clear)archive$",
     )
     async def _(e):
         x = e.pattern_match.group(1)
@@ -327,7 +327,13 @@ if sett == "True" and sett != "False":
         elif x == "stop":
             udB.set("MOVE_ARCHIVE", "False")
             await eod(e, "Now I won't move new Unapproved DM's to archive")
-
+        elif x == "clear":
+            try:
+              await e.client.edit_folder(unpack=1)
+              await eod(e, "Unarchived all chats")
+            except Exception as mm:
+              await eod(e, str(mm))
+              
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
     )
@@ -345,6 +351,10 @@ if sett == "True" and sett != "False":
             uid = replied_user.id
             if not is_approved(uid):
                 approve_user(uid)
+                try:
+                  await apprvpm.client.edit_folder(uid, folder=0)
+                except:
+                  pass
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 await asyncio.sleep(3)
                 await apprvpm.delete()
