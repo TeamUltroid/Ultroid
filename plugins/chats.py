@@ -14,10 +14,10 @@
 • `{i}getlink`
     Get link of group this cmd is used in.
 
-• `{i}create (b|g|c) <group_name>`
+• `{i}create (g|b|c) <group_name>`
     Create group woth a specific name.
-    b - megagroup/supergroup
-    g - small group
+    g - megagroup/supergroup
+    b - small group
     c - channel
 """
 
