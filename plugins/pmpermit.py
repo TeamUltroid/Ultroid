@@ -374,6 +374,10 @@ if sett == "True" and sett != "False":
             uid = user.id
             if not is_approved(uid):
                 approve_user(uid)
+                try:
+                    await apprvpm.client.edit_folder(uid, folder=0)
+                except BaseException:
+                    pass
                 await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 async for message in apprvpm.client.iter_messages(user.id, search=UND):
                     await message.delete()
