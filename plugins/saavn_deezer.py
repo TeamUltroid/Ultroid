@@ -51,7 +51,7 @@ async def siesace(e):
     await ultroid_bot.send_file(
         e.chat_id,
         okk,
-        caption="`"+title+"`"+"\n`From Deezer`",
+        caption="`" + title + "`" + "\n`From Deezer`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
@@ -93,7 +93,7 @@ async def siesace(e):
     await ultroid_bot.send_file(
         e.chat_id,
         okk,
-        caption="`"+title+"`"+"\n`From Saavn`",
+        caption="`" + title + "`" + "\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
