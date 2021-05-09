@@ -24,14 +24,14 @@ tr = Translator()
 
 @ultroid_cmd(pattern="autocorrect")
 async def acc(e):
-    if not is_fullsudo(ult.sender_id):
+    if not is_fullsudo(e.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
         await eod(e, "AUTOCORRECT Feature On")
     else:
         udB.delete("AUTOCORRECT")
-        await eof(e, "AUTOCORRECT Feature Off")
+        await eod(e, "AUTOCORRECT Feature Off")
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
