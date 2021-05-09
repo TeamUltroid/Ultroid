@@ -63,7 +63,7 @@ async def update(eve):
             repo.__del__()
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
-    elif Var.HEROKU_API =  None:
+    elif Var.HEROKU_API is None:
         try:
             ups_rem.pull(ac_br)
         except GitCommandError:
