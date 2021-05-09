@@ -9,10 +9,10 @@
 ✘ Commands Available -
 
 • `{i}saavn <search query>`
-   Download songs from Saavn
+    Download songs from Saavn
 
 • `{i}deez <search query>`
-   Download songs from Deezer
+    Download songs from Deezer
 """
 
 import os
