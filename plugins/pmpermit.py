@@ -183,11 +183,12 @@ if sett == "True" and sett != "False":
         if str(user.id) in DEVLIST:
             return
         apprv = is_approved(user.id)
-        if not apprv and Redis("MOVE_ARCHIVE") == "True" and event.text != UND:
-            try:
-                await event.client.edit_folder(user.id, folder=1)
-            except:
-                pass
+        if not apprv and event.text != UND:
+            if Redis("MOVE_ARCHIVE") == "True":
+                try:
+                    await event.client.edit_folder(user.id, folder=1)
+                except:
+                    pass
             if event.media:
                 await event.delete()
             name = user.first_name
