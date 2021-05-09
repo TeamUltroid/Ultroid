@@ -24,6 +24,7 @@ from telethon.tl.types import DocumentAttributeAudio
 
 from . import *
 
+
 @ultroid_cmd(pattern="deez ?(.*)")
 async def siesace(e):
     song = e.pattern_match.group(1)
