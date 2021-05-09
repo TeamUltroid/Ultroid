@@ -183,7 +183,13 @@ if sett == "True" and sett != "False":
         if str(user.id) in DEVLIST:
             return
         apprv = is_approved(user.id)
-        if not apprv and event.text != UND:
+        if not apprv and Redis("MOVE_ARCHIVE") == "True" and event.text != UND:
+            try:
+                await event.client.edit_folder(user.id, folder=1)
+            except:
+                pass
+            if event.media:
+                await event.delete()
             name = user.first_name
             if user.last_name:
                 fullname = f"{name} {user.last_name}"
@@ -308,6 +314,19 @@ if sett == "True" and sett != "False":
                         Var.LOG_CHANNEL,
                         f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                     )
+
+    @ultroid_cmd(
+        pattern="(start|stop)archive$",
+    )
+    async def _(e):
+        x = e.pattern_match.group(1)
+        if x == "start":
+            udB.set("MOVE_ARCHIVE", "True")
+            await eod(e, "Now I will move new Unapproved DM's to archive")
+        elif x == "stop":
+            udB.set("MOVE_ARCHIVE", "False")
+            await eod(e, "Now I won't move new Unapproved DM's to archive")
+
 
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
