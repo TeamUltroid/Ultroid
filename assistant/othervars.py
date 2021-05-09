@@ -63,7 +63,7 @@ async def update(eve):
             repo.__del__()
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
-    else:
+    elif Var.HEROKU_API =  None:
         try:
             ups_rem.pull(ac_br)
         except GitCommandError:
@@ -75,7 +75,18 @@ async def update(eve):
         os.system("git pull"), os.system("pip3.9 install -U py-Ultroid"), os.execl(
             sys.executable, sys.executable, "-m", "pyUltroid"
         )
-
+    else:
+        try:
+            ups_rem.pull(ac_br)
+        except GitCommandError:
+            repo.git.reset("--hard", "FETCH_HEAD")
+        await updateme_requirements()
+        await eve.edit(
+            "`Successfully Updated!\nBot is restarting... Wait for a second!`"
+        )
+        execl(sys.executable, sys.executable, "-m", "pyUltroid")
+        
+        
 
 @callback("changes")
 @owner
