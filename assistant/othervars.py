@@ -85,8 +85,7 @@ async def update(eve):
             "`Successfully Updated!\nBot is restarting... Wait for a second!`"
         )
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
-        
-        
+
 
 @callback("changes")
 @owner

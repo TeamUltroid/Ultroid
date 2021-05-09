@@ -187,7 +187,7 @@ if sett == "True" and sett != "False":
             if Redis("MOVE_ARCHIVE") == "True":
                 try:
                     await event.client.edit_folder(user.id, folder=1)
-                except:
+                except BaseException:
                     pass
             if event.media:
                 await event.delete()
@@ -327,7 +327,6 @@ if sett == "True" and sett != "False":
         elif x == "stop":
             udB.set("MOVE_ARCHIVE", "False")
             await eod(e, "Now I won't move new Unapproved DM's to archive")
-
 
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
