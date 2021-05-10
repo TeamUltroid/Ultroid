@@ -24,16 +24,14 @@ export const playHandler = Composer.command('play', async (ctx) => {
         if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
             await ctx.reply(JSON.stringify(ctx.message.reply_to_message));
             const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
-            const fileIsVoice = typeof JSON.parse(JSON.stringify(ctx.message.reply_to_message)).voice !== "undefined";
             const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
-            const fileTitle = fileIsVoice ? "Voice" : file.title;
-            const filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
-            await ctx.reply(file);
+            const fileTitle = file.title;
+            const filePerformer = file.performer;
             await ctx.reply(fileLink);
             await ctx.reply(fileTitle);
             await ctx.reply(filePerformer);
         } else {
-            await ctx.reply("Its Not A Audio File...");
+            return await ctx.reply("Its Not A Audio File...");
         }
     } catch (error) {
         console.log(error.message);
