@@ -104,12 +104,12 @@ async def when_asst_added_to_chat(event):
         tmp = event.added_by
         if user.id == asst.me.id:
             if int(tmp.id) == OWNER_ID or str(tmp.id) in (Redis("SUDOS").split(" ")):
-                buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot"))
+                buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
                 return await asst.send_message(
                     Var.LOG_CHANNEL, f"#ADD_LOG\n\nSudo Users added me to {chat}.", buttons=buttons,
                 )
             else:
-                buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot"))
+                buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
                 return await asst.send_message(
                     Var.LOG_CHANNEL, f"#ADD_LOG\n\n`{tmp.id}` added me to {chat}.", buttons=buttons,
                 )
