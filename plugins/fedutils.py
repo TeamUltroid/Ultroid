@@ -74,7 +74,7 @@ async def _(event):
         except IndexError:
             try:
                 FBAN = arg[1]
-            except:
+            except BaseException:
                 return await msg.edit("No user was designated.")
             REASON = "#TBMassBanned"
     try:
@@ -82,10 +82,10 @@ async def _(event):
     except ValueError:
         x = await ultroid(GetFullUserRequest(FBAN))
         uid = x.user.id
-    
+
     if str(uid) in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
-    
+
     if udB.get("FBAN_GROUP_ID"):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
