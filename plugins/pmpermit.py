@@ -142,7 +142,7 @@ async def permitpm(event):
         pl = udB.get("PMLOGGROUP")
         if pl is not None:
             return await event.forward_to(int(pl))
-        await event.forward_to(Var.LOG_CHANNEL)
+        await event.forward_to(int(udB.get('LOG_CHANNEL')))
 
 
 sett = Redis("PMSETTING")
@@ -171,11 +171,11 @@ if sett == "True" and sett != "False":
                 await message.delete()
             async for message in e.client.iter_messages(e.chat_id, search=UNS):
                 await message.delete()
-            if Var.LOG_CHANNEL:
+            if int(udB.get('LOG_CHANNEL')):
                 name = await e.client.get_entity(e.chat_id)
                 name0 = str(name.first_name)
                 await e.client.send_message(
-                    Var.LOG_CHANNEL,
+                    int(udB.get('LOG_CHANNEL')),
                     f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
                 )
 
@@ -213,7 +213,7 @@ if sett == "True" and sett != "False":
             except KeyError:
                 try:
                     await asst.send_message(
-                        Var.LOG_CHANNEL,
+                        int(udB.get('LOG_CHANNEL')),
                         f"Incoming PM from {mention}!",
                         buttons=[
                             Button.inline("Approve PM", data=f"approve_{user.id}"),
@@ -222,7 +222,7 @@ if sett == "True" and sett != "False":
                     )
                 except BaseException:
                     await ultroid.send_message(
-                        Var.LOG_CHANNEL, f"Incoming PM from {mention}!"
+                        int(udB.get('LOG_CHANNEL')), f"Incoming PM from {mention}!"
                     )
                 wrn = 1
             if user.id in LASTMSG:
@@ -309,19 +309,19 @@ if sett == "True" and sett != "False":
                     del COUNT_PM[user.id]
                     del LASTMSG[user.id]
                 except KeyError:
-                    if Var.LOG_CHANNEL:
+                    if int(udB.get('LOG_CHANNEL')):
                         await event.client.send_message(
-                            Var.LOG_CHANNEL,
+                            int(udB.get('LOG_CHANNEL')),
                             "PMPermit is messed! Pls restart the bot!!",
                         )
                         return LOGS.info("COUNT_PM is messed.")
                 await event.client(BlockRequest(user.id))
                 await event.client(ReportSpamRequest(peer=user.id))
-                if Var.LOG_CHANNEL:
+                if int(udB.get('LOG_CHANNEL')):
                     name = await event.client.get_entity(user.id)
                     name0 = str(name.first_name)
                     await event.client.send_message(
-                        Var.LOG_CHANNEL,
+                        int(udB.get('LOG_CHANNEL')),
                         f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                     )
 
@@ -394,18 +394,18 @@ if sett == "True" and sett != "False":
                     await message.delete()
                 await asyncio.sleep(3)
                 await apprvpm.delete()
-                if Var.LOG_CHANNEL:
+                if int(udB.get('LOG_CHANNEL')):
                     await apprvpm.client.send_message(
-                        Var.LOG_CHANNEL,
+                        int(udB.get('LOG_CHANNEL')),
                         f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
                     )
             else:
                 await apprvpm.edit("`User may already be approved.`")
                 await asyncio.sleep(5)
                 await apprvpm.delete()
-                if Var.LOG_CHANNEL:
+                if int(udB.get('LOG_CHANNEL')):
                     await apprvpm.client.send_message(
-                        Var.LOG_CHANNEL,
+                        int(udB.get('LOG_CHANNEL')),
                         f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
                     )
         else:
@@ -452,9 +452,9 @@ if sett == "True" and sett != "False":
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disaproved to PM!`")
                 await asyncio.sleep(5)
                 await e.delete()
-                if Var.LOG_CHANNEL:
+                if int(udB.get('LOG_CHANNEL')):
                     await e.client.send_message(
-                        Var.LOG_CHANNEL,
+                        int(udB.get('LOG_CHANNEL')),
                         f"[{name0}](tg://user?id={bbb.id}) was disapproved to PM you.",
                     )
             else:
@@ -499,9 +499,9 @@ if sett == "True" and sett != "False":
             disapprove_user(uid)
         except AttributeError:
             pass
-        if Var.LOG_CHANNEL:
+        if int(udB.get('LOG_CHANNEL')):
             await block.client.send_message(
-                Var.LOG_CHANNEL,
+                int(udB.get('LOG_CHANNEL')),
                 f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
             )
 
@@ -517,9 +517,9 @@ if sett == "True" and sett != "False":
             await unblock.edit("`You have been unblocked.`")
         else:
             await unblock.edit(NO_REPLY)
-        if Var.LOG_CHANNEL:
+        if int(udB.get('LOG_CHANNEL')):
             await unblock.client.send_message(
-                Var.LOG_CHANNEL,
+                int(udB.get('LOG_CHANNEL')),
                 f"[{name0}](tg://user?id={replied_user.id}) was unblocked!.",
             )
 

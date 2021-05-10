@@ -47,7 +47,7 @@ async def _(e):
         return await eod(xx, "`Cant delete this chat`", time=10)
     except no_admin:
         return await eod(xx, "`I m not an admin`", time=10)
-    await e.client.send_message(Var.LOG_CHANNEL, f"#Deleted\nDeleted {e.chat_id}")
+    await e.client.send_message(int(udB.get('LOG_CHANNEL')), f"#Deleted\nDeleted {e.chat_id}")
 
 
 @ultroid_cmd(

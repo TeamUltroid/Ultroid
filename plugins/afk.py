@@ -37,7 +37,7 @@ last_afk_message = {}
 last_afk_msg = {}
 afk_start = {}
 
-LOG = Var.LOG_CHANNEL
+LOG = int(udB.get('LOG_CHANNEL'))
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
