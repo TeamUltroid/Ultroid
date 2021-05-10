@@ -14,9 +14,10 @@ from telethon.tl.functions.phone import (
 )
 from telethon.tl.types import DataJSON
 
+LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 if vcbot is not None:
 
-    bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
+    bot = TelegramClient("ultroid_vc", Var.API_ID, Var.API_HASH).start(bot_token=udB.get("BOT_TOKEN"))
 
     async def get_entity(chat):
         try:
@@ -80,7 +81,7 @@ if vcbot is not None:
                 ),
             )
             await bot.send_message(
-                Var.LOG_CHANNEL,
+                LOG_CHANNEL,
                 f"`Joined Voice Chat in {(await bot.get_entity(data['chat']['id'])).title}`",
             )
         except Exception as ex:
@@ -125,7 +126,7 @@ if vcbot is not None:
                 ),
             )
             await bot.send_message(
-                Var.LOG_CHANNEL,
+                LOG_CHANNEL,
                 f"Left Voice Chat in `{data['chat']['title']}`",
             )
         except Exception as ex:
