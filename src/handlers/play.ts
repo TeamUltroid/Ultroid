@@ -21,7 +21,8 @@ export const playHandler = Composer.command('play', async (ctx) => {
         return await ctx.reply('I can only play in groups.');
     }
     try {
-        if (ctx.message.reply_to_message && (ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice)) {
+        console.log(ctx.message.reply_to_message);
+        /*if (ctx.message.reply_to_message && (ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice)) {
             const file = ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice,
               fileIsVoice = typeof ctx.message.reply_to_message.voice !== "undefined",
               fileLink = (await ctx.telegram.getFileLink(file.file_id)).href,
@@ -29,7 +30,7 @@ export const playHandler = Composer.command('play', async (ctx) => {
               filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
             console.log(file);
             await ctx.reply(file);
-        }
+        }*/
     } catch(error) {
         console.log(error.message);
     }
