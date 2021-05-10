@@ -21,7 +21,7 @@ export const playHandler = Composer.command('play', async (ctx) => {
         return await ctx.reply('I can only play in groups.');
     }
     try {
-        if (ctx.message.reply_to_message && ctx.message.reply_to_message["audio"]) {
+        if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
             await ctx.reply(JSON.stringify(ctx.message.reply_to_message));
         } else {
             await ctx.reply("Its Not A Audio File...");
@@ -35,7 +35,7 @@ export const playHandler = Composer.command('play', async (ctx) => {
             console.log(file);
             await ctx.reply(file);
         }*/
-    } catch(error) {
+    } catch (error) {
         console.log(error.message);
     }
 
