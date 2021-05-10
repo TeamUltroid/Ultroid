@@ -69,12 +69,12 @@ async def _(ult):
     await msg.edit(f"**Unzipped `{len(filename)-Enum}/{len(filename)}` Files**")
     if Enum > 0:
         if len(Elist) < 4096:
-            await ultroid_bot.send_message(int(udB.get('LOG_CHANNEL')), Elist)
+            await ultroid_bot.send_message(int(udB.get("LOG_CHANNEL")), Elist)
         else:
             file = open("UnzipError.txt", "w").write(Elist)
             file.close()
             await ultroid_bot.send_message(
-                int(udB.get('LOG_CHANNEL')),
+                int(udB.get("LOG_CHANNEL")),
                 "UnzipError.txt",
                 caption=f"`Error Occured on Unzip cmd",
             )

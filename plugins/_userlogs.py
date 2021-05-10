@@ -108,7 +108,7 @@ async def when_asst_added_to_chat(event):
                     "Leave Chat", data=f"leave_ch_{event.chat_id}|bot"
                 )
                 return await asst.send_message(
-                    int(udB.get('LOG_CHANNEL')),
+                    int(udB.get("LOG_CHANNEL")),
                     f"#ADD_LOG\n\nSudo Users added me to {chat}.",
                     buttons=buttons,
                 )
@@ -117,7 +117,7 @@ async def when_asst_added_to_chat(event):
                     "Leave Chat", data=f"leave_ch_{event.chat_id}|bot"
                 )
                 return await asst.send_message(
-                    int(udB.get('LOG_CHANNEL')),
+                    int(udB.get("LOG_CHANNEL")),
                     f"#ADD_LOG\n\n`{tmp.id}` added me to {chat}.",
                     buttons=buttons,
                 )
@@ -135,7 +135,7 @@ async def when_ultd_added_to_chat(event):
         if user.id == OWNER_ID:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
-                int(udB.get('LOG_CHANNEL')),
+                int(udB.get("LOG_CHANNEL")),
                 f"#ADD_LOG\n\n`{tmp.id}` just added you to {chat}.",
                 buttons=buttons,
             )
@@ -145,7 +145,7 @@ async def when_ultd_added_to_chat(event):
         if user.id == OWNER_ID:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
-                int(udB.get('LOG_CHANNEL')),
+                int(udB.get("LOG_CHANNEL")),
                 f"#JOIN_LOG\n\nYou just joined {chat}.",
                 buttons=buttons,
             )
