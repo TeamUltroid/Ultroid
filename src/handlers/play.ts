@@ -14,12 +14,24 @@ import { getDuration } from '../utils';
 import { logger as log } from '../bot';
 import escapeHtml from '@youtwitface/escape-html';
 
-export const playHandler = Composer.command('play', async ctx => {
+export const playHandler = Composer.command('play', async (ctx) => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {
         return await ctx.reply('I can only play in groups.');
     }
+    if (
+        ctx.message.reply_to_message &&
+        (ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice)
+      ) {
+        const file = ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice,
+          fileIsVoice = typeof ctx.message.reply_to_message.voice !== "undefined",
+          fileLink = (await ctx.telegram.getFileLink(file.file_id)).href,
+          fileTitle = fileIsVoice ? "Voice" : file.title,
+          filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
+        console.log(file);
+        await ctx.reply(file);
+      }
 
     const [ commandEntity ] = ctx.message.entities!;
     const text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
