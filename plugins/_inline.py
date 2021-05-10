@@ -500,9 +500,9 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     number_of_cols = 2
     emoji = Redis("EMOJI_IN_HELP")
     if emoji:
-        multi, mult2i = emoji, emoji
+        emojihelp = emoji
     else:
-        multi, mult2i = "✘", "✘"
+        emojihelp = "✘"
     helpable_plugins = []
     global addpage
     addpage = page_number
@@ -513,9 +513,9 @@ def paginate_addon(page_number, loaded_plugins, prefix):
     modules = [
         Button.inline(
             "{} {} {}".format(
-                random.choice(list(multi)),
+                emojihelp,
                 x,
-                random.choice(list(mult2i)),
+                emojihelp,
             ),
             data=f"add_plugin_{x}",
         )
