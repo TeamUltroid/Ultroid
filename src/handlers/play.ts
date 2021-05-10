@@ -23,18 +23,18 @@ export const playHandler = Composer.command('play', async (ctx) => {
     try {
         if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
             await ctx.reply(JSON.stringify(ctx.message.reply_to_message));
+            const file = ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice;
+            const fileIsVoice = typeof ctx.message.reply_to_message.voice !== "undefined";
+            const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
+            const fileTitle = fileIsVoice ? "Voice" : file.title;
+            const filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
+            await ctx.reply(file);
+            await ctx.reply(fileLink);
+            await ctx.reply(fileTitle);
+            await ctx.reply(filePerformer);
         } else {
             await ctx.reply("Its Not A Audio File...");
         }
-        /*if (ctx.message.reply_to_message && (ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice)) {
-            const file = ctx.message.reply_to_message.audio || ctx.message.reply_to_message.voice,
-              fileIsVoice = typeof ctx.message.reply_to_message.voice !== "undefined",
-              fileLink = (await ctx.telegram.getFileLink(file.file_id)).href,
-              fileTitle = fileIsVoice ? "Voice" : file.title,
-              filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
-            console.log(file);
-            await ctx.reply(file);
-        }*/
     } catch (error) {
         console.log(error.message);
     }
