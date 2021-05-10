@@ -33,7 +33,7 @@ jobs:
 
           commit_options: '--no-verify'
 
-          repository: plugins
+          repository: vcstarter.py
           
 
           commit_user_name: Danish
