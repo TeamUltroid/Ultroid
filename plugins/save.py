@@ -23,7 +23,7 @@ async def saf(e):
             e, "Reply to Any Message to save it to ur saved messages", time=5
         )
     MLA = e.sender_id
-    If not MLA:
+    if not MLA:
         MLA = ultroid_bot.uid
     await ultroid_bot.send_message(MLA, x)
     await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
