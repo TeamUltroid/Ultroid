@@ -24,7 +24,7 @@ export const playHandler = Composer.command('play', async (ctx) => {
         if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
             await ctx.reply(JSON.stringify(ctx.message.reply_to_message));
             const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
-            const fileIsVoice = typeof ctx.message.reply_to_message.voice !== "undefined";
+            const fileIsVoice = typeof JSON.parse(JSON.stringify(ctx.message.reply_to_message)).voice !== "undefined";
             const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
             const fileTitle = fileIsVoice ? "Voice" : file.title;
             const filePerformer = fileIsVoice ? ctx.from.first_name : file.performer;
