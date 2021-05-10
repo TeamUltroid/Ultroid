@@ -106,12 +106,12 @@ async def when_asst_added_to_chat(event):
             if int(tmp.id) == OWNER_ID or str(tmp.id) in (Redis("SUDOS").split(" ")):
                 buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot"))
                 return await asst.send_message(
-                    Var.LOG_CHANNEL, f"#ADD_LOG\n\nSudo Users added me to {chat}."
+                    Var.LOG_CHANNEL, f"#ADD_LOG\n\nSudo Users added me to {chat}.", buttons=buttons,
                 )
             else:
                 buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot"))
                 return await asst.send_message(
-                    Var.LOG_CHANNEL, f"#ADD_LOG\n\n`{tmp.id}` added me to {chat}."
+                    Var.LOG_CHANNEL, f"#ADD_LOG\n\n`{tmp.id}` added me to {chat}.", buttons=buttons,
                 )
 
 
@@ -125,17 +125,17 @@ async def when_ultd_added_to_chat(event):
         chat = (await event.get_chat()).title
         tmp = event.added_by
         if user.id == OWNER_ID:
-            buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user"))
+            buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
-                Var.LOG_CHANNEL, f"#ADD_LOG\n\n`{tmp.id}` just added you to {chat}."
+                Var.LOG_CHANNEL, f"#ADD_LOG\n\n`{tmp.id}` just added you to {chat}.", buttons=buttons,
             )
     elif event.user_joined:
         user = await event.get_user()
         chat = (await event.get_chat()).title
         if user.id == OWNER_ID:
-            buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user"))
+            buttons=Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
-                Var.LOG_CHANNEL, f"#JOIN_LOG\n\nYou just joined {chat}."
+                Var.LOG_CHANNEL, f"#JOIN_LOG\n\nYou just joined {chat}.", buttons=buttons,
             )
 
 
