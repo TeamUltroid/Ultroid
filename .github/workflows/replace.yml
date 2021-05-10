@@ -34,7 +34,7 @@ jobs:
           commit_options: '--no-verify'
 
           repository: .
-          exclude: "./.github/workflows/*.yml"
+          exclude: .github
 
           commit_user_name: Danish
           commit_user_email: danish@ultroid.tech
