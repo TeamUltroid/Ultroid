@@ -25,6 +25,15 @@
 
 • `{i}logpm`
     Start logging again from that user.
+
+• `{i}startarchive`
+    Will start adding new PMs to archive.
+
+• `{i}stoparchive`
+    Will stop adding new PMs to archive.
+
+• `{i}cleararchive`
+    Unarchive all chats.
 """
 
 import re
