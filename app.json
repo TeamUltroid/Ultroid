@@ -22,10 +22,6 @@
             "description": "You api hash, from my.telegram.org or @ScrapperRoBot.",
             "value": ""
         },
-        "BOT_TOKEN": {
-            "description": "Make a bot from @BotFather, and enter it's api token here.",
-            "value": ""
-        },
         "SESSION": {
             "description": "Your session string. Can be added now, or after deploy. (The bot will NOT work without a session string!!)",
             "value": ""
