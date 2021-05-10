@@ -93,7 +93,7 @@ if asst.me is not None:
                 thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
                 text=get_string("inline_4").format(
                     OWNER_NAME,
-                    len(PLUGINS) - 5,
+                    len(PLUGINS) - 1,
                     len(ADDONS),
                     cmd,
                 ),
