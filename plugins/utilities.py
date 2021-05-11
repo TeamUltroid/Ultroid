@@ -71,6 +71,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
+from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
@@ -242,7 +243,7 @@ async def stats(
         unread_mentions += dialog.unread_mentions_count
         unread += dialog.unread_count
     stop_time = time.time() - start_time
-
+    ct = (await ultroid_bot(GetBlockedRequest(1, 0))).count
     full_name = inline_mention(await ultroid_bot.get_me())
     response = f"🔸 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
@@ -257,7 +258,8 @@ async def stats(
     response += f"**  •• **`Creator: {creator_in_channels}` \n"
     response += f"**  •• **`Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
     response += f"**Unread:** {unread} \n"
-    response += f"**Unread Mentions:** {unread_mentions} \n\n"
+    response += f"**Unread Mentions:** {unread_mentions} \n"
+    response += f"**Blocked Users:** {ct}\n\n"
     response += f"**__It Took:__** {stop_time:.02f}s \n"
     await ok.edit(response)
 
