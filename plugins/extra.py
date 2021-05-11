@@ -91,7 +91,7 @@ async def _(e):
         async for p in e.client.iter_messages(
             e.chat_id, from_user=ultroid_bot.uid, limit=1
         ):
-            await repl.reply(p)
+            await e.client.send_message(e.chat_id, p.text, file=p.media, reply_to=repl)
             await p.delete()
     else:
         await eod(e, "`Reply To any message`")
