@@ -498,7 +498,7 @@ if sett == "True" and sett != "False":
             name0 = str(aname.first_name)
             uid = bbb.id
         else:
-            await block.edit(NO_REPLY)
+            return await block.edit(NO_REPLY)
         try:
             disapprove_user(uid)
         except AttributeError:
@@ -520,7 +520,7 @@ if sett == "True" and sett != "False":
             await unblock.client(UnblockRequest(replied_user.id))
             await unblock.edit("`You have been unblocked.`")
         else:
-            await unblock.edit(NO_REPLY)
+            return await unblock.edit(NO_REPLY)
         if int(udB.get("LOG_CHANNEL")):
             await unblock.client.send_message(
                 int(udB.get("LOG_CHANNEL")),
