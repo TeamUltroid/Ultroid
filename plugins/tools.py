@@ -71,6 +71,7 @@ from . import humanbytes as hb
     pattern="sysinfo$",
 )
 async def _(e):
+    await eor(e, "`Sending...`")
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
@@ -149,7 +150,9 @@ async def _(event):
         await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
 
-@ultroid_cmd(pattern="bots ?(.*)")
+@ultroid_cmd(
+pattern="bots ?(.*)",
+)
 async def _(ult):
     await ult.edit("`...`")
     if ult.is_private:
@@ -192,7 +195,9 @@ async def _(ult):
     await eor(ult, mentions)
 
 
-@ultroid_cmd(pattern="hl")
+@ultroid_cmd(
+pattern="hl",
+)
 async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
@@ -275,7 +280,9 @@ async def _(e):
         return await eor(e, "**Reply to a gif or audio file only**")
 
 
-@ultroid_cmd(pattern="ls ?(.*)")
+@ultroid_cmd(
+pattern="ls ?(.*)",
+)
 async def _(e):
     path = Path(e.pattern_match.group(1))
     if not path:
