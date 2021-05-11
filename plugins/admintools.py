@@ -436,6 +436,20 @@ async def delete_it(delme):
                 time=5,
             )
 
+@ultroid_cmd(
+    pattern="copy$",
+)
+async def copy(e):
+    reply = await e.get_reply_message()
+    if reply:
+        if reply.text:
+            await e.edit(reply.text)
+        else:
+            await reply.reply(reply)
+            await e.delete()
+    else:
+        await eod(e, "`Reply To any message`")
+
 
 @ultroid_cmd(
     pattern="edit",
@@ -443,15 +457,22 @@ async def delete_it(delme):
 async def editer(edit):
     message = edit.text
     chat = await edit.get_input_chat()
-    self_id = await ultroid_bot.get_peer_id("me")
     string = str(message[6:])
-    i = 1
-    async for message in ultroid_bot.iter_messages(chat, self_id):
-        if i == 2:
-            await message.edit(string)
+    reply = await edit.get_reply_message()
+    if reply and reply.text:
+        try:
+            await reply.edit(string)
             await edit.delete()
-            break
-        i = i + 1
+        except:
+            pass
+    else:
+        i = 1
+        async for message in ultroid_bot.iter_messages(chat, ultroid_bot.uid):
+            if i == 2:
+                await message.edit(string)
+                await edit.delete()
+                break
+            i = i + 1
 
 
 @ultroid_cmd(pattern="pinned")
