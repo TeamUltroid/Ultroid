@@ -55,12 +55,13 @@ import cv2
 import emoji
 from carbonnow import Carbon
 from googletrans import Translator
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots, User
-from telethon.utils import pack_bot_file_id
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
+from telethon.tl.types import User
+from telethon.utils import pack_bot_file_id
 
 from . import *
 from . import humanbytes as hb
@@ -225,25 +226,33 @@ async def _(e):
             output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
             cv2.imwrite("img.png", output)
             thumb = "img.png"
-        c = await downloader("resources/downloads/"+a.file.name, a.media.document, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
+        c = await downloader(
+            "resources/downloads/" + a.file.name,
+            a.media.document,
+            z,
+            toime,
+            "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...",
+        )
         await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
-        await bash(f'ffmpeg -i "{c.name}" -acodec libmp3lame -ac 2 -ab 144kb -ar 44100 comp.mp3')
+        await bash(
+            f'ffmpeg -i "{c.name}" -acodec libmp3lame -ac 2 -ab 144kb -ar 44100 comp.mp3'
+        )
         await bash(f'ffmpeg -y -i "{thumb}" -i comp.mp3 -c:a copy circle.mp4')
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
         f = "circle.mp4"
         metadata = extractMetadata(createParser(f))
-        duration = metadata.get('duration').seconds
-        height = metadata.get('height')
-        width = metadata.get('width')
-        attributes=[video(duration=duration, w=width, h=height, round_message=True)]
+        duration = metadata.get("duration").seconds
+        height = metadata.get("height")
+        width = metadata.get("width")
+        attributes = [video(duration=duration, w=width, h=height, round_message=True)]
         await e.client.send_file(
             e.chat_id,
-            foile, 
+            foile,
             thumb=thumb,
             reply_to=a,
             attributes=attributes,
-            )
+        )
         await z.delete()
         os.system("rm resources/downloads/*")
         os.system("rm circle.mp4 comp.mp3 img.png")
