@@ -17,6 +17,8 @@
 • `{i}copy <reply to message>`
     Copy replied message / media.
 
+• `{i}reply`
+    Reply the last sent msg to replied user.
 """
 
 from . import *
@@ -77,5 +79,20 @@ async def editer(edit):
                 await edit.delete()
                 break
             i = i + 1
+
+
+@ultroid_cmd(
+pattern="reply$",
+)
+async def _(e):
+    repl = await e.get_reply_message()
+    if repl:
+        async for p in e.client.iter_messages(e.chat_id, from_user=ultroid_bot.uid, limit=1):
+            await repl.reply(p)
+        await e.delete()
+        await p.delete()
+    else:
+        await eod(e, "`Reply To any message`")
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
