@@ -253,6 +253,7 @@ async def _(e):
             foile,
             thumb=thumb,
             reply_to=a,
+            video_note=True,
             attributes=attributes,
         )
         await z.delete()
