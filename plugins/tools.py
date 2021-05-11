@@ -58,6 +58,9 @@ from googletrans import Translator
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots, User
 from telethon.utils import pack_bot_file_id
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
+from telethon.tl.types import DocumentAttributeVideo as video
 
 from . import *
 from . import humanbytes as hb
@@ -214,71 +217,36 @@ async def _(e):
             output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
             cv2.imwrite("img.png", output)
             thumb = "img.png"
+            os.remove(bbbb)
         except TypeError:
-            thumb = "./resources/extras/ultroid.jpg"
-        c = await a.download_media(
-            "resources/downloads/",
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ..."),
-            ),
-        )
+            bbbb = "resources/extras/ultroid.jpg"
+            im = cv2.imread(bbbb)
+            dsize = (320, 320)
+            output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
+            cv2.imwrite("img.png", output)
+            thumb = "img.png"
+        c = await downloader("resources/downloads/"+a.file.name, a.media.document, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
         await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
-        cmd = [
-            "ffmpeg",
-            "-i",
-            c,
-            "-acodec",
-            "libmp3lame",
-            "-ac",
-            "2",
-            "-ab",
-            "144k",
-            "-ar",
-            "44100",
-            "comp.mp3",
-        ]
-        proess = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await proess.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-        mcd = [
-            "ffmpeg",
-            "-y",
-            "-i",
-            thumb,
-            "-i",
-            "comp.mp3",
-            "-c:a",
-            "copy",
-            "circle.mp4",
-        ]
-        process = await asyncio.create_subprocess_exec(
-            *mcd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
+        await bash(f'ffmpeg -i "{c.name}" -acodec libmp3lame -ac 2 -ab 144kb -ar 44100 comp.mp3')
+        await bash(f'ffmpeg -y -i "{thumb}" -i comp.mp3 -c:a copy circle.mp4')
         taime = time.time()
+        foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
+        f = "circle.mp4"
+        metadata = extractMetadata(createParser(f))
+        duration = metadata.get('duration').seconds
+        height = metadata.get('height')
+        width = metadata.get('width')
+        attributes=[video(duration=duration, w=width, h=height, round_message=True)]
         await e.client.send_file(
             e.chat_id,
-            "circle.mp4",
+            foile, 
             thumb=thumb,
-            video_note=True,
             reply_to=a,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ..."),
-            ),
-        )
+            attributes=attributes,
+            )
         await z.delete()
         os.system("rm resources/downloads/*")
         os.system("rm circle.mp4 comp.mp3 img.png")
-        os.remove(bbbb)
     elif a.document and a.document.mime_type == "video/mp4":
         z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
