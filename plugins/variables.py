@@ -27,7 +27,7 @@ async def get_var(event):
     try:
         opt = event.text.split(" ", maxsplit=2)[1]
     except IndexError:
-        return await x.edit("get what?")
+        return
     if not opt == "keys":
         try:
             varname = event.text.split(" ", maxsplit=2)[2]
