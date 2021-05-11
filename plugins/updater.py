@@ -11,6 +11,7 @@
 """
 
 from git import Repo
+from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
 from . import *
 
@@ -20,9 +21,10 @@ async def _(e):
     x = await updater()
     branch = (Repo.init()).active_branch
     if x is not None:
+        Link = (await ultroid_bot(GetLink(x.peer_id.channel_id, x.id))).link
         await eor(
             e,
-            f'<strong><a href="t.me/c/{x.peer_id.channel_id}/{x.id}">[ChangeLogs]</a></strong>',
+            f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",
             link_preview=False,
         )
