@@ -171,10 +171,14 @@ if sett == "True" and sett != "False":
                 await message.delete()
             async for message in e.client.iter_messages(e.chat_id, search=UNS):
                 await message.delete()
+            try:
+                await ultroid_bot.edit_folder(e.chat_id, folder=0)
+            except BaseException:
+                pass
             if int(udB.get("LOG_CHANNEL")):
                 name = await e.client.get_entity(e.chat_id)
                 name0 = str(name.first_name)
-                await e.client.send_message(
+                await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
                     f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
                 )
