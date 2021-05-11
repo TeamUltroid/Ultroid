@@ -436,6 +436,7 @@ async def delete_it(delme):
                 time=5,
             )
 
+
 @ultroid_cmd(
     pattern="copy$",
 )
@@ -463,7 +464,7 @@ async def editer(edit):
         try:
             await reply.edit(string)
             await edit.delete()
-        except:
+        except BaseException:
             pass
     else:
         i = 1
