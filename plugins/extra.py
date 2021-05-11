@@ -87,11 +87,11 @@ async def editer(edit):
 async def _(e):
     repl = await e.get_reply_message()
     if repl:
+        await e.delete()
         async for p in e.client.iter_messages(
             e.chat_id, from_user=ultroid_bot.uid, limit=1
         ):
             await repl.reply(p)
-        await e.delete()
         await p.delete()
     else:
         await eod(e, "`Reply To any message`")
