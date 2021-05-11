@@ -398,8 +398,7 @@ if sett == "True" and sett != "False":
                     await message.delete()
                 await asyncio.sleep(3)
                 await apprvpm.delete()
-                if int(udB.get("LOG_CHANNEL")):
-                    await apprvpm.client.send_message(
+                await apprvpm.client.send_message(
                         int(udB.get("LOG_CHANNEL")),
                         f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
                     )
@@ -407,8 +406,7 @@ if sett == "True" and sett != "False":
                 await apprvpm.edit("`User may already be approved.`")
                 await asyncio.sleep(5)
                 await apprvpm.delete()
-                if int(udB.get("LOG_CHANNEL")):
-                    await apprvpm.client.send_message(
+                await apprvpm.client.send_message(
                         int(udB.get("LOG_CHANNEL")),
                         f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
                     )
@@ -456,8 +454,7 @@ if sett == "True" and sett != "False":
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disaproved to PM!`")
                 await asyncio.sleep(5)
                 await e.delete()
-                if int(udB.get("LOG_CHANNEL")):
-                    await e.client.send_message(
+                await e.client.send_message(
                         int(udB.get("LOG_CHANNEL")),
                         f"[{name0}](tg://user?id={bbb.id}) was disapproved to PM you.",
                     )
@@ -503,8 +500,7 @@ if sett == "True" and sett != "False":
             disapprove_user(uid)
         except AttributeError:
             pass
-        if int(udB.get("LOG_CHANNEL")):
-            await block.client.send_message(
+        await block.client.send_message(
                 int(udB.get("LOG_CHANNEL")),
                 f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
             )
@@ -521,8 +517,7 @@ if sett == "True" and sett != "False":
             await unblock.edit("`You have been unblocked.`")
         else:
             return await unblock.edit(NO_REPLY)
-        if int(udB.get("LOG_CHANNEL")):
-            await unblock.client.send_message(
+        await unblock.client.send_message(
                 int(udB.get("LOG_CHANNEL")),
                 f"[{name0}](tg://user?id={replied_user.id}) was unblocked!.",
             )
