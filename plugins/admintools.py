@@ -311,7 +311,9 @@ async def unp(ult):
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
-    if match and purg.text[6] == " ":
+    if purg.text[6] and purg.text[6] in ["m", "a"]:
+        return
+    if match and not purg.is_reply:
         p = 0
         async for msg in ultroid_bot.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
