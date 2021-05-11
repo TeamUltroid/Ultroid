@@ -154,7 +154,7 @@ if vcbot is not None:
 
                 if data["_"] == "leave":
                     await bot.send_message(
-                        Var.LOG_CHANNEL,
+                        LOG_CHANNEL,
                         f"Received **Leave Request** In `{data['data']['chat']['title']}`",
                     )
                     await bot.send_message(
