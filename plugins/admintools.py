@@ -56,7 +56,7 @@ import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
-from telethon.tl.functions.channels import EditAdminRequest
+from telethon.tl.functions.channels import EditAdminRequest, DeleteUserHistoryRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
@@ -408,14 +408,9 @@ async def _(e):
         input = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(input)).first_name
         try:
-            nos = 0
-            async for x in e.client.iter_messages(e.chat_id, from_user=input):
-                await e.client.delete_messages(e.chat_id, x)
-                nos += 1
-            await xx.edit(
-                f"**Purged **`{nos}`** msgs of **[{name}](tg://user?id={input})",
-            )
-        except ValueError:
+            await ultroid_bot(DeleteUserHistoryRequest(e.chat_id, input))
+            await eod(e, f'Successfully Purged All Messages from {name}')
+        except Exception as er:
             return await eod(xx, str(er), time=5)
     else:
         return await eod(
