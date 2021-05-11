@@ -109,10 +109,6 @@ async def download(event):
         return await eod(xx, get_string("udl_3"))
     else:
         try:
-            if Redis("CUSTOM_THUMBNAIL"):
-                await bash(
-                    f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg"
-                )
             try:
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
