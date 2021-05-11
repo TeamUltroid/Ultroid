@@ -33,7 +33,7 @@ jobs:
 
           commit_options: '--no-verify'
 
-          repository: plugins assistant
+          repository: plugins
 
 
           commit_user_name: Danish
