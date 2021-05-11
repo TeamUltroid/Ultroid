@@ -111,7 +111,7 @@ async def download(event):
         try:
             if Redis("CUSTOM_THUMBNAIL"):
                 await bash(
-                    f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/new_thumb.jpg"
+                    f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg"
                 )
             try:
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
@@ -149,7 +149,7 @@ async def download(event):
                         caption=title,
                         attributes=attributes,
                         supports_streaming=True,
-                        thumb="resources/extras/new_thumb.jpg",
+                        thumb="resources/extras/ultroid.jpg",
                     )
                 except BaseException:
                     x = await event.client.send_file(
@@ -157,7 +157,7 @@ async def download(event):
                         res,
                         caption=title,
                         force_document=True,
-                        thumb="resources/extras/new_thumb.jpg",
+                        thumb="resources/extras/ultroid.jpg",
                     )
             else:
                 x = await event.client.send_file(
@@ -165,7 +165,7 @@ async def download(event):
                     res,
                     caption=title,
                     force_document=True,
-                    thumb="resources/extras/new_thumb.jpg",
+                    thumb="resources/extras/ultroid.jpg",
                 )
         except Exception as ve:
             return await eor(xx, str(ve))

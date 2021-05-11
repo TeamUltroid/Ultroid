@@ -181,7 +181,7 @@ async def heroku_logs(event):
     await ultroid.send_file(
         event.chat_id,
         file="ultroid-heroku.log",
-        thumb="resources/extras/new_thumb.jpg",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
     )
     os.remove("ultroid-heroku.log")
@@ -201,7 +201,7 @@ async def def_logs(ult):
     await ultroid.send_file(
         ult.chat_id,
         file="ultroid.log",
-        thumb="resources/extras/new_thumb.jpg",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"**Ultroid Logs.**\nPasted [here]({url}) too!",
     )
     await xx.edit("Done")

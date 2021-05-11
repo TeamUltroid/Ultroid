@@ -80,7 +80,7 @@ async def imak(event):
     os.rename(file, inp)
     if Redis("CUSTOM_THUMBNAIL"):
         await bash(
-            f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/new_thumb.jpg"
+            f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg"
         )
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
@@ -88,7 +88,7 @@ async def imak(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/new_thumb.jpg",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"`{xxx.name}`",
         reply_to=reply,
     )
@@ -159,7 +159,7 @@ async def _(event):
             await xx.edit(f"**Uploading** `{input_str}`")
             await asyncio.sleep(2)
             await event.client.send_file(
-                event.chat_id, input_str, thumb="resources/extras/new_thumb.jpg"
+                event.chat_id, input_str, thumb="resources/extras/ultroid.jpg"
             )
             await xx.delete()
             os.remove(input_str)

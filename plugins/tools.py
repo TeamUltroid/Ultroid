@@ -215,7 +215,7 @@ async def _(e):
             cv2.imwrite("img.png", output)
             thumb = "img.png"
         except TypeError:
-            thumb = "./resources/extras/new_thumb.jpg"
+            thumb = "./resources/extras/ultroid.jpg"
         c = await a.download_media(
             "resources/downloads/",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -286,7 +286,7 @@ async def _(e):
             e.chat_id,
             c,
             video_note=True,
-            thumb="resources/extras/new_thumb.jpg",
+            thumb="resources/extras/ultroid.jpg",
             reply_to=a,
         )
         await z.delete()
@@ -434,7 +434,7 @@ async def _(event):
                 event.chat_id,
                 out_file,
                 force_document=True,
-                thumb="resources/extras/new_thumb.jpg",
+                thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
                 caption=f"`{cmd}`",
                 reply_to=reply_to_id,
@@ -506,7 +506,7 @@ async def _(event):
                 event.chat_id,
                 out_file,
                 force_document=True,
-                thumb="resources/extras/new_thumb.jpg",
+                thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
                 caption=f"```{cmd}```",
                 reply_to=reply_to_id,
