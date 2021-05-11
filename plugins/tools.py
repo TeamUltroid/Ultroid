@@ -304,7 +304,7 @@ async def _(e):
     text = []
     apk = []
     exe = []
-    zip = []
+    zip_ = []
     book = []
     for file in sorted(files):
         if os.path.isdir(file):
@@ -324,9 +324,9 @@ async def _(e):
         elif str(file).endswith((".apk", ".xapk")):
             apk.append("📲 " + str(file))
         elif str(file).endswith(".exe"):
-            set.append("⚙ " + str(file))
+            exe.append("⚙ " + str(file))
         elif str(file).endswith((".zip", ".rar")):
-            zip.append("🗜 " + str(file))
+            zip_.append("🗜 " + str(file))
         elif str(file).endswith((".pdf", ".epub")):
             book.append("📗 " + str(file))
         elif "." in str(file)[1:]:
@@ -337,7 +337,7 @@ async def _(e):
         *sorted(folders),
         *sorted(pyfiles),
         *sorted(jsons),
-        *sorted(zip),
+        *sorted(zip_),
         *sorted(vdos),
         *sorted(pics),
         *sorted(audios),
