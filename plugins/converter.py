@@ -53,6 +53,7 @@ async def _(e):
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
     udB.set("CUSTOM_THUMBNAIL", str(nn))
+    await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
     await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
 
 
@@ -78,8 +79,6 @@ async def imak(event):
         else:
             file = await event.download_media(reply)
     os.rename(file, inp)
-    if Redis("CUSTOM_THUMBNAIL"):
-        await bash(f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg")
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
     await ultroid_bot.send_file(
