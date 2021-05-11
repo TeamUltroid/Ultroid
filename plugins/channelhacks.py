@@ -49,8 +49,7 @@ async def _(e):
         return
     x = get_source_channels()
     th = await e.get_chat()
-    for xs in x:
-        if str(th.id) not in str(xs):
+    if str(th.id) not in x:
             return
     y = get_destinations()
     for ys in y:
