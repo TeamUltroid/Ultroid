@@ -222,7 +222,7 @@ async def _(fuk):
             await whome.send_file(
                 chat,
                 f"{ytdl_data['id']}.mp4",
-                thumb=f"./resources/extras/new_thumb.jpg",
+                thumb=f"./resources/extras/ultroid.jpg",
                 caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
                 supports_streaming=True,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -240,7 +240,7 @@ async def _(fuk):
             await asst.send_file(
                 chat,
                 f"{ytdl_data['id']}.mp4",
-                thumb=f"./resources/extras/new_thumb.jpg",
+                thumb=f"./resources/extras/ultroid.jpg",
                 caption=f"**{ytdl_data['title']}\n{time_formatter((ytdl_data['duration'])*1000)}\n{ytdl_data['uploader']}**",
                 supports_streaming=True,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
