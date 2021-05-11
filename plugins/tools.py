@@ -151,7 +151,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-pattern="bots ?(.*)",
+    pattern="bots ?(.*)",
 )
 async def _(ult):
     await ult.edit("`...`")
@@ -196,7 +196,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-pattern="hl",
+    pattern="hl",
 )
 async def _(ult):
     try:
@@ -281,7 +281,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="ls ?(.*)",
+    pattern="ls ?(.*)",
 )
 async def _(e):
     path = Path(e.pattern_match.group(1))
