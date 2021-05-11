@@ -79,9 +79,7 @@ async def imak(event):
             file = await event.download_media(reply)
     os.rename(file, inp)
     if Redis("CUSTOM_THUMBNAIL"):
-        await bash(
-            f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg"
-        )
+        await bash(f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/ultroid.jpg")
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
     await ultroid_bot.send_file(
