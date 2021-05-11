@@ -50,7 +50,7 @@ async def _(e):
     x = get_source_channels()
     th = await e.get_chat()
     if str(th.id) not in x:
-            return
+        return
     y = get_destinations()
     for ys in y:
         try:
