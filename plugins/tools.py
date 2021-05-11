@@ -237,7 +237,9 @@ async def _(e):
         await bash(
             f'ffmpeg -i "{c.name}" -preset ultrafast -acodec libmp3lame -ac 2 -ab 144kb -ar 44100 comp.mp3'
         )
-        await bash(f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4')
+        await bash(
+            f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4'
+        )
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
         f = "circle.mp4"
