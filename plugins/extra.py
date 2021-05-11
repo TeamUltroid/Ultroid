@@ -49,7 +49,7 @@ async def copy(e):
             await eor(e, reply.text)
         else:
             await reply.reply(reply)
-            if e.sender_id==ultroid_bot.uid:
+            if e.sender_id == ultroid_bot.uid:
                 await e.delete()
     else:
         await eod(e, "`Reply To any message`")
