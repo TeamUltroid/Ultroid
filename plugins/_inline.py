@@ -221,19 +221,16 @@ async def _(e):
     ]
     await e.edit(buttons=button, link_preview=False)
 
-
-if asst.me is not None:
-
-    @callback("hrrrr")
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback("hrrrr")
+@owner
+async def on_plug_in_callback_query_handler(event):
         xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
         buttons = page_num(0, PLUGINS, "helpme", "def")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
-    @callback("frrr")
-    @owner
-    async def addon(event):
+@callback("frrr")
+@owner
+async def addon(event):
         halp = zhelps.format(OWNER_NAME, len(ADDONS))
         if len(ADDONS) > 0:
             buttons = page_num(0, ADDONS, "addon", "add")
@@ -245,74 +242,74 @@ if asst.me is not None:
                 alert=True,
             )
 
-    @callback("rstrt")
-    @owner
-    async def rrst(ult):
-        await restart(ult)
+@callback("rstrt")
+@owner
+async def rrst(ult):
+    await restart(ult)
 
-    @callback(
-        re.compile(
-            rb"helpme_next\((.+?)\)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
-        current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = page_num(current_page_number + 1, PLUGINS, "helpme", "def")
-        await event.edit(buttons=buttons, link_preview=False)
+@callback(
+re.compile(
+rb"helpme_next\((.+?)\)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number + 1, PLUGINS, "helpme", "def")
+    await event.edit(buttons=buttons, link_preview=False)
 
-    @callback(
-        re.compile(
-            rb"helpme_prev\((.+?)\)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback(
+re.compile(
+rb"helpme_prev\((.+?)\)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
         buttons = page_num(current_page_number - 1, PLUGINS, "helpme", "def")
         await event.edit(buttons=buttons, link_preview=False)
 
-    @callback(
-        re.compile(
-            rb"addon_next\((.+?)\)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback(
+re.compile(
+rb"addon_next\((.+?)\)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
         buttons = page_num(current_page_number + 1, ADDONS, "addon", "add")
         await event.edit(buttons=buttons, link_preview=False)
 
-    @callback(
-        re.compile(
-            rb"addon_prev\((.+?)\)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback(
+re.compile(
+rb"addon_prev\((.+?)\)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
         buttons = page_num(current_page_number - 1, ADDONS, "addon", "add")
         await event.edit(buttons=buttons, link_preview=False)
 
-    @callback("back")
-    @owner
-    async def backr(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
+@callback("back")
+@owner
+async def backr(event):
+        xhelps = helps.format(OWNER_NAME, len(PLUGINS))
         current_page_number = int(upage)
         buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
-    @callback("buck")
-    @owner
-    async def backr(event):
+@callback("buck")
+@owner
+async def backr(event):
         xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
         current_page_number = int(upage)
         buttons = page_num(current_page_number, ADDONS, "addon", "add")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
-    @callback("open")
-    @owner
-    async def opner(event):
+@callback("open")
+@owner
+async def opner(event):
         bnn = asst.me.username
         buttons = [
             [
@@ -339,7 +336,7 @@ if asst.me is not None:
         await event.edit(
             get_string("inline_4").format(
                 OWNER_NAME,
-                len(PLUGINS) - 5,
+                len(PLUGINS),
                 len(ADDONS),
                 cmd,
             ),
@@ -347,21 +344,21 @@ if asst.me is not None:
             link_preview=False,
         )
 
-    @callback("close")
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback("close")
+@owner
+async def on_plug_in_callback_query_handler(event):
         await event.edit(
             get_string("inline_5"),
             buttons=Button.inline("Oᴘᴇɴ Mᴀɪɴ Mᴇɴᴜ Aɢᴀɪɴ", data="open"),
         )
 
-    @callback(
-        re.compile(
-            b"def_plugin_(.*)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback(
+re.compile(
+b"def_plugin_(.*)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
         plugin_name = event.data_match.group(1).decode("UTF-8")
         help_string = f"Plugin Name - `{plugin_name}`\n"
         try:
@@ -390,13 +387,13 @@ if asst.me is not None:
             halps = f"Do .help {plugin_name} to get the list of commands."
             await event.edit(halps)
 
-    @callback(
-        re.compile(
-            b"add_plugin_(.*)",
-        ),
-    )
-    @owner
-    async def on_plug_in_callback_query_handler(event):
+@callback(
+re.compile(
+b"add_plugin_(.*)",
+),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
         plugin_name = event.data_match.group(1).decode("UTF-8")
         help_string = ""
         try:
