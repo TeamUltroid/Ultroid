@@ -7,7 +7,7 @@
 
 import re
 
-from telethon.errors.rpcerrorlist import MediaEmptyError as mee
+from telethon.errors.rpcerrorlist import ChatWriteForbiddenError, PeerIdInvalidError, MediaEmptyError
 from telethon.utils import get_display_name
 
 from . import *
@@ -55,7 +55,7 @@ async def all_messages_catcher(e):
                         [Button.url(where_n, where_l)],
                     ],
                 )
-        except mee:
+        except MediaEmptyError:
             if x.username:
                 who_l = f"https://t.me/{x.username}"
                 await asst.send_message(
@@ -75,12 +75,12 @@ async def all_messages_catcher(e):
                         [Button.url(where_n, where_l)],
                     ],
                 )
+        except PeerIdInvalidError:
+            await ultroid_bot.send_message(int(udB.LOG_CHANNEL), "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It")
+        except ChatWriteForbiddenError:
+            await ultroid_bot.send_message(NEEDTOLOG, "Please Give Your Assistant Bot 
         except Exception as er:
             LOGS.info(str(er))
-            await ultroid_bot.send_message(
-                NEEDTOLOG,
-                f"Please Add Your Assistant Bot - @{asst.me.username} as admin here.",
-            )
     else:
         return
 
