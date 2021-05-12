@@ -22,7 +22,7 @@
 """
 
 from telethon.events import NewMessage as NewMsg
-
+import asyncio
 from . import *
 
 _new_msgs = {}
