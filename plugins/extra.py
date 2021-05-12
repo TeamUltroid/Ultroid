@@ -36,6 +36,8 @@ _new_msgs = {}
     ),
 )
 async def newmsg(event):
+    if event.message.message == f"{HNDLR}reply":
+        return
     _new_msgs[event.chat_id] = event.message
 
 
