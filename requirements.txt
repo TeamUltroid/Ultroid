@@ -1,2 +1,2 @@
-py-Ultroid==24.5b0
+py-Ultroid==24.6b0
 qrcode
