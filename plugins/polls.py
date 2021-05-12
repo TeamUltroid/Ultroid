@@ -26,8 +26,8 @@ from . import *
 
 
 @ultroid_cmd(
-pattern="poll ?(.*)",
-groups_only=True,
+    pattern="poll ?(.*)",
+    groups_only=True,
 )
 async def uri_poll(e):
     match = e.pattern_match.group(1)
