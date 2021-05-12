@@ -21,8 +21,10 @@
     Reply the last sent msg to replied user.
 """
 
-from telethon.events import NewMessage as NewMsg
 import asyncio
+
+from telethon.events import NewMessage as NewMsg
+
 from . import *
 
 _new_msgs = {}
