@@ -93,9 +93,6 @@ async def _(event):
         await eor(xx, OUT)
 
 
-p = print  # ignore: pylint
-
-
 @ultroid_cmd(
     pattern="eval",
 )
@@ -167,12 +164,16 @@ async def _(event):
 
 async def aexec(code, event):
     e = message = event
-    event.client
+    client = event.client
+    p = print  # ignore: pylint
     exec(
         f"async def __aexec(e, client): "
         + "\n message = event = e"
         + "".join(f"\n {l}" for l in code.split("\n")),
     )
+
+    return await locals()["__aexec"](e, e.client)
+
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
