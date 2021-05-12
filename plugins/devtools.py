@@ -94,7 +94,7 @@ async def _(event):
 
 
 p = print  # ignore: pylint
-    
+
 
 @ultroid_cmd(
     pattern="eval",
