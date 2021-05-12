@@ -111,7 +111,7 @@ async def inline_handler(event):
 @in_pattern("paste?(.*)")
 @in_owner
 async def _(event):
-    ok = (event.pattern_match.group(1)).split("-")[1]
+    ok = event.pattern_match.group(1)
     link = "https://nekobin.com/"
     result = builder.article(
         title="Paste",
