@@ -10,23 +10,26 @@
 
 •`qrcode <text/reply to text>`
    Makes qrcode of text
-   
+
 •`addqr <reply image> <text>`
    Makes qr of text and add it to image.
-   
+
 •`qrdecode <reply to qrcode>`
    It decodes the qrcode.
 """
 
 
+import os
 
-import os, cv2, qrcode
+import cv2
+import qrcode
 from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
+
 from . import *
 
-    
+
 @ultroid_cmd(pattern="qrcode ?(.*)")
 async def cd(e):
     reply = await e.get_reply_message()
@@ -40,22 +43,22 @@ async def cd(e):
     kk = await eor(e, "`processing`")
     pfp = await ultroid_bot.get_profile_photos(ultroid_bot.uid)
     img = "resources/extras/teamultroid.jpg"
-    if len(pfp)>=1:
-       img = await ultroid_bot.download_media(pfp[0])
+    if len(pfp) >= 1:
+        img = await ultroid_bot.download_media(pfp[0])
     ok = Image.open(img)
-    logo = ok.resize((60,60))
+    logo = ok.resize((60, 60))
     cod = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
     cod.add_data(msg)
     cod.make()
-    imgg = cod.make_image().convert('RGB')
+    imgg = cod.make_image().convert("RGB")
     pstn = ((imgg.size[0] - logo.size[0]) // 2, (imgg.size[1] - logo.size[1]) // 2)
     imgg.paste(logo, pstn)
     imgg.save(img)
     await ultroid_bot.send_file(e.chat_id, img, support_stream=True)
     await kk.delete()
     os.remove(img)
-    
-    
+
+
 @ultroid_cmd(pattern="addqr ?(.*)")
 async def qrwater(e):
     msg = e.pattern_match.group(1)
@@ -65,7 +68,7 @@ async def qrwater(e):
     kk = await eor(e, "`processing`")
     if isinstance(r.media, photu):
         dl = await ultroid_bot.download_media(r.media)
-    elif isinstance(r.media, doc ):
+    elif isinstance(r.media, doc):
         dl = await ultroid_bot.download_media(r, thumb=-1)
     else:
         return
@@ -80,7 +83,8 @@ async def qrwater(e):
     await ultroid_bot.send_file(e.chat_id, dl, support_stream=True)
     await kk.delete()
     os.remove(dl)
-    
+
+
 @ultroid_cmd(pattern="qrdecode$")
 async def decod(e):
     r = await e.get_reply_message()
@@ -89,7 +93,7 @@ async def decod(e):
     kk = await eor(e, "`processing`")
     if isinstance(r.media, photu):
         dl = await ultroid_bot.download_media(r.media)
-    elif isinstance(r.media, doc ):
+    elif isinstance(r.media, doc):
         dl = await ultroid_bot.download_media(r, thumb=-1)
     else:
         return
@@ -101,5 +105,6 @@ async def decod(e):
     except BaseException:
         await kk.edit("`Reply To Media in Which Qr image present.`")
     os.remove(dl)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
