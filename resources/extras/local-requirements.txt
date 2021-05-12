@@ -1,6 +1,3 @@
-# Local Requirements.
-
-py-Ultroid
 asyncurban
 carbonnow
 cairosvg
