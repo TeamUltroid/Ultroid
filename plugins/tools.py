@@ -33,19 +33,13 @@
 
 """
 
-import asyncio
-import io
 import os
-import sys
 import time
-import traceback
 from asyncio.exceptions import TimeoutError
-from os import remove
 from pathlib import Path
 
 import cv2
 import emoji
-from carbonnow import Carbon
 from googletrans import Translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -349,7 +343,6 @@ async def _(e):
                 text += emoji + f" `{nam}`" + "\n"
 
     await eor(e, text)
-
 
 
 @ultroid_cmd(
