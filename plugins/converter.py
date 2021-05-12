@@ -50,10 +50,10 @@ async def _(e):
     pop = "`Reply to img or file with thumbnail.`"
     if not r:
         return await eor(e, pop)
-    if isinstance(m.media, photu):
+    if isinstance(r.media, photu):
         dl = await ultroid_bot.download_media(r.media)
-    elif isinstance(m.media, doc):
-        if m.media.document.thumbs:
+    elif isinstance(r.media, doc):
+        if r.media.document.thumbs:
             dl = await ultroid_bot.download_media(r, thumb=-1)
         else:
             return await eor(e, pop)
