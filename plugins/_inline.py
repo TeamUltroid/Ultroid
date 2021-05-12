@@ -137,9 +137,10 @@ async def setting(event):
                 Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
             ],
             [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
-        [Button.inline("<- Bᴀᴄᴋ", data="open")],
-    ],
+            [Button.inline("<- Bᴀᴄᴋ", data="open")],
+        ],
     )
+
 
 @callback("pkng")
 async def _(event):
@@ -149,11 +150,13 @@ async def _(event):
     pin = f"🌋Pɪɴɢ = {ms}ms"
     await event.answer(pin, cache_time=0, alert=True)
 
+
 @callback("upp")
 async def _(event):
     uptime = grt(time.time() - start_time)
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
     await event.answer(pin, cache_time=0, alert=True)
+
 
 @callback("inlone")
 @owner
@@ -179,44 +182,45 @@ async def _(e):
             ),
         ],
         [
-                Button.switch_inline(
-                    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
-                    query="go TeamUltroid",
-                    same_peer=True,
-                ),
-                Button.switch_inline(
-                    "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
-                    query="yahoo TeamUltroid",
-                    same_peer=True,
-                ),
+            Button.switch_inline(
+                "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
+                query="go TeamUltroid",
+                same_peer=True,
+            ),
+            Button.switch_inline(
+                "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
+                query="yahoo TeamUltroid",
+                same_peer=True,
+            ),
         ],
         [
-                Button.switch_inline(
-                    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                    query="yt Ed Sheeran Perfect",
-                    same_peer=True,
-                ),
+            Button.switch_inline(
+                "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
+                query="yt Ed Sheeran Perfect",
+                same_peer=True,
+            ),
         ],
         [
-                Button.switch_inline(
-                    "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
-                    query="clipart frog",
-                    same_peer=True,
-                ),
-                Button.switch_inline(
-                    "OʀᴀɴɢᴇFᴏx🦊",
-                    query="ofox beryllium",
-                    same_peer=True,
-                ),
+            Button.switch_inline(
+                "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
+                query="clipart frog",
+                same_peer=True,
+            ),
+            Button.switch_inline(
+                "OʀᴀɴɢᴇFᴏx🦊",
+                query="ofox beryllium",
+                same_peer=True,
+            ),
         ],
         [
-                Button.inline(
-                    "<- Bᴀᴄᴋ",
-                    data="open",
+            Button.inline(
+                "<- Bᴀᴄᴋ",
+                data="open",
             ),
         ],
     ]
     await e.edit(buttons=button, link_preview=False)
+
 
 if asst.me is not None:
 
