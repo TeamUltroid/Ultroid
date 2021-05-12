@@ -221,36 +221,40 @@ async def _(e):
     ]
     await e.edit(buttons=button, link_preview=False)
 
+
 @callback("hrrrr")
 @owner
 async def on_plug_in_callback_query_handler(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
-        buttons = page_num(0, PLUGINS, "helpme", "def")
-        await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+    xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
+    buttons = page_num(0, PLUGINS, "helpme", "def")
+    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+
 
 @callback("frrr")
 @owner
 async def addon(event):
-        halp = zhelps.format(OWNER_NAME, len(ADDONS))
-        if len(ADDONS) > 0:
-            buttons = page_num(0, ADDONS, "addon", "add")
-            await event.edit(f"{halp}", buttons=buttons, link_preview=False)
-        else:
-            await event.answer(
-                f"• Tʏᴘᴇ `{HNDLR}setredis ADDONS True`\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
-                cache_time=0,
-                alert=True,
-            )
+    halp = zhelps.format(OWNER_NAME, len(ADDONS))
+    if len(ADDONS) > 0:
+        buttons = page_num(0, ADDONS, "addon", "add")
+        await event.edit(f"{halp}", buttons=buttons, link_preview=False)
+    else:
+        await event.answer(
+            f"• Tʏᴘᴇ `{HNDLR}setredis ADDONS True`\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
+            cache_time=0,
+            alert=True,
+        )
+
 
 @callback("rstrt")
 @owner
 async def rrst(ult):
     await restart(ult)
 
+
 @callback(
-re.compile(
-rb"helpme_next\((.+?)\)",
-),
+    re.compile(
+        rb"helpme_next\((.+?)\)",
+    ),
 )
 @owner
 async def on_plug_in_callback_query_handler(event):
@@ -258,185 +262,192 @@ async def on_plug_in_callback_query_handler(event):
     buttons = page_num(current_page_number + 1, PLUGINS, "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
-@callback(
-re.compile(
-rb"helpme_prev\((.+?)\)",
-),
-)
-@owner
-async def on_plug_in_callback_query_handler(event):
-        current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = page_num(current_page_number - 1, PLUGINS, "helpme", "def")
-        await event.edit(buttons=buttons, link_preview=False)
 
 @callback(
-re.compile(
-rb"addon_next\((.+?)\)",
-),
+    re.compile(
+        rb"helpme_prev\((.+?)\)",
+    ),
 )
 @owner
 async def on_plug_in_callback_query_handler(event):
-        current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = page_num(current_page_number + 1, ADDONS, "addon", "add")
-        await event.edit(buttons=buttons, link_preview=False)
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number - 1, PLUGINS, "helpme", "def")
+    await event.edit(buttons=buttons, link_preview=False)
+
 
 @callback(
-re.compile(
-rb"addon_prev\((.+?)\)",
-),
+    re.compile(
+        rb"addon_next\((.+?)\)",
+    ),
 )
 @owner
 async def on_plug_in_callback_query_handler(event):
-        current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = page_num(current_page_number - 1, ADDONS, "addon", "add")
-        await event.edit(buttons=buttons, link_preview=False)
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number + 1, ADDONS, "addon", "add")
+    await event.edit(buttons=buttons, link_preview=False)
+
+
+@callback(
+    re.compile(
+        rb"addon_prev\((.+?)\)",
+    ),
+)
+@owner
+async def on_plug_in_callback_query_handler(event):
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number - 1, ADDONS, "addon", "add")
+    await event.edit(buttons=buttons, link_preview=False)
+
 
 @callback("back")
 @owner
 async def backr(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS))
-        current_page_number = int(upage)
-        buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
-        await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+    xhelps = helps.format(OWNER_NAME, len(PLUGINS))
+    current_page_number = int(upage)
+    buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
+    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+
 
 @callback("buck")
 @owner
 async def backr(event):
-        xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
-        current_page_number = int(upage)
-        buttons = page_num(current_page_number, ADDONS, "addon", "add")
-        await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+    xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
+    current_page_number = int(upage)
+    buttons = page_num(current_page_number, ADDONS, "addon", "add")
+    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+
 
 @callback("open")
 @owner
 async def opner(event):
-        bnn = asst.me.username
-        buttons = [
-            [
-                Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-            ],
-            [
-                Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
-                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-            ],
-            [
-                Button.url(
-                    "⚙️Sᴇᴛᴛɪɴɢs⚙️",
-                    url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
-                ),
-            ],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-        ]
-        z = []
-        for x in LIST.values():
-            for y in x:
-                z.append(y)
-        cmd = len(z) + 10
-        await event.edit(
-            get_string("inline_4").format(
-                OWNER_NAME,
-                len(PLUGINS),
-                len(ADDONS),
-                cmd,
+    bnn = asst.me.username
+    buttons = [
+        [
+            Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
+            Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+        ],
+        [
+            Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
+            Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+        ],
+        [
+            Button.url(
+                "⚙️Sᴇᴛᴛɪɴɢs⚙️",
+                url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
             ),
-            buttons=buttons,
-            link_preview=False,
-        )
+        ],
+        [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+    ]
+    z = []
+    for x in LIST.values():
+        for y in x:
+            z.append(y)
+    cmd = len(z) + 10
+    await event.edit(
+        get_string("inline_4").format(
+            OWNER_NAME,
+            len(PLUGINS),
+            len(ADDONS),
+            cmd,
+        ),
+        buttons=buttons,
+        link_preview=False,
+    )
+
 
 @callback("close")
 @owner
 async def on_plug_in_callback_query_handler(event):
-        await event.edit(
-            get_string("inline_5"),
-            buttons=Button.inline("Oᴘᴇɴ Mᴀɪɴ Mᴇɴᴜ Aɢᴀɪɴ", data="open"),
-        )
+    await event.edit(
+        get_string("inline_5"),
+        buttons=Button.inline("Oᴘᴇɴ Mᴀɪɴ Mᴇɴᴜ Aɢᴀɪɴ", data="open"),
+    )
+
 
 @callback(
-re.compile(
-b"def_plugin_(.*)",
-),
+    re.compile(
+        b"def_plugin_(.*)",
+    ),
 )
 @owner
 async def on_plug_in_callback_query_handler(event):
-        plugin_name = event.data_match.group(1).decode("UTF-8")
-        help_string = f"Plugin Name - `{plugin_name}`\n"
-        try:
-            for i in HELP[plugin_name]:
-                help_string += i
-        except BaseException:
-            pass
-        if help_string == "":
-            reply_pop_up_alert = f"{plugin_name} has no detailed help..."
+    plugin_name = event.data_match.group(1).decode("UTF-8")
+    help_string = f"Plugin Name - `{plugin_name}`\n"
+    try:
+        for i in HELP[plugin_name]:
+            help_string += i
+    except BaseException:
+        pass
+    if help_string == "":
+        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
+    else:
+        reply_pop_up_alert = help_string
+    reply_pop_up_alert += "\n© @TeamUltroid"
+    try:
+        if event.query.user_id in sed:
+            await event.edit(
+                reply_pop_up_alert,
+                buttons=[
+                    Button.inline("<- Bᴀᴄᴋ", data="back"),
+                    Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                ],
+            )
         else:
-            reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TeamUltroid"
-        try:
-            if event.query.user_id in sed:
-                await event.edit(
-                    reply_pop_up_alert,
-                    buttons=[
-                        Button.inline("<- Bᴀᴄᴋ", data="back"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-                    ],
-                )
-            else:
-                reply_pop_up_alert = notmine
-                await event.answer(reply_pop_up_alert, cache_time=0)
-        except BaseException:
-            halps = f"Do .help {plugin_name} to get the list of commands."
-            await event.edit(halps)
+            reply_pop_up_alert = notmine
+            await event.answer(reply_pop_up_alert, cache_time=0)
+    except BaseException:
+        halps = f"Do .help {plugin_name} to get the list of commands."
+        await event.edit(halps)
+
 
 @callback(
-re.compile(
-b"add_plugin_(.*)",
-),
+    re.compile(
+        b"add_plugin_(.*)",
+    ),
 )
 @owner
 async def on_plug_in_callback_query_handler(event):
-        plugin_name = event.data_match.group(1).decode("UTF-8")
-        help_string = ""
+    plugin_name = event.data_match.group(1).decode("UTF-8")
+    help_string = ""
+    try:
+        for i in HELP[plugin_name]:
+            help_string += i
+    except BaseException:
         try:
-            for i in HELP[plugin_name]:
-                help_string += i
+            for u in CMD_HELP[plugin_name]:
+                help_string = f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
+                help_string += str(CMD_HELP[plugin_name])
         except BaseException:
             try:
-                for u in CMD_HELP[plugin_name]:
+                if plugin_name in LIST:
                     help_string = (
                         f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
                     )
-                    help_string += str(CMD_HELP[plugin_name])
+                    for d in LIST[plugin_name]:
+                        help_string += HNDLR + d
+                        help_string += "\n"
             except BaseException:
-                try:
-                    if plugin_name in LIST:
-                        help_string = (
-                            f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
-                        )
-                        for d in LIST[plugin_name]:
-                            help_string += HNDLR + d
-                            help_string += "\n"
-                except BaseException:
-                    pass
-        if help_string == "":
-            reply_pop_up_alert = f"{plugin_name} has no detailed help..."
+                pass
+    if help_string == "":
+        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
+    else:
+        reply_pop_up_alert = help_string
+    reply_pop_up_alert += "\n© @TeamUltroid"
+    try:
+        if event.query.user_id in sed:
+            await event.edit(
+                reply_pop_up_alert,
+                buttons=[
+                    Button.inline("<- Bᴀᴄᴋ", data="buck"),
+                    Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                ],
+            )
         else:
-            reply_pop_up_alert = help_string
-        reply_pop_up_alert += "\n© @TeamUltroid"
-        try:
-            if event.query.user_id in sed:
-                await event.edit(
-                    reply_pop_up_alert,
-                    buttons=[
-                        Button.inline("<- Bᴀᴄᴋ", data="buck"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-                    ],
-                )
-            else:
-                reply_pop_up_alert = notmine
-                await event.answer(reply_pop_up_alert, cache_time=0)
-        except BaseException:
-            halps = f"Do .help {plugin_name} to get the list of commands."
-            await event.edit(halps)
+            reply_pop_up_alert = notmine
+            await event.answer(reply_pop_up_alert, cache_time=0)
+    except BaseException:
+        halps = f"Do .help {plugin_name} to get the list of commands."
+        await event.edit(halps)
 
 
 def page_num(page_number, loaded_plugins, prefix, type):
