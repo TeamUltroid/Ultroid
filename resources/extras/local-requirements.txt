@@ -17,6 +17,7 @@ PyDictionary
 PyPDF2
 psutil
 pytz
+qrcode
 requests>=2.18.4
 scikit-image
 selenium
