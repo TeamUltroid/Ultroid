@@ -71,6 +71,62 @@ async def e(o):
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
 
+@in_pattern("ultd")
+@in_owner
+async def inline_handler(event):
+    z = []
+    for x in LIST.values():
+        for y in x:
+            z.append(y)
+    cmd = len(z)
+    bnn = asst.me.username
+    result = event.builder.article(
+        title="Help Menu",
+        description="Help Menu - UserBot | Telethon ",
+        url="https://t.me/TheUltroid",
+        thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+        text=get_string("inline_4").format(
+            OWNER_NAME,
+            len(PLUGINS),
+            len(ADDONS),
+            cmd,
+        ),
+        buttons=[
+            [
+                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+            ],
+            [
+                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+            ],
+            [
+                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set"),
+            ],
+            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+        ],
+    )
+    await event.answer([result])
+
+
+@in_pattern("paste?(.*)")
+@in_owner
+async def _(event):
+    ok = event.pattern_match.group(1)
+    link = "https://nekobin.com/"
+    result = builder.article(
+        title="Paste",
+        text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
+        buttons=[
+            [
+                Button.url("NekoBin", url=f"{link}{ok}"),
+                Button.url("Raw", url=f"{link}raw/{ok}"),
+            ],
+        ],
+    )
+    await event.answer([result])
+
+
 if asst.me is not None:
 
     @inline
