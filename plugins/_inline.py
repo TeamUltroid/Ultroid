@@ -73,23 +73,20 @@ async def e(o):
 @in_pattern("ultd")
 @in_owner
 async def inline_handler(event):
-    builder = event.builder
-    result = None
-    event.text
     z = []
     for x in LIST.values():
         for y in x:
             z.append(y)
     cmd = len(z)
     bnn = asst.me.username
-    result = builder.article(
+    result = event.builder.article(
         title="Help Menu",
         description="Help Menu - UserBot | Telethon ",
         url="https://t.me/TheUltroid",
         thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
         text=get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS) - 1,
+            len(PLUGINS),
             len(ADDONS),
             cmd,
         ),
@@ -225,7 +222,7 @@ if asst.me is not None:
     @callback("hrrrr")
     @owner
     async def on_plug_in_callback_query_handler(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
+        xhelps = helps.format(OWNER_NAME, len(PLUGINS))
         buttons = paginate_help(0, PLUGINS, "helpme")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
@@ -333,11 +330,11 @@ if asst.me is not None:
         for x in LIST.values():
             for y in x:
                 z.append(y)
-        cmd = len(z) + 10
+        cmd = len(z)
         await event.edit(
             get_string("inline_4").format(
                 OWNER_NAME,
-                len(PLUGINS) - 5,
+                len(PLUGINS),
                 len(ADDONS),
                 cmd,
             ),
