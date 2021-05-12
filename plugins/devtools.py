@@ -17,7 +17,7 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-import io
+import io, sys, traceback
 from os import remove
 
 from carbonnow import Carbon
@@ -62,10 +62,10 @@ async def _(event):
         reply_to_id = event.reply_to_msg_id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
-    e = stderr.decode()
+    e = stderr
     if e:
         OUT += f"**• ERROR:** \n`{e}`\n"
-    o = stdout.decode()
+    o = stdout
     if not o:
         o = "Success"
         OUT += f"**• OUTPUT:**\n`{o}`"
@@ -116,11 +116,33 @@ async def _(event):
         return await eod(xx, "`Give some python cmd`", time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-    out = await evalpy(cmd, event)
+    old_stderr = sys.stderr
+    old_stdout = sys.stdout
+    redirected_output = sys.stdout = io.StringIO()
+    redirected_error = sys.stderr = io.StringIO()
+    stdout, stderr, exc = None, None, None
+    reply_to_id = event.message.id
+    try:
+        await aexec(cmd, event)
+    except Exception:
+        exc = traceback.format_exc()
+    stdout = redirected_output.getvalue()
+    stderr = redirected_error.getvalue()
+    sys.stdout = old_stdout
+    sys.stderr = old_stderr
+    evaluation = ""
+    if exc:
+        evaluation = exc
+    elif stderr:
+        evaluation = stderr
+    elif stdout:
+        evaluation = stdout
+    else:
+        evaluation = "Success"
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
-            out,
+            evaluation,
         )
     )
     if len(final_output) > 4096:
@@ -140,5 +162,13 @@ async def _(event):
     else:
         await eor(xx, final_output)
 
+async def aexec(code, event):
+    e = message = event
+    client = event.client
+    exec(
+        f"async def __aexec(e, client): "
+        + "\n message = event = e"
+        + "".join(f"\n {l}" for l in code.split("\n")),
+    )
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
