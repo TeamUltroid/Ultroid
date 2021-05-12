@@ -314,7 +314,7 @@ async def _(event):
             .get("result")
             .get("key")
         )
-    q = f"paste-{key}"
+    q = f"paste {key}"
     reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(asst.me.username, q)
