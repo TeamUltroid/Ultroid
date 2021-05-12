@@ -21,8 +21,9 @@
     Reply the last sent msg to replied user.
 """
 
-from . import *
 from telethon.events import NewMessage as NewMsg
+
+from . import *
 
 _new_msgs = {}
 
@@ -33,7 +34,7 @@ _new_msgs = {}
     ),
 )
 async def newmsg(event):
-   _new_msgs[event.chat_id] = event.message
+    _new_msgs[event.chat_id] = event.message
 
 
 @ultroid_cmd(
@@ -100,10 +101,12 @@ async def _(e):
     if e.reply_to_msg_id and e.chat_id in _new_msgs:
         msg = _new_msgs[e.chat_id]
         chat = await e.get_input_chat()
-        await asyncio.wait([
-            e.client.delete_messages(chat, [e.id, msg.id]),
-            e.client.send_message(chat, msg, reply_to=e.reply_to_msg_id)
-    ])
+        await asyncio.wait(
+            [
+                e.client.delete_messages(chat, [e.id, msg.id]),
+                e.client.send_message(chat, msg, reply_to=e.reply_to_msg_id),
+            ]
+        )
     else:
         await e.delete()
 
