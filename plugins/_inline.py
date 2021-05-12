@@ -129,64 +129,6 @@ async def _(event):
 
 if asst.me is not None:
 
-    @inline
-    @in_owner
-    async def inline_handler(event):
-        builder = event.builder
-        result = None
-        query = event.text
-        if event.query.user_id in sed and query.startswith("ultd"):
-            z = []
-            for x in LIST.values():
-                for y in x:
-                    z.append(y)
-            cmd = len(z)
-            bnn = asst.me.username
-            result = builder.article(
-                title="Help Menu",
-                description="Help Menu - UserBot | Telethon ",
-                url="https://t.me/TheUltroid",
-                thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                text=get_string("inline_4").format(
-                    OWNER_NAME,
-                    len(PLUGINS),
-                    len(ADDONS),
-                    cmd,
-                ),
-                buttons=[
-                    [
-                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-                    ],
-                    [
-                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-                    ],
-                    [
-                        Button.url(
-                            "⚙️Sᴇᴛᴛɪɴɢs⚙️",
-                            url=f"https://t.me/{bnn}?start=set",
-                        ),
-                    ],
-                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-                ],
-            )
-            await event.answer([result] if result else None)
-        elif event.query.user_id in sed and query.startswith("paste"):
-            ok = query.split("-")[1]
-            link = f"https://nekobin.com/{ok}"
-            link_raw = f"https://nekobin.com/raw/{ok}"
-            result = builder.article(
-                title="Paste",
-                text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
-                buttons=[
-                    [
-                        Button.url("NekoBin", url=f"{link}"),
-                        Button.url("Raw", url=f"{link_raw}"),
-                    ],
-                ],
-            )
-            await event.answer([result] if result else None)
 
     @callback("ownr")
     @owner
