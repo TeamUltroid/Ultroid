@@ -17,7 +17,9 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-import io, sys, traceback
+import io
+import sys
+import traceback
 from os import remove
 
 from carbonnow import Carbon
@@ -162,13 +164,15 @@ async def _(event):
     else:
         await eor(xx, final_output)
 
+
 async def aexec(code, event):
     e = message = event
-    client = event.client
+    event.client
     exec(
         f"async def __aexec(e, client): "
         + "\n message = event = e"
         + "".join(f"\n {l}" for l in code.split("\n")),
     )
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
