@@ -10,10 +10,10 @@
 
 
 • `{i}mtoi <reply to media>`
-    media to image conversion
+    Media to image conversion
 
 • `{i}mtos <reply to media>`
-    convert media to sticker.
+    Convert media to sticker.
 
 • `{i}doc <filename.ext>`
     Reply to a text msg to save it in a file.
@@ -22,11 +22,10 @@
     Reply to a file to reveal it's text.
 
 • `{i}rename <file name with extension>`
-    rename the file
+    Rename the file
 
-• `{i}thumbnail <reply to image`
-    upload Your file with your custom thumbnail.
-    In Commands `{i}rename` and `{i}ul`
+• `{i}thumbnail <reply to image/thumbnail file>`
+    Upload Your file with your custom thumbnail.
 """
 
 import asyncio
@@ -37,6 +36,8 @@ import cv2
 import requests
 from PIL import Image
 from telegraph import upload_file as uf
+from telethon.tl.types import MessageMediaPhoto as photu
+from telethon.tl.types import MessageMediaDocument as doc
 
 from . import *
 
@@ -46,9 +47,16 @@ opn = []
 @ultroid_cmd(pattern="thumbnail$")
 async def _(e):
     r = await e.get_reply_message()
-    if not (r and r.media):
-        return await eor(e, "`Reply to img`")
-    dl = await ultroid_bot.download_media(r.media)
+    pop = "`Reply to img or file with thumbnail.`"
+    if not r:
+        return await eor(e, pop)
+    if isinstance(m.media, photu):
+        dl = await ultroid_bot.download_media(r.media)
+    elif isinstance(m.media, doc):
+        if m.media.document.thumbs:
+            dl = await ultroid_bot.download_media(r, thumb=-1)
+        else:
+            return await eor(e, pop)
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
