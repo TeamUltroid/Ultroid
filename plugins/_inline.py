@@ -129,7 +129,6 @@ async def _(event):
 
 if asst.me is not None:
 
-
     @callback("ownr")
     @owner
     async def setting(event):
