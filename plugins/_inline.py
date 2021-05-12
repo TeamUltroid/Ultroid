@@ -114,7 +114,7 @@ async def inline_handler(event):
 async def _(event):
     ok = event.pattern_match.group(1)
     link = "https://nekobin.com/"
-    result = builder.article(
+    result = event.builder.article(
         title="Paste",
         text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
         buttons=[
