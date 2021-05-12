@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import random
 import re
 import time
 from datetime import datetime
@@ -70,63 +71,66 @@ async def e(o):
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
 
-@in_pattern("ultd")
-@in_owner
-async def inline_handler(event):
-    z = []
-    for x in LIST.values():
-        for y in x:
-            z.append(y)
-    cmd = len(z)
-    bnn = asst.me.username
-    result = event.builder.article(
-        title="Help Menu",
-        description="Help Menu - UserBot | Telethon ",
-        url="https://t.me/TheUltroid",
-        thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-        text=get_string("inline_4").format(
-            OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
-            cmd,
-        ),
-        buttons=[
-            [
-                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-            ],
-            [
-                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-            ],
-            [
-                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set"),
-            ],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-        ],
-    )
-    await event.answer([result])
-
-
-@in_pattern("paste?(.*)")
-@in_owner
-async def _(event):
-    ok = (event.pattern_match.group(1)).split("-")[1]
-    link = "https://nekobin.com/"
-    result = builder.article(
-        title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
-        buttons=[
-            [
-                Button.url("NekoBin", url=f"{link}{ok}"),
-                Button.url("Raw", url=f"{link}raw/{ok}"),
-            ],
-        ],
-    )
-    await event.answer([result])
-
-
 if asst.me is not None:
+
+    @inline
+    @in_owner
+    async def inline_handler(event):
+        builder = event.builder
+        result = None
+        query = event.text
+        if event.query.user_id in sed and query.startswith("ultd"):
+            z = []
+            for x in LIST.values():
+                for y in x:
+                    z.append(y)
+            cmd = len(z)
+            bnn = asst.me.username
+            result = builder.article(
+                title="Help Menu",
+                description="Help Menu - UserBot | Telethon ",
+                url="https://t.me/TheUltroid",
+                thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+                text=get_string("inline_4").format(
+                    OWNER_NAME,
+                    len(PLUGINS),
+                    len(ADDONS),
+                    cmd,
+                ),
+                buttons=[
+                    [
+                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                    ],
+                    [
+                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                    ],
+                    [
+                        Button.url(
+                            "⚙️Sᴇᴛᴛɪɴɢs⚙️",
+                            url=f"https://t.me/{bnn}?start=set",
+                        ),
+                    ],
+                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+                ],
+            )
+            await event.answer([result] if result else None)
+        elif event.query.user_id in sed and query.startswith("paste"):
+            ok = query.split("-")[1]
+            link = f"https://nekobin.com/{ok}"
+            link_raw = f"https://nekobin.com/raw/{ok}"
+            result = builder.article(
+                title="Paste",
+                text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
+                buttons=[
+                    [
+                        Button.url("NekoBin", url=f"{link}"),
+                        Button.url("Raw", url=f"{link_raw}"),
+                    ],
+                ],
+            )
+            await event.answer([result] if result else None)
 
     @callback("ownr")
     @owner
@@ -222,8 +226,8 @@ if asst.me is not None:
     @callback("hrrrr")
     @owner
     async def on_plug_in_callback_query_handler(event):
-        xhelps = helps.format(OWNER_NAME, len(PLUGINS))
-        buttons = paginate_help(0, PLUGINS, "helpme")
+        xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
+        buttons = page_num(0, PLUGINS, "helpme", "def")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
     @callback("frrr")
@@ -231,7 +235,7 @@ if asst.me is not None:
     async def addon(event):
         halp = zhelps.format(OWNER_NAME, len(ADDONS))
         if len(ADDONS) > 0:
-            buttons = paginate_addon(0, ADDONS, "addon")
+            buttons = page_num(0, ADDONS, "addon", "add")
             await event.edit(f"{halp}", buttons=buttons, link_preview=False)
         else:
             await event.answer(
@@ -253,7 +257,7 @@ if asst.me is not None:
     @owner
     async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = paginate_help(current_page_number + 1, PLUGINS, "helpme")
+        buttons = page_num(current_page_number + 1, PLUGINS, "helpme", "def")
         await event.edit(buttons=buttons, link_preview=False)
 
     @callback(
@@ -264,7 +268,7 @@ if asst.me is not None:
     @owner
     async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = paginate_help(current_page_number - 1, PLUGINS, "helpme")
+        buttons = page_num(current_page_number - 1, PLUGINS, "helpme", "def")
         await event.edit(buttons=buttons, link_preview=False)
 
     @callback(
@@ -275,7 +279,7 @@ if asst.me is not None:
     @owner
     async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = paginate_addon(current_page_number + 1, ADDONS, "addon")
+        buttons = page_num(current_page_number + 1, ADDONS, "addon", "add")
         await event.edit(buttons=buttons, link_preview=False)
 
     @callback(
@@ -286,7 +290,7 @@ if asst.me is not None:
     @owner
     async def on_plug_in_callback_query_handler(event):
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-        buttons = paginate_addon(current_page_number - 1, ADDONS, "addon")
+        buttons = page_num(current_page_number - 1, ADDONS, "addon", "add")
         await event.edit(buttons=buttons, link_preview=False)
 
     @callback("back")
@@ -294,15 +298,15 @@ if asst.me is not None:
     async def backr(event):
         xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
         current_page_number = int(upage)
-        buttons = paginate_help(current_page_number, PLUGINS, "helpme")
+        buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
     @callback("buck")
     @owner
     async def backr(event):
         xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
-        current_page_number = int(addpage)
-        buttons = paginate_addon(current_page_number, ADDONS, "addon")
+        current_page_number = int(upage)
+        buttons = page_num(current_page_number, ADDONS, "addon", "add")
         await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
     @callback("open")
@@ -330,11 +334,11 @@ if asst.me is not None:
         for x in LIST.values():
             for y in x:
                 z.append(y)
-        cmd = len(z)
+        cmd = len(z) + 10
         await event.edit(
             get_string("inline_4").format(
                 OWNER_NAME,
-                len(PLUGINS),
+                len(PLUGINS) - 5,
                 len(ADDONS),
                 cmd,
             ),
@@ -352,7 +356,7 @@ if asst.me is not None:
 
     @callback(
         re.compile(
-            b"us_plugin_(.*)",
+            b"def_plugin_(.*)",
         ),
     )
     @owner
@@ -437,83 +441,28 @@ if asst.me is not None:
             await event.edit(halps)
 
 
-def paginate_help(page_number, loaded_plugins, prefix):
+def page_num(page_number, loaded_plugins, prefix, type):
     number_of_rows = 5
     number_of_cols = 2
     emoji = Redis("EMOJI_IN_HELP")
     if emoji:
-        emojihelp = emoji
+        multi, mult2i = emoji, emoji
     else:
-        emojihelp = "✘"
+        multi, mult2i = "✘", "✘"
     helpable_plugins = []
     global upage
     upage = page_number
     for p in loaded_plugins:
-        if not p.startswith("_"):
-            helpable_plugins.append(p)
+        helpable_plugins.append(p)
     helpable_plugins = sorted(helpable_plugins)
     modules = [
         Button.inline(
             "{} {} {}".format(
-                emojihelp,
+                random.choice(list(multi)),
                 x,
-                emojihelp,
+                random.choice(list(mult2i)),
             ),
-            data=f"us_plugin_{x}",
-        )
-        for x in helpable_plugins
-    ]
-    pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols]))
-    if len(modules) % number_of_cols == 1:
-        pairs.append((modules[-1],))
-    max_num_pages = ceil(len(pairs) / number_of_rows)
-    modulo_page = page_number % max_num_pages
-    if len(pairs) > number_of_rows:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline(
-                    "<- Pʀᴇᴠɪᴏᴜs",
-                    data=f"{prefix}_prev({modulo_page})",
-                ),
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
-                Button.inline(
-                    "Nᴇxᴛ ->",
-                    data=f"{prefix}_next({modulo_page})",
-                ),
-            ),
-        ]
-    else:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
-    return pairs
-
-
-def paginate_addon(page_number, loaded_plugins, prefix):
-    number_of_rows = 5
-    number_of_cols = 2
-    emoji = Redis("EMOJI_IN_HELP")
-    if emoji:
-        emojihelp = emoji
-    else:
-        emojihelp = "✘"
-    helpable_plugins = []
-    global addpage
-    addpage = page_number
-    for p in loaded_plugins:
-        if not p.startswith("_"):
-            helpable_plugins.append(p)
-    helpable_plugins = sorted(helpable_plugins)
-    modules = [
-        Button.inline(
-            "{} {} {}".format(
-                emojihelp,
-                x,
-                emojihelp,
-            ),
-            data=f"add_plugin_{x}",
+            data=f"{type}_plugin_{x}",
         )
         for x in helpable_plugins
     ]
