@@ -72,9 +72,9 @@ async def update(eve):
         await eve.edit(
             "`Successfully Updated!\nBot is restarting... Wait for a second!`"
         )
-        os.system("git pull"), os.system("pip3.9 install -U -r requirements.txt"), os.execl(
-            sys.executable, sys.executable, "-m", "pyUltroid"
-        )
+        os.system("git pull"), os.system(
+            "pip3.9 install -U -r requirements.txt"
+        ), os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
     else:
         try:
             ups_rem.pull(ac_br)
