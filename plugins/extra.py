@@ -22,6 +22,18 @@
 """
 
 from . import *
+from telethon.events import NewMessage as NewMsg
+
+_new_msgs = {}
+
+
+@ultroid_bot.on(
+    NewMsg(
+        outgoing=True,
+    ),
+)
+async def newmsg(event):
+   _new_msgs[event.chat_id] = event.message
 
 
 @ultroid_cmd(
@@ -85,16 +97,15 @@ async def editer(edit):
     pattern="reply$",
 )
 async def _(e):
-    repl = await e.get_reply_message()
-    if repl:
-        await e.delete()
-        async for p in e.client.iter_messages(
-            e.chat_id, from_user=ultroid_bot.uid, limit=1
-        ):
-            await e.client.send_message(e.chat_id, p.text, file=p.media, reply_to=repl)
-            await p.delete()
+    if e.reply_to_msg_id and e.chat_id in _new_msgs:
+        msg = _new_msgs[e.chat_id]
+        chat = await e.get_input_chat()
+        await asyncio.wait([
+            e.client.delete_messages(chat, [e.id, msg.id]),
+            e.client.send_message(chat, msg, reply_to=e.reply_to_msg_id)
+    ])
     else:
-        await eod(e, "`Reply To any message`")
+        await e.delete()
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
