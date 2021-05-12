@@ -78,7 +78,7 @@ async def all_messages_catcher(e):
         except PeerIdInvalidError:
             await ultroid_bot.send_message(int(udB.get("LOG_CHANNEL")), "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It")
         except ChatWriteForbiddenError:
-            await ultroid_bot.send_message(NEEDTOLOG, "Please Give Your Assistant Bot 
+            await ultroid_bot.send_message(NEEDTOLOG, "Please Give Your Assistant Bot")
         except Exception as er:
             LOGS.info(str(er))
     else:
