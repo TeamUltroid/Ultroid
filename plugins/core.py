@@ -41,7 +41,7 @@ async def inline_handler(event):
     builder = event.builder
     input_str = event.pattern_match.group(1)
     if input_str is None or input_str == "":
-        plugs = await event.builder.article(
+        plugs = event.builder.article(
             title=f"Which plugin?",
             text="No Module",
             buttons=[
@@ -52,7 +52,7 @@ async def inline_handler(event):
                 ),
             ],
         )
-        await event.answer(plugs)
+        await event.answer([plugs])
     else:
         try:
             ultroid = builder.document(
