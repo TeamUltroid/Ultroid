@@ -127,60 +127,58 @@ async def _(event):
     await event.answer([result])
 
 
-if asst.me is not None:
-
-    @callback("ownr")
-    @owner
-    async def setting(event):
-        await event.edit(
-            buttons=[
-                [
-                    Button.inline("•Pɪɴɢ•", data="pkng"),
-                    Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
-                ],
-                [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
-                [Button.inline("<- Bᴀᴄᴋ", data="open")],
-            ],
-        )
-
-    @callback("pkng")
-    async def _(event):
-        start = datetime.now()
-        end = datetime.now()
-        ms = (end - start).microseconds / 1000
-        pin = f"🌋Pɪɴɢ = {ms}ms"
-        await event.answer(pin, cache_time=0, alert=True)
-
-    @callback("upp")
-    async def _(event):
-        uptime = grt(time.time() - start_time)
-        pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
-        await event.answer(pin, cache_time=0, alert=True)
-
-    @callback("inlone")
-    @owner
-    async def _(e):
-        button = [
+@callback("ownr")
+@owner
+async def setting(event):
+    await event.edit(
+        buttons=[
             [
-                Button.switch_inline(
-                    "Sᴇɴᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs",
-                    query="send",
-                    same_peer=True,
-                ),
+                Button.inline("•Pɪɴɢ•", data="pkng"),
+                Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
             ],
-            [
-                Button.switch_inline(
-                    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
-                    query="app telegram",
-                    same_peer=True,
-                ),
-                Button.switch_inline(
-                    "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
-                    query="mods minecraft",
-                    same_peer=True,
-                ),
-            ],
-            [
+            [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
+        [Button.inline("<- Bᴀᴄᴋ", data="open")],
+    ],
+    )
+
+@callback("pkng")
+async def _(event):
+    start = datetime.now()
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
+    pin = f"🌋Pɪɴɢ = {ms}ms"
+    await event.answer(pin, cache_time=0, alert=True)
+
+@callback("upp")
+async def _(event):
+    uptime = grt(time.time() - start_time)
+    pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
+    await event.answer(pin, cache_time=0, alert=True)
+
+@callback("inlone")
+@owner
+async def _(e):
+    button = [
+        [
+            Button.switch_inline(
+                "Sᴇɴᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs",
+                query="send",
+                same_peer=True,
+            ),
+        ],
+        [
+            Button.switch_inline(
+                "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
+                query="app telegram",
+                same_peer=True,
+            ),
+            Button.switch_inline(
+                "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
+                query="mods minecraft",
+                same_peer=True,
+            ),
+        ],
+        [
                 Button.switch_inline(
                     "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
                     query="go TeamUltroid",
@@ -191,15 +189,15 @@ if asst.me is not None:
                     query="yahoo TeamUltroid",
                     same_peer=True,
                 ),
-            ],
-            [
+        ],
+        [
                 Button.switch_inline(
                     "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
                     query="yt Ed Sheeran Perfect",
                     same_peer=True,
                 ),
-            ],
-            [
+        ],
+        [
                 Button.switch_inline(
                     "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
                     query="clipart frog",
@@ -210,15 +208,17 @@ if asst.me is not None:
                     query="ofox beryllium",
                     same_peer=True,
                 ),
-            ],
-            [
+        ],
+        [
                 Button.inline(
                     "<- Bᴀᴄᴋ",
                     data="open",
-                ),
-            ],
-        ]
-        await e.edit(buttons=button, link_preview=False)
+            ),
+        ],
+    ]
+    await e.edit(buttons=button, link_preview=False)
+
+if asst.me is not None:
 
     @callback("hrrrr")
     @owner
