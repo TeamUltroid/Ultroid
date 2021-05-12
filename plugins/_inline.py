@@ -109,10 +109,10 @@ async def inline_handler(event):
     await event.answer([result])
 
 
-@in_pattern("paste?(.*)")
+@in_pattern("paste")
 @in_owner
 async def _(event):
-    ok = event.pattern_match.group(1)
+    ok = event.text.split(" ")[1]
     link = "https://nekobin.com/"
     result = event.builder.article(
         title="Paste",
