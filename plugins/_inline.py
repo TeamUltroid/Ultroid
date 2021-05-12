@@ -129,7 +129,6 @@ async def _(event):
 
 if asst.me is not None:
 
-
     @callback("ownr")
     @owner
     async def setting(event):
@@ -444,7 +443,7 @@ def page_num(page_number, loaded_plugins, prefix, type):
     number_of_cols = 2
     emoji = Redis("EMOJI_IN_HELP")
     if emoji:
-        multi= emoji
+        multi = emoji
     else:
         multi = "✘"
     helpable_plugins = []
