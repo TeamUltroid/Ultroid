@@ -29,9 +29,10 @@ def start():
     print("Welcome to Ultroid, lets start setting up!\n\n")
     print("Cloning the repository...\n\n")
     try:
-        os.system("git clone https://github.com/TeamUltroid/Ultroid")
-    except Exception as e:
-        print(f"ERROR\n{str(e)}")
+        os.system("rm -rf Ultroid")
+    except BaseException:
+        pass
+    os.system("git clone https://github.com/TeamUltroid/Ultroid")
     print("\n\nDone")
     os.chdir("Ultroid")
     clear_screen()
