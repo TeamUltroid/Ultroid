@@ -58,11 +58,8 @@ def start():
         "API_ID",
         "API_HASH",
         "SESSION",
-        "BOT_USERNAME",
-        "BOT_TOKEN",
         "REDIS_URI",
         "REDIS_PASSWORD",
-        "LOG_CHANNEL",
     ]
     all_done = "# Ultroid Environment Variables.\n# Do not delete this file.\n\n"
     for i in varrs:
@@ -92,6 +89,7 @@ def start():
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")
+    os.system("pip install --upgrade py-Ultroid")
     os.system("python3 -m pyUltroid")
 
 
