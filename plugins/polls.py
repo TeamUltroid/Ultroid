@@ -52,7 +52,7 @@ async def uri_poll(e):
         if ptype == "multiple": mpp = True
     if len(option) <= 1:
         return await eod(e, "`Options Should be More than 1..`")
-    m = await eor(e, '`Processing... `)
+    m = await eor(e, '`Processing... `')
     OUT = []
     for on in range(len(option)):
         OUT.append(PollAnswer(option[on], str(on).encode()))
