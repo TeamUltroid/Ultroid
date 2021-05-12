@@ -17,30 +17,12 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-import asyncio
 import io
-import os
-import sys
-import time
-import traceback
-from asyncio.exceptions import TimeoutError
 from os import remove
-from pathlib import Path
 
-import cv2
-import emoji
 from carbonnow import Carbon
-from googletrans import Translator
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
-from telethon.tl.types import DocumentAttributeVideo as video
-from telethon.tl.types import User
-from telethon.utils import pack_bot_file_id
 
 from . import *
-from . import humanbytes as hb
 
 
 @ultroid_cmd(
@@ -56,6 +38,7 @@ async def _(e):
     await e.client.send_file(e.chat_id, haa)
     remove("neofetch.jpg")
     remove("neo.txt")
+
 
 @ultroid_cmd(
     pattern="bash",
@@ -156,5 +139,6 @@ async def _(event):
             await xx.delete()
     else:
         await eor(xx, final_output)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
