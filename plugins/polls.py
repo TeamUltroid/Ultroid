@@ -25,7 +25,10 @@ from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 from . import *
 
 
-@ultroid_cmd(pattern="poll ?(.*)")
+@ultroid_cmd(
+pattern="poll ?(.*)",
+groups_only=True,
+)
 async def uri_poll(e):
     match = e.pattern_match.group(1)
     if not match:
