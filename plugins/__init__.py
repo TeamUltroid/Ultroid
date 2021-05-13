@@ -7,7 +7,6 @@
 
 import time
 
-import cloudscraper
 from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions.all import *
@@ -37,9 +36,6 @@ OWNER_ID = ultroid_bot.me.id
 List = []
 Dict = {}
 N = 0
-
-request = cloudscraper.create_scraper()
-
 
 def grt(seconds: int) -> str:
     count = 0
