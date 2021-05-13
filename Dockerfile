@@ -7,9 +7,6 @@ FROM programmingerror/ultroid:v0.0.1
 
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt-get install -y --no-install-recommends unrar
-
 RUN apt-get autoremove --purge
 
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
