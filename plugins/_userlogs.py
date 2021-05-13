@@ -31,10 +31,10 @@ async def all_messages_catcher(e):
             NEEDTOLOG = int(udB.get("TAG_LOG"))
         except Exception:
             return LOGS.warning("you given Wrong Grp/Channel ID in TAG_LOG.")
-        x = await ultroid_bot.get_entity(e.sender_id)
+        x = e.sender
         if x.bot or x.verified:
             return
-        y = await ultroid_bot.get_entity(e.chat_id)
+        y = e.chat
         where_n = get_display_name(y)
         who_n = get_display_name(x)
         where_l = f"https://t.me/c/{y.id}/{e.id}"
