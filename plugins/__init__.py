@@ -37,6 +37,7 @@ List = []
 Dict = {}
 N = 0
 
+
 def grt(seconds: int) -> str:
     count = 0
     up_time = ""
