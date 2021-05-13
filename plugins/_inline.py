@@ -225,7 +225,7 @@ async def _(e):
 @callback("hrrrr")
 @owner
 async def on_plug_in_callback_query_handler(event):
-    xhelps = helps.format(OWNER_NAME, len(PLUGINS) - 5)
+    xhelps = helps.format(OWNER_NAME, len(PLUGINS))
     buttons = page_num(0, PLUGINS, "helpme", "def")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
