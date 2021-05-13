@@ -71,7 +71,7 @@ async def _(e):
         get = udB.get("calc")
         if get:
             udB.set("calc", get[:-1])
-            return await e.answer(str(get[:-1))
+            return await e.answer(str(get[:-1]))
     elif x == "%":
         get = udB.get("calc")
         if get:
