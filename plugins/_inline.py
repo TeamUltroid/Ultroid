@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import random
 import re
 import time
 from datetime import datetime
