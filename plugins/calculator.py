@@ -104,9 +104,11 @@ async def _(e):
     else:
         get = udB.get("calc")
         if get:
-            return udB.set("calc", get + x)
-        return udB.set("calc", x)
-
+            udB.set("calc", get + x)
+            return await e.answer(str(get + x))
+        udB.set("calc", x)
+        return await e.answer(str(x))
+        
 
 @callback("recalc")
 @owner
