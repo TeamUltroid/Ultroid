@@ -1,3 +1,1 @@
-py-Ultroid==24.8b0
-qrcode
-cloudscraper
+py-Ultroid==24.9b0
