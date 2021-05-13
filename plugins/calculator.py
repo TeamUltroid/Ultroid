@@ -16,6 +16,7 @@ import re
 
 from . import *
 
+
 @ultroid_cmd(pattern="icalc")
 async def icalc(e):
     results = await ultroid_bot.inline_query(asst.me.username, "calc")
@@ -76,17 +77,17 @@ async def _(e):
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "/100")
-            return await e.answer(str(get+"/100"))
+            return await e.answer(str(get + "/100"))
     elif x == "÷":
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "/")
-            return await e.answer(str(get+"/"))
+            return await e.answer(str(get + "/"))
     elif x == "x":
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "*")
-            return await e.answer(str(get+"*"))
+            return await e.answer(str(get + "*"))
     elif x == "=":
         get = udB.get("calc")
         if get:
