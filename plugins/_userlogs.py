@@ -110,14 +110,12 @@ async def when_asst_added_to_chat(event):
         chat = (await event.get_chat()).title
         tmp = event.added_by
         if user.is_self:
-                buttons = Button.inline(
-                    "Leave Chat", data=f"leave_ch_{event.chat_id}|bot"
-                )
-                return await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
-                    buttons=buttons,
-                )
+            buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
+            return await asst.send_message(
+                int(udB.get("LOG_CHANNEL")),
+                f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
+                buttons=buttons,
+            )
 
 
 # log for user's new joins
