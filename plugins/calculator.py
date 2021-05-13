@@ -8,11 +8,18 @@
 """
 ✘ Commands Available -
 
+•`{i}icalc`
+
 """
 
 import re
 
 from . import *
+
+@ultroid_cmd(pattern="icalc")
+async def icalc(e):
+    results = await ultroid_bot.inline_query(asst.me.username, "calc")
+    await results[0].click(e.chat_id, silent=True, hide_via=True)
 
 
 @in_pattern("calc")
@@ -63,20 +70,23 @@ async def _(e):
     elif x == "⌫":
         get = udB.get("calc")
         if get:
-            return udB.set("calc", get[:-1])
+            udB.set("calc", get[:-1])
+            return await e.answer(str(get[:-1))
     elif x == "%":
         get = udB.get("calc")
         if get:
-            return udB.set("calc", get + "/100")
+            udB.set("calc", get + "/100")
+            return await e.answer(str(get+"/100"))
     elif x == "÷":
         get = udB.get("calc")
         if get:
-            return udB.set("calc", get + "/")
+            udB.set("calc", get + "/")
+            return await e.answer(str(get+"/"))
     elif x == "x":
         get = udB.get("calc")
         if get:
-            return udB.set("calc", get + "*")
-        return
+            udB.set("calc", get + "*")
+            return await e.answer(str(get+"*"))
     elif x == "=":
         get = udB.get("calc")
         if get:
