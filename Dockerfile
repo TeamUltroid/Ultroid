@@ -11,7 +11,6 @@ RUN apt-get autoremove --purge
 
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
-RUN git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me
 WORKDIR /root/TeamUltroid/
 
 RUN pip3 install -r requirements.txt
