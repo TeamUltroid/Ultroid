@@ -208,7 +208,7 @@ async def _(event):
     if not x:
         return await eor(event, "`Give something to search`")
     uu = await eor(event, "`Processing...`")
-    z = requests.get("https://combot.org/telegram/stickers?q=" + x).text
+    z = request.get("https://combot.org/telegram/stickers?q=" + x).text
     xx = b(z, "lxml")
     title = xx.find_all("div", "sticker-pack__title")
     link = xx.find_all("a", target="_blank")
