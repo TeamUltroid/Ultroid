@@ -467,9 +467,9 @@ def page_num(page_number, loaded_plugins, prefix, type):
     modules = [
         Button.inline(
             "{} {} {}".format(
-                random.choice(list(multi)),
+                multi,
                 x,
-                random.choice(list(multi)),
+                multi,
             ),
             data=f"{type}_plugin_{x}",
         )
