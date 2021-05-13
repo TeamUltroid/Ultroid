@@ -108,7 +108,7 @@ async def _(e):
             return await e.answer(str(get + x))
         udB.set("calc", x)
         return await e.answer(str(x))
-        
+
 
 @callback("recalc")
 @owner
