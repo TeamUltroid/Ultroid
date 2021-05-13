@@ -67,7 +67,7 @@ async def _(e):
         )
     elif x == "C":
         udB.delete("calc")
-        return await e.answer("cleared", cache_time=0, alert=True)
+        return await e.answer("cleared")
     elif x == "⌫":
         get = udB.get("calc")
         if get:
@@ -95,11 +95,11 @@ async def _(e):
                 get = get[:-1]
             out = await calcc(get, e)
             try:
-                num = int(out)
+                num = float(out)
                 return await e.answer(f"Answer : {num}", cache_time=0, alert=True)
             except BaseException:
                 udB.delete("calc")
-                return await e.answer("None", cache_time=0, alert=True)
+                return await e.answer("Error", cache_time=0, alert=True)
         return await e.answer("None", cache_time=0, alert=True)
     else:
         get = udB.get("calc")
