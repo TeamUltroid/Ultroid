@@ -20,11 +20,23 @@
 
 
 from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood
-
+from telethon.events import NewMessage as NewMsg
 from . import *
 
 _check_flood = {}
+_do_action = {}
 
+@ultroid_bot.on(
+    NewMsg(
+        incoming=True,
+    ),
+)
+async def flood_checm(event):
+    ok = get_flood_limit(event.chat_id)
+    if not ok:
+        return
+    _check_flood[event.chat_id] = event.sender_id
+    
 
 @ultroid_cmd(
     pattern="setflood ?(.*)",
@@ -33,8 +45,8 @@ async def set_flood(e):
     input = e.pattern_match.group(1)
     if not input:
         return await eod(e, "`What?`")
-    if not isinstance(input, int):
-        return await eod(e, "Gwan Myad?")
+    if not input.isdigit():
+        return await eod(e, "`Gwan Myad?`")
     m = set_flood(e.chat_id, input)
     if m:
         return await eod(
