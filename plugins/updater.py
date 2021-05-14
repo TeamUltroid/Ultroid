@@ -18,9 +18,16 @@ from . import *
 
 @ultroid_cmd(pattern="update$")
 async def _(e):
-    x = await updater()
+    hmm = await updater()
     branch = (Repo.init()).active_branch
-    if x is not None:
+    if m is not None:
+        x = await ultroid_bot.asst.send_file(
+            int(udB.get("LOG_CHANNEL")),
+            "resources/extras/ultroid.jpg",
+            caption="**Update Available**",
+            force_document=True,
+            buttons=Button.inline("Changelogs", data="changes"),
+        )
         Link = (await ultroid_bot(GetLink(x.peer_id.channel_id, x.id))).link
         await eor(
             e,
