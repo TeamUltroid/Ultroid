@@ -464,7 +464,7 @@ if sett == "True" and sett != "False":
 
 
 @ultroid_cmd(
-    pattern="block ?(*)",
+    pattern="block ?(.*)",
 )
 async def blockpm(block):
     match = block.pattern_match.group(1)
