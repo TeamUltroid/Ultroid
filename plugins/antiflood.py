@@ -47,7 +47,7 @@ async def flood_checm(event):
     else:
         _check_flood[event.chat_id] = {event.sender_id: count}
     if _check_flood[event.chat_id][event.sender_id] >= int(limit):
-        await event.reply("#Do Action")
+        await event.reply(str(Redis("FLOODMODE"))
         del _check_flood[event.chat_id]
 
 
@@ -68,7 +68,7 @@ async def setflood(e):
 
 
 @ultroid_cmd(
-    pattern="floodmode ?(.*)",
+pattern="floodmode ?(.*)",
 )
 async def flood_type(e):
     input = e.pattern_match.group(1)
