@@ -14,7 +14,7 @@ async def set_flood(e):
 
 
 @ultroid_cmd(
-pattern="remflood$"),
+pattern="remflood$",
 )
 async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
