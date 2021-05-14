@@ -263,7 +263,7 @@ async def rextester(event):
 
 @in_pattern("yahoo")
 @in_owner
-async def gsearch(q_event):
+async def yahoosearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
