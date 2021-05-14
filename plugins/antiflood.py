@@ -61,8 +61,12 @@ async def setflood(e):
 )
 async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
+    try:
+        del _check_flood[e.chat_id]
+    except:
+        pass
     if hmm is True:
-        return await eod(e, "Antiflood Settings Disabled>`")
+        return await eod(e, "`Antiflood Settings Disabled`")
     else:
         await eod(e, "`No flood limits in this chat.`")
 
