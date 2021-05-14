@@ -47,7 +47,7 @@ async def flood_checm(event):
     else:
         _check_flood[event.chat_id] = {event.sender_id: count}
     if _check_flood[event.chat_id][event.sender_id] >= int(limit):
-        await event.reply(str(Redis("FLOODMODE"))
+        await event.reply(str(Redis("FLOODMODE")))
         del _check_flood[event.chat_id]
 
 
