@@ -63,7 +63,7 @@ async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
     try:
         del _check_flood[e.chat_id]
-    except:
+    except BaseException:
         pass
     if hmm is True:
         return await eod(e, "`Antiflood Settings Disabled`")
