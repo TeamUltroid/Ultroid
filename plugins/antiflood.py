@@ -43,7 +43,7 @@ async def flood_checm(event):
 @ultroid_cmd(
     pattern="setflood ?(.*)",
 )
-async def set_flood(e):
+async def setflood(e):
     input = e.pattern_match.group(1)
     if not input:
         return await eod(e, "`What?`")
