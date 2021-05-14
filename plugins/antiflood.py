@@ -32,6 +32,7 @@ _do_action = {}
 
 
 if Redis("ANTIFLOOD") is not (None or ""):
+
     @ultroid_bot.on(
         NewMsg(
             incoming=True,
