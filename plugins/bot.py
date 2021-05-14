@@ -129,8 +129,8 @@ async def restartbt(ult):
 
 @ultroid_cmd(pattern="shutdown")
 async def shutdownbot(ult):
-    if not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
+    if not is_fullsudo(ult.sender_id):
+        return await eor(ult, "`This Command Is Sudo Restricted.`")
     try:
         dyno = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
