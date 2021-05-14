@@ -8,10 +8,10 @@
 """
 ✘ Commands Available
 
-• `{i}add <id/reply to list/none>`
+• `{i}addch <id/reply to list/none>`
     Add chat to database. Adds current chat if no id specified.
 
-• `{i}rem <all/id/none>`
+• `{i}remch <all/id/none>`
     Removes the specified chat (current chat if none specified), or all chats.
 
 • `{i}broadcast <reply to msg>`
@@ -30,11 +30,11 @@ import io
 from . import *
 
 
-@ultroid_cmd(pattern="add ?(.*)", allow_sudo=False)
+@ultroid_cmd(
+pattern="addch ?(.*)",
+allow_sudo=False,
+)
 async def broadcast_adder(event):
-    if len(event.text) > 4:
-        if not event.text[4] == " ":  # weird fix
-            return
     msgg = event.pattern_match.group(1)
     x = await eor(event, get_string("bd_1"))
     aldone = new = crsh = 0
@@ -92,11 +92,11 @@ async def broadcast_adder(event):
         await event.delete()
 
 
-@ultroid_cmd(pattern="rem ?(.*)", allow_sudo=False)
+@ultroid_cmd(
+pattern="remch ?(.*)",
+allow_sudo=False,
+)
 async def broadcast_remover(event):
-    if len(event.text) > 4:
-        if not event.text[4] == " ":  # weird fix
-            return
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
@@ -120,7 +120,9 @@ async def broadcast_remover(event):
         await x.delete()
 
 
-@ultroid_cmd(pattern="listchannels")
+@ultroid_cmd(
+pattern="listchannels$",
+)
 async def list_all(event):
     x = await eor(event, "`Calculating...`")
     channels = get_channels()
@@ -153,7 +155,10 @@ async def list_all(event):
         await x.edit(msg)
 
 
-@ultroid_cmd(pattern="forward ?(.*)", allow_sudo=False)
+@ultroid_cmd(
+pattern="forward$",
+allow_sudo=False,
+)
 async def forw(event):
     if not event.is_reply:
         await eor(event, "Reply to a message to broadcast.")
@@ -196,7 +201,10 @@ async def forw(event):
             await x.edit("Set up log channel for checking errors.")
 
 
-@ultroid_cmd(pattern="broadcast ?(.*)", allow_sudo=False)
+@ultroid_cmd(
+pattern="broadcast ?(.*)",
+allow_sudo=False,
+)
 async def sending(event):
     x = await eor(event, "`Processing...`")
     if not event.is_reply:
