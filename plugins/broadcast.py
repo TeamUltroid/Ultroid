@@ -31,8 +31,8 @@ from . import *
 
 
 @ultroid_cmd(
-pattern="addch ?(.*)",
-allow_sudo=False,
+    pattern="addch ?(.*)",
+    allow_sudo=False,
 )
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
@@ -93,8 +93,8 @@ async def broadcast_adder(event):
 
 
 @ultroid_cmd(
-pattern="remch ?(.*)",
-allow_sudo=False,
+    pattern="remch ?(.*)",
+    allow_sudo=False,
 )
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
@@ -121,7 +121,7 @@ async def broadcast_remover(event):
 
 
 @ultroid_cmd(
-pattern="listchannels$",
+    pattern="listchannels$",
 )
 async def list_all(event):
     x = await eor(event, "`Calculating...`")
@@ -156,8 +156,8 @@ async def list_all(event):
 
 
 @ultroid_cmd(
-pattern="forward$",
-allow_sudo=False,
+    pattern="forward$",
+    allow_sudo=False,
 )
 async def forw(event):
     if not event.is_reply:
@@ -202,8 +202,8 @@ async def forw(event):
 
 
 @ultroid_cmd(
-pattern="broadcast ?(.*)",
-allow_sudo=False,
+    pattern="broadcast ?(.*)",
+    allow_sudo=False,
 )
 async def sending(event):
     x = await eor(event, "`Processing...`")

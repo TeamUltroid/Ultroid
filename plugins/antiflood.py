@@ -1,8 +1,8 @@
-from pyUltroid.functions.antiflood_db import get_flood_limit, set_flood, rem_flood
+from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood
 
 
 @ultroid_cmd(
-pattern="setflood ?(.*)",
+    pattern="setflood ?(.*)",
 )
 async def set_flood(e):
     input = int(e.pattern_match.group(1))
@@ -10,11 +10,13 @@ async def set_flood(e):
         return await eor(e, "`What?`")
     m = setflood(e.chat_id, input)
     if m:
-        return await eor(e, f"`Successfully Updated Antiflood Settings to {input} in this chat.`")
+        return await eor(
+            e, f"`Successfully Updated Antiflood Settings to {input} in this chat.`"
+        )
 
 
 @ultroid_cmd(
-pattern="remflood$",
+    pattern="remflood$",
 )
 async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
@@ -23,7 +25,7 @@ async def remove_flood(e):
 
 
 @ultroid_cmd(
-pattern="getflood$",
+    pattern="getflood$",
 )
 async def get_flood(e):
     ok = get_flood_limit(e.chat_id)
