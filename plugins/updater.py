@@ -48,7 +48,13 @@ async def _(e):
 @owner
 async def updava(event):
     await event.delete()
-    await updater()
+    await ultroid_bot.asst.send_file(
+            int(udB.get("LOG_CHANNEL")),
+            "resources/extras/ultroid.jpg",
+            caption="**Update Available**",
+            force_document=True,
+            buttons=Button.inline("Changelogs", data="changes"),
+        )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
