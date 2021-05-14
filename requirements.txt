@@ -1,2 +1,1 @@
-py-Ultroid==25.4b0
-cloudscraper
+py-Ultroid==25.5b0
