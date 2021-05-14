@@ -472,7 +472,7 @@ async def blockpm(block):
         reply = await block.get_reply_message()
         user = reply.sender_id
     elif match:
-        user = match
+        user = await get_user_id(match)
     elif block.is_private:
         user = block.chat_id
     else:
@@ -504,7 +504,7 @@ async def unblockpm(unblock):
         reply = await unblock.get_reply_message()
         user = reply.sender_id
     elif match:
-        user = match
+        user = await get_user_id(match)
     else:
         return await eod(unblock, NO_REPLY)
     try:
