@@ -8,7 +8,7 @@
 """
 ✘ Commands Available -
 
-•`{i}icalc`
+•`{i}icalc` - Inline Calculator
 
 """
 
@@ -51,7 +51,7 @@ async def _(e):
     tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
     lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
     lst.append([Button.inline("=", data="calc=")])
-    calc = e.builder.article("Calc", text="Noice Inline Calculator", buttons=lst)
+    calc = e.builder.article("Calc", text="• Inline Calculator •", buttons=lst)
     await e.answer([calc])
 
 
