@@ -16,6 +16,9 @@
 
 • `{i}getflood`
     Get flood limit of a chat.
+
+• `{i}floodmode <anything>`
+    Anything that you want to reply after flood limit exceeds.
 """
 
 
@@ -48,14 +51,10 @@ async def flood_checm(event):
         _check_flood[event.chat_id] = {event.sender_id: count}
     if _check_flood[event.chat_id][event.sender_id] >= int(limit):
         if Redis("FLOODMODE"):
-            await event.client.send_message(
-                event.chat_id, str(Redis("FLOODMODE")), reply_to=event.sender_id
-            )
+            await event.client.send_message(event.chat_id, str(Redis("FLOODMODE")), reply_to=event.sender_id)
             del _check_flood[event.chat_id]
         else:
-            await event.client.send_message(
-                event.chat_id, "`Please Don't Spam `", reply_to=event.sender_id
-            )
+            await event.client.send_message(event.chat_id, "`Please Don't Spam `", reply_to=event.sender_id)
             del _check_flood[event.chat_id]
 
 
