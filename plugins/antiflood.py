@@ -1,3 +1,24 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+• `{i}setflood <integer>`
+    Set flood limit in a chat.
+
+• `{i}remflood`
+    Remove flood limit from a chat.
+
+• `{i}getflood`
+    Get flood limit of a chat.
+"""
+
+
 from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood
 
 
@@ -33,3 +54,6 @@ async def get_flood(e):
         return await eor(e, f"`Flood limit for this chat is {ok}.`")
     else:
         await eor(e, "`No flood limits in this chat.`")
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
