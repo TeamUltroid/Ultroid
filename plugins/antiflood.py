@@ -46,7 +46,7 @@ async def flood_checm(event):
             _check_flood[event.chat_id] = {event.sender_id: count}
     else:
         _check_flood[event.chat_id] = {event.sender_id: count}
-    if _check_flood[event.chat_id][event.sender_id] > int(limit):
+    if _check_flood[event.chat_id][event.sender_id] >= int(limit):
         await event.reply("#Do Action")
         del _check_flood[event.chat_id]
 
