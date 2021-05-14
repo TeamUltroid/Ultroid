@@ -37,7 +37,7 @@ async def flood_checm(event):
     limit = get_flood_limit(event.chat_id)
     if not limit:
         return
-    count = 0
+    count = _check_flood[event.chat_id][event.sender_id]
     if event.chat_id in _check_flood.keys():
         count += 1
         _check_flood[event.chat_id] = {event.sender_id: count}
