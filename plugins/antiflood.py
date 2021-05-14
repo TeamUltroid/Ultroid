@@ -39,13 +39,16 @@ async def flood_checm(event):
         return
     count = 1
     if event.chat_id in _check_flood.keys():
-        count = _check_flood[event.chat_id][event.sender_id]
-        _check_flood[event.chat_id] = {event.sender_id: count + 1}
+        if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
+            count = _check_flood[event.chat_id][event.sender_id]
+            _check_flood[event.chat_id] = {event.sender_id: count + 1}
+        else:
+            del _check_flood[event.chat_id]
     else:
         _check_flood[event.chat_id] = {event.sender_id: count}
     if _check_flood[event.chat_id][event.sender_id] > int(limit):
         await event.reply("#Do Action")
-        del _check_flood[event.chat_id][event.sender_id]
+        del _check_flood[event.chat_id]
 
 
 @ultroid_cmd(
