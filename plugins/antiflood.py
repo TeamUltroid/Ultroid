@@ -34,10 +34,17 @@ _do_action = {}
     ),
 )
 async def flood_checm(event):
-    ok = get_flood_limit(event.chat_id)
-    if not ok:
+    limit = get_flood_limit(event.chat_id)
+    if not limit:
         return
-    _check_flood[event.chat_id] = event.sender_id
+    count = 0
+    if event.chat_id in _check_flood.keys():
+        count += 1
+        _check_flood[event.chat_id] = {event.sender_id: count}
+    else:
+        _check_flood[event.chat_id] = {event.sender_id: count}
+    if _check_flood[event.chat_id][event.sender_id] > int(limit):
+        await e.reply("#Do Action")
 
 
 @ultroid_cmd(
