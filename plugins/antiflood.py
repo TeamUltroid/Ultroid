@@ -68,6 +68,17 @@ async def setflood(e):
 
 
 @ultroid_cmd(
+pattern="floodmode ?(.*)",
+)
+async def flood_type(e):
+    input = e.pattern_match.group(1)
+    if not input:
+        return await eod(e, "`What?`")
+    udB.set("FLOODMODE", input)
+    await eod(e, f"`Now I will reply with {input} if flood exceeds.`")
+
+
+@ultroid_cmd(
     pattern="remflood$",
 )
 async def remove_flood(e):
