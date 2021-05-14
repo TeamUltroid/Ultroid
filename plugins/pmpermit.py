@@ -484,14 +484,14 @@ async def blockpm(block):
         )
     await block.client(BlockRequest(user))
     aname = await block.client.get_entity(user)
-    await eor(e, f"`{aname.first_name} has been blocked!`")
+    await eor(block, f"`{aname.first_name} has been blocked!`")
     try:
-        disapprove_user(uid)
+        disapprove_user(user)
     except AttributeError:
         pass
     await ultroid_bot.send_message(
         int(udB.get("LOG_CHANNEL")),
-        f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
+        f"#BLOCKED\nUser: [{aname.first_name}](tg://user?id={user})",
     )
 
 
@@ -507,9 +507,12 @@ async def unblockpm(unblock):
         user = match
     else:
         return await eod(unblock, NO_REPLY)
-    await unblock.client(UnblockRequest(user))
-    aname = await unblock.client.get_entity(user)
-    await eor(e, f"`{aname.first_name} has been UnBlocked!`")
+    try:
+        await unblock.client(UnblockRequest(user))
+        aname = await unblock.client.get_entity(user)
+        await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
+    except Exception as et:
+        await eod(unblock, f'ERROR - {str(et)}')
 
 
 @callback(
