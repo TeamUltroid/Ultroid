@@ -68,7 +68,7 @@ async def setflood(e):
 
 
 @ultroid_cmd(
-pattern="floodmode ?(.*)",
+    pattern="floodmode ?(.*)",
 )
 async def flood_type(e):
     input = e.pattern_match.group(1)
