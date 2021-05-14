@@ -49,7 +49,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
             else:
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
-        _check_flood[event.chat_id] = {event.sender_id: count}
+            _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             async for msg in event.client.iter_messages(
                 event.chat_id, from_user=event.sender_id, limit=1
