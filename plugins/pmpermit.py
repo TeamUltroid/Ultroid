@@ -464,8 +464,8 @@ if sett == "True" and sett != "False":
 
 
 @ultroid_cmd(
-        pattern="block ?(*)",
-    )
+    pattern="block ?(*)",
+)
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.is_reply:
@@ -479,9 +479,9 @@ async def blockpm(block):
         return await eod(block, NO_REPLY)
     if str(user) in DEVLIST:
         return await eor(
-                    block,
-                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
-                )
+            block,
+            "`Lol, He is my Developer\nHe Can't Be Blocked`",
+        )
     await block.client(BlockRequest(user))
     aname = await block.client.get_entity(user)
     await eor(e, f"`{aname.first_name} has been blocked!`")
@@ -496,8 +496,8 @@ async def blockpm(block):
 
 
 @ultroid_cmd(
-        pattern="unblock ?(.*)",
-    )
+    pattern="unblock ?(.*)",
+)
 async def unblockpm(unblock):
     match = unblock.pattern_match.group(1)
     if unblock.is_reply:
