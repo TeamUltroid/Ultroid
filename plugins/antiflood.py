@@ -31,38 +31,39 @@ _check_flood = {}
 _do_action = {}
 
 
-@ultroid_bot.on(
-    NewMsg(
-        incoming=True,
-    ),
-)
-async def flood_checm(event):
-    limit = get_flood_limit(event.chat_id)
-    if not limit:
-        return
-    count = 1
-    if event.chat_id in _check_flood.keys():
-        if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
-            count = _check_flood[event.chat_id][event.sender_id]
-            _check_flood[event.chat_id] = {event.sender_id: count + 1}
-        else:
-            _check_flood[event.chat_id] = {event.sender_id: count}
-    else:
-        _check_flood[event.chat_id] = {event.sender_id: count}
-    if _check_flood[event.chat_id][event.sender_id] >= int(limit):
-        async for msg in event.client.iter_messages(
-            event.chat_id, from_user=event.sender_id, limit=1
-        ):
-            if Redis("FLOODMODE"):
-                await event.client.send_message(
-                    event.chat_id, str(Redis("FLOODMODE")), reply_to=msg.id
-                )
-                del _check_flood[event.chat_id]
+if Redis("ANTIFLOOD") is not (None or ""):
+    @ultroid_bot.on(
+        NewMsg(
+            incoming=True,
+        ),
+    )
+    async def flood_checm(event):
+        limit = get_flood_limit(event.chat_id)
+        if not limit:
+            return
+        count = 1
+        if event.chat_id in _check_flood.keys():
+            if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
+                count = _check_flood[event.chat_id][event.sender_id]
+                _check_flood[event.chat_id] = {event.sender_id: count + 1}
             else:
-                await event.client.send_message(
-                    event.chat_id, "`Please Don't Spam `", reply_to=msg.id
-                )
-                del _check_flood[event.chat_id]
+                _check_flood[event.chat_id] = {event.sender_id: count}
+        else:
+        _check_flood[event.chat_id] = {event.sender_id: count}
+        if _check_flood[event.chat_id][event.sender_id] >= int(limit):
+            async for msg in event.client.iter_messages(
+                event.chat_id, from_user=event.sender_id, limit=1
+            ):
+                if Redis("FLOODMODE"):
+                    await event.client.send_message(
+                        event.chat_id, str(Redis("FLOODMODE")), reply_to=msg.id
+                    )
+                    del _check_flood[event.chat_id]
+                else:
+                    await event.client.send_message(
+                        event.chat_id, "`Please Don't Spam `", reply_to=msg.id
+                    )
+                    del _check_flood[event.chat_id]
 
 
 @ultroid_cmd(
