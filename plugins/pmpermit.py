@@ -462,62 +462,54 @@ if sett == "True" and sett != "False":
         else:
             await e.edit(NO_REPLY)
 
-    @ultroid_cmd(
-        pattern="block$",
-    )
-    async def blockpm(block):
-        if block.reply_to_msg_id:
-            reply = await block.get_reply_message()
-            replied_user = await block.client.get_entity(reply.sender_id)
-            aname = replied_user.id
-            if str(aname) in DEVLIST:
-                return await eor(
-                    block,
-                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
-                )
-            name0 = str(replied_user.first_name)
-            await block.client(BlockRequest(replied_user.id))
-            await block.edit("`You've been blocked!`")
-            uid = replied_user.id
-        elif block.is_private:
-            bbb = await block.get_chat()
-            if str(bbb.id) in DEVLIST:
-                return await eor(
-                    block,
-                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
-                )
-            await block.client(BlockRequest(bbb.id))
-            aname = await block.client.get_entity(bbb.id)
-            await block.edit("`You've been blocked!`")
-            name0 = str(aname.first_name)
-            uid = bbb.id
-        else:
-            return await block.edit(NO_REPLY)
-        try:
-            disapprove_user(uid)
-        except AttributeError:
-            pass
-        await block.client.send_message(
-            int(udB.get("LOG_CHANNEL")),
-            f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
-        )
 
-    @ultroid_cmd(
-        pattern="unblock$",
+@ultroid_cmd(
+        pattern="block ?(*)",
     )
-    async def unblockpm(unblock):
-        if unblock.reply_to_msg_id:
-            reply = await unblock.get_reply_message()
-            replied_user = await unblock.client.get_entity(reply.sender_id)
-            name0 = str(replied_user.first_name)
-            await unblock.client(UnblockRequest(replied_user.id))
-            await unblock.edit("`You have been unblocked.`")
-        else:
-            return await unblock.edit(NO_REPLY)
-        await unblock.client.send_message(
-            int(udB.get("LOG_CHANNEL")),
-            f"[{name0}](tg://user?id={replied_user.id}) was unblocked!.",
-        )
+async def blockpm(block):
+    match = block.pattern_match.group(1)
+    if block.is_reply:
+        reply = await block.get_reply_message()
+        user = reply.sender_id
+    elif match:
+        user = match
+    elif block.is_private:
+        user = block.chat_id
+    else:
+        return await eod(block, NO_REPLY)
+    if str(user) in DEVLIST:
+        return await eor(
+                    block,
+                    "`Lol, He is my Developer\nHe Can't Be Blocked`",
+                )
+    await block.client(BlockRequest(user))
+    aname = await block.client.get_entity(user)
+    await eor(e, f"`{aname.first_name} has been blocked!`")
+    try:
+        disapprove_user(uid)
+    except AttributeError:
+        pass
+    await ultroid_bot.send_message(
+        int(udB.get("LOG_CHANNEL")),
+        f"#BLOCKED\nUser: [{name0}](tg://user?id={uid})",
+    )
+
+
+@ultroid_cmd(
+        pattern="unblock ?(.*)",
+    )
+async def unblockpm(unblock):
+    match = unblock.pattern_match.group(1)
+    if unblock.is_reply:
+        reply = await unblock.get_reply_message()
+        user = reply.sender_id
+    elif match:
+        user = match
+    else:
+        return await eod(unblock, NO_REPLY)
+    await unblock.client(UnblockRequest(user))
+    aname = await unblock.client.get_entity(user)
+    await eor(e, f"`{aname.first_name} has been UnBlocked!`")
 
 
 @callback(
