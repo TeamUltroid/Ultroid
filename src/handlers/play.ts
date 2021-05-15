@@ -16,17 +16,20 @@ import escapeHtml from '@youtwitface/escape-html';
 
 export const playHandler = Composer.command('play', async (ctx) => {
     const { chat } = ctx.message;
+    let text: string;
 
     if (chat.type !== 'supergroup') {
         return await ctx.reply('I can only play in groups.');
     }
     if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
         const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
-        const textOrLink = (await ctx.telegram.getFileLink(file.file_id)).href;
+        text = (await ctx.telegram.getFileLink(file.file_id)).href;
     } else {
         const [ commandEntity ] = ctx.message.entities!;
-        const textOrLink = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
+        text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
     }
+
+    const textOrLink = text;
 
     if (!textOrLink) {
         return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
