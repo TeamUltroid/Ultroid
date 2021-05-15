@@ -24,8 +24,8 @@
     Merge nd send the Pdf to collected from .pdsave.
 """
 
-import os
 import glob
+import os
 import shutil
 import time
 
