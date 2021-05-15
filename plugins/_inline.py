@@ -82,7 +82,7 @@ async def inline_handler(event):
             z.append(y)
     cmd = len(z)
     bnn = asst.me.username
-    result = event.builder.document(
+    result = event.builder.photo(
         file=_file_to_replace,
         title="Help Menu",
         description="Help Menu - UserBot | Telethon ",
