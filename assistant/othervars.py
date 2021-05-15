@@ -993,7 +993,6 @@ async def vcb(event):
         f"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         buttons=[
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
-            [Button.inline("WEBSOCKET", data="vcw")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
@@ -1010,36 +1009,6 @@ async def name(event):
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
             "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("vcb"),
-            )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                    name,
-                    themssg,
-                ),
-                buttons=get_back_button("vcb"),
-            )
-
-
-@callback("vcw")
-@owner
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "WEBSOCKET_URL"
-    name = "WEBSOCKET URL"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**WEBSOCKET URL**\nEnter your websocket url means\n`https://{HEROKU_APP_NAME}.herokuapp.com`\nIn place of HEROKU_APP_NAME put ur heroku app name\n\nUse /cancel to terminate the operation.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
