@@ -66,6 +66,7 @@ async def _(e):
     try:
         await e.client(stopvc(await get_call(e)))
         await eor(e, "`Voice Chat Stopped...`")
+        vcdyno("off")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
 
