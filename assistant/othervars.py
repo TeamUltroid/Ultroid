@@ -26,13 +26,13 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 @callback(re.compile("sndplug_(.*)"))
 async def send(eve):
-  name = (eve.data_match.group(1)).decode('UTF-8')
-  plug_name = name.split('_')[-1]
-  if name.startswith('def'):
-    plugin = f"plugins/{plug_name}.py"
-  else:
-    plugin = f"addons/{plug_name}.py"
-  buttons = [
+    name = (eve.data_match.group(1)).decode("UTF-8")
+    plug_name = name.split("_")[-1]
+    if name.startswith("def"):
+        plugin = f"plugins/{plug_name}.py"
+    else:
+        plugin = f"addons/{plug_name}.py"
+    buttons = [
         [
             Button.inline(
                 "« Pᴀsᴛᴇ »",
@@ -44,7 +44,7 @@ async def send(eve):
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ],
     ]
-  await eve.edit(file=plugin, buttons=buttons)
+    await eve.edit(file=plugin, buttons=buttons)
 
 
 @callback("updatenow")
@@ -152,9 +152,9 @@ async def _(e):
         .get("key")
     )
     buttons = [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-        ]
+        Button.inline("« Bᴀᴄᴋ", data="buck"),
+        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+    ]
     await e.edit(
         f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
         buttons=buttons,
