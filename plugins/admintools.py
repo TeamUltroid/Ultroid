@@ -54,8 +54,8 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
-from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 from telethon.tl.functions.messages import SetHistoryTTLRequest
+from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
 
@@ -468,10 +468,8 @@ async def get_all_pinned(event):
     await x.edit(m + a, parse_mode="html")
 
 
-@ultroid_cmd(pattern="autodelete ?(.*)",
-            groups_only=True,
-            admins_only=True)
-async def autodelte(ult): # Tg Feature
+@ultroid_cmd(pattern="autodelete ?(.*)", groups_only=True, admins_only=True)
+async def autodelte(ult):  # Tg Feature
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "off"]:
         return await eod(ult, "`Please Use Proper Format..`")
