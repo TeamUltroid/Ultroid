@@ -16,7 +16,7 @@ import escapeHtml from '@youtwitface/escape-html';
 
 export const playHandler = Composer.command('play', async (ctx) => {
     const { chat } = ctx.message;
-    let text: string;
+    let text: string = '';
 
     if (chat.type !== 'supergroup') {
         return await ctx.reply('I can only play in groups.');
