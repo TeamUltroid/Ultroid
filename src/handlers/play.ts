@@ -29,11 +29,11 @@ export const playHandler = Composer.command('play', async (ctx) => {
         text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
     }
 
-    if (!textOrLink) {
+    if (!text) {
         return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
     }
 
-    const index = await addToQueue(chat, textOrLink, {
+    const index = await addToQueue(chat, text, {
         id: ctx.from.id,
         f_name: ctx.from.first_name
     });
