@@ -435,11 +435,7 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    try:
-        if event.query.user_id in sed:
-            await event.edit(
-                reply_pop_up_alert,
-                buttons=[
+    buttons=[
                     [
                         Button.inline(
                             "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
@@ -450,14 +446,19 @@ async def on_plug_in_callback_query_handler(event):
                         Button.inline("« Bᴀᴄᴋ", data="back"),
                         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                     ],
-                ],
+                ]
+    try:
+        if event.query.user_id in sed:
+            await event.edit(
+                reply_pop_up_alert,
+                buttons=buttons,
             )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
         halps = f"Do .help {plugin_name} to get the list of commands."
-        await event.edit(halps)
+        await event.edit(halps, buttons=buttons)
 
 
 @callback(
@@ -493,11 +494,7 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    try:
-        if event.query.user_id in sed:
-            await event.edit(
-                reply_pop_up_alert,
-                buttons=[
+    buttons=[
                     [
                         Button.inline(
                             "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
@@ -505,17 +502,22 @@ async def on_plug_in_callback_query_handler(event):
                         )
                     ],
                     [
-                        Button.inline("« Bᴀᴄᴋ", data="buck"),
+                        Button.inline("« Bᴀᴄᴋ", data="back"),
                         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                     ],
-                ],
+                ]
+    try:
+        if event.query.user_id in sed:
+            await event.edit(
+                reply_pop_up_alert,
+                buttons=buttons,
             )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
         halps = f"Do .help {plugin_name} to get the list of commands."
-        await event.edit(halps)
+        await event.edit(halps, buttons=buttons)
 
 
 def page_num(page_number, loaded_plugins, prefix, type):
