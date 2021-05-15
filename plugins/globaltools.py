@@ -9,19 +9,15 @@
 ✘ Commands Available -
 
 • `{i}gban <reply user/ username>`
-    Globally Ban User.
-
-• `{i}ungban <reply user/ username>`
-    Unban Globally.
+• `{i}ungban`
+    Ban/Unban Globally.
 
 • `{i}listgban`
    List all GBanned users.
 
 • `{i}gmute <reply user/ username>`
-    Globally Mute the User.
-
-• `{i}ungmute <reply user/ username>`
-    UnMute Globally.
+• `{i}ungmute`
+    Mute/UnMute Globally.
 
 • `{i}gkick <reply user/ username>`
     Globally Kick User.
