@@ -13,7 +13,9 @@
 
 """
 
-import io, requests
+import io
+
+import requests
 from selenium import webdriver
 
 from . import *
@@ -40,16 +42,20 @@ async def webss(event):
             except requests.ConnectionError:
                 return await eod(xx, "Invalid URL!", time=5)
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--test-type")
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.binary_location = "/usr/bin/google-chrome"
     driver = webdriver.Chrome(chrome_options=chrome_options)
     driver.get(xurl)
-    height = driver.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-    width = driver.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
+    height = driver.execute_script(
+        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
+    )
+    width = driver.execute_script(
+        "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
+    )
     driver.set_window_size(width + 100, height + 100)
     im_png = driver.get_screenshot_as_png()
     driver.close()
