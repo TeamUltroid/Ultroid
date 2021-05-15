@@ -435,18 +435,18 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons=[
-                    [
-                        Button.inline(
-                            "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                            data=f"sndplug_{(event.data).decode('UTF-8')}",
-                        )
-                    ],
-                    [
-                        Button.inline("« Bᴀᴄᴋ", data="back"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-                    ],
-                ]
+    buttons = [
+        [
+            Button.inline(
+                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                data=f"sndplug_{(event.data).decode('UTF-8')}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data="back"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
+    ]
     try:
         if event.query.user_id in sed:
             await event.edit(
@@ -494,18 +494,18 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons=[
-                    [
-                        Button.inline(
-                            "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                            data=f"sndplug_{(event.data).decode('UTF-8')}",
-                        )
-                    ],
-                    [
-                        Button.inline("« Bᴀᴄᴋ", data="back"),
-                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-                    ],
-                ]
+    buttons = [
+        [
+            Button.inline(
+                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                data=f"sndplug_{(event.data).decode('UTF-8')}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data="back"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
+    ]
     try:
         if event.query.user_id in sed:
             await event.edit(
