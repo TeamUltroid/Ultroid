@@ -20,22 +20,6 @@ export const playHandler = Composer.command('play', async (ctx) => {
     if (chat.type !== 'supergroup') {
         return await ctx.reply('I can only play in groups.');
     }
-    try {
-        if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
-            await ctx.reply(JSON.stringify(ctx.message.reply_to_message));
-            const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
-            const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
-            const fileTitle = file.title;
-            const filePerformer = file.performer;
-            await ctx.reply(fileLink);
-            await ctx.reply(fileTitle);
-            await ctx.reply(filePerformer);
-        } else {
-            return await ctx.reply("Its Not A Audio File...");
-        }
-    } catch (error) {
-        console.log(error.message);
-    }
 
     const [ commandEntity ] = ctx.message.entities!;
     const text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
