@@ -9,16 +9,12 @@
 ✘ Commands Available -
 
 • `{i}promote <reply to user/userid/username>`
-    Promote the user in the chat.
-
-• `{i}demote <reply to user/userid/username>`
-    Demote the user in the chat.
+• `{i}demote`
+    Promote/Demote the user in the chat.
 
 • `{i}ban <reply to user/userid/username> <reason>`
-    Ban the user from the chat.
-
-• `{i}unban <reply to user/userid/username> <reason>`
-    Unban the user from the chat.
+• `{i}unban`
+    Ban/Unban the user from the chat.
 
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
@@ -28,7 +24,7 @@
     for silent pin use ({i}pin silent).
 
 • `{i}unpin (all) <reply to message>`
-    Unpin the message(s) in the chat.
+    Unpin the messages in the chat.
 
 • `{i}pinned`
    Get pinned message in the current chat.
