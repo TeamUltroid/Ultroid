@@ -356,7 +356,11 @@ async def backr(event):
     current_page_number = int(upage)
     buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
     await event.edit(
-        f"{xhelps}", file=_file_to_replace, force_document=True, buttons=buttons, link_preview=False
+        f"{xhelps}",
+        file=_file_to_replace,
+        force_document=True,
+        buttons=buttons,
+        link_preview=False,
     )
 
 
@@ -367,7 +371,11 @@ async def backr(event):
     current_page_number = int(upage)
     buttons = page_num(current_page_number, ADDONS, "addon", "add")
     await event.edit(
-        f"{xhelps}", file=_file_to_replace, force_document=True, buttons=buttons, link_preview=False
+        f"{xhelps}",
+        file=_file_to_replace,
+        force_document=True,
+        buttons=buttons,
+        link_preview=False,
     )
 
 
