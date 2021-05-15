@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 from math import ceil
 from platform import python_version as PyVer
+from os import remove
 
 from git import Repo
 from pyUltroid import __version__ as UltVer
