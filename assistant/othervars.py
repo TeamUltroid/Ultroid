@@ -151,7 +151,7 @@ async def _(e):
         .get("result")
         .get("key")
     )
-    buttons = []
+    buttons = [
             Button.inline("« Bᴀᴄᴋ", data="buck"),
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ]
