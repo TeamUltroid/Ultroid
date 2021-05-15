@@ -150,7 +150,9 @@ async def setting(event):
 async def _(event):
     check = await updater()
     if not check:
-        return await event.answer("You Are Already On Latest Version", cache_time=0, alert=True)
+        return await event.answer(
+            "You Are Already On Latest Version", cache_time=0, alert=True
+        )
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
@@ -163,16 +165,23 @@ async def _(event):
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
-            buttons=[[Button.inline("Update Now", data="updatenow")],[Button.inline("« Bᴀᴄᴋ", data="ownr")]],
+            buttons=[
+                [Button.inline("Update Now", data="updatenow")],
+                [Button.inline("« Bᴀᴄᴋ", data="ownr")],
+            ],
         )
         remove(f"ultroid_updates.txt")
         return
     else:
         await okk.edit(
             changelog_str,
-            buttons=[[Button.inline("Update Now", data="updatenow")],[Button.inline("« Bᴀᴄᴋ", data="ownr")]],
+            buttons=[
+                [Button.inline("Update Now", data="updatenow")],
+                [Button.inline("« Bᴀᴄᴋ", data="ownr")],
+            ],
             parse_mode="html",
         )
+
 
 @callback("pkng")
 async def _(event):
