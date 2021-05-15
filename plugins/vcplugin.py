@@ -28,8 +28,11 @@
     Remove access of Voice Chat Bot.
 
 • **Voice Chat Bot Commands**
-   `/play ytsearch:song name`
+   `/play ytsearch : song-name`
    `/play youtube link`
+   `/current`
+   `/skip`
+   `/exitVc`
 
 """
 
@@ -73,9 +76,12 @@ async def _(e):
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
     er, out = await bash("npm start")
-    LOGS.warning(er)
+    LOGS.info(er)
     LOGS.info(out)
-    await zz.edit(f"Failed {er}")
+    vcdyno("on")
+    if er:
+        await zz.edit(f"Failed {er}\n\n{out}")
+
 
 
 @ultroid_cmd(
