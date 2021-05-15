@@ -147,7 +147,7 @@ async def setting(event):
 
 @callback("doupdate")
 @owner
-async def (event):
+async def _(event):
     check = await updater()
     if not check:
         return await event.answer("You Are Already On Latest Version", cache_time=0, alert=True)
