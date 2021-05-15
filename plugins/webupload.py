@@ -13,7 +13,6 @@
 """
 
 
-import asyncio
 import time
 
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
@@ -42,10 +41,10 @@ async def _(event):
                     bb.file.document,
                     xx,
                     ccc,
-                   "Downloading " + bb.file.name +"...",
-                    )
+                    "Downloading " + bb.file.name + "...",
+                )
                 file_name = naam.name
-            except:
+            except BaseException:
                 file_name = await event.client.download_media(bb)
         else:
             return await eod(xx, "`Reply to media file`", time=5)
