@@ -52,7 +52,7 @@
 import asyncio
 
 from telethon.errors import BadRequestError
-from telethon.errors.rpcerrorlist import UserIdInvalidError
+from telethon.errors.rpcerrorlist import UserIdInvalidError, ChatNotModifiedError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
 from telethon.tl.functions.messages import SetHistoryTTLRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
@@ -479,7 +479,10 @@ async def autodelte(ult):  # Tg Feature
         tt = 3600 * 24 * 7
     else:
         tt = 0
-    await ultroid_bot(SetHistoryTTLRequest(ult.chat_id, period=tt))
+    try:
+        await ultroid_bot(SetHistoryTTLRequest(ult.chat_id, period=tt))
+    except ChatNotModifiedError:
+        return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
     await eor(ult, f"Auto Delete Status Changed to {match} !")
 
 
