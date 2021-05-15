@@ -158,11 +158,11 @@ async def _(event):
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
-        await okk.edit(get_string("upd_4"))
+        await event.edit(get_string("upd_4"))
         file = open(f"ultroid_updates.txt", "w+")
         file.write(tl_chnglog)
         file.close()
-        await okk.edit(
+        await event.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
             buttons=[
@@ -173,7 +173,7 @@ async def _(event):
         remove(f"ultroid_updates.txt")
         return
     else:
-        await okk.edit(
+        await event.edit(
             changelog_str,
             buttons=[
                 [Button.inline("Update Now", data="updatenow")],
@@ -429,10 +429,13 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
+                [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                [
                     Button.inline("« Bᴀᴄᴋ", data="back"),
                     Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                 ],
-            )
+            ]
+        )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
@@ -479,10 +482,13 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
+                [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                [
                     Button.inline("« Bᴀᴄᴋ", data="buck"),
                     Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                 ],
-            )
+            ]
+        )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
