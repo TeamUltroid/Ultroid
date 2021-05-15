@@ -79,11 +79,12 @@ async def inline_handler(event):
             z.append(y)
     cmd = len(z)
     bnn = asst.me.username
-    result = event.builder.article(
+    result = event.builder.document(
+        file="resources/extras/ultroid.jpg",
         title="Help Menu",
         description="Help Menu - UserBot | Telethon ",
-        url="https://t.me/TheUltroid",
-        thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
+        force_document=True,
+        link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
@@ -135,11 +136,43 @@ async def setting(event):
                 Button.inline("•Pɪɴɢ•", data="pkng"),
                 Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
             ],
-            [Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt")],
-            [Button.inline("<- Bᴀᴄᴋ", data="open")],
+            [
+                Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt"),
+                Button.inline("•Uᴘᴅᴀᴛᴇ•", data="doupdate"),
+            ],
+            [Button.inline("« Bᴀᴄᴋ", data="open")],
         ],
     )
 
+
+@callback("doupdate")
+@owner
+async def (event):
+    check = await updater()
+    if not check:
+        return await event.answer("You Are Already On Latest Version", cache_time=0, alert=True)
+    repo = Repo.init()
+    ac_br = repo.active_branch
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog_str = changelog + f"\n\nClick the below button to update!"
+    if len(changelog_str) > 1024:
+        await okk.edit(get_string("upd_4"))
+        file = open(f"ultroid_updates.txt", "w+")
+        file.write(tl_chnglog)
+        file.close()
+        await okk.edit(
+            get_string("upd_5"),
+            file="ultroid_updates.txt",
+            buttons=[[Button.inline("Update Now", data="updatenow")],[Button.inline("« Bᴀᴄᴋ", data="ownr")]],
+        )
+        remove(f"ultroid_updates.txt")
+        return
+    else:
+        await okk.edit(
+            changelog_str,
+            buttons=[[Button.inline("Update Now", data="updatenow")],[Button.inline("« Bᴀᴄᴋ", data="ownr")]],
+            parse_mode="html",
+        )
 
 @callback("pkng")
 async def _(event):
@@ -213,7 +246,7 @@ async def _(e):
         ],
         [
             Button.inline(
-                "<- Bᴀᴄᴋ",
+                "« Bᴀᴄᴋ",
                 data="open",
             ),
         ],
@@ -387,7 +420,7 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                    Button.inline("<- Bᴀᴄᴋ", data="back"),
+                    Button.inline("« Bᴀᴄᴋ", data="back"),
                     Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                 ],
             )
@@ -437,7 +470,7 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                    Button.inline("<- Bᴀᴄᴋ", data="buck"),
+                    Button.inline("« Bᴀᴄᴋ", data="buck"),
                     Button.inline("••Cʟᴏꜱᴇ••", data="close"),
                 ],
             )
@@ -485,12 +518,12 @@ def page_num(page_number, loaded_plugins, prefix, type):
         ] + [
             (
                 Button.inline(
-                    "<- Pʀᴇᴠɪᴏᴜs",
+                    "« Pʀᴇᴠɪᴏᴜs",
                     data=f"{prefix}_prev({modulo_page})",
                 ),
-                Button.inline("-Bᴀᴄᴋ-", data="open"),
+                Button.inline("« Bᴀᴄᴋ »", data="open"),
                 Button.inline(
-                    "Nᴇxᴛ ->",
+                    "Nᴇxᴛ »",
                     data=f"{prefix}_next({modulo_page})",
                 ),
             ),
@@ -498,5 +531,5 @@ def page_num(page_number, loaded_plugins, prefix, type):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("-Bᴀᴄᴋ-", data="open"),)]
+        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
     return pairs
