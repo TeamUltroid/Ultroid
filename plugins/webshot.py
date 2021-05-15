@@ -60,6 +60,7 @@ async def webss(event):
     im_png = driver.get_screenshot_as_png()
     driver.close()
     with io.BytesIO(im_png) as sshot:
+        sshot.name = "webshot.png"
         await xx.reply(
             f"**WebShot Generated**\n**URL**: {xurl}",
             file=sshot,
