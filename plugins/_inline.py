@@ -177,7 +177,7 @@ async def _(event):
             get_string("upd_5"),
             file="ultroid_updates.txt",
             buttons=[
-                [Button.inline("Update Now", data="updatenow")],
+                [Button.inline("• Uᴘᴅᴀᴛᴇ Nᴏᴡ •", data="updatenow")],
                 [Button.inline("« Bᴀᴄᴋ", data="ownr")],
             ],
         )
@@ -214,13 +214,6 @@ async def _(event):
 @owner
 async def _(e):
     button = [
-        [
-            Button.switch_inline(
-                "Sᴇɴᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs",
-                query="send",
-                same_peer=True,
-            ),
-        ],
         [
             Button.switch_inline(
                 "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
