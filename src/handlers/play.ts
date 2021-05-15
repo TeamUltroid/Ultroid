@@ -20,15 +20,19 @@ export const playHandler = Composer.command('play', async (ctx) => {
     if (chat.type !== 'supergroup') {
         return await ctx.reply('I can only play in groups.');
     }
+    if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
+        const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
+        const textOrLink = (await ctx.telegram.getFileLink(file.file_id)).href;
+    } else {
+        const [ commandEntity ] = ctx.message.entities!;
+        const textOrLink = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
+    }
 
-    const [ commandEntity ] = ctx.message.entities!;
-    const text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
-
-    if (!text) {
+    if (!textOrLink) {
         return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
     }
 
-    const index = await addToQueue(chat, text, {
+    const index = await addToQueue(chat, textOrLink, {
         id: ctx.from.id,
         f_name: ctx.from.first_name
     });
