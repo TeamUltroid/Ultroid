@@ -20,7 +20,7 @@ from . import *
 async def _(e):
     m = await updater()
     branch = (Repo.init()).active_branch
-    if m is not None:
+    if m:
         x = await ultroid_bot.asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             "resources/extras/ultroid.jpg",
