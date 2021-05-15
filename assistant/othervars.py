@@ -117,11 +117,10 @@ async def changes(okk):
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + f"\n\nClick the below button to update!"
-    tldr_str = tl_chnglog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
         file = open(f"ultroid_updates.txt", "w+")
-        file.write(tldr_str)
+        file.write(tl_chnglog)
         file.close()
         await okk.edit(
             get_string("upd_5"),
