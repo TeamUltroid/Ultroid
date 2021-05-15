@@ -130,6 +130,11 @@ async def _(event):
 @callback("ownr")
 @owner
 async def setting(event):
+    z = []
+    for x in LIST.values():
+        for y in x:
+            z.append(y)
+    cmd = len(z)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
