@@ -36,19 +36,17 @@ async def _(event):
         bb = await event.get_reply_message()
         if bb.media:
             ccc = time.time()
-            file_name = await event.client.download_media(
-                bb,
-                "./resources/downloads/",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        xx,
-                        ccc,
-                        "Downloading...",
-                    ),
-                ),
-            )
+            try:
+                naam = await downloader(
+                    bb.file.name,
+                    bb.file.document,
+                    xx,
+                    ccc,
+                   "Downloading " + bb.file.name +"...",
+                    )
+                file_name = naam.name
+            except:
+                file_name = await event.client.download_media(bb)
         else:
             return await eod(xx, "`Reply to media file`", time=5)
     try:
