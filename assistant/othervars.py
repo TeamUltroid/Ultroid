@@ -24,6 +24,29 @@ auth_url = r["auth_url"]
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
+@callback(re.compile("sndplug_(.*)"))
+async def send(eve):
+  name = (eve.data_match.group(1)).decode('UTF-8')
+  plug_name = name.split('_')[-1]
+  if name.startswith('def'):
+    plugin = f"plugins/{plug_name}.py"
+  else:
+    plugin = f"addons/{plug_name}.py"
+  buttons = [
+        [
+            Button.inline(
+                "« Pᴀsᴛᴇ »",
+                data=f"pasta-{plugin}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
+    ]
+  await eve.edit(file=plugin, buttons=buttons)
+
+
 @callback("updatenow")
 @owner
 async def update(eve):
@@ -128,13 +151,13 @@ async def _(e):
         .get("result")
         .get("key")
     )
+    buttons = []
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ]
     await e.edit(
         f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
-        buttons=Button.switch_inline(
-            "Search Again..?",
-            query="send ",
-            same_peer=True,
-        ),
+        buttons=buttons,
         link_preview=False,
     )
 
