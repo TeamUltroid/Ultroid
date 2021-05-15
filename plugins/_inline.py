@@ -131,6 +131,12 @@ async def _(event):
 @owner
 async def setting(event):
     await event.edit(
+        get_string("inline_4").format(
+            OWNER_NAME,
+            len(PLUGINS),
+            len(ADDONS),
+            cmd,
+        ),
         buttons=[
             [
                 Button.inline("•Pɪɴɢ•", data="pkng"),
