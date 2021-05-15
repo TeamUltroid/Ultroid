@@ -30,7 +30,7 @@ if add_ons == "True" or add_ons is None:
 else:
     zhelps = get_string("inline_3")
 
-_file_to_replace = "resources/extras/ultroid.jpg"
+_file_to_replace = "resources/extras/inline.jpg"
 # ============================================#
 
 
