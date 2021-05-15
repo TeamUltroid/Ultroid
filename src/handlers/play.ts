@@ -29,8 +29,6 @@ export const playHandler = Composer.command('play', async (ctx) => {
         text = ctx.message.text.slice(commandEntity.length + 1) || deunionize(ctx.message.reply_to_message)?.text;
     }
 
-    const textOrLink = text;
-
     if (!textOrLink) {
         return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
     }
