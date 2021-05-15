@@ -84,8 +84,6 @@ async def inline_handler(event):
     bnn = asst.me.username
     result = event.builder.photo(
         file=_file_to_replace,
-        title="Help Menu",
-        description="Help Menu - UserBot | Telethon ",
         link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
