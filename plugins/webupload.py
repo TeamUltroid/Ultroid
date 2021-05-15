@@ -38,7 +38,7 @@ async def _(event):
             try:
                 naam = await downloader(
                     bb.file.name,
-                    bb.file.document,
+                    bb.media.document,
                     xx,
                     ccc,
                     "Downloading " + bb.file.name + "...",
