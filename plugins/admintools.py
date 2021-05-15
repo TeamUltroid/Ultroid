@@ -33,6 +33,9 @@
 • `{i}pinned`
    Get pinned message in the current chat.
 
+• `{i}autodelete <24h/7d/off>`
+   Enable Auto Delete Messages in Chat.
+
 • `{i}listpinned`
    Get all pinned messages in current chat.
 
@@ -42,7 +45,7 @@
 • `{i}purgeme <reply to message>`
     Purge Only your messages from the replied message.
 
-• `{i}purgeall <reply to message>`
+• `{i}purgeall`
     Delete all msgs of replied user.
 """
 
@@ -52,6 +55,7 @@ from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.functions.messages import SetHistoryTTLRequest
 
 from . import *
 
@@ -462,6 +466,23 @@ async def get_all_pinned(event):
         return await eod(x, "There is no message pinned in this group!", time=5)
 
     await x.edit(m + a, parse_mode="html")
+
+
+@ultroid_cmd(pattern="autodelete ?(.*)",
+            groups_only=True,
+            admins_only=True)
+async def autodelte(ult): # Tg Feature
+    match = ult.pattern_match.group(1)
+    if not match or match not in ["24h", "7d", "off"]:
+        return await eod(ult, "`Please Use Proper Format..`")
+    if match == "24h":
+        tt = 3600 * 24
+    elif match == "7d":
+        tt = 3600 * 24 * 7
+    else:
+        tt = 0
+    await ultroid_bot(SetHistoryTTLRequest(ult.chat_id, period=tt))
+    await eor(ult, f"Auto Delete Status Changed to {match} !")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
