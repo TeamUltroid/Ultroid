@@ -85,7 +85,6 @@ async def inline_handler(event):
         file=_file_to_replace,
         title="Help Menu",
         description="Help Menu - UserBot | Telethon ",
-        force_document=True,
         link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
@@ -145,7 +144,6 @@ async def setting(event):
             cmd,
         ),
         file=_file_to_replace,
-        force_document=True,
         link_preview=False,
         buttons=[
             [
@@ -358,7 +356,6 @@ async def backr(event):
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
-        force_document=True,
         buttons=buttons,
         link_preview=False,
     )
@@ -373,7 +370,6 @@ async def backr(event):
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
-        force_document=True,
         buttons=buttons,
         link_preview=False,
     )
@@ -423,7 +419,6 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(
         get_string("inline_5"),
         file=_file_to_replace,
-        force_document=True,
         buttons=Button.inline("Oᴘᴇɴ Mᴀɪɴ Mᴇɴᴜ Aɢᴀɪɴ", data="open"),
     )
 
