@@ -429,7 +429,7 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{(event.data).decode("UTF-8")}")],
                     [
                         Button.inline("« Bᴀᴄᴋ", data="back"),
                         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
@@ -482,7 +482,7 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{(event.data).decode("UTF-8")}")],
                     [
                         Button.inline("« Bᴀᴄᴋ", data="buck"),
                         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
