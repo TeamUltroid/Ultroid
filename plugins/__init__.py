@@ -16,6 +16,7 @@ from pyUltroid.functions.goodbye_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
 from pyUltroid.functions.welcome_db import *
+from pyUltroid.functions.ytdl import *
 from pyUltroid.utils import *
 
 from strings import get_string
