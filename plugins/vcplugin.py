@@ -83,7 +83,6 @@ async def _(e):
         await zz.edit(f"Failed {er}\n\n{out}")
 
 
-
 @ultroid_cmd(
     pattern="vcinvite$",
     groups_only=True,
