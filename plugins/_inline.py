@@ -29,7 +29,7 @@ if add_ons == "True" or add_ons is None:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
-    
+
 _file_to_replace = "resources/extras/ultroid.jpg"
 # ============================================#
 
@@ -353,7 +353,9 @@ async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(PLUGINS))
     current_page_number = int(upage)
     buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
-    await event.edit(f"{xhelps}", file=_file_to_replace, buttons=buttons, link_preview=False)
+    await event.edit(
+        f"{xhelps}", file=_file_to_replace, buttons=buttons, link_preview=False
+    )
 
 
 @callback("buck")
@@ -362,7 +364,9 @@ async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
     current_page_number = int(upage)
     buttons = page_num(current_page_number, ADDONS, "addon", "add")
-    await event.edit(f"{xhelps}", file=_file_to_replace, buttons=buttons, link_preview=False)
+    await event.edit(
+        f"{xhelps}", file=_file_to_replace, buttons=buttons, link_preview=False
+    )
 
 
 @callback("open")
