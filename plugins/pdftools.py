@@ -25,6 +25,7 @@
 """
 
 import os
+import glob
 import shutil
 import time
 
@@ -38,8 +39,8 @@ from skimage.filters import threshold_local
 
 from . import *
 
-if not os.path.exists("pdf/"):
-    os.makedirs("pdf/")
+if not os.path.isdir("pdf"):
+    os.mkdir("pdf")
 
 
 @ultroid_cmd(
@@ -73,12 +74,12 @@ async def pdfseimg(event):
             with open(os.path.join("pdf/ult{}.png".format(num + 1)), "wb") as f:
                 pw.write(f)
         os.remove(pdfp)
-        a = os.listdir("pdf/")
-        for z in a:
-            lst = [f"pdf/{z}"]
-            await event.client.send_file(event.chat_id, lst, album=True)
+        afl = glob.glob("pdf/*")
+        ok = [*sorted(afl)]
+        for z in ok:
+            await event.client.send_file(event.chat_id, z, album=True)
         shutil.rmtree("pdf")
-        os.makedirs("pdf/")
+        os.mkdir("pdf")
         await xx.delete()
     if msg:
         o = int(msg) - 1
@@ -308,9 +309,11 @@ async def sendpdf(event):
     else:
         ok = "My PDF File.pdf"
     merger = PdfFileMerger()
-    for item in os.listdir("pdf/"):
+    afl = glob.glob("pdf/*")
+    ok = [*sorted(afl)]
+    for item in ok:
         if item.endswith("pdf"):
-            merger.append(f"pdf/{item}")
+            merger.append(item)
     merger.write(ok)
     await event.client.send_file(event.chat_id, ok, reply_to=event.reply_to_msg_id)
     os.remove(ok)
