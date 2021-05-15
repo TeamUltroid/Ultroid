@@ -429,13 +429,13 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
-                [
-                    Button.inline("« Bᴀᴄᴋ", data="back"),
-                    Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                    [
+                        Button.inline("« Bᴀᴄᴋ", data="back"),
+                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                    ],
                 ],
-            ]
-        )
+            )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
@@ -482,13 +482,13 @@ async def on_plug_in_callback_query_handler(event):
             await event.edit(
                 reply_pop_up_alert,
                 buttons=[
-                [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
-                [
-                    Button.inline("« Bᴀᴄᴋ", data="buck"),
-                    Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                    [Button.inline("« Sᴇɴᴅ Pʟᴜɢɪɴ »", data=f"sndplug_{event.data}")],
+                    [
+                        Button.inline("« Bᴀᴄᴋ", data="buck"),
+                        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+                    ],
                 ],
-            ]
-        )
+            )
         else:
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
