@@ -8,7 +8,7 @@
 """
 ✘ Commands Available -
 
-•`{i}icalc` - Inline Calculator
+•`{i}calc` - Inline Calculator
 
 """
 
@@ -17,7 +17,7 @@ import re
 from . import *
 
 
-@ultroid_cmd(pattern="icalc")
+@ultroid_cmd(pattern="calc")
 async def icalc(e):
     results = await ultroid_bot.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
@@ -62,7 +62,7 @@ async def _(e):
     if x == "AC":
         udB.delete("calc")
         return await e.edit(
-            "Noice Inline Calculator",
+            "Ultroid Inline Calculator",
             buttons=[Button.inline("Open Calculator Again", data="recalc")],
         )
     elif x == "C":
@@ -100,7 +100,7 @@ async def _(e):
             except BaseException:
                 udB.delete("calc")
                 return await e.answer("Error", cache_time=0, alert=True)
-        return await e.answer("None", cache_time=0, alert=True)
+        return await e.answer("None")
     else:
         get = udB.get("calc")
         if get:
