@@ -51,7 +51,7 @@ async def _(e):
     tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
     lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
     lst.append([Button.inline("=", data="calc=")])
-    calc = e.builder.article("Calc", text="• Inline Calculator •", buttons=lst)
+    calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
     await e.answer([calc])
 
 
@@ -62,7 +62,7 @@ async def _(e):
     if x == "AC":
         udB.delete("calc")
         return await e.edit(
-            "Ultroid Inline Calculator",
+            "• Ultroid Inline Calculator •",
             buttons=[Button.inline("Open Calculator Again", data="recalc")],
         )
     elif x == "C":
