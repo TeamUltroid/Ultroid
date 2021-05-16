@@ -24,8 +24,8 @@ async def get_var(event):
     x = await eor(event, get_string("com_1"))
     if not event.out and not is_fullsudo(event.sender_id):
         return await eod(event, "`This Command Is Sudo Restricted.`")
-    if len(event.text) > 3:
-        if " " in event.text[3]:
+    if len(event.text) > 4:
+        if " " in event.text[4]:
             opt = event.text.split(" ", maxsplit=2)[1]
         else:
             return
