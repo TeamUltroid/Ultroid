@@ -52,9 +52,7 @@ import calendar
 import html
 import io
 import os
-import sys
 import time
-import traceback
 from datetime import datetime as dt
 
 import pytz
@@ -101,8 +99,6 @@ async def date(event):
     d = dt.now(k).strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
     ultroid = await eor(event, f"`{k}\n\n{d}`")
-
-
 
 
 @ultroid_cmd(
