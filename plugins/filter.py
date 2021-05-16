@@ -81,6 +81,8 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def fl(e):
+    if (await e.client.get_entity(e.sender_id)).bot:
+        return
     xx = (e.text).lower()
     chat = e.chat_id
     x = get_filter(int(chat))
