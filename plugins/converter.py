@@ -28,7 +28,6 @@
     Upload Your file with your custom thumbnail.
 """
 
-import asyncio
 import os
 import time
 
