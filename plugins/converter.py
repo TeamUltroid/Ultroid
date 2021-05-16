@@ -160,9 +160,6 @@ async def _(event):
             b.write(str(a.message))
             b.close()
             await xx.edit(f"**Packing into** `{input_str}`")
-            await asyncio.sleep(2)
-            await xx.edit(f"**Uploading** `{input_str}`")
-            await asyncio.sleep(2)
             await event.client.send_file(
                 event.chat_id, input_str, thumb="resources/extras/ultroid.jpg"
             )
