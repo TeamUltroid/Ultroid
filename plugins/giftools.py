@@ -24,8 +24,8 @@
 
 
 import os
-import random
 import time
+import random
 
 from . import *
 
@@ -85,14 +85,13 @@ async def gifs(ult):
     if not get:
         return await eor(ult, "`.gif <query>`")
     m = await eor(ult, "`Searching gif ...`")
+    gifs = await ultroid_bot.inline_query("gif", f"{get}")
     if not n:
-        gifs = await ultroid_bot.inline_query("gif", f"{get}")
         await gifs[ck].click(
             ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
         )
     else:
-        for x in range(0, n):
-            gifs = await ultroid_bot.inline_query("gif", f"{get}")
+        for x in range(n):
             await gifs[x].click(
                 ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
             )
