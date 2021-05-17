@@ -24,7 +24,7 @@ async def _(e):
     link = e.pattern_match.group(1)
     if not os.path.isdir("mega"):
         os.mkdir("mega")
-    xx = await eor(e, "Processing...\nTo Check Progress : `{i}ls mega`")
+    xx = await eor(e, f"Processing...\nTo Check Progress : `{HNDLR}ls mega`")
     s = datetime.now()
     x, y = await bash(f"megadl {link} --path mega")
     afl = glob.glob("mega/*")
