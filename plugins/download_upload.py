@@ -114,47 +114,55 @@ async def download(event):
             return await eod(xx, "`This Directory is Empty.`")
         kk = glob.glob(f"{kk}/*")
         for kk in kk:
-          try:
             try:
-                res = await uploader(kk, kk, tt, xx, "Uploading...")
-            except MessageNotModifiedError as err:
-                return await xx.edit(str(err))
-            title = kk.split("/")[-1]
-            if " | stream" in hmm and res.name.endswith(
-                tuple([".mkv", ".mp4", ".mp3", ".opus", ".m4a", ".ogg"])
-            ):
-                metadata = extractMetadata(createParser(res.name))
-                wi = 512
-                hi = 512
-                duration = 0
-                if metadata.has("width"):
-                    wi = metadata.get("width")
-                if metadata.has("height"):
-                    hi = metadata.get("height")
-                if metadata.has("duration"):
-                    duration = metadata.get("duration").seconds
-                if metadata.has("artist"):
-                    metadata.get("artist")
-                if res.name.endswith(tuple([".mkv", ".mp4"])):
-                    attributes = [
-                        DocumentAttributeVideo(
-                            w=wi, h=hi, duration=duration, supports_streaming=True
-                        )
-                    ]
-                if res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
-                    attributes = [
-                        DocumentAttributeAudio(duration=duration, title=title)
-                    ]
                 try:
-                    x = await event.client.send_file(
-                        event.chat_id,
-                        res,
-                        caption=title,
-                        attributes=attributes,
-                        supports_streaming=True,
-                        thumb="resources/extras/ultroid.jpg",
-                    )
-                except BaseException:
+                    res = await uploader(kk, kk, tt, xx, "Uploading...")
+                except MessageNotModifiedError as err:
+                    return await xx.edit(str(err))
+                title = kk.split("/")[-1]
+                if " | stream" in hmm and res.name.endswith(
+                    tuple([".mkv", ".mp4", ".mp3", ".opus", ".m4a", ".ogg"])
+                ):
+                    metadata = extractMetadata(createParser(res.name))
+                    wi = 512
+                    hi = 512
+                    duration = 0
+                    if metadata.has("width"):
+                        wi = metadata.get("width")
+                    if metadata.has("height"):
+                        hi = metadata.get("height")
+                    if metadata.has("duration"):
+                        duration = metadata.get("duration").seconds
+                    if metadata.has("artist"):
+                        metadata.get("artist")
+                    if res.name.endswith(tuple([".mkv", ".mp4"])):
+                        attributes = [
+                            DocumentAttributeVideo(
+                                w=wi, h=hi, duration=duration, supports_streaming=True
+                            )
+                        ]
+                    if res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                        attributes = [
+                            DocumentAttributeAudio(duration=duration, title=title)
+                        ]
+                    try:
+                        x = await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=title,
+                            attributes=attributes,
+                            supports_streaming=True,
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                    except BaseException:
+                        x = await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=title,
+                            force_document=True,
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                else:
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
@@ -162,16 +170,8 @@ async def download(event):
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
-            else:
-                x = await event.client.send_file(
-                    event.chat_id,
-                    res,
-                    caption=title,
-                    force_document=True,
-                    thumb="resources/extras/ultroid.jpg",
-                )
-          except Exception as ve:
-            return await eor(xx, str(ve))
+            except Exception as ve:
+                return await eor(xx, str(ve))
     else:
         try:
             try:
@@ -241,7 +241,10 @@ async def download(event):
                     size += os.path.getsize(fp)
             c = len(os.listdir(kk))
             await xx.delete()
-            await ultroid_bot.send_message(event.chat_id, f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`")
+            await ultroid_bot.send_message(
+                event.chat_id,
+                f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+            )
         else:
             await eor(xx, f"Uploaded `{kk}` in `{t}`")
     else:
