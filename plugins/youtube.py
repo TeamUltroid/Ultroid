@@ -26,6 +26,7 @@ async def download_from_youtube_(event):
         ytd = YoutubeDL(
             {
                 "format": "bestaudio",
+                "writethumbnail": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp3",
@@ -39,6 +40,7 @@ async def download_from_youtube_(event):
         ytd = YoutubeDL(
             {
                 "format": "best",
+                "writethumbnail": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp4",
@@ -52,6 +54,7 @@ async def download_from_youtube_(event):
         ytd = YoutubeDL(
             {
                 "format": "bestaudio",
+                "writethumbnail": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp3",
@@ -70,6 +73,7 @@ async def download_from_youtube_(event):
         ytd = YoutubeDL(
             {
                 "format": "best",
+                "writethumbnail": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp4",
