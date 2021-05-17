@@ -23,7 +23,7 @@ from . import *
 
 @ultroid_cmd(pattern="size$")
 async def size(e):
-    r = await e.gef_reply_message()
+    r = await e.get_reply_message()
     if not (r and r.media):
         return await eor(e, "`Reply To image`")
     if hasattr(r.media, "document"):
@@ -38,7 +38,7 @@ async def size(e):
 
 @ultroid_cmd(pattern="resize ?(.*)")
 async def size(e):
-    r = await e.gef_reply_message()
+    r = await e.get_reply_message()
     if not (r and r.media):
         return await eor(e, "`Reply To image`")
     sz = e.pattern_match.group(1)
