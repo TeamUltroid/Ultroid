@@ -110,7 +110,7 @@ async def download(event):
     if not kk:
         return await eod(xx, get_string("udl_3"))
     elif os.path.isdir(kk):
-        if not os.listdir(path):
+        if not os.listdir(kk):
             return await eod(xx, "`This Directory is Empty.`")
         kk = glob.glob(f"{kk}/*")
         for kk in kk:
