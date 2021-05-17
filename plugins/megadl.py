@@ -1,0 +1,54 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+•`{i}megadl <link>`
+  It Downloads and Upload Files from mega.nz links.
+"""
+
+from . import *
+import time, glob
+from datetime import datetime
+@ultroid_cmd(pattern="megadl ?(.*)")
+async def _(e):
+    link = e.pattern_match.group(1)
+    if not os.path.isdir("mega"):
+        os.mkdir("mega")
+    xx = await eor(e,"Processing...\nTo Check Progress : `{i}ls mega`")
+    s = datetime.now()
+    x, y = await bash(f"megadl {link} --path mega")
+    afl = glob.glob("mega/*")
+    ok = [*sorted(afl)]
+    tt = time.time()
+    c = 0
+    for kk in ok:
+        try:
+            res = await uploader(kk, kk, tt, xx, "Uploading...")
+            await ultroid_bot.send_file(
+                    e.chat_id,
+                    res,
+                    caption="`" + kk.split("/")[-1] + "`",
+                    force_document=True,
+                    thumb="resources/extras/ultroid.jpg",
+                )
+            c += 1
+        except Exception as er:
+            LOGS.info(er)
+    ee = datetime.now()
+    t = time_formatter(((ee - s).seconds) * 1000)
+    size = 0
+    for path, dirs, files in os.walk("mega"):
+        for f in files:
+            fp = os.path.join(path, f)
+            size += os.path.getsize(fp)
+    await xx.delete()
+    await ultroid_bot.send_message(e.chat_id, f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`")
+    os.system("rm -rf mega")
+    
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})    
