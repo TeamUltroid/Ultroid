@@ -9,13 +9,17 @@
 ✘ Commands Available
 
 •`{i}invertgif`
+  Make Gif Inverted(negative).
 
 •`{i}bwgif`
-
-•`{i}gif`
+  Make Gif black and white
 
 •`{i}vtog`
+  Reply To Video , It will Create Gif
+  Video to Gif
 
+•`{i}gif <query>`
+   Send video regarding to query.
 """
 
 
