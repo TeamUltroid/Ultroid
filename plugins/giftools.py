@@ -93,7 +93,7 @@ async def gifs(ult):
     else:
         for x in range(0,n):
             gifs = await ultroid_bot.inline_query("gif", f"{get}")
-            await gifs[n].click(
+            await gifs[x].click(
                 ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
             )
     await m.delete()
