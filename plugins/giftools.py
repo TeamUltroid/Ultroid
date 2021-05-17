@@ -24,8 +24,8 @@
 
 
 import os
-import time
 import random
+import time
 
 from . import *
 
@@ -75,7 +75,7 @@ async def igif(e):
 @ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
     get = ult.pattern_match.group(1)
-    ck = random.randint(0, 5)
+    random.randint(0, 5)
     n = 0
     if ";" in get:
         try:
