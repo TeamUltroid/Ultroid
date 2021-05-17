@@ -75,7 +75,7 @@ async def igif(e):
 @ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
     get = ult.pattern_match.group(1)
-    random.randint(0, 5)
+    xx = random.randint(0, 5)
     n = 0
     if ";" in get:
         try:
@@ -83,11 +83,11 @@ async def gifs(ult):
         except BaseException:
             pass
     if not get:
-        return await eor(ult, "`.gif <query>`")
+        return await eor(ult, "`{i}gif <query>`")
     m = await eor(ult, "`Searching gif ...`")
-    gifs = await ultroid_bot.inline_query("gif", f"{get}")
+    gifs = await ultroid_bot.inline_query("gif", get)
     if not n:
-        await gifs[x].click(
+        await gifs[xx].click(
             ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
         )
     else:
