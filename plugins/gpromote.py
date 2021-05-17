@@ -358,3 +358,5 @@ async def _(e):
                     except BaseException:
                         pass
         return await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
