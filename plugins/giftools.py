@@ -24,8 +24,8 @@
 
 
 import os
-import time
 import random
+import time
 
 from . import *
 
@@ -91,7 +91,7 @@ async def gifs(ult):
             ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
         )
     else:
-        for x in range(0,n):
+        for x in range(0, n):
             gifs = await ultroid_bot.inline_query("gif", f"{get}")
             await gifs[x].click(
                 ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
