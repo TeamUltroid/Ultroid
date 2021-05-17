@@ -38,7 +38,45 @@ from telethon.utils import get_display_name
 
 from . import *
 
+
+# =========================HELPER FUNCTIONS========================
+def escape_invalid_brackets(text: str, valids: List[str]) -> str:
+    new_text = ""
+    idx = 0
+    while idx < len(text):
+        if text[idx] == "{":
+            if idx + 1 < len(text) and text[idx + 1] == "{":
+                idx += 2
+                new_text += "{{{{"
+                continue
+            else:
+                success = False
+                for v in valids:
+                    if text[idx:].startswith('{' + v + '}'):
+                        success = True
+                        break
+                if success:
+                    new_text += text[idx: idx + len(v) + 2]
+                    idx += len(v) + 2
+                    continue
+                else:
+                    new_text += "{{"
+
+        elif text[idx] == "}":
+            if idx + 1 < len(text) and text[idx + 1] == "}":
+                idx += 2
+                new_text += "}}}}"
+                continue
+            else:
+                new_text += "}}"
+
+        else:
+            new_text += text[idx]
+        idx += 1
+
+    return new_text
 # ========================= CONSTANTS =============================
+VALID_FORMATTERS = ["ON", "warn", "twarn", "UND", "name", "fullname", "username", "count", "mention"]
 COUNT_PM = {}
 LASTMSG = {}
 if Redis("PMPIC"):
@@ -49,26 +87,28 @@ else:
 UND = get_string("pmperm_1")
 
 if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = """
+    UNAPPROVED_MSG_INI = """
 **PMSecurity of {ON}!**
 
 {UND}
 
 You have {warn}/{twarn} warnings!"""
 else:
-    UNAPPROVED_MSG = (
+    UNAPPROVED_MSG_INI = (
         """
 **PMSecurity of {ON}!**"""
         f"""
 
 {Redis("PM_TEXT")}
 """
-        """
+        
 
 {UND}
 
-You have {warn}/{twarn} warnings!"""
-    )
+You have {warn}/{twarn} warnings!
+""")
+
+UNAPPROVED_MSG = escape_invalid_brackets(UNAPPROVED_MSG_INI, VALID_FORMATTERS)
 
 UNS = get_string("pmperm_2")
 # 1
@@ -89,8 +129,6 @@ PMCMDS = [
     f"{hndlr}unblock",
 ]
 # =================================================================
-
-
 @ultroid_cmd(
     pattern="logpm$",
 )
