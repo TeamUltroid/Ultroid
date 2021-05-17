@@ -42,14 +42,16 @@ async def size(e):
     if not (r and r.media):
         return await eor(e, "`Reply To image`")
     sz = e.pattern_match.group(1)
-    if not sz or (len(sz.split()) == 3):
-        return await eor("Give Some Size To Resize, Like `{i}resize 720 1080` ")
+    if not sz:
+        return await eod(f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ")
     if hasattr(r.media, "document"):
         img = await ultroid_bot.download_media(r, thumb=-1)
     else:
         img = await ultroid_bot.download_media(r.media)
     sz = sz.split()
-    x, y = int(sz[1]), int(sz[2])
+    if not len(sz) == 2:
+        return await eod(f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ")
+    x, y = int(sz[0]), int(sz[1])
     im = Image.open(img)
     ok = im.resize((x, y))
     ok.save(img, format="PNG", optimize=True)
