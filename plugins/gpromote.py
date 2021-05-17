@@ -42,7 +42,10 @@ async def _(e):
         if len(ok) > 2:
             rank = ok[2]
         c = 0
-        user.id = user.peer_id.user_id
+        if e.is_private:
+            user.id = user.peer_id.user_id
+        else:
+            user.id = user.from_id.user_id
         async for x in ultroid_bot.iter_dialogs():
             if "group" in key.lower():
                 if x.is_group:
@@ -202,6 +205,10 @@ async def _(e):
         return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()
     if user:
+        if e.is_private:
+            user.id = user.peer_id.user_id
+        else:
+            user.id = user.from_id.user_id
         ev = await eor(e, "`Demoting Replied Users Globally`")
         ok = e.text.split(maxsplit=1)
         key = "all"
