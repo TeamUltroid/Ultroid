@@ -318,7 +318,7 @@ async def _(e):
             return await eod(e, f"`No User Found Regarding {user}`")
         ev = await eor(e, f"`Demoting {name.first_name} globally.`")
         key = "all"
-        if len(ok) > 2:
+        if len(k) > 2:
             if ("group" in k[2]) or ("channel" in k[2]):
                 key = k[2]
         rank = "Not AdMin"
