@@ -11,8 +11,6 @@
 • `{i}saavn <search query>`
     Download songs from Saavn
 
-• `{i}deez <search query>`
-    Download songs from Deezer
 """
 
 import os
@@ -24,7 +22,7 @@ from telethon.tl.types import DocumentAttributeAudio
 
 from . import *
 
-
+"""
 @ultroid_cmd(pattern="deez ?(.*)")
 async def siesace(e):
     song = e.pattern_match.group(1)
@@ -65,7 +63,7 @@ async def siesace(e):
     await lol.delete()
     os.remove(title + ".mp3")
     os.remove(title + ".jpg")
-
+"""
 
 @ultroid_cmd(pattern="saavn ?(.*)")
 async def siesace(e):
