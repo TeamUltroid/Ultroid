@@ -91,7 +91,9 @@ async def unzipp(event):
         os.mkdir("unzip")
     await bash(f"7z x {file} -aoa -ounzip")
     await xx.edit(
-        "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(i=HNDLR)
+        "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(
+            i=HNDLR
+        )
     )
 
 
