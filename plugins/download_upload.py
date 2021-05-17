@@ -112,7 +112,8 @@ async def download(event):
     elif os.path.isdir(kk):
         if not os.listdir(kk):
             return await eod(xx, "`This Directory is Empty.`")
-        kk = glob.glob(f"{kk}/*")
+        ok = glob.glob(f"{kk}/*")
+        kk = [*sorted(ok)]
         for kk in kk:
             try:
                 try:
