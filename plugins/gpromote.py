@@ -33,10 +33,10 @@ async def _(e):
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Promoting Replied Users Globally`")
-        ok = e.text.split(maxsplit=1)
+        ok = e.text.split()
         key = "all"
         if len(ok) > 1:
-            if ("group" in key) or ("channel" in key):
+            if ("group" in ok[1]) or ("channel" in ok[1]):
                 key = ok[1]
         rank = "AdMin"
         if len(ok) > 2:
@@ -112,7 +112,7 @@ async def _(e):
                         LOGS.info(er)
         return await eor(ev, f"Promoted The Replied Users in Total : {c} {key} chats")
     else:
-        k = e.text.split(maxsplit=1)
+        k = e.text.split()
         if not k[1]:
             return await eod(e, "`Give someone's username/id or replied to user.")
         user = k[1]
@@ -210,7 +210,7 @@ async def _(e):
         else:
             user.id = user.from_id.user_id
         ev = await eor(e, "`Demoting Replied Users Globally`")
-        ok = e.text.split(maxsplit=1)
+        ok = e.text.split()
         key = "all"
         if len(ok) > 1:
             if ("group" in ok[1]) or ("channel" in ok[1]):
@@ -283,7 +283,7 @@ async def _(e):
                         pass
         return await eor(ev, f"Demoted The Replied Users in Total : {c} {key} chats")
     else:
-        k = e.text.split(maxsplit=1)
+        k = e.text.split()
         if not k[1]:
             return await eod(e, "`Give someone's username/id or replied to user.")
         user = k[1]
