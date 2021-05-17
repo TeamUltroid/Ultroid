@@ -8,6 +8,15 @@
 """
 ✘ Commands Available -
 
+•`{i}gpromote <reply to user> <channel/group/all> <rank>`
+    globally promote user where you are admin.
+    You can also set where To promote only groups or only channels or all.
+    Like. `gpromote group boss` ~ it promote repied user in all groups.
+    Or. `gpromote @username all sar` ~ it promote the users in all group and channel.
+
+•`{i}gdemote`
+    Same function as gpromote.
+
 """
 
 from telethon.tl.functions.channels import EditAdminRequest
