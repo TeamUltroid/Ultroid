@@ -27,6 +27,7 @@ async def download_from_youtube_(event):
             {
                 "format": "bestaudio",
                 "writethumbnail": True,
+                "addmetadata": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp3",
@@ -41,6 +42,7 @@ async def download_from_youtube_(event):
             {
                 "format": "best",
                 "writethumbnail": True,
+                "addmetadata": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp4",
@@ -55,6 +57,7 @@ async def download_from_youtube_(event):
             {
                 "format": "bestaudio",
                 "writethumbnail": True,
+                "addmetadata": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp3",
@@ -74,6 +77,7 @@ async def download_from_youtube_(event):
             {
                 "format": "best",
                 "writethumbnail": True,
+                "addmetadata": True,
                 "geo-bypass": True,
                 "nocheckcertificate": True,
                 "outtmpl": "%(id)s.mp4",
