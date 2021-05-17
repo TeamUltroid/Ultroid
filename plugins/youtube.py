@@ -36,6 +36,10 @@ async def download_from_youtube_(event):
         url = event.pattern_match.group(2)
         if not url:
             return await eor(event, "Give me a (youtube) URL to download audio from!")
+        try:
+            request.get(url)
+        except BaseException:
+            return await eor(event, "`Give A Direct Audio Link To Download`")
         xx = await eor(event, get_string("com_1"))
     elif opt == "v":
         ytd = YoutubeDL(
@@ -51,6 +55,10 @@ async def download_from_youtube_(event):
         url = event.pattern_match.group(2)
         if not url:
             return await eor(event, "Give me a (youtube) URL to download video from!")
+        try:
+            request.get(url)
+        except BaseException:
+            return await eor(event, "`Give A Direct Video Link To Download`")
         xx = await eor(event, get_string("com_1"))
     elif opt == "sa":
         ytd = YoutubeDL(
