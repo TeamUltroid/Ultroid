@@ -10,15 +10,17 @@
 
 """
 
-from . import *
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
+
+from . import *
+
 
 @ultroid_cmd(pattern="gpromote ?(.*)")
 async def _(e):
     x = e.pattern_match.group(1)
     if not x:
-         return await eod(e, "`Incorrect Format`")
+        return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Promoting Replied Users Globally`")
@@ -38,71 +40,70 @@ async def _(e):
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             elif "channel" in key.lower():
                 if x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             else:
                 if x.is_group or x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
                     except Exception as er:
                         LOGS.info(er)
-                        pass
         return await eor(ev, f"Promoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split(maxsplit=1)
         if not k[1]:
             return await eod(e, "`Give someone's username/id or replied to user.")
-        user = k[1]   
+        user = k[1]
         if user.isdigit():
             user = int(user)
         try:
@@ -124,71 +125,72 @@ async def _(e):
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             elif "channel" in key.lower():
                 if x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             else:
                 if x.is_group or x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=True,
-                                     change_info=False,
-                                     ban_users=True,
-                                     delete_messages=True,
-                                     pin_messages=True,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=True,
+                                    change_info=False,
+                                    ban_users=True,
+                                    delete_messages=True,
+                                    pin_messages=True,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
         return await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
-        
+
+
 @ultroid_cmd(pattern="gdemote ?(.*)")
 async def _(e):
     x = e.pattern_match.group(1)
     if not x:
-         return await eod(e, "`Incorrect Format`")
+        return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Demoting Replied Users Globally`")
@@ -205,70 +207,70 @@ async def _(e):
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             elif "channel" in key.lower():
                 if x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             else:
                 if x.is_group or x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user.id,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user.id,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
         return await eor(ev, f"Demoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split(maxsplit=1)
         if not k[1]:
             return await eod(e, "`Give someone's username/id or replied to user.")
-        user = k[1]   
+        user = k[1]
         if user.isdigit():
             user = int(user)
         try:
@@ -288,63 +290,62 @@ async def _(e):
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             elif "channel" in key.lower():
                 if x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
             else:
                 if x.is_group or x.is_channel:
                     try:
                         await ultroid_bot(
                             EditAdminRequest(
-                                 x.id,
-                                 user,
-                                 ChatAdminRights(
-                                     add_admins=False,
-                                     invite_users=False,
-                                     change_info=False,
-                                     ban_users=False,
-                                     delete_messages=False,
-                                     pin_messages=False,
-                                 ),
-                               rank,
+                                x.id,
+                                user,
+                                ChatAdminRights(
+                                    add_admins=False,
+                                    invite_users=False,
+                                    change_info=False,
+                                    ban_users=False,
+                                    delete_messages=False,
+                                    pin_messages=False,
+                                ),
+                                rank,
                             ),
                         )
                         c += 1
-                    except:
+                    except BaseException:
                         pass
         return await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
-        

@@ -19,8 +19,11 @@
 """
 
 
-import os, time
+import os
+import time
+
 from . import *
+
 
 @ultroid_cmd(pattern="bwgif$")
 async def igif(e):
@@ -40,7 +43,8 @@ async def igif(e):
         await xx.delete()
     except Exception as er:
         LOGS.info(er)
-    
+
+
 @ultroid_cmd(pattern="invertgif$")
 async def igif(e):
     a = await e.get_reply_message()
@@ -52,13 +56,16 @@ async def igif(e):
     xx = await eor(e, "`Processing...`")
     z = await ultroid_bot.download_media(a.media)
     try:
-        await bash(f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y')
+        await bash(
+            f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y'
+        )
         await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
     except Exception as er:
         LOGS.info(er)
+
 
 @ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
@@ -71,7 +78,8 @@ async def gifs(ult):
         ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
     )
     await m.delete()
-   
+
+
 @ultroid_cmd(pattern="vtog$")
 async def vtogif(e):
     a = await e.get_reply_message()
@@ -85,21 +93,24 @@ async def vtogif(e):
     tt = time.time()
     if int(dur) < 120:
         z = await ultroid_bot.download_media(a.media)
-        await bash(f'ffmpeg -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif -y')
+        await bash(
+            f'ffmpeg -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif -y'
+        )
         await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
     else:
-        file = a.media.document
-        vid = await downloader(
-                a.file.name, a.media.document, xx, tt, "Downloading..."
-        )
+        a.media.document
+        vid = await downloader(a.file.name, a.media.document, xx, tt, "Downloading...")
         z = vid.name
-        await bash(f'ffmpeg -ss 3 -t 100 -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif')
+        await bash(
+            f'ffmpeg -ss 3 -t 100 -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif'
+        )
         await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

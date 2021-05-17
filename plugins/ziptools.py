@@ -16,13 +16,12 @@
 
 • `{i}azip <reply to file>`
    add file to batch for batch upload zip
-   
+
 • `{i}dozip`
    upload batch zip the files u added from `{i}azip`
 
 """
 
-import asyncio
 import os
 import time
 
@@ -46,7 +45,7 @@ async def zipp(event):
             file = image.name
         else:
             file = await event.download_media(reply)
-    inp = file.replace(file.split('.')[-1], 'zip')
+    inp = file.replace(file.split(".")[-1], "zip")
     await bash(f"zip -r {inp} {file}")
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
@@ -61,7 +60,8 @@ async def zipp(event):
     os.remove(inp)
     os.remove(file)
     await xx.delete()
-    
+
+
 @ultroid_cmd(pattern="unzip$")
 async def unzipp(event):
     reply = await event.get_reply_message()
@@ -90,8 +90,10 @@ async def unzipp(event):
         os.system("rm -rf unzip")
         os.mkdir("unzip")
     await bash(f"7z x {file} -aoa -ounzip")
-    await xx.edit("Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.")
-    
+    await xx.edit(
+        "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload."
+    )
+
 
 @ultroid_cmd(pattern="addzip$")
 async def azipp(event):
@@ -112,13 +114,17 @@ async def azipp(event):
             file = image.name
         else:
             file = await event.download_media(reply.media, "zip/")
-    await xx.edit(f"Downloaded `{file}` succesfully\nNow Reply To Other Files To Add And Zip all at once")
+    await xx.edit(
+        f"Downloaded `{file}` succesfully\nNow Reply To Other Files To Add And Zip all at once"
+    )
 
 
 @ultroid_cmd(pattern="dozip$")
 async def do_zip(event):
     if not os.path.isdir("zip"):
-        return await eor(event, "First All Files Via {i}addzip then doZip to zip all files at one.")
+        return await eor(
+            event, "First All Files Via {i}addzip then doZip to zip all files at one."
+        )
     xx = await eor(event, "`processing`")
     await bash(f"zip -r ultroid.zip zip/*")
     k = time.time()
