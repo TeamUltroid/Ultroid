@@ -39,11 +39,14 @@
 
 """
 
+import os
+
+from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
-from telethon import events
+
 from . import *
-import os
+
 
 @ultroid_cmd(pattern="gpromote ?(.*)")
 async def _(e):
