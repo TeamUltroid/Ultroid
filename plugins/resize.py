@@ -54,4 +54,4 @@ async def size(e):
     await ultroid_bot.send_file(e.chat_id, img)
     os.remove(img)
    
- HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
