@@ -1,1 +1,1 @@
-py-Ultroid==27.5b0
+py-Ultroid==27.6b0
