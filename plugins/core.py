@@ -28,8 +28,6 @@
 
 import os
 
-from telethon import Button
-
 from . import *
 
 
