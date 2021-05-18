@@ -528,6 +528,10 @@ async def apr_in(event):
     if not is_approved(uid):
         approve_user(uid)
         try:
+            await ultroid_bot.edit_folder(uid, folder=0)
+        except BaseException:
+            pass
+        try:
             user_name = (await ultroid.get_entity(uid)).first_name
         except BaseException:
             user_name = ""
