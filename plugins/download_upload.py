@@ -121,7 +121,7 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if " | stream" in hmm :
+                if " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512
@@ -143,7 +143,9 @@ async def download(event):
                         ]
                     elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                         attributes = [
-                            DocumentAttributeAudio(duration=duration, title=title, performer=artist)
+                            DocumentAttributeAudio(
+                                duration=duration, title=title, performer=artist
+                            )
                         ]
                     else:
                         attributes = None
@@ -179,7 +181,7 @@ async def download(event):
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
-            if " | stream" in hmm :
+            if " | stream" in hmm:
                 metadata = extractMetadata(createParser(res.name))
                 wi = 512
                 hi = 512
@@ -201,7 +203,9 @@ async def download(event):
                     ]
                 elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                     attributes = [
-                        DocumentAttributeAudio(duration=duration, title=title, performer=artist)
+                        DocumentAttributeAudio(
+                            duration=duration, title=title, performer=artist
+                        )
                     ]
                 else:
                     attributes = None
