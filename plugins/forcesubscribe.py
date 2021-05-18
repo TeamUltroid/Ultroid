@@ -17,7 +17,7 @@
 
 • `{i}remfsub`
     Remove ForceSub from Used Chat !
-    
+
     Note - You Need to be Admin in Both Channel/Chats
         in order to Use ForceSubscribe.
 """
@@ -66,7 +66,7 @@ async def addfor(e):
         match = (await ultroid_bot.get_entity(match)).id
         if not str(match).startswith("-100"):
             match = int("-100" + str(match))
-    ad = add_forcesub(e.chat_id, match)
+    add_forcesub(e.chat_id, match)
     await eor(e, "Added ForceSub in This Chat !")
 
 
