@@ -121,13 +121,12 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if " | stream" in hmm and res.name.endswith(
-                    tuple([".mkv", ".mp4", ".mp3", ".opus", ".m4a", ".ogg"])
-                ):
+                if " | stream" in hmm :
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512
                     duration = 0
+                    artist = ""
                     if metadata.has("width"):
                         wi = metadata.get("width")
                     if metadata.has("height"):
@@ -135,17 +134,19 @@ async def download(event):
                     if metadata.has("duration"):
                         duration = metadata.get("duration").seconds
                     if metadata.has("artist"):
-                        metadata.get("artist")
-                    if res.name.endswith(tuple([".mkv", ".mp4"])):
+                        artist = metadata.get("artist")
+                    if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
                         attributes = [
                             DocumentAttributeVideo(
                                 w=wi, h=hi, duration=duration, supports_streaming=True
                             )
                         ]
-                    if res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                    elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                         attributes = [
-                            DocumentAttributeAudio(duration=duration, title=title)
+                            DocumentAttributeAudio(duration=duration, title=title, performer=artist)
                         ]
+                    else:
+                        attributes = None
                     try:
                         x = await event.client.send_file(
                             event.chat_id,
@@ -160,7 +161,6 @@ async def download(event):
                             event.chat_id,
                             res,
                             caption=title,
-                            force_document=True,
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
@@ -179,13 +179,12 @@ async def download(event):
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
-            if " | stream" in hmm and res.name.endswith(
-                tuple([".mkv", ".mp4", ".mp3", ".opus", ".m4a", ".ogg"])
-            ):
+            if " | stream" in hmm :
                 metadata = extractMetadata(createParser(res.name))
                 wi = 512
                 hi = 512
                 duration = 0
+                artist = ""
                 if metadata.has("width"):
                     wi = metadata.get("width")
                 if metadata.has("height"):
@@ -193,17 +192,19 @@ async def download(event):
                 if metadata.has("duration"):
                     duration = metadata.get("duration").seconds
                 if metadata.has("artist"):
-                    metadata.get("artist")
-                if res.name.endswith(tuple([".mkv", ".mp4"])):
+                    artist = metadata.get("artist")
+                if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
                         )
                     ]
-                if res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                     attributes = [
-                        DocumentAttributeAudio(duration=duration, title=title)
+                        DocumentAttributeAudio(duration=duration, title=title, performer=artist)
                     ]
+                else:
+                    attributes = None
                 try:
                     x = await event.client.send_file(
                         event.chat_id,
