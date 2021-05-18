@@ -347,12 +347,12 @@ async def _(e):
             else:
                 text += emoji + f" `{nam}`" + "\n"
             flc += 1
-    tfos, tfls, ttol = hb(fos), hb(fls), hb(fos+fls)
+    tfos, tfls, ttol = hb(fos), hb(fls), hb(fos + fls)
     if not hb(fos):
         tfos = "0 B"
     if not hb(fls):
         tfls = "0 B"
-    if not hb(fos+fls):
+    if not hb(fos + fls):
         ttol = "0 B"
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     await eor(e, text)
