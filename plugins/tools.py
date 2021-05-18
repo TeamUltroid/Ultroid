@@ -347,7 +347,7 @@ async def _(e):
             else:
                 text += emoji + f" `{nam}`" + "\n"
             flc += 1
-    text += f"\n\n`Total` : `{flc+foc}` : `{hb(fls+fos)}`\n`Folders` : `{foc}` : `{hb(fos)}`\n`Files` : `{flc}` : `{hb(fls)}`"
+    text += f"\n\n`Folders` :  `{foc}` :   `{hb(fos)}`\n`Files` :       `{flc}` :   `{hb(fls)}`\n`Total` :       `{flc+foc}` :   `{hb(fls+fos)}`"
     await eor(e, text)
 
 
