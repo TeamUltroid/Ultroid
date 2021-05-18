@@ -126,7 +126,6 @@ async def download(event):
                     wi = 512
                     hi = 512
                     duration = 0
-                    artist = ""
                     if metadata.has("width"):
                         wi = metadata.get("width")
                     if metadata.has("height"):
@@ -135,6 +134,11 @@ async def download(event):
                         duration = metadata.get("duration").seconds
                     if metadata.has("artist"):
                         artist = metadata.get("artist")
+                    else:
+                        if udB.get("artist"):
+                            artist = udB.get("artist")
+                        else:
+                            artist = ultroid_bot.first_name
                     if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
                         attributes = [
                             DocumentAttributeVideo(
