@@ -1,3 +1,28 @@
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+
+"""
+✘ Commands Available -
+
+• `{i}fsub <chat username><id>`
+    Enable ForceSub in Used Chat !
+
+• `{i}checkfsub`
+    Check/Get Active ForceSub Setting of Used Chat.
+
+• `{i}remfsub`
+    Remove ForceSub from Used Chat !
+    
+    Note - You Need to be Admin in Both Channel/Chats
+        in order to Use ForceSubscribe.
+"""
+
+
 import re
 
 from pyUltroid.functions.forcesub_db import *
@@ -32,7 +57,7 @@ async def forcesub(ult):
         await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
 
 
-@ultroid_cmd(pattern="forcesub ?(.*)", admins_only=True, groups_only=True)
+@ultroid_cmd(pattern="fsub ?(.*)", admins_only=True, groups_only=True)
 async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
@@ -42,16 +67,24 @@ async def addfor(e):
         if not str(match).startswith("-100"):
             match = int("-100" + str(match))
     ad = add_forcesub(e.chat_id, match)
-    if ad:
-        await eor(e, "Added ForceSub in This Chat !")
+    await eor(e, "Added ForceSub in This Chat !")
 
 
-@ultroid_cmd(pattern="remforcesub$")
+@ultroid_cmd(pattern="remfsub$")
 async def remor(e):
     res = rem_forcesub(e.chat_id)
     if res == False or not res:
         return await eor(e, "ForceSub was not Active in this Chat !")
     await eor(e, "Removed ForceSub...")
+
+
+@ultroid_cmd(pattern="checkfsub$")
+async def getfsr(e):
+    res = get_forcesetting(e.chat_id)
+    if not res:
+        return await eod(e, "ForceSub is Not Active In This Chat !")
+    cha = await ultroid_bot.get_entity(int(res))
+    await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 
 
 @in_pattern("fsub ?(.*)")
@@ -96,3 +129,6 @@ async def diesoon(e):
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
     await e.edit("Thanks For Joining ! ")
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
