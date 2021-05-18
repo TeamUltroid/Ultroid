@@ -284,7 +284,7 @@ async def _(e):
             pyfiles.append("🐍 " + str(file))
         elif str(file).endswith(".json"):
             jsons.append("🔮 " + str(file))
-        elif str(file).endswith((".mkv", ".mp4", ".avi")):
+        elif str(file).endswith((".mkv", ".mp4", ".avi", "gif")):
             vdos.append("🎥 " + str(file))
         elif str(file).endswith((".mp3", ".ogg", ".m4a")):
             audios.append("🔊 " + str(file))
@@ -320,6 +320,8 @@ async def _(e):
         *sorted(otherfiles),
     ]
     text = ""
+    fls, fos = 0, 0
+    flc, foc = 0, 0
     for i in omk:
         emoji = i.split()[0]
         name = i.split(maxsplit=1)[1]
@@ -332,16 +334,20 @@ async def _(e):
                     size += os.path.getsize(fp)
             if hb(size):
                 text += emoji + f" `{nam}`" + "  `" + hb(size) + "`\n"
+                fos += size
             else:
                 text += emoji + f" `{nam}`" + "\n"
+            foc += 1
         else:
             if hb(int(os.path.getsize(name))):
                 text += (
                     emoji + f" `{nam}`" + "  `" + hb(int(os.path.getsize(name))) + "`\n"
                 )
+                fls += int(os.path.getsize(name))
             else:
                 text += emoji + f" `{nam}`" + "\n"
-
+            flc += 1
+    text += f"\n\n`Total` : `{flc+foc}` : `{hb(fls+fos)}`\n`Folders` : `{foc}` : `{hb(fos)}`\n`Files` : `{flc}` : `{hb(fls)}`")
     await eor(e, text)
 
 
