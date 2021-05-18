@@ -122,6 +122,8 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
+                if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
+                    hmm = " | stream"
                 if " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
@@ -186,12 +188,13 @@ async def download(event):
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
+            if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
+                hmm = " | stream"
             if " | stream" in hmm:
                 metadata = extractMetadata(createParser(res.name))
                 wi = 512
                 hi = 512
                 duration = 0
-                artist = ""
                 if metadata.has("width"):
                     wi = metadata.get("width")
                 if metadata.has("height"):
@@ -200,6 +203,11 @@ async def download(event):
                     duration = metadata.get("duration").seconds
                 if metadata.has("artist"):
                     artist = metadata.get("artist")
+                else:
+                    if udB.get("artist"):
+                        artist = udB.get("artist")
+                    else:
+                        artist = ultroid_bot.first_name
                 if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
                     attributes = [
                         DocumentAttributeVideo(
@@ -254,7 +262,7 @@ async def download(event):
             await xx.delete()
             await ultroid_bot.send_message(
                 event.chat_id,
-                f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+                f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
             )
         else:
             await eor(xx, f"Uploaded `{kk}` in `{t}`")
