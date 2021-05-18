@@ -284,7 +284,7 @@ async def _(e):
             pyfiles.append("🐍 " + str(file))
         elif str(file).endswith(".json"):
             jsons.append("🔮 " + str(file))
-        elif str(file).endswith((".mkv", ".mp4", ".avi", "gif")):
+        elif str(file).endswith((".mkv", ".mp4", ".avi", ".gif")):
             vdos.append("🎥 " + str(file))
         elif str(file).endswith((".mp3", ".ogg", ".m4a")):
             audios.append("🔊 " + str(file))
@@ -347,7 +347,7 @@ async def _(e):
             else:
                 text += emoji + f" `{nam}`" + "\n"
             flc += 1
-    text += f"\n\n`Total` : `{flc+foc}` : `{hb(fls+fos)}`\n`Folders` : `{foc}` : `{hb(fos)}`\n`Files` : `{flc}` : `{hb(fls)}`")
+    text += f"\n\n`Total` : `{flc+foc}` : `{hb(fls+fos)}`\n`Folders` : `{foc}` : `{hb(fos)}`\n`Files` : `{flc}` : `{hb(fls)}`"
     await eor(e, text)
 
 
