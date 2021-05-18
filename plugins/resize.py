@@ -26,13 +26,14 @@ async def size(e):
     r = await e.get_reply_message()
     if not (r and r.media):
         return await eor(e, "`Reply To image`")
+    k = await eor(e, "`Processing...`")
     if hasattr(r.media, "document"):
         img = await ultroid_bot.download_media(r, thumb=-1)
     else:
         img = await ultroid_bot.download_media(r.media)
     im = Image.open(img)
     x, y = im.size
-    await eor(e, f"Dimension Of This Image Is {x} : {y}")
+    await k.edit(f"Dimension Of This Image Is\n`{x} : {y}`")
     os.remove(img)
 
 
@@ -44,6 +45,7 @@ async def size(e):
     sz = e.pattern_match.group(1)
     if not sz:
         return await eod(f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ")
+    k = await eor(e, "`Processing...`")
     if hasattr(r.media, "document"):
         img = await ultroid_bot.download_media(r, thumb=-1)
     else:
@@ -57,6 +59,6 @@ async def size(e):
     ok.save(img, format="PNG", optimize=True)
     await ultroid_bot.send_file(e.chat_id, img)
     os.remove(img)
-
+    await k.delete()
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
