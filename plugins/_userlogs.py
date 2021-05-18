@@ -30,7 +30,7 @@ async def all_messages_catcher(e):
         try:
             NEEDTOLOG = int(udB.get("TAG_LOG"))
         except Exception:
-            return LOGS.warning("you given Wrong Grp/Channel ID in TAG_LOG.")
+            return LOGS.info("you given Wrong Grp/Channel ID in TAG_LOG.")
         x = e.sender
         if x.bot or x.verified:
             return
