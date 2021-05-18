@@ -244,6 +244,11 @@ async def _(e):
         ],
         [
             Button.switch_inline(
+                "WʜɪSᴘᴇʀ",
+                query="msg username wspr Hello",
+                same_peer=True,
+            ),
+            Button.switch_inline(
                 "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
                 query="yt Ed Sheeran Perfect",
                 same_peer=True,
