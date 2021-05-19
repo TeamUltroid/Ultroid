@@ -21,6 +21,7 @@ from . import *
 async def icalc(e):
     results = await ultroid_bot.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
+    await e.delete()
 
 
 @in_pattern("calc")
