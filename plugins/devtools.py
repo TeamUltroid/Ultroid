@@ -64,15 +64,10 @@ async def _(event):
         reply_to_id = event.reply_to_msg_id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
-    e = stderr
-    if e:
-        OUT += f"**• ERROR:** \n`{e}`\n"
-    o = stdout
-    if not o:
-        o = "Success"
-        OUT += f"**• OUTPUT:**\n`{o}`"
+    if stderr:
+        OUT += f"**• ERROR:** \n`{stderr}`\n"
     else:
-        _o = o.split("\n")
+        _o = stdout.split("\n")
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
     if len(OUT) > 4096:
