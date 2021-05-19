@@ -336,9 +336,9 @@ async def _(event):
     chk = is_gbanned(user_id)
     if chk:
         r = get_gban_reason(user_id)
-        caption +="<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>"
+        caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>"
         if r:
-            caption +=f"<b>Rᴇᴀsᴏɴ</b>: <code>{r}</code>"
+            caption += f"<b>Rᴇᴀsᴏɴ</b>: <code>{r}</code>"
     else:
         caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
     message_id_to_reply = event.message.reply_to_msg_id

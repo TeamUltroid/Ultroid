@@ -759,4 +759,5 @@ async def gstat_(e):
         msg += "not Globally Banned.**"
     await xx.edit(msg)
 
+
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
