@@ -151,9 +151,7 @@ async def download(event):
                     elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                         attributes = [
                             DocumentAttributeAudio(
-                                duration=duration,
-                                title=title.split(".")[0],
-                                performer=artist,
+                                duration=duration, title=title.split(".")[0], performer=artist
                             )
                         ]
                     else:
@@ -162,7 +160,7 @@ async def download(event):
                         x = await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=title,
+                            caption=f"`{title}`",
                             attributes=attributes,
                             supports_streaming=True,
                             thumb="resources/extras/ultroid.jpg",
@@ -171,14 +169,14 @@ async def download(event):
                         x = await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=title,
+                            caption=f"`{title}`",
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=title,
+                        caption=f"`{title}`",
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
@@ -219,9 +217,7 @@ async def download(event):
                 elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                     attributes = [
                         DocumentAttributeAudio(
-                            duration=duration,
-                            title=title.split(".")[0],
-                            performer=artist,
+                            duration=duration, title=title.split(".")[0], performer=artist
                         )
                     ]
                 else:
@@ -230,7 +226,7 @@ async def download(event):
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=title,
+                        caption=f"`{title}`",
                         attributes=attributes,
                         supports_streaming=True,
                         thumb="resources/extras/ultroid.jpg",
@@ -239,7 +235,7 @@ async def download(event):
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=title,
+                        caption=f"`{title}`",
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
@@ -247,7 +243,7 @@ async def download(event):
                 x = await event.client.send_file(
                     event.chat_id,
                     res,
-                    caption=title,
+                    caption=f"`{title}`",
                     force_document=True,
                     thumb="resources/extras/ultroid.jpg",
                 )
@@ -258,7 +254,7 @@ async def download(event):
     if t != "":
         if os.path.isdir(kk):
             size = 0
-            for path, dirs, files in os.walk("mega"):
+            for path, dirs, files in os.walk(kk):
                 for f in files:
                     fp = os.path.join(path, f)
                     size += os.path.getsize(fp)
