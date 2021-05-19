@@ -41,7 +41,9 @@ async def pinterest(e):
     get_link = get(gib_link(m)).text
     hehe = bs(get_link, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
-    if len(hulu) > 1:
+    if len(hulu) < 1:
+        return await eod(e, "`Wromg link or private pin.`")
+    elif len(hulu) > 1:
         donl(hulu[0]["href"], "pinterest.mp4")
         donl(hulu[1]["href"], "pinterest.jpg")
         await e.delete()
