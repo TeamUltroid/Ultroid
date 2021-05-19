@@ -28,7 +28,7 @@ def gib_link(link):
     colon = "%3A"
     slash = "%2F"
     if link.startswith("https"):
-        return _base + link.replace(":", colon).replace("/", back_slash)
+        return _base + link.replace(":", colon).replace("/", slash)
     else:
         return _base + f"https{colon}{slash}{slash}pin.it{slash}{link}"
 
