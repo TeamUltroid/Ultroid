@@ -49,8 +49,8 @@ import cv2
 import numpy as np
 from PIL import Image
 from telegraph import upload_file as upf
-from validators.url import url
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from validators.url import url
 
 from . import *
 
@@ -492,19 +492,23 @@ async def ultd(event):
     os.remove("ult.jpg")
     os.remove(ultt)
 
+
 @ultroid_cmd(pattern="csample (.*)")
 async def sampl(ult):
     color = ult.pattern_match.group(1)
     if color:
-        img = Image.new('RGB', (200, 100), f"{color}")
+        img = Image.new("RGB", (200, 100), f"{color}")
         img.save("csample.png")
         try:
             await ult.delete()
-            await ultroid_bot.send_message(ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png")
+            await ultroid_bot.send_message(
+                ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
+            )
         except ChatSendMediaForbiddenError:
             await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
     else:
         await eor(ult, f"Wrong Color Name/Hex Code specified!")
+
 
 @ultroid_cmd(
     pattern="blue$",
