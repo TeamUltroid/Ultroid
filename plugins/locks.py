@@ -13,41 +13,37 @@
 
 • `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>
     UNLOCK the Used Setting in Used Group.
-    
+
 """
 
-from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from pyUltroid.functions.all import lucks, unlucks
+from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
 
-@ultroid_cmd(pattern='lock ?(.*)',
-groups_only=True,
-admins_only=True)
+@ultroid_cmd(pattern="lock ?(.*)", groups_only=True, admins_only=True)
 async def lockho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, '`What to Lock  ?`')
+        return await eod(e, "`What to Lock  ?`")
     try:
         ml = lucks(mat)
-    except:
-        return await eod(e, '`Incorrect Input`')
-    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml)) 
-    await eor(e,f'Locked - `{mat}` ! ')
+    except BaseException:
+        return await eod(e, "`Incorrect Input`")
+    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    await eor(e, f"Locked - `{mat}` ! ")
 
 
-@ultroid_cmd(pattern='unlock ?(.*)',
-groups_only=True,
-admins_only=True)
+@ultroid_cmd(pattern="unlock ?(.*)", groups_only=True, admins_only=True)
 async def unlckho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, '`What to Lock  ?`')
+        return await eod(e, "`What to Lock  ?`")
     try:
         ml = unlucks(mat)
-    except:
-        return await eod(e, '`Incorrect Input`')
-    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml)) 
-    await eor(e, f'Unlocked : {mat}!`')
+    except BaseException:
+        return await eod(e, "`Incorrect Input`")
+    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    await eor(e, f"Unlocked : {mat}!`")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
