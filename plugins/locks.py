@@ -8,10 +8,10 @@
 """
 ✘ Commands Available -
 
-• `{i}lock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>
+• `{i}lock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>`
     Lock the Used Setting in Used Group.
 
-• `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>
+• `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>`
     UNLOCK the Used Setting in Used Group.
 
 """
@@ -43,7 +43,7 @@ async def unlckho(e):
     except BaseException:
         return await eod(e, "`Incorrect Input`")
     await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
-    await eor(e, f"Unlocked : {mat}!`")
+    await eor(e, f"Unlocked - `{mat}` ! ")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
