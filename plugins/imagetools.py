@@ -49,7 +49,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from telegraph import upload_file as upf
-from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError, MessageDeleteForbiddenError
 from validators.url import url
 
 from . import *
@@ -500,12 +500,16 @@ async def sampl(ult):
         img = Image.new("RGB", (200, 100), f"{color}")
         img.save("csample.png")
         try:
-            await ult.delete()
-            await ultroid_bot.send_message(
-                ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
-            )
+            try:
+                await ult.delete()
+                await ultroid_bot.send_message(
+                    ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
+                )
+            except MessageDeleteForbiddenError:
+                await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
         except ChatSendMediaForbiddenError:
-            await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
+            await eor(ult, "Umm! Sending Media is disabled here!")
+            
     else:
         await eor(ult, f"Wrong Color Name/Hex Code specified!")
 
