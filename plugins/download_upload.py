@@ -151,7 +151,7 @@ async def download(event):
                     elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                         attributes = [
                             DocumentAttributeAudio(
-                                duration=duration, title=title, performer=artist
+                                duration=duration, title=title.split(".")[0], performer=artist
                             )
                         ]
                     else:
@@ -217,7 +217,7 @@ async def download(event):
                 elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                     attributes = [
                         DocumentAttributeAudio(
-                            duration=duration, title=title, performer=artist
+                            duration=duration, title=title.split(".")[0], performer=artist
                         )
                     ]
                 else:
