@@ -230,12 +230,6 @@ async def _(event):
             except BaseException:
                 return await msg.edit("`No user designated!`")
     try:
-        if str(FBAN) in DEVLIST:
-            await msg.edit("You can't ban my dev you noob!!")
-            return
-    except Exception as e:
-        print(str(e))
-        return await msg.edit(str(e))
     if udB.get("FBAN_GROUP_ID"):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
