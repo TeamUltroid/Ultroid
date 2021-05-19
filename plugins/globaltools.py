@@ -12,6 +12,9 @@
 • `{i}ungban`
     Ban/Unban Globally.
 
+• `{i}gstat <reply to user/userid/username>`
+   Check if user is GBanned.
+
 • `{i}listgban`
    List all GBanned users.
 
@@ -57,7 +60,7 @@ async def _(e):
         return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()
     if user:
-        ev = await eor(e, "`Promoting Replied Users Globally`")
+        ev = await eor(e, "`Promoting Replied User Globally`")
         ok = e.text.split()
         key = "all"
         if len(ok) > 1:
@@ -236,7 +239,7 @@ async def _(e):
             user.id = user.peer_id.user_id
         else:
             user.id = user.from_id.user_id
-        ev = await eor(e, "`Demoting Replied Users Globally`")
+        ev = await eor(e, "`Demoting Replied User Globally`")
         ok = e.text.split()
         key = "all"
         if len(ok) > 1:
@@ -704,7 +707,7 @@ async def list_gengbanned(event):
             name = i
         msg += "**User**: " + name + "\n"
         reason = get_gban_reason(i)
-        if reason is not None:
+        if reason is not None or "":
             msg += f"**Reason**: {reason}\n\n"
         else:
             msg += "\n"
@@ -722,5 +725,39 @@ async def list_gengbanned(event):
     else:
         await x.edit(gbanned_users)
 
+
+@ultroid_cmd(pattern="gstat ?(.*)")
+async def gstat_(e):
+    xx = await eor(e, get_string("com_1"))
+    if e.is_private:
+        userid = (await e.get_chat()).id
+    elif e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+    elif e.pattern_match.group(1):
+        if (e.pattern_match.group(1)).isdigit():
+            try:
+                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+        else:
+            try:
+                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
+            except ValueError as err:
+                return await eod(xx, f"{str(err)}", time=5)
+    else:
+        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+    name = (await e.client.get_entity(userid)).first_name
+    msg = "**" + name + " is "
+    is_banned = is_gbanned(userid)
+    reason = get_gban_reason(userid)
+    if is_banned:
+        msg += "Globally Banned"
+        if reason:
+            msg += f" with reason** `{reason}`"
+        else:
+            msg += ".**"
+    else:
+        msg += "not Globally Banned.**"
+    await xx.edit(msg)
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

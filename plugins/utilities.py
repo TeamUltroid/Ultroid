@@ -309,18 +309,18 @@ async def _(event):
         dc_id = "Need a Profile Picture to check this"
         str(e)
     caption = """<b>Exᴛʀᴀᴄᴛᴇᴅ Dᴀᴛᴀʙᴀsᴇ Fʀᴏᴍ Tᴇʟᴇɢʀᴀᴍ's Dᴀᴛᴀʙᴀsᴇ<b>
-    <b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{}</code>
-    <b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={}'>Click Here</a>
-    <b>••Fɪʀsᴛ Nᴀᴍᴇ</b>: <code>{}</code>
-    <b>••Sᴇᴄᴏɴᴅ Nᴀᴍᴇ</b>: <code>{}</code>
-    <b>••Bɪᴏ</b>: <code>{}</code>
-    <b>••Dᴄ ID</b>: <code>{}</code>
-    <b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
-    <b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
-    <b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
-    <b>••Is A Bᴏᴛ</b>: <code>{}</code>
-    <b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
-    """.format(
+<b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{}</code>
+<b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={}'>Click Here</a>
+<b>••Fɪʀsᴛ Nᴀᴍᴇ</b>: <code>{}</code>
+<b>••Sᴇᴄᴏɴᴅ Nᴀᴍᴇ</b>: <code>{}</code>
+<b>••Bɪᴏ</b>: <code>{}</code>
+<b>••Dᴄ ID</b>: <code>{}</code>
+<b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
+<b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
+<b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
+<b>••Is A Bᴏᴛ</b>: <code>{}</code>
+<b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
+""".format(
         user_id,
         user_id,
         first_name,
@@ -333,6 +333,14 @@ async def _(event):
         replied_user.user.bot,
         common_chats,
     )
+    chk = is_gbanned(user_id)
+    if chk:
+        r = get_gban_reason(user_id)
+        caption +="<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>"
+        if r:
+            caption +=f"<b>Rᴇᴀsᴏɴ</b>: <code>{r}</code>"
+    else:
+        caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
     message_id_to_reply = event.message.reply_to_msg_id
     if not message_id_to_reply:
         message_id_to_reply = event.message.id
