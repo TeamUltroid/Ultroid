@@ -51,7 +51,7 @@ from . import *
 @ultroid_cmd(pattern="gpromote ?(.*)")
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
-        return await eor(e, "`This Command Is Sudo Restricted.`")
+        return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
     if not x:
         return await eod(e, "`Incorrect Format`")
@@ -226,7 +226,7 @@ async def _(e):
 @ultroid_cmd(pattern="gdemote ?(.*)")
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
-        return await eor(e, "`This Command Is Sudo Restricted.`")
+        return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
     if not x:
         return await eod(e, "`Incorrect Format`")
@@ -438,6 +438,8 @@ async def _(e):
     pattern="gban ?(.*)",
 )
 async def _(e):
+    if not e.out and not is_fullsudo(e.sender_id):
+        return await eor(e, "`This Command Is Sudo Restricted.`")
     xx = await eor(e, "`Gbanning...`")
     reason = ""
     if e.is_private:
@@ -589,6 +591,8 @@ async def gkick(e):
     pattern="gmute ?(.*)",
 )
 async def _(e):
+    if not e.out and not is_fullsudo(e.sender_id):
+        return await eor(e, "`This Command Is Sudo Restricted.`")
     xx = await eor(e, "`Gmuting...`")
     if e.is_private:
         userid = (await e.get_chat()).id
