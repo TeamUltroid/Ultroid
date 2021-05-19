@@ -229,7 +229,6 @@ async def _(event):
                 REASON = " #TBMassUnBanned "
             except BaseException:
                 return await msg.edit("`No user designated!`")
-    try:
     if udB.get("FBAN_GROUP_ID"):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
