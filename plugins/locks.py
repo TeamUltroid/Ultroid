@@ -18,7 +18,7 @@
 
 from pyUltroid.functions.all import lucks, unlucks
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-
+from . import *
 
 @ultroid_cmd(pattern="lock ?(.*)", groups_only=True, admins_only=True)
 async def lockho(e):
