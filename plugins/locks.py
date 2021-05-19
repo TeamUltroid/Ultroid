@@ -8,10 +8,10 @@
 """
 ✘ Commands Available -
 
-• `{i}lock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>`
+• `{i}lock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
     Lock the Used Setting in Used Group.
 
-• `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invite/pin/changeinfo>`
+• `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
     UNLOCK the Used Setting in Used Group.
 
 """
