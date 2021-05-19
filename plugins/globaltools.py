@@ -39,7 +39,6 @@
 
 •`{i}gdemote`
     Same function as gpromote.
-
 """
 
 import os
