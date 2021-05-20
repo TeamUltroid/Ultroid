@@ -112,8 +112,8 @@ async def _(e):
             if to_stream and "| stream" in to_stream:
                 metadata = extractMetadata(createParser(out))
                 duration = metadata.get("duration").seconds
-                hi, _ =  await bash(f'mediainfo "{out}" | grep "Height"')
-                wi, _ =  await bash(f'mediainfo "{out}" | grep "Width"')
+                hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
+                wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
                 height = int(hi.split(":")[1].split()[0])
                 width = int(wi.split(":")[1].split()[0])
                 attributes = [
