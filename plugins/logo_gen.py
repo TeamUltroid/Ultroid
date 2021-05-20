@@ -13,13 +13,16 @@
 
 """
 
-import random
 import os
-from PIL import Image, ImageDraw, ImageFont
-from . import *
+import random
 import time
+
+from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
 from telethon.utils import get_extension
+
+from . import *
+
 
 @ultroid_cmd(pattern="logo ?(.*)")
 async def logo_gen(event):
@@ -37,7 +40,9 @@ async def logo_gen(event):
                 font_ = await temp.download_media()
     else:
         pics = []
-        async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
+        async for i in ultroid.iter_messages(
+            "@UltroidLogos", filter=InputMessagesFilterPhotos
+        ):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
@@ -46,7 +51,9 @@ async def logo_gen(event):
         font_ = fpath_ + f
     if not bg_:
         pics = []
-        async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
+        async for i in ultroid.iter_messages(
+            "@UltroidLogos", filter=InputMessagesFilterPhotos
+        ):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
@@ -68,19 +75,31 @@ async def logo_gen(event):
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(font_, fnt_size)
     w, h = draw.textsize(name, font=font)
-    h += int(h*0.21)
+    h += int(h * 0.21)
     image_width, image_height = img.size
-    draw.text(((image_width-w)/2, (image_height-h)/2), name, font=font, fill=(255, 255, 255))
-    x = (image_width-w)/2
-    y = (image_height-h)/2
-    draw.text((x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black")
+    draw.text(
+        ((image_width - w) / 2, (image_height - h) / 2),
+        name,
+        font=font,
+        fill=(255, 255, 255),
+    )
+    x = (image_width - w) / 2
+    y = (image_height - h) / 2
+    draw.text(
+        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
+    )
     flnme = f"ultd.png"
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
         tt = time.time()
         up = await uploader(flnme, flnme, tt, xx, "Uploading...")
-        await ultroid.send_file(event.chat_id, file=up, caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})", foce_document=True)
+        await ultroid.send_file(
+            event.chat_id,
+            file=up,
+            caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+            foce_document=True,
+        )
         os.remove(flnme)
         await xx.delete()
     if os.path.exists(bg_):
@@ -88,5 +107,6 @@ async def logo_gen(event):
     if os.path.exists(font_):
         if not font_.startswith(fpath_):
             os.remove(font_)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
