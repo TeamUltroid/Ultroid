@@ -48,17 +48,18 @@ async def _(e):
             d_time = time.time()
             diff = time_formatter((d_time - c_time) * 1000)
             file_name = (file.name).split("/")[-1]
-            out = file_name.replace(file_name.split(".")[-1], " compressed.mkv")
+            out = file_name.replace(file_name.split(".")[-1], " compressed.mp4")
+            naam = file_name.replace(file_name.split(".")[-1], "")
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
             cmd = (
                 "ffmpeg -i "
-                + """{file.name}"""
+                + f"""{file.name}"""
                 + " -preset ultrafast -c:v -vcodec libx265 -crf "
-                + crf
+                + str(crf)
                 + " -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "
-                + """{out}"""
+                + f"""{out}"""
             )
             await bash(cmd)
             c_size = os.path.getsize(out)
@@ -75,7 +76,7 @@ async def _(e):
             caption += f"`Time Taken To Compress: ``{difff}`"
             mmmm = await uploader(
                 out,
-                out,
+                naam,
                 f_time,
                 xxx,
                 "Uploading " + out + "...",
