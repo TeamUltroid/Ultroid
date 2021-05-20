@@ -48,6 +48,7 @@ async def _(e):
             d_time = time.time()
             diff = time_formatter((d_time - c_time) * 1000)
             file_name = (file.name).split("/")[-1]
+            out = file_name.replace(file_name.split(".")[-1], " compressed.mkv")
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
@@ -57,28 +58,27 @@ async def _(e):
                 + " -preset ultrafast -c:v -vcodec libx265 -crf "
                 + crf
                 + " -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "
-                + file_name
-                + "_compressed.mp4"
+                + """{out}"""
             )
             await bash(cmd)
-            c_size = os.path.getsize(f"{file_name}_compressed.mp4")
+            c_size = os.path.getsize(out)
             f_time = time.time()
             difff = time_formatter((f_time - d_time) * 1000)
             await xxx.edit(
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
             )
             differ = 100 - ((c_size / o_size) * 100)
-            caption = f"`File: ``{file_name}_compressed.mp4`\n"
+            caption = f"`File: ``{out}`\n"
             caption += f"`Original Size: ``{humanbytes(o_size)}`\n"
             caption += f"`Compressed Size: ``{humanbytes(c_size)}`\n"
             caption += f"`Compression Ratio: ``{differ:.2f}%`\n"
             caption += f"`Time Taken To Compress: ``{difff}`"
             mmmm = await uploader(
-                f"{file_name}_compressed.mp4",
-                f"{file_name}",
+                out,
+                out,
                 f_time,
                 xxx,
-                "Uploading " + file_name + "...",
+                "Uploading " + out + "...",
             )
             await e.client.send_file(
                 e.chat_id,
