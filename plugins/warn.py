@@ -31,7 +31,7 @@ from telethon.utils import get_display_name
 from . import *
 
 
-@ultroid_cmd(pattern="warn ?(.*)", groups_only=True)
+@ultroid_cmd(pattern="warn ?(.*)", groups_only=True, admins_only=True)
 async def warn(e):
     reply = await e.get_reply_message()
     if len(e.text) > 5:
@@ -105,7 +105,7 @@ async def warn(e):
     )
 
 
-@ultroid_cmd(pattern="resetwarn ?(.*)")
+@ultroid_cmd(pattern="resetwarn ?(.*)", groups_only=True, admins_only=True)
 async def rwarn(e):
     reply = await e.get_reply_message()
     if reply:
@@ -126,7 +126,7 @@ async def rwarn(e):
     await eor(e, f"Cleared All Warns of {user}.")
 
 
-@ultroid_cmd(pattern="warns ?(.*)")
+@ultroid_cmd(pattern="warns ?(.*)", groups_only=True, admins_only=True)
 async def twarns(e):
     reply = await e.get_reply_message()
     if reply:
