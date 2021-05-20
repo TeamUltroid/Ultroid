@@ -17,14 +17,15 @@ import os
 import re
 import time
 from datetime import datetime as dt
-from telethon.tl.types import DocumentAttributeVideo
+
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
 
-@ultroid_cmd(pattern="compress (\d+)?(.*)")
+@ultroid_cmd(pattern="compress (\\d+)?(.*)")
 async def _(e):
     crf = e.pattern_match.group(1)
     if not crf:
@@ -110,10 +111,14 @@ async def _(e):
             )
             if to_stream and "| stream" in to_stream:
                 metadata = extractMetadata(createParser(out))
-                duration = metadata.get('duration').seconds
-                height = metadata.get('height')
-                width = metadata.get('width')
-                attributes=[DocumentAttributeVideo(duration=duration, w=width, h=height, supports_streaming=True)]
+                duration = metadata.get("duration").seconds
+                height = metadata.get("height")
+                width = metadata.get("width")
+                attributes = [
+                    DocumentAttributeVideo(
+                        duration=duration, w=width, h=height, supports_streaming=True
+                    )
+                ]
                 await e.client.send_file(
                     e.chat_id,
                     mmmm,
