@@ -1,5 +1,7 @@
+import os
+import time
+
 from . import *
-import time, asyncio, os
 
 
 @ultroid_cmd(pattern="compress")
@@ -12,7 +14,13 @@ async def _(e):
             or vido.document.mime_type == "video/x-matroska"
         ):
             c_time = time.time()
-            file = await downloader("resources/downloads/"+vido.file.name, vido.media.document, xxx, c_time, "Downloading "+vido.file.name+"...")
+            file = await downloader(
+                "resources/downloads/" + vido.file.name,
+                vido.media.document,
+                xxx,
+                c_time,
+                "Downloading " + vido.file.name + "...",
+            )
             o_size = os.path.getsize(file.name)
             d_time = time.time()
             diff = time_formatter((d_time - c_time) * 1000)
@@ -20,7 +28,9 @@ async def _(e):
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
-            await bash(f'ffmpeg -i "{file.name}" -preset ultrafast -vcodec libx265 -crf 25 "{file_name}-compressed.mp4"')
+            await bash(
+                f'ffmpeg -i "{file.name}" -preset ultrafast -vcodec libx265 -crf 25 "{file_name}-compressed.mp4"'
+            )
             c_size = os.path.getsize(f"{file_name}-compressed.mkv")
             f_time = time.time()
             difff = time_formatter((f_time - d_time) * 1000)
@@ -33,12 +43,18 @@ async def _(e):
             caption += f"`Compressed Size: ``{humanbytes(c_size)}`\n"
             caption += f"`Compression Ratio: ``{differ:.2f}%`\n"
             caption += f"`Time Taken To Compress: ``{difff}`"
-            mmmm = await uploader(f"{file_name}-compressed.mkv", f"{file_name}-compressed.mkv", f_time, xxx, "Uploading "+file_name+"...")
+            mmmm = await uploader(
+                f"{file_name}-compressed.mkv",
+                f"{file_name}-compressed.mkv",
+                f_time,
+                xxx,
+                "Uploading " + file_name + "...",
+            )
             await e.client.send_file(
                 e.chat_id,
                 mmmm,
                 thumb="resources/extras/new_thumb.jpg",
                 caption=caption,
                 force_document=True,
-                )
+            )
             await xxx.delete()
