@@ -1,4 +1,4 @@
-#Ultroid - UserBot
+# Ultroid - UserBot
 # Copyright (C) 2020 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
@@ -19,14 +19,15 @@
 """
 
 from pyUltroid.functions.warn_db import *
+
 from . import *
 
-   
+
 @ultroid_cmd(pattern="warn ?(.*)", groups_only=True)
 async def warn(e):
     reply = await e.get_reply_message()
     if len(e.text) > 5:
-        if not " " in e.text[5]:
+        if " " not in e.text[5]:
             return
     if reply:
         user = reply.from_id.user_id
@@ -54,12 +55,12 @@ async def warn(e):
         r = r + "|$|" + reason
     try:
         x = udB.get("SETWARN")
-        number , action = int(x.split()[0]), x.split()[1]
+        number, action = int(x.split()[0]), x.split()[1]
     except BaseException:
         number, action = 3, "ban"
     if ("ban", "kick", "mute") not in action:
         action = "ban"
-    if count+1 >= number:
+    if count + 1 >= number:
         if "ban" in action:
             try:
                 await ultroid_bot.edit_permissions(e.chat_id, user, view_messages=False)
@@ -72,15 +73,21 @@ async def warn(e):
                 return await eor(e, "`Something Went Wrong.`")
         elif "mute" in action:
             try:
-                await ultroid_bot.edit_permissions(e.chat_id, user, until_date=None, send_messages=False)
+                await ultroid_bot.edit_permissions(
+                    e.chat_id, user, until_date=None, send_messages=False
+                )
             except BaseException:
                 return await eor(e, "`Something Went Wrong.`")
         reset_warn(e.chat_id, user)
         return await eor(e, "reason lauda lassna")
-    add_warn(e.chat_id, user, count+1, r)
-    await eor(e, f"**WARNING :** {count+1}/{number}\n\n**Be Careful !!!**\n\n**Reason** : {reason}")
- 
-@ultroid_cmd(pattern="resetwarn ?(.*)") 
+    add_warn(e.chat_id, user, count + 1, r)
+    await eor(
+        e,
+        f"**WARNING :** {count+1}/{number}\n\n**Be Careful !!!**\n\n**Reason** : {reason}",
+    )
+
+
+@ultroid_cmd(pattern="resetwarn ?(.*)")
 async def rwarn(e):
     reply = await e.get_reply_message()
     if reply:
@@ -97,7 +104,8 @@ async def rwarn(e):
             return await eor(e, "Reply To user")
     reset_warn(e.chat_id, user)
     await eor(e, "Cleared All Warns.")
-    
+
+
 @ultroid_cmd(pattern="warns ?(.*)")
 async def twarns(e):
     reply = await e.get_reply_message()
@@ -120,8 +128,8 @@ async def twarns(e):
         for x in range(c):
             text += f"•**{x+1}.** {r[x]}\n"
         await eor(e, text)
-        
-        
+
+
 @ultroid_cmd(pattern="setwarn ?(.*)")
 async def warnset(e):
     ok = e.pattern_match.group(1)
@@ -129,7 +137,7 @@ async def warnset(e):
         return await eor(e, "stuff")
     if "|" in ok:
         try:
-            number , action = int(x.split()[0]), x.split()[1]
+            number, action = int(x.split()[0]), x.split()[1]
         except BaseException:
             return await eor(e, "incorrect")
         if ("ban", "kick", "mute") not in action:
@@ -138,6 +146,6 @@ async def warnset(e):
         return await eor(e, "succesx")
     else:
         await eor(e, "incorrect")
-        
-        
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})        
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

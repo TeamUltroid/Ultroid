@@ -1,4 +1,4 @@
-#Ultroid - UserBot
+# Ultroid - UserBot
 # Copyright (C) 2020 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
@@ -18,7 +18,9 @@
 """
 
 from pyUltroid.functions.echo_db import *
+
 from . import *
+
 
 @ultroid_cmd(pattern="addecho ?(.*)")
 async def echo(e):
@@ -39,8 +41,9 @@ async def echo(e):
         return await eor(e, "echo already activated for this user.")
     add_echo(e.chat_id, user)
     await eor(e, "Activated Echo For this user.")
-    
-@ultroid_cmd(pattern="remecho ?(.*)") 
+
+
+@ultroid_cmd(pattern="remecho ?(.*)")
 async def rm(e):
     r = await e.get_reply_message()
     if r:
@@ -69,7 +72,8 @@ async def okk(e):
             return await ultroid_bot.send_message(e.chat_id, ok, reply_to=e.id)
         except Exception as er:
             LOGS.info(er)
-  
+
+
 @ultroid_cmd(pattern="listecho$")
 async def lstecho(e):
     k = list_echo(e.chat_id)
@@ -80,5 +84,6 @@ async def lstecho(e):
         await eor(e, user)
     else:
         await eor(e, "Empty List")
-      
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})      
+
+
+HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
