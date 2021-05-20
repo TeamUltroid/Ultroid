@@ -86,7 +86,7 @@ async def logo_gen(event):
     if os.path.exists(bg_):
         os.remove(bg_)
     if os.path.exists(font_):
-        if not font_.startswith(fpath_)
+        if not font_.startswith(fpath_):
             os.remove(font_)
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
