@@ -33,15 +33,27 @@ async def logo_gen(event):
             ext = get_extension(temp.media)
             if ext == ".jpg" or ".png":
                 bg_ = await temp.download_media()
+            if ext == ".otf" or ".ttf":
+                font_ = await temp.download_media()
     else:
         pics = []
         async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
-    fpath_ = "./resources/fonts/"
-    f = random.choice(os.listdir(fpath_))
-    font_ = fpath_ + f
+        fpath_ = "./resources/fonts/"
+        f = random.choice(os.listdir(fpath_))
+        font_ = fpath_ + f
+    if not bg_:
+        pics = []
+        async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
+            pics.append(i)
+        id_ = random.choice(pics)
+        bg_ = await id_.download_media()
+    if not font_:
+        fpath_ = "./resources/fonts/"
+        f = random.choice(os.listdir(fpath_))
+        font_ = fpath_ + f
     # next level logic, ignore
     if len(name) < 8:
         fnt_size = 150
@@ -73,5 +85,8 @@ async def logo_gen(event):
         await xx.delete()
     if os.path.exists(bg_):
         os.remove(bg_)
+    if os.path.exists(font_):
+        if not font_.startswith(fpath_)
+            os.remove(font_)
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
