@@ -67,7 +67,7 @@ async def _(event):
     if stderr:
         OUT += f"**• ERROR:** \n`{stderr}`\n"
     elif (stderr and stdout) is (None or ""):
-        OUT += f"**• OUTPUT:**\n`{Success}`"
+        OUT += f"**• OUTPUT:**\n`Success`"
     else:
         _o = stdout.split("\n")
         o = "\n".join(_o)
