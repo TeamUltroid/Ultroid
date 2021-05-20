@@ -53,14 +53,7 @@ async def _(e):
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
-            cmd = (
-                "ffmpeg -i "
-                + f"""{file.name}"""
-                + " -preset ultrafast -c:v -vcodec libx265 -crf "
-                + str(crf)
-                + " -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "
-                + f"""{out}"""
-            )
+            cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v -vcodec libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}"""'
             await bash(cmd)
             c_size = os.path.getsize(out)
             f_time = time.time()
