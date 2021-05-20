@@ -13,6 +13,7 @@
 import os
 import time
 from datetime import datetime as dt
+
 from . import *
 
 
@@ -21,7 +22,7 @@ async def _(e):
     xxx = await eor(e, "`Trying To Download...`")
     vido = await e.get_reply_message()
     if video and video.media:
-        if "video" in mediainfo (vido.media):
+        if "video" in mediainfo(vido.media):
             if hasattr(vido.media, "document"):
                 vfile = vido.media.document
             else:
@@ -74,7 +75,6 @@ async def _(e):
                 force_document=True,
             )
             await xxx.delete()
-
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
