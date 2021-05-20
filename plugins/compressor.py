@@ -58,7 +58,7 @@ async def _(e):
             progress = "progress.txt"
             with open(progress, "w") as fk:
                 pass
-            proce = await asyncio.create_subprocess_shell(f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y'stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+            proce = await asyncio.create_subprocess_shell(f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y', stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
             while proce.returncode != 0:
                 await asyncio.sleep(3)
                 with open(progress, 'r+') as fil:
