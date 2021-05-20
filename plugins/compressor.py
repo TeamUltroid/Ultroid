@@ -14,6 +14,7 @@
 
 import os
 import time
+import asyncio
 from datetime import datetime as dt
 
 from . import *
@@ -52,14 +53,32 @@ async def _(e):
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
-            cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y'
-            a, b = await bash(cmd)
-            os.remove(file.name)
-            try:
-                if b:
-                    return await xxx.edit("ERROR:\n\n" + str(b))
-            except BaseException:
+            x, y = await bash(f'mediainfo --fullscan """{file.name}""" | grep "Frame count"')
+            total_frames = x.split(":")[1].split('\n')[0]
+            progress = "progress.txt"
+            with open(progress, "w") as fk:
                 pass
+            proce = await asyncio.create_subprocess_shell(f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y'stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+            while proce.returncode != 0:
+                await asyncio.sleep(3)
+                with open(progress, 'r+') as fil:
+                    text = fil.read()
+                    frames=re.findall("frame=(\d+)", text)
+                    size=re.findall("total_size=(\d+)", text)
+
+                    if len(frames):
+                        elapse = int(frames[-1])
+                    if len(size):
+                        size = int(size[-1])
+                        per = elapse*100/int(total_frames)
+                        progress_str = "|[{0}{1}] {2}%\n`".format(
+                            "".join(["●" for i in range(math.floor(per / 5))]),
+                            "".join(["" for i in range(20 - math.floor(per / 5))]),
+                        round(per, 2),
+                       )
+                       e_size = humanbytes(size)
+                       await xxx.edit(progress_str+"\n"+"`"+e_size+"`")
+            os.remove(file.name)
             c_size = os.path.getsize(out)
             f_time = time.time()
             difff = time_formatter((f_time - d_time) * 1000)
@@ -67,10 +86,10 @@ async def _(e):
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
             )
             differ = 100 - ((c_size / o_size) * 100)
-            caption = f"Original Size: `{humanbytes(o_size)}`\n"
-            caption += f"Compressed Size: `{humanbytes(c_size)}`\n"
-            caption += f"Compression Ratio: `{differ:.2f}%`\n"
-            caption += f"\nTime Taken To Compress: `{difff}`"
+            caption = f"**Original Size: **`{humanbytes(o_size)}`\n"
+            caption += f"**Compressed Size: **`{humanbytes(c_size)}`\n"
+            caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
+            caption += f"\n**Time Taken To Compress: **`{difff}`"
             mmmm = await uploader(
                 out,
                 out,
