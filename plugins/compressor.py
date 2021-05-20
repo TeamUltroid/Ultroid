@@ -42,7 +42,7 @@ async def _(e):
                 vfile,
                 xxx,
                 c_time,
-                "Downloading " + vido.file.name + "...",
+                "Downloading " + name + "...",
             )
             o_size = os.path.getsize(file.name)
             d_time = time.time()
