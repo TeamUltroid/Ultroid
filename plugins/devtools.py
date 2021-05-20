@@ -66,7 +66,7 @@ async def _(event):
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     if stderr:
         OUT += f"**• ERROR:** \n`{stderr}`\n"
-    elif not (stderr and stdout):
+    elif not stdout:
         OUT += f"**• OUTPUT:**\n`Success`"
     else:
         _o = stdout.split("\n")
