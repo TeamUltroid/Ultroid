@@ -19,6 +19,7 @@ from PIL import Image, ImageDraw, ImageFont
 from . import *
 import time
 from telethon.tl.types import InputMessagesFilterPhotos
+from telethon.utils import get_extension
 
 @ultroid_cmd(pattern="logo ?(.*)")
 async def logo_gen(event):
@@ -26,13 +27,20 @@ async def logo_gen(event):
     name = event.pattern_match.group(1)
     if not name:
         await eod(xx, "`Give a name too!`", time=5)
+    if event.reply_to_msg_id:
+        temp = await event.get_reply_message()
+        if temp.media:
+            ext = get_extension(temp.media)
+            if ext == ".jpg" or ".png":
+                bg_ = await temp.download_media()
+    else:
+        pics = []
+        async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
+            pics.append(i)
+        id_ = random.choice(pics)
+        bg_ = await id_.download_media()
     fpath_ = "./resources/fonts/"
     f = random.choice(os.listdir(fpath_))
-    pics = []
-    async for i in ultroid.iter_messages("@UltroidLogos", filter=InputMessagesFilterPhotos):
-        pics.append(i)
-    id_ = random.choice(pics)
-    bg_ = await id_.download_media()
     font_ = fpath_ + f
     # next level logic, ignore
     if len(name) < 8:
