@@ -24,19 +24,18 @@ async def _(e):
     crf = e.pattern_match.group(1)
     if not crf:
         crf = 28
-    if e.reply_to_msg_id:
-        xxx = await eor(e, "`Trying To Download...`")
-        vido = await e.get_reply_message()
-        if video and video.media:
-            if "video" in mediainfo(vido.media):
-                if hasattr(vido.media, "document"):
-                    vfile = vido.media.document
-                    name = vido.file.name
-                else:
-                    vfile = vido.media
-                    name = ""
-                if not name:
-                    name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+    vido = await e.get_reply_message()
+    if vido and vido.media:
+        if "video" in mediainfo(vido.media):
+            if hasattr(vido.media, "document"):
+                vfile = vido.media.document
+                name = vido.file.name
+            else:
+                vfile = vido.media
+                name = ""
+            if not name:
+                name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+            xxx = await eor(e, "`Trying To Download...`")
             c_time = time.time()
             file = await downloader(
                 "resources/downloads/" + name,
@@ -88,6 +87,9 @@ async def _(e):
                 force_document=True,
             )
             await xxx.delete()
-
+        else:
+            await eod(e, "`Reply To Video File Only`")
+    else:
+        await eod(e, "`Reply To Video File Only`")
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
