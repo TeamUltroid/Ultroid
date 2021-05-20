@@ -75,9 +75,9 @@ async def _(e):
                             "".join(["●" for i in range(math.floor(per / 5))]),
                             "".join(["" for i in range(20 - math.floor(per / 5))]),
                         round(per, 2),
-                       )
-                       e_size = humanbytes(size)
-                       await xxx.edit(progress_str+"\n"+"`"+e_size+"`")
+                        )
+                        e_size = humanbytes(size)
+                        await xxx.edit(progress_str+"\n"+"`"+e_size+"`")
             os.remove(file.name)
             c_size = os.path.getsize(out)
             f_time = time.time()
