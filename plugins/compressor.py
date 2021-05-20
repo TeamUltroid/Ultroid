@@ -54,9 +54,9 @@ async def _(e):
             cmd = (
                 "ffmpeg -i "
                 + """{file.name}"""
-                + "-preset ultrafast -c:v -vcodec libx265 -crf "
+                + " -preset ultrafast -c:v -vcodec libx265 -crf "
                 + crf
-                + "-map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "
+                + " -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "
                 + file_name
                 + "_compressed.mp4"
             )
