@@ -78,7 +78,7 @@ async def _(e):
                     if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
-                        progress_str = "|[{0}{1}] {2}%\n`".format(
+                        progress_str = "`[{0}{1}] {2}%\n`".format(
                             "".join(["●" for i in range(math.floor(per / 5))]),
                             "".join(["" for i in range(20 - math.floor(per / 5))]),
                             round(per, 2),
