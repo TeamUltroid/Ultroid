@@ -55,8 +55,11 @@ async def _(e):
             )
             cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}"""'
             a, b = await bash(cmd)
-            if b:
-                return await xxx.edit("ERROR:\n\n" + str(b))
+            try:
+                if b:
+                    return await xxx.edit("ERROR:\n\n" + str(b))
+            except BaseException:
+                pass
             c_size = os.path.getsize(out)
             f_time = time.time()
             difff = time_formatter((f_time - d_time) * 1000)
