@@ -109,6 +109,7 @@ async def _(e):
                 thumb="resources/extras/ultroid.jpg",
                 caption=caption,
                 force_document=True,
+                reply_to=e.reply_to_msg_id,
             )
             await xxx.delete()
             os.remove(out)
