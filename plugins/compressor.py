@@ -17,15 +17,19 @@ import os
 import re
 import time
 from datetime import datetime as dt
+from telethon.tl.types import DocumentAttributeVideo
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 
 from . import *
 
 
-@ultroid_cmd(pattern="compress ?(.*)")
+@ultroid_cmd(pattern="compress (\d+)?(.*)")
 async def _(e):
     crf = e.pattern_match.group(1)
     if not crf:
         crf = 27
+    to_stream = e.pattern_match.group(2)
     vido = await e.get_reply_message()
     if vido and vido.media:
         if "video" in mediainfo(vido.media):
@@ -104,14 +108,30 @@ async def _(e):
                 xxx,
                 "Uploading " + out + "...",
             )
-            await e.client.send_file(
-                e.chat_id,
-                mmmm,
-                thumb="resources/extras/ultroid.jpg",
-                caption=caption,
-                force_document=True,
-                reply_to=e.reply_to_msg_id,
-            )
+            if to_stream and "| stream" in to_stream:
+                metadata = extractMetadata(createParser(out))
+                duration = metadata.get('duration').seconds
+                height = metadata.get('height')
+                width = metadata.get('width')
+                attributes=[DocumentAttributeVideo(duration=duration, w=width, h=height, supports_streaming=True)]
+                await e.client.send_file(
+                    e.chat_id,
+                    mmmm,
+                    thumb="resources/extras/ultroid.jpg",
+                    caption=caption,
+                    attributes=attributes,
+                    force_document=False,
+                    reply_to=e.reply_to_msg_id,
+                )
+            else:
+                await e.client.send_file(
+                    e.chat_id,
+                    mmmm,
+                    thumb="resources/extras/ultroid.jpg",
+                    caption=caption,
+                    force_document=True,
+                    reply_to=e.reply_to_msg_id,
+                )
             await xxx.delete()
             os.remove(out)
         else:
