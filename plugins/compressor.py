@@ -54,6 +54,7 @@ async def _(e):
             )
             cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y'
             a, b = await bash(cmd)
+            os.remove(file.name)
             try:
                 if b:
                     return await xxx.edit("ERROR:\n\n" + str(b))
@@ -85,6 +86,7 @@ async def _(e):
                 force_document=True,
             )
             await xxx.delete()
+            os.remove(out)
         else:
             await eod(e, "`Reply To Video File Only`")
     else:
