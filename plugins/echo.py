@@ -45,7 +45,7 @@ async def echo(e):
     add_echo(e.chat_id, user)
     ok = await ultroid_bot.get_entity(user)
     user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
-    await eor(e, "Activated Echo For {user}.")
+    await eor(e, f"Activated Echo For {user}.")
 
 
 @ultroid_cmd(pattern="remecho ?(.*)")
@@ -67,7 +67,7 @@ async def rm(e):
         rem_echo(e.chat_id, user)
         ok = await ultroid_bot.get_entity(user)
         user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
-        return await eor(e, "Deactivated Echo For {user}.")
+        return await eor(e, f"Deactivated Echo For {user}.")
     await eor(e, "Echo not activated for this user")
 
 
