@@ -9,7 +9,7 @@
 ✘ Commands Available
 
 •`{i}warn <reply to user> <reason>`
-    Gives Warn.    
+    Gives Warn.
 
 •`{i}resetwarn <reply to user>`
     To reset All Warns.
@@ -22,11 +22,12 @@
    After putting " | " mark put action like ban/mute/kick
    Its Default 3 kick
    Example : `setwarn 5 | mute`
-   
+
 """
 
 from pyUltroid.functions.warn_db import *
 from telethon.utils import get_display_name
+
 from . import *
 
 
@@ -164,7 +165,9 @@ async def warnset(e):
         if ("ban", "kick", "mute") not in action:
             return await eor(e, "stuff")
         udB.set("SETWARN", f"{number} {action}")
-        return await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
+        return await eor(
+            e, f"Done Your Warn Count is now {number} and Action is {action}"
+        )
     else:
         await eor(e, "`Incorrect Format`")
 
