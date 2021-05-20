@@ -31,7 +31,13 @@ async def _(e):
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
-            cmds = ["ffmpeg -i", file.name, "-preset ultrafast -vcodec libx265 -crf", crf, file_name+"-compressed.mp4"]
+            cmds = [
+                "ffmpeg -i",
+                file.name,
+                "-preset ultrafast -vcodec libx265 -crf",
+                crf,
+                file_name + "-compressed.mp4",
+            ]
             await bash(*cmds)
             c_size = os.path.getsize(f"{file_name}-compressed.mp4")
             f_time = time.time()
