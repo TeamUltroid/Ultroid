@@ -23,7 +23,7 @@ from . import *
 async def _(e):
     crf = e.pattern_match.group(1)
     if not crf:
-        crf = 28
+        crf = 27
     vido = await e.get_reply_message()
     if vido and vido.media:
         if "video" in mediainfo(vido.media):
@@ -48,12 +48,11 @@ async def _(e):
             d_time = time.time()
             diff = time_formatter((d_time - c_time) * 1000)
             file_name = (file.name).split("/")[-1]
-            out = file_name.replace(file_name.split(".")[-1], " compressed.mp4")
-            naam = file_name.replace(file_name.split(".")[-1], "")
+            out = file_name.replace(file_name.split(".")[-1], " compressed.mkv")
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
-            cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}"""'
+            cmd = f'ffmpeg -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y'
             a, b = await bash(cmd)
             try:
                 if b:
@@ -67,14 +66,13 @@ async def _(e):
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
             )
             differ = 100 - ((c_size / o_size) * 100)
-            caption = f"`File: ``{out}`\n"
-            caption += f"`Original Size: ``{humanbytes(o_size)}`\n"
-            caption += f"`Compressed Size: ``{humanbytes(c_size)}`\n"
-            caption += f"`Compression Ratio: ``{differ:.2f}%`\n"
-            caption += f"`Time Taken To Compress: ``{difff}`"
+            caption = f"Original Size: `{humanbytes(o_size)}`\n"
+            caption += f"Compressed Size: `{humanbytes(c_size)}`\n"
+            caption += f"Compression Ratio: `{differ:.2f}%`\n"
+            caption += f"\nTime Taken To Compress: `{difff}`"
             mmmm = await uploader(
                 out,
-                naam,
+                out,
                 f_time,
                 xxx,
                 "Uploading " + out + "...",
