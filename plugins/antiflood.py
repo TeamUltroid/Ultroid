@@ -61,7 +61,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
 
 
 @ultroid_cmd(
-    pattern="setflood ?(\d+)",
+    pattern="setflood ?(\\d+)",
 )
 async def setflood(e):
     input = e.pattern_match.group(1)
