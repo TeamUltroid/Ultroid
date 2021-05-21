@@ -41,6 +41,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
         if not limit:
             return
         count = 1
+        chat = (await event.get_chat()).title
         if event.chat_id in _check_flood.keys():
             if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
                 count = _check_flood[event.chat_id][event.sender_id]
@@ -51,11 +52,13 @@ if Redis("ANTIFLOOD") is not (None or ""):
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             try:
+                name = (await event.client.get_entity(event.sender_id)).first_name
                 await event.client.edit_permissions(
                     event.chat_id, event.sender_id, send_messages=False
                 )
                 del _check_flood[event.chat_id]
                 await event.reply("#AntiFlood\n\n`You have been muted.`")
+                await asst.send_message(int(Redis("LOG_CHANNEL")), f"#Antiflood\n\n`Muted `[{name}](tg://user?id={event.sender_id})` in {chat}", buttons=Button.inline("Unmute", data=f"anti_{event.sender_id}_{event.chat_id}")) 
             except BaseException:
                 pass
 
