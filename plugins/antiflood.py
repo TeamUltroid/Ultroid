@@ -35,7 +35,8 @@ if Redis("ANTIFLOOD") is not (None or ""):
         ),
     )
     async def flood_checm(event):
-        # @KarbonCopy if msg from admin then return
+        if check_if_admin(event):
+            return
         limit = get_flood_limit(event.chat_id)
         if not limit:
             return
@@ -60,7 +61,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
 
 
 @ultroid_cmd(
-    pattern="setflood ?(.*)",
+    pattern="setflood ?(\d+)",
 )
 async def setflood(e):
     input = e.pattern_match.group(1)
