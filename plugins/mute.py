@@ -10,16 +10,16 @@
 
 • `{i}mute <reply to msg/ user id>`
     Mute user in current chat.
-   
+
 • `{i}unmute <reply to msg/ user id>`
     Unmute user in current chat.
-   
+
 • `{i}dmute <reply to msg/ user id>`
     Mute user in current chat by deleting msgs.
-   
+
 • `{i}undmute <reply to msg/ use id>`
     Unmute dmuted user in current chat.
-   
+
 • `{i}tmute <time> <reply to msg/ use id>`
     time - m- minutes
            h- hours
@@ -31,8 +31,6 @@
 from pyUltroid.functions.all import ban_time
 from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from telethon import events
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
 
 from . import *
 
@@ -75,7 +73,7 @@ async def startmute(event):
             return await eor(xx, "`No proper admin rights...`", time=5)
     elif "creator" in vars(chat):
         pass
-    elif private == True:
+    elif private:
         pass
     else:
         return await eod(xx, "`No proper admin rights...`", time=5)
@@ -106,7 +104,7 @@ async def endmute(event):
         else:
             userid = (await event.client.get_entity(input)).id
     elif event.reply_to_msg_id:
-        userid = reply.sender_id
+        userid = (await event.get_reply_message()).sender_id
     elif private is True:
         userid = event.chat_id
     else:
@@ -130,11 +128,11 @@ async def _(e):
     huh = e.text.split(" ")
     try:
         tme = huh[1]
-    except:
+    except BaseException:
         return await eod(xx, "`Time till mute?`", time=5)
     try:
         input = huh[2]
-    except:
+    except BaseException:
         pass
     chat = await e.get_chat()
     if e.reply_to_msg_id:
@@ -157,7 +155,10 @@ async def _(e):
     try:
         bun = await ban_time(xx, tme)
         await e.client.edit_permissions(
-            chat.id, userid, until_date=bun, send_messages=False
+            chat.id,
+            userid,
+            until_date=bun,
+            send_messages=False,
         )
         await eod(
             xx,
@@ -188,12 +189,15 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     try:
         await e.client.edit_permissions(
-            chat.id, userid, until_date=None, send_messages=True
+            chat.id,
+            userid,
+            until_date=None,
+            send_messages=True,
         )
         await eod(
             xx,
@@ -224,14 +228,17 @@ async def _(e):
                 return await xx.edit(str(x))
         else:
             userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+            name = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(xx, "`Reply to someone or use its id...`", time=3)
     if userid == ultroid_bot.uid:
         return await eod(xx, "`I can't mute myself.`", time=3)
     try:
         await e.client.edit_permissions(
-            chat.id, userid, until_date=None, send_messages=False
+            chat.id,
+            userid,
+            until_date=None,
+            send_messages=False,
         )
         await eod(
             xx,

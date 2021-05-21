@@ -18,8 +18,10 @@
 import asyncio
 from datetime import datetime
 
+from pyUltroid.functions.pmpermit_db import *
 from telethon import events
-from telethon.tl import functions, types
+from telethon.tl.functions.account import GetPrivacyRequest
+from telethon.tl.types import InputPrivacyKeyStatusTimestamp, PrivacyValueAllowAll
 
 from . import *
 
@@ -41,6 +43,10 @@ LOG = Var.LOG_CHANNEL
 @ultroid_bot.on(events.NewMessage(outgoing=True))
 @ultroid_bot.on(events.MessageEdited(outgoing=True))
 async def set_not_afk(event):
+    if event.is_private:
+        if Redis("PMSETTING") == "True":
+            if not is_approved(event.chat_id):
+                return
     global USER_AFK
     global afk_time
     global last_afk_message
@@ -49,7 +55,7 @@ async def set_not_afk(event):
     back_alive = datetime.now()
     afk_end = back_alive.replace(microsecond=0)
     if afk_start != {}:
-        total_afk_time = str((afk_end - afk_start))
+        total_afk_time = str(afk_end - afk_start)
     current_message = event.message.message
     if "afk" not in current_message and "yes" in USER_AFK:
         try:
@@ -67,7 +73,8 @@ async def set_not_afk(event):
                 )
         except BaseException:
             shite = await ultroid_bot.send_message(
-                event.chat_id, get_string("afk_1").format(total_afk_time)
+                event.chat_id,
+                get_string("afk_1").format(total_afk_time),
             )
         try:
             try:
@@ -101,11 +108,13 @@ async def set_not_afk(event):
 
 
 @ultroid_bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
 )
 async def on_afk(event):
-    if event.fwd_from:
-        return
+    if event.is_private:
+        if Redis("PMSETTING") == "True":
+            if not is_approved(event.chat_id):
+                return
     global USER_AFK
     global afk_time
     global last_afk_message
@@ -114,11 +123,12 @@ async def on_afk(event):
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     if afk_start != {}:
-        total_afk_time = str((afk_end - afk_start))
+        total_afk_time = str(afk_end - afk_start)
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         return False
-    if USER_AFK and not (await event.get_sender()).bot:
+    sender = await event.get_sender()
+    if USER_AFK and not (sender.bot or sender.verified):
         msg = None
         if reason:
             message_to_reply = get_string("afk_3").format(total_afk_time, reason)
@@ -150,8 +160,8 @@ async def on_afk(event):
 
 @ultroid_cmd(pattern=r"afk ?(.*)")
 async def _(event):
-    if event.fwd_from:
-        return
+    if not is_fullsudo(event.sender_id):
+        return await eor(event, "`This Command Is Sudo Restricted.`")
     reply = await event.get_reply_message()
     global USER_AFK
     global afk_time
@@ -175,9 +185,9 @@ async def _(event):
         pic = None
     if not USER_AFK:
         last_seen_status = await ultroid_bot(
-            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
+            GetPrivacyRequest(InputPrivacyKeyStatusTimestamp()),
         )
-        if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
+        if isinstance(last_seen_status.rules, PrivacyValueAllowAll):
             afk_time = datetime.datetime.now()
         USER_AFK = f"yes: {reason} {pic}"
         if reason:
@@ -185,15 +195,19 @@ async def _(event):
                 if pic.endswith((".tgs", ".webp")):
                     await ultroid_bot.send_message(event.chat_id, file=pic)
                     await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk_5").format(reason)
+                        event.chat_id,
+                        get_string("afk_5").format(reason),
                     )
                 else:
                     await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk_5").format(reason), file=pic
+                        event.chat_id,
+                        get_string("afk_5").format(reason),
+                        file=pic,
                     )
             except BaseException:
                 await ultroid_bot.send_message(
-                    event.chat_id, get_string("afk_5").format(reason)
+                    event.chat_id,
+                    get_string("afk_5").format(reason),
                 )
         else:
             try:
@@ -202,7 +216,9 @@ async def _(event):
                     await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
                 else:
                     await ultroid_bot.send_message(
-                        event.chat_id, get_string("afk_6"), file=pic
+                        event.chat_id,
+                        get_string("afk_6"),
+                        file=pic,
                     )
             except BaseException:
                 await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
@@ -212,11 +228,14 @@ async def _(event):
                 if pic.endswith((".tgs", ".webp")):
                     await ultroid_bot.send_message(LOG, file=pic)
                     await ultroid_bot.send_message(
-                        LOG, get_string("afk_7").format(reason)
+                        LOG,
+                        get_string("afk_7").format(reason),
                     )
                 else:
                     await ultroid_bot.send_message(
-                        LOG, get_string("afk_7").format(reason), file=pic
+                        LOG,
+                        get_string("afk_7").format(reason),
+                        file=pic,
                     )
             elif reason:
                 await ultroid_bot.send_message(LOG, get_string("afk_7").format(reason))

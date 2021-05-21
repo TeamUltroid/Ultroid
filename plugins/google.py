@@ -12,6 +12,7 @@
     For doing google search.
 
 • `{i}img <query>`
+  `{i}img <query> ; <no of results>`
     For doing Images search.
 
 • `{i}reverse <query>`
@@ -24,7 +25,8 @@ from shutil import rmtree
 import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
-from pyUltroid.functions.parser import GoogleSearch
+from search_engine_parser import GoogleSearch
+from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
 
 from strings import get_string
 
@@ -38,16 +40,24 @@ async def google(event):
         return await event.edit("`Give something to search..`")
     x = await eor(event, get_string("com_2"))
     gs = GoogleSearch()
-    res = await gs.async_search(f"{inp}", cache=False)
+    try:
+        res = await gs.async_search(f"{inp}", cache=False)
+    except GoglError as e:
+        return await eor(event, str(e))
     out = ""
     for i in range(len(res["links"])):
         text = res["titles"][i]
         url = res["links"][i]
         des = res["descriptions"][i]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
-    await x.edit(
-        f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}", link_preview=False
-    )
+    omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
+    opn = []
+    for bkl in range(0, len(omk), 4095):
+        opn.append(omk[bkl : bkl + 4095])
+    for bc in opn:
+        await ultroid_bot.send_message(event.chat_id, bc, link_preview=False)
+    await x.delete()
+    opn.clear()
 
 
 @ultroid_cmd(pattern="img ?(.*)")
@@ -59,6 +69,7 @@ async def goimg(event):
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
+            query = query.split(";")[0]
         except BaseExceptaion:
             lmt = 5
     else:
@@ -72,7 +83,7 @@ async def goimg(event):
     }
     pth = gi.download(args)
     ok = pth[0][query]
-    await event.client.send_file(event.chat_id, ok, album=True)
+    await event.client.send_file(event.chat_id, ok, caption=query, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 
@@ -88,17 +99,19 @@ async def reverse(event):
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}
     grs = requests.post(
-        "https://www.google.com/searchbyimage/upload", files=file, allow_redirects=False
+        "https://www.google.com/searchbyimage/upload",
+        files=file,
+        allow_redirects=False,
     )
     loc = grs.headers.get("Location")
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
     xx = bs(response.text, "html.parser")
-    div = xx.find("div", {"class": "r5a77d"})
+    div = xx.find_all("div", {"class": "r5a77d"})[0]
     alls = div.find("a")
     link = alls["href"]
     text = alls.text
@@ -113,7 +126,10 @@ async def reverse(event):
     pth = gi.download(args)
     ok = pth[0][text]
     await event.client.send_file(
-        event.chat_id, ok, album=True, caption="Similar Images Realted to Search"
+        event.chat_id,
+        ok,
+        album=True,
+        caption="Similar Images Realted to Search",
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)

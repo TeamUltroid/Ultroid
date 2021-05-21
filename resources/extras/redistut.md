@@ -1,8 +1,8 @@
-# Tutorial To Get Redis DB Url and Password 
-   
-Process For Creating DB :-    
+# Tutorial To Get Redis DB Url and Password
+
+Process For Creating DB :-   
 i.) Go To redislabs.com and click "Try Free" in Top Right Corner.   
-ii.) Fill All The Required Details Like email, first and last name, password, etc.    
+ii.) Fill All The Required Details Like email, first and last name, password, etc.   
 iii.) Tick Below "I agree the corresponding...Privacy Policy." and Click "Get Started".   
 iv) Now Check Your Email, and click the "Activate Now" sent by redislabs via email.   
 v) Now Login and Chose Free Plan in "Fixed Size" Area and Write any name in "Subscription Area".   

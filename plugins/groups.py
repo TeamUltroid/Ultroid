@@ -16,12 +16,17 @@
 """
 
 
-from telethon import events
-from telethon.tl import functions, types
-from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
-                               UserStatusEmpty, UserStatusLastMonth,
-                               UserStatusLastWeek, UserStatusOffline,
-                               UserStatusOnline, UserStatusRecently)
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import (
+    ChannelParticipantsKicked,
+    ChatBannedRights,
+    UserStatusEmpty,
+    UserStatusLastMonth,
+    UserStatusLastWeek,
+    UserStatusOffline,
+    UserStatusOnline,
+    UserStatusRecently,
+)
 
 from . import *
 
@@ -35,12 +40,14 @@ async def _(event):
     p = 0
     (await event.get_chat()).title
     async for i in event.client.iter_participants(
-        event.chat_id, filter=ChannelParticipantsKicked, aggressive=True
+        event.chat_id,
+        filter=ChannelParticipantsKicked,
+        aggressive=True,
     ):
         try:
             await event.client.edit_permissions(event.chat_id, i, view_messages=True)
             p += 1
-        except:
+        except BaseException:
             pass
     await eod(xx, "{title}: {p} unbanned")
 
@@ -78,99 +85,99 @@ async def _(event):
             if "empty" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     y -= 1
-                except:
+                except BaseException:
                     pass
         if isinstance(i.status, UserStatusLastMonth):
             m += 1
             if "month" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     m -= 1
-                except:
+                except BaseException:
                     pass
         if isinstance(i.status, UserStatusLastWeek):
             w += 1
             if "week" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     w -= 1
-                except:
+                except BaseException:
                     pass
         if isinstance(i.status, UserStatusOffline):
             o += 1
             if "offline" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     o -= 1
-                except:
+                except BaseException:
                     pass
         if isinstance(i.status, UserStatusOnline):
             q += 1
             if "online" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     q -= 1
-                except:
+                except BaseException:
                     pass
         if isinstance(i.status, UserStatusRecently):
             r += 1
             if "recently" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     r -= 1
-                except:
+                except BaseException:
                     pass
         if i.bot:
             b += 1
             if "bot" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     b -= 1
-                except:
+                except BaseException:
                     pass
         elif i.deleted:
             d += 1
             if "deleted" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     d -= 1
-                except:
+                except BaseException:
                     pass
         elif i.status is None:
             n += 1
             if "none" in input_str:
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                        EditBannedRequest(event.chat_id, i, rights),
                     )
                     c += 1
                     n -= 1
-                except:
+                except BaseException:
                     pass
     required_string = ""
     if input_str:

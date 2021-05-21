@@ -17,6 +17,9 @@
 • `{i}circle`
     Reply to a audio song or gif to get video note.
 
+• `{i}ls`
+    Get all the Files inside a Directory.
+
 • `{i}bots`
     Shows the number of bots in the current chat with their perma-link.
 
@@ -28,34 +31,59 @@
     Reply a User to Get His Id
     Without Replying You Will Get the Chat's Id
 
-• `{i}sg <reply to a user>`
+• `{i}sg <reply to a user><username/id>`
     Get His Name History of the replied user.
 
 • `{i}tr <dest lang code> <(reply to) a message>`
     Get translated message.
+
+• `{i}sysinfo`
+    Shows System Info.
 """
 
 import asyncio
 import io
+import os
 import sys
 import time
 import traceback
 from asyncio.exceptions import TimeoutError
+from os import remove
+from pathlib import Path
 
 import cv2
 import emoji
+from carbonnow import Carbon
 from googletrans import Translator
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots, User
 from telethon.utils import pack_bot_file_id
 
 from . import *
+from . import humanbytes as hb
+
+
+@ultroid_cmd(
+    pattern="sysinfo$",
+)
+async def _(e):
+    x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    with open("neo.txt", "r") as neo:
+        p = (neo.read()).replace("\n\n", "")
+    ok = Carbon(code=p)
+    haa = await ok.save("neofetch")
+    await e.client.send_file(e.chat_id, haa)
+    remove("neofetch.jpg")
+    remove("neo.txt")
 
 
 @ultroid_cmd(
     pattern="tr",
 )
 async def _(event):
+    if len(event.text) > 3:
+        if not event.text[3] == " ":
+            return
     input = event.text[4:6]
     txt = event.text[7:]
     xx = await eor(event, "`Translating...`")
@@ -74,13 +102,13 @@ async def _(event):
     try:
         tt = translator.translate(text, dest=lan)
         output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
-        await eod(xx, output_str)
+        await eor(xx, output_str)
     except Exception as exc:
         await eod(xx, str(exc), time=10)
 
 
 @ultroid_cmd(
-    pattern="id$",
+    pattern="id ?(.*)",
 )
 async def _(event):
     if event.reply_to_msg_id:
@@ -91,16 +119,28 @@ async def _(event):
             await eor(
                 event,
                 "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`".format(
-                    str(event.chat_id), str(r_msg.sender.id), bot_api_file_id
+                    str(event.chat_id),
+                    str(r_msg.sender_id),
+                    bot_api_file_id,
                 ),
             )
         else:
             await eor(
                 event,
                 "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
-                    str(event.chat_id), str(r_msg.sender.id)
+                    str(event.chat_id),
+                    str(r_msg.sender_id),
                 ),
             )
+    elif event.pattern_match.group(1):
+        ids = await get_user_id(event.pattern_match.group(1))
+        return await eor(
+            event,
+            "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
+                str(event.chat_id),
+                str(ids),
+            ),
+        )
     else:
         await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
@@ -120,7 +160,7 @@ async def _(ult):
     if not input_str:
         chat = to_write_chat
     else:
-        mentions = "**Bots in **{}: \n".format(input_str)
+        mentions = f"**Bots in **{input_str}: \n"
         try:
             chat = await ultroid_bot.get_entity(input_str)
         except Exception as e:
@@ -128,19 +168,24 @@ async def _(ult):
             return None
     try:
         async for x in ultroid_bot.iter_participants(
-            chat, filter=ChannelParticipantsBots
+            chat,
+            filter=ChannelParticipantsBots,
         ):
             if isinstance(x.participant, ChannelParticipantAdmin):
                 mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
-                    x.first_name, x.id, x.id
+                    x.first_name,
+                    x.id,
+                    x.id,
                 )
             else:
                 mentions += "\n [{}](tg://user?id={}) `{}`".format(
-                    x.first_name, x.id, x.id
+                    x.first_name,
+                    x.id,
+                    x.id,
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await eod(ult, mentions)
+    await eor(ult, mentions)
 
 
 @ultroid_cmd(pattern="hl")
@@ -149,7 +194,7 @@ async def _(ult):
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eod(ult, "`Input some link`", time=5)
-    await eod(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
+    await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
 @ultroid_cmd(
@@ -170,11 +215,11 @@ async def _(e):
             cv2.imwrite("img.png", output)
             thumb = "img.png"
         except TypeError:
-            thumb = "./resources/extras/thumb.jpg"
+            thumb = "./resources/extras/new_thumb.jpg"
         c = await a.download_media(
             "resources/downloads/",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
+                progress(d, t, z, toime, "Dᴏᴡɴʟᴏᴀᴅɪɴɢ..."),
             ),
         )
         await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
@@ -193,7 +238,9 @@ async def _(e):
             "comp.mp3",
         ]
         proess = await asyncio.create_subprocess_exec(
-            *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
         stdout, stderr = await proess.communicate()
         stderr.decode().strip()
@@ -210,7 +257,9 @@ async def _(e):
             "circle.mp4",
         ]
         process = await asyncio.create_subprocess_exec(
-            *mcd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            *mcd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
         stdout, stderr = await process.communicate()
         stderr.decode().strip()
@@ -223,7 +272,7 @@ async def _(e):
             video_note=True,
             reply_to=a,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ...")
+                progress(d, t, z, taime, "Uᴘʟᴏᴀᴅɪɴɢ..."),
             ),
         )
         await z.delete()
@@ -233,17 +282,117 @@ async def _(e):
     elif a.document and a.document.mime_type == "video/mp4":
         z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
-        await e.client.send_file(e.chat_id, c, video_note=True, reply_to=a)
+        await e.client.send_file(
+            e.chat_id,
+            c,
+            video_note=True,
+            thumb="resources/extras/new_thumb.jpg",
+            reply_to=a,
+        )
         await z.delete()
         os.remove(c)
     else:
         return await eor(e, "**Reply to a gif or audio file only**")
 
 
+@ultroid_cmd(pattern="ls ?(.*)")
+async def _(e):
+    path = Path(e.pattern_match.group(1))
+    if not path:
+        path = Path(".")
+    else:
+        if not os.path.isdir(path):
+            return await eod(e, "`Incorrect Directory.`")
+        if not os.listdir(path):
+            return await eod(e, "`This Directory is Empty.`")
+    files = path.iterdir()
+    pyfiles = []
+    jsons = []
+    vdos = []
+    audios = []
+    pics = []
+    others = []
+    otherfiles = []
+    folders = []
+    text = []
+    apk = []
+    exe = []
+    zip = []
+    book = []
+    for file in sorted(files):
+        if os.path.isdir(file):
+            folders.append("📂 " + str(file))
+        elif str(file).endswith(".py"):
+            pyfiles.append("🐍 " + str(file))
+        elif str(file).endswith(".json"):
+            jsons.append("🔮 " + str(file))
+        elif str(file).endswith((".mkv", ".mp4", ".avi")):
+            vdos.append("🎥 " + str(file))
+        elif str(file).endswith((".mp3", ".ogg", ".m4a")):
+            audios.append("🔊 " + str(file))
+        elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp")):
+            pics.append("🖼 " + str(file))
+        elif str(file).endswith((".txt", ".text", ".log")):
+            text.append("📄 " + str(file))
+        elif str(file).endswith((".apk", ".xapk")):
+            apk.append("📲 " + str(file))
+        elif str(file).endswith(".exe"):
+            set.append("⚙ " + str(file))
+        elif str(file).endswith((".zip", ".rar")):
+            zip.append("🗜 " + str(file))
+        elif str(file).endswith((".pdf", ".epub")):
+            book.append("📗 " + str(file))
+        elif "." in str(file)[1:]:
+            others.append("🏷 " + str(file))
+        else:
+            otherfiles.append("📒 " + str(file))
+    omk = [
+        *sorted(folders),
+        *sorted(pyfiles),
+        *sorted(jsons),
+        *sorted(zip),
+        *sorted(vdos),
+        *sorted(pics),
+        *sorted(audios),
+        *sorted(apk),
+        *sorted(exe),
+        *sorted(book),
+        *sorted(text),
+        *sorted(others),
+        *sorted(otherfiles),
+    ]
+    text = ""
+    for i in omk:
+        emoji = i.split()[0]
+        name = i.split(maxsplit=1)[1]
+        nam = name.split("/")[-1]
+        if os.path.isdir(name):
+            size = 0
+            for path, dirs, files in os.walk(name):
+                for f in files:
+                    fp = os.path.join(path, f)
+                    size += os.path.getsize(fp)
+            if hb(size):
+                text += emoji + f" `{nam}`" + "  `" + hb(size) + "`\n"
+            else:
+                text += emoji + f" `{nam}`" + "\n"
+        else:
+            if hb(int(os.path.getsize(name))):
+                text += (
+                    emoji + f" `{nam}`" + "  `" + hb(int(os.path.getsize(name))) + "`\n"
+                )
+            else:
+                text += emoji + f" `{nam}`" + "\n"
+
+    await eor(e, text)
+
+
 @ultroid_cmd(
     pattern="bash",
 )
 async def _(event):
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
             event,
@@ -260,49 +409,53 @@ async def _(event):
         reply_to_id = event.reply_to_msg_id
     time.time() + 100
     process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
     )
     stdout, stderr = await process.communicate()
-    OUT = f"<b>☞ BASH\n\n• COMMAND:</b>\n<code>{cmd}</code> \n\n"
+    OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     e = stderr.decode()
     if e:
-        OUT += f"<b>• ERROR:</b> \n<code>{e}</code>\n"
+        OUT += f"**• ERROR:** \n`{e}`\n"
     o = stdout.decode()
-    if not o and not e:
+    if not o:
         o = "Success"
-        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</b>"
+        OUT += f"**• OUTPUT:**\n`{o}`"
     else:
         _o = o.split("\n")
         o = "\n".join(_o)
-        OUT += f"<b>• OUTPUT:</b>\n<code>{o}</code>"
+        OUT += f"**• OUTPUT:**\n`{o}`"
     if len(OUT) > 4096:
-        ultd = (
-            OUT.replace("<code>", "")
-            .replace("</code>", "")
-            .replace("<b>", "")
-            .replace("</b>", "")
-            .replace("<i>", "")
-            .replace("</i>", "")
-        )
+        ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
+                thumb="resources/extras/new_thumb.jpg",
                 allow_cache=False,
                 caption=f"`{cmd}`",
                 reply_to=reply_to_id,
             )
             await xx.delete()
     else:
-        await eod(xx, OUT, parse_mode="html")
+        await eor(xx, OUT)
+
+
+p = print  # ignore: pylint
 
 
 @ultroid_cmd(
     pattern="eval",
 )
 async def _(event):
+    if len(event.text) > 5:
+        if not event.text[5] == " ":
+            return
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
             event,
@@ -339,31 +492,28 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = "<i>►</i> <b>EVAL</b>\n<code>{}</code>\n\n<i>►</i><b>OUTPUT</b>: \n<code>{}</code>".format(
-        cmd, evaluation
+    final_output = (
+        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+            cmd,
+            evaluation,
+        )
     )
     if len(final_output) > 4096:
-        ultd = (
-            final_output.replace("<code>", "")
-            .replace("</code>", "")
-            .replace("<b>", "")
-            .replace("</b>", "")
-            .replace("<i>", "")
-            .replace("</i>", "")
-        )
+        ultd = final_output.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await ultroid_bot.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
+                thumb="resources/extras/new_thumb.jpg",
                 allow_cache=False,
                 caption=f"```{cmd}```",
                 reply_to=reply_to_id,
             )
             await xx.delete()
     else:
-        await eod(xx, final_output, parse_mode="html")
+        await eor(xx, final_output)
 
 
 async def aexec(code, event):
@@ -372,29 +522,33 @@ async def aexec(code, event):
     exec(
         f"async def __aexec(e, client): "
         + "\n message = event = e"
-        + "".join(f"\n {l}" for l in code.split("\n"))
+        + "".join(f"\n {l}" for l in code.split("\n")),
     )
 
     return await locals()["__aexec"](e, e.client)
 
 
 @ultroid_cmd(
-    pattern="sg(?: |$)(.*)",
+    pattern="sg ?(.*)",
 )
 async def lastname(steal):
-    if steal.fwd_from:
+    if BOT_MODE:
+        return await eor(steal, "`You cant Use This command in BOT_MODE..`")
+    mat = steal.pattern_match.group(1)
+    if not (steal.is_reply or mat):
+        await eor(steal, "`Use this command with reply or give Username/id...`")
         return
-    if not steal.reply_to_msg_id:
-        await steal.edit("Reply to any user message.")
-        return
+    if mat:
+        user_id = await get_user_id(mat)
     message = await steal.get_reply_message()
+    if message:
+        user_id = message.sender.id
     chat = "@SangMataInfo_bot"
-    user_id = message.sender.id
     id = f"/search_id {user_id}"
-    if message.sender.bot:
-        await steal.edit("Reply to actual users message.")
-        return
-    lol = await eor(steal, "Processingg !!!!!")
+    check = await ultroid_bot.get_entity(user_id)
+    if not isinstance(check, User) or check.bot:
+        return await eor(steal, "Reply to Actual User's Message !")
+    lol = await eor(steal, "`Processing !...`")
     try:
         async with ultroid_bot.conversation(chat) as conv:
             try:
@@ -420,7 +574,8 @@ async def lastname(steal):
                     await lol.edit(respond.message)
                     await lol.reply(response.message)
             await steal.client.delete_messages(
-                conv.chat_id, [msg.id, responds.id, respond.id, response.id]
+                conv.chat_id,
+                [msg.id, responds.id, respond.id, response.id],
             )
     except TimeoutError:
         return await lol.edit("Error: @SangMataInfo_bot is not responding!.")

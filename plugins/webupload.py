@@ -46,25 +46,27 @@ async def _(event):
                         xx,
                         ccc,
                         "Downloading...",
-                    )
+                    ),
                 ),
             )
         else:
             return await eod(xx, "`Reply to media file`", time=5)
     try:
         results = await ultroid_bot.inline_query(
-            Var.BOT_USERNAME, f"fl2lnk {file_name}"
+            asst.me.username,
+            f"fl2lnk {file_name}",
         )
     except rep:
         return await eor(
             xx,
             "`The bot did not respond to the inline query.\nConsider using {}restart`".format(
-                HNDLR
+                HNDLR,
             ),
         )
     except dis:
         return await eor(
-            xx, "`Please turn on inline mode for your bot from` @Botfather."
+            xx,
+            "`Please turn on inline mode for your bot from` @Botfather.",
         )
     await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
     await xx.delete()

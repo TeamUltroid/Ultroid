@@ -26,6 +26,7 @@
 
 import os
 import shutil
+import time
 
 import cv2
 import imutils
@@ -47,16 +48,25 @@ if not os.path.exists("pdf/"):
 async def pdfseimg(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
-    if not ok and ok.document and ok.document.mime_type == "application/pdf":
+    if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
     xx = await eor(event, "Processing...")
+    file = ok.media.document
+    k = time.time()
+    filename = "hehe.pdf"
+    result = await downloader(
+        "pdf/" + filename,
+        file,
+        xx,
+        k,
+        "Downloading " + filename + "...",
+    )
+    await result.delete()
+    pdfp = "pdf/hehe.pdf"
+    pdfp.replace(".pdf", "")
+    pdf = PdfFileReader(pdfp)
     if not msg:
-        d = os.path.join("pdf/", "hehe.pdf")
-        await event.client.download_media(ok, d)
-        pdfp = "pdf/hehe.pdf"
-        pdfp.replace(".pdf", "")
-        pdf = PdfFileReader(pdfp)
         for num in range(pdf.numPages):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(num))
@@ -72,21 +82,17 @@ async def pdfseimg(event):
         await xx.delete()
     if msg:
         o = int(msg) - 1
-        d = os.path.join("pdf/", "hehe.pdf")
-        await event.client.download_media(ok, d)
-        pdfp = "pdf/hehe.pdf"
-        pdfp.replace(".pdf", "")
-        pdf = PdfFileReader(pdfp)
         pw = PdfFileWriter()
         pw.addPage(pdf.getPage(o))
         with open(os.path.join("ult.png"), "wb") as f:
             pw.write(f)
         os.remove(pdfp)
         await event.client.send_file(
-            event.chat_id, "ult.png", reply_to=event.reply_to_msg_id
+            event.chat_id,
+            "ult.png",
+            reply_to=event.reply_to_msg_id,
         )
         os.remove("ult.png")
-        await xx.delete()
 
 
 @ultroid_cmd(
@@ -99,19 +105,32 @@ async def pdfsetxt(event):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
     xx = await eor(event, "`Processing...`")
+    file = ok.media.document
+    k = time.time()
+    filename = ok.file.name
+    result = await downloader(
+        filename,
+        file,
+        xx,
+        k,
+        "Downloading " + filename + "...",
+    )
+    await result.delete()
+    dl = result.name
     if not msg:
-        dl = await event.client.download_media(ok)
         pdf = PdfFileReader(dl)
         text = f"{dl.split('.')[0]}.txt"
         with open(text, "w") as f:
             for page_num in range(pdf.numPages):
                 pageObj = pdf.getPage(page_num)
                 txt = pageObj.extractText()
-                f.write("Page {0}\n".format(page_num + 1))
+                f.write("Page {}\n".format(page_num + 1))
                 f.write("".center(100, "-"))
                 f.write(txt)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
@@ -119,7 +138,6 @@ async def pdfsetxt(event):
         return
     if "_" in msg:
         u, d = msg.split("_")
-        dl = await event.client.download_media(ok)
         a = PdfFileReader(dl)
         str = ""
         for i in range(int(u) - 1, int(d)):
@@ -128,24 +146,26 @@ async def pdfsetxt(event):
         with open(text, "w") as f:
             f.write(str)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
     else:
         u = int(msg) - 1
-        dl = await event.client.download_media(ok)
         a = PdfFileReader(dl)
         str = a.getPage(u).extractText()
         text = f"{dl.split('.')[0]} Pg-{msg}.txt"
         with open(text, "w") as f:
             f.write(str)
         await event.client.send_file(
-            event.chat_id, text, reply_to=event.reply_to_msg_id
+            event.chat_id,
+            text,
+            reply_to=event.reply_to_msg_id,
         )
         os.remove(text)
         os.remove(dl)
-    await xx.delete()
 
 
 @ultroid_cmd(
@@ -172,7 +192,9 @@ async def imgscan(event):
     image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
     edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
     contours, hierarchy = cv2.findContours(
-        edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        edges,
+        cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE,
     )
     polygons = []
     for cnt in contours:
@@ -183,7 +205,8 @@ async def imgscan(event):
         simplified_cnt = sortedPoly[0]
     if len(simplified_cnt) == 4:
         cropped_image = four_point_transform(
-            original_image, simplified_cnt.reshape(4, 2) * ratio
+            original_image,
+            simplified_cnt.reshape(4, 2) * ratio,
         )
         gray_image = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
         T = threshold_local(gray_image, 11, offset=10, method="gaussian")
@@ -209,7 +232,8 @@ async def savepdf(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
         await eor(
-            event, "`Reply to Images/pdf which u want to merge as a single pdf..`"
+            event,
+            "`Reply to Images/pdf which u want to merge as a single pdf..`",
         )
         return
     ultt = await ok.download_media()
@@ -225,20 +249,23 @@ async def savepdf(event):
         image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
         edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
         contours, hierarchy = cv2.findContours(
-            edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+            edges,
+            cv2.RETR_EXTERNAL,
+            cv2.CHAIN_APPROX_SIMPLE,
         )
         polygons = []
         for cnt in contours:
             hull = cv2.convexHull(cnt)
             polygons.append(
-                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False)
+                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False),
             )
             sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
             simplified_cnt = sortedPoly[0]
         if len(simplified_cnt) == 4:
             cropped_image = four_point_transform(
-                original_image, simplified_cnt.reshape(4, 2) * ratio
+                original_image,
+                simplified_cnt.reshape(4, 2) * ratio,
             )
             gray_image = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
             T = threshold_local(gray_image, 11, offset=10, method="gaussian")

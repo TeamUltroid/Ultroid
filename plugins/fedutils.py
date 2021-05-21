@@ -41,7 +41,8 @@ async def _(event):
         previous_message = await event.get_reply_message()
         if previous_message.media:
             downloaded_file_name = await ultroid_bot.download_media(
-                previous_message, "fedlist"
+                previous_message,
+                "fedlist",
             )
             file = open(downloaded_file_name, encoding="utf8")
             lines = file.readlines()
@@ -83,7 +84,7 @@ async def _(event):
         if str(FBAN) in DEVLIST:
             await msg.edit("You can't ban my dev you noob!!")
             return
-        elif FBAN.startswith("@"):
+        elif isinstance(FBAN, str):
             try:
                 x = await ultroid_bot(GetFullUserRequest(FBAN))
                 uid = x.user.id
@@ -111,7 +112,7 @@ async def _(event):
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
                     return await msg.edit(
-                        "`Seems like rose isn't responding, or, the plugin is misbehaving`"
+                        "`Seems like rose isn't responding, or, the plugin is misbehaving`",
                     )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
@@ -121,10 +122,11 @@ async def _(event):
                     await asyncio.sleep(3)
                     if fedfile.media:
                         downloaded_file_name = await ultroid_bot.download_media(
-                            fedfile, "fedlist"
+                            fedfile,
+                            "fedlist",
                         )
                         await asyncio.sleep(6)
-                        file = open(downloaded_file_name, "r", errors="ignore")
+                        file = open(downloaded_file_name, errors="ignore")
                         lines = file.readlines()
                         for line in lines:
                             try:
@@ -138,7 +140,7 @@ async def _(event):
                         return
                 if len(fedList) == 0:
                     await msg.edit(
-                        f"Unable to collect FedAdminList. Retrying ({a+1}/3)..."
+                        f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
                 else:
                     break
@@ -185,7 +187,7 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{str(e)}")
     await msg.edit(
-        f"SuperFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB"
+        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
@@ -197,7 +199,8 @@ async def _(event):
         previous_message = await event.get_reply_message()
         if previous_message.media:
             downloaded_file_name = await ultroid_bot.download_media(
-                previous_message, "fedlist"
+                previous_message,
+                "fedlist",
             )
             file = open(downloaded_file_name, encoding="utf8")
             lines = file.readlines()
@@ -257,7 +260,7 @@ async def _(event):
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
                     return await msg.edit(
-                        "`Seems like rose isn't responding, or, the plugin is misbehaving`"
+                        "`Seems like rose isn't responding, or, the plugin is misbehaving`",
                     )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
@@ -267,10 +270,11 @@ async def _(event):
                     await asyncio.sleep(3)
                     if fedfile.media:
                         downloaded_file_name = await ultroid_bot.download_media(
-                            fedfile, "fedlist"
+                            fedfile,
+                            "fedlist",
                         )
                         await asyncio.sleep(6)
-                        file = open(downloaded_file_name, "r", errors="ignore")
+                        file = open(downloaded_file_name, errors="ignore")
                         lines = file.readlines()
                         for line in lines:
                             try:
@@ -284,7 +288,7 @@ async def _(event):
                         return
                 if len(fedList) == 0:
                     await msg.edit(
-                        f"Unable to collect FedAdminList. Retrying ({a+1}/3)..."
+                        f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
                 else:
                     break
@@ -331,13 +335,13 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{str(e)}")
     await msg.edit(
-        f"SuperUnFBan Completed.\nTotal Feds - {len(fedlist)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB"
+        f"SuperUnFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
 @ultroid_cmd(pattern="fstat ?(.*)")
 async def _(event):
-    ok = await event.edit("`Checking...`")
+    ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         sysarg = str(previous_message.sender_id)
@@ -349,7 +353,7 @@ async def _(event):
         user = sysarg
     if sysarg == "":
         await ok.edit(
-            "`Give me someones id, or reply to somones message to check his/her fedstat.`"
+            "`Give me someones id, or reply to somones message to check his/her fedstat.`",
         )
         return
     else:
@@ -359,7 +363,11 @@ async def _(event):
                 await conv.get_response()
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
-                if "Looks like" in audio.text:
+                if audio.message.startswith("This command can only be used once"):
+                    return await ok.edit(
+                        "Oops, you can use this command only once every minute!",
+                    )
+                elif "Looks like" in audio.text:
                     await audio.click(0)
                     await asyncio.sleep(2)
                     audio = await conv.get_response()
@@ -369,10 +377,11 @@ async def _(event):
                         caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
                         link_preview=False,
                     )
+                    await ok.delete()
                 else:
-                    await ultroid.send_message(event.chat_id, audio.text)
+                    okk = await conv.get_edit()
+                    await ok.edit(okk.message)
                 await ultroid.send_read_acknowledge(bot)
-                await event.delete()
             except YouBlockedUserError:
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
