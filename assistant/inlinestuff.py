@@ -75,9 +75,13 @@ async def _(e):
                         ],
                     )
                 )
-        await e.answer(fox, switch_pm="OrangeFox Recovery Search.", switch_pm_param="start")
+        await e.answer(
+            fox, switch_pm="OrangeFox Recovery Search.", switch_pm_param="start"
+        )
     else:
-        await e.answer([], switch_pm="OrangeFox Recovery Search.", switch_pm_param="start")
+        await e.answer(
+            [], switch_pm="OrangeFox Recovery Search.", switch_pm_param="start"
+        )
 
 
 @in_pattern("fl2lnk ?(.*)")
@@ -158,7 +162,9 @@ async def gsearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await q_event.answer([], switch_pm="Google Search. Enter a query!", switch_pm_param="start")
+        await q_event.answer(
+            [], switch_pm="Google Search. Enter a query!", switch_pm_param="start"
+        )
     searcher = []
     page = findall(r"page=\d+", match)
     cache = False
@@ -239,14 +245,18 @@ async def rextester(event):
                     description=f"Language-`{lang}` & Code-`{code}`",
                     text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`\n\nStats:\n`{stats}`",
                 )
-            await event.answer([resultm], switch_pm="RexTester.", switch_pm_param="start")
+            await event.answer(
+                [resultm], switch_pm="RexTester.", switch_pm_param="start"
+            )
     except UnknownLanguage:
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
             text=f"The list of valid languages are\n\n{rex_langs}\n\n\nFormat to use Rextester is `@Yourassistantusername rex langcode|code`",
         )
-        await event.answer([resultm], switch_pm="RexTester. Invalid Language!", switch_pm_param="start")
+        await event.answer(
+            [resultm], switch_pm="RexTester. Invalid Language!", switch_pm_param="start"
+        )
 
 
 @in_pattern("yahoo")
@@ -255,7 +265,9 @@ async def yahoosearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await q_event.answer([], switch_pm="Yahoo Search. Enter a query!", switch_pm_param="start")
+        await q_event.answer(
+            [], switch_pm="Yahoo Search. Enter a query!", switch_pm_param="start"
+        )
     searcher = []
     page = findall(r"page=\d+", match)
     cache = False
@@ -310,7 +322,9 @@ async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer([], switch_pm="App search. Enter app name!", switch_pm_param="start")
+        await e.answer(
+            [], switch_pm="App search. Enter app name!", switch_pm_param="start"
+        )
     foles = []
     aap = search(f)
     for z in aap:
@@ -358,7 +372,9 @@ async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer([], switch_pm="Mod Apps Search. Enter app name!", switch_pm_param="start")
+        await e.answer(
+            [], switch_pm="Mod Apps Search. Enter app name!", switch_pm_param="start"
+        )
     page = 1
     start = (page - 1) * 3 + 1
     urd = randrange(1, 3)
@@ -421,4 +437,6 @@ async def clip(e):
     hm = []
     for res in resul:
         hm += [buil.photo(include_media=True, file=res["src"])]
-    await e.answer(hm, gallery=True, switch_pm="Clipart Searcher.", switch_pm_param="start")
+    await e.answer(
+        hm, gallery=True, switch_pm="Clipart Searcher.", switch_pm_param="start"
+    )
