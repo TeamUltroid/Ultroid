@@ -19,6 +19,8 @@
 """
 
 
+import re
+
 from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood
 from telethon.events import NewMessage as NewMsg
 
@@ -69,8 +71,25 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 pass
 
 
+@callback(
+re.compile(
+"anti_(.*)",
+),
+)
+async def unmuting(e):
+    ino = (e.data_match.group(1)).decode("UTF-8").split("_")
+    user = int(ino[0])
+    chat = int(ino[1])
+    user_name = (await ultroid_bot.get_entity(user)).first_name
+    chat_title = (await ultroid_bot.get_entity(chat)).title
+    await ultroid_bot.edit_permissions(chat, user, send_messages=True)
+    await e.edit(f"#Antiflood\n\n`Unmuted `[{user_name}](tg://user?id={user})` in {chat_title}`")
+    
+
+
 @ultroid_cmd(
     pattern="setflood ?(\\d+)",
+    admins_only=True,
 )
 async def setflood(e):
     input = e.pattern_match.group(1)
@@ -87,6 +106,7 @@ async def setflood(e):
 
 @ultroid_cmd(
     pattern="remflood$",
+    admins_only=True,
 )
 async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
@@ -102,6 +122,7 @@ async def remove_flood(e):
 
 @ultroid_cmd(
     pattern="getflood$",
+    admins_only=True,
 )
 async def get_flood(e):
     ok = get_flood_limit(e.chat_id)
