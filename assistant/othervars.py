@@ -30,9 +30,21 @@ async def send(eve):
     plug_name = name.split("_")[-1]
     if name.startswith("def"):
         plugin = f"plugins/{plug_name}.py"
+        buttons = [
+        [
+            Button.inline(
+                "« Pᴀsᴛᴇ »",
+                data=f"pasta-{plugin}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data="back"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
+        ]
     else:
         plugin = f"addons/{plug_name}.py"
-    buttons = [
+        buttons = [
         [
             Button.inline(
                 "« Pᴀsᴛᴇ »",
@@ -43,7 +55,7 @@ async def send(eve):
             Button.inline("« Bᴀᴄᴋ", data="buck"),
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ],
-    ]
+        ]
     await eve.edit(file=plugin, buttons=buttons)
 
 
@@ -150,7 +162,13 @@ async def _(e):
         .get("result")
         .get("key")
     )
-    buttons = [
+    if ok.startswith("plugins"):
+      buttons = [
+        Button.inline("« Bᴀᴄᴋ", data="back"),
+        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ]
+    else:
+      buttons = [
         Button.inline("« Bᴀᴄᴋ", data="buck"),
         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
     ]
