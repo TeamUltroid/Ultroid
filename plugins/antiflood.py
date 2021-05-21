@@ -16,9 +16,6 @@
 
 • `{i}getflood`
     Get flood limit of a chat.
-
-• `{i}floodmode <anything>`
-    Anything that you want to reply after flood limit exceeds.
 """
 
 
@@ -28,7 +25,6 @@ from telethon.events import NewMessage as NewMsg
 from . import *
 
 _check_flood = {}
-_do_action = {}
 
 
 if Redis("ANTIFLOOD") is not (None or ""):
@@ -39,6 +35,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
         ),
     )
     async def flood_checm(event):
+# @KarbonCopy if msg from admin then return
         limit = get_flood_limit(event.chat_id)
         if not limit:
             return
@@ -52,20 +49,13 @@ if Redis("ANTIFLOOD") is not (None or ""):
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
-            async for msg in event.client.iter_messages(
-                event.chat_id, from_user=event.sender_id, limit=1
-            ):
-                if Redis("FLOODMODE"):
-                    await event.client.send_message(
-                        event.chat_id, str(Redis("FLOODMODE")), reply_to=msg.id
-                    )
-                    del _check_flood[event.chat_id]
-                else:
-                    await event.client.send_message(
-                        event.chat_id, "`Please Don't Spam `", reply_to=msg.id
-                    )
-                    del _check_flood[event.chat_id]
-
+            try:
+                await event.client.edit_permissions(event.chat_id, event.sender_id, send_messages=False)
+                del _check_flood[event.chat_id]
+                await event.reply("#AntiFlood\n\n`You have been muted.`")
+            except:
+                pass
+            
 
 @ultroid_cmd(
     pattern="setflood ?(.*)",
@@ -81,20 +71,6 @@ async def setflood(e):
         return await eod(
             e, f"`Successfully Updated Antiflood Settings to {input} in this chat.`"
         )
-
-
-@ultroid_cmd(
-    pattern="floodmode ?(.*)",
-)
-async def flood_type(e):
-    input = e.pattern_match.group(1)
-    if not input:
-        return await eod(e, "`What?`")
-    if input == "None":
-        udB.delete("FLOODMODE")
-        return await eod(e, "`Now I will reply with default msg if flood exceeds.`")
-    udB.set("FLOODMODE", input)
-    await eod(e, f"`Now I will reply with {input} if flood exceeds.`")
 
 
 @ultroid_cmd(
