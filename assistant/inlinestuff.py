@@ -75,15 +75,9 @@ async def _(e):
                         ],
                     )
                 )
-        await e.answer(fox)
+        await e.answer(fox, switch_pm="OrangeFox Recovery Search.", switch_pm_param="start")
     else:
-        sed = e.builder.article(
-            title="Not Found",
-            description="Wrong Codename",
-            text="OʀᴀɴɢFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ Yᴏᴜʀ Pʜᴏɴᴇ Is Eɪᴛʜᴇʀ Nᴏᴛ Oғғɪᴄɪᴀʟʟʏ Bᴜɪʟᴛ Oʀ Yᴏᴜ Hᴀᴠᴇ Eɴᴛᴇʀᴇᴅ Wʀᴏɴɢ Cᴏᴅᴇɴᴀᴍᴇ",
-            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
-        )
-        await e.answer([sed])
+        await e.answer([], switch_pm="OrangeFox Recovery Search.", switch_pm_param="start")
 
 
 @in_pattern("fl2lnk ?(.*)")
@@ -116,7 +110,7 @@ async def _(e):
             title="fl2lnk",
             text="File not found",
         )
-    await e.answer([lnk])
+    await e.answer([lnk], switch_pm="File to Link.", switch_pm_param="start")
 
 
 @callback(
@@ -155,7 +149,7 @@ async def repo(e):
             ],
         ),
     ]
-    await e.answer(res)
+    await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")
 
 
 @in_pattern("go")
@@ -164,13 +158,7 @@ async def gsearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        kkkk = q_event.builder.article(
-            title="Search Something",
-            thumb=wb(gugirl, 0, "image/jpeg", []),
-            text="**Gᴏᴏɢʟᴇ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="go ", same_peer=True),
-        )
-        await q_event.answer([kkkk])
+        await q_event.answer([], switch_pm="Google Search. Enter a query!", switch_pm_param="start")
     searcher = []
     page = findall(r"page=\d+", match)
     cache = False
@@ -216,7 +204,7 @@ async def gsearch(q_event):
             )
         except IndexError:
             break
-    await q_event.answer(searcher)
+    await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
 
 
 @in_pattern("rex")
@@ -251,14 +239,14 @@ async def rextester(event):
                     description=f"Language-`{lang}` & Code-`{code}`",
                     text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`\n\nStats:\n`{stats}`",
                 )
-            await event.answer([resultm])
+            await event.answer([resultm], switch_pm="RexTester.", switch_pm_param="start")
     except UnknownLanguage:
         resultm = builder.article(
             title="Error",  # By @ProgrammingError
             description="Invalid language choosen",
             text=f"The list of valid languages are\n\n{rex_langs}\n\n\nFormat to use Rextester is `@Yourassistantusername rex langcode|code`",
         )
-        await event.answer([resultm])
+        await event.answer([resultm], switch_pm="RexTester. Invalid Language!", switch_pm_param="start")
 
 
 @in_pattern("yahoo")
@@ -267,17 +255,7 @@ async def yahoosearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        kkkk = q_event.builder.article(
-            title="Search Something",
-            thumb=wb(yeah, 0, "image/jpeg", []),
-            text="**Yᴀʜᴏᴏ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                query="yahoo ",
-                same_peer=True,
-            ),
-        )
-        await q_event.answer([kkkk])
+        await q_event.answer([], switch_pm="Yahoo Search. Enter a query!", switch_pm_param="start")
     searcher = []
     page = findall(r"page=\d+", match)
     cache = False
@@ -323,7 +301,7 @@ async def yahoosearch(q_event):
             )
         except IndexError:
             break
-    await q_event.answer(searcher)
+    await q_event.answer(searcher, switch_pm="Yahoo Search.", switch_pm_param="start")
 
 
 @in_pattern("app")
@@ -332,13 +310,7 @@ async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        kkkk = e.builder.article(
-            title="Search Something",
-            thumb=wb(ps, 0, "image/jpeg", []),
-            text="**Pʟᴀʏ Sᴛᴏʀᴇ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="app ", same_peer=True),
-        )
-        await e.answer([kkkk])
+        await e.answer([], switch_pm="App search. Enter app name!", switch_pm_param="start")
     foles = []
     aap = search(f)
     for z in aap:
@@ -377,7 +349,7 @@ async def _(e):
                 ],
             ),
         )
-    await e.answer(foles)
+    await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
 
 
 @in_pattern("mods")
@@ -386,12 +358,7 @@ async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        kkkk = e.builder.article(
-            title="Search Something",
-            text="**Mᴏᴅᴅᴇᴅ Aᴘᴘs**\n\nYou didn't search anything",
-            buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="mods ", same_peer=True),
-        )
-        await e.answer([kkkk])
+        await e.answer([], switch_pm="Mod Apps Search. Enter app name!", switch_pm_param="start")
     page = 1
     start = (page - 1) * 3 + 1
     urd = randrange(1, 3)
@@ -435,7 +402,7 @@ async def _(e):
                 ],
             ),
         )
-    await e.answer(modss)
+    await e.answer(modss, switch_pm="Search Mod Applications.", switch_pm_param="start")
 
 
 @in_pattern("clipart")
@@ -444,16 +411,7 @@ async def clip(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        kkkk = e.builder.article(
-            title="Search Something",
-            text="**Cʟɪᴘᴀʀᴛ Sᴇᴀʀᴄʜ**\n\nYou didn't search anything",
-            buttons=Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                query="clipart ",
-                same_peer=True,
-            ),
-        )
-        await e.answer([kkkk])
+        await e.answer([], switch_pm="ClipArt Search.", switch_pm_param="start")
     quer = quer.replace(" ", "+")
     sear = f"https://clipartix.com/search/{quer}"
     html = urlopen(sear)
@@ -463,4 +421,4 @@ async def clip(e):
     hm = []
     for res in resul:
         hm += [buil.photo(include_media=True, file=res["src"])]
-    await e.answer(hm, gallery=True)
+    await e.answer(hm, gallery=True, switch_pm="Clipart Searcher.", switch_pm_param="start")
