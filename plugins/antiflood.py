@@ -35,7 +35,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
         ),
     )
     async def flood_checm(event):
-# @KarbonCopy if msg from admin then return
+        # @KarbonCopy if msg from admin then return
         limit = get_flood_limit(event.chat_id)
         if not limit:
             return
@@ -50,12 +50,14 @@ if Redis("ANTIFLOOD") is not (None or ""):
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             try:
-                await event.client.edit_permissions(event.chat_id, event.sender_id, send_messages=False)
+                await event.client.edit_permissions(
+                    event.chat_id, event.sender_id, send_messages=False
+                )
                 del _check_flood[event.chat_id]
                 await event.reply("#AntiFlood\n\n`You have been muted.`")
-            except:
+            except BaseException:
                 pass
-            
+
 
 @ultroid_cmd(
     pattern="setflood ?(.*)",
