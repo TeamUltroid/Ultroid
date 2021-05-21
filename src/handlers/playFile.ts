@@ -22,6 +22,7 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
     }
     if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
         await ctx.reply('Starting <b>FilePlay</b> [beta]');
+        ctx.reply(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration);
     } else {
         return await ctx.reply("Its Not A Audio File...");
     }
