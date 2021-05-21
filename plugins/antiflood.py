@@ -37,7 +37,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
         ),
     )
     async def flood_checm(event):
-        if await check_if_admin(event):
+        if await check_if_admin(event) or (await event.client.get_entity(event.sender_id)).bot:
             return
         limit = get_flood_limit(event.chat_id)
         if not limit:
