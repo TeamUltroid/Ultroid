@@ -29,14 +29,15 @@ async def logo_gen(event):
     xx = await eor(event, get_string("com_1"))
     name = event.pattern_match.group(1)
     if not name:
-        await eod(xx, "`Give a name too!`", time=5)
+        await eod(xx, "`Give a name too!`")
+    bg_, font_ = "" , ""
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
             ext = get_extension(temp.media)
             if ext == ".jpg" or ".png":
                 bg_ = await temp.download_media()
-            if ext == ".otf" or ".ttf":
+            elif ext == ".otf" or ".ttf":
                 font_ = await temp.download_media()
     else:
         pics = []
