@@ -66,7 +66,7 @@ async def warn(e):
         number, action = int(x.split()[0]), x.split()[1]
     except BaseException:
         number, action = 3, "kick"
-    if ("ban", "kick", "mute") not in action:
+    if ("ban" or "kick" or "mute") not in action:
         action = "kick"
     if count + 1 >= number:
         if "ban" in action:
@@ -162,7 +162,7 @@ async def warnset(e):
             number, action = int(x.split()[0]), x.split()[1]
         except BaseException:
             return await eor(e, "`Incorrect Format`")
-        if ("ban", "kick", "mute") not in action:
+        if ("ban" or "kick" or "mute") not in action:
             return await eor(e, "stuff")
         udB.set("SETWARN", f"{number} {action}")
         return await eor(
