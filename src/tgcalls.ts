@@ -76,7 +76,21 @@ ws.on('message', (response: any) => {
     }
 });
 
-const downloadSong = async (url: string): Promise<DownloadedSong> => {
+const downloadSong = async (url: string, file: boolean = false ): Promise<DownloadedSong> => {
+    if (url == '' && file == true) {
+        return new Promise((resolve, reject) => {
+            const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
+    
+            resolve({
+                stream: ffmpeg.stdout,
+                info: {
+                    id: url,
+                    title: "Audio File",
+                    duration: 69
+                },
+            });
+        });
+    }
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
         const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `${url}`]);
@@ -261,6 +275,46 @@ export const leaveVc = (chatId: number) => {
         return false;
     }
 }
+
+export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
+    if (!cache.has(chat.id)) {
+        await createConnection(chat);
+        return addFIleToQueue(chat, url, by);
+    }
+
+    const connection = cache.get(chat.id)!;
+    if (connection.leftVC) {
+        cache.delete(chat.id);
+        await createConnection(chat);
+        return addFIleToQueue(chat, url, by);
+    }
+    const { stream, queue } = connection;
+
+    let songInfo: DownloadedSong['info'];
+    if (stream.finished) {
+        try {
+            const song = await downloadSong(url, true);
+            stream.setReadable(song.stream);
+            connection.currentSong = {
+                song: song.info,
+                by: by
+            };
+            songInfo = song.info;
+            cache.set(chat.id, connection);
+        } catch (error) {
+            console.error(error);
+            return -1;
+        }
+        return 0;
+    } else {
+        songInfo = await getSongInfo(url);
+    }
+    return queue.push({
+        url: url,
+        from: by,
+        info: songInfo
+    });
+};
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
     if (!cache.has(chat.id)) {
