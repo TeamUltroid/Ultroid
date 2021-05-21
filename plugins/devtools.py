@@ -66,12 +66,12 @@ async def _(event):
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     if stderr:
         OUT += f"**• ERROR:** \n`{stderr}`\n"
-    elif not stdout:
-        OUT += f"**• OUTPUT:**\n`Success`"
-    else:
+    if stdout:
         _o = stdout.split("\n")
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
+    if not stderr and not stdout:
+        OUT += f"**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
