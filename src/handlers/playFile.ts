@@ -30,7 +30,7 @@ export const playHandler = Composer.command('playFile', async (ctx) => {
     const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
 
     if (!fileLink) {
-        return await ctx.reply('You need to replyu to a audio file not an Voice or Message!');
+        return await ctx.reply('You need to reply to a audio file not an Voice or Message!');
     }
 
     const index = await addFIleToQueue(chat, fileLink, {
