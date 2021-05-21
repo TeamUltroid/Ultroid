@@ -45,10 +45,10 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
             break;
         case 0:
             if (song) {
-                const { id, title, duration } = song.song;
+                const { id } = song.song;
                 ctx.replyWithPhoto("https://9to5google.com/wp-content/uploads/sites/4/2018/09/youtube_logo_dark.jpg?quality=82&strip=all", {
-                    caption: `<b>Playing : </b> <a href="https://www.youtube.com/watch?v=${id}">${escapeHtml(title)}</a>\n` +
-                        `<b>Duration: </b>${getDuration(duration)}\n` +
+                    caption: `<b>Playing : </b> <a href="https://www.youtube.com/watch?v=${id}">${escapeHtml(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.title)}</a>\n` +
+                        `<b>Duration: </b>${getDuration(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration)}\n` +
                         `<b>Requested by :</b> <a href="tg://user?id=${song.by.id}">${song.by.f_name}</a>`,
                     parse_mode: 'HTML',
                     ...Markup.inlineKeyboard([
