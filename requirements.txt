@@ -1,2 +1,1 @@
-
-Ultroid==28.0b0
+pyUltroid==28.0b0
