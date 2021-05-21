@@ -76,7 +76,7 @@ ws.on('message', (response: any) => {
     }
 });
 
-const downloadSong = async (url: string, file: boolean = false ): Promise<DownloadedSong> => {
+const downloadSong = async (url: string, file: boolean = false, title: string = '', duration: string | number = 0): Promise<DownloadedSong> => {
     if (url == '' && file == true) {
         return new Promise((resolve, reject) => {
             const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
@@ -85,8 +85,8 @@ const downloadSong = async (url: string, file: boolean = false ): Promise<Downlo
                 stream: ffmpeg.stdout,
                 info: {
                     id: url,
-                    title: "Audio File",
-                    duration: 69
+                    title: title,
+                    duration: typeof(duration) === 'string' ? parseInt(duration) : duration,
                 },
             });
         });
@@ -302,7 +302,7 @@ export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by:
     let songInfo: DownloadedSong['info'];
     if (stream.finished) {
         try {
-            const song = await downloadSong(url, true);
+            const song = await downloadSong(url, true, title, duration);
             stream.setReadable(song.stream);
             connection.currentSong = {
                 song: song.info,
