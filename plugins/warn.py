@@ -95,7 +95,7 @@ async def warn(e):
         for x in range(c):
             text += f"•**{x+1}.** {r[x]}\n"
         await eor(e, text)
-        return reset_warn(e.chat_id, user)
+        return reset_warn(e.chat_id, ok.id)
     add_warn(e.chat_id, user, count + 1, r)
     ok = await ultroid_bot.get_entity(user)
     user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
@@ -150,7 +150,8 @@ async def twarns(e):
         for x in range(c):
             text += f"•**{x+1}.** {r[x]}\n"
         await eor(e, text)
-
+    else:
+        await eor(e, "`No Warnings`")
 
 @ultroid_cmd(pattern="setwarn ?(.*)")
 async def warnset(e):
