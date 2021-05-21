@@ -72,9 +72,9 @@ if Redis("ANTIFLOOD") is not (None or ""):
 
 
 @callback(
-re.compile(
-"anti_(.*)",
-),
+    re.compile(
+        "anti_(.*)",
+    ),
 )
 async def unmuting(e):
     ino = (e.data_match.group(1)).decode("UTF-8").split("_")
@@ -83,8 +83,9 @@ async def unmuting(e):
     user_name = (await ultroid_bot.get_entity(user)).first_name
     chat_title = (await ultroid_bot.get_entity(chat)).title
     await ultroid_bot.edit_permissions(chat, user, send_messages=True)
-    await e.edit(f"#Antiflood\n\n`Unmuted `[{user_name}](tg://user?id={user})` in {chat_title}`")
-    
+    await e.edit(
+        f"#Antiflood\n\n`Unmuted `[{user_name}](tg://user?id={user})` in {chat_title}`"
+    )
 
 
 @ultroid_cmd(
