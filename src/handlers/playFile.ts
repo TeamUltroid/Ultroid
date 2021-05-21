@@ -21,7 +21,7 @@ export const playHandler = Composer.command('playFile', async (ctx) => {
         return await ctx.reply('I can only play in groups.');
     }
     if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
-        await ctx.reply('Starting **FilePlay** [beta]');
+        await ctx.reply('Starting <b>FilePlay</b> [beta]');
     } else {
         return await ctx.reply("Its Not A Audio File...");
     }
