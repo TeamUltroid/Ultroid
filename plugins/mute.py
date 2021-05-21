@@ -21,9 +21,10 @@
     Unmute dmuted user in current chat.
 
 • `{i}tmute <time> <reply to msg/ use id>`
-    time - m- minutes
-           h- hours
-           d- days
+    s- seconds
+    m- minutes
+    h- hours
+    d- days
     Mute user in current chat with time.
 """
 
