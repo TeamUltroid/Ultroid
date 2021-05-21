@@ -14,7 +14,7 @@ import { getDuration } from '../utils';
 import { logger as log } from '../bot';
 import escapeHtml from '@youtwitface/escape-html';
 
-export const playHandler = Composer.command('playFile', async (ctx) => {
+export const filePlayHandler = Composer.command('playFile', async (ctx) => {
     const { chat } = ctx.message;
 
     if (chat.type !== 'supergroup') {
