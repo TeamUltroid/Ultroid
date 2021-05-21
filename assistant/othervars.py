@@ -152,7 +152,7 @@ async def changes(okk):
 @callback(re.compile("pasta-(.*)"))
 @owner
 async def _(e):
-    ok = e.data_match.group(1)
+    ok = (e.data_match.group(1)).decode("UTF-8")
     hmm = open(ok)
     hmmm = hmm.read()
     hmm.close()
