@@ -34,10 +34,15 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
         return await ctx.reply('You need to reply to a audio file not an Voice or Message!');
     }
 
-    const index = await addFIleToQueue(chat, fileLink, {
-        id: ctx.from.id,
-        f_name: ctx.from.first_name
-    });
+    const index = await addFIleToQueue(
+        chat, fileLink, 
+        {
+            id: ctx.from.id,
+            f_name: ctx.from.first_name
+        },
+        JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration,
+        JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.title,
+    );
     const song = getCurrentSong(chat.id);
 
     switch (index) {

@@ -125,7 +125,16 @@ const downloadSong = async (url: string, file: boolean = false ): Promise<Downlo
 };
 
 
-export const getSongInfo = async (url: string): Promise<DownloadedSong['info']> => {
+export const getSongInfo = async (url: string, file: boolean = false, duration: string | number = 0, link: string = '', title: string = ''): Promise<DownloadedSong['info']> => {
+    if (file == true) {
+        return new Promise((resolve, reject) => {
+            resolve({
+                id: link,
+                title: title,
+                duration: typeof(duration) === 'string' ? parseInt(duration) : duration,
+            });
+        });
+    }
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
         const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `ytsearch:"${url}"`]);
@@ -276,17 +285,17 @@ export const leaveVc = (chatId: number) => {
     }
 }
 
-export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
+export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from'], duration: string | number, title: string): Promise<number | null> => {
     if (!cache.has(chat.id)) {
         await createConnection(chat);
-        return addFIleToQueue(chat, url, by);
+        return addFIleToQueue(chat, url, by, duration, title);
     }
 
     const connection = cache.get(chat.id)!;
     if (connection.leftVC) {
         cache.delete(chat.id);
         await createConnection(chat);
-        return addFIleToQueue(chat, url, by);
+        return addFIleToQueue(chat, url, by, duration, title);
     }
     const { stream, queue } = connection;
 
@@ -307,7 +316,7 @@ export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by:
         }
         return 0;
     } else {
-        songInfo = await getSongInfo(url);
+        songInfo = await getSongInfo(url, true, duration, url, title);
     }
     return queue.push({
         url: url,
