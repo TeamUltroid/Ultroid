@@ -62,7 +62,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 await event.reply("#AntiFlood\n\n`You have been muted.`")
                 await asst.send_message(
                     int(Redis("LOG_CHANNEL")),
-                    f"#Antiflood\n\n`Muted `[{name}](tg://user?id={event.sender_id})` in {chat}",
+                    f"#Antiflood\n\n`Muted `[{name}](tg://user?id={event.sender_id})` in {chat}`",
                     buttons=Button.inline(
                         "Unmute", data=f"anti_{event.sender_id}_{event.chat_id}"
                     ),
