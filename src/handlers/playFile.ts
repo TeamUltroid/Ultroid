@@ -7,8 +7,8 @@
 * <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 **/
 
-import { Composer, deunionize, Markup } from 'telegraf';
-import { addToQueue, getQueue } from '../tgcalls';
+import { Composer, Markup } from 'telegraf';
+import { addFIleToQueue, getQueue } from '../tgcalls';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import { logger as log } from '../bot';
@@ -22,18 +22,18 @@ export const playHandler = Composer.command('playFile', async (ctx) => {
     }
     if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
         await ctx.reply('Starting **FilePlay** [beta]');
-        const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
-        const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
-        const fileTitle = file.title;
     } else {
         return await ctx.reply("Its Not A Audio File...");
     }
 
-    if (!text) {
-        return await ctx.reply('You need to specify a YouTube URL / Search Keyword.');
+    const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
+    const fileLink = (await ctx.telegram.getFileLink(file.file_id)).href;
+
+    if (!fileLink) {
+        return await ctx.reply('You need to replyu to a audio file not an Voice or Message!');
     }
 
-    const index = await addToQueue(chat, text, {
+    const index = await addFIleToQueue(chat, fileLink, {
         id: ctx.from.id,
         f_name: ctx.from.first_name
     });
