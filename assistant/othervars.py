@@ -31,30 +31,30 @@ async def send(eve):
     if name.startswith("def"):
         plugin = f"plugins/{plug_name}.py"
         buttons = [
-        [
-            Button.inline(
-                "« Pᴀsᴛᴇ »",
-                data=f"pasta-{plugin}",
-            )
-        ],
-        [
-            Button.inline("« Bᴀᴄᴋ", data="back"),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-        ],
+            [
+                Button.inline(
+                    "« Pᴀsᴛᴇ »",
+                    data=f"pasta-{plugin}",
+                )
+            ],
+            [
+                Button.inline("« Bᴀᴄᴋ", data="back"),
+                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+            ],
         ]
     else:
         plugin = f"addons/{plug_name}.py"
         buttons = [
-        [
-            Button.inline(
-                "« Pᴀsᴛᴇ »",
-                data=f"pasta-{plugin}",
-            )
-        ],
-        [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-        ],
+            [
+                Button.inline(
+                    "« Pᴀsᴛᴇ »",
+                    data=f"pasta-{plugin}",
+                )
+            ],
+            [
+                Button.inline("« Bᴀᴄᴋ", data="buck"),
+                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+            ],
         ]
     await eve.edit(file=plugin, buttons=buttons)
 
@@ -163,15 +163,15 @@ async def _(e):
         .get("key")
     )
     if ok.startswith("plugins"):
-      buttons = [
-        Button.inline("« Bᴀᴄᴋ", data="back"),
-        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        buttons = [
+            Button.inline("« Bᴀᴄᴋ", data="back"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ]
     else:
-      buttons = [
-        Button.inline("« Bᴀᴄᴋ", data="buck"),
-        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-    ]
+        buttons = [
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ]
     await e.edit(
         f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
         buttons=buttons,
