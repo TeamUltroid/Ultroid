@@ -26,5 +26,5 @@ async def repify(e):
         await q[0].click(e.chat_id)
         if e.sender_id == ultroid_bot.uid:
             await e.delete()
-    except ChatSendInlineForbiddenError or bmi:
+    except (ChatSendInlineForbiddenError, bmi):
         await eor(e, REPOMSG)

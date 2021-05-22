@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
-from os import execl, remove
+from os import remove
 
 import requests
 from telegraph import Telegraph
@@ -22,6 +22,42 @@ auth_url = r["auth_url"]
 
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
+
+
+@callback(re.compile("sndplug_(.*)"))
+async def send(eve):
+    name = (eve.data_match.group(1)).decode("UTF-8")
+    if name.startswith("def"):
+        plug_name = name.replace(f"def_plugin_", "")
+        plugin = f"plugins/{plug_name}.py"
+        buttons = [
+            [
+                Button.inline(
+                    "« Pᴀsᴛᴇ »",
+                    data=f"pasta-{plugin}",
+                )
+            ],
+            [
+                Button.inline("« Bᴀᴄᴋ", data="back"),
+                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+            ],
+        ]
+    else:
+        plug_name = name.replace(f"add_plugin_", "")
+        plugin = f"addons/{plug_name}.py"
+        buttons = [
+            [
+                Button.inline(
+                    "« Pᴀsᴛᴇ »",
+                    data=f"pasta-{plugin}",
+                )
+            ],
+            [
+                Button.inline("« Bᴀᴄᴋ", data="buck"),
+                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+            ],
+        ]
+    await eve.edit(file=plugin, buttons=buttons)
 
 
 @callback("updatenow")
@@ -63,6 +99,18 @@ async def update(eve):
             repo.__del__()
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
+    elif Var.HEROKU_API is None:
+        try:
+            ups_rem.pull(ac_br)
+        except GitCommandError:
+            repo.git.reset("--hard", "FETCH_HEAD")
+        await updateme_requirements()
+        await eve.edit(
+            "`Successfully Updated!\nBot is restarting... Wait for a second!`"
+        )
+        os.system("git pull"), os.system(
+            "pip3.9 install -U -r requirements.txt"
+        ), os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
     else:
         try:
             ups_rem.pull(ac_br)
@@ -82,11 +130,10 @@ async def changes(okk):
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + f"\n\nClick the below button to update!"
-    tldr_str = tl_chnglog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
         file = open(f"ultroid_updates.txt", "w+")
-        file.write(tldr_str)
+        file.write(tl_chnglog)
         file.close()
         await okk.edit(
             get_string("upd_5"),
@@ -106,7 +153,7 @@ async def changes(okk):
 @callback(re.compile("pasta-(.*)"))
 @owner
 async def _(e):
-    ok = e.data_match.group(1)
+    ok = (e.data_match.group(1)).decode("UTF-8")
     hmm = open(ok)
     hmmm = hmm.read()
     hmm.close()
@@ -116,13 +163,19 @@ async def _(e):
         .get("result")
         .get("key")
     )
+    if ok.startswith("plugins"):
+        buttons = [
+            Button.inline("« Bᴀᴄᴋ", data="back"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ]
+    else:
+        buttons = [
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ]
     await e.edit(
         f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
-        buttons=Button.switch_inline(
-            "Search Again..?",
-            query="send ",
-            same_peer=True,
-        ),
+        buttons=buttons,
         link_preview=False,
     )
 
@@ -959,7 +1012,6 @@ async def vcb(event):
         f"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         buttons=[
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
-            [Button.inline("WEBSOCKET", data="vcw")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
@@ -976,36 +1028,6 @@ async def name(event):
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
             "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("vcb"),
-            )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                    name,
-                    themssg,
-                ),
-                buttons=get_back_button("vcb"),
-            )
-
-
-@callback("vcw")
-@owner
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "WEBSOCKET_URL"
-    name = "WEBSOCKET URL"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**WEBSOCKET URL**\nEnter your websocket url means\n`https://{HEROKU_APP_NAME}.herokuapp.com`\nIn place of HEROKU_APP_NAME put ur heroku app name\n\nUse /cancel to terminate the operation.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response

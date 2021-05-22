@@ -122,17 +122,16 @@ async def cmds(event):
 )
 async def restartbt(ult):
     if Var.HEROKU_API:
-        await eor(ult, "`Restarting..`")
-        try:
-            await restart(ult)
-        except BaseException:
-            await bash("pkill python3 && python3 -m pyUltroid")
+        await restart(ult)
     else:
         await bash("pkill python3 && python3 -m pyUltroid")
 
 
 @ultroid_cmd(pattern="shutdown")
 async def shutdownbot(ult):
+    if not ult.out:
+        if not is_fullsudo(ult.sender_id):
+            return await eod(ult, "`This Command Is Sudo Restricted.`")
     try:
         dyno = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -181,7 +180,7 @@ async def heroku_logs(event):
     await ultroid.send_file(
         event.chat_id,
         file="ultroid-heroku.log",
-        thumb="resources/extras/logo_rdm.png",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
     )
     os.remove("ultroid-heroku.log")
@@ -201,7 +200,7 @@ async def def_logs(ult):
     await ultroid.send_file(
         ult.chat_id,
         file="ultroid.log",
-        thumb="resources/extras/new_thumb.jpg",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"**Ultroid Logs.**\nPasted [here]({url}) too!",
     )
     await xx.edit("Done")

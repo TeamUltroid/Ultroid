@@ -10,10 +10,10 @@
 
 
 • `{i}mtoi <reply to media>`
-    media to image conversion
+    Media to image conversion
 
 • `{i}mtos <reply to media>`
-    convert media to sticker.
+    Convert media to sticker.
 
 • `{i}doc <filename.ext>`
     Reply to a text msg to save it in a file.
@@ -22,14 +22,12 @@
     Reply to a file to reveal it's text.
 
 • `{i}rename <file name with extension>`
-    rename the file
+    Rename the file
 
-• `{i}thumbnail <reply to image`
-    upload Your file with your custom thumbnail.
-    In Commands `{i}rename` and `{i}ul`
+• `{i}thumbnail <reply to image/thumbnail file>`
+    Upload Your file with your custom thumbnail.
 """
 
-import asyncio
 import os
 import time
 
@@ -37,6 +35,8 @@ import cv2
 import requests
 from PIL import Image
 from telegraph import upload_file as uf
+from telethon.tl.types import MessageMediaDocument as doc
+from telethon.tl.types import MessageMediaPhoto as photu
 
 from . import *
 
@@ -46,13 +46,21 @@ opn = []
 @ultroid_cmd(pattern="thumbnail$")
 async def _(e):
     r = await e.get_reply_message()
-    if not (r and r.media):
-        return await eor(e, "`Reply to img`")
-    dl = await ultroid_bot.download_media(r.media)
+    pop = "`Reply to img or file with thumbnail.`"
+    if not r:
+        return await eor(e, pop)
+    if isinstance(r.media, photu):
+        dl = await ultroid_bot.download_media(r.media)
+    elif isinstance(r.media, doc):
+        if r.media.document.thumbs:
+            dl = await ultroid_bot.download_media(r, thumb=-1)
+        else:
+            return await eor(e, pop)
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
     udB.set("CUSTOM_THUMBNAIL", str(nn))
+    await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
     await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
 
 
@@ -78,17 +86,13 @@ async def imak(event):
         else:
             file = await event.download_media(reply)
     os.rename(file, inp)
-    if Redis("CUSTOM_THUMBNAIL"):
-        await bash(
-            f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/new_thumb.jpg"
-        )
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
     await ultroid_bot.send_file(
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/new_thumb.jpg",
+        thumb="resources/extras/ultroid.jpg",
         caption=f"`{xxx.name}`",
         reply_to=reply,
     )
@@ -155,11 +159,8 @@ async def _(event):
             b.write(str(a.message))
             b.close()
             await xx.edit(f"**Packing into** `{input_str}`")
-            await asyncio.sleep(2)
-            await xx.edit(f"**Uploading** `{input_str}`")
-            await asyncio.sleep(2)
             await event.client.send_file(
-                event.chat_id, input_str, thumb="resources/extras/new_thumb.jpg"
+                event.chat_id, input_str, thumb="resources/extras/ultroid.jpg"
             )
             await xx.delete()
             os.remove(input_str)

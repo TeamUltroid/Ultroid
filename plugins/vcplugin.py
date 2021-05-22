@@ -28,8 +28,11 @@
     Remove access of Voice Chat Bot.
 
 • **Voice Chat Bot Commands**
-   `/play ytsearch:song name`
+   `/play ytsearch : song-name`
    `/play youtube link`
+   `/current`
+   `/skip`
+   `/exitVc`
 
 """
 
@@ -63,6 +66,7 @@ async def _(e):
     try:
         await e.client(stopvc(await get_call(e)))
         await eor(e, "`Voice Chat Stopped...`")
+        vcdyno("off")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
 
@@ -73,9 +77,11 @@ async def _(e):
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
     er, out = await bash("npm start")
-    LOGS.warning(er)
+    LOGS.info(er)
     LOGS.info(out)
-    await zz.edit(f"Failed {er}")
+    vcdyno("on")
+    if er:
+        await zz.edit(f"Failed {er}\n\n{out}")
 
 
 @ultroid_cmd(
@@ -195,6 +201,16 @@ async def _(e):
         )
     except Exception as ex:
         return await eod(xx, f"`{str(ex)}`", time=5)
+
+
+@asst_cmd("exitVc")
+async def evc(e):
+    if e.sender.id == ultroid_bot.uid:
+        vcdyno("off")
+    elif is_sudo(e.sender.id):
+        vcdyno("off")
+    elif is_vcsudo(e.sender.id):
+        vcdyno("off")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

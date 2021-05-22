@@ -79,9 +79,6 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 - `API_ID` - Your API_ID from [my.telegram.org](https://my.telegram.org/)
 - `API_HASH` - Your API_HASH from [my.telegram.org](https://my.telegram.org/)
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
-- `BOT_TOKEN` - The token of your bot from [@BotFather](https://t.me/BotFather)
-- `BOT_USERNAME` - The username of your bot from [@BotFather](https://t.me/BotFather)
-- `LOG_CHANNEL` - A private group/channel id.
 - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
 - `REDIS_PASSWORD ` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
 
@@ -102,5 +99,5 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
-* [AndrewLaneX](https://github.com/AndrewLaneX) for [tgcalls.](http://github.com/tgcallsjs/tgcalls)
+* [AndrewLaneX](https://github.com/AndrewLaneX) for [tgcalls-base.](http://github.com/tgcallsjs/tgcalls)
 

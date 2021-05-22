@@ -23,7 +23,7 @@ async def on_out_mssg(event):
     if who == OWNER_ID:
         if event.text.startswith("/"):
             return
-        to_user = udB.get(str(x.id))
+        to_user = get_who(x.id)
         if event.media:
             if event.text:
                 await asst.send_file(int(to_user), event.media, caption=event.text)

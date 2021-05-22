@@ -29,11 +29,12 @@ def start():
     print("Welcome to Ultroid, lets start setting up!\n\n")
     print("Cloning the repository...\n\n")
     try:
-        os.system("git clone https://github.com/TeamUltroid/Ultroid && cd Ultroid")
-    except Exception as e:
-        print(f"ERROR\n{str(e)}")
+        os.system("rm -rf Ultroid")
+    except BaseException:
+        pass
+    os.system("git clone https://github.com/TeamUltroid/Ultroid")
     print("\n\nDone")
-    os.system("cd Ultroid")
+    os.chdir("Ultroid")
     clear_screen()
     print(a)
     print("\n\nLet's start!\n")
@@ -58,11 +59,8 @@ def start():
         "API_ID",
         "API_HASH",
         "SESSION",
-        "BOT_USERNAME",
-        "BOT_TOKEN",
         "REDIS_URI",
         "REDIS_PASSWORD",
-        "LOG_CHANNEL",
     ]
     all_done = "# Ultroid Environment Variables.\n# Do not delete this file.\n\n"
     for i in varrs:
@@ -88,6 +86,7 @@ def start():
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
+    os.system("pip3 install -r requirements.txt")
     os.system("pip3 install -r resources/extras/local-requirements.txt")
     clear_screen()
     print(a)

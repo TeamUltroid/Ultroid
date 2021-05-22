@@ -8,87 +8,158 @@
 """
 ✘ Commands Available
 
+• `{i}zip <reply to file>
+    zip the replied file
+
 • `{i}unzip <reply to zip file>`
     unzip the replied file.
+
+• `{i}azip <reply to file>`
+   add file to batch for batch upload zip
+
+• `{i}dozip`
+   upload batch zip the files u added from `{i}azip`
+
 """
 
-import asyncio
+import glob
 import os
 import time
-import zipfile
 
 from . import *
 
 
-@ultroid_cmd(pattern="unzip$")
-async def _(ult):
-    if not ult.is_reply:
-        return await eor(ult, "`Reply to a Zipfile..`")
-    gt = await ult.get_reply_message()
-    msg = await eor(ult, "`Processing...`")
-    if not (
-        gt.media
-        and gt.media.document
-        and gt.media.document.mime_type == "application/zip"
-    ):
-        return await msg.edit("`Reply to a Zipfile...`")
-    k = time.time()
-    d = "resources/downloads/"
-    dnl = await ultroid_bot.download_media(
-        gt,
-        d,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, msg, k, "Downloading to my Storage..."),
-        ),
-    )
-    place = "resources/downloads/extracted/"
-    with zipfile.ZipFile(dnl, "r") as zip_ref:
-        zip_ref.extractall(place)
-    filename = sorted(get_lst_of_files(place, []))
-    await msg.edit("Unzipping now")
-    THUMB = udB.get("THUMB_URL")
-    Enum = 0
-    Elist = "**Errors Occured while Unzip**\n\n"
-    for single_file in filename:
-        if os.path.exists(single_file):
-            caption_rts = os.path.basename(single_file)
-            try:
-                await ultroid_bot.send_file(
-                    ult.chat_id,
-                    single_file,
-                    thumb=THUMB,
-                    caption=f"**File Name :** {caption_rts}",
-                    force_document=True,
-                    reply_to=ult.message.id,
-                )
-            except Exception as e:
-                Enum += 1
-                Elist += f"{Enum}. {caption_rts}\n- __{str(e)}__\n"
-            os.remove(single_file)
-    os.remove(dnl)
-    await msg.edit(f"**Unzipped `{len(filename)-Enum}/{len(filename)}` Files**")
-    if Enum > 0:
-        if len(Elist) < 4096:
-            await ultroid_bot.send_message(Var.LOG_CHANNEL, Elist)
-        else:
-            file = open("UnzipError.txt", "w").write(Elist)
-            file.close()
-            await ultroid_bot.send_message(
-                Var.LOG_CHANNEL,
-                "UnzipError.txt",
-                caption=f"`Error Occured on Unzip cmd",
+@ultroid_cmd(pattern="zip$")
+async def zipp(event):
+    reply = await event.get_reply_message()
+    t = time.time()
+    if not reply:
+        await eor(event, "Reply to any media/Document.")
+        return
+    xx = await eor(event, "`Processing...`")
+    if reply.media:
+        if hasattr(reply.media, "document"):
+            file = reply.media.document
+            image = await downloader(
+                reply.file.name, reply.media.document, xx, t, "Downloading..."
             )
-            os.remove("UnzipError.txt")
+            file = image.name
+        else:
+            file = await event.download_media(reply)
+    inp = file.replace(file.split(".")[-1], "zip")
+    await bash(f"zip -r {inp} {file}")
+    k = time.time()
+    xxx = await uploader(inp, inp, k, xx, "Uploading...")
+    await ultroid_bot.send_file(
+        event.chat_id,
+        xxx,
+        force_document=True,
+        thumb="resources/extras/ultroid.jpg",
+        caption=f"`{xxx.name}`",
+        reply_to=reply,
+    )
+    os.remove(inp)
+    os.remove(file)
+    await xx.delete()
 
 
-def get_lst_of_files(input_directory, output_lst):
-    filesinfolder = os.listdir(input_directory)
-    for file_name in filesinfolder:
-        current_file_name = os.path.join(input_directory, file_name)
-        if os.path.isdir(current_file_name):
-            return get_lst_of_files(current_file_name, output_lst)
-        output_lst.append(current_file_name)
-    return output_lst
+@ultroid_cmd(pattern="unzip$")
+async def unzipp(event):
+    reply = await event.get_reply_message()
+    t = time.time()
+    if not reply:
+        await eor(event, "Reply to any media/Document.")
+        return
+    xx = await eor(event, "`Processing...`")
+    if reply.media:
+        if hasattr(reply.media, "document"):
+            file = reply.media.document
+            mime_type = file.mime_type
+            if "application" not in mime_type:
+                return await xx.edit("`Reply To zipped File`")
+            image = await downloader(
+                reply.file.name, reply.media.document, xx, t, "Downloading..."
+            )
+            file = image.name
+            if not file.endswith(("zip", "rar", "exe")):
+                return await xx.edit("`Reply To zip File Only`")
+        else:
+            return await xx.edit("`Reply to zip file only`")
+    if not os.path.isdir("unzip"):
+        os.mkdir("unzip")
+    else:
+        os.system("rm -rf unzip")
+        os.mkdir("unzip")
+    await bash(f"7z x {file} -aoa -ounzip")
+    ok = glob.glob("unzip/*")
+    k = []
+    for x in ok:
+        if os.path.isdir(x):
+            k.append(x)
+            break
+    if k:
+        await xx.edit(
+            "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(
+                i=HNDLR
+            )
+        )
+    else:
+        for x in ok:
+            k = time.time()
+            xxx = await uploader(x, x, k, xx, "Uploading...")
+            await ultroid_bot.send_file(
+                event.chat_id,
+                xxx,
+                force_document=True,
+                thumb="resources/extras/ultroid.jpg",
+                caption=f"`{xxx.name}`",
+            )
+        await xx.delete()
+
+
+@ultroid_cmd(pattern="addzip$")
+async def azipp(event):
+    reply = await event.get_reply_message()
+    t = time.time()
+    if not reply:
+        await eor(event, "Reply to any media/Document.")
+        return
+    xx = await eor(event, "`Processing...`")
+    if not os.path.isdir("zip"):
+        os.mkdir("zip")
+    if reply.media:
+        if hasattr(reply.media, "document"):
+            file = reply.media.document
+            image = await downloader(
+                "zip/" + reply.file.name, reply.media.document, xx, t, "Downloading..."
+            )
+            file = image.name
+        else:
+            file = await event.download_media(reply.media, "zip/")
+    await xx.edit(
+        f"Downloaded `{file}` succesfully\nNow Reply To Other Files To Add And Zip all at once"
+    )
+
+
+@ultroid_cmd(pattern="dozip$")
+async def do_zip(event):
+    if not os.path.isdir("zip"):
+        return await eor(
+            event, "First All Files Via {i}addzip then doZip to zip all files at one."
+        )
+    xx = await eor(event, "`processing`")
+    await bash(f"zip -r ultroid.zip zip/*")
+    k = time.time()
+    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, "Uploading...")
+    await ultroid_bot.send_file(
+        event.chat_id,
+        xxx,
+        force_document=True,
+        thumb="resources/extras/ultroid.jpg",
+    )
+    os.system("rm -rf zip")
+    os.remove("ultroid.zip")
+    await xx.delete()
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

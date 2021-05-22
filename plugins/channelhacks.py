@@ -49,9 +49,8 @@ async def _(e):
         return
     x = get_source_channels()
     th = await e.get_chat()
-    for xs in x:
-        if str(th.id) not in str(xs):
-            return
+    if str(th.id) not in x:
+        return
     y = get_destinations()
     for ys in y:
         try:
@@ -88,7 +87,7 @@ async def _(e):
             return
     async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
         try:
-            await asyncio.sleep(1)
+            await asyncio.sleep(1.3)
             await ultroid_bot.send_message(int(d), msg)
         except BaseException:
             pass

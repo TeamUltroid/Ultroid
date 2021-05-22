@@ -100,7 +100,7 @@ async def _(e):
                 Button.url("Private", url=f"t.me/{username}"),
                 Button.switch_inline(
                     "Secret msg",
-                    query=f"msg {query} wspr ",
+                    query=f"msg {query} wspr Hello 👋",
                     same_peer=True,
                 ),
             ]

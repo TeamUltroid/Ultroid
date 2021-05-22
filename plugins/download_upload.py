@@ -10,6 +10,7 @@
 
 • `{i}ul <path/to/file>`
     Upload file to telegram chat.
+    You Can Upload Folders too.
 
 • `{i}ul <path/to/file> | stream`
     Upload files as stream.
@@ -19,6 +20,8 @@
 
 """
 
+import glob
+import os
 import time
 from datetime import datetime as dt
 
@@ -107,19 +110,89 @@ async def download(event):
     tt = time.time()
     if not kk:
         return await eod(xx, get_string("udl_3"))
+    elif os.path.isdir(kk):
+        if not os.listdir(kk):
+            return await eod(xx, "`This Directory is Empty.`")
+        ok = glob.glob(f"{kk}/*")
+        kk = [*sorted(ok)]
+        for kk in kk:
+            try:
+                try:
+                    res = await uploader(kk, kk, tt, xx, "Uploading...")
+                except MessageNotModifiedError as err:
+                    return await xx.edit(str(err))
+                title = kk.split("/")[-1]
+                if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
+                    hmm = " | stream"
+                if " | stream" in hmm:
+                    metadata = extractMetadata(createParser(res.name))
+                    wi = 512
+                    hi = 512
+                    duration = 0
+                    if metadata.has("width"):
+                        wi = metadata.get("width")
+                    if metadata.has("height"):
+                        hi = metadata.get("height")
+                    if metadata.has("duration"):
+                        duration = metadata.get("duration").seconds
+                    if metadata.has("artist"):
+                        artist = metadata.get("artist")
+                    else:
+                        if udB.get("artist"):
+                            artist = udB.get("artist")
+                        else:
+                            artist = ultroid_bot.first_name
+                    if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
+                        attributes = [
+                            DocumentAttributeVideo(
+                                w=wi, h=hi, duration=duration, supports_streaming=True
+                            )
+                        ]
+                    elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                        attributes = [
+                            DocumentAttributeAudio(
+                                duration=duration,
+                                title=title.split(".")[0],
+                                performer=artist,
+                            )
+                        ]
+                    else:
+                        attributes = None
+                    try:
+                        x = await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=f"`{title}`",
+                            attributes=attributes,
+                            supports_streaming=True,
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                    except BaseException:
+                        x = await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=f"`{title}`",
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                else:
+                    x = await event.client.send_file(
+                        event.chat_id,
+                        res,
+                        caption=f"`{title}`",
+                        force_document=True,
+                        thumb="resources/extras/ultroid.jpg",
+                    )
+            except Exception as ve:
+                return await eor(xx, str(ve))
     else:
         try:
-            if Redis("CUSTOM_THUMBNAIL"):
-                await bash(
-                    f"wget {Redis('CUSTOM_THUMBNAIL')} -O resources/extras/new_thumb.jpg"
-                )
             try:
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
-            if " | stream" in hmm and res.name.endswith(
-                tuple([".mkv", ".mp4", ".mp3", ".opus", ".m4a", ".ogg"])
-            ):
+            if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
+                hmm = " | stream"
+            if " | stream" in hmm:
                 metadata = extractMetadata(createParser(res.name))
                 wi = 512
                 hi = 512
@@ -131,48 +204,72 @@ async def download(event):
                 if metadata.has("duration"):
                     duration = metadata.get("duration").seconds
                 if metadata.has("artist"):
-                    metadata.get("artist")
-                if res.name.endswith(tuple([".mkv", ".mp4"])):
+                    artist = metadata.get("artist")
+                else:
+                    if udB.get("artist"):
+                        artist = udB.get("artist")
+                    else:
+                        artist = ultroid_bot.first_name
+                if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
                         )
                     ]
-                if res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
                     attributes = [
-                        DocumentAttributeAudio(duration=duration, title=title)
+                        DocumentAttributeAudio(
+                            duration=duration,
+                            title=title.split(".")[0],
+                            performer=artist,
+                        )
                     ]
+                else:
+                    attributes = None
                 try:
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=title,
+                        caption=f"`{title}`",
                         attributes=attributes,
                         supports_streaming=True,
-                        thumb="resources/extras/new_thumb.jpg",
+                        thumb="resources/extras/ultroid.jpg",
                     )
                 except BaseException:
                     x = await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=title,
+                        caption=f"`{title}`",
                         force_document=True,
-                        thumb="resources/extras/new_thumb.jpg",
+                        thumb="resources/extras/ultroid.jpg",
                     )
             else:
                 x = await event.client.send_file(
                     event.chat_id,
                     res,
-                    caption=title,
+                    caption=f"`{title}`",
                     force_document=True,
-                    thumb="resources/extras/new_thumb.jpg",
+                    thumb="resources/extras/ultroid.jpg",
                 )
         except Exception as ve:
             return await eor(xx, str(ve))
     e = datetime.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t != "":
-        await eor(xx, f"Uploaded `{kk}` in `{t}`")
+        if os.path.isdir(kk):
+            size = 0
+            for path, dirs, files in os.walk(kk):
+                for f in files:
+                    fp = os.path.join(path, f)
+                    size += os.path.getsize(fp)
+            c = len(os.listdir(kk))
+            await xx.delete()
+            await ultroid_bot.send_message(
+                event.chat_id,
+                f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+            )
+        else:
+            await eor(xx, f"Uploaded `{kk}` in `{t}`")
     else:
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
 

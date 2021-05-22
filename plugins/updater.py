@@ -4,24 +4,35 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 • `{i}update`
     See changelogs if any update is available.
 """
 
-from . import *
 from git import Repo
+from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
+
+from . import *
 
 
 @ultroid_cmd(pattern="update$")
 async def _(e):
-    x = await updater()
+    m = await updater()
     branch = (Repo.init()).active_branch
-    if x is not None:
+    if m:
+        x = await ultroid_bot.asst.send_file(
+            int(udB.get("LOG_CHANNEL")),
+            "resources/extras/inline.jpg",
+            caption="• **Update Available** •",
+            force_document=False,
+            buttons=Button.inline("Changelogs", data="changes"),
+        )
+        Link = (await ultroid_bot(GetLink(x.peer_id.channel_id, x.id))).link
         await eor(
             e,
-            f'<strong><a href="t.me/c/{x.peer_id.channel_id}/{x.id}">[ChangeLogs]</a></strong>',
+            f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",
             link_preview=False,
         )
@@ -38,7 +49,13 @@ async def _(e):
 @owner
 async def updava(event):
     await event.delete()
-    await updater()
+    await ultroid_bot.asst.send_file(
+        int(udB.get("LOG_CHANNEL")),
+        "resources/extras/inline.jpg",
+        caption="• **Update Available** •",
+        force_document=False,
+        buttons=Button.inline("Changelogs", data="changes"),
+    )
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

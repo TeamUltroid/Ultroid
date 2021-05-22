@@ -28,80 +28,14 @@
 
 import os
 
-from telethon import Button
-
 from . import *
-
-
-@in_pattern(
-    "send ?(.*)",
-)
-@in_owner
-async def inline_handler(event):
-    builder = event.builder
-    input_str = event.pattern_match.group(1)
-    if input_str is None or input_str == "":
-        plugs = await event.builder.article(
-            title=f"Which plugin?",
-            text="No Module",
-            buttons=[
-                Button.switch_inline(
-                    "Search Again..?",
-                    query="send ",
-                    same_peer=True,
-                ),
-            ],
-        )
-        await event.answer(plugs)
-    else:
-        try:
-            ultroid = builder.document(
-                f"plugins/{input_str}.py",
-                title=f"{input_str}.py",
-                description=f"Module {input_str} Found",
-                text=f"{input_str}.py use below button to paste in neko and raw..",
-                buttons=[
-                    [
-                        Button.switch_inline(
-                            "Search Again..?",
-                            query="send ",
-                            same_peer=True,
-                        ),
-                    ],
-                    [
-                        Button.inline(
-                            "Paste?",
-                            data=f"pasta-plugins/{input_str}.py",
-                        ),
-                    ],
-                ],
-            )
-            await event.answer([ultroid])
-            return
-        except BaseException:
-            ultroidcode = builder.article(
-                title=f"Module {input_str}.py Not Found",
-                description=f"No Such Module",
-                text=f"No Module Named {input_str}.py",
-                buttons=[
-                    [
-                        Button.switch_inline(
-                            "Search Again",
-                            query="send ",
-                            same_peer=True,
-                        ),
-                    ],
-                ],
-            )
-            await event.answer([ultroidcode])
-            return
 
 
 @ultroid_cmd(
     pattern="install",
 )
 async def install(event):
-    if not is_fullsudo(event.sender_id):
+    if not event.out and not is_fullsudo(event.sender_id):
         return await eod(event, "`This Command Is Sudo Restricted.`")
     await safeinstall(event)
 

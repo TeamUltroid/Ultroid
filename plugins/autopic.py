@@ -8,10 +8,10 @@
 """
 ✘ Commands Available -
 
-• {i}autopic <search query>
+• `{i}autopic <search query>`
     Will change your profile pic at defined intervals with pics related to the given topic.
 
-• {i}stoppic
+• `{i}stoppic`
     Stop the AutoPic command.
 
 """

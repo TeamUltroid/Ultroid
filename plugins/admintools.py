@@ -9,16 +9,12 @@
 ✘ Commands Available -
 
 • `{i}promote <reply to user/userid/username>`
-    Promote the user in the chat.
-
-• `{i}demote <reply to user/userid/username>`
-    Demote the user in the chat.
+• `{i}demote`
+    Promote/Demote the user in the chat.
 
 • `{i}ban <reply to user/userid/username> <reason>`
-    Ban the user from the chat.
-
-• `{i}unban <reply to user/userid/username> <reason>`
-    Unban the user from the chat.
+• `{i}unban`
+    Ban/Unban the user from the chat.
 
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
@@ -28,10 +24,13 @@
     for silent pin use ({i}pin silent).
 
 • `{i}unpin (all) <reply to message>`
-    Unpin the message(s) in the chat.
+    Unpin the messages in the chat.
 
 • `{i}pinned`
    Get pinned message in the current chat.
+
+• `{i}autodelete <24h/7d/off>`
+   Enable Auto Delete Messages in Chat.
 
 • `{i}listpinned`
    Get all pinned messages in current chat.
@@ -42,21 +41,16 @@
 • `{i}purgeme <reply to message>`
     Purge Only your messages from the replied message.
 
-• `{i}purgeall <reply to message>`
+• `{i}purgeall`
     Delete all msgs of replied user.
-
-• `{i}del <reply to message>`
-    Delete the replied message.
-
-• `{i}edit <new message>`
-    Edit your last message.
 """
 
 import asyncio
 
 from telethon.errors import BadRequestError
-from telethon.errors.rpcerrorlist import UserIdInvalidError
-from telethon.tl.functions.channels import EditAdminRequest
+from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
+from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.messages import SetHistoryTTLRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
@@ -317,7 +311,13 @@ async def unp(ult):
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
-    if match and purg.text[6] == " ":
+    try:
+        ABC = purg.text[6]
+    except IndexError:
+        ABC = None
+    if ABC and purg.text[6] in ["m", "a"]:
+        return
+    if match and not purg.is_reply:
         p = 0
         async for msg in ultroid_bot.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
@@ -408,14 +408,9 @@ async def _(e):
         input = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(input)).first_name
         try:
-            nos = 0
-            async for x in e.client.iter_messages(e.chat_id, from_user=input):
-                await e.client.delete_messages(e.chat_id, x)
-                nos += 1
-            await xx.edit(
-                f"**Purged **`{nos}`** msgs of **[{name}](tg://user?id={input})",
-            )
-        except ValueError:
+            await ultroid_bot(DeleteUserHistoryRequest(e.chat_id, input))
+            await eod(e, f"Successfully Purged All Messages from {name}")
+        except Exception as er:
             return await eod(xx, str(er), time=5)
     else:
         return await eod(
@@ -423,40 +418,6 @@ async def _(e):
             "`Reply to someone's msg to delete.`",
             time=5,
         )
-
-
-@ultroid_cmd(
-    pattern="del$",
-)
-async def delete_it(delme):
-    msg_src = await delme.get_reply_message()
-    if delme.reply_to_msg_id:
-        try:
-            await msg_src.delete()
-            await delme.delete()
-        except BaseException:
-            await eod(
-                delme,
-                f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`",
-                time=5,
-            )
-
-
-@ultroid_cmd(
-    pattern="edit",
-)
-async def editer(edit):
-    message = edit.text
-    chat = await edit.get_input_chat()
-    self_id = await ultroid_bot.get_peer_id("me")
-    string = str(message[6:])
-    i = 1
-    async for message in ultroid_bot.iter_messages(chat, self_id):
-        if i == 2:
-            await message.edit(string)
-            await edit.delete()
-            break
-        i = i + 1
 
 
 @ultroid_cmd(pattern="pinned")
@@ -501,6 +462,24 @@ async def get_all_pinned(event):
         return await eod(x, "There is no message pinned in this group!", time=5)
 
     await x.edit(m + a, parse_mode="html")
+
+
+@ultroid_cmd(pattern="autodelete ?(.*)", groups_only=True, admins_only=True)
+async def autodelte(ult):  # Tg Feature
+    match = ult.pattern_match.group(1)
+    if not match or match not in ["24h", "7d", "off"]:
+        return await eod(ult, "`Please Use Proper Format..`")
+    if match == "24h":
+        tt = 3600 * 24
+    elif match == "7d":
+        tt = 3600 * 24 * 7
+    else:
+        tt = 0
+    try:
+        await ultroid_bot(SetHistoryTTLRequest(ult.chat_id, period=tt))
+    except ChatNotModifiedError:
+        return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
+    await eor(ult, f"Auto Delete Status Changed to {match} !")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

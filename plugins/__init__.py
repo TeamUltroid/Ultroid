@@ -16,6 +16,7 @@ from pyUltroid.functions.goodbye_db import *
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.sudos import *
 from pyUltroid.functions.welcome_db import *
+from pyUltroid.functions.ytdl import *
 from pyUltroid.utils import *
 
 from strings import get_string
@@ -29,7 +30,7 @@ except ModuleNotFoundError:
 
 
 start_time = time.time()
-ultroid_version = "v0.0.6"
+ultroid_version = "v0.0.7"
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 

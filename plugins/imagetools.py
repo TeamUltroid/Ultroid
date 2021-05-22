@@ -40,6 +40,10 @@
 
 • `{i}blue <reply to any media>`
     just cool.
+
+• `{i}csample <color name /color code>`
+   example : `{i}csample red`
+             `{i}csample #ffffff`
 """
 
 import asyncio
@@ -49,6 +53,10 @@ import cv2
 import numpy as np
 from PIL import Image
 from telegraph import upload_file as upf
+from telethon.errors.rpcerrorlist import (
+    ChatSendMediaForbiddenError,
+    MessageDeleteForbiddenError,
+)
 from validators.url import url
 
 from . import *
@@ -490,6 +498,27 @@ async def ultd(event):
     os.remove("ult.png")
     os.remove("ult.jpg")
     os.remove(ultt)
+
+
+@ultroid_cmd(pattern="csample (.*)")
+async def sampl(ult):
+    color = ult.pattern_match.group(1)
+    if color:
+        img = Image.new("RGB", (200, 100), f"{color}")
+        img.save("csample.png")
+        try:
+            try:
+                await ult.delete()
+                await ultroid_bot.send_message(
+                    ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
+                )
+            except MessageDeleteForbiddenError:
+                await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
+        except ChatSendMediaForbiddenError:
+            await eor(ult, "Umm! Sending Media is disabled here!")
+
+    else:
+        await eor(ult, f"Wrong Color Name/Hex Code specified!")
 
 
 @ultroid_cmd(

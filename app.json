@@ -22,10 +22,6 @@
             "description": "You api hash, from my.telegram.org or @ScrapperRoBot.",
             "value": ""
         },
-        "BOT_TOKEN": {
-            "description": "Make a bot from @BotFather, and enter it's api token here.",
-            "value": ""
-        },
         "SESSION": {
             "description": "Your session string. Can be added now, or after deploy. (The bot will NOT work without a session string!!)",
             "value": ""
@@ -47,10 +43,6 @@
             "description": "Name of your heroku app, given in the first blank on this page. To be added if deploying to heroku ONLY.",
             "value": "",
             "required": false
-        },
-        "LOG_CHANNEL": {
-            "description": "Create a private group. Add @missrose_bot and your BOT_USERNAME bot. Do /id. Paste that here",
-            "value": ""
         }
     },
     "formation": {
