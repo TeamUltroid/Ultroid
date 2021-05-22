@@ -202,6 +202,7 @@ async def _(e):
     except Exception as ex:
         return await eod(xx, f"`{str(ex)}`", time=5)
 
+
 @asst_cmd("exitVc")
 async def evc(e):
     if e.sender.id == ultroid_bot.uid:
@@ -210,5 +211,6 @@ async def evc(e):
         vcdyno("off")
     elif is_vcsudo(e.sender.id):
         vcdyno("off")
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
