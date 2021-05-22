@@ -32,7 +32,7 @@ _check_flood = {}
 if Redis("ANTIFLOOD") is not (None or ""):
 
     @ultroid_bot.on(
-        NewMsg,
+        NewMsg(incoming=True)
     )
     async def flood_checm(event):
         limit = get_flood_limit(event.chat_id)
@@ -43,11 +43,11 @@ if Redis("ANTIFLOOD") is not (None or ""):
         if event.chat_id in _check_flood.keys():
             if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
                 count = _check_flood[event.chat_id][event.sender_id]
-                _check_flood[event.chat_id] = {event.sender_id: count + 1}
+                _check_flood[event.chat_id].update({event.sender_id: count + 1})
             else:
-                _check_flood[event.chat_id] = {event.sender_id: count}
+                _check_flood[event.chat_id].update({event.sender_id: count})
         else:
-            _check_flood[event.chat_id] = {event.sender_id: count}
+            _check_flood[event.chat_id].update({event.sender_id: count})
         if await check_if_admin(event) or event.sender.bot or event.sender.is_self:
             return
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
