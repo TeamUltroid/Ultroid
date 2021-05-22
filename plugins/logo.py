@@ -8,8 +8,10 @@
 """
 ✘ Commands Available -
 
-• `{i}logo <name>`
-   Generate a logo of the give
+• `{i}logo <text>`
+   Generate a logo of the given Text
+   Or Reply To image , to write ur text on it.
+   Or Reply To Font File, To write with that font.
 
 """
 
