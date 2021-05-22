@@ -22,7 +22,8 @@
 
 """
 
-import os, glob
+import glob
+import os
 import time
 
 from . import *
@@ -111,7 +112,8 @@ async def unzipp(event):
                 xxx,
                 force_document=True,
                 thumb="resources/extras/ultroid.jpg",
-                caption=f"`{xxx.name}`")
+                caption=f"`{xxx.name}`",
+            )
         await xxx.delete()
 
 
