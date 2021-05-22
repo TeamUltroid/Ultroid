@@ -58,7 +58,7 @@ async def logo_gen(event):
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
     if not font_:
-        fpath_ = "./resources/fonts/"
+        fpath_ = "resources/fonts/"
         f = random.choice(os.listdir(fpath_))
         font_ = fpath_ + f
     # next level logic, ignore
@@ -105,7 +105,7 @@ async def logo_gen(event):
     if os.path.exists(bg_):
         os.remove(bg_)
     if os.path.exists(font_):
-        if not font_.startswith(fpath_):
+        if not font_.startswith("resources/fonts"):
             os.remove(font_)
 
 
