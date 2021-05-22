@@ -76,7 +76,7 @@ async def okk(e):
     if check_echo(e.chat_id, e.sender.id):
         try:
             ok = await bot.get_messages(e.chat_id, ids=e.id)
-            return await ultroid_bot.send_message(e.chat_id, ok, reply_to=e.id)
+            return await ultroid_bot.send_message(e.chat_id, ok)
         except Exception as er:
             LOGS.info(er)
 
