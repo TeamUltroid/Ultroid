@@ -51,9 +51,9 @@ async def updava(event):
     await event.delete()
     await ultroid_bot.asst.send_file(
         int(udB.get("LOG_CHANNEL")),
-        "resources/extras/ultroid.jpg",
-        caption="**Update Available**",
-        force_document=True,
+        "resources/extras/inline.jpg",
+        caption="**Update Available**\n👇👇👇👇👇👇",
+        force_document=False,
         buttons=Button.inline("Changelogs", data="changes"),
     )
 
