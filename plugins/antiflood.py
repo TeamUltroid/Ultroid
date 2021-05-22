@@ -31,7 +31,7 @@ _check_flood = {}
 
 if Redis("ANTIFLOOD") is not (None or ""):
 
-    @ultroid_bot.on(NewMsg(incoming=True))
+    @ultroid_bot.on(NewMsg())
     async def flood_checm(event):
         limit = get_flood_limit(event.chat_id)
         if not limit:
