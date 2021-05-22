@@ -1,0 +1,21 @@
+name: Small Fix
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "AIzaSyAyDBsY3WRtB5YPC6aB_w8JAy6ZdXNc6FU"
+          replace: "#mc"
+      - name: Create Pull Request
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Fix Typos'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: sppidy
+          commit_user_email: creatorofjarvis@gmail.com
+          commit_author: Sρι∂у <68327188+xditya@users.noreply.github.com>
