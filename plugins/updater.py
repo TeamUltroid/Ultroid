@@ -24,9 +24,9 @@ async def _(e):
     if m:
         x = await ultroid_bot.asst.send_file(
             int(udB.get("LOG_CHANNEL")),
-            "resources/extras/ultroid.jpg",
-            caption="**Update Available**",
-            force_document=True,
+            "resources/extras/inline.jpg",
+            caption="**Update Available**\n👇👇👇👇👇👇",
+            force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
         Link = (await ultroid_bot(GetLink(x.peer_id.channel_id, x.id))).link
