@@ -17,5 +17,5 @@ jobs:
           commit_options: '--no-verify'
           repository: .
           commit_user_name: sppidy
-          commit_user_email: creatorofjarvis@gmail.com
-          commit_author: Sρι∂у <68327188+xditya@users.noreply.github.com>
+          commit_user_email: spidy@ultroid.tech
+          commit_author: Sρι∂у <spidy@ultroid.tech>
