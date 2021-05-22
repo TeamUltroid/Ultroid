@@ -80,6 +80,7 @@ psutil==5.8.0
 pyaes==1.6.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
+pybase64==1.1.4
 pycparser==2.20
 pydantic==1.8.2
 PyDictionary==2.0.1
