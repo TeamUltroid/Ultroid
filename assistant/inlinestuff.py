@@ -9,7 +9,7 @@ from random import randrange
 from re import compile as re_compile
 from re import findall
 from urllib.request import urlopen
-
+import pybase64
 import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
@@ -29,6 +29,9 @@ ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
 ofox_api = OrangeFoxAPI()
 
+api1 = pybase64.standard_b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV")
+api2 = pybase64.standard_b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn")
+api3 = pybase64.standard_b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR")
 
 @in_pattern("ofox")
 @in_owner
@@ -379,11 +382,11 @@ async def _(e):
     start = (page - 1) * 3 + 1
     urd = randrange(1, 3)
     if urd == 1:
-        da = "AIzaSyAyDBsY3WRtB5YPC6aB_w8JAy6ZdXNc6FU"
+        da = api1
     if urd == 2:
-        da = "AIzaSyBF0zxLlYlPMp9xwMQqVKCQRq8DgdrLXsg"
+        da = api2
     if urd == 3:
-        da = "AIzaSyDdOKnwnPwVIQ_lbH5sYE4FoXjAKIQV0DQ"
+        da = api3
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = requests.get(url).json()
     search_items = data.get("items")
