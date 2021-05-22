@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
-from random import randrange
+from random import choice
 from re import compile as re_compile
 from re import findall
 from urllib.request import urlopen
@@ -388,13 +388,7 @@ async def _(e):
         )
     page = 1
     start = (page - 1) * 3 + 1
-    urd = randrange(1, 3)
-    if urd == 1:
-        da = api1
-    if urd == 2:
-        da = api2
-    if urd == 3:
-        da = api3
+    da = choice([api1, api2, api3])
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = requests.get(url).json()
     search_items = data.get("items")
