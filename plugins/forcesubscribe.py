@@ -62,10 +62,19 @@ async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
         return await eod(e, "Give Channel where you want User to Join !")
-    if not match.isdigit():
-        match = (await ultroid_bot.get_entity(match)).id
-        if not str(match).startswith("-100"):
-            match = int("-100" + str(match))
+    if match.startswith("@"):
+        ch = match
+    else:
+        try:
+            ch = int(match)
+        except BaseException:
+            return await eod(e, "Give Correct Channel Username or id")
+    try:
+        match = (await ultroid_bot.get_entity(ch)).id
+    except BaseException:
+        return await eod(e, "Give Correct Channel Username or id")
+    if not str(match).startswith("-100"):
+        match = int("-100" + str(match))
     add_forcesub(e.chat_id, match)
     await eor(e, "Added ForceSub in This Chat !")
 
@@ -73,8 +82,8 @@ async def addfor(e):
 @ultroid_cmd(pattern="remfsub$")
 async def remor(e):
     res = rem_forcesub(e.chat_id)
-    if res == False or not res:
-        return await eor(e, "ForceSub was not Active in this Chat !")
+    if not res:
+        return await eod(e, "ForceSub was not Active in this Chat !")
     await eor(e, "Removed ForceSub...")
 
 
