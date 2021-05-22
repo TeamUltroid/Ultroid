@@ -8,7 +8,9 @@
 """
 ✘ Commands Available -
 
-• `{i}compress (optional <CRF>, <| stream>, <CRF | stream>)`
+• `{i}compress <reply to video>`
+    optional `crf` and `stream` 
+    Example : `{i}compress 27 | stream` or `{i}compress 28`
     Encode the replied video according to CRF value.
     Less CRF == High Quality, More Size
     More CRF == Low Quality, Less Size
