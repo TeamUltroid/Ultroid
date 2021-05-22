@@ -27,7 +27,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 @callback(re.compile("sndplug_(.*)"))
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
-    plug_name = name.split("_")[-1]
+    plug_name = name.replace(name.split("_")[0], "")
     if name.startswith("def"):
         plugin = f"plugins/{plug_name}.py"
         buttons = [
