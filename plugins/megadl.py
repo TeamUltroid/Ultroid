@@ -46,32 +46,32 @@ async def _(e):
             )
         )
     else:
-      for kk in ok:
-        try:
-            res = await uploader(kk, kk, tt, xx, "Uploading...")
-            await ultroid_bot.send_file(
-                e.chat_id,
-                res,
-                caption="`" + kk.split("/")[-1] + "`",
-                force_document=True,
-                thumb="resources/extras/ultroid.jpg",
-            )
-            c += 1
-        except Exception as er:
-            LOGS.info(er)
-      ee = datetime.now()
-      t = time_formatter(((ee - s).seconds) * 1000)
-      size = 0
-      for path, dirs, files in os.walk("mega"):
-        for f in files:
-            fp = os.path.join(path, f)
-            size += os.path.getsize(fp)
-      await xx.delete()
-      await ultroid_bot.send_message(
-        e.chat_id,
-        f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
-      )
-      os.system("rm -rf mega")
+        for kk in ok:
+            try:
+                res = await uploader(kk, kk, tt, xx, "Uploading...")
+                await ultroid_bot.send_file(
+                    e.chat_id,
+                    res,
+                    caption="`" + kk.split("/")[-1] + "`",
+                    force_document=True,
+                    thumb="resources/extras/ultroid.jpg",
+                )
+                c += 1
+            except Exception as er:
+                LOGS.info(er)
+        ee = datetime.now()
+        t = time_formatter(((ee - s).seconds) * 1000)
+        size = 0
+        for path, dirs, files in os.walk("mega"):
+            for f in files:
+                fp = os.path.join(path, f)
+                size += os.path.getsize(fp)
+        await xx.delete()
+        await ultroid_bot.send_message(
+            e.chat_id,
+            f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+        )
+        os.system("rm -rf mega")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
