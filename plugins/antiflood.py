@@ -48,11 +48,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if (
-            await check_if_admin(event)
-            or event.sender.bot
-            or event.sender.is_self
-        ):
+        if await check_if_admin(event) or event.sender.bot or event.sender.is_self:
             return
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             try:
