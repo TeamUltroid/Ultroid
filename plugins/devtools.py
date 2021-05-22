@@ -65,7 +65,7 @@ async def _(event):
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     if stderr:
-        OUT += f"**• ERROR:** \n`{stderr}`\n"
+        OUT += f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         _o = stdout.split("\n")
         o = "\n".join(_o)
