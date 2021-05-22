@@ -19,7 +19,6 @@ import time
 
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
-from telethon.utils import get_extension
 
 from . import *
 
@@ -34,12 +33,11 @@ async def logo_gen(event):
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
-            ext = get_extension(temp.media)
-            if ext == ".jpg" or ".png":
-                bg_ = await temp.download_media()
             if hasattr(temp.media, "document"):
                 if "font" in temp.file.mime_type:
                     font_ = await temp.download_media()
+            elif "pic" in mediainfo(temp.media):
+                bg_ = await temp.download_media()
     else:
         pics = []
         async for i in ultroid.iter_messages(
