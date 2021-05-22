@@ -22,7 +22,7 @@
 
 """
 
-import os
+import os, glob
 import time
 
 from . import *
@@ -90,11 +90,29 @@ async def unzipp(event):
         os.system("rm -rf unzip")
         os.mkdir("unzip")
     await bash(f"7z x {file} -aoa -ounzip")
-    await xx.edit(
-        "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(
-            i=HNDLR
+    ok = glob.glob("unzip/*")
+    k = []
+    for x in ok:
+        if os.path.isdir(x):
+            k.append(x)
+            break
+    if k:
+        await xx.edit(
+            "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(
+                i=HNDLR
+            )
         )
-    )
+    else:
+        for x in ok:
+            k = time.time()
+            xxx = await uploader(x, x, k, xx, "Uploading...")
+            await ultroid_bot.send_file(
+                event.chat_id,
+                xxx,
+                force_document=True,
+                thumb="resources/extras/ultroid.jpg",
+                caption=f"`{xxx.name}`")
+        await xxx.delete()
 
 
 @ultroid_cmd(pattern="addzip$")
