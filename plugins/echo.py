@@ -29,7 +29,7 @@ from . import *
 async def echo(e):
     r = await e.get_reply_message()
     if r:
-        user = r.sender.id
+        user = r.sender_id
     else:
         try:
             user = e.text.split()[1]
@@ -52,7 +52,7 @@ async def echo(e):
 async def rm(e):
     r = await e.get_reply_message()
     if r:
-        user = r.sender.id
+        user = r.sender_id
     else:
         try:
             user = e.text.split()[1]
@@ -73,7 +73,7 @@ async def rm(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def okk(e):
-    if check_echo(e.chat_id, e.sender.id):
+    if check_echo(e.chat_id, e.sender_id):
         try:
             ok = await bot.get_messages(e.chat_id, ids=e.id)
             return await ultroid_bot.send_message(e.chat_id, ok)
