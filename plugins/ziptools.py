@@ -114,7 +114,7 @@ async def unzipp(event):
                 thumb="resources/extras/ultroid.jpg",
                 caption=f"`{xxx.name}`",
             )
-        await xxx.delete()
+        await xx.delete()
 
 
 @ultroid_cmd(pattern="addzip$")
