@@ -37,8 +37,9 @@ async def logo_gen(event):
             ext = get_extension(temp.media)
             if ext == ".jpg" or ".png":
                 bg_ = await temp.download_media()
-            elif ext == ".otf" or ".ttf":
-                font_ = await temp.download_media()
+            if hasattr(temp.media, "document"):
+                if "font" in temp.file.mime_type:
+                    font_ = await temp.download_media()
     else:
         pics = []
         async for i in ultroid.iter_messages(
