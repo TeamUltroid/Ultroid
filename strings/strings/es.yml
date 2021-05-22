@@ -1,32 +1,39 @@
 ---
 name: Spanish
-natively: español
+natively: Español
 authors:
   - SunnySEW
+
 #commons
 com_1: "`Procesando...`"
 com_2: "`Buscando...`"
+
 #help
 help_1: "`{}` No es un complemento válido!"
 help_2: "`El bot no respondió a la consulta en línea.\nConsidere usar {}restart`"
 help_3: "`Por favor active el modo en línea para su bot desde` @Botfather."
 help_4: "Oye,\nEstás en modo bot.\nLos usuarios del modo bot no pueden obtener ayuda directamente ...\nEn su lugar, copie, pegue lo siguiente en el chat y haga clic en la ventana emergente\n\n `@{} ultd`"
+
 #autopic
 autopic_1: "Oye, dame un mensaje de texto .."
 autopic_2: "No se encontraron resultados para `{}`"
 autopic_3: "¡Tienes una colección `{}` relacionada con tu búsqueda!\nIniciando Autopic!"
+
 #inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Soporte](t.me/ultroidsupport)\n\n **Menú de Toda de {}.\n\n Complementos ~ {}**"
 inline_2: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}**"
 inline_3: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}\n\nVe y añade `ADDONS` var con valor true**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**El menú se ha cerrado**"
+
 #tagnotif
 tagnot_1: "{} te etiquetó en {}\n\n```{}```\n\n[📨Mensaje📨]({})"
 tagnot_2: "{} te etiquetó en {}\n\n[📨Mensaje📨]({})"
+
 #whisper
 wspr_1: "@{} msj secreto para tí.\nElimina tu msj despues de leerlo.\nO el siguiente msj no se actualizará."
 wspr_2: "Mensaje eliminado"
+
 #afk
 afk_1: "`No Más Afk\n\nEstuvo por ~ {}`"
 afk_2: "#AFK\nAFK Establecido En Falso.\nFue por {}`"
@@ -36,12 +43,14 @@ afk_5: "`Yendo AFK.`\n\n**Razón:** `{}`"
 afk_6: "Me voy AFK."
 afk_7: "Actualmente AFK con el motivo de: {}"
 afk_8: "Actualmente AFK."
+
 #bot
 alive_1: "**El Userbot Ultroid...**\n\n **{}**\n\n ┏━━━━━━━━━━━━━━━━━━━━━\n ┣ **Dueño** - `{}`\n ┣ **Versión** - `{}`\n ┣ **Tiempo de actividad** - `{}`\n ┣ **Python** - `{}`\n ┣ **Telethon** - `{}`\n ┣ **Rama** - `{}`\n ┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Registros Ultroid.\nPegado [aquí]({}) tambien!"
 ping: "**Pong !!** `{}ms`\n**Tiempo de actividad** - `{}`"
 usage: "**⚙️ Uso de Dyno ⚙️**:\n\n -> `Uso de dyno para`  **{}**:\n •  `{}`**h**  `{}`**m** **|**  [`{}`**%**]\n\n -> `Cuota de horas dyno restante en este mes`:\n •  `{}`**h**  `{}`**m** **|**  [`{}`**%**]\n\n **Espacio rotal del disco: {}\n\n** **Usado: {}  Libre: {}\n\n** **📊Uso de datos📊\n\nDescarga: {}\nBajada: {}\n\n** **CPU: {}%\nRAM: {}%\nDISK: {}%**"
 shutdown: "Adiós {}.\n`Apagando...`"
+
 #broadcast
 bd_1: "`Añadiendo a base de datos...`"
 bd_2: "`Intentando agregar a todos los canales de administración a la base de datos...`"
@@ -49,9 +58,11 @@ bd_3: "**Listo.**\nChats ya en la base de datos: {}\nAgregado Recientemente: {}"
 bd_4: "¡Canales agregados!"
 bd_5: "`¡Agregado a la base de datos!`"
 bd_6: "`¡El canal ya está en la base de datos!`"
+
 #carbon
 carbon_1: "Procesando"
 carbon_2: "Carbonizado por [{}](tg://user?id={})"
+
 #chats
 chats_1: "`Procesando...`"
 chats_2: "`No puedes eliminar este chat`"
@@ -59,6 +70,7 @@ chats_3: "`No soy admin`"
 chats_4: "#Eliminado\nEliminado {}"
 chats_5: "Tu [{}]({}) Grupo es el jefe!"
 chats_6: "Tu [{}]({}) Grupo/Canal Ha sido nombrado jefe!"
+
 #converter
 cvt_1: "Responde a un medio/documento."
 cvt_2: "Dar el nombre y la extensión del archivo"
@@ -83,6 +95,7 @@ core_15: "**No puedes desinstalar complementos oficiales**"
 core_16: "`De el nombre del complemento que desea cargar`"
 core_17: "**Correctamente cargado** `{}`"
 core_18: "**No se pudo cargar** `{}` **por el siguiente error.**\n`{}`"
+
 #fedutils
 sf_1: "Iniciando un Mass-FedBan..."
 sf_2: "`Ningún usuario designado!`"
@@ -105,6 +118,7 @@ sf_18: "La lista de federales {} ha sido prohibida.\n\nRecopilado con Ultroid."
 sf_19: "**Error**\n `Desbloquea a` @MissRose_Bot` y vuelve a intentarlo!"
 sf_20: "`Extrayendo información...`"
 sf_21: "\n\nFedInfo Extraido por Ultroid"
+
 #gdrive
 gdrive_1: "`Ya ha autorizado con Google Drive`"
 gdrive_2: "Vaya [here] (https://console.developers.google.com/flows/enableapi?apiid=drive) y obtenga su `GDRIVE_CLIENT_ID` y` GDRIVE_CLIENT_SECRET`\n\n Envíe su GDRIVE_CLIENT_ID y GDRIVE_CLIENT_SECRET como este.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separados por espacio."
@@ -113,10 +127,12 @@ gdrive_4: "`¡Algo salió mal! Vuelva a enviar `/auth`otra vez.\nSi sucede lo mi
 gdrive_5: "`¡Éxito!\nYa está todo listo para usar Google Drive con Ultroid Userbot.`"
 gdrive_6: "`Vaya a `{} `y envíe ``/auth.`"
 gdrive_7: "**Archivo cargado con éxito en G-Drive:**\n\n[{}]({})"
+
 #pmpermit
 pmperm_1: "¡Por favor, espere a que responda o será bloqueado y reportado como spam!!"
 pmperm_2: "Estabas enviando spam al PM de mi maestro, lo cual no me gustó."
 pmperm_3: "Responda el mensaje de alguien o pruebe este comando en privado."
+
 #updater
 upd_1: "`Buscando actualizaciones, por favor espere...`"
 upd_2: "`Vaya... El actualizador no puede continuar debido a algunos problemas.\n\n** LOGTRACE: **\n"
@@ -125,15 +141,18 @@ upd_4: "`El registro de cambios es demasiado grande, vea el archivo para verlo"
 upd_5: "Usa `{}actualizar ahora` para actualizar."
 upd_6: "{}\n\nUsa `{}actualizar ahora` para actualizar."
 upd_7: "\n`Tu BOT está`  **actualizado**  `con`  **[[{}]]({}/arból/{})**\n"
+
 #upload download
 udl_1: "`Responde al Archivo/Medio que quieras descargar..`"
 udl_2: "Descarga exitosa..\npara\n`{}`\nen `{}`"
 udl_3: "`Da una ruta específica al archivo`"
+
 #words
 wrd_1: "**Palabra** - `{}`\n\n**Significados** -\n"
 wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** -\n"
 wrd_3: "**Palabra** - `{}`\n\n**Antonimos** -\n"
 #---------------------------------------------------#
+
 #assisant
 ast_1: "Elija qué API desea configurar."
 ast_2: "**remove.bg API**\nIngrese su clave API de remove.bg.\nUsa /cancel para terminar la operación."
