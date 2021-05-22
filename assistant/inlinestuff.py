@@ -5,12 +5,12 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import base64
 from random import randrange
 from re import compile as re_compile
 from re import findall
 from urllib.request import urlopen
 
-import base64
 import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
@@ -30,9 +30,16 @@ ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
 ofox_api = OrangeFoxAPI()
 
-api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode("ascii")
-api2 = base64.b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn").decode("ascii")
-api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").decode("ascii")
+api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
+    "ascii"
+)
+api2 = base64.b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn").decode(
+    "ascii"
+)
+api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").decode(
+    "ascii"
+)
+
 
 @in_pattern("ofox")
 @in_owner
