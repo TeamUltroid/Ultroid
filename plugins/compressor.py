@@ -14,7 +14,7 @@
     Encode the replied video according to CRF value.
     Less CRF == High Quality, More Size
     More CRF == Low Quality, Less Size
-    CRF Range = 0-51
+    CRF Range = 20-51
     Default = 27
 
 """
