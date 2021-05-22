@@ -1,21 +1,42 @@
-name: Small Fix
+
+name: replace
+
 on: push
+
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
+
     steps:
+
       - uses: actions/checkout@v2
+
       - name: Find and Replace
+
         uses: jacobtomlinson/gha-find-replace@master
+
         with:
+
           find: "AIzaSyAyDBsY3WRtB5YPC6aB_w8JAy6ZdXNc6FU"
+
           replace: "#mc"
+
+
       - name: Create Pull Request
+
         uses: stefanzweifel/git-auto-commit-action@v4
+
         with:
-          commit_message: 'Fix Typos'
+
+          commit_message: 'Trying To Reduce 1 More var'
+
           commit_options: '--no-verify'
+
           repository: .
-          commit_user_name: sppidy
-          commit_user_email: spidy@ultroid.tech
-          commit_author: Sρι∂у <spidy@ultroid.tech>
+
+
+          commit_user_name: Danish
+          commit_user_email: danish@ultroid.tech
+          commit_author: Danish <danish@ultroid.tech>
