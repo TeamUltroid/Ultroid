@@ -9,6 +9,7 @@ from random import randrange
 from re import compile as re_compile
 from re import findall
 from urllib.request import urlopen
+
 import pybase64
 import requests
 from bs4 import BeautifulSoup
@@ -29,9 +30,16 @@ ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
 ofox_api = OrangeFoxAPI()
 
-api1 = pybase64.standard_b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV")
-api2 = pybase64.standard_b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn")
-api3 = pybase64.standard_b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR")
+api1 = pybase64.standard_b64decode(
+    "QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV"
+)
+api2 = pybase64.standard_b64decode(
+    "QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn"
+)
+api3 = pybase64.standard_b64decode(
+    "QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR"
+)
+
 
 @in_pattern("ofox")
 @in_owner
