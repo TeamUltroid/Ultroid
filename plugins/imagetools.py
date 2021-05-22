@@ -40,6 +40,10 @@
 
 • `{i}blue <reply to any media>`
     just cool.
+
+• `{i}csample <color name /color code>`
+   example : `{i}csample red`
+             `{i}csample #ffffff`
 """
 
 import asyncio
