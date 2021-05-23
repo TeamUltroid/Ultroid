@@ -77,7 +77,7 @@ ws.on('message', (response: any) => {
 });
 
 const downloadSong = async (url: string, file: boolean = false, title: string = '', duration: string | number = 0): Promise<DownloadedSong> => {
-    if (url == '' && file == true) {
+    if (file == true || url.startsWith("https://api.telegram.org/file/bot")) {
         return new Promise((resolve, reject) => {
             const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
     
@@ -126,7 +126,7 @@ const downloadSong = async (url: string, file: boolean = false, title: string = 
 
 
 export const getSongInfo = async (url: string, file: boolean = false, duration: string | number = 0, link: string = '', title: string = ''): Promise<DownloadedSong['info']> => {
-    if (file == true) {
+    if (file == true || url.startsWith("https://api.telegram.org/file/bot")) {
         return new Promise((resolve, reject) => {
             resolve({
                 id: link,
