@@ -126,7 +126,7 @@ const downloadSong = async (url: string, file: boolean = false, title: string = 
 
 
 export const getSongInfo = async (url: string, file: boolean = false, duration: string | number = 0, link: string = '', title: string = ''): Promise<DownloadedSong['info']> => {
-    if (file == true || url.startsWith("https://api.telegram.org/file/bot")) {
+    if (file == true || link.startsWith("https://api.telegram.org/file/bot")) {
         return new Promise((resolve, reject) => {
             resolve({
                 id: link,

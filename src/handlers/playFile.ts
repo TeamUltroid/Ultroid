@@ -59,8 +59,8 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
                     parse_mode: 'HTML',
                     ...Markup.inlineKeyboard([
                         [
-                            Markup.button.callback('Pause', `pause:${id}`),
-                            Markup.button.callback('Skip', `skip:${id}`)
+                            Markup.button.callback('Pause', `pause:${escapeHtml(id)}`),
+                            Markup.button.callback('Skip', `skip:${escapeHtml(id)}`)
                         ],
                         [
                             Markup.button.callback('Exit', `exitVc`),
