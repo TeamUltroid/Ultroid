@@ -23,7 +23,7 @@ autopic_3: "¡Tienes una colección `{}` relacionada con tu búsqueda!\nIniciand
 inline_1: "[Uʟᴛʀᴏɪᴅ Soporte](t.me/ultroidsupport)\n\n **Menú de Toda de {}.\n\n Complementos ~ {}**"
 inline_2: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}**"
 inline_3: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}\n\nVe y añade `ADDONS` var con valor true**"
-inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_4: "** Bot de {}\n\nMenú principal\n\nPʟᴜɢɪɴs ~ {}\nComplementos ~ {}\nComandos Totales ~ {}**"
 inline_5: "**El menú se ha cerrado**"
 
 #tagnotif
