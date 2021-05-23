@@ -77,14 +77,14 @@ ws.on('message', (response: any) => {
 });
 
 const downloadSong = async (url: string, file: boolean = false, title: string = '', duration: string | number = 0): Promise<DownloadedSong> => {
-    if (file == true || url.startsWith("https://api.telegram.org/file/bot")) {
+    if (file == true && url.startsWith("https://api.telegram.org/file/bot")) {
         return new Promise((resolve, reject) => {
             const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
     
             resolve({
                 stream: ffmpeg.stdout,
                 info: {
-                    id: url,
+                    id: url.replace("https://api.telegram.org/file/bot", "").replace("/", '.'),
                     title: title,
                     duration: typeof(duration) === 'string' ? parseInt(duration) : duration,
                 },
