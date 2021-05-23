@@ -218,18 +218,14 @@ async def _(e):
         )
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
-        f = "circle.mp4"
-        metadata = extractMetadata(createParser(f))
+        metadata = extractMetadata(createParser("circle.mp4"))
         duration = metadata.get("duration").seconds
-        height = metadata.get("height")
-        width = metadata.get("width")
-        attributes = [video(duration=duration, w=width, h=height, round_message=True)]
+        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
             foile,
             thumb=thumb,
             reply_to=a,
-            video_note=True,
             attributes=attributes,
         )
         await z.delete()
