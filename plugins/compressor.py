@@ -78,7 +78,7 @@ async def _(e):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
-            if proce.returncode == 1:
+            if proce.returncode is None:
                 proce = await asyncio.create_subprocess_shell(
                     f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                     stdout=asyncio.subprocess.PIPE,
