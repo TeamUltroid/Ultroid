@@ -36,7 +36,9 @@ async def logo_gen(event):
         temp = await event.get_reply_message()
         if temp.media:
             if hasattr(temp.media, "document"):
-                if (".ttf" or ".otf") in temp.file.name:
+                if "font" in temp.file.mime_type:
+                    font_ = await temp.download_media()
+                elif (".ttf" in temp.file.name) or (".otf" in temp.file.name):
                     font_ = await temp.download_media()
             elif "pic" in mediainfo(temp.media):
                 bg_ = await temp.download_media()
