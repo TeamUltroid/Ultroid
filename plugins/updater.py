@@ -29,7 +29,7 @@ async def _(e):
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
-        Link = (await ultroid_bot(GetLink(x.peer_id.channel_id, x.id))).link
+        Link = (await ultroid_bot(GetLink(x.chat_id, x.id))).link
         await eor(
             e,
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
