@@ -188,7 +188,10 @@ async def stats(
         unread_mentions += dialog.unread_mentions_count
         unread += dialog.unread_count
     stop_time = time.time() - start_time
-    ct = (await ultroid_bot(GetBlockedRequest(1, 0))).count
+    try:
+        ct = (await ultroid_bot(GetBlockedRequest(1, 0))).count
+    except AttributeError:
+        ct = 0
     full_name = inline_mention(await ultroid_bot.get_me())
     response = f"🔸 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
