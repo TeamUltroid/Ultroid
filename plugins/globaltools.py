@@ -51,7 +51,7 @@ from . import *
 
 
 @ultroid_cmd(
-pattern="gpromote ?(.*)",
+    pattern="gpromote ?(.*)",
 )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
@@ -228,7 +228,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="gdemote ?(.*)",
+    pattern="gdemote ?(.*)",
 )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
@@ -652,7 +652,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="listgban",
+    pattern="listgban",
 )
 async def list_gengbanned(event):
     users = gbanned_user()
@@ -687,7 +687,7 @@ async def list_gengbanned(event):
 
 
 @ultroid_cmd(
-pattern="gstat ?(.*)",
+    pattern="gstat ?(.*)",
 )
 async def gstat_(e):
     xx = await eor(e, get_string("com_1"))
