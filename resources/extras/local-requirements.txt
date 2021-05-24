@@ -41,3 +41,4 @@ pyyaml
 hachoir
 aria2p
 gdown
+qrcode
