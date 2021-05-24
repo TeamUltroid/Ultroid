@@ -13,6 +13,12 @@
 
 • `{i}eval <cmds>`
     Evaluate python commands on telegram.
+    Shortcuts:
+        client = bot = event.client
+        e = event
+        p = print
+        reply = await event.get_reply_message()
+        chat = event.chat_id
 
 • `{i}sysinfo`
     Shows System Info.
