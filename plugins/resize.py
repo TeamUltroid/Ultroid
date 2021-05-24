@@ -33,7 +33,7 @@ async def size(e):
         img = await ultroid_bot.download_media(r.media)
     im = Image.open(img)
     x, y = im.size
-    await k.edit(f"Dimension Of This Image Is\n`{x} : {y}`")
+    await k.edit(f"Dimension Of This Image Is\n`{x} x {y}`")
     os.remove(img)
 
 
