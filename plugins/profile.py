@@ -97,32 +97,26 @@ async def _(ult):
 async def _(ult):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eod(e, "`This Command Is Sudo Restricted.`")
-    ok = await eor(ult, "...")
+    if not ult.is_reply:
+        return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
-    await ok.edit("`Downloading that picture...`")
-    if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-    photo = None
+    ok = await eor(ult, "...")
+    replfile = await reply_message.download_media()
+    file = await ultroid_bot.upload_file(replfile)
+    mediain = mediainfo(reply_message.media)
     try:
-        photo = await ultroid_bot.download_media(reply_message, TMP_DOWNLOAD_DIRECTORY)
-    except Exception as ex:
+        if "pic" in mediain:
+            await ultroid_bot(UploadProfilePhotoRequest(file))
+        elif ("gif", "video") in mediain:
+            await ultroid_bot(UploadProfilePhotoRequest(video=file))
+        else:
+            return await ok.edit("`Invalid MEDIA Type !`")
+        await ok.edit("`My Profile Photo has Successfully Changed !`")
+     except Exception as ex:
         await ok.edit("Error occured.\n`{}`".format(str(ex)))
-    else:
-        if photo:
-            await ok.edit("`Uploading it to my profile...`")
-            file = await ultroid_bot.upload_file(photo)
-            try:
-                await ultroid_bot(UploadProfilePhotoRequest(file))
-            except Exception as ex:
-                await ok.edit("Error occured.\n`{}`".format(str(ex)))
-            else:
-                await ok.edit("`My profile picture has been changed !`")
+    os.remove(replfile)
     await asyncio.sleep(10)
     await ok.delete()
-    try:
-        os.remove(photo)
-    except Exception as ex:
-        LOGS.exception(ex)
 
 
 # delete profile pic(s)
