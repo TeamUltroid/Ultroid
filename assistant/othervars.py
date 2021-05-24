@@ -68,12 +68,15 @@ async def update(eve):
     ups_rem = repo.remote("upstream")
     if Var.HEROKU_API:
         import heroku3
+
         try:
             heroku = heroku3.from_key(Var.HEROKU_API)
             heroku_app = None
             heroku_applications = heroku.apps()
         except BaseException:
-            return await eve.edit("`Invalid Heroku credentials for updating userbot dyno.`")
+            return await eve.edit(
+                "`Invalid Heroku credentials for updating userbot dyno.`"
+            )
         for app in heroku_applications:
             if app.name == Var.HEROKU_APP_NAME:
                 heroku_app = app
