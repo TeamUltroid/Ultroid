@@ -107,7 +107,7 @@ async def _(ult):
     try:
         if "pic" in mediain:
             await ultroid_bot(UploadProfilePhotoRequest(file))
-        elif ("gif", "video") in mediain:
+        elif "gif" or "video" in mediain:
             await ultroid_bot(UploadProfilePhotoRequest(video=file))
         else:
             return await ok.edit("`Invalid MEDIA Type !`")
