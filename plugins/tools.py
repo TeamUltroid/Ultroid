@@ -39,7 +39,6 @@ from asyncio.exceptions import TimeoutError
 from pathlib import Path
 
 import cv2
-import emoji
 from googletrans import Translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
