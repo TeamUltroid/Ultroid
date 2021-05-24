@@ -15,7 +15,7 @@
 
 """
 
-import os
+import os, glob
 import random
 import time
 
@@ -62,14 +62,12 @@ async def logo_gen(event):
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
     if not font_:
-        fpath_ = "resources/fonts/"
-        f = random.choice(os.listdir(fpath_))
-        font_ = fpath_ + f
-    # next level logic, ignore
-    if len(name) < 8:
+        fpath_ = glob.glob("resources/fonts/*")
+        font_ = random.choice(fpath_)
+    if len(name) <= 8:
         fnt_size = 150
         strke = 10
-    elif len(name) > 10:
+    elif len(name) >= 9:
         fnt_size = 50
         strke = 5
     else:
