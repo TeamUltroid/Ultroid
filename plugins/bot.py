@@ -156,7 +156,7 @@ async def _(event):
     if not event.sender_id == OWNER_ID:
         if not is_sudo(event.sender_id):
             if udB.get(OWNER_ID):
-            return
+                return
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
