@@ -100,9 +100,11 @@ async def lol(ult):
 
 @ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}ping"))
 async def _(event):
-    if not event.sender_id == ultroid_bot.uid
+    if not event.sender_id == ultroid_bot.uid:
         if not is_sudo(event.sender_id):
             return
+    if event.fwd_from:
+        return
     start = dt.now()
     x = await eor(event, "`Pong !`")
     end = dt.now()
