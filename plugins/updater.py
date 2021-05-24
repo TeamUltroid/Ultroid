@@ -17,9 +17,10 @@ from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 from . import *
 
 ULTPIC = "resources/extras/inline.jpg"
-CL = udB.get('INLINE_PIC')
+CL = udB.get("INLINE_PIC")
 if CL:
     ULTPIC = CL
+
 
 @ultroid_cmd(pattern="update$")
 async def _(e):
