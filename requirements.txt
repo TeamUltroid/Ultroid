@@ -1,1 +1,1 @@
-py-Ultroid==28.7b0
+py-Ultroid==2021.5.24
