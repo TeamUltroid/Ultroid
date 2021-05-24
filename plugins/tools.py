@@ -71,7 +71,6 @@ async def _(event):
         lan = input or "en"
     else:
         return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
-    lan = lan.strip()
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
