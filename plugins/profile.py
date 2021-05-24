@@ -112,7 +112,7 @@ async def _(ult):
         else:
             return await ok.edit("`Invalid MEDIA Type !`")
         await ok.edit("`My Profile Photo has Successfully Changed !`")
-     except Exception as ex:
+    except Exception as ex:
         await ok.edit("Error occured.\n`{}`".format(str(ex)))
     os.remove(replfile)
     await asyncio.sleep(10)
