@@ -165,7 +165,7 @@ async def setgb(event):
         await eor(x, "`Goodbye note saved`")
     elif r and r.text:
         add_goodbye(event.chat_id, r.message, None)
-        await eor(x, "`Goddbye note saved`")
+        await eor(x, "`Goodbye note saved`")
     else:
         await eod(x, "`Reply to message which u want to set as goodbye`")
 

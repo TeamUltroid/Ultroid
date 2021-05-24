@@ -149,7 +149,6 @@ async def hehe(args):
         user.username = user.first_name
     message = await args.get_reply_message()
     photo = None
-    emojibypass = False
     is_anim = False
     emoji = None
     if message and message.media:
@@ -166,7 +165,6 @@ async def hehe(args):
                 in message.media.document.attributes
             ):
                 emoji = message.media.document.attributes[1].alt
-                emojibypass = True
         elif "video" in message.media.document.mime_type.split("/"):
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
             xy = await message.download_media()
@@ -186,7 +184,6 @@ async def hehe(args):
                 if isinstance(attribute, DocumentAttributeSticker):
                     emoji = attribute.alt
 
-            emojibypass = True
             is_anim = True
             photo = 1
         else:
@@ -198,8 +195,7 @@ async def hehe(args):
 
     if photo:
         splat = args.text.split()
-        if not emojibypass:
-            emoji = "🔰"
+        emoji = "🏵"
         pack = 1
         if len(splat) == 3:
             pack = splat[2]  # User sent ultroid_both
