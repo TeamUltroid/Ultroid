@@ -46,8 +46,8 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
     pattern="setbio ?(.*)",
 )
 async def _(ult):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     set = ult.pattern_match.group(1)
     try:
@@ -66,8 +66,8 @@ async def _(ult):
     pattern="setname ?((.|//)*)",
 )
 async def _(ult):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     names = ult.pattern_match.group(1)
     first_name = names
@@ -95,8 +95,8 @@ async def _(ult):
     pattern="setpic$",
 )
 async def _(ult):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
@@ -126,8 +126,8 @@ async def _(ult):
     pattern="delpfp ?(.*)",
 )
 async def remove_profilepic(delpfp):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
+    if not delpfp.out and not is_fullsudo(delpfp.sender_id):
+        return await eod(delpfp, "`This Command Is Sudo Restricted.`")
     ok = await eor(delpfp, "...")
     group = delpfp.text[8:]
     if group == "all":
