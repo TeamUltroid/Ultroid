@@ -76,7 +76,7 @@ async def _(event):
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit("No user was designated.")
-            
+
     if FBAN.startswith("@"):
         usr = FBAN
     else:
