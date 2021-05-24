@@ -100,11 +100,12 @@ async def lol(ult):
 
 @ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}ping"))
 async def _(event):
-    if not event.sender_id == ultroid_bot.uid:
-        if not is_sudo(event.sender_id):
-            return
     if event.fwd_from:
         return
+    if not event.sender_id == OWNER_ID:
+        if not is_sudo(event.sender_id):
+            if udB.get(OWNER_ID):
+            return
     start = dt.now()
     x = await eor(event, "`Pong !`")
     end = dt.now()
@@ -148,10 +149,14 @@ async def shutdownbot(ult):
         await shutdown(ult)
 
 
-@ultroid_cmd(
-    pattern="logs",
-)
-async def get_logs(event):
+@ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}logs"))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.sender_id == OWNER_ID:
+        if not is_sudo(event.sender_id):
+            if udB.get(OWNER_ID):
+            return
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
