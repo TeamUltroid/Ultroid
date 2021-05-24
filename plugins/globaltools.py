@@ -452,7 +452,7 @@ async def _(e):
             reason = e.text.split(" ", maxsplit=2)[2]
         except IndexError:
             reason = ""
-    if e.is_private:
+    elif e.is_private:
         userid = (await e.get_chat()).id
         try:
             reason = e.text.split(" ", maxsplit=1)[1]
@@ -577,7 +577,7 @@ async def _(e):
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         userid = await get_user_id(e.pattern_match.group(1))
-    if e.is_private:
+    elif e.is_private:
         userid = (await e.get_chat()).id
     else:
         return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
