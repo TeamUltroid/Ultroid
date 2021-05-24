@@ -18,6 +18,7 @@ PyPDF2
 psutil
 pytz
 requests>=2.18.4
+screen
 scikit-image
 selenium
 speedtest-cli==2.1.3
