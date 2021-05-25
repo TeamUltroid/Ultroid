@@ -79,7 +79,10 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 # Telegraph Things
 telegraph = Telegraph()
-telegraph.create_account(short_name=OWNER_NAME)
+try:
+    telegraph.create_account(short_name=OWNER_NAME)
+except:
+    telegraph.create_account(short_name='Ultroid')
 # ================================================================#
 
 
