@@ -10,7 +10,7 @@
 • `{i}ytsa <(youtube) search query>`
    Search and download audio from youtube.
 
-• `{i}ytsv <(youtube) link>`
+• `{i}ytsv <(youtube) search query>`
    Search and download video from youtube.
 """
 

@@ -155,9 +155,10 @@ async def when_ultd_added_to_chat(event):
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
     ch_id, client = cht.split("|")
-    name = (await event.get_chat()).title
     if client == "bot":
+        name = (await asst.get_entity(int(ch_id))).title
         await asst.delete_dialog(int(ch_id))
     elif client == "user":
+        name = (await ultroid_bot.get_entity(int(ch_id))).title
         await ultroid_bot.delete_dialog(int(ch_id))
     await event.edit(f"Left `{name}`")

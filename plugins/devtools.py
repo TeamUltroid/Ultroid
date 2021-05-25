@@ -13,6 +13,12 @@
 
 • `{i}eval <cmds>`
     Evaluate python commands on telegram.
+    Shortcuts:
+        client = bot = event.client
+        e = event
+        p = print
+        reply = await event.get_reply_message()
+        chat = event.chat_id
 
 • `{i}sysinfo`
     Shows System Info.
@@ -163,15 +169,15 @@ async def _(event):
 
 
 async def aexec(code, event):
-    e = message = event
-    client = event.client
     exec(
         f"async def __aexec(e, client): "
         + "\n message = event = e"
+        + "\n reply = await event.get_reply_message()"
+        + "\n chat = e.chat_id"
         + "".join(f"\n {l}" for l in code.split("\n")),
     )
 
-    return await locals()["__aexec"](e, e.client)
+    return await locals()["__aexec"](event, event.client)
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

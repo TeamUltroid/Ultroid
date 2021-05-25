@@ -38,7 +38,7 @@ import heroku3
 import requests
 from git import Repo
 from pyUltroid import __version__ as UltVer
-from telethon import __version__
+from telethon import __version__, events
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
@@ -98,10 +98,14 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
-@ultroid_cmd(
-    pattern="ping$",
-)
+@ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}ping"))
 async def _(event):
+    if event.fwd_from:
+        return
+    if not event.sender_id == OWNER_ID:
+        if not is_sudo(event.sender_id):
+            if udB.get(OWNER_ID):
+                return
     start = dt.now()
     x = await eor(event, "`Pong !`")
     end = dt.now()
@@ -145,10 +149,13 @@ async def shutdownbot(ult):
         await shutdown(ult)
 
 
-@ultroid_cmd(
-    pattern="logs",
-)
-async def get_logs(event):
+@ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}logs"))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.sender_id == OWNER_ID:
+        if not is_sudo(event.sender_id):
+            return
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:

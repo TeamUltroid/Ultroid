@@ -39,7 +39,6 @@ from asyncio.exceptions import TimeoutError
 from pathlib import Path
 
 import cv2
-import emoji
 from googletrans import Translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -72,8 +71,6 @@ async def _(event):
         lan = input or "en"
     else:
         return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
-    text = emoji.demojize(text.strip())
-    lan = lan.strip()
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
@@ -218,18 +215,14 @@ async def _(e):
         )
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
-        f = "circle.mp4"
-        metadata = extractMetadata(createParser(f))
+        metadata = extractMetadata(createParser("circle.mp4"))
         duration = metadata.get("duration").seconds
-        height = metadata.get("height")
-        width = metadata.get("width")
-        attributes = [video(duration=duration, w=width, h=height, round_message=True)]
+        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
             foile,
             thumb=thumb,
             reply_to=a,
-            video_note=True,
             attributes=attributes,
         )
         await z.delete()

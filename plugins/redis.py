@@ -61,7 +61,9 @@ async def _(ult):
     ok = await eor(ult, "`Deleting data from Redis ...`")
     try:
         key = ult.pattern_match.group(1)
-        udB.delete(key)
+        k = udB.delete(key)
+        if k == 0:
+            return await ok.edit("`No Such Key.`")
         await ok.edit(f"`Successfully deleted key {key}`")
     except BaseException:
         await ok.edit("`Something Went Wrong`")

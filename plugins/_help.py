@@ -45,13 +45,6 @@ async def ult(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
-        # if BOT_MODE:
-        #    await ultroid_bot.send_message(
-        #        ult.chat_id,
-        #        f"Bot of {ultroid_bot.me.first_name}",
-        #        buttons=[Button.inline(text="Open Help", data="open")],
-        #    )
-        #    return
         try:
             results = await ultroid_bot.inline_query(tgbot, "ultd")
         except BotMethodInvalidError:

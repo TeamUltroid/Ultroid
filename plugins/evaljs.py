@@ -35,14 +35,14 @@ async def evalJs(
     os.system(f"node ./src/ecmaHelper/eval.d.js")
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
         await ultroid_bot.send_file(
-            event.chat.id,
+            event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
         )
     else:
         await ultroid_bot.send_file(
-            event.chat.id,
+            event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",

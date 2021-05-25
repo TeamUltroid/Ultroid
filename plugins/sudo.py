@@ -28,16 +28,11 @@ from . import *
     pattern="addsudo ?(.*)",
 )
 async def _(ult):
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if Var.BOT_MODE:
-        try:
-            if ult.sender_id != int(Redis(OWNER_ID)):
-                return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
-        except BaseException:
-            pass
-    else:
-        if ult.sender_id != ultroid_bot.uid:
-            return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
+    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+        return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
@@ -88,20 +83,15 @@ async def _(ult):
     pattern="delsudo ?(.*)",
 )
 async def _(ult):
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if Var.BOT_MODE:
-        try:
-            if ult.sender_id != int(Redis(OWNER_ID)):
-                return await eod(
-                    ult,
-                    "You are sudo user, You cant add other sudo user.",
-                    time=5,
-                )
-        except BaseException:
-            pass
-    else:
-        if ult.sender_id != ultroid_bot.uid:
-            return await eor(ult, "You are sudo user, You cant add other sudo user.")
+    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+        return await eod(
+            ult,
+            "You are sudo user, You cant add other sudo user.",
+            time=5,
+        )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
