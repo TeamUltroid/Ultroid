@@ -66,14 +66,13 @@ async def goimg(event):
     if not query:
         return await eor(event, "`Give something to search...`")
     nn = await eor(event, "`Processing Keep Patience...`")
+    lmt = 5
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
             query = query.split(";")[0]
-        except BaseExceptaion:
-            lmt = 5
-    else:
-        lmt = 5
+        except BaseException:
+            pass
     gi = googleimagesdownload()
     args = {
         "keywords": query,
