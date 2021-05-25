@@ -98,14 +98,12 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
-@ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}ping"))
+@ultroid_bot.on(events.NewMessage(pattern=f"^{HNDLR}ping$"))
 async def _(event):
     if event.fwd_from:
         return
-    if not event.sender_id == OWNER_ID:
-        if not is_sudo(event.sender_id):
-            if udB.get(OWNER_ID):
-                return
+    if not event.out and not is_sudo(event.sender_id):
+        return
     start = dt.now()
     x = await eor(event, "`Pong !`")
     end = dt.now()
@@ -149,13 +147,12 @@ async def shutdownbot(ult):
         await shutdown(ult)
 
 
-@ultroid_bot.on(events.NewMessage(pattern=f"{HNDLR}logs"))
+@ultroid_bot.on(events.NewMessage(pattern=f"^{HNDLR}logs"))
 async def _(event):
     if event.fwd_from:
         return
-    if not event.sender_id == OWNER_ID:
-        if not is_sudo(event.sender_id):
-            return
+    if not event.out and not is_sudo(event.sender_id):
+        return
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
