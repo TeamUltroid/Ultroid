@@ -180,4 +180,4 @@ async def aexec(code, event):
     return await locals()["__aexec"](event, event.client)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

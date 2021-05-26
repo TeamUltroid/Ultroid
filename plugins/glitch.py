@@ -39,4 +39,4 @@ async def _(e):
     os.remove("ult.gif")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

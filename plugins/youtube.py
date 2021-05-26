@@ -105,4 +105,4 @@ async def download_from_youtube_(event):
     await download_yt(xx, event, url, ytd)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

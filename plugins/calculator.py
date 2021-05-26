@@ -143,4 +143,4 @@ async def _(e):
     await e.edit("Noice Inline Calculator", buttons=lst)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

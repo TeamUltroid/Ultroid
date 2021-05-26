@@ -723,4 +723,4 @@ async def gstat_(e):
     await xx.edit(msg)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

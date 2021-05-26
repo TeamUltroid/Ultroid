@@ -29,4 +29,4 @@ async def saf(e):
     await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

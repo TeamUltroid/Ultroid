@@ -598,4 +598,4 @@ async def ipinfo(event):
         await eod(xx, f"ERROR:\n{err}\n{msg}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

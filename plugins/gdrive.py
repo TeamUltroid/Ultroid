@@ -171,4 +171,4 @@ async def _(event):
         await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

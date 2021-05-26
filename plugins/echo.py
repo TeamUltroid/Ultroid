@@ -95,4 +95,4 @@ async def lstecho(e):
         await eod(e, "`List is Empty, For echo`")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

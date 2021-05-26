@@ -274,4 +274,4 @@ async def download(event):
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

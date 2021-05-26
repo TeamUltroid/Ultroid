@@ -90,4 +90,4 @@ async def get_var(event):
         await x.edit(f"**List of Redis Keys :**\n{msg}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

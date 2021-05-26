@@ -57,4 +57,4 @@ async def pinterest(e):
         await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

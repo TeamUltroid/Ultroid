@@ -392,4 +392,4 @@ async def _(event):
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+

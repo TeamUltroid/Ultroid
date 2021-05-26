@@ -109,4 +109,4 @@ async def fl(e):
                 await e.reply(msg, file=media)
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+
