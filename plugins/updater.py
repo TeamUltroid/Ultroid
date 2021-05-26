@@ -61,6 +61,3 @@ async def updava(event):
         force_document=False,
         buttons=Button.inline("Changelogs", data="changes"),
     )
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

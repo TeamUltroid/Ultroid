@@ -50,6 +50,3 @@ async def mobs(e):
     except Exception as a:
         print(a)
         await eor(e, "No Results Found")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

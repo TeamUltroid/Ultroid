@@ -319,6 +319,3 @@ async def sendpdf(event):
     os.remove(ok)
     shutil.rmtree("pdf/")
     os.makedirs("pdf/")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

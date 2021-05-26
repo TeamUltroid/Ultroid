@@ -66,6 +66,3 @@ async def stoppo(ult):
         return await eod(ult, "AUTOPIC was not in used !!")
     udB.set("AUTOPIC", "None")
     await eod(ult, "AUTOPIC Stopped !!")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -107,6 +107,3 @@ async def fl(e):
                 msg = k["msg"]
                 media = k["media"]
                 await e.reply(msg, file=media)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

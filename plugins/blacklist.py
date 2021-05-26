@@ -83,6 +83,3 @@ async def bl(e):
             if z in yy:
                 await e.delete()
                 break
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

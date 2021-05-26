@@ -65,6 +65,3 @@ async def gitsearch(event):
         caption=fullusr,
         link_preview=False,
     )
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

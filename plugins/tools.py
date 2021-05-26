@@ -402,6 +402,3 @@ async def lastname(steal):
             )
     except TimeoutError:
         return await lol.edit("Error: @SangMataInfo_bot is not responding!.")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

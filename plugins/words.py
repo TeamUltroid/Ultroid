@@ -140,6 +140,3 @@ async def _(event):
         )
     except asyncurban.WordNotFoundError:
         await xx.edit(f"**No result found for** `{word}`")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

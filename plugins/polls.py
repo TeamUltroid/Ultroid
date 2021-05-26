@@ -69,6 +69,3 @@ async def uri_poll(e):
         ),
     )
     await m.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

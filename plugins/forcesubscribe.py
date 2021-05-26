@@ -138,6 +138,3 @@ async def diesoon(e):
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
     await e.edit("Thanks For Joining ! ")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

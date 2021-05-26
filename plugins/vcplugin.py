@@ -211,6 +211,3 @@ async def evc(e):
         vcdyno("off")
     elif is_vcsudo(e.sender.id):
         vcdyno("off")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

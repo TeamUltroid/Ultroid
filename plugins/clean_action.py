@@ -63,6 +63,3 @@ async def _(event):
             await event.delete()
         except BaseException:
             pass
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

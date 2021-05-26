@@ -518,6 +518,3 @@ async def ultiny(event):
     await xx.delete()
     os.remove(file)
     os.remove(ik)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

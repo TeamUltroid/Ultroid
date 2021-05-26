@@ -158,6 +158,3 @@ async def _(e):
             await eod(e, "`Reply To Video File Only`")
     else:
         await eod(e, "`Reply To Video File Only`")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

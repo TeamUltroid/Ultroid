@@ -30,6 +30,7 @@
     Turn off your bot.
 """
 
+import re
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
@@ -100,7 +101,7 @@ async def lol(ult):
 
 
 
-@ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}ping"))) 
+@ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}ping")))
 async def _(event):
     if event.fwd_from:
         return
@@ -147,7 +148,6 @@ async def shutdownbot(ult):
         await shutdown(ult, dyno)
     else:
         await shutdown(ult)
-
 
 
 @ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}logs")))
@@ -212,6 +212,3 @@ async def def_logs(ult):
     )
     await xx.edit("Done")
     await xx.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

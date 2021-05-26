@@ -54,6 +54,3 @@ async def searchunsl(ult):
         ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n", album=True
     )
     await tep.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

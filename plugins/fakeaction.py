@@ -94,6 +94,3 @@ async def _(e):
     await eod(e, f"Starting Fake Game Playing For {t} sec.")
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

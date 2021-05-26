@@ -105,6 +105,3 @@ async def decod(e):
     except BaseException:
         await kk.edit("`Reply To Media in Which Qr image present.`")
     os.remove(dl)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

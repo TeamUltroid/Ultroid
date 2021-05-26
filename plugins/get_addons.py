@@ -46,6 +46,3 @@ async def get_the_addons_lol(event):
             f"**Could not load** `{shortname}` **because of the following error.**\n`{str(e)}`",
             time=3,
         )
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

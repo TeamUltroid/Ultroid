@@ -37,6 +37,3 @@ async def _(e):
     await xx.delete()
     os.remove(ok)
     os.remove("ult.gif")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

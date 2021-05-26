@@ -205,6 +205,3 @@ async def _(event):
         required_string += f"**••Empty**  `Name with deleted Account`\n"
         required_string += f"**••None**  `Last Seen A Long Time Ago`\n"
     await eod(xx, required_string)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

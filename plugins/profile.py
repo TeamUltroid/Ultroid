@@ -174,6 +174,3 @@ async def gpoto(e):
         os.remove(okla)
     except Exception as er:
         await eor(e, f"ERROR - {str(er)}")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
