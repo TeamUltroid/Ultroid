@@ -36,7 +36,6 @@ from datetime import datetime as dt
 from platform import python_version as pyver
 
 import heroku3
-import re
 import requests
 from git import Repo
 from pyUltroid import __version__ as UltVer
@@ -98,7 +97,6 @@ async def lol(ult):
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
-
 
 
 @ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}ping")))
