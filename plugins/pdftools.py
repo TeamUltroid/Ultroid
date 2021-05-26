@@ -319,6 +319,3 @@ async def sendpdf(event):
     os.remove(ok)
     shutil.rmtree("pdf/")
     os.makedirs("pdf/")
-
-
-

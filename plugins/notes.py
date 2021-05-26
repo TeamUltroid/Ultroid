@@ -112,6 +112,3 @@ async def notes(e):
             msg = k["msg"]
             media = k["media"]
             await e.reply(msg, file=media)
-
-
-

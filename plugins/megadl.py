@@ -72,6 +72,3 @@ async def _(e):
             f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
         )
         os.system("rm -rf mega")
-
-
-

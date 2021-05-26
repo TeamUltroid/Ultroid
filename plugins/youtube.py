@@ -103,6 +103,3 @@ async def download_from_youtube_(event):
     else:
         return
     await download_yt(xx, event, url, ytd)
-
-
-

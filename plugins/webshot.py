@@ -68,6 +68,3 @@ async def webss(event):
             force_document=True,
         )
     await xx.delete()
-
-
-

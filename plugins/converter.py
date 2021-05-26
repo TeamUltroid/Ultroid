@@ -197,6 +197,3 @@ async def _(event):
             return await eod(xx, "`Reply to a readable file`", time=5)
     else:
         return await eod(xx, "`Reply to a readable file`", time=5)
-
-
-

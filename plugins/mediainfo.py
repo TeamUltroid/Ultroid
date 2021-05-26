@@ -56,6 +56,3 @@ async def mi(e):
         f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
     )
     os.remove(naam)
-
-
-

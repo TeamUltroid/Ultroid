@@ -272,6 +272,3 @@ async def download(event):
             await eor(xx, f"Uploaded `{kk}` in `{t}`")
     else:
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-
-

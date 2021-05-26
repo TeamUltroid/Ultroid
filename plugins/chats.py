@@ -123,6 +123,3 @@ async def _(e):
             )
         except Exception as ex:
             await xx.edit(str(ex))
-
-
-

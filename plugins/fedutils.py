@@ -390,6 +390,3 @@ async def _(event):
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
-
-
-

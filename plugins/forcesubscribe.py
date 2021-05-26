@@ -138,6 +138,3 @@ async def diesoon(e):
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
     await e.edit("Thanks For Joining ! ")
-
-
-

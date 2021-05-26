@@ -211,6 +211,3 @@ async def evc(e):
         vcdyno("off")
     elif is_vcsudo(e.sender.id):
         vcdyno("off")
-
-
-

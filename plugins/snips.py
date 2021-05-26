@@ -104,6 +104,3 @@ async def notes(e):
             else:
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
                 await e.delete()
-
-
-

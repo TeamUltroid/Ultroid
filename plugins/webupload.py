@@ -68,6 +68,3 @@ async def _(event):
     await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
     await xx.delete()
     await event.delete()
-
-
-

@@ -94,6 +94,3 @@ async def _(e):
     await eod(e, f"Starting Fake Game Playing For {t} sec.")
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
-
-
-

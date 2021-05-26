@@ -178,6 +178,3 @@ async def aexec(code, event):
     )
 
     return await locals()["__aexec"](event, event.client)
-
-
-

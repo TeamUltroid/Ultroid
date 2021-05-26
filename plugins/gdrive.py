@@ -169,6 +169,3 @@ async def _(event):
         await eod(event, "`Here is Your G-Drive Folder link : `\n" + folder_link)
     else:
         await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
-
-
-

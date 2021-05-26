@@ -642,6 +642,3 @@ async def unblck_in(event):
 async def ytfuxist(e):
     await e.answer("Deleted.")
     await e.delete()
-
-
-

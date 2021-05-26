@@ -132,6 +132,3 @@ async def vtogif(e):
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
-
-
-

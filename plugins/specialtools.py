@@ -243,6 +243,3 @@ async def wall(event):
     await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
-
-
-

@@ -721,6 +721,3 @@ async def gstat_(e):
     else:
         msg += "not Globally Banned.**"
     await xx.edit(msg)
-
-
-

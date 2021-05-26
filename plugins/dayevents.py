@@ -41,6 +41,3 @@ async def diela(e):
     for eve in ml[:5]:
         te += "• " + f'[{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)
-
-
-

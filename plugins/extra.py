@@ -113,6 +113,3 @@ async def _(e):
         )
     else:
         await e.delete()
-
-
-

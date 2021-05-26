@@ -172,6 +172,3 @@ async def warnset(e):
         )
     else:
         await eod(e, "`Incorrect Format`")
-
-
-

@@ -65,6 +65,3 @@ async def gitsearch(event):
         caption=fullusr,
         link_preview=False,
     )
-
-
-

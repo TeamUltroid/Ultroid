@@ -46,6 +46,3 @@ async def unlckho(e):
         return await eod(e, "`Incorrect Input`")
     await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Unlocked - `{mat}` ! ")
-
-
-

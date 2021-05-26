@@ -155,6 +155,3 @@ async def _(ult):
     return await ok.edit(
         f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
     )
-
-
-

@@ -61,6 +61,3 @@ async def updava(event):
         force_document=False,
         buttons=Button.inline("Changelogs", data="changes"),
     )
-
-
-

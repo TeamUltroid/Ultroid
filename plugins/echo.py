@@ -93,6 +93,3 @@ async def lstecho(e):
         await eor(e, user)
     else:
         await eod(e, "`List is Empty, For echo`")
-
-
-

@@ -63,6 +63,3 @@ async def siesace(e):
     await lol.delete()
     os.remove(title + ".mp3")
     os.remove(title + ".jpg")
-
-
-

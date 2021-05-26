@@ -260,6 +260,3 @@ async def list_all(event):
             await x.delete()
     else:
         await x.edit(msg)
-
-
-

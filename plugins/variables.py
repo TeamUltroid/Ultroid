@@ -88,6 +88,3 @@ async def get_var(event):
             else:
                 msg += f"• `{i}`" + "\n"
         await x.edit(f"**List of Redis Keys :**\n{msg}")
-
-
-

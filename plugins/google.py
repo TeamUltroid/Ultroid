@@ -132,6 +132,3 @@ async def reverse(event):
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)
-
-
-

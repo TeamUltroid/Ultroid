@@ -79,6 +79,3 @@ async def evaluateJs(event):
                 startTime=start,
             )
         ).start()
-
-
-

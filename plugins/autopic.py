@@ -66,6 +66,3 @@ async def stoppo(ult):
         return await eod(ult, "AUTOPIC was not in used !!")
     udB.set("AUTOPIC", "None")
     await eod(ult, "AUTOPIC Stopped !!")
-
-
-

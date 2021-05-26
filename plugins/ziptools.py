@@ -160,6 +160,3 @@ async def do_zip(event):
     os.system("rm -rf zip")
     os.remove("ultroid.zip")
     await xx.delete()
-
-
-

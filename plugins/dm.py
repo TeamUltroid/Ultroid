@@ -43,6 +43,3 @@ async def dm(e):
             "`{i}help dm`",
             time=4,
         )
-
-
-

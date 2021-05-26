@@ -572,6 +572,3 @@ async def ultd(event):
     os.remove("ult.png")
     os.remove("ult.webp")
     os.remove(ultt)
-
-
-

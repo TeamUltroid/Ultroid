@@ -88,6 +88,3 @@ async def _(e):
                 xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
     await e.client.send_message(e.chat_id, xx)
     await e.delete()
-
-
-

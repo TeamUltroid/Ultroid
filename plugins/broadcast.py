@@ -248,6 +248,3 @@ async def sending(event):
                     )
                 except BaseException:
                     pass
-
-
-

@@ -81,8 +81,8 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 telegraph = Telegraph()
 try:
     telegraph.create_account(short_name=OWNER_NAME)
-except:
-    telegraph.create_account(short_name='Ultroid')
+except BaseException:
+    telegraph.create_account(short_name="Ultroid")
 # ================================================================#
 
 
@@ -596,6 +596,3 @@ async def ipinfo(event):
         err = det["error"]["title"]
         msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
-
-
-

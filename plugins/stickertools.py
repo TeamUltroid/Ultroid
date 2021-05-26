@@ -518,6 +518,3 @@ async def ultiny(event):
     await xx.delete()
     os.remove(file)
     os.remove(ik)
-
-
-

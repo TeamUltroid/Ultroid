@@ -248,6 +248,3 @@ async def _(e):
         )
     except BaseException as m:
         await eod(xx, f"`{str(m)}`")
-
-
-

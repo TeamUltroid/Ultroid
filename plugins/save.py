@@ -27,6 +27,3 @@ async def saf(e):
         MLA = ultroid_bot.uid
     await ultroid_bot.send_message(MLA, x)
     await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
-
-
-

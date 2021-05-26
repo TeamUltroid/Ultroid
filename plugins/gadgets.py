@@ -50,6 +50,3 @@ async def mobs(e):
     except Exception as a:
         print(a)
         await eor(e, "No Results Found")
-
-
-

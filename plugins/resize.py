@@ -60,6 +60,3 @@ async def size(e):
     await ultroid_bot.send_file(e.chat_id, img)
     os.remove(img)
     await k.delete()
-
-
-

@@ -69,6 +69,3 @@ async def uri_poll(e):
         ),
     )
     await m.delete()
-
-
-

@@ -83,6 +83,3 @@ async def bl(e):
             if z in yy:
                 await e.delete()
                 break
-
-
-

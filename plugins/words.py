@@ -140,6 +140,3 @@ async def _(event):
         )
     except asyncurban.WordNotFoundError:
         await xx.edit(f"**No result found for** `{word}`")
-
-
-

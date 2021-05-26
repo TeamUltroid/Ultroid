@@ -108,6 +108,3 @@ async def load(event):
             f"**Could not load** `{shortname}` **because of the following error.**\n`{str(e)}`",
             time=3,
         )
-
-
-

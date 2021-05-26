@@ -107,6 +107,3 @@ async def fl(e):
                 msg = k["msg"]
                 media = k["media"]
                 await e.reply(msg, file=media)
-
-
-

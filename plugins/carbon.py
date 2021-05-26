@@ -230,6 +230,3 @@ async def crbn(event):
         force_document=True,
     )
     os.remove(xx)
-
-
-

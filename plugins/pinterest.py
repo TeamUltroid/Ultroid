@@ -55,6 +55,3 @@ async def pinterest(e):
     else:
         await e.delete()
         await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
-
-
-

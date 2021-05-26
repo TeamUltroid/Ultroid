@@ -174,6 +174,3 @@ async def gpoto(e):
         os.remove(okla)
     except Exception as er:
         await eor(e, f"ERROR - {str(er)}")
-
-
-

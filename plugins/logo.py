@@ -110,6 +110,3 @@ async def logo_gen(event):
     if os.path.exists(font_):
         if not font_.startswith("resources/fonts"):
             os.remove(font_)
-
-
-

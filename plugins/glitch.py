@@ -37,6 +37,3 @@ async def _(e):
     await xx.delete()
     os.remove(ok)
     os.remove("ult.gif")
-
-
-

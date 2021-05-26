@@ -480,6 +480,3 @@ async def autodelte(ult):  # Tg Feature
     except ChatNotModifiedError:
         return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
     await eor(ult, f"Auto Delete Status Changed to {match} !")
-
-
-
