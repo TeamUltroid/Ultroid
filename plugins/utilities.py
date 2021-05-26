@@ -596,5 +596,5 @@ async def ipinfo(event):
         )
     except BaseException:
         err = det["error"]["title"]
-        msg = det["error"]["messsage"]
+        msg = det["error"]["message"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
