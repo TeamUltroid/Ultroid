@@ -83,7 +83,6 @@ try:
     telegraph.create_account(short_name=OWNER_NAME)
 except BaseException:
     telegraph.create_account(short_name="Ultroid")
-# ================================================================#
 
 
 @ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)

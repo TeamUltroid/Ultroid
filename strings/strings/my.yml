@@ -96,7 +96,7 @@ bd_6: "`Channel sudah berada di database`"
 
 # carbon
 carbon_1: "Memproses..."
-carbon_2: "Carbonised oleh [{}](tg://user?id={})"
+carbon_2: "Dikarbonkan oleh [{}](tg://user?id={})"
 
 # chats
 chats_1: "`Memproses...`"
@@ -181,7 +181,7 @@ upd_7: "\n`Bot Anda`  **di versi terkini**  `dengan`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
 udl_1: "`Balas fail / media yang ingin anda muat turun ...`"
-udl_2: "Muat turun Berjaya...\nKepada\n`{}`\nin `{}`"
+udl_2: "Muat turun Berjaya...\ndi\n`{}`\nin `{}`"
 udl_3: "`Berikan spesifik tempat ke fail`"
 
 # words
