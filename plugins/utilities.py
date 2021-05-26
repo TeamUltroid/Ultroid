@@ -568,7 +568,10 @@ async def ipinfo(event):
         region = det["region"]
         country = det["country"]
         cord = det["loc"]
-        zipc = det["postal"]
+        try:
+            zipc = det["postal"]
+        except KeyError:
+            zipc = "None"
         tz = det["timezone"]
         await xx.edit(
             """
