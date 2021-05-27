@@ -256,7 +256,7 @@ async def _(e):
         ],
         [
             Button.switch_inline(
-                "EBooks Uploader",
+                "EBᴏᴏᴋs Uᴘʟᴏᴀᴅᴇʀ",
                 query="ebooks India",
                 same_peer=True,
             ),
