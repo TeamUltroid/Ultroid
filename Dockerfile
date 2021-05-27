@@ -18,5 +18,5 @@ RUN npm install -g npm@7.12.1 -g
 RUN npm install
 RUN npm run build
 
-RUN ["bash", "resources/startup/startup.sh"]
-RUN ["python", "vcstarter.py"]
+
+CMD python -m pyUltroid & python vcstarter.py
