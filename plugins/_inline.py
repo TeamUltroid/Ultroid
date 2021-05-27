@@ -256,8 +256,8 @@ async def _(e):
         ],
         [
             Button.switch_inline(
-                "CʟɪᴘAʀᴛ Sᴇᴀʀᴄʜ",
-                query="clipart frog",
+                "EBooks Uploader",
+                query="ebooks India",
                 same_peer=True,
             ),
             Button.switch_inline(
