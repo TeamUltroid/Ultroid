@@ -17,6 +17,5 @@ RUN pip3 install -r requirements.txt
 RUN npm install -g npm@7.12.1 -g
 RUN npm install
 RUN npm run build
-
-ENV vc=$WEBSOCKET_URL
-CMD python -m pyUltroid & python vcstarter.py
+ 
+CMD if [ -z "$VCBOT" ]; then python -m pyUltroid & python vcstarter.py ;else python -m pyUltroid; fi
