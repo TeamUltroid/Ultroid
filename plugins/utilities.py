@@ -46,7 +46,14 @@
 
 • `{i}ipinfo <ip address>`
     Get info about that IP address.
+
+• `{i}cpy <reply to message>`
+   Copy the replied message, with formatting. Expires in 24hrs.
+
+• `{i}pst`
+   Paste the copied message, with formatting.
 """
+
 import asyncio
 import calendar
 import html
@@ -71,6 +78,7 @@ from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
+from telethon.errors.rpcerrorlist import MessageEmptyError
 
 # =================================================================#
 from . import *
@@ -596,3 +604,25 @@ async def ipinfo(event):
         err = det["error"]["title"]
         msg = det["error"]["messsage"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
+
+
+@ultroid_cmd(pattern="cpy")
+async def copp(event):
+    msg = await event.get_reply_message() or None
+    if msg is None:
+        return await eod(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
+    msg_ = msg.text
+    udB.set("CLIPBOARD", msg_)
+    await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
+    udB.expire("CLIPBOARD", 86400) # expire in 24hrs.
+
+
+@ultroid_cmd(pattern="pst")
+async def colgate(event):
+    msg = udB.get("CLIPBOARD")
+    if msg is None:
+        return await eod(event, f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!", time=5)
+    try:
+        await eor(event, msg)
+    except MessageEmptyError:
+        return await eod(event, "ERROR.", time=2)
