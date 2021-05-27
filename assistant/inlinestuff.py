@@ -473,7 +473,7 @@ async def clip(e):
                     title=titles[rs],
                     description="GutenBerg Search",
                     file="https://gutenberg.org" + link.replace("small", "medium"),
-                    text=f"**Ebook Search**\n\n->> `{titles[rs]}`",
+                    text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
                     buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
                 )
             )
