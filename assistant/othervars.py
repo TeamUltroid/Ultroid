@@ -105,6 +105,9 @@ async def update(eve):
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
     else:
+        await eve.edit(
+            "`Userbot dyno build in progress, please wait for it to complete.`"
+        )
         try:
             ups_rem.pull(ac_br)
         except GitCommandError:
