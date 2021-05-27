@@ -8,7 +8,10 @@
 from . import *
 
 @asst_cmd("ban")
+@owner
 async def banhammer(event):
+    if not event.is_private:
+        return
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")
@@ -25,7 +28,10 @@ async def banhammer(event):
 
 
 @asst_cmd("unban")
+@owner
 async def banhammer(event):
+    if not event.is_private:
+        return
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")
