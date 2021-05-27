@@ -428,7 +428,8 @@ async def _(e):
 
 @in_pattern("ebooks")
 @in_owner
-async def clip(e):    try:
+async def clip(e):
+    try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
         await e.answer([], switch_pm="Enter Query to Look for EBook", switch_pm_param="start")
