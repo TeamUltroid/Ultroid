@@ -108,7 +108,7 @@ async def inline_handler(event):
             [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
         ],
     )
-    await event.answer([result])
+    await event.answer([result], gallery=True)
 
 
 @in_pattern("paste")
