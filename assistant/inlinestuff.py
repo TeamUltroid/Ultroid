@@ -480,9 +480,10 @@ async def clip(e):
     await e.answer(hm, switch_pm="Ebooks Search", switch_pm_param="start")
 
 
-@callback(re.compile("ebk_(.*)"))
+@callback(re_compile("ebk_(.*)"))
 async def eupload(event):
     match = event.pattern_match.group(1).decode("utf-8")
+    await event.answer("Uploading..")
     try:
         await event.edit(
             file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
