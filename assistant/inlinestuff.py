@@ -432,47 +432,64 @@ async def clip(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer([], switch_pm="Enter Query to Look for EBook", switch_pm_param="start")
+        await e.answer(
+            [], switch_pm="Enter Query to Look for EBook", switch_pm_param="start"
+        )
         return
     quer = quer.replace(" ", "+")
     sear = f"http://www.gutenberg.org/ebooks/search/?query={quer}&submit_search=Go%21"
     magma = requests.get(sear).content
     bs = BeautifulSoup(magma, "html.parser", from_encoding="utf-8")
     out = bs.find_all("img")
-    Alink = bs.find_all("a","link")
+    Alink = bs.find_all("a", "link")
     if len(out) == 0:
-        return await e.answer([], switch_pm="No Results Found !", switch_pm_param="start")
+        return await e.answer(
+            [], switch_pm="No Results Found !", switch_pm_param="start"
+        )
     buil = e.builder
-    dont_take = ["Authors","Did you mean","Sort Alpha","Sort by","Subjects","Bookshelves"]
+    dont_take = [
+        "Authors",
+        "Did you mean",
+        "Sort Alpha",
+        "Sort by",
+        "Subjects",
+        "Bookshelves",
+    ]
     hm = []
     titles = []
     for num in Alink:
-      try:
-        rt = num.find("span","title").text
-        if not rt.startswith(tuple(dont_take)):
-          titles.append(rt)
-      except BaseException:
-        pass
+        try:
+            rt = num.find("span", "title").text
+            if not rt.startswith(tuple(dont_take)):
+                titles.append(rt)
+        except BaseException:
+            pass
     for rs in range(len(out)):
         if "/cache/epub" in out[rs]["src"]:
             link = out[rs]["src"]
             num = link.split("/")[3]
-            hm.append(buil.document(
-                title=titles[rs],
-                                    description="GutenBerg Search",
-                                    file="https://gutenberg.org" + link.replace("small","medium"),
-                                    text=f"**Ebook Search**\n\n->> `{titles[rs]}`",buttons=Button.inline("Get as Doc", data=f"ebk_{num}")))
-    await e.answer(
-        hm,switch_pm="Ebooks Search", switch_pm_param="start"
-    )
+            hm.append(
+                buil.document(
+                    title=titles[rs],
+                    description="GutenBerg Search",
+                    file="https://gutenberg.org" + link.replace("small", "medium"),
+                    text=f"**Ebook Search**\n\n->> `{titles[rs]}`",
+                    buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
+                )
+            )
+    await e.answer(hm, switch_pm="Ebooks Search", switch_pm_param="start")
 
 
 @callback(re.compile("ebk_(.*)"))
 async def eupload(event):
-  match = event.pattern_match.group(1).decode("utf-8")
-  try:
-    await event.edit(file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf")
-  except:
-    book = f"{match}.epub"
-    urllib.request.urlretrieve("https://www.gutenberg.org/ebooks/132.epub.images",book)
-    await event.edit(file=book)
+    match = event.pattern_match.group(1).decode("utf-8")
+    try:
+        await event.edit(
+            file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
+        )
+    except BaseException:
+        book = f"{match}.epub"
+        urllib.request.urlretrieve(
+            "https://www.gutenberg.org/ebooks/132.epub.images", book
+        )
+        await event.edit(file=book)
