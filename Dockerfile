@@ -18,5 +18,5 @@ RUN npm install -g npm@7.12.1 -g
 RUN npm install
 RUN npm run build
 
-
-CMD python -m pyUltroid & python vcstarter.py
+ENV vc=$WEBSOCKET_URL
+CMD python -m pyUltroid & if [[ vc ]] ; then python vcstarter.py
