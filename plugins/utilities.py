@@ -91,7 +91,6 @@ try:
     telegraph.create_account(short_name=OWNER_NAME)
 except BaseException:
     telegraph.create_account(short_name="Ultroid")
-# ================================================================#
 
 
 @ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
@@ -577,7 +576,10 @@ async def ipinfo(event):
         region = det["region"]
         country = det["country"]
         cord = det["loc"]
-        zipc = det["postal"]
+        try:
+            zipc = det["postal"]
+        except KeyError:
+            zipc = "None"
         tz = det["timezone"]
         await xx.edit(
             """
@@ -602,7 +604,7 @@ async def ipinfo(event):
         )
     except BaseException:
         err = det["error"]["title"]
-        msg = det["error"]["messsage"]
+        msg = det["error"]["message"]
         await eod(xx, f"ERROR:\n{err}\n{msg}")
 
 
