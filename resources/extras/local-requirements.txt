@@ -1,3 +1,4 @@
+-r requirements.txt
 asyncurban
 carbonnow
 cairosvg
@@ -15,7 +16,6 @@ Pillow>=7.0.0
 play-scraper
 PyDictionary
 PyPDF2
-py-Ultroid
 psutil
 pytz
 requests>=2.18.4
