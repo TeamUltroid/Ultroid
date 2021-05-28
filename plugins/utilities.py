@@ -492,7 +492,7 @@ async def telegraphcmd(event):
                 tcom = "Ultroid"
             makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
-            await await eor(event,f"Pasted to Telegraph : [Telegraph]({war})")
+            await eor(event,f"Pasted to Telegraph : [Telegraph]({war})")
         else:
             await eor(event, "Reply to a Media or Text !")
     else:
