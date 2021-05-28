@@ -14,7 +14,6 @@
    Search and download video from youtube.
 """
 
-from youtube_dl import YoutubeDL
 
 from . import *
 
@@ -24,13 +23,13 @@ async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
     if opt == "a":
         ytd = {
-                "format": "bestaudio",
-                "writethumbnail": True,
-                "addmetadata": True,
-                "geo-bypass": True,
-                "nocheckcertificate": True,
-                "outtmpl": "%(id)s.mp3",
-            }
+            "format": "bestaudio",
+            "writethumbnail": True,
+            "addmetadata": True,
+            "geo-bypass": True,
+            "nocheckcertificate": True,
+            "outtmpl": "%(id)s.mp3",
+        }
         url = event.pattern_match.group(2)
         if not url:
             return await eor(event, "Give me a (youtube) URL to download audio from!")
@@ -41,13 +40,13 @@ async def download_from_youtube_(event):
         xx = await eor(event, get_string("com_1"))
     elif opt == "v":
         ytd = {
-                "format": "best",
-                "writethumbnail": True,
-                "addmetadata": True,
-                "geo-bypass": True,
-                "nocheckcertificate": True,
-                "outtmpl": "%(id)s.mp4",
-            }
+            "format": "best",
+            "writethumbnail": True,
+            "addmetadata": True,
+            "geo-bypass": True,
+            "nocheckcertificate": True,
+            "outtmpl": "%(id)s.mp4",
+        }
         url = event.pattern_match.group(2)
         if not url:
             return await eor(event, "Give me a (youtube) URL to download video from!")
@@ -58,13 +57,13 @@ async def download_from_youtube_(event):
         xx = await eor(event, get_string("com_1"))
     elif opt == "sa":
         ytd = {
-                "format": "bestaudio",
-                "writethumbnail": True,
-                "addmetadata": True,
-                "geo-bypass": True,
-                "nocheckcertificate": True,
-                "outtmpl": "%(id)s.mp3",
-            }
+            "format": "bestaudio",
+            "writethumbnail": True,
+            "addmetadata": True,
+            "geo-bypass": True,
+            "nocheckcertificate": True,
+            "outtmpl": "%(id)s.mp3",
+        }
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
@@ -76,13 +75,13 @@ async def download_from_youtube_(event):
         await xx.edit("`Downloading audio song...`")
     elif opt == "sv":
         ytd = {
-                "format": "best",
-                "writethumbnail": True,
-                "addmetadata": True,
-                "geo-bypass": True,
-                "nocheckcertificate": True,
-                "outtmpl": "%(id)s.mp4",
-            }
+            "format": "best",
+            "writethumbnail": True,
+            "addmetadata": True,
+            "geo-bypass": True,
+            "nocheckcertificate": True,
+            "outtmpl": "%(id)s.mp4",
+        }
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
