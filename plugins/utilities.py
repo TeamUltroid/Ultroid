@@ -460,7 +460,6 @@ async def rmbg(event):
 )
 async def telegraphcmd(event):
     input_str = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         getmsg = await event.get_reply_message()
         if getmsg.photo or getmsg.video or getmsg.gif:
@@ -472,7 +471,7 @@ async def telegraphcmd(event):
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error - {e}"
-            await xx.edit(amsg)
+            await eor(event, amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
             ab = open(getit)
@@ -485,7 +484,7 @@ async def telegraphcmd(event):
             makeit = telegraph.create_page(title=tcom, content=[f"{cd}"])
             war = makeit["url"]
             os.remove(getit)
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
+            await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
         elif getmsg.text:
             if input_str:
                 tcom = input_str
@@ -493,11 +492,11 @@ async def telegraphcmd(event):
                 tcom = "Ultroid"
             makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
+            await await eor(event,f"Pasted to Telegraph : [Telegraph]({war})")
         else:
-            await xx.edit("Reply to a Media or Text !")
+            await eor(event, "Reply to a Media or Text !")
     else:
-        await xx.edit("Reply to a Message !")
+        await eor(event, "Reply to a Message !")
 
 
 @ultroid_cmd(pattern="json")
@@ -546,26 +545,23 @@ async def sugg(event):
             return await eod(
                 event,
                 f"`Oops, you can't send polls here!\n\n{str(e)}`",
-                time=5,
             )
         await event.delete()
     else:
         return await eod(
             event,
             "`Please reply to a message to make a suggestion poll!`",
-            time=5,
         )
 
 
 @ultroid_cmd(pattern="ipinfo ?(.*)")
 async def ipinfo(event):
-    xx = await eor(event, get_string("com_1"))
     ip = event.text.split(" ")
     ipaddr = ""
     try:
         ipaddr = ip[1]
     except BaseException:
-        return await eod(xx, "`Give me an IP address you noob!`", time=5)
+        return await eod(event, "`Give me an IP address you noob!`")
     if ipaddr == "":
         return
     url = f"https://ipinfo.io/{ipaddr}/geo"
@@ -581,7 +577,7 @@ async def ipinfo(event):
         except KeyError:
             zipc = "None"
         tz = det["timezone"]
-        await xx.edit(
+        await eor(event, 
             """
 **IP Details Fetched.**
 
@@ -605,7 +601,7 @@ async def ipinfo(event):
     except BaseException:
         err = det["error"]["title"]
         msg = det["error"]["message"]
-        await eod(xx, f"ERROR:\n{err}\n{msg}")
+        await eod(event, f"ERROR:\n{err}\n{msg}")
 
 
 @ultroid_cmd(pattern="cpy")
