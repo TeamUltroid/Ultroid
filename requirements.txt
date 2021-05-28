@@ -1,1 +1,2 @@
 py-Ultroid==29.3b0
+git+https://github.com/buddhhu/img2html.git
