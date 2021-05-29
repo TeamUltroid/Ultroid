@@ -60,6 +60,8 @@ async def setwel(event):
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
+        elif wut == "web":
+            m = None
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
@@ -93,48 +95,6 @@ async def listwel(event):
     await event.delete()
 
 
-@ultroid_bot.on(events.ChatAction())
-async def _(event):
-    wel = get_welcome(event.chat_id)
-    if wel:
-        if event.user_joined or event.user_added:
-            user = await event.get_user()
-            chat = await event.get_chat()
-            title = chat.title if chat.title else "this chat"
-            pp = await event.client.get_participants(chat)
-            count = len(pp)
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            name = user.first_name
-            last = user.last_name
-            if last:
-                fullname = f"{name} {last}"
-            else:
-                fullname = name
-            uu = user.username
-            if uu:
-                username = f"@{uu}"
-            else:
-                username = mention
-            msgg = wel["welcome"]
-            med = wel["media"]
-            userid = user.id
-            if msgg:
-                await event.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
-                await event.reply(file=med)
-
-
 @ultroid_cmd(pattern="setgoodbye")
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
@@ -156,6 +116,8 @@ async def setgb(event):
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
+        elif wut == "web":
+            m = None
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
@@ -191,9 +153,9 @@ async def listgd(event):
 
 @ultroid_bot.on(events.ChatAction())
 async def _(event):
-    wel = get_goodbye(event.chat_id)
-    if wel:
-        if event.user_left or event.user_kicked:
+    if event.user_left or event.user_kicked:
+        wel = get_goodbye(event.chat_id)
+        if wel:     
             user = await event.get_user()
             chat = await event.get_chat()
             title = chat.title if chat.title else "this chat"
@@ -229,6 +191,43 @@ async def _(event):
                 )
             else:
                 await event.reply(file=med)
-
+    elif event.user_joined or event.user_added:
+        wel = get_welcome(event.chat_id)
+        if wel:
+            user = await event.get_user()
+            chat = await event.get_chat()
+            title = chat.title if chat.title else "this chat"
+            pp = await event.client.get_participants(chat)
+            count = len(pp)
+            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+            name = user.first_name
+            last = user.last_name
+            if last:
+                fullname = f"{name} {last}"
+            else:
+                fullname = name
+            uu = user.username
+            if uu:
+                username = f"@{uu}"
+            else:
+                username = mention
+            msgg = wel["welcome"]
+            med = wel["media"]
+            userid = user.id
+            if msgg:
+                await event.reply(
+                    msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    ),
+                    file=med,
+                )
+            else:
+                await event.reply(file=med)
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})
