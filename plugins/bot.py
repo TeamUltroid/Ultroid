@@ -99,6 +99,7 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
+
 @ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}ping")))
 async def _(event):
     if event.fwd_from:
@@ -146,6 +147,7 @@ async def shutdownbot(ult):
         await shutdown(ult, dyno)
     else:
         await shutdown(ult)
+
 
 
 @ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}logs")))
