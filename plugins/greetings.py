@@ -155,7 +155,7 @@ async def listgd(event):
 async def _(event):
     if event.user_left or event.user_kicked:
         wel = get_goodbye(event.chat_id)
-        if wel:     
+        if wel:
             user = await event.get_user()
             chat = await event.get_chat()
             title = chat.title if chat.title else "this chat"
@@ -229,5 +229,6 @@ async def _(event):
                 )
             else:
                 await event.reply(file=med)
+
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}" + Note})
