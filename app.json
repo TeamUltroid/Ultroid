@@ -1,7 +1,7 @@
 {
     "name": "Ultroid UserBot",
-    "description": "Pluggable telegram userbot, made in python using Telethon.",
-    "logo": "https://telegra.ph/file/031957757a4f6a5191040.jpg",
+    "description": "Pluggable telegram userbot, made in python using Telethon MADE BY @JATTGAMINGYT11.",
+    "logo": "https://telegra.ph/file/8002a948622a0c8618e38.jpg",
     "keywords": [
         "Telethon",
         "telegram",
@@ -9,19 +9,19 @@
         "python",
         "ultroid"
     ],
-    "repository": "https://github.com/TeamUltroid/Ultroid",
-    "website": "https://ultroid.tech",
-    "success_url": "https://t.me/TheUltroid",
+    "repository": "https://github.com/JASSXPRO/BLAC-2.0-USERBOT",
+    "website": "https://t.me/BLACUSERBOT_SUPPORT",
+    "success_url": "https://t.me/BLACUSERBOT_SUPPORT",
     "stack": "container",
     "env": {
         "API_ID": {
             "description": "You api id, from my.telegram.org or @ScrapperRoBot.",
-            "value": "", 
+            "value": "5618769", 
             "required": false
         },
         "API_HASH": {
             "description": "You api hash, from my.telegram.org or @ScrapperRoBot.",
-            "value": "",
+            "value": "70102b35b46ba99d155265e904ab81b3",
             "required": false
         },
         "SESSION": {
