@@ -10,12 +10,14 @@
 
 • `{i}carbon <text/reply to msg/reply to document>`
     Carbonise the text with default settings.
+
 • `{i}rcarbon <text/reply to msg/reply to document>`
     Carbonise the text, with random bg colours.
 """
 
 import os
 import random
+import requests
 
 from carbonnow import Carbon
 
@@ -190,6 +192,9 @@ async def crbn(event):
             code = temp.message
     else:
         code = event.text.split(" ", maxsplit=1)[1]
+    webs = requests.get("https://carbon.pokurt.me")
+    if webs.status_code == 502:
+        return await eor(event, "`Temporary Server Error has Occured !\nPlease Try Again Later`")
     carbon = Carbon(code=code)
     xx = await carbon.save("ultroid_carbon")
     await xxxx.delete()
@@ -220,6 +225,9 @@ async def crbn(event):
     else:
         code = event.text.split(" ", maxsplit=1)[1]
     col = random.choice(all_col)
+    webs = requests.get("https://carbon.pokurt.me")
+    if webs.status_code == 502:
+        return await eor(event, "`Temporary Server Error has Occured !\nPlease Try Again Later`")
     carbon = Carbon(code=code, background=col)
     xx = await carbon.save("ultroid_carbon")
     await xxxx.delete()
