@@ -65,6 +65,8 @@ def grt(seconds: int) -> str:
 
     return up_time
 
+_small_caps = ['ᴀ', 'ʙ', 'ᴄ', 'ᴅ', 'ᴇ', 'ғ', 'ɢ', 'ʜ', 'ɪ', 'ᴊ', 'ᴋ', 'ʟ', 'ᴍ', 'ɴ', 'ᴏ', 'ᴘ', 'ϙ', 'ʀ', 's', 'ᴛ', 'ᴜ', 'ᴠ', 'ᴡ', 'x', 'ʏ', 'ᴢ']
+
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
