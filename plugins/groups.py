@@ -33,11 +33,8 @@ from telethon.tl.types import (
 
 from . import *
 
-@ultroid_cmd(
-    pattern="setgpic$",
-    groups_only=True, 
-    admins_only=True
-)
+
+@ultroid_cmd(pattern="setgpic$", groups_only=True, admins_only=True)
 async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
