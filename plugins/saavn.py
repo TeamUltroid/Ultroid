@@ -81,7 +81,11 @@ async def siesace(e):
         return await eod(e, "Give me Something to Search")
     quality = "mp3"
     if "| flac" in song:
-        quality = "flac"
+        try:
+            song = song.split('|')[0]
+            quality = "flac"
+        except Exception as ex:
+            await eod(e, f"`{str(ex)}`")
     hmm = time.time()
     lol = await eor(e, "Searching on Deezer...")
     sung = song.replace(" ", "%20")
