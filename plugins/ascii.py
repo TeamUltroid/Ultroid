@@ -13,13 +13,15 @@
 """
 
 
-from img2html.converter import Img2HTMLConverter
 import os
+
+from img2html.converter import Img2HTMLConverter
+
 from . import *
 
 
 @ultroid_cmd(
-pattern="html$",
+    pattern="html$",
 )
 async def _(e):
     if not e.reply_to_msg_id:
@@ -33,4 +35,4 @@ async def _(e):
     await e.client.send_file(e.chat_id, "html.html", reply_to=e.reply_to_msg_id)
     await m.delete()
     os.remove(img)
-    os.remove('html.html')
+    os.remove("html.html")
