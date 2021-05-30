@@ -82,7 +82,7 @@ async def siesace(e):
     quality = "mp3"
     if "| flac" in song:
         try:
-            song = song.split('|')[0]
+            song = song.split("|")[0]
             quality = "flac"
         except Exception as ex:
             await eod(e, f"`{str(ex)}`")
