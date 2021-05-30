@@ -25,7 +25,9 @@ from telethon.tl.types import DocumentAttributeAudio
 from . import *
 
 
-@ultroid_cmd(pattern="saavn ?(.*)")
+@ultroid_cmd(
+pattern="saavn ?(.*)",
+)
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
@@ -70,7 +72,9 @@ async def siesace(e):
     os.remove(title + ".jpg")
 
 
-@ultroid_cmd(pattern="deez ?(.*)")
+@ultroid_cmd(
+pattern="deez ?(.*)",
+)
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
@@ -97,7 +101,7 @@ async def siesace(e):
     urlretrieve(urrl, title + "." + quality)
     urlretrieve(img, title + ".jpg")
     okk = await uploader(
-        title + "." + quality, title + "." quality, hmm, lol, "Uploading " + title + "..."
+        title + "." + quality, title + "." + quality, hmm, lol, "Uploading " + title + "..."
     )
     await ultroid_bot.send_file(
         e.chat_id,
