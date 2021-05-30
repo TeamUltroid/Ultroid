@@ -26,7 +26,7 @@ from . import *
 
 
 @ultroid_cmd(
-pattern="saavn ?(.*)",
+    pattern="saavn ?(.*)",
 )
 async def siesace(e):
     song = e.pattern_match.group(1)
@@ -73,7 +73,7 @@ async def siesace(e):
 
 
 @ultroid_cmd(
-pattern="deez ?(.*)",
+    pattern="deez ?(.*)",
 )
 async def siesace(e):
     song = e.pattern_match.group(1)
@@ -101,7 +101,11 @@ async def siesace(e):
     urlretrieve(urrl, title + "." + quality)
     urlretrieve(img, title + ".jpg")
     okk = await uploader(
-        title + "." + quality, title + "." + quality, hmm, lol, "Uploading " + title + "..."
+        title + "." + quality,
+        title + "." + quality,
+        hmm,
+        lol,
+        "Uploading " + title + "...",
     )
     await ultroid_bot.send_file(
         e.chat_id,
