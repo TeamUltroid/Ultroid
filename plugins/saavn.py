@@ -40,6 +40,8 @@ async def siesace(e):
         k = (r.get(url)).json()[0]
     except IndexError:
         return await eod(lol, "`Song Not Found.. `")
+    except Exception as ex:
+        return await eod(lol, f"`{str(ex)}`")
     try:
         title = k["song"]
         urrl = k["media_url"]
@@ -93,7 +95,9 @@ async def siesace(e):
     try:
         k = (r.get(url)).json()[0]
     except IndexError:
-        return await eod(lol, "Song Not Found.. ")
+        return await eod(lol, "`Song Not Found.. `")
+    except Exception as ex:
+        return await eod(lol, f"`{str(ex)}`")
     try:
         title = k["title"]
         urrl = k["raw_link"]
@@ -114,7 +118,7 @@ async def siesace(e):
     await ultroid_bot.send_file(
         e.chat_id,
         okk,
-        caption="" + title + "" + "\nFrom Deezer`",
+        caption="`" + title + "`" + "\n`From Deezer`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
