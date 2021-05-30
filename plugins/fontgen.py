@@ -2,7 +2,7 @@
 {i}
 """
 
-from . import _small_caps
+from . import _double_stroke, _monospace, _small_caps, _default
 
 fonts = ["small caps ", "monospace ", "double stroke "]
 
@@ -22,8 +22,8 @@ async def _(e):
     if font == "small caps ":
         font = _small_caps
     if font == "monospace ":
-        font = _small_caps
+        font = _monospace
     if font == "double stroke ":
-        font = _small_caps
+        font = _double_stroke
     await eor(e, str(font))
     # todo tmrw
