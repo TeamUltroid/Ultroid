@@ -11,6 +11,8 @@
 • `{i}saavn <search query>`
     Download songs from Saavn
 
+• `{i}deez <search query (| flac)>`
+    Download songs from Deezer
 """
 
 import os
@@ -36,11 +38,14 @@ async def siesace(e):
         k = (r.get(url)).json()[0]
     except IndexError:
         return await eod(lol, "`Song Not Found.. `")
-    title = k["song"]
-    urrl = k["media_url"]
-    img = k["image"]
-    duration = k["duration"]
-    singers = k["singers"]
+    try:
+        title = k["song"]
+        urrl = k["media_url"]
+        img = k["image"]
+        duration = k["duration"]
+        singers = k["singers"]
+    except Exception as ex:
+        return await eod(lol, f"`{str(ex)}`")
     urlretrieve(urrl, title + ".mp3")
     urlretrieve(img, title + ".jpg")
     okk = await uploader(
@@ -62,4 +67,52 @@ async def siesace(e):
     )
     await lol.delete()
     os.remove(title + ".mp3")
+    os.remove(title + ".jpg")
+
+
+@ultroid_cmd(pattern="deez ?(.*)")
+async def siesace(e):
+    song = e.pattern_match.group(1)
+    if not song:
+        return await eod(e, "Give me Something to Search")
+    quality = "mp3"
+    if "| flac" in song:
+        quality = "flac"
+    hmm = time.time()
+    lol = await eor(e, "Searching on Deezer...")
+    sung = song.replace(" ", "%20")
+    url = f"https://jostapi.herokuapp.com/deezer?query={sung}&quality={quality}&count=1"
+    try:
+        k = (r.get(url)).json()[0]
+    except IndexError:
+        return await eod(lol, "Song Not Found.. ")
+    try:
+        title = k["title"]
+        urrl = k["raw_link"]
+        img = k["album"]["cover_xl"]
+        duration = k["duration"]
+        singers = k["artist"]["name"]
+    except Exception as ex:
+        return await eod(lol, f"`{str(ex)}`")
+    urlretrieve(urrl, title + "." + quality)
+    urlretrieve(img, title + ".jpg")
+    okk = await uploader(
+        title + "." + quality, title + "." quality, hmm, lol, "Uploading " + title + "..."
+    )
+    await ultroid_bot.send_file(
+        e.chat_id,
+        okk,
+        caption="" + title + "" + "\nFrom Deezer`",
+        attributes=[
+            DocumentAttributeAudio(
+                duration=int(duration),
+                title=title,
+                performer=singers,
+            )
+        ],
+        supports_streaming=True,
+        thumb=title + ".jpg",
+    )
+    await lol.delete()
+    os.remove(title + "." + quality)
     os.remove(title + ".jpg")
