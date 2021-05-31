@@ -96,10 +96,9 @@ async def logo_gen(event):
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
         tt = time.time()
-        up = await uploader(flnme, flnme, tt, xx, "Uploading...")
         await ultroid.send_file(
             event.chat_id,
-            file=up,
+            file=flnme,
             caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
             foce_document=True,
         )
