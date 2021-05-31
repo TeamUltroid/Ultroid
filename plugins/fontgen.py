@@ -2,7 +2,7 @@
 {i}
 """
 
-from . import _default, _double_stroke, script_royal, _monospace, _small_caps
+from . import _default, _double_stroke, _monospace, _small_caps
 
 fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
