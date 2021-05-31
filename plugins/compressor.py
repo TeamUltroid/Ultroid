@@ -99,8 +99,10 @@ async def _(e):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
                         time_diff = time.time() - int(compress_time)
-                        speed = round(elapse/time_diff, 2)
-                        eta = time_formatter((int(total_frames)-elapse/speed)*1000)
+                        speed = round(elapse / time_diff, 2)
+                        eta = time_formatter(
+                            (int(total_frames) - elapse / speed) * 1000
+                        )
                         text = f"`Compressing {file.name} at {crf} CRF.\n`"
                         progress_str = "`[{0}{1}] {2}%\n\n`".format(
                             "".join(["●" for i in range(math.floor(per / 5))]),
@@ -109,7 +111,16 @@ async def _(e):
                         )
                         e_size = humanbytes(size)
                         try:
-                            await xxx.edit(text + progress_str + "`" + e_size + "`" + "`" + eta +"`")
+                            await xxx.edit(
+                                text
+                                + progress_str
+                                + "`"
+                                + e_size
+                                + "`"
+                                + "`"
+                                + eta
+                                + "`"
+                            )
                         except MessageNotModifiedError:
                             pass
             os.remove(file.name)
