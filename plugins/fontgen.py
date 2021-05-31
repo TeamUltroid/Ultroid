@@ -2,9 +2,9 @@
 {i}
 """
 
-from . import _default, _double_stroke, _monospace, _small_caps
+from . import _default, _double_stroke, script_royal, _monospace, _small_caps
 
-fonts = ["small caps ", "monospace ", "double stroke "]
+fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
 
 @ultroid_cmd(
@@ -25,6 +25,8 @@ async def _(e):
         msg = gen_font(text, _monospace)
     if font == "double stroke ":
         msg = gen_font(text, _double_stroke)
+    if font == "script royal ":
+        msg = gen_font(text, _script_royal)
     await eor(e, msg)
     # todo tmrw
 
