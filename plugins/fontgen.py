@@ -33,5 +33,5 @@ def gen_font(text, new_font):
     for q in text:
         if q in _default:
             new = new_font[_default.index(q)]
-            msg = text.replace(q, new)
-    return msg
+            text = text.replace(q, new)
+    return text
