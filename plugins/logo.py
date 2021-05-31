@@ -95,12 +95,11 @@ async def logo_gen(event):
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
-        time.time()
-        await ultroid.send_file(
+        await event.client.send_file(
             event.chat_id,
             file=flnme,
             caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-            foce_document=True,
+            force_document=True,
         )
         os.remove(flnme)
         await xx.delete()
