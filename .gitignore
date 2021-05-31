@@ -1,6 +1,4 @@
 .env
-venv/
-__pycache__
 ultroid.session-journal
 ultroid.session
 *.mp3
@@ -8,14 +6,17 @@ ultroid.session
 *.webp
 *.mp4
 *.tgs
-.vscode/*
 /*.jpg
 /*.png
 /*.mp4
-addons/
 ultroid.log
 target/npmlist.json
+package-lock.json
+# Directories
+addons/
+__pycache__/
+venv/
 node_modules/
 glitch_me/
-.idea
-venv/
+.idea/
+.vscode/
