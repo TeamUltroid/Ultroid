@@ -18,12 +18,12 @@
     "redis": "^3.0.2",
     "telegraf": "^4.3.0",
     "tgcalls": "^0.1.2",
-    "ws": "^7.4.6"
+    "ws": "^7.4.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.25",
     "@types/redis": "^2.8.28",
-    "@types/ws": "^7.4.6",
+    "@types/ws": "^7.4.0",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "typegram": "^3.1.9",
