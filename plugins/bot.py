@@ -124,6 +124,7 @@ async def cmds(event):
     pattern="restart$",
 )
 async def restartbt(ult):
+    await eor(ult, "`Restarting...`")
     if Var.HEROKU_API:
         await restart(ult)
     else:
