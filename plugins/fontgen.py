@@ -2,7 +2,7 @@
 {i}
 """
 
-from . import _default, _double_stroke, _monospace, _small_caps
+from . import _double_stroke, _monospace, _small_caps, _default
 
 fonts = ["small caps ", "monospace ", "double stroke "]
 
@@ -20,12 +20,12 @@ async def _(e):
     if font not in fonts:
         return  # todo
     if font == "small caps ":
-        gen_font(text, _small_caps)
+        msg = gen_font(text, _small_caps)
     if font == "monospace ":
-        gen_font(text, _monospace)
+        msg = gen_font(text, _monospace)
     if font == "double stroke ":
-        gen_font(text, _double_stroke)
-    await eor(e, str(font))
+        msg = gen_font(text, _double_stroke)
+    await eor(e, msg)
     # todo tmrw
 
 
