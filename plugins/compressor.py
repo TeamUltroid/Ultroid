@@ -27,8 +27,8 @@ from datetime import datetime as dt
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
+from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
