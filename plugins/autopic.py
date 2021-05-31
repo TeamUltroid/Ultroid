@@ -37,6 +37,11 @@ async def autopic(e):
         return await eod(e, get_string("autopic_2").format(search))
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
+    ST = udB.get("SLEEP_TIME")
+    if ST:
+        SLEEP_TIME = int(ST)
+    else:
+        SLEEP_TIME = 1221
     while True:
         for lie in clls:
             ge = udB.get("AUTOPIC")
@@ -56,7 +61,7 @@ async def autopic(e):
             file = await ultroid_bot.upload_file(kar)
             await ultroid_bot(UploadProfilePhotoRequest(file))
             os.remove(kar)
-            await asyncio.sleep(1111)
+            await asyncio.sleep(SLEEP_TIME)
 
 
 @ultroid_cmd(pattern="stoppic$")
