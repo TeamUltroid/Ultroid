@@ -80,13 +80,13 @@ const downloadSong = async (url: string, file: boolean = false, title: string = 
     if (file == true && url.startsWith("https://api.telegram.org/file/bot")) {
         return new Promise((resolve, reject) => {
             const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
-    
+
             resolve({
                 stream: ffmpeg.stdout,
                 info: {
                     id: url.replace("https://api.telegram.org/file/bot", "").replace("/", '.'),
                     title: title,
-                    duration: typeof(duration) === 'string' ? parseInt(duration) : duration,
+                    duration: typeof (duration) === 'string' ? parseInt(duration) : duration,
                 },
             });
         });
@@ -131,7 +131,7 @@ export const getSongInfo = async (url: string, file: boolean = false, duration: 
             resolve({
                 id: link,
                 title: title,
-                duration: typeof(duration) === 'string' ? parseInt(duration) : duration,
+                duration: typeof (duration) === 'string' ? parseInt(duration) : duration,
             });
         });
     }
@@ -165,11 +165,11 @@ export const getSongInfo = async (url: string, file: boolean = false, duration: 
     });
 };
 
-export const closeConnection = async(): Promise<void> => {
+export const closeConnection = async (): Promise<void> => {
     connection.close();
 }
 
-const createConnection = async(chat: Chat.SupergroupChat): Promise<void> => {
+const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     if (cache.has(chat.id)) {
         return;
     }
@@ -267,19 +267,20 @@ const createConnection = async(chat: Chat.SupergroupChat): Promise<void> => {
         };
         ws.send(JSON.stringify(data));
         cachedConnection.leftVC = true;
+        cachedConnection.connection.close();
     });
 };
 
 export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
-        const { stream } = cache.get(chatId)!;
+        const { stream, connection } = cache.get(chatId)!;
         try {
             stream.emit('leave');
         } catch (error) {
             console.log(error.toString());
             stream.emit('leave');
         }
-        process.exit(0);
+        // process.exit(0);
     } else {
         return false;
     }
