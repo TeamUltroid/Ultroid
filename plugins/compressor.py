@@ -28,6 +28,7 @@ from datetime import datetime as dt
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeVideo
+from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from . import *
 
@@ -96,13 +97,17 @@ async def _(e):
                     if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
-                        progress_str = "`[{0}{1}] {2}%\n`".format(
+                        text = f"`Compressing {file.name} at {crf} CRF.\n`"
+                        progress_str = "`[{0}{1}] {2}%\n\n`".format(
                             "".join(["●" for i in range(math.floor(per / 5))]),
                             "".join(["" for i in range(20 - math.floor(per / 5))]),
                             round(per, 2),
                         )
                         e_size = humanbytes(size)
-                        await xxx.edit(progress_str + "\n" + "`" + e_size + "`")
+                        try:
+                            await xxx.edit(text + progress_str + "`" + e_size + "`")
+                        except MessageNotModifiedError:
+                            pass
             os.remove(file.name)
             c_size = os.path.getsize(out)
             f_time = time.time()
