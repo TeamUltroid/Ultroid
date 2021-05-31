@@ -97,7 +97,7 @@ async def _(e):
                     if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
-                        time_diff = time.time() - int(d_time)
+                        time_diff = time.time() - int(c_time)
                         speed = round(elapse / time_diff, 2)
                         eta = time_formatter(
                             (int(total_frames) - elapse / speed) * 1000
