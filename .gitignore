@@ -1,6 +1,8 @@
 .env
 ultroid.session-journal
 ultroid.session
+ultroid_vc.session
+build
 *.mp3
 *.webm
 *.webp
