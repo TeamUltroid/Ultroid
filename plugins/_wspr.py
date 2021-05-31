@@ -57,6 +57,7 @@ async def _(e):
 
 
 @in_pattern("msg")
+@in_owner
 async def _(e):
     vvv = e.text
     zzz = vvv.split(" ", maxsplit=1)
