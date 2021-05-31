@@ -71,7 +71,6 @@ async def _(e):
                 f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
             )
             total_frames = x.split(":")[1].split("\n")[0]
-            compress_time = time.time()
             progress = "progress.txt"
             with open(progress, "w") as fk:
                 pass
@@ -98,7 +97,7 @@ async def _(e):
                     if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
-                        time_diff = time.time() - int(compress_time)
+                        time_diff = time.time() - int(d_time)
                         speed = round(elapse / time_diff, 2)
                         eta = time_formatter(
                             (int(total_frames) - elapse / speed) * 1000
@@ -117,7 +116,7 @@ async def _(e):
                                 + "`"
                                 + e_size
                                 + "`"
-                                + "`"
+                                + "\n\n`"
                                 + eta
                                 + "`"
                             )
