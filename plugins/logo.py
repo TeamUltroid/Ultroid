@@ -95,7 +95,7 @@ async def logo_gen(event):
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
-        tt = time.time()
+        time.time()
         await ultroid.send_file(
             event.chat_id,
             file=flnme,
