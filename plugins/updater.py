@@ -36,15 +36,17 @@ async def _(e):
             buttons=Button.inline("Changelogs", data="changes"),
         )
         Link = (await ultroid_bot(GetLink(x.chat_id, x.id))).link
-        await xx.edit(f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
-                    parse_mode="html",
-                    link_preview=False,
-            )
+        await xx.edit(
+            f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
+            parse_mode="html",
+            link_preview=False,
+        )
     else:
-        await xx.edit(f'<code>Your BOT is </code><strong>up-to-date</strong><code> with </code><strong><a href="https://github.com/TeamUltroid/Ultroid/tree/{branch}">[{branch}]</a></strong>',
-                    parse_mode="html",
-                    link_preview=False,
-                )
+        await xx.edit(
+            f'<code>Your BOT is </code><strong>up-to-date</strong><code> with </code><strong><a href="https://github.com/TeamUltroid/Ultroid/tree/{branch}">[{branch}]</a></strong>',
+            parse_mode="html",
+            link_preview=False,
+        )
 
 
 @callback("updtavail")
