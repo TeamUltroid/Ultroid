@@ -37,7 +37,7 @@ async def download_from_youtube_(event):
             request.get(url)
         except BaseException:
             return await eor(event, "`Give A Direct Audio Link To Download`")
-        xx = await eor(event, get_string("com_1"))
+        await eor(event, get_string("com_1"))
     elif opt == "v":
         ytd = {
             "format": "best",
@@ -54,7 +54,7 @@ async def download_from_youtube_(event):
             request.get(url)
         except BaseException:
             return await eor(event, "`Give A Direct Video Link To Download`")
-        xx = await eor(event, get_string("com_1"))
+        await eor(event, get_string("com_1"))
     elif opt == "sa":
         ytd = {
             "format": "bestaudio",
