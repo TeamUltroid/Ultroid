@@ -158,7 +158,7 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
-    return await eod(event, "`Bsdk Give Name.`")
+        return await eod(event, "`Bsdk Give Name.`")
     xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
