@@ -44,7 +44,7 @@ opn = []
 
 
 @ultroid_cmd(
-pattern="thumbnail$",
+    pattern="thumbnail$",
 )
 async def _(e):
     r = await e.get_reply_message()
@@ -67,7 +67,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-pattern="rename ?(.*)",
+    pattern="rename ?(.*)",
 )
 async def imak(event):
     reply = await event.get_reply_message()
@@ -105,7 +105,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-pattern="mtoi$",
+    pattern="mtoi$",
 )
 async def imak(event):
     reply = await event.get_reply_message()
@@ -129,7 +129,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-pattern="mtos$",
+    pattern="mtos$",
 )
 async def smak(event):
     reply = await event.get_reply_message()
