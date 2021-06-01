@@ -42,7 +42,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
             return
         if (
             await check_if_admin(event)
-            or (await event.client.get_entity(event.sender_id)).bot
+            or event.sender.bot
         ):
             return
         count = 1
@@ -57,7 +57,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             try:
-                name = (await event.client.get_entity(event.sender_id)).first_name
+                name = event.sender_id.first_name
                 await event.client.edit_permissions(
                     event.chat_id, event.sender_id, send_messages=False
                 )
@@ -100,7 +100,7 @@ async def setflood(e):
     if not input:
         return await eod(e, "`What?`")
     if not input.isdigit():
-        return await eod(e, "`Gwan Myad?`")
+        return await eod(e, "`Invalid Input`")
     m = set_flood(e.chat_id, input)
     if m:
         return await eod(
@@ -118,10 +118,9 @@ async def remove_flood(e):
         del _check_flood[e.chat_id]
     except BaseException:
         pass
-    if hmm is True:
+    if hmm:
         return await eod(e, "`Antiflood Settings Disabled`")
-    else:
-        await eod(e, "`No flood limits in this chat.`")
+    await eod(e, "`No flood limits in this chat.`")
 
 
 @ultroid_cmd(
@@ -132,8 +131,7 @@ async def get_flood(e):
     ok = get_flood_limit(e.chat_id)
     if ok:
         return await eod(e, f"`Flood limit for this chat is {ok}.`")
-    else:
-        await eod(e, "`No flood limits in this chat.`")
+    await eod(e, "`No flood limits in this chat.`")
 
 
 HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
