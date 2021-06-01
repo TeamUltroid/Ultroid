@@ -46,6 +46,7 @@ import os
 from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
+telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 
 from . import *
 
@@ -424,8 +425,12 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
-    ungban(userid)
-    delete_gban_reason(userid)
+    try:
+        ungban(userid)
+        delete_gban_reason(userid)
+        await e.client(UnblockRequest(int(userid)))
+    except Exception as ex:
+        return await eor(xx, str(ex))
     await xx.edit(
         f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
@@ -479,8 +484,12 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
-    gban(userid)
-    add_gban_reason(userid, reason)
+    try:
+        gban(userid)
+        add_gban_reason(userid, reason)
+        await e.client(BlockRequest(int(userid)))
+    except Exception as ex:
+        return await eor(xx, str(ex))
     gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
     if reason != "":
         gb_msg += f"\n**Reason** - {reason}"
