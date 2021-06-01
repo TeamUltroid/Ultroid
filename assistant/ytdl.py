@@ -110,7 +110,7 @@ async def _(event):
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         urlretrieve(
-            f"https://i.ytimg.com/vi/{ytdl_data['id]}/hqdefault.jpg", f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{ytdl_data['id']}/hqdefault.jpg", f"{title}.jpg"
         )
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
