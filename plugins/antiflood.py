@@ -54,7 +54,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
             try:
-                name = event.sender_id.first_name
+                name = event.sender.first_name
                 await event.client.edit_permissions(
                     event.chat_id, event.sender_id, send_messages=False
                 )
