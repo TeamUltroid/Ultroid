@@ -21,7 +21,7 @@
 
 import re
 
-from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood
+from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood, get_flood
 from telethon.events import NewMessage as NewMsg
 
 from . import *
@@ -33,13 +33,10 @@ if Redis("ANTIFLOOD") is not (None or ""):
 
     @ultroid_bot.on(
         NewMsg(
-            incoming=True,
+            chats=list(get_flood().keys()),
         ),
     )
     async def flood_checm(event):
-        limit = get_flood_limit(event.chat_id)
-        if not limit:
-            return
         if await check_if_admin(event) or event.sender.bot:
             return
         count = 1
@@ -53,6 +50,8 @@ if Redis("ANTIFLOOD") is not (None or ""):
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
         if _check_flood[event.chat_id][event.sender_id] >= int(limit):
+            if str(event.sender_id) in DEVLIST:
+                return
             try:
                 name = event.sender.first_name
                 await event.client.edit_permissions(
@@ -124,7 +123,7 @@ async def remove_flood(e):
     pattern="getflood$",
     admins_only=True,
 )
-async def get_flood(e):
+async def getflood(e):
     ok = get_flood_limit(e.chat_id)
     if ok:
         return await eod(e, f"`Flood limit for this chat is {ok}.`")
