@@ -167,8 +167,8 @@ async def _(event):
             attributes=[
                 DocumentAttributeVideo(
                     duration=int(duration),
-                    w=wi,
-                    h=hi,
+                    w=int(wi),
+                    h=int(hi),
                     supports_streaming=True,
                 ),
             ],
