@@ -75,12 +75,6 @@ async def _(e):
             with open(progress, "w") as fk:
                 pass
             proce = await asyncio.create_subprocess_shell(
-                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -c:v libx265 -crf {crf} -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? """{out}""" -y',
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-            )
-            if proce.returncode is None:
-                proce = await asyncio.create_subprocess_shell(
                     f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.PIPE,
@@ -97,7 +91,7 @@ async def _(e):
                     if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
-                        time_diff = time.time() - int(c_time)
+                        time_diff = time.time() - int(d_time)
                         speed = round(elapse / time_diff, 2)
                         eta = time_formatter(
                             (int(total_frames) - elapse / speed) * 1000
