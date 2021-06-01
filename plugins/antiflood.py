@@ -21,7 +21,12 @@
 
 import re
 
-from pyUltroid.functions.antiflood_db import get_flood_limit, rem_flood, set_flood, get_flood
+from pyUltroid.functions.antiflood_db import (
+    get_flood,
+    get_flood_limit,
+    rem_flood,
+    set_flood,
+)
 from telethon.events import NewMessage as NewMsg
 
 from . import *
