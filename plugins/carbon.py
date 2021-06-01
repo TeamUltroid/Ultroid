@@ -15,7 +15,6 @@
     Carbonise the text, with random bg colours.
 """
 
-import os
 import random
 
 import requests
@@ -198,7 +197,7 @@ async def crbn(event):
             event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
         )
     carbon = Carbon(code=code)
-    xx = await carbon.save("ultroid_carbon")
+    xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await ultroid_bot.send_file(
         event.chat_id,
@@ -206,7 +205,6 @@ async def crbn(event):
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
         force_document=True,
     )
-    os.remove(xx)
 
 
 @ultroid_cmd(
@@ -233,7 +231,7 @@ async def crbn(event):
             event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
         )
     carbon = Carbon(code=code, background=col)
-    xx = await carbon.save("ultroid_carbon")
+    xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await ultroid_bot.send_file(
         event.chat_id,
@@ -241,4 +239,3 @@ async def crbn(event):
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
         force_document=True,
     )
-    os.remove(xx)
