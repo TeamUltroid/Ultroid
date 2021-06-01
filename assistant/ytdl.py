@@ -6,7 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import asyncio
 import os
 import re
 import time
@@ -14,7 +13,6 @@ from urllib.request import urlretrieve
 
 from pyUltroid.functions.all import *
 from telethon import Button
-from telethon.errors import UserNotParticipantError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
