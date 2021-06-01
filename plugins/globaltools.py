@@ -45,8 +45,8 @@ import os
 
 from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
-from telethon.tl.types import ChatAdminRights
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
+from telethon.tl.types import ChatAdminRights
 
 from . import *
 
