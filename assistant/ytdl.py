@@ -80,7 +80,7 @@ async def _(event):
     await event.answer(results)
 
 
-@callback(re.compile("yt_(.*)"))
+@callback(re.compile("ytdl_(.*)"))
 @owner
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
