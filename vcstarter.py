@@ -171,7 +171,7 @@ if vcbot is not None:
     def main():
         app = web.Application()
         app.router.add_route("GET", "/", websocket_handler)
-        web.run_app(app, port=os.environ.get("PORT", 6969))
+        web.run_app(app, port=6969)
 
     vcbot.start()
     main()
