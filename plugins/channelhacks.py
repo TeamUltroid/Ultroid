@@ -55,13 +55,13 @@ async def _(e):
     for ys in y:
         try:
             if e.text and not e.media:
-                await ultroid_bot.send_message(int(ys), e.text)
+                await ultroid_bot.forward_message(int(ys), e.text)
             elif e.media and e.text:
                 await ultroid_bot.send_file(int(ys), e.media, caption=e.text)
             else:
                 await ultroid_bot.send_file(int(ys), e.media)
         except Exception as e:
-            await ultroid_bot.send_message(bot.me.id, str(e))
+            await ultroid_bot.forward_message(bot.me.id, str(e))
 
 
 @ultroid_cmd(pattern="shift (.*)")
@@ -88,7 +88,7 @@ async def _(e):
     async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
         try:
             await asyncio.sleep(1.3)
-            await ultroid_bot.send_message(int(d), msg)
+            await ultroid_bot.forward_message(int(d), msg)
         except BaseException:
             pass
     await z.edit("Done")
