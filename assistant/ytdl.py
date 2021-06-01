@@ -131,14 +131,17 @@ async def _(event):
 
     elif lets_split[0] == "video":
         opts = {
-            "format": "bestvideo+bestaudio",
+            "format": "best",
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
             "nocheckcertificate": True,
             "postprocessors": [
-                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
+                {
+                    "key": "FFmpegVideoConvertor",
+                    "preferedformat": "mp4",
+                },
             ],
             "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
@@ -176,4 +179,4 @@ async def _(event):
         file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
-    os.system(f"rm {title}*")
+    os.system(f'rm "{title}*"')
