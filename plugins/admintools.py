@@ -48,6 +48,7 @@
 import asyncio
 
 from telethon.errors import BadRequestError
+from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
 from telethon.tl.functions.messages import SetHistoryTTLRequest
@@ -236,10 +237,7 @@ async def kck(ult):
     pattern="pin ?(.*)",
 )
 async def pin(msg):
-    if not msg.is_private:
-        # for pin(s) in private messages
-        await msg.get_chat()
-    cht = await ultroid_bot.get_entity(msg.chat_id)
+    mss = '`Pinned.`'
     xx = msg.reply_to_msg_id
     tt = msg.text
     try:
@@ -250,17 +248,19 @@ async def pin(msg):
         pass
     if not msg.is_reply:
         return
+    if not msg.is_private:
+        link = (await ultroid_bot(ExpLink(msg.chat_id, xx))).link
+        mss = f'`Pinned` [This Message]({link})'
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
-        x = await eor(msg, get_string("com_1"))
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
         except BadRequestError:
-            return await x.edit("`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm, I'm have no rights here...`")
         except Exception as e:
-            return await x.edit(f"**ERROR:**`{str(e)}`")
-        await x.edit(f"`Pinned` [this message](https://t.me/c/{cht.id}/{xx})!")
+            return await eor(msg, f"**ERROR:**`{str(e)}`")
+        await eor(msg, mss)
     else:
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
