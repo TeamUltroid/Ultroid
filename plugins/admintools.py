@@ -48,9 +48,9 @@
 import asyncio
 
 from telethon.errors import BadRequestError
-from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
@@ -237,7 +237,7 @@ async def kck(ult):
     pattern="pin ?(.*)",
 )
 async def pin(msg):
-    mss = '`Pinned.`'
+    mss = "`Pinned.`"
     xx = msg.reply_to_msg_id
     tt = msg.text
     try:
@@ -250,7 +250,7 @@ async def pin(msg):
         return
     if not msg.is_private:
         link = (await ultroid_bot(ExpLink(msg.chat_id, xx))).link
-        mss = f'`Pinned` [This Message]({link})'
+        mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
