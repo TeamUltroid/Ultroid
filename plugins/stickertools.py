@@ -147,10 +147,10 @@ async def uconverter(event):
 async def pack_kangish(_):
     _e = _.get_reply_message()
 
-    if event.text.split(" "):
+    if _.text.split(" "):
         _packname = event.text.split(" ", maxsplit=1)[1]
     else:
-        _packname = f"Ultroid Kang Pack By {event.sender_id}"
+        _packname = f"Ultroid Kang Pack By {_.sender_id}"
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
