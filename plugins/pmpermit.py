@@ -179,7 +179,7 @@ if sett == "True" and sett != "False":
             name0 = str(name.first_name)
             await asst.send_message(
                 int(udB.get("LOG_CHANNEL")),
-                f"#AutoApproved\nßecoz of outgoing msg\nUser - [{name0}](tg://user?id={e.chat_id})",
+                f"#AutoApproved\n**OutGoing Message.**\nUser - [{name0}](tg://user?id={e.chat_id})",
             )
 
     @ultroid_bot.on(
@@ -321,7 +321,7 @@ if sett == "True" and sett != "False":
                 await event.client(ReportSpamRequest(peer=user.id))
                 name = await event.client.get_entity(user.id)
                 name0 = str(name.first_name)
-                await event.client.send_message(
+                await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
                     f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                 )
