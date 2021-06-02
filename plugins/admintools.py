@@ -257,7 +257,7 @@ async def pin(msg):
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
         except BadRequestError:
-            return await eor(msg, "`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await eor(msg, f"**ERROR:**`{str(e)}`")
         await eor(msg, mss)
@@ -265,7 +265,7 @@ async def pin(msg):
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
         except BadRequestError:
-            return await eor(msg, "`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await eor(msg, f"**ERROR:**`{str(e)}`")
         try:
@@ -288,14 +288,14 @@ async def unp(ult):
         try:
             await ultroid_bot.unpin_message(ult.chat_id, msg)
         except BadRequestError:
-            return await xx.edit("`Hmm, I'm have no rights here...`")
+            return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await xx.edit(f"**ERROR:**\n`{str(e)}`")
     elif ch == "all":
         try:
             await ultroid_bot.unpin_message(ult.chat_id)
         except BadRequestError:
-            return await xx.edit("`Hmm, I'm have no rights here...`")
+            return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await xx.edit(f"**ERROR:**`{str(e)}`")
     else:
