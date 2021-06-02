@@ -145,7 +145,7 @@ async def uconverter(event):
 
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
-    _e = _.get_reply_message()
+    _e = await _.get_reply_message()
 
     if _.text.split(" "):
         _packname = _.text.split(" ", maxsplit=1)[1]
