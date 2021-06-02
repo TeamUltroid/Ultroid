@@ -20,6 +20,9 @@
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
 
+• `{i}packkang <pack name>`
+    Kang the Complete sticker set (with custom name).
+
 • `{i}round <reply to any media>`
     To extract round sticker.
 
@@ -146,7 +149,8 @@ async def uconverter(event):
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-
+    if not _e:
+        return await eor(_, '`Reply to Sticker.`')
     if _.text.split(" "):
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
@@ -171,7 +175,7 @@ async def pack_kangish(_):
         pack = 1
         for i in range(0, 101):
             try:
-                _r_e_s = await tgbot(
+                _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
                         title=_packname,
@@ -182,7 +186,7 @@ async def pack_kangish(_):
             except PackShortNameOccupiedError:
                 time.sleep(1)
                 pack += 1
-                _r_e_s = await tgbot(
+                _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
                         title=_packname,
