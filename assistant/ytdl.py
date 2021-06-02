@@ -180,3 +180,42 @@ async def _(event):
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}*"')
+
+
+"""
+import json
+from . import humanbytes
+from youtube_dl import YoutubeDL
+ytd = YoutubeDL(
+            {
+                "format": "best",
+                "geo-bypass": True,
+                "nocheckcertificate": True,
+                "outtmpl": "%(id)s.mp4",
+            }
+        )
+
+l = ytd.extract_info("http://www.youtube.com/watch?v=pKwNDsBxXRA", False)['formats']
+audio = []
+video = []
+for m in l:
+    k = m['format_note']
+    id = m['format_id']
+    note = m['format_note']
+    size = humanbytes(m['filesize'])
+    j = f"{id} {note} {size}"
+    if k == 'tiny':
+        audio.append(j)
+    else:
+        video.append(j)
+
+
+def butt(typee, listt):
+    butts = [Button.inline(str(x.split(" ", maxsplit=2)[1:]).replace("'","").replace('[','').replace(']','').replace(',',''), data=typee+x.split(' ', maxsplit=2)[0]) for x in listt]
+    buttons = list(zip(butts[::2],butts[1::2]))
+    if len(butts) % 2 == 1:
+        buttons.append((butts[-1],))
+    return buttons
+
+await asst.send_message(chat, "ok", buttons=butt("yta_", audio))
+"""
