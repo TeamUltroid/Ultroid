@@ -148,7 +148,7 @@ async def pack_kangish(_):
     _e = _.get_reply_message()
 
     if _.text.split(" "):
-        _packname = event.text.split(" ", maxsplit=1)[1]
+        _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
