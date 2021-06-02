@@ -52,6 +52,9 @@
 
 • `{i}pst`
    Paste the copied message, with formatting.
+
+• `{i}randomuser`
+   Generate details about a random user.
 """
 
 import asyncio
@@ -629,3 +632,14 @@ async def colgate(event):
         await eor(event, msg)
     except MessageEmptyError:
         return await eod(event, "ERROR.", time=2)
+
+# inspired by @RandomUserGenBot.
+@ultroid_cmd(pattern="randomuser")
+async def _gen_data(event):
+    x = await eor(event, get_string("com_1"))
+    msg, pic = get_random_user_data()
+    await event.reply(
+        msg,
+        file=pic
+    )
+    await x.delete()
