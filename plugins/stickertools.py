@@ -158,7 +158,7 @@ async def pack_kangish(_):
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
-        _get_stiks = await client(
+        _get_stiks = await ultroid_bot(
             functions.messages.GetStickerSetRequest(
                 stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
             )
