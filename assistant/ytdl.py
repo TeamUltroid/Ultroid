@@ -86,7 +86,7 @@ async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
     if lets_split[0] == "audio":
-        opts = {
+        """opts = {
             "format": "bestaudio",
             "addmetadata": True,
             "key": "FFmpegMetadata",
@@ -103,8 +103,8 @@ async def _(event):
             "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
-        }
-        ytdl_data = await dler(event, opts, lets_split[1])
+        }"""
+        ytdl_data = await dler(event, lets_split[1])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         urlretrieve(
@@ -130,7 +130,7 @@ async def _(event):
         )
 
     elif lets_split[0] == "video":
-        opts = {
+        """opts = {
             "format": "best",
             "addmetadata": True,
             "key": "FFmpegMetadata",
@@ -146,8 +146,8 @@ async def _(event):
             "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
-        }
-        ytdl_data = await dler(event, opts, lets_split[1])
+        }"""
+        ytdl_data = await dler(event, lets_split[1])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         urlretrieve(
@@ -183,31 +183,20 @@ async def _(event):
 
 
 """
-import json
-from . import humanbytes
-from youtube_dl import YoutubeDL
-ytd = YoutubeDL(
-            {
-                "format": "best",
-                "geo-bypass": True,
-                "nocheckcertificate": True,
-                "outtmpl": "%(id)s.mp4",
-            }
-        )
-
-l = ytd.extract_info("http://www.youtube.com/watch?v=pKwNDsBxXRA", False)['formats']
-audio = []
-video = []
-for m in l:
-    k = m['format_note']
-    id = m['format_id']
-    note = m['format_note']
-    size = humanbytes(m['filesize'])
-    j = f"{id} {note} {size}"
-    if k == 'tiny':
-        audio.append(j)
-    else:
-        video.append(j)
+def get_data(data):
+    audio = []
+    video = []
+    for m in data['formats']:
+        k = m['format_note']
+        id = m['format_id']
+        note = m['format_note']
+        size = humanbytes(m['filesize'])
+        j = f"{id} {note} {size}"
+        if k == 'tiny':
+            audio.append(j)
+        else:
+            video.append(j)
+    return audio, video
 
 
 def butt(typee, listt):
