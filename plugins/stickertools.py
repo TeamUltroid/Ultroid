@@ -39,7 +39,11 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendInlineForbiddenError, ChatSendStickersForbiddenError, PackShortNameOccupiedError
+from telethon.errors import (
+    ChatSendInlineForbiddenError,
+    ChatSendStickersForbiddenError,
+    PackShortNameOccupiedError,
+)
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
@@ -142,7 +146,7 @@ async def uconverter(event):
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = _.get_reply_message()
-    
+
     if event.text.split(" "):
         _packname = event.text.split(" ", maxsplit=1)[1]
     else:
@@ -150,23 +154,48 @@ async def pack_kangish(_):
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
-        _get_stiks = await client(functions.messages.GetStickerSetRequest(stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)))
+        _get_stiks = await client(
+            functions.messages.GetStickerSetRequest(
+                stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
+            )
+        )
         stiks = []
         for i in _get_stiks.documents:
             x = utils.get_input_document(i)
-            stiks.append(types.InputStickerSetItem(document=x, emoji=(i.attributes[1]).alt,))
+            stiks.append(
+                types.InputStickerSetItem(
+                    document=x,
+                    emoji=(i.attributes[1]).alt,
+                )
+            )
         pack = 1
-        count = 0
         for i in range(0, 101):
             try:
-                _r_e_s =  await tgbot(functions.stickers.CreateStickerSetRequest(user_id=_.sender_id, title=_packname, short_name=f'ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}', stickers=stiks))
+                _r_e_s = await tgbot(
+                    functions.stickers.CreateStickerSetRequest(
+                        user_id=_.sender_id,
+                        title=_packname,
+                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                        stickers=stiks,
+                    )
+                )
             except PackShortNameOccupiedError:
                 time.sleep(1)
                 pack += 1
-                _r_e_s =  await tgbot(functions.stickers.CreateStickerSetRequest(user_id=_.sender_id, title=_packname, short_name=f'ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}', stickers=stiks))
+                _r_e_s = await tgbot(
+                    functions.stickers.CreateStickerSetRequest(
+                        user_id=_.sender_id,
+                        title=_packname,
+                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                        stickers=stiks,
+                    )
+                )
                 continue
             break
-        await eor(_, f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers{_r_e_s.set.shortname})")
+        await eor(
+            _,
+            f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers{_r_e_s.set.shortname})",
+        )
     else:
         await eor(_, "Unsupported File")
 
