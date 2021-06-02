@@ -54,7 +54,9 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if _check_flood[event.chat_id][event.sender_id] >= int(get_flood_limit(event.chat_id)):
+        if _check_flood[event.chat_id][event.sender_id] >= int(
+            get_flood_limit(event.chat_id)
+        ):
             if str(event.sender_id) in DEVLIST:
                 return
             try:
