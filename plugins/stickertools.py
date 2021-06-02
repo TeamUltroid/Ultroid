@@ -198,7 +198,7 @@ async def pack_kangish(_):
             break
         await eor(
             _,
-            f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers{_r_e_s.set.shortname})",
+            f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
         )
     else:
         await eor(_, "Unsupported File")
