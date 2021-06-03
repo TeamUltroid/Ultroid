@@ -151,7 +151,7 @@ async def pack_kangish(_):
     _e = await _.get_reply_message()
     if not _e:
         return await eor(_, "`Reply to Sticker.`")
-    if _.text.split(" "):
+    if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
@@ -185,7 +185,7 @@ async def pack_kangish(_):
                 )
             except PackShortNameOccupiedError:
                 time.sleep(1)
-                pack += 1
+                pack += i
                 """i += 1
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
