@@ -1,7 +1,6 @@
 .env
-ultroid.session-journal
-ultroid.session
-ultroid_vc.session
+*.session-journal
+*.session
 build
 *.mp3
 *.webm
@@ -11,7 +10,7 @@ build
 /*.jpg
 /*.png
 /*.mp4
-ultroid.log
+*.log
 target/npmlist.json
 package-lock.json
 # Directories
@@ -22,3 +21,4 @@ node_modules/
 glitch_me/
 .idea/
 .vscode/
+temp/
