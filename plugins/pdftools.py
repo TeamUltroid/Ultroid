@@ -84,7 +84,7 @@ async def pdfseimg(event):
         os.mkdir("pdf")
         await xx.delete()
     elif "-" in msg:
-        ok = int(msg.split("-")[-1]) -1
+        ok = int(msg.split("-")[-1]) - 1
         for o in range(ok):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(o))
