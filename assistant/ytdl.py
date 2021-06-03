@@ -155,7 +155,7 @@ async def _(event):
     format = url.split(":")[1]
     if lets_split[0] == "audio":
         opts = {
-            "format": int(format),
+            "format": str(format),
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
@@ -191,7 +191,7 @@ async def _(event):
 
     elif lets_split[0] == "video":
         opts = {
-            "format": int(format),
+            "format": str(format),
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
