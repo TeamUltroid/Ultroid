@@ -214,7 +214,12 @@ async def _(event):
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
+        try:
+            os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
+        except FileNotFoundError:
+            os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
+        except Exception as ex:
+            return await event.edit(str(ex))
         wi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Width"')
         hi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Height"')
         c_time = time.time()
