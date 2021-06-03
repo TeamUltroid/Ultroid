@@ -177,7 +177,7 @@ async def pack_kangish(_):
             cont = requests.get(Alink).content
             if (
                 "A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
-                in cont
+                in str(cont)
             ):
                 pack += 1
         r_e_s = await asst(
