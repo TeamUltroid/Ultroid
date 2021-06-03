@@ -17,6 +17,7 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
+from numerize import numerize
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -168,7 +169,7 @@ async def _(event):
         YoutubeDL(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
-        views = ytdl_data["view_count"]
+        views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
@@ -204,7 +205,7 @@ async def _(event):
         YoutubeDL(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
-        views = ytdl_data["view_count"]
+        views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
@@ -236,4 +237,4 @@ async def _(event):
         file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
-    os.system(f'rm "{title}*"')
+    os.system(f'rm "{title}"*')
