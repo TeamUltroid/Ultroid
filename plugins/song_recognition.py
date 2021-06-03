@@ -40,7 +40,7 @@ async def song_recog(event):
         return await eod(xx, str(e), time=10)
     try:
         x = res["track"]
-	except KeyError:
-		return await eod(xx, "`Couldn't identify song :(`", time=5)
+    except KeyError:
+	return await eod(xx, "`Couldn't identify song :(`", time=5)
     await xx.edit(f"**Song Recognised!**\nName: __{x['title']}__")
     remove(path_to_song)
