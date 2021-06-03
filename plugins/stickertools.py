@@ -185,7 +185,8 @@ async def pack_kangish(_):
                 )
             except PackShortNameOccupiedError:
                 time.sleep(1)
-                i += 1
+                pack += i
+                """i += 1
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
@@ -193,7 +194,7 @@ async def pack_kangish(_):
                         short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                         stickers=stiks,
                     )
-                )
+                )"""
             if _r_e_s:
                 break
             else:
