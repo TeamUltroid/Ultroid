@@ -173,7 +173,7 @@ async def pack_kangish(_):
                 )
             )
         pack = 1
-        for i in range(0, 101):
+        for i in range(1, 101):
             try:
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
@@ -185,7 +185,7 @@ async def pack_kangish(_):
                 )
             except PackShortNameOccupiedError:
                 time.sleep(1)
-                pack += 1
+                pack += i
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
