@@ -6,21 +6,20 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import re
-
-from pyUltroid.functions.all import *
-from telethon import Button
-from telethon.tl.types import InputWebDocument as wb
-from youtubesearchpython import VideosSearch
-
 import os
+import re
 import time
 from urllib.request import urlretrieve
 
+from pyUltroid.functions.all import *
+from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from telethon.tl.types import InputWebDocument as wb
+from youtubesearchpython import VideosSearch
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
+
 
 @in_pattern("yt")
 @in_owner
@@ -46,7 +45,7 @@ async def _(event):
     nibba = nub["result"]
     for v in nibba:
         ids = v["id"]
-        link = _yt_base_url+ids
+        link = _yt_base_url + ids
         title = v["title"]
         duration = v["duration"]
         thumb = f"https://img.youtube.com/vi/{ids}/hqdefault.jpg"
@@ -91,9 +90,11 @@ async def _(event):
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
     _lets_split = _e.split("_", maxsplit=1)
-    _ytdl_data = await dler(e, _yt_base_url+_lets_split[1])
+    _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
     _data = get_data(_lets_split[0], _ytdl_data)
-    _buttons = get_buttons("ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data)
+    _buttons = get_buttons(
+        "ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data
+    )
     _text = "`Select Your Format.`"
     await e.edit(_text, buttons=_buttons)
 
@@ -145,8 +146,8 @@ def get_buttons(typee, listt):
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
-    vid_id = lets_split[2].split(':')[0]
-    link = _yt_base_url+vid_id
+    vid_id = lets_split[2].split(":")[0]
+    link = _yt_base_url + vid_id
     format = url.split(":")[1]
     if lets_split[0] == "audio":
         opts = {
@@ -164,9 +165,7 @@ async def _(event):
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = ytdl_data["view_count"]
-        urlretrieve(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
-        )
+        urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
         os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
@@ -202,9 +201,7 @@ async def _(event):
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = ytdl_data["view_count"]
-        urlretrieve(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
-        )
+        urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
         os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
