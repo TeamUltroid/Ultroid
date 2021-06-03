@@ -173,7 +173,7 @@ async def pack_kangish(_):
                 )
             )
         pack = 1
-        for i in range(1, 101):
+        for i in range(0, 101):
             try:
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
