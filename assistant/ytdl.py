@@ -128,7 +128,7 @@ def get_buttons(typee, listt):
             .replace("[", "")
             .replace("]", "")
             .replace(",", ""),
-            data=typee +"_" + x.split(" ", maxsplit=2)[0],
+            data=typee + "_" + x.split(" ", maxsplit=2)[0],
         )
         for x in listt
     ]
