@@ -195,7 +195,8 @@ async def pack_kangish(_):
                     )
                 )
                 continue
-            break
+            else:
+                break
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
