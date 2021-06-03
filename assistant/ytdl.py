@@ -133,7 +133,7 @@ async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
     if lets_split[0] == "audio":
-        """opts = {
+        opts = {
             "format": "bestaudio",
             "addmetadata": True,
             "key": "FFmpegMetadata",
@@ -150,7 +150,7 @@ async def _(event):
             "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
-        }"""
+        }
         ytdl_data = await dler(event, lets_split[1])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
@@ -177,7 +177,7 @@ async def _(event):
         )
 
     elif lets_split[0] == "video":
-        """opts = {
+        opts = {
             "format": "best",
             "addmetadata": True,
             "key": "FFmpegMetadata",
@@ -193,7 +193,7 @@ async def _(event):
             "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
-        }"""
+        }
         ytdl_data = await dler(event, lets_split[1])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
