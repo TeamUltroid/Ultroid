@@ -102,15 +102,18 @@ async def _(e):
 def get_data(types, data):
     audio = []
     video = []
-    for m in data["formats"]:
-        id = m["format_id"]
-        note = m["format_note"]
-        size = humanbytes(m["filesize"])
-        j = f"{id} {note} {size}"
-        if note == "tiny":
-            audio.append(j)
-        else:
-            video.append(j)
+    try:
+        for m in data["formats"]:
+            id = m["format_id"]
+            note = m["format_note"]
+            size = humanbytes(m["filesize"])
+            j = f"{id} {note} {size}"
+            if note == "tiny":
+                audio.append(j)
+            else:
+                video.append(j)
+    except:
+        pass
     if types == "audio":
         return audio
     elif types == "video":
