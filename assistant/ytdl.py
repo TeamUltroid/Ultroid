@@ -112,7 +112,7 @@ def get_data(types, data):
                 audio.append(j)
             else:
                 video.append(j)
-    except:
+    except BaseException:
         pass
     if types == "audio":
         return audio
