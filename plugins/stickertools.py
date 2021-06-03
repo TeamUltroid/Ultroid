@@ -35,6 +35,7 @@ import asyncio
 import io
 import os
 import random
+import requests
 import re
 import urllib.request
 from os import remove
@@ -174,19 +175,11 @@ async def pack_kangish(_):
             )
         pack = 1
         for i in range(0, 101):
-            try:
-                _r_e_s = await asst(
-                    functions.stickers.CreateStickerSetRequest(
-                        user_id=_.sender_id,
-                        title=_packname,
-                        short_name=f"ult_{_.sender_id}_{pack}_by_{asst.me.username}",
-                        stickers=stiks,
-                    )
-                )
-            except PackShortNameOccupiedError:
-                time.sleep(1)
-                pack += i
-                _r_e_s = await asst(
+            Alink = f"https://t.me/addstickers/ult_{_.sender_id}_{i}_by_{asst.me.username}"
+            cont = requests.get(Alink).text
+            if "A **Telegram** user has created the **Sticker Set.**" in cont:
+                pack += 1
+        r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
                         title=_packname,
