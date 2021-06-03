@@ -185,7 +185,7 @@ async def pack_kangish(_):
                 )
             except PackShortNameOccupiedError:
                 time.sleep(1)
-                pack += i
+                pack += 1
                 """i += 1
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
