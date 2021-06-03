@@ -80,6 +80,53 @@ async def _(event):
     await event.answer(results)
 
 
+
+
+
+@callback(
+    re.compile(
+        "ytdl_(.*)",
+    ),
+)
+async def _(e):
+    _e = e.pattern_match.group(1).decode("UTF-8")
+    lets_split = _e.split("_", maxsplit=1)
+    ytdl_data = await dler(event, lets_split[1])
+    data = get_data(lets_split[0], ytdl_data)
+    buttons = get_buttons(lets_split[0], data)
+    text = "`Select Your Format.`")
+    await e.edit(text, buttons=buttons)
+    
+def get_data(types, data):
+    audio = []
+    video = []
+    for m in data['formats']:
+        k = m['format_note']
+        id = m['format_id']
+        note = m['format_note']
+        size = humanbytes(m['filesize'])
+        j = f"{id} {note} {size}"
+        if k == 'tiny':
+            audio.append(j)
+        else:
+            video.append(j)
+    if types == "audio":
+        return audio
+    elif types == "video":
+        return video
+    else:
+        return []
+
+
+def get_buttons(typee, listt):
+    butts = [Button.inline(str(x.split(" ", maxsplit=2)[1:]).replace("'","").replace('[','').replace(']','').replace(',',''), data=typee+x.split(' ', maxsplit=2)[0]) for x in listt]
+    buttons = list(zip(butts[::2],butts[1::2]))
+    if len(butts) % 2 == 1:
+        buttons.append((butts[-1],))
+    return buttons
+
+
+"""
 @callback(re.compile("ytdl_(.*)"))
 @owner
 async def _(event):
@@ -180,31 +227,4 @@ async def _(event):
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}*"')
-
-
-"""
-def get_data(data):
-    audio = []
-    video = []
-    for m in data['formats']:
-        k = m['format_note']
-        id = m['format_id']
-        note = m['format_note']
-        size = humanbytes(m['filesize'])
-        j = f"{id} {note} {size}"
-        if k == 'tiny':
-            audio.append(j)
-        else:
-            video.append(j)
-    return audio, video
-
-
-def butt(typee, listt):
-    butts = [Button.inline(str(x.split(" ", maxsplit=2)[1:]).replace("'","").replace('[','').replace(']','').replace(',',''), data=typee+x.split(' ', maxsplit=2)[0]) for x in listt]
-    buttons = list(zip(butts[::2],butts[1::2]))
-    if len(butts) % 2 == 1:
-        buttons.append((butts[-1],))
-    return buttons
-
-await asst.send_message(chat, "ok", buttons=butt("yta_", audio))
 """
