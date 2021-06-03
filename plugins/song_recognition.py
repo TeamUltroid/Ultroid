@@ -38,8 +38,9 @@ async def song_recog(event):
         res = await shazam.recognize_song(path_to_song)
     except Exception as e:
         return await eod(xx, str(e), time=10)
-    x = res["track"] or None
-    if x is None:
-        return await eod(xx, "`Couldn't identify song :(`", time=5)
+    try:
+        x = res["track"]
+	except KeyError:
+		return await eod(xx, "`Couldn't identify song :(`", time=5)
     await xx.edit(f"**Song Recognised!**\nName: __{x['title']}__")
     remove(path_to_song)
