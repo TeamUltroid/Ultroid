@@ -148,9 +148,9 @@ async def pack_kangish(_):
     _e = await _.get_reply_message()
     if not _e:
         return await eor(_, "`Reply to Sticker.`")
-    try:
+    if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
-    except IndexError:
+    else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
@@ -171,23 +171,27 @@ async def pack_kangish(_):
             )
         pack = 1
         for i in range(0, 101):
-            Alink = (
-                f"https://t.me/addstickers/ult_{_.sender_id}_{i}_by_{asst.me.username}"
-            )
-            cont = requests.get(Alink).content
-            if (
-                "A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
-                in str(cont)
-            ):
-                pack += 1
-        r_e_s = await asst(
-            functions.stickers.CreateStickerSetRequest(
-                user_id=_.sender_id,
-                title=_packname,
-                short_name=f"ult_{_.sender_id}_{pack}_by_{asst.me.username}",
-                stickers=stiks,
-            )
-        )
+            try:
+                _r_e_s = await asst(
+                    functions.stickers.CreateStickerSetRequest(
+                        user_id=_.sender_id,
+                        title=_packname,
+                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                        stickers=stiks,
+                    )
+                )
+            except PackShortNameOccupiedError:
+                time.sleep(1)
+                pack += i
+                """i += 1
+                _r_e_s = await asst(
+                    functions.stickers.CreateStickerSetRequest(
+                        user_id=_.sender_id,
+                        title=_packname,
+                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                        stickers=stiks,
+                    )
+                )"""
 
         await eor(
             _,
