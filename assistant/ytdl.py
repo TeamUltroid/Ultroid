@@ -6,14 +6,10 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import os
 import re
-import time
-from urllib.request import urlretrieve
 
 from pyUltroid.functions.all import *
 from telethon import Button
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
@@ -80,9 +76,6 @@ async def _(event):
     await event.answer(results)
 
 
-
-
-
 @callback(
     re.compile(
         "ytdl_(.*)",
@@ -96,17 +89,18 @@ async def _(e):
     buttons = get_buttons(lets_split[0], data)
     text = "`Select Your Format.`"
     await e.edit(text, buttons=buttons)
-    
+
+
 def get_data(types, data):
     audio = []
     video = []
-    for m in data['formats']:
-        k = m['format_note']
-        id = m['format_id']
-        note = m['format_note']
-        size = humanbytes(m['filesize'])
+    for m in data["formats"]:
+        k = m["format_note"]
+        id = m["format_id"]
+        note = m["format_note"]
+        size = humanbytes(m["filesize"])
         j = f"{id} {note} {size}"
-        if k == 'tiny':
+        if k == "tiny":
             audio.append(j)
         else:
             video.append(j)
@@ -119,8 +113,18 @@ def get_data(types, data):
 
 
 def get_buttons(typee, listt):
-    butts = [Button.inline(str(x.split(" ", maxsplit=2)[1:]).replace("'","").replace('[','').replace(']','').replace(',',''), data=typee+x.split(' ', maxsplit=2)[0]) for x in listt]
-    buttons = list(zip(butts[::2],butts[1::2]))
+    butts = [
+        Button.inline(
+            str(x.split(" ", maxsplit=2)[1:])
+            .replace("'", "")
+            .replace("[", "")
+            .replace("]", "")
+            .replace(",", ""),
+            data=typee + x.split(" ", maxsplit=2)[0],
+        )
+        for x in listt
+    ]
+    buttons = list(zip(butts[::2], butts[1::2]))
     if len(butts) % 2 == 1:
         buttons.append((butts[-1],))
     return buttons
