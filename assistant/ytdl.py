@@ -22,7 +22,7 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 """
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
-
+_yt_base_url = "https://www.youtube.com/watch?v="
 
 @in_pattern("yt")
 @in_owner
@@ -47,9 +47,9 @@ async def _(event):
     nub = search.result()
     nibba = nub["result"]
     for v in nibba:
-        link = v["link"]
-        title = v["title"]
         ids = v["id"]
+        link = _yt_base_url+ids
+        title = v["title"]
         duration = v["duration"]
         thumb = f"https://img.youtube.com/vi/{ids}/hqdefault.jpg"
         text = f"**•Tɪᴛʟᴇ•** `{title}`\n\n**••[Lɪɴᴋ]({link})••**\n\n**••Dᴜʀᴀᴛɪᴏɴ••** `{duration}`\n\n\n"
@@ -63,8 +63,8 @@ async def _(event):
                 include_media=True,
                 buttons=[
                     [
-                        Button.inline("Audio", data=f"ytdl_audio_{link}"),
-                        Button.inline("Video", data=f"ytdl_video_{link}"),
+                        Button.inline("Audio", data=f"ytdl_audio_{ids}"),
+                        Button.inline("Video", data=f"ytdl_video_{ids}"),
                     ],
                     [
                         Button.switch_inline(
@@ -89,12 +89,13 @@ async def _(event):
         "ytdl_(.*)",
     ),
 )
+@owner
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
     _lets_split = _e.split("_", maxsplit=1)
-    _ytdl_data = await dler(e, _lets_split[1])
+    _ytdl_data = await dler(e, _yt_base_url+_lets_split[1])
     _data = get_data(_lets_split[0], _ytdl_data)
-    _buttons = get_buttons("ytdownload_" + _lets_split[0] + "_", _data)
+    _buttons = get_buttons("ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data)
     _text = "`Select Your Format.`"
     await e.edit(_text, buttons=_buttons)
 
@@ -137,36 +138,36 @@ def get_buttons(typee, listt):
     return buttons
 
 
-"""
-@callback(re.compile("ytdl_(.*)"))
+@callback(
+    re.compile(
+        "ytownload_(.*)",
+    ),
+)
 @owner
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
+    vid_id = lets_split[2].split(':')[0]
+    link = _yt_base_url+vid_id
+    format = url.split(":")[1]
     if lets_split[0] == "audio":
         opts = {
-            "format": "bestaudio",
+            "format": int(format),
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "nocheckcertificate": True,
-            "postprocessors": [
-                {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
-                    "preferredquality": "320",
-                },
-            ],
             "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
-        ytdl_data = await dler(event, lets_split[1])
+        ytdl_data = await dler(event, link)
+        YoutubeDl(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
+        views = ytdl_data["view_count"]
         urlretrieve(
-            f"https://i.ytimg.com/vi/{ytdl_data['id']}/hqdefault.jpg", f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
@@ -189,27 +190,22 @@ async def _(event):
 
     elif lets_split[0] == "video":
         opts = {
-            "format": "best",
+            "format": int(format),
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "nocheckcertificate": True,
-            "postprocessors": [
-                {
-                    "key": "FFmpegVideoConvertor",
-                    "preferedformat": "mp4",
-                },
-            ],
             "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
-        ytdl_data = await dler(event, lets_split[1])
+        ytdl_data = await dler(event, link)
+        YoutubeDl(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
+        views = ytdl_data["view_count"]
         urlretrieve(
-            f"https://i.ytimg.com/vi/{ytdl_data['id']}/hqdefault.jpg", f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
@@ -232,10 +228,13 @@ async def _(event):
             ],
             thumb=thumb,
         )
+    text = f"`Title:` `{title}`\n"
+    text += f"`Duration:` `{time_formatter(int(duration)*1000)}`\n"
+    text += f"`Views:` `{views}`\n"
+    text += f"`Artist:` `{artist}`")
     await event.edit(
-        f"**{title}\n{time_formatter(int(duration)*1000)}\n{artist}**",
+        text,
         file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}*"')
-"""
