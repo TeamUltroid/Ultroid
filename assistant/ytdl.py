@@ -101,52 +101,6 @@ async def _(e):
     await e.edit(_text, buttons=_buttons)
 
 
-def get_data(types, data):
-    audio = []
-    video = []
-    try:
-        for m in data["formats"]:
-            id = m["format_id"]
-            note = m["format_note"]
-            size = humanbytes(m["filesize"])
-            j = f"{id} {note} {size}"
-            if note == "tiny":
-                audio.append(j)
-            else:
-                if m["acodec"] == "none":
-                    id = str(m["format_id"]) + "+" + str(audio[-1].split()[0])
-                    j = f"{id} {note} {size}"
-                    video.append(j)
-                else:
-                    video.append(j)
-    except BaseException:
-        pass
-    if types == "audio":
-        return audio
-    elif types == "video":
-        return video
-    else:
-        return []
-
-
-def get_buttons(typee, listt):
-    butts = [
-        Button.inline(
-            str(x.split(" ", maxsplit=2)[1:])
-            .replace("'", "")
-            .replace("[", "")
-            .replace("]", "")
-            .replace(",", ""),
-            data=typee + x.split(" ", maxsplit=2)[0],
-        )
-        for x in listt
-    ]
-    buttons = list(zip(butts[::2], butts[1::2]))
-    if len(butts) % 2 == 1:
-        buttons.append((butts[-1],))
-    return buttons
-
-
 @callback(
     re.compile(
         "ytdownload_(.*)",
