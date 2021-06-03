@@ -142,7 +142,7 @@ def get_buttons(typee, listt):
 
 @callback(
     re.compile(
-        "ytownload_(.*)",
+        "ytdownload_(.*)",
     ),
 )
 @owner
