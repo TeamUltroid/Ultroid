@@ -114,7 +114,7 @@ def get_data(types, data):
                 audio.append(j)
             else:
                 if m["acodec"] == "none":
-                    id = str(m["format_id"]) + "+" + str(audio[-1].split()[-2])
+                    id = str(m["format_id"]) + "+" + str(audio[-1].split()[1])
                     j = f"{id} {note} {size}"
                     video.append(j)
                 else:
