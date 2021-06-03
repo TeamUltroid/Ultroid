@@ -113,8 +113,8 @@ def get_data(types, data):
             if note == "tiny":
                 audio.append(j)
             else:
-                if m['acodec'] == 'none':
-                    id = str(m['format_id']) + "+" + str(audio[-1].split()[-1])
+                if m["acodec"] == "none":
+                    id = str(m["format_id"]) + "+" + str(audio[-1].split()[-1])
                     j = f"{id} {note} {size}"
                     video.append(j)
                 else:
