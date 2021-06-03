@@ -91,12 +91,12 @@ async def _(event):
 )
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
-    lets_split = _e.split("_", maxsplit=1)
-    ytdl_data = await dler(event, lets_split[1])
-    data = get_data(lets_split[0], ytdl_data)
-    buttons = get_buttons(lets_split[0], data)
-    text = "`Select Your Format.`"
-    await e.edit(text, buttons=buttons)
+    _lets_split = _e.split("_", maxsplit=1)
+    _ytdl_data = await dler(e, _lets_split[1])
+    _data = get_data(_lets_split[0], _ytdl_data)
+    _buttons = get_buttons(_lets_split[0], _data)
+    _text = "`Select Your Format.`"
+    await e.edit(_text, buttons=_buttons)
 
 
 def get_data(types, data):
