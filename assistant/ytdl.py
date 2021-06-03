@@ -16,6 +16,7 @@ from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
+from youtube_dl import YoutubeDL
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -164,7 +165,7 @@ async def _(event):
             "logtostderr": False,
         }
         ytdl_data = await dler(event, link)
-        YoutubeDl(opts).download([link])
+        YoutubeDL(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = ytdl_data["view_count"]
@@ -200,7 +201,7 @@ async def _(event):
             "quiet": True,
         }
         ytdl_data = await dler(event, link)
-        YoutubeDl(opts).download([link])
+        YoutubeDL(opts).download([link])
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = ytdl_data["view_count"]
