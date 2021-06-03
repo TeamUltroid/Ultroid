@@ -6,12 +6,13 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+import os
 import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
 
-import requests, os
+import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
@@ -493,6 +494,8 @@ async def eupload(event):
         urllib.request.urlretrieve(
             "https://www.gutenberg.org/ebooks/132.epub.images", book
         )
-        fn, media, _ = await asst._file_to_media(book, thumb="resources/extras/ultroid.jpg")
+        fn, media, _ = await asst._file_to_media(
+            book, thumb="resources/extras/ultroid.jpg"
+        )
         await event.edit(file=media)
         os.remove(book)
