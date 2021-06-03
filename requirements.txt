@@ -1,3 +1,4 @@
 py-Ultroid==30.5b0
 numerize
 git+https://github.com/buddhhu/img2html.git
+shazamio
