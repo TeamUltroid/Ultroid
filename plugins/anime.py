@@ -12,14 +12,16 @@
    Get details about currently airing anime.
 """
 
-from . import *
 from os import remove
+
+from . import *
+
 
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
     try:
         await eor(event, airing_eps())
-    except:
+    except BaseException:
         msg = airing_eps()
         t = msg.replace("*", "").replace("`", "")
         f = open("animes.txt", "w")
