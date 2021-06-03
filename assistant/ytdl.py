@@ -11,13 +11,13 @@ import re
 import time
 from urllib.request import urlretrieve
 
+from numerize import numerize
 from pyUltroid.functions.all import *
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
-from numerize import numerize
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
