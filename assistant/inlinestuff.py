@@ -11,7 +11,7 @@ from random import choice
 from re import compile as re_compile
 from re import findall
 
-import requests
+import requests, os
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
@@ -489,8 +489,10 @@ async def eupload(event):
             file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
         )
     except BaseException:
-        book = f"{match}.epub"
+        book = "Ultroid-Book.epub"
         urllib.request.urlretrieve(
             "https://www.gutenberg.org/ebooks/132.epub.images", book
         )
-        await event.edit(file=book)
+        fn, media, _ = await asst._file_to_media(book, thumb="resources/extras/ultroid.jpg")
+        await event.edit(file=media)
+        os.remove(book)
