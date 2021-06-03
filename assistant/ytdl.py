@@ -94,7 +94,7 @@ async def _(e):
     ytdl_data = await dler(event, lets_split[1])
     data = get_data(lets_split[0], ytdl_data)
     buttons = get_buttons(lets_split[0], data)
-    text = "`Select Your Format.`")
+    text = "`Select Your Format.`"
     await e.edit(text, buttons=buttons)
     
 def get_data(types, data):
