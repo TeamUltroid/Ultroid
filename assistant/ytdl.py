@@ -13,6 +13,14 @@ from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
+"""
+import os
+import time
+from urllib.request import urlretrieve
+
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+"""
+
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 
 
