@@ -185,7 +185,7 @@ async def pack_kangish(_):
                 )
             except PackShortNameOccupiedError:
                 time.sleep(1)
-                pack += i
+                i += 1
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
@@ -194,7 +194,6 @@ async def pack_kangish(_):
                         stickers=stiks,
                     )
                 )
-                continue
             else:
                 break
         await eor(
