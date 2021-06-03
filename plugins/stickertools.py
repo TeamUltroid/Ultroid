@@ -174,8 +174,8 @@ async def pack_kangish(_):
             Alink = (
                 f"https://t.me/addstickers/ult_{_.sender_id}_{i}_by_{asst.me.username}"
             )
-            cont = requests.get(Alink).text
-            if "A **Telegram** user has created the **Sticker Set.**" in cont:
+            cont = requests.get(Alink).content
+            if "A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>." in cont:
                 pack += 1
         r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
