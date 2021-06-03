@@ -41,7 +41,6 @@ from os import remove
 
 import cv2
 import numpy as np
-import requests
 from PIL import Image, ImageDraw
 from telethon.errors import (
     ChatSendInlineForbiddenError,
