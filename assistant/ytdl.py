@@ -94,7 +94,7 @@ async def _(e):
     _lets_split = _e.split("_", maxsplit=1)
     _ytdl_data = await dler(e, _lets_split[1])
     _data = get_data(_lets_split[0], _ytdl_data)
-    _buttons = get_buttons(_lets_split[0], _data)
+    _buttons = get_buttons("ytdownload_"+_lets_split[0]+"_", _data)
     _text = "`Select Your Format.`"
     await e.edit(_text, buttons=_buttons)
 
@@ -127,7 +127,7 @@ def get_buttons(typee, listt):
             .replace("[", "")
             .replace("]", "")
             .replace(",", ""),
-            data=typee + "_" + x.split(" ", maxsplit=2)[0],
+            data=typee + x.split(" ", maxsplit=2)[0],
         )
         for x in listt
     ]
