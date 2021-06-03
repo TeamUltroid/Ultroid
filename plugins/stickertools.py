@@ -195,7 +195,6 @@ async def pack_kangish(_):
                         stickers=stiks,
                     )
                 )"""
-                continue
 
         await eor(
             _,
