@@ -104,8 +104,6 @@ async def waifu(animu):
             hide_via=True,
         )
         await xx.delete()
-    except ChatSendInlineForbiddenError:
-        await xx.edit("`Boss ! I cant use inline things here...`")
     except ChatSendStickersForbiddenError:
         await xx.edit("Sorry boss, I can't send Sticker Here !!")
 
@@ -344,7 +342,7 @@ async def hehe(args):
                         await xx.edit(
                             f"`Sticker added in a Different Pack !\
                             \nThis Pack is Newly created!\
-                            \nYour pack can be found [here](t.me/addstickers/{packname})",
+                            \nYour pack can be found` [here](t.me/addstickers/{packname})",
                             parse_mode="md",
                         )
                         return
