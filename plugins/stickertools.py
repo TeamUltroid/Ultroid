@@ -42,11 +42,7 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon.errors import (
-    ChatSendInlineForbiddenError,
-    ChatSendStickersForbiddenError,
-    PackShortNameOccupiedError,
-)
+from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
