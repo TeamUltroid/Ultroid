@@ -130,22 +130,12 @@ async def restartbt(ult):
         await bash("pkill python3 && python3 -m pyUltroid")
 
 
-@ultroid_cmd(pattern="shutdown")
+@ultroid_cmd(pattern="shutdown$")
 async def shutdownbot(ult):
     if not ult.out:
         if not is_fullsudo(ult.sender_id):
             return await eod(ult, "`This Command Is Sudo Restricted.`")
-    try:
-        dyno = ult.text.split(" ", maxsplit=1)[1]
-    except IndexError:
-        dyno = None
-    if dyno:
-        if dyno not in ["userbot", "vcbot", "web", "worker"]:
-            await eor(ult, "Invalid Dyno Type specified !")
-            return
-        await shutdown(ult, dyno)
-    else:
-        await shutdown(ult)
+    await shutdown(ult)
 
 
 @ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}logs")))
