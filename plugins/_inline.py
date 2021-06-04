@@ -10,12 +10,10 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-from platform import python_version as PyVer
 
 from git import Repo
-from pyUltroid import __version__ as UltVer
 from support import *
-from telethon import Button, __version__
+from telethon import Button
 from telethon.tl.types import InputWebDocument
 
 from . import *
@@ -66,18 +64,20 @@ async def e(o):
         uptime = grt(time.time() - start_time)
         MSG += f"\n\n• Uptime - {uptime}\n"
         MSG += f"• OWNER - {OWNER_NAME}"
-        WEB0 = InputWebDocument("https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", [])
+        WEB0 = InputWebDocument(
+            "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+        )
         RES = [
-        InputBotInlineResult(
-            str(e.id),
-            'photo',
-            send_message = await b._message(text=" " or None,
-                                            media=True),
-            title="Ultroid Userbot",
-            description="Userbot | Telethon",
-            url=TLINK,
-            thumb=WEB0,
-            content=InputWebDocument(TLINK, 0, "image/jpg", []))
+            InputBotInlineResult(
+                str(e.id),
+                "photo",
+                send_message=await b._message(text=" " or None, media=True),
+                title="Ultroid Userbot",
+                description="Userbot | Telethon",
+                url=TLINK,
+                thumb=WEB0,
+                content=InputWebDocument(TLINK, 0, "image/jpg", []),
+            )
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
