@@ -57,21 +57,21 @@ _main_help_menu = [
 
 @in_pattern("")
 @in_owner
-async def e(o):
+async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
-        MSG = "• Ultroid Userbot •"
+        MSG = "• **Ultroid Userbot •**"
         uptime = grt(time.time() - start_time)
-        MSG += f"\n\n• Uptime - {uptime}\n"
-        MSG += f"• OWNER - {OWNER_NAME}"
+        MSG += f"\n\n• **Uptime** - `{uptime}`\n"
+        MSG += f"• **OWNER** - `{OWNER_NAME}`"
         WEB0 = InputWebDocument(
             "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
         )
         RES = [
             InputBotInlineResult(
-                str(e.id),
+                str(o.id),
                 "photo",
-                send_message=await b._message(text=" " or None, media=True),
+                send_message=await b._message(text=MSG, media=True),
                 title="Ultroid Userbot",
                 description="Userbot | Telethon",
                 url=TLINK,
