@@ -61,7 +61,7 @@ async def closet(lol):
     await lol.delete()
 
 
-@asst_cmd("start ?(\\w+)")
+@asst_cmd("start ?(.*)")
 async def ultroid(event):
     if event.is_group:
         if event.sender_id in sed:
