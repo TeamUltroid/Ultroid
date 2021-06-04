@@ -22,7 +22,8 @@ from . import *
 
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
-ULTROID_PIC = "https://telegra.ph/file/115f149ed8e154641708b.jpg"
+
+TLINK = "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
@@ -30,8 +31,12 @@ if add_ons == "True" or add_ons is None:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
-if udB.get("INLINE_PIC"):
-    _file_to_replace = udB.get("INLINE_PIC")
+
+C_PIC = udB.get("INLINE_PIC")
+
+if C_PIC:
+    _file_to_replace = C_PIC
+    TLINK = C_PIC
 else:
     _file_to_replace = "resources/extras/inline.jpg"
 # ============================================#
@@ -57,35 +62,22 @@ _main_help_menu = [
 async def e(o):
     if len(o.text) == 0:
         b = o.builder
+        MSG = "• Ultroid Userbot •"
         uptime = grt(time.time() - start_time)
-        header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
-        ALIVEMSG = get_string("alive_1").format(
-            header,
-            OWNER_NAME,
-            ultroid_version,
-            UltVer,
-            uptime,
-            PyVer(),
-            __version__,
-            Repo().active_branch,
-        )
-        res = [
-            await b.article(
-                title="Ultroid Userbot",
-                url="https://t.me/TeamUltroid",
-                description="Userbot | Telethon ",
-                text=ALIVEMSG,
-                thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                buttons=[
-                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
-                    [
-                        Button.url(
-                            text="Repo",
-                            url="https://github.com/Teamultroid/Ultroid",
-                        ),
-                    ],
-                ],
-            ),
+        MSG += f"\n\n• Uptime - {uptime}\n"
+        MSG += f"• OWNER - {OWNER_NAME}"
+        WEB0 = InputWebDocument("https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", [])
+        RES = [
+        InputBotInlineResult(
+            str(e.id),
+            'photo',
+            send_message = await b._message(text=" " or None,
+                                            media=True),
+            title="Ultroid Userbot",
+            description="Userbot | Telethon",
+            url=TLINK,
+            thumb=WEB0,
+            content=InputWebDocument(TLINK, 0, "image/jpg", []))
         ]
         await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
