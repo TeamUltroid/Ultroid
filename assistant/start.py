@@ -61,14 +61,18 @@ async def closet(lol):
     await lol.delete()
 
 
-@asst_cmd("start ?(\w+)")
+@asst_cmd("start ?(\\w+)")
 async def ultroid(event):
     if event.is_group:
         if event.sender_id in sed:
             return await event.reply(
-                    "`I dont work in groups`",
-                    buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{asst.me.username}?start=set")],
+                "`I dont work in groups`",
+                buttons=[
+                    Button.url(
+                        "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{asst.me.username}?start=set"
                     )
+                ],
+            )
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
         ok = ""
@@ -99,7 +103,6 @@ async def ultroid(event):
                 get_string("ast_3").format(name),
                 buttons=_start,
             )
-    
 
 
 @callback("mainmenu")
