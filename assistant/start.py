@@ -25,6 +25,31 @@ Owner_info_msg = f"""
 __Ultroid {ultroid_version}, powered by @TeamUltroid__
 """
 
+_settings = [
+        [
+            Button.inline("API Kᴇʏs", data="apiset"),
+            Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+        ],
+        [
+            Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+            Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+        ],
+        [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+        [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
+        [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+    ]
+
+_start = [
+            [
+                Button.inline("Language 🌐", data="lang"),
+                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+            ],
+            [
+                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
+            ],
+        ]
+
 
 @asst_cmd("start")
 async def assistant(event):
@@ -70,8 +95,6 @@ async def closet(lol):
 @asst_cmd("start ?(.*)")
 @owner
 async def ultroid(event):
-    if event.pattern_match.group(1):
-        return
     if event.is_group:
         return
     name = event.sender.first_name
@@ -80,20 +103,15 @@ async def ultroid(event):
     await asst.send_message(
         event.chat_id,
         get_string("ast_3").format(name),
-        buttons=[
-            [
-                Button.inline("Language 🌐", data="lang"),
-                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
-            ],
-            [
-                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
-            ],
-        ],
+        buttons=_start,
     )
+    if event.pattern_match.group(1) == "set":
+        await event.reply(
+            "Choose from the below options -",
+            buttons=_settings,
+        )
 
 
-# aah, repeat the codes..
 @callback("mainmenu")
 @owner
 async def ultroid(event):
@@ -101,16 +119,7 @@ async def ultroid(event):
         return
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
-        buttons=[
-            [
-                Button.inline("Language 🌐", data="lang"),
-                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
-            ],
-            [
-                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
-            ],
-        ],
+        buttons=_start,
     )
 
 
@@ -166,38 +175,6 @@ Failed for {fail} user(s).""",
 async def setting(event):
     await event.edit(
         "Choose from the below options -",
-        buttons=[
-            [
-                Button.inline("API Kᴇʏs", data="apiset"),
-                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
-            ],
-            [
-                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-                Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
-            ],
-            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
-            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-        ],
+        buttons=_settings,
     )
 
-
-@asst_cmd("start set")
-@owner
-async def set(event):
-    await event.reply(
-        "Choose from the below options -",
-        buttons=[
-            [
-                Button.inline("API Kᴇʏs", data="apiset"),
-                Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
-            ],
-            [
-                Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-                Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
-            ],
-            [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
-            [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
-            [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-        ],
-    )
