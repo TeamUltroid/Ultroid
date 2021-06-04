@@ -36,6 +36,21 @@ else:
     _file_to_replace = "resources/extras/inline.jpg"
 # ============================================#
 
+_main_help_menu = [
+            [
+                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+            ],
+            [
+                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+            ],
+            [
+                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+            ],
+            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+        ]
+
 
 @in_pattern("")
 @in_owner
@@ -93,20 +108,7 @@ async def inline_handler(event):
             len(ADDONS),
             cmd,
         ),
-        buttons=[
-            [
-                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-            ],
-            [
-                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-            ],
-            [
-                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set"),
-            ],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-        ],
+        buttons=_main_help_menu,
     )
     await event.answer([result], gallery=True)
 
@@ -385,23 +387,6 @@ async def backr(event):
 @owner
 async def opner(event):
     bnn = asst.me.username
-    buttons = [
-        [
-            Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
-            Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-        ],
-        [
-            Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
-            Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-        ],
-        [
-            Button.url(
-                "⚙️Sᴇᴛᴛɪɴɢs⚙️",
-                url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
-            ),
-        ],
-        [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-    ]
     z = []
     for x in LIST.values():
         for y in x:
@@ -414,7 +399,7 @@ async def opner(event):
             len(ADDONS),
             cmd,
         ),
-        buttons=buttons,
+        buttons=_main_help_menu,
         link_preview=False,
     )
 
