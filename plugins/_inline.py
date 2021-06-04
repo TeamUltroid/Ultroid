@@ -15,6 +15,7 @@ from git import Repo
 from support import *
 from telethon import Button
 from telethon.tl.types import InputWebDocument
+from telethon.tl.types import InputBotInlineResult
 
 from . import *
 
