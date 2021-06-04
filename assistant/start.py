@@ -26,29 +26,29 @@ __Ultroid {ultroid_version}, powered by @TeamUltroid__
 """
 
 _settings = [
-        [
-            Button.inline("API Kᴇʏs", data="apiset"),
-            Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
-        ],
-        [
-            Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-            Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
-        ],
-        [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
-        [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
-        [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-    ]
+    [
+        Button.inline("API Kᴇʏs", data="apiset"),
+        Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+    ],
+    [
+        Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+    ],
+    [Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars")],
+    [Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb")],
+    [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+]
 
 _start = [
-            [
-                Button.inline("Language 🌐", data="lang"),
-                Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
-            ],
-            [
-                Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-                Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
-            ],
-        ]
+    [
+        Button.inline("Language 🌐", data="lang"),
+        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+    ],
+    [
+        Button.inline("Sᴛᴀᴛs ✨", data="stat"),
+        Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
+    ],
+]
 
 
 @asst_cmd("start")
@@ -177,4 +177,3 @@ async def setting(event):
         "Choose from the below options -",
         buttons=_settings,
     )
-
