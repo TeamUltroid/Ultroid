@@ -51,20 +51,27 @@ _start = [
 ]
 
 
-@asst_cmd("start")
-async def assistant(event):
-    if event.is_group and event.sender_id in sed:
-        bnn = (await asst.get_me()).username
-        return await event.reply(
-            "`I dont work in groups`",
-            buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{bnn}?start=set")],
-        )
-    else:
+@callback("ownerinfo")
+async def own(event):
+    await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data="closeit")])
+
+
+@callback("closeit")
+async def closet(lol):
+    await lol.delete()
+
+
+@asst_cmd("start ?(\w+)")
+async def ultroid(event):
+    if event.is_group:
+        if event.sender_id in sed:
+            return await event.reply(
+                    "`I dont work in groups`",
+                    buttons=[Button.url("⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{asst.me.username}?start=set")],
+                    )
         if not is_added(event.sender_id) and event.sender_id not in sed:
             add_user(event.sender_id)
         ok = ""
-        if event.is_private and event.sender_id in sed:
-            return
         u = await event.client.get_entity(event.chat_id)
         if not udB.get("STARTMSG"):
             if udB.get("PMBOT") == "True":
@@ -80,36 +87,19 @@ async def assistant(event):
                 Redis("STARTMSG").format(me=me, mention=mention),
                 buttons=[Button.inline("Info.", data="ownerinfo")],
             )
-
-
-@callback("ownerinfo")
-async def own(event):
-    await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data="closeit")])
-
-
-@callback("closeit")
-async def closet(lol):
-    await lol.delete()
-
-
-@asst_cmd("start ?(.*)")
-@owner
-async def ultroid(event):
-    if event.is_group:
-        return
-    name = event.sender.first_name
-    if event.sender.last_name:
-        name += f" {event.sender.last_name}"
-    await asst.send_message(
-        event.chat_id,
-        get_string("ast_3").format(name),
-        buttons=_start,
-    )
-    if event.pattern_match.group(1) == "set":
-        await event.reply(
-            "Choose from the below options -",
-            buttons=_settings,
-        )
+    else:
+        name = get_display_name(event.sender_id)
+        if event.pattern_match.group(1) == "set":
+            await event.reply(
+                "Choose from the below options -",
+                buttons=_settings,
+            )
+        else:
+            await event.reply(
+                get_string("ast_3").format(name),
+                buttons=_start,
+            )
+    
 
 
 @callback("mainmenu")
