@@ -25,9 +25,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @callback(
-  re.compile(
-    "sndplug_(.*)"
-  ),
+    re.compile("sndplug_(.*)"),
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
@@ -78,9 +76,7 @@ async def update(eve):
             heroku_app = None
             heroku_applications = heroku.apps()
         except BaseException:
-            return await eve.edit(
-                "`Wrong HEROKU_API.`"
-            )
+            return await eve.edit("`Wrong HEROKU_API.`")
         for app in heroku_applications:
             if app.name == Var.HEROKU_APP_NAME:
                 heroku_app = app
@@ -151,9 +147,9 @@ async def changes(okk):
 
 
 @callback(
-  re.compile(
-    "pasta-(.*)",
-  ),
+    re.compile(
+        "pasta-(.*)",
+    ),
 )
 @owner
 async def _(e):
