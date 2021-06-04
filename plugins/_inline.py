@@ -97,8 +97,6 @@ async def inline_handler(event):
     for x in LIST.values():
         for y in x:
             z.append(y)
-    cmd = len(z)
-    asst.me.username
     result = event.builder.photo(
         file=_file_to_replace,
         link_preview=False,
@@ -106,7 +104,7 @@ async def inline_handler(event):
             OWNER_NAME,
             len(PLUGINS),
             len(ADDONS),
-            cmd,
+            len(z),
         ),
         buttons=_main_help_menu,
     )
@@ -204,8 +202,8 @@ async def _(event):
 async def _(event):
     start = datetime.now()
     end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    pin = f"🌋Pɪɴɢ = {ms}ms"
+    ms = (end - start).microseconds
+    pin = f"🌋Pɪɴɢ = {ms} microseconds"
     await event.answer(pin, cache_time=0, alert=True)
 
 
@@ -386,18 +384,16 @@ async def backr(event):
 @callback("open")
 @owner
 async def opner(event):
-    asst.me.username
     z = []
     for x in LIST.values():
         for y in x:
             z.append(y)
-    cmd = len(z) + 10
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
             len(ADDONS),
-            cmd,
+            len(z),
         ),
         buttons=_main_help_menu,
         link_preview=False,
