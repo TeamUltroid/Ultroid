@@ -37,19 +37,19 @@ else:
 # ============================================#
 
 _main_help_menu = [
-            [
-                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-            ],
-            [
-                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-            ],
-            [
-                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
-            ],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-        ]
+    [
+        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+    ],
+    [
+        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+    ],
+    [
+        Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+    ],
+    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+]
 
 
 @in_pattern("")
@@ -98,7 +98,7 @@ async def inline_handler(event):
         for y in x:
             z.append(y)
     cmd = len(z)
-    bnn = asst.me.username
+    asst.me.username
     result = event.builder.photo(
         file=_file_to_replace,
         link_preview=False,
@@ -386,7 +386,7 @@ async def backr(event):
 @callback("open")
 @owner
 async def opner(event):
-    bnn = asst.me.username
+    asst.me.username
     z = []
     for x in LIST.values():
         for y in x:
