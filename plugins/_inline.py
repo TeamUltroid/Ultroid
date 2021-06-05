@@ -16,8 +16,6 @@ from support import *
 from telethon import Button
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
 
-from plugins._ultroid import SUP_BUTTONS
-
 from . import *
 
 # ================================================#
@@ -41,6 +39,9 @@ else:
     _file_to_replace = "resources/extras/inline.jpg"
 # ============================================#
 
+
+#--------------------BUTTONS--------------------#
+
 _main_help_menu = [
     [
         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
@@ -55,6 +56,16 @@ _main_help_menu = [
     ],
     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
 ]
+
+SUP_BUTTONS = [
+    [
+        Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
+        Button.url("Addons", url="https://github.com/TeamUltroid/UltroidAddons"),
+    ],
+    [Button.url("Support", url="t.me/UltroidSupport")],
+]
+
+#--------------------BUTTONS--------------------#
 
 
 @in_pattern("")
