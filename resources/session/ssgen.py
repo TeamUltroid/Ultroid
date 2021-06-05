@@ -34,6 +34,7 @@ try:
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
     import telethon
+
     x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
 except BaseException:
     print("Installing Telethon...")

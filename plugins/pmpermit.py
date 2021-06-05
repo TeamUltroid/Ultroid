@@ -65,19 +65,12 @@ if not Redis("PM_TEXT"):
 
 You have {warn}/{twarn} warnings!"""
 else:
-    UNAPPROVED_MSG = (
-        """
-**PMSecurity of {ON}!**"""
-        f"""
+    UNAPPROVED_MSG = """
+**PMSecurity of {ON}!**
 
 {Redis("PM_TEXT")}
-"""
-        """
-
-{UND}
 
 You have {warn}/{twarn} warnings!"""
-    )
 
 UNS = get_string("pmperm_2")
 # 1
@@ -148,7 +141,7 @@ async def permitpm(event):
 sett = Redis("PMSETTING")
 if sett is None:
     sett = True
-if sett == "True" and sett != "False":
+if sett == "True":
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -198,7 +191,7 @@ if sett == "True" and sett != "False":
         if not apprv and event.text != UND:
             if Redis("MOVE_ARCHIVE") == "True":
                 try:
-                    await event.client.edit_folder(user.id, folder=1)
+                    await ultroid.edit_folder(user.id, folder=1)
                 except BaseException:
                     pass
             if event.media:
@@ -233,61 +226,18 @@ if sett == "True" and sett != "False":
                 if event.text != prevmsg:
                     if "PMSecurity" in event.text:
                         return
-                    async for message in event.client.iter_messages(
+                    async for message in ultroid.iter_messages(
                         user.id,
                         search=UND,
                     ):
                         await message.delete()
 
-                    async for message in event.client.iter_messages(
+                    async for message in ultroid.iter_messages(
                         user.id,
                         search=UNS,
                     ):
                         await message.delete()
-                    await event.client.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=UNAPPROVED_MSG.format(
-                            ON=OWNER_NAME,
-                            warn=wrn,
-                            twarn=WARNS,
-                            UND=UND,
-                            name=name,
-                            fullname=fullname,
-                            username=username,
-                            count=count,
-                            mention=mention,
-                        ),
-                    )
-                elif event.text == prevmsg:
-                    async for message in event.client.iter_messages(
-                        user.id,
-                        search=UND,
-                    ):
-                        await message.delete()
-                    await event.client.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=UNAPPROVED_MSG.format(
-                            ON=OWNER_NAME,
-                            warn=wrn,
-                            twarn=WARNS,
-                            UND=UND,
-                            name=name,
-                            fullname=fullname,
-                            username=username,
-                            count=count,
-                            mention=mention,
-                        ),
-                    )
-                LASTMSG.update({user.id: event.text})
-            else:
-                async for message in event.client.iter_messages(user.id, search=UND):
-                    await message.delete()
-                await event.client.send_file(
-                    user.id,
-                    PMPIC,
-                    caption=UNAPPROVED_MSG.format(
+                    message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
                         twarn=WARNS,
@@ -297,7 +247,53 @@ if sett == "True" and sett != "False":
                         username=username,
                         count=count,
                         mention=mention,
-                    ),
+                    )
+                    await ultroid.send_file(
+                        user.id,
+                        PMPIC,
+                        caption=message_,
+                    )
+                elif event.text == prevmsg:
+                    async for message in ultroid.iter_messages(
+                        user.id,
+                        search=UND,
+                    ):
+                        await message.delete()
+                    message_ = UNAPPROVED_MSG.format(
+                        ON=OWNER_NAME,
+                        warn=wrn,
+                        twarn=WARNS,
+                        UND=UND,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        count=count,
+                        mention=mention,
+                    )
+                    await ultroid.send_file(
+                        user.id,
+                        PMPIC,
+                        caption=message_,
+                    )
+                LASTMSG.update({user.id: event.text})
+            else:
+                async for message in ultroid.iter_messages(user.id, search=UND):
+                    await message.delete()
+                message_ = UNAPPROVED_MSG.format(
+                    ON=OWNER_NAME,
+                    warn=wrn,
+                    twarn=WARNS,
+                    UND=UND,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    count=count,
+                    mention=mention,
+                )
+                await ultroid.send_file(
+                    user.id,
+                    PMPIC,
+                    caption=message_,
                 )
                 LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
@@ -305,21 +301,21 @@ if sett == "True" and sett != "False":
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
-                async for message in event.client.iter_messages(user.id, search=UND):
+                async for message in ultroid.iter_messages(user.id, search=UND):
                     await message.delete()
                 await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
                     del LASTMSG[user.id]
                 except KeyError:
-                    await event.client.send_message(
+                    await asst.send_message(
                         int(udB.get("LOG_CHANNEL")),
                         "PMPermit is messed! Pls restart the bot!!",
                     )
                     return LOGS.info("COUNT_PM is messed.")
-                await event.client(BlockRequest(user.id))
-                await event.client(ReportSpamRequest(peer=user.id))
-                name = await event.client.get_entity(user.id)
+                await ultroid(BlockRequest(user.id))
+                await ultroid(ReportSpamRequest(peer=user.id))
+                name = await ultroid.get_entity(user.id)
                 name0 = str(name.first_name)
                 await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),

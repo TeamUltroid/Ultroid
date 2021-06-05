@@ -7,6 +7,7 @@
 
 from . import *
 
+
 @asst_cmd("ban")
 @owner
 async def banhammer(event):

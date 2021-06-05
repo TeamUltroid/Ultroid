@@ -17,7 +17,9 @@ from telethon.tl.types import DataJSON
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 if vcbot is not None:
 
-    bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(bot_token=udB.get("BOT_TOKEN"))
+    bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(
+        bot_token=udB.get("BOT_TOKEN")
+    )
 
     async def get_entity(chat):
         try:
