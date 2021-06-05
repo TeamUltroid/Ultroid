@@ -69,13 +69,12 @@ async def inline_alive(o):
         WEB0 = InputWebDocument(
             "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
         )
-        reply_markup = ultroid_bot.build_reply_markup(SUP_BUTTONS)
         RES = [
             InputBotInlineResult(
                 str(o.id),
                 "photo",
                 send_message=await b._message(
-                    text=MSG, media=True, reply_markup=reply_markup
+                    text=MSG, media=True, buttons=SUP_BUTTONS,
                 ),
                 title="Ultroid Userbot",
                 description="Userbot | Telethon",
