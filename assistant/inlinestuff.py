@@ -11,7 +11,7 @@ import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
-from plugins._ultroid import SUP_BUTTONS
+
 import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
@@ -19,6 +19,8 @@ from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
+
+from plugins._ultroid import SUP_BUTTONS
 
 from . import *
 from . import humanbytes as hb
@@ -154,7 +156,7 @@ async def repo(e):
             description="Userbot | Telethon",
             thumb=wb(ultpic, 0, "image/jpeg", []),
             text="• **ULTROID USERBOT** •",
-            buttons=SUP_BUTTONS
+            buttons=SUP_BUTTONS,
         ),
     ]
     await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")
