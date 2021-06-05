@@ -11,7 +11,7 @@ import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
-
+from plugins._ultroid import SUP_BUTTONS
 import requests
 from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
@@ -154,15 +154,7 @@ async def repo(e):
             description="Userbot | Telethon",
             thumb=wb(ultpic, 0, "image/jpeg", []),
             text="• **ULTROID USERBOT** •",
-            buttons=[
-                [
-                    Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
-                    Button.url(
-                        "Addons", url="https://github.com/TeamUltroid/UltroidAddons"
-                    ),
-                ],
-                [Button.url("Support", url="t.me/UltroidSupport")],
-            ],
+            buttons=SUP_BUTTONS
         ),
     ]
     await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")
