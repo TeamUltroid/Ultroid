@@ -137,18 +137,13 @@ async def _(event):
         file = await uploader(
             f"{title}.mp3", f"{title}.mp3", c_time, event, "Uploading " + title + "..."
         )
-        attributes, file, thumb = await event.client._file_to_media(
-            file,
-            attributes=[
+        attributes=[
                 DocumentAttributeAudio(
                     duration=int(duration),
                     title=title,
                     performer=artist,
                 ),
-            ],
-            thumb=thumb,
-        )
-
+            ]
     elif lets_split[0] == "video":
         opts = {
             "format": str(format),
@@ -180,18 +175,14 @@ async def _(event):
         file = await uploader(
             f"{title}.mp4", f"{title}.mp4", c_time, event, "Uploading " + title + "..."
         )
-        attributes, file, thumb = await event.client._file_to_media(
-            file,
-            attributes=[
+        attributes=[
                 DocumentAttributeVideo(
                     duration=int(duration),
                     w=int(wi.split(":")[1].split()[0]),
                     h=int(hi.split(":")[1].split()[0]),
                     supports_streaming=True,
                 ),
-            ],
-            thumb=thumb,
-        )
+            ]
     text = f"`Title:` `{title}`\n"
     text += f"`Duration:` `{time_formatter(int(duration)*1000)}`\n"
     text += f"`Views:` `{views}`\n"
@@ -199,6 +190,8 @@ async def _(event):
     await event.edit(
         text,
         file=file,
+        attributes=attributes,
+        thumb=thumb,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}"*')
