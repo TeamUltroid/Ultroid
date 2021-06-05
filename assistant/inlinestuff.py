@@ -20,6 +20,8 @@ from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
+from plugins._ultroid import SUP_BUTTONS
+
 from . import *
 from . import humanbytes as hb
 
@@ -154,15 +156,7 @@ async def repo(e):
             description="Userbot | Telethon",
             thumb=wb(ultpic, 0, "image/jpeg", []),
             text="• **ULTROID USERBOT** •",
-            buttons=[
-                [
-                    Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
-                    Button.url(
-                        "Addons", url="https://github.com/TeamUltroid/UltroidAddons"
-                    ),
-                ],
-                [Button.url("Support", url="t.me/UltroidSupport")],
-            ],
+            buttons=SUP_BUTTONS,
         ),
     ]
     await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")

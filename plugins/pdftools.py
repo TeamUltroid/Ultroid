@@ -10,9 +10,11 @@
 
 • `{i}pdf <page num> <reply to pdf file>`
     Extract nd Send page as a Image.(note-: For Extraction all pages just use .pdf)
+    You Can use multi pages too like `{i}pdf 1-7`
 
 • `{i}pdtext <page num> <reply to pdf file>`
     Extract Text From the Pdf.(note-: For Extraction all text just use .pdtext)
+    You Can use multi pages too like `{i}pdf 1-7`
 
 • `{i}pdscan <reply to image>`
     It scan, crop nd send img as pdf.
@@ -81,7 +83,21 @@ async def pdfseimg(event):
         shutil.rmtree("pdf")
         os.mkdir("pdf")
         await xx.delete()
-    if msg:
+    elif "-" in msg:
+        ok = int(msg.split("-")[-1]) - 1
+        for o in range(ok):
+            pw = PdfFileWriter()
+            pw.addPage(pdf.getPage(o))
+            with open(os.path.join("ult.png"), "wb") as f:
+                pw.write(f)
+            await event.client.send_file(
+                event.chat_id,
+                "ult.png",
+                reply_to=event.reply_to_msg_id,
+            )
+            os.remove("ult.png")
+        os.remove(pdfp)
+    elif msg:
         o = int(msg) - 1
         pw = PdfFileWriter()
         pw.addPage(pdf.getPage(o))
@@ -136,8 +152,8 @@ async def pdfsetxt(event):
         os.remove(text)
         os.remove(dl)
         return
-    if "_" in msg:
-        u, d = msg.split("_")
+    if "-" in msg:
+        u, d = msg.split("-")
         a = PdfFileReader(dl)
         str = ""
         for i in range(int(u) - 1, int(d)):

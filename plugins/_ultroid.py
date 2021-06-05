@@ -19,6 +19,15 @@ REPOMSG = (
 )
 
 
+SUP_BUTTONS = [
+    [
+        Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
+        Button.url("Addons", url="https://github.com/TeamUltroid/UltroidAddons"),
+    ],
+    [Button.url("Support", url="t.me/UltroidSupport")],
+]
+
+
 @ultroid_cmd(pattern="repo$")
 async def repify(e):
     try:

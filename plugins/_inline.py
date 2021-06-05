@@ -10,19 +10,20 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-from platform import python_version as PyVer
 
 from git import Repo
-from pyUltroid import __version__ as UltVer
 from support import *
-from telethon import Button, __version__
-from telethon.tl.types import InputWebDocument
+from telethon import Button
+from telethon.tl.types import InputBotInlineResult, InputWebDocument
+
+from plugins._ultroid import SUP_BUTTONS
 
 from . import *
 
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
-ULTROID_PIC = "https://telegra.ph/file/115f149ed8e154641708b.jpg"
+
+TLINK = "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
@@ -30,49 +31,61 @@ if add_ons == "True" or add_ons is None:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
-if udB.get("INLINE_PIC"):
-    _file_to_replace = udB.get("INLINE_PIC")
+
+C_PIC = udB.get("INLINE_PIC")
+
+if C_PIC:
+    _file_to_replace = C_PIC
+    TLINK = C_PIC
 else:
     _file_to_replace = "resources/extras/inline.jpg"
 # ============================================#
 
+_main_help_menu = [
+    [
+        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+    ],
+    [
+        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+    ],
+    [
+        Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+    ],
+    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+]
+
 
 @in_pattern("")
 @in_owner
-async def e(o):
+async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
+        MSG = "• **Ultroid Userbot •**"
         uptime = grt(time.time() - start_time)
-        header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
-        ALIVEMSG = get_string("alive_1").format(
-            header,
-            OWNER_NAME,
-            ultroid_version,
-            UltVer,
-            uptime,
-            PyVer(),
-            __version__,
-            Repo().active_branch,
+        MSG += f"\n\n• **Uptime** - `{uptime}`\n"
+        MSG += f"• **OWNER** - `{OWNER_NAME}`"
+        WEB0 = InputWebDocument(
+            "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
         )
-        res = [
-            await b.article(
+        RES = [
+            InputBotInlineResult(
+                str(o.id),
+                "photo",
+                send_message=await b._message(
+                    text=MSG,
+                    media=True,
+                    buttons=SUP_BUTTONS,
+                ),
                 title="Ultroid Userbot",
-                url="https://t.me/TeamUltroid",
-                description="Userbot | Telethon ",
-                text=ALIVEMSG,
-                thumb=InputWebDocument(ULTROID_PIC, 0, "image/jpeg", []),
-                buttons=[
-                    [Button.url(text="Support Group", url="t.me/UltroidSupport")],
-                    [
-                        Button.url(
-                            text="Repo",
-                            url="https://github.com/Teamultroid/Ultroid",
-                        ),
-                    ],
-                ],
-            ),
+                description="Userbot | Telethon",
+                url=TLINK,
+                thumb=WEB0,
+                content=InputWebDocument(TLINK, 0, "image/jpg", []),
+            )
         ]
-        await o.answer(res, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+        await o.answer(RES, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd")
@@ -82,8 +95,6 @@ async def inline_handler(event):
     for x in LIST.values():
         for y in x:
             z.append(y)
-    cmd = len(z)
-    bnn = asst.me.username
     result = event.builder.photo(
         file=_file_to_replace,
         link_preview=False,
@@ -91,22 +102,9 @@ async def inline_handler(event):
             OWNER_NAME,
             len(PLUGINS),
             len(ADDONS),
-            cmd,
+            len(z),
         ),
-        buttons=[
-            [
-                Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-            ],
-            [
-                Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-            ],
-            [
-                Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set"),
-            ],
-            [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-        ],
+        buttons=_main_help_menu,
     )
     await event.answer([result], gallery=True)
 
@@ -202,8 +200,8 @@ async def _(event):
 async def _(event):
     start = datetime.now()
     end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    pin = f"🌋Pɪɴɢ = {ms}ms"
+    ms = (end - start).microseconds
+    pin = f"🌋Pɪɴɢ = {ms} microseconds"
     await event.answer(pin, cache_time=0, alert=True)
 
 
@@ -384,37 +382,18 @@ async def backr(event):
 @callback("open")
 @owner
 async def opner(event):
-    bnn = asst.me.username
-    buttons = [
-        [
-            Button.inline("• Pʟᴜɢɪɴs ", data="hrrrr"),
-            Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-        ],
-        [
-            Button.inline("Oᴡɴᴇʀ•Tᴏᴏʟꜱ", data="ownr"),
-            Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-        ],
-        [
-            Button.url(
-                "⚙️Sᴇᴛᴛɪɴɢs⚙️",
-                url=f"https://t.me/{bnn}?start={ultroid_bot.me.id}",
-            ),
-        ],
-        [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-    ]
     z = []
     for x in LIST.values():
         for y in x:
             z.append(y)
-    cmd = len(z) + 10
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
             len(ADDONS),
-            cmd,
+            len(z),
         ),
-        buttons=buttons,
+        buttons=_main_help_menu,
         link_preview=False,
     )
 
