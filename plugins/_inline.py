@@ -74,7 +74,9 @@ async def inline_alive(o):
                 str(o.id),
                 "photo",
                 send_message=await b._message(
-                    text=MSG, media=True, buttons=SUP_BUTTONS,
+                    text=MSG,
+                    media=True,
+                    buttons=SUP_BUTTONS,
                 ),
                 title="Ultroid Userbot",
                 description="Userbot | Telethon",
