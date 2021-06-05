@@ -424,7 +424,7 @@ async def _(e):
 async def get_pinned(event):
     x = await eor(event, get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
-    chat_name = 'This Chat'
+    chat_name = "This Chat"
     if not event.is_private:
         chat_name = (await event.get_chat()).title
     tem = ""
