@@ -10,11 +10,13 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-from plugins._ultroid import SUP_BUTTONS
+
 from git import Repo
 from support import *
 from telethon import Button
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
+
+from plugins._ultroid import SUP_BUTTONS
 
 from . import *
 
@@ -72,7 +74,9 @@ async def inline_alive(o):
             InputBotInlineResult(
                 str(o.id),
                 "photo",
-                send_message=await b._message(text=MSG, media=True, reply_markup=reply_markup),
+                send_message=await b._message(
+                    text=MSG, media=True, reply_markup=reply_markup
+                ),
                 title="Ultroid Userbot",
                 description="Userbot | Telethon",
                 url=TLINK,
