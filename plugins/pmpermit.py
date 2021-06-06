@@ -361,13 +361,17 @@ if sett == "True":
                     await apprvpm.client.edit_folder(uid, folder=0)
                 except BaseException:
                     pass
-                await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                await asyncio.sleep(3)
-                await apprvpm.delete()
+                await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
+                await asst.send_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                )
             else:
-                await apprvpm.edit("`User may already be approved.`")
-                await asyncio.sleep(5)
-                await apprvpm.delete()
+                await eod(apprvpm, "`User may already be approved.`")
+                await asst.send_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                )
         elif apprvpm.is_private:
             user = await apprvpm.get_chat()
             aname = await apprvpm.client.get_entity(user.id)
@@ -384,24 +388,20 @@ if sett == "True":
                     await apprvpm.client.edit_folder(uid, folder=0)
                 except BaseException:
                     pass
-                await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
+                await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
                 async for message in apprvpm.client.iter_messages(user.id, search=UND):
                     await message.delete()
                 async for message in apprvpm.client.iter_messages(user.id, search=UNS):
                     await message.delete()
-                await asyncio.sleep(3)
-                await apprvpm.delete()
-                await apprvpm.client.send_message(
+                await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
-                    f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
+                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
                 )
             else:
-                await apprvpm.edit("`User may already be approved.`")
-                await asyncio.sleep(5)
-                await apprvpm.delete()
-                await apprvpm.client.send_message(
+                await eod(apprvpm, "`User may already be approved.`")
+                await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
-                    f"#APPROVED\nUser: [{name0}](tg://user?id={uid})",
+                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
                 )
         else:
             await apprvpm.edit(NO_REPLY)
