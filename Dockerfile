@@ -14,7 +14,6 @@ RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroi
 WORKDIR /root/TeamUltroid/
 
 RUN pip3 install --no-cache-dir -r requirements.txt
-RUN git clone -b better https://github.com/New-dev0/Telethon && cd Telethon && pip install .
 RUN npm install -g npm@7.12.1 -g
 RUN npm install
 RUN npm run build
