@@ -76,7 +76,21 @@ ws.on('message', (response: any) => {
     }
 });
 
-const downloadSong = async (url: string): Promise<DownloadedSong> => {
+const downloadSong = async (url: string, file: boolean = false, title: string = '', duration: string | number = 0): Promise<DownloadedSong> => {
+    if (file == true && url.startsWith("https://api.telegram.org/file/bot")) {
+        return new Promise((resolve, reject) => {
+            const ffmpeg = spawn('ffmpeg', ['-y', '-nostdin', '-i', url, ...ffmpegOptions.split(' ')]);
+
+            resolve({
+                stream: ffmpeg.stdout,
+                info: {
+                    id: url.replace("https://api.telegram.org/file/bot", "").replace("/", '.'),
+                    title: title,
+                    duration: typeof (duration) === 'string' ? parseInt(duration) : duration,
+                },
+            });
+        });
+    }
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
         const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `${url}`]);
@@ -111,7 +125,16 @@ const downloadSong = async (url: string): Promise<DownloadedSong> => {
 };
 
 
-export const getSongInfo = async (url: string): Promise<DownloadedSong['info']> => {
+export const getSongInfo = async (url: string, file: boolean = false, duration: string | number = 0, link: string = '', title: string = ''): Promise<DownloadedSong['info']> => {
+    if (file == true || link.startsWith("https://api.telegram.org/file/bot")) {
+        return new Promise((resolve, reject) => {
+            resolve({
+                id: link,
+                title: title,
+                duration: typeof (duration) === 'string' ? parseInt(duration) : duration,
+            });
+        });
+    }
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
         const ytdl = spawn('youtube-dl', ['-x', '--print-json', '-g', `ytsearch:"${url}"`]);
@@ -142,11 +165,11 @@ export const getSongInfo = async (url: string): Promise<DownloadedSong['info']> 
     });
 };
 
-export const closeConnection = async(): Promise<void> => {
+export const closeConnection = async (): Promise<void> => {
     connection.close();
 }
 
-const createConnection = async(chat: Chat.SupergroupChat): Promise<void> => {
+const createConnection = async (chat: Chat.SupergroupChat): Promise<void> => {
     if (cache.has(chat.id)) {
         return;
     }
@@ -244,23 +267,64 @@ const createConnection = async(chat: Chat.SupergroupChat): Promise<void> => {
         };
         ws.send(JSON.stringify(data));
         cachedConnection.leftVC = true;
+        cachedConnection.connection.close();
     });
 };
 
 export const leaveVc = (chatId: number) => {
     if (cache.has(chatId)) {
-        const { stream } = cache.get(chatId)!;
+        const { stream, connection } = cache.get(chatId)!;
         try {
             stream.emit('leave');
         } catch (error) {
             console.log(error.toString());
             stream.emit('leave');
         }
-        process.exit(0);
+        // process.exit(0);
     } else {
         return false;
     }
 }
+
+export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from'], duration: string | number, title: string): Promise<number | null> => {
+    if (!cache.has(chat.id)) {
+        await createConnection(chat);
+        return addFIleToQueue(chat, url, by, duration, title);
+    }
+
+    const connection = cache.get(chat.id)!;
+    if (connection.leftVC) {
+        cache.delete(chat.id);
+        await createConnection(chat);
+        return addFIleToQueue(chat, url, by, duration, title);
+    }
+    const { stream, queue } = connection;
+
+    let songInfo: DownloadedSong['info'];
+    if (stream.finished) {
+        try {
+            const song = await downloadSong(url, true, title, duration);
+            stream.setReadable(song.stream);
+            connection.currentSong = {
+                song: song.info,
+                by: by
+            };
+            songInfo = song.info;
+            cache.set(chat.id, connection);
+        } catch (error) {
+            console.error(error);
+            return -1;
+        }
+        return 0;
+    } else {
+        songInfo = await getSongInfo(url, true, duration, url, title);
+    }
+    return queue.push({
+        url: url,
+        from: by,
+        info: songInfo
+    });
+};
 
 export const addToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from']): Promise<number | null> => {
     if (!cache.has(chat.id)) {
