@@ -97,12 +97,15 @@ async def _(ult):
         replied_to = await ult.get_reply_message()
         id = await get_user_id(replied_to.sender_id)
         name = (await ult.client.get_entity(int(id))).first_name
-        sed.remove(id)
         mmm = ""
         if not is_sudo(id):
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         elif del_sudo(id):
             mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
+            try:
+                sed.remove(id)
+            except:
+                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
@@ -113,7 +116,6 @@ async def _(ult):
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
             name = ""
-        sed.remove(id)
         mmm = ""
         if not is_sudo(id):
             if name != "":
@@ -125,6 +127,10 @@ async def _(ult):
                 mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
             else:
                 mmm += f"**Removed **`{id}`** from SUDO User(s)**"
+            try:
+                sed.remove(id)
+            except:
+                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
