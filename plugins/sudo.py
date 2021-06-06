@@ -104,7 +104,7 @@ async def _(ult):
             mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
             try:
                 sed.remove(id)
-            except:
+            except BaseException:
                 pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
@@ -129,7 +129,7 @@ async def _(ult):
                 mmm += f"**Removed **`{id}`** from SUDO User(s)**"
             try:
                 sed.remove(id)
-            except:
+            except BaseException:
                 pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
