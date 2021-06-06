@@ -50,24 +50,23 @@ from telethon.tl.types import ChatAdminRights
 
 from . import *
 
-
 _gpromote_rights = ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                )
+    add_admins=False,
+    invite_users=True,
+    change_info=False,
+    ban_users=True,
+    delete_messages=True,
+    pin_messages=True,
+)
 
 _gdemote_rights = ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                )
+    add_admins=False,
+    invite_users=False,
+    change_info=False,
+    ban_users=False,
+    delete_messages=False,
+    pin_messages=False,
+)
 
 
 @ultroid_cmd(
