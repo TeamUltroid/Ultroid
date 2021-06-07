@@ -14,11 +14,13 @@
    Search and download video from youtube.
 """
 
-
+from pyUltroid.functions.ytdl import *
 from . import *
 
 
-@ultroid_cmd(pattern="yt(a|v|sa|sv) ?(.*)")
+@ultroid_cmd(
+    pattern="yt(a|v|sa|sv) ?(.*)",
+)
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
     xx = await eor(event, get_string("com_1"))
