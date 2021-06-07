@@ -45,7 +45,6 @@ from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
-from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
 
 from . import *
@@ -379,7 +378,11 @@ async def lastname(steal):
             except YouBlockedUserError:
                 await lol.edit("Please unblock @sangmatainfo_bot and try again")
                 return
-            if response.text.startswith("No records found") or respond.text.startswith("No records found") or responds.text.startswith("No records found"):
+            if (
+                response.text.startswith("No records found")
+                or respond.text.startswith("No records found")
+                or responds.text.startswith("No records found")
+            ):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
                 return
