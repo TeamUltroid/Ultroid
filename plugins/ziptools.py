@@ -22,7 +22,6 @@
 
 """
 
-import glob
 import os
 import time
 
@@ -93,15 +92,15 @@ async def unzipp(event):
     await bash(f"7z x {file} -aoa -ounzip")
     ok = get_all_files("unzip")
     for x in ok:
-            k = time.time()
-            xxx = await uploader(x, x, k, xx, "Uploading...")
-            await ultroid_bot.send_file(
-                event.chat_id,
-                xxx,
-                force_document=True,
-                thumb="resources/extras/ultroid.jpg",
-                caption=f"`{xxx.name}`",
-            )
+        k = time.time()
+        xxx = await uploader(x, x, k, xx, "Uploading...")
+        await ultroid_bot.send_file(
+            event.chat_id,
+            xxx,
+            force_document=True,
+            thumb="resources/extras/ultroid.jpg",
+            caption=f"`{xxx.name}`",
+        )
     await xx.delete()
 
 
