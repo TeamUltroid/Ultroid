@@ -72,7 +72,7 @@ else:
         """
 You have {warn}/{twarn} warnings!"""
     )
-    
+
 UNS = get_string("pmperm_2")
 # 1
 if Redis("PMWARNS"):
