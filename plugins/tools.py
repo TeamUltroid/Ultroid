@@ -368,9 +368,6 @@ async def lastname(steal):
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    check = await ultroid_bot.get_entity(user_id)
-    if not isinstance(check, User) or check.bot:
-        return await eor(steal, "Reply to Actual User's Message !")
     lol = await eor(steal, "`Processing !...`")
     try:
         async with ultroid_bot.conversation(chat) as conv:
@@ -382,7 +379,7 @@ async def lastname(steal):
             except YouBlockedUserError:
                 await lol.edit("Please unblock @sangmatainfo_bot and try again")
                 return
-            if response.text.startswith("No records found"):
+            if response.text.startswith("No records found") or respond.text.startswith("No records found") or responds.text.startswith("No records found"):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
                 return
