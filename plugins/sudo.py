@@ -47,7 +47,7 @@ async def _(ult):
             mmm += f"**Added [{name}](tg://user?id={id}) as SUDO User**"
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    if inputs:
+    elif inputs:
         id = await get_user_id(inputs)
         try:
             name = (await ult.client.get_entity(int(id))).first_name
