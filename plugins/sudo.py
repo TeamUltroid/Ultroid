@@ -19,6 +19,7 @@
 """
 
 from pyUltroid.misc import sudoers
+
 from . import *
 
 
@@ -86,7 +87,7 @@ async def _(ult):
         return await eod(
             ult,
             "You are sudo user, You cant add other sudo user.",
-            )
+        )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
