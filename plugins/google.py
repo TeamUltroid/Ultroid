@@ -27,6 +27,7 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from search_engine_parser import GoogleSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
+from pyUltroid.functions.google_image import googleimagesdownload
 
 from strings import get_string
 
