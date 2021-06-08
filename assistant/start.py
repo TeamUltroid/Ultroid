@@ -73,7 +73,7 @@ async def ultroid(event):
                     )
                 ],
             )
-        if not is_added(event.sender_id) and str(event.sender_id not) in owner_and_sudos():
+        if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
             add_user(event.sender_id)
         ok = ""
         u = await event.client.get_entity(event.chat_id)
