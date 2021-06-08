@@ -60,17 +60,18 @@ UND = get_string("pmperm_1")
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
-
 {UND}
-
 You have {warn}/{twarn} warnings!"""
 else:
-    UNAPPROVED_MSG = """
-**PMSecurity of {ON}!**
-
+    UNAPPROVED_MSG = (
+        """
+**PMSecurity of {ON}!**"""
+        f"""
 {Redis("PM_TEXT")}
-
+"""
+        """
 You have {warn}/{twarn} warnings!"""
+    )
 
 UNS = get_string("pmperm_2")
 # 1
