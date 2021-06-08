@@ -13,7 +13,7 @@ from os import remove
 
 from git import Repo
 from support import *
-from telethon import Button
+from pyUltroid.misc import owner_and_sudos
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
 
 from . import *
