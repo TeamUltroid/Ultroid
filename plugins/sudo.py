@@ -18,7 +18,7 @@
     List all sudo users.
 """
 
-
+from pyUltroid.misc import sudoers
 from . import *
 
 
@@ -29,7 +29,7 @@ async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+    if str(ult.sender_id) in sudoers():
         return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
@@ -82,12 +82,11 @@ async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+    if str(ult.sender_id) in sudoers():
         return await eod(
             ult,
             "You are sudo user, You cant add other sudo user.",
-            time=5,
-        )
+            )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
