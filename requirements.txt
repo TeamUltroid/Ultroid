@@ -1,3 +1,3 @@
-py-Ultroid==40.2b0
+py-Ultroid==40.3b0
 git+https://github.com/New-dev0/Shazamio.git
 https://github.com/New-dev0/Telethon/archive/better.zip
