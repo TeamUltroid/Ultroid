@@ -31,6 +31,7 @@
 """
 import os
 
+from pyUltroid.functions.greetings_db import *
 from telegraph import upload_file as uf
 from telethon.utils import get_display_name, pack_bot_file_id
 

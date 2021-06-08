@@ -18,8 +18,7 @@
     List all sudo users.
 """
 
-
-from pyUltroid.misc._decorators import sed
+from pyUltroid.misc import sudoers
 
 from . import *
 
@@ -31,15 +30,14 @@ async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+    if str(ult.sender_id) in sudoers():
         return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
+    mmm = ""
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = await get_user_id(replied_to.sender_id)
         name = (await ult.client.get_entity(int(id))).first_name
-        sed.append(id)
-        mmm = ""
         if id == ultroid_bot.me.id:
             mmm += "You cant add yourself as Sudo User..."
         elif is_sudo(id):
@@ -49,16 +47,12 @@ async def _(ult):
             mmm += f"**Added [{name}](tg://user?id={id}) as SUDO User**"
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-        await eod(ok, mmm, time=5)
-
     if inputs:
         id = await get_user_id(inputs)
         try:
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
             name = ""
-        sed.append(id)
-        mmm = ""
         if id == ultroid_bot.me.id:
             mmm += "You cant add yourself as Sudo User..."
         elif is_sudo(id):
@@ -74,9 +68,9 @@ async def _(ult):
                 mmm += f"**Added **`{id}`** as SUDO User**"
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-        await eod(ok, mmm, time=5)
     else:
-        return await eod(ok, "`Reply to a msg or add it's id/username.`", time=5)
+        mmm += "`Reply to a msg or add it's id/username.`"
+    await eod(ok, mmm)
 
 
 @ultroid_cmd(
@@ -86,37 +80,29 @@ async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if BOT_MODE and ult.sender_id != int(Redis(OWNER_ID)):
+    if str(ult.sender_id) in sudoers():
         return await eod(
             ult,
-            "You are sudo user, You cant add other sudo user.",
-            time=5,
+            "You are sudo user, You cant remove other sudo user.",
         )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
+    mmm = ""
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = await get_user_id(replied_to.sender_id)
         name = (await ult.client.get_entity(int(id))).first_name
-        mmm = ""
         if not is_sudo(id):
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         elif del_sudo(id):
             mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
-            try:
-                sed.remove(id)
-            except BaseException:
-                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-        await eod(ok, mmm, time=5)
-
-    if inputs:
+    elif inputs:
         id = await get_user_id(inputs)
         try:
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
             name = ""
-        mmm = ""
         if not is_sudo(id):
             if name != "":
                 mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
@@ -127,13 +113,11 @@ async def _(ult):
                 mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
             else:
                 mmm += f"**Removed **`{id}`** from SUDO User(s)**"
-            try:
-                sed.remove(id)
-            except BaseException:
-                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-        await eod(ok, mmm, time=5)
+    else:
+        mmm += "`Reply to a msg or add it's id/username.`"
+    await eod(ok, mmm)
 
 
 @ultroid_cmd(

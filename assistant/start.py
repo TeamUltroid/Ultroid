@@ -8,8 +8,8 @@
 from datetime import datetime
 
 from pyUltroid.functions.asst_fns import *
-from pyUltroid.misc._decorators import sed
-from telethon import Button, events
+from pyUltroid.misc import owner_and_sudos
+from telethon import events
 from telethon.utils import get_display_name
 
 from plugins import *
@@ -64,7 +64,7 @@ async def closet(lol):
 @asst_cmd("start ?(.*)")
 async def ultroid(event):
     if event.is_group:
-        if event.sender_id in sed:
+        if str(event.sender_id) in owner_and_sudos:
             return await event.reply(
                 "`I dont work in groups`",
                 buttons=[
@@ -73,7 +73,10 @@ async def ultroid(event):
                     )
                 ],
             )
-        if not is_added(event.sender_id) and event.sender_id not in sed:
+        if (
+            not is_added(event.sender_id)
+            and str(event.sender_id) not in owner_and_sudos()
+        ):
             add_user(event.sender_id)
         ok = ""
         u = await event.client.get_entity(event.chat_id)

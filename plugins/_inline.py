@@ -12,8 +12,8 @@ from math import ceil
 from os import remove
 
 from git import Repo
+from pyUltroid.misc import owner_and_sudos
 from support import *
-from telethon import Button
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
 
 from . import *
@@ -451,7 +451,7 @@ async def on_plug_in_callback_query_handler(event):
         ],
     ]
     try:
-        if event.query.user_id in sed:
+        if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
                 reply_pop_up_alert,
                 buttons=buttons,
@@ -510,7 +510,7 @@ async def on_plug_in_callback_query_handler(event):
         ],
     ]
     try:
-        if event.query.user_id in sed:
+        if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
                 reply_pop_up_alert,
                 buttons=buttons,
