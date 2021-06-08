@@ -14,6 +14,7 @@ from pyUltroid.functions.broadcast_db import *
 from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
+from telethon import Button
 
 from strings import get_string
 
