@@ -253,7 +253,7 @@ async def download(event):
                 )
         except Exception as ve:
             return await eor(xx, str(ve))
-    e = datetime.now()
+    e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t != "":
         if os.path.isdir(kk):
