@@ -15,7 +15,7 @@ from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.sudos import *
 from pyUltroid.utils import *
 from telethon import Button
-from telethon.tl import types, functions
+from telethon.tl import functions, types
 
 from strings import get_string
 
