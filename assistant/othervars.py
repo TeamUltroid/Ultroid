@@ -7,6 +7,8 @@
 
 import re
 from os import remove
+from random import choices
+from glob import glob
 
 import requests
 from telegraph import Telegraph
@@ -29,6 +31,9 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
+    thumb = ""
+    for m in choices(sorted(glob("resources/extras/*.jpg"))):
+        thumb += m
     if name.startswith("def"):
         plug_name = name.replace(f"def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
@@ -59,7 +64,7 @@ async def send(eve):
                 Button.inline("••Cʟᴏꜱᴇ••", data="close"),
             ],
         ]
-    await eve.edit(file=plugin, buttons=buttons)
+    await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
 
 @callback("updatenow")
