@@ -19,8 +19,6 @@
 """
 
 
-from pyUltroid.misc._decorators import sed
-
 from . import *
 
 
@@ -38,7 +36,6 @@ async def _(ult):
         replied_to = await ult.get_reply_message()
         id = await get_user_id(replied_to.sender_id)
         name = (await ult.client.get_entity(int(id))).first_name
-        sed.append(id)
         mmm = ""
         if id == ultroid_bot.me.id:
             mmm += "You cant add yourself as Sudo User..."
@@ -57,7 +54,6 @@ async def _(ult):
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
             name = ""
-        sed.append(id)
         mmm = ""
         if id == ultroid_bot.me.id:
             mmm += "You cant add yourself as Sudo User..."
@@ -102,10 +98,6 @@ async def _(ult):
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         elif del_sudo(id):
             mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
-            try:
-                sed.remove(id)
-            except BaseException:
-                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
@@ -127,10 +119,6 @@ async def _(ult):
                 mmm += f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
             else:
                 mmm += f"**Removed **`{id}`** from SUDO User(s)**"
-            try:
-                sed.remove(id)
-            except BaseException:
-                pass
         else:
             mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
         await eod(ok, mmm, time=5)
