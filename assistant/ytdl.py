@@ -183,10 +183,10 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    text = f"`Title:` `{title}`\n"
-    text += f"`Duration:` `{time_formatter(int(duration)*1000)}`\n"
-    text += f"`Views:` `{views}`\n"
-    text += f"`Artist:` `{artist}`"
+    text = f"**Title:** `{title}`\n"
+    text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
+    text += f"**Views:** `{views}`\n"
+    text += f"**Artist:** `{artist}`"
     await event.edit(
         text,
         file=file,
