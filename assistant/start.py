@@ -61,8 +61,6 @@ async def own(event):
 
 @callback("closeit")
 async def closet(lol):
-    await lol.edit("`Deleting.`")
-    await asyncio.sleep(3)
     await lol.delete()
 
 
