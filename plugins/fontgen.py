@@ -1,5 +1,6 @@
 """
-{i}
+• {i}fonts <font name> <text>
+    Generate different fonts for the text.
 """
 
 from . import _default, _double_stroke, _monospace, _small_caps
@@ -8,7 +9,7 @@ fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
 
 @ultroid_cmd(
-    pattern="font ?((.*)|s$)",
+    pattern="font ?(.*)",
 )
 async def _(e):
     input = e.pattern_match.group(1)
@@ -21,7 +22,7 @@ async def _(e):
         font = input.split(":", maxsplit=1)[0]
         text = input.split(":", maxsplit=1)[1]
     except BaseException:
-        return await eod(e, "`fonts small caps chala jaa bsdk`")
+        return await eod(e, "`fonts small caps : chala jaa bsdk`")
     if font not in fonts:
         return await eod(e, f"`{font} not in font list`.")
     if font == "small caps ":
