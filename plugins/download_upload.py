@@ -84,7 +84,7 @@ async def download(event):
                     ),
                 ),
             )
-    e = datetime.now()
+    e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t != "":
         await eor(xx, get_string("udl_2").format(file_name, t))
