@@ -1,6 +1,9 @@
 """
-• {i}fonts <font name> <text>
+• `{i}font <font name> <text>`
     Generate different fonts for the text.
+
+• `{i}font`
+    To get list of fonts
 """
 
 from . import _default, _double_stroke, _monospace, _small_caps
@@ -22,7 +25,7 @@ async def _(e):
         font = input.split(":", maxsplit=1)[0]
         text = input.split(":", maxsplit=1)[1]
     except BaseException:
-        return await eod(e, "`fonts small caps : chala jaa bsdk`")
+        return await eod(e, "`fonts small caps : Your Message`")
     if font not in fonts:
         return await eod(e, f"`{font} not in font list`.")
     if font == "small caps ":
