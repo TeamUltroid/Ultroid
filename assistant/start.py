@@ -56,9 +56,12 @@ async def own(event):
     await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data="closeit")])
 
 
-@callback("closeit")
+@callback("closeit_(.*)")
 async def closet(lol):
-    await lol.delete()
+    splitit = ((lol.data_match.group(1)).decode()).split("_")
+    channel = splitit[1]
+    msg_id = splitit[2]
+    await lol.client.delete_messages(int(channel), int(msg_id))
 
 
 @asst_cmd("start ?(.*)")
