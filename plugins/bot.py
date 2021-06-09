@@ -123,9 +123,9 @@ async def cmds(event):
     pattern="restart$",
 )
 async def restartbt(ult):
-    await eor(ult, "`Restarting...`")
+    ok = await eor(ult, "`Restarting...`")
     if Var.HEROKU_API:
-        await restart(ult)
+        await restart(ok)
     else:
         await bash("pkill python3 && python3 -m pyUltroid")
 
