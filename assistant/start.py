@@ -53,7 +53,12 @@ _start = [
 
 @callback("ownerinfo")
 async def own(event):
-    await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data=f"closeit_{event.chat_id}_{event.message.id}")])
+    await event.edit(
+        Owner_info_msg,
+        buttons=[
+            Button.inline("Close", data=f"closeit_{event.chat_id}_{event.message.id}")
+        ],
+    )
 
 
 @callback("closeit_(.*)")
