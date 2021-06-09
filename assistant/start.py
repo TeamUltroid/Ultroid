@@ -55,9 +55,7 @@ _start = [
 async def own(event):
     await event.edit(
         Owner_info_msg,
-        buttons=[
-            Button.inline("Close", data=f"closeit_{event.chat_id}_{event.id}")
-        ],
+        buttons=[Button.inline("Close", data=f"closeit_{event.chat_id}_{event.id}")],
     )
 
 
