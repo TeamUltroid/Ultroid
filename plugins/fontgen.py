@@ -8,7 +8,7 @@ fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
 
 @ultroid_cmd(
-    pattern="font ?(s$|(.*))",
+    pattern="font ?((.*)|s$)",
 )
 async def _(e):
     input = e.pattern_match.group(1)
