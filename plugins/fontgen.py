@@ -8,17 +8,22 @@ fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
 
 @ultroid_cmd(
-    pattern="font ?(.*)",
+    pattern="font (s$|?(.*))",
 )
 async def _(e):
     input = e.pattern_match.group(1)
+    if not input:
+        m = "**Available Fonts**\n\n"
+        for x in fonts:
+            m += f"• `{x}`\n"
+        return await eod(e, m)
     try:
         font = input.split(":", maxsplit=1)[0]
         text = input.split(":", maxsplit=1)[1]
     except BaseException:
-        pass  # todo
+        return await eod(e, "`fonts small caps chala jaa bsdk`")
     if font not in fonts:
-        return  # todo
+        return await eod(e, f"`{font} not in font list`.")
     if font == "small caps ":
         msg = gen_font(text, _small_caps)
     if font == "monospace ":
@@ -28,7 +33,6 @@ async def _(e):
     if font == "script royal ":
         msg = gen_font(text, _script_royal)
     await eor(e, msg)
-    # todo tmrw
 
 
 def gen_font(text, new_font):
