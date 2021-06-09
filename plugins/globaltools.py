@@ -608,7 +608,7 @@ async def list_gengbanned(event):
             name = (await ultroid.get_entity(int(i))).first_name
         except BaseException:
             name = i
-        msg += "**User**: " + name + "\n"
+        msg += f"**User**: {name}\n"
         reason = get_gban_reason(i)
         if reason is not None or "":
             msg += f"**Reason**: {reason}\n\n"
