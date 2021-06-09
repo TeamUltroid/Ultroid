@@ -135,4 +135,3 @@ async def getflood(e):
     if ok:
         return await eod(e, f"`Flood limit for this chat is {ok}.`")
     await eod(e, "`No flood limits in this chat.`")
-
