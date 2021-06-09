@@ -55,16 +55,15 @@ _start = [
 async def own(event):
     await event.edit(
         Owner_info_msg,
-        buttons=[Button.inline("Close", data=f"closeit_{event.chat_id}_{event.id}")],
+        buttons=[Button.inline("Close", data=f"closeit")],
     )
 
 
-@callback("closeit_(.*)")
+@callback("closeit")
 async def closet(lol):
-    splitit = ((lol.data_match.group(1)).decode()).split("_")
-    channel = splitit[1]
-    msg_id = splitit[2]
-    await ultroid_bot.delete_messages(int(channel), int(msg_id))
+    await lol.edit("`Deleting.`")
+    await asyncio.sleep(3)
+    await lol.delete()
 
 
 @asst_cmd("start ?(.*)")
