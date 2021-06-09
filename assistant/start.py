@@ -41,7 +41,7 @@ _settings = [
 
 _start = [
     [
-        Button.inline("Language 🌐", data="lang"),
+        Button.inline("Lᴀɴɢᴜᴀɢᴇ 🌐", data="lang"),
         Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
     ],
     [
@@ -53,7 +53,7 @@ _start = [
 
 @callback("ownerinfo")
 async def own(event):
-    await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data="closeit")])
+    await event.edit(Owner_info_msg, buttons=[Button.inline("Close", data=f"closeit_{event.chat_id}_{event.message.id}")])
 
 
 @callback("closeit_(.*)")
