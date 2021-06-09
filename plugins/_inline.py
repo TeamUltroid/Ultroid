@@ -417,7 +417,7 @@ async def on_plug_in_callback_query_handler(event):
         file=_file_to_replace,
         buttons=[
             Button.inline("Oᴘᴇɴ Aɢᴀɪɴ", data="open"),
-            Button.inline("Dᴇʟᴇᴛᴇ", data=f"closeit_{event.chat_id}_{event.message.id}"),
+            Button.inline("Dᴇʟᴇᴛᴇ", data=f"closeit_{event.chat_id}_{event.id}"),
         ],
     )
 
