@@ -369,10 +369,6 @@ if sett == "True":
                 )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
-                await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
-                )
         elif apprvpm.is_private:
             user = await apprvpm.get_chat()
             aname = await apprvpm.client.get_entity(user.id)
@@ -400,10 +396,6 @@ if sett == "True":
                 )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
-                await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
-                )
         else:
             await apprvpm.edit(NO_REPLY)
 
@@ -428,6 +420,10 @@ if sett == "True":
                 )
                 await asyncio.sleep(5)
                 await e.delete()
+                await asst.send_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
+                )
             else:
                 await e.edit(
                     f"[{name0}](tg://user?id={replied_user.id}) was never approved!",
@@ -448,9 +444,9 @@ if sett == "True":
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disaproved to PM!`")
                 await asyncio.sleep(5)
                 await e.delete()
-                await e.client.send_message(
+                await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
-                    f"[{name0}](tg://user?id={bbb.id}) was disapproved to PM you.",
+                    f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
                 )
             else:
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) was never approved!")
@@ -486,7 +482,7 @@ async def blockpm(block):
         disapprove_user(user)
     except AttributeError:
         pass
-    await ultroid_bot.send_message(
+    await asst.send_message(
         int(udB.get("LOG_CHANNEL")),
         f"#BLOCKED\nUser: [{aname.first_name}](tg://user?id={user})",
     )
