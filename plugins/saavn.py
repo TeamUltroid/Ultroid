@@ -21,6 +21,7 @@ from urllib.request import urlretrieve
 
 import requests as r
 from telethon.tl.types import DocumentAttributeAudio
+from json.decoder import JSONDecodeError
 
 from . import *
 
