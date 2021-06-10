@@ -97,7 +97,9 @@ async def siesace(e):
     except IndexError:
         return await eod(lol, "`Song Not Found.. `")
     except JSONDecodeError:
-        return await eod(lol, f"`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`")
+        return await eod(
+            lol, f"`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`"
+        )
     try:
         title = k["title"]
         urrl = k["raw_link"]
