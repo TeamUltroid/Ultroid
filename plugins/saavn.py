@@ -89,15 +89,15 @@ async def siesace(e):
         except Exception as ex:
             await eod(e, f"`{str(ex)}`")
     hmm = time.time()
-    lol = await eor(e, "Searching on Deezer...")
+    lol = await eor(e, "`Searching on Deezer...`")
     sung = song.replace(" ", "%20")
     url = f"https://jostapi.herokuapp.com/deezer?query={sung}&quality={quality}&count=1"
     try:
         k = (r.get(url)).json()[0]
     except IndexError:
         return await eod(lol, "`Song Not Found.. `")
-    except Exception as ex:
-        return await eod(lol, f"`{str(ex)}`")
+    except JSONDecodeError:
+        return await eod(lol, f"`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`")
     try:
         title = k["title"]
         urrl = k["raw_link"]
