@@ -615,10 +615,18 @@ async def copp(event):
 
 
 @asst_cmd("pst")
+async def pepsodent(event):
+    await toothpaste(event)
+
+
 @ultroid_cmd(
     pattern="pst$",
 )
 async def colgate(event):
+    await toothpaste(event)
+
+
+async def toothpaste(event):
     try:
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
         await event.delete()
@@ -627,6 +635,9 @@ async def colgate(event):
             event,
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
         )
+    except Exception as ex:
+        return await eod(str(ex))
+    
 
 
 # inspired by @RandomUserGenBot.
