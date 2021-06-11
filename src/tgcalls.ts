@@ -286,17 +286,17 @@ export const leaveVc = (chatId: number) => {
     }
 }
 
-export const addFIleToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from'], duration: string | number, title: string): Promise<number | null> => {
+export const addFileToQueue = async (chat: Chat.SupergroupChat, url: string, by: Queue['from'], duration: string | number, title: string): Promise<number | null> => {
     if (!cache.has(chat.id)) {
         await createConnection(chat);
-        return addFIleToQueue(chat, url, by, duration, title);
+        return addFileToQueue(chat, url, by, duration, title);
     }
 
     const connection = cache.get(chat.id)!;
     if (connection.leftVC) {
         cache.delete(chat.id);
         await createConnection(chat);
-        return addFIleToQueue(chat, url, by, duration, title);
+        return addFileToQueue(chat, url, by, duration, title);
     }
     const { stream, queue } = connection;
 
