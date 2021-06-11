@@ -46,7 +46,7 @@ async def _(ult):
         if "pic" in mediain:
             await ultroid_bot(EditPhotoRequest(ult.chat_id, file))
         else:
-            return await ok.edit("`Invalid MEDIA Type !`")
+            return await eod(ult, "`Invalid MEDIA Type !`")
         await eod(ult, "`Group Photo has Successfully Changed !`")
     except Exception as ex:
         await eod(ult, "Error occured.\n`{}`".format(str(ex)))
