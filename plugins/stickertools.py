@@ -38,10 +38,11 @@ import random
 import re
 import urllib.request
 from os import remove
-from telethon import utils
+
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+from telethon import utils
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
     DocumentAttributeFilename,
