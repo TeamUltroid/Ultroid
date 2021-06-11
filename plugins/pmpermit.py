@@ -209,16 +209,24 @@ if sett == "True":
             count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id] + 1
-                await asst.edit_message(int(udB.get("LOG_CHANNEL")), _not_approved[user.id], f"Incoming PM from {mention} with {wrn}/{WARNS} warning!", buttons=[Button.inline("Approve PM", data=f"approve_{user.id}"), Button.inline("Block PM", data=f"block_{user.id}")])
+                await asst.edit_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    _not_approved[user.id],
+                    f"Incoming PM from {mention} with {wrn}/{WARNS} warning!",
+                    buttons=[
+                        Button.inline("Approve PM", data=f"approve_{user.id}"),
+                        Button.inline("Block PM", data=f"block_{user.id}"),
+                    ],
+                )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                        int(udB.get("LOG_CHANNEL")),
-                        f"Incoming PM from {mention} with 1/{WARNS} warning!",
-                        buttons=[
-                            Button.inline("Approve PM", data=f"approve_{user.id}"),
-                            Button.inline("Block PM", data=f"block_{user.id}"),
-                        ],
-                    )
+                    int(udB.get("LOG_CHANNEL")),
+                    f"Incoming PM from {mention} with 1/{WARNS} warning!",
+                    buttons=[
+                        Button.inline("Approve PM", data=f"approve_{user.id}"),
+                        Button.inline("Block PM", data=f"block_{user.id}"),
+                    ],
+                )
                 wrn = 1
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
@@ -369,8 +377,8 @@ if sett == "True":
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                         Button.inline("Block", data=f"block_{uid}"),
-                        ],
-                    )
+                    ],
+                )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         elif apprvpm.is_private:
@@ -401,8 +409,8 @@ if sett == "True":
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                         Button.inline("Block", data=f"block_{uid}"),
-                        ],
-                    )
+                    ],
+                )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         else:
@@ -436,8 +444,8 @@ if sett == "True":
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{aname}"),
                         Button.inline("Block", data=f"block_{aname}"),
-                        ],
-                    )
+                    ],
+                )
             else:
                 await e.edit(
                     f"[{name0}](tg://user?id={replied_user.id}) was never approved!",
@@ -465,8 +473,8 @@ if sett == "True":
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{bbb.id}"),
                         Button.inline("Block", data=f"block_{bbb.id}"),
-                        ],
-                    )
+                    ],
+                )
             else:
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) was never approved!")
                 await asyncio.sleep(5)
