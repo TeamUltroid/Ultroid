@@ -614,12 +614,14 @@ async def copp(event):
     await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
 
 
+@asst_cmd("pst")
 @ultroid_cmd(
     pattern="pst$",
 )
 async def colgate(event):
     try:
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
+        await event.delete()
     except KeyError:
         return await eod(
             event,
