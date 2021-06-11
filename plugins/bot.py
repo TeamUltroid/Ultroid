@@ -35,15 +35,12 @@ import time
 from datetime import datetime as dt
 from platform import python_version as pyver
 
-import heroku3
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__, events
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
-
-
 
 
 @ultroid_cmd(
