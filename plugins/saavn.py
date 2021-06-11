@@ -48,7 +48,7 @@ async def siesace(e):
         urrl = k["media_url"]
         img = k["image"]
         duration = k["duration"]
-        singers = k["singers"]
+        singers = k["primary_artists"]
     except Exception as ex:
         return await eod(lol, f"`{str(ex)}`")
     urlretrieve(urrl, title + ".mp3")
