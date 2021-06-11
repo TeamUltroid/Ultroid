@@ -604,7 +604,9 @@ async def ipinfo(event):
         await eod(event, f"ERROR:\n{err}\n{msg}")
 
 
-@ultroid_cmd(pattern="cpy")
+@ultroid_cmd(
+     pattern="cpy$",
+)
 async def copp(event):
     msg = await event.get_reply_message()
     if msg is None:
@@ -613,11 +615,13 @@ async def copp(event):
     await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
 
 
-@ultroid_cmd(pattern="pst")
+@ultroid_cmd(
+    pattern="pst$",
+)
 async def colgate(event):
     try:
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
-    except KeyError
+    except KeyError:
         return await eod(
             event,
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
