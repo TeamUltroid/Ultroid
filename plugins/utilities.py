@@ -95,6 +95,8 @@ try:
 except BaseException:
     telegraph.create_account(short_name="Ultroid")
 
+_copied_msg = {}
+
 
 @ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
 async def leave(ult):
@@ -604,29 +606,22 @@ async def ipinfo(event):
 
 @ultroid_cmd(pattern="cpy")
 async def copp(event):
-    msg = await event.get_reply_message() or None
+    msg = await event.get_reply_message()
     if msg is None:
-        return await eod(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
-    msg_ = msg.text
-    udB.set("CLIPBOARD", msg_)
+        return await eod(event, f"Use `{hndlr}cpy` as reply to a message!")
+    _copied_msg["CLIPBOARD"] = msg
     await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
-    udB.expire("CLIPBOARD", 86400)  # expire in 24hrs.
 
 
 @ultroid_cmd(pattern="pst")
 async def colgate(event):
-    msg = udB.get("CLIPBOARD")
-    if msg is None:
+    try:
+        await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
+    except KeyError
         return await eod(
             event,
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
-            time=5,
         )
-    try:
-        await eor(event, msg)
-    except MessageEmptyError:
-        return await eod(event, "ERROR.", time=2)
-
 
 # inspired by @RandomUserGenBot.
 
