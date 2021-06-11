@@ -637,7 +637,6 @@ async def toothpaste(event):
         )
     except Exception as ex:
         return await eod(str(ex))
-    
 
 
 # inspired by @RandomUserGenBot.
