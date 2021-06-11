@@ -431,7 +431,7 @@ if sett == "True":
                 await e.delete()
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
-                    _not_approved[aname]
+                    _not_approved[aname],
                     f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{aname}"),
