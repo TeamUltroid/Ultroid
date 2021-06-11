@@ -69,7 +69,6 @@ import pytz
 import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
-from telethon.errors.rpcerrorlist import MessageEmptyError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
@@ -605,7 +604,7 @@ async def ipinfo(event):
 
 
 @ultroid_cmd(
-     pattern="cpy$",
+    pattern="cpy$",
 )
 async def copp(event):
     msg = await event.get_reply_message()
@@ -626,6 +625,7 @@ async def colgate(event):
             event,
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
         )
+
 
 # inspired by @RandomUserGenBot.
 
