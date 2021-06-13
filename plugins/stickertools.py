@@ -174,7 +174,7 @@ async def pack_kangish(_):
         ok = eval(udB.get("PACKKANG"))
         try:
             pack = ok[_.sender_id] + 1
-        except:
+        except BaseException:
             pack = 1
         try:
             _r_e_s = await asst(
