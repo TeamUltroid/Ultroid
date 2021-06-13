@@ -189,7 +189,7 @@ async def pack_kangish(_):
             udB.set("PACKKANG", str(ok))
         except PackShortNameOccupiedError:
             time.sleep(1)
-            """i += 1
+            pack += 1
             _r_e_s = await asst(
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
@@ -197,8 +197,7 @@ async def pack_kangish(_):
                     short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                     stickers=stiks,
                 )
-            )"""
-
+            )
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
