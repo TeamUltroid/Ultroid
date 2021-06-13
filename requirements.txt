@@ -1,2 +1,2 @@
-py-Ultroid==40.9b0
-Telethon
+py-Ultroid==50.0b0
+https://github.com/New-dev0/Telethon/archive/BETTER.zip
