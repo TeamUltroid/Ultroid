@@ -198,6 +198,8 @@ async def pack_kangish(_):
                     stickers=stiks,
                 )
             )
+            ok.update({_.sender_id: pack})
+            udB.set("PACKKANG", str(ok))
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
