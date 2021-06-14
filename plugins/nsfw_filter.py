@@ -10,8 +10,10 @@
 
 """
 
-from . import *
 import requests
+
+from . import *
+
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
 async def addnsfw(e):
@@ -21,10 +23,12 @@ async def addnsfw(e):
     nsfw_chat(e.chat_id, action)
     await eor(e, "Added This Chat To Nsfw Filter")
 
+
 @ultroid_cmd(pattern="remnsfw", admins_only=True)
 async def remnsfw(e):
     rem_nsfw(e.chat_id)
     await eor(e, "Removed This Chat from Nsfw Filter.")
+
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def checknsfw(e):
@@ -34,12 +38,11 @@ async def checknsfw(e):
         r = requests.post(
             "https://api.deepai.org/api/nsfw-detector",
             files={
-           'image': open(await e.media.download_media(), 'rb'),
-        },
-        headers={'api-key': udB["DEEP_API"]}
+                "image": open(await e.media.download_media(), "rb"),
+            },
+            headers={"api-key": udB["DEEP_API"]},
         )
-        k = float((r.json()['output']['nsfw_score']))
-        score = (int(k*100))
+        k = float((r.json()["output"]["nsfw_score"]))
+        score = int(k * 100)
         if score > 45:
             await e.delete()
-          
