@@ -422,6 +422,7 @@ async def tagloggrr(e):
 
 @callback("deltag")
 @owner
+async def delfuk(e)
     udB.delete("TAG_LOG")
     await e.answer("Done!!! TAG lOG Off")
 
