@@ -415,10 +415,19 @@ async def hndlrr(event):
                 buttons=get_back_button("otvars"),
             )
 
-
 @callback("taglog")
 @owner
-async def tagloggerr(event):
+async def tagloggrr(e):
+    await e.edit("Choose Options", buttons =[[Button.inline("SET TAG LOG", data="settag")],[Button.inline("DELETE TAG LOG", data="deltag")],[Button.inline("« Bᴀᴄᴋ", data="otvars")]])
+
+@callback("deltag")
+@owner
+    udB.delete("TAG_LOG")
+    await e.answer("Done!!! TAG lOG Off")
+
+@callback("settag")
+@owner
+async def taglogerr(event):
     await event.delete()
     pru = event.sender_id
     var = "TAG_LOG"
@@ -433,13 +442,13 @@ async def tagloggerr(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("taglog"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("taglog"),
             )
 
 
