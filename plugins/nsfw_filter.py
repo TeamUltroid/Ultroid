@@ -33,7 +33,9 @@ async def remnsfw(e):
     rem_nsfw(e.chat_id)
     await eor(e, "Removed This Chat from Nsfw Filter.")
 
+
 NWARN = {}
+
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def checknsfw(e):
@@ -69,7 +71,10 @@ async def checknsfw(e):
                 count = NWARN[e.sender_id] + 1
                 if count < 3:
                     NWARN.update({e.sender_id: count})
-                    return await ultroid_bot.send_message(e.chat_id, f"**NSFW Warn {count}/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}")
+                    return await ultroid_bot.send_message(
+                        e.chat_id,
+                        f"**NSFW Warn {count}/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
+                    )
                 if "mute" in action:
                     try:
                         await ultroid_bot.edit_permissions(
@@ -79,7 +84,9 @@ async def checknsfw(e):
                         pass
                 elif "ban" in action:
                     try:
-                        await ultroid_bot.edit_permissions(e.chat_id, e.sender_id, view_messages=False)
+                        await ultroid_bot.edit_permissions(
+                            e.chat_id, e.sender_id, view_messages=False
+                        )
                     except BaseException:
                         pass
                 elif "kick" in action:
@@ -90,4 +97,7 @@ async def checknsfw(e):
                 NWARN.pop(e.sender_id)
             else:
                 NWARN.update({e.sender_id: 1})
-                return await ultroid_bot.send_message(e.chat_id, f"**NSFW Warn 1/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}")
+                return await ultroid_bot.send_message(
+                    e.chat_id,
+                    f"**NSFW Warn 1/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
+                )
