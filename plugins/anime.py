@@ -10,15 +10,13 @@
 
 • `{i}airing`
    Get details about currently airing anime.
-   
-• `{i}anime <anime name>` 
+
+• `{i}anime <anime name>`
    Get anime details from anilist.
 """
 
 from os import remove
-import json
-import re
-import requests
+
 from . import *
 
 
