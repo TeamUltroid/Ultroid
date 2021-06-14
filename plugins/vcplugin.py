@@ -75,7 +75,7 @@ async def _(e):
 )
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("python vcstarter.py & sleep 10 && npm start")
+    er, out = await bash("python vcstarter.py && sleep 10 && npm start")
     LOGS.info(er)
     LOGS.info(out)
     if er:

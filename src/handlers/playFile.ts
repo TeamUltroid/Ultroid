@@ -8,7 +8,7 @@
 **/
 
 import { Composer, Markup } from 'telegraf';
-import { addFIleToQueue, getQueue } from '../tgcalls';
+import { addFileToQueue, getQueue } from '../tgcalls';
 import { getCurrentSong } from '../tgcalls';
 import { getDuration } from '../utils';
 import { logger as log } from '../bot';
@@ -21,10 +21,9 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
         return await ctx.reply('I can only play in groups.');
     }
     if (ctx.message.reply_to_message && JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio) {
-        await ctx.reply('Starting <b>FilePlay</b> [beta]');
-        ctx.reply(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration);
+        await ctx.reply('Starting <b>FilePlay</b> [beta]', {parse_mode: 'HTML'});
     } else {
-        return await ctx.reply("Its Not A Audio File...");
+        return await ctx.reply("Its Not An Audio File...");
     }
 
     const file = JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio;
@@ -34,14 +33,14 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
         return await ctx.reply('You need to reply to a audio file not an Voice or Message!');
     }
 
-    const index = await addFIleToQueue(
+    const index = await addFileToQueue(
         chat, fileLink, 
         {
             id: ctx.from.id,
             f_name: ctx.from.first_name
         },
         JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration,
-        JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.title,
+        JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.file_name,
     );
     const song = getCurrentSong(chat.id);
 
@@ -53,7 +52,7 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
             if (song) {
                 const { id } = song.song;
                 ctx.replyWithPhoto("https://9to5google.com/wp-content/uploads/sites/4/2018/09/youtube_logo_dark.jpg?quality=82&strip=all", {
-                    caption: `<b>Playing : </b> <a href="https://www.youtube.com/watch?v=${id}">${escapeHtml(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.title)}</a>\n` +
+                    caption: `<b>Playing : </b> <a href="https://www.youtube.com/watch?v=${id}">${escapeHtml(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.file_name)}</a>\n` +
                         `<b>Duration: </b>${getDuration(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration)}\n` +
                         `<b>Requested by :</b> <a href="tg://user?id=${song.by.id}">${song.by.f_name}</a>`,
                     parse_mode: 'HTML',
@@ -83,5 +82,4 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
                 await log("Queue not found in " + chat.title)
             }
     }
-
 });
