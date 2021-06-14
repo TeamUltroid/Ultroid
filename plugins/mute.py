@@ -43,6 +43,7 @@ async def watcher(event):
     if event.via_bot and is_muted(f"{event.via_bot_id}_{event.chat_id}"):
         await event.delete()
 
+
 @ultroid_cmd(
     pattern="dmute ?(.*)",
 )
