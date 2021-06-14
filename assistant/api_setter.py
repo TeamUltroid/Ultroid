@@ -73,6 +73,7 @@ async def rmbgapi(event):
                 buttons=get_back_button("apiset"),
             )
 
+
 @callback("oapi")
 @owner
 async def rmbgapi(event):
