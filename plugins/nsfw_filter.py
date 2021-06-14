@@ -10,7 +10,9 @@
 
 """
 
-import requests, os
+import os
+
+import requests
 
 from . import *
 
@@ -35,7 +37,7 @@ async def checknsfw(e):
     chat = e.chat_id
     action = is_nsfw(chat)
     if action and udB.get("DEEP_API") and e.media:
-        pic, name,nsfw = "", "", 0
+        pic, name, nsfw = "", "", 0
         try:
             pic = await ultroid_bot.download_media(e.media, thumb=-1)
         except BaseException:
