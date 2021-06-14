@@ -10,7 +10,7 @@
 
 """
 
-import requests
+import requests, os
 
 from . import *
 
@@ -35,14 +35,29 @@ async def checknsfw(e):
     chat = e.chat_id
     action = is_nsfw(chat)
     if action and udB.get("DEEP_API") and e.media:
-        r = requests.post(
-            "https://api.deepai.org/api/nsfw-detector",
-            files={
-                "image": open(await e.media.download_media(), "rb"),
-            },
-            headers={"api-key": udB["DEEP_API"]},
-        )
-        k = float((r.json()["output"]["nsfw_score"]))
-        score = int(k * 100)
-        if score > 45:
+        pic, name,nsfw = "", "", 0
+        try:
+            pic = await ultroid_bot.download_media(e.media, thumb=-1)
+        except BaseException:
+            pass
+        if e.file:
+            name = e.file.name
+        if name:
+            if check_profanity(name):
+                nsfw += 1
+        if pic and not nsfw:
+            r = requests.post(
+                "https://api.deepai.org/api/nsfw-detector",
+                files={
+                    "image": open(pic, "rb"),
+                },
+                headers={"api-key": udB["DEEP_API"]},
+            )
+            k = float((r.json()["output"]["nsfw_score"]))
+            score = int(k * 100)
+            if score > 45:
+                nsfw += 1
+            os.remove(pic)
+        if nsfw:
             await e.delete()
+            take(action)
