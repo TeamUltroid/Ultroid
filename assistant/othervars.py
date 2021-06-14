@@ -415,16 +415,26 @@ async def hndlrr(event):
                 buttons=get_back_button("otvars"),
             )
 
+
 @callback("taglog")
 @owner
 async def tagloggrr(e):
-    await e.edit("Choose Options", buttons =[[Button.inline("SET TAG LOG", data="settag")],[Button.inline("DELETE TAG LOG", data="deltag")],[Button.inline("« Bᴀᴄᴋ", data="otvars")]])
+    await e.edit(
+        "Choose Options",
+        buttons=[
+            [Button.inline("SET TAG LOG", data="settag")],
+            [Button.inline("DELETE TAG LOG", data="deltag")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        ],
+    )
+
 
 @callback("deltag")
 @owner
 async def delfuk(e):
     udB.delete("TAG_LOG")
     await e.answer("Done!!! TAG lOG Off")
+
 
 @callback("settag")
 @owner
