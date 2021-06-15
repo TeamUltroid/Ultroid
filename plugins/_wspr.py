@@ -67,7 +67,7 @@ async def _(e):
         query = sed[0]
     except IndexError:
         return
-    meme = e.query.user_id
+    e.query.user_id
     try:
         desc = sed[1]
     except IndexError:
@@ -133,7 +133,7 @@ async def _(e):
                 text=get_string("wspr_1").format(us),
                 buttons=button,
             )
-            buddhhu.update({e.id : logi.id})
+            buddhhu.update({e.id: logi.id})
             snap.update({e.id: desc})
         except ValueError:
             sur = e.builder.article(
