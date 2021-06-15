@@ -13,7 +13,7 @@
 import os
 
 import requests
-
+from ProfanityDetector import detector
 from . import *
 
 
@@ -54,7 +54,8 @@ async def checknsfw(e):
         if e.file:
             name = e.file.name
         if name:
-            if check_profanity(name):
+            x, y = detector(name)
+            if y:
                 nsfw += 1
         if pic and not nsfw:
             r = requests.post(
