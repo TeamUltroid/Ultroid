@@ -22,7 +22,7 @@ from telethon.tl.types import UserStatusRecently as rec
 from . import *
 
 snap = {}
-buddhhu = []
+buddhhu = {}
 
 
 @ultroid_cmd(
@@ -119,9 +119,11 @@ async def _(e):
             )
     else:
         try:
+            if query.isdigit:
+                query = int(query)
             logi = await ultroid_bot.get_entity(query)
             button = [
-                Button.inline("Secret Msg", data=f"dd_{logi.id}"),
+                Button.inline("Secret Msg", data=f"dd_{e.id}"),
                 Button.inline("Delete Msg", data=f"del"),
             ]
             us = logi.username
@@ -131,9 +133,8 @@ async def _(e):
                 text=get_string("wspr_1").format(us),
                 buttons=button,
             )
-            buddhhu.append(meme)
-            buddhhu.append(logi.id)
-            snap.update({logi.id: desc})
+            buddhhu.update({e.id : logi.id})
+            snap.update({e.id: desc})
         except ValueError:
             sur = e.builder.article(
                 title="Type ur msg",
@@ -149,21 +150,18 @@ async def _(e):
 )
 async def _(e):
     ids = int(e.pattern_match.group(1).decode("UTF-8"))
-    if e.sender_id in buddhhu:
-        await e.answer(snap[ids], alert=True)
-    else:
-        await e.answer("Not For You", alert=True)
+    if buddhhu.get(e.id):
+        if e.sender_id == buddhhu[e.id]:
+            await e.answer(snap[ids], alert=True)
+        else:
+            await e.answer("Not For You", alert=True)
 
 
 @callback("del")
 async def _(e):
-    if e.sender_id in buddhhu:
-        for k in buddhhu:
-            try:
-                del snap[k]
-                buddhhu.clear()
-            except KeyError:
-                pass
+    if buddhhu.get(e.id):
+        if e.sender_id == buddhhu[e.id]:
+            buddhhu.pop(e.id)
             try:
                 await e.edit(get_string("wspr_2"))
             except np:
