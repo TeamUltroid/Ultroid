@@ -14,6 +14,7 @@ import os
 
 import requests
 from ProfanityDetector import detector
+
 from . import *
 
 
