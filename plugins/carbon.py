@@ -230,7 +230,9 @@ async def crbn(event):
         return await eor(
             event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
         )
-    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",code=code, background=col)
+    carbon = Carbon(
+        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
+    )
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await ultroid_bot.send_file(
