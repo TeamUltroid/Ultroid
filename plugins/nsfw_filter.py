@@ -78,32 +78,32 @@ async def checknsfw(e):
                 if count < 3:
                     NWARN.update({e.sender_id: count})
                     return await ultroid_bot.send_message(
-                        e.chat_id,
+                        chat,
                         f"**NSFW Warn {count}/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
                     )
                 if "mute" in action:
                     try:
                         await ultroid_bot.edit_permissions(
-                            e.chat_id, e.sender_id, until_date=None, send_messages=False
+                            chat, e.sender_id, until_date=None, send_messages=False
                         )
                     except BaseException:
                         pass
                 elif "ban" in action:
                     try:
                         await ultroid_bot.edit_permissions(
-                            e.chat_id, e.sender_id, view_messages=False
+                            chat, e.sender_id, view_messages=False
                         )
                     except BaseException:
                         pass
                 elif "kick" in action:
                     try:
-                        await ultroid_bot.kick_participant(e.chat_id, e.sender_id)
+                        await ultroid_bot.kick_participant(chat, e.sender_id)
                     except BaseException:
                         pass
                 NWARN.pop(e.sender_id)
             else:
                 NWARN.update({e.sender_id: 1})
                 return await ultroid_bot.send_message(
-                    e.chat_id,
+                    chat,
                     f"**NSFW Warn 1/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
                 )
