@@ -17,6 +17,7 @@ from telethon.utils import pack_bot_file_id
 
 from . import *
 
+
 @ultroid_cmd(pattern="addcmd ?(.*)")
 async def ac(e):
     wrd = (e.pattern_match.group(1)).lower()
@@ -50,6 +51,7 @@ async def ac(e):
         add_cmd(wrd, wt.text, None)
     await eor(e, f"Done Command : `/{wrd}` saved.")
 
+
 @ultroid_cmd(pattern="remcmd ?(.*)")
 async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
@@ -60,6 +62,7 @@ async def rc(e):
     rem_cmd(wrd)
     await eor(e, f"Done Command: `/{wrd}` Removed.")
 
+
 @ultroid_cmd(pattern="listcmd$")
 async def lscmd(e):
     if list_cmds():
@@ -68,7 +71,6 @@ async def lscmd(e):
             ok += "/" + x + "\n"
         return await eor(e, ok)
     return await eor(e, "No commands found")
-
 
 
 @asst.on(events.NewMessage())
