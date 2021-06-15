@@ -10,9 +10,7 @@
 
 """
 
-import os
 
-import requests
 from ProfanityDetector import detector
 
 from . import *
@@ -28,6 +26,7 @@ async def addp(e):
 async def remp(e):
     rem_profan(e.chat_id)
     await eor(e, "Removed This Chat from Profanity Filter.")
+
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def checkprofan(e):
