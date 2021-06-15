@@ -19,6 +19,8 @@ from . import *
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
 async def addnsfw(e):
+    if not udB.get("DEEP_API"):
+        return await eor(e, f"Get Api from deepai.org and Add It `{HNDLR}setredis DEEP_API your-api`")
     action = e.pattern_match.group(1)
     if not action:
         action = "mute"
