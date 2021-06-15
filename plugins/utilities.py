@@ -470,6 +470,16 @@ async def telegraphcmd(event):
             except Exception as e:
                 amsg = f"Error - {e}"
             await eor(event, amsg)
+        elif "pic" in mediainfo(getmsg.media):
+            getit = await ultroid_bot.download_media(getmsg)
+            try:
+                variable = uf(getit)
+                os.remove(getit)
+                nn = "https://telegra.ph" + variable[0]
+                amsg = f"Uploaded to [Telegraph]({nn}) !"
+            except Exception as e:
+                amsg = f"Error - {e}"
+            await eor(event, amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
             ab = open(getit)
