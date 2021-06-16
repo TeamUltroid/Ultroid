@@ -163,6 +163,7 @@ async def _(e):
     if buddhhu.get(ids):
         if e.sender_id in buddhhu[ids]:
             buddhhu.pop(ids)
+            snap.pop(ids)
             try:
                 await e.edit(get_string("wspr_2"))
             except np:
