@@ -25,7 +25,7 @@ async def on_out_mssg(event):
         if event.text.startswith("/who"):
             try:
                 k = await asst.get_entity(int(to_user))
-                return await event.reply(f"[{k.first_name}]({tg://user?id={k.id})")
+                return await event.reply(f"[{k.first_name}](tg://user?id={k.id})")
             except BaseException:
                 return
         elif event.text.startswith("/"):
