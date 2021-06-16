@@ -21,9 +21,15 @@ async def on_out_mssg(event):
         return
     who = event.sender_id
     if who == OWNER_ID:
-        if event.text.startswith("/"):
-            return
         to_user = get_who(x.id)
+        if event.text.startswith("/who"):
+            try:
+                k = await asst.get_entity(int(to_user))
+                return await event.reply(f"[{k.first_name}]({tg://user?id={k.id})")
+            except BaseException:
+                return
+        elif event.text.startswith("/"):
+                return
         if event.media:
             if event.text:
                 await asst.send_file(int(to_user), event.media, caption=event.text)
