@@ -155,6 +155,8 @@ async def _(e):
             await e.answer(snap[ids], alert=True)
         else:
             await e.answer("Not For You", alert=True)
+    else:
+        await e.answer("Message Deleted", alert=True)
 
 
 @callback(re.compile("del_(.*)"))
