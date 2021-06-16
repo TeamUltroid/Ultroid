@@ -32,8 +32,7 @@ async def _(e):
     if e.reply_to_msg_id:
         okk = (await e.get_reply_message()).sender_id
         try:
-            zyx = await ultroid_bot(gu(id=okk))
-            put = zyx.user.username
+            put = okk
         except ValueError as ex:
             return await eor(e, str(ex))
         except AttributeError:
@@ -65,6 +64,8 @@ async def _(e):
         ggg = zzz[1]
         sed = ggg.split(" wspr ", maxsplit=1)
         query = sed[0].replace(" ", "")
+        if query.isdigit():
+            query = int(query)
     except IndexError:
         return
     iuser = e.query.user_id
@@ -78,6 +79,7 @@ async def _(e):
             name = logi.user.first_name
             ids = logi.user.id
             username = logi.user.username
+            mention = f"[{name}](tg://user?id={ids})"
             x = logi.user.status
             bio = logi.about
             if isinstance(x, on):
@@ -94,11 +96,16 @@ async def _(e):
                 status = "Can't Tell"
             text = f"**Name:**    `{name}`\n"
             text += f"**Id:**    `{ids}`\n"
-            text += f"**Username:**    `{username}`\n"
+            if username:
+                text += f"**Username:**    `{username}`\n"
+                url = f"https://t.me/{username}"
+            else:
+                text += f"**Mention:**    `{mention}`\n"
+                url = f"tg://user?id={ids}"
             text += f"**Status:**    `{status}`\n"
             text += f"**About:**    `{bio}`"
             button = [
-                Button.url("Private", url=f"t.me/{username}"),
+                Button.url("Private", url=url),
                 Button.switch_inline(
                     "Secret msg",
                     query=f"msg {query} wspr Hello 👋",
@@ -119,8 +126,6 @@ async def _(e):
             )
     else:
         try:
-            if query.isdigit():
-                query = int(query)
             logi = await ultroid_bot.get_entity(query)
             button = [
                 Button.inline("Secret Msg", data=f"dd_{e.id}"),
