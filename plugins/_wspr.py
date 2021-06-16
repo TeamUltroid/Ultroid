@@ -123,7 +123,7 @@ async def _(e):
                 query = int(query)
             logi = await ultroid_bot.get_entity(query)
             button = [
-                Button.inline("Secret Msg", data=f"dd_{e.id}"),
+                Button.inline("Secret Msg", data=f"dd"),
                 Button.inline("Delete Msg", data=f"del"),
             ]
             us = logi.username
@@ -145,14 +145,13 @@ async def _(e):
 
 @callback(
     re.compile(
-        "dd_(.*)",
+        "dd",
     ),
 )
 async def _(e):
-    ids = int(e.pattern_match.group(1).decode("UTF-8"))
     if buddhhu.get(e.id):
         if e.sender_id in buddhhu[e.id]:
-            await e.answer(snap[ids], alert=True)
+            await e.answer(snap[e.id], alert=True)
         else:
             await e.answer("Not For You", alert=True)
 
@@ -160,7 +159,7 @@ async def _(e):
 @callback("del")
 async def _(e):
     if buddhhu.get(e.id):
-        if e.sender_id == buddhhu[e.id]:
+        if e.sender_id in buddhhu[e.id]:
             buddhhu.pop(e.id)
             try:
                 await e.edit(get_string("wspr_2"))
