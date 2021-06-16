@@ -86,23 +86,41 @@ async def checknsfw(e):
                         await ultroid_bot.edit_permissions(
                             chat, e.sender_id, until_date=None, send_messages=False
                         )
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}",
+                        )
                     except BaseException:
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.",
+                        )
                 elif "ban" in action:
                     try:
                         await ultroid_bot.edit_permissions(
                             chat, e.sender_id, view_messages=False
                         )
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}",
+                        )
                     except BaseException:
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.",
+                        )
                 elif "kick" in action:
                     try:
                         await ultroid_bot.kick_participant(chat, e.sender_id)
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}",
+                        )
                     except BaseException:
-                        await ultroid_bot.send_message(chat, f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.")
+                        await ultroid_bot.send_message(
+                            chat,
+                            f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\nCan't Able to {action}.",
+                        )
                 NWARN.pop(e.sender_id)
             else:
                 NWARN.update({e.sender_id: 1})
