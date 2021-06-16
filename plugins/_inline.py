@@ -137,6 +137,7 @@ async def _(event):
     )
     await event.answer([result])
 
+
 @in_pattern("dog")
 @in_owner
 async def _(event):
