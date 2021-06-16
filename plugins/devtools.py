@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -41,7 +41,7 @@ async def _(e):
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
-    ok = Carbon(code=p)
+    ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
     haa = await ok.save("neofetch")
     await e.client.send_file(e.chat_id, haa)
     await xx.delete()

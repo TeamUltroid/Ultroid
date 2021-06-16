@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -131,6 +131,24 @@ async def _(event):
         buttons=[
             [
                 Button.url("NekoBin", url=f"{link}{ok}"),
+                Button.url("Raw", url=f"{link}raw/{ok}"),
+            ],
+        ],
+    )
+    await event.answer([result])
+
+
+@in_pattern("dog")
+@in_owner
+async def _(event):
+    ok = event.text.split(" ")[1]
+    link = "https://del.dog/"
+    result = event.builder.article(
+        title="Paste",
+        text="Pᴀsᴛᴇᴅ Tᴏ Dᴏɢʙɪɴ!",
+        buttons=[
+            [
+                Button.url("DogBin", url=f"{link}{ok}"),
                 Button.url("Raw", url=f"{link}raw/{ok}"),
             ],
         ],

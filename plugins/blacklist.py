@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -27,11 +27,8 @@ from pyUltroid.functions.blacklist_db import *
 from . import *
 
 
-@ultroid_cmd(pattern="blacklist ?(.*)")
+@ultroid_cmd(pattern="blacklist ?(.*)", admins_only=True)
 async def af(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You are Not Admin Here`")
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
@@ -43,11 +40,8 @@ async def af(e):
     await eor(e, f"Done : `{wrd}` Blacklisted here.")
 
 
-@ultroid_cmd(pattern="remblacklist ?(.*)")
+@ultroid_cmd(pattern="remblacklist ?(.*)", admins_only=True)
 async def rf(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You are Not Admin Here`")
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
@@ -59,11 +53,8 @@ async def rf(e):
     await eor(e, f"Done : `{wrd}` Removed from Blacklist.")
 
 
-@ultroid_cmd(pattern="listblacklist")
+@ultroid_cmd(pattern="listblacklist$", admins_only=True)
 async def lsnote(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You are Not Admin Here`")
     x = list_blacklist(e.chat_id)
     if x:
         sd = "Blacklist Found In This Chats Are\n\n"

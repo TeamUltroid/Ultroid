@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -167,30 +167,39 @@ async def pack_kangish(_):
                     emoji=(i.attributes[1]).alt,
                 )
             )
-        pack = 1
-        for i in range(0, 101):
-            try:
-                _r_e_s = await asst(
-                    functions.stickers.CreateStickerSetRequest(
-                        user_id=_.sender_id,
-                        title=_packname,
-                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
-                        stickers=stiks,
-                    )
+        try:
+            eval(udB.get("PACKKANG"))
+        except BaseException:
+            udB.set("PACKKANG", "{}")
+        ok = eval(udB.get("PACKKANG"))
+        try:
+            pack = ok[_.sender_id] + 1
+        except BaseException:
+            pack = 1
+        try:
+            _r_e_s = await asst(
+                functions.stickers.CreateStickerSetRequest(
+                    user_id=_.sender_id,
+                    title=_packname,
+                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    stickers=stiks,
                 )
-            except PackShortNameOccupiedError:
-                time.sleep(1)
-                pack += i
-                """i += 1
-                _r_e_s = await asst(
-                    functions.stickers.CreateStickerSetRequest(
-                        user_id=_.sender_id,
-                        title=_packname,
-                        short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
-                        stickers=stiks,
-                    )
-                )"""
-
+            )
+            ok.update({_.sender_id: pack})
+            udB.set("PACKKANG", str(ok))
+        except PackShortNameOccupiedError:
+            time.sleep(1)
+            pack += 1
+            _r_e_s = await asst(
+                functions.stickers.CreateStickerSetRequest(
+                    user_id=_.sender_id,
+                    title=_packname,
+                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    stickers=stiks,
+                )
+            )
+            ok.update({_.sender_id: pack})
+            udB.set("PACKKANG", str(ok))
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",

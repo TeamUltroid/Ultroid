@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -53,8 +53,6 @@
 • `{i}pst`
    Paste the copied message, with formatting.
 
-• `{i}randomuser`
-   Generate details about a random user.
 """
 
 import asyncio
@@ -256,24 +254,13 @@ async def _(event):
     else:
         downloaded_file_name = None
         message = "`Include long text / Reply to text file`"
-    if downloaded_file_name and downloaded_file_name.endswith(".py"):
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
-    else:
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
-    q = f"paste {key}"
-    reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+    what, key = get_paste(message)
+    if "neko" in what:
+        q = f"paste {key}"
+        reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+    elif "dog" in what:
+        q = f"dog {key}"
+        reply_text = f"• **Pasted to Dog Bin :** [Dog](https://del.dog/{key})\n• **Raw Url :** : [Raw](https://del.dog/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(asst.me.username, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
@@ -470,6 +457,16 @@ async def telegraphcmd(event):
             except Exception as e:
                 amsg = f"Error - {e}"
             await eor(event, amsg)
+        elif "pic" in mediainfo(getmsg.media):
+            getit = await ultroid_bot.download_media(getmsg)
+            try:
+                variable = uf(getit)
+                os.remove(getit)
+                nn = "https://telegra.ph" + variable[0]
+                amsg = f"Uploaded to [Telegraph]({nn}) !"
+            except Exception as e:
+                amsg = f"Error - {e}"
+            await eor(event, amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
             ab = open(getit)
@@ -615,10 +612,18 @@ async def copp(event):
 
 
 @asst_cmd("pst")
+async def pepsodent(event):
+    await toothpaste(event)
+
+
 @ultroid_cmd(
     pattern="pst$",
 )
 async def colgate(event):
+    await toothpaste(event)
+
+
+async def toothpaste(event):
     try:
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
         await event.delete()
@@ -627,14 +632,5 @@ async def colgate(event):
             event,
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
         )
-
-
-# inspired by @RandomUserGenBot.
-
-
-@ultroid_cmd(pattern="randomuser")
-async def _gen_data(event):
-    x = await eor(event, get_string("com_1"))
-    msg, pic = get_random_user_data()
-    await event.reply(msg, file=pic)
-    await x.delete()
+    except Exception as ex:
+        return await eod(str(ex))

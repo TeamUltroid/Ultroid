@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -191,19 +191,18 @@ async def crbn(event):
             code = temp.message
     else:
         code = event.text.split(" ", maxsplit=1)[1]
-    webs = requests.get("https://carbon.pokurt.me")
+    webs = requests.get("https://carbonara.vercel.app/api/cook")
     if webs.status_code == 502:
         return await eor(
             event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
         )
-    carbon = Carbon(code=code)
+    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code)
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await ultroid_bot.send_file(
         event.chat_id,
         xx,
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-        force_document=True,
     )
 
 
@@ -225,17 +224,18 @@ async def crbn(event):
     else:
         code = event.text.split(" ", maxsplit=1)[1]
     col = random.choice(all_col)
-    webs = requests.get("https://carbon.pokurt.me")
+    webs = requests.get("https://carbonara.vercel.app/api/cook")
     if webs.status_code == 502:
         return await eor(
             event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
         )
-    carbon = Carbon(code=code, background=col)
+    carbon = Carbon(
+        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
+    )
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await ultroid_bot.send_file(
         event.chat_id,
         xx,
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-        force_document=True,
     )

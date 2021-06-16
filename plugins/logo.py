@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -50,9 +50,8 @@ async def logo_gen(event):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
-        fpath_ = "./resources/fonts/"
-        f = random.choice(os.listdir(fpath_))
-        font_ = fpath_ + f
+        fpath_ = glob.glob("resources/fonts/*")
+        font_ = random.choice(fpath_)
     if not bg_:
         pics = []
         async for i in ultroid.iter_messages(
