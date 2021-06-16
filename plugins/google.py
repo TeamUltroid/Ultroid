@@ -74,15 +74,18 @@ async def goimg(event):
             query = query.split(";")[0]
         except BaseException:
             pass
-    gi = googleimagesdownload()
-    args = {
-        "keywords": query,
-        "limit": lmt,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    pth = gi.download(args)
-    ok = pth[0][query]
+    try:
+        gi = googleimagesdownload()
+        args = {
+            "keywords": query,
+            "limit": lmt,
+            "format": "jpg",
+            "output_directory": "./resources/downloads/",
+        }
+        pth = gi.download(args)
+        ok = pth[0][query]
+    except BaseException:
+        return await nn.edit("No Results Found :(")
     await event.client.send_file(event.chat_id, ok, caption=query, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
