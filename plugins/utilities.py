@@ -257,10 +257,10 @@ async def _(event):
         downloaded_file_name = None
         message = "`Include long text / Reply to text file`"
     what, key = get_paste(message)
-    if what == "neko":
+    if "neko" in what:
         q = f"paste {key}"
         reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
-    else:
+    elif "dog" in what:
         q = f"dog {key}"
         reply_text = f"• **Pasted to Dog Bin :** [Dog](https://del.dog/{key})\n• **Raw Url :** : [Raw](https://del.dog/raw/{key})"
     try:
@@ -636,14 +636,3 @@ async def toothpaste(event):
         )
     except Exception as ex:
         return await eod(str(ex))
-
-
-# inspired by @RandomUserGenBot.
-
-
-@ultroid_cmd(pattern="randomuser")
-async def _gen_data(event):
-    x = await eor(event, get_string("com_1"))
-    msg, pic = get_random_user_data()
-    await event.reply(msg, file=pic)
-    await x.delete()
