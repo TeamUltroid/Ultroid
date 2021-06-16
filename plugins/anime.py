@@ -13,13 +13,15 @@
 
 • `{i}anime <anime name>`
    Get anime details from anilist.
-   
+
 • `{i}character <character name>`
    Fetch anime character details.
 """
 
 from os import remove
+
 import jikanpy
+
 from . import *
 
 
