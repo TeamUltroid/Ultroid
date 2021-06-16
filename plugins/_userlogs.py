@@ -109,7 +109,7 @@ async def when_asst_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         tmp = event.added_by
@@ -131,7 +131,7 @@ async def when_ultd_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         tmp = event.added_by
@@ -146,7 +146,7 @@ async def when_ultd_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         if user.is_self:
