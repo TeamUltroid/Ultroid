@@ -119,7 +119,7 @@ async def _(e):
             )
     else:
         try:
-            if query.isdigit:
+            if query.isdigit():
                 query = int(query)
             logi = await ultroid_bot.get_entity(query)
             button = [
