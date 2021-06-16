@@ -56,7 +56,10 @@ async def anime_char_search(event):
     if not char_name:
         await eod(xx, "`Enter the name of a character too please!`", time=5)
     jikan = jikanpy.jikan.Jikan()
-    s = jikan.search("character", char_name)
+    try:
+        s = jikan.search("character", char_name)
+    except jikanpy.exceptions.APIException:
+        return await eod(xx, "`Couldn't find character!`", time=5)
     a = s["results"][0]["mal_id"]
     char_json = jikan.character(a)
     pic = char_json["image_url"]
