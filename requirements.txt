@@ -1,3 +1,3 @@
-py-Ultroid==41.1b0
+py-Ultroid==41.2b0
 https://github.com/New-dev0/Telethon/archive/BETTER.zip
 ProfanityDetector
