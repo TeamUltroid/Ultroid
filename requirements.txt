@@ -1,3 +1,6 @@
-py-Ultroid==41.2b0
+py-Ultroid==41.3b0
 https://github.com/New-dev0/Telethon/archive/BETTER.zip
 ProfanityDetector
+git+https://github.com/OpenRestfulAPI/carbon-now-sh-API-Wrapper
+apscheduler
+Faker
