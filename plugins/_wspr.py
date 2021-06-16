@@ -64,10 +64,10 @@ async def _(e):
     try:
         ggg = zzz[1]
         sed = ggg.split(" wspr ", maxsplit=1)
-        query = sed[0]
+        query = sed[0].replace(" ", "")
     except IndexError:
         return
-    e.query.user_id
+    iuser = e.query.user_id
     try:
         desc = sed[1]
     except IndexError:
@@ -133,7 +133,7 @@ async def _(e):
                 text=get_string("wspr_1").format(us),
                 buttons=button,
             )
-            buddhhu.update({e.id: logi.id})
+            buddhhu.update({e.id: [logi.id, iuser]})
             snap.update({e.id: desc})
         except ValueError:
             sur = e.builder.article(
@@ -151,7 +151,7 @@ async def _(e):
 async def _(e):
     ids = int(e.pattern_match.group(1).decode("UTF-8"))
     if buddhhu.get(e.id):
-        if e.sender_id == buddhhu[e.id]:
+        if e.sender_id in buddhhu[e.id]:
             await e.answer(snap[ids], alert=True)
         else:
             await e.answer("Not For You", alert=True)
