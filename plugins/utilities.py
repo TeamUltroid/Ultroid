@@ -256,24 +256,13 @@ async def _(event):
     else:
         downloaded_file_name = None
         message = "`Include long text / Reply to text file`"
-    if downloaded_file_name and downloaded_file_name.endswith(".py"):
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
+    what, key = get_paste(message)
+    if what == "neko":
+        q = f"paste {key}"
+        reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
     else:
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
-    q = f"paste {key}"
-    reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+        q = f"dog {key}"
+        reply_text = f"• **Pasted to Dog Bin :** [Dog](https://del.dog/{key})\n• **Raw Url :** : [Raw](https://del.dog/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(asst.me.username, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
