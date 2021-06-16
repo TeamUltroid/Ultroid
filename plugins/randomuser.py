@@ -12,6 +12,7 @@
    Generate details about a random user.
 """
 
+from . import *
 
 @ultroid_cmd(pattern="randomuser")
 async def _gen_data(event):
