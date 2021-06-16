@@ -53,8 +53,6 @@
 • `{i}pst`
    Paste the copied message, with formatting.
 
-• `{i}randomuser`
-   Generate details about a random user.
 """
 
 import asyncio
