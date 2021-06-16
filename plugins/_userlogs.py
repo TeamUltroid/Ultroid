@@ -107,7 +107,11 @@ async def _(e):
 async def when_asst_added_to_chat(event):
     if event.user_added:
         user = await event.get_user()
-        chat = (await event.get_chat()).title
+        chat = await event.get_chat()
+        if chat.username:
+            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+        else:
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         tmp = event.added_by
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
@@ -125,7 +129,11 @@ async def when_asst_added_to_chat(event):
 async def when_ultd_added_to_chat(event):
     if event.user_added:
         user = await event.get_user()
-        chat = (await event.get_chat()).title
+        chat = await event.get_chat()
+        if chat.username:
+            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+        else:
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         tmp = event.added_by
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
@@ -136,7 +144,11 @@ async def when_ultd_added_to_chat(event):
             )
     elif event.user_joined:
         user = await event.get_user()
-        chat = (await event.get_chat()).title
+        chat = await event.get_chat()
+        if chat.username:
+            chat = f"[{chat.title}](https://t.me/{username}/{event.id})"
+        else:
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
