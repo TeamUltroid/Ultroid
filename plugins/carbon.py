@@ -203,7 +203,6 @@ async def crbn(event):
         event.chat_id,
         xx,
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-        force_document=True,
     )
 
 
@@ -239,5 +238,4 @@ async def crbn(event):
         event.chat_id,
         xx,
         caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-        force_document=True,
     )
