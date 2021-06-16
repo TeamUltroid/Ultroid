@@ -18,7 +18,7 @@ from . import *
 
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)
 async def addp(e):
-    profan_chat(e.chat_id)
+    profan_chat(e.chat_id, "mute")
     await eor(e, "Added This Chat To Profanity Filter")
 
 
