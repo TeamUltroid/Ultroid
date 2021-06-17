@@ -38,7 +38,7 @@ async def airing_anime(event):
         remove("anime.txt")
         await event.delete()
 
-
+"""
 @ultroid_cmd(pattern="anime ?(.*)")
 async def anilist(event):
     name = event.pattern_match.group(1)
@@ -49,7 +49,7 @@ async def anilist(event):
     msg = f"**{title}**\n{year} | {episodes} Episodes.\n\n{info}"
     await event.reply(msg, file=banner, link_preview=True)
     await x.delete()
-
+"""
 
 @ultroid_cmd(pattern="character ?(.*)")
 async def anime_char_search(event):
