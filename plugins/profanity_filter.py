@@ -26,13 +26,13 @@ from . import *
 async def addp(e):
     # action features not added yet or not needed ig 😂😂
     profan_chat(e.chat_id, "mute")
-    await eor(e, "Added This Chat To Profanity Filter")
+    await eod(e, "`Added This Chat for Profanity Filtering!`", time=10)
 
 
 @ultroid_cmd(pattern="remprofanity", admins_only=True)
 async def remp(e):
     rem_profan(e.chat_id)
-    await eor(e, "Removed This Chat from Profanity Filter.")
+    await eod(e, "`Removed This Chat from Profanity Filtering!`", time=10)
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
