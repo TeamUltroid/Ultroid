@@ -194,17 +194,15 @@ async def _(event):
             try:
                 await xx.edit(f"```{d}```")
             except BaseException:
-                key = (
-                    requests.post(
-                        "https://nekobin.com/api/documents", json={"content": d}
+                what, key = get_paste(message)
+                if "neko" in what:
+                    await xx.edit(
+                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
                     )
-                    .json()
-                    .get("result")
-                    .get("key")
-                )
-                await xx.edit(
-                    f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
-                )
+                elif "dog" in what:
+                    await xx.edit(
+                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [DOGBIN](https://del.dog/{key})"
+                    )
             os.remove(b)
         else:
             return await eod(xx, "`Reply to a readable file`", time=5)
