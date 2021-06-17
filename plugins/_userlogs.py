@@ -109,9 +109,9 @@ async def when_asst_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
-            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
         tmp = event.added_by
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
@@ -131,9 +131,9 @@ async def when_ultd_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
-            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
         tmp = event.added_by
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
@@ -146,9 +146,9 @@ async def when_ultd_added_to_chat(event):
         user = await event.get_user()
         chat = await event.get_chat()
         if chat.username:
-            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
-            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.id})"
+            chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
         if user.is_self:
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
