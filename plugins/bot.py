@@ -82,6 +82,7 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
+
 @ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}ping$"))
 async def _(event):
     if event.fwd_from:
@@ -120,6 +121,7 @@ async def shutdownbot(ult):
         if not is_fullsudo(ult.sender_id):
             return await eod(ult, "`This Command Is Sudo Restricted.`")
     await shutdown(ult)
+
 
 
 @ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs$"))
