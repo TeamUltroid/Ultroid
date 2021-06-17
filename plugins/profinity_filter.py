@@ -8,6 +8,12 @@
 """
 ✘ Commands Available -
 
+•`{i}addprofanity`
+   If someone sends bad word in a chat, Then bot will delete that message.
+
+•`{i}remprofanity`
+   From chat from Profanity list.
+
 """
 
 
@@ -18,7 +24,7 @@ from . import *
 
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)
 async def addp(e):
-    profan_chat(e.chat_id, "mute")
+    profan_chat(e.chat_id, "mute") #action features not added yet or not needed ig 😂😂
     await eor(e, "Added This Chat To Profanity Filter")
 
 
