@@ -11,8 +11,6 @@
 • `{i}saavn <search query>`
     Download songs from Saavn
 
-• `{i}deez <search query (| flac)>`
-    Download songs from Deezer
 """
 
 import os
