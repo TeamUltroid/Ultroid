@@ -8,6 +8,11 @@
 """
 ✘ Commands Available -
 
+•`{i}addnsfw <ban/mute/kick>`
+   If someone sends 18+ content it will delete and takes action.
+
+•`{i}remnsfw`
+   Remove Chat from nsfw filter.
 """
 
 import os
