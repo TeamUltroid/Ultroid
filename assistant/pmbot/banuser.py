@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -7,8 +7,12 @@
 
 from . import *
 
+
 @asst_cmd("ban")
+@owner
 async def banhammer(event):
+    if not event.is_private:
+        return
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")
@@ -25,7 +29,10 @@ async def banhammer(event):
 
 
 @asst_cmd("unban")
+@owner
 async def banhammer(event):
+    if not event.is_private:
+        return
     x = await event.get_reply_message()
     if x is None:
         return await event.edit("Please reply to someone to ban him.")

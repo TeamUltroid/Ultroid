@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -21,6 +21,8 @@ from . import *
 
 @ultroid_cmd(pattern="schedule ?(.*)")
 async def _(e):
+    if not e.out and not is_fullsudo(e.sender_id):
+        return await eod(e, "`This Command is Full Sudo Restricted`")
     x = e.pattern_match.group(1)
     xx = await e.get_reply_message()
     if x and not xx:
@@ -53,6 +55,3 @@ async def _(e):
                 await eod(e, "`Incorrect Format`")
     else:
         return await eod(e, "`Incorrect Format`")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

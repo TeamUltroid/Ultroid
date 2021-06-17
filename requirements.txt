@@ -1,1 +1,3 @@
-py-Ultroid==2021.5.24
+py-Ultroid==2021.6.17
+Shazamio
+https://github.com/New-dev0/Telethon/archive/BETTER.zip

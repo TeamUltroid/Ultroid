@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -16,6 +16,8 @@ from . import *
 
 @ultroid_cmd(pattern="dm ?(.*)")
 async def dm(e):
+    if not e.out and not is_fullsudo(e.sender_id):
+        return await eor(e, "`This Command is Full Sudo Restricted..`")
     if len(e.text) > 3:
         if not e.text[3] == " ":  # weird fix
             return
@@ -43,6 +45,3 @@ async def dm(e):
             "`{i}help dm`",
             time=4,
         )
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

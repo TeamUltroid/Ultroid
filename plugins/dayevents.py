@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -41,6 +41,3 @@ async def diela(e):
     for eve in ml[:5]:
         te += "• " + f'[{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

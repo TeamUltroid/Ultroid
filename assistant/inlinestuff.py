@@ -1,15 +1,16 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+import os
+import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
-from urllib.request import urlopen
 
 import requests
 from bs4 import BeautifulSoup
@@ -18,6 +19,8 @@ from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
+
+from plugins._inline import SUP_BUTTONS
 
 from . import *
 from . import humanbytes as hb
@@ -153,15 +156,7 @@ async def repo(e):
             description="Userbot | Telethon",
             thumb=wb(ultpic, 0, "image/jpeg", []),
             text="• **ULTROID USERBOT** •",
-            buttons=[
-                [
-                    Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
-                    Button.url(
-                        "Addons", url="https://github.com/TeamUltroid/UltroidAddons"
-                    ),
-                ],
-                [Button.url("Support", url="t.me/UltroidSupport")],
-            ],
+            buttons=SUP_BUTTONS,
         ),
     ]
     await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")
@@ -426,22 +421,75 @@ async def _(e):
     await e.answer(modss, switch_pm="Search Mod Applications.", switch_pm_param="start")
 
 
-@in_pattern("clipart")
+@in_pattern("ebooks")
 @in_owner
 async def clip(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer([], switch_pm="ClipArt Search.", switch_pm_param="start")
+        await e.answer(
+            [], switch_pm="Enter Query to Look for EBook", switch_pm_param="start"
+        )
+        return
     quer = quer.replace(" ", "+")
-    sear = f"https://clipartix.com/search/{quer}"
-    html = urlopen(sear)
-    bs = BeautifulSoup(html, "html.parser", from_encoding="utf-8")
-    resul = bs.find_all("img", "attachment-full size-full")
+    sear = f"http://www.gutenberg.org/ebooks/search/?query={quer}&submit_search=Go%21"
+    magma = requests.get(sear).content
+    bs = BeautifulSoup(magma, "html.parser", from_encoding="utf-8")
+    out = bs.find_all("img")
+    Alink = bs.find_all("a", "link")
+    if len(out) == 0:
+        return await e.answer(
+            [], switch_pm="No Results Found !", switch_pm_param="start"
+        )
     buil = e.builder
+    dont_take = [
+        "Authors",
+        "Did you mean",
+        "Sort Alpha",
+        "Sort by",
+        "Subjects",
+        "Bookshelves",
+    ]
     hm = []
-    for res in resul:
-        hm += [buil.photo(include_media=True, file=res["src"])]
-    await e.answer(
-        hm, gallery=True, switch_pm="Clipart Searcher.", switch_pm_param="start"
-    )
+    titles = []
+    for num in Alink:
+        try:
+            rt = num.find("span", "title").text
+            if not rt.startswith(tuple(dont_take)):
+                titles.append(rt)
+        except BaseException:
+            pass
+    for rs in range(len(out)):
+        if "/cache/epub" in out[rs]["src"]:
+            link = out[rs]["src"]
+            num = link.split("/")[3]
+            hm.append(
+                buil.document(
+                    title=titles[rs],
+                    description="GutenBerg Search",
+                    file="https://gutenberg.org" + link.replace("small", "medium"),
+                    text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
+                    buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
+                )
+            )
+    await e.answer(hm, switch_pm="Ebooks Search", switch_pm_param="start")
+
+
+@callback(re_compile("ebk_(.*)"))
+async def eupload(event):
+    match = event.pattern_match.group(1).decode("utf-8")
+    await event.answer("Uploading..")
+    try:
+        await event.edit(
+            file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
+        )
+    except BaseException:
+        book = "Ultroid-Book.epub"
+        urllib.request.urlretrieve(
+            "https://www.gutenberg.org/ebooks/132.epub.images", book
+        )
+        fn, media, _ = await asst._file_to_media(
+            book, thumb="resources/extras/ultroid.jpg"
+        )
+        await event.edit(file=media)
+        os.remove(book)

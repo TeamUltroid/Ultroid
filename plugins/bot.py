@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -34,29 +34,12 @@ import time
 from datetime import datetime as dt
 from platform import python_version as pyver
 
-import heroku3
-import re
-import requests
 from git import Repo
-from pyUltroid import __version__ as UltVer
+from pyUltroid.version import __version__ as UltVer
 from telethon import __version__, events
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
-
-HEROKU_API = None
-HEROKU_APP_NAME = None
-
-try:
-    if Var.HEROKU_API and Var.HEROKU_APP_NAME:
-        HEROKU_API = Var.HEROKU_API
-        HEROKU_APP_NAME = Var.HEROKU_APP_NAME
-        Heroku = heroku3.from_key(Var.HEROKU_API)
-        heroku_api = "https://api.heroku.com"
-        app = Heroku.app(Var.HEROKU_APP_NAME)
-except BaseException:
-    HEROKU_API = None
-    HEROKU_APP_NAME = None
 
 
 @ultroid_cmd(
@@ -99,8 +82,7 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
-
-@ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}ping"))) 
+@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}ping$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -125,32 +107,22 @@ async def cmds(event):
     pattern="restart$",
 )
 async def restartbt(ult):
+    ok = await eor(ult, "`Restarting...`")
     if Var.HEROKU_API:
-        await restart(ult)
+        await restart(ok)
     else:
         await bash("pkill python3 && python3 -m pyUltroid")
 
 
-@ultroid_cmd(pattern="shutdown")
+@ultroid_cmd(pattern="shutdown$")
 async def shutdownbot(ult):
     if not ult.out:
         if not is_fullsudo(ult.sender_id):
             return await eod(ult, "`This Command Is Sudo Restricted.`")
-    try:
-        dyno = ult.text.split(" ", maxsplit=1)[1]
-    except IndexError:
-        dyno = None
-    if dyno:
-        if dyno not in ["userbot", "vcbot", "web", "worker"]:
-            await eor(ult, "Invalid Dyno Type specified !")
-            return
-        await shutdown(ult, dyno)
-    else:
-        await shutdown(ult)
+    await shutdown(ult)
 
 
-
-@ultroid_bot.on(events.NewMessage(pattern=re.escape(f"{HNDLR}logs")))
+@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -166,52 +138,3 @@ async def _(event):
         await def_logs(event)
     else:
         await def_logs(event)
-
-
-async def heroku_logs(event):
-    if HEROKU_API is None and HEROKU_APP_NAME is None:
-        return await eor(
-            event, "Please set `HEROKU_APP_NAME` and `HEROKU_API` in vars."
-        )
-    await eor(event, "`Downloading Logs...`")
-    ok = app.get_log()
-    with open("ultroid-heroku.log", "w") as log:
-        log.write(ok)
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": ok})
-        .json()
-        .get("result")
-        .get("key")
-    )
-    url = f"https://nekobin.com/{key}"
-    await ultroid.send_file(
-        event.chat_id,
-        file="ultroid-heroku.log",
-        thumb="resources/extras/ultroid.jpg",
-        caption=f"**Ultroid Heroku Logs.**\nPasted [here]({url}) too!",
-    )
-    os.remove("ultroid-heroku.log")
-
-
-async def def_logs(ult):
-    xx = await eor(ult, "`Processing...`")
-    with open("ultroid.log") as f:
-        k = f.read()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": k})
-        .json()
-        .get("result")
-        .get("key")
-    )
-    url = f"https://nekobin.com/{key}"
-    await ultroid.send_file(
-        ult.chat_id,
-        file="ultroid.log",
-        thumb="resources/extras/ultroid.jpg",
-        caption=f"**Ultroid Logs.**\nPasted [here]({url}) too!",
-    )
-    await xx.edit("Done")
-    await xx.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

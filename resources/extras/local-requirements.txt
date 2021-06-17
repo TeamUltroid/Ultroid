@@ -42,3 +42,4 @@ hachoir
 aria2p
 gdown
 qrcode
+shazamio

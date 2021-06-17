@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -94,6 +94,3 @@ async def _(e):
     await eod(e, f"Starting Fake Game Playing For {t} sec.")
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

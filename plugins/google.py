@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -25,6 +25,7 @@ from shutil import rmtree
 import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
+from pyUltroid.functions.google_image import googleimagesdownload
 from search_engine_parser import GoogleSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
 
@@ -66,23 +67,25 @@ async def goimg(event):
     if not query:
         return await eor(event, "`Give something to search...`")
     nn = await eor(event, "`Processing Keep Patience...`")
+    lmt = 5
     if ";" in query:
         try:
             lmt = int(query.split(";")[1])
             query = query.split(";")[0]
-        except BaseExceptaion:
-            lmt = 5
-    else:
-        lmt = 5
-    gi = googleimagesdownload()
-    args = {
-        "keywords": query,
-        "limit": lmt,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    pth = gi.download(args)
-    ok = pth[0][query]
+        except BaseException:
+            pass
+    try:
+        gi = googleimagesdownload()
+        args = {
+            "keywords": query,
+            "limit": lmt,
+            "format": "jpg",
+            "output_directory": "./resources/downloads/",
+        }
+        pth = gi.download(args)
+        ok = pth[0][query]
+    except BaseException:
+        return await nn.edit("No Results Found :(")
     await event.client.send_file(event.chat_id, ok, caption=query, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
@@ -133,6 +136,3 @@ async def reverse(event):
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

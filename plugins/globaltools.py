@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -33,7 +33,7 @@
 
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin.
-    You can also set where To promote only groups or only channels or all.
+    You can also set where To promote only groups or only channels or in all.
     Like. `gpromote group boss` ~ it promote repied user in all groups.
     Or. `gpromote @username all sar` ~ it promote the users in all group and channel.
 
@@ -45,9 +45,28 @@ import os
 
 from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
+from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
 
 from . import *
+
+_gpromote_rights = ChatAdminRights(
+    add_admins=False,
+    invite_users=True,
+    change_info=False,
+    ban_users=True,
+    delete_messages=True,
+    pin_messages=True,
+)
+
+_gdemote_rights = ChatAdminRights(
+    add_admins=False,
+    invite_users=False,
+    change_info=False,
+    ban_users=False,
+    delete_messages=False,
+    pin_messages=False,
+)
 
 
 @ultroid_cmd(
@@ -83,14 +102,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -104,14 +116,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -125,14 +130,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -168,14 +166,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -189,14 +180,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -210,14 +194,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=True,
-                                    change_info=False,
-                                    ban_users=True,
-                                    delete_messages=True,
-                                    pin_messages=True,
-                                ),
+                                _gpromote_rights,
                                 rank,
                             ),
                         )
@@ -258,14 +235,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -279,14 +249,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -300,14 +263,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user.id,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -341,14 +297,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -362,14 +311,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -383,14 +325,7 @@ async def _(e):
                             EditAdminRequest(
                                 x.id,
                                 user,
-                                ChatAdminRights(
-                                    add_admins=False,
-                                    invite_users=False,
-                                    change_info=False,
-                                    ban_users=False,
-                                    delete_messages=False,
-                                    pin_messages=False,
-                                ),
+                                _gdemote_rights,
                                 rank,
                             ),
                         )
@@ -424,8 +359,12 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
-    ungban(userid)
-    delete_gban_reason(userid)
+    try:
+        ungban(userid)
+        delete_gban_reason(userid)
+        await e.client(UnblockRequest(int(userid)))
+    except Exception as ex:
+        return await eor(xx, str(ex))
     await xx.edit(
         f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
@@ -479,8 +418,12 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
-    gban(userid)
-    add_gban_reason(userid, reason)
+    try:
+        gban(userid)
+        add_gban_reason(userid, reason)
+        await e.client(BlockRequest(int(userid)))
+    except Exception as ex:
+        return await eor(xx, str(ex))
     gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
     if reason != "":
         gb_msg += f"\n**Reason** - {reason}"
@@ -665,7 +608,7 @@ async def list_gengbanned(event):
             name = (await ultroid.get_entity(int(i))).first_name
         except BaseException:
             name = i
-        msg += "**User**: " + name + "\n"
+        msg += f"**User**: {name}\n"
         reason = get_gban_reason(i)
         if reason is not None or "":
             msg += f"**Reason**: {reason}\n\n"
@@ -721,6 +664,3 @@ async def gstat_(e):
     else:
         msg += "not Globally Banned.**"
     await xx.edit(msg)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

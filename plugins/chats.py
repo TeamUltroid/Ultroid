@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -38,8 +38,6 @@ from . import *
     groups_only=True,
 )
 async def _(e):
-    if BOT_MODE:
-        return await eor(e, "You Cant Use This Command in BOT_MODE")
     xx = await eor(e, "`Processing...`")
     try:
         await e.client(DeleteChannelRequest(e.chat_id))
@@ -71,8 +69,6 @@ async def _(e):
     pattern="create (b|g|c)(?: |$)(.*)",
 )
 async def _(e):
-    if BOT_MODE:
-        return await eor(e, "You Cant use this Command in BOT_MODE")
     type_of_group = e.pattern_match.group(1)
     group_name = e.pattern_match.group(2)
     xx = await eor(e, "`Processing...`")
@@ -123,6 +119,3 @@ async def _(e):
             )
         except Exception as ex:
             await xx.edit(str(ex))
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

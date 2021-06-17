@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -84,7 +84,7 @@ async def download(event):
                     ),
                 ),
             )
-    e = datetime.now()
+    e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t != "":
         await eor(xx, get_string("udl_2").format(file_name, t))
@@ -253,7 +253,7 @@ async def download(event):
                 )
         except Exception as ve:
             return await eor(xx, str(ve))
-    e = datetime.now()
+    e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if t != "":
         if os.path.isdir(kk):
@@ -272,6 +272,3 @@ async def download(event):
             await eor(xx, f"Uploaded `{kk}` in `{t}`")
     else:
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -30,11 +30,8 @@ from telethon.utils import pack_bot_file_id
 from . import *
 
 
-@ultroid_cmd(pattern="addnote ?(.*)")
+@ultroid_cmd(pattern="addnote ?(.*)", admins_only=True)
 async def an(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     chat = e.chat_id
@@ -68,11 +65,8 @@ async def an(e):
     await eor(e, f"Done Note : `#{wrd}` saved.")
 
 
-@ultroid_cmd(pattern="remnote ?(.*)")
+@ultroid_cmd(pattern="remnote ?(.*)", admins_only=True)
 async def rn(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You Are Not Admin Here.", time=5)
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
@@ -83,11 +77,8 @@ async def rn(e):
     await eor(e, f"Done Note: `#{wrd}` Removed.")
 
 
-@ultroid_cmd(pattern="listnote$")
+@ultroid_cmd(pattern="listnote$", admins_only=True)
 async def lsnote(e):
-    if e.is_group:
-        if not e._chat.admin_rights:
-            return await eod(e, "`You Are Not Admin Here.", time=5)
     x = list_note(e.chat_id)
     if x:
         sd = "Notes Found In This Chats Are\n\n"
@@ -112,6 +103,3 @@ async def notes(e):
             msg = k["msg"]
             media = k["media"]
             await e.reply(msg, file=media)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

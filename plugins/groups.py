@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -7,6 +7,9 @@
 
 """
 ✘ Commands Available -
+
+• `{i}setgpic <reply to Photo>`
+    Set Profile photo of Group.
 
 • `{i}unbanall`
     Unban all Members of a group.
@@ -16,7 +19,7 @@
 """
 
 
-from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.functions.channels import EditBannedRequest, EditPhotoRequest
 from telethon.tl.types import (
     ChannelParticipantsKicked,
     ChatBannedRights,
@@ -29,6 +32,25 @@ from telethon.tl.types import (
 )
 
 from . import *
+
+
+@ultroid_cmd(pattern="setgpic$", groups_only=True, admins_only=True)
+async def _(ult):
+    if not ult.is_reply:
+        return await eod(ult, "`Reply to a Media..`")
+    reply_message = await ult.get_reply_message()
+    replfile = await reply_message.download_media()
+    file = await ultroid_bot.upload_file(replfile)
+    mediain = mediainfo(reply_message.media)
+    try:
+        if "pic" in mediain:
+            await ultroid_bot(EditPhotoRequest(ult.chat_id, file))
+        else:
+            return await eod(ult, "`Invalid MEDIA Type !`")
+        await eod(ult, "`Group Photo has Successfully Changed !`")
+    except Exception as ex:
+        await eod(ult, "Error occured.\n`{}`".format(str(ex)))
+    os.remove(replfile)
 
 
 @ultroid_cmd(
@@ -205,6 +227,3 @@ async def _(event):
         required_string += f"**••Empty**  `Name with deleted Account`\n"
         required_string += f"**••None**  `Last Seen A Long Time Ago`\n"
     await eod(xx, required_string)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

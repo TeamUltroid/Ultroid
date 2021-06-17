@@ -1,12 +1,14 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
+from glob import glob
 from os import remove
+from random import choices
 
 import requests
 from telegraph import Telegraph
@@ -24,9 +26,14 @@ auth_url = r["auth_url"]
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
-@callback(re.compile("sndplug_(.*)"))
+@callback(
+    re.compile("sndplug_(.*)"),
+)
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
+    thumb = ""
+    for m in choices(sorted(glob("resources/extras/*.jpg"))):
+        thumb += m
     if name.startswith("def"):
         plug_name = name.replace(f"def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
@@ -57,7 +64,7 @@ async def send(eve):
                 Button.inline("••Cʟᴏꜱᴇ••", data="close"),
             ],
         ]
-    await eve.edit(file=plugin, buttons=buttons)
+    await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
 
 @callback("updatenow")
@@ -74,14 +81,12 @@ async def update(eve):
             heroku_app = None
             heroku_applications = heroku.apps()
         except BaseException:
-            return await eve.edit(
-                "`Invalid Heroku credentials for updating userbot dyno.`"
-            )
+            return await eve.edit("`Wrong HEROKU_API.`")
         for app in heroku_applications:
             if app.name == Var.HEROKU_APP_NAME:
                 heroku_app = app
         if not heroku_app:
-            await eve.edit("`Invalid Heroku credentials for updating userbot dyno.`")
+            await eve.edit("`Wrong HEROKU_APP_NAME.`")
             repo.__del__()
             return
         await eve.edit(
@@ -105,6 +110,9 @@ async def update(eve):
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
     else:
+        await eve.edit(
+            "`Userbot dyno build in progress, please wait for it to complete.`"
+        )
         try:
             ups_rem.pull(ac_br)
         except GitCommandError:
@@ -143,7 +151,11 @@ async def changes(okk):
         )
 
 
-@callback(re.compile("pasta-(.*)"))
+@callback(
+    re.compile(
+        "pasta-(.*)",
+    ),
+)
 @owner
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
@@ -296,6 +308,7 @@ async def otvaar(event):
                 Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
                 Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
             ],
+            [Button.inline("Inline Pic", data="inli_pic")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
@@ -405,7 +418,27 @@ async def hndlrr(event):
 
 @callback("taglog")
 @owner
-async def tagloggerr(event):
+async def tagloggrr(e):
+    await e.edit(
+        "Choose Options",
+        buttons=[
+            [Button.inline("SET TAG LOG", data="settag")],
+            [Button.inline("DELETE TAG LOG", data="deltag")],
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        ],
+    )
+
+
+@callback("deltag")
+@owner
+async def delfuk(e):
+    udB.delete("TAG_LOG")
+    await e.answer("Done!!! TAG lOG Off")
+
+
+@callback("settag")
+@owner
+async def taglogerr(event):
     await event.delete()
     pru = event.sender_id
     var = "TAG_LOG"
@@ -420,13 +453,13 @@ async def tagloggerr(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("taglog"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("taglog"),
             )
 
 
@@ -1039,3 +1072,48 @@ async def name(event):
                 ),
                 buttons=get_back_button("vcb"),
             )
+
+
+@callback("inli_pic")
+@owner
+async def media(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "INLINE_PIC"
+    name = "Inline Media"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "**Inline Media**\nSend me a pic/gif/ or link  to set as inline media.\n\nUse /cancel to terminate the operation.",
+        )
+        response = await conv.get_response()
+        try:
+            themssg = response.message.message
+            if themssg == "/cancel":
+                return await conv.send_message(
+                    "Operation cancelled!!",
+                    buttons=get_back_button("setter"),
+                )
+        except BaseException:
+            pass
+        media = await event.client.download_media(response, "inlpic")
+        if (
+            not (response.text).startswith("/")
+            and not response.text == ""
+            and not response.media
+        ):
+            url = response.text
+        else:
+            try:
+                x = upl(media)
+                url = f"https://telegra.ph/{x[0]}"
+                remove(media)
+            except BaseException:
+                return await conv.send_message(
+                    "Terminated.",
+                    buttons=get_back_button("setter"),
+                )
+        await setit(event, var, url)
+        await conv.send_message(
+            f"{name} has been set.",
+            buttons=get_back_button("setter"),
+        )

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -32,7 +32,6 @@ import os
 import time
 
 import cv2
-import requests
 from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaDocument as doc
@@ -43,7 +42,9 @@ from . import *
 opn = []
 
 
-@ultroid_cmd(pattern="thumbnail$")
+@ultroid_cmd(
+    pattern="thumbnail$",
+)
 async def _(e):
     r = await e.get_reply_message()
     pop = "`Reply to img or file with thumbnail.`"
@@ -64,7 +65,9 @@ async def _(e):
     await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
 
 
-@ultroid_cmd(pattern="rename ?(.*)")
+@ultroid_cmd(
+    pattern="rename ?(.*)",
+)
 async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
@@ -100,7 +103,9 @@ async def imak(event):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="mtoi$")
+@ultroid_cmd(
+    pattern="mtoi$",
+)
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -122,7 +127,9 @@ async def imak(event):
     os.remove(image)
 
 
-@ultroid_cmd(pattern="mtos$")
+@ultroid_cmd(
+    pattern="mtos$",
+)
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -145,10 +152,12 @@ async def smak(event):
 
 
 @ultroid_cmd(
-    pattern="doc",
+    pattern="doc ?(.*)",
 )
 async def _(event):
-    input_str = event.text[5:]
+    input_str = event.pattern_match.group(1)
+    if not input_str:
+        return await eod(event, "`Bsdk Give Name.`")
     xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
@@ -175,28 +184,26 @@ async def _(event):
         a = await event.get_reply_message()
         if a.media:
             b = await a.download_media()
-            c = open(b)
-            d = c.read()
-            c.close()
+            try:
+                c = open(b)
+                d = c.read()
+                c.close()
+            except UnicodeDecodeError:
+                return await eod(xx, "`Not A Readable File.`")
             try:
                 await xx.edit(f"```{d}```")
             except BaseException:
-                key = (
-                    requests.post(
-                        "https://nekobin.com/api/documents", json={"content": d}
+                what, key = get_paste(message)
+                if "neko" in what:
+                    await xx.edit(
+                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
                     )
-                    .json()
-                    .get("result")
-                    .get("key")
-                )
-                await xx.edit(
-                    f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
-                )
+                elif "dog" in what:
+                    await xx.edit(
+                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [DOGBIN](https://del.dog/{key})"
+                    )
             os.remove(b)
         else:
             return await eod(xx, "`Reply to a readable file`", time=5)
     else:
         return await eod(xx, "`Reply to a readable file`", time=5)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

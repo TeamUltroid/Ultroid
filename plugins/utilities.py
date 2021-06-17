@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -46,7 +46,15 @@
 
 • `{i}ipinfo <ip address>`
     Get info about that IP address.
+
+• `{i}cpy <reply to message>`
+   Copy the replied message, with formatting. Expires in 24hrs.
+
+• `{i}pst`
+   Paste the copied message, with formatting.
+
 """
+
 import asyncio
 import calendar
 import html
@@ -81,13 +89,17 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 telegraph = Telegraph()
 try:
     telegraph.create_account(short_name=OWNER_NAME)
-except:
-    telegraph.create_account(short_name='Ultroid')
-# ================================================================#
+
+except BaseException:
+    telegraph.create_account(short_name="Ultroid")
+
+_copied_msg = {}
 
 
-@ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
+@ultroid_cmd(pattern="kickme$")
 async def leave(ult):
+    if not ult.out and not is_fullsudo(e.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
@@ -96,10 +108,9 @@ async def leave(ult):
     pattern="date$",
 )
 async def date(event):
-    k = pytz.timezone("Asia/Kolkata")
-    m = dt.now(k).month
-    y = dt.now(k).year
-    d = dt.now(k).strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
+    m = dt.now().month
+    y = dt.now().year
+    d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
     ultroid = await eor(event, f"`{k}\n\n{d}`")
 
@@ -125,8 +136,6 @@ async def info(event):
     pattern="listreserved$",
 )
 async def _(event):
-    if BOT_MODE:
-        return await eor(ult, "You Cant Use this Command in BOT MODE")
     result = await ultroid_bot(GetAdminedPublicChannelsRequest())
     output_str = ""
     r = result.chats
@@ -144,8 +153,6 @@ async def _(event):
 async def stats(
     event: NewMessage.Event,
 ) -> None:
-    if BOT_MODE:
-        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     ok = await eor(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
@@ -249,24 +256,13 @@ async def _(event):
     else:
         downloaded_file_name = None
         message = "`Include long text / Reply to text file`"
-    if downloaded_file_name and downloaded_file_name.endswith(".py"):
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
-    else:
-        data = message
-        key = (
-            requests.post("https://nekobin.com/api/documents", json={"content": data})
-            .json()
-            .get("result")
-            .get("key")
-        )
-    q = f"paste {key}"
-    reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+    what, key = get_paste(message)
+    if "neko" in what:
+        q = f"paste {key}"
+        reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
+    elif "dog" in what:
+        q = f"dog {key}"
+        reply_text = f"• **Pasted to Dog Bin :** [Dog](https://del.dog/{key})\n• **Raw Url :** : [Raw](https://del.dog/raw/{key})"
     try:
         ok = await ultroid_bot.inline_query(asst.me.username, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
@@ -367,8 +363,6 @@ async def _(event):
     groups_only=True,
 )
 async def _(ult):
-    if BOT_MODE:
-        return await eor(ult, "You Cant Use this Command in BOT_MODE")
     xx = await eor(ult, get_string("com_1"))
     to_add_users = ult.pattern_match.group(1)
     if not ult.is_channel and ult.is_group:
@@ -453,7 +447,6 @@ async def rmbg(event):
 )
 async def telegraphcmd(event):
     input_str = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         getmsg = await event.get_reply_message()
         if getmsg.photo or getmsg.video or getmsg.gif:
@@ -465,7 +458,17 @@ async def telegraphcmd(event):
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error - {e}"
-            await xx.edit(amsg)
+            await eor(event, amsg)
+        elif "pic" in mediainfo(getmsg.media):
+            getit = await ultroid_bot.download_media(getmsg)
+            try:
+                variable = uf(getit)
+                os.remove(getit)
+                nn = "https://telegra.ph" + variable[0]
+                amsg = f"Uploaded to [Telegraph]({nn}) !"
+            except Exception as e:
+                amsg = f"Error - {e}"
+            await eor(event, amsg)
         elif getmsg.document:
             getit = await ultroid_bot.download_media(getmsg)
             ab = open(getit)
@@ -478,7 +481,7 @@ async def telegraphcmd(event):
             makeit = telegraph.create_page(title=tcom, content=[f"{cd}"])
             war = makeit["url"]
             os.remove(getit)
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
+            await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
         elif getmsg.text:
             if input_str:
                 tcom = input_str
@@ -486,11 +489,11 @@ async def telegraphcmd(event):
                 tcom = "Ultroid"
             makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
+            await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
         else:
-            await xx.edit("Reply to a Media or Text !")
+            await eor(event, "Reply to a Media or Text !")
     else:
-        await xx.edit("Reply to a Message !")
+        await eor(event, "Reply to a Message !")
 
 
 @ultroid_cmd(pattern="json")
@@ -539,26 +542,23 @@ async def sugg(event):
             return await eod(
                 event,
                 f"`Oops, you can't send polls here!\n\n{str(e)}`",
-                time=5,
             )
         await event.delete()
     else:
         return await eod(
             event,
             "`Please reply to a message to make a suggestion poll!`",
-            time=5,
         )
 
 
 @ultroid_cmd(pattern="ipinfo ?(.*)")
 async def ipinfo(event):
-    xx = await eor(event, get_string("com_1"))
     ip = event.text.split(" ")
     ipaddr = ""
     try:
         ipaddr = ip[1]
     except BaseException:
-        return await eod(xx, "`Give me an IP address you noob!`", time=5)
+        return await eod(event, "`Give me an IP address you noob!`")
     if ipaddr == "":
         return
     url = f"https://ipinfo.io/{ipaddr}/geo"
@@ -569,9 +569,13 @@ async def ipinfo(event):
         region = det["region"]
         country = det["country"]
         cord = det["loc"]
-        zipc = det["postal"]
+        try:
+            zipc = det["postal"]
+        except KeyError:
+            zipc = "None"
         tz = det["timezone"]
-        await xx.edit(
+        await eor(
+            event,
             """
 **IP Details Fetched.**
 
@@ -594,8 +598,41 @@ async def ipinfo(event):
         )
     except BaseException:
         err = det["error"]["title"]
-        msg = det["error"]["messsage"]
-        await eod(xx, f"ERROR:\n{err}\n{msg}")
+        msg = det["error"]["message"]
+        await eod(event, f"ERROR:\n{err}\n{msg}")
 
 
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
+@ultroid_cmd(
+    pattern="cpy$",
+)
+async def copp(event):
+    msg = await event.get_reply_message()
+    if msg is None:
+        return await eod(event, f"Use `{hndlr}cpy` as reply to a message!")
+    _copied_msg["CLIPBOARD"] = msg
+    await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
+
+
+@asst_cmd("pst")
+async def pepsodent(event):
+    await toothpaste(event)
+
+
+@ultroid_cmd(
+    pattern="pst$",
+)
+async def colgate(event):
+    await toothpaste(event)
+
+
+async def toothpaste(event):
+    try:
+        await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
+        await event.delete()
+    except KeyError:
+        return await eod(
+            event,
+            f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
+        )
+    except Exception as ex:
+        return await eod(str(ex))

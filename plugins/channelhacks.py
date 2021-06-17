@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -87,7 +87,7 @@ async def _(e):
             return
     async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
         try:
-            await asyncio.sleep(1.3)
+            await asyncio.sleep(2)
             await ultroid_bot.send_message(int(d), msg)
         except BaseException:
             pass
@@ -260,6 +260,3 @@ async def list_all(event):
             await x.delete()
     else:
         await x.edit(msg)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

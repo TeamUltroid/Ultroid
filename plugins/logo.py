@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -18,7 +18,6 @@
 import glob
 import os
 import random
-import time
 
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
@@ -51,9 +50,8 @@ async def logo_gen(event):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
-        fpath_ = "./resources/fonts/"
-        f = random.choice(os.listdir(fpath_))
-        font_ = fpath_ + f
+        fpath_ = glob.glob("resources/fonts/*")
+        font_ = random.choice(fpath_)
     if not bg_:
         pics = []
         async for i in ultroid.iter_messages(
@@ -95,13 +93,11 @@ async def logo_gen(event):
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
-        tt = time.time()
-        up = await uploader(flnme, flnme, tt, xx, "Uploading...")
-        await ultroid.send_file(
+        await event.client.send_file(
             event.chat_id,
-            file=up,
+            file=flnme,
             caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-            foce_document=True,
+            force_document=True,
         )
         os.remove(flnme)
         await xx.delete()
@@ -110,6 +106,3 @@ async def logo_gen(event):
     if os.path.exists(font_):
         if not font_.startswith("resources/fonts"):
             os.remove(font_)
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

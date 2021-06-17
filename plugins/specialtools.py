@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -36,6 +36,7 @@ import moviepy.editor as m
 import pytz
 import requests
 from bs4 import BeautifulSoup as b
+from pyUltroid.functions.google_image import googleimagesdownload
 
 from . import *
 
@@ -243,6 +244,3 @@ async def wall(event):
     await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

@@ -1,7 +1,5 @@
 build:
   docker:
-      worker: Dockerfile
-      web: Dockerfile
+      ultroid: Dockerfile
 run:
-  worker: bash resources/startup/startup.sh
-  web: python vcstarter.py
+  ultroid: bash resources/startup/startup.sh

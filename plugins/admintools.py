@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -50,6 +50,7 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
 from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
@@ -236,10 +237,7 @@ async def kck(ult):
     pattern="pin ?(.*)",
 )
 async def pin(msg):
-    if not msg.is_private:
-        # for pin(s) in private messages
-        await msg.get_chat()
-    cht = await ultroid_bot.get_entity(msg.chat_id)
+    mss = "`Pinned.`"
     xx = msg.reply_to_msg_id
     tt = msg.text
     try:
@@ -250,22 +248,24 @@ async def pin(msg):
         pass
     if not msg.is_reply:
         return
+    if not msg.is_private:
+        link = (await ultroid_bot(ExpLink(msg.chat_id, xx))).link
+        mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
-        x = await eor(msg, get_string("com_1"))
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
         except BadRequestError:
-            return await x.edit("`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
-            return await x.edit(f"**ERROR:**`{str(e)}`")
-        await x.edit(f"`Pinned` [this message](https://t.me/c/{cht.id}/{xx})!")
+            return await eor(msg, f"**ERROR:**`{str(e)}`")
+        await eor(msg, mss)
     else:
         try:
             await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
         except BadRequestError:
-            return await eor(msg, "`Hmm, I'm have no rights here...`")
+            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await eor(msg, f"**ERROR:**`{str(e)}`")
         try:
@@ -288,14 +288,14 @@ async def unp(ult):
         try:
             await ultroid_bot.unpin_message(ult.chat_id, msg)
         except BadRequestError:
-            return await xx.edit("`Hmm, I'm have no rights here...`")
+            return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await xx.edit(f"**ERROR:**\n`{str(e)}`")
     elif ch == "all":
         try:
             await ultroid_bot.unpin_message(ult.chat_id)
         except BadRequestError:
-            return await xx.edit("`Hmm, I'm have no rights here...`")
+            return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await xx.edit(f"**ERROR:**`{str(e)}`")
     else:
@@ -424,7 +424,9 @@ async def _(e):
 async def get_pinned(event):
     x = await eor(event, get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
-    chat_name = (await event.get_chat()).title
+    chat_name = "This Chat"
+    if not event.is_private:
+        chat_name = (await event.get_chat()).title
     tem = ""
     c = 0
 
@@ -480,6 +482,3 @@ async def autodelte(ult):  # Tg Feature
     except ChatNotModifiedError:
         return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
     await eor(ult, f"Auto Delete Status Changed to {match} !")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

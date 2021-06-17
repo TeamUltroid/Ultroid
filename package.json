@@ -18,7 +18,7 @@
     "redis": "^3.0.2",
     "telegraf": "^4.3.0",
     "tgcalls": "^0.1.2",
-    "ws": "^7.4.3"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@types/node": "^14.14.25",

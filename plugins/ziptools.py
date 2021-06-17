@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -22,7 +22,6 @@
 
 """
 
-import glob
 import os
 import time
 
@@ -91,30 +90,18 @@ async def unzipp(event):
         os.system("rm -rf unzip")
         os.mkdir("unzip")
     await bash(f"7z x {file} -aoa -ounzip")
-    ok = glob.glob("unzip/*")
-    k = []
+    ok = get_all_files("unzip")
     for x in ok:
-        if os.path.isdir(x):
-            k.append(x)
-            break
-    if k:
-        await xx.edit(
-            "Your Unzipped File Saved in `unzip` folder.\nDo `{i}ls unzip` and browse storage\nUse `{i}ul <path>` To upload.".format(
-                i=HNDLR
-            )
+        k = time.time()
+        xxx = await uploader(x, x, k, xx, "Uploading...")
+        await ultroid_bot.send_file(
+            event.chat_id,
+            xxx,
+            force_document=True,
+            thumb="resources/extras/ultroid.jpg",
+            caption=f"`{xxx.name}`",
         )
-    else:
-        for x in ok:
-            k = time.time()
-            xxx = await uploader(x, x, k, xx, "Uploading...")
-            await ultroid_bot.send_file(
-                event.chat_id,
-                xxx,
-                force_document=True,
-                thumb="resources/extras/ultroid.jpg",
-                caption=f"`{xxx.name}`",
-            )
-        await xx.delete()
+    await xx.delete()
 
 
 @ultroid_cmd(pattern="addzip$")
@@ -160,6 +147,3 @@ async def do_zip(event):
     os.system("rm -rf zip")
     os.remove("ultroid.zip")
     await xx.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

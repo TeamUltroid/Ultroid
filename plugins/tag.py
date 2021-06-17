@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -88,6 +88,3 @@ async def _(e):
                 xx += f"\n[{get_display_name(bb)}](tg://user?id={bb.id})"
     await e.client.send_message(e.chat_id, xx)
     await e.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

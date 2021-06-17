@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -66,7 +66,6 @@ async def _(e):
     try:
         await e.client(stopvc(await get_call(e)))
         await eor(e, "`Voice Chat Stopped...`")
-        vcdyno("off")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
 
@@ -76,10 +75,9 @@ async def _(e):
 )
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("npm start")
+    er, out = await bash("python vcstarter.py & sleep 10 && npm start")
     LOGS.info(er)
     LOGS.info(out)
-    vcdyno("on")
     if er:
         await zz.edit(f"Failed {er}\n\n{out}")
 
@@ -201,16 +199,3 @@ async def _(e):
         )
     except Exception as ex:
         return await eod(xx, f"`{str(ex)}`", time=5)
-
-
-@asst_cmd("exitVc")
-async def evc(e):
-    if e.sender.id == ultroid_bot.uid:
-        vcdyno("off")
-    elif is_sudo(e.sender.id):
-        vcdyno("off")
-    elif is_vcsudo(e.sender.id):
-        vcdyno("off")
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

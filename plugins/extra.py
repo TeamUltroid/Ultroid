@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -50,7 +50,7 @@ async def delete_it(delme):
         try:
             await msg_src.delete()
             await delme.delete()
-        except BaseException:
+        except Exception as e:
             await eod(
                 delme,
                 f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`",
@@ -113,6 +113,3 @@ async def _(e):
         )
     else:
         await e.delete()
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})

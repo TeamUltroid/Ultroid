@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -24,6 +24,7 @@ if CL:
 
 @ultroid_cmd(pattern="update$")
 async def _(e):
+    xx = await eor(e, "`Checking for updates...`")
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
@@ -35,15 +36,13 @@ async def _(e):
             buttons=Button.inline("Changelogs", data="changes"),
         )
         Link = (await ultroid_bot(GetLink(x.chat_id, x.id))).link
-        await eor(
-            e,
+        await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",
             link_preview=False,
         )
     else:
-        await eor(
-            e,
+        await xx.edit(
             f'<code>Your BOT is </code><strong>up-to-date</strong><code> with </code><strong><a href="https://github.com/TeamUltroid/Ultroid/tree/{branch}">[{branch}]</a></strong>',
             parse_mode="html",
             link_preview=False,
@@ -61,6 +60,3 @@ async def updava(event):
         force_document=False,
         buttons=Button.inline("Changelogs", data="changes"),
     )
-
-
-HELP.update({f"{__name__.split('.')[1]}": f"{__doc__.format(i=HNDLR)}"})
