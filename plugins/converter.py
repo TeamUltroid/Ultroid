@@ -32,7 +32,6 @@ import os
 import time
 
 import cv2
-import requests
 from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaDocument as doc
