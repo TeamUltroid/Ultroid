@@ -1,5 +1,5 @@
 build:
   docker:
-      worker: Dockerfile
+      ultroid: Dockerfile
 run:
-  worker: bash resources/startup/startup.sh
+  ultroid: bash resources/startup/startup.sh
