@@ -98,7 +98,7 @@ _copied_msg = {}
 
 @ultroid_cmd(pattern="kickme$")
 async def leave(ult):
-    if not e.out and not is_fullsudo(e.sender_id):
+    if not ult.out and not is_fullsudo(e.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
