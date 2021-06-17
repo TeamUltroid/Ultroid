@@ -96,8 +96,10 @@ except BaseException:
 _copied_msg = {}
 
 
-@ultroid_cmd(pattern="kickme$", groups_only=True, allow_sudo=False)
+@ultroid_cmd(pattern="kickme$")
 async def leave(ult):
+    if not e.out and not is_fullsudo(e.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ultroid_bot(LeaveChannelRequest(ult.chat_id))
 
@@ -106,10 +108,9 @@ async def leave(ult):
     pattern="date$",
 )
 async def date(event):
-    k = pytz.timezone("Asia/Kolkata")
-    m = dt.now(k).month
-    y = dt.now(k).year
-    d = dt.now(k).strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
+    m = dt.now().month
+    y = dt.now().year
+    d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
     ultroid = await eor(event, f"`{k}\n\n{d}`")
 
