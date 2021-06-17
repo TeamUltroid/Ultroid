@@ -89,6 +89,7 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 telegraph = Telegraph()
 try:
     telegraph.create_account(short_name=OWNER_NAME)
+
 except BaseException:
     telegraph.create_account(short_name="Ultroid")
 
