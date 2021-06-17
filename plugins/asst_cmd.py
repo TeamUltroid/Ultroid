@@ -7,6 +7,15 @@
 
 """
 ✘ Commands Available -
+
+•`{i}addcmd <new cmd> <reply>`
+   It will set new cmd for your assistant bot with that reply message.
+
+•`{i}remcmd <cmd name>`
+   It will remove your cmd.
+
+•`{i}listcmd`
+   To Get list of all your custom cmd.
 """
 
 import os
