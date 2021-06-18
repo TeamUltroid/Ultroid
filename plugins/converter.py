@@ -193,7 +193,7 @@ async def _(event):
             try:
                 await xx.edit(f"```{d}```")
             except BaseException:
-                what, key = get_paste(message)
+                what, key = get_paste(d)
                 if "neko" in what:
                     await xx.edit(
                         f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"

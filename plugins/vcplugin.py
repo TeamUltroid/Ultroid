@@ -27,14 +27,15 @@
 • `{i}rmvcaccess <id/username/reply to msg>`
     Remove access of Voice Chat Bot.
 
-• **Voice Chat Bot Commands**
+• **Voice Chat - Bot Commands**
    `/play ytsearch : song-name`
    `/play youtube link`
    `/current`
    `/skip`
    `/exitVc`
-
 """
+
+from os import remove
 
 from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
@@ -79,7 +80,15 @@ async def _(e):
     LOGS.info(er)
     LOGS.info(out)
     if er:
-        await zz.edit(f"Failed {er}\n\n{out}")
+        msg = f"Failed {er}\n\n{out}"
+        if len(msg) > 4096:
+            with open("vc-error.txt", "w") as f:
+                f.write(msg.replace("`", ""))
+            await e.reply(file="vc-error.txt")
+            await zz.delete()
+            remove("vc-error.txt")
+            return
+        await zz.edit(msg)
 
 
 @ultroid_cmd(
