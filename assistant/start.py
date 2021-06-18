@@ -111,7 +111,6 @@ async def ultroid(event):
                     get_string("ast_3").format(name),
                     buttons=_start,
                 )
-    
 
 
 @callback("mainmenu")
