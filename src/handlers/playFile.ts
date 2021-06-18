@@ -52,7 +52,7 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
             if (song) {
                 const { id } = song.song;
                 ctx.replyWithPhoto("https://9to5google.com/wp-content/uploads/sites/4/2018/09/youtube_logo_dark.jpg?quality=82&strip=all", {
-                    caption: `<b>Playing : </b> <a href="${id}">${escapeHtml(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.file_name)}</a>\n` +
+                    caption: `<b>Playing : </b> <a href="https://www.youtube.com/watch?v=${id}">${escapeHtml(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.file_name)}</a>\n` +
                         `<b>Duration: </b>${getDuration(JSON.parse(JSON.stringify(ctx.message.reply_to_message)).audio.duration)}\n` +
                         `<b>Requested by :</b> <a href="tg://user?id=${song.by.id}">${song.by.f_name}</a>`,
                     parse_mode: 'HTML',
@@ -73,7 +73,7 @@ export const filePlayHandler = Composer.command('playFile', async (ctx) => {
             if (queue) {
                 let queueId = queue.length - 1
                 const { info, from } = queue[queueId];
-                await ctx.replyWithHTML(`<b>Queued :</b> <a href="${info.id}">${escapeHtml(info.title)}</a> (${getDuration(info.duration)})\n` +
+                await ctx.replyWithHTML(`<b>Queued :</b> <a href="https://www.youtube.com/watch?v=${info.id}">${escapeHtml(info.title)}</a> (${getDuration(info.duration)})\n` +
                     `<b>At position ${index}.</b>\n` +
                     `<b>Requested By :</b> <a href="tg://user?id=${from.id}">${from.f_name}</a>`, {
                     disable_web_page_preview: true,
