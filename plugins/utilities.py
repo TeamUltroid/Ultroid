@@ -63,7 +63,6 @@ import os
 import time
 from datetime import datetime as dt
 
-import pytz
 import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf

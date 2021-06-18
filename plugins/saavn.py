@@ -15,7 +15,6 @@
 
 import os
 import time
-from json.decoder import JSONDecodeError
 from urllib.request import urlretrieve
 
 import requests as r

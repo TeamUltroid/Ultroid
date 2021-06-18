@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import vcbot, udB
+from pyUltroid import udB, vcbot
 from pyUltroid.dB.database import Var
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
