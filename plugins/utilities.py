@@ -63,7 +63,6 @@ import os
 import time
 from datetime import datetime as dt
 
-import pytz
 import requests
 from telegraph import Telegraph
 from telegraph import upload_file as uf
@@ -75,7 +74,7 @@ from telethon.tl.functions.channels import (
     LeaveChannelRequest,
 )
 from telethon.tl.functions.contacts import GetBlockedRequest
-from telethon.tl.functions.messages import AddChatUserRequest
+from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
@@ -202,6 +201,11 @@ async def stats(
         ct = (await ultroid_bot(GetBlockedRequest(1, 0))).count
     except AttributeError:
         ct = 0
+    try:
+        sp = await ultroid_bot(GetAllStickersRequest(0))
+        sp_count = len(sp.sets)
+    except BaseException:
+        sp_count = 0
     full_name = inline_mention(await ultroid_bot.get_me())
     response = f"🔸 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
@@ -217,7 +221,8 @@ async def stats(
     response += f"**  •• **`Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
     response += f"**Unread:** {unread} \n"
     response += f"**Unread Mentions:** {unread_mentions} \n"
-    response += f"**Blocked Users:** {ct}\n\n"
+    response += f"**Blocked Users:** {ct}\n"
+    response += f"**Total Stickers Pack Installed :** `{sp_count}`\n\n"
     response += f"**__It Took:__** {stop_time:.02f}s \n"
     await ok.edit(response)
 

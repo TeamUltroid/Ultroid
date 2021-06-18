@@ -126,6 +126,8 @@ async def download(event):
                     hmm = " | stream"
                 if " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
+                    if not metadata:
+                        return await event.reply(file=res, supports_streaming=True)
                     wi = 512
                     hi = 512
                     duration = 0

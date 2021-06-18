@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import vcbot, udB
+from pyUltroid import udB, vcbot
 from pyUltroid.dB.database import Var
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -174,7 +174,7 @@ if vcbot:
     def main():
         app = web.Application()
         app.router.add_route("GET", "/", websocket_handler)
-        web.run_app(app, host="localhost", port=6969)
+        web.run_app(app, host="127.0.0.1", port=6969)
 
     vcbot.start()
     main()
