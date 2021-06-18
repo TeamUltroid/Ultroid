@@ -29,7 +29,7 @@ async def on_out_mssg(event):
             except BaseException:
                 return
         elif event.text.startswith("/"):
-                return
+            return
         if event.media:
             if event.text:
                 await asst.send_file(int(to_user), event.media, caption=event.text)
