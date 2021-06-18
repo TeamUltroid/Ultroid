@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2020 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -50,6 +50,8 @@ from . import *
 # ========================= CONSTANTS =============================
 COUNT_PM = {}
 LASTMSG = {}
+WARN_MSGS = {}
+U_WARNS = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
@@ -60,14 +62,18 @@ UND = get_string("pmperm_1")
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
+
 {UND}
+
 You have {warn}/{twarn} warnings!"""
 else:
     UNAPPROVED_MSG = (
         """
 **PMSecurity of {ON}!**"""
         f"""
+
 {Redis("PM_TEXT")}
+
 """
         """
 You have {warn}/{twarn} warnings!"""
@@ -93,6 +99,11 @@ PMCMDS = [
 ]
 
 _not_approved = {}
+sett = Redis("PMSETTING")
+if sett is None:
+    sett = True
+inline_pm = udB.get("INLINE_PM") or "True"
+my_bot = asst.me.username
 # =================================================================
 
 
@@ -102,11 +113,11 @@ _not_approved = {}
 async def _(e):
     if not e.is_private:
         return await eod(e, "`Use me in Private.`", time=3)
-    if is_logger(str(e.chat_id)):
-        nolog_user(str(e.chat_id))
-        return await eod(e, "`Now I Will log msgs from here.`", time=3)
-    else:
+    if not is_logger(str(e.chat_id)):
         return await eod(e, "`Wasn't logging msgs from here.`", time=3)
+
+    nolog_user(str(e.chat_id))
+    return await eod(e, "`Now I Will log msgs from here.`", time=3)
 
 
 @ultroid_cmd(
@@ -141,10 +152,7 @@ async def permitpm(event):
         await event.forward_to(int(udB.get("LOG_CHANNEL")))
 
 
-sett = Redis("PMSETTING")
-if sett is None:
-    sett = True
-if sett == "True":
+if sett == "True" or sett != "False":
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -200,10 +208,7 @@ if sett == "True":
             if event.media:
                 await event.delete()
             name = user.first_name
-            if user.last_name:
-                fullname = f"{name} {user.last_name}"
-            else:
-                fullname = name
+            fullname = f"{name} {user.last_name}" if user.last_name else name
             username = f"@{user.username}"
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
@@ -255,12 +260,22 @@ if sett == "True":
                         count=count,
                         mention=mention,
                     )
-                    await ultroid.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
-                elif event.text == prevmsg:
+                    update_pm(user.id, message_, wrn)
+                    if inline_pm == "False":
+                        await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        try:
+                            await results[0].click(
+                                user.id, reply_to=event.id, hide_via=True
+                            )
+                        except Exception as e:
+                            print(e)
+                else:
                     async for message in ultroid.iter_messages(
                         user.id,
                         search=UND,
@@ -277,12 +292,23 @@ if sett == "True":
                         count=count,
                         mention=mention,
                     )
-                    await ultroid.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
-                LASTMSG.update({user.id: event.text})
+                    update_pm(user.id, message_, wrn)
+                    if inline_pm == "False":
+                        await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        try:
+                            results = await ultroid.inline_query(
+                                my_bot, f"ip_{user.id}"
+                            )
+                            await results[0].click(
+                                user.id, reply_to=event.id, hide_via=True
+                            )
+                        except Exception as e:
+                            print(e)
             else:
                 async for message in ultroid.iter_messages(user.id, search=UND):
                     await message.delete()
@@ -297,12 +323,22 @@ if sett == "True":
                     count=count,
                     mention=mention,
                 )
-                await ultroid.send_file(
-                    user.id,
-                    PMPIC,
-                    caption=message_,
-                )
-                LASTMSG.update({user.id: event.text})
+                update_pm(user.id, message_, wrn)
+                if inline_pm == "False":
+                    await ultroid.send_file(
+                        user.id,
+                        PMPIC,
+                        caption=message_,
+                    )
+                else:
+                    try:
+                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        await results[0].click(
+                            user.id, reply_to=event.id, hide_via=True
+                        )
+                    except Exception as e:
+                        print(e)
+            LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
                 COUNT_PM.update({user.id: 1})
             else:
@@ -671,5 +707,76 @@ async def unblck_in(event):
 
 @callback("deletedissht")
 async def ytfuxist(e):
-    await e.answer("Deleted.")
-    await e.delete()
+    try:
+        await e.answer("Deleted.")
+        await e.delete()
+    except BaseException:
+        pass
+
+
+@asst.on(events.InlineQuery(pattern=re.compile("ip_(.*)")))
+@in_owner
+async def in_pm_ans(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        warns = U_WARNS[from_user]
+    except Exception as e:
+        print(e)
+        warns = "?"
+    wrns = f"{warns}/{WARNS}"
+    await event.answer(
+        [
+            await event.builder.article(
+                title="Inline PMPermit.",
+                text=f"**PMSecurity of {OWNER_NAME}!**",
+                buttons=[
+                    [
+                        Button.inline("Warns", data=f"admin_only{from_user}"),
+                        Button.inline(wrns, data="do_nothing"),
+                    ],
+                    [Button.inline("Message 📫", data=f"m_{from_user}")],
+                ],
+            )
+        ]
+    )
+
+
+@callback(re.compile("admin_only(.*)"))
+async def _admin_tools(event):
+    if event.sender_id != OWNER_ID:
+        return await event.answer("Not for You", alert=True)
+    chat = int(event.pattern_match.group(1))
+    await event.edit(
+        "Owner Tools.",
+        buttons=[
+            Button.inline("Approve PM", data=f"approve_{chat}"),
+            Button.inline("Block PM", data=f"block_{chat}"),
+        ],
+    )
+
+
+@callback("do_nothing")
+async def _mejik(e):
+    await e.answer()  # ensure there is no white clock.
+
+
+@callback(re.compile("m_(.*)"))
+async def _rep(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        msg_ = WARN_MSGS[from_user]
+    except Exception as e:
+        print(e)
+        msg_ = "Missing."
+    await event.edit(msg_)
+
+
+def update_pm(userid, message, warns_given):
+    try:
+        WARN_MSGS.update({userid: message})
+    except KeyError as e:
+        print(e)
+    try:
+        U_WARNS.update({userid: warns_given})
+    except KeyError as e:
+        print(e)
