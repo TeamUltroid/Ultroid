@@ -122,7 +122,7 @@ async def shutdownbot(ult):
     await shutdown(ult)
 
 
-@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs$"))
+@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
