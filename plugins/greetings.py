@@ -239,7 +239,7 @@ async def thank_memebers(event):
     if must_thank(event.chat_id):
         chat_count = len(await event.client.get_participants(await event.get_chat()))
         if chat_count % 100 == 0:
-            stik_id = chat_count
+            stik_id = chat_count/100 - 1
             sticker = stickers[stik_id]
             await ultroid.send_message(event.chat_id, file=sticker)
         
