@@ -48,6 +48,8 @@ from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
 
+from pyUltroid.functions.gban_mute_db import *
+
 from . import *
 
 _gpromote_rights = ChatAdminRights(
