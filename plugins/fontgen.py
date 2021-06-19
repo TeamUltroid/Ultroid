@@ -6,7 +6,13 @@
     To get list of fonts
 """
 
-from resources.extras.fonts import _default, _double_stroke, _monospace, _small_caps, _script_royal
+from resources.extras.fonts import (
+    _default,
+    _double_stroke,
+    _monospace,
+    _script_royal,
+    _small_caps,
+)
 
 fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 

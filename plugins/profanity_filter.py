@@ -19,6 +19,7 @@
 
 from ProfanityDetector import detector
 from pyUltroid.functions.nsfw_db import is_profan, profan_chat, rem_profan
+
 from . import *
 
 
