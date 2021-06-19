@@ -61,8 +61,6 @@ def grt(seconds: int) -> str:
     return up_time
 
 
-
-
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
     "Plagiarising hehe...",
