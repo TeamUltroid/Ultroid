@@ -10,6 +10,7 @@ from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from telethon.tl.custom import Button
+from pyUltroid.dB.core import HELP
 
 from . import *
 
