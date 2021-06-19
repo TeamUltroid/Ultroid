@@ -11,6 +11,7 @@ from os import remove
 from random import choices
 
 import requests
+import urllib
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
@@ -47,7 +48,7 @@ async def eupload(event):
             book, thumb="resources/extras/ultroid.jpg"
         )
         await event.edit(file=media)
-        os.remove(book)
+        remove(book)
 
 
 @callback(
