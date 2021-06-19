@@ -231,7 +231,7 @@ async def stats(
     pattern="paste( (.*)|$)",
 )
 async def _(event):
-    xx = await eor(event, "` 《 Pasting to nekobin... 》 `")
+    xx = await eor(event, "` 《 Pasting... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     if not (input_str or event.is_reply):
         return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
