@@ -27,9 +27,9 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @callback(
-re.compile(
-"ebk_(.*)",
-),
+    re.compile(
+        "ebk_(.*)",
+    ),
 )
 async def eupload(event):
     match = event.pattern_match.group(1).decode("utf-8")
@@ -51,9 +51,9 @@ async def eupload(event):
 
 
 @callback(
-re.compile(
-"sndplug_(.*)",
-),
+    re.compile(
+        "sndplug_(.*)",
+    ),
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
