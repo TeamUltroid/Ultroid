@@ -11,7 +11,9 @@
 • `{i}getaddons <raw link to code>`
     Load Plugins from the given raw link.
 """
+
 import requests
+from pyUltroid.utils import load_addons
 
 from . import *
 
