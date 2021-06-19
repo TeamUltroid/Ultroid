@@ -9,9 +9,9 @@ import time
 
 from pyUltroid.dB import *
 from pyUltroid.functions.all import *
+from pyUltroid.functions.sudos import *
 from telethon import Button
 from telethon.tl import functions, types
-from pyUltroid.functions.sudos import *
 
 from strings import get_string
 
