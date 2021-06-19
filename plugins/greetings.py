@@ -239,16 +239,19 @@ async def thank_memebers(event):
     if must_thank(event.chat_id):
         chat_count = len(await event.client.get_participants(await event.get_chat()))
         if chat_count % 100 == 0:
-            stik_id = chat_count/100 - 1
+            stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
             await ultroid.send_message(event.chat_id, file=sticker)
-        
-        
+
+
 @ultroid_cmd(pattern="thankmembers (on|off)")
 async def thank_set(event):
     type_ = event.pattern_match.group(1)
     if not type_ or type_ == "":
-        await eor(event, f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{hndlr}thankmembers on` or `{hndlr}thankmembers off` to toggle current settings!")
+        await eor(
+            event,
+            f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{hndlr}thankmembers on` or `{hndlr}thankmembers off` to toggle current settings!",
+        )
         return
     chat = event.chat_id
     if not str(chat).startswith("-"):
@@ -257,6 +260,7 @@ async def thank_set(event):
         add_thanks(chat)
     elif type_.lower() == "off":
         remove_thanks(chat)
-    await eor(event, f"**Done! Thank you members has been turned** `{type_.lower()}` **for this chat**!")
-    
-
+    await eor(
+        event,
+        f"**Done! Thank you members has been turned** `{type_.lower()}` **for this chat**!",
+    )

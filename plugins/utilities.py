@@ -635,7 +635,7 @@ async def toothpaste(event):
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
         try:
             await event.delete()
-        except:
+        except BaseException:
             pass
     except KeyError:
         return await eod(
