@@ -6,8 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
-import os
-import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
