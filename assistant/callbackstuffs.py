@@ -160,9 +160,9 @@ async def changes(okk):
     changelog_str = changelog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
-        file = open(f"ultroid_updates.txt", "w+")
-        file.write(tl_chnglog)
-        file.close()
+        await asyncio.sleep(2)
+        with open(f"ultroid_updates.txt", "w+") as file:
+            file.write(tl_chnglog)
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
@@ -187,7 +187,7 @@ async def changes(okk):
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
     with open(ok, "r") as hmm:
-    _, key = get_paste(hmm.read())
+        _, key = get_paste(hmm.read())
     if _ == "dog":
         link = "https://del.dog/"+key
         raw = "https://del.dog/raw/"+key
