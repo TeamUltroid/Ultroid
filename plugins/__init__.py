@@ -11,7 +11,6 @@ from pyUltroid.dB import *
 from pyUltroid.dB.core import *
 from pyUltroid.functions.all import *
 from pyUltroid.functions.asstcmd_db import *
-from pyUltroid.functions.broadcast_db import *
 from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.nsfw_db import *
 from pyUltroid.utils import *
