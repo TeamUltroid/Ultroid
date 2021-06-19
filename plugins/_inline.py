@@ -15,7 +15,7 @@ from git import Repo
 from pyUltroid.misc import owner_and_sudos
 from support import *
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
-
+from pyUltroid.dB.core import *
 from . import *
 
 # ================================================#
