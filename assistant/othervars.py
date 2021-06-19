@@ -27,7 +27,33 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @callback(
-    re.compile("sndplug_(.*)"),
+re.compile(
+"ebk_(.*)",
+),
+)
+async def eupload(event):
+    match = event.pattern_match.group(1).decode("utf-8")
+    await event.answer("Uploading..")
+    try:
+        await event.edit(
+            file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
+        )
+    except BaseException:
+        book = "Ultroid-Book.epub"
+        urllib.request.urlretrieve(
+            "https://www.gutenberg.org/ebooks/132.epub.images", book
+        )
+        fn, media, _ = await asst._file_to_media(
+            book, thumb="resources/extras/ultroid.jpg"
+        )
+        await event.edit(file=media)
+        os.remove(book)
+
+
+@callback(
+re.compile(
+"sndplug_(.*)",
+),
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
