@@ -11,7 +11,6 @@ from glob import glob
 from os import remove
 from random import choices
 
-import requests
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
@@ -189,11 +188,11 @@ async def _(e):
     with open(ok, "r") as hmm:
         _, key = get_paste(hmm.read())
     if _ == "dog":
-        link = "https://del.dog/"+key
-        raw = "https://del.dog/raw/"+key
+        link = "https://del.dog/" + key
+        raw = "https://del.dog/raw/" + key
     else:
-        link = "https://nekobin.com/"+key
-        raw = "https://nekobin.com/raw/"+key
+        link = "https://nekobin.com/" + key
+        raw = "https://nekobin.com/raw/" + key
     if ok.startswith("plugins"):
         buttons = [
             Button.inline("« Bᴀᴄᴋ", data="back"),
@@ -208,7 +207,7 @@ async def _(e):
         f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
         buttons=buttons,
         link_preview=False,
-        parse_mode='html',
+        parse_mode="html",
     )
 
 
