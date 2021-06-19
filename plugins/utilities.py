@@ -633,7 +633,10 @@ async def colgate(event):
 async def toothpaste(event):
     try:
         await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
-        await event.delete()
+        try:
+            await event.delete()
+        except:
+            pass
     except KeyError:
         return await eod(
             event,
