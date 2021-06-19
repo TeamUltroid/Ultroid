@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="./resources/extras/logo_readme.jpg" alt="TeamUltroid Logo">
+  <img src="https://telegra.ph/file/c07979039982e3f6e14d7.jpg" alt="TeamUltroid Logo">
 </p>
 <h1 align="center">
   <b>Ultroid - UserBot</b>
 </h1>
 
-<b>A stable pluggable Telegram userbot + vc music bot, based on Telethon.</b>   
+<b>A stable pluggable Telegram userbot + vc music bot, based on Telethon මෙහෙමයි මෙ අමතර plugin install වෙන්න ටිකක් වෙලා යනවා පැය 3 ක් වගේ මන් විඩියො එක කරන අවස්ථාව වන විට +1300 කට වැඩිය plugin තියෙනවා .</b>   
 
 [![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
 [![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
@@ -83,13 +83,13 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 - `REDIS_PASSWORD ` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
 
 ## Session String
-Different ways to get your `SESSION`:
+Different ways to get your මන් මෙක ගන්න විදිය විඩියො එකේ වැඩිය විස්තර කලේ නැ මන් කලින් දාපු විඩියො එකක් බලන්න `SESSION`:
 * [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
 * Linux : `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
 * Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
 
-Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
+Made with 💕 by [@slbotzone](https://t.me/slbotzone). <br />
 
 # License
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
@@ -98,6 +98,6 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
-* [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
+* [supun](https://github.com/supunmadurangasl/) for [Telethon.](https://github.com/supunmadurangasl/)
 * [AndrewLaneX](https://github.com/AndrewLaneX) for [tgcalls-base.](http://github.com/tgcallsjs/tgcalls)
 
