@@ -186,15 +186,14 @@ async def changes(okk):
 @owner
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
-    hmm = open(ok)
-    hmmm = hmm.read()
-    hmm.close()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": hmmm})
-        .json()
-        .get("result")
-        .get("key")
-    )
+    with open(ok, "r") as hmm:
+    _, key = get_paste(hmm.read())
+    if _ == "dog":
+        link = "https://del.dog/"+key
+        raw = "https://del.dog/raw/"+key
+    else:
+        link = "https://nekobin.com/"+key
+        raw = "https://nekobin.com/raw/"+key
     if ok.startswith("plugins"):
         buttons = [
             Button.inline("« Bᴀᴄᴋ", data="back"),
@@ -206,9 +205,10 @@ async def _(e):
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ]
     await e.edit(
-        f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
+        f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
         buttons=buttons,
         link_preview=False,
+        parse_mode='html',
     )
 
 
