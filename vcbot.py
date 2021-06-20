@@ -21,7 +21,6 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 
-
 @Client.on_message(filters.command(["play"], prefixes="."))
 async def startup(_, message):
     msg = await message.edit_text("`Processing...`")
