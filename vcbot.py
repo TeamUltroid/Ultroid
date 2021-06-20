@@ -1,11 +1,11 @@
 import logging
+import os
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
-from pyUltroid.functions.all import bash
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -32,7 +32,7 @@ async def startup(_, message):
     else:
         dl = await message.reply_to_message.download()
         song = f"{message.chat.id}_VCSONG.raw"
-        await bash(f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song}")
+        os.system(f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song}")
         await msg.edit_text("Starting Play..")
     CallsClient.join_group_call(message.chat.id, song)
     await msg.delete()
@@ -51,7 +51,7 @@ async def handler(_, message):
 
 @asst.on_message(filters.group & filters.command("listvc"))
 async def handler(_, message):
-    await message.edit_text(f"{CallsClient.active_calls}")
+    await message.reply_text(f"{CallsClient.active_calls}")
 
 
 @asst.on_message(filters.command("volume"))
