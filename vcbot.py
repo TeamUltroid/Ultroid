@@ -23,7 +23,7 @@ async def startup(_, message):
     song = message.matches[0].group(1)
     await CallsClient.join_group_call(message.chat.id, song)
 
-@pytgcalls.on_stream_end()
+@CallsClient.on_stream_end()
 async def handler(chat_id: int):
 	await CallsClient.leave_group_call(chat_id)
 
