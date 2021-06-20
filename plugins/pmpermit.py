@@ -652,7 +652,6 @@ async def apr_in(event):
                     Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
-                [Button.inline("Close", data="deletedissht")],
             ],
         )
         async for message in ultroid.iter_messages(uid, search=UND):
@@ -668,7 +667,6 @@ async def apr_in(event):
                     Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
-                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
@@ -694,7 +692,6 @@ async def disapr_in(event):
                     Button.inline("Approve PM", data=f"approve_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
-                [Button.inline("Close", data="deletedissht")],
             ],
         )
         await event.answer("DisApproved.")
@@ -706,7 +703,6 @@ async def disapr_in(event):
                     Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
-                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
