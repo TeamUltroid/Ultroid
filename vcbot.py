@@ -53,6 +53,4 @@ async def testing(_, msg):
 
 asst.start()
 Process(target=idle).start()
-vc.run()
-
 CallsClient.run()
