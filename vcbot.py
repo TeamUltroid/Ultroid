@@ -24,5 +24,5 @@ async def startup(_, message):
     await CallsClient.join_group_call(message.chat.id, song)
 
 
-if vcbot:
-  CallsClient.run()
+Client.start()
+CallsClient.run()
