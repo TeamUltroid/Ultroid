@@ -65,8 +65,6 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vc_p_{chat}")]]
     )
     await msg.edit_text("Started Play...", reply_markup=reply_markup)
-    os.remove(song)
-    await msg.delete()
 
 
 @CallsClient.on_stream_end()
