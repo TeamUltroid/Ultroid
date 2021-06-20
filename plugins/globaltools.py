@@ -43,6 +43,7 @@
 
 import os
 
+from pyUltroid.functions.gban_mute_db import *
 from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest

@@ -76,39 +76,41 @@ async def ultroid(event):
                     )
                 ],
             )
+    else:
         if (
             not is_added(event.sender_id)
             and str(event.sender_id) not in owner_and_sudos()
         ):
             add_user(event.sender_id)
-        ok = ""
-        u = await event.client.get_entity(event.chat_id)
-        if not udB.get("STARTMSG"):
-            if udB.get("PMBOT") == "True":
-                ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
-            await event.reply(
-                f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
-                buttons=[Button.inline("Info.", data="ownerinfo")],
-            )
+        if str(event.sender_id) not in owner_and_sudos():
+            ok = ""
+            u = await event.client.get_entity(event.chat_id)
+            if not udB.get("STARTMSG"):
+                if udB.get("PMBOT") == "True":
+                    ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
+                await event.reply(
+                    f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
+                    buttons=[Button.inline("Info.", data="ownerinfo")],
+                )
+            else:
+                me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
+                mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
+                await event.reply(
+                    Redis("STARTMSG").format(me=me, mention=mention),
+                    buttons=[Button.inline("Info.", data="ownerinfo")],
+                )
         else:
-            me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
-            mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
-            await event.reply(
-                Redis("STARTMSG").format(me=me, mention=mention),
-                buttons=[Button.inline("Info.", data="ownerinfo")],
-            )
-    else:
-        name = get_display_name(event.sender_id)
-        if event.pattern_match.group(1) == "set":
-            await event.reply(
-                "Choose from the below options -",
-                buttons=_settings,
-            )
-        else:
-            await event.reply(
-                get_string("ast_3").format(name),
-                buttons=_start,
-            )
+            name = get_display_name(event.sender_id)
+            if event.pattern_match.group(1) == "set":
+                await event.reply(
+                    "Choose from the below options -",
+                    buttons=_settings,
+                )
+            else:
+                await event.reply(
+                    get_string("ast_3").format(name),
+                    buttons=_start,
+                )
 
 
 @callback("mainmenu")

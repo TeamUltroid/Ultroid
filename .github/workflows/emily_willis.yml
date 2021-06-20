@@ -25,13 +25,11 @@ jobs:
           black assistant/*.py
           isort plugins/*.py
           black plugins/*.py
-          isort *.py
-          black *.py
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: 1Danish-00
-          commit_user_email: danish@ultroid.tech
-          commit_author: 1Danish-00 <danish@ultroid.tech>
+          commit_user_name: buddhhu
+          commit_user_email: 48654350+buddhhu@users.noreply.github.com
+          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>

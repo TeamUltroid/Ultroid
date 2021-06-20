@@ -12,6 +12,7 @@ from math import ceil
 from os import remove
 
 from git import Repo
+from pyUltroid.dB.core import *
 from pyUltroid.misc import owner_and_sudos
 from support import *
 from telethon.tl.types import InputBotInlineResult, InputWebDocument

@@ -6,7 +6,13 @@
     To get list of fonts
 """
 
-from . import _default, _double_stroke, _monospace, _small_caps
+from resources.extras.fonts import (
+    _default,
+    _double_stroke,
+    _monospace,
+    _script_royal,
+    _small_caps,
+)
 
 fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 
@@ -16,6 +22,7 @@ fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
 )
 async def _(e):
     input = e.pattern_match.group(1)
+    reply = await e.get_reply_message()
     if not input:
         m = "**Available Fonts**\n\n"
         for x in fonts:
@@ -23,9 +30,15 @@ async def _(e):
         return await eod(e, m)
     try:
         font = input.split(":", maxsplit=1)[0]
-        text = input.split(":", maxsplit=1)[1]
-    except BaseException:
+    except IndexError:
         return await eod(e, "`fonts small caps : Your Message`")
+    if reply:
+        text = reply.message
+    else:
+        try:
+            text = input.split(":", maxsplit=1)[1]
+        except IndexError:
+            return await eod(e, "`fonts small caps : Your Message`")
     if font not in fonts:
         return await eod(e, f"`{font} not in font list`.")
     if font == "small caps ":

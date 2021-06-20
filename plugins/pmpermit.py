@@ -438,15 +438,25 @@ if sett == "True" or sett != "False":
                     await message.delete()
                 async for message in apprvpm.client.iter_messages(user.id, search=UNS):
                     await message.delete()
-                await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    _not_approved[uid],
-                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
-                    buttons=[
-                        Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                        Button.inline("Block", data=f"block_{uid}"),
-                    ],
-                )
+                try:
+                    await asst.edit_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        _not_approved[uid],
+                        f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                        buttons=[
+                            Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                            Button.inline("Block", data=f"block_{uid}"),
+                        ],
+                    )
+                except KeyError:
+                    _not_approved[uid] = await asst.send_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                        buttons=[
+                            Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                            Button.inline("Block", data=f"block_{uid}"),
+                        ],
+                    )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         else:
@@ -502,15 +512,25 @@ if sett == "True" or sett != "False":
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disaproved to PM!`")
                 await asyncio.sleep(5)
                 await e.delete()
-                await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    _not_approved[bbb.id],
-                    f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
-                    buttons=[
-                        Button.inline("Approve PM", data=f"approve_{bbb.id}"),
-                        Button.inline("Block", data=f"block_{bbb.id}"),
-                    ],
-                )
+                try:
+                    await asst.edit_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        _not_approved[bbb.id],
+                        f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
+                        buttons=[
+                            Button.inline("Approve PM", data=f"approve_{bbb.id}"),
+                            Button.inline("Block", data=f"block_{bbb.id}"),
+                        ],
+                    )
+                except KeyError:
+                    _not_approved[bbb.id] = await asst.send_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
+                        buttons=[
+                            Button.inline("Approve PM", data=f"approve_{bbb.id}"),
+                            Button.inline("Block", data=f"block_{bbb.id}"),
+                        ],
+                    )
             else:
                 await e.edit(f"[{name0}](tg://user?id={bbb.id}) was never approved!")
                 await asyncio.sleep(5)
@@ -545,12 +565,19 @@ async def blockpm(block):
         disapprove_user(user)
     except AttributeError:
         pass
-    await asst.edit_message(
-        int(udB.get("LOG_CHANNEL")),
-        _not_approved[user],
-        f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
-        buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
-    )
+    try:
+        await asst.edit_message(
+            int(udB.get("LOG_CHANNEL")),
+            _not_approved[user],
+            f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
+            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+        )
+    except KeyError:
+        _not_approved[user] = await asst.send_message(
+            int(udB.get("LOG_CHANNEL")),
+            f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
+            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+        )
 
 
 @ultroid_cmd(
@@ -571,15 +598,25 @@ async def unblockpm(unblock):
         await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
     except Exception as et:
         await eod(unblock, f"ERROR - {str(et)}")
-    await asst.edit_message(
-        int(udB.get("LOG_CHANNEL")),
-        _not_approved[user],
-        f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
-        buttons=[
-            Button.inline("Block", data=f"block_{user}"),
-            Button.inline("Close", data="deletedissht"),
-        ],
-    )
+    try:
+        await asst.edit_message(
+            int(udB.get("LOG_CHANNEL")),
+            _not_approved[user],
+            f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
+            buttons=[
+                Button.inline("Block", data=f"block_{user}"),
+                Button.inline("Close", data="deletedissht"),
+            ],
+        )
+    except KeyError:
+        _not_approved[user] = await asst.send_message(
+            int(udB.get("LOG_CHANNEL")),
+            f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
+            buttons=[
+                Button.inline("Block", data=f"block_{user}"),
+                Button.inline("Close", data="deletedissht"),
+            ],
+        )
 
 
 @callback(

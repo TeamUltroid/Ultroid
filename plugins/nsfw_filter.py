@@ -9,16 +9,17 @@
 ✘ Commands Available -
 
 •`{i}addnsfw <ban/mute/kick>`
-   If someone sends 18+ content it will delete and takes action.
+   If someone sends 18+ content it will be deleted and action will be taken.
 
 •`{i}remnsfw`
-   Remove Chat from nsfw filter.
+   Remove Chat from nsfw filtering.
 """
 
 import os
 
 import requests
 from ProfanityDetector import detector
+from pyUltroid.functions.nsfw_db import *
 
 from . import *
 
