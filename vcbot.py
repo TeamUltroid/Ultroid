@@ -21,9 +21,10 @@ CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 @Client.on_message(filters.me & filters.group & filters.regex("^.play (.*)"))
 async def startup(_, message):
     song = message.matches[0].group(1)
+    await message.edit_text('`Processing...`')
     await CallsClient.join_group_call(message.chat.id, song)
 
-@CallsClient.on_stream_end()
+@pytgcalls.on_stream_end()
 async def handler(chat_id: int):
 	await CallsClient.leave_group_call(chat_id)
 
