@@ -1,5 +1,4 @@
 import json
-import os
 from json.decoder import JSONDecodeError
 
 from aiohttp import web
