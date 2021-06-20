@@ -6,7 +6,7 @@ from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
-from pyUltroid.misc import owners_and_sudos
+from pyUltroid.misc import owner_and_sudos
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -21,7 +21,7 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
-AUTHS = owners_and_sudos()
+AUTHS = owner_and_sudos()
 
 
 @Client.on_message(filters.command(["play"], prefixes="."))
