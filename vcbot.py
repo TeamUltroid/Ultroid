@@ -6,7 +6,7 @@ from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
-
+from pyUltroid.misc import sudoers
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
 logging.basicConfig(level=logging.INFO)
@@ -20,6 +20,9 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
+CACHE = {}
+A_AUTH = [udB.get("OWNER_ID"),*sudoers()]
+AUTH = list(int(a) for a in A_AUTH)
 
 async def download(query, chat):
     song = f"VCSONG_{chat}.raw"
@@ -29,10 +32,10 @@ async def download(query, chat):
     return song
 
 
-@Client.on_message(filters.command(["play"], prefixes="."))
+@asst.on_message(filters.command("play") & filters.users(AUTH))
 async def startup(_, message):
     chat = message.chat.id
-    msg = await message.edit_text("`Processing...`")
+    msg = await message.reply_text("`Processing...`")
     song = message.text.split(" ", maxsplit=1)
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
@@ -40,6 +43,8 @@ async def startup(_, message):
         await msg.edit_text("Starting Play..")
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
+    elif not message.reply_to_message and len(song) == 1:
+        return await msg.edit_text("Pls Give me Something to Play...")
     else:
         dl = await message.reply_to_message.download()
         print(dl)
@@ -65,12 +70,12 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
-@Client.on_message(filters.me & filters.group & filters.regex("^.listvc"))
+@asst.on_message(filters.command("listvc") & filters.users(AUTH))
 async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("volume"))
+@asst.on_message(filters.command("volume") & filters.users(AUTH))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
