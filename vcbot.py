@@ -3,6 +3,7 @@ import logging
 from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
+from multiprocessing import Process
 from pyUltroid.dB.database import Var
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
@@ -12,15 +13,13 @@ logging.basicConfig(level=logging.INFO)
 SESSION = udB.get("VC_SESSION")
 
 
-ASST = Client(
-    "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
-)
+asst = Client("VC-ASST", api_id=Var.API_ID,api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN"))
 Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 
-@Client.on_message(filters.me & filters.group & filters.command(["play"], prefixes="."))
+@Client.on_message(filters.command(["play"], prefixes="."))
 async def startup(_, message):
     msg = await message.edit_text("`Processing...`")
     song = message.text.split(" ")
@@ -48,13 +47,12 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
-@ASST.on_message(filters.command("play"))
+@asst.on_message(filters.command("play"))
 async def testing(_, msg):
     await msg.reply_text("Wait a Second..")
 
+asst.start()
+Process(target=idle).start()
+vc.run()
 
 CallsClient.run()
-
-ASST.start()
-
-idle()
