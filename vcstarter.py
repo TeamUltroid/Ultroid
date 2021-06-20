@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 from aiohttp import web
 from aiohttp.http_websocket import WSMsgType
-from pyUltroid import udB, vcbot
+from pyUltroid import udB, vcbot ultroid_bot
 from pyUltroid.dB.database import Var
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -16,11 +16,10 @@ from telethon.tl.functions.phone import (
 from telethon.tl.types import DataJSON
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
+vcbot = ultroid_bot
 if vcbot:
 
-    bot = TelegramClient(None, Var.API_ID, Var.API_HASH).start(
-        bot_token=udB.get("BOT_TOKEN")
-    )
+    bot = ultroid_bot.asst
 
     async def get_entity(chat):
         try:
@@ -176,5 +175,4 @@ if vcbot:
         app.router.add_route("GET", "/", websocket_handler)
         web.run_app(app, host="127.0.0.1", port=6969)
 
-    vcbot.start()
     main()
