@@ -51,7 +51,7 @@ async def handler(_, message):
 
 @asst.on_message(filters.group & filters.command("listvc"))
 async def handler(_, message):
-    await message.edit_text(f"{CallsClient.calls}\n\n{CallsClient.active_calls}")
+    await message.edit_text(f"{CallsClient.active_calls}")
 
 
 @asst.on_message(filters.command("volume"))
