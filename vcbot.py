@@ -7,6 +7,7 @@ from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
+
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
 logging.basicConfig(level=logging.INFO)
@@ -21,8 +22,9 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 CACHE = {}
-A_AUTH = [udB.get("OWNER_ID"),*sudoers()]
+A_AUTH = [udB.get("OWNER_ID"), *sudoers()]
 AUTH = list(int(a) for a in A_AUTH)
+
 
 async def download(query, chat):
     song = f"VCSONG_{chat}.raw"
