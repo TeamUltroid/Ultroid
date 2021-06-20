@@ -1,5 +1,6 @@
 import logging
 import os
+import glob
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
@@ -27,6 +28,12 @@ async def startup(_, message):
     song = message.text.split(" ")
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
+        Xx = await bash(f'cd resources/downloads/ && youtube-dl -x --audio-format mp3 --audio-quality 1 --write-thumbnail ytsearch:"{song}"')
+        dl = glob.glob("resources/downloads/*mp3")[0]
+        song_raw = f"{message.chat.id}_VCSONG.raw"
+        await bash(f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song_raw} -y")
+        await bash(f"rm -rf {dl}")
+        await msg.edit_text("Starting Play..")
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
