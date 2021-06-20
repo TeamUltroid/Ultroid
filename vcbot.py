@@ -28,4 +28,9 @@ async def startup(_, message):
 async def handler(chat_id: int):
 	await CallsClient.leave_group_call(chat_id)
 
+@Client.on_message(filters.me & filters.group & filters.regex("^.lvc (.*)"))
+async def handler(_, message):
+	await message.edit_text('`Left...`')
+	await CallsClient.leave_group_call(message.chat.id)
+
 CallsClient.run()
