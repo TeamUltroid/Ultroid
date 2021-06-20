@@ -11,10 +11,12 @@ logging.basicConfig(level=logging.INFO)
 
 SESSION = udB.get("VC_SESSION")
 
-Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
+
 ASST = Client(
     "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
 )
+Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
+
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 
