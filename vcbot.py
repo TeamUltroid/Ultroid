@@ -35,7 +35,7 @@ async def startup(_, message):
     song = message.text.split(" ")
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
-        song = await download_n_transcode(song, message.chat.id)
+        song = await download(song, message.chat.id)
         await msg.edit_text("Starting Play..")
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
