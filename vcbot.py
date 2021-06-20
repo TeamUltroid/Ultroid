@@ -1,7 +1,6 @@
 import logging
 
 from pyrogram import Client, filters, idle
-
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
@@ -13,7 +12,9 @@ logging.basicConfig(level=logging.INFO)
 SESSION = udB.get("VC_SESSION")
 
 Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
-ASST = Client("VC-ASST", api_id=Var.API_ID,api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN"))
+ASST = Client(
+    "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
+)
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 
@@ -43,6 +44,7 @@ async def handler(chat_id: int):
 async def handler(_, message):
     await message.edit_text("`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
+
 
 @ASST.on_message(filters.command("play"))
 async def testing(_, msg):
