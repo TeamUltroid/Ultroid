@@ -50,6 +50,8 @@ from . import *
 # ========================= CONSTANTS =============================
 COUNT_PM = {}
 LASTMSG = {}
+WARN_MSGS = {}
+U_WARNS = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
@@ -60,14 +62,18 @@ UND = get_string("pmperm_1")
 if not Redis("PM_TEXT"):
     UNAPPROVED_MSG = """
 **PMSecurity of {ON}!**
+
 {UND}
+
 You have {warn}/{twarn} warnings!"""
 else:
     UNAPPROVED_MSG = (
         """
 **PMSecurity of {ON}!**"""
         f"""
+
 {Redis("PM_TEXT")}
+
 """
         """
 You have {warn}/{twarn} warnings!"""
@@ -93,6 +99,11 @@ PMCMDS = [
 ]
 
 _not_approved = {}
+sett = Redis("PMSETTING")
+if sett is None:
+    sett = True
+inline_pm = udB.get("INLINE_PM") or "True"
+my_bot = asst.me.username
 # =================================================================
 
 
@@ -102,11 +113,11 @@ _not_approved = {}
 async def _(e):
     if not e.is_private:
         return await eod(e, "`Use me in Private.`", time=3)
-    if is_logger(str(e.chat_id)):
-        nolog_user(str(e.chat_id))
-        return await eod(e, "`Now I Will log msgs from here.`", time=3)
-    else:
+    if not is_logger(str(e.chat_id)):
         return await eod(e, "`Wasn't logging msgs from here.`", time=3)
+
+    nolog_user(str(e.chat_id))
+    return await eod(e, "`Now I Will log msgs from here.`", time=3)
 
 
 @ultroid_cmd(
@@ -141,10 +152,7 @@ async def permitpm(event):
         await event.forward_to(int(udB.get("LOG_CHANNEL")))
 
 
-sett = Redis("PMSETTING")
-if sett is None:
-    sett = True
-if sett == "True":
+if sett == "True" or sett != "False":
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -255,11 +263,21 @@ if sett == "True":
                         count=count,
                         mention=mention,
                     )
-                    await ultroid.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
+                    update_pm(user.id, message_, wrn)
+                    if inline_pm == "False":
+                        await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        try:
+                            await results[0].click(
+                                user.id, reply_to=event.id, hide_via=True
+                            )
+                        except Exception as e:
+                            print(e)
                 elif event.text == prevmsg:
                     async for message in ultroid.iter_messages(
                         user.id,
@@ -277,11 +295,23 @@ if sett == "True":
                         count=count,
                         mention=mention,
                     )
-                    await ultroid.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
+                    update_pm(user.id, message_, wrn)
+                    if inline_pm == "False":
+                        await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        try:
+                            results = await ultroid.inline_query(
+                                my_bot, f"ip_{user.id}"
+                            )
+                            await results[0].click(
+                                user.id, reply_to=event.id, hide_via=True
+                            )
+                        except Exception as e:
+                            print(e)
                 LASTMSG.update({user.id: event.text})
             else:
                 async for message in ultroid.iter_messages(user.id, search=UND):
@@ -297,12 +327,22 @@ if sett == "True":
                     count=count,
                     mention=mention,
                 )
-                await ultroid.send_file(
-                    user.id,
-                    PMPIC,
-                    caption=message_,
-                )
-                LASTMSG.update({user.id: event.text})
+                update_pm(user.id, message_, wrn)
+                if inline_pm == "False":
+                    await ultroid.send_file(
+                        user.id,
+                        PMPIC,
+                        caption=message_,
+                    )
+                else:
+                    try:
+                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        await results[0].click(
+                            user.id, reply_to=event.id, hide_via=True
+                        )
+                    except Exception as e:
+                        print(e)
+            LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
                 COUNT_PM.update({user.id: 1})
             else:
@@ -534,13 +574,17 @@ async def blockpm(block):
             int(udB.get("LOG_CHANNEL")),
             _not_approved[user],
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
-            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+            buttons=[
+                Button.inline("UnBlock", data=f"unblock_{user}"),
+            ],
         )
     except KeyError:
         _not_approved[user] = await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
-            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+            buttons=[
+                Button.inline("UnBlock", data=f"unblock_{user}"),
+            ],
         )
 
 
@@ -569,7 +613,6 @@ async def unblockpm(unblock):
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
-                Button.inline("Close", data="deletedissht"),
             ],
         )
     except KeyError:
@@ -578,7 +621,6 @@ async def unblockpm(unblock):
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
-                Button.inline("Close", data="deletedissht"),
             ],
         )
 
@@ -606,8 +648,11 @@ async def apr_in(event):
         await event.edit(
             f"#APPROVED\n\n[{user_name}](tg://user?id={uid}) `approved to PM!`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
         async for message in ultroid.iter_messages(uid, search=UND):
@@ -615,15 +660,15 @@ async def apr_in(event):
         async for message in ultroid.iter_messages(uid, search=UNS):
             await message.delete()
         await event.answer("Approved.")
-        x = await ultroid.send_message(uid, "You have been approved to PM me!")
-        await asyncio.sleep(5)
-        await x.delete()
     else:
         await event.edit(
             "`User may already be approved.`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
@@ -645,20 +690,23 @@ async def disapr_in(event):
         await event.edit(
             f"#DISAPPROVED\n\n[{user_name}](tg://user?id={uid}) `disapproved from PMs!`",
             buttons=[
-                Button.inline("Approve PM", data=f"approve_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Approve PM", data=f"approve_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
         await event.answer("DisApproved.")
-        x = await ultroid.send_message(uid, "You have been disapproved from PMing me!")
-        await asyncio.sleep(5)
-        await x.delete()
     else:
         await event.edit(
             "`User was never approved!`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
@@ -679,7 +727,9 @@ async def blck_in(event):
     await event.answer("Blocked.")
     await event.edit(
         f"#BLOCKED\n\n[{user_name}](tg://user?id={uid}) has been **blocked!**",
-        buttons=Button.inline("UnBlock", data=f"unblock_{uid}"),
+        buttons=[
+            Button.inline("UnBlock", data=f"unblock_{uid}"),
+        ],
     )
 
 
@@ -701,12 +751,109 @@ async def unblck_in(event):
         f"#UNBLOCKED\n\n[{user_name}](tg://user?id={uid}) has been **unblocked!**",
         buttons=[
             Button.inline("Block", data=f"block_{uid}"),
-            Button.inline("Close", data="deletedissht"),
         ],
     )
 
 
 @callback("deletedissht")
 async def ytfuxist(e):
-    await e.answer("Deleted.")
-    await e.delete()
+    try:
+        await e.answer("Deleted.")
+        await e.delete()
+    except BaseException:
+        try:
+            await ultroid.delete_messages(e.chat_id, e.id)
+        except BaseException:
+            pass
+
+
+@asst.on(events.InlineQuery(pattern=re.compile("ip_(.*)")))
+@in_owner
+async def in_pm_ans(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        warns = U_WARNS[from_user]
+    except Exception as e:
+        print(e)
+        warns = "?"
+    wrns = f"{warns}/{WARNS}"
+    await event.answer(
+        [
+            await event.builder.article(
+                title="Inline PMPermit.",
+                text=f"**PMSecurity of {OWNER_NAME}!**",
+                buttons=[
+                    [
+                        Button.inline("Warns", data=f"admin_only{from_user}"),
+                        Button.inline(wrns, data="do_nothing"),
+                    ],
+                    [Button.inline("Message 📫", data=f"m_{from_user}")],
+                ],
+            )
+        ]
+    )
+
+
+@callback(re.compile("admin_only(.*)"))
+async def _admin_tools(event):
+    if event.sender_id != OWNER_ID:
+        return await event.answer()
+    chat = int(event.pattern_match.group(1))
+    await event.edit(
+        "Owner Tools.",
+        buttons=[
+            [
+                Button.inline("Approve PM", data=f"approve_{chat}"),
+                Button.inline("Block PM", data=f"block_{chat}"),
+            ],
+            [Button.inline("« Back", data=f"pmbk_{chat}")],
+        ],
+    )
+
+
+@callback("do_nothing")
+async def _mejik(e):
+    await e.answer()  # ensure there is no white clock.
+
+
+@callback(re.compile("m_(.*)"))
+async def _rep(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        msg_ = WARN_MSGS[from_user]
+    except Exception as e:
+        print(e)
+        msg_ = "Missing."
+    await event.edit(msg_, buttons=[Button.inline("« Back", data=f"pmbk_{from_user}")])
+
+
+@callback(re.compile("pmbk_(.*)"))
+async def edt(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        warns = U_WARNS[from_user]
+    except Exception as e:
+        print(e)
+        warns = "?"
+    wrns = f"{warns}/{WARNS}"
+    await event.edit(
+        f"**PMSecurity of {OWNER_NAME}!**",
+        buttons=[
+            [
+                Button.inline("Warns", data=f"admin_only{from_user}"),
+                Button.inline(wrns, data="do_nothing"),
+            ],
+            [Button.inline("Message 📫", data=f"m_{from_user}")],
+        ],
+    )
+
+
+def update_pm(userid, message, warns_given):
+    try:
+        WARN_MSGS.update({userid: message})
+    except KeyError as e:
+        print(e)
+    try:
+        U_WARNS.update({userid: warns_given})
+    except KeyError as e:
+        print(e)
