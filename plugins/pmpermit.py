@@ -73,7 +73,6 @@ else:
         f"""
 
 {Redis("PM_TEXT")}
-
 """
         """
 You have {warn}/{twarn} warnings!"""
