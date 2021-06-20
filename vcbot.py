@@ -1,3 +1,4 @@
+import glob
 import logging
 from multiprocessing import Process
 
@@ -20,17 +21,10 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
-
 async def download(query, chat):
-    s = await bash(
-        f'youtube-dl -x --audio-format mp3 --audio-quality 1 --write-thumbnail ytsearch:"{query}" --print-json|jq ".title"'
-    )
     song = f"VCSONG_{chat}.raw"
-    await bash(
-        f"ffmpeg -i {eval(s[0])} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y"
-    )
-    return eval(s[0])
-
+    s = await bash(f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" ytsearch:'{query}'""")
+    return song
 
 @Client.on_message(filters.command(["play"], prefixes="."))
 async def startup(_, message):
