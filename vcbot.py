@@ -57,8 +57,8 @@ async def chesendvolume(_, message):
     try:
         CallsClient.change_volume_call(message.chat.id, int(mk[1]))
         msg = f"Volume Changed to {mk[1]}"
-    except Exception:
-        pass
+    except Exception as msg:
+        msg = str(msg)
     await message.reply_text(msg)
 
 
