@@ -33,7 +33,7 @@ async def download(query, chat):
 async def startup(_, message):
     chat = message.chat.id
     msg = await message.edit_text("`Processing...`")
-    song = message.text.split(" ")
+    song = message.text.split(" ", maxsplit=1)
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
         song = await download(song, message.chat.id)
