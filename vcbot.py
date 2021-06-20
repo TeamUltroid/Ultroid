@@ -44,7 +44,7 @@ async def startup(_, message):
     else:
         dl = await message.reply_to_message.download()
         song = f"{message.chat.id}_VCSONG.raw"
-        os.system(
+        await bash(
             f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y"
         )
         await msg.edit_text("Starting Play..")
@@ -79,11 +79,6 @@ async def chesendvolume(_, message):
     except Exception as msg:
         msg = str(msg)
     await message.reply_text(msg)
-
-
-@asst.on_message(filters.command("play"))
-async def testing(_, msg):
-    await msg.reply_text("Wait a Second..")
 
 
 asst.start()
