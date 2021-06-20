@@ -31,6 +31,7 @@ async def download(query, chat):
 
 @Client.on_message(filters.command(["play"], prefixes="."))
 async def startup(_, message):
+    chat = message.chat.id
     msg = await message.edit_text("`Processing...`")
     song = message.text.split(" ")
     if not message.reply_to_message and len(song) > 1:
