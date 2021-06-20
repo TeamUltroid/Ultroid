@@ -1,6 +1,5 @@
 import glob
 import logging
-import os
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
