@@ -4,8 +4,8 @@ from multiprocessing import Process
 from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
-from pyUltroid.functions.all import bash
 from pyUltroid.dB.database import Var
+from pyUltroid.functions.all import bash
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -48,6 +48,7 @@ async def handler(_, message):
     await message.edit_text("`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
 
+
 @asst.on_message(filters.command("volume"))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
@@ -56,7 +57,7 @@ async def chesendvolume(_, message):
     try:
         CallsClient.change_volume_call(message.chat.id, int(mk[1]))
         msg = f"Volume Changed to {mk[1]}"
-    except Exception as msg:
+    except Exception:
         pass
     await message.reply_text(msg)
 
