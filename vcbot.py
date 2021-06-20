@@ -42,6 +42,7 @@ async def startup(_, message):
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
         dl = await message.reply_to_message.download()
+        print(dl)
         song = f"{message.chat.id}_VCSONG.raw"
         print(
             await bash(
