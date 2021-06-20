@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
+# Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -208,7 +208,10 @@ if sett == "True" or sett != "False":
             if event.media:
                 await event.delete()
             name = user.first_name
-            fullname = f"{name} {user.last_name}" if user.last_name else name
+            if user.last_name:
+                fullname = f"{name} {user.last_name}"
+            else:
+                fullname = name
             username = f"@{user.username}"
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
@@ -275,7 +278,7 @@ if sett == "True" or sett != "False":
                             )
                         except Exception as e:
                             print(e)
-                else:
+                elif event.text == prevmsg:
                     async for message in ultroid.iter_messages(
                         user.id,
                         search=UND,
@@ -309,6 +312,7 @@ if sett == "True" or sett != "False":
                             )
                         except Exception as e:
                             print(e)
+                LASTMSG.update({user.id: event.text})
             else:
                 async for message in ultroid.iter_messages(user.id, search=UND):
                     await message.delete()
@@ -570,13 +574,17 @@ async def blockpm(block):
             int(udB.get("LOG_CHANNEL")),
             _not_approved[user],
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
-            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+            buttons=[
+                Button.inline("UnBlock", data=f"unblock_{user}"),
+            ],
         )
     except KeyError:
         _not_approved[user] = await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **blocked**.",
-            buttons=Button.inline("UnBlock", data=f"unblock_{user}"),
+            buttons=[
+                Button.inline("UnBlock", data=f"unblock_{user}"),
+            ],
         )
 
 
@@ -605,7 +613,6 @@ async def unblockpm(unblock):
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
-                Button.inline("Close", data="deletedissht"),
             ],
         )
     except KeyError:
@@ -614,7 +621,6 @@ async def unblockpm(unblock):
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
-                Button.inline("Close", data="deletedissht"),
             ],
         )
 
@@ -642,8 +648,11 @@ async def apr_in(event):
         await event.edit(
             f"#APPROVED\n\n[{user_name}](tg://user?id={uid}) `approved to PM!`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
         async for message in ultroid.iter_messages(uid, search=UND):
@@ -651,15 +660,15 @@ async def apr_in(event):
         async for message in ultroid.iter_messages(uid, search=UNS):
             await message.delete()
         await event.answer("Approved.")
-        x = await ultroid.send_message(uid, "You have been approved to PM me!")
-        await asyncio.sleep(5)
-        await x.delete()
     else:
         await event.edit(
             "`User may already be approved.`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
@@ -681,20 +690,23 @@ async def disapr_in(event):
         await event.edit(
             f"#DISAPPROVED\n\n[{user_name}](tg://user?id={uid}) `disapproved from PMs!`",
             buttons=[
-                Button.inline("Approve PM", data=f"approve_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Approve PM", data=f"approve_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
         await event.answer("DisApproved.")
-        x = await ultroid.send_message(uid, "You have been disapproved from PMing me!")
-        await asyncio.sleep(5)
-        await x.delete()
     else:
         await event.edit(
             "`User was never approved!`",
             buttons=[
-                Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                Button.inline("Block", data=f"block_{uid}"),
+                [
+                    Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                    Button.inline("Block", data=f"block_{uid}"),
+                ],
+                [Button.inline("Close", data="deletedissht")],
             ],
         )
 
@@ -715,7 +727,9 @@ async def blck_in(event):
     await event.answer("Blocked.")
     await event.edit(
         f"#BLOCKED\n\n[{user_name}](tg://user?id={uid}) has been **blocked!**",
-        buttons=Button.inline("UnBlock", data=f"unblock_{uid}"),
+        buttons=[
+            Button.inline("UnBlock", data=f"unblock_{uid}"),
+        ],
     )
 
 
@@ -737,7 +751,6 @@ async def unblck_in(event):
         f"#UNBLOCKED\n\n[{user_name}](tg://user?id={uid}) has been **unblocked!**",
         buttons=[
             Button.inline("Block", data=f"block_{uid}"),
-            Button.inline("Close", data="deletedissht"),
         ],
     )
 
@@ -747,8 +760,11 @@ async def ytfuxist(e):
     try:
         await e.answer("Deleted.")
         await e.delete()
-    except BaseException:
-        pass
+    except:
+        try:
+            await ultroid.delete_messages(e.chat_id, e.id)
+        except:
+            pass
 
 
 @asst.on(events.InlineQuery(pattern=re.compile("ip_(.*)")))
@@ -781,13 +797,16 @@ async def in_pm_ans(event):
 @callback(re.compile("admin_only(.*)"))
 async def _admin_tools(event):
     if event.sender_id != OWNER_ID:
-        return await event.answer("Not for You", alert=True)
+        return await event.answer()
     chat = int(event.pattern_match.group(1))
     await event.edit(
         "Owner Tools.",
         buttons=[
-            Button.inline("Approve PM", data=f"approve_{chat}"),
-            Button.inline("Block PM", data=f"block_{chat}"),
+            [
+                Button.inline("Approve PM", data=f"approve_{chat}"),
+                Button.inline("Block PM", data=f"block_{chat}"),
+            ],
+            [Button.inline("« Back", data=f"pmbk_{chat}")],
         ],
     )
 
@@ -805,7 +824,28 @@ async def _rep(event):
     except Exception as e:
         print(e)
         msg_ = "Missing."
-    await event.edit(msg_)
+    await event.edit(msg_, buttons=[Button.inline("« Back", data=f"pmbk_{from_user}")])
+
+
+@callback(re.compile("pmbk_(.*)"))
+async def edt(event):
+    from_user = int(event.pattern_match.group(1))
+    try:
+        warns = U_WARNS[from_user]
+    except Exception as e:
+        print(e)
+        warns = "?"
+    wrns = f"{warns}/{WARNS}"
+    await event.edit(
+        f"**PMSecurity of {OWNER_NAME}!**",
+        buttons=[
+            [
+                Button.inline("Warns", data=f"admin_only{from_user}"),
+                Button.inline(wrns, data="do_nothing"),
+            ],
+            [Button.inline("Message 📫", data=f"m_{from_user}")],
+        ],
+    )
 
 
 def update_pm(userid, message, warns_given):
