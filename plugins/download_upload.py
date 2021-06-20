@@ -122,7 +122,7 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if title.endswith(".mp3", ".m4a", ".opus", ".ogg", ".flac"):
+                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     hmm = " | stream"
                 if " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
@@ -151,13 +151,13 @@ async def download(event):
                             caption=f"`{title}`",
                             supports_streaming=True,
                         )
-                    if res.name.endswith(".mkv", ".mp4", ".avi"):
+                    if res.name.endswith((".mkv", ".mp4", ".avi")):
                         attributes = [
                             DocumentAttributeVideo(
                                 w=wi, h=hi, duration=duration, supports_streaming=True
                             )
                         ]
-                    elif res.name.endswith(".mp3", ".m4a", ".opus", ".ogg", ".flac"):
+                    elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                         attributes = [
                             DocumentAttributeAudio(
                                 duration=duration,
@@ -199,7 +199,7 @@ async def download(event):
                 res = await uploader(kk, kk, tt, xx, "Uploading...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
-            if title.endswith(".mp3", ".m4a", ".opus", ".ogg", ".flac"):
+            if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                 hmm = " | stream"
             if " | stream" in hmm:
                 metadata = extractMetadata(createParser(res.name))
@@ -228,13 +228,13 @@ async def download(event):
                         caption=f"`{title}`",
                         supports_streaming=True,
                     )
-                if res.name.endswith(".mkv", ".mp4", ".avi"):
+                if res.name.endswith((".mkv", ".mp4", ".avi")):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
                         )
                     ]
-                elif res.name.endswith(".mp3", ".m4a", ".opus", ".ogg", ".flac"):
+                elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     attributes = [
                         DocumentAttributeAudio(
                             duration=duration,
