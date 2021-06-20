@@ -49,7 +49,7 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
-@Client.on_message(filters.me & filters.group & filters.regex("^.listvc"))
+@asst.on_message(filters.group & filters.command("listvc"))
 async def handler(_, message):
     await message.edit_text(f"{CallsClient.calls}\n\n{CallsClient.active_calls}")
 
