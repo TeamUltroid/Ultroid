@@ -2,7 +2,7 @@ import logging
 import os
 from multiprocessing import Process
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
@@ -58,6 +58,7 @@ async def startup(_, message):
             )
         )
         await msg.edit_text("Starting Play..")
+    await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]")
     CallsClient.join_group_call(message.chat.id, song)
     os.remove(song)
     await msg.delete()
