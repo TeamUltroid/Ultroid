@@ -223,11 +223,11 @@ async def download(event):
                             artist = ultroid_bot.first_name
                 except AttributeError:
                     await event.client.send_file(
-                            event.chat_id,
-                            res,
-                            caption=f"`{title}`",
-                            supports_streaming=True,
-                        )
+                        event.chat_id,
+                        res,
+                        caption=f"`{title}`",
+                        supports_streaming=True,
+                    )
                 if res.name.endswith(".mkv", ".mp4", ".avi"):
                     attributes = [
                         DocumentAttributeVideo(
