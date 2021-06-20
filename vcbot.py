@@ -6,7 +6,6 @@ from pyrogram import Client, filters, idle
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
-from pyUltroid.misc import owner_and_sudos
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -21,7 +20,6 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
-AUTHS = owner_and_sudos()
 
 
 @Client.on_message(filters.command(["play"], prefixes="."))
@@ -57,7 +55,7 @@ async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("volume") & (filters.user(AUTHS) | filters.me))
+@asst.on_message(filters.command("volume"))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
