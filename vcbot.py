@@ -49,7 +49,7 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
-@asst.on_message(filters.group & filters.command("listvc"))
+@Client.on_message(filters.me & filters.group & filters.regex("^.listvc"))
 async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
