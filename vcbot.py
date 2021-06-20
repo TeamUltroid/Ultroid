@@ -37,7 +37,7 @@ async def startup(_, message):
         await bash(
             f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y"
         )
-        await bash(f"rm -rf {dl}")
+        # await bash(f"rm -rf {dl}")
         await msg.edit_text("Starting Play..")
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
