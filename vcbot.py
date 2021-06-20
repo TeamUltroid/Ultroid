@@ -49,6 +49,11 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
+@Client.on_message(filters.me & filters.group & filters.regex("^.listvc"))
+async def handler(_, message):
+    await message.edit_text(f"{CallsClient.calls}\n\n{CallsClient.active_calls}")
+
+
 @asst.on_message(filters.command("volume"))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
