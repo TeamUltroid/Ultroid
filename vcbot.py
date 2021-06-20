@@ -61,7 +61,7 @@ async def startup(_, message):
     )
     CallsClient.join_group_call(message.chat.id, song)
     reply_markup = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Pause", callback_data=f"vc_p_{chat}")]]
+        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_text("Started Play...", reply_markup=reply_markup)
 
@@ -105,10 +105,11 @@ async def stopvc(_, query):
     else:
         CallsClient.pause_stream(chat)
         BT = "Pause"
+    await query.answer("Done", show_alert=True)
     dt = BT[0].lower()
     await query.edit_message_reply_markup(
         InlineKeyboardMarkup(
-            [[InlineKeyboardButton(BT, callback_data=f"vc_{dt}_{chat}")]]
+            [[InlineKeyboardButton(BT, callback_data=f"vc{dt}_{chat}")]]
         )
     )
 
