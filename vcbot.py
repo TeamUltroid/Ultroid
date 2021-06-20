@@ -18,7 +18,7 @@ Client = Client(SESSION or ":memory:",
 
 CallsClient = PyTgCalls(Client)
 
-@CallsClient.on_message(filters.me & filters.group & filters.regex("^.play (.*)"))
+@Client.on_message(filters.me & filters.group & filters.regex("^.play (.*)"))
 async def startup(_, message):
     song = message.matches[0].group(1)
     await CallsClient.join_group_call(message.chat.id, song)
