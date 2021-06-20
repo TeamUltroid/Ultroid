@@ -34,7 +34,7 @@ async def download(query, chat):
     return song
 
 
-@asst.on_message(filters.command("play") & filters.users(AUTH))
+@asst.on_message(filters.command("play") & filters.user(AUTH))
 async def startup(_, message):
     chat = message.chat.id
     msg = await message.reply_text("`Processing...`")
@@ -72,12 +72,12 @@ async def handler(_, message):
     await CallsClient.leave_group_call(message.chat.id)
 
 
-@asst.on_message(filters.command("listvc") & filters.users(AUTH))
+@asst.on_message(filters.command("listvc") & filters.user(AUTH))
 async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("volume") & filters.users(AUTH))
+@asst.on_message(filters.command("volume") & filters.user(AUTH))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
