@@ -1,4 +1,4 @@
-import logging
+import logging, os
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
@@ -58,6 +58,7 @@ async def startup(_, message):
         )
         await msg.edit_text("Starting Play..")
     CallsClient.join_group_call(message.chat.id, song)
+    os.remove(song)
     await msg.delete()
 
 
@@ -66,7 +67,7 @@ async def handler(chat_id: int):
     CallsClient.leave_group_call(chat_id)
 
 
-@Client.on_message(filters.group & filters.regex("^.lvc") & filters.user(AUTH))
+@asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
 async def handler(_, message):
     await message.reply_text("`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
