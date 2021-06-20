@@ -32,7 +32,7 @@ async def startup(_, message):
     else:
         dl = await message.reply_to_message.download()
         song = f"{message.chat.id}_VCSONG.raw"
-        await bash(f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 4800 {song}")
+        await bash(f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song}")
         await msg.edit_text("Starting Play..")
     CallsClient.join_group_call(message.chat.id, song)
     await msg.delete()
