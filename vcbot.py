@@ -4,7 +4,7 @@ from pyUltroid import udB, vcbot
 from pyUltroid.dB.database import Var
 
 from pyrogram import Client, filters
-from pytgcalls import PyTgCalls
+from pytgcalls import PyTgCalls, PyLogs
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -16,7 +16,7 @@ Client = Client(SESSION,
                 api_id=Var.API_ID,
                 api_hash=Var.API_HASH)
 
-CallsClient = PyTgCalls(Client)
+CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 @Client.on_message(filters.me & filters.group & filters.regex("^.play (.*)"))
 async def startup(_, message):
