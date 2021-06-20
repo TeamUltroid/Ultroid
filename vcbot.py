@@ -46,7 +46,7 @@ async def startup(_, message):
         song = f"{message.chat.id}_VCSONG.raw"
         print(
             await bash(
-                f"ffmpeg -i {dl} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y"
+                f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
             )
         )
         await msg.edit_text("Starting Play..")
