@@ -91,7 +91,5 @@ async def chesendvolume(_, message):
         msg = str(msg)
     await message.reply_text(msg)
 
-
-asst.start()
-Process(target=idle).start()
+Process(target=asst.run).start()
 CallsClient.run()
