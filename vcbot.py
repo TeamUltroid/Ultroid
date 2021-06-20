@@ -58,7 +58,9 @@ async def startup(_, message):
             )
         )
         await msg.edit_text("Starting Play..")
-    await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]")
+    await asst.send_message(
+        LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
+    )
     CallsClient.join_group_call(message.chat.id, song)
     os.remove(song)
     await msg.delete()
