@@ -57,7 +57,7 @@ async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("volume") & (filters.user(AUTHS) | filters.me ))
+@asst.on_message(filters.command("volume") & (filters.user(AUTHS) | filters.me))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
