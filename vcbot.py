@@ -3,6 +3,7 @@ import os
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
@@ -43,7 +44,6 @@ async def startup(_, message):
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
         song = await download(song, message.chat.id)
-        await msg.edit_text("Starting Play..")
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     elif not message.reply_to_message and len(song) == 1:
@@ -57,11 +57,12 @@ async def startup(_, message):
                 f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
             )
         )
-        await msg.edit_text("Starting Play..")
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
     )
     CallsClient.join_group_call(message.chat.id, song)
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Pause", callback_data=f"vc_p_{chat}")]])
+    await msg.edit_text("Started Play...", reply_markup=reply_markup)
     os.remove(song)
     await msg.delete()
 
@@ -94,6 +95,18 @@ async def chesendvolume(_, message):
         msg = str(msg)
     await message.reply_text(msg)
 
+@asst.on_callback_query(filters.regex("^vc(.*)"))
+async def stopvc(_, query):
+    match = query.matches[0].group(1).split("_")
+    chat = int(match[1])
+    if match[0] == "r":
+        CallsClient.resume_stream(chat)
+        BT = "Resume"
+    else:
+        CallsClient.pause_stream(chat)
+        BT = "Pause"
+    dt = BT[0].lower()
+    await query.edit_message_reply_markup(InlineKeyboardMarkup([[InlineKeyboardButton(BT,callback_data=f"vc_{dt}_{chat}")]]))
 
 asst.start()
 Process(target=idle).start()
