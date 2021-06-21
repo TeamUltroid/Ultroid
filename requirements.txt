@@ -3,3 +3,4 @@ Shazamio
 https://github.com/New-dev0/Telethon/archive/BETTER.zip
 py-tgcalls
 pyrogram
+ffmpeg-python
