@@ -1,6 +1,6 @@
+import asyncio
 import logging
 import os
-import asyncio
 from datetime import datetime as dt
 from multiprocessing import Process
 
