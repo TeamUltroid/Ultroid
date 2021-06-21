@@ -170,10 +170,7 @@ if sett == "True" or sett != "False":
             return
         if not is_approved(e.chat_id):
             approve_user(e.chat_id)
-            async for message in e.client.iter_messages(e.chat_id, search=UND):
-                await message.delete()
-            async for message in e.client.iter_messages(e.chat_id, search=UNS):
-                await message.delete()
+            await delete_pm_warn_msgs(e.chat_id)
             try:
                 await ultroid_bot.edit_folder(e.chat_id, folder=0)
             except BaseException:
@@ -238,19 +235,9 @@ if sett == "True" or sett != "False":
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
                 if event.text != prevmsg:
-                    if "PMSecurity" in event.text:
+                    if "PMSecurity" in event.text or "**PMSecurity" in event.text:
                         return
-                    async for message in ultroid.iter_messages(
-                        user.id,
-                        search=UND,
-                    ):
-                        await message.delete()
-
-                    async for message in ultroid.iter_messages(
-                        user.id,
-                        search=UNS,
-                    ):
-                        await message.delete()
+                    await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -278,11 +265,7 @@ if sett == "True" or sett != "False":
                         except Exception as e:
                             print(e)
                 elif event.text == prevmsg:
-                    async for message in ultroid.iter_messages(
-                        user.id,
-                        search=UND,
-                    ):
-                        await message.delete()
+                    await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -313,8 +296,7 @@ if sett == "True" or sett != "False":
                             print(e)
                 LASTMSG.update({user.id: event.text})
             else:
-                async for message in ultroid.iter_messages(user.id, search=UND):
-                    await message.delete()
+                await delete_pm_warn_msgs(user.id)
                 message_ = UNAPPROVED_MSG.format(
                     ON=OWNER_NAME,
                     warn=wrn,
@@ -347,8 +329,7 @@ if sett == "True" or sett != "False":
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
-                async for message in ultroid.iter_messages(user.id, search=UND):
-                    await message.delete()
+                await delete_pm_warn_msgs(user.id)
                 await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
@@ -437,10 +418,7 @@ if sett == "True" or sett != "False":
                 except BaseException:
                     pass
                 await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                async for message in apprvpm.client.iter_messages(user.id, search=UND):
-                    await message.delete()
-                async for message in apprvpm.client.iter_messages(user.id, search=UNS):
-                    await message.delete()
+                await delete_pm_warn_msgs(user.id)
                 try:
                     await asst.edit_message(
                         int(udB.get("LOG_CHANNEL")),
@@ -482,7 +460,7 @@ if sett == "True" or sett != "False":
             if is_approved(aname):
                 disapprove_user(aname)
                 await e.edit(
-                    f"[{name0}](tg://user?id={replied_user.id}) `Disaproved to PM!`",
+                    f"[{name0}](tg://user?id={replied_user.id}) `Disapproved to PM!`",
                 )
                 await asyncio.sleep(5)
                 await e.delete()
@@ -512,7 +490,7 @@ if sett == "True" or sett != "False":
             name0 = str(aname.first_name)
             if is_approved(bbb.id):
                 disapprove_user(bbb.id)
-                await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disaproved to PM!`")
+                await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disapproved to PM!`")
                 await asyncio.sleep(5)
                 await e.delete()
                 try:
@@ -653,10 +631,7 @@ async def apr_in(event):
                 ],
             ],
         )
-        async for message in ultroid.iter_messages(uid, search=UND):
-            await message.delete()
-        async for message in ultroid.iter_messages(uid, search=UNS):
-            await message.delete()
+        await delete_pm_warn_msgs(uid)
         await event.answer("Approved.")
     else:
         await event.edit(
@@ -755,10 +730,10 @@ async def ytfuxist(e):
     try:
         await e.answer("Deleted.")
         await e.delete()
-    except BaseException:
+    except:
         try:
             await ultroid.delete_messages(e.chat_id, e.id)
-        except BaseException:
+        except:
             pass
 
 
@@ -852,3 +827,12 @@ def update_pm(userid, message, warns_given):
         U_WARNS.update({userid: warns_given})
     except KeyError as e:
         print(e)
+
+
+async def delete_pm_warn_msgs(chat: int):
+    async for i in ultroid.iter_messages(chat, from_user=OWNER_ID):
+        tx = i.text
+        if tx.startswith(
+            ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
+        ):
+            await i.delete()

@@ -746,10 +746,44 @@ async def alvcs(event):
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
+            [
+                Button.inline("PMPermit Type", data="pmtype")
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
         ],
     )
 
+@callback("pmtype")
+@owner
+async def pmtyp(e):
+    await event.edit(
+        "Select the type of PMPermit needed.",
+        buttons=[
+            [Button.inline("Inline", data="inpm_in")],
+            [Button.inline("Normal", data="inpm_no")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        ],
+    )
+
+@callback("inpm_in")
+@owner
+async def inl_on(event):
+    var = "INLINE_PM"
+    await setit(event, var, "True")
+    await event.edit(
+        f"Done!! PMPermit type has been set to inline!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+    )
+
+@callback("inpm_no")
+@owner
+async def inl_on(event):
+    var = "INLINE_PM"
+    await setit(event, var, "False")
+    await event.edit(
+        f"Done!! PMPermit type has been set to normal!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+    )
 
 @callback("pmtxt")
 @owner
