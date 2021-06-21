@@ -39,6 +39,7 @@ def add_to_queue(chat_id, song):
             play_at = 1
         QUEUE[int(chat_id)] = {play_at: song}
 
+
 def get_from_queue(chat_id):
     if int(chat_id) in CallsClient.active_calls.keys():
         try:
@@ -78,19 +79,21 @@ async def startup(_, message):
         dl = await reply.download()
         song = f"VCSONG_{chat}_{TS}.raw"
         await bash(
-                f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
-            )
+            f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
+        )
         if reply.audio and reply.audio.thumbs:
             dll = reply.audio.thumbs[0].file_id
             th = await asst.download_media(dll)
             try:
-                ml = CallsClient.active_calls[chat]
+                CallsClient.active_calls[chat]
             except IndexError:
                 msg = await asst.send_photo(chat, th, caption="`Playing...`")
             os.remove(th)
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song)
-        return await message.reply_text("Added to queue at #{list(QUEUE[chat].keys())[0]}")
+        return await message.reply_text(
+            "Added to queue at #{list(QUEUE[chat].keys())[0]}"
+        )
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
     )
