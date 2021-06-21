@@ -9,7 +9,7 @@ from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
-
+from datetime import datetime as dt
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
 logging.basicConfig(level=logging.INFO)
@@ -29,8 +29,8 @@ A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
 
-async def download(query, chat):
-    song = f"VCSONG_{chat}.raw"
+async def download(query, chat, ts):
+    song = f"VCSONG_{chat}_{ts}.raw"
     if "youtube.com" in query:
         await bash(
             f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" {query}"""
@@ -47,9 +47,10 @@ async def startup(_, message):
     chat = message.chat.id
     msg = await message.reply_text("`Processing...`")
     song = message.text.split(" ", maxsplit=1)
+    TS = dt.now().strftime("%H:%M%:%S")
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
-        song = await download(song, message.chat.id)
+        song = await download(song, message.chat.id, TS)
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     elif not message.reply_to_message and len(song) == 1:
@@ -57,7 +58,7 @@ async def startup(_, message):
     else:
         dl = await message.reply_to_message.download()
         print(dl)
-        song = f"VCSONG_{chat}.raw"
+        song = f"VCSONG_{chat}_{TS}.raw"
         print(
             await bash(
                 f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
@@ -92,7 +93,8 @@ async def handler(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
-    file = f"VCRADIO_{message.chat.id}.raw"
+    TS = dt.now().strftime("%H:%M%:%S")
+    file = f"VCRADIO_{message.chat.id}_{TS}.raw"
     await bash(
         f"ffmpeg -y -i {radio[1]} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
     )
@@ -115,11 +117,7 @@ async def chesendvolume(_, message):
         mk = fchat.full_chat.call
         Vl = await Client.send(
             functions.phone.GetGroupParticipants(
-                call=mk,
-                ids=[await Client.resolve_peer(me.id)],
-                sources=[],
-                offset="",
-                limit=0,
+                call=mk, ids=[await Client.resolve_peer(me.id)], sources=[], offset="", limit=0
             )
         )
         try:
