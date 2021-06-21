@@ -31,6 +31,15 @@ A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
 
+def add_to_cache(chat_id, song):
+    if int(chat_id) in CallsClient.active_calls.keys():
+        try:
+            length = len(QUEUE[int(chat_id)]) + 1
+        except KeyError:
+            length = 1
+        QUEUE[int(chat_id)] = {length: song}
+
+
 async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     if "youtube.com" in query:
