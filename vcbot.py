@@ -106,6 +106,7 @@ async def radio(_, message):
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
+        me = await Client.get_me()
         fchat = await Client.send(
             functions.channels.GetFullChannel(
                 channel=await Client.resolve_peer(message.chat.id)
@@ -114,7 +115,7 @@ async def chesendvolume(_, message):
         mk = fchat.full_chat.call
         Vl = await Client.send(
             functions.phone.GetGroupParticipants(
-                call=mk, ids=["me"], sources=[], offset="", limit=0
+                call=mk, ids=[await Client.resolve_peer(me.id)], sources=[], offset="", limit=0
             )
         )
         try:
