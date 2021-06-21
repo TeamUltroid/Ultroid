@@ -113,7 +113,7 @@ async def handler(chat_id: int):
         try:
             pos = len(QUEUE[int(chat_id)]) + 1
             del QUEUE[chat_id][pos]
-        except BaseException as ap: 
+        except BaseException as ap:
             print(ap)
     CallsClient.leave_group_call(chat_id)
 
