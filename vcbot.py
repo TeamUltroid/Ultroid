@@ -84,6 +84,9 @@ async def startup(_, message):
         if reply.audio and reply.audio.thumbs:
             dll = reply.audio.thumbs[0].file_id
             th = await asst.download_media(dll)
+            if chat in CallsClient.active_calls.keys():
+                add_to_queue(chat, song)
+                return await asst.send_text(chat, "Added to queue at #{list(QUEUE[chat].keys())[0]}")
             msg = await asst.send_photo(chat, th, caption="`Playing...`")
             os.remove(th)
     await asst.send_message(
@@ -98,6 +101,8 @@ async def startup(_, message):
 
 @CallsClient.on_stream_end()
 async def handler(chat_id: int):
+    if chat_id in QUEUE.keys():
+        CallsClient.change_stream(chat_id, get_from_queue(chat_id))
     CallsClient.leave_group_call(chat_id)
 
 
