@@ -87,7 +87,7 @@ async def startup(_, message):
             th = await asst.download_media(dll)
             try:
                 CallsClient.active_calls[chat]
-            except IndexError:
+            except KeyError:
                 await msg.delete()
                 msg = await asst.send_photo(chat, th, caption="`Playing...`")
             os.remove(th)
