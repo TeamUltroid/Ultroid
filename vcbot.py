@@ -1,5 +1,6 @@
 import logging
 import os
+import asyncio
 from datetime import datetime as dt
 from multiprocessing import Process
 
@@ -171,7 +172,7 @@ async def radio(_, message):
         .overwrite_output()
         .run_async()
     )
-    asyncio.sleep(2)
+    await asyncio.sleep(2)
     CallsClient.join_group_call(
         message.chat.id, file, stream_type=StreamType().live_stream
     )
