@@ -746,12 +746,11 @@ async def alvcs(event):
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
-            [
-                Button.inline("PMPermit Type", data="pmtype")
-            ],
+            [Button.inline("PMPermit Type", data="pmtype")],
             [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
         ],
     )
+
 
 @callback("pmtype")
 @owner
@@ -765,6 +764,7 @@ async def pmtyp(e):
         ],
     )
 
+
 @callback("inpm_in")
 @owner
 async def inl_on(event):
@@ -775,6 +775,7 @@ async def inl_on(event):
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
     )
 
+
 @callback("inpm_no")
 @owner
 async def inl_on(event):
@@ -784,6 +785,7 @@ async def inl_on(event):
         f"Done!! PMPermit type has been set to normal!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
     )
+
 
 @callback("pmtxt")
 @owner

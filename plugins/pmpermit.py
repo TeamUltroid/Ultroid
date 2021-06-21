@@ -730,10 +730,10 @@ async def ytfuxist(e):
     try:
         await e.answer("Deleted.")
         await e.delete()
-    except:
+    except BaseException:
         try:
             await ultroid.delete_messages(e.chat_id, e.id)
-        except:
+        except BaseException:
             pass
 
 
