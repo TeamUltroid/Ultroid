@@ -5,7 +5,7 @@ from pyrogram import Client, filters, idle
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyLogs, PyTgCalls
-from pyUltroid import udB
+from pyUltroid import udB, ultroid_bot
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
@@ -24,8 +24,9 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 CACHE = {}
-A_AUTH = [udB.get("OWNER_ID"), *sudoers()]
-AUTH = list(int(a) for a in A_AUTH)
+_vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
+A_AUTH = [ultroid_bot.uid, *sudoers(), *_vc_sudos]
+AUTH = [int(x) for x in A_AUTH]
 
 
 async def download(query, chat):
