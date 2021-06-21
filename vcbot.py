@@ -87,10 +87,14 @@ async def handler(_, message):
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
-        fchat = await Client.send(functions.channels.GetFullChannel(channel=message.chat.id))
+        fchat = await Client.send(
+            functions.channels.GetFullChannel(channel=message.chat.id)
+        )
         mk = fchat.full_chat.call
         Vl = await Client.send(
-            functions.phone.GetGroupParticipants(call=mk, ids=["me"], sources=[], offset="", limit=0)
+            functions.phone.GetGroupParticipants(
+                call=mk, ids=["me"], sources=[], offset="", limit=0
+            )
         )
         try:
             CML = Vl.participants[0].volume
