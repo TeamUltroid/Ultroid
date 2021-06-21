@@ -92,7 +92,7 @@ async def startup(_, message):
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song)
         return await message.reply_text(
-            "Added to queue at #{list(QUEUE[chat].keys())[0]}"
+            "Added to queue at #{list(QUEUE[chat].keys())[-1]}"
         )
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
