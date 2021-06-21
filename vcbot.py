@@ -81,11 +81,11 @@ async def startup(_, message):
         await bash(
                 f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
             )
-    if reply.audio and reply.audio.thumbs:
-        dll = reply.audio.thumbs[0].file_id
-        th = await asst.download_media(dll)
-        msg = await asst.send_photo(chat, th, caption="`Playing...`")
-        os.remove(th)
+        if reply.audio and reply.audio.thumbs:
+            dll = reply.audio.thumbs[0].file_id
+            th = await asst.download_media(dll)
+            msg = await asst.send_photo(chat, th, caption="`Playing...`")
+            os.remove(th)
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
     )
