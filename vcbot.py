@@ -104,6 +104,10 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
+    gsn = get_from_queue(chat)
+    while gsn:
+        CallsClient.change_stream(chat, gsn)
+    
 
 
 @CallsClient.on_stream_end()
@@ -125,7 +129,7 @@ async def handler(_, message):
 
 
 @asst.on_message(filters.command("listvc") & filters.user(AUTH))
-async def handler(_, message):
+async def handler(_, message): 
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
@@ -180,6 +184,8 @@ async def chesendvolume(_, message):
 
 @asst.on_callback_query(filters.regex("^vc(.*)"))
 async def stopvc(_, query):
+    if query.from_user.id not in AUTH:
+        return await query.answer("You are Not Authorised to Use Me!", show_alert=True)
     match = query.matches[0].group(1).split("_")
     chat = int(match[1])
     if match[0] == "r":
