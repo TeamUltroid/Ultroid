@@ -107,9 +107,13 @@ async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
         fchat = await Client.send(
-            functions.channels.GetFullChannel(channel=types.InputChannelFromMessage(peer=types.InputPeerInput(),
-                                                                                    msg_id=message.message_id,
-                                                                                    channel_id=message.chat.id))
+            functions.channels.GetFullChannel(
+                channel=types.InputChannelFromMessage(
+                    peer=types.InputPeerInput(),
+                    msg_id=message.message_id,
+                    channel_id=message.chat.id,
+                )
+            )
         )
         mk = fchat.full_chat.call
         Vl = await Client.send(
