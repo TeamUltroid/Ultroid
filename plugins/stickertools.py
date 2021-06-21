@@ -181,7 +181,7 @@ async def pack_kangish(_):
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
                     title=_packname,
-                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                     stickers=stiks,
                 )
             )
@@ -194,7 +194,7 @@ async def pack_kangish(_):
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
                     title=_packname,
-                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                     stickers=stiks,
                 )
             )
