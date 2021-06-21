@@ -48,6 +48,11 @@ def get_from_queue(chat_id):
             raise KeyError
         return play_this
 
+async def eor(message, text, *args, **kwargs):
+    if message.outgoing:
+        return await message.edit_text(text, *args, **kwargs)
+    return await message.reply_text(text, *args, **kwargs)
+
 
 async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
@@ -64,7 +69,7 @@ async def download(query, chat, ts):
 
 @asst.on_message(filters.command("play") & filters.user(AUTH))
 async def startup(_, message):
-    msg = await message.reply_text("`Processing..`")
+    msg = await eor(message, "`Processing..`")
     chat = message.chat.id
     song = message.text.split(" ", maxsplit=1)
     TS = dt.now().strftime("%H:%M:%S")
@@ -128,7 +133,7 @@ async def streamhandler(chat_id: int):
 
 @asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
 async def handler(_, message):
-    await message.reply_text("`Left...`")
+    await eor(message, "`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
 
 
@@ -190,15 +195,15 @@ async def chesendvolume(_, message):
             CML = Vl.participants[0].volume
         except IndexError:
             CML = None or 0
-        return await message.reply_text(f"**Current Volume :** {CML}%")
+        return await eor(message, f"**Current Volume :** {CML}%")
     try:
         if int(mk[1]) not in range(1, 101):
-            return await message.reply_text("Volume should be in between 1-100")
+            return await eor(message, "Volume should be in between 1-100")
         CallsClient.change_volume_call(message.chat.id, int(mk[1]))
         msg = f"Volume Changed to {mk[1]}"
     except Exception as msg:
         msg = str(msg)
-    await message.reply_text(msg)
+    await eor(message, msg)
 
 
 @Client.on_message(filters.me & filters.command("volume", "."))
