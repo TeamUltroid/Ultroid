@@ -1,4 +1,4 @@
-import logging
+import logging, os
 from datetime import datetime as dt
 from multiprocessing import Process
 
@@ -73,6 +73,7 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_text("Started Play...", reply_markup=reply_markup)
+    os.remove(song)
 
 
 @CallsClient.on_stream_end()
