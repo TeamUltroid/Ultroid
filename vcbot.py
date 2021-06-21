@@ -88,6 +88,8 @@ async def chesendvolume(_, message):
     if not len(mk) > 1:
         return await message.reply_text("Give Some Input to Change the Volume...")
     try:
+        if int(mk[1]) not in range(1,101):
+            return await message.reply_text('Volume should be in between 1-100')
         CallsClient.change_volume_call(message.chat.id, int(mk[1]))
         msg = f"Volume Changed to {mk[1]}"
     except Exception as msg:
