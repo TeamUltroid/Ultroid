@@ -133,7 +133,7 @@ async def streamhandler(chat_id: int):
 
 
 @asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
-async def handler(_, message):
+async def leavehandler(_, message):
     await eor(message, "`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
 
@@ -144,7 +144,7 @@ async def lhandler(_, message):
 
 
 @asst.on_message(filters.command("listvc") & filters.user(AUTH))
-async def handler(_, message):
+async def list_handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
