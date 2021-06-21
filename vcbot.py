@@ -56,25 +56,28 @@ async def download(query, chat, ts):
 @asst.on_message(filters.command("play") & filters.user(AUTH))
 async def startup(_, message):
     chat = message.chat.id
-    msg = await message.reply_text("`Processing...`")
     song = message.text.split(" ", maxsplit=1)
     TS = dt.now().strftime("%H:%M:%S")
-    if not message.reply_to_message and len(song) > 1:
+    reply = message.reply_to_message
+    if not reply and len(song) > 1:
         song = song[1]
         song = await download(song, message.chat.id, TS)
-    elif not message.reply_to_message.audio:
+        msg = await message.reply_text("`Processing...`")
+    elif not (reply.audio or reply.voice):
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
-    elif not message.reply_to_message and len(song) == 1:
+    elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
     else:
-        dl = await message.reply_to_message.download()
-        print(dl)
+        dl = await reply.download()
         song = f"VCSONG_{chat}_{TS}.raw"
-        print(
-            await bash(
+        await bash(
                 f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
             )
-        )
+    if reply.audio and reply.audio.thumbs:
+        dll = reply.audio.thumbs[0].file_id
+        th = await asst.download_media(dll)
+        msg = await asst.send_photo(chat, th, caption="`Playing...`")
+        os.remove(th)
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
     )
@@ -82,7 +85,6 @@ async def startup(_, message):
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
-    await msg.edit_text("Started Play...", reply_markup=reply_markup)
     os.remove(song)
 
 
