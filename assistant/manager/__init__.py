@@ -6,3 +6,4 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from plugins import *
+asst = ultroid_bot.asst
