@@ -48,7 +48,7 @@ async def startup(_, message):
     chat = message.chat.id
     msg = await message.reply_text("`Processing...`")
     song = message.text.split(" ", maxsplit=1)
-    TS = dt.now().strftime("%H:%M%:%S")
+    TS = dt.now().strftime("%H:%M:%S")
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
         song = await download(song, message.chat.id, TS)
@@ -94,7 +94,7 @@ async def handler(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
-    TS = dt.now().strftime("%H:%M%:%S")
+    TS = dt.now().strftime("%H:%M:%S")
     file = f"VCRADIO_{message.chat.id}_{TS}.raw"
     await bash(
         f"ffmpeg -y -i {radio[1]} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
