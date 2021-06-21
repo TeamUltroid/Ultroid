@@ -48,6 +48,7 @@ def get_from_queue(chat_id):
             raise KeyError
         return play_this
 
+
 async def eor(message, text, *args, **kwargs):
     if message.outgoing:
         return await message.edit_text(text, *args, **kwargs)
