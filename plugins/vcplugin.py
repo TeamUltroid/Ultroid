@@ -76,7 +76,7 @@ async def _(e):
 )
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("python vcbot.py")
+    er, out = await bash("python3 vcbot.py")
     LOGS.info(er)
     LOGS.info(out)
     if er:
@@ -84,7 +84,7 @@ async def _(e):
         if len(msg) > 4096:
             with open("vc-logs.txt", "w") as f:
                 f.write(msg.replace("`", ""))
-            await e.reply(file="vc-error.txt")
+            await e.reply(file="vc-logs.txt")
             await zz.delete()
             remove("vc-error.txt")
             return
