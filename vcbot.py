@@ -92,7 +92,7 @@ async def startup(_, message):
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song)
         return await message.reply_text(
-            "Added to queue at #{list(QUEUE[chat].keys())[-1]}"
+            f"Added to queue at #{list(QUEUE[chat].keys())[-1]}"
         )
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
@@ -108,6 +108,11 @@ async def startup(_, message):
 async def handler(chat_id: int):
     if chat_id in QUEUE.keys():
         CallsClient.change_stream(chat_id, get_from_queue(chat_id))
+        try:
+            pos = len(QUEUE[int(chat_id)]) + 1
+            del QUEUE[chat_id][pos]
+        except:
+            pass
     CallsClient.leave_group_call(chat_id)
 
 
