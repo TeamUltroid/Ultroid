@@ -115,7 +115,11 @@ async def chesendvolume(_, message):
         mk = fchat.full_chat.call
         Vl = await Client.send(
             functions.phone.GetGroupParticipants(
-                call=mk, ids=[await Client.resolve_peer(me.id)], sources=[], offset="", limit=0
+                call=mk,
+                ids=[await Client.resolve_peer(me.id)],
+                sources=[],
+                offset="",
+                limit=0,
             )
         )
         try:
