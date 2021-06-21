@@ -107,7 +107,6 @@ async def startup(_, message):
     gsn = get_from_queue(chat)
     while gsn:
         CallsClient.change_stream(chat, gsn)
-    
 
 
 @CallsClient.on_stream_end()
@@ -129,7 +128,7 @@ async def handler(_, message):
 
 
 @asst.on_message(filters.command("listvc") & filters.user(AUTH))
-async def handler(_, message): 
+async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
