@@ -2,7 +2,7 @@ import logging
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
-from pyrogram.raw import functions, types
+from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
