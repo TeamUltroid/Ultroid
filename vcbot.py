@@ -49,7 +49,8 @@ async def startup(_, message):
     song = message.text.split(" ", maxsplit=1)
     if not message.reply_to_message and len(song) > 1:
         song = song[1]
-        song = await download(song, message.chat.id)
+        if not ".raw" in song:
+            song = await download(song, message.chat.id)
     elif not message.reply_to_message.audio:
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     elif not message.reply_to_message and len(song) == 1:
