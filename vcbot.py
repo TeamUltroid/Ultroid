@@ -72,10 +72,10 @@ async def startup(_, message):
     if not reply and len(song) > 1:
         song = song[1]
         song = await download(song, message.chat.id, TS)
-    elif not (reply.audio or reply.voice):
-        return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
+    elif not (reply.audio or reply.voice):
+        return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
         dl = await reply.download()
         song = f"VCSONG_{chat}_{TS}.raw"
@@ -113,8 +113,8 @@ async def handler(chat_id: int):
         try:
             pos = len(QUEUE[int(chat_id)]) + 1
             del QUEUE[chat_id][pos]
-        except BaseException:
-            pass
+        except BaseException as ap: 
+            print(ap)
     CallsClient.leave_group_call(chat_id)
 
 
