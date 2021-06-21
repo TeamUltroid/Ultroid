@@ -104,9 +104,9 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-    #gsn = get_from_queue(chat)
-    #while gsn:
-     #   CallsClient.change_stream(chat, gsn)
+    # gsn = get_from_queue(chat)
+    # while gsn:
+    #   CallsClient.change_stream(chat, gsn)
 
 
 @CallsClient.on_stream_end()
