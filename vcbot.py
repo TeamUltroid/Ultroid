@@ -63,7 +63,7 @@ async def download(query, chat, ts):
 
 
 @asst.on_message(filters.command("play") & filters.user(AUTH))
-@Client.on_message(filters.me & filters.command("play","."))
+@Client.on_message(filters.me & filters.command("play", "."))
 async def startup(_, message):
     msg = await message.reply_text("`Processing..`")
     chat = message.chat.id
@@ -123,20 +123,20 @@ async def handler(chat_id: int):
 
 
 @asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
-@Client.on_message(filters.me & filters.command("leavevc","."))
+@Client.on_message(filters.me & filters.command("leavevc", "."))
 async def handler(_, message):
     await message.reply_text("`Left...`")
     await CallsClient.leave_group_call(message.chat.id)
 
 
 @asst.on_message(filters.command("listvc") & filters.user(AUTH))
-@Client.on_message(filters.me & filters.command("listvc","."))
+@Client.on_message(filters.me & filters.command("listvc", "."))
 async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
-@Client.on_message(filters.me & filters.command("radio","."))
+@Client.on_message(filters.me & filters.command("radio", "."))
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     TS = dt.now().strftime("%H:%M:%S")
@@ -151,7 +151,7 @@ async def radio(_, message):
 
 
 @asst.on_message(filters.command("volume") & filters.user(AUTH))
-@Client.on_message(filters.me & filters.command("volume","."))
+@Client.on_message(filters.me & filters.command("volume", "."))
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
