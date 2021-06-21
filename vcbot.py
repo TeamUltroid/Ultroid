@@ -7,7 +7,7 @@ import ffmpeg
 from pyrogram import Client, filters, idle
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pytgcalls import PyLogs, PyTgCalls
+from pytgcalls import PyLogs, PyTgCalls, StreamType
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
