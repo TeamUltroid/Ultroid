@@ -31,9 +31,14 @@ AUTH = [int(x) for x in A_AUTH]
 
 async def download(query, chat):
     song = f"VCSONG_{chat}.raw"
-    s = await bash(
-        f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" ytsearch:'{query}'"""
-    )
+    if "youtube.com" in query:
+        await bash(
+            f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" {query}"""
+        )
+    else:
+        await bash(
+            f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" ytsearch:'{query}'"""
+        )
     return song
 
 
