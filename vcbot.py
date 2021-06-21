@@ -104,15 +104,15 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-    gsn = get_from_queue(chat)
-    while gsn:
-        CallsClient.change_stream(chat, gsn)
+    #gsn = get_from_queue(chat)
+    #while gsn:
+     #   CallsClient.change_stream(chat, gsn)
 
 
 @CallsClient.on_stream_end()
 async def handler(chat_id: int):
     if chat_id in QUEUE.keys():
-        CallsClient.change_stream(chat_id, get_from_queue(chat_id))
+        CallsClient.join_group_call(chat_id, get_from_queue(chat_id))
         try:
             pos = len(QUEUE[int(chat_id)]) + 1
             del QUEUE[chat_id][pos]
