@@ -1,5 +1,6 @@
 import logging
 import os
+import ffmpeg
 from datetime import datetime as dt
 from multiprocessing import Process
 
