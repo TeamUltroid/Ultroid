@@ -92,7 +92,7 @@ async def handler(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
-    file = f"VCRADIO_{message.chat.io}.raw"
+    file = f"VCRADIO_{message.chat.id}.raw"
     await bash(
         f"ffmpeg -y -i {radio[1]} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
     )
@@ -108,11 +108,7 @@ async def chesendvolume(_, message):
     if not len(mk) > 1:
         fchat = await Client.send(
             functions.channels.GetFullChannel(
-                channel=types.InputChannelFromMessage(
-                    peer=types.InputPeerInput(),
-                    msg_id=message.message_id,
-                    channel_id=message.chat.id,
-                )
+                channel=await Client.resolve_peer(message.chat.id)
             )
         )
         mk = fchat.full_chat.call
