@@ -158,11 +158,21 @@ async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     TS = dt.now().strftime("%H:%M:%S")
     file = f"VCRADIO_{message.chat.id}_{TS}.raw"
-    process = (ffmpeg.input("https://meethimirchihdl-lh.akamaihd.net/i/MeethiMirchiHDLive_1_1@320572/master.m3u8")
-                .output(file, format="s16le", acodec="pcm_s16le", ac=1, ar="48000", loglevel="error",)
-                .overwrite_output()
-                .run_async()
-              )
+    process = (
+        ffmpeg.input(
+            "https://meethimirchihdl-lh.akamaihd.net/i/MeethiMirchiHDLive_1_1@320572/master.m3u8"
+        )
+        .output(
+            file,
+            format="s16le",
+            acodec="pcm_s16le",
+            ac=1,
+            ar="48000",
+            loglevel="error",
+        )
+        .overwrite_output()
+        .run_async()
+    )
     CallsClient.join_group_call(
         message.chat.id, file, stream_type=StreamType().live_stream
     )
