@@ -8,6 +8,7 @@ from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
+from pyrogram.raw import functions
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -86,7 +87,14 @@ async def handler(_, message):
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
-        return await message.reply_text("Give Some Input to Change the Volume...")
+        fchat = await Client.send(functions.channels.GetFullChannel(message.chat.id))
+        mk = fchat.full_chat.call
+        Vl = await Client.send(functions.phone.GetGroupParticipants(mk, ["me"],[],"",0))
+        try:
+            CML = Vl.participants[0].volume
+        except IndexError:
+            CML = None or 0
+        return await message.reply_text(f"**Current Volume :** {CML}%")
     try:
         if int(mk[1]) not in range(1, 101):
             return await message.reply_text("Volume should be in between 1-100")
