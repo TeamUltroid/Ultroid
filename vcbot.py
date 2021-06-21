@@ -157,11 +157,10 @@ async def llhnf(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
-    TS = dt.now().strftime("%H:%M:%S")
-    file = f"VCRADIO_{message.chat.id}_{TS}.raw"
+    file = f"VCRADIO_{message.chat.id}.raw"
     process = (
         ffmpeg.input(
-            "https://meethimirchihdl-lh.akamaihd.net/i/MeethiMirchiHDLive_1_1@320572/master.m3u8"
+            radio[1]
         )
         .output(
             file,
@@ -174,10 +173,11 @@ async def radio(_, message):
         .overwrite_output()
         .run_async()
     )
+    asyncio.sleep(2)
     CallsClient.join_group_call(
         message.chat.id, file, stream_type=StreamType().live_stream
     )
-    await message.reply_text("playing Radio")
+    await message.reply_text("Playing Radio")
 
 
 @Client.on_message(filters.me & filters.command("radio", "."))
