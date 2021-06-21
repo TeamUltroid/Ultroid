@@ -146,10 +146,10 @@ async def stopvc(_, query):
     chat = int(match[1])
     if match[0] == "r":
         CallsClient.resume_stream(chat)
-        BT = "Resume"
+        BT = "Pause"
     else:
         CallsClient.pause_stream(chat)
-        BT = "Pause"
+        BT = "Resume"
     await query.answer("Done", show_alert=True)
     dt = BT[0].lower()
     await query.edit_message_reply_markup(
