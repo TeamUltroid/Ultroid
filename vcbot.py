@@ -2,13 +2,13 @@ import logging
 from multiprocessing import Process
 
 from pyrogram import Client, filters, idle
+from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyLogs, PyTgCalls
 from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
-from pyrogram.raw import functions
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
@@ -89,7 +89,9 @@ async def chesendvolume(_, message):
     if not len(mk) > 1:
         fchat = await Client.send(functions.channels.GetFullChannel(message.chat.id))
         mk = fchat.full_chat.call
-        Vl = await Client.send(functions.phone.GetGroupParticipants(mk, ["me"],[],"",0))
+        Vl = await Client.send(
+            functions.phone.GetGroupParticipants(mk, ["me"], [], "", 0)
+        )
         try:
             CML = Vl.participants[0].volume
         except IndexError:
