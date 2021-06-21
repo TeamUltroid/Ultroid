@@ -25,19 +25,27 @@ Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
 
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
-CACHE = {}
+QUEUE = {}
 _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
 A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
 
-def add_to_cache(chat_id, song):
+def add_to_queue(chat_id, song):
     if int(chat_id) in CallsClient.active_calls.keys():
         try:
-            length = len(QUEUE[int(chat_id)]) + 1
+            play_at = len(QUEUE[int(chat_id)]) + 1
         except KeyError:
-            length = 1
-        QUEUE[int(chat_id)] = {length: song}
+            play_at = 1
+        QUEUE[int(chat_id)] = {play_at: song}
+
+def get_from_queue(chat_id):
+    if int(chat_id) in CallsClient.active_calls.keys():
+        try:
+            play_this = list(QUEUE[int(chat_id)].keys())[0]
+        except KeyError:
+            raise KeyError
+        return play_this
 
 
 async def download(query, chat, ts):
