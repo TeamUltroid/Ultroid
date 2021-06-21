@@ -88,12 +88,18 @@ async def handler(_, message):
 async def handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
+
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
     file = f"VCRADIO_{message.chat.io}.raw"
-    await bash(f"ffmpeg -y -i {radio} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}")
-    CallsClient.join_group_call(message.chat.id, file, stream_type=StreamType().live_stream)
+    await bash(
+        f"ffmpeg -y -i {radio} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
+    )
+    CallsClient.join_group_call(
+        message.chat.id, file, stream_type=StreamType().live_stream
+    )
     await message.reply("playing Radio")
+
 
 @asst.on_message(filters.command("volume") & filters.user(AUTH))
 async def chesendvolume(_, message):
