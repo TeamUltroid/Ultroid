@@ -102,7 +102,7 @@ async def radio(_, message):
     CallsClient.join_group_call(
         message.chat.id, file, stream_type=StreamType().live_stream
     )
-    await message.reply("playing Radio")
+    await message.reply_text("playing Radio")
 
 
 @asst.on_message(filters.command("volume") & filters.user(AUTH))
