@@ -5,7 +5,7 @@ from pyrogram import Client, filters, idle
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyLogs, PyTgCalls
-from pyUltroid import udB, ultroid_bot
+from pyUltroid import udB
 from pyUltroid.dB.database import Var
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
@@ -25,7 +25,7 @@ CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 CACHE = {}
 _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
-A_AUTH = [ultroid_bot.uid, *sudoers(), *_vc_sudos]
+A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
 
