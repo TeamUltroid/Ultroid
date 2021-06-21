@@ -6,4 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from plugins import *
+from pyUltroid.misc._assistant import ultmanager
+
 asst = ultroid_bot.asst
