@@ -64,6 +64,7 @@ async def download(query, chat, ts):
 
 @asst.on_message(filters.command("play") & filters.user(AUTH))
 async def startup(_, message):
+    msg = await message.reply_text("`Processing..`")
     chat = message.chat.id
     song = message.text.split(" ", maxsplit=1)
     TS = dt.now().strftime("%H:%M:%S")
@@ -87,6 +88,7 @@ async def startup(_, message):
             try:
                 CallsClient.active_calls[chat]
             except IndexError:
+                await msg.delete()
                 msg = await asst.send_photo(chat, th, caption="`Playing...`")
             os.remove(th)
     if chat in CallsClient.active_calls.keys():
