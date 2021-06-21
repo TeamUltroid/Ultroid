@@ -91,9 +91,10 @@ async def handler(_, message):
 
 @asst.on_message(filters.command("radio") & filters.user(AUTH))
 async def radio(_, message):
+    radio = message.text.split(" ", maxsplit=1)
     file = f"VCRADIO_{message.chat.io}.raw"
     await bash(
-        f"ffmpeg -y -i {radio} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
+        f"ffmpeg -y -i {radio[1]} -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {file}"
     )
     CallsClient.join_group_call(
         message.chat.id, file, stream_type=StreamType().live_stream
