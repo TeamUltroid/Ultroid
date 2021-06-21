@@ -159,9 +159,7 @@ async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     file = f"VCRADIO_{message.chat.id}.raw"
     process = (
-        ffmpeg.input(
-            radio[1]
-        )
+        ffmpeg.input(radio[1])
         .output(
             file,
             format="s16le",
