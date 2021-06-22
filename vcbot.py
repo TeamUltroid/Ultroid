@@ -137,7 +137,7 @@ async def streamhandler(chat_id: int):
 @asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
 async def leavehandler(_, message):
     await eor(message, "`Left...`")
-    await CallsClient.leave_group_call(message.chat.id)
+    CallsClient.leave_group_call(message.chat.id)
 
 
 @Client.on_message(filters.me & filters.command("leavevc", "."))
