@@ -161,7 +161,7 @@ async def radio(_, message):
     file = f"VCRADIO_{message.chat.id}.raw"
     if re.search("youtube|youtu.be"):
         is_live_vid = await bash(
-            'youtube-dl -j "https://youtu.be/zcrUCvBD16k" | jq ".is_live"'
+            f'youtube-dl -j "{radio[1]}" | jq ".is_live"'
         )
         if is_live_vid == "true":
             the_input = f'"$(youtube-dl -x -g "{radio[1]}")"'
