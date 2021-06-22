@@ -25,7 +25,7 @@ asst = Client(
     "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
 )
 Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
-
+HNDLR = udB.get("HNDLR")
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 
 QUEUE = {}
@@ -71,7 +71,7 @@ async def download(query, chat, ts):
     return song
 
 
-@asst.on_message(filters.command("play") & filters.user(AUTH))
+@asst.on_message(filters.command("play") & filters.user(AUTH) & ~filters.edited)
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
     chat = message.chat.id
@@ -118,7 +118,7 @@ async def startup(_, message):
     #   CallsClient.change_stream(chat, gsn)
 
 
-@Client.on_message(filters.me & filters.command("play", "."))
+@Client.on_message(filters.me & filters.command("play", HNDLR) & ~filters.edited)
 async def cstartup(_, message):
     await startup(_, message)
 
@@ -135,28 +135,28 @@ async def streamhandler(chat_id: int):
     CallsClient.leave_group_call(chat_id)
 
 
-@asst.on_message(filters.regex("leavevc") & filters.user(AUTH))
+@asst.on_message(filters.regex("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
     await eor(message, "`Left...`")
     CallsClient.leave_group_call(message.chat.id)
 
 
-@Client.on_message(filters.me & filters.command("leavevc", "."))
+@Client.on_message(filters.me & filters.command("leavevc", HNDLR)  & ~filters.edited)
 async def lhandler(_, message):
     await handler(_, message)
 
 
-@asst.on_message(filters.command("listvc") & filters.user(AUTH))
+@asst.on_message(filters.command("listvc") & filters.user(AUTH)  & ~filters.edited )
 async def list_handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
 
-@Client.on_message(filters.me & filters.command("listvc", "."))
+@Client.on_message(filters.me & filters.command("listvc", HNDLR)  & ~filters.edited )
 async def llhnf(_, message):
     await message.edit_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("radio") & filters.user(AUTH))
+@asst.on_message(filters.command("radio") & filters.user(AUTH)  & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     file = f"VCRADIO_{message.chat.id}.raw"
@@ -190,12 +190,12 @@ async def radio(_, message):
     await message.reply_text("Playing Radio")
 
 
-@Client.on_message(filters.me & filters.command("radio", "."))
+@Client.on_message(filters.me & filters.command("radio", HNDLR)  & ~filters.edited)
 async def rplay(_, message):
     await radio(_, message)
 
 
-@asst.on_message(filters.command("volume") & filters.user(AUTH))
+@asst.on_message(filters.command("volume") & filters.user(AUTH)  & ~filters.edited)
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
@@ -230,7 +230,7 @@ async def chesendvolume(_, message):
     await eor(message, msg)
 
 
-@Client.on_message(filters.me & filters.command("volume", "."))
+@Client.on_message(filters.me & filters.command("volume", HNDLR)  & ~filters.edited)
 async def volplay(_, message):
     await chesendvolume(_, message)
 
