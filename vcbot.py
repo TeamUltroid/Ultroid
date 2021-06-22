@@ -25,10 +25,9 @@ asst = Client(
     "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
 )
 Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
-HNDLR = udB.get("HNDLR")
 CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
 """
-
+HNDLR = udB.get("HNDLR")
 QUEUE = {}
 _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
 A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
