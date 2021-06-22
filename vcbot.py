@@ -71,7 +71,9 @@ async def download(query, chat, ts):
     return song
 
 
-@asst.on_message(filters.command(["play", "cplay"]) & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(
+    filters.command(["play", "cplay"]) & filters.user(AUTH) & ~filters.edited
+)
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
     song = message.text.split(" ", maxsplit=1)
@@ -118,7 +120,6 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-
 
 
 @Client.on_message(filters.me & filters.command("play", HNDLR) & ~filters.edited)
