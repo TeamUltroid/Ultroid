@@ -80,9 +80,11 @@ async def download(query, chat, ts):
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
     song = message.text.split(" ", maxsplit=1)
+    ChatPlay = None
     if message.text[1] != "c":
         chat = message.chat.id
     else:
+        ChatPlay = True
         try:
             song = song[1].split(" ", maxsplit=1)
         except IndexError:
@@ -119,10 +121,13 @@ async def startup(_, message):
         return await message.reply_text(
             f"Added to queue at #{list(QUEUE[chat].keys())[-1]}"
         )
+    chattitle = message.chat.title
+    if ChatPlay:
+        chattitle = (await Client.get_chat(chat)).title
     await asst.send_message(
-        LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
+        LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
     )
-    CallsClient.join_group_call(cha, song)
+    CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
