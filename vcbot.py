@@ -71,11 +71,16 @@ async def download(query, chat, ts):
     return song
 
 
-@asst.on_message(filters.command("play") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(filters.command(["play", "cplay"]) & filters.user(AUTH) & ~filters.edited)
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
-    chat = message.chat.id
     song = message.text.split(" ", maxsplit=1)
+    if message.text[1] != "c":
+        chat = message.chat.id
+    else:
+        song = song[1].split(" ", maxsplit=1)
+        chat = song[0]
+        song = song[1]
     TS = dt.now().strftime("%H:%M:%S")
     reply = message.reply_to_message
     if not reply and len(song) > 1:
@@ -98,7 +103,7 @@ async def startup(_, message):
                 CallsClient.active_calls[chat]
             except KeyError:
                 await msg.delete()
-                msg = await asst.send_photo(chat, th, caption="`Playing...`")
+                msg = await message.reply_photo(th, caption="`Playing...`")
             os.remove(th)
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song)
@@ -108,14 +113,12 @@ async def startup(_, message):
     await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {message.chat.title} [`{chat}`]"
     )
-    CallsClient.join_group_call(message.chat.id, song)
+    CallsClient.join_group_call(cha, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-    # gsn = get_from_queue(chat)
-    # while gsn:
-    #   CallsClient.change_stream(chat, gsn)
+
 
 
 @Client.on_message(filters.me & filters.command("play", HNDLR) & ~filters.edited)
