@@ -3,15 +3,15 @@ import logging
 import os
 import re
 from datetime import datetime as dt
-from multiprocessing import Process
 
 import ffmpeg
-from pyrogram import Client, filters, idle
+from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pytgcalls import PyLogs, PyTgCalls, StreamType
-from pyUltroid import udB, vcClient as Client, vcasst as asst
-from pyUltroid.dB.database import Var
+from pytgcalls import StreamType
+from pyUltroid import udB
+from pyUltroid import vcasst as asst
+from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
 
