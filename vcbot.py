@@ -17,7 +17,6 @@ from pyUltroid.misc import sudoers
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
-logging.basicConfig(level=logging.INFO)
 
 SESSION = udB.get("VC_SESSION")
 """
