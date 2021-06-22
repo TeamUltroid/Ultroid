@@ -165,7 +165,7 @@ async def radio(_, message):
         if is_live_vid == "true":
             the_input = f'"$(youtube-dl -x -g "{radio[1]}")"'
         else:
-            the_input = radio[1]
+            return await message.reply_text("Only Live Youtube Urls/m3u8 Urls supported!")
     else:
         the_input = radio[1]
     process = (
