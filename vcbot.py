@@ -60,7 +60,7 @@ async def eor(message, text, *args, **kwargs):
 
 async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
-    if "youtube.com" in query:
+    if ("youtube.com" or "youtu.be") in query:
         await bash(
             f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" {query}"""
         )
