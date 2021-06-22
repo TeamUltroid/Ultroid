@@ -1,4 +1,4 @@
-py-Ultroid==42.1b0
+py-Ultroid==42.2b0
 Shazamio
 https://github.com/New-dev0/Telethon/archive/BETTER.zip
 py-tgcalls
