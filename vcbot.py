@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
-from pyUltroid import udB, CallsClient
+from pyUltroid import CallsClient, udB
 from pyUltroid import vcasst as asst
 from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash
