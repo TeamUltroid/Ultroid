@@ -124,9 +124,7 @@ async def startup(_, message):
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = (await Client.get_chat(chat)).title
-    await asst.send_message(
-        LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
-    )
+    await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
