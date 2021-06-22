@@ -72,7 +72,10 @@ async def download(query, chat, ts):
 
 
 @asst.on_message(
-    filters.command(["play", "cplay"]) & filters.user(AUTH) & ~filters.edited & filters.group
+    filters.command(["play", "cplay"])
+    & filters.user(AUTH)
+    & ~filters.edited
+    & filters.group
 )
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
@@ -84,7 +87,9 @@ async def startup(_, message):
             song = song[1].split(" ", maxsplit=1)
         except IndexError:
             if not reply:
-                return await msg.edit_text("Please Give a Channel Username/Id to Play There or use /play to play in current Chat.")
+                return await msg.edit_text(
+                    "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
+                )
         chat = song[0]
     TS = dt.now().strftime("%H:%M:%S")
     reply = message.reply_to_message
