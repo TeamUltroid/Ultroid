@@ -93,6 +93,9 @@ async def startup(_, message):
                     "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
                 )
         chat = song[0]
+    if ChatPlay:
+        Chat = await Client.get_chat(chat)
+        chat = Chat.id
     TS = dt.now().strftime("%H:%M:%S")
     reply = message.reply_to_message
     if not reply and len(song) > 1:
@@ -123,7 +126,7 @@ async def startup(_, message):
         )
     chattitle = message.chat.title
     if ChatPlay:
-        chattitle = (await Client.get_chat(chat)).title
+        chattitle = Chat.title
     await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
