@@ -26,7 +26,7 @@ def add_to_queue(chat_id, song, song_name, from_user):
         play_at = len(QUEUE[int(chat_id)]) + 1
     except BaseException:
         play_at = 1
-    QUEUE[int(chat_id)] = {play_at: song, "title": song_name, "from_user": from_user}
+    QUEUE[int(chat_id)] = {play_at: {"song": song, "title": song_name, "from_user": from_user}}
     return QUEUE[int(chat_id)]
 
 
@@ -35,8 +35,11 @@ def get_from_queue(chat_id):
         play_this = list(QUEUE[int(chat_id)].keys())[0]
     except KeyError:
         raise KeyError
-    song = QUEUE[int(chat_id)][play_this]
-    return song
+    info = QUEUE[int(chat_id)][play_this]
+    song = info["song"]
+    title = info["title"]
+    from_user = info["from_user"]
+    return song, title, from_user
 
 
 async def eor(message, text, *args, **kwargs):
@@ -133,10 +136,11 @@ async def cstartup(_, message):
 
 
 @CallsClient.on_stream_end()
-async def streamhandler(chat_id: int):
+async def streamhandler(chat_id: int, message):
     try:
-        CallsClient.change_stream(chat_id, get_from_queue(chat_id))
-        await message.reply_text(get_from_queue(chat_id))
+        song, title, from_user = get_from_queue(chat_id)
+        CallsClient.change_stream(chat_id, song)
+        await message.reply_text(f"Playing {title}\nRequested by: {from_user}")
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
