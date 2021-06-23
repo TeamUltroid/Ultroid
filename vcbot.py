@@ -151,7 +151,7 @@ async def streamhandler(chat_id: int):
         CallsClient.leave_group_call(chat_id)
 
 
-@asst.on_message(filters.regex("leavevc") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
     await eor(message, "`Left...`")
     CallsClient.leave_group_call(message.chat.id)
