@@ -177,7 +177,7 @@ async def leavehandler(_, message):
 
 @Client.on_message(filters.me & filters.command("leavevc", HNDLR) & ~filters.edited)
 async def lhandler(_, message):
-    await handler(_, message)
+    await leavehandler(_, message)
 
 
 @asst.on_message(filters.command("listvc") & filters.user(AUTH) & ~filters.edited)
