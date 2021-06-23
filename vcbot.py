@@ -136,6 +136,7 @@ async def cstartup(_, message):
 async def streamhandler(chat_id: int):
     try:
         CallsClient.change_stream(chat_id, get_from_queue(chat_id))
+        await message.reply_text(get_from_queue(chat_id))
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
