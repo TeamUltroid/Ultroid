@@ -144,11 +144,12 @@ async def streamhandler(chat_id: int):
     if chat_id in QUEUE.keys():
         CallsClient.join_group_call(chat_id, get_from_queue(chat_id))
         try:
-            pos = len(QUEUE[int(chat_id)]) + 1
+            pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
         except BaseException as ap:
             print(ap)
-    CallsClient.leave_group_call(chat_id)
+    else:
+        CallsClient.leave_group_call(chat_id)
 
 
 @asst.on_message(filters.regex("leavevc") & filters.user(AUTH) & ~filters.edited)
