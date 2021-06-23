@@ -175,6 +175,11 @@ async def llhnf(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
+    if re.search("|", radio[1]):
+        ko = radio.split("|", maxsplit=1)
+        chat = ko[1]
+    else:
+        chat = message.chat.id
     file = f"VCRADIO_{message.chat.id}.raw"
     if re.search("youtube", radio[1]) or re.search("youtu", radio[1]):
         is_live_vid = (await bash(f'youtube-dl -j "{radio[1]}" | jq ".is_live"'))[0]
@@ -201,7 +206,7 @@ async def radio(_, message):
     )
     await asyncio.sleep(2)
     CallsClient.join_group_call(
-        message.chat.id, file, stream_type=StreamType().live_stream
+        chat, file, stream_type=StreamType().live_stream
     )
     await message.reply_text("Playing Radio")
 
