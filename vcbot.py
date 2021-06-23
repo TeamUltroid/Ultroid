@@ -33,20 +33,20 @@ AUTH = [int(x) for x in A_AUTH]
 
 
 def add_to_queue(chat_id, song):
-        try:
-            play_at = len(QUEUE[int(chat_id)]) + 1
-        except BaseException:
-            play_at = 1
-        QUEUE[int(chat_id)] = {play_at: song}
-        return QUEUE[int(chat_id)]
+    try:
+        play_at = len(QUEUE[int(chat_id)]) + 1
+    except BaseException:
+        play_at = 1
+    QUEUE[int(chat_id)] = {play_at: song}
+    return QUEUE[int(chat_id)]
 
 
 def get_from_queue(chat_id):
-        try:
-            play_this = list(QUEUE[int(chat_id)].keys())[0]
-        except KeyError:
-            raise KeyError
-        return play_this
+    try:
+        play_this = list(QUEUE[int(chat_id)].keys())[0]
+    except KeyError:
+        raise KeyError
+    return play_this
 
 
 async def eor(message, text, *args, **kwargs):
