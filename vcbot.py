@@ -177,7 +177,7 @@ async def radio(_, message):
             the_input = (await bash(f"youtube-dl -x -g {radio[1]}"))[0]
         else:
             return await message.reply_text(
-                "Only Live Youtube Urls/m3u8 Urls supported!"
+                f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
             )
     else:
         the_input = radio[1]
