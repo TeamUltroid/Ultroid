@@ -1,64 +1,6 @@
-import asyncio
-import os
-import re
-from datetime import datetime as dt
+from . import *
 
-import ffmpeg
-from pyrogram import Client, filters
-from pyrogram.raw import functions
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pytgcalls import StreamType
-from pyUltroid import HNDLR, CallsClient, udB
-from pyUltroid import vcasst as asst
-from pyUltroid import vcClient as Client
-from pyUltroid.functions.all import bash
-from pyUltroid.misc import sudoers
-
-LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-QUEUE = {}
-_vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
-A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
-AUTH = [int(x) for x in A_AUTH]
-
-
-def add_to_queue(chat_id, song, song_name, from_user):
-    try:
-        play_at = len(QUEUE[int(chat_id)]) + 1
-    except BaseException:
-        play_at = 1
-    QUEUE[int(chat_id)] = {play_at: song, "title": song_name, "from_user": from_user}
-    return QUEUE[int(chat_id)]
-
-
-def get_from_queue(chat_id):
-    try:
-        play_this = list(QUEUE[int(chat_id)].keys())[0]
-    except KeyError:
-        raise KeyError
-    song = QUEUE[int(chat_id)][play_this]
-    return song
-
-
-async def eor(message, text, *args, **kwargs):
-    if message.outgoing:
-        return await message.edit_text(text, *args, **kwargs)
-    return await message.reply_text(text, *args, **kwargs)
-
-
-async def download(query, chat, ts):
-    song = f"VCSONG_{chat}_{ts}.raw"
-    if ("youtube.com" or "youtu.be") in query:
-        await bash(
-            f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" {query}"""
-        )
-    else:
-        await bash(
-            f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" ytsearch:'{query}'"""
-        )
-    return song
-
-
-@asst.on_message(
+@vcasst.on_message(
     filters.command(["play", "cplay"])
     & filters.user(AUTH)
     & ~filters.edited
@@ -99,7 +41,7 @@ async def startup(_, message):
         )
         if reply.audio and reply.audio.thumbs:
             dll = reply.audio.thumbs[0].file_id
-            th = await asst.download_media(dll)
+            th = await vcasst.download_media(dll)
             try:
                 CallsClient.active_calls[chat]
             except KeyError:
@@ -116,7 +58,7 @@ async def startup(_, message):
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = Chat.title
-    await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
+    await vcasst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
@@ -142,7 +84,7 @@ async def streamhandler(chat_id: int):
         CallsClient.leave_group_call(chat_id)
 
 
-@asst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
+@vcasst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
     await eor(message, "`Left...`")
     CallsClient.leave_group_call(message.chat.id)
@@ -153,7 +95,7 @@ async def lhandler(_, message):
     await handler(_, message)
 
 
-@asst.on_message(filters.command("listvc") & filters.user(AUTH) & ~filters.edited)
+@vcasst.on_message(filters.command("listvc") & filters.user(AUTH) & ~filters.edited)
 async def list_handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
@@ -163,7 +105,7 @@ async def llhnf(_, message):
     await message.edit_text(f"{CallsClient.active_calls}")
 
 
-@asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
+@vcasst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     if re.search("|", radio[1]):
@@ -206,7 +148,7 @@ async def rplay(_, message):
     await radio(_, message)
 
 
-@asst.on_message(filters.command("volume") & filters.user(AUTH) & ~filters.edited)
+@vcasst.on_message(filters.command("volume") & filters.user(AUTH) & ~filters.edited)
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:
@@ -246,7 +188,7 @@ async def volplay(_, message):
     await chesendvolume(_, message)
 
 
-@asst.on_callback_query(filters.regex("^vc(.*)"))
+@vcasst.on_callback_query(filters.regex("^vc(.*)"))
 async def stopvc(_, query):
     if query.from_user.id not in AUTH:
         return await query.answer("You are Not Authorised to Use Me!", show_alert=True)
