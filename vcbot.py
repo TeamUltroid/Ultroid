@@ -89,7 +89,7 @@ async def startup(_, message):
     try:
         song_name = reply.audio.file_name
     except BaseException:
-        song_name = "" 
+        song_name = ""
     if ChatPlay:
         Chat = await Client.get_chat(chat)
         chat = Chat.id
@@ -155,7 +155,7 @@ async def streamhandler(chat_id: int, message):
 
 @asst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
-    spli = message.text.split(" ",maxpslit=1)
+    spli = message.text.split(" ", maxpslit=1)
     try:
         chat = spli[1]
     except IndexError:
