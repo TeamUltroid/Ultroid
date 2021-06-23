@@ -26,7 +26,9 @@ def add_to_queue(chat_id, song, song_name, from_user):
         play_at = len(QUEUE[int(chat_id)]) + 1
     except BaseException:
         play_at = 1
-    QUEUE[int(chat_id)] = {play_at: {"song": song, "title": song_name, "from_user": from_user}}
+    QUEUE[int(chat_id)] = {
+        play_at: {"song": song, "title": song_name, "from_user": from_user}
+    }
     return QUEUE[int(chat_id)]
 
 
