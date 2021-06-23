@@ -182,6 +182,10 @@ async def llhnf(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
+    try:
+        radio[1]
+    except IndexError:
+        return await eor(message, "Are You Kidding Me?\nWhat to Play?")
     if re.search("|", radio[1]):
         ko = (radio[1]).split("|", maxsplit=1)
         chat = ko[0]
