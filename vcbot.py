@@ -107,7 +107,10 @@ async def startup(_, message):
                 msg = await message.reply_photo(th, caption="`Playing...`")
             os.remove(th)
     from_user = message.from_user.first_name
-    song_name = reply.document.file_name
+    try:
+        song_name = reply.audio.file_name
+    except:
+        song_name = ""
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
         return await message.reply_text(
