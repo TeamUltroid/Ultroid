@@ -85,6 +85,11 @@ async def startup(_, message):
                     "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
                 )
         chat = song[0]
+
+    try:
+        song_name = reply.audio.file_name
+    except BaseException:
+        song_name = "" 
     if ChatPlay:
         Chat = await Client.get_chat(chat)
         chat = Chat.id
@@ -109,13 +114,9 @@ async def startup(_, message):
                 CallsClient.active_calls[chat]
             except KeyError:
                 await msg.delete()
-                msg = await message.reply_photo(th, caption="`Playing...`")
+                msg = await message.reply_photo(th, caption=f"`Playing {song_name}...`")
             os.remove(th)
     from_user = message.from_user.first_name
-    try:
-        song_name = reply.audio.file_name
-    except BaseException:
-        song_name = ""
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
         return await message.reply_text(
@@ -154,8 +155,13 @@ async def streamhandler(chat_id: int, message):
 
 @asst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
-    await eor(message, "`Left...`")
-    CallsClient.leave_group_call(message.chat.id)
+    spli = message.text.split(" ",maxpslit=1)
+    try:
+        chat = spli[1]
+    except IndexError:
+        chat = message.chat.id
+    await eor(message, "`Left Vc...`")
+    CallsClient.leave_group_call(chat)
 
 
 @Client.on_message(filters.me & filters.command("leavevc", HNDLR) & ~filters.edited)
