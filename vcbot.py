@@ -109,7 +109,7 @@ async def startup(_, message):
     from_user = message.from_user.first_name
     try:
         song_name = reply.audio.file_name
-    except:
+    except BaseException:
         song_name = ""
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
