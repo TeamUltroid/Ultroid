@@ -138,7 +138,7 @@ async def streamhandler(chat_id: int):
             del QUEUE[chat_id][pos]
         except BaseException as ap:
             print(ap)
-    except:
+    except BaseException:
         CallsClient.leave_group_call(chat_id)
 
 
