@@ -177,9 +177,9 @@ async def radio(_, message):
         ko = radio
     file = f"VCRADIO_{message.chat.id}.raw"
     if re.search("youtube", ko[1]) or re.search("youtu", ko[1]):
-        is_live_vid = (await bash(f'youtube-dl -j "{radio[1]}" | jq ".is_live"'))[0]
+        is_live_vid = (await bash(f'youtube-dl -j "{ko[1]}" | jq ".is_live"'))[0]
         if is_live_vid == "true":
-            the_input = (await bash(f"youtube-dl -x -g {radio[1]}"))[0]
+            the_input = (await bash(f"youtube-dl -x -g {ko[1]}"))[0]
         else:
             return await message.reply_text(
                 f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
