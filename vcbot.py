@@ -131,14 +131,14 @@ async def cstartup(_, message):
 
 @CallsClient.on_stream_end()
 async def streamhandler(chat_id: int):
-    if chat_id in QUEUE.keys():
+    try:
         CallsClient.change_stream(chat_id, get_from_queue(chat_id))
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
         except BaseException as ap:
             print(ap)
-    else:
+    except:
         CallsClient.leave_group_call(chat_id)
 
 
