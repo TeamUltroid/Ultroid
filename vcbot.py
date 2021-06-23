@@ -176,7 +176,7 @@ async def llhnf(_, message):
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     if re.search("|", radio[1]):
-        ko = radio.split("|", maxsplit=1)
+        ko = (radio[1]).split("|", maxsplit=1)
         chat = ko[1]
     else:
         chat = message.chat.id
