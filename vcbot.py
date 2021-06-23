@@ -36,9 +36,10 @@ def add_to_queue(chat_id, song):
     if int(chat_id) in CallsClient.active_calls.keys():
         try:
             play_at = len(QUEUE[int(chat_id)]) + 1
-        except KeyError:
+        except:
             play_at = 1
         QUEUE[int(chat_id)] = {play_at: song}
+        return QUEUE[int(chat_id)]
 
 
 def get_from_queue(chat_id):
