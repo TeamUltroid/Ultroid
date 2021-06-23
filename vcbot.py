@@ -46,7 +46,8 @@ def get_from_queue(chat_id):
         play_this = list(QUEUE[int(chat_id)].keys())[0]
     except KeyError:
         raise KeyError
-    return play_this
+    song = QUEUE[int(chat_id)][play_this]
+    return song
 
 
 async def eor(message, text, *args, **kwargs):
