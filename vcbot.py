@@ -8,24 +8,13 @@ from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
-from pyUltroid import CallsClient, udB
+from pyUltroid import CallsClient, HNDLR, udB, LOGS
 from pyUltroid import vcasst as asst
 from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-
-
-SESSION = udB.get("VC_SESSION")
-"""
-asst = Client(
-    "VC-ASST", api_id=Var.API_ID, api_hash=Var.API_HASH, bot_token=udB.get("BOT_TOKEN")
-)
-Client = Client(SESSION, api_id=Var.API_ID, api_hash=Var.API_HASH)
-CallsClient = PyTgCalls(Client, log_mode=PyLogs.ultra_verbose)
-"""
-HNDLR = udB.get("HNDLR")
 QUEUE = {}
 _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
 A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
@@ -273,10 +262,3 @@ async def stopvc(_, query):
             [[InlineKeyboardButton(BT, callback_data=f"vc{dt}_{chat}")]]
         )
     )
-
-
-"""
-asst.start()
-Process(target=idle).start()
-CallsClient.run()
-"""
