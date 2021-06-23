@@ -205,9 +205,7 @@ async def radio(_, message):
         .run_async()
     )
     await asyncio.sleep(2)
-    CallsClient.join_group_call(
-        chat, file, stream_type=StreamType().live_stream
-    )
+    CallsClient.join_group_call(chat, file, stream_type=StreamType().live_stream)
     await message.reply_text("Playing Radio")
 
 
