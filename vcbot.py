@@ -21,12 +21,12 @@ A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
 
-def add_to_queue(chat_id, song):
+def add_to_queue(chat_id, song, song_name, from_user):
     try:
         play_at = len(QUEUE[int(chat_id)]) + 1
     except BaseException:
         play_at = 1
-    QUEUE[int(chat_id)] = {play_at: song}
+    QUEUE[int(chat_id)] = {play_at: song, {"title": song_name, "from_user": from_user}}
     return QUEUE[int(chat_id)]
 
 
@@ -106,8 +106,10 @@ async def startup(_, message):
                 await msg.delete()
                 msg = await message.reply_photo(th, caption="`Playing...`")
             os.remove(th)
+    from_user = message.from_user.first_name
+    song_name = reply.document.file_name
     if chat in CallsClient.active_calls.keys():
-        add_to_queue(chat, song)
+        add_to_queue(chat, song, song_name, from_user)
         return await message.reply_text(
             f"Added to queue at #{list(QUEUE[chat].keys())[-1]}"
         )
@@ -164,7 +166,7 @@ async def llhnf(_, message):
 @asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
-    if re.search("\\|", radio[1]):
+    if re.search("|", radio[1]):
         ko = (radio[1]).split("|", maxsplit=1)
         chat = ko[1]
     else:
@@ -172,9 +174,9 @@ async def radio(_, message):
         ko = radio
     file = f"VCRADIO_{message.chat.id}.raw"
     if re.search("youtube", ko[1]) or re.search("youtu", ko[1]):
-        is_live_vid = (await bash(f'youtube-dl -j "{ko[1]}" | jq ".is_live"'))[0]
+        is_live_vid = (await bash(f'youtube-dl -j "{radio[1]}" | jq ".is_live"'))[0]
         if is_live_vid == "true":
-            the_input = (await bash(f"youtube-dl -x -g {ko[1]}"))[0]
+            the_input = (await bash(f"youtube-dl -x -g {radio[1]}"))[0]
         else:
             return await message.reply_text(
                 f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
