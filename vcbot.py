@@ -33,7 +33,6 @@ AUTH = [int(x) for x in A_AUTH]
 
 
 def add_to_queue(chat_id, song):
-    if int(chat_id) in CallsClient.active_calls.keys():
         try:
             play_at = len(QUEUE[int(chat_id)]) + 1
         except BaseException:
@@ -43,7 +42,6 @@ def add_to_queue(chat_id, song):
 
 
 def get_from_queue(chat_id):
-    if int(chat_id) in CallsClient.active_calls.keys():
         try:
             play_this = list(QUEUE[int(chat_id)].keys())[0]
         except KeyError:
