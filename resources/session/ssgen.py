@@ -9,6 +9,10 @@
 import os
 from time import sleep
 
+from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError
+from telethon.sessions import StringSession
+from telethon.sync import TelegramClient
+
 # https://www.tutorialspoint.com/how-to-clear-screen-in-python#:~:text=In%20Python%20sometimes%20we%20have,screen%20by%20pressing%20Control%20%2B%20l%20.
 if os.name == "posix":
     _ = os.system("clear")
@@ -33,7 +37,6 @@ try:
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
-    import telethon
 
     x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
 except BaseException:
@@ -51,9 +54,6 @@ print(x)
 
 # the imports
 
-from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError
-from telethon.sessions import StringSession
-from telethon.sync import TelegramClient
 
 print(
     "Get your API ID and API HASH from my.telegram.org or @ScrapperRoBot to proceed.\n\n",

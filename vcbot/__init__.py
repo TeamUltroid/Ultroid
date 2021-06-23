@@ -21,6 +21,7 @@ _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
 A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
 
+
 def add_to_queue(chat_id, song, song_name, from_user):
     try:
         play_at = len(QUEUE[int(chat_id)]) + 1

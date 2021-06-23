@@ -1,5 +1,6 @@
 from . import *
 
+
 @vcasst.on_message(
     filters.command(["play", "cplay"])
     & filters.user(AUTH)
@@ -58,7 +59,9 @@ async def startup(_, message):
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = Chat.title
-    await vcasst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
+    await vcasst.send_message(
+        LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
+    )
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
