@@ -172,7 +172,7 @@ async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     if re.search("|", radio[1]):
         ko = (radio[1]).split("|", maxsplit=1)
-        chat = ko[1]
+        chat = ko[0]
     else:
         chat = message.chat.id
         ko = radio
