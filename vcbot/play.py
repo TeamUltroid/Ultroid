@@ -30,7 +30,7 @@ async def startup(_, message):
                     "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
                 )
         chat = song[0]
-
+    reply = message.reply_to_message
     try:
         song_name = reply.audio.file_name
     except BaseException:
@@ -39,7 +39,6 @@ async def startup(_, message):
         Chat = await Client.get_chat(chat)
         chat = Chat.id
     TS = dt.now().strftime("%H:%M:%S")
-    reply = message.reply_to_message
     if not reply and len(song) > 1:
         song = await download(song[1], message.chat.id, TS)
     elif not reply and len(song) == 1:
