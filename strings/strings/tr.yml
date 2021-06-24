@@ -1,0 +1,142 @@
+---
+name: Turkish
+natively: Türk
+
+authors:
+  - luci
+
+#commons
+com_1: "`İşleniyor...`"
+com_2: "`Aranıyor...`"
+#help
+help_1: "`{}` plugin bulunamadı!"
+help_2: "'Bot satır içi sorguya yanıt vermedi.\n{}restart ile yeniden deneyin` "
+help_3: "` Lütfen botunuz için satır içi modu açın ' @Botfather."
+help_4: "Hey,\nŞuan Bot Modundasınız. \nBot Modunda Kullanıcılar Doğrudan Yardım Alamıyor ... \nBunun yerine Sohbette Aşağıdakileri Kopyalayın ve Açılır Pencereyi Tıklayın. \n\n `@{} ultd`"
+#autopic
+autopic_1: "Bana bir yazı gönder."
+autopic_2: "`{} 'İçin Sonuç bulunamadı"
+autopic_3: "Aramanızla ilgili bir Koleksiyon '{}' var!\n Autopic'i başlatıyorum!"
+#inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Dᴇsᴛᴇᴋ](t.me/ultroidsupport)\n\n **Yᴀʀᴅɪᴍ Mᴇɴᴜ̈sᴜ̈{}.\n\n Pʟᴜɢɪɴs ~ {}**\n\n"
+inline_2: "[Uʟᴛʀᴏɪᴅ Dᴇsᴛᴇᴋ](t.me/ultroidsupport)\n\n **Yᴀʀᴅɪᴍ Mᴇɴᴜ̈sᴜ̈{}.\n\n Eᴋʟᴇɴᴛɪʟᴇʀ ~ {}**\n\n"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n **Yᴀʀᴅɪm Mᴇɴüsü {}.\n\n Ekʟᴇɴᴛɪʟᴇʀ ~ {}\n\n Gɪᴅɪɴ Vᴇ `ADDONS` Vᴀʀɪ Tʀᴜᴇ Dᴇğᴇʀɪ İʟᴇ Ekʟᴇyɪɴ**"
+inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_5: "**Mᴇɴü Kᴀᴘᴀᴛɪʟᴅɪ**"
+#tagnotif
+tagnot_1: "{} seni etiketledi {}\n\n [📨Mesaj📨]({})"
+tagnot_2: "{} seni etiketledi {}\n\n [📨Mesaj📨]({})"
+#whisper
+wspr_1: "@{} sizin için gizli mesaj.\nOkuduktan sonra mesajınızı silin.\nVeya bir sonraki mesaj güncellenmeyecektir."
+wspr_2: "Mesaj silindi"
+#afk
+afk_1: "`Artık afk değilim.\n\n İçin Uzaktaydı ~ {}`"
+afk_2: "#AFK\n AFK modu False olarak ayarlandı.\n AFK olduğunuz süre: {}`"
+afk_3: "Şu anda AFK'yım.\n Son görülmem: {} önce `\n\n **Sebebi:** `{}`"
+afk_4: "`Şu anda AFK'yım.\n\n Son görülmem: {} önce.`"
+afk_5: "`Artık AFK'yım.`\n\n **Sebebi:** `{}`"
+afk_6: "Artık AFK'yım."
+afk_7: "Şu anda AFK.\n**AFK olma nedeni:** `{}`"
+afk_8: "Şu anda AFK."
+#bot
+alive_1: "**Ultroid UserBot...**\n\n **{}**\n\n ┏━━━━━━━━━━━━━━━━━━━━━\n ┣ **Botun Sahibi** - `{}`\n ┣ **Sürüm** - `{}`\n ┣ **Çalışma Süresi** - `{}`\n ┣ **Python** - `{}`\n ┣ **Telethon** - `{}`\n ┣ **Branch** - `{}`\n ┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Günlükleri.\n[Buraya]({}) da yapıştırıldı!"
+ping: "**Pong !!** `{}ms`\n**Çalışma Süresi** - `{}`"
+usage: "**⚙️ Dyno Kullanımı ⚙️**:\n\n -> **{}** İçin Kullanılmış Dyno Süresi:\n •  `{}`**saat**  `{}`**dakika** **|**  [`{}`**%**]\n\n -> `Bu Ay İçin Kalan Dyno süresi`:\n •  `{}`**saat**  `{}`**dakika** **|**  [`{}`**%**]\n\n **Toplam Disk Alanı: {}\n\n** **Kullanılmış: {}  Bedava: {}\n\n** **📊Veri Kullanımı📊\n\nYükleme: {}\nİndirme: {}\n\n** **CPU: {}%\nRAM: {}%\nDISK: {}%**"
+shutdown: "Güle güle {}.\n`Kapatılıyor...`"
+#broadcast
+bd_1: "`Verirabanına ekleniyor...`"
+bd_2: "`Tüm yönetici olduğun kanallar veritabanına eklenilmeye çalışılıyor...`"
+bd_3: "**Bitti.**\nVeritabanında mevcut sohbetler: {}\nYeni eklenenler: {}"
+bd_4: "Kanallar eklendi!"
+bd_5: "`Veritabanına eklendi!`"
+bd_6: "`Kanal zaten veritabanındadır!`"
+#carbon
+carbon_1: "`Karbon effekt uygulanıyor.`"
+carbon_2: "[{}](tg://user?id={}) tarafından karbon effekt uygulandı"
+#chats
+chats_1: "`İstediğiniz işlem yapılıyor...`"
+chats_2: "`Bu sohbeti silemiyorum`"
+chats_3: "`Yönetici değilim`"
+chats_4: "#Silindi\nSilindi {}"
+chats_5: "Sizin [{}]({}) Grubunuz Oluşturuldu Efendim!"
+chats_6: "Sizin [{}]({}) Grubuzun/Kanalınız oluşturuldu Efendim!"
+#converter
+cvt_1: "Herhangi bir medyaya/dosyaya yanıt verin."
+cvt_2: "Dosyanın adını ve uzantısını verin"
+cvt_3: "`İşlem Yapılıyor...`"
+cvt_4: "Bir medyaya yanıt verin."
+#core
+core_1: "Modül Bulundu"
+core_2: "{}.py nekoya ve rawa yapıştırmak için .paste komutunu kullanın.."
+core_3: "Tekrar Arayın..?"
+core_4: "Modül Bulundu"
+core_5: "{}.py nekoya ve rawa yapıştırmak için .paste komutunu kullanın.."
+core_6: "{}.py Modülü bulunamadı"
+core_7: "Böyle Modül Yok"
+core_8: "{}.py Adlı Modül Yok"
+core_9: "`Kaldırmak istediğiniz eklentinin adını girin`"
+core_10: "`{}` **Başarıyla Kaldırıldı.**"
+core_11: "**Resmi Eklentileri Kaldıramazsınız.**"
+core_12: "`{}` **Adlı Eklenti Yok**"
+core_13: "`Kaldırmak istediğiniz eklentinin adını girin`"
+core_14: "`{}` **Başarıyla Kaldırıldı.**"
+core_15: "**Resmi Eklentileri Kaldıramazsınız.**"
+core_16: "`Yüklemek istediğiniz eklentinin adını girin`"
+core_17: "`{}` **Başarıyla Yüklendi**"
+core_18: "**Aşağıdaki hata nedeniyle** `{}` **yüklenemedi.**\n`{}`"
+#fedutils
+sf_1: "Mass-FedBan Başlatılıyor..."
+sf_2: "`Kullanıcı atanmadı!`"
+sf_3: "Geliştiricimi Yasaklayamazsın!!"
+sf_4: "`Rose yanıt vermiyor veya eklenti hatalı çalışıyor gibi görünüyor`"
+sf_5: "Fed komutlarını yalnızca 5 dakikada bir kullanabilirsiniz"
+sf_6: "5 dakika sonra tekrar deneyin."
+sf_7: "FedAdminList toplanamıyor. Yeniden deneniyor ({}/3)..."
+sf_8: "Hata"
+sf_9: "FedAdminList toplanamıyor."
+sf_10: "{} fedlerde fbanlanıyor."
+sf_11: "Belirtilen FBan Grup Kimliği yanlış."
+sf_12: "{} Hariç tutuldu."
+sf_13: "FedAdmin dosyası kaldırılırken hata oluştu.\n{}"
+sf_14: "SuperFBan Başarılı.\nToplam Fedler - {}.\nHariç tutulan - {}.\n Etkilenen {} fed.\n#TB"
+sf_15: "Mass-UnFedBan Başlatılıyor..."
+sf_16: "SuperUnFBan Başarılı.\nToplam Fedler - {}.\nHariç tutulan - {}.\n Etkilenen {} fed.\n#TB"
+sf_17: "`Benim birinin kimliğini ver ya da fed statüsünü kontrol etmem için birinin mesajına cevap verin.`"
+sf_18: "{} federasyonlarda yasaklananların listesi.\n\nUltroid kullanılarak toplanmıştır."
+sf_19: "**Hata**\n @MissRose_Bot'a `gidin engellemeyi kaldırıp tekrar deneyin!`"
+sf_20: "`Bilgi alınıyor..`"
+sf_21: "\n\nUltroid Tarafından Çıkarılan FedInfo"
+#gdrive
+gdrive_1: "`Google Drive ile zaten yetki verdiniz`"
+gdrive_2: "[Buraya](https://console.developers.google.com/flows/enableapi?apiid=drive) gidin ve \"GDRIVE_CLIENT_ID\" ve \"GDRIVE_CLIENT_SECRET\" bilgilerinizi alın\n\n GDRIVE_CLIENT_ID ve GDRIVE_CLIENT_SECRET bilgilerinizi bu şekilde gönderin.\n\"GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET\" gördüğünüz gibi boşlukla ayrılmış."
+gdrive_3: "`İD doğru değil.`"
+gdrive_4: "'Bir şeyler ters gitti! Tekrar `/auth` komutunu gönderin.\nAynı şey olursa `@TheUltroid ile iletişime geçin."
+gdrive_5: "`Başarılı!\nGoogle Drive'ı Ultroid Userbot ile kullanmaya hazırsınız.`"
+gdrive_6: "``{}` adresine gidin ve``/auth.` komutunu gönderin"
+gdrive_7: "**G-Drive'a Başarıyla Yüklenen Dosya :**\n\n[{}]({})"
+#pmpermit
+pmperm_1: "Lütfen mesajınıza yanıt vermemi bekleyin, yoksa engellenir ve spam olarak bildirilirsiniz!!"
+pmperm_2: "Sahibimin PM'sine spam gönderiyordun ki bu hoşuma gitmedi."
+pmperm_3: "Birinin mesajını yanıtlayın veya bu komutu özel olarak deneyin."
+#updater
+upd_1: "`Güncellemeler kontrol ediliyor, lütfen bekleyin...`"
+upd_2: "`Oops.. Güncelleme bazı sorunlar nedeniyle devam edemiyor.`\n\n**LOG İZLEME:**\n"
+upd_3: "**[[{}]]({}/tree/{} için yeni GÜNCELLEME mevcut):\n\nDEĞİŞİM GÜNLÜĞÜ**\n\n{}"
+upd_4: "`Değişiklik günlüğü çok büyük, dosyayı görmek için görüntüleyin.`"
+upd_5: "Güncellemek için `{}update now` komutunu kullanın."
+upd_6: "{}\n\nGüncellemek için `{}update now` komutunu kullanın."
+upd_7: "\n`BOT'unuz` **[[{}]]({}/tree/{})** `ile` **güncel.**\n"
+#upload download
+udl_1: "`İndirmek İstediğiniz Dosyayı/Medyayı Yanıtlayın..`"
+udl_2: "İndirme Başarılı..\n`{}` için.\n`{}` içinde"
+udl_3: "`Dosyaya belirli bir yol verin`"
+#words
+wrd_1: "**Kelime** - `{}`\n\n**Anlamı** -\n"
+wrd_2: "**Kelime** - `{}`\n\n**Eş anlamlısı** -\n"
+wrd_3: "**Kelime** - `{}`\n\n**Zıt anlamlısı** - \n"
+#---------------------------------------------------#
+#assisant
+ast_1: "Hangi API'yi ayarlamak istediğinizi seçin."
+ast_2: "**remove.bg API'si**\nAPI anahtarınızı remove.bg'den alın ve bana gönderin.\n\nİşlemi sonlandırmak için /cancel komutunu kullanın."
+ast_3: "Selam {}. Lütfen seçeneklere göz atın."
