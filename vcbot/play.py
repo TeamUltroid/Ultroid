@@ -90,7 +90,7 @@ async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
-        await message.reply_text(f"Playing {title}\nRequested by: {from_user}")
+        await asst.send_message(chat_id, f"Playing {title}\nRequested by: {from_user}")
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
