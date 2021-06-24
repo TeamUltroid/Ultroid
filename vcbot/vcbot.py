@@ -131,7 +131,7 @@ async def radio(_, message):
                 f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
             )
     else:
-        the_input = radio[1]
+        the_input = ko[1]
     process = (
         ffmpeg.input(the_input)
         .output(
