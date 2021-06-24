@@ -16,7 +16,7 @@ import ffmpeg
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
-from pyUltroid import HNDLR, CallsClient, udB
+from pyUltroid import HNDLR, CallsClient, udB, ultroid_bot
 from pyUltroid import vcasst as asst
 from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash
@@ -27,7 +27,7 @@ QUEUE = {}
 _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
 A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
 AUTH = [int(x) for x in A_AUTH]
-
+vcusername = ultroid_bot.asst.me.username
 
 def add_to_queue(chat_id, song, song_name, from_user):
     try:
