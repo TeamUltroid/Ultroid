@@ -9,7 +9,7 @@ from . import *
 
 
 @asst.on_message(
-    filters.command(["play", "cplay", f"play@{asst.me.username}"])
+    filters.command(["play", "cplay"])
     & filters.user(AUTH)
     & ~filters.edited
     & filters.group
