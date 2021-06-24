@@ -1,6 +1,7 @@
 from . import *
 from .play import streamhandler
 
+
 @asst.on_message(filters.command("skipvc") & filters.user(AUTH) & ~filters.edited)
 async def skiplife(_, message):
     mst = message.text.split(" ", maxsplit=1)
