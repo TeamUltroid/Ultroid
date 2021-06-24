@@ -8,7 +8,7 @@
 from . import *
 
 
-@asst.on_message(filters.command("listvc") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(filters.command(["listvc", f"listvc@{vcusername}"]) & filters.user(AUTH) & ~filters.edited)
 async def list_handler(_, message):
     await message.reply_text(f"{CallsClient.active_calls}")
 
