@@ -34,7 +34,10 @@ async def startup(_, message):
     try:
         song_name = reply.audio.file_name
     except BaseException:
-        song_name = ""
+        if song:
+            song_name = song
+        else:
+            song_name = ""
     if ChatPlay:
         Chat = await Client.get_chat(chat)
         chat = Chat.id
