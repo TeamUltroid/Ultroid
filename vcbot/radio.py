@@ -27,8 +27,8 @@ async def radio(_, message):
         if is_live_vid == "true":
             the_input = (await bash(f"youtube-dl -x -g {ko[1]}"))[0]
         else:
-            return await eor(message,
-                f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
+            return await eor(
+                message, f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
             )
     else:
         the_input = ko[1]
