@@ -8,7 +8,11 @@
 from . import *
 
 
-@asst.on_message(filters.command(["stopvc", f"stopvc@{vcusername}"]) & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(
+    filters.command(["stopvc", f"stopvc@{vcusername}"])
+    & filters.user(AUTH)
+    & ~filters.edited
+)
 async def stopvc(_, message):
     ms = message.text.split(" ", maxsplit=1)
     try:
@@ -26,7 +30,11 @@ async def ustop(_, message):
     await stopvc(_, message)
 
 
-@asst.on_message(filters.command(["resumevc",f"resumevc@{vcusername}"]) & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(
+    filters.command(["resumevc", f"resumevc@{vcusername}"])
+    & filters.user(AUTH)
+    & ~filters.edited
+)
 async def stopvc(_, message):
     ms = message.text.split(" ", maxsplit=1)
     try:
