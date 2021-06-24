@@ -34,7 +34,7 @@ def add_to_queue(chat_id, song, song_name, from_user):
         play_at = len(QUEUE[int(chat_id)]) + 1
     except BaseException:
         play_at = 1
-    QUEUE[int(chat_id)] = {play_at: song, "title": song_name, "from_user": from_user}
+    QUEUE[int(chat_id)] = {play_at: {"song": song, "title": song_name, "from_user": from_user}}
     return QUEUE[int(chat_id)]
 
 
@@ -43,7 +43,11 @@ def get_from_queue(chat_id):
         play_this = list(QUEUE[int(chat_id)].keys())[0]
     except KeyError:
         raise KeyError
-    return QUEUE[int(chat_id)][play_this]
+    info = QUEUE[int(chat_id)][play_this]
+    song = info["song"]
+    title = info["title"]
+    from_user = info["from_user"]
+    return song, title, from_user
 
 
 async def eor(message, text, *args, **kwargs):
