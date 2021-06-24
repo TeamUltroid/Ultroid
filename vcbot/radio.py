@@ -8,7 +8,7 @@
 from . import *
 
 
-@vcasst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     try:
@@ -27,7 +27,7 @@ async def radio(_, message):
         if is_live_vid == "true":
             the_input = (await bash(f"youtube-dl -x -g {ko[1]}"))[0]
         else:
-            return await message.reply_text(
+            return await eor(message,
                 f"Only Live Youtube Urls/m3u8 Urls supported!\n{ko}"
             )
     else:
@@ -47,7 +47,7 @@ async def radio(_, message):
     )
     await asyncio.sleep(2)
     CallsClient.join_group_call(chat, file, stream_type=StreamType().live_stream)
-    await message.reply_text("Playing Radio")
+    await eor(message, "Playing Radio")
 
 
 @Client.on_message(filters.me & filters.command("radio", HNDLR) & ~filters.edited)
