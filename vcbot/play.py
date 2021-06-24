@@ -83,7 +83,7 @@ async def cstartup(_, message):
 
 
 @CallsClient.on_stream_end()
-async def streamhandler(chat_id: int, message):
+async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
@@ -92,6 +92,6 @@ async def streamhandler(chat_id: int, message):
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
         except BaseException as ap:
-            await message.reply_text(f"`{str(ap)}`")
+            await asst.send_message(chat_id, f"`{str(ap)}`")
     except BaseException:
         CallsClient.leave_group_call(chat_id)
