@@ -1,3 +1,9 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 from . import *
 
 
@@ -8,7 +14,7 @@ async def radio(_, message):
         radio[1]
     except IndexError:
         return await eor(message, "Are You Kidding Me?\nWhat to Play?")
-    if re.search("|", radio[1]):
+    if re.search("\|", radio[1]):
         ko = (radio[1]).split("|", maxsplit=1)
         chat = ko[0]
     else:
