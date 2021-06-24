@@ -8,7 +8,7 @@
 from . import *
 
 
-@asst.on_message(filters.command("radio") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(filters.command(["radio", f"radio@{vcusername}"]) & filters.user(AUTH) & ~filters.edited)
 async def radio(_, message):
     radio = message.text.split(" ", maxsplit=1)
     try:
