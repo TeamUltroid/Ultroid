@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_message(filters.command("leavevc") & filters.user(AUTH) & ~filters.edited)
 async def leavehandler(_, message):
-    spli = message.text.split(" ", maxpslit=1)
+    spli = message.text.split(" ", maxsplit=1)
     try:
         chat = spli[1]
     except IndexError:
