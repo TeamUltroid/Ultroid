@@ -137,6 +137,7 @@ def main():
         )
     except Exception as e:
         print(e)
+        exit(0)
     if type_of_ss == 1:
         telethon_session()
     elif type_of_ss == 2:
