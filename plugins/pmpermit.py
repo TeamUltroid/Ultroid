@@ -34,22 +34,21 @@
 
 • `{i}cleararchive`
     Unarchive all chats.
-    
+
 • `{i}listapproved`
    List all approved PMs.
 """
 
 import re
+from os import remove
 
 from pyUltroid.functions.logusers_db import *
 from pyUltroid.functions.pmpermit_db import *
+from tabulate import tabulate
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name
-
-from tabulate import tabulate
-from os import remove
 
 from . import *
 
@@ -614,7 +613,7 @@ async def list_approved(event):
     for i in [int(x) for x in udB.get("PMPERMIT").split(" ")]:
         try:
             name = (await ultroid.get_entity(i)).first_name
-        except:
+        except BaseException:
             name = ""
         users.append([name.strip(), str(i)])
     with open("approved_pms.txt", "w") as list_appr:
