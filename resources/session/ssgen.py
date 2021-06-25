@@ -17,6 +17,7 @@ a = r"""
   \____/|_|\__|_|  \___/|_|\__,_|
 """
 
+
 def spinner(x):
     if x == "tele":
         print("Checking if Telethon is installed...")
@@ -35,6 +36,7 @@ def clear_screen():
     else:
         # for windows platfrom
         os.system("cls")
+
 
 def get_api_id_and_hash():
     print(
@@ -96,10 +98,12 @@ def telethon_session():
         print("The phone number is invalid!\nQuitting...")
         exit(0)
 
+
 def pyro_session():
     try:
         spinner("pyro")
         from pyrogram import Client
+
         x = "\bFound an existing installation of Pyrogram...\nSuccessfully Imported.\n\n"
     except BaseException:
         print("Installing Pyrogram...")
@@ -108,25 +112,29 @@ def pyro_session():
     clear_screen()
     print(a)
     print(x)
-    
+
     # generate a session
     API_ID, API_HASH = get_api_id_and_hash()
     print("Enter phone number when asked.\n\n")
     with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
         ss = pyro.export_session_string()
-        pyro.send_message("me", f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid music bot. **DO NOT SHARE it.**")
+        pyro.send_message(
+            "me",
+            f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid music bot. **DO NOT SHARE it.**",
+        )
         print("Session has been sent to your saved messages!")
         exit(0)
-    
+
+
 def main():
     clear_screen()
     print(a)
     try:
         type_of_ss = int(
-        input(
-            "\nWhich session do you want to generate?\n1. User Session.\n2. VC Session.\n\nEnter choice:  "
+            input(
+                "\nWhich session do you want to generate?\n1. User Session.\n2. VC Session.\n\nEnter choice:  "
+            )
         )
-    )
     except Exception as e:
         print(e)
     if type_of_ss == 1:
@@ -140,5 +148,6 @@ def main():
             main()
         else:
             exit(0)
+
 
 main()

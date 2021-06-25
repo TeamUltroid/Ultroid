@@ -34,6 +34,9 @@
 
 • `{i}cleararchive`
     Unarchive all chats.
+    
+• `{i}listapproved`
+   List all approved PMs.
 """
 
 import re
@@ -44,6 +47,9 @@ from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name
+
+from tabulate import tabulate
+from os import remove
 
 from . import *
 
@@ -125,11 +131,11 @@ async def _(e):
 async def _(e):
     if not e.is_private:
         return await eod(e, "`Use me in Private.`", time=3)
-    if not is_logger(str(e.chat_id)):
-        log_user(str(e.chat_id))
-        return await eod(e, "`Now I Won't log msgs from here.`", time=3)
-    else:
+    if is_logger(str(e.chat_id)):
         return await eod(e, "`Wasn't logging msgs from here.`", time=3)
+
+    log_user(str(e.chat_id))
+    return await eod(e, "`Now I Won't log msgs from here.`", time=3)
 
 
 @ultroid_bot.on(
@@ -204,10 +210,7 @@ if sett == "True" or sett != "False":
             if event.media:
                 await event.delete()
             name = user.first_name
-            if user.last_name:
-                fullname = f"{name} {user.last_name}"
-            else:
-                fullname = name
+            fullname = f"{name} {user.last_name}" if user.last_name else name
             username = f"@{user.username}"
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
@@ -264,7 +267,7 @@ if sett == "True" or sett != "False":
                             )
                         except Exception as e:
                             print(e)
-                elif event.text == prevmsg:
+                else:
                     await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
@@ -600,6 +603,29 @@ async def unblockpm(unblock):
                 Button.inline("Block", data=f"block_{user}"),
             ],
         )
+
+
+@ultroid_cmd(pattern="listapproved")
+async def list_approved(event):
+    xx = await eor(event, get_string(com_1))
+    if udB.get("PMPERMIT") is None:
+        return await eod(xx, "`You haven't approved anyone yet!`")
+    users = []
+    for i in [int(x) for x in udB.get("PMPERMIT").split(" ")]:
+        try:
+            name = (await ultroid.get_entity(i)).first_name
+        except:
+            name = ""
+        users.append([name.strip(), str(i)])
+    with open("approved_pms.txt", "w") as list_appr:
+        list_appr.write(
+            tabulate(users, headers=["UserName", "UserID"], showindex="always")
+        )
+    await event.reply(
+        "List of users approved by [{}](tg://user?id={})".format(OWNER_NAME, OWNER_ID),
+        file="approved_pms.txt",
+    )
+    remove("approved_pms.txt")
 
 
 @callback(
