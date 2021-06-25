@@ -10,7 +10,11 @@ from pyrogram.raw import functions
 from . import *
 
 
-@asst.on_message(filters.command("volume") & filters.user(AUTH) & ~filters.edited)
+@asst.on_message(
+    filters.command(["volume", f"volume@{vcusername}"])
+    & filters.user(AUTH)
+    & ~filters.edited
+)
 async def chesendvolume(_, message):
     mk = message.text.split(" ")
     if not len(mk) > 1:

@@ -9,7 +9,7 @@ from . import *
 
 
 @asst.on_message(
-    filters.command(["play", "cplay"])
+    filters.command(["play", "cplay", f"play@{vcusername}", f"cplay@{vcusername}"])
     & filters.user(AUTH)
     & ~filters.edited
     & filters.group
@@ -30,16 +30,18 @@ async def startup(_, message):
                     "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
                 )
         chat = song[0]
-
+    reply = message.reply_to_message
     try:
         song_name = reply.audio.file_name
     except BaseException:
-        song_name = ""
+        if song:
+            song_name = song
+        else:
+            song_name = ""
     if ChatPlay:
         Chat = await Client.get_chat(chat)
         chat = Chat.id
     TS = dt.now().strftime("%H:%M:%S")
-    reply = message.reply_to_message
     if not reply and len(song) > 1:
         song = await download(song[1], message.chat.id, TS)
     elif not reply and len(song) == 1:
@@ -78,23 +80,21 @@ async def startup(_, message):
     await msg.edit_reply_markup(reply_markup)
 
 
-@Client.on_message(
-    filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited
-)
+@Client.on_message(filters.me & filters.command("play", HNDLR) & ~filters.edited)
 async def cstartup(_, message):
     await startup(_, message)
 
 
 @CallsClient.on_stream_end()
-async def streamhandler(chat_id: int, message):
+async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
-        await message.reply_text(f"Playing {title}\nRequested by: {from_user}")
+        await asst.send_message(chat_id, f"Playing {title}\nRequested by: {from_user}")
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
         except BaseException as ap:
-            print(ap)
+            await asst.send_message(chat_id, f"`{str(ap)}`")
     except BaseException:
         CallsClient.leave_group_call(chat_id)
