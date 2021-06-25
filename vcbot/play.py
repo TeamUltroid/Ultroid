@@ -78,7 +78,9 @@ async def startup(_, message):
     await msg.edit_reply_markup(reply_markup)
 
 
-@Client.on_message(filters.me & filters.command(["play","cplay"], HNDLR) & ~filters.edited)
+@Client.on_message(
+    filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited
+)
 async def cstartup(_, message):
     await startup(_, message)
 
