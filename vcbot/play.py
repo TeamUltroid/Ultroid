@@ -17,6 +17,7 @@ from . import *
 async def startup(_, message):
     msg = await eor(message, "`Processing..`")
     song = message.text.split(" ", maxsplit=1)
+    reply = message.reply_to_message
     ChatPlay = None
     if message.text[1] != "c":
         chat = message.chat.id
@@ -30,7 +31,6 @@ async def startup(_, message):
                     "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
                 )
         chat = song[0]
-    reply = message.reply_to_message
     try:
         song_name = reply.audio.file_name
     except BaseException:
