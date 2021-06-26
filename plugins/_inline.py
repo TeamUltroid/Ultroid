@@ -146,7 +146,7 @@ async def _(event):
     link = "https://hastebin.com/"
     result = event.builder.article(
         title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Dᴏɢʙɪɴ!",
+        text="Pᴀsᴛᴇᴅ Tᴏ Hᴀsᴛᴇʙɪɴ!",
         buttons=[
             [
                 Button.url("DogBin", url=f"{link}{ok}"),
