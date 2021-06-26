@@ -1,3 +1,3 @@
 py-Ultroid==44.0b0
-https://github.com/New-dev0/Telethon/archive/BETTER.zip
+https://github.com/New-dev0/Telethon/archive/patch-1.zip
 ffmpeg-python
