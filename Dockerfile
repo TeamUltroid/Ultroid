@@ -10,7 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt install jq -y
 
-RUN git clone -b pytgcalls https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 WORKDIR /root/TeamUltroid/
 

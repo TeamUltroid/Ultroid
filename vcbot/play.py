@@ -35,7 +35,7 @@ async def startup(_, message):
         song_name = reply.audio.file_name
     except BaseException:
         if song:
-            song_name = song
+            song_name = song[1]
         else:
             song_name = ""
     if ChatPlay:
@@ -66,7 +66,7 @@ async def startup(_, message):
     from_user = message.from_user.first_name
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
-        return await message.reply_text(
+        return await msg.edit(
             f"Added to queue at #{list(QUEUE[chat].keys())[-1]}"
         )
     chattitle = message.chat.title

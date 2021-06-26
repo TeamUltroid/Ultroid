@@ -75,7 +75,7 @@ async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
         MSG = "• **Ultroid Userbot •**"
-        uptime = grt(time.time() - start_time)
+        uptime = time_formatter((time.time() - start_time) * 1000)
         MSG += f"\n\n• **Uptime** - `{uptime}`\n"
         MSG += f"• **OWNER** - `{OWNER_NAME}`"
         WEB0 = InputWebDocument(
@@ -237,7 +237,7 @@ async def _(event):
 
 @callback("upp")
 async def _(event):
-    uptime = grt(time.time() - start_time)
+    uptime = time_formatter((time.time() - start_time) * 1000)
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
     await event.answer(pin, cache_time=0, alert=True)
 

@@ -67,15 +67,7 @@ async def closet(lol):
 @asst_cmd("start ?(.*)")
 async def ultroid(event):
     if event.is_group:
-        if str(event.sender_id) in owner_and_sudos():
-            return await event.reply(
-                "`I dont work in groups`",
-                buttons=[
-                    Button.url(
-                        "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{asst.me.username}?start=set"
-                    )
-                ],
-            )
+        return
     else:
         if (
             not is_added(event.sender_id)

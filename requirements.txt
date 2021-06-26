@@ -1,6 +1,5 @@
-py-Ultroid==43.7b0
 Shazamio
-https://github.com/New-dev0/Telethon/archive/BETTER.zip
+https://github.com/New-dev0/Telethon/archive/patch-1.zip
 py-tgcalls
 pyrogram
-ffmpeg-python
+py-Ultroid==44.0b0
