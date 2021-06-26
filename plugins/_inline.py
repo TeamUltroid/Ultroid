@@ -139,11 +139,11 @@ async def _(event):
     await event.answer([result])
 
 
-@in_pattern("dog")
+@in_pattern("haste")
 @in_owner
 async def _(event):
     ok = event.text.split(" ")[1]
-    link = "https://del.dog/"
+    link = "https://hastebin.com/"
     result = event.builder.article(
         title="Paste",
         text="Pᴀsᴛᴇᴅ Tᴏ Dᴏɢʙɪɴ!",
