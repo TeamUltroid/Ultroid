@@ -3,7 +3,8 @@
 # Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import os
 from time import sleep
@@ -54,7 +55,6 @@ def get_api_id_and_hash():
 def telethon_session():
     try:
         spinner("tele")
-        import telethon
 
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except BaseException:

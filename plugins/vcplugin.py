@@ -35,7 +35,6 @@
    `/exitVc`
 """
 
-from os import remove
 
 from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
@@ -69,26 +68,6 @@ async def _(e):
         await eor(e, "`Voice Chat Stopped...`")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
-
-
-@ultroid_cmd(
-    pattern="playvc$",
-)
-async def _(e):
-    zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("python vcstarter.py & sleep 10 && npm start")
-    LOGS.info(er)
-    LOGS.info(out)
-    if er:
-        msg = f"Failed {er}\n\n{out}"
-        if len(msg) > 4096:
-            with open("vc-error.txt", "w") as f:
-                f.write(msg.replace("`", ""))
-            await e.reply(file="vc-error.txt")
-            await zz.delete()
-            remove("vc-error.txt")
-            return
-        await zz.edit(msg)
 
 
 @ultroid_cmd(
