@@ -149,7 +149,7 @@ async def _(event):
         text="Pᴀsᴛᴇᴅ Tᴏ Hᴀsᴛᴇʙɪɴ!",
         buttons=[
             [
-                Button.url("DogBin", url=f"{link}{ok}"),
+                Button.url("HasteBin", url=f"{link}{ok}"),
                 Button.url("Raw", url=f"{link}raw/{ok}"),
             ],
         ],
