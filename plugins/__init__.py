@@ -10,6 +10,7 @@ import time
 from pyUltroid.dB import *
 from pyUltroid.functions.all import *
 from pyUltroid.functions.sudos import *
+from pyUltroid.version import ultroid_version
 from telethon import Button
 from telethon.tl import functions, types
 
@@ -24,7 +25,7 @@ except ModuleNotFoundError:
 
 
 start_time = time.time()
-ultroid_version = "v0.0.9"
+
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
