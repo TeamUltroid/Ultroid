@@ -1,6 +1,4 @@
-Shazamio
 https://github.com/New-dev0/Telethon/archive/BETTER.zip
-py-tgcalls
-pyrogram
 py-Ultroid==44.1b0
 ffmpeg-python
+tabulate
