@@ -6,6 +6,9 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
+import os
+
+J_CACHE = {}
 
 
 @asst.on_message(
@@ -54,6 +57,7 @@ async def startup(_, message):
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
+        os.remove(dl)
         if reply.audio and reply.audio.thumbs:
             dll = reply.audio.thumbs[0].file_id
             th = await asst.download_media(dll)
@@ -70,15 +74,17 @@ async def startup(_, message):
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = Chat.title
-    await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
+    CH = await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
+    J_CACHE.update(chat, CH.id)
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
+    os.remove(song)   
 
 
-@Client.on_message(filters.me & filters.command("play", HNDLR) & ~filters.edited)
+@Client.on_message(filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited)
 async def cstartup(_, message):
     await startup(_, message)
 
@@ -96,3 +102,5 @@ async def streamhandler(chat_id: int):
             await asst.send_message(chat_id, f"`{str(ap)}`")
     except BaseException:
         CallsClient.leave_group_call(chat_id)
+        Cyanide = J_CACHE[chat_id]
+        await asst.delete_messages(LOG_CHANNEL, Cyanide)
