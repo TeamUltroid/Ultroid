@@ -106,7 +106,11 @@ _not_approved = {}
 sett = Redis("PMSETTING")
 if sett is None:
     sett = True
-inline_pm = udB.get("INLINE_PM") or "True"
+t_in = udB.get("INLINE_PM")
+if t_in is "True" or None:
+    inline_pm = "True"
+elif t_in is "False":
+    inline_pm = "False"
 my_bot = asst.me.username
 # =================================================================
 
@@ -860,4 +864,6 @@ async def delete_pm_warn_msgs(chat: int):
         if tx.startswith(
             ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
         ):
+            if tx.startswith("#"):
+                await asyncio.sleep(30) # sleep for a while once approved, we need the menu open!
             await i.delete()
