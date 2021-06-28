@@ -66,7 +66,7 @@ async def startup(_, message):
                 CallsClient.active_calls[chat]
             except KeyError:
                 await msg.delete()
-                msg = await message.reply_photo(th, caption=f"`Playing {song_name}...`")
+                msg = await message.reply_photo(th, caption=f"**Playing :** {song_name}\n**Requested By :** {message.from_user.mention}")
             os.remove(th)
     from_user = message.from_user.first_name
     if chat in CallsClient.active_calls.keys():
@@ -84,7 +84,6 @@ async def startup(_, message):
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-    os.remove(song)
 
 
 @Client.on_message(
@@ -99,7 +98,7 @@ async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
-        await asst.send_message(chat_id, f"Playing {title}\nRequested by: {from_user}")
+        await asst.send_message(chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}")
         try:
             pos = list(QUEUE[int(chat_id)])[0]
             del QUEUE[chat_id][pos]
