@@ -652,7 +652,9 @@ async def toothpaste(event):
 @ultroid_cmd(pattern="thumb")
 async def thumb_dl(event):
     if not event.reply_to_msg_id:
-        return await eod(event, "`Please reply to a file to download its thumbnail!`", time=5)
+        return await eod(
+            event, "`Please reply to a file to download its thumbnail!`", time=5
+        )
     x = await event.get_reply_message()
     m = await client.download_media(x, thumb=-1)
     await e.reply("Downloaded.", file=m)
