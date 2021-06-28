@@ -46,10 +46,7 @@ def add_to_queue(chat_id, song, song_name, from_user):
 
 
 def get_from_queue(chat_id):
-    try:
-        play_this = list(QUEUE[int(chat_id)].keys())[0]
-    except KeyError:
-        raise KeyError
+    play_this = list(QUEUE[int(chat_id)].keys())[0]
     info = QUEUE[int(chat_id)][play_this]
     song = info["song"]
     title = info["title"]
