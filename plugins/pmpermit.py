@@ -865,5 +865,6 @@ async def delete_pm_warn_msgs(chat: int):
             ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
         ):
             if tx.startswith("#"):
-                await asyncio.sleep(30) # sleep for a while once approved, we need the menu open!
+                # sleep for a while once approved, we need the menu open!
+                await asyncio.sleep(30)
             await i.delete()
