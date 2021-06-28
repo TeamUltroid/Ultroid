@@ -53,6 +53,8 @@
 • `{i}pst`
    Paste the copied message, with formatting.
 
+• `{i}thumb <reply to file>`
+   Download the thumbnail of the replied file.
 """
 
 import asyncio
@@ -645,3 +647,12 @@ async def toothpaste(event):
         )
     except Exception as ex:
         return await eod(str(ex))
+
+
+@ultroid_cmd(pattern="thumb")
+async def thumb_dl(event):
+    if not event.reply_to_msg_id:
+        return await eod(event, "`Please reply to a file to download its thumbnail!`", time=5)
+    x = await event.get_reply_message()
+    m = await client.download_media(x, thumb=-1)
+    await e.reply("Downloaded.", file=m)
