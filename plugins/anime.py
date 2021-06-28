@@ -21,10 +21,9 @@
 from os import remove
 
 import jikanpy
-from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 
 from . import *
-
+from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
@@ -51,18 +50,22 @@ async def anilist(event):
     try:
         await event.reply(msg, file=banner, link_preview=True)
     except MediaCaptionTooLongError:
-        with open(f"{title}.txt", "w") as f:
+        nm = name.replace(" ", "_")
+        with open(f"{nm}.txt", "w") as f:
             f.write(msg.replace("*", ""))
-        await bash(f"wget {banner} -O {title}.jpg")
+        await bash(f"wget {banner} -O {nm}.jpg")
         try:
-            await event.reply(file=f"{title}.txt", thumb=f"{title}.jpg")
+            await ultroid.send_file(event.chat_id, f"{nm}.txt", thumb=f"{nm}.jpg")
         except Exception as e:
-            await event.reply(file=f"{title}.txt")
+            await event.reply(file=f"{nm}.txt")
             LOGS.warning(str(e))
         try:
-            remove(f"{title}.jpg")
-            remove(f"{title}.txt")
-        except BaseException:
+            remove(f"{nm}.jpg")
+        except:
+            pass
+        try:
+            remove(f"{nm}.txt")
+        except:
             pass
     await x.delete()
 
