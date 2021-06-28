@@ -861,7 +861,7 @@ def update_pm(userid, message, warns_given):
 async def delete_pm_warn_msgs(chat: int):
     async for i in ultroid.iter_messages(chat, from_user=OWNER_ID):
         tx = i.text
-        if tx.startswith(
+        if tx is not None and tx.startswith(
             ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
         ):
             if tx.startswith("#"):
