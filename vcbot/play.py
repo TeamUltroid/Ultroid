@@ -72,14 +72,14 @@ async def startup(_, message):
     if chat in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat].keys())[-1]}")
+    CallsClient.join_group_call(chat, song)
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = Chat.title
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
     )
-    J_CACHE.update(chat, CH.message_id)
-    CallsClient.join_group_call(chat, song)
+    J_CACHE.update({chat:CH.message_id})
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
