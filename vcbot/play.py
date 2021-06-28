@@ -78,7 +78,7 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
     )
-    J_CACHE.update(chat, CH.id)
+    J_CACHE.update(chat, CH.message_id)
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
@@ -109,3 +109,4 @@ async def streamhandler(chat_id: int):
         CallsClient.leave_group_call(chat_id)
         Cyanide = J_CACHE[chat_id]
         await asst.delete_messages(LOG_CHANNEL, Cyanide)
+        J_CACHE.pop(chat_id)
