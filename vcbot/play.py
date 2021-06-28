@@ -5,8 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from . import *
 import os
+
+from . import *
 
 J_CACHE = {}
 
@@ -74,17 +75,21 @@ async def startup(_, message):
     chattitle = message.chat.title
     if ChatPlay:
         chattitle = Chat.title
-    CH = await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]")
+    CH = await asst.send_message(
+        LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
+    )
     J_CACHE.update(chat, CH.id)
     CallsClient.join_group_call(chat, song)
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
     await msg.edit_reply_markup(reply_markup)
-    os.remove(song)   
+    os.remove(song)
 
 
-@Client.on_message(filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited)
+@Client.on_message(
+    filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited
+)
 async def cstartup(_, message):
     await startup(_, message)
 
