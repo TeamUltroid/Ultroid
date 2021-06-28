@@ -21,9 +21,10 @@
 from os import remove
 
 import jikanpy
+from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 
 from . import *
-from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
+
 
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
@@ -61,11 +62,11 @@ async def anilist(event):
             LOGS.warning(str(e))
         try:
             remove(f"{nm}.jpg")
-        except:
+        except BaseException:
             pass
         try:
             remove(f"{nm}.txt")
-        except:
+        except BaseException:
             pass
     await x.delete()
 
