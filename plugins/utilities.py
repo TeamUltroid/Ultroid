@@ -656,5 +656,5 @@ async def thumb_dl(event):
             event, "`Please reply to a file to download its thumbnail!`", time=5
         )
     x = await event.get_reply_message()
-    m = await client.download_media(x, thumb=-1)
+    m = await ultroid_bot.download_media(x, thumb=-1)
     await e.reply("Downloaded.", file=m)
