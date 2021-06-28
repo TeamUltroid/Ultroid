@@ -23,7 +23,7 @@ from os import remove
 import jikanpy
 
 from . import *
-
+from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
@@ -47,7 +47,22 @@ async def anilist(event):
         return await eod(x, "`Enter a anime name!`", time=5)
     banner, title, year, episodes, info = get_anime_src_res(name)
     msg = f"**{title}**\n{year} | {episodes} Episodes.\n\n{info}"
-    await event.reply(msg, file=banner, link_preview=True)
+    try:
+        await event.reply(msg, file=banner, link_preview=True)
+    except MediaCaptionTooLongError:
+        with open(f"{title}.txt", "w") as f:
+            f.write(msg.replace("*", ""))
+        await bash(f"wget {banner} -O {title}.jpg")
+        try:
+            await event.reply(file=f"{title}.txt", thumb=f"{title}.jpg")
+        except Exception as e:
+            await event.reply(file=f"{title}.txt")
+            LOGS.warning(str(e))
+        try:
+            remove(f"{title}.jpg")
+            remove(f"{title}.txt")
+        except:
+            pass
     await x.delete()
 
 
