@@ -79,7 +79,7 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
     )
-    J_CACHE.update({chat:CH.message_id})
+    J_CACHE.update({chat: CH.message_id})
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
     )
