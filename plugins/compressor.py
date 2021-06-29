@@ -33,7 +33,7 @@ from telethon.tl.types import DocumentAttributeVideo
 from . import *
 
 
-@ultroid_cmd(pattern="compress ?((\\d+)(.*)|$)")
+@ultroid_cmd(pattern="compress ?((\\d+)|(\\d+)(.*)|$)")
 async def _(e):
     crf = e.pattern_match.group(1)
     if not crf:
