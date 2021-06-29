@@ -24,7 +24,6 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 
 
 @in_pattern("yt")
-
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
