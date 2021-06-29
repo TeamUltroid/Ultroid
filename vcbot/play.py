@@ -36,8 +36,12 @@ async def startup(_, message):
                 )
         chat = song[0]
     try:
-        song_name = reply.audio.file_name
+        if reply.audio: med = reply.audio
+        elif reply.video: med = reply.video
+        elif reply.voice: med = reply.voice
+        song_name = med.file_name
     except BaseException:
+        med = None
         if song:
             song_name = song[1]
         else:
@@ -50,7 +54,7 @@ async def startup(_, message):
         song = await download(song[1], message.chat.id, TS)
     elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
-    elif not (reply.audio or reply.voice):
+    elif not (reply.audio or reply.voice or reply.video):
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
         dl = await reply.download()
@@ -59,8 +63,8 @@ async def startup(_, message):
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
         os.remove(dl)
-        if reply.audio and reply.audio.thumbs:
-            dll = reply.audio.thumbs[0].file_id
+        if med and med.thumbs:
+            dll = med.thumbs[0].file_id
             th = await asst.download_media(dll)
             try:
                 CallsClient.active_calls[chat]
