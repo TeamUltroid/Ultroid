@@ -154,7 +154,6 @@ async def listgd(event):
     await event.delete()
 
 
-
 @ultroid_cmd(pattern="thankmembers (on|off)")
 async def thank_set(event):
     type_ = event.pattern_match.group(1)

@@ -571,7 +571,6 @@ async def _(e):
     await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-
 @ultroid_cmd(
     pattern="listgban",
 )

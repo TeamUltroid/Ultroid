@@ -1,12 +1,13 @@
-from . import *
-
 from pyUltroid.functions.clean_db import *
 from pyUltroid.functions.forcesub_db import *
 from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.greetings_db import *
-from telethon.utils import get_display_name
-from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors.rpcerrorlist import UserNotParticipantError
+from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.utils import get_display_name
+
+from . import *
+
 
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
@@ -16,7 +17,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             await ult.delete()
         except BaseException:
             pass
-        
+
     # thank members
     if must_thank(ult.chat_id):
         chat_count = len(await ult.client.get_participants(await ult.get_chat()))
@@ -36,7 +37,9 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             try:
                 await ultroid_bot(GetParticipantRequest(int(joinchat), user.id))
             except UserNotParticipantError:
-                await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+                await ultroid_bot.edit_permissions(
+                    ult.chat_id, user.id, send_messages=False
+                )
                 res = await ultroid_bot.inline_query(
                     asst.me.username, f"fsub {user.id}_{joinchat}"
                 )
@@ -61,7 +64,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 await ult.reply(gban_watch)
             except BaseException:
                 pass
-            
+
         # greetings
         if get_welcome(ult.chat_id):
             user = await ult.get_user()
@@ -125,4 +128,3 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 )
             else:
                 await ult.reply(file=med)
-        
