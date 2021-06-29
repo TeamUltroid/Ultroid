@@ -36,9 +36,12 @@ async def startup(_, message):
                 )
         chat = song[0]
     try:
-        if reply.audio: med = reply.audio
-        elif reply.video: med = reply.video
-        elif reply.voice: med = reply.voice
+        if reply.audio:
+            med = reply.audio
+        elif reply.video:
+            med = reply.video
+        elif reply.voice:
+            med = reply.voice
         song_name = med.file_name
     except BaseException:
         med = None
