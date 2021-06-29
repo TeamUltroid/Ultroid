@@ -107,6 +107,7 @@ sett = Redis("PMSETTING")
 if sett is None:
     sett = True
 t_in = udB.get("INLINE_PM")
+inline_pm = "True"
 if t_in is "True" or None:
     inline_pm = "True"
 elif t_in is "False":
