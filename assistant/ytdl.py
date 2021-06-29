@@ -57,6 +57,7 @@ async def _(event):
                 file=thumb,
                 title=title,
                 description=desc,
+                force_document=True,
                 text=text,
                 include_media=True,
                 buttons=[
