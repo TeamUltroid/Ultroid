@@ -26,35 +26,12 @@
 import re
 
 from pyUltroid.functions.forcesub_db import *
-from telethon import events
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 from . import *
-
-
-@ultroid_bot.on(events.ChatAction())
-async def forcesub(ult):
-    if not udB.get("FORCESUB"):
-        return
-    if not (ult.user_joined or ult.user_added):
-        return
-    if not get_forcesetting(ult.chat_id):
-        return
-    user = await ult.get_user()
-    if user.bot:
-        return
-    joinchat = get_forcesetting(ult.chat_id)
-    try:
-        await ultroid_bot(GetParticipantRequest(int(joinchat), user.id))
-    except UserNotParticipantError:
-        await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
-        res = await ultroid_bot.inline_query(
-            asst.me.username, f"fsub {user.id}_{joinchat}"
-        )
-        await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
 
 
 @ultroid_cmd(pattern="fsub ?(.*)", admins_only=True, groups_only=True)

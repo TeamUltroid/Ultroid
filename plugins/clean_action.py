@@ -55,11 +55,3 @@ async def _(e):
     else:
         await eod(e, "`No Chat Added`")
 
-
-@ultroid_bot.on(events.ChatAction())
-async def _(event):
-    if is_clean_added(event.chat_id):
-        try:
-            await event.delete()
-        except BaseException:
-            pass

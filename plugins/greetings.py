@@ -35,7 +35,7 @@ import os
 
 from pyUltroid.functions.greetings_db import *
 from telegraph import upload_file as uf
-from telethon.utils import get_display_name, pack_bot_file_id
+from telethon.utils import pack_bot_file_id
 
 from . import *
 
@@ -153,95 +153,6 @@ async def listgd(event):
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
-
-@ultroid_bot.on(events.ChatAction())
-async def _(event):
-    if event.user_left or event.user_kicked:
-        wel = get_goodbye(event.chat_id)
-        if wel:
-            user = await event.get_user()
-            chat = await event.get_chat()
-            title = chat.title if chat.title else "this chat"
-            pp = await event.client.get_participants(chat)
-            count = len(pp)
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            name = user.first_name
-            last = user.last_name
-            if last:
-                fullname = f"{name} {last}"
-            else:
-                fullname = name
-            uu = user.username
-            if uu:
-                username = f"@{uu}"
-            else:
-                username = mention
-            msgg = wel["goodbye"]
-            med = wel["media"]
-            userid = user.id
-            if msgg:
-                await event.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
-                await event.reply(file=med)
-    elif event.user_joined or event.user_added:
-        wel = get_welcome(event.chat_id)
-        if wel:
-            user = await event.get_user()
-            chat = await event.get_chat()
-            title = chat.title if chat.title else "this chat"
-            pp = await event.client.get_participants(chat)
-            count = len(pp)
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            name = user.first_name
-            last = user.last_name
-            if last:
-                fullname = f"{name} {last}"
-            else:
-                fullname = name
-            uu = user.username
-            if uu:
-                username = f"@{uu}"
-            else:
-                username = mention
-            msgg = wel["welcome"]
-            med = wel["media"]
-            userid = user.id
-            if msgg:
-                await event.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
-                await event.reply(file=med)
-
-
-@ultroid_bot.on(events.ChatAction)
-async def thank_memebers(event):
-    if must_thank(event.chat_id):
-        chat_count = len(await event.client.get_participants(await event.get_chat()))
-        if chat_count % 100 == 0:
-            stik_id = chat_count / 100 - 1
-            sticker = stickers[stik_id]
-            await ultroid.send_message(event.chat_id, file=sticker)
 
 
 @ultroid_cmd(pattern="thankmembers (on|off)")

@@ -44,7 +44,6 @@
 import os
 
 from pyUltroid.functions.gban_mute_db import *
-from telethon import events
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
@@ -571,28 +570,6 @@ async def _(e):
     ungmute(userid)
     await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
-
-@ultroid_bot.on(events.ChatAction)
-async def _(e):
-    if e.user_joined or e.added_by:
-        user = await e.get_user()
-        chat = await e.get_chat()
-        if is_gbanned(str(user.id)):
-            if chat.admin_rights:
-                try:
-                    await e.client.edit_permissions(
-                        chat.id,
-                        user.id,
-                        view_messages=False,
-                    )
-                    reason = get_gban_reason(user.id)
-                    gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
-                    if reason is not None:
-                        gban_watch += f"**Reason**: {reason}\n\n"
-                    gban_watch += f"`User Banned.`"
-                    await e.reply(gban_watch)
-                except BaseException:
-                    pass
 
 
 @ultroid_cmd(
