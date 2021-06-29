@@ -10,7 +10,7 @@
 
 • `{i}compress <reply to video>`
     optional `crf` and `stream`
-    Example : `{i}compress 27 | stream` or `{i}compress 28`
+    Example : `{i}compress 27 stream` or `{i}compress 28`
     Encode the replied video according to CRF value.
     Less CRF == High Quality, More Size
     More CRF == Low Quality, Less Size
@@ -33,12 +33,18 @@ from telethon.tl.types import DocumentAttributeVideo
 from . import *
 
 
-@ultroid_cmd(pattern="compress ?((\\d+)|(\\d+)(.*)|$)")
+@ultroid_cmd(pattern="compress ?(.*)")
 async def _(e):
-    crf = e.pattern_match.group(1)
-    if not crf:
-        crf = 27
-    to_stream = e.pattern_match.group(2)
+    cr = e.pattern_match.group(1)
+    crf = 27
+    to_stream = False
+    if cr:
+        k = e.text.split()
+        if len(k) == 2:
+            crf = int(k[1]) if k[1].isdigit() else 27
+        elif len(k) > 2:
+            crf = int(k[1]) if k[1].isdigit() else 27
+            to_stream = True if "stream" in k[2] else False
     vido = await e.get_reply_message()
     if vido and vido.media:
         if "video" in mediainfo(vido.media):
@@ -135,7 +141,7 @@ async def _(e):
                 xxx,
                 "Uploading " + out + "...",
             )
-            if to_stream and "| stream" in to_stream:
+            if to_stream:
                 metadata = extractMetadata(createParser(out))
                 duration = metadata.get("duration").seconds
                 hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
