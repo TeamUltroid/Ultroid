@@ -1,0 +1,55 @@
+name: Bug Report
+description: File a bug report
+title: "[BUG REPORT]: "
+labels: [bug]
+assignees:
+  - xditya
+  - New-dev0
+  - buddhhu
+  - 1Danish-00
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: Your telegram username or email ID.
+      placeholder: ex. @username or email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of Ultroid are you running?
+      options:
+        - 0.0.8 (or later)
+        - 0.0.7 (or lesser)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgement
+      description: By submitting this issue, you agree that you have read the [docs](https://ultroid.tech) and gone through the [deploy tutorial](https://www.youtube.com/watch?v=9wF7k9qA0Q4) at first.
+      options:
+        - label: I have followed all of the above steps.
+          required: true
