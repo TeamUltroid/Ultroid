@@ -69,7 +69,7 @@ async def _(e):
             d_time = time.time()
             diff = time_formatter((d_time - c_time) * 1000)
             file_name = (file.name).split("/")[-1]
-            out = file_name.replace(file_name.split(".")[-1], " compressed.mkv")
+            out = file_name.replace(file_name.split(".")[-1], "compressed.mkv")
             await xxx.edit(
                 f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
             )
