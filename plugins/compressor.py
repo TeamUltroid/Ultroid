@@ -106,7 +106,9 @@ async def _(e):
                             "".join(["" for i in range(20 - math.floor(per / 5))]),
                             round(per, 2),
                         )
-                        e_size = humanbytes(size) + " of ~" + humanbytes((size/per)*100)
+                        e_size = (
+                            humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
+                        )
                         eta = "~" + time_formatter(some_eta)
                         try:
                             await xxx.edit(
