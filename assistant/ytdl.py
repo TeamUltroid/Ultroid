@@ -24,7 +24,7 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 
 
 @in_pattern("yt")
-@in_owner
+
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -50,7 +50,7 @@ async def _(event):
         link = _yt_base_url + ids
         title = v["title"]
         duration = v["duration"]
-        thumb = f"https://img.youtube.com/vi/{ids}/hqdefault.jpg"
+        thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"**•Tɪᴛʟᴇ•** `{title}`\n\n**••[Lɪɴᴋ]({link})••**\n\n**••Dᴜʀᴀᴛɪᴏɴ••** `{duration}`\n\n\n"
         desc = f"Title : {title}\nDuration : {duration}"
         results.append(
