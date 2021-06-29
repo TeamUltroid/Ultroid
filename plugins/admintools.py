@@ -452,7 +452,12 @@ async def get_all_pinned(event):
     async for i in ultroid.iter_messages(
         event.chat_id, filter=InputMessagesFilterPinned
     ):
-        a += f"{c}. <a href=https://t.me/c/{chat_id}/{i.id}>Go to message.</a>\n"
+        if i.message:
+            t = " ".join(i.message.split()[0:4])
+            txt = "{}....".format(t)
+        else:
+            txt = "Go to message."
+        a += f"{c}. <a href=https://t.me/c/{chat_id}/{i.id}>{txt}</a>\n"
         c += 1
 
     if c == 1:

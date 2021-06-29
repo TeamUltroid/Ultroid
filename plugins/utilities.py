@@ -655,6 +655,10 @@ async def thumb_dl(event):
         return await eod(
             event, "`Please reply to a file to download its thumbnail!`", time=5
         )
+    xx = await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await ultroid_bot.download_media(x, thumb=-1)
-    await event.reply("Downloaded.", file=m)
+    await event.reply(file=m)
+    await xx.edit("`Thumbnail sent, if available.`")
+    await asyncio.sleep(5)
+    await xx.delete()
