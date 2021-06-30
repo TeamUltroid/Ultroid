@@ -17,12 +17,12 @@ from plugins import *
 from . import *
 
 Owner_info_msg = f"""
-**Owner** - {OWNER_NAME}
-**OwnerID** - `{OWNER_ID}`
+<strong>Owner</strong> - {OWNER_NAME}
+<stong>OwnerID</strong> - <code>{OWNER_ID}</code>
 
-**Message Forwards** - {udB.get("PMBOT")}
+<strong>Message Forwards</strong> - {udB.get("PMBOT")}
 
-__Ultroid {ultroid_version}, powered by @TeamUltroid__
+<stong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
 """
 
 _settings = [
@@ -56,6 +56,8 @@ async def own(event):
     await event.edit(
         Owner_info_msg,
         buttons=[Button.inline("Close", data=f"closeit")],
+        link_preview=False,
+        parse_mode='html',
     )
 
 
