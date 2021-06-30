@@ -99,7 +99,7 @@ async def _(e):
     )
     _text = "`Select Your Format.`"
     if not _buttons:
-        _text = "`Error domwloading from YouTube.\nTry Restarting your bot.`"
+        _text = "`Error downloading from YouTube.\nTry Restarting your bot.`"
     await e.edit(_text, buttons=_buttons)
 
 
