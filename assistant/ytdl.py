@@ -192,7 +192,9 @@ async def _(event):
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`"
-    file_to_replace = await asst.send_message(int(Redis("LOG_CHANNEL")), text, file=file, attributes=attributes, thumb=thumb)
+    file_to_replace = await asst.send_message(
+        int(Redis("LOG_CHANNEL")), text, file=file, attributes=attributes, thumb=thumb
+    )
     await event.edit(
         text,
         file=file_to_replace.media,
