@@ -57,7 +57,7 @@ async def own(event):
         Owner_info_msg,
         buttons=[Button.inline("Close", data=f"closeit")],
         link_preview=False,
-        parse_mode='html',
+        parse_mode="html",
     )
 
 
