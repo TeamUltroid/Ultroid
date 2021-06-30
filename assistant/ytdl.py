@@ -191,9 +191,10 @@ async def _(event):
     text = f"**Title:** `{title}`\n"
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
-    text += f"**Artist:** `{artist}`"
+    text += f"**Artist:** `{artist}`\n\n"
+    log = "**For Inline YTDL**"
     file_to_replace = await asst.send_message(
-        int(Redis("LOG_CHANNEL")), text, file=file, attributes=attributes, thumb=thumb
+        int(Redis("LOG_CHANNEL")), text+log, file=file, attributes=attributes, thumb=thumb
     )
     await event.edit(
         text,
