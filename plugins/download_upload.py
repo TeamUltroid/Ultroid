@@ -148,7 +148,7 @@ async def download(event):
                         return await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{title}`",
+                            caption=f"`{kk}/{title}`",
                             supports_streaming=True,
                         )
                     if res.name.endswith((".mkv", ".mp4", ".avi")):
@@ -171,7 +171,7 @@ async def download(event):
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{title}`",
+                            caption=f"`{kk}/{title}`",
                             attributes=attributes,
                             supports_streaming=True,
                             thumb="resources/extras/ultroid.jpg",
@@ -180,14 +180,14 @@ async def download(event):
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{title}`",
+                            caption=f"`{kk}/{title}`",
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
                     await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=f"`{title}`",
+                        caption=f"`{kk}/{title}`",
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
