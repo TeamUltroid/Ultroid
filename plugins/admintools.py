@@ -339,9 +339,7 @@ async def fastpurger(purg):
         await ultroid_bot.delete_messages(chat, msgs)
     done = await ultroid_bot.send_message(
         purg.chat_id,
-        "__Fast purge complete!__\n**Purged** `"
-        + str(count)
-        + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
     await asyncio.sleep(5)
     await done.delete()
@@ -474,9 +472,9 @@ async def get_all_pinned(event):
 
 
 @ultroid_cmd(
-pattern="autodelete ?(.*)",
-groups_only=True,
-admins_only=True,
+    pattern="autodelete ?(.*)",
+    groups_only=True,
+    admins_only=True,
 )
 async def autodelte(ult):  # Tg Feature
     match = ult.pattern_match.group(1)
