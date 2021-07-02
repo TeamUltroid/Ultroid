@@ -38,7 +38,7 @@ import PIL
 from imutils.perspective import four_point_transform
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from skimage.filters import threshold_local
-
+from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 from . import *
 
 if not os.path.isdir("pdf"):
@@ -104,11 +104,12 @@ async def pdfseimg(event):
         with open(os.path.join("ult.png"), "wb") as f:
             pw.write(f)
         os.remove(pdfp)
-        await event.client.send_file(
-            event.chat_id,
-            "ult.png",
-            reply_to=event.reply_to_msg_id,
-        )
+        try:
+            await event.reply(
+            file="ult.png"
+            )
+        except PhotoSaveFileInvalidError:
+            await event.reply(file="ult.png", force_document=True)
         os.remove("ult.png")
 
 
