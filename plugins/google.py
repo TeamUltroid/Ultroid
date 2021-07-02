@@ -34,7 +34,9 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(pattern="google ?(.*)")
+@ultroid_cmd(
+pattern="google ?(.*)"
+)
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
@@ -46,11 +48,14 @@ async def google(event):
     except GoglError as e:
         return await eor(event, str(e))
     out = ""
-    for i in range(len(res["links"])):
-        text = res["titles"][i]
-        url = res["links"][i]
-        des = res["descriptions"][i]
-        out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
+    try:
+        for i in range(len(res["links"])):
+            text = res["titles"][i]
+            url = res["links"][i]
+            des = res["descriptions"][i]
+            out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
+    except AttributeError:
+        return await eod(event, f"`Can't find anything about {inp}`")
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = []
     for bkl in range(0, len(omk), 4095):
@@ -61,7 +66,9 @@ async def google(event):
     opn.clear()
 
 
-@ultroid_cmd(pattern="img ?(.*)")
+@ultroid_cmd(
+pattern="img ?(.*)"
+)
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
@@ -91,7 +98,9 @@ async def goimg(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="reverse")
+@ultroid_cmd(
+    pattern="reverse"
+)
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
