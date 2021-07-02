@@ -118,7 +118,7 @@ async def download(event):
         for kk in kk:
             try:
                 try:
-                    res = await uploader(kk, kk, tt, xx, "Uploading...")
+                    res = await uploader(kk, kk, tt, xx, "Uploading {kk}...")
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
@@ -171,7 +171,7 @@ async def download(event):
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{kk}/{title}`",
+                            caption=f"`{kk}`",
                             attributes=attributes,
                             supports_streaming=True,
                             thumb="resources/extras/ultroid.jpg",
@@ -180,14 +180,14 @@ async def download(event):
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{kk}/{title}`",
+                            caption=f"`{kk}`",
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
                     await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=f"`{kk}/{title}`",
+                        caption=f"`{kk}`",
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
@@ -196,7 +196,7 @@ async def download(event):
     else:
         try:
             try:
-                res = await uploader(kk, kk, tt, xx, "Uploading...")
+                res = await uploader(kk, kk, tt, xx, f"Uploading {kk}...")
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
             if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
