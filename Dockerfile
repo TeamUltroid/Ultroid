@@ -15,4 +15,6 @@ RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroi
 
 WORKDIR /root/TeamUltroid/
 
+RUN pip uninstall search-engine-parser -y
+
 RUN pip3 install --no-cache-dir -r requirements.txt
