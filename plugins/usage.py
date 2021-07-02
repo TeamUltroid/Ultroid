@@ -53,6 +53,7 @@ async def usage_finder(event):
     else:
         await eor(x, "`The what?`", time=5)
 
+
 def simple_usage():
     total, used, free = shutil.disk_usage(".")
     cpuUsage = psutil.cpu_percent()
@@ -73,6 +74,7 @@ def simple_usage():
         memory,
         disk,
     )
+
 
 def heroku_usage():
     if HEROKU_API is None and HEROKU_APP_NAME is None:
