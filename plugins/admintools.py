@@ -340,8 +340,6 @@ async def fastpurger(purg):
     done = await ultroid_bot.send_message(
         purg.chat_id,
         "__Fast purge complete!__\n**Purged** `"
-        + str(len(msgs))
-        + "` **of** `"
         + str(count)
         + "` **messages.**",
     )
@@ -420,7 +418,9 @@ async def _(e):
         )
 
 
-@ultroid_cmd(pattern="pinned")
+@ultroid_cmd(
+    pattern="pinned",
+)
 async def get_pinned(event):
     x = await eor(event, get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
@@ -442,7 +442,9 @@ async def get_pinned(event):
         return await eod(x, "There is no pinned message in chat!", time=5)
 
 
-@ultroid_cmd(pattern="listpinned")
+@ultroid_cmd(
+    pattern="listpinned",
+)
 async def get_all_pinned(event):
     x = await eor(event, get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
@@ -471,7 +473,11 @@ async def get_all_pinned(event):
     await x.edit(m + a, parse_mode="html")
 
 
-@ultroid_cmd(pattern="autodelete ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(
+pattern="autodelete ?(.*)",
+groups_only=True,
+admins_only=True,
+)
 async def autodelte(ult):  # Tg Feature
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "off"]:
