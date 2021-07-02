@@ -41,16 +41,38 @@ async def usage_finder(event):
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await x.edit(get_full_usage())
+        return await x.edit(simple_usage())
 
     if opt == "redis":
         return await x.edit(redis_usage())
     elif opt == "heroku":
         is_hk, hk = heroku_usage()
         await x.edit(hk)
+    elif opt == "full":
+        await x.edit(get_full_usage())
     else:
         await eor(x, "`The what?`", time=5)
 
+def simple_usage():
+    total, used, free = shutil.disk_usage(".")
+    cpuUsage = psutil.cpu_percent()
+    memory = psutil.virtual_memory().percent
+    disk = psutil.disk_usage("/").percent
+    upload = humanbytes(psutil.net_io_counters().bytes_sent)
+    down = humanbytes(psutil.net_io_counters().bytes_recv)
+    TOTAL = humanbytes(total)
+    USED = humanbytes(used)
+    FREE = humanbytes(free)
+    return get_string("usage_simple").format(
+        TOTAL,
+        USED,
+        FREE,
+        upload,
+        down,
+        cpuUsage,
+        memory,
+        disk,
+    )
 
 def heroku_usage():
     if HEROKU_API is None and HEROKU_APP_NAME is None:
