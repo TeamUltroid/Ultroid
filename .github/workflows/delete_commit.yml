@@ -1,0 +1,21 @@
+#For Deleting Commit
+
+name: Delete Commit
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Cloning repo
+         run: git clone -b {branch} https://{username:password}@github.com/TeamUltroid/Ultroid folder
+       - name: Deleting Commit
+         run: |
+           cd folder
+           git --reset hard {commit id}
+           git push -f
