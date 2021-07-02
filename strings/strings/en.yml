@@ -88,6 +88,15 @@ usage: "**⚙️ Dyno Usage ⚙️**:\n\n
 **CPU**: `{}%`\n
 **RAM**: `{}%`\n
 **DISK**: `{}%`"
+usage_simple: "**Total Disk Space**: `{}`\n
+**Used**: `{}`\n
+**Free**: `{}`\n\n
+**📊 Data Usage 📊\n
+**Upload**: `{}`\n
+**Down**: `{}`\n\n
+**CPU**: `{}%`\n
+**RAM**: `{}%`\n
+**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
 
 # broadcast
