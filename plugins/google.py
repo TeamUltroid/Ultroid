@@ -34,9 +34,7 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(
-pattern="google ?(.*)"
-)
+@ultroid_cmd(pattern="google ?(.*)")
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
@@ -66,9 +64,7 @@ async def google(event):
     opn.clear()
 
 
-@ultroid_cmd(
-pattern="img ?(.*)"
-)
+@ultroid_cmd(pattern="img ?(.*)")
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
@@ -98,9 +94,7 @@ async def goimg(event):
     await nn.delete()
 
 
-@ultroid_cmd(
-    pattern="reverse"
-)
+@ultroid_cmd(pattern="reverse")
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
