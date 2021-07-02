@@ -82,7 +82,7 @@ usage: "**⚙️ Dyno Usage ⚙️**:\n\n
 **Total Disk Space**: `{}`\n
 **Used**: `{}`\n
 **Free**: `{}`\n\n
-📊 Data Usage 📊\n
+**📊 Data Usage 📊**\n
 **Upload**: `{}`\n
 **Down**: `{}`\n\n
 **CPU**: `{}%`\n
@@ -91,7 +91,7 @@ usage: "**⚙️ Dyno Usage ⚙️**:\n\n
 usage_simple: "**Total Disk Space**: `{}`\n
 **Used**: `{}`\n
 **Free**: `{}`\n\n
-📊 Data Usage 📊\n
+**📊 Data Usage 📊**\n
 **Upload**: `{}`\n
 **Down**: `{}`\n\n
 **CPU**: `{}%`\n
