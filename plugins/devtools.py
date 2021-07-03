@@ -89,7 +89,7 @@ async def _(event):
                 force_document=True,
                 thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
-                caption=f"`{cmd}`",
+                caption=f"`{cmd}`" if (len(cmd)+2) < 1000 else None,
                 reply_to=reply_to_id,
             )
             await xx.delete()
