@@ -248,7 +248,7 @@ async def pin(msg):
         pass
     if not msg.is_reply:
         return
-    if not msg.is_private:
+    if not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await ultroid_bot(ExpLink(msg.chat_id, xx))).link
         mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
