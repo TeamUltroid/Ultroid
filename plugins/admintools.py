@@ -59,7 +59,6 @@ from . import *
 
 @ultroid_cmd(
     pattern="promote ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def prmte(ult):
@@ -97,7 +96,6 @@ async def prmte(ult):
 
 @ultroid_cmd(
     pattern="demote ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def dmote(ult):
@@ -135,7 +133,6 @@ async def dmote(ult):
 
 @ultroid_cmd(
     pattern="ban ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def bban(ult):
@@ -172,7 +169,6 @@ async def bban(ult):
 
 @ultroid_cmd(
     pattern="unban ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def uunban(ult):
@@ -199,7 +195,6 @@ async def uunban(ult):
 
 @ultroid_cmd(
     pattern="kick ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def kck(ult):
@@ -417,31 +412,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="pinned",
-)
-async def get_pinned(event):
-    x = await eor(event, get_string("com_1"))
-    chat_id = (str(event.chat_id)).replace("-100", "")
-    chat_name = "This Chat"
-    if not event.is_private:
-        chat_name = (await event.get_chat()).title
-    tem = ""
-    c = 0
-
-    async for i in ultroid.iter_messages(
-        event.chat_id, filter=InputMessagesFilterPinned
-    ):
-        c += 1
-        tem += f"The pinned message in {chat_name} can be found <a href=https://t.me/c/{chat_id}/{i.id}>here.</a>"
-        if c == 1:
-            return await x.edit(tem, parse_mode="html")
-
-    if tem == "":
-        return await eod(x, "There is no pinned message in chat!", time=5)
-
-
-@ultroid_cmd(
-    pattern="listpinned",
+    pattern="listpinned$",
 )
 async def get_all_pinned(event):
     x = await eor(event, get_string("com_1"))
@@ -473,7 +444,6 @@ async def get_all_pinned(event):
 
 @ultroid_cmd(
     pattern="autodelete ?(.*)",
-    groups_only=True,
     admins_only=True,
 )
 async def autodelte(ult):  # Tg Feature
