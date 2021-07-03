@@ -52,7 +52,7 @@ from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidErro
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
 from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned, Chat
 
 from . import *
 
