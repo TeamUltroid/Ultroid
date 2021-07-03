@@ -22,16 +22,9 @@ autopic_2: "No Results found for `{}`"
 autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
 
 # inline
-inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Pʟᴜɢɪɴs ~ {}**"
-inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Aᴅᴅᴏɴs ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Aᴅᴅᴏɴs ~ {}\n\n
-Dᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 
@@ -44,59 +37,21 @@ wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next ms
 wspr_2: "Message deleted"
 
 # afk
-afk_1: "`No Longer Afk\n\n
-Was away for ~ {}`"
-afk_2: "#AFK\n
-Set AFK mode to False.\n
-Was AFK for `{}`"
-afk_3: "`I'm currently AFK.\n
-Last seen {} ago.`\n\n
-**Reason:** `{}`"
-afk_4: "`I'm currently AFK.\n\n
-Last seen {} ago.`"
-afk_5: "`Going AFK.`\n\n
-**Reason:** `{}`"
+afk_1: "`No Longer Afk\n\nWas away for ~ {}`"
+afk_2: "#AFK\nSet AFK mode to False.\nWas AFK for `{}`"
+afk_3: "`I'm currently AFK.\nLast seen {} ago.`\n\n**Reason:** `{}`"
+afk_4: "`I'm currently AFK.\n\nLast seen {} ago.`"
+afk_5: "`Going AFK.`\n\n**Reason:** `{}`"
 afk_6: "I'm going AFK."
 afk_7: "Currently AFK with reason {}"
 afk_8: "Currently AFK."
 
 # bot
-alive_1: "**The Ultroid Userbot...**\n\n
-**{}**\n\n
-┏━━━━━━━━━━━━━━━━━━━━━\n
-┣ **Owner** - `{}`\n
-┣ **Version** - `{}`\n
-┣ **Py-Ultroid** - `{}`\n
-┣ **UpTime** - `{}`\n
-┣ **Python** - `{}`\n
-┣ **Telethon** - `{}`\n
-┣ **Branch** - `{}`\n
-┗━━━━━━━━━━━━━━━━━━━━━"
+alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
-usage: "**⚙️ Dyno Usage ⚙️**:\n\n
--> **Dyno usage for** `{}`:\n
-  •  **{}h**  **{}m** |** `[{}%]`\n
--> **Dyno hours quota remaining this month**:\n
-  •  **{}h**  **{}m |** `[{}%]`\n\n
-**Total Disk Space**: `{}`\n
-**Used**: `{}`\n
-**Free**: `{}`\n\n
-**📊 Data Usage 📊**\n
-**Upload**: `{}`\n
-**Down**: `{}`\n\n
-**CPU**: `{}%`\n
-**RAM**: `{}%`\n
-**DISK**: `{}%`"
-usage_simple: "**Total Disk Space**: `{}`\n
-**Used**: `{}`\n
-**Free**: `{}`\n\n
-**📊 Data Usage 📊**\n
-**Upload**: `{}`\n
-**Down**: `{}`\n\n
-**CPU**: `{}%`\n
-**RAM**: `{}%`\n
-**DISK**: `{}%`"
+usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+usage_simple: "**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
 
 # broadcast
