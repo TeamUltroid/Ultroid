@@ -52,7 +52,7 @@ async def google(event):
             url = res["links"][i]
             des = res["descriptions"][i]
             out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
-    except AttributeError:
+    except TypeError:
         return await eod(event, f"`Can't find anything about {inp}`")
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = []
