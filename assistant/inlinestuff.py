@@ -418,10 +418,12 @@ async def clip(e):
             link = "https://gutenberg.org" + link.replace("small", "medium")
             file = wb(link, 0, "image/jpeg", [])
             hm.append(
-                buil.document(
+                buil.article(
                     title=titles[rs],
+                    type="photo",
                     description="GutenBerg Search",
-                    file=file,
+                    thumb=file,
+                    content=file,
                     text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
                     buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
                 )
