@@ -415,11 +415,13 @@ async def clip(e):
         if "/cache/epub" in out[rs]["src"]:
             link = out[rs]["src"]
             num = link.split("/")[3]
+            link = "https://gutenberg.org" + link.replace("small", "medium")
+            file = wb(link, 0, "image/jpeg", [])
             hm.append(
                 buil.document(
                     title=titles[rs],
                     description="GutenBerg Search",
-                    file="https://gutenberg.org" + link.replace("small", "medium"),
+                    file=file,
                     text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
                     buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
                 )
