@@ -424,6 +424,7 @@ async def clip(e):
                     description="GutenBerg Search",
                     thumb=file,
                     content=file,
+                    include_media=True,
                     text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
                     buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
                 )
