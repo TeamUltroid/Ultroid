@@ -195,13 +195,6 @@ async def _(event):
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`\n\n"
-    # file_to_replace = await asst.send_message(  # https://github.com/sandy1709/catuserbot/blob/f70ae77a792643d5f73e49d8a07113c45d0ab170/userbot/assistant/iytdl.py#L171
-    #       int(Redis("LOG_CHANNEL")),
-    #       text + log,
-    #       file=file,
-    #      attributes=attributes,
-    #      thumb=thumb,
-    #  )
     file = await asst(
         functions.messages.UploadMediaRequest(types.InputPeerSelf(), file)
     )
@@ -209,5 +202,7 @@ async def _(event):
         text,
         file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+        attributes=attributes, 
+        thumb=thumb,
     )
     os.system(f'rm "{title}"*')
