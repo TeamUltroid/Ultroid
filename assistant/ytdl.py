@@ -202,7 +202,9 @@ async def _(event):
     #      attributes=attributes,
     #      thumb=thumb,
     #  )
-    file = await asst(functions.messages.UploadMediaRequest(types.InputPeerSelf(), file))
+    file = await asst(
+        functions.messages.UploadMediaRequest(types.InputPeerSelf(), file)
+    )
     await event.edit(
         text,
         file=file,
