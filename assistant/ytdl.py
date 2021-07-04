@@ -202,7 +202,7 @@ async def _(event):
         text,
         file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
-        attributes=attributes, 
+        attributes=attributes,
         thumb=thumb,
     )
     os.system(f'rm "{title}"*')
