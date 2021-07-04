@@ -18,7 +18,7 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
-
+from telethon.tl import functions, types
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 
@@ -195,16 +195,17 @@ async def _(event):
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`\n\n"
     log = "**For Inline YTDL**"
-    file_to_replace = await asst.send_message(  # https://github.com/sandy1709/catuserbot/blob/f70ae77a792643d5f73e49d8a07113c45d0ab170/userbot/assistant/iytdl.py#L171
-        int(Redis("LOG_CHANNEL")),
-        text + log,
-        file=file,
-        attributes=attributes,
-        thumb=thumb,
-    )
+    #file_to_replace = await asst.send_message(  # https://github.com/sandy1709/catuserbot/blob/f70ae77a792643d5f73e49d8a07113c45d0ab170/userbot/assistant/iytdl.py#L171
+ #       int(Redis("LOG_CHANNEL")),
+ #       text + log,
+ #       file=file,
+  #      attributes=attributes,
+  #      thumb=thumb,
+  #  )
+    file = await asst(functions.UploadMediaRequest(types.InputPeerSelf(), file))
     await event.edit(
         text,
-        file=file_to_replace.media,
+        file=file,
         buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}"*')
