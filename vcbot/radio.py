@@ -9,7 +9,8 @@ from . import *
 
 
 @asst.on_message(
-    filters.command(["radio", f"radio@{vcusername}"])
+    filters.command(["radio", f"radio@{vcusername}",
+                     "cradio",f"cradio@{vcusername}"])
     & filters.user(AUTH)
     & ~filters.edited
 )
@@ -19,7 +20,7 @@ async def radio(_, message):
         radio[1]
     except IndexError:
         return await eor(message, "Are You Kidding Me?\nWhat to Play?")
-    if re.search("\\|", radio[1]):
+    if "|" in radio[1]:
         ko = (radio[1]).split("|", maxsplit=1)
         chat = ko[0]
     else:
