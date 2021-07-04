@@ -52,7 +52,7 @@ async def _(event):
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"**•Tɪᴛʟᴇ•** `{title}`\n\n**••[Lɪɴᴋ]({link})••**\n\n**••Dᴜʀᴀᴛɪᴏɴ••** `{duration}`\n\n\n"
         desc = f"Title : {title}\nDuration : {duration}"
-        file = wb(thumb, 0, "image/jpeg", []),
+        file = (wb(thumb, 0, "image/jpeg", []),)
         results.append(
             await event.builder.article(
                 type="document",
