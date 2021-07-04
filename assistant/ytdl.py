@@ -14,11 +14,12 @@ from urllib.request import urlretrieve
 from numerize import numerize
 from pyUltroid.functions.all import *
 from telethon import Button
+from telethon.tl import functions, types
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
-from telethon.tl import functions, types
+
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 
@@ -134,7 +135,7 @@ async def _(event):
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
-        thumb = f"{title}.jpg"
+        f"{title}.jpg"
         duration = ytdl_data["duration"]
         os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
         c_time = time.time()
@@ -165,7 +166,7 @@ async def _(event):
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
-        thumb = f"{title}.jpg"
+        f"{title}.jpg"
         duration = ytdl_data["duration"]
         try:
             os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
@@ -194,14 +195,13 @@ async def _(event):
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`\n\n"
-    log = "**For Inline YTDL**"
-    #file_to_replace = await asst.send_message(  # https://github.com/sandy1709/catuserbot/blob/f70ae77a792643d5f73e49d8a07113c45d0ab170/userbot/assistant/iytdl.py#L171
- #       int(Redis("LOG_CHANNEL")),
- #       text + log,
- #       file=file,
-  #      attributes=attributes,
-  #      thumb=thumb,
-  #  )
+    # file_to_replace = await asst.send_message(  # https://github.com/sandy1709/catuserbot/blob/f70ae77a792643d5f73e49d8a07113c45d0ab170/userbot/assistant/iytdl.py#L171
+    #       int(Redis("LOG_CHANNEL")),
+    #       text + log,
+    #       file=file,
+    #      attributes=attributes,
+    #      thumb=thumb,
+    #  )
     file = await asst(functions.UploadMediaRequest(types.InputPeerSelf(), file))
     await event.edit(
         text,
