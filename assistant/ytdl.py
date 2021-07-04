@@ -195,8 +195,9 @@ async def _(event):
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`\n\n"
-    _, file,__= await asst._file_to_media(file, attributes=attributes,
-                                     thumb=thumb, supports_streaming=True)
+    _, file, __ = await asst._file_to_media(
+        file, attributes=attributes, thumb=thumb, supports_streaming=True
+    )
     file = await asst(
         functions.messages.UploadMediaRequest(types.InputPeerSelf(), file)
     )
