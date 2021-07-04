@@ -55,7 +55,7 @@ async def _(event):
         file = wb(thumb, 0, "image/jpeg", [])
         results.append(
             await event.builder.article(
-                type="file",
+                type="photo",
                 title=title,
                 description=desc,
                 thumb=file,
