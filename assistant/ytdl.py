@@ -135,7 +135,7 @@ async def _(event):
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
-        thumb=f"{title}.jpg"
+        thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
         os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
         c_time = time.time()
@@ -166,7 +166,7 @@ async def _(event):
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
-        thumb=f"{title}.jpg"
+        thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
         try:
             os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
