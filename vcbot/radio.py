@@ -9,8 +9,7 @@ from . import *
 
 
 @asst.on_message(
-    filters.command(["radio", f"radio@{vcusername}",
-                     "cradio",f"cradio@{vcusername}"])
+    filters.command(["radio", f"radio@{vcusername}", "cradio", f"cradio@{vcusername}"])
     & filters.user(AUTH)
     & ~filters.edited
 )
