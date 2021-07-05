@@ -33,10 +33,10 @@
 
 • `{i} gblacklist <chat id/username/nothing (for current chat)`
    Add chat to blacklist and not send global broadcasts there.
-   
+
 • `{i} ungblacklist <chat id/username/nothing (for current chat)`
    Remove the chat from blacklist adn continue sending global broadcasts there.
-   
+
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin.
     You can also set where To promote only groups or only channels or in all.
@@ -50,10 +50,10 @@
 import os
 
 from pyUltroid.functions.gban_mute_db import *
+from pyUltroid.functions.gcast_blacklist_db import *
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
-from pyUltroid.functions.gcast_blacklist_db import *
 
 from . import *
 
