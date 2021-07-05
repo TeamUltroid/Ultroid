@@ -31,6 +31,12 @@
 • `{i}gucast <Message>`
     Globally Send that msg in all Ur Chat Users.
 
+• `{i} gblacklist <chat id/username/nothing (for current chat)`
+   Add chat to blacklist and not send global broadcasts there.
+   
+• `{i} ungblacklist <chat id/username/nothing (for current chat)`
+   Remove the chat from blacklist adn continue sending global broadcasts there.
+   
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin.
     You can also set where To promote only groups or only channels or in all.
@@ -47,6 +53,7 @@ from pyUltroid.functions.gban_mute_db import *
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
+from pyUltroid.functions.gcast_blacklist_db import *
 
 from . import *
 
@@ -447,11 +454,12 @@ async def gcast(event):
     async for x in ultroid_bot.iter_dialogs():
         if x.is_group:
             chat = x.id
-            try:
-                done += 1
-                await ultroid_bot.send_message(chat, msg)
-            except BaseException:
-                er += 1
+            if not is_gblacklisted(chat):
+                try:
+                    done += 1
+                    await ultroid_bot.send_message(chat, msg)
+                except BaseException:
+                    er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
@@ -472,11 +480,12 @@ async def gucast(event):
     async for x in ultroid_bot.iter_dialogs():
         if x.is_user and not x.entity.bot:
             chat = x.id
-            try:
-                done += 1
-                await ultroid_bot.send_message(chat, msg)
-            except BaseException:
-                er += 1
+            if not is_gblacklisted(chat):
+                try:
+                    done += 1
+                    await ultroid_bot.send_message(chat, msg)
+                except BaseException:
+                    er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
@@ -641,3 +650,30 @@ async def gstat_(e):
     else:
         msg += "not Globally Banned.**"
     await xx.edit(msg)
+
+
+@ultroid_cmd(pattern="gblacklist")
+async def blacklist_(event):
+    await gblacker(event, "add")
+
+
+@ultroid_cmd(pattern="ungblacklist")
+async def ungblacker(event):
+    await glacker(event, "remove")
+
+
+async def gblacker(event, type_):
+    chat = (await event.get_chat()).id
+    try:
+        chat = int(event.text.split(" ", 1)[1])
+    except IndexError:
+        pass
+    try:
+        chat_id = (await ultroid.get_entity(chat)).id
+    except Exception as e:
+        return await eor(event, "**ERROR**\n`{}`".format(str(e)))
+    if type_ == "add":
+        add_gblacklist(chat_id)
+    elif type_ == "remove":
+        rem_gblacklist(chat_id)
+    await eor(event, "Global Broadcasts: \n{}ed {}".format(type_, chat))
