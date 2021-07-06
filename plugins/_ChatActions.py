@@ -1,3 +1,4 @@
+from pyUltroid.functions.chatBot_db import chatbot_stats
 from pyUltroid.functions.clean_db import *
 from pyUltroid.functions.forcesub_db import *
 from pyUltroid.functions.gban_mute_db import *
@@ -5,6 +6,8 @@ from pyUltroid.functions.greetings_db import *
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
+from pyUltroid.functions.chatBot_db import chatbot_stats
+from pyUltroid.functions.all import get_chatbot_reply
 
 from . import *
 
@@ -94,37 +97,42 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                     ),
                     file=med,
                 )
-            else:
-                if not is_gbanned(str(user.id)):
-                    await ult.reply(file=med)
-    if ult.user_left or ult.user_kicked:
-        if get_goodbye(ult.chat_id):
-            user = await ult.get_user()
-            chat = await ult.get_chat()
-            title = chat.title or "this chat"
-            pp = await ult.client.get_participants(chat)
-            count = len(pp)
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
-            name = user.first_name
-            last = user.last_name
-            fullname = f"{name} {last}" if last else name
-            uu = user.username
-            username = f"@{uu}" if uu else mention
-            msgg = wel["goodbye"]
-            med = wel["media"]
-            userid = user.id
-            if msgg:
-                await ult.reply(
-                    msgg.format(
-                        mention=mention,
-                        group=title,
-                        count=count,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                    ),
-                    file=med,
-                )
-            else:
+            elif not is_gbanned(str(user.id)):
                 await ult.reply(file=med)
+    if (ult.user_left or ult.user_kicked) and get_goodbye(ult.chat_id):
+        user = await ult.get_user()
+        chat = await ult.get_chat()
+        title = chat.title or "this chat"
+        pp = await ult.client.get_participants(chat)
+        count = len(pp)
+        mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+        name = user.first_name
+        last = user.last_name
+        fullname = f"{name} {last}" if last else name
+        uu = user.username
+        username = f"@{uu}" if uu else mention
+        msgg = wel["goodbye"]
+        med = wel["media"]
+        userid = user.id
+        if msgg:
+            await ult.reply(
+                msgg.format(
+                    mention=mention,
+                    group=title,
+                    count=count,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                ),
+                file=med,
+            )
+        else:
+            await ult.reply(file=med)
+
+
+@ultroid_bot.on(events.NewMessage(incoming=True))
+async def chatBot_replies(event):
+    if event.sender_id and chatbot_stats(event.sender_id):
+        message = event.text
+        await event.reply(get_chatbot_reply(event, message))
