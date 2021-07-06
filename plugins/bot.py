@@ -134,7 +134,5 @@ async def _(event):
         return await def_logs(event)
     if opt == "heroku":
         await heroku_logs(event)
-    elif opt == "sys":
-        await def_logs(event)
     else:
         await def_logs(event)
