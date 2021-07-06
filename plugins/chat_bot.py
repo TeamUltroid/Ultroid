@@ -13,10 +13,10 @@
 
 • `{i}remai <reply to user/give username/userid>`
    Remove the AI ChatBot.
-   
+
 • `{i}repai <reply to user/give a message>`
    Reply to the user with a message by an AI.
-   
+
 • `{i}listai`
    List the currently AI added users.
 """
@@ -61,7 +61,7 @@ async def lister(event):
             user = (
                 f"[{(await ultroid.get_entity(int(i))).first_name}](tg://user?id={i})"
             )
-        except:
+        except BaseException:
             user = f"`{i}`"
         msg += "- {}\n".format(user)
     await eor(event, msg, link_preview=False)

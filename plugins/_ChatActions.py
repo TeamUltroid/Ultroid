@@ -1,3 +1,4 @@
+from pyUltroid.functions.all import get_chatbot_reply
 from pyUltroid.functions.chatBot_db import chatbot_stats
 from pyUltroid.functions.clean_db import *
 from pyUltroid.functions.forcesub_db import *
@@ -6,8 +7,6 @@ from pyUltroid.functions.greetings_db import *
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
-from pyUltroid.functions.chatBot_db import chatbot_stats
-from pyUltroid.functions.all import get_chatbot_reply
 
 from . import *
 
