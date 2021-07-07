@@ -10,10 +10,10 @@ from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-from telethon.tl.custom import Button
 
 from . import *
 from ._inline import _main_help_menu
+
 
 @ultroid_cmd(
     pattern="help ?(.*)",
@@ -54,7 +54,7 @@ async def ult(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            bnn = asst.me.username
+            asst.me.username
             return await ultroid_bot.send_message(
                 ult.chat_id,
                 get_string("inline_4").format(
@@ -63,7 +63,7 @@ async def ult(ult):
                     len(ADDONS),
                     cmd,
                 ),
-                buttons=_main_help_menu
+                buttons=_main_help_menu,
             )
         except rep:
             return await eor(
