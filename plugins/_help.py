@@ -47,7 +47,7 @@ async def ult(ult):
             await eor(ult, "Error 🤔 occured.")
     else:
         try:
-            results = await ultroid_bot.inline_query(tgbot, "ultd")
+            results = await ult.client.inline_query(tgbot, "ultd")
         except BotMethodInvalidError:
             z = []
             for x in LIST.values():
