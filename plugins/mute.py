@@ -74,9 +74,7 @@ async def startmute(event):
             pass
         else:
             return await eor(xx, "`No proper admin rights...`", time=5)
-    elif "creator" in vars(chat):
-        pass
-    elif private:
+    elif "creator" in vars(chat) or private:
         pass
     else:
         return await eod(xx, "`No proper admin rights...`", time=5)
@@ -91,6 +89,7 @@ async def startmute(event):
 
 @ultroid_cmd(
     pattern="undmute ?(.*)",
+    type = ["official", "manager"]
 )
 async def endmute(event):
     xx = await eor(event, "`Unmuting...`")
@@ -125,6 +124,7 @@ async def endmute(event):
 @ultroid_cmd(
     pattern="tmute",
     groups_only=True,
+    type = ["official", "manager"]
 )
 async def _(e):
     xx = await eor(e, "`Muting...`")
@@ -175,6 +175,7 @@ async def _(e):
 @ultroid_cmd(
     pattern="unmute ?(.*)",
     groups_only=True,
+    type = ["official", "manager"]
 )
 async def _(e):
     xx = await eor(e, "`Unmuting...`")
@@ -214,6 +215,7 @@ async def _(e):
 @ultroid_cmd(
     pattern="mute ?(.*)",
     groups_only=True,
+    type = ["official", "manager"]
 )
 async def _(e):
     xx = await eor(e, "`Muting...`")
