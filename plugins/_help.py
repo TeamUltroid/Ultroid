@@ -18,7 +18,7 @@ from ._inline import _main_help_menu
 @ultroid_cmd(
     pattern="help ?(.*)",
 )
-async def ult(ult):
+async def ult_help(ult):
     plug = ult.pattern_match.group(1)
     tgbot = asst.me.username
     if plug:
@@ -55,7 +55,7 @@ async def ult(ult):
                     z.append(y)
             cmd = len(z) + 10
             asst.me.username
-            return await ultroid_bot.send_message(
+            return await ult.client.send_message(
                 ult.chat_id,
                 get_string("inline_4").format(
                     OWNER_NAME,
