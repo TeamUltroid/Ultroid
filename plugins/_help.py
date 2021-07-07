@@ -54,7 +54,6 @@ async def ult_help(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            asst.me.username
             return await ult.client.send_message(
                 ult.chat_id,
                 get_string("inline_4").format(
