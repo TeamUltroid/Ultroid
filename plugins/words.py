@@ -47,13 +47,10 @@ async def mean(event):
     if len(x) > 4096:
         with io.BytesIO(str.encode(x)) as fle:
             fle.name = f"{wrd}-meanings.txt"
-            await ultroid_bot.send_file(
-                event.chat_id,
-                out_file,
+            await event.reply(
+                file=out_file,
                 force_document=True,
-                allow_cache=False,
                 caption=f"Meanings of {wrd}",
-                reply_to=evid,
             )
             await xx.delete()
     else:
