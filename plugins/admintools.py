@@ -60,6 +60,7 @@ from . import *
 @ultroid_cmd(
     pattern="promote ?(.*)",
     admins_only=True,
+    type = ["official", "manager"]
 )
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -97,6 +98,7 @@ async def prmte(ult):
 @ultroid_cmd(
     pattern="demote ?(.*)",
     admins_only=True,
+    type = ["official", "manager"]
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -134,6 +136,7 @@ async def dmote(ult):
 @ultroid_cmd(
     pattern="ban ?(.*)",
     admins_only=True,
+    type = ["official", "manager"]
 )
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -170,6 +173,7 @@ async def bban(ult):
 @ultroid_cmd(
     pattern="unban ?(.*)",
     admins_only=True,
+    type = ["official", "manager"]
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -196,6 +200,7 @@ async def uunban(ult):
 @ultroid_cmd(
     pattern="kick ?(.*)",
     admins_only=True,
+    type = ["official", "manager"]
 )
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
@@ -230,6 +235,7 @@ async def kck(ult):
 
 @ultroid_cmd(
     pattern="pin ?(.*)",
+    type = ["official", "manager"]
 )
 async def pin(msg):
     mss = "`Pinned.`"
@@ -271,6 +277,7 @@ async def pin(msg):
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
+    type = ["official", "manager"]
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
