@@ -19,4 +19,4 @@ RUN pip uninstall search-engine-parser -y
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD ["bash", "resources/startup/startup.sh"]
+CMD bash resources/startup/startup.sh
