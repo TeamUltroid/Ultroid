@@ -22,7 +22,8 @@ from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from . import *
 
 
-@ultroid_cmd(pattern="lock ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(pattern="lock ?(.*)", groups_only=True, admins_only=True, 
+    type = ["official", "manager"])
 async def lockho(e):
     mat = e.pattern_match.group(1)
     if not mat:
@@ -35,7 +36,8 @@ async def lockho(e):
     await eor(e, f"Locked - `{mat}` ! ")
 
 
-@ultroid_cmd(pattern="unlock ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(pattern="unlock ?(.*)", groups_only=True, admins_only=True,
+    type = ["official", "manager"])
 async def unlckho(e):
     mat = e.pattern_match.group(1)
     if not mat:
