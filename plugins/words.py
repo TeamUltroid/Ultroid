@@ -31,7 +31,7 @@ dictionary = PyDictionary()
 
 @ultroid_cmd(pattern="meaning", type=["official", "manager"])
 async def mean(event):
-    evid = event.message.id
+    event.message.id
     xx = await eor(event, get_string("com_1"))
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = dictionary.meaning(wrd)
