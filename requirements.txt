@@ -1,5 +1,5 @@
 https://github.com/New-dev0/Telethon/archive/New.zip
-py-Ultroid==44.8b0
+py-Ultroid==45.7b0
 ffmpeg-python
 tabulate
 git+https://github.com/buddhhu/search-engine-parser
