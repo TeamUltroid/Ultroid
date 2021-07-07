@@ -51,10 +51,7 @@ from . import *
 from . import humanbytes as hb
 
 
-@ultroid_cmd(
-    pattern="tr",
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="tr", type=["official", "manager"])
 async def _(event):
     if len(event.text) > 3:
         if not event.text[3] == " ":
@@ -80,10 +77,7 @@ async def _(event):
         await eod(xx, str(exc), time=10)
 
 
-@ultroid_cmd(
-    pattern="id ?(.*)",
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"])
 async def _(event):
     if event.reply_to_msg_id:
         await event.get_input_chat()
