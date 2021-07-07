@@ -19,9 +19,9 @@ async def radio(_, message):
         radio[1]
     except IndexError:
         return await eor(message, "Are You Kidding Me?\nWhat to Play?")
-    if "|" in radio[1]:
-        ko = (radio[1]).split("|", maxsplit=1)
-        chat = ko[0]
+    if message.text[0] == "c":
+        ko = radio[1].split(" ", maxsplit=1)
+        chat = int(ko[0])
     else:
         chat = message.chat.id
         ko = radio
