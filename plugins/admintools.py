@@ -57,11 +57,7 @@ from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
 from . import *
 
 
-@ultroid_cmd(
-    pattern="promote ?(.*)",
-    admins_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -95,11 +91,7 @@ async def prmte(ult):
     await xx.delete()
 
 
-@ultroid_cmd(
-    pattern="demote ?(.*)",
-    admins_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="demote ?(.*)", admins_only=True, type=["official", "manager"])
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -133,11 +125,7 @@ async def dmote(ult):
     await xx.delete()
 
 
-@ultroid_cmd(
-    pattern="ban ?(.*)",
-    admins_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -170,11 +158,7 @@ async def bban(ult):
         )
 
 
-@ultroid_cmd(
-    pattern="unban ?(.*)",
-    admins_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, type=["official", "manager"])
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -197,11 +181,7 @@ async def uunban(ult):
         )
 
 
-@ultroid_cmd(
-    pattern="kick ?(.*)",
-    admins_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"])
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
         return
@@ -233,10 +213,7 @@ async def kck(ult):
         )
 
 
-@ultroid_cmd(
-    pattern="pin ?(.*)",
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
 async def pin(msg):
     mss = "`Pinned.`"
     xx = msg.reply_to_msg_id
@@ -275,10 +252,7 @@ async def pin(msg):
             pass
 
 
-@ultroid_cmd(
-    pattern="unpin($| (.*))",
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"])
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
     if not ult.is_private:
