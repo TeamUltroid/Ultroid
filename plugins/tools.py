@@ -53,6 +53,7 @@ from . import humanbytes as hb
 
 @ultroid_cmd(
     pattern="tr",
+    type = ["official", "manager"]
 )
 async def _(event):
     if len(event.text) > 3:
@@ -81,6 +82,7 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="id ?(.*)",
+    type = ["official", "manager"]
 )
 async def _(event):
     if event.reply_to_msg_id:
