@@ -87,10 +87,7 @@ async def startmute(event):
         await eod(xx, "Error: " + f"`{str(e)}`")
 
 
-@ultroid_cmd(
-    pattern="undmute ?(.*)",
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="undmute ?(.*)", type=["official", "manager"])
 async def endmute(event):
     xx = await eor(event, "`Unmuting...`")
     private = False
@@ -121,11 +118,7 @@ async def endmute(event):
         await eod(xx, "Error: " + f"`{str(e)}`")
 
 
-@ultroid_cmd(
-    pattern="tmute",
-    groups_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="tmute", groups_only=True, type=["official", "manager"])
 async def _(e):
     xx = await eor(e, "`Muting...`")
     huh = e.text.split(" ")
@@ -172,11 +165,7 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(
-    pattern="unmute ?(.*)",
-    groups_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="unmute ?(.*)", groups_only=True, type=["official", "manager"])
 async def _(e):
     xx = await eor(e, "`Unmuting...`")
     input = e.pattern_match.group(1)
@@ -212,11 +201,7 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(
-    pattern="mute ?(.*)",
-    groups_only=True,
-    type = ["official", "manager"]
-)
+@ultroid_cmd(pattern="mute ?(.*)", groups_only=True, type=["official", "manager"])
 async def _(e):
     xx = await eor(e, "`Muting...`")
     input = e.pattern_match.group(1)
