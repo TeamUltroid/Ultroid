@@ -281,6 +281,7 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="info ?(.*)",
+    type = ["official", "manager"]
 )
 async def _(event):
     xx = await eor(event, "`Processing...`")
