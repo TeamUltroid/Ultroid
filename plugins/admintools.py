@@ -173,11 +173,12 @@ async def uunban(ult):
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
-    text = f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
+    text = (
+        f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
+    )
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
-
 
 
 @ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"])
@@ -202,7 +203,9 @@ async def kck(ult):
         return await xx.edit(
             f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
-    text = f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
+    text = (
+        f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
+    )
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
@@ -241,7 +244,9 @@ async def pin(msg):
             return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await eor(msg, f"**ERROR:**`{str(e)}`")
-        if msg.out: await msg.delete()
+        if msg.out:
+            await msg.delete()
+
 
 @ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"])
 async def unp(ult):
