@@ -31,6 +31,7 @@ dictionary = PyDictionary()
 
 @ultroid_cmd(
     pattern="meaning",
+    type = ["official", "manager"]
 )
 async def mean(event):
     evid = event.message.id
