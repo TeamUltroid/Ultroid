@@ -226,7 +226,7 @@ async def pin(msg):
         pass
     if not msg.is_reply:
         return
-    if not msg.is_private and not isinstance(msg.chat, Chat):
+    if not msg.client.bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
