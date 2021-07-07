@@ -83,7 +83,7 @@ async def prmte(ult):
             ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is now an admin in {ult.chat.title} with title {rank}.`",
+            f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to promote you.`")
@@ -117,7 +117,7 @@ async def dmote(ult):
             ),
         )
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is no longer an admin in {ult.chat.title}`",
+            f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to demote you.`")
@@ -146,15 +146,17 @@ async def bban(ult):
             await reply.delete()
     except BadRequestError:
         return await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
+            f"{inline_mention(user)}**was banned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
         )
+    userme = inline_mention(user)
+    senderme = inline_mention(ult.sender)
     if reason:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
+            f"{userme} **was banned by** {senderme}**in** `{ult.chat.title}`\n**Reason**: `{reason}`",
         )
     else:
         await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was banned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
+            f"{userme} **was banned by** {senderme} **in** `{ult.chat.title}`",
         )
 
 
@@ -171,14 +173,11 @@ async def uunban(ult):
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
+    text = f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
     if reason:
-        await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
-        )
-    else:
-        await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) **was unbanned by** [{OWNER_NAME}](tg://user?id={OWNER_ID}) **in** `{ult.chat.title}`",
-        )
+        text += f"\n**Reason**: `{reason}`"
+    await xx.edit(text)
+
 
 
 @ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"])
@@ -203,14 +202,10 @@ async def kck(ult):
         return await xx.edit(
             f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
+    text = f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
     if reason:
-        await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`\n**Reason**: `{reason}`",
-        )
-    else:
-        await xx.edit(
-            f"[{user.first_name}](tg://user?id={user.id})` was kicked by` [{OWNER_NAME}](tg://user?id={OWNER_ID}) `in {ult.chat.title}`",
-        )
+        text += f"\n**Reason**: `{reason}`"
+    await xx.edit(text)
 
 
 @ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
@@ -226,7 +221,7 @@ async def pin(msg):
         pass
     if not msg.is_reply:
         return
-    if not msg.client.bot and not msg.is_private and not isinstance(msg.chat, Chat):
+    if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
@@ -246,11 +241,7 @@ async def pin(msg):
             return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await eor(msg, f"**ERROR:**`{str(e)}`")
-        try:
-            await msg.delete()
-        except BaseException:
-            pass
-
+        if msg.out: await msg.delete()
 
 @ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"])
 async def unp(ult):
