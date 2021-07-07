@@ -14,7 +14,6 @@ from urllib.request import urlretrieve
 from numerize import numerize
 from pyUltroid.functions.all import *
 from telethon import Button
-from telethon.tl import functions, types
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtube_dl import YoutubeDL
