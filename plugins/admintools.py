@@ -67,7 +67,7 @@ async def prmte(ult):
     if not user:
         return await xx.edit("`Reply to a user to promote him!`")
     try:
-        await ultroid_bot(
+        await ult.client(
             EditAdminRequest(
                 ult.chat_id,
                 user.id,
@@ -101,7 +101,7 @@ async def dmote(ult):
     if not user:
         return await xx.edit("`Reply to a user to demote him!`")
     try:
-        await ultroid_bot(
+        await ult.client(
             EditAdminRequest(
                 ult.chat_id,
                 user.id,
@@ -135,7 +135,7 @@ async def bban(ult):
     if str(user.id) in DEVLIST:
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
     try:
-        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=False)
+        await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
     except BadRequestError:
         return await xx.edit("`I don't have the right to ban a user.`")
     except UserIdInvalidError:
@@ -166,7 +166,7 @@ async def uunban(ult):
     if not user:
         return await xx.edit("`Reply to a user or give username to unban him!`")
     try:
-        await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=True)
+        await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=True)
     except BadRequestError:
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
@@ -192,10 +192,10 @@ async def kck(ult):
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
-    if user.id == ultroid_bot.uid:
-        return await xx.edit("`You Can't kick urself`")
+    if user.id == ultroid_bot.uid or asst.me.id:
+        return await xx.edit("`You Can't kick that powerhouse`")
     try:
-        await ultroid_bot.kick_participant(ult.chat_id, user.id)
+        await ult.client.kick_participant(ult.chat_id, user.id)
         await asyncio.sleep(0.5)
     except BadRequestError:
         return await xx.edit("`I don't have the right to kick a user.`")
@@ -227,13 +227,13 @@ async def pin(msg):
     if not msg.is_reply:
         return
     if not msg.is_private and not isinstance(msg.chat, Chat):
-        link = (await ultroid_bot(ExpLink(msg.chat_id, xx))).link
+        link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
         try:
-            await ultroid_bot.pin_message(msg.chat_id, xx, notify=slnt)
+            await msg.client.pin_message(msg.chat_id, xx, notify=slnt)
         except BadRequestError:
             return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
@@ -241,7 +241,7 @@ async def pin(msg):
         await eor(msg, mss)
     else:
         try:
-            await ultroid_bot.pin_message(msg.chat_id, xx, notify=False)
+            await msg.client.pin_message(msg.chat_id, xx, notify=False)
         except BadRequestError:
             return await eor(msg, "`Hmm.. Guess I have no rights here!`")
         except Exception as e:
@@ -262,14 +262,14 @@ async def unp(ult):
     msg = ult.reply_to_msg_id
     if msg and not ch:
         try:
-            await ultroid_bot.unpin_message(ult.chat_id, msg)
+            await ult.client.unpin_message(ult.chat_id, msg)
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
             return await xx.edit(f"**ERROR:**\n`{str(e)}`")
     elif ch == "all":
         try:
-            await ultroid_bot.unpin_message(ult.chat_id)
+            await ult.client.unpin_message(ult.chat_id)
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
