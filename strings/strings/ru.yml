@@ -1,8 +1,9 @@
----
 name: Russian
 natively: Русский
+
 authors:
   - marat2509
+  
 #commons
 com_1: "`Обработка...`"
 com_2: "`Поиск...`"
