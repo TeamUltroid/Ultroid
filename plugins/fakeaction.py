@@ -98,8 +98,9 @@ async def _(e):
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
 
+
 @ultroid_cmd(pattern="stopaction")
 async def do_it(e):
     async with e.client.action(e.chat_id, "cancel"):
         pass
-    await e.reply('Fake Action Stopped.')
+    await e.reply("Fake Action Stopped.")
