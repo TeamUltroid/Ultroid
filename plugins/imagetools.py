@@ -109,7 +109,7 @@ async def _(event):
     if not reply.media:
         return await eor(event, "`Reply To a Black nd White Image`")
     xx = await eor(event, "`Coloring image 🎨🖌️...`")
-    image = await ultroid_bot.download_media(reply.media)
+    image = await reply.download_media()
     img = cv2.VideoCapture(image)
     ret, frame = img.read()
     cv2.imwrite("ult.jpg", frame)
@@ -129,7 +129,7 @@ async def _(event):
             r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`"
         )
     r_json = r.json()["output_url"]
-    await ultroid_bot.send_file(event.chat_id, r_json, reply_to=reply)
+    await event.client.send_file(event.chat_id, r_json, reply_to=reply)
     await xx.delete()
 
 
@@ -509,7 +509,7 @@ async def sampl(ult):
         try:
             try:
                 await ult.delete()
-                await ultroid_bot.send_message(
+                await ult.client.send_message(
                     ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
                 )
             except MessageDeleteForbiddenError:
