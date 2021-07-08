@@ -20,7 +20,7 @@ from . import *
 @ultroid_cmd(pattern="calc")
 async def icalc(e):
     udB.delete("calc")
-    results = await ultroid_bot.inline_query(asst.me.username, "calc")
+    results = await e.client.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
     await e.delete()
 
