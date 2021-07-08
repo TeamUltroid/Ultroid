@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -20,7 +19,6 @@
 • `{i}ud <word>`
     Fetch word defenition from urbandictionary.
 """
-
 import asyncurban
 from PyDictionary import PyDictionary
 
@@ -74,7 +72,7 @@ async def mean(event):
         if len(x) > 4096:
             with io.BytesIO(str.encode(x)) as fle:
                 fle.name = f"{wrd}-synonyms.txt"
-                await ultroid_bot.send_file(
+                await event.client.send_file(
                     event.chat_id,
                     out_file,
                     force_document=True,
@@ -106,7 +104,7 @@ async def mean(event):
         if len(x) > 4096:
             with io.BytesIO(str.encode(x)) as fle:
                 fle.name = f"{wrd}-antonyms.txt"
-                await ultroid_bot.send_file(
+                await event.client.send_file(
                     event.chat_id,
                     out_file,
                     force_document=True,

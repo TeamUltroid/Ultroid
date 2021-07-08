@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -17,7 +16,6 @@
 • `{i}character <character name>`
    Fetch anime character details.
 """
-
 from os import remove
 
 import jikanpy
@@ -56,7 +54,7 @@ async def anilist(event):
             f.write(msg.replace("*", ""))
         await bash(f"wget {banner} -O {nm}.jpg")
         try:
-            await ultroid.send_file(event.chat_id, f"{nm}.txt", thumb=f"{nm}.jpg")
+            await event.reply(file=f"{nm}.txt", thumb=f"{nm}.jpg")
         except Exception as e:
             await event.reply(file=f"{nm}.txt")
             LOGS.warning(str(e))

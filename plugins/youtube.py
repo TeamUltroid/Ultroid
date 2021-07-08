@@ -1,3 +1,9 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
 ✘ Commands Available -
 
@@ -13,7 +19,6 @@
 • `{i}ytsv <(youtube) search query>`
    Search and download video from youtube.
 """
-
 from pyUltroid.functions.ytdl import *
 
 from . import *

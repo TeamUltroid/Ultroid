@@ -4,14 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
 • `{i}mediainfo <reply to media>`
    To get info about it.
 """
-
 import os
 import time
 from datetime import datetime as dt
@@ -47,7 +45,7 @@ async def mi(e):
         )
         naam = dl.name
     else:
-        naam = await ultroid_bot.download_media(r.media)
+        naam = await e.client.download_media(r.media)
     out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
     urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     if er:

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -20,7 +19,6 @@
 • `{i}reply`
     Reply the last sent msg to replied user.
 """
-
 import asyncio
 
 from telethon.events import NewMessage as NewMsg
@@ -51,11 +49,7 @@ async def delete_it(delme):
             await msg_src.delete()
             await delme.delete()
         except Exception as e:
-            await eod(
-                delme,
-                f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`",
-                time=5,
-            )
+            await eod(delme, f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`")
 
 
 @ultroid_cmd(
@@ -68,7 +62,7 @@ async def copy(e):
             await eor(e, reply.text)
         else:
             await reply.reply(reply)
-            if e.sender_id == ultroid_bot.uid:
+            if e.out:
                 await e.delete()
     else:
         await eod(e, "`Reply To any message`")
@@ -90,7 +84,7 @@ async def editer(edit):
             pass
     else:
         i = 1
-        async for message in ultroid_bot.iter_messages(chat, ultroid_bot.uid):
+        async for message in edit.client.iter_messages(chat, ultroid_bot.uid):
             if i == 2:
                 await message.edit(string)
                 await edit.delete()

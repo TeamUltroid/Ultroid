@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -22,7 +21,6 @@ Specify FBan Group and Feds to exclude in the assistant.
 • `{i}fedinfo <(fedid)>`
     Collect federation info of the given fed id, or of the fed you own, from Rose.
 """
-
 import asyncio
 import os
 
@@ -39,7 +37,7 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.media:
-            downloaded_file_name = await ultroid.download_media(
+            downloaded_file_name = await event.client.download_media(
                 previous_message,
                 "fedlist",
             )
@@ -85,7 +83,7 @@ async def _(event):
         except BaseException:
             return await msg.edit("Give username or id.")
     try:
-        x = await ultroid_bot.get_entity(usr)
+        x = await event.client.get_entity(usr)
         uid = x.id
     except BaseException:
         return await msg.edit("Incorrect user was designated.")
@@ -100,7 +98,7 @@ async def _(event):
     fedList = []
     if not len(fedList):
         for a in range(3):
-            async with ultroid.conversation("@MissRose_bot") as bot_conv:
+            async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
                 await asyncio.sleep(3)
                 await bot_conv.send_message("/myfeds")
@@ -175,9 +173,9 @@ async def _(event):
             await ultroid.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
-        await ultroid.send_message(chat, f"/joinfed {fed}")
+        await event.client.send_message(chat, f"/joinfed {fed}")
         await asyncio.sleep(3)
-        await ultroid.send_message(chat, f"/fban {uid} {REASON}")
+        await event.client.send_message(chat, f"/fban {uid} {REASON}")
         await asyncio.sleep(3)
     try:
         os.remove("fedlist")
@@ -241,7 +239,7 @@ async def _(event):
         chat = await event.get_chat()
     if not len(fedList):
         for a in range(3):
-            async with ultroid.conversation("@MissRose_bot") as bot_conv:
+            async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
                 await asyncio.sleep(3)
                 await bot_conv.send_message("/myfeds")
@@ -301,7 +299,7 @@ async def _(event):
             return
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
-        await ultroid.send_message(chat, f"/start")
+        await event.client.send_message(chat, f"/start")
     except BaseException:
         await msg.edit("Specified FBan Group ID is incorrect.")
         return
@@ -313,7 +311,7 @@ async def _(event):
     exCount = 0
     for fed in fedList:
         if udB.get("EXCLUDE_FED") and fed in excludeFed:
-            await ultroid.send_message(chat, f"{fed} Excluded.")
+            await event.client.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
         await ultroid.send_message(chat, f"/joinfed {fed}")
@@ -347,7 +345,7 @@ async def _(event):
         )
         return
     else:
-        async with ultroid.conversation(bot) as conv:
+        async with event.client.conversation(bot) as conv:
             try:
                 await conv.send_message("/start")
                 await conv.get_response()
@@ -361,7 +359,7 @@ async def _(event):
                     await audio.click(0)
                     await asyncio.sleep(2)
                     audio = await conv.get_response()
-                    await ultroid.send_file(
+                    await event.client.send_file(
                         event.chat_id,
                         audio,
                         caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
@@ -380,7 +378,7 @@ async def _(event):
 async def _(event):
     ok = await event.edit("`Extracting information...`")
     sysarg = event.pattern_match.group(1)
-    async with ultroid.conversation(bot) as conv:
+    async with event.client.conversation(bot) as conv:
         try:
             await conv.send_message("/start")
             await conv.get_response()

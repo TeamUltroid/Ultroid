@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,7 +18,6 @@
     Reply to file to download.
 
 """
-
 import glob
 import os
 import time
@@ -282,7 +280,7 @@ async def download(event):
                     size += os.path.getsize(fp)
             c = len(os.listdir(kk))
             await xx.delete()
-            await ultroid_bot.send_message(
+            await event.client.send_message(
                 event.chat_id,
                 f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
             )

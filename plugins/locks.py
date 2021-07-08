@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -15,7 +14,6 @@
     UNLOCK the Used Setting in Used Group.
 
 """
-
 from pyUltroid.functions.all import lucks, unlucks
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
@@ -36,7 +34,7 @@ async def lockho(e):
         ml = lucks(mat)
     except BaseException:
         return await eod(e, "`Incorrect Input`")
-    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Locked - `{mat}` ! ")
 
 
@@ -54,5 +52,5 @@ async def unlckho(e):
         ml = unlucks(mat)
     except BaseException:
         return await eod(e, "`Incorrect Input`")
-    await ultroid_bot(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Unlocked - `{mat}` ! ")

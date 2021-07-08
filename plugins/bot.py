@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -29,7 +28,6 @@
 • `{i}shutdown`
     Turn off your bot.
 """
-
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
@@ -67,16 +65,14 @@ async def lol(ult):
         return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
         try:
-            await ultroid_bot.send_message(
-                ult.chat_id, als, file=pic, link_preview=False
-            )
+            await ult.reply(als, file=pic, link_preview=False)
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
     else:
         try:
-            await ultroid_bot.send_message(ult.chat_id, file=pic)
-            await ultroid_bot.send_message(ult.chat_id, als, link_preview=False)
+            await ult.reply(file=pic)
+            await ult.reply(als, link_preview=False)
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)

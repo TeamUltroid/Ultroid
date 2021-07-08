@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -65,9 +64,8 @@ async def siesace(e):
         lol,
         "Uploading " + title + "...",
     )
-    await ultroid_bot.send_file(
-        e.chat_id,
-        okk,
+    await e.reply(
+        file=okk,
         caption="`" + title + "`" + "\n`From Deezer`",
         attributes=[
             DocumentAttributeAudio(

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -44,7 +43,6 @@
 • `{i}purgeall`
     Delete all msgs of replied user.
 """
-
 import asyncio
 
 from telethon.errors import BadRequestError
@@ -163,7 +161,6 @@ async def bban(ult):
 @ultroid_cmd(pattern="unban ?(.*)", admins_only=True, type=["official", "manager"])
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
-    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to unban him!`")
@@ -192,7 +189,7 @@ async def kck(ult):
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
-    if user.id == ultroid_bot.uid or asst.me.id:
+    if user.id in [ultroid_bot.uid, asst.me.id]:
         return await xx.edit("`You Can't kick that powerhouse`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
@@ -277,9 +274,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(
-    pattern="purge ?(.*)",
-)
+@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"])
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
@@ -291,7 +286,7 @@ async def fastpurger(purg):
         return
     if match and not purg.is_reply:
         p = 0
-        async for msg in ultroid_bot.iter_messages(purg.chat_id, limit=int(match)):
+        async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
             p += 0
         return await eod(purg, f"Purged {p} Messages! ")
@@ -299,22 +294,20 @@ async def fastpurger(purg):
     count = 0
     if not (purg.reply_to_msg_id or match):
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
-    async for msg in ultroid_bot.iter_messages(chat, min_id=purg.reply_to_msg_id):
+    async for msg in purg.client.iter_messages(chat, min_id=purg.reply_to_msg_id):
         msgs.append(msg)
         count = count + 1
         msgs.append(purg.reply_to_msg_id)
         if len(msgs) == 100:
-            await ultroid_bot.delete_messages(chat, msgs)
+            await purg.client.delete_messages(chat, msgs)
             msgs = []
 
     if msgs:
-        await ultroid_bot.delete_messages(chat, msgs)
-    done = await ultroid_bot.send_message(
-        purg.chat_id,
+        await purg.client.delete_messages(chat, msgs)
+    await eod(
+        purg,
         "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
-    await asyncio.sleep(5)
-    await done.delete()
 
 
 @ultroid_cmd(
@@ -329,7 +322,7 @@ async def fastpurgerme(purg):
             await eod(purg, "`Give a Valid Input.. `")
             return
         mp = 0
-        async for mm in ultroid_bot.iter_messages(
+        async for mm in purg.client.iter_messages(
             purg.chat_id, limit=nnt, from_user="me"
         ):
             await mm.delete()
@@ -345,7 +338,7 @@ async def fastpurgerme(purg):
             "`Reply to a message to purge from or use it like ``purgeme <num>`",
             time=10,
         )
-    async for msg in ultroid_bot.iter_messages(
+    async for msg in purg.client.iter_messages(
         chat,
         from_user="me",
         min_id=purg.reply_to_msg_id,
@@ -358,13 +351,11 @@ async def fastpurgerme(purg):
             msgs = []
 
     if msgs:
-        await ultroid_bot.delete_messages(chat, msgs)
-    done = await ultroid_bot.send_message(
-        purg.chat_id,
+        await purg.client.delete_messages(chat, msgs)
+    await eod(
+        purg,
         "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
-    await asyncio.sleep(5)
-    await done.delete()
 
 
 @ultroid_cmd(
@@ -373,18 +364,16 @@ async def fastpurgerme(purg):
 async def _(e):
     xx = await eor(e, get_string("com_1"))
     if e.reply_to_msg_id:
-        input = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(input)).first_name
+        name = (await e.get_reply_message()).sender
         try:
-            await ultroid_bot(DeleteUserHistoryRequest(e.chat_id, input))
-            await eod(e, f"Successfully Purged All Messages from {name}")
+            await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
+            await eod(e, f"Successfully Purged All Messages from {name.first_name}")
         except Exception as er:
-            return await eod(xx, str(er), time=5)
+            return await eod(xx, str(er))
     else:
         return await eod(
             xx,
             "`Reply to someone's msg to delete.`",
-            time=5,
         )
 
 
@@ -397,7 +386,7 @@ async def get_all_pinned(event):
     chat_name = (await event.get_chat()).title
     a = ""
     c = 1
-    async for i in ultroid.iter_messages(
+    async for i in event.client.iter_messages(
         event.chat_id, filter=InputMessagesFilterPinned
     ):
         if i.message:
@@ -414,7 +403,7 @@ async def get_all_pinned(event):
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
     if a == "":
-        return await eod(x, "There is no message pinned in this group!", time=5)
+        return await eod(x, "There is no message pinned in this group!")
 
     await x.edit(m + a, parse_mode="html")
 
@@ -434,7 +423,7 @@ async def autodelte(ult):  # Tg Feature
     else:
         tt = 0
     try:
-        await ultroid_bot(SetHistoryTTLRequest(ult.chat_id, period=tt))
+        await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
         return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
     await eor(ult, f"Auto Delete Status Changed to {match} !")

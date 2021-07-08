@@ -4,14 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
 •`{i}megadl <link>`
   It Downloads and Upload Files from mega.nz links.
 """
-
 import time
 from datetime import datetime
 
@@ -35,7 +33,7 @@ async def _(e):
     for kk in ok:
         try:
             res = await uploader(kk, kk, tt, xx, "Uploading...")
-            await ultroid_bot.send_file(
+            await e.client.send_file(
                 e.chat_id,
                 res,
                 caption="`" + kk.split("/")[-1] + "`",
@@ -53,7 +51,7 @@ async def _(e):
             fp = os.path.join(path, f)
             size += os.path.getsize(fp)
     await xx.delete()
-    await ultroid_bot.send_message(
+    await e.client.send_message(
         e.chat_id,
         f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
     )

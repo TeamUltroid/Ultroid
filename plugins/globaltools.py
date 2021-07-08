@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -46,7 +45,6 @@
 •`{i}gdemote`
     Same function as gpromote.
 """
-
 import os
 
 from pyUltroid.functions.gban_mute_db import *
@@ -101,11 +99,11 @@ async def _(e):
             user.id = user.peer_id.user_id
         else:
             user.id = user.from_id.user_id
-        async for x in ultroid_bot.iter_dialogs():
+        async for x in e.client.iter_dialogs():
             if "group" in key.lower():
                 if x.is_group:
                     try:
-                        await ultroid_bot(
+                        await e.client(
                             EditAdminRequest(
                                 x.id,
                                 user.id,
@@ -119,7 +117,7 @@ async def _(e):
             elif "channel" in key.lower():
                 if x.is_channel:
                     try:
-                        await ultroid_bot(
+                        await e.client(
                             EditAdminRequest(
                                 x.id,
                                 user.id,
@@ -133,7 +131,7 @@ async def _(e):
             else:
                 if x.is_group or x.is_channel:
                     try:
-                        await ultroid_bot(
+                        await e.client(
                             EditAdminRequest(
                                 x.id,
                                 user.id,
@@ -153,7 +151,7 @@ async def _(e):
         if user.isdigit():
             user = int(user)
         try:
-            name = await ultroid_bot.get_entity(user)
+            name = await e.client.get_entity(user)
         except BaseException:
             return await eod(e, f"`No User Found Regarding {user}`")
         ev = await eor(e, f"`Promoting {name.first_name} globally.`")
@@ -165,7 +163,7 @@ async def _(e):
         if len(k) > 3:
             rank = k[3]
         c = 0
-        async for x in ultroid_bot.iter_dialogs():
+        async for x in e.client.iter_dialogs():
             if "group" in key.lower():
                 if x.is_group:
                     try:
@@ -234,7 +232,7 @@ async def _(e):
                 key = ok[1]
         rank = "Not AdMin"
         c = 0
-        async for x in ultroid_bot.iter_dialogs():
+        async for x in e.client.iter_dialogs():
             if "group" in key.lower():
                 if x.is_group:
                     try:
@@ -451,7 +449,7 @@ async def gcast(event):
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
-    async for x in ultroid_bot.iter_dialogs():
+    async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
             if not is_gblacklisted(chat):
@@ -477,7 +475,7 @@ async def gucast(event):
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
-    async for x in ultroid_bot.iter_dialogs():
+    async for x in event.client.iter_dialogs():
         if x.is_user and not x.entity.bot:
             chat = x.id
             if not is_gblacklisted(chat):
@@ -511,7 +509,7 @@ async def gkick(e):
     async for gkick in e.client.iter_dialogs():
         if gkick.is_group or gkick.is_channel:
             try:
-                await ultroid_bot.kick_participant(gkick.id, userid)
+                await e.client.kick_participant(gkick.id, userid)
                 chats += 1
             except BaseException:
                 pass
@@ -607,7 +605,7 @@ async def list_gengbanned(event):
         f.close()
         await x.reply(
             file="gbanned.txt",
-            caption=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+            message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
         )
         os.remove("gbanned.txt")
         await x.delete()

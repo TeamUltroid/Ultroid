@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -24,10 +23,10 @@ async def saf(e):
         return await eod(
             e, "Reply to Any Message to save it to ur saved messages", time=5
         )
-    if e.sender_id == ultroid_bot.uid:
-        await ultroid_bot.send_message("me", x)
+    if e.out:
+        await e.client.send_message("me", x)
     else:
-        await ultroid_bot.send_message(e.sender_id, x)
+        await e.client.send_message(e.sender_id, x)
     await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
 
 
@@ -38,7 +37,7 @@ async def saf(e):
         return await eod(
             e, "Reply to Any Message to save it to ur saved messages", time=5
         )
-    if e.sender_id == ultroid_bot.uid:
+    if e.out:
         await x.forward_to("me")
     else:
         await x.forward_to(e.sender_id)

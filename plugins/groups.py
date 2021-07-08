@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -17,8 +16,6 @@
 • `{i}rmusers`
     Remove users specifically.
 """
-
-
 from telethon.tl.functions.channels import EditBannedRequest, EditPhotoRequest
 from telethon.tl.types import (
     ChannelParticipantsKicked,
@@ -40,11 +37,11 @@ async def _(ult):
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
     replfile = await reply_message.download_media()
-    file = await ultroid_bot.upload_file(replfile)
+    file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
         if "pic" in mediain:
-            await ultroid_bot(EditPhotoRequest(ult.chat_id, file))
+            await ult.client(EditPhotoRequest(ult.chat_id, file))
         else:
             return await eod(ult, "`Invalid MEDIA Type !`")
         await eod(ult, "`Group Photo has Successfully Changed !`")

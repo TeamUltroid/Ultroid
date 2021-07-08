@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -27,7 +26,6 @@
 • `{i}thumbnail <reply to image/thumbnail file>`
     Upload Your file with your custom thumbnail.
 """
-
 import os
 import time
 
@@ -51,10 +49,10 @@ async def _(e):
     if not r:
         return await eor(e, pop)
     if isinstance(r.media, photu):
-        dl = await ultroid_bot.download_media(r.media)
+        dl = await e.client.download_media(r.media)
     elif isinstance(r.media, doc):
         if r.media.document.thumbs:
-            dl = await ultroid_bot.download_media(r, thumb=-1)
+            dl = await e.client.download_media(r, thumb=-1)
         else:
             return await eor(e, pop)
     variable = uf(dl)
@@ -91,13 +89,11 @@ async def imak(event):
     os.rename(file, inp)
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
-    await ultroid_bot.send_file(
-        event.chat_id,
-        xxx,
+    await event.reply(
+        file=xxx,
         force_document=True,
         thumb="resources/extras/ultroid.jpg",
         caption=f"`{xxx.name}`",
-        reply_to=reply,
     )
     os.remove(inp)
     await xx.delete()
@@ -112,7 +108,7 @@ async def imak(event):
         await eor(event, "Reply to any media.")
         return
     xx = await eor(event, "`Processing...`")
-    image = await ultroid_bot.download_media(reply)
+    image = await event.client.download_media(reply)
     file = "ult.png"
     if image.endswith((".webp", ".png")):
         c = Image.open(image)
@@ -121,7 +117,7 @@ async def imak(event):
         img = cv2.VideoCapture(image)
         ult, roid = img.read()
         cv2.imwrite(file, roid)
-    await ultroid_bot.send_file(event.chat_id, file, reply_to=reply)
+    await event.reply(file=file)
     await xx.delete()
     os.remove(file)
     os.remove(image)
@@ -136,7 +132,7 @@ async def smak(event):
         await eor(event, "Reply to any media.")
         return
     xx = await eor(event, "`Processing...`")
-    image = await ultroid_bot.download_media(reply)
+    image = await event.client.download_media(reply)
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
         c = Image.open(image)
@@ -145,7 +141,7 @@ async def smak(event):
         img = cv2.VideoCapture(image)
         ult, roid = img.read()
         cv2.imwrite(file, roid)
-    await ultroid_bot.send_file(event.chat_id, file, reply_to=reply)
+    await event.reply(file=file)
     await xx.delete()
     os.remove(file)
     os.remove(image)
@@ -198,12 +194,8 @@ async def _(event):
                     await xx.edit(
                         f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
                     )
-                elif "dog" in what:
-                    await xx.edit(
-                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [DOGBIN](https://del.dog/{key})"
-                    )
             os.remove(b)
         else:
-            return await eod(xx, "`Reply to a readable file`", time=5)
+            return await eod(xx, "`Reply to a readable file`")
     else:
-        return await eod(xx, "`Reply to a readable file`", time=5)
+        return await eod(xx, "`Reply to a readable file`")

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -27,8 +26,6 @@
     d- days
     Mute user in current chat with time.
 """
-
-
 from pyUltroid.functions.all import ban_time
 from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from telethon import events
@@ -233,7 +230,6 @@ async def _(e):
         await eod(
             xx,
             f"`Successfully Muted` [{name}](tg://user?id={userid}) `in {chat.title}`",
-            time=5,
         )
     except BaseException as m:
         await eod(xx, f"`{str(m)}`")

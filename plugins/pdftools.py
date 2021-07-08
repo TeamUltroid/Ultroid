@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -25,7 +24,6 @@
 • `{i}pdsend `
     Merge nd send the Pdf to collected from .pdsave.
 """
-
 import glob
 import os
 import shutil
@@ -299,7 +297,7 @@ async def savepdf(event):
         os.remove("o.png")
     elif ultt.endswith(".pdf"):
         a = dani_ck("pdf/scan.pdf")
-        await ultroid_bot.download_media(ok, a)
+        await event.client.download_media(ok, a)
         await eor(
             event,
             f"Done, Now Reply Another Image/pdf if completed then use {hndlr}pdsend to merge nd send all as pdf",
