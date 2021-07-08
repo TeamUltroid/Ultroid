@@ -53,8 +53,7 @@ async def delete_it(delme):
         except Exception as e:
             await eod(
                 delme,
-                f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`",
-                time=5,
+                f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`"
             )
 
 
@@ -68,7 +67,7 @@ async def copy(e):
             await eor(e, reply.text)
         else:
             await reply.reply(reply)
-            if e.sender_id == ultroid_bot.uid:
+            if e.out:
                 await e.delete()
     else:
         await eod(e, "`Reply To any message`")
@@ -90,7 +89,7 @@ async def editer(edit):
             pass
     else:
         i = 1
-        async for message in ultroid_bot.iter_messages(chat, ultroid_bot.uid):
+        async for message in edit.client.iter_messages(chat, ultroid_bot.uid):
             if i == 2:
                 await message.edit(string)
                 await edit.delete()
