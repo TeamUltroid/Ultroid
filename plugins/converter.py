@@ -41,8 +41,7 @@ opn = []
 
 
 @ultroid_cmd(
-    pattern="thumbnail$",
-)
+    pattern="thumbnail$", )
 async def _(e):
     r = await e.get_reply_message()
     pop = "`Reply to img or file with thumbnail.`"
@@ -60,12 +59,13 @@ async def _(e):
     nn = "https://telegra.ph" + variable[0]
     udB.set("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
-    await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
+    await eor(e,
+              f"Added [This]({nn}) As Your Custom Thumbnail",
+              link_preview=False)
 
 
 @ultroid_cmd(
-    pattern="rename ?(.*)",
-)
+    pattern="rename ?(.*)", )
 async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
@@ -80,9 +80,8 @@ async def imak(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
-                reply.file.name, reply.media.document, xx, t, "Downloading..."
-            )
+            image = await downloader(reply.file.name, reply.media.document, xx,
+                                     t, "Downloading...")
             file = image.name
         else:
             file = await event.download_media(reply)
@@ -100,8 +99,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-    pattern="mtoi$",
-)
+    pattern="mtoi$", )
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -124,8 +122,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-    pattern="mtos$",
-)
+    pattern="mtos$", )
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -148,8 +145,7 @@ async def smak(event):
 
 
 @ultroid_cmd(
-    pattern="doc ?(.*)",
-)
+    pattern="doc ?(.*)", )
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
@@ -164,16 +160,15 @@ async def _(event):
             b.write(str(a.message))
             b.close()
             await xx.edit(f"**Packing into** `{input_str}`")
-            await event.client.send_file(
-                event.chat_id, input_str, thumb="resources/extras/ultroid.jpg"
-            )
+            await event.client.send_file(event.chat_id,
+                                         input_str,
+                                         thumb="resources/extras/ultroid.jpg")
             await xx.delete()
             os.remove(input_str)
 
 
 @ultroid_cmd(
-    pattern="open$",
-)
+    pattern="open$", )
 async def _(event):
     xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:

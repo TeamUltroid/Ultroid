@@ -22,8 +22,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="saavn ?(.*)",
-)
+    pattern="saavn ?(.*)", )
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
@@ -48,9 +47,8 @@ async def siesace(e):
         return await eod(lol, f"`{str(ex)}`")
     urlretrieve(urrl, title + ".mp3")
     urlretrieve(img, title + ".jpg")
-    okk = await uploader(
-        title + ".mp3", title + ".mp3", hmm, lol, "Uploading " + title + "..."
-    )
+    okk = await uploader(title + ".mp3", title + ".mp3", hmm, lol,
+                         "Uploading " + title + "...")
     await e.reply(
         file=okk,
         message="`" + title + "`" + "\n`From Saavn`",

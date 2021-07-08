@@ -51,7 +51,9 @@ async def _(e):
     tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
     lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
     lst.append([Button.inline("=", data="calc=")])
-    calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
+    calc = e.builder.article("Calc",
+                             text="• Ultroid Inline Calculator •",
+                             buttons=lst)
     await e.answer([calc])
 
 
@@ -96,7 +98,9 @@ async def _(e):
             out = await calcc(get, e)
             try:
                 num = float(out)
-                return await e.answer(f"Answer : {num}", cache_time=0, alert=True)
+                return await e.answer(f"Answer : {num}",
+                                      cache_time=0,
+                                      alert=True)
             except BaseException:
                 udB.delete("calc")
                 return await e.answer("Error", cache_time=0, alert=True)

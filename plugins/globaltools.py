@@ -76,8 +76,7 @@ _gdemote_rights = ChatAdminRights(
 
 
 @ultroid_cmd(
-    pattern="gpromote ?(.*)",
-)
+    pattern="gpromote ?(.*)", )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eod(e, "`This Command Is Sudo Restricted.`")
@@ -110,8 +109,7 @@ async def _(e):
                                 user.id,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -124,8 +122,7 @@ async def _(e):
                                 user.id,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -138,16 +135,17 @@ async def _(e):
                                 user.id,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except Exception as er:
                         LOGS.info(er)
-        return await eor(ev, f"Promoted The Replied Users in Total : {c} {key} chats")
+        return await eor(
+            ev, f"Promoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split()
         if not k[1]:
-            return await eod(e, "`Give someone's username/id or replied to user.")
+            return await eod(
+                e, "`Give someone's username/id or replied to user.")
         user = k[1]
         if user.isdigit():
             user = int(user)
@@ -174,8 +172,7 @@ async def _(e):
                                 user,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -188,8 +185,7 @@ async def _(e):
                                 user,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -202,17 +198,16 @@ async def _(e):
                                 user,
                                 _gpromote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
-        return await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
+        return await eor(
+            ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
 
 
 @ultroid_cmd(
-    pattern="gdemote ?(.*)",
-)
+    pattern="gdemote ?(.*)", )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eod(e, "`This Command Is Sudo Restricted.`")
@@ -243,8 +238,7 @@ async def _(e):
                                 user.id,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -257,8 +251,7 @@ async def _(e):
                                 user.id,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -271,16 +264,17 @@ async def _(e):
                                 user.id,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
-        return await eor(ev, f"Demoted The Replied Users in Total : {c} {key} chats")
+        return await eor(
+            ev, f"Demoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split()
         if not k[1]:
-            return await eod(e, "`Give someone's username/id or replied to user.")
+            return await eod(
+                e, "`Give someone's username/id or replied to user.")
         user = k[1]
         if user.isdigit():
             user = int(user)
@@ -305,8 +299,7 @@ async def _(e):
                                 user,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -319,8 +312,7 @@ async def _(e):
                                 user,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
@@ -333,17 +325,16 @@ async def _(e):
                                 user,
                                 _gdemote_rights,
                                 rank,
-                            ),
-                        )
+                            ), )
                         c += 1
                     except BaseException:
                         pass
-        return await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
+        return await eor(
+            ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
 
 
 @ultroid_cmd(
-    pattern="ungban ?(.*)",
-)
+    pattern="ungban ?(.*)", )
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
     if e.reply_to_msg_id:
@@ -361,7 +352,9 @@ async def _(e):
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
-                await e.client.edit_permissions(ggban.id, userid, view_messages=True)
+                await e.client.edit_permissions(ggban.id,
+                                                userid,
+                                                view_messages=True)
                 chats += 1
             except BaseException:
                 pass
@@ -377,8 +370,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="gban ?(.*)",
-)
+    pattern="gban ?(.*)", )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eor(e, "`This Command Is Sudo Restricted.`")
@@ -420,7 +412,9 @@ async def _(e):
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
-                await e.client.edit_permissions(ggban.id, userid, view_messages=False)
+                await e.client.edit_permissions(ggban.id,
+                                                userid,
+                                                view_messages=False)
                 chats += 1
             except BaseException:
                 pass
@@ -437,8 +431,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="gcast ?(.*)",
-)
+    pattern="gcast ?(.*)", )
 async def gcast(event):
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
@@ -463,8 +456,7 @@ async def gcast(event):
 
 
 @ultroid_cmd(
-    pattern="gucast ?(.*)",
-)
+    pattern="gucast ?(.*)", )
 async def gucast(event):
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
@@ -489,8 +481,7 @@ async def gucast(event):
 
 
 @ultroid_cmd(
-    pattern="gkick ?(.*)",
-)
+    pattern="gkick ?(.*)", )
 async def gkick(e):
     xx = await eor(e, "`Gkicking...`")
     if e.reply_to_msg_id:
@@ -514,12 +505,12 @@ async def gkick(e):
                 chats += 1
             except BaseException:
                 pass
-    await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(
+        f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(
-    pattern="gmute ?(.*)",
-)
+    pattern="gmute ?(.*)", )
 async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eor(e, "`This Command Is Sudo Restricted.`")
@@ -543,17 +534,19 @@ async def _(e):
     async for onmute in e.client.iter_dialogs():
         if onmute.is_group:
             try:
-                await e.client.edit_permissions(onmute.id, userid, send_messages=False)
+                await e.client.edit_permissions(onmute.id,
+                                                userid,
+                                                send_messages=False)
                 chats += 1
             except BaseException:
                 pass
     gmute(userid)
-    await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(
+        f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(
-    pattern="ungmute ?(.*)",
-)
+    pattern="ungmute ?(.*)", )
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
     if e.reply_to_msg_id:
@@ -571,17 +564,19 @@ async def _(e):
     async for hurr in e.client.iter_dialogs():
         if hurr.is_group:
             try:
-                await e.client.edit_permissions(hurr.id, userid, send_messages=True)
+                await e.client.edit_permissions(hurr.id,
+                                                userid,
+                                                send_messages=True)
                 chats += 1
             except BaseException:
                 pass
     ungmute(userid)
-    await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(
+        f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(
-    pattern="listgban",
-)
+    pattern="listgban", )
 async def list_gengbanned(event):
     users = gbanned_user()
     x = await eor(event, get_string("com_1"))
@@ -606,7 +601,8 @@ async def list_gengbanned(event):
         f.close()
         await x.reply(
             file="gbanned.txt",
-            message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+            message=
+            f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
         )
         os.remove("gbanned.txt")
         await x.delete()
@@ -615,8 +611,7 @@ async def list_gengbanned(event):
 
 
 @ultroid_cmd(
-    pattern="gstat ?(.*)",
-)
+    pattern="gstat ?(.*)", )
 async def gstat_(e):
     xx = await eor(e, get_string("com_1"))
     if e.is_private:
@@ -626,12 +621,16 @@ async def gstat_(e):
     elif e.pattern_match.group(1):
         if (e.pattern_match.group(1)).isdigit():
             try:
-                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
+                userid = (await
+                          e.client.get_entity(int(e.pattern_match.group(1))
+                                              )).id
             except ValueError as err:
                 return await eod(xx, f"{str(err)}", time=5)
         else:
             try:
-                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
+                userid = (await
+                          e.client.get_entity(str(e.pattern_match.group(1))
+                                              )).id
             except ValueError as err:
                 return await eod(xx, f"{str(err)}", time=5)
     else:

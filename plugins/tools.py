@@ -66,7 +66,9 @@ async def _(event):
         text = txt
         lan = input or "en"
     else:
-        return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
+        return await eod(xx,
+                         f"`{hndlr}tr LanguageCode` as reply to a message",
+                         time=5)
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
@@ -85,7 +87,8 @@ async def _(event):
             bot_api_file_id = pack_bot_file_id(r_msg.media)
             await eor(
                 event,
-                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`".format(
+                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`"
+                .format(
                     str(event.chat_id),
                     str(r_msg.sender_id),
                     bot_api_file_id,
@@ -109,7 +112,8 @@ async def _(event):
             ),
         )
     else:
-        await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
+        await eor(event,
+                  "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
 
 @ultroid_cmd(pattern="bots ?(.*)", groups_only=True)
@@ -129,8 +133,8 @@ async def _(ult):
             return None
     try:
         async for x in ult.client.iter_participants(
-            chat,
-            filter=ChannelParticipantsBots,
+                chat,
+                filter=ChannelParticipantsBots,
         ):
             if isinstance(x.participant, ChannelParticipantAdmin):
                 mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
@@ -150,8 +154,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="hl",
-)
+    pattern="hl", )
 async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
@@ -161,8 +164,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="circle$",
-)
+    pattern="circle$", )
 async def _(e):
     a = await e.get_reply_message()
     if a is None:
@@ -200,10 +202,13 @@ async def _(e):
             f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4'
         )
         taime = time.time()
-        foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
+        foile = await uploader("circle.mp4", "circle.mp4", taime, z,
+                               "Uᴘʟᴏᴀᴅɪɴɢ...")
         metadata = extractMetadata(createParser("circle.mp4"))
         duration = metadata.get("duration").seconds
-        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
+        attributes = [
+            video(duration=duration, w=320, h=320, round_message=True)
+        ]
         await e.client.send_file(
             e.chat_id,
             foile,
@@ -231,8 +236,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="ls ?(.*)",
-)
+    pattern="ls ?(.*)", )
 async def _(e):
     path = Path(e.pattern_match.group(1))
     if not path:
@@ -319,9 +323,8 @@ async def _(e):
             foc += 1
         else:
             if hb(int(os.path.getsize(name))):
-                text += (
-                    emoji + f" `{nam}`" + "  `" + hb(int(os.path.getsize(name))) + "`\n"
-                )
+                text += (emoji + f" `{nam}`" + "  `" +
+                         hb(int(os.path.getsize(name))) + "`\n")
                 fls += int(os.path.getsize(name))
             else:
                 text += emoji + f" `{nam}`" + "\n"
@@ -338,12 +341,12 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="sg ?(.*)",
-)
+    pattern="sg ?(.*)", )
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
     if not (steal.is_reply or mat):
-        await eor(steal, "`Use this command with reply or give Username/id...`")
+        await eor(steal,
+                  "`Use this command with reply or give Username/id...`")
         return
     if mat:
         user_id = await get_user_id(mat)
@@ -361,15 +364,15 @@ async def lastname(steal):
                 respond = await conv.get_response()
                 responds = await conv.get_response()
             except YouBlockedUserError:
-                await lol.edit("Please unblock @sangmatainfo_bot and try again")
+                await lol.edit("Please unblock @sangmatainfo_bot and try again"
+                               )
                 return
-            if (
-                response.text.startswith("No records found")
-                or respond.text.startswith("No records found")
-                or responds.text.startswith("No records found")
-            ):
+            if (response.text.startswith("No records found")
+                    or respond.text.startswith("No records found")
+                    or responds.text.startswith("No records found")):
                 await lol.edit("No records found for this user")
-                await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
+                await steal.client.delete_messages(conv.chat_id,
+                                                   [msg.id, response.id])
                 return
             else:
                 if response.text.startswith("🔗"):

@@ -55,7 +55,7 @@ async def google(event):
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = []
     for bkl in range(0, len(omk), 4095):
-        opn.append(omk[bkl : bkl + 4095])
+        opn.append(omk[bkl:bkl + 4095])
     for bc in opn:
         await event.respond(bc, link_preview=False)
     await x.delete()
@@ -111,7 +111,8 @@ async def reverse(event):
     response = requests.get(
         loc,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
+            "User-Agent":
+            "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
     xx = bs(response.text, "html.parser")
@@ -119,7 +120,8 @@ async def reverse(event):
     alls = div.find("a")
     link = alls["href"]
     text = alls.text
-    await ult.edit(f"`Dimension ~ {x} : {y}`\nSauce ~ [{text}](google.com{link})")
+    await ult.edit(
+        f"`Dimension ~ {x} : {y}`\nSauce ~ [{text}](google.com{link})")
     gi = googleimagesdownload()
     args = {
         "keywords": text,

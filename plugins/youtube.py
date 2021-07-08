@@ -25,8 +25,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="yt(a|v|sa|sv) ?(.*)",
-)
+    pattern="yt(a|v|sa|sv) ?(.*)", )
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
     xx = await eor(event, get_string("com_1"))
@@ -41,7 +40,8 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, "Give me a (youtube) URL to download audio from!")
+            return await eor(
+                xx, "Give me a (youtube) URL to download audio from!")
         try:
             request.get(url)
         except BaseException:
@@ -57,7 +57,8 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, "Give me a (youtube) URL to download video from!")
+            return await eor(
+                xx, "Give me a (youtube) URL to download video from!")
         try:
             request.get(url)
         except BaseException:
@@ -75,8 +76,7 @@ async def download_from_youtube_(event):
             query = event.text.split(" ", 1)[1]
         except IndexError:
             return await eor(
-                xx, "Give me a (youtube) search query to download audio from!"
-            )
+                xx, "Give me a (youtube) search query to download audio from!")
         url = await get_yt_link(query)
         await eor(xx, "`Downloading audio song...`")
     elif opt == "sv":
@@ -92,8 +92,7 @@ async def download_from_youtube_(event):
             query = event.text.split(" ", 1)[1]
         except IndexError:
             return await eor(
-                xx, "Give me a (youtube) search query to download video from!"
-            )
+                xx, "Give me a (youtube) search query to download video from!")
         url = await get_yt_link(query)
         await eor(xx, "`Downloading video song...`")
     else:

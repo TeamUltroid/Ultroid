@@ -18,8 +18,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="ascii ?(.*)",
-)
+    pattern="ascii ?(.*)", )
 async def _(e):
     if not e.reply_to_msg_id:
         return await eor(e, "`Reply to image.`")

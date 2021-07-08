@@ -44,8 +44,7 @@ async def watcher(event):
 
 
 @ultroid_cmd(
-    pattern="dmute ?(.*)",
-)
+    pattern="dmute ?(.*)", )
 async def startmute(event):
     xx = await eor(event, "`Muting...`")
     input = event.pattern_match.group(1)
@@ -78,7 +77,9 @@ async def startmute(event):
     else:
         return await eod(xx, "`No proper admin rights...`", time=5)
     if is_muted(f"{userid}_{chat_id}"):
-        return await eod(xx, "`This user is already muted in this chat.`", time=5)
+        return await eod(xx,
+                         "`This user is already muted in this chat.`",
+                         time=5)
     try:
         mute(f"{userid}_{chat_id}")
         await eod(xx, "`Successfully muted...`", time=3)
@@ -164,7 +165,9 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(pattern="unmute ?(.*)", groups_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="unmute ?(.*)",
+             groups_only=True,
+             type=["official", "manager"])
 async def _(e):
     xx = await eor(e, "`Unmuting...`")
     input = e.pattern_match.group(1)
@@ -200,7 +203,9 @@ async def _(e):
         await eod(xx, f"`{str(m)}`")
 
 
-@ultroid_cmd(pattern="mute ?(.*)", groups_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="mute ?(.*)",
+             groups_only=True,
+             type=["official", "manager"])
 async def _(e):
     xx = await eor(e, "`Muting...`")
     input = e.pattern_match.group(1)

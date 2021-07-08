@@ -40,8 +40,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="getaudio$",
-)
+    pattern="getaudio$", )
 async def daudtoid(event):
     ureply = await event.get_reply_message()
     if not (ureply and ("audio" in ureply.document.mime_type)):
@@ -51,12 +50,12 @@ async def daudtoid(event):
     d = os.path.join("resources/extras/", "ul.mp3")
     await xx.edit("`Downloading... Large Files Takes Time..`")
     await event.client.download_media(ureply, d)
-    await xx.edit("`Done.. Now reply to video In which u want to add that Audio`")
+    await xx.edit(
+        "`Done.. Now reply to video In which u want to add that Audio`")
 
 
 @ultroid_cmd(
-    pattern="addaudio$",
-)
+    pattern="addaudio$", )
 async def adaudroid(event):
     ureply = await event.get_reply_message()
     if not (ureply and ("video" in ureply.document.mime_type)):
@@ -87,8 +86,7 @@ async def adaudroid(event):
 
 
 @ultroid_cmd(
-    pattern=r"dob ?(.*)",
-)
+    pattern=r"dob ?(.*)", )
 async def hbd(event):
     if not event.pattern_match.group(1):
         return await eor(event, "`Put input in dd/mm/yyyy format`")
@@ -166,7 +164,8 @@ async def hbd(event):
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     sign = f"{sign}"
     params = (("sign", sign), ("today", day))
-    response = requests.post("https://aztro.sameerkumar.website/", params=params)
+    response = requests.post("https://aztro.sameerkumar.website/",
+                             params=params)
     json = response.json()
     dd = json.get("current_date")
     ds = json.get("description")
@@ -239,6 +238,7 @@ async def wall(event):
     }
     gi.download(args)
     xx = choice(os.listdir(os.path.abspath(f"./resources/downloads/{query}/")))
-    await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
+    await event.client.send_file(event.chat_id,
+                                 f"./resources/downloads/{query}/{xx}")
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()

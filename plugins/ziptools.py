@@ -37,9 +37,8 @@ async def zipp(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
-                reply.file.name, reply.media.document, xx, t, "Downloading..."
-            )
+            image = await downloader(reply.file.name, reply.media.document, xx,
+                                     t, "Downloading...")
             file = image.name
         else:
             file = await event.download_media(reply)
@@ -74,9 +73,8 @@ async def unzipp(event):
             mime_type = file.mime_type
             if "application" not in mime_type:
                 return await xx.edit("`Reply To zipped File`")
-            image = await downloader(
-                reply.file.name, reply.media.document, xx, t, "Downloading..."
-            )
+            image = await downloader(reply.file.name, reply.media.document, xx,
+                                     t, "Downloading...")
             file = image.name
             if not file.endswith(("zip", "rar", "exe")):
                 return await xx.edit("`Reply To zip File Only`")
@@ -115,9 +113,9 @@ async def azipp(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
-                "zip/" + reply.file.name, reply.media.document, xx, t, "Downloading..."
-            )
+            image = await downloader("zip/" + reply.file.name,
+                                     reply.media.document, xx, t,
+                                     "Downloading...")
             file = image.name
         else:
             file = await event.download_media(reply.media, "zip/")
@@ -130,7 +128,8 @@ async def azipp(event):
 async def do_zip(event):
     if not os.path.isdir("zip"):
         return await eor(
-            event, "First All Files Via {i}addzip then doZip to zip all files at one."
+            event,
+            "First All Files Via {i}addzip then doZip to zip all files at one."
         )
     xx = await eor(event, "`processing`")
     await bash(f"zip -r ultroid.zip zip/*")

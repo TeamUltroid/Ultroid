@@ -33,11 +33,11 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="sysinfo$",
-)
+    pattern="sysinfo$", )
 async def _(e):
     xx = await eor(e, "`Sending...`")
-    x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    x, y = await bash(
+        "neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
@@ -49,8 +49,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="bash",
-)
+    pattern="bash", )
 async def _(event):
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
@@ -100,8 +99,7 @@ p = print  # ignore: pylint
 
 
 @ultroid_cmd(
-    pattern="eval",
-)
+    pattern="eval", )
 async def _(event):
     if len(event.text) > 5:
         if not event.text[5] == " ":
@@ -145,11 +143,11 @@ async def _(event):
     else:
         evaluation = "Success"
     final_output = (
-        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".
+        format(
             cmd,
             evaluation,
-        )
-    )
+        ))
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
@@ -170,11 +168,9 @@ async def _(event):
 
 async def aexec(code, event):
     exec(
-        f"async def __aexec(e, client): "
-        + "\n message = event = e"
-        + "\n reply = await event.get_reply_message()"
-        + "\n chat = await event.get_chat()"
-        + "".join(f"\n {l}" for l in code.split("\n")),
-    )
+        f"async def __aexec(e, client): " + "\n message = event = e" +
+        "\n reply = await event.get_reply_message()" +
+        "\n chat = await event.get_chat()" +
+        "".join(f"\n {l}" for l in code.split("\n")), )
 
     return await locals()["__aexec"](event, event.client)

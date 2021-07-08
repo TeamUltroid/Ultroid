@@ -58,12 +58,14 @@ async def _(event):
     p = 0
     (await event.get_chat()).title
     async for i in event.client.iter_participants(
-        event.chat_id,
-        filter=ChannelParticipantsKicked,
-        aggressive=True,
+            event.chat_id,
+            filter=ChannelParticipantsKicked,
+            aggressive=True,
     ):
         try:
-            await event.client.edit_permissions(event.chat_id, i, view_messages=True)
+            await event.client.edit_permissions(event.chat_id,
+                                                i,
+                                                view_messages=True)
             p += 1
         except BaseException:
             pass
@@ -103,8 +105,7 @@ async def _(event):
             if "empty" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     y -= 1
                 except BaseException:
@@ -114,8 +115,7 @@ async def _(event):
             if "month" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     m -= 1
                 except BaseException:
@@ -125,8 +125,7 @@ async def _(event):
             if "week" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     w -= 1
                 except BaseException:
@@ -136,8 +135,7 @@ async def _(event):
             if "offline" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     o -= 1
                 except BaseException:
@@ -147,8 +145,7 @@ async def _(event):
             if "online" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     q -= 1
                 except BaseException:
@@ -158,8 +155,7 @@ async def _(event):
             if "recently" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     r -= 1
                 except BaseException:
@@ -169,8 +165,7 @@ async def _(event):
             if "bot" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     b -= 1
                 except BaseException:
@@ -180,8 +175,7 @@ async def _(event):
             if "deleted" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     d -= 1
                 except BaseException:
@@ -191,8 +185,7 @@ async def _(event):
             if "none" in input_str:
                 try:
                     await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                        EditBannedRequest(event.chat_id, i, rights), )
                     c += 1
                     n -= 1
                 except BaseException:

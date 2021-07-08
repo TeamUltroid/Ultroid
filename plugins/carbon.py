@@ -173,8 +173,7 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="carbon",
-)
+    pattern="carbon", )
 async def crbn(event):
     xxxx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
@@ -192,9 +191,10 @@ async def crbn(event):
     webs = requests.get("https://carbonara.vercel.app/api/cook")
     if webs.status_code == 502:
         return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
-    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code)
+            event,
+            "`Temporary Server Error has Occured !\nPlease Try Again Later`")
+    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",
+                    code=code)
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
@@ -204,8 +204,7 @@ async def crbn(event):
 
 
 @ultroid_cmd(
-    pattern="rcarbon",
-)
+    pattern="rcarbon", )
 async def crbn(event):
     xxxx = await eor(event, "Processing")
     if event.reply_to_msg_id:
@@ -224,11 +223,11 @@ async def crbn(event):
     webs = requests.get("https://carbonara.vercel.app/api/cook")
     if webs.status_code == 502:
         return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
-    )
+            event,
+            "`Temporary Server Error has Occured !\nPlease Try Again Later`")
+    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",
+                    code=code,
+                    background=col)
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
