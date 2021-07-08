@@ -61,7 +61,7 @@ async def uri_poll(e):
     OUT = []
     for on in range(len(option)):
         OUT.append(PollAnswer(option[on], str(on).encode()))
-    await ultroid_bot.send_file(
+    await e.client.send_file(
         e.chat_id,
         InputMediaPoll(
             Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
