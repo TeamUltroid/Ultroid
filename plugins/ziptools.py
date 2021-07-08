@@ -49,7 +49,7 @@ async def zipp(event):
     await bash(f"zip -r {inp} {file}")
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
-    await ultroid_bot.send_file(
+    await event.client.send_file(
         event.chat_id,
         xxx,
         force_document=True,
@@ -94,7 +94,7 @@ async def unzipp(event):
     for x in ok:
         k = time.time()
         xxx = await uploader(x, x, k, xx, "Uploading...")
-        await ultroid_bot.send_file(
+        await event.client.send_file(
             event.chat_id,
             xxx,
             force_document=True,
@@ -138,7 +138,7 @@ async def do_zip(event):
     await bash(f"zip -r ultroid.zip zip/*")
     k = time.time()
     xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, "Uploading...")
-    await ultroid_bot.send_file(
+    await event.client.send_file(
         event.chat_id,
         xxx,
         force_document=True,
