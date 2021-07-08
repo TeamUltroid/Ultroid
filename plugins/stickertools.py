@@ -90,7 +90,7 @@ async def waifu(animu):
     waifus = [32, 33, 37, 40, 41, 42, 58, 20]
     finalcall = "#" + (str(random.choice(waifus)))
     try:
-        sticcers = await ultroid_bot.inline_query(
+        sticcers = await animu.client.inline_query(
             "stickerizerbot",
             f"{finalcall}{(deEmojify(text))}",
         )
@@ -153,7 +153,7 @@ async def pack_kangish(_):
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
-        _get_stiks = await ultroid_bot(
+        _get_stiks = await _.client(
             functions.messages.GetStickerSetRequest(
                 stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
             )
@@ -212,6 +212,7 @@ async def pack_kangish(_):
     pattern="kang",
 )
 async def hehe(args):
+    ultroid_bot = args.client
     xx = await eor(args, "`Processing...`")
     user = await ultroid_bot.get_me()
     if not user.username:
