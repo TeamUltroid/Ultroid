@@ -44,7 +44,7 @@ async def broadcast_adder(event):
         await x.edit(get_string("bd_2"))
         chats = [
             e.entity
-            for e in await ultroid.get_dialogs()
+            for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
         for i in chats:
@@ -135,7 +135,7 @@ async def list_all(event):
     for channel in channels:
         name = ""
         try:
-            name = (await ultroid.get_entity(int(channel))).title
+            name = (await event.client.get_entity(int(channel))).title
         except BaseException:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
@@ -144,13 +144,10 @@ async def list_all(event):
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
-            await ultroid_bot.send_file(
-                event.chat_id,
-                out_file,
+            await event.reply("Channels in Database",
+                file=out_file,
                 force_document=True,
                 allow_cache=False,
-                caption="Channels in database",
-                reply_to=event,
             )
             await x.delete()
     else:
