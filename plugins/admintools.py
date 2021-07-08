@@ -310,7 +310,7 @@ async def fastpurger(purg):
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     await eod(
-        purg
+        purg,
         "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
 
