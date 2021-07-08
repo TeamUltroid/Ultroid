@@ -59,7 +59,7 @@ async def google(event):
     for bkl in range(0, len(omk), 4095):
         opn.append(omk[bkl : bkl + 4095])
     for bc in opn:
-        await event.client.send_message(event.chat_id, bc, link_preview=False)
+        await event.respond(bc, link_preview=False)
     await x.delete()
     opn.clear()
 
@@ -89,7 +89,7 @@ async def goimg(event):
         ok = pth[0][query]
     except BaseException:
         return await nn.edit("No Results Found :(")
-    await event.client.send_file(event.chat_id, ok, caption=query, album=True)
+    await event.reply(file=ok, message=query, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 
