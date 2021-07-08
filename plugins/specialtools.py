@@ -96,7 +96,7 @@ async def hbd(event):
         return await eor(event, "`Put input in dd/mm/yyyy format`")
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
-        nam = await ultroid_bot.get_entity(kk.from_id)
+        nam = await event.client.get_entity(kk.from_id)
         name = nam.first_name
     else:
         name = ultroid_bot.me.first_name
