@@ -115,14 +115,9 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="bots ?(.*)",
+    groups_only=True
 )
 async def _(ult):
-    await ult.edit("`...`")
-    if ult.is_private:
-        user = await ult.get_chat()
-        if not user.bot:
-            return await ult.edit("`Seariously ?`")
-
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
     to_write_chat = await ult.get_input_chat()
@@ -132,12 +127,12 @@ async def _(ult):
     else:
         mentions = f"**Bots in **{input_str}: \n"
         try:
-            chat = await ultroid_bot.get_entity(input_str)
+            chat = await ult.client.get_entity(input_str)
         except Exception as e:
             await eor(ult, str(e))
             return None
     try:
-        async for x in ultroid_bot.iter_participants(
+        async for x in ult.client.iter_participants(
             chat,
             filter=ChannelParticipantsBots,
         ):
@@ -363,7 +358,7 @@ async def lastname(steal):
     id = f"/search_id {user_id}"
     lol = await eor(steal, "`Processing !...`")
     try:
-        async with ultroid_bot.conversation(chat) as conv:
+        async with steal.client.conversation(chat) as conv:
             try:
                 msg = await conv.send_message(id)
                 response = await conv.get_response()
