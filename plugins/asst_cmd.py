@@ -38,7 +38,7 @@ async def ac(e):
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
-            dl = await bot.download_media(wt.media)
+            dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
             m = "https://telegra.ph" + variable[0]
@@ -46,7 +46,7 @@ async def ac(e):
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
             else:
-                dl = await bot.download_media(wt.media)
+                dl = await e.client.download_media(wt.media)
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
