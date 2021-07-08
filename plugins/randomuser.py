@@ -19,5 +19,5 @@ from . import *
 async def _gen_data(event):
     x = await eor(event, get_string("com_1"))
     msg, pic = get_random_user_data()
-    await ultroid_bot.send_file(event.chat_id, file=pic, caption=msg)
+    await event.reply(file=pic, message=msg)
     await x.delete()
