@@ -129,7 +129,8 @@ async def _(event):
                             except BaseException:
                                 pass
                     elif "You can only use fed commands once every 5 minutes" in (
-                            await bot_conv.get_edit):
+                        await bot_conv.get_edit
+                    ):
                         await msg.edit("Try again after 5 mins.")
                         return
                 if len(fedList) == 0:
@@ -269,7 +270,8 @@ async def _(event):
                             except BaseException:
                                 pass
                     elif "You can only use fed commands once every 5 minutes" in (
-                            await bot_conv.get_edit):
+                        await bot_conv.get_edit
+                    ):
                         await msg.edit("Try again after 5 mins.")
                         return
                 if len(fedList) == 0:
@@ -349,8 +351,7 @@ async def _(event):
                 await conv.get_response()
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
-                if audio.message.startswith(
-                        "This command can only be used once"):
+                if audio.message.startswith("This command can only be used once"):
                     return await ok.edit(
                         "Oops, you can use this command only once every minute!",
                     )
@@ -361,8 +362,7 @@ async def _(event):
                     await event.client.send_file(
                         event.chat_id,
                         audio,
-                        caption=
-                        f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
+                        caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
                         link_preview=False,
                     )
                     await ok.delete()
@@ -371,8 +371,7 @@ async def _(event):
                     await ok.edit(okk.message)
                 await ultroid.send_read_acknowledge(bot)
             except YouBlockedUserError:
-                await ok.edit(
-                    "**Error**\n `Unblock` @MissRose_Bot `and try again!")
+                await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
 @ultroid_cmd(pattern="fedinfo ?(.*)")
@@ -388,5 +387,4 @@ async def _(event):
             await ultroid.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
-            await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!"
-                          )
+            await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")

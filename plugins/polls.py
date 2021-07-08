@@ -18,9 +18,7 @@
     Get the quiz poll where answerno is the number of option which is correct
 
 """
-from telethon.tl.types import InputMediaPoll
-from telethon.tl.types import Poll
-from telethon.tl.types import PollAnswer
+from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 
 from . import *
 
@@ -64,12 +62,7 @@ async def uri_poll(e):
     await e.client.send_file(
         e.chat_id,
         InputMediaPoll(
-            Poll(20,
-                 ques,
-                 OUT,
-                 multiple_choice=mpp,
-                 public_voters=publ,
-                 quiz=quizo),
+            Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
             correct_answers=karzo,
         ),
     )

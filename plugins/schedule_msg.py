@@ -27,9 +27,9 @@ async def _(e):
         y = x.split(" ")[-1]
         k = x.replace(y, "")
         if y.isdigit():
-            await e.client.send_message(e.chat_id,
-                                        k,
-                                        schedule=timedelta(seconds=int(y)))
+            await e.client.send_message(
+                e.chat_id, k, schedule=timedelta(seconds=int(y))
+            )
             await eod(e, "`Scheduled msg Succesfully`")
         else:
             try:
@@ -40,9 +40,9 @@ async def _(e):
                 await eod(e, "`Incorrect Format`")
     elif xx and x:
         if x.isdigit():
-            await e.client.send_message(e.chat_id,
-                                        xx,
-                                        schedule=timedelta(seconds=int(x)))
+            await e.client.send_message(
+                e.chat_id, xx, schedule=timedelta(seconds=int(x))
+            )
             await eod(e, "`Scheduled msg Succesfully`")
         else:
             try:

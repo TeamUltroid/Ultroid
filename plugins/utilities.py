@@ -69,22 +69,19 @@ from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
-from telethon.tl.functions.channels import InviteToChannelRequest
-from telethon.tl.functions.channels import LeaveChannelRequest
+from telethon.tl.functions.channels import (
+    GetAdminedPublicChannelsRequest,
+    InviteToChannelRequest,
+    LeaveChannelRequest,
+)
 from telethon.tl.functions.contacts import GetBlockedRequest
-from telethon.tl.functions.messages import AddChatUserRequest
-from telethon.tl.functions.messages import GetAllStickersRequest
+from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import Channel
-from telethon.tl.types import Chat
-from telethon.tl.types import InputMediaPoll
-from telethon.tl.types import Poll
-from telethon.tl.types import PollAnswer
-from telethon.tl.types import User
+from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
 
 from . import *
+
 # =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
@@ -104,13 +101,13 @@ _copied_msg = {}
 async def leave(ult):
     if not ult.out and not is_fullsudo(e.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
-    await eor(ult,
-              f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
+    await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
     await ult.client(LeaveChannelRequest(ult.chat_id))
 
 
 @ultroid_cmd(
-    pattern="date$", )
+    pattern="date$",
+)
 async def date(event):
     m = dt.now().month
     y = dt.now().year
@@ -120,7 +117,8 @@ async def date(event):
 
 
 @ultroid_cmd(
-    pattern="chatinfo(?: |$)(.*)", )
+    pattern="chatinfo(?: |$)(.*)",
+)
 async def info(event):
     ok = await eor(event, get_string("com_1"))
     chat = await get_chatinfo(event)
@@ -136,7 +134,8 @@ async def info(event):
 
 
 @ultroid_cmd(
-    pattern="listreserved$", )
+    pattern="listreserved$",
+)
 async def _(event):
     result = await ult.client(GetAdminedPublicChannelsRequest())
     output_str = ""
@@ -150,8 +149,11 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="stats$", )
-async def stats(event: NewMessage.Event, ) -> None:
+    pattern="stats$",
+)
+async def stats(
+    event: NewMessage.Event,
+) -> None:
     ok = await eor(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
@@ -228,13 +230,13 @@ async def stats(event: NewMessage.Event, ) -> None:
 
 
 @ultroid_cmd(
-    pattern="paste( (.*)|$)", )
+    pattern="paste( (.*)|$)",
+)
 async def _(event):
     xx = await eor(event, "` 《 Pasting... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     if not (input_str or event.is_reply):
-        return await xx.edit(
-            "`Reply to a Message/Document or Give me Some Text !`")
+        return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
     if input_str:
         message = input_str
         downloaded_file_name = None
@@ -270,9 +272,7 @@ async def _(event):
         reply_text = f"• **Pasted to HasteBin :** [Haste](https://hastebin.com/{key})\n• **Raw Url :** : [Raw](https://hastebin.com/raw/{key})"
     try:
         ok = await event.client.inline_query(asst.me.username, q)
-        await ok[0].click(event.chat_id,
-                          reply_to=event.reply_to_msg_id,
-                          hide_via=True)
+        await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException:
         await xx.edit(reply_text)
@@ -291,7 +291,8 @@ async def _(event):
             offset=42,
             max_id=0,
             limit=80,
-        ), )
+        ),
+    )
     replied_user_profile_photos_count = "NaN"
     try:
         replied_user_profile_photos_count = replied_user_profile_photos.count
@@ -302,8 +303,9 @@ async def _(event):
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
     last_name = replied_user.user.last_name
-    last_name = (last_name.replace("\u2060", "") if last_name else
-                 ("Last Name not found"))
+    last_name = (
+        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
+    )
     user_bio = replied_user.about
     if user_bio is not None:
         user_bio = html.escape(replied_user.about)
@@ -376,9 +378,9 @@ async def _(ult):
                         chat_id=ult.chat_id,
                         user_id=user_id,
                         fwd_limit=1000000,
-                    ), )
-                await xx.edit(
-                    f"Successfully invited `{user_id}` to `{ult.chat_id}`")
+                    ),
+                )
+                await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
                 await xx.edit(str(e))
     else:
@@ -388,15 +390,16 @@ async def _(ult):
                     InviteToChannelRequest(
                         channel=ult.chat_id,
                         users=[user_id],
-                    ), )
-                await xx.edit(
-                    f"Successfully invited `{user_id}` to `{ult.chat_id}`")
+                    ),
+                )
+                await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
             except Exception as e:
                 await xx.edit(str(e))
 
 
 @ultroid_cmd(
-    pattern=r"rmbg$", )
+    pattern=r"rmbg$",
+)
 async def rmbg(event):
     RMBG_API = udB.get("RMBG_API")
     xx = await eor(event, get_string("com_1"))
@@ -414,8 +417,7 @@ async def rmbg(event):
         out = ReTrieveFile(dl)
         os.remove(dl)
     else:
-        await xx.edit(
-            f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
+        await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
         await asyncio.sleep(5)
         await xx.delete()
         return
@@ -446,7 +448,8 @@ async def rmbg(event):
 
 
 @ultroid_cmd(
-    pattern="telegraph ?(.*)", )
+    pattern="telegraph ?(.*)",
+)
 async def telegraphcmd(event):
     ultroid_bot = event.client
     input_str = event.pattern_match.group(1)
@@ -490,8 +493,7 @@ async def telegraphcmd(event):
                 tcom = input_str
             else:
                 tcom = "Ultroid"
-            makeit = telegraph.create_page(title=tcom,
-                                           content=[f"{getmsg.text}"])
+            makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
             await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
         else:
@@ -533,12 +535,13 @@ async def sugg(event):
         try:
             await event.client.send_message(
                 event.chat_id,
-                file=InputMediaPoll(poll=Poll(
-                    id=12345,
-                    question="Do you agree to the replied suggestion?",
-                    answers=[PollAnswer("Yes", b"1"),
-                             PollAnswer("No", b"2")],
-                ), ),
+                file=InputMediaPoll(
+                    poll=Poll(
+                        id=12345,
+                        question="Do you agree to the replied suggestion?",
+                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
+                    ),
+                ),
                 reply_to=msgid,
             )
         except Exception as e:
@@ -606,7 +609,8 @@ async def ipinfo(event):
 
 
 @ultroid_cmd(
-    pattern="cpy$", )
+    pattern="cpy$",
+)
 async def copp(event):
     msg = await event.get_reply_message()
     if msg is None:
@@ -621,15 +625,15 @@ async def pepsodent(event):
 
 
 @ultroid_cmd(
-    pattern="pst$", )
+    pattern="pst$",
+)
 async def colgate(event):
     await toothpaste(event)
 
 
 async def toothpaste(event):
     try:
-        await event.client.send_message(event.chat_id,
-                                        _copied_msg["CLIPBOARD"])
+        await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
         try:
             await event.delete()
         except BaseException:
@@ -646,9 +650,9 @@ async def toothpaste(event):
 @ultroid_cmd(pattern="thumb")
 async def thumb_dl(event):
     if not event.reply_to_msg_id:
-        return await eod(event,
-                         "`Please reply to a file to download its thumbnail!`",
-                         time=5)
+        return await eod(
+            event, "`Please reply to a file to download its thumbnail!`", time=5
+        )
     xx = await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)

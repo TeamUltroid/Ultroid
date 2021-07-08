@@ -36,28 +36,25 @@ async def evalJs(
             event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,
-            caption=
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
+            caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
         )
     else:
         await event.client.send_file(
             event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,
-            caption=
-            f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
+            caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
     await event.delete()
-    file = open("./src/ecmaHelper/evalJs.result.d.txt",
-                encoding="utf-8",
-                mode="w")
+    file = open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
     file.write("'use-strict';\n")
     file.close()
 
 
 # The Command Is `.evaljs`
 @ultroid_cmd(
-    pattern="evaljs", )
+    pattern="evaljs",
+)
 async def evaluateJs(event):
     start = time.time()
     if not event.out and not is_fullsudo(event.sender_id):
@@ -73,8 +70,10 @@ async def evaluateJs(event):
     except IndexError:
         return await eod(xx, "`Give some JS command`", time=5)
     if cmd and cmd != "":
-        Thread(target=await evalJs(
-            xx,
-            command=cmd,
-            startTime=start,
-        )).start()
+        Thread(
+            target=await evalJs(
+                xx,
+                command=cmd,
+                startTime=start,
+            )
+        ).start()

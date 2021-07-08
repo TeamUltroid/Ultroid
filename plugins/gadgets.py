@@ -36,8 +36,7 @@ async def mobs(e):
         cont = requests.get(li).content
         nu = bs(cont, "html.parser", from_encoding="utf-8")
         req = nu.find_all("div", "_pdsd")
-        imu = nu.find_all("source",
-                          type="image/webp")[0]["srcset"].split("?")[0]
+        imu = nu.find_all("source", type="image/webp")[0]["srcset"].split("?")[0]
         out += f"☑️ **[{tit}]({li})**\n\n"
         for fp in req:
             ty = fp.findNext()

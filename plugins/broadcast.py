@@ -41,7 +41,8 @@ async def broadcast_adder(event):
     if msgg == "all":
         await x.edit(get_string("bd_2"))
         chats = [
-            e.entity for e in await event.client.get_dialogs()
+            e.entity
+            for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
         for i in chats:
@@ -120,7 +121,8 @@ async def broadcast_remover(event):
 
 
 @ultroid_cmd(
-    pattern="listchannels$", )
+    pattern="listchannels$",
+)
 async def list_all(event):
     x = await eor(event, "`Calculating...`")
     channels = get_channels()
@@ -162,8 +164,7 @@ async def forw(event):
     channels = get_channels()
     x = await eor(event, "Sending...")
     if get_no_channels() == 0:
-        return await x.edit(
-            f"Please add channels by using `{hndlr}add` in them.")
+        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
     error_count = 0
     sent_count = 0
     if event.reply_to_msg_id:
@@ -191,8 +192,9 @@ async def forw(event):
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
         try:
-            await ultroid_bot.send_message(int(udB.get("LOG_CHANNEL")),
-                                           f"{error_count} Errors")
+            await ultroid_bot.send_message(
+                int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
+            )
         except BaseException:
             await x.edit("Set up log channel for checking errors.")
 
@@ -209,8 +211,7 @@ async def sending(event):
     error_count = 0
     sent_count = 0
     if get_no_channels() == 0:
-        return await x.edit(
-            f"Please add channels by using `{hndlr}add` in them.")
+        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
     await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -219,8 +220,7 @@ async def sending(event):
         if previous_message:
             for channel in channels:
                 try:
-                    await ultroid_bot.send_message(int(channel),
-                                                   previous_message)
+                    await ultroid_bot.send_message(int(channel), previous_message)
                     sent_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -237,8 +237,7 @@ async def sending(event):
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
-            await x.edit(
-                f"{sent_count} messages sent with {error_count} errors.")
+            await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 try:
                     await ultroid_bot.send_message(

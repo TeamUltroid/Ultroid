@@ -26,14 +26,14 @@ from datetime import datetime as dt
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
-from telethon.tl.types import DocumentAttributeAudio
-from telethon.tl.types import DocumentAttributeVideo
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from . import *
 
 
 @ultroid_cmd(
-    pattern="dl ?(.*)", )
+    pattern="dl ?(.*)",
+)
 async def download(event):
     if not event.reply_to_msg_id:
         return await eor(event, "`Reply to a Media Message`")
@@ -53,11 +53,9 @@ async def download(event):
                 filename = ok.file.name
             if not filename:
                 if "audio" in mime_type:
-                    filename = "audio_" + dt.now().isoformat(
-                        "_", "seconds") + ".ogg"
+                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
                 elif "video" in mime_type:
-                    filename = "video_" + dt.now().isoformat(
-                        "_", "seconds") + ".mp4"
+                    filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
             try:
                 result = await downloader(
                     "resources/downloads/" + filename,
@@ -74,14 +72,15 @@ async def download(event):
             file_name = await event.client.download_media(
                 ok,
                 d,
-                progress_callback=lambda d, t: asyncio.get_event_loop().
-                create_task(progress(
-                    d,
-                    t,
-                    xx,
-                    k,
-                    "Downloading...",
-                ), ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d,
+                        t,
+                        xx,
+                        k,
+                        "Downloading...",
+                    ),
+                ),
             )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
@@ -92,7 +91,8 @@ async def download(event):
 
 
 @ultroid_cmd(
-    pattern="ul ?(.*)", )
+    pattern="ul ?(.*)",
+)
 async def download(event):
     xx = await eor(event, get_string("com_1"))
     hmm = event.pattern_match.group(1)
@@ -151,13 +151,11 @@ async def download(event):
                         )
                     if res.name.endswith((".mkv", ".mp4", ".avi")):
                         attributes = [
-                            DocumentAttributeVideo(w=wi,
-                                                   h=hi,
-                                                   duration=duration,
-                                                   supports_streaming=True)
+                            DocumentAttributeVideo(
+                                w=wi, h=hi, duration=duration, supports_streaming=True
+                            )
                         ]
-                    elif res.name.endswith(
-                        (".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                    elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                         attributes = [
                             DocumentAttributeAudio(
                                 duration=duration,
@@ -230,13 +228,11 @@ async def download(event):
                     )
                 if res.name.endswith((".mkv", ".mp4", ".avi")):
                     attributes = [
-                        DocumentAttributeVideo(w=wi,
-                                               h=hi,
-                                               duration=duration,
-                                               supports_streaming=True)
+                        DocumentAttributeVideo(
+                            w=wi, h=hi, duration=duration, supports_streaming=True
+                        )
                     ]
-                elif res.name.endswith(
-                    (".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     attributes = [
                         DocumentAttributeAudio(
                             duration=duration,

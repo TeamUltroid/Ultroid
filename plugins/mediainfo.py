@@ -25,9 +25,7 @@ async def mi(e):
     xx = mediainfo(r.media)
     murl = r.media.stringify()
     url = make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
-    ee = await eor(e,
-                   f"**[{xx}]({url})**\n\n`Loading More...`",
-                   link_preview=False)
+    ee = await eor(e, f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     taime = time.time()
     if hasattr(r.media, "document"):
         file = r.media.document
@@ -35,11 +33,9 @@ async def mi(e):
         filename = r.file.name
         if not filename:
             if "audio" in mime_type:
-                filename = "audio_" + dt.now().isoformat("_",
-                                                         "seconds") + ".ogg"
+                filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
             elif "video" in mime_type:
-                filename = "video_" + dt.now().isoformat("_",
-                                                         "seconds") + ".mp4"
+                filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
         dl = await downloader(
             "resources/downloads/" + filename,
             file,
@@ -54,6 +50,7 @@ async def mi(e):
     urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     if er:
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
-    await ee.edit(f"**[{xx}]({url})**\n\n[More Explained Info]({urll})",
-                  link_preview=False)
+    await ee.edit(
+        f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
+    )
     os.remove(naam)

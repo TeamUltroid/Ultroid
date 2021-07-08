@@ -22,7 +22,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="addsudo ?(.*)", )
+    pattern="addsudo ?(.*)",
+)
 async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
@@ -64,7 +65,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delsudo ?(.*)", )
+    pattern="delsudo ?(.*)",
+)
 async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command is Sudo Restricted!..`")
@@ -104,7 +106,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="listsudo$", )
+    pattern="listsudo$",
+)
 async def _(ult):
     ok = await eor(ult, "`...`")
     sudos = Redis("SUDOS")
@@ -124,5 +127,6 @@ async def _(ult):
     m = udB.get("SUDO") if udB.get("SUDO") else "False"
     if m == "False":
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await ok.edit(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}",
-                         link_preview=False)
+    return await ok.edit(
+        f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
+    )

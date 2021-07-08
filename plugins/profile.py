@@ -26,9 +26,11 @@ import asyncio
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.photos import DeletePhotosRequest
-from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.functions.photos import UploadProfilePhotoRequest
+from telethon.tl.functions.photos import (
+    DeletePhotosRequest,
+    GetUserPhotosRequest,
+    UploadProfilePhotoRequest,
+)
 from telethon.tl.types import InputPhoto
 
 from . import *
@@ -39,7 +41,8 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 
 @ultroid_cmd(
-    pattern="setbio ?(.*)", )
+    pattern="setbio ?(.*)",
+)
 async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
@@ -58,7 +61,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="setname ?((.|//)*)", )
+    pattern="setname ?((.|//)*)",
+)
 async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
@@ -73,7 +77,8 @@ async def _(ult):
             UpdateProfileRequest(
                 first_name=first_name,
                 last_name=last_name,
-            ), )
+            ),
+        )
         await ok.edit(f"Name changed to `{names}`")
     except Exception as ex:
         await ok.edit("Error occured.\n`{}`".format(str(ex)))
@@ -85,7 +90,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="setpic$", )
+    pattern="setpic$",
+)
 async def _(ult):
     if not ult.out and not is_fullsudo(ult.sender_id):
         return await eod(ult, "`This Command Is Sudo Restricted.`")
@@ -115,7 +121,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delpfp ?(.*)", )
+    pattern="delpfp ?(.*)",
+)
 async def remove_profilepic(delpfp):
     if not delpfp.out and not is_fullsudo(delpfp.sender_id):
         return await eod(delpfp, "`This Command Is Sudo Restricted.`")
@@ -128,10 +135,8 @@ async def remove_profilepic(delpfp):
     else:
         lim = 1
     pfplist = await delpfp.client(
-        GetUserPhotosRequest(user_id=delpfp.from_id,
-                             offset=0,
-                             max_id=0,
-                             limit=lim), )
+        GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim),
+    )
     input_photos = []
     for sep in pfplist.photos:
         input_photos.append(
@@ -139,10 +144,10 @@ async def remove_profilepic(delpfp):
                 id=sep.id,
                 access_hash=sep.access_hash,
                 file_reference=sep.file_reference,
-            ), )
+            ),
+        )
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await ok.edit(
-        f"`Successfully deleted {len(input_photos)} profile picture(s).`")
+    await ok.edit(f"`Successfully deleted {len(input_photos)} profile picture(s).`")
     await asyncio.sleep(10)
     await ok.delete()
 

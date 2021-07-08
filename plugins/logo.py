@@ -17,9 +17,7 @@ import glob
 import os
 import random
 
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
 
 from . import *
@@ -45,7 +43,8 @@ async def logo_gen(event):
     else:
         pics = []
         async for i in event.client.iter_messages(
-                "@UltroidLogos", filter=InputMessagesFilterPhotos):
+            "@UltroidLogos", filter=InputMessagesFilterPhotos
+        ):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
@@ -54,7 +53,8 @@ async def logo_gen(event):
     if not bg_:
         pics = []
         async for i in event.client.iter_messages(
-                "@UltroidLogos", filter=InputMessagesFilterPhotos):
+            "@UltroidLogos", filter=InputMessagesFilterPhotos
+        ):
             pics.append(i)
         id_ = random.choice(pics)
         bg_ = await id_.download_media()
@@ -84,12 +84,9 @@ async def logo_gen(event):
     )
     x = (image_width - w) / 2
     y = (image_height - h) / 2
-    draw.text((x, y),
-              name,
-              font=font,
-              fill="white",
-              stroke_width=strke,
-              stroke_fill="black")
+    draw.text(
+        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
+    )
     flnme = f"ultd.png"
     img.save(flnme, "png")
     await xx.edit("`Done!`")

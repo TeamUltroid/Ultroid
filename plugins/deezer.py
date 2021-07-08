@@ -22,7 +22,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="deez ?(.*)", )
+    pattern="deez ?(.*)",
+)
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
@@ -44,7 +45,8 @@ async def siesace(e):
         return await eod(lol, "`Song Not Found.. `")
     except JSONDecodeError:
         return await eod(
-            lol, f"`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`")
+            lol, f"`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`"
+        )
     try:
         title = k["title"]
         urrl = k["raw_link"]

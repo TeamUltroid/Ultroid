@@ -56,7 +56,8 @@ async def mean(event):
 
 
 @ultroid_cmd(
-    pattern="synonym", )
+    pattern="synonym",
+)
 async def mean(event):
     evid = event.message.id
     xx = await eor(event, get_string("com_1"))
@@ -87,7 +88,8 @@ async def mean(event):
 
 
 @ultroid_cmd(
-    pattern="antonym", )
+    pattern="antonym",
+)
 async def mean(event):
     evid = event.message.id
     xx = await eor(event, get_string("com_1"))

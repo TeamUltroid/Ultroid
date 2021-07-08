@@ -14,8 +14,7 @@
     UNLOCK the Used Setting in Used Group.
 
 """
-from pyUltroid.functions.all import lucks
-from pyUltroid.functions.all import unlucks
+from pyUltroid.functions.all import lucks, unlucks
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
 from . import *
