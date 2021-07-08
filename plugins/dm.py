@@ -40,7 +40,4 @@ async def dm(e):
         await e.client.send_message(chat_id, msg)
         await eod(e, "`⚜️Message Delivered!⚜️`")
     except BaseException:
-        await eod(
-            e,
-            "`{i}help dm`"
-        )
+        await eod(e, "`{i}help dm`")

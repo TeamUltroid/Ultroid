@@ -31,9 +31,7 @@ async def _(e):
     ok = await e.client.download_media(reply.media)
     cmd = f"glitch_me gif --line_count 200 -f 10 -d 50 '{ok}' ult.gif"
     stdout, stderr = await bash(cmd)
-    await e.reply(
-        file="ult.gif", force_document=False
-    )
+    await e.reply(file="ult.gif", force_document=False)
     await xx.delete()
     os.remove(ok)
     os.remove("ult.gif")

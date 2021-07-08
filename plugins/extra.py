@@ -51,10 +51,7 @@ async def delete_it(delme):
             await msg_src.delete()
             await delme.delete()
         except Exception as e:
-            await eod(
-                delme,
-                f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`"
-            )
+            await eod(delme, f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`")
 
 
 @ultroid_cmd(

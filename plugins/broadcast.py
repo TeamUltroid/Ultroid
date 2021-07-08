@@ -144,11 +144,12 @@ async def list_all(event):
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
-            await event.reply("Channels in Database",
-                              file=out_file,
-                              force_document=True,
-                              allow_cache=False,
-                              )
+            await event.reply(
+                "Channels in Database",
+                file=out_file,
+                force_document=True,
+                allow_cache=False,
+            )
             await x.delete()
     else:
         await x.edit(msg)

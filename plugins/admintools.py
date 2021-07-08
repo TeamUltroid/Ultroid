@@ -276,10 +276,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(
-    pattern="purge ?(.*)",
-    type=["official", "manager"]
-)
+@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"])
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
@@ -311,8 +308,7 @@ async def fastpurger(purg):
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" +
-        str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
 
 
@@ -360,8 +356,7 @@ async def fastpurgerme(purg):
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" +
-        str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
 
 

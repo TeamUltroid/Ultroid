@@ -305,8 +305,7 @@ async def _(event):
         first_name = first_name.replace("\u2060", "")
     last_name = replied_user.user.last_name
     last_name = (
-        last_name.replace("\u2060", "") if last_name else (
-            "Last Name not found")
+        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
     )
     user_bio = replied_user.about
     if user_bio is not None:
@@ -495,8 +494,7 @@ async def telegraphcmd(event):
                 tcom = input_str
             else:
                 tcom = "Ultroid"
-            makeit = telegraph.create_page(
-                title=tcom, content=[f"{getmsg.text}"])
+            makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
             war = makeit["url"]
             await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
         else:
@@ -542,8 +540,7 @@ async def sugg(event):
                     poll=Poll(
                         id=12345,
                         question="Do you agree to the replied suggestion?",
-                        answers=[PollAnswer("Yes", b"1"),
-                                 PollAnswer("No", b"2")],
+                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                     ),
                 ),
                 reply_to=msgid,

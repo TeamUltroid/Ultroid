@@ -51,8 +51,7 @@ async def cd(e):
     cod.add_data(msg)
     cod.make()
     imgg = cod.make_image().convert("RGB")
-    pstn = ((imgg.size[0] - logo.size[0]) // 2,
-            (imgg.size[1] - logo.size[1]) // 2)
+    pstn = ((imgg.size[0] - logo.size[0]) // 2, (imgg.size[1] - logo.size[1]) // 2)
     imgg.paste(logo, pstn)
     imgg.save(img)
     await e.client.send_file(e.chat_id, img, supports_streaming=True)

@@ -57,7 +57,7 @@ async def google(event):
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = []
     for bkl in range(0, len(omk), 4095):
-        opn.append(omk[bkl: bkl + 4095])
+        opn.append(omk[bkl : bkl + 4095])
     for bc in opn:
         await event.respond(bc, link_preview=False)
     await x.delete()

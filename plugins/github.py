@@ -59,7 +59,8 @@ async def gitsearch(event):
 **Following** - {ufollowing}
 """
     await xx.delete()
-    await event.reply(fullusr,
-                      file=upic,
-                      link_preview=False,
-                      )
+    await event.reply(
+        fullusr,
+        file=upic,
+        link_preview=False,
+    )
