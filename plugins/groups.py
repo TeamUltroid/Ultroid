@@ -40,11 +40,11 @@ async def _(ult):
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
     replfile = await reply_message.download_media()
-    file = await ultroid_bot.upload_file(replfile)
+    file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
         if "pic" in mediain:
-            await ultroid_bot(EditPhotoRequest(ult.chat_id, file))
+            await ult.client(EditPhotoRequest(ult.chat_id, file))
         else:
             return await eod(ult, "`Invalid MEDIA Type !`")
         await eod(ult, "`Group Photo has Successfully Changed !`")
