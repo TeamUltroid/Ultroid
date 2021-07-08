@@ -71,15 +71,15 @@ from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import (
-    GetAdminedPublicChannelsRequest,
-    InviteToChannelRequest,
-    LeaveChannelRequest,
-)
+from telethon.tl.functions.channels import (GetAdminedPublicChannelsRequest,
+                                            InviteToChannelRequest,
+                                            LeaveChannelRequest)
 from telethon.tl.functions.contacts import GetBlockedRequest
-from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
+from telethon.tl.functions.messages import (AddChatUserRequest,
+                                            GetAllStickersRequest)
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
+from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
+                               User)
 from telethon.utils import get_input_location
 
 # =================================================================#

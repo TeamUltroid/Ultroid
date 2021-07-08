@@ -53,10 +53,8 @@ import cv2
 import numpy as np
 from PIL import Image
 from telegraph import upload_file as upf
-from telethon.errors.rpcerrorlist import (
-    ChatSendMediaForbiddenError,
-    MessageDeleteForbiddenError,
-)
+from telethon.errors.rpcerrorlist import (ChatSendMediaForbiddenError,
+                                          MessageDeleteForbiddenError)
 from validators.url import url
 
 from . import *

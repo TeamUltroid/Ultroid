@@ -28,11 +28,9 @@ import asyncio
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.photos import (
-    DeletePhotosRequest,
-    GetUserPhotosRequest,
-    UploadProfilePhotoRequest,
-)
+from telethon.tl.functions.photos import (DeletePhotosRequest,
+                                          GetUserPhotosRequest,
+                                          UploadProfilePhotoRequest)
 from telethon.tl.types import InputPhoto
 
 from . import *
