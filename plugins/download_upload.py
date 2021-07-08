@@ -282,7 +282,7 @@ async def download(event):
                     size += os.path.getsize(fp)
             c = len(os.listdir(kk))
             await xx.delete()
-            await ultroid_bot.send_message(
+            await event.client.send_message(
                 event.chat_id,
                 f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
             )
