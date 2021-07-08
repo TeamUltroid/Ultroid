@@ -155,7 +155,7 @@ async def _(event):
         ultd = final_output.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
-            await ultroid_bot.send_file(
+            await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
