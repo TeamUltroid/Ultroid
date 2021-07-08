@@ -65,9 +65,8 @@ async def siesace(e):
         lol,
         "Uploading " + title + "...",
     )
-    await ultroid_bot.send_file(
-        e.chat_id,
-        okk,
+    await e.reply(
+        file=okk,
         caption="`" + title + "`" + "\n`From Deezer`",
         attributes=[
             DocumentAttributeAudio(
