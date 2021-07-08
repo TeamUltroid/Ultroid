@@ -19,12 +19,12 @@ REPOMSG = (
 )
 
 
-@ultroid_cmd(pattern="repo$")
+@ultroid_cmd(pattern="repo$", type=["official", "manager"])
 async def repify(e):
     try:
-        q = await ultroid_bot.inline_query(asst.me.username, "repo")
+        q = await e.client.inline_query(asst.me.username, "repo")
         await q[0].click(e.chat_id)
-        if e.sender_id == ultroid_bot.uid:
+        if e.out:
             await e.delete()
     except (ChatSendInlineForbiddenError, bmi):
         await eor(e, REPOMSG)
