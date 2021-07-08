@@ -207,7 +207,8 @@ async def _(e):
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
         metadata = extractMetadata(createParser("circle.mp4"))
         duration = metadata.get("duration").seconds
-        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
+        attributes = [video(duration=duration, w=320,
+                            h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
             foile,
@@ -324,7 +325,8 @@ async def _(e):
         else:
             if hb(int(os.path.getsize(name))):
                 text += (
-                    emoji + f" `{nam}`" + "  `" + hb(int(os.path.getsize(name))) + "`\n"
+                    emoji + f" `{nam}`" + "  `" +
+                    hb(int(os.path.getsize(name))) + "`\n"
                 )
                 fls += int(os.path.getsize(name))
             else:

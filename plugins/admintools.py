@@ -278,7 +278,7 @@ async def unp(ult):
 
 @ultroid_cmd(
     pattern="purge ?(.*)",
-    type = ["official", "manager"]
+    type=["official", "manager"]
 )
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
@@ -311,7 +311,8 @@ async def fastpurger(purg):
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" +
+        str(count) + "` **messages.**",
     )
 
 
@@ -359,7 +360,8 @@ async def fastpurgerme(purg):
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" +
+        str(count) + "` **messages.**",
     )
 
 

@@ -64,7 +64,8 @@ async def uri_poll(e):
     await e.client.send_file(
         e.chat_id,
         InputMediaPoll(
-            Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
+            Poll(20, ques, OUT, multiple_choice=mpp,
+                 public_voters=publ, quiz=quizo),
             correct_answers=karzo,
         ),
     )

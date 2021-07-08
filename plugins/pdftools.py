@@ -215,7 +215,8 @@ async def imgscan(event):
     polygons = []
     for cnt in contours:
         hull = cv2.convexHull(cnt)
-        polygons.append(cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False))
+        polygons.append(cv2.approxPolyDP(
+            hull, 0.01 * cv2.arcLength(hull, True), False))
         sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
         cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
         simplified_cnt = sortedPoly[0]
@@ -273,7 +274,8 @@ async def savepdf(event):
         for cnt in contours:
             hull = cv2.convexHull(cnt)
             polygons.append(
-                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False),
+                cv2.approxPolyDP(
+                    hull, 0.01 * cv2.arcLength(hull, True), False),
             )
             sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)

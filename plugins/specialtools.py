@@ -168,7 +168,8 @@ async def hbd(event):
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     sign = f"{sign}"
     params = (("sign", sign), ("today", day))
-    response = requests.post("https://aztro.sameerkumar.website/", params=params)
+    response = requests.post(
+        "https://aztro.sameerkumar.website/", params=params)
     json = response.json()
     dd = json.get("current_date")
     ds = json.get("description")

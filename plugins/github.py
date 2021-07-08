@@ -60,6 +60,6 @@ async def gitsearch(event):
 """
     await xx.delete()
     await event.reply(fullusr,
-        file=upic,
-        link_preview=False,
-    )
+                      file=upic,
+                      link_preview=False,
+                      )

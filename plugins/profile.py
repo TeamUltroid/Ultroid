@@ -137,7 +137,8 @@ async def remove_profilepic(delpfp):
     else:
         lim = 1
     pfplist = await delpfp.client(
-        GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim),
+        GetUserPhotosRequest(user_id=delpfp.from_id,
+                             offset=0, max_id=0, limit=lim),
     )
     input_photos = []
     for sep in pfplist.photos:

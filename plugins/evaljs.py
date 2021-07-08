@@ -48,7 +48,8 @@ async def evalJs(
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
     await event.delete()
-    file = open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
+    file = open("./src/ecmaHelper/evalJs.result.d.txt",
+                encoding="utf-8", mode="w")
     file.write("'use-strict';\n")
     file.close()
 
