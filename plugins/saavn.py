@@ -53,10 +53,9 @@ async def siesace(e):
     okk = await uploader(
         title + ".mp3", title + ".mp3", hmm, lol, "Uploading " + title + "..."
     )
-    await ultroid_bot.send_file(
-        e.chat_id,
-        okk,
-        caption="`" + title + "`" + "\n`From Saavn`",
+    await e.reply(
+        file=okk,
+        message="`" + title + "`" + "\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
