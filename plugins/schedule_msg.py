@@ -29,14 +29,14 @@ async def _(e):
         y = x.split(" ")[-1]
         k = x.replace(y, "")
         if y.isdigit():
-            await ultroid_bot.send_message(
+            await e.client.send_message(
                 e.chat_id, k, schedule=timedelta(seconds=int(y))
             )
             await eod(e, "`Scheduled msg Succesfully`")
         else:
             try:
                 z = await ban_time(e, y)
-                await ultroid_bot.send_message(e.chat_id, k, schedule=z)
+                await e.client.send_message(e.chat_id, k, schedule=z)
                 await eod(e, "`Scheduled msg Succesfully`")
             except BaseException:
                 await eod(e, "`Incorrect Format`")
@@ -49,7 +49,7 @@ async def _(e):
         else:
             try:
                 z = await ban_time(e, x)
-                await ultroid_bot.send_message(e.chat_id, xx, schedule=z)
+                await e.client.send_message(e.chat_id, xx, schedule=z)
                 await eod(e, "`Scheduled msg Succesfully`")
             except BaseException:
                 await eod(e, "`Incorrect Format`")
