@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -22,7 +21,6 @@ Specify FBan Group and Feds to exclude in the assistant.
 • `{i}fedinfo <(fedid)>`
     Collect federation info of the given fed id, or of the fed you own, from Rose.
 """
-
 import asyncio
 import os
 

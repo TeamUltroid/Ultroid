@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -14,12 +13,13 @@
    Or Reply To Font File, To write with that font.
 
 """
-
 import glob
 import os
 import random
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
 
 from . import *

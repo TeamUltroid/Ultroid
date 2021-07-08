@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -23,14 +22,13 @@
 • `{i}poto <username>`
     Upload the photo of Chat/User if Available.
 """
-
 import asyncio
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.photos import (DeletePhotosRequest,
-                                          GetUserPhotosRequest,
-                                          UploadProfilePhotoRequest)
+from telethon.tl.functions.photos import DeletePhotosRequest
+from telethon.tl.functions.photos import GetUserPhotosRequest
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from telethon.tl.types import InputPhoto
 
 from . import *

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -18,7 +17,6 @@
 • `{i}reverse <query>`
     Reply an Image or sticker to find its sauce.
 """
-
 import os
 from shutil import rmtree
 
@@ -30,9 +28,8 @@ from search_engine_parser import GoogleSearch
 from search_engine_parser.core.exceptions import \
     NoResultsOrTrafficError as GoglError
 
-from strings import get_string
-
 from . import *
+from strings import get_string
 
 
 @ultroid_cmd(pattern="google ?(.*)", type=["official", "manager"])

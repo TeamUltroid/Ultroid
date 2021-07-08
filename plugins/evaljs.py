@@ -4,20 +4,18 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 • `{i}evaljs <javaScriptCommands>`
     Evaluate JavaScript code and upload.
 """
-
 # Inbuilt
 import os
 import time
 from threading import Thread
 
-# Ultroid
 from . import *
+# Ultroid
 
 
 async def evalJs(

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -32,7 +31,6 @@
     Get translated message.
 
 """
-
 import os
 import time
 from asyncio.exceptions import TimeoutError
@@ -43,7 +41,8 @@ from googletrans import Translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
+from telethon.tl.types import ChannelParticipantAdmin
+from telethon.tl.types import ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 

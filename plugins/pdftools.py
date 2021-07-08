@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -25,7 +24,6 @@
 • `{i}pdsend `
     Merge nd send the Pdf to collected from .pdsave.
 """
-
 import glob
 import os
 import shutil
@@ -36,7 +34,9 @@ import imutils
 import numpy as np
 import PIL
 from imutils.perspective import four_point_transform
-from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfFileWriter
 from skimage.filters import threshold_local
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 

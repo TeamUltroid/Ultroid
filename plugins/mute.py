@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -27,10 +26,10 @@
     d- days
     Mute user in current chat with time.
 """
-
-
 from pyUltroid.functions.all import ban_time
-from pyUltroid.functions.mute_db import is_muted, mute, unmute
+from pyUltroid.functions.mute_db import is_muted
+from pyUltroid.functions.mute_db import mute
+from pyUltroid.functions.mute_db import unmute
 from telethon import events
 
 from . import *

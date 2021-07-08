@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -15,7 +14,6 @@
    To resize image on x, y axis.
    eg. `{i}resize 690 960`
 """
-
 from PIL import Image
 
 from . import *

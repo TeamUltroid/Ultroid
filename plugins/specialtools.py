@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -26,7 +25,6 @@
 • `{i}wall <query>`
     Search Hd Wallpaper as Per ur Wish..
 """
-
 import os
 from datetime import datetime as dt
 from random import choice

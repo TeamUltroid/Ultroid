@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -30,7 +29,6 @@
     paste text on random stickers.
 
 """
-
 import asyncio
 import io
 import os
@@ -41,12 +39,14 @@ from os import remove
 
 import cv2
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image
+from PIL import ImageDraw
 from telethon import utils
-from telethon.errors import (ChatSendStickersForbiddenError,
-                             PackShortNameOccupiedError)
-from telethon.tl.types import (DocumentAttributeFilename,
-                               DocumentAttributeSticker, MessageMediaPhoto)
+from telethon.errors import ChatSendStickersForbiddenError
+from telethon.errors import PackShortNameOccupiedError
+from telethon.tl.types import DocumentAttributeFilename
+from telethon.tl.types import DocumentAttributeSticker
+from telethon.tl.types import MessageMediaPhoto
 
 from . import *
 

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -46,13 +45,13 @@
 •`{i}gdemote`
     Same function as gpromote.
 """
-
 import os
 
 from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.gcast_blacklist_db import *
 from telethon.tl.functions.channels import EditAdminRequest
-from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
+from telethon.tl.functions.contacts import BlockRequest
+from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.types import ChatAdminRights
 
 from . import *

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -17,8 +16,6 @@
 •`qrdecode <reply to qrcode>`
    It decodes the qrcode.
 """
-
-
 import os
 
 import cv2

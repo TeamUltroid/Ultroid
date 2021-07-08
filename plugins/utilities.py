@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -56,7 +55,6 @@
 • `{i}thumb <reply to file>`
    Download the thumbnail of the replied file.
 """
-
 import asyncio
 import calendar
 import html
@@ -71,19 +69,23 @@ from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.channels import (GetAdminedPublicChannelsRequest,
-                                            InviteToChannelRequest,
-                                            LeaveChannelRequest)
+from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
+from telethon.tl.functions.channels import InviteToChannelRequest
+from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.contacts import GetBlockedRequest
-from telethon.tl.functions.messages import (AddChatUserRequest,
-                                            GetAllStickersRequest)
+from telethon.tl.functions.messages import AddChatUserRequest
+from telethon.tl.functions.messages import GetAllStickersRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.types import (Channel, Chat, InputMediaPoll, Poll, PollAnswer,
-                               User)
+from telethon.tl.types import Channel
+from telethon.tl.types import Chat
+from telethon.tl.types import InputMediaPoll
+from telethon.tl.types import Poll
+from telethon.tl.types import PollAnswer
+from telethon.tl.types import User
 from telethon.utils import get_input_location
 
-# =================================================================#
 from . import *
+# =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 

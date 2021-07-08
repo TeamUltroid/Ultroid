@@ -4,14 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
 • `{i}mediainfo <reply to media>`
    To get info about it.
 """
-
 import os
 import time
 from datetime import datetime as dt

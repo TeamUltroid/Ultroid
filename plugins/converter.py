@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -27,7 +26,6 @@
 • `{i}thumbnail <reply to image/thumbnail file>`
     Upload Your file with your custom thumbnail.
 """
-
 import os
 import time
 

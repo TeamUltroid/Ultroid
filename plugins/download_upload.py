@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,7 +18,6 @@
     Reply to file to download.
 
 """
-
 import glob
 import os
 import time
@@ -28,7 +26,8 @@ from datetime import datetime as dt
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 

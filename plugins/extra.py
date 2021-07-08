@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -20,7 +19,6 @@
 • `{i}reply`
     Reply the last sent msg to replied user.
 """
-
 import asyncio
 
 from telethon.events import NewMessage as NewMsg

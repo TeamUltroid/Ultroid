@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -15,8 +14,8 @@
     UNLOCK the Used Setting in Used Group.
 
 """
-
-from pyUltroid.functions.all import lucks, unlucks
+from pyUltroid.functions.all import lucks
+from pyUltroid.functions.all import unlucks
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
 from . import *

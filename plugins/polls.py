@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,8 +18,9 @@
     Get the quiz poll where answerno is the number of option which is correct
 
 """
-
-from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
+from telethon.tl.types import InputMediaPoll
+from telethon.tl.types import Poll
+from telethon.tl.types import PollAnswer
 
 from . import *
 

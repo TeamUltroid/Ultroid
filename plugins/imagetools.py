@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -45,7 +44,6 @@
    example : `{i}csample red`
              `{i}csample #ffffff`
 """
-
 import asyncio
 import os
 
@@ -53,8 +51,8 @@ import cv2
 import numpy as np
 from PIL import Image
 from telegraph import upload_file as upf
-from telethon.errors.rpcerrorlist import (ChatSendMediaForbiddenError,
-                                          MessageDeleteForbiddenError)
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from validators.url import url
 
 from . import *

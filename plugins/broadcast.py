@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -23,7 +22,6 @@
 • `{i}listchannels`
     To get list of all added chats.
 """
-
 import asyncio
 import io
 

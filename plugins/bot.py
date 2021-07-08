@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -29,14 +28,14 @@
 • `{i}shutdown`
     Turn off your bot.
 """
-
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
 
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
-from telethon import __version__, events
+from telethon import __version__
+from telethon import events
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *

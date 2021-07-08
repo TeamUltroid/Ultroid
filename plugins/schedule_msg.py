@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -13,7 +12,6 @@
     eg. `{i}schedule Hello 100` It deliver msg after 100 sec.
     eg. `{i}schedule Hello 1h` It deliver msg after an hour.
 """
-
 from datetime import timedelta
 
 from . import *

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -17,13 +16,16 @@
 • `{i}rmusers`
     Remove users specifically.
 """
-
-
-from telethon.tl.functions.channels import EditBannedRequest, EditPhotoRequest
-from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
-                               UserStatusEmpty, UserStatusLastMonth,
-                               UserStatusLastWeek, UserStatusOffline,
-                               UserStatusOnline, UserStatusRecently)
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.functions.channels import EditPhotoRequest
+from telethon.tl.types import ChannelParticipantsKicked
+from telethon.tl.types import ChatBannedRights
+from telethon.tl.types import UserStatusEmpty
+from telethon.tl.types import UserStatusLastMonth
+from telethon.tl.types import UserStatusLastWeek
+from telethon.tl.types import UserStatusOffline
+from telethon.tl.types import UserStatusOnline
+from telethon.tl.types import UserStatusRecently
 
 from . import *
 
