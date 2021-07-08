@@ -33,7 +33,7 @@ async def _(e):
     html = converter.convert(img)
     with open("html.html", "w") as t:
         t.write(html)
-    await e.client.send_file(e.chat_id, "html.html", reply_to=e.reply_to_msg_id)
+    await e.reply(file="html.html")
     await m.delete()
     os.remove(img)
     os.remove("html.html")
