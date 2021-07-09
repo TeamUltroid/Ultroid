@@ -104,13 +104,13 @@ PMCMDS = [
 
 _not_approved = {}
 sett = Redis("PMSETTING")
-if sett is None:
-    sett = True
+if not sett:
+    sett = "False"
 t_in = udB.get("INLINE_PM")
 inline_pm = "True"
-if t_in is "True" or None:
+if not t_in or t_in == "True":
     inline_pm = "True"
-elif t_in is "False":
+elif t_in == "False":
     inline_pm = "False"
 my_bot = asst.me.username
 # =================================================================
@@ -161,7 +161,7 @@ async def permitpm(event):
         await event.forward_to(int(udB.get("LOG_CHANNEL")))
 
 
-if sett == "True" or sett != "False":
+if sett == "True":
 
     @ultroid_bot.on(
         events.NewMessage(
