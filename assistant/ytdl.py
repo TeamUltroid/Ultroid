@@ -82,7 +82,7 @@ async def _(event):
                 ],
             ),
         )
-    await event.answer(results)
+    await event.answer(results[:50])
 
 
 @callback(
