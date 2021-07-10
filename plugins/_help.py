@@ -20,7 +20,7 @@ from ._inline import _main_help_menu
 )
 async def ult_help(ult):
     plug = ult.pattern_match.group(1)
-    tgbot = asst.me.username
+    tgbot = ultroid_bot.asst.me.username
     if plug:
         try:
             if plug in HELP:
