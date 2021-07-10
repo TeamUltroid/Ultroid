@@ -13,7 +13,7 @@ J_CACHE = {}
 
 
 @asst.on_message(
-    filters.command(["play", "cplay", f"play@{vcusername}", f"cplay@{vcusername}"])
+    filters.command(["play", f"play@{vcusername}"])
     & filters.user(AUTH)
     & ~filters.edited
     & filters.group
@@ -22,19 +22,12 @@ async def startup(_, message):
     msg = await eor(message, "`Processing..`")
     song = message.text.split(" ", maxsplit=1)
     reply = message.reply_to_message
-    ChatPlay = None
-    if message.text[1] != "c":
-        chat = message.chat.id
+
+    if len(song) >= 1 and song[0].startswith('@' or '-'):
+        song = song.split(' ', maxsplit=1)
+        chat = await Client.get_chat(song[0])
     else:
-        ChatPlay = True
-        try:
-            song = song[1].split(" ", maxsplit=1)
-        except IndexError:
-            if not reply:
-                return await msg.edit_text(
-                    "Please Give a Channel Username/Id to Play There or use /play to play in current Chat."
-                )
-        chat = song[0]
+        chat = message.chat
     try:
         if reply.audio:
             med = reply.audio
@@ -49,19 +42,17 @@ async def startup(_, message):
             song_name = song[1]
         else:
             song_name = ""
-    if ChatPlay:
-        Chat = await Client.get_chat(chat)
-        chat = Chat.id
+
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
-        song = await download(song[1], message.chat.id, TS)
+        song = await download(song[1], chat.id, TS)
     elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
     elif not (reply.audio or reply.voice or reply.video):
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
         dl = await reply.download()
-        song = f"VCSONG_{chat}_{TS}.raw"
+        song = f"VCSONG_{chat.id}_{TS}.raw"
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
@@ -70,28 +61,25 @@ async def startup(_, message):
             dll = med.thumbs[0].file_id
             th = await asst.download_media(dll)
             try:
-                CallsClient.active_calls[chat]
+                CallsClient.active_calls[chat.id]
             except KeyError:
                 await msg.delete()
                 msg = await message.reply_photo(
                     th,
                     caption=f"**Playing :** {song_name}\n**Requested By :** {message.from_user.mention}",
-                )
+                    disable_web_page_preview=True)
             os.remove(th)
-    from_user = message.from_user.first_name
-    if chat in CallsClient.active_calls.keys():
+    from_user = message.from_user.mention
+    if chat.id in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
-        return await msg.edit(f"Added to queue at #{list(QUEUE[chat].keys())[-1]}")
+        return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
     CallsClient.join_group_call(chat, song)
-    chattitle = message.chat.title
-    if ChatPlay:
-        chattitle = Chat.title
     CH = await asst.send_message(
-        LOG_CHANNEL, f"Joined Voice Call in {chattitle} [`{chat}`]"
+        LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
     J_CACHE.update({chat: CH.message_id})
     reply_markup = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat}")]]
+        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}")]]
     )
     await msg.edit_reply_markup(reply_markup)
 
