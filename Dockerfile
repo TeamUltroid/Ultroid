@@ -18,5 +18,5 @@ WORKDIR /root/TeamUltroid/
 RUN pip uninstall search-engine-parser -y
 
 RUN pip3 install --no-cache-dir -r requirements.txt
-RUN pip3 uninstall tgcrypto -y
+
 CMD bash resources/startup/startup.sh
