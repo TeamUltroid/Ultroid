@@ -8,7 +8,7 @@ FROM programmingerror/ultroid:b0.1
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt install jq netcat -y
+RUN apt install jq netcat tgcrypto -y
 RUN apt autoremove
 
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
