@@ -23,8 +23,8 @@ async def startup(_, message):
     song = message.text.split(" ", maxsplit=1)
     reply = message.reply_to_message
 
-    if len(song) >= 1 and song[0].startswith('@' or '-'):
-        song = song.split(' ', maxsplit=1)
+    if len(song) >= 1 and song[0].startswith("@" or "-"):
+        song = song.split(" ", maxsplit=1)
         chat = await Client.get_chat(song[0])
     else:
         chat = message.chat
@@ -67,7 +67,8 @@ async def startup(_, message):
                 msg = await message.reply_photo(
                     th,
                     caption=f"**Playing :** {song_name}\n**Requested By :** {message.from_user.mention}",
-                    disable_web_page_preview=True)
+                    disable_web_page_preview=True,
+                )
             os.remove(th)
     from_user = message.from_user.mention
     if chat.id in CallsClient.active_calls.keys():
