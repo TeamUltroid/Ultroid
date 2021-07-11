@@ -53,10 +53,8 @@ async def broadcast_adder(event):
                             new += 1
                             cid = f"-100{i.id}"
                             add_channel(int(cid))
-                        else:
-                            pass
-            except BaseException:
-                pass
+            except Exception as Ex:
+                LOGS.info(Ex)
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
         return
     if event.reply_to_msg_id:
@@ -73,11 +71,8 @@ async def broadcast_adder(event):
         await event.delete()
         return
     chat_id = event.chat_id
-    try:
-        if int(chat_id) == int(udB.get("LOG_CHANNEL")):
-            return
-    except BaseException:
-        pass
+    if int(chat_id) == int(udB.get("LOG_CHANNEL")):
+        return
     if not is_channel_added(chat_id):
         xx = add_channel(chat_id)
         if xx:
@@ -183,21 +178,17 @@ async def forw(event):
                     int(udB.get("LOG_CHANNEL")),
                     f"Error in sending at {channel}.",
                 )
-            except BaseException:
-                pass
+            except Exception as Em:
+                LOGS.info(Em)
             error_count += 1
             await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
             )
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
-        try:
-            await ultroid_bot.send_message(
+        await ultroid_bot.send_message(
                 int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
             )
-        except BaseException:
-            await x.edit("Set up log channel for checking errors.")
-
 
 @ultroid_cmd(
     pattern="broadcast ?(.*)",
@@ -226,23 +217,18 @@ async def sending(event):
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
                 except Exception as error:
-                    try:
-                        await ultroid_bot.send_message(
+                   
+                    await ultroid_bot.send_message(
                             int(udB.get("LOG_CHANNEL")),
                             f"Error in sending at {channel}.\n\n{error}",
                         )
-                    except BaseException:
-                        pass
                     error_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
             await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
-                try:
-                    await ultroid_bot.send_message(
+                await ultroid_bot.send_message(
                         int(udB.get("LOG_CHANNEL")),
                         f"{error_count} Errors",
                     )
-                except BaseException:
-                    pass
