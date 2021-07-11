@@ -30,6 +30,7 @@ async def playic(event):
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
     if reply and reply.file:
         dl = await reply.download_media()
+        song_name = reply.file.name
         song = f"VCSONG_{chat.id}_{TS}.raw"
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
