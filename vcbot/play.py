@@ -104,4 +104,4 @@ async def streamhandler(chat_id: int):
         CallsClient.leave_group_call(chat_id)
         Cyanide = J_CACHE[chat_id]
         await asst.delete_messages(LOG_CHANNEL, Cyanide)
-       J_CACHE.pop(chat_id)
+        J_CACHE.pop(chat_id)
