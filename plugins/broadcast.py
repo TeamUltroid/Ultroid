@@ -187,8 +187,9 @@ async def forw(event):
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
         await ultroid_bot.send_message(
-                int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
-            )
+            int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
+        )
+
 
 @ultroid_cmd(
     pattern="broadcast ?(.*)",
@@ -217,11 +218,11 @@ async def sending(event):
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
                 except Exception as error:
-                   
+
                     await ultroid_bot.send_message(
-                            int(udB.get("LOG_CHANNEL")),
-                            f"Error in sending at {channel}.\n\n{error}",
-                        )
+                        int(udB.get("LOG_CHANNEL")),
+                        f"Error in sending at {channel}.\n\n{error}",
+                    )
                     error_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -229,6 +230,6 @@ async def sending(event):
             await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 await ultroid_bot.send_message(
-                        int(udB.get("LOG_CHANNEL")),
-                        f"{error_count} Errors",
-                    )
+                    int(udB.get("LOG_CHANNEL")),
+                    f"{error_count} Errors",
+                )
