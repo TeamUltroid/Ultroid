@@ -4,8 +4,8 @@ import os
 
 @ultroid_cmd(pattern="play")
 async def playic(event):
-	if not udB.get('VC_SESSION'):
-		return await eor(event, "Fill A `VC_SESSION` in redis to play in Vc")
+    if not udB.get('VC_SESSION'):
+        return await eor(event, "Fill A `VC_SESSION` in redis to play in Vc")
     msg = await eor(event, '`Processing...`')
     song = event.text.split(' ', maxsplit=1)
     reply = await event.get_reply_message()
