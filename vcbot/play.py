@@ -23,8 +23,8 @@ async def startup(_, message):
     song = message.text.split(" ", maxsplit=1)
     reply = message.reply_to_message
 
-    if len(song) >= 1 and song[0].startswith("@" or "-"):
-        song = song.split(" ", maxsplit=1)
+    if len(song) > 1 and song[1].startswith("@" or "-"):
+        song = song[1].split(" ", maxsplit=1)
         chat = await Client.get_chat(song[0])
     else:
         chat = message.chat
