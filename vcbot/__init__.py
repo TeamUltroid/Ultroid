@@ -25,9 +25,13 @@ from pyUltroid.misc import sudoers
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 QUEUE = {}
-_vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
-A_AUTH = [*_vc_sudos]
-AUTH = [int(x) for x in A_AUTH]
+
+def VC_AUTHS():
+    _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
+    A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
+    AUTH = [int(x) for x in A_AUTH]
+    return AUTH
+
 vcusername = ultroid_bot.asst.me.username
 
 
