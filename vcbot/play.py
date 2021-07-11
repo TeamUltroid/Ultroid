@@ -70,11 +70,11 @@ async def startup(_, message):
             caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
         )
         os.remove(th)
-    CallsClient.join_group_call(chat, song)
+    CallsClient.join_group_call(chat.id, song)
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
-    J_CACHE.update({chat: CH.message_id})
+    J_CACHE.update({chat.id: CH.message_id})
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}")]]
     )
