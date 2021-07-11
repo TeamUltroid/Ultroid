@@ -68,7 +68,6 @@ async def startup(_, message):
         msg = await message.reply_photo(
             th,
             caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
-            disable_webpage_preview=True,
         )
         os.remove(th)
     CallsClient.join_group_call(chat, song)
