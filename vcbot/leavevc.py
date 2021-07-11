@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_message(
     filters.command(["leavevc", f"leavevc@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def leavehandler(_, message):
