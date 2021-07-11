@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_message(
     filters.command(["listvc", f"listvc@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def list_handler(_, message):
