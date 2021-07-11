@@ -86,7 +86,7 @@ async def startup(_, message):
 
 
 @Client.on_message(
-    filters.me & filters.command(["play", "cplay"], HNDLR) & ~filters.edited
+    filters.me & filters.command(["play"], HNDLR) & ~filters.edited
 )
 async def cstartup(_, message):
     await startup(_, message)
@@ -96,7 +96,8 @@ async def cstartup(_, message):
 async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
-        CallsClient.change_stream(chat_id, song)
+        CallsClient.leave_group_call(chat_id)
+        CallsClient.join_group_call(chat_id, song)
         await asst.send_message(
             chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
