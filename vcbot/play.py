@@ -59,7 +59,7 @@ async def startup(_, message):
         os.remove(dl)
     from_user = message.from_user.mention
     if chat.id in CallsClient.active_calls.keys():
-        add_to_queue(chat, song, song_name, from_user)
+        add_to_queue(chat.id, song, song_name, from_user)
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
     if med and med.thumbs:
         dll = med.thumbs[0].file_id
