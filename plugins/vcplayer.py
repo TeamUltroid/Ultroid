@@ -25,9 +25,9 @@ async def playic(event):
     elif not reply and len(song) == 1:
         return await msg.edit("Pls Give me Something to Play...")
     from_user = inline_mention(event.sender)
-    if chat in CallsClient.active_calls.keys():
-        add_to_queue(chat, song, song_name, from_user)
-        return await msg.edit(f"Added to queue at #{list(QUEUE[chat].keys())[-1]}")
+    if chat.id in CallsClient.active_calls.keys():
+        add_to_queue(chat.id, song, song_name, from_user)
+        return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
     if reply and reply.file:
         dl = await reply.download_media()
         song = f"VCSONG_{chat.id}_{TS}.raw"
