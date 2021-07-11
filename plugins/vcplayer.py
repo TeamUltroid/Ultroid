@@ -1,6 +1,6 @@
 from vcbot import *
 from . import *
-from os import remove
+import os
 
 @ultroid_cmd(pattern="play")
 async def playic(event):
@@ -35,6 +35,6 @@ async def playic(event):
          if thumb:
              await msg.delete()
              msg = await asst.send_photo(chat.id, caption=f"`Playing {song_name}...`")
-              os.remove(thumb)
+             os.remove(thumb)
     await asst.send_message(LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]")
     CallsClient.join_group_call(chat.id, song)
