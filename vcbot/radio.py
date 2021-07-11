@@ -9,19 +9,18 @@ from . import *
 
 
 @asst.on_message(
-    filters.command(["radio", f"radio@{vcusername}", "cradio", f"cradio@{vcusername}"])
+    filters.command(["radio", f"radio@{vcusername}"])
     & filters.user(AUTH)
     & ~filters.edited
 )
-async def radio(_, message):
+async def radio(client, message):
     radio = message.text.split(" ", maxsplit=1)
-    try:
-        radio[1]
-    except IndexError:
+    if not len(radio) >= 1:
         return await eor(message, "Are You Kidding Me?\nWhat to Play?")
-    if message.text[0] == "c":
+    elif len(radio) >= 1 and radio[1].startswith('@' or '-'):
         ko = radio[1].split(" ", maxsplit=1)
-        chat = int(ko[0])
+        chat = await client.get_chat(ko[0])
+        chat = chat.id
     else:
         chat = message.chat.id
         ko = radio
@@ -49,7 +48,7 @@ async def radio(_, message):
         .overwrite_output()
         .run_async()
     )
-    await asyncio.sleep(2)
+   # await asyncio.sleep(2)
     CallsClient.join_group_call(chat, file, stream_type=StreamType().live_stream)
     await eor(message, "Playing Radio")
 
