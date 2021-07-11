@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_message(
     filters.command(["radio", f"radio@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def radio(client, message):
