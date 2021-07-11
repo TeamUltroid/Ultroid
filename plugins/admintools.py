@@ -200,9 +200,7 @@ async def kck(ult):
         return await xx.edit(
             f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
-    text = (
-        f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
-    )
+    text = f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`"
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
