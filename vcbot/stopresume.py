@@ -24,7 +24,7 @@ async def stopvc(_, message):
 
 
 @Client.on_message(
-    filters.command("stopvc", HNDLR) & filters.user(AUTH) & ~filters.edited
+    filters.command("stopvc", HNDLR) & filters.user(VC_AUTHS()) & ~filters.edited
 )
 async def ustop(_, message):
     await stopvc(_, message)
