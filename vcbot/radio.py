@@ -17,7 +17,7 @@ async def radio(client, message):
     radio = message.text.split(" ", maxsplit=1)
     if not len(radio) >= 1:
         return await eor(message, "Are You Kidding Me?\nWhat to Play?")
-    elif len(radio) >= 1 and radio[1].startswith('@' or '-'):
+    elif len(radio) >= 1 and radio[1].startswith("@" or "-"):
         ko = radio[1].split(" ", maxsplit=1)
         chat = await client.get_chat(ko[0])
         chat = chat.id
@@ -48,7 +48,7 @@ async def radio(client, message):
         .overwrite_output()
         .run_async()
     )
-   # await asyncio.sleep(2)
+    # await asyncio.sleep(2)
     CallsClient.join_group_call(chat, file, stream_type=StreamType().live_stream)
     await eor(message, "Playing Radio")
 
