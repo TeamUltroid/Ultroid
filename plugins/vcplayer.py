@@ -16,7 +16,7 @@ async def playic(event):
         song = song[1].split(" ", maxsplit=1)
         chat = await Client.get_chat(song[0])
     else:
-        chat = await Client.get_chat(event.hat_id)
+        chat = await Client.get_chat(event.chat_id)
     LOG_CHANNEL = udB.get("LOG_CHANNEL")
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
