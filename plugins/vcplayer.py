@@ -12,11 +12,11 @@ async def playic(event):
     msg = await eor(event, "`Processing...`")
     song = event.text.split(" ", maxsplit=1)
     reply = await event.get_reply_message()
-    if len(song) > 1 and song[0].startswith("@" or "-"):
+    if len(song) > 1 and song[1].startswith("@" or "-"):
         song = song[1].split(" ", maxsplit=1)
         chat = await Client.get_chat(song[0])
     else:
-        chat = await Client.get_chat(e.chat_id)
+        chat = await Client.get_chat(event.hat_id)
     LOG_CHANNEL = udB.get("LOG_CHANNEL")
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
