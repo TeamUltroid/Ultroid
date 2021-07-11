@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_message(
     filters.command(["stopvc", f"stopvc@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def stopvc(_, message):
@@ -32,7 +32,7 @@ async def ustop(_, message):
 
 @asst.on_message(
     filters.command(["resumevc", f"resumevc@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def stopvc(_, message):
