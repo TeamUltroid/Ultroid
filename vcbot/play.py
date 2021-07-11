@@ -66,10 +66,10 @@ async def startup(_, message):
         th = await asst.download_media(dll)
         await msg.delete()
         msg = await message.reply_photo(
-                    th,
-                    caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
-                    disable_web_page_preview=True,
-                )
+            th,
+            caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
+            disable_web_page_preview=True,
+        )
         os.remove(th)
     CallsClient.join_group_call(chat, song)
     CH = await asst.send_message(
