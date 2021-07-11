@@ -57,23 +57,20 @@ async def startup(_, message):
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
         os.remove(dl)
-        if med and med.thumbs:
-            dll = med.thumbs[0].file_id
-            th = await asst.download_media(dll)
-            try:
-                CallsClient.active_calls[chat.id]
-            except KeyError:
-                await msg.delete()
-                msg = await message.reply_photo(
-                    th,
-                    caption=f"**Playing :** {song_name}\n**Requested By :** {message.from_user.mention}",
-                    disable_web_page_preview=True,
-                )
-            os.remove(th)
     from_user = message.from_user.mention
     if chat.id in CallsClient.active_calls.keys():
         add_to_queue(chat, song, song_name, from_user)
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
+    if med and med.thumbs:
+        dll = med.thumbs[0].file_id
+        th = await asst.download_media(dll)
+        await msg.delete()
+        msg = await message.reply_photo(
+                    th,
+                    caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
+                    disable_web_page_preview=True,
+                )
+        os.remove(th)
     CallsClient.join_group_call(chat, song)
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
