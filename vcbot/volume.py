@@ -12,7 +12,7 @@ from . import *
 
 @asst.on_message(
     filters.command(["volume", f"volume@{vcusername}"])
-    & filters.user(AUTH)
+    & filters.user(VC_AUTHS())
     & ~filters.edited
 )
 async def chesendvolume(_, message):
