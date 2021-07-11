@@ -10,7 +10,7 @@ from . import *
 
 @asst.on_callback_query(filters.regex("^vc(.*)"))
 async def stopvc(_, query):
-    if query.from_user.id not in AUTH:
+    if query.from_user.id not in VC_AUTHS():
         return await query.answer("You are Not Authorised to Use Me!", show_alert=True)
     match = query.matches[0].group(1).split("_")
     chat = int(match[1])
