@@ -15,9 +15,8 @@ async def playic(event):
     if len(song) > 1 and song[0].startswith("@" or "-"):
         song = song[1].split(" ", maxsplit=1)
         chat = await Client.get_chat(song[0])
-    # Mixing Up Pyro & Tele bcoz not much difference
     else:
-        chat = event.chat
+        chat = await Client.get_chat(e.chat_id)
     LOG_CHANNEL = udB.get("LOG_CHANNEL")
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
