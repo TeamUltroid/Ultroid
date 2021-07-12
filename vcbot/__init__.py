@@ -22,9 +22,13 @@ from pyUltroid import vcasst as asst
 from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash
 from pyUltroid.misc import sudoers
+from youtube_dl import YoutubeDL
+from youtubesearchpython import VideosSearch
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 QUEUE = {}
+
+_yt_base_url = "https://www.youtube.com/watch?v="
 
 
 def VC_AUTHS():
@@ -67,7 +71,7 @@ async def eor(message, text, *args, **kwargs):
     return await message.reply_text(text, *args, **kwargs)
 
 
-async def download(query, chat, ts):
+"""async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     if ("youtube.com" or "youtu.be") in query:
         await bash(
@@ -77,4 +81,27 @@ async def download(query, chat, ts):
         await bash(
             f"""youtube-dl -x --audio-format best --audio-quality 1 --postprocessor-args "-f s16le -ac 1 -acodec pcm_s16le -ar 48000 '{song}' -y" ytsearch:'{query}'"""
         )
-    return song
+    return song"""
+
+async def download(event, query, chat, ts):
+    song = f"VCSONG_{chat}_{ts}.raw"
+    search = VideosSearch(string, limit=1).result()
+    noo = search["result"][0]
+    vid_id = noo['id']
+    link = _yt_base_url + vid_id
+    opts = {
+            "format": str(format),
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "outtmpl": "%(id)s.mp3",
+            "quiet": True,
+            "logtostderr": False,
+    }
+    ytdl_data = await dler(event, link)
+    YoutubeDL(opts).download([link])
+    title = ytdl_data["title"]
+    duration = ytdl_data["duration"]
+    thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
+    return song, thumb, title, duration
