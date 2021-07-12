@@ -6,7 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import os
-
 from . import *
 
 J_CACHE = {}
@@ -28,30 +27,28 @@ async def startup(_, message):
         chat = await Client.get_chat(song[0])
     else:
         chat = message.chat
-    try:
+
+    thumb, med, song_name = None, None, ""
+    if reply:
         if reply.audio:
             med = reply.audio
-        elif reply.video:
-            med = reply.video
-        elif reply.voice:
-            med = reply.voice
-        song_name = med.file_name
-    except BaseException:
-        med = None
-        if song:
-            song_name = song[1]
-        else:
-            song_name = ""
-    thumb = None
+            song_name = med.title
+        elif reply.video or reply.audio:
+            med = reply.video or reply.audio
+            song_name = med.file_name
+        if med.thumb:
+            dll = med.thumbs[0].file_id
+            thumb = await asst.download_media(dll)
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
-        song, thumb, title, duration = await download(msg, song[1], chat.id, TS)
+        song, thumb, song_name, duration = await download(msg, song[1], chat.id, TS)
     elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
     elif not (reply.audio or reply.voice or reply.video):
         return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
     else:
         dl = await reply.download()
+        duration = med.duration
         song = f"VCSONG_{chat.id}_{TS}.raw"
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
@@ -61,16 +58,14 @@ async def startup(_, message):
     if chat.id in CallsClient.active_calls.keys():
         add_to_queue(chat.id, song, song_name, from_user)
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
-    if med and med.thumbs:
-        dll = med.thumbs[0].file_id
-        thumb = await asst.download_media(dll)
     if thumb:
         await msg.delete()
         msg = await message.reply_photo(
             thumb,
-            caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
+            caption=f"**Playing :** {song_name}\n**Duration :** {duration}\n**Requested By :** {from_user}",
         )
-        os.remove(thumb)
+        if os.path.exists(thumb):
+            os.remove(thumb)
     CallsClient.join_group_call(chat.id, song)
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
