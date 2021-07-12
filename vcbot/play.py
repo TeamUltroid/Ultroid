@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import os
+import os, asyncio
 
 from . import *
 
@@ -71,11 +71,12 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
-    J_CACHE.update({chat.id: CH.message_id})
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}")]]
     )
     await msg.edit_reply_markup(reply_markup)
+    await asyncio.sleep(duration)
+    await msg.delete()
 
 
 @Client.on_message(filters.me & filters.command(["play"], HNDLR) & ~filters.edited)
@@ -101,4 +102,3 @@ async def streamhandler(chat_id: int):
         CallsClient.leave_group_call(chat_id)
         Cyanide = J_CACHE[chat_id]
         await asst.delete_messages(LOG_CHANNEL, Cyanide)
-        J_CACHE.pop(chat_id)
