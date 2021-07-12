@@ -55,8 +55,12 @@ from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
 from . import *
 
 
-@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"],
-             ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="promote ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -90,7 +94,12 @@ async def prmte(ult):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="demote ?(.*)", admins_only=True, type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="demote ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -124,7 +133,12 @@ async def dmote(ult):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"],  ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="ban ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -159,7 +173,12 @@ async def bban(ult):
         )
 
 
-@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="unban ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
@@ -177,7 +196,12 @@ async def uunban(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"],  ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="kick ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
         return
@@ -205,9 +229,8 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"],  ignore_dualmode=True)
+@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"], ignore_dualmode=True)
 async def pin(msg):
-    mss = "`Pinned.`"
     xx = msg.reply_to_msg_id
     tt = msg.text
     try:
@@ -220,12 +243,12 @@ async def pin(msg):
         return await eor(msg, "Reply a Message to Pin !")
     if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
-        mss = f"`Pinned` [This Message]({link})"
+        f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
     if ch != "silent":
-        slnt = True
+        pass
     else:
-        slnt = False
+        pass
     try:
         await msg.client.pin_message(msg.chat_id, xx, notify=False)
     except BadRequestError:
@@ -236,7 +259,9 @@ async def pin(msg):
         await msg.delete()
 
 
-@ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"],  ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="unpin($| (.*))", type=["official", "manager"], ignore_dualmode=True
+)
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
     if not ult.is_private:
@@ -265,7 +290,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"],  ignore_dualmode=True)
+@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"], ignore_dualmode=True)
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
@@ -276,7 +301,9 @@ async def fastpurger(purg):
     if ABC and purg.text[6] in ["m", "a"]:
         return
     if purg.client._bot:
-        return await purg.client.delete_messages(purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)])
+        return await purg.client.delete_messages(
+            purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)]
+        )
     if match and not purg.is_reply:
         p = 0
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
