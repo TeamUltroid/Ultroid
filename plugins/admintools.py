@@ -55,7 +55,8 @@ from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
 from . import *
 
 
-@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"],
+             ignore_dualmode=True)
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -89,7 +90,7 @@ async def prmte(ult):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="demote ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="demote ?(.*)", admins_only=True, type=["official", "manager"], ignore_dualmode=True)
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -123,7 +124,7 @@ async def dmote(ult):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"],  ignore_dualmode=True)
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -158,7 +159,7 @@ async def bban(ult):
         )
 
 
-@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, type=["official", "manager"], ignore_dualmode=True)
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
@@ -170,15 +171,13 @@ async def uunban(ult):
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
-    text = (
-        f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`",
-    )
+    text = f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`"
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="kick ?(.*)", admins_only=True, type=["official", "manager"],  ignore_dualmode=True)
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
         return
@@ -206,7 +205,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"],  ignore_dualmode=True)
 async def pin(msg):
     mss = "`Pinned.`"
     xx = msg.reply_to_msg_id
@@ -218,32 +217,26 @@ async def pin(msg):
     except BaseException:
         pass
     if not msg.is_reply:
-        return
+        return await eor(msg, "Reply a Message to Pin !")
     if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         mss = f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
     if ch != "silent":
         slnt = True
-        try:
-            await msg.client.pin_message(msg.chat_id, xx, notify=slnt)
-        except BadRequestError:
-            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
-        except Exception as e:
-            return await eor(msg, f"**ERROR:**`{str(e)}`")
-        await eor(msg, mss)
     else:
-        try:
-            await msg.client.pin_message(msg.chat_id, xx, notify=False)
-        except BadRequestError:
-            return await eor(msg, "`Hmm.. Guess I have no rights here!`")
-        except Exception as e:
-            return await eor(msg, f"**ERROR:**`{str(e)}`")
-        if msg.out:
-            await msg.delete()
+        slnt = False
+    try:
+        await msg.client.pin_message(msg.chat_id, xx, notify=False)
+    except BadRequestError:
+        return await eor(msg, "`Hmm.. Guess I have no rights here!`")
+    except Exception as e:
+        return await eor(msg, f"**ERROR:**`{str(e)}`")
+    if msg.out:
+        await msg.delete()
 
 
-@ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"])
+@ultroid_cmd(pattern="unpin($| (.*))", type=["official", "manager"],  ignore_dualmode=True)
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
     if not ult.is_private:
@@ -272,7 +265,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"],  ignore_dualmode=True)
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
@@ -282,6 +275,8 @@ async def fastpurger(purg):
         ABC = None
     if ABC and purg.text[6] in ["m", "a"]:
         return
+    if purg.client._bot:
+        return await purg.client.delete_messages(purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)])
     if match and not purg.is_reply:
         p = 0
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
