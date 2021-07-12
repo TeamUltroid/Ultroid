@@ -5,7 +5,8 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import os, asyncio
+import asyncio
+import os
 
 from . import *
 
