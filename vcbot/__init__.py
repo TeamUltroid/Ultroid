@@ -91,7 +91,7 @@ async def download(event, query, chat, ts):
     vid_id = noo["id"]
     link = _yt_base_url + vid_id
     opts = {
-        "format": str(format),
+        "format": "bestaudio",
         "addmetadata": True,
         "key": "FFmpegMetadata",
         "prefer_ffmpeg": True,
