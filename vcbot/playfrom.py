@@ -27,10 +27,10 @@ async def PlayFrom(client, message):
         spl = chat.split(" ", maxsplit=1)[-1].split(";")[0].split(" ")
 
     if len(spl) == 3:
-        PlayAT = await Client.get_chat(spl[1])
-        playfrom = await Client.get_chat(spl[2])
+        PlayAT = Client.get_chat(spl[1])
+        playfrom = Client.get_chat(spl[2])
     elif len(spl) == 2:
-        playfrom = await Client.get_chat(spl[1])
+        playfrom = Client.get_chat(spl[1])
     else:
         return await eor(
             message, "Provide the Chat Username/Id from where to Play Songs..."
