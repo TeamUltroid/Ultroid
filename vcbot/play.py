@@ -45,7 +45,7 @@ async def startup(_, message):
 
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
-        song = await download(song[1], chat.id, TS)
+        song, thumb, title, duration = await download(msg, song[1], chat.id, TS)
     elif not reply and len(song) == 1:
         return await msg.edit_text("Pls Give me Something to Play...")
     elif not (reply.audio or reply.voice or reply.video):
