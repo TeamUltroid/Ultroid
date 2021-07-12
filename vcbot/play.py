@@ -67,7 +67,7 @@ async def startup(_, message):
     if thumb:
         await msg.delete()
         msg = await message.reply_photo(
-            th,
+            thumb,
             caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
         )
         os.remove(thumb)
