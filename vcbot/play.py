@@ -37,7 +37,7 @@ async def startup(_, message):
         elif reply.video or reply.audio:
             med = reply.video or reply.audio
             song_name = med.file_name
-        if med.thumb:
+        if med.thumbs:
             dll = med.thumbs[0].file_id
             thumb = await asst.download_media(dll)
     TS = dt.now().strftime("%H:%M:%S")
