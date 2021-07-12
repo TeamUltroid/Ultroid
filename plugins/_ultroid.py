@@ -17,7 +17,7 @@ REPOMSG = """
 """
 
 
-@ultroid_cmd(pattern="repo$", type=["official", "manager"])
+@ultroid_cmd(pattern="repo$", type=["official", "manager"], ignore_dualmode=True)
 async def repify(e):
     try:
         q = await e.client.inline_query(asst.me.username, "repo")
