@@ -42,7 +42,7 @@ async def startup(_, message):
             song_name = song[1]
         else:
             song_name = ""
-
+    thumb = None
     TS = dt.now().strftime("%H:%M:%S")
     if not reply and len(song) > 1:
         song, thumb, title, duration = await download(msg, song[1], chat.id, TS)
@@ -63,13 +63,14 @@ async def startup(_, message):
         return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
     if med and med.thumbs:
         dll = med.thumbs[0].file_id
-        th = await asst.download_media(dll)
+        thumb = await asst.download_media(dll)
+    if thumb:
         await msg.delete()
         msg = await message.reply_photo(
             th,
             caption=f"**Playing :** {song_name}\n**Requested By :** {from_user}",
         )
-        os.remove(th)
+        os.remove(thumb)
     CallsClient.join_group_call(chat.id, song)
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
