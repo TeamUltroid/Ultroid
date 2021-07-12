@@ -71,7 +71,7 @@ async def eor(message, text, *args, **kwargs):
     return await message.reply_text(text, *args, **kwargs)
 
 
-#async def download(query, chat, ts):
+# async def download(query, chat, ts):
 #    song = f"VCSONG_{chat}_{ts}.raw"
 #    if ("youtube.com" or "youtu.be") in query:
 #        await bash(
@@ -83,21 +83,22 @@ async def eor(message, text, *args, **kwargs):
 #        )
 #    return song
 
+
 async def download(event, query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     search = VideosSearch(string, limit=1).result()
     noo = search["result"][0]
-    vid_id = noo['id']
+    vid_id = noo["id"]
     link = _yt_base_url + vid_id
     opts = {
-            "format": str(format),
-            "addmetadata": True,
-            "key": "FFmpegMetadata",
-            "prefer_ffmpeg": True,
-            "geo_bypass": True,
-            "outtmpl": "%(id)s.mp3",
-            "quiet": True,
-            "logtostderr": False,
+        "format": str(format),
+        "addmetadata": True,
+        "key": "FFmpegMetadata",
+        "prefer_ffmpeg": True,
+        "geo_bypass": True,
+        "outtmpl": "%(id)s.mp3",
+        "quiet": True,
+        "logtostderr": False,
     }
     ytdl_data = await dler(event, link)
     YoutubeDL(opts).download([link])
