@@ -55,7 +55,6 @@ async def startup(_, message):
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
-        os.remove(dl)
     from_user = message.from_user.mention
     if chat.id in CallsClient.active_calls.keys():
         add_to_queue(chat.id, song, song_name, from_user)
