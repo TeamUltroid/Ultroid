@@ -49,7 +49,7 @@ from . import *
 from . import humanbytes as hb
 
 
-@ultroid_cmd(pattern="tr", type=["official", "manager"],ignore_dualmode=True)
+@ultroid_cmd(pattern="tr", type=["official", "manager"], ignore_dualmode=True)
 async def _(event):
     if len(event.text) > 3:
         if not event.text[3] == " ":
@@ -111,7 +111,12 @@ async def _(event):
         await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
 
-@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official","manager"],ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="bots ?(.*)",
+    groups_only=True,
+    type=["official", "manager"],
+    ignore_dualmode=True,
+)
 async def _(ult):
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
