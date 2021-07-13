@@ -23,11 +23,10 @@ async def PlayFrom(client, message):
     PlayAT = message.chat
 
     if ";" in chat:
-        limit = int(chat.split(";")[-1])
-        print(limit)
-        spl = chat.split(" ", maxsplit=1)[-1].split(";")[0].split(" ")
-        print(spl)
-
+        lct = chat.split(";", maxsplit=1)
+        limit = int(lct[-1])
+        spl = lct[0].split(" ")
+    print(spl, limit)
     if len(spl) == 3:
         PlayAT = await Client.get_chat(chat_id=spl[1])
         playfrom = await Client.get_chat(chat_id=spl[2])
