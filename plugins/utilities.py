@@ -278,7 +278,7 @@ async def _(event):
         await xx.edit(reply_text)
 
 
-@ultroid_cmd(pattern="info ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="info ?(.*)", type=["official", "manager"],ignore_dualmode=True)
 async def _(event):
     xx = await eor(event, "`Processing...`")
     replied_user, error_i_a = await get_full_user(event)
