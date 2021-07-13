@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import os
-
+import asyncio
 from . import *
 
 
@@ -38,7 +38,7 @@ async def PlayFrom(client, message):
     msg = await eor(message, "`Processing...`")
     await asst.send_message(LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}")
     async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
-        music.audio.duration
+        durat = music.audio.duration
         dl = await music.download()
         TS = dt.now().strftime("%H:%M:%S")
         song = f"VCSONG_{PlayAT.id}_{TS}.raw"
@@ -47,12 +47,12 @@ async def PlayFrom(client, message):
         )
         os.remove(dl)
         await msg.delete()
-        mn = await message.reply_text(f"Playing {music.title}\nAt : {PlayAT.title}")
+        mn = await message.reply_text(f"Playing {music.audio.title}\nAt : {PlayAT.title}")
         if PlayAT.id not in CallsClient.active_calls.keys():
             CallsClient.join_group_call(PlayAT.id, song)
         else:
             CallsClient.change_stream(PlayAT.id, song)
-        # await asyncio.sleep(durat)
+        await asyncio.sleep(durat)
         await mn.delete()
 
 
