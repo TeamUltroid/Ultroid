@@ -67,7 +67,10 @@ async def startup(_, message):
         )
         if os.path.exists(thumb):
             os.remove(thumb)
-    CallsClient.join_group_call(chat.id, song)
+    try:
+        CallsClient.join_group_call(chat.id, song)
+    except Exception as E:
+        return await msg.edit_text(str(E))
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
