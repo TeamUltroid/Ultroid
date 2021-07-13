@@ -75,7 +75,7 @@ async def _(event):
         await eod(xx, str(exc), time=10)
 
 
-@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"], ignore_dualmode=True)
 async def _(event):
     if event.reply_to_msg_id:
         await event.get_input_chat()
@@ -111,7 +111,7 @@ async def _(event):
         await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
 
-@ultroid_cmd(pattern="bots ?(.*)", groups_only=True)
+@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official","manager"],ignore_dualmode=True)
 async def _(ult):
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
