@@ -19,12 +19,14 @@ from . import *
 async def PlayFrom(client, message):
     chat = message.text
     spl = chat.split(" ")
-    limit = None
+    limit = 100
     PlayAT = message.chat
 
     if ";" in chat:
         limit = int(chat.split(";")[-1])
+        print(limit)
         spl = chat.split(" ", maxsplit=1)[-1].split(";")[0].split(" ")
+        print(spl)
 
     if len(spl) == 3:
         PlayAT = await Client.get_chat(chat_id=spl[1])
