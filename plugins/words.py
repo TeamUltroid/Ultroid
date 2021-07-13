@@ -27,7 +27,7 @@ from . import *
 dictionary = PyDictionary()
 
 
-@ultroid_cmd(pattern="meaning", type=["official", "manager"])
+@ultroid_cmd(pattern="meaning", type=["official", "manager"], ignore_dualmode=True)
 async def mean(event):
     event.message.id
     xx = await eor(event, get_string("com_1"))
