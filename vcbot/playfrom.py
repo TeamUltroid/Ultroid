@@ -40,7 +40,11 @@ async def PlayFrom(client, message):
     M = await asst.send_message(
         LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}"
     )
-    async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
+    Req = Client.search_messages(playfrom.id, limit=limit, filter="audio")
+    ALL = await Req.collect()
+    TTl = len(ALL)
+    async for i in range(TTl):
+        music = ALL[i]
         durat = music.audio.duration
         sleepy = durat + 20
         dl = await music.download()
@@ -52,7 +56,7 @@ async def PlayFrom(client, message):
         os.remove(dl)
         await msg.delete()
         mn = await message.reply_text(
-            f"**Playing** {music.audio.title}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
+            f"**Playing** {music.audio.title}\n**Song Number** : {i}/{TTl}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
             quote=False,
         )
         if PlayAT.id not in CallsClient.active_calls.keys():
