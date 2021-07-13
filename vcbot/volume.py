@@ -5,9 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyrogram.raw import functions
-
 from . import *
+
+from pyrogram.raw import functions
 
 
 @asst.on_message(
