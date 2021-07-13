@@ -47,12 +47,12 @@ async def PlayFrom(client, message):
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
         os.remove(dl)
+        await msg.delete()
+        mn = await message.reply_text(f"Playing {music.title}\nAt : {PlayAT.title}")
         if PlayAT.id not in CallsClient.active_calls.keys():
             CallsClient.join_group_call(PlayAT.id, song)
         else:
             CallsClient.change_stream(PlayAT.id, song)
-        await msg.delete()
-        mn = await message.reply_text(f"Playing {music.title}\nAt : {PlayAT.title}")
         await asyncio.sleep(durat)
         await mn.delete()
 
