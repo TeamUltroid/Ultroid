@@ -49,7 +49,7 @@ from . import *
 from . import humanbytes as hb
 
 
-@ultroid_cmd(pattern="tr", type=["official", "manager"])
+@ultroid_cmd(pattern="tr", type=["official", "manager"],ignore_dualmode=True)
 async def _(event):
     if len(event.text) > 3:
         if not event.text[3] == " ":
