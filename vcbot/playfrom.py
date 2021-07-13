@@ -18,19 +18,16 @@ from . import *
 )
 async def PlayFrom(client, message):
     chat = message.text
-    spl = chat.split(" ")
+    spl = chat.split(" ", maxsplit=1)
     limit = 100
     PlayAT = message.chat
 
     if ";" in chat:
-        lct = chat.split(";", maxsplit=1)
+        lct = spl[1].split(";", maxsplit=1)
         limit = int(lct[-1])
-        spl = lct[0].split(" ")
-    print(spl, limit)
-    if len(spl) == 3:
-        PlayAT = await Client.get_chat(chat_id=spl[1])
-        playfrom = await Client.get_chat(chat_id=spl[2])
-    elif len(spl) == 2:
+        spl = [None, lct[0]]
+
+    if len(spl) == 2:
         playfrom = await Client.get_chat(chat_id=spl[1])
     else:
         return await eor(
@@ -40,7 +37,7 @@ async def PlayFrom(client, message):
     msg = await eor(message, "`Processing...`")
     await asst.send_message(LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}")
     async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
-        durat = music.duration + 20
+        durat = music.audio.duration + 20
         dl = await music.download()
         song = f"VCSONG_{PlayAT.id}_{TS}.raw"
         await bash(
