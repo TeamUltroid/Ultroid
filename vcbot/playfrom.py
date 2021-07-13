@@ -40,10 +40,11 @@ async def PlayFrom(client, message):
     M = await asst.send_message(
         LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}"
     )
-    Req = Client.search_messages(playfrom.id, limit=limit, filter="audio")
-    ALL = await Req.collect()
+    ALL = []
+    async for mi in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
+        ALL.append(mi)
     TTl = len(ALL)
-    async for i in range(TTl):
+    for i in range(TTl):
         music = ALL[i]
         durat = music.audio.duration
         sleepy = durat + 20
