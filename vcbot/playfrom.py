@@ -39,7 +39,7 @@ async def PlayFrom(client, message):
     msg = await eor(message, "`Processing...`")
     await asst.send_message(LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}")
     async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
-        durat = music.audio.duration + 20
+        durat = music.audio.duration
         dl = await music.download()
         TS = dt.now().strftime("%H:%M:%S")
         song = f"VCSONG_{PlayAT.id}_{TS}.raw"
@@ -53,7 +53,7 @@ async def PlayFrom(client, message):
             CallsClient.join_group_call(PlayAT.id, song)
         else:
             CallsClient.change_stream(PlayAT.id, song)
-        await asyncio.sleep(durat)
+        # await asyncio.sleep(durat)
         await mn.delete()
 
 
