@@ -26,7 +26,6 @@ from pyUltroid.misc import sudoers
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
-
 Client = CallsClient._app
 
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
