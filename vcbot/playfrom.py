@@ -21,7 +21,9 @@ async def PlayFrom(client, message):
     spl = chat.split(" ", maxsplit=1)
     limit = 100
     PlayAT = message.chat
-
+    CHN_PLAY = udB.get('CHN_PLAY')
+    if CHN_PLAY:
+        PlayAT = await Client.get_chat(CHN_PLAY)
     if ";" in chat:
         lct = spl[1].split(";", maxsplit=1)
         limit = int(lct[-1])
@@ -39,6 +41,7 @@ async def PlayFrom(client, message):
     async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
         durat = music.audio.duration + 20
         dl = await music.download()
+        TS = dt.now().strftime("%H:%M:%S")
         song = f"VCSONG_{PlayAT.id}_{TS}.raw"
         await bash(
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
