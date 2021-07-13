@@ -21,7 +21,7 @@ from pyUltroid import HNDLR, CallsClient, udB, ultroid_bot
 from pyUltroid import vcasst as asst
 
 # from pyUltroid import vcClient as Client
-from pyUltroid.functions.all import bash, dler
+from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
