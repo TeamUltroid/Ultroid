@@ -5,8 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import os
 import asyncio
+import os
+
 from . import *
 
 
@@ -47,7 +48,9 @@ async def PlayFrom(client, message):
         )
         os.remove(dl)
         await msg.delete()
-        mn = await message.reply_text(f"Playing {music.audio.title}\nAt : {PlayAT.title}")
+        mn = await message.reply_text(
+            f"Playing {music.audio.title}\nAt : {PlayAT.title}"
+        )
         if PlayAT.id not in CallsClient.active_calls.keys():
             CallsClient.join_group_call(PlayAT.id, song)
         else:
