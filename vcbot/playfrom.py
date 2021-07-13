@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import asyncio
 import os
 
 from . import *
@@ -39,7 +38,7 @@ async def PlayFrom(client, message):
     msg = await eor(message, "`Processing...`")
     await asst.send_message(LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}")
     async for music in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
-        durat = music.audio.duration
+        music.audio.duration
         dl = await music.download()
         TS = dt.now().strftime("%H:%M:%S")
         song = f"VCSONG_{PlayAT.id}_{TS}.raw"
