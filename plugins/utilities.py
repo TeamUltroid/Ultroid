@@ -647,7 +647,7 @@ async def toothpaste(event):
         return await eod(str(ex))
 
 
-@ultroid_cmd(pattern="thumb")
+@ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
     if not event.reply_to_msg_id:
         return await eod(
