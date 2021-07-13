@@ -21,7 +21,7 @@ async def PlayFrom(client, message):
     spl = chat.split(" ", maxsplit=1)
     limit = 100
     PlayAT = message.chat
-    CHN_PLAY = udB.get('CHN_PLAY')
+    CHN_PLAY = udB.get("CHN_PLAY")
     if CHN_PLAY:
         PlayAT = await Client.get_chat(CHN_PLAY)
     if ";" in chat:
