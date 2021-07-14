@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
-from .play import streamhandler
+# from .play import streamhandler
 
 
 @asst.on_message(filters.command("skipvc") & filters.user(VC_AUTHS()) & ~filters.edited)
@@ -17,4 +17,4 @@ async def skiplife(_, message):
     except BaseException:
         chat = message.chat.id
     CallsClient.pause_stream(chat)
-    await streamhandler(_, message)
+    # await streamhandler(_, message)
