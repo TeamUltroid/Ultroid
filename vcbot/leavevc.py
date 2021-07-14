@@ -16,7 +16,7 @@ from . import *
 async def leavehandler(_, message):
     spli = message.text.split(" ", maxsplit=1)
     try:
-        chat = spli[1]
+        chat = (await Client.get_chat(spli[1])).id
     except IndexError:
         chat = message.chat.id
     await eor(message, "`Left Vc...`")
