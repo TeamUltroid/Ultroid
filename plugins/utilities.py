@@ -137,7 +137,7 @@ async def info(event):
     pattern="listreserved$",
 )
 async def _(event):
-    result = await ult.client(GetAdminedPublicChannelsRequest())
+    result = await event.client(GetAdminedPublicChannelsRequest())
     output_str = ""
     r = result.chats
     for channel_obj in r:
@@ -409,7 +409,7 @@ async def rmbg(event):
         )
     if event.reply_to_msg_id:
         reply = await event.get_reply_message()
-        dl = await ultroid_bot.download_media(reply.media)
+        dl = await event.client.download_media(reply.media)
         if not dl.endswith(("webp", "jpg", "png", "jpeg")):
             os.remove(dl)
             return await xx.edit("`Unsupported Media`")
@@ -441,7 +441,7 @@ async def rmbg(event):
         force_document=True,
         reply_to=reply,
     )
-    await ultroid_bot.send_file(event.chat_id, "ult.webp", reply_to=reply)
+    await event.client.send_file(event.chat_id, "ult.webp", reply_to=reply)
     os.remove(rmbgp)
     os.remove("ult.webp")
     await xx.delete()
