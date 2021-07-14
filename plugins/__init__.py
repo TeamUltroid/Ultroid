@@ -33,7 +33,7 @@ List = []
 Dict = {}
 N = 0
 
-NOSPAM_CHAT = [-1001387666944,-1001109500936,-1001050982793]
+NOSPAM_CHAT = [-1001387666944, -1001109500936, -1001050982793]
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
