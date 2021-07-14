@@ -141,7 +141,6 @@ async def dmote(ult):
 )
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
-    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to ban him!`")
@@ -152,7 +151,7 @@ async def bban(ult):
     except BadRequestError:
         return await xx.edit("`I don't have the right to ban a user.`")
     except UserIdInvalidError:
-        await xx.edit("`I couldn't get who he is!`")
+        return await xx.edit("`I couldn't get who he is!`")
     try:
         reply = await ult.get_reply_message()
         if reply:
