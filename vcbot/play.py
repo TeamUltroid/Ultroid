@@ -98,7 +98,7 @@ async def streamhandler(chat_id: int):
         )
         try:
             pos = list(QUEUE[int(chat_id)])[0]
-            del QUEUE[chat_id][pos]
+            QUEUE[chat_id].pop(pos)
         except BaseException as ap:
             await asst.send_message(chat_id, f"`{str(ap)}`")
     except BaseException:
