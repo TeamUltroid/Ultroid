@@ -94,7 +94,7 @@ async def streamhandler(chat_id: int):
         await asst.send_message(
             chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
-        pos = list(QUEUE[int(chat_id)])[0]
+        pos = list(QUEUE[int(chat_id)].keys())[0]
         QUEUE[chat_id].pop(pos)
     except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)
