@@ -10,8 +10,6 @@ import os
 
 from . import *
 
-J_CACHE = {}
-
 
 @asst.on_message(
     filters.command(["play", f"play@{vcusername}"])
@@ -91,17 +89,13 @@ async def cstartup(_, message):
 async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
-        CallsClient.leave_group_call(chat_id)
-        CallsClient.join_group_call(chat_id, song)
+        CallsClient.change_stream(chat_id, song)
         await asst.send_message(
             chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
-        try:
-            pos = list(QUEUE[int(chat_id)])[0]
-            QUEUE[chat_id].pop(pos)
-        except BaseException as ap:
-            await asst.send_message(chat_id, f"`{str(ap)}`")
-    except BaseException:
+        pos = list(QUEUE[int(chat_id)])[0]
+        QUEUE[chat_id].pop(pos)
+    except IndexError:
         CallsClient.leave_group_call(chat_id)
-        Cyanide = J_CACHE[chat_id]
-        await asst.delete_messages(LOG_CHANNEL, Cyanide)
+    except Exception as ap:
+        await asst.send_message(chat_id, f"`{str(ap)}`")
