@@ -90,12 +90,13 @@ async def streamhandler(chat_id: int):
     try:
         song, title, from_user = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
+        CallsClient._add_active_call(chat_id)
         await asst.send_message(
             chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
         pos = list(QUEUE[int(chat_id)])[0]
         QUEUE[chat_id].pop(pos)
-    except IndexError:
+    except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:
         await asst.send_message(chat_id, f"`{str(ap)}`")
