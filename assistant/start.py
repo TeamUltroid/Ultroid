@@ -7,11 +7,11 @@
 
 from datetime import datetime
 
+from pytz import timezone as tz
 from pyUltroid.functions.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
 from telethon.utils import get_display_name
-from pytz import timezone as tz
 
 from plugins import *
 
@@ -184,7 +184,9 @@ async def timezone_(event):
     var = "TIMEZONE"
     name = "Timezone"
     async with event.client.conversation(pru) as conv:
-        await conv.send_message("Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)")
+        await conv.send_message(
+            "Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)"
+        )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
@@ -199,10 +201,10 @@ async def timezone_(event):
                 await setit(event, var, themssg)
                 await conv.send_message(
                     f"{name} changed to {themssg}\n",
-                   buttons=get_back_button("mainmenu"),
-               )
-            except:
+                    buttons=get_back_button("mainmenu"),
+                )
+            except BaseException:
                 await conv.send_message(
                     "Wrong TimeZone, Try again",
-                   buttons=get_back_button("mainmenu"),
-               )
+                    buttons=get_back_button("mainmenu"),
+                )
