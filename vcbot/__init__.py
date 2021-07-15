@@ -81,7 +81,7 @@ def get_from_queue(chat_id):
     song = info["song"]
     title = info["title"]
     from_user = info["from_user"]
-    return song, title, from_user
+    return song, title, from_user, play_this
 
 
 async def eor(message, text, *args, **kwargs):
