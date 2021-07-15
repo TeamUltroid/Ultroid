@@ -10,7 +10,7 @@ from support import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-
+from pyUltroid.misc._assistant import in_pattern
 from . import *
 from ._inline import _main_help_menu
 
