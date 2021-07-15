@@ -26,7 +26,7 @@ import io
 import sys
 import traceback
 from os import remove
-
+from pprint import pprint
 from carbonnow import Carbon
 
 from . import *
@@ -96,7 +96,7 @@ async def _(event):
         await xx.edit(OUT)
 
 
-p = print  # ignore: pylint
+p, pp = print, pprint  # ignore: pylint
 
 
 @ultroid_cmd(
