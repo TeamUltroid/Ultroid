@@ -64,14 +64,16 @@ def add_to_queue(chat_id, song, song_name, from_user):
         )
     return QUEUE[int(chat_id)]
 
+
 def list_queue(chat):
     if QUEUE.get(chat):
-        txt,n = "", 0
+        txt, n = "", 0
         for x in list(QUEUE[chat].keys()):
             n += 1
             data = QUEUE[chat][x]
             txt += f'{n}.{data["title"]} __requested by__ {data["from_user"]}\n'
         return txt
+
 
 def get_from_queue(chat_id):
     play_this = list(QUEUE[int(chat_id)].keys())[0]
