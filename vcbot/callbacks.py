@@ -8,11 +8,13 @@
 from . import *
 from .play import queue_func
 
+
 def AUTH_FILTER(client, message):
     if query.from_user.id not in VC_AUTHS():
         await query.answer("You are Not Authorised to Use Me!", show_alert=True)
         return False
     return True
+
 
 @asst.on_callback_query(filters.regex("^vc(.*)") & AUTH_FILTER)
 async def stopvc(_, query):
