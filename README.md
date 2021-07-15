@@ -36,7 +36,7 @@
 ## Deploy to Heroku
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2F1Danish-00%2FSideLoad)
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
@@ -88,6 +88,7 @@ Different ways to get your `SESSION`:
 * Linux : `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
 * Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
+* TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 
@@ -99,5 +100,5 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
-* [AndrewLaneX](https://github.com/AndrewLaneX) for [tgcalls-base.](http://github.com/tgcallsjs/tgcalls)
+* [Dan](https://github.com/delivrance) for [Pyrogram.](https://github.com/pyrogram/pyrogram)
 
