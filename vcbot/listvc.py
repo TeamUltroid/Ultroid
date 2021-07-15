@@ -21,6 +21,7 @@ async def list_handler(_, message):
 async def llhnf(_, message):
     await message.edit_text(f"{CallsClient.active_calls}")
 
+
 @asst.on_message(filters.command("queue") & filters.user(VC_AUTHS()) & ~filters.edited)
 async def queuee(_, e):
     mst = e.text.split(" ", maxsplit=1)
