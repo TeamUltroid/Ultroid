@@ -20,3 +20,14 @@ async def list_handler(_, message):
 @Client.on_message(filters.me & filters.command("listvc", HNDLR) & ~filters.edited)
 async def llhnf(_, message):
     await message.edit_text(f"{CallsClient.active_calls}")
+
+@asst.on_message(filters.command("queue") & filters.user(VC_AUTHS()) & ~filters.edited)
+async def queuee(_, e):
+    mst = e.text.split(" ", maxsplit=1)
+    try:
+        chat = (await Client.get_chat(mst[1])).id
+    except BaseException:
+        chat = e.chat.id
+    if QUEUE.get(chat):
+        k = QUEUE[chat]
+        await asst.send_message(e.chat.id, str(k))
