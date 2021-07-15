@@ -6,12 +6,16 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
+from .play import queue_func
 
-
-@asst.on_callback_query(filters.regex("^vc(.*)"))
-async def stopvc(_, query):
+def AUTH_FILTER(client, message):
     if query.from_user.id not in VC_AUTHS():
-        return await query.answer("You are Not Authorised to Use Me!", show_alert=True)
+        await query.answer("You are Not Authorised to Use Me!", show_alert=True)
+        return False
+    return True
+
+@asst.on_callback_query(filters.regex("^vc(.*)") & AUTH_FILTER)
+async def stopvc(_, query):
     match = query.matches[0].group(1).split("_")
     chat = int(match[1])
     if match[0] == "r":
@@ -27,3 +31,9 @@ async def stopvc(_, query):
             [[InlineKeyboardButton(BT, callback_data=f"vc{dt}_{chat}")]]
         )
     )
+
+
+@asst.on_callback_query(filters.regex("^skip_(.*)") & AUTH_FILTER)
+async def skipstream(client, query):
+    match = query.matches[0].group(1)
+    await queue_func(int(match))
