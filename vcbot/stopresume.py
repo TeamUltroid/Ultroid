@@ -16,7 +16,7 @@ from . import *
 async def stopvc(_, message):
     ms = message.text.split(" ", maxsplit=1)
     try:
-        chat = ms[1]
+        chat = (await Client.get_chat(ms[1])).id
     except IndexError:
         chat = message.chat.id
     CallsClient.pause_stream(chat)
@@ -38,7 +38,7 @@ async def ustop(_, message):
 async def stopvc(_, message):
     ms = message.text.split(" ", maxsplit=1)
     try:
-        chat = ms[1]
+        chat = (await Client.get_chat(ms[1])).id
     except IndexError:
         chat = message.chat.id
     CallsClient.resume_stream(chat)
