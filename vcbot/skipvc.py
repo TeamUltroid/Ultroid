@@ -19,11 +19,11 @@ async def skiplife(_, message):
         song, title, from_user, pos = get_from_queue(chat)
         CallsClient.change_stream(chat, song)
         await asst.send_message(
-            chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
+            chat, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
-        QUEUE[chat_id].pop(pos)
-        if not QUEUE[chat_id]:
-            QUEUE.pop(chat_id)
+        QUEUE[chat].pop(pos)
+        if not QUEUE[chat]:
+            QUEUE.pop(chat)
     except IndexError:
         CallsClient.leave_group_call(chat)
     except Exception as Ex:
