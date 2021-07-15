@@ -50,7 +50,9 @@ def add_to_queue(chat_id, song, song_name, from_user):
     except BaseException:
         play_at = 1
     if QUEUE.get(int(chat_id)):
-        QUEUE[int(chat_id)].update({play_at: {"song": song, "title": song_name, "from_user": from_user}})
+        QUEUE[int(chat_id)].update(
+            {play_at: {"song": song, "title": song_name, "from_user": from_user}}
+        )
     else:
         QUEUE.update(
             {
