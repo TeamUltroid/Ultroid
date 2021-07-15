@@ -29,6 +29,7 @@ async def queuee(_, e):
         chat = (await Client.get_chat(mst[1])).id
     except BaseException:
         chat = e.chat.id
-    if QUEUE.get(chat):
-        k = QUEUE[chat]
-        await asst.send_message(e.chat.id, str(k))
+    txt = list_queue(chat)
+    if txt:
+        return await asst.send_message(e.chat.id, txt)
+    await asst.send_message(e.chat.id, "No Queue")
