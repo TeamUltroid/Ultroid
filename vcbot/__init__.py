@@ -71,7 +71,7 @@ def list_queue(chat):
         for x in list(QUEUE[chat].keys()):
             n += 1
             data = QUEUE[chat][x]
-            txt += f'{n}.{data["title"]} __requested by__ {data["from_user"]}\n'
+            txt += f'**{n}.{data["title"]}** : __By {data["from_user"]}__\n'
         return txt
 
 
