@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import asyncio
 import os
 
 from . import *
@@ -44,7 +43,8 @@ async def PlayFrom(client, message):
     async for mi in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
         ALL.append(mi)
     TTl = len(ALL)
-    for i in range(TTl):
+    await msg.delete()
+    for i in range(TTL):
         music = ALL[i]
         durat = music.audio.duration
         sleepy = durat + 20
@@ -55,17 +55,17 @@ async def PlayFrom(client, message):
             f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
         )
         os.remove(dl)
-        await msg.delete()
-        mn = await message.reply_text(
-            f"**Playing** {music.audio.title}\n**Song Number** : {i}/{TTl}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
-            quote=False,
-        )
         if PlayAT.id not in CallsClient.active_calls.keys():
             CallsClient.join_group_call(PlayAT.id, song)
+            mn = await message.reply_text(
+                f"**Playing** {music.audio.title}\n**Song Number** : {i}/{TTl}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
+                quote=False,
+            )
+            # await mn.delete()
         else:
-            CallsClient.change_stream(PlayAT.id, song)
-        await asyncio.sleep(sleepy)
-        await mn.delete()
+            add_to_queue(
+                PlayAT.id, song, music.audio.title, message.from_user.id, sleepy
+            )
     await M.delete()
 
 

@@ -44,7 +44,7 @@ def VC_AUTHS():
 vcusername = ultroid_bot.asst.me.username
 
 
-def add_to_queue(chat_id, song, song_name, from_user):
+def add_to_queue(chat_id, song, song_name, from_user, duration):
     try:
         n = sorted(list(QUEUE[int(chat_id)].keys()))
         play_at = n[-1] + 1
@@ -52,13 +52,25 @@ def add_to_queue(chat_id, song, song_name, from_user):
         play_at = 1
     if QUEUE.get(int(chat_id)):
         QUEUE[int(chat_id)].update(
-            {play_at: {"song": song, "title": song_name, "from_user": from_user}}
+            {
+                play_at: {
+                    "song": song,
+                    "title": song_name,
+                    "from_user": from_user,
+                    "duration": duration,
+                }
+            }
         )
     else:
         QUEUE.update(
             {
                 int(chat_id): {
-                    play_at: {"song": song, "title": song_name, "from_user": from_user}
+                    play_at: {
+                        "song": song,
+                        "title": song_name,
+                        "from_user": from_user,
+                        "duration": duration,
+                    }
                 }
             }
         )
@@ -81,7 +93,8 @@ def get_from_queue(chat_id):
     song = info["song"]
     title = info["title"]
     from_user = info["from_user"]
-    return song, title, from_user, play_this
+    duration = info["duration"]
+    return song, title, from_user, play_this, duration
 
 
 async def eor(message, text, *args, **kwargs):

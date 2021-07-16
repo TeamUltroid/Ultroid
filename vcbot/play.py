@@ -55,8 +55,10 @@ async def startup(_, message):
         )
     from_user = message.from_user.mention
     if chat.id in CallsClient.active_calls.keys():
-        add_to_queue(chat.id, song, song_name, from_user)
-        return await msg.edit(f"Added to queue at #{list(QUEUE[chat.id].keys())[-1]}")
+        add_to_queue(chat.id, song, song_name, from_user, duration)
+        return await msg.edit(
+            f"Added **{song_name}** to queue at #{list(QUEUE[chat.id].keys())[-1]}"
+        )
     if thumb:
         await msg.delete()
         msg = await message.reply_photo(
@@ -87,15 +89,17 @@ async def cstartup(_, message):
 
 async def queue_func(chat_id: int):
     try:
-        song, title, from_user, pos = get_from_queue(chat_id)
+        song, title, from_user, pos, dur = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
         CallsClient._add_active_call(chat_id)
-        await asst.send_message(
+        xx = await asst.send_message(
             chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
         QUEUE[chat_id].pop(pos)
         if not QUEUE[chat_id]:
             QUEUE.pop(chat_id)
+        await asyncio.sleep(dur+5)
+        await xx.delete()
     except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:

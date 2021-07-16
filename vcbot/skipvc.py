@@ -16,14 +16,16 @@ async def skiplife(_, message):
     except BaseException:
         chat = message.chat.id
     try:
-        song, title, from_user, pos = get_from_queue(chat)
+        song, title, from_user, pos, dur = get_from_queue(chat)
         CallsClient.change_stream(chat, song)
-        await asst.send_message(
+        ok = await asst.send_message(
             chat, f"**Playing :** {title}\n**Requested by**: {from_user}"
         )
         QUEUE[chat].pop(pos)
         if not QUEUE[chat]:
             QUEUE.pop(chat)
+        await asyncio.sleep(dur)
+        await ok.delete()
     except IndexError:
         CallsClient.leave_group_call(chat)
     except Exception as Ex:
