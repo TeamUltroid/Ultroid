@@ -5,8 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyUltroid.dB.core import HELP
-from support import *
+from pyUltroid.dB.core import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
@@ -14,12 +13,9 @@ from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from . import *
 
 
-@ultroid_cmd(
-    pattern="help ?(.*)",
-)
-async def ult_help(ult):
+@ultroid_cmd(pattern="help ?(.*)")
+async def _help(ult):
     plug = ult.pattern_match.group(1)
-    tgbot = ultroid_bot.asst.me.username
     if plug:
         try:
             if plug in HELP:
@@ -45,6 +41,7 @@ async def ult_help(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
+        tgbot = ultroid_bot.asst.me.username
         try:
             results = await ult.client.inline_query(tgbot, "ultd")
         except BotMethodInvalidError:
