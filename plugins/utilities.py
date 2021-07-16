@@ -127,14 +127,13 @@ async def info(event):
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
         print("Exception:", e)
-        await ok.edit(f"`An unexpected error has occurred. {e}`")
-        await asyncio.sleep(5)
-        await ok.delete()
+        await eod(ok, f"`An unexpected error has occurred. {e}`")
     return
 
 
 @ultroid_cmd(
     pattern="listreserved$",
+    ignore_dualmode=True
 )
 async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())

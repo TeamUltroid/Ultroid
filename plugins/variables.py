@@ -1,3 +1,10 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 
@@ -77,7 +84,7 @@ async def get_var(event):
         if val is not None:
             return await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
         else:
-            return await eod(x, "No such key!", time=5)
+            return await eod(x, "No such key!")
 
     elif opt == "keys":
         keys = sorted(udB.keys())

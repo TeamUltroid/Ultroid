@@ -35,7 +35,10 @@ async def _(e):
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
-        Link = (await ultroid_bot(GetLink(x.chat_id, x.id))).link
+        if not e.client._bot:
+          Link = (await e.client(GetLink(x.chat_id, x.id))).link
+        else:
+          Link = f"https://t.me/{x.chat.id}/{x.id}"
         await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",
