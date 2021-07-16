@@ -64,6 +64,7 @@ async def startup(_, message):
         msg = await message.reply_photo(
             thumb,
             caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {duration*1000}\n👤 **Requested By :** {from_user}",
+            reply_markup=reply_markup(chat.id),
         )
         if os.path.exists(thumb):
             os.remove(thumb)
@@ -74,17 +75,9 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
-    reply_markup = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}"),
-                InlineKeyboardButton("Skip", callback_data=f"skip_{chat.id}"),
-            ]
-        ]
-    )
-    await msg.edit_reply_markup(reply_markup)
     await asyncio.sleep(duration)
     await msg.delete()
+    await CH.delete()
 
 
 @Client.on_message(filters.me & filters.command(["play"], HNDLR) & ~filters.edited)
@@ -98,7 +91,9 @@ async def queue_func(chat_id: int):
         CallsClient.change_stream(chat_id, song)
         CallsClient._add_active_call(chat_id)
         xx = await asst.send_message(
-            chat_id, f"**Playing :** {title}\n**Requested by**: {from_user}"
+            chat_id,
+            f"**Playing :** {title}\n**Duration** : {time_formatter(dur)}\n**Requested by**: {from_user}",
+            reply_markup=reply_markup(chat_id),
         )
         QUEUE[chat_id].pop(pos)
         if not QUEUE[chat_id]:

@@ -29,7 +29,10 @@ async def PlayFrom(client, message):
         spl = [None, lct[0]]
 
     if len(spl) == 2:
-        playfrom = await Client.get_chat(chat_id=spl[1])
+        try:
+            playfrom = await Client.get_chat(chat_id=spl[1])
+        except Exception as Ex:
+            return await eor(message, str(Ex))
     else:
         return await eor(
             message, "Provide the Chat Username/Id from where to Play Songs..."
@@ -61,7 +64,9 @@ async def PlayFrom(client, message):
                 f"**Playing** {music.audio.title}\n**Song Number** : {i}/{TTl}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
                 quote=False,
             )
-            # await mn.delete()
+            await asyncio.sleep(durat)
+            await mn.delete()
+            os.remove(song)
         else:
             add_to_queue(
                 PlayAT.id, song, music.audio.title, message.from_user.mention, sleepy

@@ -37,7 +37,7 @@ async def chesendvolume(_, message):
         try:
             CML = Vl.participants[0].volume
         except IndexError:
-            CML = None or 0
+            CML = 0
         return await eor(message, f"**Current Volume :** {CML}%")
     try:
         if int(mk[1]) not in range(1, 101):

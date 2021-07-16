@@ -32,6 +32,7 @@ LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 QUEUE = {}
 
 _yt_base_url = "https://www.youtube.com/watch?v="
+vcusername = ultroid_bot.asst.me.username
 
 
 def VC_AUTHS():
@@ -41,7 +42,15 @@ def VC_AUTHS():
     return AUTH
 
 
-vcusername = ultroid_bot.asst.me.username
+def reply_markup(chat_id: int):
+    return InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("Pause", callback_data=f"vcp_{chat_id}"),
+                InlineKeyboardButton("Skip", callback_data=f"skip_{chat_id}"),
+            ]
+        ]
+    )
 
 
 def add_to_queue(chat_id, song, song_name, from_user, duration):

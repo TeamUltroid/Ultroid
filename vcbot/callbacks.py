@@ -39,3 +39,6 @@ async def stopvc(_, query):
 async def skipstream(client, query):
     match = query.matches[0].group(1)
     await queue_func(int(match))
+    await query.answer("Skipped !", show_alert=True)
+    if query.message:
+        await query.message.delete()

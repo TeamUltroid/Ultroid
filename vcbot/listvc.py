@@ -14,15 +14,28 @@ from . import *
     & ~filters.edited
 )
 async def list_handler(_, message):
-    await message.reply_text(f"{CallsClient.active_calls}")
+    OUT = ""
+    if len(list(CallsClient.active_calls.keys())) == 0:
+        return await eor(message, "No Active Group Calls Running..")
+    OUT += "List of All Active Calls\n\n"
+    for ke in CallsClient.active_calls.keys():
+        stat = CallsClient.active_calls[ke]
+        OUT.append(f"`{ke}` : __{stat}__\n")
+    await eor(message, OUT)
 
 
-@Client.on_message(filters.me & filters.command("listvc", HNDLR) & ~filters.edited)
+@Client.on_message(
+    filters.outgoing & filters.command("listvc", HNDLR) & ~filters.edited
+)
 async def llhnf(_, message):
-    await message.edit_text(f"{CallsClient.active_calls}")
+    await list_handler(_, message)
 
 
-@asst.on_message(filters.command("queue") & filters.user(VC_AUTHS()) & ~filters.edited)
+@asst.on_message(
+    filters.command(["queue", f"queue@{vcusername}"])
+    & filters.user(VC_AUTHS())
+    & ~filters.edited
+)
 async def queuee(_, e):
     mst = e.text.split(" ", maxsplit=1)
     try:
@@ -31,5 +44,10 @@ async def queuee(_, e):
         chat = e.chat.id
     txt = list_queue(chat)
     if txt:
-        return await asst.send_message(e.chat.id, txt)
-    await asst.send_message(e.chat.id, "No Queue")
+        return await eor(message, txt)
+    await eor(message, "No Queue Found !")
+
+
+@Client.on_message(filters.outgoing & filters.command("queue", HNDLR) & ~filters.edited)
+async def queue_vc(_, message):
+    await queuee(_, message)

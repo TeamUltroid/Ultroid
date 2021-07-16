@@ -50,7 +50,7 @@ async def radio(client, message):
     )
     # await asyncio.sleep(2)
     CallsClient.join_group_call(chat, file, stream_type=StreamType().live_stream)
-    await eor(message, "Playing Radio")
+    await eor(message, "Started Radio Stream")
 
 
 @Client.on_message(filters.me & filters.command("radio", HNDLR) & ~filters.edited)
