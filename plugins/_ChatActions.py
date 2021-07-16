@@ -84,7 +84,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             med = wel["media"]
             userid = user.id
             if msgg and not is_gbanned(str(user.id)):
-                await ult.reply(
+                send = await ult.reply(
                     msgg.format(
                         mention=mention,
                         group=title,
@@ -96,6 +96,8 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                     ),
                     file=med,
                 )
+                await asyncio.sleep(150)
+                await send.delete()
             elif not is_gbanned(str(user.id)):
                 await ult.reply(file=med)
     if (ult.user_left or ult.user_kicked) and get_goodbye(ult.chat_id):
@@ -114,7 +116,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         med = wel["media"]
         userid = user.id
         if msgg:
-            await ult.reply(
+            send = await ult.reply(
                 msgg.format(
                     mention=mention,
                     group=title,
@@ -126,6 +128,8 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 ),
                 file=med,
             )
+            await asyncio.sleep(150)
+            await send.delete()
         else:
             await ult.reply(file=med)
 
