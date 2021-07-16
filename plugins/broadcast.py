@@ -33,7 +33,6 @@ from . import *
 @ultroid_cmd(
     pattern="addch ?(.*)",
     allow_sudo=False,
-    ignore_dual=True,
 )
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
@@ -155,8 +154,8 @@ async def list_all(event):
 )
 async def forw(event):
     if not event.is_reply:
-        await eor(event, "Reply to a message to broadcast.")
-        return
+        return await eor(event, "Reply to a message to broadcast.")
+    ultroid_bot = event.client
     channels = get_channels()
     x = await eor(event, "Sending...")
     if get_no_channels() == 0:
@@ -195,6 +194,7 @@ async def forw(event):
 @ultroid_cmd(
     pattern="broadcast ?(.*)",
     allow_sudo=False,
+    ignore_dualmode=True,
 )
 async def sending(event):
     x = await eor(event, "`Processing...`")
