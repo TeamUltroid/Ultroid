@@ -44,7 +44,7 @@ async def PlayFrom(client, message):
         ALL.append(mi)
     TTl = len(ALL)
     await msg.delete()
-    for i in range(TTL):
+    for i in range(TTl):
         music = ALL[i]
         durat = music.audio.duration
         sleepy = durat + 20
