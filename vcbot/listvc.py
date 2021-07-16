@@ -20,7 +20,7 @@ async def list_handler(_, message):
     OUT += "List of All Active Calls\n\n"
     for ke in CallsClient.active_calls.keys():
         stat = CallsClient.active_calls[ke]
-        OUT.append(f"`{ke}` : __{stat}__\n")
+        OUT += f"`{ke}` : __{stat}__\n"
     await eor(message, OUT)
 
 
