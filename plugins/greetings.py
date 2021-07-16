@@ -51,7 +51,7 @@ async def setwel(event):
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
-            dl = await bot.download_media(r.media)
+            dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
             m = "https://telegra.ph" + variable[0]
@@ -59,7 +59,7 @@ async def setwel(event):
             if r.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
             else:
-                dl = await bot.download_media(r.media)
+                dl = await r.download_media()
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
@@ -107,7 +107,7 @@ async def setgb(event):
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
-            dl = await bot.download_media(r.media)
+            dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
             m = "https://telegra.ph" + variable[0]
@@ -115,7 +115,7 @@ async def setgb(event):
             if r.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
             else:
-                dl = await bot.download_media(r.media)
+                dl = await r.download_media()
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]

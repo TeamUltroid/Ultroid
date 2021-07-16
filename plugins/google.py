@@ -98,7 +98,7 @@ async def reverse(event):
     if not reply:
         return await eor(event, "`Reply to an Image`")
     ult = await eor(event, "`Processing...`")
-    dl = await bot.download_media(reply)
+    dl = await reply.download_media()
     img = Image.open(dl)
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}

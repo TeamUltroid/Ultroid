@@ -45,7 +45,7 @@ async def mi(e):
         )
         naam = dl.name
     else:
-        naam = await e.client.download_media(r.media)
+        naam = await r.download_media()
     out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
     urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     if er:

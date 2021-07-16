@@ -95,7 +95,7 @@ async def sketch(e):
     inverted_blurred_img = 255 - blurred_img
     pencil_sketch_IMG = cv2.divide(gray_image, inverted_blurred_img, scale=256.0)
     cv2.imwrite("ultroid.png", pencil_sketch_IMG)
-    await e.client.send_file(e.chat_id, file="ultroid.png")
+    await e.reply(file="ultroid.png")
     await xx.delete()
     os.remove(file)
     os.remove("ultroid.png")

@@ -30,7 +30,7 @@ from . import *
 async def lockho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`What to Lock  ?`")
+        return await eod(e, "`Give some Proper Input..`")
     try:
         ml = lucks(mat)
     except BaseException:
@@ -49,7 +49,7 @@ async def lockho(e):
 async def unlckho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`What to Lock  ?`")
+        return await eod(e, "`Give some Proper Input..`")
     try:
         ml = unlucks(mat)
     except BaseException:

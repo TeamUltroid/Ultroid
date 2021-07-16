@@ -55,7 +55,7 @@ async def checknsfw(e):
     if action and udB.get("DEEP_API") and e.media:
         pic, name, nsfw = "", "", 0
         try:
-            pic = await ultroid_bot.download_media(e.media, thumb=-1)
+            pic = await e.download_media(thumb=-1)
         except BaseException:
             pass
         if e.file:

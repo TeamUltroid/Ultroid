@@ -74,7 +74,7 @@ async def imak(event):
         return
     inp = event.pattern_match.group(1)
     if not inp:
-        await eor(event, "Give The name nd extension of file")
+        await eor(event, "Give The name and extension of file")
         return
     xx = await eor(event, "`Processing...`")
     if reply.media:
@@ -90,10 +90,10 @@ async def imak(event):
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
     await event.reply(
+       f"`{xxx.name}`",
         file=xxx,
         force_document=True,
         thumb="resources/extras/ultroid.jpg",
-        message=f"`{xxx.name}`",
     )
     os.remove(inp)
     await xx.delete()
@@ -108,7 +108,7 @@ async def imak(event):
         await eor(event, "Reply to any media.")
         return
     xx = await eor(event, "`Processing...`")
-    image = await event.client.download_media(reply)
+    image = await reply.download_media()
     file = "ult.png"
     if image.endswith((".webp", ".png")):
         c = Image.open(image)
@@ -132,7 +132,7 @@ async def smak(event):
         await eor(event, "Reply to any media.")
         return
     xx = await eor(event, "`Processing...`")
-    image = await event.client.download_media(reply)
+    image = await reply.download_media()
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
         c = Image.open(image)
@@ -153,7 +153,7 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await eod(event, "`Bsdk Give Name.`")
+        return await eod(event, "`Give The File Name.`")
     xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
@@ -164,8 +164,8 @@ async def _(event):
             b.write(str(a.message))
             b.close()
             await xx.edit(f"**Packing into** `{input_str}`")
-            await event.client.send_file(
-                event.chat_id, input_str, thumb="resources/extras/ultroid.jpg"
+            await event.reply(
+                file=input_str, thumb="resources/extras/ultroid.jpg"
             )
             await xx.delete()
             os.remove(input_str)

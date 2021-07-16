@@ -43,7 +43,7 @@ async def _(e):
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
     haa = await ok.save("neofetch")
-    await e.client.send_file(e.chat_id, haa)
+    await e.reply(file=haa)
     await xx.delete()
     remove("neofetch.jpg")
     remove("neo.txt")
@@ -174,7 +174,7 @@ async def aexec(code, event):
         f"async def __aexec(e, client): "
         + "\n message = event = e"
         + "\n reply = await event.get_reply_message()"
-        + "\n chat = await event.get_chat()"
+        + "\n chat = (await event.get_chat()).id"
         + "".join(f"\n {l}" for l in code.split("\n")),
     )
 

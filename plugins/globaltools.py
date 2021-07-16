@@ -81,6 +81,7 @@ async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
+    ultroid_bot = e.client
     if not x:
         return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()
@@ -216,6 +217,7 @@ async def _(e):
     if not e.out and not is_fullsudo(e.sender_id):
         return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
+    ultroid_bot = e.client
     if not x:
         return await eod(e, "`Incorrect Format`")
     user = await e.get_reply_message()

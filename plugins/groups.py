@@ -36,7 +36,10 @@ async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
-    replfile = await reply_message.download_media()
+    try:
+      replfile = await reply_message.download_media()
+    except AttributeError:
+      return await eor(ult, "Reply to a Photo..")
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:

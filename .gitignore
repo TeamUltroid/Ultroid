@@ -18,4 +18,5 @@ venv/
 glitch_me/
 .idea/
 .vscode/
+.replit
 pyUltroid/

@@ -34,7 +34,7 @@ async def im_lonely_chat_with_me(event):
             message = event.text.split(" ", 1)[1]
         except IndexError:
             return await eod(
-                event, "Give a message or reply to one you idiot.", time=10
+                event, "Give a message or Reply to a User's Message.", time=10
             )
     reply_ = get_chatbot_reply(event, message=message)
     await eor(event, reply_)
@@ -58,9 +58,8 @@ async def lister(event):
     msg = ""
     for i in users:
         try:
-            user = (
-                f"[{(await ultroid.get_entity(int(i))).first_name}](tg://user?id={i})"
-            )
+            user = await event.client.get_entity(int(i))
+            user = inline_mention(user)
         except BaseException:
             user = f"`{i}`"
         msg += "- {}\n".format(user)
@@ -80,7 +79,7 @@ async def chat_bot_fn(event, type_):
                 "Reply to a user or give me his id/username to add an AI ChatBot!",
                 time=10,
             )
-        user = (await ultroid_bot.get_entity(usr)).id
+        user = (await event.client.get_entity(usr)).id
     if type_ == "add":
         add_chatbot(user)
     if type_ == "remove":

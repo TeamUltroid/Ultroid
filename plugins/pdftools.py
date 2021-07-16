@@ -89,10 +89,8 @@ async def pdfseimg(event):
             pw.addPage(pdf.getPage(o))
             with open(os.path.join("ult.png"), "wb") as f:
                 pw.write(f)
-            await event.client.send_file(
-                event.chat_id,
-                "ult.png",
-                reply_to=event.reply_to_msg_id,
+            await event.reply(
+                file="ult.png",
             )
             os.remove("ult.png")
         os.remove(pdfp)

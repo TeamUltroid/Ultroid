@@ -13,7 +13,6 @@
 import os
 import time
 from json.decoder import JSONDecodeError
-from urllib.request import urlretrieve
 
 import requests as r
 from telethon.tl.types import DocumentAttributeAudio
@@ -55,8 +54,8 @@ async def siesace(e):
         singers = k["artist"]["name"]
     except Exception as ex:
         return await eod(lol, f"`{str(ex)}`")
-    urlretrieve(urrl, title + "." + quality)
-    urlretrieve(img, title + ".jpg")
+    await download_file(urrl, title + "." + quality)
+    await download_file(img, title + ".jpg")
     okk = await uploader(
         title + "." + quality,
         title + "." + quality,
@@ -65,8 +64,8 @@ async def siesace(e):
         "Uploading " + title + "...",
     )
     await e.reply(
+        "`" + title + "`" + "\n`From Deezer`",
         file=okk,
-        caption="`" + title + "`" + "\n`From Deezer`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),

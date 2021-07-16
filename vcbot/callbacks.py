@@ -42,3 +42,15 @@ async def skipstream(client, query):
     await query.answer("Skipped !", show_alert=True)
     if query.message:
         await query.message.delete()
+
+
+@asst.on_callback_query(filters.regex("^ex_(.*)") & AUTH_FILTER)
+async def exit_vc(_, query):
+    match = query.matches[0].group(1)
+    msg = query.message
+    if int(match) not in CallsClient.active_calls.keys():
+      return await msg.delete()
+    QUEUE.pop(int(match))
+    await query.answer("Exited !")
+    await asyncio.sleep(1)
+    await msg.delete()
