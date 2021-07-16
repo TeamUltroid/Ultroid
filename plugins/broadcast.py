@@ -33,6 +33,7 @@ from . import *
 @ultroid_cmd(
     pattern="addch ?(.*)",
     allow_sudo=False,
+    ignore_dual=True,
 )
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
