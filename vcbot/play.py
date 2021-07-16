@@ -63,7 +63,7 @@ async def startup(_, message):
         await msg.delete()
         msg = await message.reply_photo(
             thumb,
-            caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {duration}\n👤 **Requested By :** {from_user}",
+            caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {duration*1000}\n👤 **Requested By :** {from_user}",
         )
         if os.path.exists(thumb):
             os.remove(thumb)
@@ -75,7 +75,8 @@ async def startup(_, message):
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
     reply_markup = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}")]]
+        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}"),
+         InlineKeyboardButton("Skip", callback_data=f"skip_{chat.id}")]]
     )
     await msg.edit_reply_markup(reply_markup)
     await asyncio.sleep(duration)
