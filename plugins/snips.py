@@ -84,8 +84,11 @@ async def lsnote(e):
         await eor(e, "No Snips Found Here")
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
+@ultroid_bot.on(events.NewMessage())
 async def notes(e):
+    if e.sender_id != ultroid_bot.uid:
+        if not str(e.sender_id) in udB["SUDOS"]:
+            return
     xx = (e.text).lower()
     if not xx.startswith("$"):
         return
