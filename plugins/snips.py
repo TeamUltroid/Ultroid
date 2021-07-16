@@ -86,9 +86,8 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
-    if e.sender_id != ultroid_bot.uid:
-        if not str(e.sender_id) in udB["SUDOS"]:
-            return
+    if not e.out and not str(e.sender_id) in udB["SUDOS"].split(" "):
+        return
     xx = (e.text).lower()
     if not xx.startswith("$"):
         return
