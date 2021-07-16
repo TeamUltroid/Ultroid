@@ -89,10 +89,8 @@ async def fl(e):
     x = get_filter(int(chat))
     if x:
         if " " in xx:
-            xx = xx.split(" ")
-            kk = ""
-            for c in xx:
-                if c in x:
+            for c in x:
+                if c in xx:
                     k = get_reply(int(chat), c)
                     if k:
                         kk = k
