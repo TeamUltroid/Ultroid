@@ -44,8 +44,8 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 ### Local Deploy - Easy Method
 - Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
-- Windows - `cd desktop ; wget https://del.dog/raw/ultroid-termux -o locals.py ; python locals.py`
-- Termux - `sh -c "$(curl -fsSL https://del.dog/raw/ultroid-termux-deploy)"`
+- Windows - `cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
+- Termux - `sh -c "$(curl -fsSL https://git.io/JY9UM)"`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
@@ -62,11 +62,11 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
   - For Linux users:
     `bash sessiongen`
      or
-    `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+    `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
   - For Termux users:
-    `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
+    `sh -c "$(curl -fsSL https://git.io/JqgsR)"`
   - For Windows Users:
-    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`
+    `cd desktop ; wget https://git.io/JY9JI -o ultroid.py ; python ultroid.py`
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
 (You can either edit and rename the file or make a new file named `.env`.)
 - Run the bot:
@@ -85,7 +85,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ## Session String
 Different ways to get your `SESSION`:
 * [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
-* Linux : `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+* Linux : `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
 * Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
 * TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
