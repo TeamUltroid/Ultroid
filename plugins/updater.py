@@ -36,9 +36,9 @@ async def _(e):
             buttons=Button.inline("Changelogs", data="changes"),
         )
         if not e.client._bot:
-          Link = (await e.client(GetLink(x.chat_id, x.id))).link
+            Link = (await e.client(GetLink(x.chat_id, x.id))).link
         else:
-          Link = f"https://t.me/{x.chat.id}/{x.id}"
+            Link = f"https://t.me/{x.chat.id}/{x.id}"
         await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",

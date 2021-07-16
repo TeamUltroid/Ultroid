@@ -131,10 +131,7 @@ async def info(event):
     return
 
 
-@ultroid_cmd(
-    pattern="listreserved$",
-    ignore_dualmode=True
-)
+@ultroid_cmd(pattern="listreserved$", ignore_dualmode=True)
 async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
     output_str = ""
