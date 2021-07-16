@@ -38,7 +38,7 @@ async def PlayFrom(client, message):
 
     msg = await eor(message, "`Processing...`")
     M = await asst.send_message(
-        LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title}"
+        LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title} [`{PlayAT.id}`]"
     )
     ALL = []
     async for mi in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
@@ -59,7 +59,7 @@ async def PlayFrom(client, message):
         if PlayAT.id not in CallsClient.active_calls.keys():
             CallsClient.join_group_call(PlayAT.id, song)
             mn = await message.reply_text(
-                f"**Playing** {music.audio.title}\n**Song Number** : {i}/{TTl}\n**Duration :** {time_formatter(durat)}\n**At** : {PlayAT.title}",
+                f"**Playing** {music.audio.title}\n**Song Number** : {i+1}/{TTl}\n**Duration :** {time_formatter(durat*1000)}\n**At** : {PlayAT.title}",
                 quote=False,
             )
             await asyncio.sleep(durat)
