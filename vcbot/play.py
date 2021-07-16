@@ -75,8 +75,12 @@ async def startup(_, message):
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
     reply_markup = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}"),
-         InlineKeyboardButton("Skip", callback_data=f"skip_{chat.id}")]]
+        [
+            [
+                InlineKeyboardButton("Pause", callback_data=f"vcp_{chat.id}"),
+                InlineKeyboardButton("Skip", callback_data=f"skip_{chat.id}"),
+            ]
+        ]
     )
     await msg.edit_reply_markup(reply_markup)
     await asyncio.sleep(duration)
