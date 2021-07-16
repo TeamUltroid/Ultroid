@@ -12,7 +12,6 @@ from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
 from . import *
-from ._inline import _main_help_menu
 
 
 @ultroid_cmd(
@@ -62,7 +61,22 @@ async def ult_help(ult):
                     len(ADDONS),
                     cmd,
                 ),
-                buttons=_main_help_menu,
+                buttons=[
+    [
+        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
+        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+    ],
+    [
+        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
+        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+    ],
+    [
+        Button.url(
+            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{tgbot}?start=set"
+        ),
+    ],
+    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+],
             )
         except rep:
             return await eor(
