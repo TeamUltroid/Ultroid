@@ -44,8 +44,8 @@ async def queuee(_, e):
         chat = e.chat.id
     txt = list_queue(chat)
     if txt:
-        return await eor(message, txt)
-    await eor(message, "No Queue Found !")
+        return await eor(e, txt)
+    await eor(e, "No Queue Found !")
 
 
 @Client.on_message(filters.outgoing & filters.command("queue", HNDLR) & ~filters.edited)
