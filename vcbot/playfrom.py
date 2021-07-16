@@ -64,7 +64,7 @@ async def PlayFrom(client, message):
             # await mn.delete()
         else:
             add_to_queue(
-                PlayAT.id, song, music.audio.title, message.from_user.id, sleepy
+                PlayAT.id, song, music.audio.title, message.from_user.mention, sleepy
             )
     await M.delete()
 
