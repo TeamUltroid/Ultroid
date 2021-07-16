@@ -18,5 +18,3 @@ WORKDIR /root/TeamUltroid/
 RUN pip uninstall search-engine-parser -y
 
 RUN pip3 install --no-cache-dir -r requirements.txt
-
-CMD ["python3", "-m", "pyUltroid"]
