@@ -198,8 +198,8 @@ async def crbn(event):
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
+        f"Carbonised by {inline_mention(event.sender)}",
         file=xx,
-        caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
     )
 
 
@@ -232,6 +232,6 @@ async def crbn(event):
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
+        f"Carbonised by {inline_mention(event.sender)}",
         file=xx,
-        caption=f"Carbonised by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
     )
