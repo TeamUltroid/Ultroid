@@ -90,7 +90,7 @@ async def imak(event):
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, "Uploading...")
     await event.reply(
-       f"`{xxx.name}`",
+        f"`{xxx.name}`",
         file=xxx,
         force_document=True,
         thumb="resources/extras/ultroid.jpg",
@@ -164,9 +164,7 @@ async def _(event):
             b.write(str(a.message))
             b.close()
             await xx.edit(f"**Packing into** `{input_str}`")
-            await event.reply(
-                file=input_str, thumb="resources/extras/ultroid.jpg"
-            )
+            await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
             await xx.delete()
             os.remove(input_str)
 

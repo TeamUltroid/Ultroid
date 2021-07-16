@@ -49,7 +49,7 @@ async def exit_vc(_, query):
     match = query.matches[0].group(1)
     msg = query.message
     if int(match) not in CallsClient.active_calls.keys():
-      return await msg.delete()
+        return await msg.delete()
     QUEUE.pop(int(match))
     await query.answer("Exited !")
     await asyncio.sleep(1)

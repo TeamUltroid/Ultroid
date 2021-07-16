@@ -527,11 +527,7 @@ if sett == "True":
             await e.edit(NO_REPLY)
 
 
-@ultroid_cmd(
-    pattern="block ?(.*)",
-    ignore_dualmode=True
-
-)
+@ultroid_cmd(pattern="block ?(.*)", ignore_dualmode=True)
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.is_reply:
@@ -574,10 +570,7 @@ async def blockpm(block):
         )
 
 
-@ultroid_cmd(
-    pattern="unblock ?(.*)",
-   ignore_dualmode=True
-)
+@ultroid_cmd(pattern="unblock ?(.*)", ignore_dualmode=True)
 async def unblockpm(unblock):
     match = unblock.pattern_match.group(1)
     if unblock.is_reply:

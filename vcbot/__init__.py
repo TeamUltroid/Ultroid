@@ -49,7 +49,7 @@ def reply_markup(chat_id: int):
                 InlineKeyboardButton("Pause", callback_data=f"vcp_{chat_id}"),
                 InlineKeyboardButton("Skip", callback_data=f"skip_{chat_id}"),
             ],
-            [InlineKeyboardButton("Exit", callback_data=f"ex_{chat_id}")]
+            [InlineKeyboardButton("Exit", callback_data=f"ex_{chat_id}")],
         ]
     )
 

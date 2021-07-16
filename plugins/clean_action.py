@@ -30,7 +30,6 @@ async def _(e):
     await eod(e, "Added Clean Action Setting For this Chat")
 
 
-
 @ultroid_cmd(pattern="remclean$")
 async def _(e):
     rem_clean(e.chat_id)
