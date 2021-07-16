@@ -112,13 +112,13 @@ async def restartbt(ult):
 
 @ultroid_cmd(pattern="shutdown$")
 async def shutdownbot(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await shutdown(ult)
 
 
 @ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs ?(.*)"))
+@asst.on(events.NewMessage(pattern=f"\\{HNDLR}logs ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
