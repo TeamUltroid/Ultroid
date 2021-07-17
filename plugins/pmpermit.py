@@ -607,7 +607,7 @@ async def unblockpm(unblock):
 
 @ultroid_cmd(pattern="listapproved")
 async def list_approved(event):
-    xx = await eor(event, get_string(com_1))
+    xx = await eor(event, get_string('com_1'))
     if udB.get("PMPERMIT") is None:
         return await eod(xx, "`You haven't approved anyone yet!`")
     users = []
