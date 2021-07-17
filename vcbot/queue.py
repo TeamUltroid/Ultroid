@@ -8,7 +8,7 @@
 from . import *
 
 
-@asst.on_message(["clearqueue", f"clearqueue@{vcusername}"])
+@asst.on_message(filters.command(["clearqueue", f"clearqueue@{vcusername}"])
     & filters.user(VC_AUTHS())
     & ~filters.edited
 )
