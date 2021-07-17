@@ -40,8 +40,8 @@ async def chesendvolume(_, message):
             CML = 0
         return await eor(message, f"**Current Volume :** {CML}%")
     try:
-        if int(mk[1]) not in range(1, 101):
-            return await eor(message, "Volume should be in between 1-100")
+        if int(mk[1]) not in range(0, 201):
+            return await eor(message, "`Volume` should be in between `0-200`")
         CallsClient.change_volume_call(message.chat.id, int(mk[1]))
         msg = f"Volume Changed to `{mk[1]}%`"
     except Exception as msg:
