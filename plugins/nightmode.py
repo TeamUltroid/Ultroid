@@ -12,10 +12,10 @@
 At Night it will turn off everyone permission to send message in  an all groups which you added via `{i}addnight`
 And Turn On auto at morning
 
-• `{i}addnm` 
+• `{i}addnm`
    Add NightMode
    To Add Group To Auto Night Mode.
-    
+
 • `{i}remnm`
    Remove NightMode
    To remove Group From Auto Night Mode
@@ -63,7 +63,7 @@ async def add_grp(e):
         try:
             add_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Added {pat} To Night Mode.")
-        except:
+        except BaseException:
             return await eod(e, "Something Went Wrong")
     add_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
@@ -76,10 +76,11 @@ async def rem_grp(e):
         try:
             rem_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Removed {pat} To Night Mode.")
-        except:
+        except BaseException:
             return await eod(e, "Something Went Wrong")
     rem_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
+
 
 @ultroid_cmd(pattern="listnm$")
 async def rem_grp(e):
@@ -92,10 +93,10 @@ async def rem_grp(e):
                 name += "@" + ok.username
             else:
                 name += ok.title
-        except:
+        except BaseException:
             name += str(x)
     await eor(e, name)
-            
+
 
 async def open_grp():
     chats = night_grps()
@@ -137,7 +138,9 @@ async def close_grp():
                     ),
                 )
             )
-            await ultroid_bot.send_message(chat, f"**NightMode : Group Closed**\n\nGroup Will Open At `{h2}:{m2}`")
+            await ultroid_bot.send_message(
+                chat, f"**NightMode : Group Closed**\n\nGroup Will Open At `{h2}:{m2}`"
+            )
         except Exception as er:
             LOGS.info(er)
 
