@@ -78,9 +78,11 @@ async def chat_bot_fn(event, type_):
                 event,
                 "Reply to a user or give me his id/username to add an AI ChatBot!",
             )
-        user = (await event.client.get_entity(usr))
+        user = await event.client.get_entity(usr)
     if type_ == "add":
         add_chatbot(user.id)
     if type_ == "remov":
         rem_chatbot(user.id)
-    await eor(event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})`")
+    await eor(
+        event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})`"
+    )
