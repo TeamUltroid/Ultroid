@@ -22,7 +22,9 @@ async def leavehandler(_, message):
     except Exception as Ex:
         return await eor(message, str(Ex))
     CallsClient.leave_group_call(chat)
-    await eor(message, "Successfully Leaved Group Call..")
+    m = await eor(message, "Successfully Left Group Call..")
+    await asyncio.sleep(5)
+    await m.delete()
 
 
 @Client.on_message(filters.me & filters.command("leavevc", HNDLR) & ~filters.edited)
