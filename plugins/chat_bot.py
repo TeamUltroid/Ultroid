@@ -47,7 +47,7 @@ async def add_chatBot(event):
 
 @ultroid_cmd(pattern="remai")
 async def rem_chatBot(event):
-    await chat_bot_fn(event, type_="remove")
+    await chat_bot_fn(event, type_="remov")
 
 
 @ultroid_cmd(pattern="listai")
@@ -68,7 +68,7 @@ async def lister(event):
 
 async def chat_bot_fn(event, type_):
     if event.reply_to_msg_id:
-        user = (await event.get_reply_message()).sender_id
+        user = (await event.get_reply_message()).sender
     else:
         temp = event.text.split(" ", 1)
         try:
@@ -77,11 +77,10 @@ async def chat_bot_fn(event, type_):
             return await eod(
                 event,
                 "Reply to a user or give me his id/username to add an AI ChatBot!",
-                time=10,
             )
-        user = (await event.client.get_entity(usr)).id
+        user = (await event.client.get_entity(usr))
     if type_ == "add":
-        add_chatbot(user)
-    if type_ == "remove":
-        rem_chatbot(user)
-    await eor(event, f"**ChatBot:**\n{type_}d `{user}`")
+        add_chatbot(user.id)
+    if type_ == "remov":
+        rem_chatbot(user.id)
+    await eor(event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})`")
