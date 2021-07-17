@@ -35,10 +35,10 @@ async def PlayFrom(client, message):
         return await eor(
             message, "Provide the Chat Username/Id from where to Play Songs..."
         )
+    ALL = []
     M = await asst.send_message(
         LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title} [`{PlayAT.id}`]"
     )
-    ALL = []
     async for mi in Client.search_messages(playfrom.id, limit=limit, filter="audio"):
         ALL.append(mi)
     TTl = len(ALL)
@@ -64,10 +64,11 @@ async def PlayFrom(client, message):
                     f"✤ **Playing** : {music.audio.title}\n✤ **Song No** : {i+1}/{TTl}\n✤ **Duration :** {time_formatter(durat*1000)}\n**✤ At** : `{PlayAT.title}`",
                     quote=False,
                 )
+                await asyncio.sleep(durat)
+                os.remove(song)
             except Exception as er:
                 await mn.edit(str(er))
                 continue
-            os.remove(song)
     await M.delete()
 
 
