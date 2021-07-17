@@ -67,7 +67,7 @@ async def PlayFrom(client, message):
                 )
                 Durat = durat
                 Song = song
-                Mn = mN
+
                 Sleep = True
             except Exception as er:
                 await mn.edit(str(er))
@@ -75,7 +75,7 @@ async def PlayFrom(client, message):
     if Sleep:
         await asyncio.sleep(Durat)
         os.remove(Song)
-        await mN.delete()
+        await mn.delete()
     await M.delete()
 
 
