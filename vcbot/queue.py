@@ -8,7 +8,8 @@
 from . import *
 
 
-@asst.on_message(filters.command(["clearqueue", f"clearqueue@{vcusername}"])
+@asst.on_message(
+    filters.command(["clearqueue", f"clearqueue@{vcusername}"])
     & filters.user(VC_AUTHS())
     & ~filters.edited
 )
@@ -18,12 +19,14 @@ async def clear_queue(_, message):
     except KeyError:
         return await eor(message, "Queue Not Found !")
     # Todo - Clear Remaining Songs
-    return await eor(message, "Cleared Queue...")   
+    return await eor(message, "Cleared Queue...")
 
 
-@Client.on_message(filters.outgoing & filters.command("clearqueue", HNDLR) & ~filters.edited)
+@Client.on_message(
+    filters.outgoing & filters.command("clearqueue", HNDLR) & ~filters.edited
+)
 async def clearqueue_vc(_, message):
-   await clear_queue(_, message)
+    await clear_queue(_, message)
 
 
 @asst.on_message(

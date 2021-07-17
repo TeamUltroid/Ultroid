@@ -24,7 +24,10 @@ async def skiplife(_, message):
 
 
 @Client.on_message(
-    filters.command("skip", HNDLR) & filters.outgoing & ~filters.edited & ~filters.forwarded
+    filters.command("skip", HNDLR)
+    & filters.outgoing
+    & ~filters.edited
+    & ~filters.forwarded
 )
 async def vc_skipe(_, message):
     await skiplife(_, message)
