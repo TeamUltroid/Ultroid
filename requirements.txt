@@ -1,4 +1,5 @@
 https://github.com/New-dev0/Telethon/archive/New.zip
-py-Ultroid==47.0b0
+py-Ultroid==47.1b0
 ffmpeg-python
+shazamio
 git+https://github.com/buddhhu/search-engine-parser

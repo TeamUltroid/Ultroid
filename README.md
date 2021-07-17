@@ -101,4 +101,5 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
 * [Dan](https://github.com/delivrance) for [Pyrogram.](https://github.com/pyrogram/pyrogram)
+* [Aditya](https://github.com/xditya) for [PyTgCalls.](https://github.com/pytgcalls/pytgcalls)
 

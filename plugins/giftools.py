@@ -81,7 +81,7 @@ async def gifs(ult):
         except BaseException:
             pass
     if not get:
-        return await eor(ult, f"`{HNDLR}}gif <query>`")
+        return await eor(ult, f"`{HNDLR}gif <query>`")
     m = await eor(ult, "`Searching gif ...`")
     gifs = await ult.client.inline_query("gif", get)
     if not n:

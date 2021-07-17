@@ -11,7 +11,6 @@ import time
 from pyUltroid.dB import *
 from pyUltroid.functions.all import *
 from pyUltroid.functions.sudos import *
-from pyUltroid.misc._assistant import *
 from pyUltroid.version import ultroid_version
 from telethon import Button
 from telethon.tl import functions, types

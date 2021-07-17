@@ -7,10 +7,11 @@
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pyUltroid.functions.night_db import *
-from telethon.functions.messages import EditChatDefaultBannedRightsRequest
+from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from . import *
+
 
 @ultroid_cmd(pattern="nmtime ?(.*)")
 async def set_time(e):
@@ -25,13 +26,15 @@ async def set_time(e):
             tm.append(int(x))
         udB.set("NIGHT_TIME", str(tm))
         await eor(e, "Setted time successfully")
-    except:
+    except BaseException:
         await eor(e, "Give Time in correct format")
+
 
 @ultroid_cmd(pattern="addnight")
 async def add_grp(e):
     add_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
+
 
 @ultroid_cmd(pattern="remnight")
 async def rem_grp(e):
@@ -81,9 +84,9 @@ async def close_grp():
             LOGS.info(er)
 
 
-if  night_grps():
+if night_grps():
     h1, m1, h2, m2 = 0, 0, 7, 0
-    if udB.get("NIGHT_TIME");
+    if udB.get("NIGHT_TIME"):
         h1, m1, h2, m2 = udB["NIGHT_TIME"]
     sch = AsyncIOScheduler()
     sch.add_job(close_grp, trigger="cron", hour=h1, minute=m1)
