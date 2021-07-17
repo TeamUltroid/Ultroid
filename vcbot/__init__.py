@@ -131,11 +131,9 @@ async def download(event, query, chat, ts):
     }
     ytdl_data = await dler(event, link)
     YoutubeDL(opts).download([link])
-    dl = vid_id + '.mp3'
+    dl = vid_id + ".mp3"
     title = ytdl_data["title"]
     duration = ytdl_data["duration"]
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
-    await bash(
-            f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
-        )
+    await bash(f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y')
     return song, thumb, title, duration
