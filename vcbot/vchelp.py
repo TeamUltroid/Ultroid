@@ -9,6 +9,7 @@ from . import *
 
 HELP_TEXT = "**View All Vc Commands Here :**\nhttps://telegra.ph/Vc-Commands-07-17-2"
 
+
 @asst.on_message(
     filters.command(["vchelp", f"vchelp@{vcusername}"])
     & filters.user(VC_AUTHS())
