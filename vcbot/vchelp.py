@@ -14,7 +14,7 @@ HELP_TEXT = f"""
   - `/play <channel username/id, where to play><search query/youtube link/reply to File>`
       Plays Music in Voice Call of Specified or Current Chat.
 
- -  `/radio <M3U8 url/Radio Link/Youtube Live Stream Link>`
+  - `/radio <M3U8 url/Radio Link/Youtube Live Stream Link>`
       Plays Music Live, Depending on Entered Query.
 
   - `/playfrom <Channel Username/Id> ; <limit of songs>`
@@ -30,7 +30,7 @@ HELP_TEXT = f"""
   - `/listvc` : `Get List of Chats, where Vc is Active.`
   - `/clearqueue` : `Clear All the Songs, added to Queue.`
 
- `Note` :  `You can Also Use the same Commands from VC Account with Handler` `{HNDLR}`
+  `Note` :  `You can Also Use the same Commands from VC Account with Handler` `{HNDLR}`
 
 """
 
