@@ -30,17 +30,46 @@ async def set_time(e):
         await eor(e, "Give Time in correct format")
 
 
-@ultroid_cmd(pattern="addnight")
+@ultroid_cmd(pattern="addnight ?(.*)")
 async def add_grp(e):
+    pat = e.pattern_match.group(1)
+    if pat:
+        try:
+            add_night((await bot.get_entity(pat)).id)
+            return await eor(e, f"Done, Added {pat} To Night Mode.")
+         except:
+            return await eod(e, "Something Went Wrong")
     add_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
 
 
-@ultroid_cmd(pattern="remnight")
+@ultroid_cmd(pattern="remnight ?(.*)")
 async def rem_grp(e):
+    pat = e.pattern_match.group(1)
+    if pat:
+        try:
+            rem_night((await bot.get_entity(pat)).id)
+            return await eor(e, f"Done, Removed {pat} To Night Mode.")
+         except:
+            return await eod(e, "Something Went Wrong")
     rem_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
 
+@ultroid_cmd(pattern="listnight")
+async def rem_grp(e):
+    chats = night_grps()
+    name = "NightMode Groups Are-:\n\n"
+    for x in chats:
+        try:
+            ok = await ultroid_bot.get_entity(x)
+            if ok.username:
+                name += "@" + ok.username
+            else:
+                name += ok.title
+        except:
+            name += str(x)
+    await eor(e, name)
+            
 
 async def open_grp():
     chats = night_grps()
@@ -79,12 +108,13 @@ async def close_grp():
                     ),
                 )
             )
-            await ultroid_bot.send_message(chat, "Group Opened")
+            await ultroid_bot.send_message(chat, "Group Closed")
         except Exception as er:
             LOGS.info(er)
 
 
 if night_grps():
+  try:
     h1, m1, h2, m2 = 0, 0, 7, 0
     if udB.get("NIGHT_TIME"):
         h1, m1, h2, m2 = eval(udB["NIGHT_TIME"])
@@ -92,3 +122,5 @@ if night_grps():
     sch.add_job(close_grp, trigger="cron", hour=h1, minute=m1)
     sch.add_job(open_grp, trigger="cron", hour=h2, minute=m2)
     sch.start()
+  except Exception as er:
+    LOGS.info(er)
