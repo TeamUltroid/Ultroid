@@ -856,12 +856,12 @@ def update_pm(userid, message, warns_given):
 
 
 async def delete_pm_warn_msgs(chat: int):
-    async for i in ultroid.iter_messages(chat, from_user=OWNER_ID):
+    async for i in ultroid_bot.iter_messages(chat, from_user="me"):
         tx = i.text
-        if tx is not None and tx.startswith(
+        if tx and tx.startswith(
             ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
         ):
             if tx.startswith("#"):
                 # sleep for a while once approved, we need the menu open!
-                await asyncio.sleep(30)
+                await asyncio.sleep(4)
             await i.delete()

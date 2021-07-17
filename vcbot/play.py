@@ -63,7 +63,7 @@ async def startup(_, message):
         await msg.delete()
         msg = await message.reply_photo(
             thumb,
-            caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {duration*1000}\n👤 **Requested By :** {from_user}",
+            caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {time_formatter(duration*1000)}\n👤 **Requested By :** {from_user}",
             reply_markup=reply_markup(chat.id),
         )
         if os.path.exists(thumb):
@@ -76,6 +76,7 @@ async def startup(_, message):
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
     await asyncio.sleep(duration)
+    os.remove(song)
     await msg.delete()
     await CH.delete()
 
@@ -92,7 +93,7 @@ async def queue_func(chat_id: int):
         CallsClient._add_active_call(chat_id)
         xx = await asst.send_message(
             chat_id,
-            f"**Playing :** {title}\n**Duration** : {time_formatter(dur)}\n**Requested by**: {from_user}",
+            f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
             reply_markup=reply_markup(chat_id),
         )
         QUEUE[chat_id].pop(pos)
