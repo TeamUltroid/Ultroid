@@ -130,7 +130,7 @@ async def when_ultd_added_to_chat(event):
     if event.user_added:
         user = await event.get_user()
         chat = await event.get_chat()
-        if hasattr(chat,'username') and chat.username:
+        if hasattr(chat, "username") and chat.username:
             chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
@@ -145,7 +145,7 @@ async def when_ultd_added_to_chat(event):
     elif event.user_joined:
         user = await event.get_user()
         chat = await event.get_chat()
-        if hasattr(chat,'username') and chat.username:
+        if hasattr(chat, "username") and chat.username:
             chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
