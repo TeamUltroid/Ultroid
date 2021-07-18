@@ -130,7 +130,7 @@ async def when_ultd_added_to_chat(event):
     if event.user_added:
         user = await event.get_user()
         chat = await event.get_chat()
-        if chat.username:
+        if hasattr(chat,'username') and chat.username:
             chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
@@ -139,13 +139,13 @@ async def when_ultd_added_to_chat(event):
             buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
             return await asst.send_message(
                 int(udB.get("LOG_CHANNEL")),
-                f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) just added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
+                f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}.",
                 buttons=buttons,
             )
     elif event.user_joined:
         user = await event.get_user()
         chat = await event.get_chat()
-        if chat.username:
+        if hasattr(chat,'username') and chat.username:
             chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
         else:
             chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
