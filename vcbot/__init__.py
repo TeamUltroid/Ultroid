@@ -141,11 +141,11 @@ async def download(event, query, chat, ts):
 async def vc_check(chat, chat_type):
     if chat_type in ["supergroup", "channel"]:
         chat = await Client.send(
-            functions.channels.GetFullChannel(await Client.resolve_peer(chat))
+            functions.channels.GetFullChannel(channel=await Client.resolve_peer(chat))
         )
     elif chat_type == "group":
         chat = await Client.send(
-            functions.messages.GetFullChat(await Client.resolve_peer(chat))
+            functions.messages.GetFullChat(chat_id=chat)
         )
     else:
         return False
