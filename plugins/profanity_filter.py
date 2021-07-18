@@ -18,13 +18,13 @@
 
 
 from ProfanityDetector import detector
+from pyUltroid.functions.nsfw_db import is_profan, profan_chat, rem_profan
 
 from . import *
 
 
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)
 async def addp(e):
-    # action features not added yet or not needed ig 😂😂
     profan_chat(e.chat_id, "mute")
     await eod(e, "`Added This Chat for Profanity Filtering!`", time=10)
 

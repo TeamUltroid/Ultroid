@@ -14,6 +14,4 @@ WORKDIR /root/TeamUltroid/
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN npm install -g npm@7.16.0 -g
-RUN npm install
-RUN npm run build
+CMD ["bash", "resources/startup/startup.sh"]

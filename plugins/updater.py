@@ -28,14 +28,17 @@ async def _(e):
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
-        x = await ultroid_bot.asst.send_file(
+        x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             ULTPIC,
             caption="• **Update Available** •",
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
-        Link = (await ultroid_bot(GetLink(x.chat_id, x.id))).link
+        if not e.client._bot:
+            Link = (await e.client(GetLink(x.chat_id, x.id))).link
+        else:
+            Link = f"https://t.me/{x.chat.id}/{x.id}"
         await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",
@@ -53,7 +56,7 @@ async def _(e):
 @owner
 async def updava(event):
     await event.delete()
-    await ultroid_bot.asst.send_file(
+    await asst.send_file(
         int(udB.get("LOG_CHANNEL")),
         ULTPIC,
         caption="• **Update Available** •",

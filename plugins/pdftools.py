@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -25,7 +24,6 @@
 • `{i}pdsend `
     Merge nd send the Pdf to collected from .pdsave.
 """
-
 import glob
 import os
 import shutil
@@ -38,6 +36,7 @@ import PIL
 from imutils.perspective import four_point_transform
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from skimage.filters import threshold_local
+from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
 from . import *
 
@@ -90,10 +89,8 @@ async def pdfseimg(event):
             pw.addPage(pdf.getPage(o))
             with open(os.path.join("ult.png"), "wb") as f:
                 pw.write(f)
-            await event.client.send_file(
-                event.chat_id,
-                "ult.png",
-                reply_to=event.reply_to_msg_id,
+            await event.reply(
+                file="ult.png",
             )
             os.remove("ult.png")
         os.remove(pdfp)
@@ -104,11 +101,10 @@ async def pdfseimg(event):
         with open(os.path.join("ult.png"), "wb") as f:
             pw.write(f)
         os.remove(pdfp)
-        await event.client.send_file(
-            event.chat_id,
-            "ult.png",
-            reply_to=event.reply_to_msg_id,
-        )
+        try:
+            await event.reply(file="ult.png")
+        except PhotoSaveFileInvalidError:
+            await event.reply(file="ult.png", force_document=True)
         os.remove("ult.png")
 
 
@@ -299,7 +295,7 @@ async def savepdf(event):
         os.remove("o.png")
     elif ultt.endswith(".pdf"):
         a = dani_ck("pdf/scan.pdf")
-        await ultroid_bot.download_media(ok, a)
+        await event.client.download_media(ok, a)
         await eor(
             event,
             f"Done, Now Reply Another Image/pdf if completed then use {hndlr}pdsend to merge nd send all as pdf",

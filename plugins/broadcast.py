@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -23,9 +22,10 @@
 • `{i}listchannels`
     To get list of all added chats.
 """
-
 import asyncio
 import io
+
+from pyUltroid.functions.broadcast_db import *
 
 from . import *
 
@@ -42,7 +42,7 @@ async def broadcast_adder(event):
         await x.edit(get_string("bd_2"))
         chats = [
             e.entity
-            for e in await ultroid.get_dialogs()
+            for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
         for i in chats:
@@ -53,10 +53,8 @@ async def broadcast_adder(event):
                             new += 1
                             cid = f"-100{i.id}"
                             add_channel(int(cid))
-                        else:
-                            pass
-            except BaseException:
-                pass
+            except Exception as Ex:
+                LOGS.info(Ex)
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
         return
     if event.reply_to_msg_id:
@@ -73,11 +71,8 @@ async def broadcast_adder(event):
         await event.delete()
         return
     chat_id = event.chat_id
-    try:
-        if int(chat_id) == int(udB.get("LOG_CHANNEL")):
-            return
-    except BaseException:
-        pass
+    if int(chat_id) == int(udB.get("LOG_CHANNEL")):
+        return
     if not is_channel_added(chat_id):
         xx = add_channel(chat_id)
         if xx:
@@ -133,7 +128,7 @@ async def list_all(event):
     for channel in channels:
         name = ""
         try:
-            name = (await ultroid.get_entity(int(channel))).title
+            name = (await event.client.get_entity(int(channel))).title
         except BaseException:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
@@ -142,13 +137,11 @@ async def list_all(event):
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
-            await ultroid_bot.send_file(
-                event.chat_id,
-                out_file,
+            await event.reply(
+                "Channels in Database",
+                file=out_file,
                 force_document=True,
                 allow_cache=False,
-                caption="Channels in database",
-                reply_to=event,
             )
             await x.delete()
     else:
@@ -161,8 +154,8 @@ async def list_all(event):
 )
 async def forw(event):
     if not event.is_reply:
-        await eor(event, "Reply to a message to broadcast.")
-        return
+        return await eor(event, "Reply to a message to broadcast.")
+    ultroid_bot = event.client
     channels = get_channels()
     x = await eor(event, "Sending...")
     if get_no_channels() == 0:
@@ -185,25 +178,23 @@ async def forw(event):
                     int(udB.get("LOG_CHANNEL")),
                     f"Error in sending at {channel}.",
                 )
-            except BaseException:
-                pass
+            except Exception as Em:
+                LOGS.info(Em)
             error_count += 1
             await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
             )
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
-        try:
-            await ultroid_bot.send_message(
-                int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
-            )
-        except BaseException:
-            await x.edit("Set up log channel for checking errors.")
+        await ultroid_bot.send_message(
+            int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
+        )
 
 
 @ultroid_cmd(
     pattern="broadcast ?(.*)",
     allow_sudo=False,
+    ignore_dualmode=True,
 )
 async def sending(event):
     x = await eor(event, "`Processing...`")
@@ -228,23 +219,18 @@ async def sending(event):
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
                 except Exception as error:
-                    try:
-                        await ultroid_bot.send_message(
-                            int(udB.get("LOG_CHANNEL")),
-                            f"Error in sending at {channel}.\n\n{error}",
-                        )
-                    except BaseException:
-                        pass
+
+                    await ultroid_bot.send_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        f"Error in sending at {channel}.\n\n{error}",
+                    )
                     error_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
             await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
-                try:
-                    await ultroid_bot.send_message(
-                        int(udB.get("LOG_CHANNEL")),
-                        f"{error_count} Errors",
-                    )
-                except BaseException:
-                    pass
+                await ultroid_bot.send_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    f"{error_count} Errors",
+                )

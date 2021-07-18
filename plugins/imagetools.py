@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -45,7 +44,6 @@
    example : `{i}csample red`
              `{i}csample #ffffff`
 """
-
 import asyncio
 import os
 
@@ -97,7 +95,7 @@ async def sketch(e):
     inverted_blurred_img = 255 - blurred_img
     pencil_sketch_IMG = cv2.divide(gray_image, inverted_blurred_img, scale=256.0)
     cv2.imwrite("ultroid.png", pencil_sketch_IMG)
-    await e.client.send_file(e.chat_id, file="ultroid.png")
+    await e.reply(file="ultroid.png")
     await xx.delete()
     os.remove(file)
     os.remove("ultroid.png")
@@ -109,7 +107,7 @@ async def _(event):
     if not reply.media:
         return await eor(event, "`Reply To a Black nd White Image`")
     xx = await eor(event, "`Coloring image 🎨🖌️...`")
-    image = await ultroid_bot.download_media(reply.media)
+    image = await reply.download_media()
     img = cv2.VideoCapture(image)
     ret, frame = img.read()
     cv2.imwrite("ult.jpg", frame)
@@ -129,7 +127,7 @@ async def _(event):
             r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`"
         )
     r_json = r.json()["output_url"]
-    await ultroid_bot.send_file(event.chat_id, r_json, reply_to=reply)
+    await event.client.send_file(event.chat_id, r_json, reply_to=reply)
     await xx.delete()
 
 
@@ -509,7 +507,7 @@ async def sampl(ult):
         try:
             try:
                 await ult.delete()
-                await ultroid_bot.send_message(
+                await ult.client.send_message(
                     ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
                 )
             except MessageDeleteForbiddenError:

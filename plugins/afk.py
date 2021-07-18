@@ -10,6 +10,7 @@
 
 • `{i}afk <optional reason>`
     AFK means away from keyboard,
+
     After u active this if Someone tag or msg u then It auto Reply Him/her,
     (Note : By Reply To any media U can set media afk too).
 
@@ -160,9 +161,11 @@ async def on_afk(event):
 
 @ultroid_cmd(pattern=r"afk ?(.*)")
 async def _(event):
-    if not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await eor(event, "`This Command Is Full Sudo Restricted.`")
     reply = await event.get_reply_message()
+    if event.client._bot:
+        return await eor(event, "Master, I am a Bot, I cant go AFK..")
     global USER_AFK
     global afk_time
     global last_afk_message

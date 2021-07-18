@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -14,7 +13,6 @@
 import os
 import time
 from json.decoder import JSONDecodeError
-from urllib.request import urlretrieve
 
 import requests as r
 from telethon.tl.types import DocumentAttributeAudio
@@ -56,8 +54,8 @@ async def siesace(e):
         singers = k["artist"]["name"]
     except Exception as ex:
         return await eod(lol, f"`{str(ex)}`")
-    urlretrieve(urrl, title + "." + quality)
-    urlretrieve(img, title + ".jpg")
+    await download_file(urrl, title + "." + quality)
+    await download_file(img, title + ".jpg")
     okk = await uploader(
         title + "." + quality,
         title + "." + quality,
@@ -65,10 +63,9 @@ async def siesace(e):
         lol,
         "Uploading " + title + "...",
     )
-    await ultroid_bot.send_file(
-        e.chat_id,
-        okk,
-        caption="`" + title + "`" + "\n`From Deezer`",
+    await e.reply(
+        "`" + title + "`" + "\n`From Deezer`",
+        file=okk,
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),

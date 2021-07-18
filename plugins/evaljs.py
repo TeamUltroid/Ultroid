@@ -4,22 +4,20 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 • `{i}evaljs <javaScriptCommands>`
     Evaluate JavaScript code and upload.
 """
-
 # Inbuilt
 import os
 import time
 from threading import Thread
 
-# Ultroid
 from . import *
 
 
+# Ultroid
 async def evalJs(
     event,
     startTime: float,
@@ -34,14 +32,14 @@ async def evalJs(
     scriptFile.close()
     os.system(f"node ./src/ecmaHelper/eval.d.js")
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
-        await ultroid_bot.send_file(
+        await event.client.send_file(
             event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}s` \n\n**• Result:**\n`[Info]: Uploaded File For Better Visualisation Of Indents.`",
         )
     else:
-        await ultroid_bot.send_file(
+        await event.client.send_file(
             event.chat_id,
             "./src/ecmaHelper/evalJs.result.d.txt",
             force_document=True,

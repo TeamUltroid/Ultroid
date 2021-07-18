@@ -6,8 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
-import os
-import urllib
 from random import choice
 from re import compile as re_compile
 from re import findall
@@ -219,52 +217,6 @@ async def gsearch(q_event):
     await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
 
 
-@in_pattern("rex")
-@in_owner
-async def rextester(event):
-    builder = event.builder
-    try:
-        omk = event.text.split(" ", maxsplit=1)[1]
-        if omk is not None:
-            if "|" in omk:
-                lang, codee = omk.split("|")
-            else:
-                lang = "python3"
-                codee = omk
-            if lang == "php":
-                code = f"<?php {codee} ?>"
-            else:
-                code = codee
-            output = await rexec_aio(lang, code)
-            stats = output.stats
-            if output.errors is not None:
-                outputt = output.errors
-                resultm = builder.article(
-                    title="Code",
-                    description=f"Language-`{lang}` & Code-`{code}`",
-                    text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nErrors:\n`{outputt}`\n\nStats:\n`{stats}`",
-                )
-            else:  # By @ProgrammingError
-                outputt = output.results
-                resultm = builder.article(
-                    title="Code",  # By @ProgrammingError
-                    description=f"Language-`{lang}` & Code-`{code}`",
-                    text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`\n\nStats:\n`{stats}`",
-                )
-            await event.answer(
-                [resultm], switch_pm="RexTester.", switch_pm_param="start"
-            )
-    except UnknownLanguage:
-        resultm = builder.article(
-            title="Error",  # By @ProgrammingError
-            description="Invalid language choosen",
-            text=f"The list of valid languages are\n\n{rex_langs}\n\n\nFormat to use Rextester is `@Yourassistantusername rex langcode|code`",
-        )
-        await event.answer(
-            [resultm], switch_pm="RexTester. Invalid Language!", switch_pm_param="start"
-        )
-
-
 @in_pattern("yahoo")
 @in_owner
 async def yahoosearch(q_event):
@@ -463,33 +415,18 @@ async def clip(e):
         if "/cache/epub" in out[rs]["src"]:
             link = out[rs]["src"]
             num = link.split("/")[3]
+            link = "https://gutenberg.org" + link.replace("small", "medium")
+            file = wb(link, 0, "image/jpeg", [])
             hm.append(
-                buil.document(
+                buil.article(
                     title=titles[rs],
+                    type="photo",
                     description="GutenBerg Search",
-                    file="https://gutenberg.org" + link.replace("small", "medium"),
+                    thumb=file,
+                    content=file,
+                    include_media=True,
                     text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
                     buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
                 )
             )
     await e.answer(hm, switch_pm="Ebooks Search", switch_pm_param="start")
-
-
-@callback(re_compile("ebk_(.*)"))
-async def eupload(event):
-    match = event.pattern_match.group(1).decode("utf-8")
-    await event.answer("Uploading..")
-    try:
-        await event.edit(
-            file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
-        )
-    except BaseException:
-        book = "Ultroid-Book.epub"
-        urllib.request.urlretrieve(
-            "https://www.gutenberg.org/ebooks/132.epub.images", book
-        )
-        fn, media, _ = await asst._file_to_media(
-            book, thumb="resources/extras/ultroid.jpg"
-        )
-        await event.edit(file=media)
-        os.remove(book)

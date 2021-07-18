@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -12,7 +11,6 @@
     Download songs from Saavn
 
 """
-
 import os
 import time
 from urllib.request import urlretrieve
@@ -53,10 +51,9 @@ async def siesace(e):
     okk = await uploader(
         title + ".mp3", title + ".mp3", hmm, lol, "Uploading " + title + "..."
     )
-    await ultroid_bot.send_file(
-        e.chat_id,
-        okk,
-        caption="`" + title + "`" + "\n`From Saavn`",
+    await e.reply(
+        file=okk,
+        message="`" + title + "`" + "\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),

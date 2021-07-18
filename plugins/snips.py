@@ -40,7 +40,7 @@ async def an(e):
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
-            dl = await bot.download_media(wt.media)
+            dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
             m = "https://telegra.ph" + variable[0]
@@ -48,7 +48,7 @@ async def an(e):
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
             else:
-                dl = await bot.download_media(wt.media)
+                dl = await wt.download_media()
                 variable = uf(dl)
                 os.remove(dl)
                 m = "https://telegra.ph" + variable[0]
@@ -84,8 +84,10 @@ async def lsnote(e):
         await eor(e, "No Snips Found Here")
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
+@ultroid_bot.on(events.NewMessage())
 async def notes(e):
+    if not e.out and not str(e.sender_id) in sudoers():
+        return
     xx = (e.text).lower()
     if not xx.startswith("$"):
         return

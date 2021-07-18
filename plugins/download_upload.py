@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,7 +18,6 @@
     Reply to file to download.
 
 """
-
 import glob
 import os
 import time
@@ -118,19 +116,96 @@ async def download(event):
         for kk in kk:
             try:
                 try:
-                    res = await uploader(kk, kk, tt, xx, "Uploading...")
+                    res = await uploader(kk, kk, tt, xx, "Uploading {kk}...")
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
+                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     hmm = " | stream"
                 if " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
-                    if not metadata:
-                        return await event.reply(file=res, supports_streaming=True)
                     wi = 512
                     hi = 512
                     duration = 0
+                    artist = ""
+                    try:
+                        if metadata.has("width"):
+                            wi = metadata.get("width")
+                        if metadata.has("height"):
+                            hi = metadata.get("height")
+                        if metadata.has("duration"):
+                            duration = metadata.get("duration").seconds
+                        if metadata.has("artist"):
+                            artist = metadata.get("artist")
+                        else:
+                            if udB.get("artist"):
+                                artist = udB.get("artist")
+                            else:
+                                artist = ultroid_bot.first_name
+                    except AttributeError:
+                        return await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=f"`{kk}/{title}`",
+                            supports_streaming=True,
+                        )
+                    if res.name.endswith((".mkv", ".mp4", ".avi")):
+                        attributes = [
+                            DocumentAttributeVideo(
+                                w=wi, h=hi, duration=duration, supports_streaming=True
+                            )
+                        ]
+                    elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                        attributes = [
+                            DocumentAttributeAudio(
+                                duration=duration,
+                                title=title.split(".")[0],
+                                performer=artist,
+                            )
+                        ]
+                    else:
+                        attributes = None
+                    try:
+                        await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=f"`{kk}`",
+                            attributes=attributes,
+                            supports_streaming=True,
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                    except BaseException:
+                        await event.client.send_file(
+                            event.chat_id,
+                            res,
+                            caption=f"`{kk}`",
+                            thumb="resources/extras/ultroid.jpg",
+                        )
+                else:
+                    await event.client.send_file(
+                        event.chat_id,
+                        res,
+                        caption=f"`{kk}`",
+                        force_document=True,
+                        thumb="resources/extras/ultroid.jpg",
+                    )
+            except Exception as ve:
+                return await eor(xx, str(ve))
+    else:
+        try:
+            try:
+                res = await uploader(kk, kk, tt, xx, f"Uploading {kk}...")
+            except MessageNotModifiedError as err:
+                return await xx.edit(str(err))
+            if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                hmm = " | stream"
+            if " | stream" in hmm:
+                metadata = extractMetadata(createParser(res.name))
+                wi = 512
+                hi = 512
+                duration = 0
+                artist = ""
+                try:
                     if metadata.has("width"):
                         wi = metadata.get("width")
                     if metadata.has("height"):
@@ -144,81 +219,20 @@ async def download(event):
                             artist = udB.get("artist")
                         else:
                             artist = ultroid_bot.first_name
-                    if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
-                        attributes = [
-                            DocumentAttributeVideo(
-                                w=wi, h=hi, duration=duration, supports_streaming=True
-                            )
-                        ]
-                    elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
-                        attributes = [
-                            DocumentAttributeAudio(
-                                duration=duration,
-                                title=title.split(".")[0],
-                                performer=artist,
-                            )
-                        ]
-                    else:
-                        attributes = None
-                    try:
-                        x = await event.client.send_file(
-                            event.chat_id,
-                            res,
-                            caption=f"`{title}`",
-                            attributes=attributes,
-                            supports_streaming=True,
-                            thumb="resources/extras/ultroid.jpg",
-                        )
-                    except BaseException:
-                        x = await event.client.send_file(
-                            event.chat_id,
-                            res,
-                            caption=f"`{title}`",
-                            thumb="resources/extras/ultroid.jpg",
-                        )
-                else:
-                    x = await event.client.send_file(
+                except AttributeError:
+                    await event.client.send_file(
                         event.chat_id,
                         res,
                         caption=f"`{title}`",
-                        force_document=True,
-                        thumb="resources/extras/ultroid.jpg",
+                        supports_streaming=True,
                     )
-            except Exception as ve:
-                return await eor(xx, str(ve))
-    else:
-        try:
-            try:
-                res = await uploader(kk, kk, tt, xx, "Uploading...")
-            except MessageNotModifiedError as err:
-                return await xx.edit(str(err))
-            if title.endswith((".mp3", ".m4a", ".opus", ".ogg")):
-                hmm = " | stream"
-            if " | stream" in hmm:
-                metadata = extractMetadata(createParser(res.name))
-                wi = 512
-                hi = 512
-                duration = 0
-                if metadata.has("width"):
-                    wi = metadata.get("width")
-                if metadata.has("height"):
-                    hi = metadata.get("height")
-                if metadata.has("duration"):
-                    duration = metadata.get("duration").seconds
-                if metadata.has("artist"):
-                    artist = metadata.get("artist")
-                else:
-                    if udB.get("artist"):
-                        artist = udB.get("artist")
-                    else:
-                        artist = ultroid_bot.first_name
-                if res.name.endswith(tuple([".mkv", ".mp4", ".avi"])):
+                if res.name.endswith((".mkv", ".mp4", ".avi")):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
                         )
                     ]
-                elif res.name.endswith(tuple([".mp3", ".m4a", ".opus", ".ogg"])):
+                elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     attributes = [
                         DocumentAttributeAudio(
                             duration=duration,
@@ -229,7 +243,7 @@ async def download(event):
                 else:
                     attributes = None
                 try:
-                    x = await event.client.send_file(
+                    await event.client.send_file(
                         event.chat_id,
                         res,
                         caption=f"`{title}`",
@@ -238,7 +252,7 @@ async def download(event):
                         thumb="resources/extras/ultroid.jpg",
                     )
                 except BaseException:
-                    x = await event.client.send_file(
+                    await event.client.send_file(
                         event.chat_id,
                         res,
                         caption=f"`{title}`",
@@ -246,7 +260,7 @@ async def download(event):
                         thumb="resources/extras/ultroid.jpg",
                     )
             else:
-                x = await event.client.send_file(
+                await event.client.send_file(
                     event.chat_id,
                     res,
                     caption=f"`{title}`",
@@ -266,7 +280,7 @@ async def download(event):
                     size += os.path.getsize(fp)
             c = len(os.listdir(kk))
             await xx.delete()
-            await ultroid_bot.send_message(
+            await event.client.send_message(
                 event.chat_id,
                 f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
             )

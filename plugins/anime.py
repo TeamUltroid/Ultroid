@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -17,10 +16,10 @@
 • `{i}character <character name>`
    Fetch anime character details.
 """
-
 from os import remove
 
 import jikanpy
+from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 
 from . import *
 
@@ -47,7 +46,26 @@ async def anilist(event):
         return await eod(x, "`Enter a anime name!`", time=5)
     banner, title, year, episodes, info = get_anime_src_res(name)
     msg = f"**{title}**\n{year} | {episodes} Episodes.\n\n{info}"
-    await event.reply(msg, file=banner, link_preview=True)
+    try:
+        await event.reply(msg, file=banner, link_preview=True)
+    except MediaCaptionTooLongError:
+        nm = name.replace(" ", "_")
+        with open(f"{nm}.txt", "w") as f:
+            f.write(msg.replace("*", ""))
+        await bash(f"wget {banner} -O {nm}.jpg")
+        try:
+            await event.reply(file=f"{nm}.txt", thumb=f"{nm}.jpg")
+        except Exception as e:
+            await event.reply(file=f"{nm}.txt")
+            LOGS.warning(str(e))
+        try:
+            remove(f"{nm}.jpg")
+        except BaseException:
+            pass
+        try:
+            remove(f"{nm}.txt")
+        except BaseException:
+            pass
     await x.delete()
 
 

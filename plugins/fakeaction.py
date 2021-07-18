@@ -19,6 +19,9 @@
 
 • `{i}fgame <time/in secs>`
     `Show Fake Game Playing Action in current chat. `
+
+• `{i}stopaction`
+   `Stop any ongoing Chat Action going in Chat.`
 """
 
 from . import *
@@ -94,3 +97,10 @@ async def _(e):
     await eod(e, f"Starting Fake Game Playing For {t} sec.")
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
+
+
+@ultroid_cmd(pattern="stopaction")
+async def do_it(e):
+    async with e.client.action(e.chat_id, "cancel"):
+        pass
+    await e.reply("Fake Action Stopped.")

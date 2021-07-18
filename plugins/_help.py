@@ -5,21 +5,17 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from support import *
+from pyUltroid.dB.core import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-from telethon.tl.custom import Button
 
 from . import *
 
 
-@ultroid_cmd(
-    pattern="help ?(.*)",
-)
-async def ult(ult):
+@ultroid_cmd(pattern="help ?(.*)")
+async def _help(ult):
     plug = ult.pattern_match.group(1)
-    tgbot = asst.me.username
     if plug:
         try:
             if plug in HELP:
@@ -45,16 +41,16 @@ async def ult(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
+        tgbot = asst.me.username
         try:
-            results = await ultroid_bot.inline_query(tgbot, "ultd")
+            results = await ult.client.inline_query(tgbot, "ultd")
         except BotMethodInvalidError:
             z = []
             for x in LIST.values():
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            bnn = asst.me.username
-            return await ultroid_bot.send_message(
+            return await ult.client.send_message(
                 ult.chat_id,
                 get_string("inline_4").format(
                     OWNER_NAME,
@@ -71,7 +67,11 @@ async def ult(ult):
                         Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
                         Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
                     ],
-                    [Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{bnn}?start=set")],
+                    [
+                        Button.url(
+                            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{tgbot}?start=set"
+                        ),
+                    ],
                     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
                 ],
             )

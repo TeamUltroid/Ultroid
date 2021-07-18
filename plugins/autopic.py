@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -48,9 +47,9 @@ async def autopic(e):
             if not ge == "True":
                 return
             au = "https://unsplash.com" + lie["href"]
-            et = await ultroid_bot(getweb(au))
+            et = await e.client(getweb(au))
             try:
-                kar = await ultroid_bot.download_media(et.webpage.photo)
+                kar = await e.client.download_media(et.webpage.photo)
             except AttributeError:
                 ct = r.get(au).content
                 bsc = bs(ct, "html.parser", from_encoding="utf-8")
@@ -58,8 +57,8 @@ async def autopic(e):
                 li = ft[0]["src"]
                 kar = "autopic.png"
                 urllib.request.urlretrieve(li, kar)
-            file = await ultroid_bot.upload_file(kar)
-            await ultroid_bot(UploadProfilePhotoRequest(file))
+            file = await e.client.upload_file(kar)
+            await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
             await asyncio.sleep(SLEEP_TIME)
 

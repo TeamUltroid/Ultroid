@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -18,7 +17,6 @@
 • `{i}reverse <query>`
     Reply an Image or sticker to find its sauce.
 """
-
 import os
 from shutil import rmtree
 
@@ -34,7 +32,7 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(pattern="google ?(.*)")
+@ultroid_cmd(pattern="google ?(.*)", type=["official", "manager"], ignore_dualmode=True)
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
@@ -46,17 +44,20 @@ async def google(event):
     except GoglError as e:
         return await eor(event, str(e))
     out = ""
-    for i in range(len(res["links"])):
-        text = res["titles"][i]
-        url = res["links"][i]
-        des = res["descriptions"][i]
-        out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
+    try:
+        for i in range(len(res["links"])):
+            text = res["titles"][i]
+            url = res["links"][i]
+            des = res["descriptions"][i]
+            out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
+    except TypeError:
+        return await eod(event, f"`Can't find anything about {inp}`")
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = []
     for bkl in range(0, len(omk), 4095):
         opn.append(omk[bkl : bkl + 4095])
     for bc in opn:
-        await ultroid_bot.send_message(event.chat_id, bc, link_preview=False)
+        await event.respond(bc, link_preview=False)
     await x.delete()
     opn.clear()
 
@@ -86,7 +87,7 @@ async def goimg(event):
         ok = pth[0][query]
     except BaseException:
         return await nn.edit("No Results Found :(")
-    await event.client.send_file(event.chat_id, ok, caption=query, album=True)
+    await event.reply(file=ok, message=query, album=True)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 
@@ -97,7 +98,7 @@ async def reverse(event):
     if not reply:
         return await eor(event, "`Reply to an Image`")
     ult = await eor(event, "`Processing...`")
-    dl = await bot.download_media(reply)
+    dl = await reply.download_media()
     img = Image.open(dl)
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}

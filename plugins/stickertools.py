@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -30,7 +29,6 @@
     paste text on random stickers.
 
 """
-
 import asyncio
 import io
 import os
@@ -90,7 +88,7 @@ async def waifu(animu):
     waifus = [32, 33, 37, 40, 41, 42, 58, 20]
     finalcall = "#" + (str(random.choice(waifus)))
     try:
-        sticcers = await ultroid_bot.inline_query(
+        sticcers = await animu.client.inline_query(
             "stickerizerbot",
             f"{finalcall}{(deEmojify(text))}",
         )
@@ -153,7 +151,7 @@ async def pack_kangish(_):
     if _e and _e.media and _e.media.document.mime_type == "image/webp":
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
-        _get_stiks = await ultroid_bot(
+        _get_stiks = await _.client(
             functions.messages.GetStickerSetRequest(
                 stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
             )
@@ -181,7 +179,7 @@ async def pack_kangish(_):
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
                     title=_packname,
-                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                     stickers=stiks,
                 )
             )
@@ -194,7 +192,7 @@ async def pack_kangish(_):
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
                     title=_packname,
-                    short_name=f"ult_{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
                     stickers=stiks,
                 )
             )
@@ -212,6 +210,7 @@ async def pack_kangish(_):
     pattern="kang",
 )
 async def hehe(args):
+    ultroid_bot = args.client
     xx = await eor(args, "`Processing...`")
     user = await ultroid_bot.get_me()
     if not user.username:
@@ -264,8 +263,9 @@ async def hehe(args):
 
     if photo:
         splat = args.text.split()
-        emoji = "🏵"
         pack = 1
+        if not emoji:
+            emoji = "🏵"
         if len(splat) == 3:
             pack = splat[2]  # User sent ultroid_both
             emoji = splat[1]

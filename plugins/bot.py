@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -29,7 +28,6 @@
 • `{i}shutdown`
     Turn off your bot.
 """
-
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
@@ -47,7 +45,7 @@ from . import *
 )
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
-    uptime = grt(time.time() - start_time)
+    uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
@@ -67,16 +65,14 @@ async def lol(ult):
         return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
         try:
-            await ultroid_bot.send_message(
-                ult.chat_id, als, file=pic, link_preview=False
-            )
+            await ult.reply(als, file=pic, link_preview=False)
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
     else:
         try:
-            await ultroid_bot.send_message(ult.chat_id, file=pic)
-            await ultroid_bot.send_message(ult.chat_id, als, link_preview=False)
+            await ult.reply(file=pic)
+            await ult.reply(als, link_preview=False)
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
@@ -92,7 +88,7 @@ async def _(event):
     x = await eor(event, "`Pong !`")
     end = dt.now()
     ms = (end - start).microseconds / 1000
-    uptime = grt(time.time() - start_time)
+    uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(ms, uptime))
 
 
@@ -116,13 +112,13 @@ async def restartbt(ult):
 
 @ultroid_cmd(pattern="shutdown$")
 async def shutdownbot(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
+    if not ult.out and not is_fullsudo(ult.sender_id):
+        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await shutdown(ult)
 
 
 @ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs ?(.*)"))
+@asst.on(events.NewMessage(pattern="^/{HNDLR}logs ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -134,7 +130,5 @@ async def _(event):
         return await def_logs(event)
     if opt == "heroku":
         await heroku_logs(event)
-    elif opt == "sys":
-        await def_logs(event)
     else:
         await def_logs(event)

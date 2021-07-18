@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -27,6 +26,7 @@ import io
 import sys
 import traceback
 from os import remove
+from pprint import pprint
 
 from carbonnow import Carbon
 
@@ -43,7 +43,7 @@ async def _(e):
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
     haa = await ok.save("neofetch")
-    await e.client.send_file(e.chat_id, haa)
+    await e.reply(file=haa)
     await xx.delete()
     remove("neofetch.jpg")
     remove("neo.txt")
@@ -89,7 +89,7 @@ async def _(event):
                 force_document=True,
                 thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
-                caption=f"`{cmd}`",
+                caption=f"`{cmd}`" if (len(cmd) + 2) < 1000 else None,
                 reply_to=reply_to_id,
             )
             await xx.delete()
@@ -97,7 +97,7 @@ async def _(event):
         await xx.edit(OUT)
 
 
-p = print  # ignore: pylint
+p, pp = print, pprint  # ignore: pylint
 
 
 @ultroid_cmd(
@@ -155,7 +155,7 @@ async def _(event):
         ultd = final_output.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
-            await ultroid_bot.send_file(
+            await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -174,7 +174,7 @@ async def aexec(code, event):
         f"async def __aexec(e, client): "
         + "\n message = event = e"
         + "\n reply = await event.get_reply_message()"
-        + "\n chat = e.chat_id"
+        + "\n chat = (await event.get_chat()).id"
         + "".join(f"\n {l}" for l in code.split("\n")),
     )
 

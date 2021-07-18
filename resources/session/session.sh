@@ -27,6 +27,6 @@ apt-get upgrade -y
 pkg upgrade -y
 pkg install python wget -y
 wget https://raw.githubusercontent.com/TeamUltroid/ultroid/main/resources/session/ssgen.py
-pip install telethon
+pip install telethon pyrogram
 clear
 python3 ssgen.py

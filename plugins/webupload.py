@@ -47,9 +47,9 @@ async def _(event):
             except BaseException:
                 file_name = await event.client.download_media(bb)
         else:
-            return await eod(xx, "`Reply to media file`", time=5)
+            return await eod(xx, "`Reply to media file`")
     try:
-        results = await ultroid_bot.inline_query(
+        results = await event.client.inline_query(
             asst.me.username,
             f"fl2lnk {file_name}",
         )

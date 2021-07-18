@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -21,8 +20,6 @@
 •`{i}gif <query>`
    Send video regarding to query.
 """
-
-
 import os
 import random
 import time
@@ -40,7 +37,7 @@ async def igif(e):
     if "gif" not in wut:
         return await eod(e, "`Reply To Gif Only`")
     xx = await eor(e, "`Processing...`")
-    z = await ultroid_bot.download_media(a.media)
+    z = await a.download_media()
     try:
         await bash(f'ffmpeg -i "{z}" -vf format=gray ult.gif -y')
         await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
@@ -60,7 +57,7 @@ async def igif(e):
     if "gif" not in wut:
         return await eod(e, "`Reply To Gif Only`")
     xx = await eor(e, "`Processing...`")
-    z = await ultroid_bot.download_media(a.media)
+    z = await a.download_media()
     try:
         await bash(
             f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y'
@@ -84,9 +81,9 @@ async def gifs(ult):
         except BaseException:
             pass
     if not get:
-        return await eor(ult, "`{i}gif <query>`")
+        return await eor(ult, f"`{HNDLR}gif <query>`")
     m = await eor(ult, "`Searching gif ...`")
-    gifs = await ultroid_bot.inline_query("gif", get)
+    gifs = await ult.client.inline_query("gif", get)
     if not n:
         await gifs[xx].click(
             ult.chat.id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
@@ -111,7 +108,7 @@ async def vtogif(e):
     dur = a.media.document.attributes[0].duration
     tt = time.time()
     if int(dur) < 120:
-        z = await ultroid_bot.download_media(a.media)
+        z = await a.download_media()
         await bash(
             f'ffmpeg -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif -y'
         )

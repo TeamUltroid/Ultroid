@@ -4,15 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
 • `{i}ascii <reply image>`
     Convert replied image into html.
 """
-
-
 import os
 
 from img2html.converter import Img2HTMLConverter
@@ -33,7 +30,7 @@ async def _(e):
     html = converter.convert(img)
     with open("html.html", "w") as t:
         t.write(html)
-    await e.client.send_file(e.chat_id, "html.html", reply_to=e.reply_to_msg_id)
+    await e.reply(file="html.html")
     await m.delete()
     os.remove(img)
     os.remove("html.html")

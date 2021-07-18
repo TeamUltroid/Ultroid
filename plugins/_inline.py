@@ -12,6 +12,7 @@ from math import ceil
 from os import remove
 
 from git import Repo
+from pyUltroid.dB.core import *
 from pyUltroid.misc import owner_and_sudos
 from support import *
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
@@ -74,7 +75,7 @@ async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
         MSG = "• **Ultroid Userbot •**"
-        uptime = grt(time.time() - start_time)
+        uptime = time_formatter((time.time() - start_time) * 1000)
         MSG += f"\n\n• **Uptime** - `{uptime}`\n"
         MSG += f"• **OWNER** - `{OWNER_NAME}`"
         WEB0 = InputWebDocument(
@@ -120,35 +121,17 @@ async def inline_handler(event):
     await event.answer([result], gallery=True)
 
 
-@in_pattern("paste")
+@in_pattern("haste")
 @in_owner
 async def _(event):
     ok = event.text.split(" ")[1]
-    link = "https://nekobin.com/"
+    link = "https://hastebin.com/"
     result = event.builder.article(
         title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
+        text="Pᴀsᴛᴇᴅ Tᴏ Hᴀsᴛᴇʙɪɴ!",
         buttons=[
             [
-                Button.url("NekoBin", url=f"{link}{ok}"),
-                Button.url("Raw", url=f"{link}raw/{ok}"),
-            ],
-        ],
-    )
-    await event.answer([result])
-
-
-@in_pattern("dog")
-@in_owner
-async def _(event):
-    ok = event.text.split(" ")[1]
-    link = "https://del.dog/"
-    result = event.builder.article(
-        title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Dᴏɢʙɪɴ!",
-        buttons=[
-            [
-                Button.url("DogBin", url=f"{link}{ok}"),
+                Button.url("HasteBin", url=f"{link}{ok}"),
                 Button.url("Raw", url=f"{link}raw/{ok}"),
             ],
         ],
@@ -236,7 +219,7 @@ async def _(event):
 
 @callback("upp")
 async def _(event):
-    uptime = grt(time.time() - start_time)
+    uptime = time_formatter((time.time() - start_time) * 1000)
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
     await event.answer(pin, cache_time=0, alert=True)
 

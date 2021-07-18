@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -14,7 +13,6 @@
    Or Reply To Font File, To write with that font.
 
 """
-
 import glob
 import os
 import random
@@ -44,7 +42,7 @@ async def logo_gen(event):
                 bg_ = await temp.download_media()
     else:
         pics = []
-        async for i in ultroid.iter_messages(
+        async for i in event.client.iter_messages(
             "@UltroidLogos", filter=InputMessagesFilterPhotos
         ):
             pics.append(i)
@@ -54,7 +52,7 @@ async def logo_gen(event):
         font_ = random.choice(fpath_)
     if not bg_:
         pics = []
-        async for i in ultroid.iter_messages(
+        async for i in event.client.iter_messages(
             "@UltroidLogos", filter=InputMessagesFilterPhotos
         ):
             pics.append(i)

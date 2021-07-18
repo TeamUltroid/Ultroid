@@ -14,9 +14,6 @@
 • `{i}stopvc`
     Stop Group Call in a group.
 
-• `{i}playvc`
-    Start Voice Chat Bot to receive Commands.
-
 • `{i}vcinvite`
     Invite all members of group in Group Call.
     (You must be joined)
@@ -27,15 +24,10 @@
 • `{i}rmvcaccess <id/username/reply to msg>`
     Remove access of Voice Chat Bot.
 
-• **Voice Chat - Bot Commands**
-   `/play ytsearch : song-name`
-   `/play youtube link`
-   `/current`
-   `/skip`
-   `/exitVc`
+• `{i}listvcaccess`
+    Gwt The List of People having vc access.
 """
 
-from os import remove
 
 from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
@@ -69,26 +61,6 @@ async def _(e):
         await eor(e, "`Voice Chat Stopped...`")
     except Exception as ex:
         await eor(e, f"`{str(ex)}`")
-
-
-@ultroid_cmd(
-    pattern="playvc$",
-)
-async def _(e):
-    zz = await eor(e, "`VC bot started...`")
-    er, out = await bash("python vcstarter.py & sleep 10 && npm start")
-    LOGS.info(er)
-    LOGS.info(out)
-    if er:
-        msg = f"Failed {er}\n\n{out}"
-        if len(msg) > 4096:
-            with open("vc-error.txt", "w") as f:
-                f.write(msg.replace("`", ""))
-            await e.reply(file="vc-error.txt")
-            await zz.delete()
-            remove("vc-error.txt")
-            return
-        await zz.edit(msg)
 
 
 @ultroid_cmd(

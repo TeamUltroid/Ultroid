@@ -6,11 +6,11 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
+import urllib
 from glob import glob
 from os import remove
 from random import choices
 
-import requests
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
@@ -27,7 +27,33 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
 @callback(
-    re.compile("sndplug_(.*)"),
+    re.compile(
+        "ebk_(.*)",
+    ),
+)
+async def eupload(event):
+    match = event.pattern_match.group(1).decode("utf-8")
+    await event.answer("Uploading..")
+    try:
+        await event.edit(
+            file=f"https://www.gutenberg.org/files/{match}/{match}-pdf.pdf"
+        )
+    except BaseException:
+        book = "Ultroid-Book.epub"
+        urllib.request.urlretrieve(
+            "https://www.gutenberg.org/ebooks/132.epub.images", book
+        )
+        fn, media, _ = await asst._file_to_media(
+            book, thumb="resources/extras/ultroid.jpg"
+        )
+        await event.edit(file=media)
+        remove(book)
+
+
+@callback(
+    re.compile(
+        "sndplug_(.*)",
+    ),
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
@@ -133,9 +159,9 @@ async def changes(okk):
     changelog_str = changelog + f"\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
-        file = open(f"ultroid_updates.txt", "w+")
-        file.write(tl_chnglog)
-        file.close()
+        await asyncio.sleep(2)
+        with open(f"ultroid_updates.txt", "w+") as file:
+            file.write(tl_chnglog)
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
@@ -159,15 +185,14 @@ async def changes(okk):
 @owner
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
-    hmm = open(ok)
-    hmmm = hmm.read()
-    hmm.close()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": hmmm})
-        .json()
-        .get("result")
-        .get("key")
-    )
+    with open(ok, "r") as hmm:
+        _, key = get_paste(hmm.read())
+    if _ == "dog":
+        link = "https://del.dog/" + key
+        raw = "https://del.dog/raw/" + key
+    else:
+        link = "https://nekobin.com/" + key
+        raw = "https://nekobin.com/raw/" + key
     if ok.startswith("plugins"):
         buttons = [
             Button.inline("« Bᴀᴄᴋ", data="back"),
@@ -179,9 +204,10 @@ async def _(e):
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ]
     await e.edit(
-        f"Pasted to Nekobin\n     👉[Link](https://nekobin.com/{key})\n     👉[Raw Link](https://nekobin.com/raw/{key})",
+        f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
         buttons=buttons,
         link_preview=False,
+        parse_mode="html",
     )
 
 
@@ -220,7 +246,7 @@ async def _(e):
         + "4. Copy link of that folder.\n"
         + "5. Send all characters which is after id= .",
     )
-    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+    async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
         udB.set("GDRIVE_FOLDER_ID", repl.text)
@@ -236,7 +262,7 @@ async def _(e):
     if not e.is_private:
         return
     await e.edit("Send your CLIENT SECRET")
-    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+    async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
         udB.set("GDRIVE_CLIENT_SECRET", repl.text)
@@ -252,7 +278,7 @@ async def _(e):
     if not e.is_private:
         return
     await e.edit("Send your CLIENT ID ending with .com")
-    async with ultroid_bot.asst.conversation(e.sender_id) as conv:
+    async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
         if not repl.text.endswith(".com"):
@@ -720,8 +746,44 @@ async def alvcs(event):
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
+            [Button.inline("PMPermit Type", data="pmtype")],
             [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
         ],
+    )
+
+
+@callback("pmtype")
+@owner
+async def pmtyp(e):
+    await event.edit(
+        "Select the type of PMPermit needed.",
+        buttons=[
+            [Button.inline("Inline", data="inpm_in")],
+            [Button.inline("Normal", data="inpm_no")],
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        ],
+    )
+
+
+@callback("inpm_in")
+@owner
+async def inl_on(event):
+    var = "INLINE_PM"
+    await setit(event, var, "True")
+    await event.edit(
+        f"Done!! PMPermit type has been set to inline!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+    )
+
+
+@callback("inpm_no")
+@owner
+async def inl_on(event):
+    var = "INLINE_PM"
+    await setit(event, var, "False")
+    await event.edit(
+        f"Done!! PMPermit type has been set to normal!",
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
     )
 
 
@@ -988,7 +1050,7 @@ async def name(event):
     name = "Bot Welcome Message:"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**BOT WELCOME MSG**\nEnter the msg which u want to show when someone start your assistant Bot.\n\nUse /cancel to terminate the operation.",
+            "**BOT WELCOME MSG**\nEnter the msg which u want to show when someone start your assistant Bot.\nYou Can use `{me}` , `{mention}` Parameters Too\nUse /cancel to terminate the operation.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response

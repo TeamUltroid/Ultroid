@@ -73,7 +73,7 @@ async def _(e):
         c = int(a)
     except Exception:
         try:
-            c = (await ultroid_bot.get_entity(a)).id
+            c = (await e.client.get_entity(a)).id
         except Exception:
             await z.edit("invalid Channel given")
             return
@@ -81,14 +81,14 @@ async def _(e):
         d = int(b)
     except Exception:
         try:
-            d = (await ultroid_bot.get_entity(b)).id
+            d = (await e.client.get_entity(b)).id
         except Exception:
             await z.edit("invalid Channel given")
             return
-    async for msg in ultroid_bot.iter_messages(int(c), reverse=True):
+    async for msg in e.client.iter_messages(int(c), reverse=True):
         try:
             await asyncio.sleep(2)
-            await ultroid_bot.send_message(int(d), msg)
+            await e.client.send_message(int(d), msg)
         except BaseException:
             pass
     await z.edit("Done")
@@ -115,7 +115,7 @@ async def source(e):
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "processing")
+    x = await eor(event, "`Processing..`")
     if chat_id == "all":
         await x.edit("`Removing...`")
         udB.delete("CH_SOURCE")
@@ -125,24 +125,18 @@ async def dd(event):
         y = int(chat_id)
     except Exception:
         try:
-            y = int((await bot.get_entity(chat_id)).id)
+            y = int((await event.client.get_entity(chat_id)).id)
         except Exception as es:
             print(es)
             return
     if is_source_channel_added(y):
         rem_source_channel(y)
-        await x.edit("Source removed from database")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eod(x, "Source removed from database", time=3)
     elif is_source_channel_added(y):
         rem_source_channel(y)
-        await x.edit("Source removed from database")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eod(x, "Source removed from database")
     elif not is_source_channel_added(y):
-        await x.edit("Source channel is already removed from database. ")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eod(x, "Source channel is already removed from database. ", time=3)
 
 
 @ultroid_cmd(pattern="listsource")
@@ -156,7 +150,7 @@ async def list_all(event):
     for channel in channels:
         name = ""
         try:
-            name = (await ultroid.get_entity(int(channel))).title
+            name = (await event.client.get_entity(int(channel))).title
         except BaseException:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
@@ -165,7 +159,7 @@ async def list_all(event):
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
-            await ultroid_bot.send_file(
+            await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -185,7 +179,7 @@ async def destination(e):
         y = int(x)
     except Exception:
         try:
-            y = int((await bot.get_entity(x)).id)
+            y = int((await e.client.get_entity(x)).id)
         except Exception as es:
             print(es)
             return
@@ -209,28 +203,23 @@ async def dd(event):
         y = int(chat_id)
     except Exception:
         try:
-            y = int((await bot.get_entity(chat_id)).id)
+            y = int((await event.client.get_entity(chat_id)).id)
         except Exception as es:
             print(es)
             return
     if is_destination_added(y):
         rem_destination(y)
-        await x.edit("Destination removed from database")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eor(x, "Destination removed from database")
     elif is_destination_added(y):
         rem_destination(y)
-        await x.edit("Destination removed from database")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eod(x, "Destination removed from database")
     elif not is_destination_added(y):
-        await x.edit("Destination channel is already removed from database. ")
-        await asyncio.sleep(3)
-        await x.delete()
+        await eod(x, "Destination channel is already removed from database. ")
 
 
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
+    ultroid_bot = event.client
     x = await eor(event, "`Calculating...`")
     channels = get_destinations()
     num = get_no_destinations()

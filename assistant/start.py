@@ -7,6 +7,7 @@
 
 from datetime import datetime
 
+from pytz import timezone as tz
 from pyUltroid.functions.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
@@ -17,12 +18,12 @@ from plugins import *
 from . import *
 
 Owner_info_msg = f"""
-**Owner** - {OWNER_NAME}
-**OwnerID** - `{OWNER_ID}`
+<strong>Owner</strong> - {OWNER_NAME}
+<stong>OwnerID</strong> - <code>{OWNER_ID}</code>
 
-**Message Forwards** - {udB.get("PMBOT")}
+<strong>Message Forwards</strong> - {udB.get("PMBOT")}
 
-__Ultroid {ultroid_version}, powered by @TeamUltroid__
+<stong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
 """
 
 _settings = [
@@ -48,6 +49,7 @@ _start = [
         Button.inline("Sᴛᴀᴛs ✨", data="stat"),
         Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
     ],
+    [Button.inline("TɪᴍᴇZᴏɴᴇ 🌎", data="tz")],
 ]
 
 
@@ -56,6 +58,8 @@ async def own(event):
     await event.edit(
         Owner_info_msg,
         buttons=[Button.inline("Close", data=f"closeit")],
+        link_preview=False,
+        parse_mode="html",
     )
 
 
@@ -67,15 +71,7 @@ async def closet(lol):
 @asst_cmd("start ?(.*)")
 async def ultroid(event):
     if event.is_group:
-        if str(event.sender_id) in owner_and_sudos():
-            return await event.reply(
-                "`I dont work in groups`",
-                buttons=[
-                    Button.url(
-                        "⚙️Sᴛᴀʀᴛ⚙️", url=f"https://t.me/{asst.me.username}?start=set"
-                    )
-                ],
-            )
+        return
     else:
         if (
             not is_added(event.sender_id)
@@ -178,3 +174,37 @@ async def setting(event):
         "Choose from the below options -",
         buttons=_settings,
     )
+
+
+@callback("tz")
+@owner
+async def timezone_(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "TIMEZONE"
+    name = "Timezone"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)"
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button("mainmenu"),
+            )
+        else:
+            try:
+                tz(themssg)
+                await setit(event, var, themssg)
+                await conv.send_message(
+                    f"{name} changed to {themssg}\n",
+                    buttons=get_back_button("mainmenu"),
+                )
+            except BaseException:
+                await conv.send_message(
+                    "Wrong TimeZone, Try again",
+                    buttons=get_back_button("mainmenu"),
+                )

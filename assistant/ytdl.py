@@ -24,7 +24,6 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 
 
 @in_pattern("yt")
-@in_owner
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -50,14 +49,17 @@ async def _(event):
         link = _yt_base_url + ids
         title = v["title"]
         duration = v["duration"]
-        thumb = f"https://img.youtube.com/vi/{ids}/hqdefault.jpg"
+        thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"**•Tɪᴛʟᴇ•** `{title}`\n\n**••[Lɪɴᴋ]({link})••**\n\n**••Dᴜʀᴀᴛɪᴏɴ••** `{duration}`\n\n\n"
         desc = f"Title : {title}\nDuration : {duration}"
+        file = wb(thumb, 0, "image/jpeg", [])
         results.append(
-            await event.builder.document(
-                file=thumb,
+            await event.builder.article(
+                type="photo",
                 title=title,
                 description=desc,
+                thumb=file,
+                content=file,
                 text=text,
                 include_media=True,
                 buttons=[
@@ -80,7 +82,7 @@ async def _(event):
                 ],
             ),
         )
-    await event.answer(results)
+    await event.answer(results[:50])
 
 
 @callback(
@@ -99,7 +101,7 @@ async def _(e):
     )
     _text = "`Select Your Format.`"
     if not _buttons:
-        _text = "`Error domwloading from YouTube.\nTry Restarting your bot.`"
+        _text = "`Error downloading from YouTube.\nTry Restarting your bot.`"
     await e.edit(_text, buttons=_buttons)
 
 
@@ -191,12 +193,12 @@ async def _(event):
     text = f"**Title:** `{title}`\n"
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
-    text += f"**Artist:** `{artist}`"
+    text += f"**Artist:** `{artist}`\n\n"
     await event.edit(
         text,
         file=file,
+        buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
         attributes=attributes,
         thumb=thumb,
-        buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
     )
     os.system(f'rm "{title}"*')

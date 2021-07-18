@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -12,8 +11,6 @@
     Unsplash Image Search.
 
 """
-
-
 import urllib
 
 import requests as r
@@ -50,7 +47,7 @@ async def searchunsl(ult):
         urllib.request.urlretrieve(ft, Hp)
         CL.append(Hp)
         nl += 1
-    await bot.send_file(
+    await ult.client.send_file(
         ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n", album=True
     )
     await tep.delete()

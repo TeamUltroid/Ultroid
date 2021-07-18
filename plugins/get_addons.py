@@ -11,7 +11,9 @@
 • `{i}getaddons <raw link to code>`
     Load Plugins from the given raw link.
 """
+
 import requests
+from pyUltroid.utils import load_addons
 
 from . import *
 
@@ -39,7 +41,7 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eod(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=3)
+        await eod(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`")
     except Exception as e:
         await eod(
             xx,

@@ -16,7 +16,7 @@
 [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/TeamUltroid/Ultroid)   
 [![Contributors](https://img.shields.io/github/contributors/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/graphs/contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
-[![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE)   
+[![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE)
 [![Sparkline](https://stars.medv.io/Teamultroid/Ultroid.svg)](https://stars.medv.io/TeamUltroid/Ultroid)
 
 ----
@@ -37,7 +37,7 @@
 ## Deploy to Heroku
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2F1Danish-00%2FUltroid-1)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2F1Danish-00%2FSideLoad)
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
@@ -45,8 +45,8 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 ### Local Deploy - Easy Method
 - Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
-- Windows - `cd desktop ; wget https://del.dog/raw/ultroid-termux -o locals.py ; python locals.py`
-- Termux - `sh -c "$(curl -fsSL https://del.dog/raw/ultroid-termux-deploy)"`
+- Windows - `cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
+- Termux - `sh -c "$(curl -fsSL https://git.io/JY9UM)"`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
@@ -63,11 +63,11 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
   - For Linux users:
     `bash sessiongen`
      or
-    `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+    `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
   - For Termux users:
-    `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
+    `sh -c "$(curl -fsSL https://git.io/JqgsR)"`
   - For Windows Users:
-    `cd desktop ; wget https://del.dog/ultroid -o ultroid.py ; python ultroid.py`
+    `cd desktop ; wget https://git.io/JY9JI -o ultroid.py ; python ultroid.py`
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
 (You can either edit and rename the file or make a new file named `.env`.)
 - Run the bot:
@@ -86,9 +86,10 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ## Session String
 Different ways to get your `SESSION`:
 * [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
-* Linux : `bash -c "$(curl -fsSL https://del.dog/ultroid)"`
+* Linux : `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
 * Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
+* TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
 
 Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
 
@@ -100,5 +101,6 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
-* [AndrewLaneX](https://github.com/AndrewLaneX) for [tgcalls-base.](http://github.com/tgcallsjs/tgcalls)
+* [Dan](https://github.com/delivrance) for [Pyrogram.](https://github.com/pyrogram/pyrogram)
+* [Pytgcalls](https://github.com/pytgcalls) for [PyTgCalls.](https://github.com/pytgcalls/pytgcalls)
 
