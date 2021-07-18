@@ -18,7 +18,8 @@
     list all filters.
 """
 
-import os,re
+import os
+import re
 
 from pyUltroid.functions.filter_db import *
 from telegraph import upload_file as uf
@@ -88,13 +89,13 @@ async def fl(e):
     chat = e.chat_id
     x = get_filter(int(chat))
     if x:
-            for c in x:
-                pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
-                if re.search(pat, xx):
-                    k = get_reply(int(chat), c)
-                    if k:
-                        kk = k
-            if kk:
-                msg = k["msg"]
-                media = k["media"]
-                await e.reply(msg, file=media)
+        for c in x:
+            pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
+            if re.search(pat, xx):
+                k = get_reply(int(chat), c)
+                if k:
+                    kk = k
+        if kk:
+            msg = k["msg"]
+            media = k["media"]
+            await e.reply(msg, file=media)
