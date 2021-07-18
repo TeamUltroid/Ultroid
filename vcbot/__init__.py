@@ -18,7 +18,9 @@ from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
-from pyUltroid import HNDLR, CallsClient, udB, ultroid_bot, asst as tele_asst
+from pyUltroid import HNDLR, CallsClient
+from pyUltroid import asst as tele_asst
+from pyUltroid import udB, ultroid_bot
 from pyUltroid import vcasst as asst
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
