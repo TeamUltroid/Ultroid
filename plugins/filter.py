@@ -89,14 +89,12 @@ async def fl(e):
     chat = e.chat_id
     x = get_filter(int(chat))
     if x:
-        kk = ""
         for c in x:
             pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
             if re.search(pat, xx):
                 k = get_reply(int(chat), c)
                 if k:
                     kk = k
-        if kk:
-            msg = k["msg"]
-            media = k["media"]
-            await e.reply(msg, file=media)
+                    msg = k["msg"]
+                    media = k["media"]
+                    await e.reply(msg, file=media)
