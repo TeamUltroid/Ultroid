@@ -8,4 +8,4 @@
 
 from plugins import *
 
-asst = ultroid_bot.asst
+asst = asst

@@ -31,7 +31,7 @@ LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 QUEUE = {}
 
 _yt_base_url = "https://www.youtube.com/watch?v="
-vcusername = ultroid_bot.asst.me.username
+vcusername = asst.me.username
 
 
 def VC_AUTHS():
