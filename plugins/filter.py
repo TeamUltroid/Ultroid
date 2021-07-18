@@ -89,6 +89,7 @@ async def fl(e):
     chat = e.chat_id
     x = get_filter(int(chat))
     if x:
+        kk = ""
         for c in x:
             pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
             if re.search(pat, xx):
