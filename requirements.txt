@@ -1,2 +1,2 @@
 https://github.com/New-dev0/Telethon/archive/New.zip
-py-Ultroid==48.7b0
+py-Ultroid==48.8b0
