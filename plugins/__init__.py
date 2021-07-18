@@ -8,6 +8,7 @@
 import asyncio
 import time
 
+from pyUltroid import *
 from pyUltroid.dB import *
 from pyUltroid.functions.all import *
 from pyUltroid.functions.sudos import *
