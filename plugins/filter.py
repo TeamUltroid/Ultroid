@@ -94,7 +94,6 @@ async def fl(e):
             if re.search(pat, xx):
                 k = get_reply(int(chat), c)
                 if k:
-                    kk = k
                     msg = k["msg"]
                     media = k["media"]
                     await e.reply(msg, file=media)
