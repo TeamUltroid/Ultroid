@@ -20,7 +20,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
 from pyUltroid import HNDLR, CallsClient, udB, ultroid_bot
 from pyUltroid import vcasst as asst
-
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
 from youtube_dl import YoutubeDL
@@ -141,9 +140,13 @@ async def download(event, query, chat, ts):
 
 async def vc_check(chat, chat_type):
     if chat_type in ["supergroup", "channel"]:
-        chat = await Client.send(functions.channels.GetFullChannel(await Client.resolve_peer(chat)))
+        chat = await Client.send(
+            functions.channels.GetFullChannel(await Client.resolve_peer(chat))
+        )
     elif chat_type == "group":
-        chat = await Client.send(functions.messages.GetFullChat(await Client.resolve_peer(chat)))
+        chat = await Client.send(
+            functions.messages.GetFullChat(await Client.resolve_peer(chat))
+        )
     else:
         return False
     if not chat.full_chat.call:
