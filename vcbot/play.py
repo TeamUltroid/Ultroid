@@ -8,6 +8,7 @@
 import asyncio
 import os
 import random
+
 from . import *
 
 
@@ -64,7 +65,8 @@ async def startup(_, message):
         try:
             Up = await Client.send(
                 functions.phone.CreateGroupCall(
-                    peer=await Client.resolve_peer(chat.id), random_id=random.randrange(1, 100)
+                    peer=await Client.resolve_peer(chat.id),
+                    random_id=random.randrange(1, 100),
                 )
             )
             Incall = Up.updates[2].messsge.action.call
