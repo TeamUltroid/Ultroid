@@ -59,6 +59,12 @@ async def startup(_, message):
         return await msg.edit(
             f"Added **{song_name}** to queue at #{list(QUEUE[chat.id].keys())[-1]}"
         )
+    che = await vc_check(chat.id, chat.type)
+    if not che:
+        try:
+            await Client.send(functions.phone.CreateGroupCall(peer=await Client.resolve_peer(chat.id), title="🎻 Ultroid Song Play"))
+        except Exception as E:
+            return await msg.edit_text(str(E))
     if thumb:
         await msg.delete()
         msg = await message.reply_photo(
