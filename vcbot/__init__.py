@@ -15,12 +15,12 @@ from datetime import datetime as dt
 
 import ffmpeg
 from pyrogram import Client, filters
+from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
 from pyUltroid import HNDLR, CallsClient, udB, ultroid_bot
 from pyUltroid import vcasst as asst
 
-# from pyUltroid import vcClient as Client
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
 from youtube_dl import YoutubeDL
@@ -137,3 +137,15 @@ async def download(event, query, chat, ts):
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
     await bash(f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y')
     return song, thumb, title, duration
+
+
+async def vc_check(chat, chat_type):
+    if chat_type in ["supergroup", "channel"]:
+        chat = await Client.send(functions.channels.GetFullChannel(await Client.resolve_peer(chat)))
+    elif chat_type == "group":
+        chat = await Client.send(functions.messages.GetFullChat(await Client.resolve_peer(chat)))
+    else:
+        return False
+    if not chat.full_chat.call:
+        return False
+    return True
