@@ -23,6 +23,10 @@ async def leavehandler(_, message):
         return await eor(message, str(Ex))
     CallsClient.leave_group_call(chat)
     m = await eor(message, "Successfully Left Group Call..")
+    try:
+        QUEUE.pop(chat)
+    except KeyError:
+        pass
     await asyncio.sleep(5)
     await m.delete()
 
