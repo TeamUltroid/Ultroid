@@ -69,10 +69,6 @@ async def startup(_, message):
                     random_id=random.randrange(1, 100),
                 )
             )
-            Incall = Up.updates[2].messsge.action.call
-            await Client.send(
-                functions.phone.EditGroupCallTitle(Incall, "🎸 Ultroid Music Play")
-            )
         except Exception as E:
             return await msg.edit_text(str(E))
     if thumb:
