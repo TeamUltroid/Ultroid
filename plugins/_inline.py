@@ -54,7 +54,7 @@ _main_help_menu = [
     ],
     [
         Button.url(
-            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{ultroid_bot.asst.me.username}?start=set"
+            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"
         ),
     ],
     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
@@ -121,24 +121,6 @@ async def inline_handler(event):
         buttons=_main_help_menu,
     )
     await event.answer([result], gallery=True)
-
-
-@in_pattern("paste")
-@in_owner
-async def _(event):
-    ok = event.text.split(" ")[1]
-    link = "https://nekobin.com/"
-    result = event.builder.article(
-        title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Nᴇᴋᴏʙɪɴ!",
-        buttons=[
-            [
-                Button.url("NekoBin", url=f"{link}{ok}"),
-                Button.url("Raw", url=f"{link}raw/{ok}"),
-            ],
-        ],
-    )
-    await event.answer([result])
 
 
 @in_pattern("haste")
