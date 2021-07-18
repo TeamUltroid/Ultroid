@@ -53,9 +53,7 @@ _main_help_menu = [
         Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
     ],
     [
-        Button.url(
-            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"
-        ),
+        Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
     ],
     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
 ]
