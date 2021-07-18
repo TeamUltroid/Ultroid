@@ -144,9 +144,7 @@ async def vc_check(chat, chat_type):
             functions.channels.GetFullChannel(channel=await Client.resolve_peer(chat))
         )
     elif chat_type == "group":
-        chat = await Client.send(
-            functions.messages.GetFullChat(chat_id=chat)
-        )
+        chat = await Client.send(functions.messages.GetFullChat(chat_id=chat))
     else:
         return False
     if not chat.full_chat.call:
