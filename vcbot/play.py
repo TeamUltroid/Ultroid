@@ -62,7 +62,11 @@ async def startup(_, message):
     che = await vc_check(chat.id, chat.type)
     if not che:
         try:
-            await Client.send(functions.phone.CreateGroupCall(peer=await Client.resolve_peer(chat.id), title="🎻 Ultroid Song Play"))
+            await Client.send(
+                functions.phone.CreateGroupCall(
+                    peer=await Client.resolve_peer(chat.id), title="🎻 Ultroid Song Play"
+                )
+            )
         except Exception as E:
             return await msg.edit_text(str(E))
     if thumb:
