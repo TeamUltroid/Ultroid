@@ -28,7 +28,7 @@ async def _(e):
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
-        x = await ultroid_bot.asst.send_file(
+        x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             ULTPIC,
             caption="• **Update Available** •",
@@ -56,7 +56,7 @@ async def _(e):
 @owner
 async def updava(event):
     await event.delete()
-    await ultroid_bot.asst.send_file(
+    await asst.send_file(
         int(udB.get("LOG_CHANNEL")),
         ULTPIC,
         caption="• **Update Available** •",
