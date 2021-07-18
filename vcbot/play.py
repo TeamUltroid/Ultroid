@@ -63,7 +63,7 @@ async def startup(_, message):
     if not che:
         try:
             Up = await Client.send(
-                functions.phone.CreateGroupCall(peer=await Client.resolve_peer(chat.id))
+                functions.phone.CreateGroupCall(peer=await Client.resolve_peer(chat.id),random_id=None)
             )
             Incall = Up.updates[2].messsge.action.call
             await Client.send(
