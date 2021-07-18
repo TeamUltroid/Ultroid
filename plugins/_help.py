@@ -41,7 +41,7 @@ async def _help(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
-        tgbot = ultroid_bot.asst.me.username
+        tgbot = asst.me.username
         try:
             results = await ult.client.inline_query(tgbot, "ultd")
         except BotMethodInvalidError:
