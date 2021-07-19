@@ -49,6 +49,7 @@ from telethon.tl.types import (
 )
 
 from . import *
+from telethon.utils import get_input_document
 
 EMOJI_PATTERN = re.compile(
     "["
@@ -158,7 +159,7 @@ async def pack_kangish(_):
         )
         stiks = []
         for i in _get_stiks.documents:
-            x = utils.get_input_document(i)
+            x = get_input_document(i)
             stiks.append(
                 types.InputStickerSetItem(
                     document=x,
