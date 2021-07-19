@@ -37,7 +37,7 @@ async def startup(_, message):
         elif reply.video or reply.audio:
             med = reply.video or reply.audio
             song_name = med.file_name
-        if med.thumbs:
+        if med and med.thumbs:
             dll = med.thumbs[0].file_id
             thumb = await asst.download_media(dll)
     TS = dt.now().strftime("%H:%M:%S")
@@ -102,7 +102,7 @@ async def queue_func(chat_id: int):
     try:
         song, title, from_user, pos, dur = get_from_queue(chat_id)
         CallsClient.change_stream(chat_id, song)
-        CallsClient._add_active_call(chat_id)
+       #CallsClient._add_active_call(chat_id)
         xx = await asst.send_message(
             chat_id,
             f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
@@ -112,6 +112,7 @@ async def queue_func(chat_id: int):
         if not QUEUE[chat_id]:
             QUEUE.pop(chat_id)
         await asyncio.sleep(dur + 5)
+     #   CallsClient._remove_active_call(chat_id)
         await xx.delete()
     except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)

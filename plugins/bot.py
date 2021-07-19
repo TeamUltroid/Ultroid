@@ -132,3 +132,5 @@ async def _(event):
         await heroku_logs(event)
     else:
         await def_logs(event)
+    if event.out:
+        await event.delete()
