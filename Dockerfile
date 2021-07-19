@@ -12,6 +12,7 @@ RUN git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 
 WORKDIR /root/TeamUltroid/
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY requirements.txt /deploy/
+RUN pip3 install --no-cache-dir -r /deploy/requirements.txt
 
 CMD ["bash", "resources/startup/startup.sh"]
