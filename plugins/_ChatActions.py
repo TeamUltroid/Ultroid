@@ -1,3 +1,11 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+
 from pyUltroid.functions.all import get_chatbot_reply
 from pyUltroid.functions.chatBot_db import chatbot_stats
 from pyUltroid.functions.clean_db import *
