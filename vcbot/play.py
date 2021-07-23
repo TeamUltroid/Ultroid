@@ -101,11 +101,10 @@ async def cstartup(_, message):
 async def queue_func(chat_id: int):
     try:
         song, title, from_user, pos, dur = get_from_queue(chat_id)
-        if chat_id in CallsClient.active_calls.keys();
+        if chat_id in CallsClient.active_calls.keys():
             CallsClient.change_stream(chat_id, song)
         else:
             CallsClient.join_group_call(chat_id, song)
-      # CallsClient._add_active_call(chat_id)
         xx = await asst.send_message(
             chat_id,
             f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
