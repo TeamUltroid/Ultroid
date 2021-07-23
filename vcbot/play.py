@@ -101,8 +101,11 @@ async def cstartup(_, message):
 async def queue_func(chat_id: int):
     try:
         song, title, from_user, pos, dur = get_from_queue(chat_id)
-        CallsClient.change_stream(chat_id, song)
-       #CallsClient._add_active_call(chat_id)
+        if chat_id in CallsClient.active_calls.keys();
+            CallsClient.change_stream(chat_id, song)
+        else:
+            CallsClient.join_group_call(chat_id, song)
+      # CallsClient._add_active_call(chat_id)
         xx = await asst.send_message(
             chat_id,
             f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
@@ -111,8 +114,8 @@ async def queue_func(chat_id: int):
         QUEUE[chat_id].pop(pos)
         if not QUEUE[chat_id]:
             QUEUE.pop(chat_id)
-        await asyncio.sleep(dur + 5)
-     #   CallsClient._remove_active_call(chat_id)
+        await asyncio.sleep(dur)
+     #  CallsClient._remove_active_call(chat_id)
         await xx.delete()
     except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)
