@@ -114,7 +114,8 @@ async def queue_func(chat_id: int):
         if not QUEUE[chat_id]:
             QUEUE.pop(chat_id)
         await asyncio.sleep(dur)
-        #  CallsClient._remove_active_call(chat_id)
+        if chat_id in CallsClient.active_calls.keys():
+            CallsClient._remove_active_call(chat_id)
         await xx.delete()
     except (IndexError, KeyError):
         CallsClient.leave_group_call(chat_id)
