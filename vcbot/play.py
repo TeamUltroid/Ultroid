@@ -87,7 +87,7 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
-    await asyncio.sleep(duration)
+    # await asyncio.sleep(duration)
     os.remove(song)
     await msg.delete()
     await CH.delete()
@@ -111,11 +111,12 @@ async def queue_func(chat_id: int):
             reply_markup=reply_markup(chat_id),
         )
         QUEUE[chat_id].pop(pos)
-        await asyncio.sleep(dur)
+        # await asyncio.sleep(dur)
         if chat_id in CallsClient.active_calls.keys():
             CallsClient.active_calls.pop(chat_id)
         await xx.delete()
-    except (IndexError, KeyError):
+    except (IndexError, KeyError) as Ec:
+        LOGS.info(Ec)
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:
         await asst.send_message(chat_id, f"`{str(ap)}`")
