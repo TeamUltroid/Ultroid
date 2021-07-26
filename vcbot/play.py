@@ -86,7 +86,7 @@ async def startup(_, message):
     CH = await asst.send_message(
         LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
     )
-    # await asyncio.sleep(duration)
+    await asyncio.sleep(duration + 5)
     os.remove(song)
     await msg.delete()
     await CH.delete()
@@ -110,7 +110,8 @@ async def queue_func(chat_id: int):
             reply_markup=reply_markup(chat_id),
         )
         QUEUE[chat_id].pop(pos)
-        # await asyncio.sleep(dur)
+        await asyncio.sleep(dur + 5)
+        os.remove(song)
         if chat_id in CallsClient.active_calls.keys():
             CallsClient.active_calls.pop(chat_id)
         await xx.delete()
