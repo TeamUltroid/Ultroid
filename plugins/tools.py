@@ -49,7 +49,7 @@ from . import *
 from . import humanbytes as hb
 
 
-@ultroid_cmd(pattern="tr", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="tr", type=["official", "manager"])
 async def _(event):
     if len(event.text) > 3:
         if not event.text[3] == " ":
@@ -57,15 +57,15 @@ async def _(event):
     input = event.text[4:6]
     txt = event.text[7:]
     xx = await eor(event, "`Translating...`")
-    if event.reply_to_msg_id:
+    if input:
+        text = txt
+        lan = input or "en"
+    elif event.is_reply:
         previous_message = await event.get_reply_message()
         text = previous_message.message
         lan = input or "en"
-    elif input:
-        text = txt
-        lan = input or "en"
     else:
-        return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
+        return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message")
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
@@ -160,7 +160,7 @@ async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(ult, "`Input some link`", time=5)
+        return await eod(ult, "`Input some link`")
     await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
