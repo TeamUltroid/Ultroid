@@ -10,6 +10,9 @@
 • `{i}setgpic <reply to Photo>`
     Set Profile photo of Group.
 
+• `{i}delgpic`
+    Delete Profile photo of Group.
+
 • `{i}unbanall`
     Unban all Members of a group.
 
@@ -52,6 +55,15 @@ async def _(ult):
         await eod(ult, "Error occured.\n`{}`".format(str(ex)))
     os.remove(replfile)
 
+
+@ultroid_cmd(pattern="delgpic$", groups_only=True, admins_only=True)
+async def _(ult):
+    try:
+        await ult.client(EditPhotoRequest(ult.chat_id, types.InputChatPhotoEmpty()))
+        text = "`Removed Chat Photo..`"
+    except Exception as E:
+        text = str(E)
+    return await eod(ult, text)
 
 @ultroid_cmd(
     pattern="unbanall$",
