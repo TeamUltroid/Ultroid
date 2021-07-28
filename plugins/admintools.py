@@ -28,7 +28,7 @@
 • `{i}pinned`
    Get pinned message in the current chat.
 
-• `{i}autodelete <24h/7d/off>`
+• `{i}autodelete <24h/7d/1m/off>`
    Enable Auto Delete Messages in Chat.
 
 • `{i}listpinned`
@@ -433,16 +433,18 @@ async def get_all_pinned(event):
 )
 async def autodelte(ult):  # Tg Feature
     match = ult.pattern_match.group(1)
-    if not match or match not in ["24h", "7d", "off"]:
+    if not match or match not in ["24h", "7d", "1m", "off"]:
         return await eod(ult, "`Please Use Proper Format..`")
     if match == "24h":
         tt = 3600 * 24
     elif match == "7d":
         tt = 3600 * 24 * 7
+    elif match == "1m":
+        tt = 3600 * 24 * 30
     else:
         tt = 0
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
         return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
-    await eor(ult, f"Auto Delete Status Changed to {match} !")
+    await eor(ult, f"Auto Delete Status Changed to `{match}` !")
