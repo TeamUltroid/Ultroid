@@ -85,13 +85,11 @@ async def prmte(ult):
                 rank,
             ),
         )
-        await xx.edit(
+        await eod(xx, 
             f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to promote you.`")
-    await asyncio.sleep(5)
-    await xx.delete()
 
 
 @ultroid_cmd(
@@ -124,13 +122,11 @@ async def dmote(ult):
                 rank,
             ),
         )
-        await xx.edit(
+        await eod(xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to demote you.`")
-    await asyncio.sleep(5)
-    await xx.delete()
 
 
 @ultroid_cmd(
@@ -215,7 +211,7 @@ async def kck(ult):
         return await xx.edit("`You Can't kick that powerhouse`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(0.9)
     except BadRequestError:
         return await xx.edit("`I don't have the right to kick a user.`")
     except Exception as e:
@@ -244,10 +240,6 @@ async def pin(msg):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         f"`Pinned` [This Message]({link})"
     ch = msg.pattern_match.group(1)
-    if ch != "silent":
-        pass
-    else:
-        pass
     try:
         await msg.client.pin_message(msg.chat_id, xx, notify=False)
     except BadRequestError:
