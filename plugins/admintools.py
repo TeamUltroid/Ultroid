@@ -440,7 +440,7 @@ async def autodelte(ult):  # Tg Feature
     elif match == "7d":
         tt = 3600 * 24 * 7
     elif match == "1m":
-        tt = 3600 * 24 * 30
+        tt = 3600 * 24 * 31
     else:
         tt = 0
     try:
