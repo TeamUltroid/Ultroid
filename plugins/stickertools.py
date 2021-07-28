@@ -40,7 +40,7 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from telethon import utils
+from telethon.utils import get_input_document
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
     DocumentAttributeFilename,
@@ -158,7 +158,7 @@ async def pack_kangish(_):
         )
         stiks = []
         for i in _get_stiks.documents:
-            x = utils.get_input_document(i)
+            x = get_input_document(i)
             stiks.append(
                 types.InputStickerSetItem(
                     document=x,
