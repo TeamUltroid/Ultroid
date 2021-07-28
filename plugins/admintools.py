@@ -85,7 +85,8 @@ async def prmte(ult):
                 rank,
             ),
         )
-        await eod(xx, 
+        await eod(
+            xx,
             f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except BadRequestError:
@@ -122,7 +123,8 @@ async def dmote(ult):
                 rank,
             ),
         )
-        await eod(xx,
+        await eod(
+            xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
@@ -239,7 +241,7 @@ async def pin(msg):
     if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
         f"`Pinned` [This Message]({link})"
-    ch = msg.pattern_match.group(1)
+    msg.pattern_match.group(1)
     try:
         await msg.client.pin_message(msg.chat_id, xx, notify=False)
     except BadRequestError:
