@@ -659,6 +659,4 @@ async def thumb_dl(event):
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
-    await xx.edit("`Thumbnail sent, if available.`")
-    await asyncio.sleep(5)
-    await xx.delete()
+    await eod(xx, "`Thumbnail sent, if available.`")
