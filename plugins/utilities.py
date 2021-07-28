@@ -40,7 +40,7 @@
 • `{i}json <reply to msg>`
     Get the json encoding of the message.
 
-• `{i}suggest <reply to message>`
+• `{i}suggest <reply to message> or <poll title>`
     Create a Yes/No poll for the replied suggestion.
 
 • `{i}ipinfo <ip address>`
@@ -526,11 +526,23 @@ async def _(event):
 
 @ultroid_cmd(pattern="suggest")
 async def sugg(event):
-    if await event.get_reply_message():
-        msgid = (await event.get_reply_message()).id
-        try:
-            await event.client.send_message(
-                event.chat_id,
+    sll = event.text.split(" ", maxsplit=1)
+    try:
+        text = sll[1]
+    except IndexError:
+        text = None
+    if event.is_reply:
+        text = "Do you Agree to Replied Suggestion ?"
+        cevent = await event.get_reply_message()
+    elif text:
+        cevent = event
+    else:
+        return await eod(
+            event,
+            "`Please reply to a message to make a suggestion poll!`",
+        )
+    try:
+        await cevent.reply(
                 file=InputMediaPoll(
                     poll=Poll(
                         id=12345,
@@ -538,20 +550,13 @@ async def sugg(event):
                         answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                     ),
                 ),
-                reply_to=msgid,
             )
-        except Exception as e:
-            return await eod(
+    except Exception as e:
+        return await eod(
                 event,
                 f"`Oops, you can't send polls here!\n\n{str(e)}`",
             )
-        await event.delete()
-    else:
-        return await eod(
-            event,
-            "`Please reply to a message to make a suggestion poll!`",
-        )
-
+    await event.delete()
 
 @ultroid_cmd(pattern="ipinfo ?(.*)")
 async def ipinfo(event):
