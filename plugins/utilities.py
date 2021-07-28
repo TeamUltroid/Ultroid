@@ -546,7 +546,7 @@ async def sugg(event):
             file=InputMediaPoll(
                 poll=Poll(
                     id=12345,
-                    question="Do you agree to the replied suggestion?",
+                    question=text,
                     answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                 ),
             ),
@@ -635,7 +635,7 @@ async def colgate(event):
 
 async def toothpaste(event):
     try:
-        await event.client.send_message(event.chat_id, _copied_msg["CLIPBOARD"])
+        await event.respond(_copied_msg["CLIPBOARD"])
         try:
             await event.delete()
         except BaseException:
