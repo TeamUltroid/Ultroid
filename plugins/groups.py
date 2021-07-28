@@ -65,6 +65,7 @@ async def _(ult):
         text = str(E)
     return await eod(ult, text)
 
+
 @ultroid_cmd(
     pattern="unbanall$",
     groups_only=True,
