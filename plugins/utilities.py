@@ -543,20 +543,21 @@ async def sugg(event):
         )
     try:
         await cevent.reply(
-                file=InputMediaPoll(
-                    poll=Poll(
-                        id=12345,
-                        question="Do you agree to the replied suggestion?",
-                        answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
-                    ),
+            file=InputMediaPoll(
+                poll=Poll(
+                    id=12345,
+                    question="Do you agree to the replied suggestion?",
+                    answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                 ),
-            )
+            ),
+        )
     except Exception as e:
         return await eod(
-                event,
-                f"`Oops, you can't send polls here!\n\n{str(e)}`",
-            )
+            event,
+            f"`Oops, you can't send polls here!\n\n{str(e)}`",
+        )
     await event.delete()
+
 
 @ultroid_cmd(pattern="ipinfo ?(.*)")
 async def ipinfo(event):
