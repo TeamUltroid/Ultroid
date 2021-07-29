@@ -101,6 +101,5 @@ async def _(e):
 
 @ultroid_cmd(pattern="stopaction")
 async def do_it(e):
-    async with e.client.action(e.chat_id, "cancel"):
-        pass
-    await e.reply("Fake Action Stopped.")
+    await e.client.action(e.chat_id, "cancel")
+    await eod(e, "Fake Action Stopped.")
