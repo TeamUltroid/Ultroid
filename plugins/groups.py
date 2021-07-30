@@ -39,14 +39,14 @@ async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
-    try:
+    if reply_message.media
         replfile = await reply_message.download_media()
-    except AttributeError:
-        return await eor(ult, "Reply to a Photo..")
+    else:
+        return await eor(ult, "Reply to a Photo or Video..")
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
-        if "pic" in mediain:
+        if "pic" or "video" or "gif" in mediain:
             await ult.client(EditPhotoRequest(ult.chat_id, file))
         else:
             return await eod(ult, "`Invalid MEDIA Type !`")
