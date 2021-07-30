@@ -39,7 +39,7 @@ async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
-    if reply_message.media
+    if reply_message.media:
         replfile = await reply_message.download_media()
     else:
         return await eor(ult, "Reply to a Photo or Video..")
