@@ -78,12 +78,12 @@ async def getfsr(e):
 async def fcall(e):
     match = e.pattern_match.group(1)
     spli = match.split("_")
-    user = await e.client.get_entity(int(spli[0]))
-    cl = await e.client.get_entity(int(spli[1]))
+    user = await ultroid_bot.get_entity(int(spli[0]))
+    cl = await ultroid_bot.get_entity(int(spli[1]))
     text = f"Hi [{user.first_name}](tg://user?id={user.id}), You Need to Join"
     text += f" {cl.title} in order to Chat in this Group."
     if not cl.username:
-        el = (await e.client(ExportChatInviteRequest(cl))).link
+        el = (await ultroid_bot(ExportChatInviteRequest(cl))).link
     else:
         el = "https://t.me/" + cl.username
     res = [
