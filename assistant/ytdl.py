@@ -129,8 +129,7 @@ async def _(event):
             "quiet": True,
             "logtostderr": False,
         }
-        ytdl_data = await dler(event, link)
-        YoutubeDL(opts).download([link])
+        ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
@@ -160,8 +159,7 @@ async def _(event):
             "logtostderr": False,
             "quiet": True,
         }
-        ytdl_data = await dler(event, link)
-        YoutubeDL(opts).download([link])
+        ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
