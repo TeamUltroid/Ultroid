@@ -34,7 +34,7 @@ async def startup(_, message):
         if reply.audio:
             med = reply.audio
             song_name = med.title
-        elif reply.video or reply.audio:
+        elif reply.video:
             med = reply.video or reply.audio
             song_name = med.file_name
         if med and med.thumbs:
