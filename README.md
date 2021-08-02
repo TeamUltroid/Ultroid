@@ -44,9 +44,9 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 - [Easy Method](#local-deploy---easy-method)
 
 ### Local Deploy - Easy Method
-- Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
-- Windows - `cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
-- Termux - `sh -c "$(curl -fsSL https://git.io/JY9UM)"`
+- <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="" srcset="" align="center"> - <br>`bash -c "$(curl -fsSL https://git.io/JY9UM)"`
+- <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="" srcset="" align="center"> - <br>`cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
+- <img src="https://img.shields.io/badge/Termux-414141?style=for-the-badge&logo=tmux&logoColor=#1BB91F" alt="" srcset="" align="center"> - <br>`sh -c "$(curl -fsSL https://git.io/JY9UM)"`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
