@@ -29,7 +29,7 @@
 [![Document](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
 
 # Tutorial 
-- Full Tutorial - [![Full Tutorial](https://img.shields.io/badge/Watch%20Now-blue)](https://www.youtube.com/watch?v=9wF7k9qA0Q4)
+- Full Tutorial - <a href="https://www.youtube.com/watch?v=9wF7k9qA0Q4"><img src="https://img.shields.io/badge/Watch%20Now-blue" alt="" srcset="" align="center"></a>
 
 - Tutorial to get Redis URL and password - [here.](./resources/extras/redistut.md)
 ---
