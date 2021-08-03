@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from telethon.errors import ChatSendInlineForbiddenError
+
 from . import *
 
 REPOMSG = """
@@ -15,9 +16,14 @@ REPOMSG = """
 • Support - @UltroidSupport
 """
 
-RP_BUTTONS = [[Button.inline("Repo", "https://github.com/TeamUltroid/Ultroid"),
-              Button.inline("Addons","https://github.com/TeamUltroid/UltroidAddons")],
-              [Button.inline("Support Group","t.me/ultroidsupport")]]
+RP_BUTTONS = [
+    [
+        Button.inline("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.inline("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
+    ],
+    [Button.inline("Support Group", "t.me/ultroidsupport")],
+]
+
 
 @ultroid_cmd(pattern="repo$", type=["official", "manager"], ignore_dualmode=True)
 async def repify(e):
