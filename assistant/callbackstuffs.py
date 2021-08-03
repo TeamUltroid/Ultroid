@@ -6,11 +6,12 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
+import subprocess
 import urllib
 from glob import glob
 from os import remove
 from random import choices
-import subprocess
+
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
