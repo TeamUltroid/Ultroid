@@ -12,6 +12,12 @@ from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
 from . import *
 
+C_PIC = udB.get("INLINE_PIC")
+if C_PIC:
+    _file_to_replace = C_PIC
+else:
+    _file_to_replace = "resources/extras/inline.jpg"
+
 
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
@@ -50,14 +56,15 @@ async def _help(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            return await ult.client.send_message(
-                ult.chat_id,
+            return await ult.reply(
+                
                 get_string("inline_4").format(
                     OWNER_NAME,
                     len(PLUGINS) - 5,
                     len(ADDONS),
                     cmd,
                 ),
+                file=_file_to_replace,
                 buttons=[
                     [
                         Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
