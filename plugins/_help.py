@@ -57,7 +57,6 @@ async def _help(ult):
                     z.append(y)
             cmd = len(z) + 10
             return await ult.reply(
-                
                 get_string("inline_4").format(
                     OWNER_NAME,
                     len(PLUGINS) - 5,
