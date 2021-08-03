@@ -136,6 +136,26 @@ async def update(eve):
             repo.__del__()
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
+    elif not (Var.HEROKU_API and Var.HEROKU_APP_NAME):
+        await eve.edit(
+            "`Userbot dyno build in progress, please wait for it to complete.`"
+        )
+        subprocess.run(
+            [
+                "git",
+                "pull",
+                "&&",
+                "pip3 install -r requirements.txt",
+                "&&",
+                "python3",
+                "-m",
+                "pyUltroid",
+            ],
+            check=True,
+        )
+        await eve.edit(
+            "`Successfully Updated!\nBot is restarting... Wait for Few Minutes!`"
+        )
     else:
         await eve.edit(
             "`Userbot dyno build in progress, please wait for it to complete.`"
