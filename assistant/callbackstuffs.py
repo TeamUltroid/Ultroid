@@ -10,7 +10,7 @@ import urllib
 from glob import glob
 from os import remove
 from random import choices
-
+import subprocess
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 
