@@ -140,7 +140,7 @@ async def update(eve):
         await eve.edit(
             "`Userbot dyno build in progress, please wait for it to complete.`"
         )
-        subprocess.run(["git", "pull", "&&", "python3", "-m", "pyUltroid"], check=True)
+        subprocess.run(["git", "pull", "&&", "pip3 install -r requirements.txt", "&&", "python3", "-m", "pyUltroid"], check=True)
         await eve.edit(
             "`Successfully Updated!\nBot is restarting... Wait for Few Minutes!`"
         )
