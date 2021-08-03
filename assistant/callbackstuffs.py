@@ -6,7 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
-import subprocess
 import urllib
 from glob import glob
 from os import remove
