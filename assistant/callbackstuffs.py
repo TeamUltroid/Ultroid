@@ -346,7 +346,8 @@ async def otvaar(event):
             [
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
                 Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
-            ], [Button.inline("Sudo HNDLR", data="shndlr")],
+            ],
+            [Button.inline("Sudo HNDLR", data="shndlr")],
             [
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
@@ -461,6 +462,7 @@ async def hndlrr(event):
                 f"{name} changed to {themssg}",
                 buttons=get_back_button("otvars"),
             )
+
 
 @callback("shndlr")
 @owner
