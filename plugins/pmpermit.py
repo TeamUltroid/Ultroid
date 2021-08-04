@@ -763,7 +763,7 @@ async def ytfuxist(e):
             pass
 
 
-@asst.on(events.InlineQuery(pattern=re.compile("ip_(.*)")))
+@in_pattern(pattern=re.compile("ip_(.*)"))
 @in_owner
 async def in_pm_ans(event):
     from_user = int(event.pattern_match.group(1))
@@ -787,6 +787,7 @@ async def in_pm_ans(event):
                 PMPIC,
                 title="Inline PMPermit.",
                 text=f"**PMSecurity of {OWNER_NAME}!**",
+                force_document=False,
                 buttons=buttons,
             )
         ]
