@@ -559,7 +559,7 @@ if sett == "True":
             await e.edit(NO_REPLY)
 
 
-@ultroid_cmd(pattern="block ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="block ?(.*)")
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.is_reply:
@@ -602,7 +602,7 @@ async def blockpm(block):
         )
 
 
-@ultroid_cmd(pattern="unblock ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="unblock ?(.*)")
 async def unblockpm(unblock):
     match = unblock.pattern_match.group(1)
     if unblock.is_reply:
@@ -795,7 +795,7 @@ async def ytfuxist(e):
             pass
 
 
-@in_pattern(pattern=re.compile("ip_(.*)"))
+@in_pattern(re.compile("ip_(.*)"))
 @in_owner
 async def in_pm_ans(event):
     from_user = int(event.pattern_match.group(1))
