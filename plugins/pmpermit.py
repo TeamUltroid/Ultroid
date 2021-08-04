@@ -805,13 +805,16 @@ async def in_pm_ans(event):
     except Exception as e:
         LOGS.info(e)
         warns = "?"
+    try:
+        msg_ = WARN_MSGS[from_user]
+    except KeyError:
+        msg_ = "**PMSecurity of {OWNER_NAME}**"
     wrns = f"{warns}/{WARNS}"
     buttons = [
         [
             Button.inline("Warns", data=f"admin_only{from_user}"),
-            Button.inline(wrns, data="do_nothing"),
-        ],
-        [Button.inline("Message 📫", data=f"m_{from_user}")],
+            Button.inline(wrns, data=f"don_{wrns}"),
+        ]
     ]
     include_media = True
     mime_type = None
@@ -835,7 +838,7 @@ async def in_pm_ans(event):
         event.builder.article(
             title="Inline PMPermit.",
             type=_type,
-            text=f"**PMSecurity of {OWNER_NAME}!**",
+            text=msg_,
             description="@TeamUltroid",
             include_media=include_media,
             buttons=buttons,
@@ -863,20 +866,12 @@ async def _admin_tools(event):
     )
 
 
-@callback("do_nothing")
+@callback(re.compile("don_?(.*)"))
 async def _mejik(e):
-    await e.answer()  # ensure there is no white clock.
-
-
-@callback(re.compile("m_(.*)"))
-async def _rep(event):
-    from_user = int(event.pattern_match.group(1))
-    try:
-        msg_ = WARN_MSGS[from_user]
-    except Exception as e:
-        print(e)
-        msg_ = "Missing."
-    await event.edit(msg_, buttons=[Button.inline("« Back", data=f"pmbk_{from_user}")])
+    data = e.pattern_match.group(1).decode("utf-8").split("/")
+    text = "👮‍♂ Warn Count : " + data[0]
+    text += "🤖 Total Warn Count : " + data[1]
+    await e.answer()
 
 
 @callback(re.compile("pmbk_(.*)"))
