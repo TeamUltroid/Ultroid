@@ -813,30 +813,32 @@ async def in_pm_ans(event):
         ],
         [Button.inline("Message 📫", data=f"m_{from_user}")],
     ]
+    include_media = False
+    mime_type = None
+    cont = None
     try:
         ext = PMPIC.split(".")[-1].lower()
     except (AttributeError, IndexError):
         ext = None
-    cont = types.InputWebDocument(PMPIC, 0, "image/jpeg", [])
-    request = event.builder.article(
+    if ext in ["img", "jpg", "png"]:
+        _type = "photo"
+        mime_type = "image/jpg"
+    elif ext in ["mp4", "mkv", "gif"]:
+        mime_type = "video/mp4"
+        _type = "gif"
+    else:
+        _type = "article"
+    if include_media:
+        cont = types.InputWebDocument(PMPIC, 0, "image/jpeg", [])
+    res = [event.builder.article(
         title="Inline PMPermit.",
         text=f"**PMSecurity of {OWNER_NAME}!**",
         description="@TeamUltroid",
-        include_media=True,
+        include_media=include_media,
         buttons=buttons,
         thumb=cont,
         content=cont,
-    )
-    if ext in ["img", "jpg", "png"]:
-        pass
-    elif ext in ["mp4", "mkv", "gif"]:
-        cont.mime_type = "video/mp4"
-        request.type = "gif"
-    else:
-        request.type = "article"
-        request.content, request.thumb = None, None
-        request.include_media = False
-    res = [await request]
+    )]
     await event.answer(res)
 
 
