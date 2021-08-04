@@ -56,7 +56,7 @@ async def autopic(e):
                 ft = bsc.find_all("img", "oCCRx")
                 li = ft[0]["src"]
                 kar = "autopic.png"
-                urllib.request.urlretrieve(li, kar)
+                await download_file(li, kar)
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
