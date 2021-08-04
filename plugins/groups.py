@@ -46,10 +46,13 @@ async def _(ult):
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
-        if "pic" or "video" or "gif" in mediain:
-            await ult.client(EditPhotoRequest(ult.chat_id, file))
+        if "pic" in mediain:
+            pass
+        elif "gif" or "video" in median:
+            file = types.InputChatUploadedPhoto(video=file)
         else:
             return await eod(ult, "`Invalid MEDIA Type !`")
+        await ult.client(EditPhotoRequest(ult.chat_id, file))
         await eod(ult, "`Group Photo has Successfully Changed !`")
     except Exception as ex:
         await eod(ult, "Error occured.\n`{}`".format(str(ex)))
