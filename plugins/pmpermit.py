@@ -775,23 +775,27 @@ async def in_pm_ans(event):
     wrns = f"{warns}/{WARNS}"
     mnl = local_mediainfo(PMPIC)
     buttons = [
-                    [
-                        Button.inline("Warns", data=f"admin_only{from_user}"),
-                        Button.inline(wrns, data="do_nothing"),
-                    ],
-                    [Button.inline("Message 📫", data=f"m_{from_user}")],
-                ]
+        [
+            Button.inline("Warns", data=f"admin_only{from_user}"),
+            Button.inline(wrns, data="do_nothing"),
+        ],
+        [Button.inline("Message 📫", data=f"m_{from_user}")],
+    ]
     if mnl == "stream" or "doc":
-        res = [await event.builder.document(PMPIC,
-            title="Inline PMPermit.",
+        res = [
+            await event.builder.document(
+                PMPIC,
+                title="Inline PMPermit.",
                 text=f"**PMSecurity of {OWNER_NAME}!**",
-                buttons=buttons)]
+                buttons=buttons,
+            )
+        ]
     else:
         res = [
             await event.builder.article(
                 title="Inline PMPermit.",
                 text=f"**PMSecurity of {OWNER_NAME}!**",
-                buttons=buttons
+                buttons=buttons,
             )
         ]
     await event.answer(res)
