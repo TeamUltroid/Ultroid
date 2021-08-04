@@ -53,7 +53,7 @@ async def autopic(e):
             except AttributeError:
                 ct = r.get(au).content
                 bsc = bs(ct, "html.parser", from_encoding="utf-8")
-                ft = bsc.find_all("img", "_2UpQX")
+                ft = bsc.find_all("img", "oCCRx")
                 li = ft[0]["src"]
                 kar = "autopic.png"
                 urllib.request.urlretrieve(li, kar)
