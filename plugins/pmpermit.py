@@ -57,6 +57,7 @@ COUNT_PM = {}
 LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
+
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
@@ -802,11 +803,9 @@ async def in_pm_ans(event):
     try:
         warns = U_WARNS[from_user]
     except Exception as e:
-        print(e)
+        LOGS.info(e)
         warns = "?"
     wrns = f"{warns}/{WARNS}"
-    if PMPIC:
-        mnl = local_mediainfo(PMPIC)
     buttons = [
         [
             Button.inline("Warns", data=f"admin_only{from_user}"),
@@ -814,7 +813,7 @@ async def in_pm_ans(event):
         ],
         [Button.inline("Message 📫", data=f"m_{from_user}")],
     ]
-    if PMPIC and mnl == "stream" or "doc":
+    if PMPIC:
         res = [
             await event.builder.document(
                 PMPIC,
