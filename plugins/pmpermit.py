@@ -817,17 +817,17 @@ async def in_pm_ans(event):
         ext = PMPIC.split(".")[-1].lower()
     except (AttributeError, IndexError):
         ext = None
-    cont = types.InputWebDocument(PMPIC, 0,"image/jpeg", [])
+    cont = types.InputWebDocument(PMPIC, 0, "image/jpeg", [])
     request = event.builder.article(
-                title="Inline PMPermit.",
-                text=f"**PMSecurity of {OWNER_NAME}!**",
-                description="@TeamUltroid",
-                include_media=True,
-                buttons=buttons,
-                thumb=cont,
-                content=cont
-            )
-    if ext in ["img", "jpg","png"]:
+        title="Inline PMPermit.",
+        text=f"**PMSecurity of {OWNER_NAME}!**",
+        description="@TeamUltroid",
+        include_media=True,
+        buttons=buttons,
+        thumb=cont,
+        content=cont,
+    )
+    if ext in ["img", "jpg", "png"]:
         pass
     elif ext in ["mp4", "mkv", "gif"]:
         cont.mime_type = "video/mp4"
@@ -835,7 +835,7 @@ async def in_pm_ans(event):
     else:
         request.type = "article"
         request.content, request.thumb = None, None
-        request.include_media=False
+        request.include_media = False
     res = [await request]
     await event.answer(res)
 
