@@ -23,14 +23,13 @@ shazam = Shazam()
 
 @ultroid_cmd(pattern="whichsong$")
 async def song_recog(event):
-    if not event.reply_to_msg_id:
+    if not event.is_reply:
         return await eod(event, "`Reply to a song file to recognise it!`", time=10)
-    xx = await eor(event, get_string("com_1"))
     reply = await event.get_reply_message()
     t_ = mediainfo(reply.media)
     if t_ != "audio":
-        return await eod(xx, "`Please use as reply to an audio file.`", time=5)
-    await xx.edit("`Downloading...`")
+        return await eod(event, "`Please use as reply to an audio file.`", time=5)
+    xx = await eor(event, "`Downloading...`")
     path_to_song = "./temp/shaazam_cache/unknown.mp3"
     await reply.download_media(path_to_song)
     await xx.edit("`Trying to identify the song....`")
