@@ -790,10 +790,7 @@ async def ytfuxist(e):
         await e.answer("Deleted.")
         await e.delete()
     except BaseException:
-        try:
-            await ultroid.delete_messages(e.chat_id, e.id)
-        except BaseException:
-            pass
+        await ultroid.delete_messages(e.chat_id, e.id)
 
 
 @in_pattern(re.compile("ip_(.*)"))
@@ -855,7 +852,7 @@ async def _admin_tools(event):
         return await event.answer()
     chat = int(event.pattern_match.group(1))
     await event.edit(
-        "Owner Tools.",
+        "• **Owner Tools.**",
         buttons=[
             [
                 Button.inline("Approve PM", data=f"approve_{chat}"),
@@ -870,8 +867,8 @@ async def _admin_tools(event):
 async def _mejik(e):
     data = e.pattern_match.group(1).decode("utf-8").split("/")
     text = "👮‍♂ Warn Count : " + data[0]
-    text += "🤖 Total Warn Count : " + data[1]
-    await e.answer()
+    text += "\n🤖 Total Warn Count : " + data[1]
+    await e.answer(text, show_alert=True)
 
 
 @callback(re.compile("pmbk_(.*)"))
@@ -884,12 +881,10 @@ async def edt(event):
         warns = "?"
     wrns = f"{warns}/{WARNS}"
     await event.edit(
-        f"**PMSecurity of {OWNER_NAME}!**",
         buttons=[
             [
                 Button.inline("Warns", data=f"admin_only{from_user}"),
-                Button.inline(wrns, data="do_nothing"),
-            ],
-            [Button.inline("Message 📫", data=f"m_{from_user}")],
+                Button.inline(wrns, data=f"don_{wrns}"),
+            ]
         ],
     )
