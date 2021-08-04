@@ -30,6 +30,7 @@ start_time = time.time()
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
+LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
 List = []
 Dict = {}
