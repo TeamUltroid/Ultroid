@@ -60,7 +60,7 @@ U_WARNS = {}
 if Redis("PMPIC"):
     PMPIC = Redis("PMPIC")
 else:
-    PMPIC = "resources/extras/teamultroid.jpg"
+    PMPIC = None
 
 UND = get_string("pmperm_1")
 
@@ -258,11 +258,16 @@ if sett == "True":
                     )
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
-                        await ultroid.send_file(
+                        if not PMPIC:
+                            await ultroid.send_file(
                             user.id,
                             PMPIC,
                             caption=message_,
-                        )
+                            )
+                        else:
+                            await ultroid_bot.send_message(user.id, _message)
+
+
                     else:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
                         try:
@@ -286,11 +291,14 @@ if sett == "True":
                     )
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
-                        await ultroid.send_file(
+                        if not PMPIC:
+                            await ultroid.send_file(
                             user.id,
                             PMPIC,
                             caption=message_,
-                        )
+                            )
+                        else:
+                            await ultroid_bot.send_message(user.id, _message)
                     else:
                         try:
                             results = await ultroid.inline_query(
@@ -773,7 +781,8 @@ async def in_pm_ans(event):
         print(e)
         warns = "?"
     wrns = f"{warns}/{WARNS}"
-    mnl = local_mediainfo(PMPIC)
+    if PMPIC:
+        mnl = local_mediainfo(PMPIC)
     buttons = [
         [
             Button.inline("Warns", data=f"admin_only{from_user}"),
@@ -781,7 +790,7 @@ async def in_pm_ans(event):
         ],
         [Button.inline("Message 📫", data=f"m_{from_user}")],
     ]
-    if mnl == "stream" or "doc":
+    if PMPIC and mnl == "stream" or "doc":
         res = [
             await event.builder.document(
                 PMPIC,
