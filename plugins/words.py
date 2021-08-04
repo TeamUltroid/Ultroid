@@ -27,16 +27,14 @@ from . import *
 dictionary = PyDictionary()
 
 
-@ultroid_cmd(pattern="meaning", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="meaning", type=["official", "manager"])
 async def mean(event):
-    event.message.id
-    xx = await eor(event, get_string("com_1"))
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = dictionary.meaning(wrd)
     try:
         p = ok["Noun"]
     except BaseException:
-        return await xx.edit("Oops! No such word found!!")
+        return await eor(event, "Oops! No such word found!!")
     x = get_string("wrd_1").format(wrd)
     c = 1
     for i in p:
@@ -50,16 +48,15 @@ async def mean(event):
                 force_document=True,
                 caption=f"Meanings of {wrd}",
             )
-            await xx.delete()
+            if event.out: await event.delete()
     else:
-        await xx.edit(x)
+        await eor(event, x)
 
 
 @ultroid_cmd(
     pattern="synonym",
 )
 async def mean(event):
-    evid = event.message.id
     xx = await eor(event, get_string("com_1"))
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = dictionary.synonym(wrd)
@@ -78,7 +75,7 @@ async def mean(event):
                     force_document=True,
                     allow_cache=False,
                     caption=f"Synonyms of {wrd}",
-                    reply_to=evid,
+                    reply_to=event.reply_to_msg_id,
                 )
                 await xx.delete()
         else:
@@ -121,15 +118,14 @@ async def mean(event):
 
 @ultroid_cmd(pattern="ud (.*)")
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
     word = event.pattern_match.group(1)
     if word is None:
-        return await xx.edit("`No word given!`")
+        return await eor(event, "`No word given!`")
     urban = asyncurban.UrbanDictionary()
     try:
         mean = await urban.get_word(word)
-        await xx.edit(
+        await eor(event,
             f"**Text**: `{mean.word}`\n\n**Meaning**: `{mean.definition}`\n\n**Example**: __{mean.example}__",
         )
     except asyncurban.WordNotFoundError:
-        await xx.edit(f"**No result found for** `{word}`")
+        await eor(event, f"**No result found for** `{word}`")
