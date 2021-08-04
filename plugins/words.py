@@ -48,7 +48,8 @@ async def mean(event):
                 force_document=True,
                 caption=f"Meanings of {wrd}",
             )
-            if event.out: await event.delete()
+            if event.out:
+                await event.delete()
     else:
         await eor(event, x)
 
@@ -124,7 +125,8 @@ async def _(event):
     urban = asyncurban.UrbanDictionary()
     try:
         mean = await urban.get_word(word)
-        await eor(event,
+        await eor(
+            event,
             f"**Text**: `{mean.word}`\n\n**Meaning**: `{mean.definition}`\n\n**Example**: __{mean.example}__",
         )
     except asyncurban.WordNotFoundError:
