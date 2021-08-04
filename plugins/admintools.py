@@ -159,7 +159,7 @@ async def bban(ult):
             f"{inline_mention(user)}**was banned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
         )
     userme = inline_mention(user)
-    senderme = inline_mention(ult.sender)
+    senderme = inline_mention(await ult.get_sender())
     if reason:
         await xx.edit(
             f"{userme} **was banned by** {senderme}**in** `{ult.chat.title}`\n**Reason**: `{reason}`",
