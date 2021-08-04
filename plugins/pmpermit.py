@@ -260,13 +260,12 @@ if sett == "True":
                     if inline_pm == "False":
                         if not PMPIC:
                             await ultroid.send_file(
-                            user.id,
-                            PMPIC,
-                            caption=message_,
+                                user.id,
+                                PMPIC,
+                                caption=message_,
                             )
                         else:
                             await ultroid_bot.send_message(user.id, _message)
-
 
                     else:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
@@ -293,9 +292,9 @@ if sett == "True":
                     if inline_pm == "False":
                         if not PMPIC:
                             await ultroid.send_file(
-                            user.id,
-                            PMPIC,
-                            caption=message_,
+                                user.id,
+                                PMPIC,
+                                caption=message_,
                             )
                         else:
                             await ultroid_bot.send_message(user.id, _message)
