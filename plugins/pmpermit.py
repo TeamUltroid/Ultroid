@@ -773,21 +773,28 @@ async def in_pm_ans(event):
         print(e)
         warns = "?"
     wrns = f"{warns}/{WARNS}"
-    await event.answer(
-        [
-            await event.builder.article(
-                title="Inline PMPermit.",
-                text=f"**PMSecurity of {OWNER_NAME}!**",
-                buttons=[
+    mnl = local_mediainfo(PMPIC)
+    buttons = [
                     [
                         Button.inline("Warns", data=f"admin_only{from_user}"),
                         Button.inline(wrns, data="do_nothing"),
                     ],
                     [Button.inline("Message 📫", data=f"m_{from_user}")],
-                ],
+                ]
+    if mnl == "stream" or "doc":
+        res = [await event.builder.document(PMPIC,
+            title="Inline PMPermit.",
+                text=f"**PMSecurity of {OWNER_NAME}!**",
+                buttons=buttons)]
+    else:
+        res = [
+            await event.builder.article(
+                title="Inline PMPermit.",
+                text=f"**PMSecurity of {OWNER_NAME}!**",
+                buttons=buttons
             )
         ]
-    )
+    await event.answer(res)
 
 
 @callback(re.compile("admin_only(.*)"))
