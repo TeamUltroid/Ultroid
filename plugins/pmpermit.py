@@ -813,7 +813,7 @@ async def in_pm_ans(event):
         ],
         [Button.inline("Message 📫", data=f"m_{from_user}")],
     ]
-    include_media = False
+    include_media = True
     mime_type = None
     cont = None
     try:
@@ -828,6 +828,7 @@ async def in_pm_ans(event):
         _type = "gif"
     else:
         _type = "article"
+        include_media = False
     if include_media:
         cont = types.InputWebDocument(PMPIC, 0, mime_type, [])
     res = [
