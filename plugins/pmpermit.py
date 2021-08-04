@@ -113,6 +113,31 @@ if not t_in or t_in == "True":
 elif t_in == "False":
     inline_pm = "False"
 my_bot = asst.me.username
+
+
+def update_pm(userid, message, warns_given):
+    try:
+        WARN_MSGS.update({userid: message})
+    except KeyError as e:
+        print(e)
+    try:
+        U_WARNS.update({userid: warns_given})
+    except KeyError as e:
+        print(e)
+
+
+async def delete_pm_warn_msgs(chat: int):
+    async for i in ultroid_bot.iter_messages(chat, from_user="me"):
+        tx = i.text
+        if tx and tx.startswith(
+            ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
+        ):
+            if tx.startswith("#"):
+                # sleep for a while once approved, we need the menu open!
+                await asyncio.sleep(4)
+            await i.delete()
+
+
 # =================================================================
 
 
@@ -258,7 +283,7 @@ if sett == "True":
                     )
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
-                        if not PMPIC:
+                        if PMPIC:
                             await ultroid.send_file(
                                 user.id,
                                 PMPIC,
@@ -274,7 +299,7 @@ if sett == "True":
                                 user.id, reply_to=event.id, hide_via=True
                             )
                         except Exception as e:
-                            print(e)
+                            LOGS.info(e)
                 else:
                     await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
@@ -290,7 +315,7 @@ if sett == "True":
                     )
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
-                        if not PMPIC:
+                        if PMPIC:
                             await ultroid.send_file(
                                 user.id,
                                 PMPIC,
@@ -862,26 +887,3 @@ async def edt(event):
             [Button.inline("Message 📫", data=f"m_{from_user}")],
         ],
     )
-
-
-def update_pm(userid, message, warns_given):
-    try:
-        WARN_MSGS.update({userid: message})
-    except KeyError as e:
-        print(e)
-    try:
-        U_WARNS.update({userid: warns_given})
-    except KeyError as e:
-        print(e)
-
-
-async def delete_pm_warn_msgs(chat: int):
-    async for i in ultroid_bot.iter_messages(chat, from_user="me"):
-        tx = i.text
-        if tx and tx.startswith(
-            ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
-        ):
-            if tx.startswith("#"):
-                # sleep for a while once approved, we need the menu open!
-                await asyncio.sleep(4)
-            await i.delete()
