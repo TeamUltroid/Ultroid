@@ -852,7 +852,6 @@ async def _admin_tools(event):
         return await event.answer()
     chat = int(event.pattern_match.group(1))
     await event.edit(
-        "• **Owner Tools.**",
         buttons=[
             [
                 Button.inline("Approve PM", data=f"approve_{chat}"),
@@ -868,7 +867,7 @@ async def _mejik(e):
     data = e.pattern_match.group(1).decode("utf-8").split("/")
     text = "👮‍♂ Warn Count : " + data[0]
     text += "\n🤖 Total Warn Count : " + data[1]
-    await e.answer(text, show_alert=True)
+    await e.answer(text, alert=True)
 
 
 @callback(re.compile("pmbk_(.*)"))
@@ -878,7 +877,7 @@ async def edt(event):
         warns = U_WARNS[from_user]
     except Exception as e:
         print(e)
-        warns = "?"
+        warns = "0"
     wrns = f"{warns}/{WARNS}"
     await event.edit(
         buttons=[
