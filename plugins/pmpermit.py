@@ -830,16 +830,18 @@ async def in_pm_ans(event):
         _type = "article"
     if include_media:
         cont = types.InputWebDocument(PMPIC, 0, mime_type, [])
-    res = [event.builder.article(
-        title="Inline PMPermit.",
-        type=_type,
-        text=f"**PMSecurity of {OWNER_NAME}!**",
-        description="@TeamUltroid",
-        include_media=include_media,
-        buttons=buttons,
-        thumb=cont,
-        content=cont,
-    )]
+    res = [
+        event.builder.article(
+            title="Inline PMPermit.",
+            type=_type,
+            text=f"**PMSecurity of {OWNER_NAME}!**",
+            description="@TeamUltroid",
+            include_media=include_media,
+            buttons=buttons,
+            thumb=cont,
+            content=cont,
+        )
+    ]
     await event.answer(res)
 
 
