@@ -32,7 +32,10 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(pattern="google ?(.*)", type=["official", "manager"], )
+@ultroid_cmd(
+    pattern="google ?(.*)",
+    type=["official", "manager"],
+)
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:

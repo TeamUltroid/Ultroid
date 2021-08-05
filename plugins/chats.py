@@ -54,7 +54,6 @@ async def _(e):
     pattern="getlink$",
     groups_only=True,
     type=["official", "manager"],
-    ,
 )
 async def _(e):
     xx = await eor(e, "`Processing...`")

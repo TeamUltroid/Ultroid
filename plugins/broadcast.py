@@ -194,7 +194,6 @@ async def forw(event):
 @ultroid_cmd(
     pattern="broadcast ?(.*)",
     allow_sudo=False,
-    ,
 )
 async def sending(event):
     x = await eor(event, "`Processing...`")

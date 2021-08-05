@@ -25,7 +25,6 @@ from . import *
     groups_only=True,
     admins_only=True,
     type=["official", "manager"],
-    ,
 )
 async def lockho(e):
     mat = e.pattern_match.group(1)
@@ -44,7 +43,6 @@ async def lockho(e):
     groups_only=True,
     admins_only=True,
     type=["official", "manager"],
-    ,
 )
 async def unlckho(e):
     mat = e.pattern_match.group(1)

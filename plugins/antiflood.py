@@ -97,7 +97,6 @@ async def unmuting(e):
 @ultroid_cmd(
     pattern="setflood ?(\\d+)",
     admins_only=True,
-    ,
 )
 async def setflood(e):
     input = e.pattern_match.group(1)
@@ -115,7 +114,6 @@ async def setflood(e):
 @ultroid_cmd(
     pattern="remflood$",
     admins_only=True,
-    ,
 )
 async def remove_flood(e):
     hmm = rem_flood(e.chat_id)
@@ -131,7 +129,6 @@ async def remove_flood(e):
 @ultroid_cmd(
     pattern="getflood$",
     admins_only=True,
-    ,
 )
 async def getflood(e):
     ok = get_flood_limit(e.chat_id)

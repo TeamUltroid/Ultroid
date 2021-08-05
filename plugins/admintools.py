@@ -55,12 +55,7 @@ from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
 from . import *
 
 
-@ultroid_cmd(
-    pattern="promote ?(.*)",
-    admins_only=True,
-    type=["official", "manager"],
-    ,
-)
+@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -97,7 +92,6 @@ async def prmte(ult):
     pattern="demote ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ,
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -131,12 +125,7 @@ async def dmote(ult):
         return await xx.edit("`I don't have the right to demote you.`")
 
 
-@ultroid_cmd(
-    pattern="ban ?(.*)",
-    admins_only=True,
-    type=["official", "manager"],
-    ,
-)
+@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
@@ -174,7 +163,6 @@ async def bban(ult):
     pattern="unban ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ,
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -197,7 +185,6 @@ async def uunban(ult):
     pattern="kick ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ,
 )
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
@@ -226,7 +213,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"], )
+@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
 async def pin(msg):
     xx = msg.reply_to_msg_id
     tt = msg.text
@@ -253,7 +240,8 @@ async def pin(msg):
 
 
 @ultroid_cmd(
-    pattern="unpin($| (.*))", type=["official", "manager"], 
+    pattern="unpin($| (.*))",
+    type=["official", "manager"],
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -283,7 +271,10 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"], )
+@ultroid_cmd(
+    pattern="purge ?(.*)",
+    type=["official", "manager"],
+)
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)

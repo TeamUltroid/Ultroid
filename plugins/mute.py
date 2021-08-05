@@ -85,7 +85,8 @@ async def startmute(event):
 
 
 @ultroid_cmd(
-    pattern="undmute ?(.*)", type=["official", "manager"], 
+    pattern="undmute ?(.*)",
+    type=["official", "manager"],
 )
 async def endmute(event):
     xx = await eor(event, "`Unmuting...`")
@@ -121,7 +122,6 @@ async def endmute(event):
     pattern="tmute",
     groups_only=True,
     type=["official", "manager"],
-    ,
 )
 async def _(e):
     xx = await eor(e, "`Muting...`")
@@ -173,7 +173,6 @@ async def _(e):
     pattern="unmute ?(.*)",
     groups_only=True,
     type=["official", "manager"],
-    ,
 )
 async def _(e):
     xx = await eor(e, "`Unmuting...`")
@@ -214,7 +213,6 @@ async def _(e):
     pattern="mute ?(.*)",
     groups_only=True,
     type=["official", "manager"],
-    ,
 )
 async def _(e):
     xx = await eor(e, "`Muting...`")
