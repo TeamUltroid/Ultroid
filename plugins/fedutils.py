@@ -31,7 +31,7 @@ from . import *
 bot = "@MissRose_bot"
 
 
-@ultroid_cmd(pattern="superfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="superfban ?(.*)", )
 async def _(event):
     msg = await eor(event, "Starting a Mass-FedBan...")
     if event.reply_to_msg_id:
@@ -186,7 +186,7 @@ async def _(event):
     )
 
 
-@ultroid_cmd(pattern="superunfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="superunfban ?(.*)", )
 async def _(event):
     msg = await eor(event, "Starting a Mass-UnFedBan...")
     fedList = []
@@ -327,7 +327,7 @@ async def _(event):
     )
 
 
-@ultroid_cmd(pattern="fstat ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="fstat ?(.*)", )
 async def _(event):
     ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
@@ -374,7 +374,7 @@ async def _(event):
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
-@ultroid_cmd(pattern="fedinfo ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(pattern="fedinfo ?(.*)", )
 async def _(event):
     ok = await event.edit("`Extracting information...`")
     sysarg = event.pattern_match.group(1)

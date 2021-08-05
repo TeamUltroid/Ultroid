@@ -75,7 +75,7 @@ async def _(event):
         await eod(xx, str(exc), time=10)
 
 
-@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"], )
 async def _(event):
     if event.reply_to_msg_id:
         await event.get_input_chat()
@@ -115,7 +115,7 @@ async def _(event):
     pattern="bots ?(.*)",
     groups_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def _(ult):
     mentions = "**Bots in this Chat**: \n"

@@ -59,7 +59,7 @@ from . import *
     pattern="promote ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -97,7 +97,7 @@ async def prmte(ult):
     pattern="demote ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -135,7 +135,7 @@ async def dmote(ult):
     pattern="ban ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -174,7 +174,7 @@ async def bban(ult):
     pattern="unban ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -197,7 +197,7 @@ async def uunban(ult):
     pattern="kick ?(.*)",
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
+    ,
 )
 async def kck(ult):
     if ult.text == f"{HNDLR}kickme":
@@ -226,7 +226,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"], )
 async def pin(msg):
     xx = msg.reply_to_msg_id
     tt = msg.text
@@ -253,7 +253,7 @@ async def pin(msg):
 
 
 @ultroid_cmd(
-    pattern="unpin($| (.*))", type=["official", "manager"], ignore_dualmode=True
+    pattern="unpin($| (.*))", type=["official", "manager"], 
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -283,7 +283,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="purge ?(.*)", type=["official", "manager"], )
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)

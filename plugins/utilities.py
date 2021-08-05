@@ -131,7 +131,7 @@ async def info(event):
     return
 
 
-@ultroid_cmd(pattern="listreserved$", ignore_dualmode=True)
+@ultroid_cmd(pattern="listreserved$", )
 async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
     output_str = ""
@@ -274,7 +274,7 @@ async def _(event):
         await xx.edit(reply_text)
 
 
-@ultroid_cmd(pattern="info ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="info ?(.*)", type=["official", "manager"], )
 async def _(event):
     xx = await eor(event, "`Processing...`")
     replied_user, error_i_a = await get_full_user(event)

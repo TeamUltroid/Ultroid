@@ -25,7 +25,7 @@ RP_BUTTONS = [
 ]
 
 
-@ultroid_cmd(pattern="repo$", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="repo$", type=["official", "manager"], )
 async def repify(e):
     if e.client._bot:
         return await e.reply("• **Ultroid Userbot** •", buttons=RP_BUTTONS)
