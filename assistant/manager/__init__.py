@@ -7,5 +7,3 @@
 
 
 from plugins import *
-
-asst = asst
