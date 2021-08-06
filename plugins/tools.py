@@ -56,7 +56,6 @@ async def _(event):
             return
     input = event.text[4:6]
     txt = event.text[7:]
-    xx = await eor(event, "`Translating...`")
     if input:
         text = txt
         lan = input or "en"
@@ -65,14 +64,14 @@ async def _(event):
         text = previous_message.message
         lan = input or "en"
     else:
-        return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message")
+        return await eod(event, f"`{hndlr}tr LanguageCode` as reply to a message")
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
         output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
-        await eor(xx, output_str)
+        await eor(event, output_str)
     except Exception as exc:
-        await eod(xx, str(exc), time=10)
+        await eod(event, str(exc), time=17)
 
 
 @ultroid_cmd(
