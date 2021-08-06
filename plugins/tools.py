@@ -56,7 +56,7 @@ async def _(event):
             return
     input = event.text[4:6]
     txt = event.text[7:]
-    if input:
+    if txt:
         text = txt
         lan = input or "en"
     elif event.is_reply:
