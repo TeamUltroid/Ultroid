@@ -78,8 +78,8 @@ async def chat_bot_fn(event, type_):
                 user = event.chat_id
             else:
                 return await eod(
-                event,
-                "Reply to a user or give me his id/username to add an AI ChatBot!",
+                    event,
+                    "Reply to a user or give me his id/username to add an AI ChatBot!",
                 )
         user = await event.client.get_entity(usr)
     if type_ == "add":
