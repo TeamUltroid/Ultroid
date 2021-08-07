@@ -18,6 +18,11 @@
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
 
+• `{i}tkick <time> <reply to msg/ use id>`
+    s- seconds | m- minutes
+    h- hours |  d- days
+    Kick user in current chat with time.
+
 • `{i}pin <reply to message>`
     Pin the message in the chat
     for silent pin use ({i}pin silent).
@@ -211,6 +216,39 @@ async def kck(ult):
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
+
+
+@ultroid_cmd(pattern="tkick ?(.*)", type=["official", "manager"])
+async def tkicki(e):
+    huh = e.text.split(" ")
+    try:
+        tme = huh[1]
+    except IndexError:
+        return await eod(e, "`Time till kick?`", time=15)
+    try:
+        input = huh[2]
+    except IndexError:
+        pass
+    chat = await e.get_chat()
+    if e.is_reply:
+        replied = await e.get_reply_message()
+        userid = replied.sender_id
+        fn = (await e.get_sender()).first_name
+    elif input:
+        userid = await get_user_id(input)
+        fn = (await e.client.get_entity(userid)).first_name
+    else:
+        return await eod(e, "`Reply to someone or use its id...`", time=3)
+    try:
+        bun = await ban_time(e, tme)
+        await e.client.edit_permissions(e.chat_id, userid, until_date=bun, view_messages=False)
+        await eod(
+            e,
+            f"`Successfully kicked` `{fn}` `in {chat.title} for {tme}`",
+            time=15,
+        )
+    except Exception as m:
+        return await eor(e, str(m))
 
 
 @ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
