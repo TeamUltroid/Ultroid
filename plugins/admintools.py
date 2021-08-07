@@ -285,9 +285,11 @@ async def fastpurger(purg):
     if ABC and purg.text[6] in ["m", "a"]:
         return
     if purg.client._bot:
-        return await purg.client.delete_messages(
+        await purg.client.delete_messages(
             purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)]
         )
+        await eor(purg, "__Purged Successfully!__")
+        return
     if match and not purg.is_reply:
         p = 0
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
@@ -416,7 +418,7 @@ async def get_all_pinned(event):
     pattern="autodelete ?(.*)",
     admins_only=True,
 )
-async def autodelte(ult):  # Tg Feature
+async def autodelte(ult):
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "1m", "off"]:
         return await eod(ult, "`Please Use Proper Format..`")
