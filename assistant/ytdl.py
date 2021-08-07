@@ -164,7 +164,7 @@ async def _(event):
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        if f"{title}.mp4" not in glob.glob(*):
+        if f"{title}.mp4" not in glob.glob("*"):
             try:
                 os.rename(f"{title}.mkv", f"{title}.mp4")
             except FileNotFoundError:
