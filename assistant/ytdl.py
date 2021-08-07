@@ -138,7 +138,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         c_time = time.time()
         file = await uploader(
-            f"{title}.mp3".replace("_","|"), f"{title}.mp3", c_time, event, "Uploading " + title + "..."
+            f"{title}.mp3".replace("|","_"), f"{title}.mp3", c_time, event, "Uploading " + title + "..."
         )
         attributes = [
             DocumentAttributeAudio(
@@ -176,7 +176,7 @@ async def _(event):
         hi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Height"')
         c_time = time.time()
         file = await uploader(
-            f"{title}.mp4".replace("_","|"), f"{title}.mp4", c_time, event, "Uploading " + title + "..."
+            f"{title}.mp4".replace("|","_"), f"{title}.mp4", c_time, event, "Uploading " + title + "..."
         )
         attributes = [
             DocumentAttributeVideo(
