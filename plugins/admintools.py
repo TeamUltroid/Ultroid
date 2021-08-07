@@ -241,7 +241,9 @@ async def tkicki(e):
         return await eod(e, "`Reply to someone or use its id...`", time=3)
     try:
         bun = await ban_time(e, tme)
-        await e.client.edit_permissions(e.chat_id, userid, until_date=bun, view_messages=False)
+        await e.client.edit_permissions(
+            e.chat_id, userid, until_date=bun, view_messages=False
+        )
         await eod(
             e,
             f"`Successfully kicked` `{fn}` `in {chat.title} for {tme}`",
