@@ -124,7 +124,7 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(title)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -135,7 +135,6 @@ async def _(event):
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
         c_time = time.time()
         file = await uploader(
             f"{title}.mp3", f"{title}.mp3", c_time, event, "Uploading " + title + "..."
@@ -154,7 +153,7 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(title)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
@@ -165,15 +164,13 @@ async def _(event):
         urlretrieve(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg")
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        try:
-            os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
-        except FileNotFoundError:
+        if f"{title}.mp4" not in glob.glob(*):
             try:
-                os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
+                os.rename(f"{title}.mkv", f"{title}.mp4")
             except FileNotFoundError:
-                os.rename(f"{ytdl_data['id']}.webm", f"{title}.mp4")
-        except Exception as ex:
-            return await event.edit(str(ex))
+                os.rename(f"{title}.webm", f"{title}.mp4")
+            except Exception as ex:
+                return await event.edit(str(ex))
         wi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Width"')
         hi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Height"')
         c_time = time.time()
@@ -183,8 +180,8 @@ async def _(event):
         attributes = [
             DocumentAttributeVideo(
                 duration=int(duration),
-                w=int(wi.split(":")[1].split()[0]),
-                h=int(hi.split(":")[1].split()[0]),
+                w=int(wi.split(":")[1].split("pixels")[0].replace(" ", "")),
+                h=int(hi.split(":")[1].split("pixels")[0].replace(" ", "")),
                 supports_streaming=True,
             ),
         ]
