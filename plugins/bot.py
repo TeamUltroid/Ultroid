@@ -34,7 +34,7 @@ from platform import python_version as pyver
 
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
-from telethon import __version__, events
+from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
