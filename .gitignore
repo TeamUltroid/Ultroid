@@ -22,3 +22,12 @@ glitch_me/
 .idea/
 .vscode/
 temp/
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+.settings/
+*.swf
+*.air
+*.ipa
+*.apk
