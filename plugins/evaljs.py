@@ -53,9 +53,7 @@ async def evalJs(
 
 
 # The Command Is `.evaljs`
-@ultroid_cmd(
-    pattern="evaljs", fullsudo=True
-)
+@ultroid_cmd(pattern="evaljs", fullsudo=True)
 async def evaluateJs(event):
     start = time.time()
     if Redis("I_DEV") != "True":
