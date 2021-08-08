@@ -61,7 +61,7 @@ async def send(eve):
     thumb = ""
     for m in choices(sorted(glob("resources/extras/*.jpg"))):
         thumb += m
-    await event.answer("Sending...")
+    await eve.answer("Sending...")
     if name.startswith("def"):
         plug_name = name.replace(f"def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
@@ -175,7 +175,7 @@ async def update(eve):
 @callback("changes")
 @owner
 async def changes(okk):
-    await event.answer("Generating Changelogs...")
+    await okk.answer("Generating Changelogs...")
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
@@ -210,12 +210,8 @@ async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
     with open(ok, "r") as hmm:
         _, key = get_paste(hmm.read())
-    if _ == "dog":
-        link = "https://del.dog/" + key
-        raw = "https://del.dog/raw/" + key
-    else:
-        link = "https://nekobin.com/" + key
-        raw = "https://nekobin.com/raw/" + key
+    link = "https://nekobin.com/" + key
+    raw = "https://nekobin.com/raw/" + key
     if ok.startswith("plugins"):
         buttons = [
             Button.inline("« Bᴀᴄᴋ", data="back"),
