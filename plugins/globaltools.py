@@ -74,9 +74,7 @@ _gdemote_rights = ChatAdminRights(
 )
 
 
-@ultroid_cmd(
-    pattern="gpromote ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gpromote ?(.*)", fullsudo=True)
 async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
@@ -208,9 +206,7 @@ async def _(e):
         return await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
 
 
-@ultroid_cmd(
-    pattern="gdemote ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gdemote ?(.*)", fullsudo=True)
 async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
@@ -338,9 +334,7 @@ async def _(e):
         return await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
 
 
-@ultroid_cmd(
-    pattern="ungban ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="ungban ?(.*)", fullsudo=True)
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
     if e.reply_to_msg_id:
@@ -373,9 +367,7 @@ async def _(e):
     )
 
 
-@ultroid_cmd(
-    pattern="gban ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gban ?(.*)", fullsudo=True)
 async def _(e):
     xx = await eor(e, "`Gbanning...`")
     reason = ""
@@ -431,9 +423,7 @@ async def _(e):
     await xx.edit(gb_msg)
 
 
-@ultroid_cmd(
-    pattern="gcast ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gcast ?(.*)", fullsudo=True)
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if not xx:
@@ -455,9 +445,7 @@ async def gcast(event):
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
-@ultroid_cmd(
-    pattern="gucast ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
 async def gucast(event):
     xx = event.pattern_match.group(1)
     if not xx:
@@ -479,9 +467,7 @@ async def gucast(event):
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
-@ultroid_cmd(
-    pattern="gkick ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gkick ?(.*)", fullsudo=True)
 async def gkick(e):
     xx = await eor(e, "`Gkicking...`")
     if e.reply_to_msg_id:
@@ -508,9 +494,7 @@ async def gkick(e):
     await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(
-    pattern="gmute ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="gmute ?(.*)", fullsudo=True)
 async def _(e):
     xx = await eor(e, "`Gmuting...`")
     if e.reply_to_msg_id:
@@ -540,9 +524,7 @@ async def _(e):
     await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(
-    pattern="ungmute ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
     if e.reply_to_msg_id:
