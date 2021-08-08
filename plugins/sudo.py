@@ -21,9 +21,7 @@ from pyUltroid.misc import sudoers
 from . import *
 
 
-@ultroid_cmd(
-    pattern="addsudo ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
     if str(ult.sender_id) in sudoers():
@@ -62,9 +60,7 @@ async def _(ult):
     await eod(ok, mmm)
 
 
-@ultroid_cmd(
-    pattern="delsudo ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
     if str(ult.sender_id) in sudoers():
