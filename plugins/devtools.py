@@ -49,9 +49,7 @@ async def _(e):
     remove("neo.txt")
 
 
-@ultroid_cmd(
-    pattern="bash", fullsudo=True
-)
+@ultroid_cmd(pattern="bash", fullsudo=True)
 async def _(event):
     if Redis("I_DEV") != "True":
         await eor(
@@ -98,9 +96,7 @@ async def _(event):
 p, pp = print, pprint  # ignore: pylint
 
 
-@ultroid_cmd(
-    pattern="eval", fullsudo=True
-)
+@ultroid_cmd(pattern="eval", fullsudo=True)
 async def _(event):
     if len(event.text) > 5:
         if not event.text[5] == " ":
