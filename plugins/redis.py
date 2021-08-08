@@ -28,9 +28,7 @@ import re
 from . import *
 
 
-@ultroid_cmd(
-    pattern="setredis ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)
 async def _(ult):
     ok = await eor(ult, "`...`")
     try:
@@ -48,9 +46,7 @@ async def _(ult):
         await ok.edit("`Something Went Wrong`")
 
 
-@ultroid_cmd(
-    pattern="delredis ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="delredis ?(.*)", fullsudo=True)
 async def _(ult):
     ok = await eor(ult, "`Deleting data from Redis ...`")
     try:
@@ -63,9 +59,7 @@ async def _(ult):
         await ok.edit("`Something Went Wrong`")
 
 
-@ultroid_cmd(
-    pattern="renredis ?(.*)", fullsudo=True
-)
+@ultroid_cmd(pattern="renredis ?(.*)", fullsudo=True)
 async def _(ult):
     ok = await eor(ult, "`...`")
     delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
