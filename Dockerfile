@@ -18,8 +18,7 @@ COPY requirements.txt /deploy/
 RUN pip3 install --no-cache-dir -r /deploy/requirements.txt
 
 # install addons requirements
-RUN wget -O /deploy/addons.txt https://git.io/JWdOk
-RUN pip3 install --no-cache-dir -r /deploy/addons.txt
+RUN wget -O /deploy/addons.txt https://git.io/JWdOk && pip3 install --no-cache-dir -r /deploy/addons.txt
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
