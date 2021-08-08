@@ -10,7 +10,7 @@
 
 • `{i}install <reply to plugin>`
     To install the plugin,
-   `{i}install f`
+  `{i}install f`
     To force Install.
 
 • `{i}uninstall <plugin name>`
@@ -32,11 +32,9 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="install",
+    pattern="install", fullsudo=True
 )
 async def install(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eod(event, "`This Command Is Sudo Restricted.`")
     await safeinstall(event)
 
 
