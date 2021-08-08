@@ -50,11 +50,9 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="bash",
+    pattern="bash", fullsudo=True
 )
 async def _(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
             event,
@@ -101,14 +99,12 @@ p, pp = print, pprint  # ignore: pylint
 
 
 @ultroid_cmd(
-    pattern="eval",
+    pattern="eval", fullsudo=True
 )
 async def _(event):
     if len(event.text) > 5:
         if not event.text[5] == " ":
             return
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         await eor(
             event,
