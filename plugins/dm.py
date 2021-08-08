@@ -47,7 +47,7 @@ async def dm(e):
 
 @ultroid_cmd(pattern="fwdreply ?(.*)")
 async def _(e):
-    message = event.pattern_match.group(1)
+    message = e.pattern_match.group(1)
     if not e.reply_to_msg_id:
         return await eod(e, "`Reply to someone's msg.`")
     if not message:
