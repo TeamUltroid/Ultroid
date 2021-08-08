@@ -31,9 +31,7 @@ import os
 from . import *
 
 
-@ultroid_cmd(
-    pattern="install", fullsudo=True
-)
+@ultroid_cmd(pattern="install", fullsudo=True)
 async def install(event):
     await safeinstall(event)
 
