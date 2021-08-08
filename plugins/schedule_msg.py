@@ -17,10 +17,8 @@ from datetime import timedelta
 from . import *
 
 
-@ultroid_cmd(pattern="schedule ?(.*)")
+@ultroid_cmd(pattern="schedule ?(.*)", fullsudo=True)
 async def _(e):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command is Full Sudo Restricted`")
     x = e.pattern_match.group(1)
     xx = await e.get_reply_message()
     if x and not xx:
