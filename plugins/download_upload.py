@@ -53,13 +53,16 @@ async def down(event):
     await fast_download(
         link,
         filename,
-        progress_callback=lambda d, t:
-            asyncio.create_task(
-                progress(
-                    d, t, msg, s_time, f"Downloading from {link}",
-                )
+        progress_callback=lambda d, t: asyncio.create_task(
+            progress(
+                d,
+                t,
+                msg,
+                s_time,
+                f"Downloading from {link}",
             )
-        )
+        ),
+    )
     await eod(msg, "`Download complete.`")
 
 
