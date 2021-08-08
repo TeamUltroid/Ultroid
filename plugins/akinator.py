@@ -48,7 +48,7 @@ async def doai(e):
     mid = int(dt[1])
     await e.edit("Processing... ")
     try:
-        qu = games[ch][mid].start_game(child_mode=True) 
+        qu = games[ch][mid].start_game(child_mode=True)
         # child mode should be promoted
     except KeyError:
         return await e.answer("Game has been Terminated....", alert=True)
