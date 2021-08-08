@@ -8,7 +8,7 @@
 """
 ✘ Commands Available -
 
-**DataBase Commands, do not use if you don't know what it is.**
+• **DataBase Commands, do not use if you don't know what it is.**
 
 • `{i}setredis key | value`
     Redis Set Value.
@@ -29,12 +29,9 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="setredis ?(.*)",
+    pattern="setredis ?(.*)", fullsudo=True
 )
 async def _(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`...`")
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
@@ -52,12 +49,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delredis ?(.*)",
+    pattern="delredis ?(.*)", fullsudo=True
 )
 async def _(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`Deleting data from Redis ...`")
     try:
         key = ult.pattern_match.group(1)
@@ -70,12 +64,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="renredis ?(.*)",
+    pattern="renredis ?(.*)", fullsudo=True
 )
 async def _(ult):
-    if not ult.out:
-        if not is_fullsudo(ult.sender_id):
-            return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "`...`")
     delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
     data = ult.pattern_match.group(1).split(delim)
