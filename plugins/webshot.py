@@ -13,7 +13,6 @@
 
 """
 
-import io
 import requests
 from htmlwebshot import WebShot
 
@@ -39,7 +38,7 @@ async def webss(event):
         except requests.ConnectionError:
             try:
                 xurl = "http://" + xurl
-                r2 = requests.get(xurl)
+                requests.get(xurl)
             except requests.ConnectionError:
                 return await eod(xx, "Invalid URL!", time=5)
     shot = WebShot(quality=85)
