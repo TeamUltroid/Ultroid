@@ -55,4 +55,4 @@ async def _(e):
     msg = await e.get_reply_message()
     fwd = await msg.forward_to(msg.sender_id)
     await fwd.reply(message)
-    await eod(e, `Check in Private.`")
+    await eod(e, "`Check in Private.`")
