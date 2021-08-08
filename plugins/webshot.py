@@ -41,7 +41,7 @@ async def webss(event):
                 requests.get(xurl)
             except requests.ConnectionError:
                 return await eod(xx, "Invalid URL!")
-    shot = WebShot(quality=88)
+    shot = WebShot(quality=88, delay=3.1)
     pic = await shot.create_pic_async(url=xurl, output="webshot.png")
     await xx.reply(
         f"**WebShot Generated**\n**URL**: {xurl}",
