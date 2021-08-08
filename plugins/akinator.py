@@ -1,3 +1,18 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+• `{i}akinator`
+    `Start Akinator Game`.
+
+"""
+
 import akinator
 from telethon.errors import BotMethodInvalidError
 
@@ -33,7 +48,8 @@ async def doai(e):
     mid = int(dt[1])
     await e.edit("Processing... ")
     try:
-        qu = games[ch][mid].start_game(child_mode=True)
+        qu = games[ch][mid].start_game(child_mode=True) 
+        # child mode should be promoted
     except KeyError:
         return await e.answer("Game has been Terminated....", alert=True)
     bts = []
