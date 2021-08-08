@@ -159,10 +159,8 @@ async def on_afk(event):
             pass
 
 
-@ultroid_cmd(pattern=r"afk ?(.*)")
+@ultroid_cmd(pattern=r"afk ?(.*)", fullsudo=True)
 async def _(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Full Sudo Restricted.`")
     reply = await event.get_reply_message()
     if event.client._bot:
         return await eor(event, "Master, I am a Bot, I cant go AFK..")
