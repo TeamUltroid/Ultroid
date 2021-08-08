@@ -26,10 +26,8 @@ import os
 from . import *
 
 
-@ultroid_cmd(pattern="get")
+@ultroid_cmd(pattern="get", fullsudo=True)
 async def get_var(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eod(event, "`This Command Is Sudo Restricted.`")
     if len(event.text) > 4:
         if " " in event.text[4]:
             opt = event.text.split(" ", maxsplit=2)[1]
