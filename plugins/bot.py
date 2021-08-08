@@ -78,7 +78,10 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
-@ultroid_cmd(pattern="ping$", chats=[])
+@ultroid_cmd(
+    pattern="ping$",
+    chats=[],
+)
 async def _(event):
     start = dt.now()
     x = await eor(event, "`Pong !`")
@@ -97,6 +100,7 @@ async def cmds(event):
 
 @ultroid_cmd(
     pattern="restart$",
+    fullsudo=True,
 )
 async def restartbt(ult):
     ok = await eor(ult, "`Restarting...`")
@@ -106,14 +110,18 @@ async def restartbt(ult):
         await bash("pkill python3 && python3 -m pyUltroid")
 
 
-@ultroid_cmd(pattern="shutdown$")
+@ultroid_cmd(
+    pattern="shutdown$",
+    fullsudo=True,
+)
 async def shutdownbot(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await shutdown(ult)
 
 
-@ultroid_cmd(pattern="logs ?(|heroku|sys)", chats=[])
+@ultroid_cmd(
+    pattern="logs ?(|heroku|sys)",
+    chats=[],
+)
 async def _(event):
     opt = event.pattern_match.group(1)
     if opt == "heroku":
