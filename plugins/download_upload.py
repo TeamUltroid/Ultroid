@@ -17,7 +17,11 @@
 • `{i}dl <filename(optional)>`
     Reply to file to download.
 
+• `{i}download <direct link> | filename`
+    Download using link. Will autogenerate filename if not given.
+
 """
+import asyncio
 import glob
 import os
 import time
@@ -29,6 +33,32 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from . import *
+
+
+@ultroid_cmd(
+    pattern="download ?(.*)",
+)
+async def down(event):
+    matched = event.pattern_match.group(1)
+    msg = await eor(event, "`Trying to download...`")
+    if not matched:
+        return await eod(msg, "`You forgot to give link :(`")
+    try:
+        splited = matched.split(" | ")
+        link = splited[0]
+        filename = splited[1]
+    except IndexError:
+        filename = None
+    s_time = time.time()
+    await fast_download(
+        link,
+        filename,
+        progress_callback=lambda d, t:
+            asyncio.create_task(
+                d, t, msg, s_time, f"Downloading from {link}",
+            )
+        )
+    await eod(msg, "`Download complete.`")
 
 
 @ultroid_cmd(
