@@ -13,7 +13,7 @@
 import os
 
 from img2html.converter import Img2HTMLConverter
-
+from htmlwebshot import WebShot
 from . import *
 
 
@@ -28,9 +28,8 @@ async def _(e):
     char = "■" if not e.pattern_match.group(1) else e.pattern_match.group(1)
     converter = Img2HTMLConverter(char=char)
     html = converter.convert(img)
-    with open("html.html", "w") as t:
-        t.write(html)
-    await e.reply(file="html.html")
+    shot = WebShot()
+    pic = await create_pic_async(html=html, output=img)
     await m.delete()
-    os.remove(img)
-    os.remove("html.html")
+    await e.reply(file=pic)
+    os.remove(pic)
