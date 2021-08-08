@@ -10,7 +10,7 @@
 • `{i}dm <username/id> <reply/type>`
     Direct Message the User.
 
-• `{i}fwdreply <reply to msg>
+• `{i}fwdreply <reply to msg>`
     Reply to someone's msg by forwarding it in private.
 """
 from . import *
