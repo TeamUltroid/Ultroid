@@ -75,11 +75,9 @@ _gdemote_rights = ChatAdminRights(
 
 
 @ultroid_cmd(
-    pattern="gpromote ?(.*)",
+    pattern="gpromote ?(.*)", fullsudo=True
 )
 async def _(e):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
@@ -211,11 +209,9 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="gdemote ?(.*)",
+    pattern="gdemote ?(.*)", fullsudo=True
 )
 async def _(e):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eod(e, "`This Command Is Sudo Restricted.`")
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
@@ -343,7 +339,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="ungban ?(.*)",
+    pattern="ungban ?(.*)", fullsudo=True
 )
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
@@ -378,11 +374,9 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="gban ?(.*)",
+    pattern="gban ?(.*)", fullsudo=True
 )
 async def _(e):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eor(e, "`This Command Is Sudo Restricted.`")
     xx = await eor(e, "`Gbanning...`")
     reason = ""
     if e.reply_to_msg_id:
@@ -438,11 +432,9 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="gcast ?(.*)",
+    pattern="gcast ?(.*)", fullsudo=True
 )
 async def gcast(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
     xx = event.pattern_match.group(1)
     if not xx:
         return eor(event, "`Give some text to Globally Broadcast`")
@@ -464,11 +456,9 @@ async def gcast(event):
 
 
 @ultroid_cmd(
-    pattern="gucast ?(.*)",
+    pattern="gucast ?(.*)", fullsudo=True
 )
 async def gucast(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
     xx = event.pattern_match.group(1)
     if not xx:
         return eor(event, "`Give some text to Globally Broadcast`")
@@ -490,7 +480,7 @@ async def gucast(event):
 
 
 @ultroid_cmd(
-    pattern="gkick ?(.*)",
+    pattern="gkick ?(.*)", fullsudo=True
 )
 async def gkick(e):
     xx = await eor(e, "`Gkicking...`")
@@ -519,11 +509,9 @@ async def gkick(e):
 
 
 @ultroid_cmd(
-    pattern="gmute ?(.*)",
+    pattern="gmute ?(.*)", fullsudo=True
 )
 async def _(e):
-    if not e.out and not is_fullsudo(e.sender_id):
-        return await eor(e, "`This Command Is Sudo Restricted.`")
     xx = await eor(e, "`Gmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
@@ -553,7 +541,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="ungmute ?(.*)",
+    pattern="ungmute ?(.*)", fullsudo=True
 )
 async def _(e):
     xx = await eor(e, "`UnGmuting...`")
