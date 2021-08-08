@@ -9,6 +9,9 @@
 
 • `{i}dm <username/id> <reply/type>`
     Direct Message the User.
+
+• `{i}fwdreply <reply to msg>
+    Reply to someone's msg by forwarding it in private.
 """
 from . import *
 
@@ -40,3 +43,16 @@ async def dm(e):
         await eod(e, "`⚜️Message Delivered!⚜️`")
     except BaseException:
         await eod(e, f"Read Usage : `{HNDLR}help dm`")
+
+
+@ultroid_cmd(pattern="fwdreply ?(.*)")
+async def _(e):
+    message = event.pattern_match.group(1)
+    if not e.reply_to_msg_id:
+        return await eod(e, "`Reply to someone's msg.`")
+    if not message:
+        return await eod(e, "`No message found to deliver :(`")
+    msg = await e.get_reply_message()
+    fwd = await msg.forward_to(msg.sender_id)
+    await fwd.reply(message)
+    await e.edit("`Check in Private.`")
