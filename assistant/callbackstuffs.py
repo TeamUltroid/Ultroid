@@ -61,6 +61,7 @@ async def send(eve):
     thumb = ""
     for m in choices(sorted(glob("resources/extras/*.jpg"))):
         thumb += m
+    await event.answer("Sending...")
     if name.startswith("def"):
         plug_name = name.replace(f"def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
@@ -174,6 +175,7 @@ async def update(eve):
 @callback("changes")
 @owner
 async def changes(okk):
+    await event.answer("Generating Changelogs...")
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
