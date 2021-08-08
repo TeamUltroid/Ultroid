@@ -41,11 +41,9 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 
 @ultroid_cmd(
-    pattern="setbio ?(.*)",
+    pattern="setbio ?(.*)", forcesudo=True
 )
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     set = ult.pattern_match.group(1)
     try:
@@ -61,11 +59,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="setname ?((.|//)*)",
+    pattern="setname ?((.|//)*)", forcesudo=True
 )
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     names = ult.pattern_match.group(1)
     first_name = names
@@ -90,11 +86,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="setpic$",
+    pattern="setpic$", forcesudo=True
 )
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
@@ -121,11 +115,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delpfp ?(.*)",
+    pattern="delpfp ?(.*)", fullsudo=True
 )
 async def remove_profilepic(delpfp):
-    if not delpfp.out and not is_fullsudo(delpfp.sender_id):
-        return await eod(delpfp, "`This Command Is Sudo Restricted.`")
     ok = await eor(delpfp, "...")
     group = delpfp.text[8:]
     if group == "all":
