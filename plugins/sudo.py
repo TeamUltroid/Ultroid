@@ -22,11 +22,9 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="addsudo ?(.*)",
+    pattern="addsudo ?(.*)", fullsudo=True
 )
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
     if str(ult.sender_id) in sudoers():
         return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
@@ -65,11 +63,9 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delsudo ?(.*)",
+    pattern="delsudo ?(.*)", fullsudo=True
 )
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
     if str(ult.sender_id) in sudoers():
         return await eod(
