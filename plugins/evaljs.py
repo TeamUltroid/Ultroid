@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
 ✘ Commands Available -
+
 • `{i}evaljs <javaScriptCommands>`
     Evaluate JavaScript code and upload.
 """
@@ -53,12 +54,10 @@ async def evalJs(
 
 # The Command Is `.evaljs`
 @ultroid_cmd(
-    pattern="evaljs",
+    pattern="evaljs", fullsudo=True
 )
 async def evaluateJs(event):
     start = time.time()
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
         return await eor(
             event,
