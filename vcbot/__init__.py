@@ -13,7 +13,6 @@ import os
 import re
 from datetime import datetime as dt
 
-import ffmpeg
 from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
