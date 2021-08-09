@@ -48,8 +48,7 @@ async def mean(event):
                 force_document=True,
                 caption=f"Meanings of {wrd}",
             )
-            if event.out:
-                await event.delete()
+            await event.delete()
     else:
         await eor(event, x)
 
@@ -58,7 +57,6 @@ async def mean(event):
     pattern="synonym",
 )
 async def mean(event):
-    xx = await eor(event, get_string("com_1"))
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = dictionary.synonym(wrd)
     x = get_string("wrd_2").format(wrd)
@@ -78,11 +76,11 @@ async def mean(event):
                     caption=f"Synonyms of {wrd}",
                     reply_to=event.reply_to_msg_id,
                 )
-                await xx.delete()
+                await event.delete()
         else:
-            await xx.edit(x)
+            await event.edit(x)
     except Exception as e:
-        await xx.edit(f"No synonym found!!\n{str(e)}")
+        await event.edit(f"No synonym found!!\n{str(e)}")
 
 
 @ultroid_cmd(
@@ -90,7 +88,6 @@ async def mean(event):
 )
 async def mean(event):
     evid = event.message.id
-    xx = await eor(event, get_string("com_1"))
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = dictionary.antonym(wrd)
     x = get_string("wrd_3").format(wrd)
@@ -110,11 +107,11 @@ async def mean(event):
                     caption=f"Antonyms of {wrd}",
                     reply_to=evid,
                 )
-                await xx.delete()
+                await event.delete()
         else:
-            await xx.edit(x)
+            await event.edit(x)
     except Exception as e:
-        await xx.edit(f"No antonym found!!\n{str(e)}")
+        await event.edit(f"No antonym found!!\n{str(e)}")
 
 
 @ultroid_cmd(pattern="ud (.*)")
