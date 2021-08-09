@@ -40,7 +40,7 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 # bio changer
 
 
-@ultroid_cmd(pattern="setbio ?(.*)", forcesudo=True)
+@ultroid_cmd(pattern="setbio ?(.*)", fullsudo=True)
 async def _(ult):
     ok = await eor(ult, "...")
     set = ult.pattern_match.group(1)
@@ -56,7 +56,7 @@ async def _(ult):
 # name changer
 
 
-@ultroid_cmd(pattern="setname ?((.|//)*)", forcesudo=True)
+@ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
     ok = await eor(ult, "...")
     names = ult.pattern_match.group(1)
@@ -81,7 +81,7 @@ async def _(ult):
 # profile pic
 
 
-@ultroid_cmd(pattern="setpic$", forcesudo=True)
+@ultroid_cmd(pattern="setpic$", fullsudo=True)
 async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
