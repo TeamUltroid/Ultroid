@@ -22,7 +22,7 @@ from . import *
 tr = Translator()
 
 
-@ultroid_cmd(pattern="autocorrect", forcesudo=True)
+@ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
