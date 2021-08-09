@@ -11,20 +11,21 @@
     Upload file to telegram chat.
     You Can Upload Folders too.
 
-• `{i}ul <path/to/file> | stream`
+• `{i}ul <path/to/file> (| stream)`
     Upload files as stream.
 
 • `{i}dl <filename(optional)>`
     Reply to file to download.
 
-• `{i}download <direct link> | filename`
-    Download using link. Will autogenerate filename if not given.
+• `{i}download <DDL> (| filename)`
+    Download using DDL. Will autogenerate filename if not given.
 
 """
 import asyncio
 import glob
 import os
 import time
+from aiohttp.client_exceptions import InvalidURL
 from datetime import datetime as dt
 
 from hachoir.metadata import extractMetadata
@@ -50,20 +51,23 @@ async def down(event):
     except IndexError:
         filename = None
     s_time = time.time()
-    await fast_download(
-        link,
-        filename,
-        progress_callback=lambda d, t: asyncio.create_task(
-            progress(
-                d,
-                t,
-                msg,
-                s_time,
-                f"Downloading from {link}",
-            )
-        ),
-    )
-    await eod(msg, "`Download complete.`")
+    try:
+        filename = await fast_download(
+            link,
+            filename,
+            progress_callback=lambda d, t: asyncio.create_task(
+                progress(
+                    d,
+                    t,
+                    msg,
+                    s_time,
+                    f"Downloading from {link}",
+                )
+            ),
+        )
+    except InvalidURL:
+        return await eod(msg, "`Invalid URL provided :(`")
+    await eod(msg, f"`{filename} `downloaded.")
 
 
 @ultroid_cmd(
