@@ -25,9 +25,9 @@ import asyncio
 import glob
 import os
 import time
-from aiohttp.client_exceptions import InvalidURL
 from datetime import datetime as dt
 
+from aiohttp.client_exceptions import InvalidURL
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
