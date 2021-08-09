@@ -27,7 +27,7 @@ from . import *
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
     try:
-        await eor(event, airing_eps())
+        await eor(event, airing_eps(), link_preview=False)
     except BaseException:
         info = airing_eps()
         t = info.replace("*", "").replace("`", "")
