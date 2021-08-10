@@ -13,6 +13,7 @@
 
 """
 import os
+
 import requests
 from htmlwebshot import WebShot
 
