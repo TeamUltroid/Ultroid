@@ -67,7 +67,7 @@ async def down(event):
         )
     except InvalidURL:
         return await eod(msg, "`Invalid URL provided :(`")
-    await eod(msg, f"`{filename} `downloaded.")
+    await eor(msg, f"`{filename} `downloaded.")
 
 
 @ultroid_cmd(
