@@ -99,6 +99,7 @@ async def all_messages_catcher(e):
             CACHE_SPAM[NEEDTOLOG]
         except KeyError;
             await asst.send_message(LOG_CHANNEL, MSG)
+            CACHE_SPAM.update({NEEDTOLOG:True})
     except Exception as er:
         LOGS.info(str(er))
 
