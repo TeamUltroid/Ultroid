@@ -12,7 +12,7 @@
     Get a screenshot of the webpage.
 
 """
-
+import os
 import requests
 from htmlwebshot import WebShot
 
@@ -41,12 +41,13 @@ async def webss(event):
                 requests.get(xurl)
             except requests.ConnectionError:
                 return await eod(xx, "Invalid URL!")
-    shot = WebShot(quality=88, delay=3.1)
-    pic = await shot.create_pic_async(url=xurl, output="webshot.png")
+    shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
+    pic = await shot.create_pic_async(url=xurl)
     await xx.reply(
         f"**WebShot Generated**\n**URL**: {xurl}",
         file=pic,
         link_preview=False,
         force_document=True,
     )
+    os.remove(pic)
     await xx.delete()
