@@ -34,7 +34,7 @@ async def all_messages_catcher(e):
         NEEDTOLOG = int(udB.get("TAG_LOG"))
     except Exception:
         return LOGS.info("you given Wrong Grp/Channel ID in TAG_LOG.")
-    x = e.sender
+    x = await e.get_sender()
     if x.bot or x.verified:
         return
     y = e.chat
@@ -42,43 +42,26 @@ async def all_messages_catcher(e):
     who_n = get_display_name(x)
     where_l = f"https://t.me/c/{y.id}/{e.id}"
     send = await ultroid_bot.get_messages(e.chat_id, ids=e.id)
+    if x.username:
+        who_l = f"https://t.me/{x.username}"
+        bt = Button.url(who_n, who_l)
+    else:
+        bt = Button.inline(who_n, data=f"who{x.id}")
     try:
-        if x.username:
-            who_l = f"https://t.me/{x.username}"
-            await asst.send_message(
+       await asst.send_message(
                 NEEDTOLOG,
                 send,
                 buttons=[
-                    [Button.url(who_n, who_l)],
-                    [Button.url(where_n, where_l)],
-                ],
-            )
-        else:
-            await asst.send_message(
-                NEEDTOLOG,
-                send,
-                buttons=[
-                    [Button.inline(who_n, data=f"who{x.id}")],
+                    [bt],
                     [Button.url(where_n, where_l)],
                 ],
             )
     except MediaEmptyError:
-        if x.username:
-            who_l = f"https://t.me/{x.username}"
-            await asst.send_message(
+        await asst.send_message(
                 NEEDTOLOG,
                 "`Unsupported Media`",
                 buttons=[
-                    [Button.url(who_n, who_l)],
-                    [Button.url(where_n, where_l)],
-                ],
-            )
-        else:
-            await asst.send_message(
-                NEEDTOLOG,
-                "`Unsupported Media`",
-                buttons=[
-                    [Button.inline(who_n, data=f"who{x.id}")],
+                    [bt],
                     [Button.url(where_n, where_l)],
                 ],
             )
@@ -97,7 +80,7 @@ async def all_messages_catcher(e):
             MSG = "Add me to Your Tag Logger Chat to Log Tags"
         try:
             CACHE_SPAM[NEEDTOLOG]
-        except KeyError;
+        except KeyError:
             await asst.send_message(LOG_CHANNEL, MSG)
             CACHE_SPAM.update({NEEDTOLOG:True})
     except Exception as er:
