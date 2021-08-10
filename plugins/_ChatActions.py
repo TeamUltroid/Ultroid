@@ -56,7 +56,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
 
     # gban checks
-    if ult.user_joined and ult.added_by:
+    if ult.user_joined or ult.added_by:
         user = await ult.get_user()
         chat = await ult.get_chat()
         if is_gbanned(str(user.id)) and chat.admin_rights:
