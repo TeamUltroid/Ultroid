@@ -66,7 +66,7 @@ async def all_messages_catcher(e):
                 [Button.url(where_n, where_l)],
             ],
         )
-    except PeerIdInvalidError:
+    except (PeerIdInvalidError, ValueError):
         await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It",
