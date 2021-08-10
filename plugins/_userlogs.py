@@ -11,7 +11,7 @@ from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
     PeerIdInvalidError,
-    UserNotParticipantError
+    UserNotParticipantError,
 )
 from telethon.utils import get_display_name
 
@@ -20,6 +20,7 @@ from . import *
 # taglogger
 
 CACHE_SPAM = {}
+
 
 @ultroid_bot.on(
     events.NewMessage(
@@ -48,23 +49,23 @@ async def all_messages_catcher(e):
     else:
         bt = Button.inline(who_n, data=f"who{x.id}")
     try:
-       await asst.send_message(
-                NEEDTOLOG,
-                send,
-                buttons=[
-                    [bt],
-                    [Button.url(where_n, where_l)],
-                ],
-            )
+        await asst.send_message(
+            NEEDTOLOG,
+            send,
+            buttons=[
+                [bt],
+                [Button.url(where_n, where_l)],
+            ],
+        )
     except MediaEmptyError:
         await asst.send_message(
-                NEEDTOLOG,
-                "`Unsupported Media`",
-                buttons=[
-                    [bt],
-                    [Button.url(where_n, where_l)],
-                ],
-            )
+            NEEDTOLOG,
+            "`Unsupported Media`",
+            buttons=[
+                [bt],
+                [Button.url(where_n, where_l)],
+            ],
+        )
     except PeerIdInvalidError:
         await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
@@ -82,7 +83,7 @@ async def all_messages_catcher(e):
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
             await asst.send_message(LOG_CHANNEL, MSG)
-            CACHE_SPAM.update({NEEDTOLOG:True})
+            CACHE_SPAM.update({NEEDTOLOG: True})
     except Exception as er:
         LOGS.info(str(er))
 
