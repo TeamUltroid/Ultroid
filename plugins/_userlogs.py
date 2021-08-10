@@ -11,6 +11,7 @@ from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
     PeerIdInvalidError,
+    UserNotParticipantError
 )
 from telethon.utils import get_display_name
 
@@ -18,6 +19,7 @@ from . import *
 
 # taglogger
 
+CACHE_SPAM = {}
 
 @ultroid_bot.on(
     events.NewMessage(
@@ -81,12 +83,22 @@ async def all_messages_catcher(e):
                 ],
             )
     except PeerIdInvalidError:
-        await ultroid_bot.send_message(
+        await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It",
         )
     except ChatWriteForbiddenError:
-        await ultroid_bot.send_message(NEEDTOLOG, "Please Give Your Assistant Bot")
+        try:
+            await asst.get_permissions(NEEDTOLOG, "me")
+            MSG = "Your Asst Cant Send Messages in Tag Log Chat."
+            MSG += "\n\nPlease Review the case or you can off"
+            MSG += "Your TagLogger, if you dont want to use it"
+        except UserNotParticipantError:
+            MSG = "Add me to Your Tag Logger Chat to Log Tags"
+        try:
+            CACHE_SPAM[NEEDTOLOG]
+        except KeyError;
+            await asst.send_message(LOG_CHANNEL, MSG)
     except Exception as er:
         LOGS.info(str(er))
 
