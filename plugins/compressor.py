@@ -99,6 +99,7 @@ async def _(e):
                         per = elapse * 100 / int(total_frames)
                         time_diff = time.time() - int(d_time)
                         speed = round(elapse / time_diff, 2)
+                    if int(speed) != 0:
                         some_eta = ((int(total_frames) - elapse) / speed) * 1000
                         text = f"`Compressing {file_name} at {crf} CRF.\n`"
                         progress_str = "`[{0}{1}] {2}%\n\n`".format(
