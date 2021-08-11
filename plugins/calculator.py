@@ -14,19 +14,7 @@ import re
 
 from . import *
 
-
-@ultroid_cmd(pattern="calc")
-async def icalc(e):
-    udB.delete("calc")
-    results = await e.client.inline_query(asst.me.username, "calc")
-    await results[0].click(e.chat_id, silent=True, hide_via=True)
-    await e.delete()
-
-
-@in_pattern("calc")
-@in_owner
-async def _(e):
-    m = [
+m = [
         "AC",
         "C",
         "⌫",
@@ -48,9 +36,24 @@ async def _(e):
         ".",
         "÷",
     ]
-    tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
-    lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
-    lst.append([Button.inline("=", data="calc=")])
+tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
+lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
+lst.append([Button.inline("=", data="calc=")])
+    
+
+@ultroid_cmd(pattern="calc")
+async def icalc(e):
+    udB.delete("calc")
+    if e.client._bot:
+        return await e.reply("• Ultroid Inline Calculator •", buttons=lst)
+    results = await e.client.inline_query(asst.me.username, "calc")
+    await results[0].click(e.chat_id, silent=True, hide_via=True)
+    await e.delete()
+
+
+@in_pattern("calc")
+@in_owner
+async def _(e):
     calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
     await e.answer([calc])
 
