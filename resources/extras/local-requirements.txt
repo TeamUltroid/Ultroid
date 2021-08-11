@@ -1,3 +1,5 @@
+aiohttp
+screen
 akinator.py
 tabulate
 asyncurban
