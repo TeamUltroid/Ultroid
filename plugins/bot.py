@@ -46,7 +46,7 @@ from . import *
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -63,7 +63,7 @@ async def lol(ult):
     )
     if pic is None:
         return await eor(ult, als)
-    elif pic is not None and "telegra" in pic:
+    elif "telegra" in pic:
         try:
             await ult.reply(als, file=pic, link_preview=False)
             await ult.delete()

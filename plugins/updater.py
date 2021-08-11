@@ -11,14 +11,13 @@
     See changelogs if any update is available.
 """
 
+
 from git import Repo
 
 from . import *
 
-ULTPIC = "resources/extras/inline.jpg"
 CL = udB.get("INLINE_PIC")
-if CL:
-    ULTPIC = CL
+ULTPIC = CL or "resources/extras/inline.jpg"
 
 
 @ultroid_cmd(pattern="update$")

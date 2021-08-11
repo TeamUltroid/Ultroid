@@ -44,10 +44,12 @@ LOG = int(udB.get("LOG_CHANNEL"))
 @ultroid_bot.on(events.NewMessage(outgoing=True))
 @ultroid_bot.on(events.MessageEdited(outgoing=True))
 async def set_not_afk(event):
-    if event.is_private:
-        if Redis("PMSETTING") == "True":
-            if not is_approved(event.chat_id):
-                return
+    if (
+        event.is_private
+        and Redis("PMSETTING") == "True"
+        and not is_approved(event.chat_id)
+    ):
+        return
     global USER_AFK
     global afk_time
     global last_afk_message
@@ -112,10 +114,12 @@ async def set_not_afk(event):
     events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
 )
 async def on_afk(event):
-    if event.is_private:
-        if Redis("PMSETTING") == "True":
-            if not is_approved(event.chat_id):
-                return
+    if (
+        event.is_private
+        and Redis("PMSETTING") == "True"
+        and not is_approved(event.chat_id)
+    ):
+        return
     global USER_AFK
     global afk_time
     global last_afk_message
@@ -129,7 +133,7 @@ async def on_afk(event):
     if "afk" in current_message_text:
         return False
     sender = await event.get_sender()
-    if USER_AFK and not (sender.bot or sender.verified):
+    if USER_AFK and not sender.bot and not sender.verified:
         msg = None
         if reason:
             message_to_reply = get_string("afk_3").format(total_afk_time, reason)
@@ -180,10 +184,7 @@ async def _(event):
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     reason = event.pattern_match.group(1)
-    if reply:
-        pic = await event.client.download_media(reply)
-    else:
-        pic = None
+    pic = await event.client.download_media(reply) if reply else None
     if not USER_AFK:
         last_seen_status = await ultroid_bot(
             GetPrivacyRequest(InputPrivacyKeyStatusTimestamp()),

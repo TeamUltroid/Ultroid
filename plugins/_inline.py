@@ -97,7 +97,7 @@ async def inline_alive(o):
                 content=InputWebDocument(TLINK, 0, "image/jpg", []),
             )
         ]
-        await o.answer(RES, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+        await o.answer(RES, switch_pm='👥 ULTROID PORTAL', switch_pm_param="start")
 
 
 @in_pattern("ultd")
@@ -181,12 +181,11 @@ async def _(event):
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + f"\n\nClick the below button to update!"
+    changelog_str = changelog + '\n\nClick the below button to update!'
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
-        file = open(f"ultroid_updates.txt", "w+")
-        file.write(tl_chnglog)
-        file.close()
+        with open('ultroid_updates.txt', "w+") as file:
+            file.write(tl_chnglog)
         await event.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
@@ -195,7 +194,7 @@ async def _(event):
                 [Button.inline("« Bᴀᴄᴋ", data="ownr")],
             ],
         )
-        remove(f"ultroid_updates.txt")
+        remove('ultroid_updates.txt')
         return
     else:
         await event.edit(
@@ -528,15 +527,10 @@ def page_num(page_number, loaded_plugins, prefix, type):
     number_of_rows = 5
     number_of_cols = 2
     emoji = Redis("EMOJI_IN_HELP")
-    if emoji:
-        multi = emoji
-    else:
-        multi = "✘"
-    helpable_plugins = []
+    multi = emoji or "✘"
     global upage
     upage = page_number
-    for p in loaded_plugins:
-        helpable_plugins.append(p)
+    helpable_plugins = [p for p in loaded_plugins]
     helpable_plugins = sorted(helpable_plugins)
     modules = [
         Button.inline(

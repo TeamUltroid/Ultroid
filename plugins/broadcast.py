@@ -47,12 +47,14 @@ async def broadcast_adder(event):
         ]
         for i in chats:
             try:
-                if i.broadcast:
-                    if i.creator or i.admin_rights:
-                        if not is_channel_added(i.id):
-                            new += 1
-                            cid = f"-100{i.id}"
-                            add_channel(int(cid))
+                if (
+                    i.broadcast
+                    and (i.creator or i.admin_rights)
+                    and not is_channel_added(i.id)
+                ):
+                    new += 1
+                    cid = f"-100{i.id}"
+                    add_channel(int(cid))
             except Exception as Ex:
                 LOGS.info(Ex)
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
@@ -200,8 +202,6 @@ async def sending(event):
     if not event.is_reply:
         return await x.edit("Reply to a message to broadcast.")
     channels = get_channels()
-    error_count = 0
-    sent_count = 0
     if get_no_channels() == 0:
         return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
     await x.edit("Sending....")
@@ -210,6 +210,8 @@ async def sending(event):
         if previous_message.poll:
             return await x.edit(f"Reply `{hndlr}forward` for polls.")
         if previous_message:
+            error_count = 0
+            sent_count = 0
             for channel in channels:
                 try:
                     await ultroid_bot.send_message(int(channel), previous_message)

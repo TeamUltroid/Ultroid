@@ -274,7 +274,7 @@ async def pin(msg):
     except BadRequestError:
         return await eor(msg, "`Hmm.. Guess I have no rights here!`")
     except Exception as e:
-        return await eor(msg, f"**ERROR:**`{str(e)}`")
+        return await eor(msg, f'**ERROR:**`{e}`')
     if msg.out:
         await msg.delete()
 
@@ -296,14 +296,14 @@ async def unp(ult):
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
-            return await xx.edit(f"**ERROR:**\n`{str(e)}`")
+            return await xx.edit(f'**ERROR:**\n`{e}`')
     elif ch == "all":
         try:
             await ult.client.unpin_message(ult.chat_id)
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
-            return await xx.edit(f"**ERROR:**`{str(e)}`")
+            return await xx.edit(f'**ERROR:**`{e}`')
     else:
         return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
     if not msg and ch != "all":
@@ -342,7 +342,7 @@ async def fastpurger(purg):
         return await eod(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in purg.client.iter_messages(chat, min_id=purg.reply_to_msg_id):
         msgs.append(msg)
-        count = count + 1
+        count += 1
         msgs.append(purg.reply_to_msg_id)
         if len(msgs) == 100:
             await purg.client.delete_messages(chat, msgs)
@@ -390,7 +390,7 @@ async def fastpurgerme(purg):
         min_id=purg.reply_to_msg_id,
     ):
         msgs.append(msg)
-        count = count + 1
+        count += 1
         msgs.append(purg.reply_to_msg_id)
         if len(msgs) == 100:
             await ultroid_bot.delete_messages(chat, msgs)
@@ -409,18 +409,18 @@ async def fastpurgerme(purg):
 )
 async def _(e):
     xx = await eor(e, get_string("com_1"))
-    if e.reply_to_msg_id:
-        name = (await e.get_reply_message()).sender
-        try:
-            await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-            await eod(e, f"Successfully Purged All Messages from {name.first_name}")
-        except Exception as er:
-            return await eod(xx, str(er))
-    else:
+    if not e.reply_to_msg_id:
         return await eod(
             xx,
             "`Reply to someone's msg to delete.`",
         )
+
+    name = (await e.get_reply_message()).sender
+    try:
+        await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
+        await eod(e, f"Successfully Purged All Messages from {name.first_name}")
+    except Exception as er:
+        return await eod(xx, str(er))
 
 
 @ultroid_cmd(

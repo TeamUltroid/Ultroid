@@ -33,21 +33,20 @@ async def _(event):
         pass
     if event.reply_to_msg_id:
         bb = await event.get_reply_message()
-        if bb.media:
-            ccc = time.time()
-            try:
-                naam = await downloader(
-                    bb.file.name,
-                    bb.media.document,
-                    xx,
-                    ccc,
-                    "Downloading " + bb.file.name + "...",
-                )
-                file_name = naam.name
-            except BaseException:
-                file_name = await event.client.download_media(bb)
-        else:
+        if not bb.media:
             return await eod(xx, "`Reply to media file`")
+        ccc = time.time()
+        try:
+            naam = await downloader(
+                bb.file.name,
+                bb.media.document,
+                xx,
+                ccc,
+                "Downloading " + bb.file.name + "...",
+            )
+            file_name = naam.name
+        except BaseException:
+            file_name = await event.client.download_media(bb)
     try:
         results = await event.client.inline_query(
             asst.me.username,

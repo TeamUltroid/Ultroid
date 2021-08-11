@@ -13,10 +13,7 @@ from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from . import *
 
 C_PIC = udB.get("INLINE_PIC")
-if C_PIC:
-    _file_to_replace = C_PIC
-else:
-    _file_to_replace = "resources/extras/inline.jpg"
+_file_to_replace = C_PIC or "resources/extras/inline.jpg"
 
 
 @ultroid_cmd(pattern="help ?(.*)")

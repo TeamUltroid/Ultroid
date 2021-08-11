@@ -26,15 +26,14 @@ async def PlayFrom(client, message):
         limit = int(lct[-1])
         spl = [None, lct[0]]
 
-    if len(spl) == 2:
-        try:
-            playfrom = await Client.get_chat(chat_id=spl[1])
-        except Exception as Ex:
-            return await eor(message, str(Ex))
-    else:
+    if len(spl) != 2:
         return await eor(
             message, "Provide the Chat Username/Id from where to Play Songs..."
         )
+    try:
+        playfrom = await Client.get_chat(chat_id=spl[1])
+    except Exception as Ex:
+        return await eor(message, str(Ex))
     ALL = []
     M = await asst.send_message(
         LOG_CHANNEL, f"Started Chat Song Play at {PlayAT.title} [`{PlayAT.id}`]"

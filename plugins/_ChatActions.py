@@ -70,7 +70,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
                 if reason is not None:
                     gban_watch += f"**Reason**: {reason}\n\n"
-                gban_watch += f"`User Banned.`"
+                gban_watch += '`User Banned.`'
                 await ult.reply(gban_watch)
             except BaseException:
                 pass
@@ -145,8 +145,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
-    if not e.media and e.chat:
-        if chatbot_stats(e.chat.id, e.sender_id):
-            msg = get_chatbot_reply(e, e.text)
-            if msg:
-                await e.reply(msg)
+    if not e.media and e.chat and chatbot_stats(e.chat.id, e.sender_id):
+        msg = get_chatbot_reply(e, e.text)
+        if msg:
+            await e.reply(msg)

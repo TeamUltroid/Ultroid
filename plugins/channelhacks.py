@@ -45,7 +45,7 @@ from . import *
 
 @ultroid_bot.on(events.NewMessage())
 async def _(e):
-    if not udB.get("AUTOPOST") == "True":
+    if udB.get("AUTOPOST") != "True":
         return
     x = get_source_channels()
     th = await e.get_chat()

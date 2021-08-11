@@ -149,9 +149,7 @@ def heroku_usage():
 
 def redis_usage():
     x = 30 * 1024 * 1024
-    z = 0
-    for n in udB.keys():
-        z += udB.memory_usage(n)
+    z = sum(udB.memory_usage(n) for n in udB.keys())
     a = humanbytes(z) + "/" + humanbytes(x)
     b = str(round(z / x * 100, 3)) + "%"
     return f"**REDIS**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
@@ -159,10 +157,6 @@ def redis_usage():
 
 def get_full_usage():
     is_hk, hk = heroku_usage()
-    if is_hk is False:
-        her = ""
-    else:
-        her = hk
+    her = "" if is_hk is False else hk
     rd = redis_usage()
-    msg = her + "\n\n" + rd
-    return msg
+    return her + "\n\n" + rd

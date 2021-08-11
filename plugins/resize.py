@@ -49,7 +49,7 @@ async def size(e):
     else:
         img = await r.download_media()
     sz = sz.split()
-    if not len(sz) == 2:
+    if len(sz) != 2:
         return await eod(f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ")
     x, y = int(sz[0]), int(sz[1])
     im = Image.open(img)

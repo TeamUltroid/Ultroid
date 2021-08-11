@@ -116,7 +116,7 @@ async def _(ult):
             msg += f"• [{name}](tg://user?id={i}) ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    m = udB.get("SUDO") if udB.get("SUDO") else "False"
+    m = udB.get("SUDO") or "False"
     if m == "False":
         m = "[False](https://telegra.ph/Ultroid-04-06)"
     return await ok.edit(

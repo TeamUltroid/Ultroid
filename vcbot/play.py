@@ -33,7 +33,7 @@ async def startup(_, message):
         if reply.audio:
             med = reply.audio
             song_name = med.title
-        elif reply.video or reply.audio:
+        elif reply.video:
             med = reply.video or reply.audio
             song_name = med.file_name
         if med and med.thumbs:
@@ -119,7 +119,7 @@ async def queue_func(chat_id: int):
         LOGS.info(Ec)
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:
-        await asst.send_message(chat_id, f"`{str(ap)}`")
+        await asst.send_message(chat_id, f'`{ap}`')
 
 
 @CallsClient.on_stream_end()

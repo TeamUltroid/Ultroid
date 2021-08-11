@@ -89,7 +89,7 @@ async def editer(edit):
                 await message.edit(string)
                 await edit.delete()
                 break
-            i = i + 1
+            i += 1
 
 
 @ultroid_cmd(

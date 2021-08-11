@@ -103,7 +103,7 @@ async def fcall(e):
 async def diesoon(e):
     match = (e.data_match.group(1)).decode("UTF-8")
     spli = match.split("_")
-    if not e.sender_id == int(spli[0]):
+    if e.sender_id != int(spli[0]):
         return await e.answer("This Message is Not for You", alert=True)
     try:
         await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
