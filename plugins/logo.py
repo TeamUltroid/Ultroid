@@ -51,12 +51,12 @@ async def logo_gen(event):
         else:
             pics = []
             async for i in event.client.iter_messages(
-            "@UltroidLogos", filter=InputMessagesFilterPhotos
+                "@UltroidLogos", filter=InputMessagesFilterPhotos
             ):
                 pics.append(i)
             id_ = random.choice(pics)
             bg_ = await id_.download_media()
-            
+
     if not font_:
         fpath_ = glob.glob("resources/fonts/*")
         font_ = random.choice(fpath_)
