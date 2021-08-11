@@ -52,12 +52,9 @@ async def doai(e):
         # child mode should be promoted
     except KeyError:
         return await e.answer("Game has been Terminated....", alert=True)
-    bts = []
-    for o in ["Yes", "No", "Idk"]:
-        bts.append(Button.inline(o, f"aka_{adt}_{o}"))
-    cts = []
-    for o in ["Probably", "Probably Not"]:
-        cts.append(Button.inline(o, f"aka_{adt}_{o}"))
+    bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
+    cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
+
     bts = [bts, cts]
     # ignored Back Button since it makes the Pagination looks Bad
     await e.edit("Q. " + qu, buttons=bts)
@@ -81,12 +78,11 @@ async def okah(e):
         gs = gm.first_guess
         text = "It's " + gs["name"] + "\n " + gs["description"]
         return await e.edit(text, file=gs["absolute_picture_path"])
-    bts = []
-    for o in ["Yes", "No", "Idk"]:
-        bts.append(Button.inline(o, f"aka_{ch}_{mid}_{o}"))
-    cts = []
-    for o in ["Probably", "Probably Not"]:
-        cts.append(Button.inline(o, f"aka_{ch}_{mid}_{o}"))
+    bts = [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]]
+    cts = [
+        Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]
+    ]
+
     bts = [bts, cts]
     await e.edit(text, buttons=bts)
 

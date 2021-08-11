@@ -24,14 +24,13 @@ async def evalJs(
     startTime: float,
     command: str = "",
 ):
-    scriptFile = open(
+    with open(
         "./src/ecmaHelper/evalJs.run.js",
         "w",
         encoding="utf-8",
-    )
-    scriptFile.write(str(command))
-    scriptFile.close()
-    os.system(f"node ./src/ecmaHelper/eval.d.js")
+    ) as scriptFile:
+        scriptFile.write(str(command))
+    os.system("node ./src/ecmaHelper/eval.d.js")
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
         await event.client.send_file(
             event.chat_id,
@@ -47,9 +46,10 @@ async def evalJs(
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
     await event.delete()
-    file = open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w")
-    file.write("'use-strict';\n")
-    file.close()
+    with open(
+        "./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w"
+    ) as file:
+        file.write("'use-strict';\n")
 
 
 # The Command Is `.evaljs`

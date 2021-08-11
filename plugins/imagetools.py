@@ -516,7 +516,7 @@ async def sampl(ult):
             await eor(ult, "Umm! Sending Media is disabled here!")
 
     else:
-        await eor(ult, f"Wrong Color Name/Hex Code specified!")
+        await eor(ult, "Wrong Color Name/Hex Code specified!")
 
 
 @ultroid_cmd(

@@ -56,9 +56,7 @@ async def google(event):
     except TypeError:
         return await eod(event, f"`Can't find anything about {inp}`")
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    opn = []
-    for bkl in range(0, len(omk), 4095):
-        opn.append(omk[bkl : bkl + 4095])
+    opn = [omk[bkl : bkl + 4095] for bkl in range(0, len(omk), 4095)]
     for bc in opn:
         await event.respond(bc, link_preview=False)
     await x.delete()

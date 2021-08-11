@@ -47,18 +47,16 @@ async def uri_poll(e):
             ptype = ptype.split("_")[0]
         if ptype not in ["public", "quiz", "multiple"]:
             return await eod(e, "`Invalid Poll Type...`")
-        if ptype == "public":
-            publ = True
-        if ptype == "quiz":
-            quizo = True
         if ptype == "multiple":
             mpp = True
+        elif ptype == "public":
+            publ = True
+        elif ptype == "quiz":
+            quizo = True
     if len(option) <= 1:
         return await eod(e, "`Options Should be More than 1..`")
     m = await eor(e, "`Processing... `")
-    OUT = []
-    for on in range(len(option)):
-        OUT.append(PollAnswer(option[on], str(on).encode()))
+    OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
     await e.client.send_file(
         e.chat_id,
         InputMediaPoll(

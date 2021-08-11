@@ -34,14 +34,11 @@ from . import *
 async def warn(e):
     ultroid_bot = e.client
     reply = await e.get_reply_message()
-    if len(e.text) > 5:
-        if " " not in e.text[5]:
-            return
+    if len(e.text) > 5 and " " not in e.text[5]:
+        return
     if reply:
         user = reply.from_id.user_id
-        reason = "unknown"
-        if e.pattern_match.group(1):
-            reason = e.text[5:]
+        reason = e.text[5:] if e.pattern_match.group(1) else "unknown"
     else:
         try:
             user = e.text.split()[1]
@@ -57,10 +54,7 @@ async def warn(e):
         except BaseException:
             reason = "unknown"
     count, r = warns(e.chat_id, user)
-    if not r:
-        r = reason
-    else:
-        r = r + "|$|" + reason
+    r = reason if not r else r + "|$|" + reason
     try:
         x = udB.get("SETWARN")
         number, action = int(x.split()[0]), x.split()[1]

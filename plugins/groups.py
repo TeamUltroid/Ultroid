@@ -46,12 +46,8 @@ async def _(ult):
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
-        if "pic" in mediain:
-            pass
-        elif "gif" or "video" in median:
+        if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
-        else:
-            return await eod(ult, "`Invalid MEDIA Type !`")
         await ult.client(EditPhotoRequest(ult.chat_id, file))
         await eod(ult, "`Group Photo has Successfully Changed !`")
     except Exception as ex:
@@ -240,6 +236,6 @@ async def _(event):
         required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
         required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
         required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`\n\n"
-        required_string += f"**••Empty**  `Name with deleted Account`\n"
-        required_string += f"**••None**  `Last Seen A Long Time Ago`\n"
+        required_string += "**••Empty**  `Name with deleted Account`\n"
+        required_string += "**••None**  `Last Seen A Long Time Ago`\n"
     await eor(xx, required_string)

@@ -39,6 +39,7 @@
    List all approved PMs.
 """
 
+
 import re
 from os import remove
 
@@ -58,11 +59,7 @@ LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
 
-if Redis("PMPIC"):
-    PMPIC = Redis("PMPIC")
-else:
-    PMPIC = None
-
+PMPIC = Redis("PMPIC") or None
 UND = get_string("pmperm_1")
 
 if not Redis("PM_TEXT"):
@@ -618,7 +615,7 @@ async def unblockpm(unblock):
         aname = await unblock.client.get_entity(user)
         await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
     except Exception as et:
-        await eod(unblock, f"ERROR - {str(et)}")
+        await eod(unblock, f"ERROR - {et}")
     try:
         await asst.edit_message(
             int(udB.get("LOG_CHANNEL")),

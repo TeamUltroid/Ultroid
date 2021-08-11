@@ -19,11 +19,9 @@ from . import *
 @ultroid_cmd(pattern="megadl ?(.*)")
 async def _(e):
     link = e.pattern_match.group(1)
-    if not os.path.isdir("mega"):
-        os.mkdir("mega")
-    else:
+    if os.path.isdir("mega"):
         os.system("rm -rf mega")
-        os.mkdir("mega")
+    os.mkdir("mega")
     xx = await eor(e, f"Processing...\nTo Check Progress : `{HNDLR}ls mega`")
     s = datetime.now()
     x, y = await bash(f"megadl {link} --path mega")
