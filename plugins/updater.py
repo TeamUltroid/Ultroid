@@ -12,7 +12,6 @@
 """
 
 from git import Repo
-from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
 from . import *
 
