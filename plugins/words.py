@@ -78,7 +78,7 @@ async def mean(event):
         else:
             await event.edit(x)
     except Exception as e:
-        await event.edit(f'No synonym found!!\n{e}')
+        await event.edit(f"No synonym found!!\n{e}")
 
 
 @ultroid_cmd(
@@ -109,7 +109,7 @@ async def mean(event):
         else:
             await event.edit(x)
     except Exception as e:
-        await event.edit(f'No antonym found!!\n{e}')
+        await event.edit(f"No antonym found!!\n{e}")
 
 
 @ultroid_cmd(pattern="ud (.*)")

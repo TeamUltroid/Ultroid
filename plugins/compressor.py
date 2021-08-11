@@ -107,9 +107,7 @@ async def _(e):
                         round(per, 2),
                     )
 
-                    e_size = (
-                        humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
-                    )
+                    e_size = humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
                     eta = "~" + time_formatter(some_eta)
                     try:
                         await xxx.edit(

@@ -160,7 +160,7 @@ async def _(event):
             return
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
-        await ultroid.send_message(chat, '/start')
+        await ultroid.send_message(chat, "/start")
     except BaseException:
         await msg.edit("Specified FBan Group ID is incorrect.")
         return
@@ -182,7 +182,7 @@ async def _(event):
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f'Error in removing FedAdmin file.\n{e}')
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#TB",
     )
@@ -299,7 +299,7 @@ async def _(event):
             return
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
-        await event.client.send_message(chat, '/start')
+        await event.client.send_message(chat, "/start")
     except BaseException:
         await msg.edit("Specified FBan Group ID is incorrect.")
         return
@@ -321,7 +321,7 @@ async def _(event):
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f'Error in removing FedAdmin file.\n{e}')
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperUnFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )

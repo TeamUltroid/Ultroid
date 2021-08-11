@@ -18,7 +18,7 @@ async def banhammer(event):
         return await event.edit("Please reply to someone to ban him.")
     target = get_who(x.id)
     if is_blacklisted(target):
-        return await asst.send_message(event.chat_id, 'User is already banned!')
+        return await asst.send_message(event.chat_id, "User is already banned!")
 
     blacklist_user(target)
     await asst.send_message(event.chat_id, f"#BAN\nUser - {target}")
@@ -38,7 +38,7 @@ async def banhammer(event):
         return await event.edit("Please reply to someone to ban him.")
     target = get_who(x.id)
     if not is_blacklisted(target):
-        return await asst.send_message(event.chat_id, 'User was never banned!')
+        return await asst.send_message(event.chat_id, "User was never banned!")
 
     rem_blacklist(target)
     await asst.send_message(event.chat_id, f"#UNBAN\nUser - {target}")

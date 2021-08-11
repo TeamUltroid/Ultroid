@@ -70,7 +70,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
                 if reason is not None:
                     gban_watch += f"**Reason**: {reason}\n\n"
-                gban_watch += '`User Banned.`'
+                gban_watch += "`User Banned.`"
                 await ult.reply(gban_watch)
             except BaseException:
                 pass

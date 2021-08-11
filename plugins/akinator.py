@@ -53,10 +53,7 @@ async def doai(e):
     except KeyError:
         return await e.answer("Game has been Terminated....", alert=True)
     bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
-    cts = [
-        Button.inline(o, f"aka_{adt}_{o}")
-        for o in ["Probably", "Probably Not"]
-    ]
+    cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
 
     bts = [bts, cts]
     # ignored Back Button since it makes the Pagination looks Bad
@@ -83,8 +80,7 @@ async def okah(e):
         return await e.edit(text, file=gs["absolute_picture_path"])
     bts = [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]]
     cts = [
-        Button.inline(o, f"aka_{ch}_{mid}_{o}")
-        for o in ["Probably", "Probably Not"]
+        Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]
     ]
 
     bts = [bts, cts]

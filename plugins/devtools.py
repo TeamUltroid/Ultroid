@@ -74,7 +74,7 @@ async def _(event):
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
     if not stderr and not stdout:
-        OUT += '**• OUTPUT:**\n`Success`'
+        OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
@@ -165,13 +165,12 @@ async def aexec(code, event):
     exec(
         (
             (
-                ('async def __aexec(e, client): ' + "\n message = event = e")
+                ("async def __aexec(e, client): " + "\n message = event = e")
                 + "\n reply = await event.get_reply_message()"
             )
             + "\n chat = (await event.get_chat()).id"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
-
 
     return await locals()["__aexec"](event, event.client)

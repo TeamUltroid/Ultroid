@@ -26,10 +26,7 @@ async def get_the_addons_lol(event):
     if thelink is None:
         return await eod(xx, fool, time=10)
     split_thelink = thelink.split("/")
-    if (
-        "raw" not in split_thelink
-        and "raw.githubusercontent.com" not in split_thelink
-    ):
+    if "raw" not in split_thelink and "raw.githubusercontent.com" not in split_thelink:
         return await eod(xx, fool, time=10)
     name_of_it = split_thelink[(len(split_thelink) - 1)]
     plug = requests.get(thelink).text
@@ -46,6 +43,6 @@ async def get_the_addons_lol(event):
     except Exception as e:
         await eod(
             xx,
-            f'**Could not load** `{shortname}` **because of the following error.**\n`{e}`',
+            f"**Could not load** `{shortname}` **because of the following error.**\n`{e}`",
             time=3,
         )

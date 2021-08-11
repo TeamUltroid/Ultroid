@@ -524,12 +524,12 @@ async def gstat_(e):
             try:
                 userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
             except ValueError as err:
-                return await eod(xx, f'{err}', time=5)
+                return await eod(xx, f"{err}", time=5)
         else:
             try:
                 userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
             except ValueError as err:
-                return await eod(xx, f'{err}', time=5)
+                return await eod(xx, f"{err}", time=5)
     else:
         return await eod(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name

@@ -136,8 +136,7 @@ async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
     r = result.chats
     output_str = "".join(
-        f"- {channel_obj.title} @{channel_obj.username} \n"
-        for channel_obj in r
+        f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in r
     )
 
     if not r:

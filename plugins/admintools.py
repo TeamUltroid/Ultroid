@@ -274,7 +274,7 @@ async def pin(msg):
     except BadRequestError:
         return await eor(msg, "`Hmm.. Guess I have no rights here!`")
     except Exception as e:
-        return await eor(msg, f'**ERROR:**`{e}`')
+        return await eor(msg, f"**ERROR:**`{e}`")
     if msg.out:
         await msg.delete()
 
@@ -296,14 +296,14 @@ async def unp(ult):
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
-            return await xx.edit(f'**ERROR:**\n`{e}`')
+            return await xx.edit(f"**ERROR:**\n`{e}`")
     elif ch == "all":
         try:
             await ult.client.unpin_message(ult.chat_id)
         except BadRequestError:
             return await xx.edit("`Hmm.. Guess I have no rights here!`")
         except Exception as e:
-            return await xx.edit(f'**ERROR:**`{e}`')
+            return await xx.edit(f"**ERROR:**`{e}`")
     else:
         return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
     if not msg and ch != "all":

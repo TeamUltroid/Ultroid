@@ -141,7 +141,9 @@ async def _(e):
             buddhhu.update({e.id: [logi.id, iuser]})
             snap.update({e.id: desc})
         except ValueError:
-            sur = e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
+            sur = e.builder.article(
+                title="Type ur msg", text="You Didn't Type Your Msg"
+            )
     await e.answer([sur])
 
 

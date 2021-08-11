@@ -97,7 +97,7 @@ async def inline_alive(o):
                 content=InputWebDocument(TLINK, 0, "image/jpg", []),
             )
         ]
-        await o.answer(RES, switch_pm='👥 ULTROID PORTAL', switch_pm_param="start")
+        await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd")
@@ -181,10 +181,10 @@ async def _(event):
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + '\n\nClick the below button to update!'
+    changelog_str = changelog + "\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
-        with open('ultroid_updates.txt', "w+") as file:
+        with open("ultroid_updates.txt", "w+") as file:
             file.write(tl_chnglog)
         await event.edit(
             get_string("upd_5"),
@@ -194,7 +194,7 @@ async def _(event):
                 [Button.inline("« Bᴀᴄᴋ", data="ownr")],
             ],
         )
-        remove('ultroid_updates.txt')
+        remove("ultroid_updates.txt")
         return
     else:
         await event.edit(

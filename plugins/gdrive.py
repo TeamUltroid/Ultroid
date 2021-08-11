@@ -87,7 +87,7 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             required_file_name = input_str
-            await mone.edit(f'Found `{required_file_name}` in {ms} seconds.')
+            await mone.edit(f"Found `{required_file_name}` in {ms} seconds.")
         else:
             return await eod(
                 mone,

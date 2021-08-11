@@ -86,7 +86,7 @@ async def logo_gen(event):
     draw.text(
         (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
     )
-    flnme = 'ultd.png'
+    flnme = "ultd.png"
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):

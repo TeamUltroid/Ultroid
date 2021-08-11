@@ -119,7 +119,7 @@ async def queue_func(chat_id: int):
         LOGS.info(Ec)
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:
-        await asst.send_message(chat_id, f'`{ap}`')
+        await asst.send_message(chat_id, f"`{ap}`")
 
 
 @CallsClient.on_stream_end()

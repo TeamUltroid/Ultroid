@@ -130,7 +130,7 @@ async def do_zip(event):
             event, "First All Files Via {i}addzip then doZip to zip all files at one."
         )
     xx = await eor(event, "`processing`")
-    await bash('zip -r ultroid.zip zip/*')
+    await bash("zip -r ultroid.zip zip/*")
     k = time.time()
     xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, "Uploading...")
     await event.client.send_file(

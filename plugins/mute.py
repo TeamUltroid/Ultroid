@@ -75,7 +75,7 @@ async def startmute(event):
         mute(f"{userid}_{chat_id}")
         await eod(xx, "`Successfully muted...`", time=3)
     except Exception as e:
-        await eod(xx, "Error: " + f'`{e}`')
+        await eod(xx, "Error: " + f"`{e}`")
 
 
 @ultroid_cmd(
@@ -107,7 +107,7 @@ async def endmute(event):
         unmute(f"{userid}_{chat_id}")
         await eod(xx, "`Successfully unmuted...`", time=3)
     except Exception as e:
-        await eod(xx, "Error: " + f'`{e}`')
+        await eod(xx, "Error: " + f"`{e}`")
 
 
 @ultroid_cmd(
@@ -158,7 +158,7 @@ async def _(e):
             time=5,
         )
     except BaseException as m:
-        await eod(xx, f'`{m}`')
+        await eod(xx, f"`{m}`")
 
 
 @ultroid_cmd(
@@ -198,7 +198,7 @@ async def _(e):
             time=5,
         )
     except BaseException as m:
-        await eod(xx, f'`{m}`')
+        await eod(xx, f"`{m}`")
 
 
 @ultroid_cmd(
@@ -239,4 +239,4 @@ async def _(e):
             f"`Successfully Muted` [{name}](tg://user?id={userid}) `in {chat.title}`",
         )
     except BaseException as m:
-        await eod(xx, f'`{m}`')
+        await eod(xx, f"`{m}`")

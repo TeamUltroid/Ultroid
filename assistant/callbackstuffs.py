@@ -61,7 +61,7 @@ async def send(eve):
     thumb = "".join(choices(sorted(glob("resources/extras/*.jpg"))))
     await eve.answer("Sending...")
     if name.startswith("def"):
-        plug_name = name.replace('def_plugin_', "")
+        plug_name = name.replace("def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
         buttons = [
             [
@@ -76,7 +76,7 @@ async def send(eve):
             ],
         ]
     else:
-        plug_name = name.replace('add_plugin_', "")
+        plug_name = name.replace("add_plugin_", "")
         plugin = f"addons/{plug_name}.py"
         buttons = [
             [
@@ -164,18 +164,18 @@ async def changes(okk):
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + '\n\nClick the below button to update!'
+    changelog_str = changelog + "\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
         await asyncio.sleep(2)
-        with open('ultroid_updates.txt', "w+") as file:
+        with open("ultroid_updates.txt", "w+") as file:
             file.write(tl_chnglog)
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
             buttons=Button.inline("Update Now", data="updatenow"),
         )
-        remove('ultroid_updates.txt')
+        remove("ultroid_updates.txt")
         return
     else:
         await okk.edit(
@@ -456,7 +456,7 @@ async def hndlrr(event):
     name = "Sudo Handler"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            'Send The Symbol Which u want as Handler/Trigger to use bot\n\n use /cancel to cancel.'
+            "Send The Symbol Which u want as Handler/Trigger to use bot\n\n use /cancel to cancel."
         )
 
         response = conv.wait_event(events.NewMessage(chats=pru))
@@ -649,7 +649,7 @@ async def sfexf(event):
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
         await conv.send_message(
-            'Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.'
+            "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back."
         )
 
         response = conv.wait_event(events.NewMessage(chats=pru))
@@ -811,7 +811,7 @@ async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "True")
     await event.edit(
-        'Done!! PMPermit type has been set to inline!',
+        "Done!! PMPermit type has been set to inline!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
     )
 
@@ -822,7 +822,7 @@ async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "False")
     await event.edit(
-        'Done!! PMPermit type has been set to normal!',
+        "Done!! PMPermit type has been set to normal!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
     )
 
@@ -968,7 +968,7 @@ async def apon(event):
     var = "AUTOAPPROVE"
     await setit(event, var, "True")
     await event.edit(
-        'Done!! AUTOAPPROVE  Started!!',
+        "Done!! AUTOAPPROVE  Started!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
     )
 
@@ -1008,7 +1008,7 @@ async def pmlog(event):
     var = "PMLOG"
     await setit(event, var, "True")
     await event.edit(
-        'Done!! PMLOGGER  Started!!',
+        "Done!! PMLOGGER  Started!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
     )
 
@@ -1049,7 +1049,7 @@ async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
     await event.edit(
-        'Done! PMPermit has been turned on!!',
+        "Done! PMPermit has been turned on!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
     )
 
@@ -1060,7 +1060,7 @@ async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
     await event.edit(
-        'Done! PMPermit has been turned off!!',
+        "Done! PMPermit has been turned off!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
     )
 
@@ -1069,7 +1069,7 @@ async def pmofff(event):
 @owner
 async def chbot(event):
     await event.edit(
-        'From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)',
+        "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         buttons=[
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
@@ -1135,7 +1135,7 @@ async def chon(event):
 @owner
 async def vcb(event):
     await event.edit(
-        'From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)',
+        "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         buttons=[
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],

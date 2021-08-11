@@ -33,7 +33,7 @@ async def siesace(e):
             song = song.split("|")[0]
             quality = "flac"
         except Exception as ex:
-            await eod(e, f'`{ex}`')
+            await eod(e, f"`{ex}`")
     hmm = time.time()
     lol = await eor(e, "`Searching on Deezer...`")
     sung = song.replace(" ", "%20")
@@ -44,7 +44,7 @@ async def siesace(e):
         return await eod(lol, "`Song Not Found.. `")
     except JSONDecodeError:
         return await eod(
-            lol, '`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`'
+            lol, "`Tell `[sɪᴘᴀᴋ](tg://user?id=1303895686)`to turn on API.`"
         )
 
     try:
@@ -54,7 +54,7 @@ async def siesace(e):
         duration = k["duration"]
         singers = k["artist"]["name"]
     except Exception as ex:
-        return await eod(lol, f'`{ex}`')
+        return await eod(lol, f"`{ex}`")
     await download_file(urrl, title + "." + quality)
     await download_file(img, title + ".jpg")
     okk = await uploader(

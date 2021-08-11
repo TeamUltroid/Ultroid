@@ -57,7 +57,7 @@ _start = [
 async def own(event):
     await event.edit(
         Owner_info_msg,
-        buttons=[Button.inline("Close", data='closeit')],
+        buttons=[Button.inline("Close", data="closeit")],
         link_preview=False,
         parse_mode="html",
     )
@@ -72,10 +72,7 @@ async def closet(lol):
 async def ultroid(event):
     if event.is_group:
         return
-    if (
-        not is_added(event.sender_id)
-        and str(event.sender_id) not in owner_and_sudos()
-    ):
+    if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
         add_user(event.sender_id)
     if str(event.sender_id) not in owner_and_sudos():
         ok = ""

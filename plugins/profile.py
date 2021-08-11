@@ -119,11 +119,14 @@ async def remove_profilepic(delpfp):
     pfplist = await delpfp.client(
         GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim),
     )
-    input_photos = [InputPhoto(
-                id=sep.id,
-                access_hash=sep.access_hash,
-                file_reference=sep.file_reference,
-            ) for sep in pfplist.photos]
+    input_photos = [
+        InputPhoto(
+            id=sep.id,
+            access_hash=sep.access_hash,
+            file_reference=sep.file_reference,
+        )
+        for sep in pfplist.photos
+    ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await ok.edit(f"`Successfully deleted {len(input_photos)} profile picture(s).`")
     await asyncio.sleep(10)
@@ -149,4 +152,4 @@ async def gpoto(e):
         await e.reply(file=okla)
         os.remove(okla)
     except Exception as er:
-        await eor(e, f'ERROR - {er}')
+        await eor(e, f"ERROR - {er}")

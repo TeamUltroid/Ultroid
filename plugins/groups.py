@@ -236,6 +236,6 @@ async def _(event):
         required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
         required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
         required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`\n\n"
-        required_string += '**••Empty**  `Name with deleted Account`\n'
-        required_string += '**••None**  `Last Seen A Long Time Ago`\n'
+        required_string += "**••Empty**  `Name with deleted Account`\n"
+        required_string += "**••None**  `Last Seen A Long Time Ago`\n"
     await eor(xx, required_string)

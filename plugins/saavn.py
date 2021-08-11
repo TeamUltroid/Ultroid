@@ -45,7 +45,7 @@ async def siesace(e):
         duration = k["duration"]
         singers = k["primary_artists"]
     except Exception as ex:
-        return await eod(lol, f'`{ex}`')
+        return await eod(lol, f"`{ex}`")
     urlretrieve(urrl, title + ".mp3")
     urlretrieve(img, title + ".jpg")
     okk = await uploader(

@@ -30,7 +30,7 @@ async def evalJs(
         encoding="utf-8",
     ) as scriptFile:
         scriptFile.write(str(command))
-    os.system('node ./src/ecmaHelper/eval.d.js')
+    os.system("node ./src/ecmaHelper/eval.d.js")
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
         await event.client.send_file(
             event.chat_id,
@@ -46,7 +46,9 @@ async def evalJs(
             caption=f"**☞ evalJS\n\n• Command:**\n`{command}` \n\n**• TimeTaken:**\n`{time.time() - startTime:.2f}` \n\n**• Result:**\n`[Warning]: Unexpected Error Occured !`",
         )
     await event.delete()
-    with open("./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w") as file:
+    with open(
+        "./src/ecmaHelper/evalJs.result.d.txt", encoding="utf-8", mode="w"
+    ) as file:
         file.write("'use-strict';\n")
 
 
