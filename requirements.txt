@@ -1,2 +1,2 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
-py-Ultroid==52.6b0
+git+https://${GITHUB_TOKEN}@${PYPI_REPO}.git
