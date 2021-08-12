@@ -16,7 +16,6 @@
 • `{i}listsudo`
     List all sudo users.
 """
-from pyUltroid.misc import sudoers
 
 from . import *
 
