@@ -124,10 +124,10 @@ async def diesoon(e):
 async def cacheahs(ult):
     if udB.get("FORCESUB"):
         user = await ult.get_sender()
-        if not get_forcesetting(ult.chat_id) or user.bot:
-            return
         joinchat = get_forcesetting(ult.chat_id)
-        if CACHE.get(ult.chat_id]:
+        if not joinchat or user.bot:
+            return
+        if CACHE.get(ult.chat_id):
             if CACHE[ult.chat_id].get(user.id):
                 CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
             else:
