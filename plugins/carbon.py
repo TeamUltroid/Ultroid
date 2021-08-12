@@ -15,7 +15,6 @@
 """
 import random
 
-import requests
 from carbonnow import Carbon
 
 from . import *
