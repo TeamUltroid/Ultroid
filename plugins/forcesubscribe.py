@@ -137,7 +137,11 @@ if udB.get("FORCESUB"):
             return
         except KeyError:
             count = 1
-            CACHE.update({ult.chat_id: {user.id: {"count": count}}})
+            try:
+                chat = CACHE[ult.chat_id]
+                chat.update({user.id: count})
+            except KeyError:
+                CACHE.update({ult.chat_id: {user.id: {"count": count}}})
         try:
             part = await ultroid_bot.get_permissions(int(joinchat), user.id)
             if isinstance(part, ChannelParticipantBanned) and part.participant.left:
