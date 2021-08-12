@@ -127,20 +127,16 @@ async def cacheahs(ult):
         if not get_forcesetting(ult.chat_id) or user.bot:
             return
         joinchat = get_forcesetting(ult.chat_id)
-        try:
-            co = CACHE[ult.chat_id]
-            count = co[user.id]["count"] + 1
-            CACHE.update({ult.chat_id: {user.id: {"count": count}}})
-            if count == 10:
-                co[user.id]["count"] = 0
+        if CACHE.get(ult.chat_id]:
+            if CACHE[ult.chat_id].get(user.id):
+                CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
+            else:
+                CACHE[ult.chat_id].update({user.id: 1})
+        else:
+            CACHE.update({ult.chat_id: {user.id: 1}})
+        if not CACHE[ult.chat_id][user.id] >= 10:
             return
-        except KeyError:
-            count = 1
-            try:
-                chat = CACHE[ult.chat_id]
-                chat.update({user.id: {"count": count}})
-            except KeyError:
-                CACHE.update({ult.chat_id: {user.id: {"count": count}}})
+        CACHE[ult.chat_id].pop(user.id)
         try:
             part = await ultroid_bot.get_permissions(int(joinchat), user.id)
             if isinstance(part, ChannelParticipantBanned) and part.participant.left:
