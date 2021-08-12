@@ -31,6 +31,7 @@ from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
+CACHE = {}
 from . import *
 
 
@@ -115,3 +116,35 @@ async def diesoon(e):
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
     await e.edit("Thanks For Joining ! ")
+
+
+if udB.get("FORCESUB"):
+    @ultroid_bot.on(events.NewMessage())
+    async def cacheahs(ult):
+        user = await ult.get_sender()
+        if not get_forcesetting(ult.chat_id) or user.bot:
+            return
+        joinchat = get_forcesetting(ult.chat_id)
+        try:
+            co = CACHE[ult.chat_id]
+            count = co[user.id]["count"] + 1
+            CACHE.update({ult.chat_id:{user.id:{"count":count}}})
+            if count == 10:
+                co[user.id]["count"] = 0
+            return
+        except KeyError:
+            count = 1
+            CACHE.update({ult.chat_id:{user.id:{"count":count}}})
+        try:
+            await ultroid_bot(GetParticipantRequest(int(joinchat), user.id))
+            return
+        except UserNotParticipantError:
+            pass
+        await ultroid_bot.edit_permissions(
+                    ult.chat_id, user.id, send_messages=False
+                )
+        res = await ultroid_bot.inline_query(
+                    asst.me.username, f"fsub {user.id}_{joinchat}"
+                )
+        await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
+
