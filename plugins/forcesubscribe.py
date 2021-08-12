@@ -134,7 +134,7 @@ async def cacheahs(ult):
         else:
             CACHE.update({ult.chat_id: {user.id: 1}})
         count = CACHE[ult.chat_id][user.id]
-        if count  == 11:
+        if count == 11:
             CACHE[ult.chat_id][user.id].update(1)
             return
         if count in range(2, 11):
