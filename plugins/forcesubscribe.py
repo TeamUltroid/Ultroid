@@ -30,7 +30,7 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
-
+from telethon.tl.types import ChannelParticipantBanned
 from . import *
 
 CACHE = {}
@@ -139,8 +139,9 @@ if udB.get("FORCESUB"):
             CACHE.update({ult.chat_id: {user.id: {"count": count}}})
         try:
             part = await ultroid_bot.get_permissions(int(joinchat), user.id)
-            if not part.left:
-                return
+            if isinstance(part, ChannelParticipantBanned) and part.participant.left:
+                raise UserNotParticipantError(None)
+            return
         except UserNotParticipantError:
             pass
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
