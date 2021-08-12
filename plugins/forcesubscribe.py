@@ -120,7 +120,7 @@ async def diesoon(e):
     await e.edit("Thanks For Joining ! ")
 
 
-@ultroid_bot.on(events.NewMessage())
+@ultroid_bot.on(events.NewMessage(incoming=True))
 async def cacheahs(ult):
     if udB.get("FORCESUB"):
         user = await ult.get_sender()
@@ -134,14 +134,14 @@ async def cacheahs(ult):
                 CACHE[ult.chat_id].update({user.id: 1})
         else:
             CACHE.update({ult.chat_id: {user.id: 1}})
-        if not CACHE[ult.chat_id][user.id] >= 10:
+        if CACHE[ult.chat_id][user.id] <= 10:
+            CACHE[ult.chat_id][user.id].update(1)
             return
-        CACHE[ult.chat_id].pop(user.id)
         try:
             part = await ultroid_bot.get_permissions(int(joinchat), user.id)
-            if isinstance(part, ChannelParticipantBanned) and part.participant.left:
-                raise UserNotParticipantError(None)
-            return
+            ch = await ultroid_bot.get_permissions(ult.chat_id, user.id)
+            if isinstance(ch.participant, (types.ChannelParticipantAdmin, types.ChannelParticipantCreator)):
+                return
         except UserNotParticipantError:
             pass
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
