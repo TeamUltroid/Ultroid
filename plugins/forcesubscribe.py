@@ -138,12 +138,13 @@ if udB.get("FORCESUB"):
             count = 1
             CACHE.update({ult.chat_id: {user.id: {"count": count}}})
         try:
-            await ultroid_bot(GetParticipantRequest(int(joinchat), user.id))
-            return
+            part = await ultroid_bot.get_permissions(int(joinchat), user.id)
+            if not part.participant.left:
+                return
         except UserNotParticipantError:
             pass
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
         res = await ultroid_bot.inline_query(
             asst.me.username, f"fsub {user.id}_{joinchat}"
         )
-        await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
+        await res[0].click(ult.chat_id, reply_to=ult.id)
