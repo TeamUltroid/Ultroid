@@ -139,7 +139,7 @@ if udB.get("FORCESUB"):
             count = 1
             try:
                 chat = CACHE[ult.chat_id]
-                chat.update({user.id: {"count":count}})
+                chat.update({user.id: {"count": count}})
             except KeyError:
                 CACHE.update({ult.chat_id: {user.id: {"count": count}}})
         try:
