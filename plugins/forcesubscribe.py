@@ -133,14 +133,14 @@ async def cacheahs(ult):
                 CACHE[ult.chat_id].update({user.id: 1})
         else:
             CACHE.update({ult.chat_id: {user.id: 1}})
-        if CACHE[ult.chat_id][user.id] == 11:
+        count = CACHE[ult.chat_id][user.id]
+        if count  == 11:
             CACHE[ult.chat_id][user.id].update(1)
+            return
+        if count in range(2, 11):
             return
         try:
             await ultroid_bot.get_permissions(int(joinchat), user.id)
-            ch = await ultroid_bot.get_permissions(ult.chat_id, user.id)
-            if isinstance(ch.participant, types.ChannelParticipantCreator):
-                return
             return
         except UserNotParticipantError:
             pass
