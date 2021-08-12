@@ -24,8 +24,6 @@ from . import *
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
-    if str(ult.sender_id) in sudoers():
-        return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     mmm = ""
     if ult.reply_to_msg_id:
@@ -63,11 +61,6 @@ async def _(ult):
 @ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
-    if str(ult.sender_id) in sudoers():
-        return await eod(
-            ult,
-            "You are sudo user, You cant remove other sudo user.",
-        )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     mmm = ""
     if ult.reply_to_msg_id:
