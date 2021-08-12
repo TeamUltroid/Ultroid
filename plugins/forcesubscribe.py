@@ -120,10 +120,9 @@ async def diesoon(e):
     await e.edit("Thanks For Joining ! ")
 
 
-if udB.get("FORCESUB"):
-
-    @ultroid_bot.on(events.NewMessage())
-    async def cacheahs(ult):
+@ultroid_bot.on(events.NewMessage())
+async def cacheahs(ult):
+    if udB.get("FORCESUB"):  
         user = await ult.get_sender()
         if not get_forcesetting(ult.chat_id) or user.bot:
             return
