@@ -141,9 +141,10 @@ async def cacheahs(ult):
             ch = await ultroid_bot.get_permissions(ult.chat_id, user.id)
             if isinstance(
                 ch.participant,
-                (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+                types.ChannelParticipantCreator
             ):
                 return
+            return
         except UserNotParticipantError:
             pass
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
