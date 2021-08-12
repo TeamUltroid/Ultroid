@@ -325,7 +325,8 @@ async def fastpurger(purg):
     if ABC and purg.text[6] in ["m", "a"]:
         return
     if purg.client._bot:
-        if not purg.is_reply: return await eor(purg, "Reply to a Message!")
+        if not purg.is_reply:
+            return await eor(purg, "Reply to a Message!")
         await purg.client.delete_messages(
             purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)]
         )
