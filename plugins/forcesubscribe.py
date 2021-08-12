@@ -139,7 +139,7 @@ if udB.get("FORCESUB"):
             CACHE.update({ult.chat_id: {user.id: {"count": count}}})
         try:
             part = await ultroid_bot.get_permissions(int(joinchat), user.id)
-            if not part.participant.left:
+            if not part.left:
                 return
         except UserNotParticipantError:
             pass
