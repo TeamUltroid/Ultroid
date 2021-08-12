@@ -30,7 +30,6 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import ChannelParticipantBanned
 
 from . import *
 
@@ -138,9 +137,12 @@ async def cacheahs(ult):
             CACHE[ult.chat_id][user.id].update(1)
             return
         try:
-            part = await ultroid_bot.get_permissions(int(joinchat), user.id)
+            await ultroid_bot.get_permissions(int(joinchat), user.id)
             ch = await ultroid_bot.get_permissions(ult.chat_id, user.id)
-            if isinstance(ch.participant, (types.ChannelParticipantAdmin, types.ChannelParticipantCreator)):
+            if isinstance(
+                ch.participant,
+                (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+            ):
                 return
         except UserNotParticipantError:
             pass
