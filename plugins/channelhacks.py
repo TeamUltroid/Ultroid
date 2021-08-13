@@ -54,7 +54,7 @@ async def _(e):
     y = get_destinations()
     for ys in y:
         try:
-            await ultroid_bot.send_message(int(ys), e)
+            await ultroid_bot.send_message(int(ys), e.message)
         except Exception as e:
             await asst.send_message(int(udB["LOG_CHANNEL"]), str(e))
 
