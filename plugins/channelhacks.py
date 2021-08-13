@@ -56,7 +56,7 @@ async def _(e):
         try:
             await ultroid_bot.send_message(int(ys), e)
         except Exception as e:
-            await asst.send_message(int(udB.get["LOG_CHANNEL"]), str(e))
+            await asst.send_message(int(udB["LOG_CHANNEL"]), str(e))
 
 
 @ultroid_cmd(pattern="shift (.*)")
