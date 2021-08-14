@@ -40,17 +40,17 @@ STRINGS = {
 • Thanks for Reaching till EnD.""",
 }
 
-CURRENT = 0
+CURRENT = 1
 
 
 @callback(re.compile("^initft$"))
 async def init_depl(e):
     global CURRENT
-    CURRENT += 1
-    if CURRENT == 5:
+    if CURRENT == 4:
         return await e.edit(
             STRINGS[5], buttons=Button.inline("<< Back", "initbk"), link_preview=False
         )
+    CURRENT += 1
     await e.edit(
         STRINGS[CURRENT],
         buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")],
@@ -61,13 +61,13 @@ async def init_depl(e):
 @callback(re.compile("^initbk$"))
 async def ineiq(e):
     global CURRENT
-    CURRENT -= 1
-    if CURRENT == 1:
+    if CURRENT == 2:
         return await e.edit(
             STRINGS[1],
-            buttons=Button.inline("Start Back", "initft"),
+            buttons=Button.inline("Start Back >>", "initft"),
             link_preview=False,
         )
+    CURRENT -= 1
     await e.edit(
         STRINGS[CURRENT],
         buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")],
