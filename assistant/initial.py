@@ -45,6 +45,7 @@ CURRENT = 1
 
 @callback(re.compile("^initft$"))
 async def init_depl(e):
+    global CURRENT
     if CURRENT == 4:
         return await e.edit(STRINGS[5], buttons=Button.inline("<< Back", "initbk"))
     CURRENT += 1
@@ -53,6 +54,7 @@ async def init_depl(e):
 
 @callback(re.compile("^initbk$"))
 async def ineiq(e):
+    global CURRENT
     if CURRENT == 2:
         return await e.edit(STRINGS[1], buttons=Button.inline("Start Back", "initft"))
     CURRENT -= 1
