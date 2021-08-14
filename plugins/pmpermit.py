@@ -67,6 +67,7 @@ if not Redis("PM_TEXT"):
 else:
     UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n"+Redis('PM_TEXT')+"\n\nYou have {warn}/{twarn} warnings!"
 
+
 UNS = get_string("pmperm_2")
 # 1
 if Redis("PMWARNS"):
