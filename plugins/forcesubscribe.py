@@ -26,7 +26,7 @@
 import re
 
 from pyUltroid.functions.forcesub_db import *
-from telethon.errors.rpcerrorlist import UserNotParticipantError
+from telethon.errors.rpcerrorlist import UserNotParticipantError, ChatAdminRequiredError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
@@ -144,7 +144,12 @@ async def cacheahs(ult):
             return
         except UserNotParticipantError:
             pass
-        await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+        try:
+            await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+        except ChatAdminRequiredError:
+            return
+        except Exception as e:
+            LOGS.info(e)
         res = await ultroid_bot.inline_query(
             asst.me.username, f"fsub {user.id}_{joinchat}"
         )
