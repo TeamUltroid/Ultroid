@@ -429,7 +429,7 @@ if sett == "True":
                     )
                 except KeyError:
                     _not_approved[uid] = await asst.send_message(
-                        int(udB.get("LOG_CHANNEL")),,
+                        int(udB.get("LOG_CHANNEL")),
                         f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
                         buttons=[
                             Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
