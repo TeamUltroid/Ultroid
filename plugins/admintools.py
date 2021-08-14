@@ -18,10 +18,10 @@
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
 
-• `{i}tkick <time> <reply to msg/ use id>`
+• `{i}tban <time> <reply to msg/ use id>`
     s- seconds | m- minutes
     h- hours |  d- days
-    Kick user in current chat with time.
+    Ban user in current chat with time.
 
 • `{i}pin <reply to message>`
     Pin the message in the chat
@@ -218,7 +218,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tkick ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="tban ?(.*)", type=["official", "manager"])
 async def tkicki(e):
     huh = e.text.split(" ")
     try:
@@ -246,7 +246,7 @@ async def tkicki(e):
         )
         await eod(
             e,
-            f"`Successfully kicked` `{fn}` `in {chat.title} for {tme}`",
+            f"`Successfully Banned` `{fn}` `in {chat.title} for {tme}`",
             time=15,
         )
     except Exception as m:
