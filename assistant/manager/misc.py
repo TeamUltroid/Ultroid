@@ -9,7 +9,7 @@
 from . import *
 
 
-@ultroid_cmd(pattern="kickme", type=["manager"])
+@ultroid_cmd(pattern="kickme", type=["manager"], allow_all=True)
 async def doit(e):
     try:
         await e.client.kick_participant(e.chat_id, e.sender_id)
