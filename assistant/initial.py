@@ -42,6 +42,7 @@ STRINGS = {
 
 CURRENT = 1
 
+
 @callback(re.compile("^initft$"))
 async def init_depl(e):
     if CURRENT == 4:
