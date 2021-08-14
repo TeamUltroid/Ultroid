@@ -47,6 +47,7 @@ CURRENT = 1
 async def init_depl(e):
     global CURRENT
     if CURRENT == 4:
+        CURRENT += 1
         return await e.edit(
             STRINGS[5], buttons=Button.inline("<< Back", "initbk"), link_preview=False
         )
