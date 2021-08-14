@@ -7,10 +7,13 @@
 
 """
 ✘ Commands Available -
+
 • `{i}afk <optional reason>`
     AFK means away from keyboard,
     After u active this if Someone tag or msg u then It auto Reply Him/her,
+
     (Note : By Reply To any media U can set media afk too).
+
 """
 
 
@@ -39,10 +42,12 @@ async def set_afk(event):
             text = reply.text
         if reply.media:
             media_type = mediainfo(reply.media)
-            if media_type.startswith(("pic", "sticker", "gif")):
+            if media_type.startswith(("pic", "gif")):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
                 media = f"https://telegra.ph{iurl[0]}"
+            elif "sticker" in media_type:
+                media = reply.file.id
             else:
                 return await eod(event, "`Unsupported media`")
     add_afk(text, media_type, media)
