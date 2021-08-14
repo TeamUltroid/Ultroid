@@ -19,7 +19,6 @@ from telethon.utils import get_display_name
 from . import *
 
 
-
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions

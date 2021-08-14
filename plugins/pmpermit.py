@@ -63,9 +63,15 @@ PMPIC = Redis("PMPIC") or None
 UND = get_string("pmperm_1")
 
 if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
+    UNAPPROVED_MSG = (
+        "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
+    )
 else:
-    UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n"+Redis('PM_TEXT')+"\n\nYou have {warn}/{twarn} warnings!"
+    UNAPPROVED_MSG = (
+        "**PMSecurity of {ON}!**\n\n"
+        + Redis("PM_TEXT")
+        + "\n\nYou have {warn}/{twarn} warnings!"
+    )
 
 
 UNS = get_string("pmperm_2")
@@ -278,7 +284,9 @@ if sett == "True":
                                 caption=message_,
                             )
                         else:
-                            _to_delete[user.id] = await ultroid_bot.send_message(user.id, _message)
+                            _to_delete[user.id] = await ultroid_bot.send_message(
+                                user.id, _message
+                            )
 
                     else:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
@@ -310,7 +318,9 @@ if sett == "True":
                                 caption=message_,
                             )
                         else:
-                            _to_delete[user.id] = await ultroid_bot.send_message(user.id, _message)
+                            _to_delete[user.id] = await ultroid_bot.send_message(
+                                user.id, _message
+                            )
                     else:
                         try:
                             results = await ultroid.inline_query(
