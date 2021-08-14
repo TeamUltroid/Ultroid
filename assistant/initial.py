@@ -47,15 +47,15 @@ CURRENT = 1
 async def init_depl(e):
     global CURRENT
     if CURRENT == 4:
-        return await e.edit(STRINGS[5], buttons=Button.inline("<< Back", "initbk"))
+        return await e.edit(STRINGS[5], buttons=Button.inline("<< Back", "initbk"), link_preview=False)
     CURRENT += 1
-    await e.edit(STRINGS[CURRENT])
+    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("Start Back", "initft"), Button.inline("<< Back", "initbk")], link_preview=False)
 
 
 @callback(re.compile("^initbk$"))
 async def ineiq(e):
     global CURRENT
     if CURRENT == 2:
-        return await e.edit(STRINGS[1], buttons=Button.inline("Start Back", "initft"))
+        return await e.edit(STRINGS[1], buttons=Button.inline("Start Back", "initft"), link_preview=False)
     CURRENT -= 1
-    await e.edit(STRINGS[CURRENT])
+    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("Start Back", "initft"), Button.inline("<< Back", "initbk")], link_preview=False)
