@@ -6,17 +6,19 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import re
+
 from . import *
 
-STRINGS = {1: """🎇 **Thanks for Deploying Ultroid Userbot!**
+STRINGS = {
+    1: """🎇 **Thanks for Deploying Ultroid Userbot!**
 
 • Here, are the Some Basic stuff from, where you can Know, about its Usage.""",
-2: """🎉** About Ultroid**
+    2: """🎉** About Ultroid**
 
 🧿 Ultroid is Pluggable and powerful Telethon Userbot, made in Python from Scratch. It is Aimed to Increase Security along with Addition of Other Useful Features.
 
 ❣ Made by **@TeamUltroid**""",
-3: """**💡• FAQs •**
+    3: """**💡• FAQs •**
 
 -> [Setting up TimeZone](https://t.me/UltroidUpdates/22)
 -> [About Inline PmPermit](https://t.me/UltroidUpdates/21)
@@ -24,21 +26,21 @@ STRINGS = {1: """🎇 **Thanks for Deploying Ultroid Userbot!**
 -> [Custom Thumbnail](https://t.me/UltroidUpdates/13)
 -> [About FullSudo](https://t.me/UltroidUpdates/11)
 -> [Setting Up PmBot](https://t.me/UltroidUpdates/2)
--> [Also Check](https://t.me/UltroidUpdates/14) 
+-> [Also Check](https://t.me/UltroidUpdates/14)
 
 **• To Know About Updates**
   - Join @TheUltroid.""",
-4: """• `To Know All Available Commands`
+    4: """• `To Know All Available Commands`
 
   - `{HNDLR}help`
   - `{HNDLR}cmds`""",
-5: """• **For Any Other Query or Suggestion**
+    5: """• **For Any Other Query or Suggestion**
   - Move to **@UltroidSupport**.
 
-• Thanks for Reaching till EnD."""}
+• Thanks for Reaching till EnD.""",
+}
 
 
 @callback(re.compile("^init_(.*)"))
 async def init_depl(e):
-    num = e.pattern_match.group(1).decode("utf-8").split("_")
-    pass
+    e.pattern_match.group(1).decode("utf-8").split("_")
