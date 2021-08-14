@@ -30,7 +30,7 @@ STRINGS = {
 
 **• To Know About Updates**
   - Join @TheUltroid.""",
-    4: """• `To Know All Available Commands`
+    4: f"""• `To Know All Available Commands`
 
   - `{HNDLR}help`
   - `{HNDLR}cmds`""",
@@ -46,10 +46,10 @@ CURRENT = 1
 @callback(re.compile("^initft$"))
 async def init_depl(e):
     global CURRENT
-    if CURRENT == 4:
+    if CURRENT == 5:
         return await e.edit(STRINGS[5], buttons=Button.inline("<< Back", "initbk"), link_preview=False)
     CURRENT += 1
-    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("Start Back", "initft"), Button.inline("<< Back", "initbk")], link_preview=False)
+    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")], link_preview=False)
 
 
 @callback(re.compile("^initbk$"))
@@ -58,4 +58,4 @@ async def ineiq(e):
     if CURRENT == 1:
         return await e.edit(STRINGS[1], buttons=Button.inline("Start Back", "initft"), link_preview=False)
     CURRENT -= 1
-    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("Start Back", "initft"), Button.inline("<< Back", "initbk")], link_preview=False)
+    await e.edit(STRINGS[CURRENT], buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")], link_preview=False)
