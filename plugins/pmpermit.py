@@ -439,8 +439,8 @@ if sett == "True":
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         elif apprvpm.is_private:
-            user = apprvpm.sender
-            aname = await apprvpm.client.get_entity(user.id)
+            aname = await apprvpm.get_sender()
+            user = aname
             if str(user.id) in DEVLIST:
                 return await eor(
                     apprvpm,
