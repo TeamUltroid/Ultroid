@@ -34,7 +34,7 @@ async def set_afk(event):
     elif is_afk():
         return
     text, media, media_type = None, None, None
-    if e.pattern_match.group(1):
+    if event.pattern_match.group(1):
         text = event.text.split(maxsplit=1)[1]
     reply = await event.get_reply_message()
     if reply:
@@ -80,6 +80,9 @@ async def set_afk(event):
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)
+        return await asst.send_message(LOG_CHANNEL, msg2.text)
+    await asst.send_message(LOG_CHANNEL, msg.text)
+
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
