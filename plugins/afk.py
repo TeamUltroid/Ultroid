@@ -81,7 +81,7 @@ async def set_afk(event):
     if msg2:
         old_afk_msg.append(msg2)
         return await asst.send_message(LOG_CHANNEL, msg2.text)
-    await asst.send_message(LOG_CHANNEL, msg.text)
+    await asst.send_message(LOG_CHANNEL, msg1.text)
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
