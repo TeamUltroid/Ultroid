@@ -112,7 +112,7 @@ def update_pm(userid, message, warns_given):
         pass
 
 
-def delete_pm_warn_msgs(chat: int):
+async def delete_pm_warn_msgs(chat: int):
     try:
         await _to_delete[chat].delete()
     except KeyError:
@@ -186,7 +186,7 @@ if sett == "True":
             return
         if not is_approved(miss.id):
             approve_user(miss.id)
-            delete_pm_warn_msgs(miss.id)
+            await delete_pm_warn_msgs(miss.id)
             try:
                 await ultroid_bot.edit_folder(miss.id, folder=0)
             except BaseException:
@@ -256,7 +256,7 @@ if sett == "True":
                 if event.text != prevmsg:
                     if "PMSecurity" in event.text or "**PMSecurity" in event.text:
                         return
-                    delete_pm_warn_msgs(user.id)
+                    await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -288,7 +288,7 @@ if sett == "True":
                         except Exception as e:
                             LOGS.info(str(e))
                 else:
-                    delete_pm_warn_msgs(user.id)
+                    await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -322,7 +322,7 @@ if sett == "True":
                             LOGS.info(str(e))
                 LASTMSG.update({user.id: event.text})
             else:
-                delete_pm_warn_msgs(user.id)
+                await delete_pm_warn_msgs(user.id)
                 message_ = UNAPPROVED_MSG.format(
                     ON=OWNER_NAME,
                     warn=wrn,
@@ -355,7 +355,7 @@ if sett == "True":
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
-                delete_pm_warn_msgs(user.id)
+                await delete_pm_warn_msgs(user.id)
                 await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
@@ -454,7 +454,7 @@ if sett == "True":
                 except BaseException:
                     pass
                 await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                delete_pm_warn_msgs(user.id)
+                await delete_pm_warn_msgs(user.id)
                 try:
                     await asst.edit_message(
                         int(udB.get("LOG_CHANNEL")),
@@ -686,7 +686,7 @@ async def apr_in(event):
                 ],
             ],
         )
-        delete_pm_warn_msgs(uid)
+        await delete_pm_warn_msgs(uid)
         await event.answer("Approved.")
     else:
         await event.edit(
