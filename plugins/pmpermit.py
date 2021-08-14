@@ -54,32 +54,18 @@ from telethon.utils import get_display_name
 from . import *
 
 # ========================= CONSTANTS =============================
+
 COUNT_PM = {}
 LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
-
 PMPIC = Redis("PMPIC") or None
 UND = get_string("pmperm_1")
 
 if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = """
-**PMSecurity of {ON}!**
-
-{UND}
-
-You have {warn}/{twarn} warnings!"""
+    UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
 else:
-    UNAPPROVED_MSG = (
-        """
-**PMSecurity of {ON}!**"""
-        f"""
-
-{Redis("PM_TEXT")}
-"""
-        """
-You have {warn}/{twarn} warnings!"""
-    )
+    UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n"+Redis('PM_TEXT')+"\n\nYou have {warn}/{twarn} warnings!"
 
 UNS = get_string("pmperm_2")
 # 1
@@ -101,6 +87,8 @@ PMCMDS = [
 ]
 
 _not_approved = {}
+_to_delete = {}
+
 sett = Redis("PMSETTING")
 if not sett:
     sett = "False"
@@ -116,24 +104,19 @@ my_bot = asst.me.username
 def update_pm(userid, message, warns_given):
     try:
         WARN_MSGS.update({userid: message})
-    except KeyError as e:
-        print(e)
+    except KeyError:
+        pass
     try:
         U_WARNS.update({userid: warns_given})
-    except KeyError as e:
-        print(e)
+    except KeyError:
+        pass
 
 
-async def delete_pm_warn_msgs(chat: int):
-    async for i in ultroid_bot.iter_messages(chat, from_user="me"):
-        tx = i.text
-        if tx and tx.startswith(
-            ("**PMSecurity", "#APPROVED", "#DISAPPROVED", "#UNBLOCKED", "#BLOCKED")
-        ):
-            if tx.startswith("#"):
-                # sleep for a while once approved, we need the menu open!
-                await asyncio.sleep(4)
-            await i.delete()
+def delete_pm_warn_msgs(chat: int):
+    try:
+        await _to_delete[chat].delete()
+    except KeyError:
+        pass
 
 
 # =================================================================
@@ -172,7 +155,7 @@ async def _(e):
     ),
 )
 async def permitpm(event):
-    user = await event.get_chat()
+    user = event.sender
     if user.bot or user.is_self or user.verified:
         return
     if is_logger(user.id):
@@ -193,7 +176,7 @@ if sett == "True":
         ),
     )
     async def autoappr(e):
-        miss = await e.get_chat()
+        miss = e.sender
         if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
             return
         if str(miss.id) in DEVLIST:
@@ -203,7 +186,7 @@ if sett == "True":
             return
         if not is_approved(miss.id):
             approve_user(miss.id)
-            await delete_pm_warn_msgs(miss.id)
+            delete_pm_warn_msgs(miss.id)
             try:
                 await ultroid_bot.edit_folder(miss.id, folder=0)
             except BaseException:
@@ -228,7 +211,7 @@ if sett == "True":
         ),
     )
     async def permitpm(event):
-        user = await event.get_chat()
+        user = event.sender
         if user.bot or user.is_self or user.verified:
             return
         if str(user.id) in DEVLIST:
@@ -273,7 +256,7 @@ if sett == "True":
                 if event.text != prevmsg:
                     if "PMSecurity" in event.text or "**PMSecurity" in event.text:
                         return
-                    await delete_pm_warn_msgs(user.id)
+                    delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -288,24 +271,24 @@ if sett == "True":
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
                         if PMPIC:
-                            await ultroid.send_file(
+                            _to_delete[user.id] = await ultroid.send_file(
                                 user.id,
                                 PMPIC,
                                 caption=message_,
                             )
                         else:
-                            await ultroid_bot.send_message(user.id, _message)
+                            _to_delete[user.id] = await ultroid_bot.send_message(user.id, _message)
 
                     else:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
                         try:
-                            await results[0].click(
+                            _to_delete[user.id] = await results[0].click(
                                 user.id, reply_to=event.id, hide_via=True
                             )
                         except Exception as e:
-                            LOGS.info(e)
+                            LOGS.info(str(e))
                 else:
-                    await delete_pm_warn_msgs(user.id)
+                    delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
                         ON=OWNER_NAME,
                         warn=wrn,
@@ -320,26 +303,26 @@ if sett == "True":
                     update_pm(user.id, message_, wrn)
                     if inline_pm == "False":
                         if PMPIC:
-                            await ultroid.send_file(
+                            _to_delete[user.id] = await ultroid.send_file(
                                 user.id,
                                 PMPIC,
                                 caption=message_,
                             )
                         else:
-                            await ultroid_bot.send_message(user.id, _message)
+                            _to_delete[user.id] = await ultroid_bot.send_message(user.id, _message)
                     else:
                         try:
                             results = await ultroid.inline_query(
                                 my_bot, f"ip_{user.id}"
                             )
-                            await results[0].click(
+                            _to_delete[user.id] = await results[0].click(
                                 user.id, reply_to=event.id, hide_via=True
                             )
                         except Exception as e:
-                            print(e)
+                            LOGS.info(str(e))
                 LASTMSG.update({user.id: event.text})
             else:
-                await delete_pm_warn_msgs(user.id)
+                delete_pm_warn_msgs(user.id)
                 message_ = UNAPPROVED_MSG.format(
                     ON=OWNER_NAME,
                     warn=wrn,
@@ -353,7 +336,7 @@ if sett == "True":
                 )
                 update_pm(user.id, message_, wrn)
                 if inline_pm == "False":
-                    await ultroid.send_file(
+                    _to_delete[user.id] = await ultroid.send_file(
                         user.id,
                         PMPIC,
                         caption=message_,
@@ -361,18 +344,18 @@ if sett == "True":
                 else:
                     try:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
-                        await results[0].click(
+                        _to_delete[user.id] = await results[0].click(
                             user.id, reply_to=event.id, hide_via=True
                         )
                     except Exception as e:
-                        print(e)
+                        LOGS.info(str(e))
             LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
                 COUNT_PM.update({user.id: 1})
             else:
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
-                await delete_pm_warn_msgs(user.id)
+                delete_pm_warn_msgs(user.id)
                 await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
@@ -417,7 +400,7 @@ if sett == "True":
     async def approvepm(apprvpm):
         if apprvpm.reply_to_msg_id:
             reply = await apprvpm.get_reply_message()
-            replied_user = await apprvpm.client.get_entity(reply.sender_id)
+            replied_user = reply.sender
             aname = replied_user.id
             if str(aname) in DEVLIST:
                 return await eor(
@@ -433,19 +416,29 @@ if sett == "True":
                 except BaseException:
                     pass
                 await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    _not_approved[uid],
-                    f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
-                    buttons=[
-                        Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
-                        Button.inline("Block", data=f"block_{uid}"),
-                    ],
-                )
+                try:
+                    await asst.edit_message(
+                        int(udB.get("LOG_CHANNEL")),
+                        _not_approved[uid],
+                        f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                        buttons=[
+                            Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                            Button.inline("Block", data=f"block_{uid}"),
+                        ],
+                    )
+                except KeyError:
+                    _not_approved[uid] = await asst.send_message(
+                        int(udB.get("LOG_CHANNEL")),,
+                        f"#APPROVED\n\n`User: `[{name0}](tg://user?id={uid})",
+                        buttons=[
+                            Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
+                            Button.inline("Block", data=f"block_{uid}"),
+                        ],
+                    )
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         elif apprvpm.is_private:
-            user = await apprvpm.get_chat()
+            user = apprvpm.sender
             aname = await apprvpm.client.get_entity(user.id)
             if str(user.id) in DEVLIST:
                 return await eor(
@@ -461,7 +454,7 @@ if sett == "True":
                 except BaseException:
                     pass
                 await eod(apprvpm, f"[{name0}](tg://user?id={uid}) `approved to PM!`")
-                await delete_pm_warn_msgs(user.id)
+                delete_pm_warn_msgs(user.id)
                 try:
                     await asst.edit_message(
                         int(udB.get("LOG_CHANNEL")),
@@ -492,7 +485,7 @@ if sett == "True":
     async def disapprovepm(e):
         if e.reply_to_msg_id:
             reply = await e.get_reply_message()
-            replied_user = await e.client.get_entity(reply.sender_id)
+            replied_user = reply.sender
             aname = replied_user.id
             if str(aname) in DEVLIST:
                 return await eor(
@@ -523,7 +516,7 @@ if sett == "True":
                 await asyncio.sleep(5)
                 await e.delete()
         elif e.is_private:
-            bbb = await e.get_chat()
+            bbb = e.sender
             aname = await e.client.get_entity(bbb.id)
             if str(bbb.id) in DEVLIST:
                 return await eor(
@@ -693,7 +686,7 @@ async def apr_in(event):
                 ],
             ],
         )
-        await delete_pm_warn_msgs(uid)
+        delete_pm_warn_msgs(uid)
         await event.answer("Approved.")
     else:
         await event.edit(
