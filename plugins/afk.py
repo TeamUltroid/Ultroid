@@ -91,6 +91,8 @@ async def remove_afk(event):
         and not is_approved(event.chat_id)
     ):
         return
+    elif "afk" in event.text:
+        return
     if is_afk():
         _, _, _, afk_time = is_afk()
         del_afk()
@@ -114,6 +116,8 @@ async def on_afk(event):
     ):
         return
     elif not is_afk():
+        return
+    elif "afk" in event.text:
         return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None
