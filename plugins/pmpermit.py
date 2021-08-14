@@ -162,7 +162,7 @@ async def _(e):
     ),
 )
 async def permitpm(event):
-    user = event.sender
+    user = await event.get_sender()
     if user.bot or user.is_self or user.verified:
         return
     if is_logger(user.id):
@@ -183,7 +183,7 @@ if sett == "True":
         ),
     )
     async def autoappr(e):
-        miss = e.sender
+        miss = await e.get_sender()
         if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
             return
         if str(miss.id) in DEVLIST:
@@ -218,7 +218,7 @@ if sett == "True":
         ),
     )
     async def permitpm(event):
-        user = event.sender
+        user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
         if str(user.id) in DEVLIST:
@@ -527,7 +527,7 @@ if sett == "True":
                 await asyncio.sleep(5)
                 await e.delete()
         elif e.is_private:
-            bbb = e.sender
+            bbb = await e.get_sender()
             aname = await e.client.get_entity(bbb.id)
             if str(bbb.id) in DEVLIST:
                 return await eor(
