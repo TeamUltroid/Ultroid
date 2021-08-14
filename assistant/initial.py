@@ -40,7 +40,19 @@ STRINGS = {
 • Thanks for Reaching till EnD.""",
 }
 
+CURRENT = 1
 
-@callback(re.compile("^init_(.*)"))
+@callback(re.compile("^initft$"))
 async def init_depl(e):
-    e.pattern_match.group(1).decode("utf-8").split("_")
+    if CURRENT == 4:
+        return await e.edit(STRINGS[5], buttons=Button.inline("<< Back", "initbk"))
+    CURRENT += 1
+    await e.edit(STRINGS[CURRENT])
+
+
+@callback(re.compile("^initbk$"))
+async def ineiq(e):
+    if CURRENT == 2:
+        return await e.edit(STRINGS[1], buttons=Button.inline("Start Back", "initft"))
+    CURRENT -= 1
+    await e.edit(STRINGS[CURRENT])
