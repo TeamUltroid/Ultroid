@@ -121,6 +121,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         fullname = f"{name} {last}" if last else name
         uu = user.username
         username = f"@{uu}" if uu else mention
+        wel = get_goodbye(ult.chat_id)
         msgg = wel["goodbye"]
         med = wel["media"]
         userid = user.id
