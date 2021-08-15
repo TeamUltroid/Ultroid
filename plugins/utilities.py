@@ -99,7 +99,8 @@ _copied_msg = {}
 
 @ultroid_cmd(pattern="kickme$", fullsudo=True)
 async def leave(ult):
-    await eor(ult, f"`{ultroid_bot.me.first_name} has left this group, bye!!.`")
+    me = asst.me if ult.client._bot else ultroid_bot.me
+    await eor(ult, f"`{me.first_name} has left this group, bye!!.`")
     await ult.client(LeaveChannelRequest(ult.chat_id))
 
 
