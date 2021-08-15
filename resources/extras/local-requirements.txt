@@ -10,6 +10,7 @@ GitPython
 googletrans==4.0.0rc1
 git+https://github.com/ProgrammingError/heroku3.py
 imutils
+instagrapi
 lottie
 lxml
 moviepy
