@@ -181,7 +181,9 @@ async def uunban(ult):
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
     sender = inline_mention(await ult.get_sender())
-    text = f"{inline_mention(user)} **was unbanned by** {sender} **in** `{ult.chat.title}`"
+    text = (
+        f"{inline_mention(user)} **was unbanned by** {sender} **in** `{ult.chat.title}`"
+    )
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
@@ -267,7 +269,7 @@ async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, "Reply a Message to Pin !")
     if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
-        link = (await msg.client(ExpLink(msg.chat_id, xx))).link
+        (await msg.client(ExpLink(msg.chat_id, xx))).link
     try:
         await msg.client.pin_message(msg.chat_id, xx, notify=False)
     except BadRequestError:
