@@ -9,6 +9,20 @@
 from . import *
 
 
+@ultroid_cmd(pattern="echo ?(.*)", type=["manager"])
+async def oqha(e):
+    match = e.pattern_match.group(1)
+    if match:
+        text = match
+        reply_to = e
+    elif e.is_reply:
+        text = (await e.get_reply_message()).text
+        reply_to = e.reply_to_msg_id
+    else:
+        return await eod(e, "What to Echo?")
+    await e.client.send_message(e.chat_id, text, reply_to=reply_to)
+
+
 @ultroid_cmd(pattern="kickme", type=["manager"], allow_all=True)
 async def doit(e):
     try:
