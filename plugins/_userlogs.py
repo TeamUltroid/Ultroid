@@ -41,30 +41,33 @@ async def all_messages_catcher(e):
     y = e.chat
     where_n = get_display_name(y)
     who_n = get_display_name(x)
-    where_l = f"https://t.me/c/{y.id}/{e.id}"
+    where_l = e.message.message_link
     send = await ultroid_bot.get_messages(e.chat_id, ids=e.id)
     if x.username:
         who_l = f"https://t.me/{x.username}"
         bt = Button.url(who_n, who_l)
     else:
         bt = Button.inline(who_n, data=f"who{x.id}")
+    buttons=[
+                [bt],
+                [Button.url(where_n, where_l)],
+            ],
     try:
         await asst.send_message(
             NEEDTOLOG,
             send,
-            buttons=[
-                [bt],
-                [Button.url(where_n, where_l)],
-            ],
+            buttons=buttons
         )
     except MediaEmptyError:
-        await asst.send_message(
+        try:
+            msg = await asst.get_messages(e.chat_id, ids=e.id)
+            await asst.send_message(NEEDTOLOG, send, buttons=buttons)
+        except Exception as e:
+            LOGS.info(e)
+            await asst.send_message(
             NEEDTOLOG,
             "`Unsupported Media`",
-            buttons=[
-                [bt],
-                [Button.url(where_n, where_l)],
-            ],
+            buttons=buttons
         )
     except (PeerIdInvalidError, ValueError):
         await asst.send_message(
