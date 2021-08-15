@@ -195,7 +195,7 @@ async def uunban(ult):
     type=["official", "manager"],
 )
 async def kck(ult):
-    if ult.text==f"{HNDLR}kickme" or not ult.text.startswith(HNDLR):
+    if ult.text == f"{HNDLR}kickme" or not ult.text.startswith(HNDLR):
         return
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
