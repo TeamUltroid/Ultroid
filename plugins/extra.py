@@ -58,12 +58,8 @@ async def delete_it(delme):
 async def copy(e):
     reply = await e.get_reply_message()
     if reply:
-        if reply.text and not reply.media:
-            await eor(e, reply.text)
-        else:
-            await reply.reply(reply)
-            if e.out:
-                await e.delete()
+        await reply.reply(reply)
+        await e.delete()
     else:
         await eod(e, "`Reply To any message`")
 
