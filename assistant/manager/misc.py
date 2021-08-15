@@ -7,7 +7,7 @@
 
 
 from . import *
-
+import aiohttp
 
 @ultroid_cmd(pattern="echo ?(.*)", type=["manager"])
 async def oqha(e):
@@ -30,3 +30,13 @@ async def doit(e):
     except Exception as e:
         return await eod(e, str(e))
     await eod(e, "Yes, You are right, get out.")
+
+
+@ultroid_cmd(pattern="joke$", type=["manager"])
+async def do_joke(e):
+    e = await e.get_reply_message() if e.is_reply else e
+    link = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single"
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(link) as out:
+            out = await out.json()
+    await e.reply(out["joke"])
