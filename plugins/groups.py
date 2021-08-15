@@ -34,7 +34,8 @@ from telethon.tl.types import (
 from . import *
 
 
-@ultroid_cmd(pattern="setgpic$", groups_only=True, admins_only=True)
+@ultroid_cmd(pattern="setgpic$", groups_only=True, admins_only=True, 
+    type=["official","manager"])
 async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
@@ -55,7 +56,7 @@ async def _(ult):
     os.remove(replfile)
 
 
-@ultroid_cmd(pattern="delgpic$", groups_only=True, admins_only=True)
+@ultroid_cmd(pattern="delgpic$", groups_only=True, admins_only=True, type=["official", "manager"])
 async def _(ult):
     try:
         await ult.client(EditPhotoRequest(ult.chat_id, types.InputChatPhotoEmpty()))
