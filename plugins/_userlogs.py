@@ -48,27 +48,21 @@ async def all_messages_catcher(e):
         bt = Button.url(who_n, who_l)
     else:
         bt = Button.inline(who_n, data=f"who{x.id}")
-    buttons=[
-                [bt],
-                [Button.url(where_n, where_l)],
-            ],
+    buttons = (
+        [
+            [bt],
+            [Button.url(where_n, where_l)],
+        ],
+    )
     try:
-        await asst.send_message(
-            NEEDTOLOG,
-            send,
-            buttons=buttons
-        )
+        await asst.send_message(NEEDTOLOG, send, buttons=buttons)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             await asst.send_message(NEEDTOLOG, send, buttons=buttons)
         except Exception as e:
             LOGS.info(e)
-            await asst.send_message(
-            NEEDTOLOG,
-            "`Unsupported Media`",
-            buttons=buttons
-        )
+            await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
     except (PeerIdInvalidError, ValueError):
         await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
