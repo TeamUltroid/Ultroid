@@ -140,20 +140,20 @@ async def bban(ult):
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to ban a user.`")
+    except BadRequestError as e:
+        return await xx.edit(f"Error - `{e}|\n`I don't have the right to ban a user.`")
     except UserIdInvalidError:
         return await xx.edit("`I couldn't get who he is!`")
+    senderme = inline_mention(await ult.get_sender())
     try:
         reply = await ult.get_reply_message()
         if reply:
             await reply.delete()
     except BadRequestError:
         return await xx.edit(
-            f"{inline_mention(user)}**was banned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
+            f"{inline_mention(user)}**was banned by** {senderme} **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
         )
     userme = inline_mention(user)
-    senderme = inline_mention(await ult.get_sender())
     if reason:
         await xx.edit(
             f"{userme} **was banned by** {senderme} **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
@@ -180,7 +180,8 @@ async def uunban(ult):
         return await xx.edit("`I don't have the right to unban a user.`")
     except UserIdInvalidError:
         await xx.edit("`I couldn't get who he is!`")
-    text = f"{inline_mention(user)} **was unbanned by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`"
+    sender = inline_mention(await ult.get_sender())
+    text = f"{inline_mention(user)} **was unbanned by** {sender} **in** `{ult.chat.title}`"
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
@@ -202,7 +203,7 @@ async def kck(ult):
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
     if user.id in [ultroid_bot.uid, asst.me.id]:
-        return await xx.edit("`You Can't kick that powerhouse`")
+        return await xx.edit("`You will Never kick that Guy..`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
         await asyncio.sleep(0.9)
@@ -212,7 +213,7 @@ async def kck(ult):
         return await xx.edit(
             f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
         )
-    text = f"{inline_mention(user)} **was kicked by** {inline_mention(ult.sender)} **in** `{ult.chat.title}`"
+    text = f"{inline_mention(user)} **was kicked by** {inline_mention(await ult.get_sender())} **in** `{ult.chat.title}`"
     if reason:
         text += f"\n**Reason**: `{reason}`"
     await xx.edit(text)
@@ -267,8 +268,6 @@ async def pin(msg):
         return await eor(msg, "Reply a Message to Pin !")
     if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
         link = (await msg.client(ExpLink(msg.chat_id, xx))).link
-        f"`Pinned` [This Message]({link})"
-    msg.pattern_match.group(1)
     try:
         await msg.client.pin_message(msg.chat_id, xx, notify=False)
     except BadRequestError:
