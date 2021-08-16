@@ -125,7 +125,10 @@ async def when_ultd_added_to_chat(event):
     chat = await event.get_chat()
     if not (user and user.is_self):
         return
-    chat = f"[{chat.title}]({event.message.message_link})"
+    if chat.username:
+        chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
+    else:
+        chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
     buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
     if event.user_added:
         tmp = event.added_by
