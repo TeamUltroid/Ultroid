@@ -449,7 +449,7 @@ if sett == "True":
             else:
                 await eod(apprvpm, "`User may already be approved.`")
         elif apprvpm.is_private:
-            aname = await apprvpm.get_sender()
+            aname = apprvpm.chat_id
             user = aname
             if str(user.id) in DEVLIST:
                 return await eor(
@@ -527,7 +527,7 @@ if sett == "True":
                 await asyncio.sleep(5)
                 await e.delete()
         elif e.is_private:
-            bbb = await e.get_sender()
+            bbb = e.chat_id
             aname = await e.client.get_entity(bbb.id)
             if str(bbb.id) in DEVLIST:
                 return await eor(
