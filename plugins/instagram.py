@@ -55,8 +55,7 @@ async def insta_dl(e):
             return
         except Exception as B:
             return await eor(tt, str(B))
-    if isinstance(e.media, types.MessageMediaWebPage)
-        and isinstance(e.media.webpage, types.WebPage):
+    if isinstance(e.media, types.MessageMediaWebPage) and isinstance(e.media.webpage, types.WebPage):
         photo = e.media.webpage.photo or e.media.webpage.document
         if not photo:
             return await eor(
