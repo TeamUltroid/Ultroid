@@ -48,12 +48,10 @@ async def all_messages_catcher(e):
         bt = Button.url(who_n, who_l)
     else:
         bt = Button.inline(who_n, data=f"who{x.id}")
-    buttons = (
-        [
+    buttons = [
             [bt],
             [Button.url(where_n, where_l)],
-        ],
-    )
+        ]
     try:
         await asst.send_message(NEEDTOLOG, send, buttons=buttons)
     except MediaEmptyError:
