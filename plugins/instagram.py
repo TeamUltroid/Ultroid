@@ -54,18 +54,20 @@ async def insta_dl(e):
             return
         except Exception as B:
             return await eor(e, B)
-    if replied and isinstance(replied.media, types.MessageMediaWebPage) and isinstance(
-            replied.media.webpage, types.WebPage
-        ):
-            photo = replied.media.webpage.photo or replied.media.webpage.document
-            if not photo:
-                return await eor(
-                    e,
-                    "Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD` to Use This Comamand!",
-                )
-            await e.delete()
-            return await e.reply(
-                f"**Link:{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
-                file=photo,
+    if (
+        replied
+        and isinstance(replied.media, types.MessageMediaWebPage)
+        and isinstance(replied.media.webpage, types.WebPage)
+    ):
+        photo = replied.media.webpage.photo or replied.media.webpage.document
+        if not photo:
+            return await eor(
+                e,
+                "Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD` to Use This Comamand!",
             )
+        await e.delete()
+        return await e.reply(
+            f"**Link:{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
+            file=photo,
+        )
     await eor(e, "Please Fill Instagram Credential to Use this Command...")
