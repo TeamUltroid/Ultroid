@@ -43,15 +43,12 @@ async def all_messages_catcher(e):
     who_n = get_display_name(x)
     where_l = e.message.message_link
     send = await ultroid_bot.get_messages(e.chat_id, ids=e.id)
+    buttons = [[Button.url(where_n, where_l)]]
     if x.username:
         who_l = f"https://t.me/{x.username}"
-        bt = Button.url(who_n, who_l)
+        buttons.append([Button.url(who_n, who_l)])
     else:
-        bt = Button.inline(who_n, data=f"who{x.id}")
-    buttons = [
-            [bt],
-            [Button.url(where_n, where_l)],
-        ]
+        buttons.append([Button.inline(who_n, data=f"who{x.id}")])
     try:
         await asst.send_message(NEEDTOLOG, send, buttons=buttons)
     except MediaEmptyError:
