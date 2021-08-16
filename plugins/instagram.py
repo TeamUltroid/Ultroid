@@ -15,8 +15,7 @@
 
 import os
 
-from instagrapi import Client
-
+import instagrapi
 from . import *
 
 CLIENT = []
@@ -26,7 +25,7 @@ def create_client(username, password):
     try:
         return CLIENT[0]
     except IndexError:
-        cl = Client(session_name="Ultroid")
+        cl = instagrapi.Client(session_name="Ultroid")
         cl.login(username, password)
         CLIENT.append(cl)
         return cl
