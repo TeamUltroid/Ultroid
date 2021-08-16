@@ -29,8 +29,8 @@ async def oqha(e):
 async def doit(e):
     try:
         await e.client.kick_participant(e.chat_id, e.sender_id)
-    except Exception as e:
-        return await eod(e, str(e))
+    except Exception as Fe:
+        return await eod(e, str(Fe))
     await eod(e, "Yes, You are right, get out.")
 
 
