@@ -55,7 +55,8 @@ async def insta_dl(e):
       photo = e.media.webpage.photo or e.media.webpage.document
       if not photo:
         return await eor(e, "Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD` to Use This Comamand!")
-      return await e.reply(file=photo, f"**Link:{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...")
+      await e.delete()
+      return await e.reply(f"**Link:{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...", file=photo)
     await eor(e, "Please Fill Instagram Credential to Use this Command...")
       
         
