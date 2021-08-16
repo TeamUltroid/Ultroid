@@ -206,7 +206,7 @@ async def kck(ult):
     if str(user.id) in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
     if user.id in [ultroid_bot.uid, asst.me.id]:
-        return await xx.edit("`You will Never kick that Guy..`")
+        return await xx.edit("`I will Never kick that Guy..`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
         await asyncio.sleep(0.9)
