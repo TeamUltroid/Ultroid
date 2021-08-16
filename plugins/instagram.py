@@ -16,6 +16,7 @@
 import os
 
 import instagrapi
+
 from . import *
 
 CLIENT = []
