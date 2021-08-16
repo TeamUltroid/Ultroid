@@ -134,7 +134,7 @@ async def when_ultd_added_to_chat(event):
         text = f"#JOIN_LOG\n\n[{user.first_name}](tg://user?id={user.id}) just joined {chat}."
     else:
         return
-    await asst.send_message(int(udB["LOG_CHANNEL"], text, buttons=buttons)
+    await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
 
 
 @callback(
