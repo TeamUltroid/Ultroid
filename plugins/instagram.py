@@ -49,7 +49,7 @@ async def insta_dl(e):
         await e.delete()
         os.remove(media)
         return
-      except Exception as B:
+    except Exception as B:
         return await eor(e, B)
     if isinstance(e.media, types.MessageMediaWebPage) and isinstance(e.media.webpage, types.WebPage):
       photo = e.media.webpage.photo or e.media.webpage.document
