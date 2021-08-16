@@ -15,6 +15,7 @@ target/npmlist.json
 package-lock.json
 # Directories
 addons/
+pyUltroid/
 __pycache__/
 venv/
 node_modules/
