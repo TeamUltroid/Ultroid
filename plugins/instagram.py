@@ -26,7 +26,7 @@ def create_client(username, password):
     try:
         return CLIENT[0]
     except IndexError:
-        cl = instagrapi.Client(session_name="Ultroid")
+        cl = instagrapi.Client()
         cl.login(username, password)
         CLIENT.append(cl)
         return cl
@@ -74,4 +74,12 @@ async def insta_dl(e):
 
 @ultroid_cmd(pattern="instadata")
 async def soon_(e):
-    pass
+    un = udB.get("INSTA_USERNAME")
+    up = udB.get("INSTA_PASSWORD")
+
+    match = e.pattern_match.group(1)
+    try:
+        cl = create_client(un, up)
+    except Exception as g:
+        return await eor(e, g)
+    return
