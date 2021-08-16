@@ -56,8 +56,7 @@ async def insta_dl(e):
         except Exception as B:
             return await eor(tt, str(B))
     if isinstance(e.media, types.MessageMediaWebPage)
-        and isinstance(e.media.webpage, types.WebPage)
-    ):
+        and isinstance(e.media.webpage, types.WebPage):
         photo = e.media.webpage.photo or e.media.webpage.document
         if not photo:
             return await eor(
@@ -70,3 +69,8 @@ async def insta_dl(e):
             file=photo,
         )
     await eor(tt, "Please Fill Instagram Credential to Use this Command...")
+ 
+
+@ultroid_cmd(pattern="instadata")
+async def soon_(e):
+  pass
