@@ -183,7 +183,8 @@ if sett == "True":
             return
         if str(miss.id) in DEVLIST:
             return
-        if e.text.startswith(HNDLR):  # do not approve if outgoing is a command.
+        # do not approve if outgoing is a command.
+        if e.text.startswith(HNDLR):
             return
         if not is_approved(miss.id):
             approve_user(miss.id)
@@ -347,13 +348,13 @@ if sett == "True":
                 if not inline_pm:
                     if PMPIC:
                         _to_delete[user.id] = await ultroid_bot.send_file(
-                                user.id,
-                                PMPIC,
-                                caption=message_,
+                            user.id,
+                            PMPIC,
+                            caption=message_,
                         )
                     else:
                         _to_delete[user.id] = await ultroid_bot.send_message(
-                                user.id, message_
+                            user.id, message_
                         )
                 else:
                     try:
@@ -390,7 +391,6 @@ if sett == "True":
                     f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                 )
 
-
     @ultroid_cmd(
         pattern="(start|stop|clear)archive$",
     )
@@ -409,7 +409,6 @@ if sett == "True":
             except Exception as mm:
                 await eod(e, str(mm))
 
-
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
     )
@@ -422,8 +421,8 @@ if sett == "True":
             return await apprvpm.edit(NO_REPLY)
         if str(user.id) in DEVLIST:
             return await eor(
-                    apprvpm,
-                    "Lol, He is my Developer\nHe is auto Approved",
+                apprvpm,
+                "Lol, He is my Developer\nHe is auto Approved",
             )
         if not is_approved(user.id):
             approve_user(user.id)
@@ -431,7 +430,10 @@ if sett == "True":
                 await apprvpm.client.edit_folder(user.id, folder=0)
             except BaseException:
                 pass
-            await eod(apprvpm, f"[{user.first_name}](tg://user?id={user.id}) `approved to PM!`")
+            await eod(
+                apprvpm,
+                f"[{user.first_name}](tg://user?id={user.id}) `approved to PM!`",
+            )
             try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
@@ -454,7 +456,6 @@ if sett == "True":
         else:
             await eod(apprvpm, "`User may already be approved.`")
 
-
     @ultroid_cmd(
         pattern="(da|disapprove)(?: |$)",
     )
@@ -467,12 +468,14 @@ if sett == "True":
             return await e.edit(NO_REPLY)
         if str(user.id) in DEVLIST:
             return await eor(
-                    e,
-                    "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
+                e,
+                "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
             )
         if is_approved(user.id):
             disapprove_user(user.id)
-            await eod(e, f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`")
+            await eod(
+                e, f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`"
+            )
             try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
@@ -493,7 +496,9 @@ if sett == "True":
                     ],
                 )
         else:
-            await eod(e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!")
+            await eod(
+                e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!"
+            )
 
 
 @ultroid_cmd(pattern="block ?(.*)")
@@ -730,11 +735,7 @@ async def ytfuxist(e):
         await ultroid.delete_messages(e.chat_id, e.id)
 
 
-@in_pattern(
-    re.compile(
-        "ip_(.*)"
-    )
-)
+@in_pattern(re.compile("ip_(.*)"))
 @in_owner
 async def in_pm_ans(event):
     from_user = int(event.pattern_match.group(1))
@@ -787,11 +788,7 @@ async def in_pm_ans(event):
     await event.answer(res)
 
 
-@callback(
-    re.compile(
-        "admin_only(.*)"
-    )
-)
+@callback(re.compile("admin_only(.*)"))
 async def _admin_tools(event):
     if event.sender_id != OWNER_ID:
         return await event.answer()
@@ -807,11 +804,7 @@ async def _admin_tools(event):
     )
 
 
-@callback(
-    re.compile(
-       "don_(.*)"
-    )
-)
+@callback(re.compile("don_(.*)"))
 async def _mejik(e):
     data = e.pattern_match.group(1).decode("utf-8").split("/")
     text = "👮‍♂ Warn Count : " + data[0]
@@ -819,11 +812,7 @@ async def _mejik(e):
     await e.answer(text, alert=True)
 
 
-@callback(
-    re.compile(
-        "pmbk_(.*)"
-    )
-)
+@callback(re.compile("pmbk_(.*)"))
 async def edt(event):
     from_user = int(event.pattern_match.group(1))
     try:
