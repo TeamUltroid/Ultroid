@@ -99,12 +99,13 @@ _to_delete = {}
 sett = Redis("PMSETTING")
 if not sett:
     sett = "False"
-t_in = udB.get("INLINE_PM")
-inline_pm = "True"
-if not t_in or t_in == "True":
+
+t_in = Redis("INLINE_PM")
+if t_in == "True":
     inline_pm = "True"
-elif t_in == "False":
+else:
     inline_pm = "False"
+
 my_bot = asst.me.username
 
 
@@ -179,7 +180,7 @@ if sett == "True":
     @ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
-            func=lambda e: e.is_private,
+            func=lambda e: e.is_private and e.out,
         ),
     )
     async def autoappr(e):
