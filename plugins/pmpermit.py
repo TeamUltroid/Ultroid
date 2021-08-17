@@ -285,7 +285,7 @@ if sett == "True":
                             )
                         else:
                             _to_delete[user.id] = await ultroid_bot.send_message(
-                                user.id, _message
+                                user.id, message_
                             )
 
                     else:
@@ -319,7 +319,7 @@ if sett == "True":
                             )
                         else:
                             _to_delete[user.id] = await ultroid_bot.send_message(
-                                user.id, _message
+                                user.id, message_
                             )
                     else:
                         try:
@@ -347,11 +347,16 @@ if sett == "True":
                 )
                 update_pm(user.id, message_, wrn)
                 if inline_pm == "False":
-                    _to_delete[user.id] = await ultroid.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
+                    if PMPIC:
+                        _to_delete[user.id] = await ultroid_bot.send_file(
+                                user.id,
+                                PMPIC,
+                                caption=message_,
+                        )
+                    else:
+                        _to_delete[user.id] = await ultroid_bot.send_message(
+                                user.id, message_
+                        )
                 else:
                     try:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
