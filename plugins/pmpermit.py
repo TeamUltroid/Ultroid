@@ -428,14 +428,14 @@ if sett == "True":
         if not is_approved(user.id):
             approve_user(user.id)
             try:
-                await apprvpm.client.edit_folder(uid, folder=0)
+                await apprvpm.client.edit_folder(user.id, folder=0)
             except BaseException:
                 pass
             await eod(apprvpm, f"[{user.first_name}](tg://user?id={user.id}) `approved to PM!`")
             try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
-                    _not_approved[uid],
+                    _not_approved[user.id],
                     f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id})",
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
