@@ -1,2 +1,2 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
-py-Ultroid==53.0b0
+py-Ultroid==52.9b0
