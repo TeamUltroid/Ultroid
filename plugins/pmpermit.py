@@ -184,13 +184,12 @@ if sett == "True":
         ),
     )
     async def autoappr(e):
-        miss = await e.get_sender()
+        miss = await e.get_chat()
         if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
             return
         if str(miss.id) in DEVLIST:
             return
-        mssg = e.text
-        if mssg.startswith(HNDLR):  # do not approve if outgoing is a command.
+        if e.text.startswith(HNDLR):  # do not approve if outgoing is a command.
             return
         if not is_approved(miss.id):
             approve_user(miss.id)
@@ -199,12 +198,11 @@ if sett == "True":
                 await ultroid_bot.edit_folder(miss.id, folder=0)
             except BaseException:
                 pass
-            name = miss.first_name
             try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
                     _not_approved[miss.id],
-                    f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id})",
+                    f"#AutoApproved\n**OutGoing Message.**\nUser - [{miss.first_name}](tg://user?id={miss.id})",
                 )
             except KeyError:
                 await asst.send_message(
@@ -393,6 +391,7 @@ if sett == "True":
                     f"[{name0}](tg://user?id={user.id}) was Blocked for spamming.",
                 )
 
+
     @ultroid_cmd(
         pattern="(start|stop|clear)archive$",
     )
@@ -410,6 +409,7 @@ if sett == "True":
                 await eod(e, "Unarchived all chats")
             except Exception as mm:
                 await eod(e, str(mm))
+
 
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
@@ -731,7 +731,11 @@ async def ytfuxist(e):
         await ultroid.delete_messages(e.chat_id, e.id)
 
 
-@in_pattern(re.compile("ip_(.*)"))
+@in_pattern(
+    re.compile(
+        "ip_(.*)"
+    )
+)
 @in_owner
 async def in_pm_ans(event):
     from_user = int(event.pattern_match.group(1))
@@ -784,7 +788,11 @@ async def in_pm_ans(event):
     await event.answer(res)
 
 
-@callback(re.compile("admin_only(.*)"))
+@callback(
+    re.compile(
+        "admin_only(.*)"
+    )
+)
 async def _admin_tools(event):
     if event.sender_id != OWNER_ID:
         return await event.answer()
@@ -800,7 +808,11 @@ async def _admin_tools(event):
     )
 
 
-@callback(re.compile("don_?(.*)"))
+@callback(
+    re.compile(
+       "don_(.*)"
+    )
+)
 async def _mejik(e):
     data = e.pattern_match.group(1).decode("utf-8").split("/")
     text = "👮‍♂ Warn Count : " + data[0]
@@ -808,13 +820,17 @@ async def _mejik(e):
     await e.answer(text, alert=True)
 
 
-@callback(re.compile("pmbk_(.*)"))
+@callback(
+    re.compile(
+        "pmbk_(.*)"
+    )
+)
 async def edt(event):
     from_user = int(event.pattern_match.group(1))
     try:
         warns = U_WARNS[from_user]
     except Exception as e:
-        print(e)
+        LOGS.info(str(e))
         warns = "0"
     wrns = f"{warns}/{WARNS}"
     await event.edit(
