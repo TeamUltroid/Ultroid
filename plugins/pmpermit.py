@@ -100,12 +100,6 @@ sett = Redis("PMSETTING")
 if not sett:
     sett = "False"
 
-t_in = Redis("INLINE_PM")
-if t_in == "True":
-    inline_pm = "True"
-else:
-    inline_pm = "False"
-
 my_bot = asst.me.username
 
 
@@ -217,6 +211,11 @@ if sett == "True":
         ),
     )
     async def permitpm(event):
+        t_in = Redis("INLINE_PM")
+        if t_in == "True":
+            inline_pm = True
+        else:
+            inline_pm = False
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
@@ -275,7 +274,7 @@ if sett == "True":
                         mention=mention,
                     )
                     update_pm(user.id, message_, wrn)
-                    if inline_pm == "False":
+                    if not inline_pm:
                         if PMPIC:
                             _to_delete[user.id] = await ultroid.send_file(
                                 user.id,
@@ -309,7 +308,7 @@ if sett == "True":
                         mention=mention,
                     )
                     update_pm(user.id, message_, wrn)
-                    if inline_pm == "False":
+                    if not inline_pm:
                         if PMPIC:
                             _to_delete[user.id] = await ultroid.send_file(
                                 user.id,
@@ -345,7 +344,7 @@ if sett == "True":
                     mention=mention,
                 )
                 update_pm(user.id, message_, wrn)
-                if inline_pm == "False":
+                if not inline_pm:
                     if PMPIC:
                         _to_delete[user.id] = await ultroid_bot.send_file(
                                 user.id,
