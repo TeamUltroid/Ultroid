@@ -213,7 +213,7 @@ if sett == "True":
     @ultroid_bot.on(
         events.NewMessage(
             incoming=True,
-            func=lambda e: e.is_private,
+            func=lambda e: e.is_private and not e.out,
         ),
     )
     async def permitpm(event):
