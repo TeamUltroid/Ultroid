@@ -460,76 +460,40 @@ if sett == "True":
     )
     async def disapprovepm(e):
         if e.reply_to_msg_id:
-            reply = await e.get_reply_message()
-            replied_user = reply.sender
-            aname = replied_user.id
-            if str(aname) in DEVLIST:
-                return await eor(
+            user = (await e.get_reply_message()).sender
+        elif e.is_private:
+            user = await e.get_chat()
+        else:
+            return await e.edit(NO_REPLY)
+        if str(user.id) in DEVLIST:
+            return await eor(
                     e,
                     "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
-                )
-            name0 = str(replied_user.first_name)
-            if is_approved(aname):
-                disapprove_user(aname)
-                await e.edit(
-                    f"[{name0}](tg://user?id={replied_user.id}) `Disapproved to PM!`",
-                )
-                await asyncio.sleep(5)
-                await e.delete()
+            )
+        if is_approved(user.id):
+            disapprove_user(user.id)
+            await eod(e, f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`")
+            try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
-                    _not_approved[aname],
-                    f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
+                    _not_approved[user.id],
+                    f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) `was disapproved to PM you.`",
                     buttons=[
-                        Button.inline("Approve PM", data=f"approve_{aname}"),
-                        Button.inline("Block", data=f"block_{aname}"),
+                        Button.inline("Approve PM", data=f"approve_{user.id}"),
+                        Button.inline("Block", data=f"block_{user.id}"),
                     ],
                 )
-            else:
-                await e.edit(
-                    f"[{name0}](tg://user?id={replied_user.id}) was never approved!",
+            except KeyError:
+                _not_approved[user.id] = await asst.send_message(
+                    int(udB.get("LOG_CHANNEL")),
+                    f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) `was disapproved to PM you.`",
+                    buttons=[
+                        Button.inline("Approve PM", data=f"approve_{user.id}"),
+                        Button.inline("Block", data=f"block_{user.id}"),
+                    ],
                 )
-                await asyncio.sleep(5)
-                await e.delete()
-        elif e.is_private:
-            bbb = await e.get_chat()
-            aname = await e.client.get_entity(bbb.id)
-            if str(bbb.id) in DEVLIST:
-                return await eor(
-                    e,
-                    "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
-                )
-            name0 = str(aname.first_name)
-            if is_approved(bbb.id):
-                disapprove_user(bbb.id)
-                await e.edit(f"[{name0}](tg://user?id={bbb.id}) `Disapproved to PM!`")
-                await asyncio.sleep(5)
-                await e.delete()
-                try:
-                    await asst.edit_message(
-                        int(udB.get("LOG_CHANNEL")),
-                        _not_approved[bbb.id],
-                        f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
-                        buttons=[
-                            Button.inline("Approve PM", data=f"approve_{bbb.id}"),
-                            Button.inline("Block", data=f"block_{bbb.id}"),
-                        ],
-                    )
-                except KeyError:
-                    _not_approved[bbb.id] = await asst.send_message(
-                        int(udB.get("LOG_CHANNEL")),
-                        f"#DISAPPROVED\n\n[{name0}](tg://user?id={bbb.id}) `was disapproved to PM you.`",
-                        buttons=[
-                            Button.inline("Approve PM", data=f"approve_{bbb.id}"),
-                            Button.inline("Block", data=f"block_{bbb.id}"),
-                        ],
-                    )
-            else:
-                await e.edit(f"[{name0}](tg://user?id={bbb.id}) was never approved!")
-                await asyncio.sleep(5)
-                await e.delete()
         else:
-            await e.edit(NO_REPLY)
+            await eod(e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!")
 
 
 @ultroid_cmd(pattern="block ?(.*)")
