@@ -19,11 +19,11 @@ from . import *
 
 Owner_info_msg = f"""
 <strong>Owner</strong> - {OWNER_NAME}
-<stong>OwnerID</strong> - <code>{OWNER_ID}</code>
+<strong>OwnerID</strong> - <code>{OWNER_ID}</code>
 
 <strong>Message Forwards</strong> - {udB.get("PMBOT")}
 
-<stong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
+<strong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
 """
 
 _settings = [
