@@ -102,19 +102,16 @@ async def soon_(e):
             return await eor(ew, f"**ERROR** : `{g}`")
     else:
         data = cl.account_info()
+        data = cl.user_info(data.pk)
     photo = data.profile_pic_url
     unam = "https://instagram.com/" + data.username
     msg = f"• **Full Name** : __{data.full_name}__"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
-    if hasattr(data, "media_count"):
-        msg += f"\n• **Posts Count** : {data.media_count}"
-    if hasattr(data, "follower_count"):
-        msg += f"\n• **Followers** : {data.follower_count}"
-    if hasattr(data, "following_count"):
-        msg += f"\n• **Following** : {data.following_count}"
-    if hasattr(data, "category_name"):
-        msg += f"\n• **Category** : {data.category_name}"
+    msg += f"\n• **Posts Count** : {data.media_count}"
+    msg += f"\n• **Followers** : {data.follower_count}"
+    msg += f"\n• **Following** : {data.following_count}"
+    msg += f"\n• **Category** : {data.category_name}"
     await e.reply(
         msg,
         file=photo,
