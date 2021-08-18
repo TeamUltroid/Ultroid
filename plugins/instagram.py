@@ -76,14 +76,24 @@ async def insta_dl(e):
     await eor(tt, "Please Fill Instagram Credential to Use this Command...")
 
 
-@ultroid_cmd(pattern="instadata")
+@ultroid_cmd(pattern="instadata ?(.*)")
 async def soon_(e):
     un = udB.get("INSTA_USERNAME")
     up = udB.get("INSTA_PASSWORD")
-
-    e.pattern_match.group(1)
+    if not un and up:
+        return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
+    match = e.pattern_match.group(1)
+    ew = await eor(e, "`Processing...`")
     try:
-        create_client(un, up)
+        cl = create_client(un, up)
     except Exception as g:
-        return await eor(e, g)
-    return
+        return await eor(ew, g)
+    if match:
+        try:
+            id = cl.user_id_from_username(match)
+            data = cl.user_info(id)
+        except Exception as g:
+            return await eor(ew, f"ERROR : {g}")
+    else:
+        data = cl.account_info()
+    await eor(ew, str(data))
