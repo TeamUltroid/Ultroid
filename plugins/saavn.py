@@ -63,4 +63,4 @@ async def siesace(e):
         thumb=title + ".jpg",
     )
     await lol.delete()
-    os.remove(x for x in [song, title + ".jpg"])
+    [os.remove(x) for x in [song, title + ".jpg"]]
