@@ -115,5 +115,10 @@ async def soon_(e):
         msg += f"\n• **Following** : {data.following_count}"
     if hasattr(data, "category_name"):
         msg += f"\n• **Category** : {data.category_name}"
-    await e.reply(msg, file=photo, force_document=True, attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")])
+    await e.reply(
+        msg,
+        file=photo,
+        force_document=True,
+        attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")],
+    )
     await ew.delete()
