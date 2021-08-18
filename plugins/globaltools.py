@@ -24,7 +24,7 @@
 • `{i}gkick <reply user/ username>`
     Globally Kick User.
 
-• `{i}gcast <Message>`
+• `{i}gcast <Message> or <reply>`
     Globally Send that msg in all grps.
 
 • `{i}gucast <Message>`
@@ -355,23 +355,31 @@ async def _(e):
 @ultroid_cmd(pattern="gcast ?(.*)", fullsudo=True)
 async def gcast(event):
     xx = event.pattern_match.group(1)
-    if not xx:
-        return eor(event, "`Give some text to Globally Broadcast`")
-    tt = event.text
-    msg = tt[6:]
+    if xx:
+        msg = xx
+    elif event.is_reply:
+        msg = await event.get_reply_message()
+    else:
+        return eor(event, "`Give some text to Globally Broadcast or reply a message..`")
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
+    err = ""
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
             if not is_gblacklisted(chat):
                 try:
                     done += 1
-                    await ultroid_bot.send_message(chat, msg)
-                except BaseException:
+                    await event.client.send_message(chat, msg)
+                except Exception as h:
+                    err += "• " + str(h) + "\n"
                     er += 1
-    await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
+    text += f"Done in {done} chats, error in {er} chat(s)"
+    if err != "":
+        open("gcast-error.log", "w").write(h)
+        text += f"\nYou can do `{HNDLR}ul gcast-error.log` to know error report."
+    await kk.edit(text)
 
 
 @ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
