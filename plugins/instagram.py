@@ -23,12 +23,16 @@ CLIENT = []
 
 
 def create_client(username, password):
+    settings = None
+    if udB.get("INSTA_SET"):
+        settings = eval(udB.get("INSTA_SET"))
     try:
         return CLIENT[0]
     except IndexError:
-        cl = instagrapi.Client()
+        cl = instagrapi.Client(settings)
         cl.login(username, password)
         CLIENT.append(cl)
+        udB.set("INSTA_SET", str(cl.get_settings()))
         return cl
 
 
