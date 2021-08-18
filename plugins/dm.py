@@ -18,8 +18,6 @@ from . import *
 
 @ultroid_cmd(pattern="dm ?(.*)", fullsudo=True)
 async def dm(e):
-    if not e.out:
-        return await eor(e, "`This Command is Full Sudo Restricted..`")
     if len(e.text) > 3 and e.text[3] != " ":  # weird fix
         return
     d = e.pattern_match.group(1)
@@ -38,11 +36,11 @@ async def dm(e):
     try:
         await e.client.send_message(chat_id, msg)
         await eod(e, "`⚜️Message Delivered!⚜️`")
-    except BaseException:
-        await eod(e, f"Read Usage : `{HNDLR}help dm`")
+    except Exception as m:
+        await eod(e, f"Error - {m}\nRead Usage : `{HNDLR}help dm`")
 
 
-@ultroid_cmd(pattern="fwdreply ?(.*)")
+@ultroid_cmd(pattern="fwdreply ?(.*)", fullsudo=True)
 async def _(e):
     message = e.pattern_match.group(1)
     if not e.reply_to_msg_id:
