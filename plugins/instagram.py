@@ -11,6 +11,12 @@
 • `{i}instadl <Instagram Url>`
   `Download Instagram Media...`
 
+• `{i}instadata <username>`
+  `Get Instagram Data of someone or self`
+
+• Fill `INSTA_USERNAME` and `INSTA_PASS`
+  before using it..
+
 """
 
 import os
@@ -93,7 +99,7 @@ async def soon_(e):
             id = cl.user_id_from_username(match)
             data = cl.user_info(id)
         except Exception as g:
-            return await eor(ew, f"ERROR : {g}")
+            return await eor(ew, f"**ERROR** : `{g}`")
     else:
         data = cl.account_info()
     photo = data.profile_pic_url
@@ -101,8 +107,13 @@ async def soon_(e):
     msg = f"• **Full Name** : __{data.full_name}__"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
-    msg += f"\n• **Followers** : {data.follower_count}"
-    msg += f"\n• **Following** : {data.following_count}"
-    msg += f"\n• **Category** : {data.category_name}"
-    await e.reply(msg, file=photo, force_document=True)
+    if hasattr(data, "media_count"):
+        msg += f"\n• **Posts Count** : {data.media_count}"
+    if hasattr(data, "follower_count"):
+        msg += f"\n• **Followers** : {data.follower_count}"
+    if hasattr(data, "following_count"):
+        msg += f"\n• **Following** : {data.following_count}"
+    if hasattr(data, "category_name"):
+        msg += f"\n• **Category** : {data.category_name}"
+    await e.reply(msg, file=photo, force_document=True, attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")])
     await ew.delete()
