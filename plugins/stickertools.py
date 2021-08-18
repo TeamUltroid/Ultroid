@@ -26,7 +26,7 @@
     To extract round sticker.
 
 • `{i}waifu <text>`
-    paste text on random stickers.
+    p text on random stickers.
 
 """
 import asyncio
@@ -40,6 +40,9 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+
+from telethon.utils import get_input_document
+
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
     DocumentAttributeFilename,

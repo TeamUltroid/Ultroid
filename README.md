@@ -26,7 +26,7 @@
 - [Local Machine](#Deploy-Locally)
 
 # Documentation 
-[![Document](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
+[![Documentation](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
 
 # Tutorial 
 - Full Tutorial - [![Full Tutorial](https://img.shields.io/badge/Watch%20Now-blue)](https://www.youtube.com/watch?v=9wF7k9qA0Q4)
@@ -42,6 +42,16 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
+- [Latest Method](#local-deploy---latest-method)
+
+
+### Local Deploy - Latest Method
+This is the latest and most fastest method currently.<br>
+First, goto [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
+Then, do as its given in the `README.md` to add the executable to your system path.
+
+Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information on this.
+
 
 ### Local Deploy - Easy Method
 - Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
