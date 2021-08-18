@@ -16,9 +16,9 @@
 from . import *
 
 
-@ultroid_cmd(pattern="dm ?(.*)")
+@ultroid_cmd(pattern="dm ?(.*)", fullsudo=True)
 async def dm(e):
-    if not e.out and not is_fullsudo(e.sender_id):
+    if not e.out:
         return await eor(e, "`This Command is Full Sudo Restricted..`")
     if len(e.text) > 3 and e.text[3] != " ":  # weird fix
         return
