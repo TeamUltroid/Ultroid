@@ -98,8 +98,8 @@ async def soon_(e):
         data = cl.account_info()
     photo = data.profile_pic_url
     unam = "https://instagram.com/" + data.username
-    msg = "• **Full Name** : __{data.full_name}__"
-    msg += f"\n• **UserName** : [@{data.username}]({unam}"
+    msg = f"• **Full Name** : __{data.full_name}__"
+    msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
     msg += f"\n• **Followers** : {data.follower_count}"
     msg += f"\n• **Following** : {data.following_count}"
