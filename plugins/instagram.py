@@ -96,4 +96,13 @@ async def soon_(e):
             return await eor(ew, f"ERROR : {g}")
     else:
         data = cl.account_info()
-    await eor(ew, str(data))
+    photo = data.profile_pic_url
+    unam = "https://instagram.com/" + data.username
+    msg = "• **Full Name** : __{data.full_name}__"
+    msg += f"\n• **UserName** : [@{data.username}]({unam}"
+    msg += f"\n• **Verified** : {data.is_verified}"
+    msg += f"\n• **Followers** : {data.follower_count}"
+    msg += f"\n• **Following** : {data.following_count}"
+    msg += f"\n• **Category** : {data.category_name}"
+    await e.reply(msg, file=photo, force_document=True)
+    await ew.delete()
