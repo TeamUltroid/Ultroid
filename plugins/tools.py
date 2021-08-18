@@ -49,33 +49,34 @@ from . import *
 from . import humanbytes as hb
 
 
-@ultroid_cmd(pattern="tr", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(pattern="tr", type=["official", "manager"])
 async def _(event):
-    if len(event.text) > 3:
-        if not event.text[3] == " ":
-            return
+    if len(event.text) > 3 and event.text[3] != " ":
+        return
     input = event.text[4:6]
     txt = event.text[7:]
-    xx = await eor(event, "`Translating...`")
-    if event.reply_to_msg_id:
+    if txt:
+        text = txt
+        lan = input or "en"
+    elif event.is_reply:
         previous_message = await event.get_reply_message()
         text = previous_message.message
         lan = input or "en"
-    elif input:
-        text = txt
-        lan = input or "en"
     else:
-        return await eod(xx, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
+        return await eod(event, f"`{hndlr}tr LanguageCode` as reply to a message")
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
         output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
-        await eor(xx, output_str)
+        await eor(event, output_str)
     except Exception as exc:
-        await eod(xx, str(exc), time=10)
+        await eod(event, str(exc), time=17)
 
 
-@ultroid_cmd(pattern="id ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="id ?(.*)",
+    type=["official", "manager"],
+)
 async def _(event):
     if event.reply_to_msg_id:
         await event.get_input_chat()
@@ -111,12 +112,7 @@ async def _(event):
         await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
 
 
-@ultroid_cmd(
-    pattern="bots ?(.*)",
-    groups_only=True,
-    type=["official", "manager"],
-    ignore_dualmode=True,
-)
+@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
 async def _(ult):
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
@@ -160,7 +156,7 @@ async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(ult, "`Input some link`", time=5)
+        return await eod(ult, "`Input some link`")
     await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 

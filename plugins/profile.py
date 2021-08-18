@@ -40,12 +40,8 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 # bio changer
 
 
-@ultroid_cmd(
-    pattern="setbio ?(.*)",
-)
+@ultroid_cmd(pattern="setbio ?(.*)", fullsudo=True)
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     set = ult.pattern_match.group(1)
     try:
@@ -60,12 +56,8 @@ async def _(ult):
 # name changer
 
 
-@ultroid_cmd(
-    pattern="setname ?((.|//)*)",
-)
+@ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     ok = await eor(ult, "...")
     names = ult.pattern_match.group(1)
     first_name = names
@@ -89,12 +81,8 @@ async def _(ult):
 # profile pic
 
 
-@ultroid_cmd(
-    pattern="setpic$",
-)
+@ultroid_cmd(pattern="setpic$", fullsudo=True)
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
     reply_message = await ult.get_reply_message()
@@ -105,10 +93,8 @@ async def _(ult):
     try:
         if "pic" in mediain:
             await ult.client(UploadProfilePhotoRequest(file))
-        elif "gif" or "video" in mediain:
-            await ult.client(UploadProfilePhotoRequest(video=file))
         else:
-            return await ok.edit("`Invalid MEDIA Type !`")
+            await ult.client(UploadProfilePhotoRequest(video=file))
         await ok.edit("`My Profile Photo has Successfully Changed !`")
     except Exception as ex:
         await ok.edit("Error occured.\n`{}`".format(str(ex)))
@@ -120,12 +106,8 @@ async def _(ult):
 # delete profile pic(s)
 
 
-@ultroid_cmd(
-    pattern="delpfp ?(.*)",
-)
+@ultroid_cmd(pattern="delpfp ?(.*)", fullsudo=True)
 async def remove_profilepic(delpfp):
-    if not delpfp.out and not is_fullsudo(delpfp.sender_id):
-        return await eod(delpfp, "`This Command Is Sudo Restricted.`")
     ok = await eor(delpfp, "...")
     group = delpfp.text[8:]
     if group == "all":
@@ -137,15 +119,14 @@ async def remove_profilepic(delpfp):
     pfplist = await delpfp.client(
         GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim),
     )
-    input_photos = []
-    for sep in pfplist.photos:
-        input_photos.append(
-            InputPhoto(
-                id=sep.id,
-                access_hash=sep.access_hash,
-                file_reference=sep.file_reference,
-            ),
+    input_photos = [
+        InputPhoto(
+            id=sep.id,
+            access_hash=sep.access_hash,
+            file_reference=sep.file_reference,
         )
+        for sep in pfplist.photos
+    ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await ok.edit(f"`Successfully deleted {len(input_photos)} profile picture(s).`")
     await asyncio.sleep(10)
@@ -171,4 +152,4 @@ async def gpoto(e):
         await e.reply(file=okla)
         os.remove(okla)
     except Exception as er:
-        await eor(e, f"ERROR - {str(er)}")
+        await eor(e, f"ERROR - {er}")

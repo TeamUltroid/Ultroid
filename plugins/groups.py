@@ -7,8 +7,11 @@
 """
 ✘ Commands Available -
 
-• `{i}setgpic <reply to Photo>`
+• `{i}setgpic <reply to Photo><chat username>`
     Set Profile photo of Group.
+
+• `{i}delgpic <chat username -optional>`
+    Delete Profile photo of Group.
 
 • `{i}unbanall`
     Unban all Members of a group.
@@ -31,26 +34,57 @@ from telethon.tl.types import (
 from . import *
 
 
-@ultroid_cmd(pattern="setgpic$", groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="setgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
+)
 async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
+    match = ult.pattern_match.group(1)
+    if not ult.client._bot and match:
+        try:
+            chat = await get_user_id(match)
+        except Exception as ok:
+            return await eor(ult, str(ok))
+    else:
+        chat = ult.chat_id
     reply_message = await ult.get_reply_message()
-    try:
+    if reply_message.media:
         replfile = await reply_message.download_media()
-    except AttributeError:
-        return await eor(ult, "Reply to a Photo..")
+    else:
+        return await eor(ult, "Reply to a Photo or Video..")
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
-        if "pic" in mediain:
-            await ult.client(EditPhotoRequest(ult.chat_id, file))
-        else:
-            return await eod(ult, "`Invalid MEDIA Type !`")
+        if "pic" not in mediain:
+            file = types.InputChatUploadedPhoto(video=file)
+        await ult.client(EditPhotoRequest(chat, file))
         await eod(ult, "`Group Photo has Successfully Changed !`")
     except Exception as ex:
         await eod(ult, "Error occured.\n`{}`".format(str(ex)))
     os.remove(replfile)
+
+
+@ultroid_cmd(
+    pattern="delgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
+)
+async def _(ult):
+    match = ult.pattern_match.group(1)
+    chat = ult.chat_id
+    if not ult.client._bot and match:
+        chat = match
+    try:
+        await ult.client(EditPhotoRequest(chat, types.InputChatPhotoEmpty()))
+        text = "`Removed Chat Photo..`"
+    except Exception as E:
+        text = str(E)
+    return await eod(ult, text)
 
 
 @ultroid_cmd(
@@ -224,6 +258,6 @@ async def _(event):
         required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
         required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
         required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`\n\n"
-        required_string += f"**••Empty**  `Name with deleted Account`\n"
-        required_string += f"**••None**  `Last Seen A Long Time Ago`\n"
-    await eod(xx, required_string)
+        required_string += "**••Empty**  `Name with deleted Account`\n"
+        required_string += "**••None**  `Last Seen A Long Time Ago`\n"
+    await eor(xx, required_string)

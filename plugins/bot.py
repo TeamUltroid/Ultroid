@@ -34,7 +34,7 @@ from platform import python_version as pyver
 
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
-from telethon import __version__, events
+from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 from . import *
@@ -46,7 +46,7 @@ from . import *
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") if udB.get("ALIVE_TEXT") else "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -63,7 +63,7 @@ async def lol(ult):
     )
     if pic is None:
         return await eor(ult, als)
-    elif pic is not None and "telegra" in pic:
+    elif "telegra" in pic:
         try:
             await ult.reply(als, file=pic, link_preview=False)
             await ult.delete()
@@ -78,12 +78,11 @@ async def lol(ult):
             await eor(ult, als, link_preview=False)
 
 
-@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}ping$"))
+@ultroid_cmd(
+    pattern="ping$",
+    chats=[],
+)
 async def _(event):
-    if event.fwd_from:
-        return
-    if not event.out and not is_sudo(event.sender_id):
-        return
     start = dt.now()
     x = await eor(event, "`Pong !`")
     end = dt.now()
@@ -101,6 +100,7 @@ async def cmds(event):
 
 @ultroid_cmd(
     pattern="restart$",
+    fullsudo=True,
 )
 async def restartbt(ult):
     ok = await eor(ult, "`Restarting...`")
@@ -110,27 +110,21 @@ async def restartbt(ult):
         await bash("pkill python3 && python3 -m pyUltroid")
 
 
-@ultroid_cmd(pattern="shutdown$")
+@ultroid_cmd(
+    pattern="shutdown$",
+    fullsudo=True,
+)
 async def shutdownbot(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     await shutdown(ult)
 
 
-@ultroid_bot.on(events.NewMessage(pattern=f"\\{HNDLR}logs ?(.*)"))
-@asst.on(events.NewMessage(pattern="^/{HNDLR}logs ?(.*)"))
+@ultroid_cmd(
+    pattern="logs ?(|heroku|sys)",
+    chats=[],
+)
 async def _(event):
-    if event.fwd_from:
-        return
-    if not event.out and not is_sudo(event.sender_id):
-        return
-    try:
-        opt = event.text.split(" ", maxsplit=1)[1]
-    except IndexError:
-        return await def_logs(event)
+    opt = event.pattern_match.group(1)
     if opt == "heroku":
         await heroku_logs(event)
     else:
         await def_logs(event)
-    if event.out:
-        await event.delete()

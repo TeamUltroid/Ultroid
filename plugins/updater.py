@@ -11,15 +11,13 @@
     See changelogs if any update is available.
 """
 
+
 from git import Repo
-from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
 from . import *
 
-ULTPIC = "resources/extras/inline.jpg"
 CL = udB.get("INLINE_PIC")
-if CL:
-    ULTPIC = CL
+ULTPIC = CL or "resources/extras/inline.jpg"
 
 
 @ultroid_cmd(pattern="update$")
@@ -35,10 +33,7 @@ async def _(e):
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
-        if not e.client._bot:
-            Link = (await e.client(GetLink(x.chat_id, x.id))).link
-        else:
-            Link = f"https://t.me/c/{x.chat.id}/{x.id}"
+        Link = x.message_link
         await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",

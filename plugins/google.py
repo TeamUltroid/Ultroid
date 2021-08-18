@@ -32,7 +32,10 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(pattern="google ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="google ?(.*)",
+    type=["official", "manager"],
+)
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
@@ -53,9 +56,7 @@ async def google(event):
     except TypeError:
         return await eod(event, f"`Can't find anything about {inp}`")
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    opn = []
-    for bkl in range(0, len(omk), 4095):
-        opn.append(omk[bkl : bkl + 4095])
+    opn = [omk[bkl : bkl + 4095] for bkl in range(0, len(omk), 4095)]
     for bc in opn:
         await event.respond(bc, link_preview=False)
     await x.delete()

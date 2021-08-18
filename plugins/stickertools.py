@@ -26,7 +26,7 @@
     To extract round sticker.
 
 • `{i}waifu <text>`
-    paste text on random stickers.
+    p text on random stickers.
 
 """
 import asyncio
@@ -40,13 +40,16 @@ from os import remove
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+
 from telethon.utils import get_input_document
+
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
     MessageMediaPhoto,
 )
+from telethon.utils import get_input_document
 
 from . import *
 
@@ -95,9 +98,10 @@ async def waifu(animu):
         await sticcers[0].click(
             animu.chat_id,
             reply_to=animu.reply_to_msg_id,
-            silent=True if animu.is_reply else False,
+            silent=bool(animu.is_reply),
             hide_via=True,
         )
+
         await xx.delete()
     except ChatSendStickersForbiddenError:
         await xx.edit("Sorry boss, I can't send Sticker Here !!")
@@ -484,9 +488,8 @@ async def ultdestroy(event):
     await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")
     os.system("lottie_convert.py ultroid.tgs json.json")
-    json = open("json.json")
-    jsn = json.read()
-    json.close()
+    with open("json.json") as json:
+        jsn = json.read()
     jsn = (
         jsn.replace("[100]", "[200]")
         .replace("[10]", "[40]")
@@ -528,9 +531,8 @@ async def ultiny(event):
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
         os.system("lottie_convert.py ult.tgs json.json")
-        json = open("json.json")
-        jsn = json.read()
-        json.close()
+        with open("json.json") as json:
+            jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
         os.system("lottie_convert.py json.json ult.tgs")

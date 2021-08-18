@@ -31,7 +31,9 @@ from . import *
 bot = "@MissRose_bot"
 
 
-@ultroid_cmd(pattern="superfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="superfban ?(.*)",
+)
 async def _(event):
     msg = await eor(event, "Starting a Mass-FedBan...")
     if event.reply_to_msg_id:
@@ -133,7 +135,7 @@ async def _(event):
                     ):
                         await msg.edit("Try again after 5 mins.")
                         return
-                if len(fedList) == 0:
+                if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
@@ -153,12 +155,12 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if len(fedList) == 0:
+        if not fedList:
             await msg.edit("Unable to collect FedAdminList.")
             return
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
-        await ultroid.send_message(chat, f"/start")
+        await ultroid.send_message(chat, "/start")
     except BaseException:
         await msg.edit("Specified FBan Group ID is incorrect.")
         return
@@ -180,13 +182,15 @@ async def _(event):
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f"Error in removing FedAdmin file.\n{str(e)}")
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
-@ultroid_cmd(pattern="superunfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="superunfban ?(.*)",
+)
 async def _(event):
     msg = await eor(event, "Starting a Mass-UnFedBan...")
     fedList = []
@@ -205,12 +209,8 @@ async def _(event):
                 except BaseException:
                     pass
             arg = event.text.split(" ", maxsplit=2)
-            if len(arg) > 2:
-                FBAN = arg[1]
-                REASON = arg[2]  # rose unbans now can have reasons
-            else:
-                FBAN = arg[1]
-                REASON = ""
+            FBAN = arg[1]
+            REASON = arg[2] if len(arg) > 2 else ""
         else:
             FBAN = previous_message.sender_id
             try:
@@ -274,7 +274,7 @@ async def _(event):
                     ):
                         await msg.edit("Try again after 5 mins.")
                         return
-                if len(fedList) == 0:
+                if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
@@ -294,12 +294,12 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if len(fedList) == 0:
+        if not fedList:
             await msg.edit("Unable to collect FedAdminList.")
             return
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
-        await event.client.send_message(chat, f"/start")
+        await event.client.send_message(chat, "/start")
     except BaseException:
         await msg.edit("Specified FBan Group ID is incorrect.")
         return
@@ -321,13 +321,15 @@ async def _(event):
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f"Error in removing FedAdmin file.\n{str(e)}")
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperUnFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
-@ultroid_cmd(pattern="fstat ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="fstat ?(.*)",
+)
 async def _(event):
     ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
@@ -374,7 +376,9 @@ async def _(event):
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
-@ultroid_cmd(pattern="fedinfo ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="fedinfo ?(.*)",
+)
 async def _(event):
     ok = await event.edit("`Extracting information...`")
     sysarg = event.pattern_match.group(1)

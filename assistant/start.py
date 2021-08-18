@@ -57,7 +57,7 @@ _start = [
 async def own(event):
     await event.edit(
         Owner_info_msg,
-        buttons=[Button.inline("Close", data=f"closeit")],
+        buttons=[Button.inline("Close", data="closeit")],
         link_preview=False,
         parse_mode="html",
     )
@@ -72,41 +72,37 @@ async def closet(lol):
 async def ultroid(event):
     if event.is_group:
         return
-    else:
-        if (
-            not is_added(event.sender_id)
-            and str(event.sender_id) not in owner_and_sudos()
-        ):
-            add_user(event.sender_id)
-        if str(event.sender_id) not in owner_and_sudos():
-            ok = ""
-            u = await event.client.get_entity(event.chat_id)
-            if not udB.get("STARTMSG"):
-                if udB.get("PMBOT") == "True":
-                    ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
-                await event.reply(
-                    f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
-                    buttons=[Button.inline("Info.", data="ownerinfo")],
-                )
-            else:
-                me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
-                mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
-                await event.reply(
-                    Redis("STARTMSG").format(me=me, mention=mention),
-                    buttons=[Button.inline("Info.", data="ownerinfo")],
-                )
+    if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
+        add_user(event.sender_id)
+    if str(event.sender_id) not in owner_and_sudos():
+        ok = ""
+        u = await event.client.get_entity(event.chat_id)
+        if not udB.get("STARTMSG"):
+            if udB.get("PMBOT") == "True":
+                ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
+            await event.reply(
+                f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
+                buttons=[Button.inline("Info.", data="ownerinfo")],
+            )
         else:
-            name = get_display_name(event.sender_id)
-            if event.pattern_match.group(1) == "set":
-                await event.reply(
-                    "Choose from the below options -",
-                    buttons=_settings,
-                )
-            else:
-                await event.reply(
-                    get_string("ast_3").format(name),
-                    buttons=_start,
-                )
+            me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
+            mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
+            await event.reply(
+                Redis("STARTMSG").format(me=me, mention=mention),
+                buttons=[Button.inline("Info.", data="ownerinfo")],
+            )
+    else:
+        name = get_display_name(event.sender_id)
+        if event.pattern_match.group(1) == "set":
+            await event.reply(
+                "Choose from the below options -",
+                buttons=_settings,
+            )
+        else:
+            await event.reply(
+                get_string("ast_3").format(name),
+                buttons=_start,
+            )
 
 
 @callback("mainmenu")
@@ -145,26 +141,25 @@ async def bdcast(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message("Cancelled!!")
-        else:
-            success = 0
-            fail = 0
-            await conv.send_message(f"Starting a broadcast to {len(ok)} users...")
-            start = datetime.now()
-            for i in ok:
-                try:
-                    await asst.send_message(int(i), f"{themssg}")
-                    success += 1
-                except BaseException:
-                    fail += 1
-            end = datetime.now()
-            time_taken = (end - start).seconds
-            await conv.send_message(
-                f"""
+        success = 0
+        fail = 0
+        await conv.send_message(f"Starting a broadcast to {len(ok)} users...")
+        start = datetime.now()
+        for i in ok:
+            try:
+                await asst.send_message(int(i), f"{themssg}")
+                success += 1
+            except BaseException:
+                fail += 1
+        end = datetime.now()
+        time_taken = (end - start).seconds
+        await conv.send_message(
+            f"""
 Broadcast completed in {time_taken} seconds.
 Total Users in Bot - {len(ok)}
 Sent to {success} users.
 Failed for {fail} user(s).""",
-            )
+        )
 
 
 @callback("setter")
@@ -195,16 +190,15 @@ async def timezone_(event):
                 "Cancelled!!",
                 buttons=get_back_button("mainmenu"),
             )
-        else:
-            try:
-                tz(themssg)
-                await setit(event, var, themssg)
-                await conv.send_message(
-                    f"{name} changed to {themssg}\n",
-                    buttons=get_back_button("mainmenu"),
-                )
-            except BaseException:
-                await conv.send_message(
-                    "Wrong TimeZone, Try again",
-                    buttons=get_back_button("mainmenu"),
-                )
+        try:
+            tz(themssg)
+            await setit(event, var, themssg)
+            await conv.send_message(
+                f"{name} changed to {themssg}\n",
+                buttons=get_back_button("mainmenu"),
+            )
+        except BaseException:
+            await conv.send_message(
+                "Wrong TimeZone, Try again",
+                buttons=get_back_button("mainmenu"),
+            )

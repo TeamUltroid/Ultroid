@@ -15,7 +15,6 @@
 """
 import random
 
-import requests
 from carbonnow import Carbon
 
 from . import *
@@ -181,19 +180,16 @@ async def crbn(event):
         temp = await event.get_reply_message()
         if temp.media:
             b = await event.client.download_media(temp)
-            a = open(b)
-            code = a.read()
-            a.close()
+            with open(b) as a:
+                code = a.read()
             os.remove(b)
         else:
             code = temp.message
     else:
-        code = event.text.split(" ", maxsplit=1)[1]
-    webs = requests.get("https://carbonara.vercel.app/api/cook")
-    if webs.status_code == 502:
-        return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
+        try:
+            code = event.text.split(" ", maxsplit=1)[1]
+        except IndexError:
+            return await eor(event, "`Reply to Message or readable file..`")
     carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code)
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
@@ -212,20 +208,17 @@ async def crbn(event):
         temp = await event.get_reply_message()
         if temp.media:
             b = await event.client.download_media(temp)
-            a = open(b)
-            code = a.read()
-            a.close()
+            with open(b) as a:
+                code = a.read()
             os.remove(b)
         else:
             code = temp.message
     else:
-        code = event.text.split(" ", maxsplit=1)[1]
+        try:
+            code = event.text.split(" ", maxsplit=1)[1]
+        except IndexError:
+            return await eor(event, "`Reply to Message or readable file..`")
     col = random.choice(all_col)
-    webs = requests.get("https://carbonara.vercel.app/api/cook")
-    if webs.status_code == 502:
-        return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
     )

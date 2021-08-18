@@ -1,10 +1,12 @@
 from os import listdir, path
 from typing import Any, Dict, List, Union
-
+from googletrans import Translator
 from pyUltroid import udB
 from yaml import safe_load
 
 languages = {}
+Trs = Translator() 
+
 strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
 
 for file in listdir(strings_folder):
@@ -20,7 +22,7 @@ def get_string(key: str) -> Any:
         return languages[(udB.get("language") or "en")][key]
     except KeyError:
         try:
-            return languages["en"][key]
+            return Trs.translate(languages["en"][key], dest=udB.get("language")).text
         except KeyError:
             return f"Warning: could not load any string with the key {key}"
 

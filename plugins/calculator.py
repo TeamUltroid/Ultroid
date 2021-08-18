@@ -14,10 +14,38 @@ import re
 
 from . import *
 
+m = [
+    "AC",
+    "C",
+    "⌫",
+    "%",
+    "7",
+    "8",
+    "9",
+    "+",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+    "x",
+    "00",
+    "0",
+    ".",
+    "÷",
+]
+tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
+lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
+lst.append([Button.inline("=", data="calc=")])
+
 
 @ultroid_cmd(pattern="calc")
 async def icalc(e):
     udB.delete("calc")
+    if e.client._bot:
+        return await e.reply("• Ultroid Inline Calculator •", buttons=lst)
     results = await e.client.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
     await e.delete()
@@ -26,31 +54,6 @@ async def icalc(e):
 @in_pattern("calc")
 @in_owner
 async def _(e):
-    m = [
-        "AC",
-        "C",
-        "⌫",
-        "%",
-        "7",
-        "8",
-        "9",
-        "+",
-        "4",
-        "5",
-        "6",
-        "-",
-        "1",
-        "2",
-        "3",
-        "x",
-        "00",
-        "0",
-        ".",
-        "÷",
-    ]
-    tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
-    lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
-    lst.append([Button.inline("=", data="calc=")])
     calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
     await e.answer([calc])
 

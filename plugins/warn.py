@@ -26,7 +26,6 @@
 """
 
 from pyUltroid.functions.warn_db import *
-from telethon.utils import get_display_name
 
 from . import *
 
@@ -35,14 +34,11 @@ from . import *
 async def warn(e):
     ultroid_bot = e.client
     reply = await e.get_reply_message()
-    if len(e.text) > 5:
-        if " " not in e.text[5]:
-            return
+    if len(e.text) > 5 and " " not in e.text[5]:
+        return
     if reply:
         user = reply.from_id.user_id
-        reason = "unknown"
-        if e.pattern_match.group(1):
-            reason = e.text[5:]
+        reason = e.text[5:] if e.pattern_match.group(1) else "unknown"
     else:
         try:
             user = e.text.split()[1]
@@ -58,10 +54,7 @@ async def warn(e):
         except BaseException:
             reason = "unknown"
     count, r = warns(e.chat_id, user)
-    if not r:
-        r = reason
-    else:
-        r = r + "|$|" + reason
+    r = reason if not r else r + "|$|" + reason
     try:
         x = udB.get("SETWARN")
         number, action = int(x.split()[0]), x.split()[1]
@@ -90,7 +83,7 @@ async def warn(e):
         add_warn(e.chat_id, user, count + 1, r)
         c, r = warns(e.chat_id, user)
         ok = await ultroid_bot.get_entity(user)
-        user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+        user = inline_mention(ok)
         r = r.split("|$|")
         text = f"User {user} Got {action} Due to {count+1} Warns.\n\n"
         for x in range(c):
@@ -99,7 +92,7 @@ async def warn(e):
         return reset_warn(e.chat_id, ok.id)
     add_warn(e.chat_id, user, count + 1, r)
     ok = await ultroid_bot.get_entity(user)
-    user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+    user = inline_mention(ok)
     await eor(
         e,
         f"**WARNING :** {count+1}/{number}\n**To :**{user}\n**Be Careful !!!**\n\n**Reason** : {reason}",
@@ -110,7 +103,7 @@ async def warn(e):
 async def rwarn(e):
     reply = await e.get_reply_message()
     if reply:
-        user = reply.from_id.user_id
+        user = reply.sender_id
     else:
         try:
             user = e.text.split()[1]
@@ -123,7 +116,7 @@ async def rwarn(e):
             return await eor(e, "Reply To user")
     reset_warn(e.chat_id, user)
     ok = await e.client.get_entity(user)
-    user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+    user = inline_mention(ok)
     await eor(e, f"Cleared All Warns of {user}.")
 
 
@@ -145,7 +138,7 @@ async def twarns(e):
     c, r = warns(e.chat_id, user)
     if c and r:
         ok = await e.client.get_entity(user)
-        user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+        user = inline_mention(ok)
         r = r.split("|$|")
         text = f"User {user} Got {c} Warns.\n\n"
         for x in range(c):

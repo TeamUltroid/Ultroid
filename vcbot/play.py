@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import asyncio
 import os
 import random
 
@@ -34,7 +33,7 @@ async def startup(_, message):
         if reply.audio:
             med = reply.audio
             song_name = med.title
-        elif reply.video or reply.audio:
+        elif reply.video:
             med = reply.video or reply.audio
             song_name = med.file_name
         if med and med.thumbs:
@@ -101,23 +100,26 @@ async def cstartup(_, message):
 async def queue_func(chat_id: int):
     try:
         song, title, from_user, pos, dur = get_from_queue(chat_id)
-        CallsClient.change_stream(chat_id, song)
-       #CallsClient._add_active_call(chat_id)
+        if chat_id in CallsClient.active_calls.keys():
+            CallsClient.change_stream(chat_id, song)
+        else:
+            CallsClient.join_group_call(chat_id, song)
         xx = await asst.send_message(
             chat_id,
             f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
             reply_markup=reply_markup(chat_id),
         )
         QUEUE[chat_id].pop(pos)
-        if not QUEUE[chat_id]:
-            QUEUE.pop(chat_id)
-        await asyncio.sleep(dur + 5)
-     #   CallsClient._remove_active_call(chat_id)
+        await asyncio.sleep(dur)
+        os.remove(song)
+        if chat_id in CallsClient.active_calls.keys():
+            CallsClient.active_calls.pop(chat_id)
         await xx.delete()
-    except (IndexError, KeyError):
+    except (IndexError, KeyError) as Ec:
+        LOGS.info(Ec)
         CallsClient.leave_group_call(chat_id)
     except Exception as ap:
-        await asst.send_message(chat_id, f"`{str(ap)}`")
+        await asst.send_message(chat_id, f"`{ap}`")
 
 
 @CallsClient.on_stream_end()

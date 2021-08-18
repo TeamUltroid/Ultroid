@@ -45,9 +45,7 @@ def start():
     )
     if sessionisneeded == "generate":
         gen_session()
-    elif sessionisneeded == "skip":
-        pass
-    else:
+    elif sessionisneeded != "skip":
         print(
             'Please choose "generate" to generate a session string, or "skip" to pass on.\n\nPlease run the script again!',
         )
@@ -70,19 +68,14 @@ def start():
     print("\n\nHere are the things you've entered.\nKindly check.")
     print(all_done)
     isitdone = input("\n\nIs it all correct? [y/n]")
-    if isitdone == "y":
+    if isitdone == "y" or isitdone != "n":
         # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f = open(".env", "w")
         f.write(all_done)
         f.close
-    elif isitdone == "n":
+    else:
         print("Oh, let's redo these then -_-")
         start()
-    else:
-        # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
-        f = open(".env", "w")
-        f.write(all_done)
-        f.close
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
@@ -96,17 +89,12 @@ def start():
 
 def do_input(var):
     val = input(f"Enter your {var}: ")
-    to_write = f"{var}={val}\n"
-    return to_write
+    return f"{var}={val}\n"
 
 
 def clear_screen():
     # clear screen
-    if os.name == "posix":
-        _ = os.system("clear")
-    else:
-        # for windows platfrom
-        _ = os.system("cls")
+    _ = os.system("clear") if os.name == "posix" else os.system("cls")
 
 
 def check_for_py():

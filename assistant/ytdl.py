@@ -16,7 +16,6 @@ from pyUltroid.functions.all import *
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
@@ -24,6 +23,7 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 
 
 @in_pattern("yt")
+@in_owner
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -128,8 +128,7 @@ async def _(event):
             "quiet": True,
             "logtostderr": False,
         }
-        ytdl_data = await dler(event, link)
-        YoutubeDL(opts).download([link])
+        ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
@@ -159,8 +158,7 @@ async def _(event):
             "logtostderr": False,
             "quiet": True,
         }
-        ytdl_data = await dler(event, link)
-        YoutubeDL(opts).download([link])
+        ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
@@ -171,9 +169,9 @@ async def _(event):
             os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
         except FileNotFoundError:
             try:
-                os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
+                os.rename(f"{ytdl_data['id']}.mp4.mkv", f"{title}.mp4")
             except FileNotFoundError:
-                os.rename(f"{ytdl_data['id']}.webm", f"{title}.mp4")
+                os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
         except Exception as ex:
             return await event.edit(str(ex))
         wi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Width"')
@@ -185,8 +183,8 @@ async def _(event):
         attributes = [
             DocumentAttributeVideo(
                 duration=int(duration),
-                w=int(wi.split(":")[1].split()[0]),
-                h=int(hi.split(":")[1].split()[0]),
+                w=int(wi.split(":")[1].split("pixels")[0].replace(" ", "")),
+                h=int(hi.split(":")[1].split("pixels")[0].replace(" ", "")),
                 supports_streaming=True,
             ),
         ]

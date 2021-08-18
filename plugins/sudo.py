@@ -16,20 +16,13 @@
 • `{i}listsudo`
     List all sudo users.
 """
-from pyUltroid.misc import sudoers
 
 from . import *
 
 
-@ultroid_cmd(
-    pattern="addsudo ?(.*)",
-)
+@ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if str(ult.sender_id) in sudoers():
-        return await eod(ult, "`Sudo users can't add new sudos!`", time=10)
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     mmm = ""
     if ult.reply_to_msg_id:
@@ -64,18 +57,9 @@ async def _(ult):
     await eod(ok, mmm)
 
 
-@ultroid_cmd(
-    pattern="delsudo ?(.*)",
-)
+@ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
 async def _(ult):
-    if not ult.out and not is_fullsudo(ult.sender_id):
-        return await eod(ult, "`This Command is Sudo Restricted!..`")
     inputs = ult.pattern_match.group(1)
-    if str(ult.sender_id) in sudoers():
-        return await eod(
-            ult,
-            "You are sudo user, You cant remove other sudo user.",
-        )
     ok = await eor(ult, "`Updating SUDO Users List ...`")
     mmm = ""
     if ult.reply_to_msg_id:
@@ -124,7 +108,7 @@ async def _(ult):
             msg += f"• [{name}](tg://user?id={i}) ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    m = udB.get("SUDO") if udB.get("SUDO") else "False"
+    m = udB.get("SUDO") or "False"
     if m == "False":
         m = "[False](https://telegra.ph/Ultroid-04-06)"
     return await ok.edit(

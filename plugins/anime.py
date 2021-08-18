@@ -27,10 +27,16 @@ from . import *
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
     try:
-        await eor(event, airing_eps())
+        await eor(event, airing_eps(), link_preview=False)
     except BaseException:
         info = airing_eps()
-        t = info.replace("*", "").replace("`", "")
+        t = (
+            info.replace("*", "")
+            .replace("[", "")
+            .replace("]", "")
+            .replace("(", "  ")
+            .replace(")", "")
+        )
         with open("animes.txt", "w") as f:
             f.write(t)
         await event.reply(file="animes.txt")

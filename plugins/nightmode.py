@@ -45,11 +45,9 @@ async def set_time(e):
         return await eor(e, "Give Time in correct format")
     try:
         ok = e.text.split(maxsplit=1)[1].split()
-        if not len(ok) == 4:
+        if len(ok) != 4:
             return await eor(e, "Give Time in correct format")
-        tm = []
-        for x in ok:
-            tm.append(int(x))
+        tm = [int(x) for x in ok]
         udB.set("NIGHT_TIME", str(tm))
         await eor(e, "Setted time successfully")
     except BaseException:
@@ -89,10 +87,7 @@ async def rem_grp(e):
     for x in chats:
         try:
             ok = await ultroid_bot.get_entity(x)
-            if ok.username:
-                name += "@" + ok.username
-            else:
-                name += ok.title
+            name += "@" + ok.username if ok.username else ok.title
         except BaseException:
             name += str(x)
     await eor(e, name)

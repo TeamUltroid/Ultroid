@@ -142,8 +142,7 @@ async def _(e):
             snap.update({e.id: desc})
         except ValueError:
             sur = e.builder.article(
-                title="Type ur msg",
-                text=f"You Didn't Type Your Msg",
+                title="Type ur msg", text="You Didn't Type Your Msg"
             )
     await e.answer([sur])
 

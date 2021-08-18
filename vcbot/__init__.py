@@ -13,12 +13,11 @@ import os
 import re
 from datetime import datetime as dt
 
-import ffmpeg
 from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import StreamType
-from pyUltroid import HNDLR, CallsClient
+from pyUltroid import HNDLR, LOGS, CallsClient
 from pyUltroid import asst as tele_asst
 from pyUltroid import udB, ultroid_bot
 from pyUltroid import vcasst as asst
@@ -39,8 +38,7 @@ vcusername = tele_asst.me.username
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
     A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
-    AUTH = [int(x) for x in A_AUTH]
-    return AUTH
+    return [int(x) for x in A_AUTH]
 
 
 def reply_markup(chat_id: int):
@@ -149,6 +147,4 @@ async def vc_check(chat, chat_type):
         chat = await Client.send(functions.messages.GetFullChat(chat_id=chat))
     else:
         return False
-    if not chat.full_chat.call:
-        return False
-    return True
+    return bool(chat.full_chat.call)

@@ -38,7 +38,7 @@ async def stopvc(_, query):
 @asst.on_callback_query(filters.regex("^skip_(.*)") & AUTH_FILTER)
 async def skipstream(client, query):
     match = query.matches[0].group(1)
-    await query.answer("Skipped !", show_alert=True)
+    await query.answer("Skipped !", show_alert=False)
     await query.message.delete()
     await queue_func(int(match))
 

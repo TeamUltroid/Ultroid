@@ -30,10 +30,4 @@ async def on_out_mssg(event):
                 return
         elif event.text.startswith("/"):
             return
-        if event.media:
-            if event.text:
-                await asst.send_file(int(to_user), event.media, caption=event.text)
-            else:
-                await asst.send_file(int(to_user), event.media)
-        else:
-            await asst.send_message(int(to_user), event.text)
+        await asst.send_message(int(to_user), event.message)

@@ -12,11 +12,10 @@
     Get a screenshot of the webpage.
 
 """
-
-import io
+import os
 
 import requests
-from selenium import webdriver
+from htmlwebshot import WebShot
 
 from . import *
 
@@ -28,43 +27,28 @@ async def webss(event):
     try:
         xurl = mssg[1]
     except IndexError:
-        return await eod(xx, "`Give a URL please!`", time=5)
+        return await eod(xx, "`Give a URL please!`")
     try:
         requests.get(xurl)
     except requests.ConnectionError:
-        return await eod(xx, "Invalid URL!", time=5)
+        return await eod(xx, "Invalid URL!")
     except requests.exceptions.MissingSchema:
         try:
-            r = requests.get("https://" + xurl)
+            xurl = "https://" + xurl
+            requests.get(xurl)
         except requests.ConnectionError:
             try:
-                r2 = requests.get("http://" + xurl)
+                xurl = "http://" + xurl
+                requests.get(xurl)
             except requests.ConnectionError:
-                return await eod(xx, "Invalid URL!", time=5)
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--ignore-certificate-errors")
-    chrome_options.add_argument("--test-type")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.binary_location = "/usr/bin/google-chrome"
-    driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.get(xurl)
-    height = driver.execute_script(
-        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
+                return await eod(xx, "Invalid URL!")
+    shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
+    pic = await shot.create_pic_async(url=xurl)
+    await xx.reply(
+        f"**WebShot Generated**\n**URL**: {xurl}",
+        file=pic,
+        link_preview=False,
+        force_document=True,
     )
-    width = driver.execute_script(
-        "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
-    )
-    driver.set_window_size(width + 100, height + 100)
-    im_png = driver.get_screenshot_as_png()
-    driver.close()
-    with io.BytesIO(im_png) as sshot:
-        sshot.name = "webshot.png"
-        await xx.reply(
-            f"**WebShot Generated**\n**URL**: {xurl}",
-            file=sshot,
-            link_preview=False,
-            force_document=True,
-        )
+    os.remove(pic)
     await xx.delete()

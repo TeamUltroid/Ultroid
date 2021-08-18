@@ -11,24 +11,63 @@
     Upload file to telegram chat.
     You Can Upload Folders too.
 
-• `{i}ul <path/to/file> | stream`
+• `{i}ul <path/to/file> (| stream)`
     Upload files as stream.
 
 • `{i}dl <filename(optional)>`
     Reply to file to download.
 
+• `{i}download <DDL> (| filename)`
+    Download using DDL. Will autogenerate filename if not given.
+
 """
+import asyncio
 import glob
 import os
 import time
 from datetime import datetime as dt
 
+from aiohttp.client_exceptions import InvalidURL
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from . import *
+
+
+@ultroid_cmd(
+    pattern="download ?(.*)",
+)
+async def down(event):
+    matched = event.pattern_match.group(1)
+    msg = await eor(event, "`Trying to download...`")
+    if not matched:
+        return await eod(msg, "`You forgot to give link :(`")
+    try:
+        splited = matched.split(" | ")
+        link = splited[0]
+        filename = splited[1]
+    except IndexError:
+        filename = None
+    s_time = time.time()
+    try:
+        filename = await fast_download(
+            link,
+            filename,
+            progress_callback=lambda d, t: asyncio.create_task(
+                progress(
+                    d,
+                    t,
+                    msg,
+                    s_time,
+                    f"Downloading from {link}",
+                )
+            ),
+        )
+    except InvalidURL:
+        return await eod(msg, "`Invalid URL provided :(`")
+    await eor(msg, f"`{filename} `downloaded.")
 
 
 @ultroid_cmd(
@@ -47,10 +86,7 @@ async def download(event):
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
-            if event.pattern_match.group(1):
-                filename = event.pattern_match.group(1)
-            else:
-                filename = ok.file.name
+            filename = event.pattern_match.group(1) or ok.file.name
             if not filename:
                 if "audio" in mime_type:
                     filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
@@ -138,10 +174,7 @@ async def download(event):
                         if metadata.has("artist"):
                             artist = metadata.get("artist")
                         else:
-                            if udB.get("artist"):
-                                artist = udB.get("artist")
-                            else:
-                                artist = ultroid_bot.first_name
+                            artist = udB.get("artist") or ultroid_bot.first_name
                     except AttributeError:
                         return await event.client.send_file(
                             event.chat_id,
@@ -215,10 +248,7 @@ async def download(event):
                     if metadata.has("artist"):
                         artist = metadata.get("artist")
                     else:
-                        if udB.get("artist"):
-                            artist = udB.get("artist")
-                        else:
-                            artist = ultroid_bot.first_name
+                        artist = udB.get("artist") or ultroid_bot.first_name
                 except AttributeError:
                     await event.client.send_file(
                         event.chat_id,
@@ -271,20 +301,20 @@ async def download(event):
             return await eor(xx, str(ve))
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t != "":
-        if os.path.isdir(kk):
-            size = 0
-            for path, dirs, files in os.walk(kk):
-                for f in files:
-                    fp = os.path.join(path, f)
-                    size += os.path.getsize(fp)
-            c = len(os.listdir(kk))
-            await xx.delete()
-            await event.client.send_message(
-                event.chat_id,
-                f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
-            )
-        else:
-            await eor(xx, f"Uploaded `{kk}` in `{t}`")
-    else:
+    if t == "":
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
+
+    elif os.path.isdir(kk):
+        size = 0
+        for path, dirs, files in os.walk(kk):
+            for f in files:
+                fp = os.path.join(path, f)
+                size += os.path.getsize(fp)
+        c = len(os.listdir(kk))
+        await xx.delete()
+        await event.client.send_message(
+            event.chat_id,
+            f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+        )
+    else:
+        await eor(xx, f"Uploaded `{kk}` in `{t}`")

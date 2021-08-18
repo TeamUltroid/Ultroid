@@ -47,11 +47,10 @@ async def an(e):
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
-            else:
-                dl = await wt.download_media()
-                variable = uf(dl)
-                os.remove(dl)
-                m = "https://telegra.ph" + variable[0]
+            dl = await wt.download_media()
+            variable = uf(dl)
+            os.remove(dl)
+            m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
@@ -86,7 +85,7 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
-    if not e.out and not str(e.sender_id) in sudoers():
+    if not e.out and str(e.sender_id) not in sudoers():
         return
     xx = (e.text).lower()
     if not xx.startswith("$"):

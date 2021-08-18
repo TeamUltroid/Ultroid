@@ -10,7 +10,7 @@
 
 • `{i}install <reply to plugin>`
     To install the plugin,
-   `{i}install f`
+  `{i}install f`
     To force Install.
 
 • `{i}uninstall <plugin name>`
@@ -31,12 +31,8 @@ import os
 from . import *
 
 
-@ultroid_cmd(
-    pattern="install",
-)
+@ultroid_cmd(pattern="install", fullsudo=True)
 async def install(event):
-    if not event.out and not is_fullsudo(event.sender_id):
-        return await eod(event, "`This Command Is Sudo Restricted.`")
     await safeinstall(event)
 
 
@@ -105,6 +101,6 @@ async def load(event):
     except Exception as e:
         await eod(
             event,
-            f"**Could not load** `{shortname}` **because of the following error.**\n`{str(e)}`",
+            f"**Could not load** `{shortname}` **because of the following error.**\n`{e}`",
             time=3,
         )

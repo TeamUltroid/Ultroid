@@ -54,7 +54,6 @@ async def _(e):
     pattern="getlink$",
     groups_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
 )
 async def _(e):
     xx = await eor(e, "`Processing...`")
@@ -100,15 +99,16 @@ async def _(e):
             )
         except Exception as ex:
             await xx.edit(str(ex))
-    elif type_of_group == "g" or type_of_group == "c":
+    elif type_of_group in ["g", "c"]:
         try:
             r = await e.client(
                 CreateChannelRequest(
                     title=group_name,
                     about="Join @TeamUltroid",
-                    megagroup=False if type_of_group == "c" else True,
-                ),
+                    megagroup=type_of_group != "c",
+                )
             )
+
             created_chat_id = r.chats[0].id
             result = await e.client(
                 ExportChatInviteRequest(

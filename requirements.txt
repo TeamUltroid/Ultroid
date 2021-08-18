@@ -1,2 +1,2 @@
-https://github.com/New-dev0/Telethon/archive/New.zip
-py-Ultroid==2021.7.19
+https://github.com/New-dev0/Telethon/archive/Munch.zip
+py-Ultroid==53.0b0

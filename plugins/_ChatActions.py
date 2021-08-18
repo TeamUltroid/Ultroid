@@ -1,3 +1,11 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+
 from pyUltroid.functions.all import get_chatbot_reply
 from pyUltroid.functions.chatBot_db import chatbot_stats
 from pyUltroid.functions.clean_db import *
@@ -48,7 +56,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
 
     # gban checks
-    if ult.user_joined and ult.added_by:
+    if ult.user_joined or ult.added_by:
         user = await ult.get_user()
         chat = await ult.get_chat()
         if is_gbanned(str(user.id)) and chat.admin_rights:
@@ -62,7 +70,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
                 if reason is not None:
                     gban_watch += f"**Reason**: {reason}\n\n"
-                gban_watch += f"`User Banned.`"
+                gban_watch += "`User Banned.`"
                 await ult.reply(gban_watch)
             except BaseException:
                 pass
@@ -80,6 +88,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             fullname = f"{name} {last}" if last else name
             uu = user.username
             username = f"@{uu}" if uu else mention
+            wel = get_welcome(ult.chat_id)
             msgg = wel["welcome"]
             med = wel["media"]
             userid = user.id
@@ -112,6 +121,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         fullname = f"{name} {last}" if last else name
         uu = user.username
         username = f"@{uu}" if uu else mention
+        wel = get_goodbye(ult.chat_id)
         msgg = wel["goodbye"]
         med = wel["media"]
         userid = user.id
@@ -135,8 +145,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
-async def chatBot_replies(event):
-    if event.sender_id and chatbot_stats(event.chat_id, event.sender_id) and not event.media:
-        msg = get_chatbot_reply(event, event.text)
+
+async def chatBot_replies(e):
+    if not e.media and e.chat and chatbot_stats(e.chat.id, e.sender_id):
+        msg = get_chatbot_reply(e, e.text)
+
         if msg:
-            await event.reply(msg)
+            await e.reply(msg)
