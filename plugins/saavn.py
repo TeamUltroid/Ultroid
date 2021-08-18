@@ -29,7 +29,7 @@ async def siesace(e):
     if not song:
         return await eod(e, "`Give me Something to Search")
     hmm = time.time()
-    lol = await eor(e, "`Searching on Saavn...`")
+    lol = await eor(e, f"`Searching {song} on Saavn...`")
     sung = song.replace(" ", "%20")
     url = f"https://jostapi.herokuapp.com/saavn?query={sung}"
     try:
@@ -46,10 +46,10 @@ async def siesace(e):
         singers = k["primary_artists"]
     except Exception as ex:
         return await eod(lol, f"`{ex}`")
-    urlretrieve(urrl, title + ".mp3")
+    song = await fast_download(urrl, file_name=title + ".mp3")
     urlretrieve(img, title + ".jpg")
     okk = await uploader(
-        title + ".mp3", title + ".mp3", hmm, lol, "Uploading " + title + "..."
+        song, song, hmm, lol, "Uploading " + title + "..."
     )
     await e.reply(
         file=okk,
@@ -65,5 +65,4 @@ async def siesace(e):
         thumb=title + ".jpg",
     )
     await lol.delete()
-    os.remove(title + ".mp3")
-    os.remove(title + ".jpg")
+    os.remove(x for x in [song, title+".jpg"])
