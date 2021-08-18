@@ -7,10 +7,10 @@
 """
 ✘ Commands Available -
 
-• `{i}setgpic <reply to Photo>`
+• `{i}setgpic <reply to Photo><chat username>`
     Set Profile photo of Group.
 
-• `{i}delgpic`
+• `{i}delgpic <chat username -optional>`
     Delete Profile photo of Group.
 
 • `{i}unbanall`
@@ -35,11 +35,19 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="setgpic$", groups_only=True, admins_only=True, type=["official", "manager"]
+    pattern="setgpic ?(.*)", groups_only=True, admins_only=True, type=["official", "manager"]
 )
 async def _(ult):
     if not ult.is_reply:
         return await eod(ult, "`Reply to a Media..`")
+    match = ult.pattern_match.group(1)
+    if not ult.client._bot and match:
+        try:
+            chat = await get_user_id(match)
+        except Exception as ok:
+            return await eor(ult, str(ok))
+    else:
+        chat = ult.chat_id
     reply_message = await ult.get_reply_message()
     if reply_message.media:
         replfile = await reply_message.download_media()
@@ -50,7 +58,7 @@ async def _(ult):
     try:
         if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
-        await ult.client(EditPhotoRequest(ult.chat_id, file))
+        await ult.client(EditPhotoRequest(chat, file))
         await eod(ult, "`Group Photo has Successfully Changed !`")
     except Exception as ex:
         await eod(ult, "Error occured.\n`{}`".format(str(ex)))
@@ -58,11 +66,15 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delgpic$", groups_only=True, admins_only=True, type=["official", "manager"]
+    pattern="delgpic ?(.*)", groups_only=True, admins_only=True, type=["official", "manager"]
 )
 async def _(ult):
+    match = ult.pattern_match.group(1)
+    chat = ult.chat_id
+    if not ult.client._bot and match:
+        chat = match
     try:
-        await ult.client(EditPhotoRequest(ult.chat_id, types.InputChatPhotoEmpty()))
+        await ult.client(EditPhotoRequest(chat, types.InputChatPhotoEmpty()))
         text = "`Removed Chat Photo..`"
     except Exception as E:
         text = str(E)
