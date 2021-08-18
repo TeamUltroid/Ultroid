@@ -18,6 +18,7 @@ from . import *
 
 err = "Reply to a File bish"
 
+
 @ultroid_cmd(pattern="pyzip ?(.*)")
 async def pyZip(e):
     if e.fwd_from:
@@ -32,15 +33,12 @@ async def pyZip(e):
     nem_ = reply.file.name
     zip_ = f"{nem_}.zip" if nem_ else "ult_pyZip.zip"
     password = pass_ if pass_ else "pyZip"
-    cap_ = f"**File Name :** - {zip_} \n"\
-    f"**Password to Unzip :** - `{password}`"
-    
-    pyminizip.compress(
-        dl_, None, zip_, password, 5)
+    cap_ = f"**File Name :** - {zip_} \n" f"**Password to Unzip :** - `{password}`"
+
+    pyminizip.compress(dl_, None, zip_, password, 5)
     await eris.edit(">> __uploading__")
     try:
-        await e.client.send_file(
-            e.chat_id, zip_, caption=cap_)
+        await e.client.send_file(e.chat_id, zip_, caption=cap_)
         await eris.delete()
     except Exception as ex:
         return await eris.edit(f"#Error: {ex}")
