@@ -35,7 +35,10 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="setgpic ?(.*)", groups_only=True, admins_only=True, type=["official", "manager"]
+    pattern="setgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
 )
 async def _(ult):
     if not ult.is_reply:
@@ -66,7 +69,10 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delgpic ?(.*)", groups_only=True, admins_only=True, type=["official", "manager"]
+    pattern="delgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
 )
 async def _(ult):
     match = ult.pattern_match.group(1)

@@ -48,9 +48,7 @@ async def siesace(e):
         return await eod(lol, f"`{ex}`")
     song = await fast_download(urrl, file_name=title + ".mp3")
     urlretrieve(img, title + ".jpg")
-    okk = await uploader(
-        song, song, hmm, lol, "Uploading " + title + "..."
-    )
+    okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
         message="`" + title + "`" + "\n`From Saavn`",
@@ -65,4 +63,4 @@ async def siesace(e):
         thumb=title + ".jpg",
     )
     await lol.delete()
-    os.remove(x for x in [song, title+".jpg"])
+    os.remove(x for x in [song, title + ".jpg"])
