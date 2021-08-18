@@ -23,7 +23,7 @@ CLIENT = []
 
 
 def create_client(username, password):
-    settings = None
+    settings = {}
     if udB.get("INSTA_SET"):
         settings = eval(udB.get("INSTA_SET"))
     try:
@@ -87,7 +87,7 @@ async def soon_(e):
     try:
         cl = create_client(un, up)
     except Exception as g:
-        return await eor(ew, g)
+        return await eor(ew, str(g))
     if match:
         try:
             id = cl.user_id_from_username(match)
