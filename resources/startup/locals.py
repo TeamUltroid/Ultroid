@@ -72,7 +72,6 @@ def start():
         # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f = open(".env", "w")
         f.write(all_done)
-        f.close
     else:
         print("Oh, let's redo these then -_-")
         start()
@@ -124,7 +123,6 @@ def gen_session():
     print("\nProcessing...")
     # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
     os.system("python3 resources/session/ssgen.py")
-    return
 
 
 start()
