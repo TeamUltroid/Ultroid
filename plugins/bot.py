@@ -62,7 +62,7 @@ async def lol(ult):
         kk,
     )
     if pic is None:
-        return await eor(ult, als)
+        await eor(ult, als)
     elif "telegra" in pic:
         try:
             await ult.reply(als, file=pic, link_preview=False)
