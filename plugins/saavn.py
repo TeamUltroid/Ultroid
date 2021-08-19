@@ -47,7 +47,7 @@ async def siesace(e):
     except Exception as ex:
         return await eod(lol, f"`{ex}`")
     song = await fast_download(urrl, file_name=title + ".mp3")
-    urlretrieve(img, title + ".jpg")
+    thumb = await fast_download(img, file_name=title + ".jpg")
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
@@ -60,7 +60,7 @@ async def siesace(e):
             )
         ],
         supports_streaming=True,
-        thumb=title + ".jpg",
+        thumb=thumb,
     )
     await lol.delete()
-    [os.remove(x) for x in [song, title + ".jpg"]]
+    [os.remove(x) if x for x in [song, thumb]]
