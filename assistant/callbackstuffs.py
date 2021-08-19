@@ -7,7 +7,6 @@
 
 import re
 import subprocess
-import urllib
 from glob import glob
 from os import remove
 from random import choices
