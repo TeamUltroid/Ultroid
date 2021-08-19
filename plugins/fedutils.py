@@ -60,7 +60,7 @@ async def _(event):
     else:
         chat = await event.get_chat()
     fedList = []
-    if not len(fedList):
+    if not fedList:
         for a in range(3):
             async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
@@ -196,7 +196,7 @@ async def _(event):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
-    if not len(fedList):
+    if not fedList:
         for a in range(3):
             async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
