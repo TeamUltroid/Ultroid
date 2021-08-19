@@ -38,6 +38,8 @@ if C_PIC:
     TLINK = C_PIC
 else:
     _file_to_replace = "resources/extras/inline.jpg"
+
+upage = 0
 # ============================================#
 
 
