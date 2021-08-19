@@ -27,7 +27,7 @@
 • `{i}gcast <Message> or <reply>`
     Globally Send that msg in all grps.
 
-• `{i}gucast <Message>`
+• `{i}gucast <Message> or <reply>`
     Globally Send that msg in all Ur Chat Users.
 
 • `{i} gblacklist <chat id/username/nothing (for current chat)`
@@ -368,7 +368,7 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
-            if not is_gblacklisted(chat):
+            if not is_gblacklisted(chat) and not int("-100"+str(chat)) in NOSPAM_CHAT:
                 try:
                     done += 1
                     await event.client.send_message(chat, msg)
@@ -385,10 +385,12 @@ async def gcast(event):
 @ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
 async def gucast(event):
     xx = event.pattern_match.group(1)
-    if not xx:
-        return eor(event, "`Give some text to Globally Broadcast`")
-    tt = event.text
-    msg = tt[7:]
+    if xx:
+        msg = xx
+    elif event.is_reply:
+        msg = await event.get_reply_message()
+    else:
+        return eor(event, "`Give some text to Globally Broadcast or reply a message..`")
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
