@@ -229,7 +229,7 @@ async def tkicki(e):
     except IndexError:
         return await eod(e, "`Time till kick?`", time=15)
     try:
-        input = huh[2]
+        inputt = huh[2]
     except IndexError:
         pass
     chat = await e.get_chat()
@@ -237,8 +237,8 @@ async def tkicki(e):
         replied = await e.get_reply_message()
         userid = replied.sender_id
         fn = (await e.get_sender()).first_name
-    elif input:
-        userid = await get_user_id(input)
+    elif inputt:
+        userid = await get_user_id(inputt)
         fn = (await e.client.get_entity(userid)).first_name
     else:
         return await eod(e, "`Reply to someone or use its id...`", time=3)
