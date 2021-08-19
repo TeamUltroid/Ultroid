@@ -101,7 +101,7 @@ async def _(event):
             )
     elif event.pattern_match.group(1):
         ids = await get_user_id(event.pattern_match.group(1))
-        return await eor(
+        await eor(
             event,
             "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
                 str(event.chat_id),
@@ -125,8 +125,7 @@ async def _(ult):
         try:
             chat = await ult.client.get_entity(input_str)
         except Exception as e:
-            await eor(ult, str(e))
-            return None
+            return await eor(ult, str(e))
     try:
         async for x in ult.client.iter_participants(
             chat,
@@ -227,7 +226,7 @@ async def _(e):
         await z.delete()
         os.remove(c)
     else:
-        return await eor(e, "**Reply to a gif or audio file only**")
+        await eor(e, "**Reply to a gif or audio file only**")
 
 
 @ultroid_cmd(
@@ -343,8 +342,7 @@ async def _(e):
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
     if not (steal.is_reply or mat):
-        await eor(steal, "`Use this command with reply or give Username/id...`")
-        return
+        return await eor(steal, "`Use this command with reply or give Username/id...`")
     if mat:
         user_id = await get_user_id(mat)
     message = await steal.get_reply_message()
@@ -361,16 +359,14 @@ async def lastname(steal):
                 respond = await conv.get_response()
                 responds = await conv.get_response()
             except YouBlockedUserError:
-                await lol.edit("Please unblock @sangmatainfo_bot and try again")
-                return
+                return await lol.edit("Please unblock @sangmatainfo_bot and try again")
             if (
                 response.text.startswith("No records found")
                 or respond.text.startswith("No records found")
                 or responds.text.startswith("No records found")
             ):
                 await lol.edit("No records found for this user")
-                await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
-                return
+                return await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
             else:
                 if response.text.startswith("🔗"):
                     await lol.edit(respond.message)
@@ -386,4 +382,4 @@ async def lastname(steal):
                 [msg.id, responds.id, respond.id, response.id],
             )
     except AsyncTimeout:
-        return await lol.edit("Error: @SangMataInfo_bot is not responding!.")
+        await lol.edit("Error: @SangMataInfo_bot is not responding!.")
