@@ -257,22 +257,17 @@ async def tkicki(e):
         return await eor(e, str(m))
 
 
-@ultroid_cmd(pattern="pin ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="pin$", type=["official", "manager"])
 async def pin(msg):
-    xx = msg.reply_to_msg_id
-    tt = msg.text
-    try:
-        kk = tt[4]
-        if kk:
-            return
-    except BaseException:
-        pass
     if not msg.is_reply:
         return await eor(msg, "Reply a Message to Pin !")
-    if not msg.client._bot and not msg.is_private and not isinstance(msg.chat, Chat):
-        (await msg.client(ExpLink(msg.chat_id, xx))).link
+    msg = await msg.get_reply_message()
+    if msg.is_private:
+        text = "`Pinned.`"
+    else:
+        text = f"Pinned [This Message]({msg.message_link}) !"
     try:
-        await msg.client.pin_message(msg.chat_id, xx, notify=False)
+        await msg.client.pin_message(msg.chat_id, msg.id, notify=False)
     except BadRequestError:
         return await eor(msg, "`Hmm.. Guess I have no rights here!`")
     except Exception as e:
