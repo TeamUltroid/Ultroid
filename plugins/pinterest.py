@@ -14,6 +14,7 @@
 
 
 import os
+from urllib.request import urlretrieve as donl
 
 from bs4 import BeautifulSoup as bs
 from requests import get
@@ -41,16 +42,15 @@ async def pinterest(e):
     hehe = bs(get_link, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
     if len(hulu) < 1:
-        return await eod(e, "`Wrong link or private pin.`")
+        await eod(e, "`Wrong link or private pin.`")
     elif len(hulu) > 1:
-        await download_file(hulu[0]["href"], "pinterest.mp4")
-        await download_file(hulu[1]["href"], "pinterest.jpg")
+        video = await fast_download(hulu[0]["href"])
+        thumb = await fast_download(hulu[1]["href"])
         await e.delete()
         await e.client.send_file(
-            e.chat_id, "pinterest.mp4", thumb="pinterest.jpg", caption=f"Pin:- {m}"
+            e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}"
         )
-        os.remove("pinterest.mp4")
-        os.remove("pinterest.jpg")
+        [os.remove(file) for file in [video, thumb]]
     else:
         await e.delete()
         await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
