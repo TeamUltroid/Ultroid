@@ -50,7 +50,7 @@ async def pinterest(e):
         await e.client.send_file(
             e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}"
         )
-        [os.remove(file) if file for file in [video, thumb]]
+        [os.remove(file) for file in [video, thumb]]
     else:
         await e.delete()
         await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
