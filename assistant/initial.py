@@ -62,7 +62,7 @@ async def init_depl(e):
 
 @callback(re.compile("^initbk_(\\+d)"))
 async def ineiq(e):
-    CURRENT == int(e.data_match.group(1))
+    CURRENT = int(e.data_match.group(1))
     if CURRENT == 1:
         return await e.edit(
             STRINGS[1],
