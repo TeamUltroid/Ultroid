@@ -20,6 +20,7 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 
 
+
 from . import *
 
 _base = "https://pinterestdownloader.com/download?url="
