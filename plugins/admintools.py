@@ -53,8 +53,9 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
 
@@ -260,19 +261,18 @@ async def tkicki(e):
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, "Reply a Message to Pin !")
-    msg = await msg.get_reply_message()
-    if msg.is_private:
-        pass
+    me = await msg.get_reply_message()
+    if me.is_private:
+        text = "`Pinned.`"
     else:
-        f"Pinned [This Message]({msg.message_link}) !"
+        text = f"Pinned [This Message]({me.message_link}) !"
     try:
-        await msg.client.pin_message(msg.chat_id, msg.id, notify=False)
+        await msg.client.pin_message(msg.chat_id, me.id, notify=False)
     except BadRequestError:
         return await eor(msg, "`Hmm.. Guess I have no rights here!`")
     except Exception as e:
         return await eor(msg, f"**ERROR:**`{e}`")
-    if msg.out:
-        await msg.delete()
+    await eor(msg, text)
 
 
 @ultroid_cmd(
