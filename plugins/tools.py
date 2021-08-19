@@ -366,7 +366,7 @@ async def lastname(steal):
                 or responds.text.startswith("No records found")
             ):
                 await lol.edit("No records found for this user")
-                return await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
+                await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
             else:
                 if response.text.startswith("🔗"):
                     await lol.edit(respond.message)
