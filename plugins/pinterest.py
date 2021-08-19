@@ -14,7 +14,6 @@
 
 
 import os
-from urllib.request import urlretrieve as donl
 
 from bs4 import BeautifulSoup as bs
 from requests import get
@@ -44,8 +43,8 @@ async def pinterest(e):
     if len(hulu) < 1:
         return await eod(e, "`Wrong link or private pin.`")
     elif len(hulu) > 1:
-        donl(hulu[0]["href"], "pinterest.mp4")
-        donl(hulu[1]["href"], "pinterest.jpg")
+        await download_file(hulu[0]["href"], "pinterest.mp4")
+        await download_file(hulu[1]["href"], "pinterest.jpg")
         await e.delete()
         await e.client.send_file(
             e.chat_id, "pinterest.mp4", thumb="pinterest.jpg", caption=f"Pin:- {m}"
