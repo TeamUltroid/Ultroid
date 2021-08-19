@@ -304,7 +304,6 @@ async def otvaar(event):
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
                 Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
             ],
-            [Button.inline("Sudo HNDLR", data="shndlr")],
             [
                 Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
                 Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
@@ -313,7 +312,7 @@ async def otvaar(event):
                 Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
                 Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
             ],
-            [Button.inline("Inline Pic", data="inli_pic")],
+            [Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"), Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
