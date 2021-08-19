@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import asyncio
-import time
+import time, os
 
 from pyUltroid import *
 from pyUltroid.dB import *
@@ -21,7 +21,7 @@ from strings import get_string
 try:
     import glitch_me
 except ModuleNotFoundError:
-    await bash(
+    os.system(
         "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
     )
 
