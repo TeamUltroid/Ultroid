@@ -36,61 +36,23 @@ bot = "@MissRose_bot"
 )
 async def _(event):
     msg = await eor(event, "Starting a Mass-FedBan...")
+    inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        if previous_message.media:
-            downloaded_file_name = await event.client.download_media(
-                previous_message,
-                "fedlist",
-            )
-            file = open(downloaded_file_name, encoding="utf8")
-            lines = file.readlines()
-            for line in lines:
-                try:
-                    fedList.append(line[:36])
-                except BaseException:
-                    pass
-            arg = event.text.split(" ", maxsplit=2)
-            try:
-                FBAN = arg[1]
-                REASON = arg[2]
-            except IndexError:
-                try:
-                    FBAN = arg[1]
-                except IndexError:
-                    return await msg.edit("No user was designated.")
-                REASON = "#TBMassBanned "
-        else:
-            FBAN = previous_message.sender_id
-            try:
-                REASON = event.text.split(" ", maxsplit=1)[1]
-            except IndexError:
-                REASON = "#TBMassBanned"
-    else:
+        FBAN = (await event.get_reply_message()).sender_id
+        if inputt:
+            REASON = inputt
+    elif inputt and not event.reply_to_msg_id:
         REASON = "#TBMassBanned"
         arg = event.text.split()
         if len(arg) == 2:
-            FBAN = arg[1]
+            FBAN = await get_user_id(arg[1])
         elif len(arg) > 2:
-            FBAN = arg[1]
+            FBAN = await get_user_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit("No user was designated.")
 
-    if FBAN.startswith("@"):
-        usr = FBAN
-    else:
-        try:
-            usr = int(FBAN)
-        except BaseException:
-            return await msg.edit("Give username or id.")
-    try:
-        x = await event.client.get_entity(usr)
-        uid = x.id
-    except BaseException:
-        return await msg.edit("Incorrect user was designated.")
-
-    if str(uid) in DEVLIST:
+    if str(FBAN) in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
     if udB.get("FBAN_GROUP_ID"):
@@ -177,7 +139,7 @@ async def _(event):
             continue
         await event.client.send_message(chat, f"/joinfed {fed}")
         await asyncio.sleep(3)
-        await event.client.send_message(chat, f"/fban {uid} {REASON}")
+        await event.client.send_message(chat, f"/fban {FBAN} {REASON}")
         await asyncio.sleep(3)
     try:
         os.remove("fedlist")
