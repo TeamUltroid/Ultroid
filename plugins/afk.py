@@ -30,7 +30,7 @@ old_afk_msg = []
 @ultroid_cmd(pattern="afk ?(.*)", fullsudo=True)
 async def set_afk(event):
     if event.client._bot:
-        return await eor(event, "Master, I am a Bot, I cant go AFK..")
+        await eor(event, "Master, I am a Bot, I cant go AFK..")
     elif is_afk():
         return
     text, media, media_type = None, None, None
@@ -91,9 +91,8 @@ async def remove_afk(event):
         event.is_private
         and Redis("PMSETTING") == "True"
         and not is_approved(event.chat_id)
+        and "afk" in event.text
     ):
-        return
-    elif "afk" in event.text:
         return
     if is_afk():
         _, _, _, afk_time = is_afk()
@@ -115,11 +114,9 @@ async def on_afk(event):
         event.is_private
         and Redis("PMSETTING") == "True"
         and not is_approved(event.chat_id)
+        or not is_afk()
+        or "afk" in event.text
     ):
-        return
-    elif not is_afk():
-        return
-    elif "afk" in event.text:
         return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None
