@@ -484,7 +484,7 @@ async def ultdestroy(event):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")
-    os.system("lottie_convert.py ultroid.tgs json.json")
+    await bash("lottie_convert.py ultroid.tgs json.json")
     with open("json.json") as json:
         jsn = json.read()
     jsn = (
@@ -503,7 +503,7 @@ async def ultdestroy(event):
         .replace("[9]", "[110]")
     )
     open("json.json", "w").write(jsn)
-    os.system("lottie_convert.py json.json ultroid.tgs")
+    await bash("lottie_convert.py json.json ultroid.tgs")
     await event.client.send_file(
         event.chat_id,
         file="ultroid.tgs",
@@ -527,12 +527,12 @@ async def ultiny(event):
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
-        os.system("lottie_convert.py ult.tgs json.json")
+        await bash("lottie_convert.py ult.tgs json.json")
         with open("json.json") as json:
             jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
-        os.system("lottie_convert.py json.json ult.tgs")
+        await bash("lottie_convert.py json.json ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
     elif ik.endswith((".gif", ".mp4")):

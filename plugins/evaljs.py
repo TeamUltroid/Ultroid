@@ -30,7 +30,7 @@ async def evalJs(
         encoding="utf-8",
     ) as scriptFile:
         scriptFile.write(str(command))
-    os.system("node ./src/ecmaHelper/eval.d.js")
+    await bash("node ./src/ecmaHelper/eval.d.js")
     if os.path.exists("./src/ecmaHelper/evalJs.result.d.txt"):
         await event.client.send_file(
             event.chat_id,

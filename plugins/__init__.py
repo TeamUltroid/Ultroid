@@ -21,7 +21,7 @@ from strings import get_string
 try:
     import glitch_me
 except ModuleNotFoundError:
-    os.system(
+    await bash(
         "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
     )
 

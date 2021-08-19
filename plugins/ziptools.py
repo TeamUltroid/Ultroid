@@ -82,7 +82,7 @@ async def unzipp(event):
         if not file.endswith(("zip", "rar", "exe")):
             return await xx.edit("`Reply To zip File Only`")
     if os.path.isdir("unzip"):
-        os.system("rm -rf unzip")
+        await bash("rm -rf unzip")
     os.mkdir("unzip")
     await bash(f"7z x {file} -aoa -ounzip")
     ok = get_all_files("unzip")
@@ -139,6 +139,6 @@ async def do_zip(event):
         force_document=True,
         thumb="resources/extras/ultroid.jpg",
     )
-    os.system("rm -rf zip")
+    await bash("rm -rf zip")
     os.remove("ultroid.zip")
     await xx.delete()

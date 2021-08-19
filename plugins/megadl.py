@@ -20,7 +20,7 @@ from . import *
 async def _(e):
     link = e.pattern_match.group(1)
     if os.path.isdir("mega"):
-        os.system("rm -rf mega")
+        await bash("rm -rf mega")
     os.mkdir("mega")
     xx = await eor(e, f"Processing...\nTo Check Progress : `{HNDLR}ls mega`")
     s = datetime.now()
@@ -53,4 +53,4 @@ async def _(e):
         e.chat_id,
         f"Downloaded And Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
     )
-    os.system("rm -rf mega")
+    await bash("rm -rf mega")

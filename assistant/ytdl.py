@@ -199,4 +199,4 @@ async def _(event):
         attributes=attributes,
         thumb=thumb,
     )
-    os.system(f'rm "{title}"*')
+    await bash(f'rm "{title}"*')

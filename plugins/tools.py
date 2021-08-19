@@ -212,8 +212,8 @@ async def _(e):
             attributes=attributes,
         )
         await z.delete()
-        os.system("rm resources/downloads/*")
-        os.system("rm circle.mp4 comp.mp3 img.png")
+        await bash("rm resources/downloads/*")
+        await bash("rm circle.mp4 comp.mp3 img.png")
     elif a.document and a.document.mime_type == "video/mp4":
         z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
