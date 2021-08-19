@@ -51,7 +51,7 @@ async def usage_finder(event):
         return await x.edit(simple_usage())
 
     if opt == "redis":
-        return await x.edit(redis_usage())
+        await x.edit(redis_usage())
     elif opt == "heroku":
         is_hk, hk = heroku_usage()
         await x.edit(hk)
