@@ -262,7 +262,7 @@ async def _(event):
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
-        for n in range(len(excludeFed)):
+        for n, m in enumerate(excludeFed):
             excludeFed[n] = excludeFed[n].strip()
     exCount = 0
     for fed in fedList:
