@@ -96,8 +96,8 @@ async def soon_(e):
         return await eor(ew, str(g))
     if match:
         try:
-            id = cl.user_id_from_username(match)
-            data = cl.user_info(id)
+            iid = cl.user_id_from_username(match)
+            data = cl.user_info(iid)
         except Exception as g:
             return await eor(ew, f"**ERROR** : `{g}`")
     else:
