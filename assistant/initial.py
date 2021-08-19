@@ -41,7 +41,7 @@ STRINGS = {
 }
 
 
-@callback(re.compile("initft_(.*)"))
+@callback(re.compile("initft_(\d+)"))
 async def init_depl(e):
     CURRENT = int(e.data_match.group(1))
     if CURRENT == 5:
@@ -60,7 +60,7 @@ async def init_depl(e):
     )
 
 
-@callback(re.compile("initbk_(.*)"))
+@callback(re.compile("initbk_(\d+)"))
 async def ineiq(e):
     CURRENT = int(e.data_match.group(1))
     if CURRENT == 1:
