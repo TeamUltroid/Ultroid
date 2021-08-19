@@ -95,8 +95,7 @@ async def _(event):
                     elif "You can only use fed commands once every 5 minutes" in (
                         await bot_conv.get_edit
                     ):
-                        await msg.edit("Try again after 5 mins.")
-                        return
+                        return await msg.edit("Try again after 5 mins.")
                 if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
@@ -118,14 +117,12 @@ async def _(event):
             elif In:
                 tempFedId += x
         if not fedList:
-            await msg.edit("Unable to collect FedAdminList.")
-            return
+            return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
         await ultroid.send_message(chat, "/start")
     except BaseException:
-        await msg.edit("Specified FBan Group ID is incorrect.")
-        return
+        return await msg.edit("Specified FBan Group ID is incorrect.")
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
@@ -234,8 +231,7 @@ async def _(event):
                     elif "You can only use fed commands once every 5 minutes" in (
                         await bot_conv.get_edit
                     ):
-                        await msg.edit("Try again after 5 mins.")
-                        return
+                        return await msg.edit("Try again after 5 mins.")
                 if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
@@ -257,14 +253,12 @@ async def _(event):
             elif In:
                 tempFedId += x
         if not fedList:
-            await msg.edit("Unable to collect FedAdminList.")
-            return
+            return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
         await event.client.send_message(chat, "/start")
     except BaseException:
-        await msg.edit("Specified FBan Group ID is incorrect.")
-        return
+        return await msg.edit("Specified FBan Group ID is incorrect.")
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
@@ -307,7 +301,6 @@ async def _(event):
         await ok.edit(
             "`Give me someones id, or reply to somones message to check his/her fedstat.`",
         )
-        return
     else:
         async with event.client.conversation(bot) as conv:
             try:
@@ -316,7 +309,7 @@ async def _(event):
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
                 if audio.message.startswith("This command can only be used once"):
-                    return await ok.edit(
+                    await ok.edit(
                         "Oops, you can use this command only once every minute!",
                     )
                 elif "Looks like" in audio.text:
