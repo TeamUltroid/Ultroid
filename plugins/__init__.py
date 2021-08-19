@@ -37,6 +37,10 @@ List = []
 Dict = {}
 N = 0
 
+# Chats, which needs to be ignore for some cases
+# Considerably, there can be many
+# Feel Free to Add Any other... 
+
 NOSPAM_CHAT = [
     -1001387666944,  # @PyrogramChat
     -1001109500936,  # @TelethonChat
