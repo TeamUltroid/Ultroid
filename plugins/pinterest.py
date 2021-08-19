@@ -14,12 +14,9 @@
 
 
 import os
-from urllib.request import urlretrieve as donl
 
 from bs4 import BeautifulSoup as bs
 from requests import get
-
-
 
 from . import *
 
@@ -48,9 +45,7 @@ async def pinterest(e):
         video = await fast_download(hulu[0]["href"])
         thumb = await fast_download(hulu[1]["href"])
         await e.delete()
-        await e.client.send_file(
-            e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}"
-        )
+        await e.client.send_file(e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}")
         [os.remove(file) for file in [video, thumb]]
     else:
         await e.delete()

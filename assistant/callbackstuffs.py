@@ -312,7 +312,10 @@ async def otvaar(event):
                 Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
                 Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
             ],
-            [Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"), Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr")],
+            [
+                Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
+                Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
+            ],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )

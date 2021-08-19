@@ -13,7 +13,6 @@
 """
 import os
 import time
-from urllib.request import urlretrieve
 
 import requests as r
 from telethon.tl.types import DocumentAttributeAudio

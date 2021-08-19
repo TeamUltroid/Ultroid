@@ -9,7 +9,6 @@
 import os
 import re
 import time
-from urllib.request import urlretrieve
 
 from numerize import numerize
 from pyUltroid.functions.all import *
@@ -164,7 +163,9 @@ async def _(event):
         title = ytdl_data["title"]
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
-        thumb = await fast_download(f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", file_name=f"{title}.jpg")
+        thumb = await fast_download(
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", file_name=f"{title}.jpg"
+        )
 
         duration = ytdl_data["duration"]
         try:
