@@ -332,12 +332,12 @@ async def emoji(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message(
+            await conv.send_message(
                 "Cancelled!!",
                 buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
-            return await conv.send_message(
+            await conv.send_message(
                 "Incorrect Emoji",
                 buttons=get_back_button("otvars"),
             )
