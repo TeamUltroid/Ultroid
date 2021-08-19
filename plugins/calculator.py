@@ -64,33 +64,33 @@ async def _(e):
     x = (e.data_match.group(1)).decode()
     if x == "AC":
         udB.delete("calc")
-        return await e.edit(
+        await e.edit(
             "• Ultroid Inline Calculator •",
             buttons=[Button.inline("Open Calculator Again", data="recalc")],
         )
     elif x == "C":
         udB.delete("calc")
-        return await e.answer("cleared")
+        await e.answer("cleared")
     elif x == "⌫":
         get = udB.get("calc")
         if get:
             udB.set("calc", get[:-1])
-            return await e.answer(str(get[:-1]))
+            await e.answer(str(get[:-1]))
     elif x == "%":
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "/100")
-            return await e.answer(str(get + "/100"))
+            await e.answer(str(get + "/100"))
     elif x == "÷":
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "/")
-            return await e.answer(str(get + "/"))
+            await e.answer(str(get + "/"))
     elif x == "x":
         get = udB.get("calc")
         if get:
             udB.set("calc", get + "*")
-            return await e.answer(str(get + "*"))
+            await e.answer(str(get + "*"))
     elif x == "=":
         get = udB.get("calc")
         if get:
@@ -99,18 +99,18 @@ async def _(e):
             out = await calcc(get, e)
             try:
                 num = float(out)
-                return await e.answer(f"Answer : {num}", cache_time=0, alert=True)
+                await e.answer(f"Answer : {num}", cache_time=0, alert=True)
             except BaseException:
                 udB.delete("calc")
-                return await e.answer("Error", cache_time=0, alert=True)
-        return await e.answer("None")
+                await e.answer("Error", cache_time=0, alert=True)
+        await e.answer("None")
     else:
         get = udB.get("calc")
         if get:
             udB.set("calc", get + x)
-            return await e.answer(str(get + x))
+            await e.answer(str(get + x))
         udB.set("calc", x)
-        return await e.answer(str(x))
+        await e.answer(str(x))
 
 
 @callback("recalc")
