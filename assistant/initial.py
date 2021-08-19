@@ -40,37 +40,32 @@ STRINGS = {
 • Thanks for Reaching till EnD.""",
 }
 
-CURRENT = 1
 
-
-@callback(re.compile("^initft$"))
+@callback(re.compile("^initft_(\\+d)"))
 async def init_depl(e):
-    global CURRENT
-    if CURRENT == 4:
-        CURRENT += 1
+    CURRENT = int(e.data_match.group(1))
+    if CURRENT == 5:
         return await e.edit(
-            STRINGS[5], buttons=Button.inline("<< Back", "initbk"), link_preview=False
+            STRINGS[5], buttons=Button.inline("<< Back", "initbk_"+str(4)), link_preview=False
         )
-    CURRENT += 1
     await e.edit(
         STRINGS[CURRENT],
-        buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")],
+        buttons=[Button.inline("<<", "initbk_"+str(CURRENT-1)), Button.inline(">>", "initft_"+str(CURRENT+1))],
         link_preview=False,
     )
 
 
-@callback(re.compile("^initbk$"))
+@callback(re.compile("^initbk_(\\+d)"))
 async def ineiq(e):
-    global CURRENT
-    if CURRENT == 2:
+    CURRENT == int(e.data_match.group(1))
+    if CURRENT == 1:
         return await e.edit(
             STRINGS[1],
-            buttons=Button.inline("Start Back >>", "initft"),
+            buttons=Button.inline("Start Back >>", "initft_"+str(2)),
             link_preview=False,
         )
-    CURRENT -= 1
     await e.edit(
         STRINGS[CURRENT],
-        buttons=[Button.inline("<<", "initbk"), Button.inline(">>", "initft")],
+        buttons=[Button.inline("<<", "initbk_"+str(CURRENT-1)), Button.inline(">>", "initft_"+str(CURRENT+1))],
         link_preview=False,
     )
