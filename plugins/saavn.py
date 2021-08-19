@@ -63,4 +63,4 @@ async def siesace(e):
         thumb=thumb,
     )
     await lol.delete()
-    [os.remove(x) if x for x in [song, thumb]]
+    [os.remove(x) for x in [song, thumb]]
