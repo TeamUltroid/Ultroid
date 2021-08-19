@@ -35,6 +35,7 @@ import os
 import random
 import re
 import urllib.request
+import requests
 from os import remove
 
 import cv2
@@ -290,10 +291,8 @@ async def hehe(args):
             packnick += " (Animated)"
             cmd = "/newanimated"
 
-        response = urllib.request.urlopen(
-            urllib.request.Request(f"http://t.me/addstickers/{packname}"),
-        )
-        htmlstr = response.read().decode("utf8").split("\n")
+        response = requests.get(f"http://t.me/addstickers/{packname}")
+        htmlstr = response.text.split("\n")
 
         if (
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
