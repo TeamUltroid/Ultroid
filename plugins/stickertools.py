@@ -113,15 +113,15 @@ async def uconverter(event):
     ok = ["image/webp", "application/x-tgsticker"]
     if not (a.media and a.media.document and a.media.document.mime_type in ok):
         return await eor(event, "`Reply to a Sticker...`")
-    input = event.pattern_match.group(1)
+    input_ = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
-    if "gif" in input:
+    if "gif" in input_:
         cmd = ["lottie_convert.py", b, "something.gif"]
         file = "something.gif"
-    elif "img" in input:
+    elif "img" in input_:
         cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
-    elif "sticker" in input:
+    elif "sticker" in input_:
         cmd = ["lottie_convert.py", b, "something.webp"]
         file = "something.webp"
     else:
@@ -522,8 +522,8 @@ async def ultiny(event):
     if not (reply and (reply.media)):
         await eor(event, "`Reply To Media`")
         return
-    xx = await eor(event, "`processing...`")
-    ik = await ultroid_bot.download_media(reply)
+    xx = await eor(event, "`Processing...`")
+    ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
