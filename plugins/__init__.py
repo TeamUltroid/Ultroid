@@ -6,7 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import asyncio
-import time, os
+import time
+import os
 
 from pyUltroid import *
 from pyUltroid.dB import *
