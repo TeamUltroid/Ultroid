@@ -152,8 +152,7 @@ async def changes(okk):
         )
         remove("ultroid_updates.txt")
         return
-    else:
-        await okk.edit(
+    await okk.edit(
             changelog_str,
             buttons=Button.inline("Update Now", data="updatenow"),
             parse_mode="html",
@@ -365,12 +364,12 @@ async def pluginch(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message(
+            await conv.send_message(
                 "Cancelled!!",
                 buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
-            return await conv.send_message(
+            await conv.send_message(
                 "Incorrect channel",
                 buttons=get_back_button("otvars"),
             )
@@ -400,17 +399,17 @@ async def hndlrr(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message(
+            await conv.send_message(
                 "Cancelled!!",
                 buttons=get_back_button("otvars"),
             )
         elif len(themssg) > 1:
-            return await conv.send_message(
+            await conv.send_message(
                 "Incorrect Handler",
                 buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
-            return await conv.send_message(
+            await conv.send_message(
                 "This cannot be used as handler",
                 buttons=get_back_button("otvars"),
             )
@@ -438,17 +437,17 @@ async def hndlrr(event):
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
-            return await conv.send_message(
+            await conv.send_message(
                 "Cancelled!!",
                 buttons=get_back_button("otvars"),
             )
         elif len(themssg) > 1:
-            return await conv.send_message(
+            await conv.send_message(
                 "Incorrect Handler",
                 buttons=get_back_button("otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
-            return await conv.send_message(
+            await conv.send_message(
                 "This cannot be used as handler",
                 buttons=get_back_button("otvars"),
             )
