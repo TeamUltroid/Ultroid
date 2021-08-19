@@ -34,12 +34,11 @@ import io
 import os
 import random
 import re
-import urllib.request
-import requests
 from os import remove
 
 import cv2
 import numpy as np
+import requests
 from PIL import Image, ImageDraw
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
