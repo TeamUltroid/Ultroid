@@ -153,10 +153,10 @@ async def changes(okk):
         remove("ultroid_updates.txt")
         return
     await okk.edit(
-            changelog_str,
-            buttons=Button.inline("Update Now", data="updatenow"),
-            parse_mode="html",
-        )
+        changelog_str,
+        buttons=Button.inline("Update Now", data="updatenow"),
+        parse_mode="html",
+    )
 
 
 @callback(
