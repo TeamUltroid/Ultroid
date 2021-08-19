@@ -129,8 +129,8 @@ async def _(event):
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
-        for n in range(len(excludeFed)):
-            excludeFed[n] = excludeFed[n].strip()
+        for num, item in enumerate(excludeFed):
+            excludeFed[num] = item.strip()
     exCount = 0
     for fed in fedList:
         if udB.get("EXCLUDE_FED") and fed in excludeFed:
@@ -350,7 +350,7 @@ async def _(event):
             await conv.get_response()
             await conv.send_message("/fedinfo " + sysarg)
             audio = await conv.get_response()
-            await ultroid.send_read_acknowledge(bot)
+            await event.client.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
