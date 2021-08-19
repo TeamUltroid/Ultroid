@@ -53,9 +53,8 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
-from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
 
