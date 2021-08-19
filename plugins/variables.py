@@ -44,19 +44,19 @@ async def get_var(event):
         val = udB.get(varname)
         if val is not None:
             c += 1
-            return await x.edit(
+            await x.edit(
                 f"**Variable** - `{varname}`\n**Value**: `{val}`\n**Type**: Redis Key."
             )
         # try env vars
         val = os.getenv(varname)
         if val is not None:
             c += 1
-            return await x.edit(
+            await x.edit(
                 f"**Variable** - `{varname}`\n**Value**: `{val}`\n**Type**: Env Var."
             )
 
         if c == 0:
-            return await eod(x, "Such a var doesn't exist!", time=5)
+            await eod(x, "Such a var doesn't exist!", time=5)
 
     elif opt == "type":
         c = 0
@@ -64,22 +64,22 @@ async def get_var(event):
         val = udB.get(varname)
         if val is not None:
             c += 1
-            return await x.edit(f"**Variable** - `{varname}`\n**Type**: Redis Key.")
+            await x.edit(f"**Variable** - `{varname}`\n**Type**: Redis Key.")
         # try env vars
         val = os.getenv(varname)
         if val is not None:
             c += 1
-            return await x.edit(f"**Variable** - `{varname}`\n**Type**: Env Var.")
+            await x.edit(f"**Variable** - `{varname}`\n**Type**: Env Var.")
 
         if c == 0:
-            return await eod(x, "Such a var doesn't exist!", time=5)
+            await eod(x, "Such a var doesn't exist!", time=5)
 
     elif opt == "redis":
         val = udB.get(varname)
         if val is not None:
-            return await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
+            await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
         else:
-            return await eod(x, "No such key!")
+            await eod(x, "No such key!")
 
     elif opt == "keys":
         keys = sorted(udB.keys())
