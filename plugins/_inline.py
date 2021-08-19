@@ -195,7 +195,6 @@ async def _(event):
             ],
         )
         remove("ultroid_updates.txt")
-        return
     else:
         await event.edit(
             changelog_str,
