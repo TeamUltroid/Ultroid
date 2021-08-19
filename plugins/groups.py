@@ -94,7 +94,7 @@ async def _(ult):
 async def _(event):
     xx = await eor(event, "Searching Participant Lists.")
     p = 0
-    (await event.get_chat()).title
+    title = (await event.get_chat()).title
     async for i in event.client.iter_participants(
         event.chat_id,
         filter=ChannelParticipantsKicked,
