@@ -105,7 +105,7 @@ async def _(event):
             p += 1
         except BaseException:
             pass
-    await eod(xx, "{title}: {p} unbanned")
+    await eod(xx, f"{title}: {p} unbanned")
 
 
 @ultroid_cmd(
