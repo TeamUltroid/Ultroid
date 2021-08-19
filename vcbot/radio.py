@@ -16,7 +16,7 @@ from . import *
 async def radio(client, message):
     radio = message.text.split(" ", maxsplit=1)
     if len(radio) < 1:
-        return await eor(message, "Are You Kidding Me?\nWhat to Play?")
+        await eor(message, "Are You Kidding Me?\nWhat to Play?")
     elif len(radio) >= 1 and radio[1].startswith("@" or "-"):
         ko = radio[1].split(" ", maxsplit=1)
         chat = await client.get_chat(ko[0])
