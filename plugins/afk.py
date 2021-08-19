@@ -118,6 +118,8 @@ async def on_afk(event):
         or "afk" in event.text
     ):
         return
+    if event.chat_id in NOSPAM_CHAT:
+        return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None
     if text and media:
