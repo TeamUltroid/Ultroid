@@ -11,7 +11,6 @@ from re import compile as re_compile
 from re import findall
 
 import requests
-from bs4 import BeautifulSoup
 from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
