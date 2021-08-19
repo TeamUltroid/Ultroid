@@ -136,7 +136,7 @@ async def _(e):
                     c += 1
                 except Exception as er:
                     LOGS.info(er)
-        return await eor(ev, f"Promoted The Replied Users in Total : {c} {key} chats")
+        await eor(ev, f"Promoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split()
         if not k[1]:
@@ -177,7 +177,7 @@ async def _(e):
                     c += 1
                 except BaseException:
                     pass
-        return await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
+        await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
 
 
 @ultroid_cmd(pattern="gdemote ?(.*)", fullsudo=True)
@@ -219,7 +219,7 @@ async def _(e):
                     c += 1
                 except BaseException:
                     pass
-        return await eor(ev, f"Demoted The Replied Users in Total : {c} {key} chats")
+        await eor(ev, f"Demoted The Replied Users in Total : {c} {key} chats")
     else:
         k = e.text.split()
         if not k[1]:
@@ -260,7 +260,7 @@ async def _(e):
                     c += 1
                 except BaseException:
                     pass
-        return await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
+        await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
 
 
 @ultroid_cmd(pattern="ungban ?(.*)", fullsudo=True)
