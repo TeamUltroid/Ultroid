@@ -161,7 +161,7 @@ async def warnset(e):
         if ("ban" or "kick" or "mute") not in action:
             return await eod(e, "`Only mute / ban / kick option suported`")
         udB.set("SETWARN", f"{number} {action}")
-        return await eor(
+        await eor(
             e, f"Done Your Warn Count is now {number} and Action is {action}"
         )
     else:
