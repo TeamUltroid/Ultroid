@@ -53,9 +53,8 @@ import asyncio
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
-from telethon.tl.functions.channels import ExportMessageLinkRequest as ExpLink
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import Chat, ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
 
 from . import *
 
@@ -263,9 +262,9 @@ async def pin(msg):
         return await eor(msg, "Reply a Message to Pin !")
     msg = await msg.get_reply_message()
     if msg.is_private:
-        text = "`Pinned.`"
+        pass
     else:
-        text = f"Pinned [This Message]({msg.message_link}) !"
+        f"Pinned [This Message]({msg.message_link}) !"
     try:
         await msg.client.pin_message(msg.chat_id, msg.id, notify=False)
     except BadRequestError:
