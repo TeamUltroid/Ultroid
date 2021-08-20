@@ -182,19 +182,19 @@ async def aexec(code, event):
 
 @ultroid_cmd(pattern="cpp", only_devs=True)
 async def doie(e):
-    match = e.text.split(' ', maxsplit=1)
+    match = e.text.split(" ", maxsplit=1)
     try:
         match = match[1]
     except IndexError:
         return await eor(e, "`Give Some C++ Code..`")
     msg = await eor(e, "Processing...")
-    open('cpp-ultroid.cpp', 'w').write(match)
-    m = await bash('g++ -o CppUltroid cpp-ultroid.cpp')
+    open("cpp-ultroid.cpp", "w").write(match)
+    m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
     o_cpp = f"• **Eval-Cpp**\n\n{match}"
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n{m[1]}"
         return await eor(msg, m)
-    m = await bash('./CppUltroid')
+    m = await bash("./CppUltroid")
     if m[0] != "":
         o_cpp += "\n\n**• Output** :\n{m[0]}"
     if m[1] != "":
