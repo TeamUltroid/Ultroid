@@ -44,16 +44,16 @@ async def send(eve):
         plugin = f"addons/{plug_name}.py"
         data = "buck"
     buttons = [
-            [
-                Button.inline(
-                    "« Pᴀsᴛᴇ »",
-                    data=f"pasta-{plugin}",
-                )
-            ],
-            [
-                Button.inline("« Bᴀᴄᴋ", data=data),
-                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-            ],
+        [
+            Button.inline(
+                "« Pᴀsᴛᴇ »",
+                data=f"pasta-{plugin}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data=data),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
     ]
     await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
@@ -165,8 +165,8 @@ async def _(e):
     if ok.startswith("plugins"):
         data = "back"
     buttons = [
-            Button.inline("« Bᴀᴄᴋ", data=data),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        Button.inline("« Bᴀᴄᴋ", data=data),
+        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
     ]
     await e.edit(
         f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
