@@ -198,7 +198,7 @@ async def doie(e):
         return await eor(msg, o_cpp)
     m = await bash("./CppUltroid")
     if m[0] != "":
-        o_cpp += f"\n\n**• Output** :\n{m[0]}"
+        o_cpp += f"\n\n**• Output :**\n`{m[0]}`"
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
     if len(o_cpp) > 3000:
