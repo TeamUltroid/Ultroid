@@ -1,22 +1,23 @@
-from pyUltroid import CallsClient, vcClient, ultroid_bot as ultroid, asst, udB, Var
-from pyUltroid.misc import sudoers
-from telethon import events
-
-
+import asyncio
 import os
+import random
+import subprocess
+from asyncio import sleep
+from datetime import datetime
+from os import path
+from random import randint
+from signal import SIGINT
+
 import ffmpeg
+import wget
 from pyrogram import emoji
 from pyrogram.methods.messages.download_media import DEFAULT_DOWNLOAD_DIR
-import wget
-from asyncio import sleep
+from pyUltroid import CallsClient, Var, asst, udB
+from pyUltroid import ultroid_bot as ultroid
+from pyUltroid import vcClient
+from pyUltroid.misc import sudoers
+from telethon import events
 from youtube_dl import YoutubeDL
-from os import path
-import subprocess
-import asyncio
-import random
-from datetime import datetime
-from signal import SIGINT
-from random import randint
 
 USERNAME = asst.me.username
 
@@ -129,7 +130,7 @@ class Player(object):
         await self.download_audio(playlist[1])
 
     async def send_text(self, text):
-        group_call = self.group_call
+        self.group_call
         chat_id = LOG_GROUP
         message = await asst.send_message(
             chat_id, text, disable_web_page_preview=True, disable_notification=True
@@ -187,16 +188,15 @@ class Player(object):
                 process.kill()
             except Exception as e:
                 print(e)
-                pass
             FFMPEG_PROCESSES[chat_id] = ""
         station_stream_url = STREAM_URL
         try:
             RADIO.remove(0)
-        except:
+        except BaseException:
             pass
         try:
             RADIO.add(1)
-        except:
+        except BaseException:
             pass
 
         if CPLAY:
@@ -204,7 +204,7 @@ class Player(object):
             return
         try:
             RADIO.remove(3)
-        except:
+        except BaseException:
             pass
         if os.path.exists(f"radio-{chat_id}.raw"):
             os.remove(f"radio-{chat_id}.raw")
@@ -257,11 +257,11 @@ class Player(object):
             group_call.input_filename = ""
             try:
                 RADIO.remove(1)
-            except:
+            except BaseException:
                 pass
             try:
                 RADIO.add(0)
-            except:
+            except BaseException:
                 pass
         process = FFMPEG_PROCESSES.get(chat_id)
         if process:
@@ -271,7 +271,6 @@ class Player(object):
                 process.kill()
             except Exception as e:
                 print(e)
-                pass
             FFMPEG_PROCESSES[chat_id] = ""
 
     async def start_call(self, chat_id):
@@ -313,7 +312,7 @@ class Player(object):
         await sleep(DELAY)
         try:
             await event.delete()
-        except:
+        except BaseException:
             pass
 
     async def get_admins(self, chat):
@@ -333,7 +332,7 @@ class Player(object):
 
     async def shuffle_playlist(self):
         v = []
-        p = [v.append(playlist[c]) for c in range(2, len(playlist))]
+        [v.append(playlist[c]) for c in range(2, len(playlist))]
         random.shuffle(v)
         for c in range(2, len(playlist)):
             playlist.remove(playlist[c])
@@ -382,7 +381,6 @@ class Player(object):
                         await self.download_audio(track)
             if not playlist:
                 print("No songs Found From Channel, Starting Red FM")
-                CPLAY = False
                 STREAM_URL = "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8?nocache=825347"
                 await self.start_radio(channel)
                 return
@@ -393,7 +391,6 @@ class Player(object):
                 if LOG_GROUP:
                     await self.send_playlist()
         except Exception as e:
-            CPLAY = False
             STREAM_URL = "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8?nocache=825347"
             await self.start_radio(channel)
             print("Errorrs Occured\n Starting Red FM", e)
@@ -402,6 +399,8 @@ class Player(object):
 mp = Player()
 
 # pytgcalls handlers
+
+
 @mp.group_call.on_network_status_changed
 async def on_network_changed(call, is_connected):
     chat_id = call.full_chat.id
