@@ -227,6 +227,7 @@ async def stats(
 
 @ultroid_cmd(
     pattern="paste( (.*)|$)",
+    type=["official", "manager"]
 )
 async def _(event):
     xx = await eor(event, "` 《 Pasting... 》 `")
