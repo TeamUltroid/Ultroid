@@ -10,7 +10,7 @@
 • `{i}bash <cmds>`
     Run linux commands on telegram.
 
-• `{i}eval <cmds>`
+• `{i}eval <code>`
     Evaluate python commands on telegram.
     Shortcuts:
         client = bot = event.client
@@ -18,6 +18,10 @@
         p = print
         reply = await event.get_reply_message()
         chat = event.chat_id
+
+• `{i}cpp <code>`
+    Run c++ code from Telegram.
+    It should be the complete file base.
 
 • `{i}sysinfo`
     Shows System Info.
@@ -174,3 +178,32 @@ async def aexec(code, event):
     )
 
     return await locals()["__aexec"](event, event.client)
+
+
+@ultroid_cmd(pattern="cpp", only_devs=True)
+async def doie(e):
+    match = e.text.split(' ', maxsplit=1)
+    try:
+        match = match[1]
+    except IndexError:
+        return await eor(e, "`Give Some C++ Code..`")
+    msg = await eor(e, "Processing...")
+    open('cpp-ultroid.cpp', 'w').write(match)
+    m = await bash('g++ -o CppUltroid cpp-ultroid.cpp')
+    o_cpp = f"• **Eval-Cpp**\n\n{match}"
+    if m[1] != "":
+        o_cpp += f"\n\n**• Error :**\n{m[1]}"
+        return await eor(msg, m)
+    m = await bash('./CppUltroid')
+    if m[0] != "":
+        o_cpp += "\n\n**• Output** :\n{m[0]}"
+    if m[1] != "":
+        o_cpp += f"\n\n**• Error :**\n{m[1]}"
+    if len(o_cpp) > 3000:
+        with io.BytesIO(str.encode(o_cpp)) as out_file:
+            out_file.name = "eval.txt"
+            await msg.reply(f"`{match}`", file=out_file)
+    else:
+        await eor(msg, match)
+    os.remove("CppUltroid")
+    os.remove("cpp-ultroid.cpp")
