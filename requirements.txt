@@ -1,2 +1,5 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
 py-Ultroid==53.1b0
+pytgcalls
+wget
+ffmpeg

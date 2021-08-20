@@ -13,6 +13,7 @@ build
 *.log
 target/npmlist.json
 package-lock.json
+
 # Directories
 addons/
 pyUltroid/
@@ -32,3 +33,8 @@ bin-release/
 *.air
 *.ipa
 *.apk
+
+# temporary files
+vcbot-old
+*.raw
+tplugins

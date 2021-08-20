@@ -87,8 +87,6 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
     `python(3) -m pyUltroid`
 
 ## Necessary Variables
-- `API_ID` - Your API_ID from [my.telegram.org](https://my.telegram.org/)
-- `API_HASH` - Your API_HASH from [my.telegram.org](https://my.telegram.org/)
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
 - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
 - `REDIS_PASSWORD ` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
@@ -111,6 +109,5 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
-* [Dan](https://github.com/delivrance) for [Pyrogram.](https://github.com/pyrogram/pyrogram)
-* [Pytgcalls](https://github.com/pytgcalls) for [PyTgCalls.](https://github.com/pytgcalls/pytgcalls)
+* [MarshalX](https://github.com/MarshalX) for [PyTgCalls.](https://github.com/MarshalX/tgcalls)
 
