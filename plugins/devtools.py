@@ -206,6 +206,6 @@ async def doie(e):
             out_file.name = "eval.txt"
             await msg.reply(f"`{match}`", file=out_file)
     else:
-        await eor(msg, match)
+        await eor(msg, o_cpp)
     os.remove("CppUltroid")
     os.remove("cpp-ultroid.cpp")
