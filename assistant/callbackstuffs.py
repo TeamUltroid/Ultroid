@@ -38,22 +38,12 @@ async def send(eve):
     if name.startswith("def"):
         plug_name = name.replace("def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
-        buttons = [
-            [
-                Button.inline(
-                    "« Pᴀsᴛᴇ »",
-                    data=f"pasta-{plugin}",
-                )
-            ],
-            [
-                Button.inline("« Bᴀᴄᴋ", data="back"),
-                Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-            ],
-        ]
+        data = "back"
     else:
         plug_name = name.replace("add_plugin_", "")
         plugin = f"addons/{plug_name}.py"
-        buttons = [
+        data = "buck"
+    buttons = [
             [
                 Button.inline(
                     "« Pᴀsᴛᴇ »",
@@ -61,10 +51,10 @@ async def send(eve):
                 )
             ],
             [
-                Button.inline("« Bᴀᴄᴋ", data="buck"),
+                Button.inline("« Bᴀᴄᴋ", data=data),
                 Button.inline("••Cʟᴏꜱᴇ••", data="close"),
             ],
-        ]
+    ]
     await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
 
@@ -171,16 +161,13 @@ async def _(e):
         _, key = get_paste(hmm.read())
     link = "https://nekobin.com/" + key
     raw = "https://nekobin.com/raw/" + key
+    data = "buck"
     if ok.startswith("plugins"):
-        buttons = [
-            Button.inline("« Bᴀᴄᴋ", data="back"),
+        data = "back"
+    buttons = [
+            Button.inline("« Bᴀᴄᴋ", data=data),
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-        ]
-    else:
-        buttons = [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-        ]
+    ]
     await e.edit(
         f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
         buttons=buttons,
