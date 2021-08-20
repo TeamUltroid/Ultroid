@@ -33,7 +33,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
-    thumb = "".join(choices(sorted(glob("resources/extras/*.jpg"))))
+    thumb = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
     await eve.answer("Sending...")
     if name.startswith("def"):
         plug_name = name.replace("def_plugin_", "")
@@ -169,7 +169,7 @@ async def _(e):
         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
     ]
     await e.edit(
-        f"<strong>Pasted\n     👉<a href={link}>[Link]</a>\n     👉<a href={raw}>[Raw Link]</a></strong>",
+        f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
         buttons=buttons,
         link_preview=False,
         parse_mode="html",
