@@ -180,7 +180,9 @@ async def aexec(code, event):
     return await locals()["__aexec"](event, event.client)
 
 
-@ultroid_cmd(pattern="cpp",) # only_devs=True)
+@ultroid_cmd(
+    pattern="cpp",
+)  # only_devs=True)
 async def doie(e):
     match = e.text.split(" ", maxsplit=1)
     try:
