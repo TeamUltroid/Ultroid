@@ -19,7 +19,7 @@ from . import *
 
 @asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def on_new_mssg(event):
-    incoming = event.raw_text
+    incoming = event.message
     who = event.sender_id
     if is_blacklisted(who):
         return
