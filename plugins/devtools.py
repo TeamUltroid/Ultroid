@@ -195,7 +195,7 @@ async def doie(e):
     o_cpp = f"• **Eval-Cpp**\n\n{match}"
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n{m[1]}"
-        return await eor(msg, m)
+        return await eor(msg, o_cpp)
     m = await bash("./CppUltroid")
     if m[0] != "":
         o_cpp += "\n\n**• Output** :\n{m[0]}"
