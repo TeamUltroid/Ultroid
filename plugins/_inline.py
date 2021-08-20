@@ -31,7 +31,9 @@ if add_ons == "True" or add_ons is None:
 else:
     zhelps = get_string("inline_3")
 
-_file_to_replace = _file_to_replace = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
+_file_to_replace = _file_to_replace = (
+    udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
+)
 
 upage = 0
 # ============================================#

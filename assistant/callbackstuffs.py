@@ -7,9 +7,7 @@
 
 import re
 import subprocess
-from glob import glob
 from os import remove
-from random import choices
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
