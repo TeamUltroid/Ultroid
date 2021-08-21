@@ -52,9 +52,9 @@ import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.channels import DeleteUserHistoryRequest
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import InputMessagesFilterPinned
 
 from . import *
 
@@ -70,21 +70,21 @@ async def prmte(ult):
         return await xx.edit("`Reply to a user to promote him!`")
     try:
         await ult.client.edit_admin(
-                ult.chat_id,
-                user.id,
-                invite_users=True,
-                ban_users=True,
-                delete_messages=True,
-                pin_messages=True,
-                manage_call=True,
-                title=rank,
+            ult.chat_id,
+            user.id,
+            invite_users=True,
+            ban_users=True,
+            delete_messages=True,
+            pin_messages=True,
+            manage_call=True,
+            title=rank,
         )
         await eod(
             xx,
             f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
     except Exception as ex:
-        return await xx.edit("`"+str(ex)+"`")
+        return await xx.edit("`" + str(ex) + "`")
 
 
 @ultroid_cmd(
@@ -102,21 +102,21 @@ async def dmote(ult):
         return await xx.edit("`Reply to a user to demote him!`")
     try:
         await ult.client.edit_admin(
-                ult.chat_id,
-                user.id,
-                invite_users=None,
-                ban_users=None,
-                delete_messages=None,
-                pin_messages=None,
-                manage_call=None,
-                title=rank,
-            ),
+            ult.chat_id,
+            user.id,
+            invite_users=None,
+            ban_users=None,
+            delete_messages=None,
+            pin_messages=None,
+            manage_call=None,
+            title=rank,
+        ),
         await eod(
             xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
     except Exception as ex:
-        return await xx.edit("`"+str(ex)+"`")
+        return await xx.edit("`" + str(ex) + "`")
 
 
 @ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
