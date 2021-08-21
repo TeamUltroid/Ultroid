@@ -40,18 +40,18 @@ CACHE = {}
 async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
-        return await eod(e, "Give Channel where you want User to Join !")
+        return await eor(e, "Give Channel where you want User to Join !", time=5)
     if match.startswith("@"):
         ch = match
     else:
         try:
             ch = int(match)
         except BaseException:
-            return await eod(e, "Give Correct Channel Username or id")
+            return await eor(e, "Give Correct Channel Username or id", time=5)
     try:
         match = (await e.client.get_entity(ch)).id
     except BaseException:
-        return await eod(e, "Give Correct Channel Username or id")
+        return await eor(e, "Give Correct Channel Username or id", time=5)
     if not str(match).startswith("-100"):
         match = int("-100" + str(match))
     add_forcesub(e.chat_id, match)
@@ -62,7 +62,7 @@ async def addfor(e):
 async def remor(e):
     res = rem_forcesub(e.chat_id)
     if not res:
-        return await eod(e, "ForceSub was not Active in this Chat !")
+        return await eor(e, "ForceSub was not Active in this Chat !", time=5)
     await eor(e, "Removed ForceSub...")
 
 
@@ -70,7 +70,7 @@ async def remor(e):
 async def getfsr(e):
     res = get_forcesetting(e.chat_id)
     if not res:
-        return await eod(e, "ForceSub is Not Active In This Chat !")
+        return await eor(e, "ForceSub is Not Active In This Chat !", time=5)
     cha = await e.client.get_entity(int(res))
     await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 

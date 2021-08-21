@@ -128,9 +128,9 @@ async def _(e):
             userid = await get_user_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eod(xx, f"`{str(ex)}`", time=5)
+            return await eor(xx, f"`{str(ex)}`", time=5)
     else:
-        return await eod(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
     if not is_vcsudo(userid):
         return await eod(
             xx,
@@ -145,7 +145,7 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eod(xx, f"`{ex}`", time=5)
+        return await eor(xx, f"`{ex}`", time=5)
 
 
 @ultroid_cmd(
@@ -162,9 +162,9 @@ async def _(e):
             userid = await get_user_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eod(xx, f"`{str(ex)}`", time=5)
+            return await eor(xx, f"`{str(ex)}`", time=5)
     else:
-        return await eod(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
     if is_vcsudo(userid):
         return await eod(
             xx,
@@ -179,4 +179,4 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eod(xx, f"`{ex}`", time=5)
+        return await eor(xx, f"`{ex}`", time=5)

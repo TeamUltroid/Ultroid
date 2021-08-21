@@ -36,7 +36,7 @@ async def an(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eod(e, "`Use this Command with Reply and word to use a note.`")
+        return await eor(e, "`Use this Command with Reply and word to use a note.`", time=5)
     if "#" in wrd:
         wrd = wrd.replace("#", "")
     if wt and wt.media:
@@ -48,7 +48,7 @@ async def an(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
+                return await eor(x, "`Unsupported Media`", time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -69,7 +69,7 @@ async def rn(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
-        return await eod(e, "`Give me the note handler which you want to remove.`")
+        return await eor(e, "`Give me the note handler which you want to remove.`", time=5)
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)

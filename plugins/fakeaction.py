@@ -39,8 +39,8 @@ async def _(e):
             try:
                 t = await ban_time(e, t)
             except BaseException:
-                return await eod(e, "`Incorrect Format`")
-    await eod(e, f"Starting Fake Typing For {t} sec.")
+                return await eor(e, "`Incorrect Format`", time=5)
+    await eor(e, f"Starting Fake Typing For {t} sec.", time=5)
     async with e.client.action(e.chat_id, "typing"):
         await asyncio.sleep(t)
 
@@ -57,8 +57,8 @@ async def _(e):
             try:
                 t = await ban_time(e, t)
             except BaseException:
-                return await eod(e, "`Incorrect Format`")
-    await eod(e, f"Starting Fake audio recording For {t} sec.")
+                return await eor(e, "`Incorrect Format`", time=5)
+    await eor(e, f"Starting Fake audio recording For {t} sec.", time=5)
     async with e.client.action(e.chat_id, "record-audio"):
         await asyncio.sleep(t)
 
@@ -75,8 +75,8 @@ async def _(e):
             try:
                 t = await ban_time(e, t)
             except BaseException:
-                return await eod(e, "`Incorrect Format`")
-    await eod(e, f"Starting Fake video recording For {t} sec.")
+                return await eor(e, "`Incorrect Format`", time=5)
+    await eor(e, f"Starting Fake video recording For {t} sec.", time=5)
     async with e.client.action(e.chat_id, "record-video"):
         await asyncio.sleep(t)
 
@@ -93,8 +93,8 @@ async def _(e):
             try:
                 t = await ban_time(e, t)
             except BaseException:
-                return await eod(e, "`Incorrect Format`")
-    await eod(e, f"Starting Fake Game Playing For {t} sec.")
+                return await eor(e, "`Incorrect Format`", time=5)
+    await eor(e, f"Starting Fake Game Playing For {t} sec.", time=5)
     async with e.client.action(e.chat_id, "game"):
         await asyncio.sleep(t)
 
@@ -102,4 +102,4 @@ async def _(e):
 @ultroid_cmd(pattern="stopaction")
 async def do_it(e):
     await e.client.action(e.chat_id, "cancel")
-    await eod(e, "Fake Action Stopped.")
+    await eor(e, "Fake Action Stopped.", time=5)

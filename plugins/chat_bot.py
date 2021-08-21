@@ -54,7 +54,7 @@ async def rem_chatBot(event):
 async def lister(event):
     users = get_all_added(event.chat.id)
     if udB.get("CHATBOT_USERS") is None:
-        return await eod(event, "`No user has AI added.`")
+        return await eor(event, "`No user has AI added.`", time=5)
     msg = ""
     for i in users:
         try:

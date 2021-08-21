@@ -42,7 +42,7 @@ from . import *
 )
 async def _(ult):
     if not ult.is_reply:
-        return await eod(ult, "`Reply to a Media..`")
+        return await eor(ult, "`Reply to a Media..`", time=5)
     match = ult.pattern_match.group(1)
     if not ult.client._bot and match:
         try:
@@ -62,9 +62,9 @@ async def _(ult):
         if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
         await ult.client(EditPhotoRequest(chat, file))
-        await eod(ult, "`Group Photo has Successfully Changed !`")
+        await eor(ult, "`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
-        await eod(ult, "Error occured.\n`{}`".format(str(ex)))
+        await eor(ult, "Error occured.\n`{}`".format(str(ex)), time=5)
     os.remove(replfile)
 
 
@@ -84,7 +84,7 @@ async def _(ult):
         text = "`Removed Chat Photo..`"
     except Exception as E:
         text = str(E)
-    return await eod(ult, text)
+    return await eor(ult, text, time=5)
 
 
 @ultroid_cmd(
@@ -105,7 +105,7 @@ async def _(event):
             p += 1
         except BaseException:
             pass
-    await eod(xx, f"{title}: {p} unbanned")
+    await eor(xx, f"{title}: {p} unbanned", time=5)
 
 
 @ultroid_cmd(
@@ -118,7 +118,7 @@ async def _(event):
     if input_str:
         chat = await event.get_chat()
         if not (chat.admin_rights or chat.creator):
-            return await eod(xx, "`You aren't an admin here!`", time=5)
+            return await eor(xx, "`You aren't an admin here!`", time=5)
     p = 0
     b = 0
     c = 0

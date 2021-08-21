@@ -28,26 +28,26 @@ async def _(e):
             await e.client.send_message(
                 e.chat_id, k, schedule=timedelta(seconds=int(y))
             )
-            await eod(e, "`Scheduled msg Succesfully`")
+            await eor(e, "`Scheduled msg Succesfully`", time=5)
         else:
             try:
                 z = await ban_time(e, y)
                 await e.client.send_message(e.chat_id, k, schedule=z)
-                await eod(e, "`Scheduled msg Succesfully`")
+                await eor(e, "`Scheduled msg Succesfully`", time=5)
             except BaseException:
-                await eod(e, "`Incorrect Format`")
+                await eor(e, "`Incorrect Format`", time=5)
     elif xx and x:
         if x.isdigit():
             await e.client.send_message(
                 e.chat_id, xx, schedule=timedelta(seconds=int(x))
             )
-            await eod(e, "`Scheduled msg Succesfully`")
+            await eor(e, "`Scheduled msg Succesfully`", time=5)
         else:
             try:
                 z = await ban_time(e, x)
                 await e.client.send_message(e.chat_id, xx, schedule=z)
-                await eod(e, "`Scheduled msg Succesfully`")
+                await eor(e, "`Scheduled msg Succesfully`", time=5)
             except BaseException:
-                await eod(e, "`Incorrect Format`")
+                await eor(e, "`Incorrect Format`", time=5)
     else:
-        return await eod(e, "`Incorrect Format`")
+        return await eor(e, "`Incorrect Format`", time=5)

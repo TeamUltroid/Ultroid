@@ -79,7 +79,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eod(e, "`Incorrect Format`")
+        return await eor(e, "`Incorrect Format`", time=5)
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Promoting Replied User Globally`")
@@ -140,14 +140,14 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eod(e, "`Give someone's username/id or replied to user.")
+            return await eor(e, "`Give someone's username/id or replied to user.", time=5)
         user = k[1]
         if user.isdigit():
             user = int(user)
         try:
             name = await e.client.get_entity(user)
         except BaseException:
-            return await eod(e, f"`No User Found Regarding {user}`")
+            return await eor(e, f"`No User Found Regarding {user}`", time=5)
         ev = await eor(e, f"`Promoting {name.first_name} globally.`")
         key = "all"
         if len(k) > 2 and (("group" in k[2]) or ("channel" in k[2])):
@@ -185,7 +185,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eod(e, "`Incorrect Format`")
+        return await eor(e, "`Incorrect Format`", time=5)
     user = await e.get_reply_message()
     if user:
         user.id = user.peer_id.user_id if e.is_private else user.from_id.user_id
@@ -223,14 +223,14 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eod(e, "`Give someone's username/id or replied to user.")
+            return await eor(e, "`Give someone's username/id or replied to user.", time=5)
         user = k[1]
         if user.isdigit():
             user = int(user)
         try:
             name = await ultroid_bot.get_entity(user)
         except BaseException:
-            return await eod(e, f"`No User Found Regarding {user}`")
+            return await eor(e, f"`No User Found Regarding {user}`", time=5)
         ev = await eor(e, f"`Demoting {name.first_name} globally.`")
         key = "all"
         if len(k) > 2 and (("group" in k[2]) or ("channel" in k[2])):
@@ -273,11 +273,11 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if not is_gbanned(userid):
-        return await eod(xx, "`User is not gbanned.`", time=3)
+        return await eor(xx, "`User is not gbanned.`", time=3)
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
@@ -320,13 +320,13 @@ async def _(e):
         except IndexError:
             reason = ""
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eod(xx, "`I can't gban myself.`", time=3)
+        return await eor(xx, "`I can't gban myself.`", time=3)
     if str(userid) in DEVLIST:
-        return await eod(xx, "`I can't gban my Developers.`", time=3)
+        return await eor(xx, "`I can't gban my Developers.`", time=3)
     if is_gbanned(userid):
         return await eod(
             xx,
@@ -416,13 +416,13 @@ async def gkick(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eod(xx, "`I can't gkick myself.`", time=3)
+        return await eor(xx, "`I can't gkick myself.`", time=3)
     if str(userid) in DEVLIST:
-        return await eod(xx, "`I can't gkick my Developers.`", time=3)
+        return await eor(xx, "`I can't gkick my Developers.`", time=3)
     async for gkick in e.client.iter_dialogs():
         if gkick.is_group or gkick.is_channel:
             try:
@@ -443,15 +443,15 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", tome=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eod(xx, "`I can't gmute myself.`", time=3)
+        return await eor(xx, "`I can't gmute myself.`", time=3)
     if str(userid) in DEVLIST:
-        return await eod(xx, "`I can't gmute my Developers.`", time=3)
+        return await eor(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
-        return await eod(xx, "`User is already gmuted.`", time=4)
+        return await eor(xx, "`User is already gmuted.`", time=4)
     async for onmute in e.client.iter_dialogs():
         if onmute.is_group:
             try:
@@ -473,11 +473,11 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if not is_gmuted(userid):
-        return await eod(xx, "`User is not gmuted.`", time=3)
+        return await eor(xx, "`User is not gmuted.`", time=3)
     async for hurr in e.client.iter_dialogs():
         if hurr.is_group:
             try:
@@ -534,14 +534,14 @@ async def gstat_(e):
             try:
                 userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
             except ValueError as err:
-                return await eod(xx, f"{err}", time=5)
+                return await eor(xx, f"{err}", time=5)
         else:
             try:
                 userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
             except ValueError as err:
-                return await eod(xx, f"{err}", time=5)
+                return await eor(xx, f"{err}", time=5)
     else:
-        return await eod(xx, "`Reply to some msg or add their id.`", time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     msg = "**" + name + " is "
     is_banned = is_gbanned(userid)

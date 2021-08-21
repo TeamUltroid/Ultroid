@@ -40,7 +40,7 @@ async def pinterest(e):
     hehe = bs(get_link, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
     if len(hulu) < 1:
-        await eod(e, "`Wrong link or private pin.`")
+        await eor(e, "`Wrong link or private pin.`", time=5)
     elif len(hulu) > 1:
         video = await fast_download(hulu[0]["href"])
         thumb = await fast_download(hulu[1]["href"])

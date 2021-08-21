@@ -47,7 +47,7 @@ async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
     if event.is_private:
-        return await eod(x, "Please use this in a group and not PMs!", time=10)
+        return await eor(x, "Please use this in a group and not PMs!", time=10)
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -57,7 +57,7 @@ async def setwel(event):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
+                return await eor(x, "`Unsupported Media`", time=5)
             dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -75,22 +75,22 @@ async def setwel(event):
         add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
-        await eod(x, "`Reply to message which u want to set as welcome`")
+        await eor(x, "`Reply to message which u want to set as welcome`", time=5)
 
 
 @ultroid_cmd(pattern="clearwelcome$")
 async def clearwel(event):
     if not get_welcome(event.chat_id):
-        await eod(event, "`No welcome was set!`", time=5)
+        await eor(event, "`No welcome was set!`", time=5)
     delete_welcome(event.chat_id)
-    await eod(event, "`Welcome Note Deleted`")
+    await eor(event, "`Welcome Note Deleted`", time=5)
 
 
 @ultroid_cmd(pattern="getwelcome$")
 async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
-        await eod(event, "`No welcome was set!`", time=5)
+        await eor(event, "`No welcome was set!`", time=5)
     msgg = wel["welcome"]
     med = wel["media"]
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
@@ -102,7 +102,7 @@ async def setgb(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
     if event.is_private:
-        return await eod(x, "Please use this in a group and not PMs!", time=10)
+        return await eor(x, "Please use this in a group and not PMs!", time=10)
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -112,7 +112,7 @@ async def setgb(event):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
+                return await eor(x, "`Unsupported Media`", time=5)
             dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -130,22 +130,22 @@ async def setgb(event):
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goodbye note saved`")
     else:
-        await eod(x, "`Reply to message which u want to set as goodbye`")
+        await eor(x, "`Reply to message which u want to set as goodbye`", time=5)
 
 
 @ultroid_cmd(pattern="cleargoodbye$")
 async def clearwgb(event):
     if not get_goodbye(event.chat_id):
-        await eod(event, "`No goodbye was set!`", time=5)
+        await eor(event, "`No goodbye was set!`", time=5)
     delete_goodbye(event.chat_id)
-    await eod(event, "`Goodbye Note Deleted`")
+    await eor(event, "`Goodbye Note Deleted`", time=5)
 
 
 @ultroid_cmd(pattern="getgoodbye$")
 async def listgd(event):
     wel = get_goodbye(event.chat_id)
     if not wel:
-        await eod(event, "`No goodbye was set!`", time=5)
+        await eor(event, "`No goodbye was set!`", time=5)
     msgg = wel["goodbye"]
     med = wel["media"]
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
@@ -163,7 +163,7 @@ async def thank_set(event):
         return
     chat = event.chat_id
     if not str(chat).startswith("-"):
-        return await eod(event, "`Please use this command in a group!`", time=10)
+        return await eor(event, "`Please use this command in a group!`", time=10)
     if type_.lower() == "on":
         add_thanks(chat)
     elif type_.lower() == "off":

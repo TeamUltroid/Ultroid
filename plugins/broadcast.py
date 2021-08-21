@@ -125,7 +125,7 @@ async def list_all(event):
     channels = get_channels()
     num = get_no_channels()
     if num == 0:
-        return await eod(x, "No chats were added.", time=5)
+        return await eor(x, "No chats were added.", time=5)
     msg = "Channels in database:\n"
     for channel in channels:
         name = ""

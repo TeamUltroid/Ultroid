@@ -43,7 +43,7 @@ async def down(event):
     matched = event.pattern_match.group(1)
     msg = await eor(event, "`Trying to download...`")
     if not matched:
-        return await eod(msg, "`You forgot to give link :(`")
+        return await eor(msg, "`You forgot to give link :(`", time=5)
     try:
         splited = matched.split(" | ")
         link = splited[0]
@@ -66,7 +66,7 @@ async def down(event):
             ),
         )
     except InvalidURL:
-        return await eod(msg, "`Invalid URL provided :(`")
+        return await eor(msg, "`Invalid URL provided :(`", time=5)
     await eor(msg, f"`{filename} `downloaded.")
 
 
@@ -82,7 +82,7 @@ async def download(event):
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
-            return await eod(xx, get_string("udl_1"), time=5)
+            return await eor(xx, get_string("udl_1"), time=5)
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
@@ -143,10 +143,10 @@ async def download(event):
     s = dt.now()
     tt = time.time()
     if not kk:
-        return await eod(xx, get_string("udl_3"))
+        return await eor(xx, get_string("udl_3"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eod(xx, "`This Directory is Empty.`")
+            return await eor(xx, "`This Directory is Empty.`", time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:

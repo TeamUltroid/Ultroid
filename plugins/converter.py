@@ -153,7 +153,7 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await eod(event, "`Give The File Name.`")
+        return await eor(event, "`Give The File Name.`", time=5)
     xx = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         a = await event.get_reply_message()
@@ -173,17 +173,17 @@ async def _(event):
 async def _(event):
     xx = await eor(event, get_string("com_1"))
     if not event.reply_to_msg_id:
-        return await eod(xx, "`Reply to a readable file`")
+        return await eor(xx, "`Reply to a readable file`", time=5)
 
     a = await event.get_reply_message()
     if not a.media:
-        return await eod(xx, "`Reply to a readable file`")
+        return await eor(xx, "`Reply to a readable file`", time=5)
     b = await a.download_media()
     try:
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eod(xx, "`Not A Readable File.`")
+        return await eor(xx, "`Not A Readable File.`", time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:

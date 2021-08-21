@@ -62,7 +62,7 @@ async def add_grp(e):
             add_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Added {pat} To Night Mode.")
         except BaseException:
-            return await eod(e, "Something Went Wrong")
+            return await eor(e, "Something Went Wrong", time=5)
     add_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
 
@@ -75,7 +75,7 @@ async def rem_grp(e):
             rem_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Removed {pat} To Night Mode.")
         except BaseException:
-            return await eod(e, "Something Went Wrong")
+            return await eor(e, "Something Went Wrong", time=5)
     rem_night(e.chat_id)
     await eor(e, "Done, Added Current Chat To Night Mode")
 

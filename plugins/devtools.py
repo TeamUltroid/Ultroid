@@ -65,7 +65,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`No cmd given`", time=10)
+        return await eor(xx, "`No cmd given`", time=10)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -115,7 +115,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`Give some python cmd`", time=5)
+        return await eor(xx, "`Give some python cmd`", time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr

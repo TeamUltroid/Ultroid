@@ -27,7 +27,7 @@ async def saf(e):
         await e.client.send_message("me", x)
     else:
         await e.client.send_message(e.sender_id, x)
-    await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
+    await eor(e, "Message saved to Your Pm/Saved Messages.", time=5)
 
 
 @ultroid_cmd(pattern="fsave$")
@@ -41,4 +41,4 @@ async def saf(e):
         await x.forward_to("me")
     else:
         await x.forward_to(e.sender_id)
-    await eod(e, "Message saved to Your Pm/Saved Messages.", time=5)
+    await eor(e, "Message saved to Your Pm/Saved Messages.", time=5)

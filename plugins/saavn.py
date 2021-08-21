@@ -26,7 +26,7 @@ from . import *
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
-        return await eod(e, "`Give me Something to Search")
+        return await eor(e, "`Give me Something to Search", time=5)
     hmm = time.time()
     lol = await eor(e, f"`Searching {song} on Saavn...`")
     sung = song.replace(" ", "%20")
@@ -34,9 +34,9 @@ async def siesace(e):
     try:
         k = (r.get(url)).json()[0]
     except IndexError:
-        return await eod(lol, "`Song Not Found.. `")
+        return await eor(lol, "`Song Not Found.. `", time=5)
     except Exception as ex:
-        return await eod(lol, f"`{str(ex)}`")
+        return await eor(lol, f"`{str(ex)}`", time=5)
     try:
         title = k["song"]
         urrl = k["media_url"]
@@ -44,7 +44,7 @@ async def siesace(e):
         duration = k["duration"]
         singers = k["primary_artists"]
     except Exception as ex:
-        return await eod(lol, f"`{ex}`")
+        return await eor(lol, f"`{ex}`", time=5)
     song = await fast_download(urrl, file_name=title + ".mp3")
     thumb = await fast_download(img, file_name=title + ".jpg")
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")

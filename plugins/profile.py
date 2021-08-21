@@ -84,7 +84,7 @@ async def _(ult):
 @ultroid_cmd(pattern="setpic$", fullsudo=True)
 async def _(ult):
     if not ult.is_reply:
-        return await eod(ult, "`Reply to a Media..`")
+        return await eor(ult, "`Reply to a Media..`", time=5)
     reply_message = await ult.get_reply_message()
     ok = await eor(ult, "...")
     replfile = await reply_message.download_media()

@@ -27,20 +27,20 @@ async def _(e):
         m = "**Available Fonts**\n\n"
         for x in fonts:
             m += f"• `{x}`\n"
-        return await eod(e, m)
+        return await eor(e, m, time=5)
     try:
         font = input.split(":", maxsplit=1)[0]
     except IndexError:
-        return await eod(e, "`fonts small caps : Your Message`")
+        return await eor(e, "`fonts small caps : Your Message`", time=5)
     if reply:
         text = reply.message
     else:
         try:
             text = input.split(":", maxsplit=1)[1]
         except IndexError:
-            return await eod(e, "`fonts small caps : Your Message`")
+            return await eor(e, "`fonts small caps : Your Message`", time=5)
     if font not in fonts:
-        return await eod(e, f"`{font} not in font list`.")
+        return await eor(e, f"`{font} not in font list`.", time=5)
     if font == "small caps ":
         msg = gen_font(text, _small_caps)
     if font == "monospace ":

@@ -32,10 +32,10 @@ from . import *
 async def igif(e):
     a = await e.get_reply_message()
     if not (a and a.media):
-        return await eod(e, "`Reply To gif only`")
+        return await eor(e, "`Reply To gif only`", time=5)
     wut = mediainfo(a.media)
     if "gif" not in wut:
-        return await eod(e, "`Reply To Gif Only`")
+        return await eor(e, "`Reply To Gif Only`", time=5)
     xx = await eor(e, "`Processing...`")
     z = await a.download_media()
     try:
@@ -52,10 +52,10 @@ async def igif(e):
 async def igif(e):
     a = await e.get_reply_message()
     if not (a and a.media):
-        return await eod(e, "`Reply To gif only`")
+        return await eor(e, "`Reply To gif only`", time=5)
     wut = mediainfo(a.media)
     if "gif" not in wut:
-        return await eod(e, "`Reply To Gif Only`")
+        return await eor(e, "`Reply To Gif Only`", time=5)
     xx = await eor(e, "`Processing...`")
     z = await a.download_media()
     try:
@@ -100,10 +100,10 @@ async def gifs(ult):
 async def vtogif(e):
     a = await e.get_reply_message()
     if not (a and a.media):
-        return await eod(e, "`Reply To video only`")
+        return await eor(e, "`Reply To video only`", time=5)
     wut = mediainfo(a.media)
     if "video" not in wut:
-        return await eod(e, "`Reply To Video Only`")
+        return await eor(e, "`Reply To Video Only`", time=5)
     xx = await eor(e, "`Processing...`")
     dur = a.media.document.attributes[0].duration
     tt = time.time()

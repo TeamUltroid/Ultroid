@@ -49,7 +49,7 @@ async def set_afk(event):
             elif "sticker" in media_type:
                 media = reply.file.id
             else:
-                return await eod(event, "`Unsupported media`")
+                return await eor(event, "`Unsupported media`", time=5)
     add_afk(text, media_type, media)
     await eor(event, "`Done`")
     msg1, msg2 = None, None

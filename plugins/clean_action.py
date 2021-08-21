@@ -27,13 +27,13 @@ from . import *
 @ultroid_cmd(pattern="addclean$", admins_only=True)
 async def _(e):
     add_clean(e.chat_id)
-    await eod(e, "Added Clean Action Setting For this Chat")
+    await eor(e, "Added Clean Action Setting For this Chat", time=5)
 
 
 @ultroid_cmd(pattern="remclean$")
 async def _(e):
     rem_clean(e.chat_id)
-    await eod(e, "Removed Clean Action Setting For this Chat")
+    await eor(e, "Removed Clean Action Setting For this Chat", time=5)
 
 
 @ultroid_cmd(pattern="listclean$")
@@ -50,4 +50,4 @@ async def _(e):
             o += x + " " + title + "\n"
         await eor(e, o)
     else:
-        await eod(e, "`No Chat Added`")
+        await eor(e, "`No Chat Added`", time=5)

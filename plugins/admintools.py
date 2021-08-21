@@ -217,7 +217,7 @@ async def tkicki(e):
     try:
         tme = huh[1]
     except IndexError:
-        return await eod(e, "`Time till kick?`", time=15)
+        return await eor(e, "`Time till kick?`", time=15)
     try:
         inputt = huh[2]
     except IndexError:
@@ -231,7 +231,7 @@ async def tkicki(e):
         userid = await get_user_id(inputt)
         fn = (await e.client.get_entity(userid)).first_name
     else:
-        return await eod(e, "`Reply to someone or use its id...`", time=3)
+        return await eor(e, "`Reply to someone or use its id...`", time=3)
     try:
         bun = await ban_time(e, tme)
         await e.client.edit_permissions(
@@ -322,11 +322,11 @@ async def fastpurger(purg):
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
             p += 0
-        return await eod(purg, f"Purged {p} Messages! ")
+        return await eor(purg, f"Purged {p} Messages! ", time=5)
     msgs = []
     count = 0
     if not (purg.reply_to_msg_id or match):
-        return await eod(purg, "`Reply to a message to purge from.`", time=10)
+        return await eor(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in purg.client.iter_messages(chat, min_id=purg.reply_to_msg_id):
         msgs.append(msg)
         count += 1
@@ -352,7 +352,7 @@ async def fastpurgerme(purg):
         try:
             nnt = int(num)
         except BaseException:
-            await eod(purg, "`Give a Valid Input.. `")
+            await eor(purg, "`Give a Valid Input.. `", time=5)
             return
         mp = 0
         async for mm in purg.client.iter_messages(
@@ -360,7 +360,7 @@ async def fastpurgerme(purg):
         ):
             await mm.delete()
             mp += 1
-        await eod(purg, f"Purged {mp} Messages!")
+        await eor(purg, f"Purged {mp} Messages!", time=5)
         return
     chat = await purg.get_input_chat()
     msgs = []
@@ -405,9 +405,9 @@ async def _(e):
     name = (await e.get_reply_message()).sender
     try:
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-        await eod(e, f"Successfully Purged All Messages from {name.first_name}")
+        await eor(e, f"Successfully Purged All Messages from {name.first_name}", time=5)
     except Exception as er:
-        return await eod(xx, str(er))
+        return await eor(xx, str(er), time=5)
 
 
 @ultroid_cmd(
@@ -436,7 +436,7 @@ async def get_all_pinned(event):
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
     if a == "":
-        return await eod(x, "There is no message pinned in this group!")
+        return await eor(x, "There is no message pinned in this group!", time=5)
 
     await x.edit(m + a, parse_mode="html")
 
@@ -448,7 +448,7 @@ async def get_all_pinned(event):
 async def autodelte(ult):
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "1m", "off"]:
-        return await eod(ult, "`Please Use Proper Format..`")
+        return await eor(ult, "`Please Use Proper Format..`", time=5)
     if match == "24h":
         tt = 3600 * 24
     elif match == "7d":
@@ -460,5 +460,5 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
+        return await eor(ult, f"Auto Delete Setting is Already same to `{match}`", time=5)
     await eor(ult, f"Auto Delete Status Changed to `{match}` !")

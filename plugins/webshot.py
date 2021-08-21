@@ -27,11 +27,11 @@ async def webss(event):
     try:
         xurl = mssg[1]
     except IndexError:
-        return await eod(xx, "`Give a URL please!`")
+        return await eor(xx, "`Give a URL please!`", time=5)
     try:
         requests.get(xurl)
     except requests.ConnectionError:
-        return await eod(xx, "Invalid URL!")
+        return await eor(xx, "Invalid URL!", time=5)
     except requests.exceptions.MissingSchema:
         try:
             xurl = "https://" + xurl
@@ -41,7 +41,7 @@ async def webss(event):
                 xurl = "http://" + xurl
                 requests.get(xurl)
             except requests.ConnectionError:
-                return await eod(xx, "Invalid URL!")
+                return await eor(xx, "Invalid URL!", time=5)
     shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
     pic = await shot.create_pic_async(url=xurl)
     await xx.reply(

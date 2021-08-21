@@ -54,7 +54,7 @@ async def google(event):
             des = res["descriptions"][i]
             out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     except TypeError:
-        return await eod(event, f"`Can't find anything about {inp}`")
+        return await eor(event, f"`Can't find anything about {inp}`", time=5)
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     opn = [omk[bkl : bkl + 4095] for bkl in range(0, len(omk), 4095)]
     for bc in opn:

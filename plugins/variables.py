@@ -37,7 +37,7 @@ async def get_var(event):
         try:
             varname = event.text.split(" ", maxsplit=2)[2]
         except IndexError:
-            return await eod(x, "Such a var doesn't exist!", time=5)
+            return await eor(x, "Such a var doesn't exist!", time=5)
     if opt == "var":
         c = 0
         # try redis
@@ -56,7 +56,7 @@ async def get_var(event):
             )
 
         if c == 0:
-            await eod(x, "Such a var doesn't exist!", time=5)
+            await eor(x, "Such a var doesn't exist!", time=5)
 
     elif opt == "type":
         c = 0
@@ -72,14 +72,14 @@ async def get_var(event):
             await x.edit(f"**Variable** - `{varname}`\n**Type**: Env Var.")
 
         if c == 0:
-            await eod(x, "Such a var doesn't exist!", time=5)
+            await eor(x, "Such a var doesn't exist!", time=5)
 
     elif opt == "redis":
         val = udB.get(varname)
         if val is not None:
             await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
         else:
-            await eod(x, "No such key!")
+            await eor(x, "No such key!", time=5)
 
     elif opt == "keys":
         keys = sorted(udB.keys())

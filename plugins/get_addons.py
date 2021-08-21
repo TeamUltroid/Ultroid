@@ -24,10 +24,10 @@ async def get_the_addons_lol(event):
     xx = await eor(event, get_string("com_1"))
     fool = "Please provide a raw link!"
     if thelink is None:
-        return await eod(xx, fool, time=10)
+        return await eor(xx, fool, time=10)
     split_thelink = thelink.split("/")
     if "raw" not in split_thelink and "raw.githubusercontent.com" not in split_thelink:
-        return await eod(xx, fool, time=10)
+        return await eor(xx, fool, time=10)
     name_of_it = split_thelink[(len(split_thelink) - 1)]
     plug = requests.get(thelink).text
     fil = f"addons/{name_of_it}"
@@ -38,7 +38,7 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eod(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`")
+        await eor(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=5)
     except Exception as e:
         await eod(
             xx,
