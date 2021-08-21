@@ -361,9 +361,9 @@ async def lastname(steal):
             except YouBlockedUserError:
                 return await lol.edit("Please unblock @sangmatainfo_bot and try again")
             if (
-                response.text.startswith("No records found")
-                or respond.text.startswith("No records found")
-                or responds.text.startswith("No records found")
+                (response and response.text == "No records found")
+                or (respond and respond.text == "No records found")
+                or (responds and responds.text == "No records found")
             ):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
