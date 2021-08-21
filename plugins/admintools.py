@@ -69,27 +69,22 @@ async def prmte(ult):
     if not user:
         return await xx.edit("`Reply to a user to promote him!`")
     try:
-        await ult.client(
-            EditAdminRequest(
+        await ult.client.edit_admin(
                 ult.chat_id,
                 user.id,
-                ChatAdminRights(
-                    add_admins=False,
-                    invite_users=True,
-                    change_info=False,
-                    ban_users=True,
-                    delete_messages=True,
-                    pin_messages=True,
-                ),
-                rank,
-            ),
+                invite_users=True,
+                ban_users=True,
+                delete_messages=True,
+                pin_messages=True,
+                manage_call=True,
+                title=rank,
         )
         await eod(
             xx,
             f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to promote you.`")
+    except Exception as ex:
+        return await xx.edit("`"+str(ex)+"`")
 
 
 @ultroid_cmd(
@@ -106,27 +101,23 @@ async def dmote(ult):
     if not user:
         return await xx.edit("`Reply to a user to demote him!`")
     try:
-        await ult.client(
-            EditAdminRequest(
+        await ult.client.edit_admin(
                 ult.chat_id,
                 user.id,
-                ChatAdminRights(
-                    add_admins=None,
-                    invite_users=None,
-                    change_info=None,
-                    ban_users=None,
-                    delete_messages=None,
-                    pin_messages=None,
-                ),
-                rank,
+                invite_users=None,
+                ban_users=None,
+                delete_messages=None,
+                pin_messages=None,
+                manage_call=None,
+                title=rank,
             ),
         )
         await eod(
             xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to demote you.`")
+    except Exception as ex:
+        return await xx.edit("`"+str(ex)+"`")
 
 
 @ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
