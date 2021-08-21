@@ -111,7 +111,6 @@ async def dmote(ult):
                 manage_call=None,
                 title=rank,
             ),
-        )
         await eod(
             xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
