@@ -166,6 +166,8 @@ async def _(event):
         folder_link = "https://drive.google.com/folderview?id=" + Redis(
             "GDRIVE_FOLDER_ID",
         )
-        await eor(event, "`Here is Your G-Drive Folder link : `\n" + folder_link, time=5)
+        await eor(
+            event, "`Here is Your G-Drive Folder link : `\n" + folder_link, time=5
+        )
     else:
         await eor(event, "Set GDRIVE_FOLDER_ID with value of your folder id", time=5)

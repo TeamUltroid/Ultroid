@@ -36,7 +36,9 @@ async def an(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, "`Use this Command with Reply and word to use a note.`", time=5)
+        return await eor(
+            e, "`Use this Command with Reply and word to use a note.`", time=5
+        )
     if "#" in wrd:
         wrd = wrd.replace("#", "")
     if wt and wt.media:
@@ -69,7 +71,9 @@ async def rn(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "`Give me the note handler which you want to remove.`", time=5)
+        return await eor(
+            e, "`Give me the note handler which you want to remove.`", time=5
+        )
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)

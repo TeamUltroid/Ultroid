@@ -30,7 +30,9 @@ async def ac(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eor(e, "`Use this Command with Reply and word to use a command.`", time=5)
+        return await eor(
+            e, "`Use this Command with Reply and word to use a command.`", time=5
+        )
     if "/" in wrd:
         wrd = wrd.replace("/", "")
     if wt and wt.media:

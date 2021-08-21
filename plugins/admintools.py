@@ -460,5 +460,7 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await eor(ult, f"Auto Delete Setting is Already same to `{match}`", time=5)
+        return await eor(
+            ult, f"Auto Delete Setting is Already same to `{match}`", time=5
+        )
     await eor(ult, f"Auto Delete Status Changed to `{match}` !")

@@ -63,7 +63,9 @@ async def _(event):
         text = previous_message.message
         lan = input or "en"
     else:
-        return await eor(event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5)
+        return await eor(
+            event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5
+        )
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)

@@ -140,7 +140,9 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eor(e, "`Give someone's username/id or replied to user.", time=5)
+            return await eor(
+                e, "`Give someone's username/id or replied to user.", time=5
+            )
         user = k[1]
         if user.isdigit():
             user = int(user)
@@ -223,7 +225,9 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eor(e, "`Give someone's username/id or replied to user.", time=5)
+            return await eor(
+                e, "`Give someone's username/id or replied to user.", time=5
+            )
         user = k[1]
         if user.isdigit():
             user = int(user)
