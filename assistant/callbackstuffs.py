@@ -103,9 +103,8 @@ async def update(eve):
             "`Userbot dyno build in progress, please wait for it to complete.`"
         )
         subprocess.run(
-            [
-                "git",
-                "pull",
+            [   "pkill python", "&&",
+                "git pull",
                 "&&",
                 "pip3 install -r requirements.txt",
                 "&&",
