@@ -84,7 +84,6 @@ async def set_afk(event):
     await asst.send_message(LOG_CHANNEL, msg1.text)
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
 @ultroid_bot.on(events.MessageEdited(outgoing=True))
 async def remove_afk(event):
     if (
