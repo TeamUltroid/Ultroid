@@ -1,12 +1,11 @@
 from os import remove
 
-from telethon import events
-from pyUltroid import udB, asst, CallsClient, LOGS
-from pyUltroid.misc import sudoers
-from pyUltroid.functions.all import bash, dler, time_formatter
-from pyUltroid.misc._wrappers import eod, eor
+from pyUltroid import LOGS, CallsClient, asst, udB
 from pyUltroid.dB.core import ACTIVE_CALLS
-
+from pyUltroid.functions.all import bash, dler, time_formatter
+from pyUltroid.misc import sudoers
+from pyUltroid.misc._wrappers import eod, eor
+from telethon import events
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
@@ -45,7 +44,7 @@ async def download(event, query, chat, ts):
     await bash(f"ffmpeg -i {dl} -f s16le -ac 2 -ar 48000 -acodec pcm_s16le {song}")
     try:
         remove(dl)
-    except:
+    except BaseException:
         pass
     return song, thumb, title, duration
 
@@ -110,7 +109,7 @@ async def on_network_changed(call, is_connected):
             ACTIVE_CALLS.remove(chat)
         try:
             remove(call._GroupCallFile__input_filename)
-        except:
+        except BaseException:
             pass
 
 
@@ -118,7 +117,7 @@ async def on_network_changed(call, is_connected):
 async def playout_ended_handler(call, __):
     try:
         remove(call._GroupCallFile__input_filename)
-    except:
+    except BaseException:
         pass
     # play the next song in queue
     # if queue is empty, then leave vc
