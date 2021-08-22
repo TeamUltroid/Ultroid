@@ -132,7 +132,7 @@ def main():
     try:
         type_of_ss = int(
             input(
-                "\nWhich session do you want to generate?\n1. User Session.\n2. VC Session.\n\nEnter choice:  "
+                "\nWhich session do you want to generate?\n1. User Session.\n2. VC Session.\n\nEnter choice 1 or 2:  "
             )
         )
     except Exception as e:
