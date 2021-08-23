@@ -2,13 +2,17 @@ import asyncio
 from os import remove
 from time import time
 
-from telethon import events
-from pyUltroid import udB, asst, CallsClient, LOGS
-from pyUltroid.misc import sudoers
+from pyUltroid import LOGS, CallsClient, asst, udB
+from pyUltroid.dB.core import ACTIVE_CALLS
 from pyUltroid.functions.all import bash, dler, time_formatter
+from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
+<<<<<<< HEAD
 from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 
+=======
+from telethon import events
+>>>>>>> 08a10f7d089101452ff45837f2dc9ece12ab82ba
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
@@ -47,7 +51,7 @@ async def download(event, query, chat, ts):
     await raw_converter(dl, song)
     try:
         remove(dl)
-    except:
+    except BaseException:
         pass
     return song, thumb, title, duration
 
@@ -207,7 +211,7 @@ async def on_network_changed(call, is_connected):
             ACTIVE_CALLS.remove(chat)
         try:
             remove(call._GroupCallFile__input_filename)
-        except:
+        except BaseException:
             pass
 
 
@@ -221,7 +225,7 @@ async def playout_ended_handler(call, __):
     # remove the file
     try:
         remove(call._GroupCallFile__input_filename)
-    except:
+    except BaseException:
         pass
 
     # play the next song in queue
