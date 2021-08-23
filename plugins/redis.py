@@ -75,4 +75,4 @@ async def _(ult):
         except BaseException:
             await eor(ult, "Something went wrong ...")
     else:
-        await ok.edit("Key not found")
+        await oor(ult, "Key not found")
