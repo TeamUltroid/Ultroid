@@ -19,6 +19,8 @@
 from . import *
 from pytgcalls.exceptions import NotConnectedError
 
+from . import *
+
 
 @vc_asst("joinvc")
 async def join_(event):
