@@ -8,15 +8,14 @@
 """
 • `{i}joinvc <optional chat id/username>`
    Join the voice chat.
-   
+
 • `{i}leavevc`
    Leave the voice chat.
-   
+
 • `{i}rejoin`
    Re-join the voice chat, incase of errors.
 """
 
-from . import *
 from pytgcalls.exceptions import NotConnectedError
 
 from . import *
