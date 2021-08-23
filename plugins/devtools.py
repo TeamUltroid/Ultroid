@@ -190,7 +190,7 @@ async def doie(e):
     if "main(" not in match:
         new_m = ""
         for i in match.split("\n"):
-            new_m += " "*4 + i + "\n"
+            new_m += " " * 4 + i + "\n"
         match = DUMMY_CPP.replace("!code", new_m)
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
