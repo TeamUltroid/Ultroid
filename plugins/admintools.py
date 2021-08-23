@@ -185,7 +185,7 @@ async def uunban(ult):
 )
 async def kck(ult):
     ml = ult.text.split(" ", maxsplit=1)[0]
-    if "kickme" in ml:
+    if "kickme" in ult.text:
         return
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
