@@ -168,9 +168,7 @@ async def aexec(code, event):
     return await locals()["__aexec"](event, event.client)
 
 
-DUMMY_CPP = """
-#include <iostream>
-
+DUMMY_CPP = """#include <iostream>
 using namespace std;
 
 int main(){
