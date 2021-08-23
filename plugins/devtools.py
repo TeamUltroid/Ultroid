@@ -179,6 +179,7 @@ async def aexec(code, event):
 
     return await locals()["__aexec"](event, event.client)
 
+
 DUMMY_CPP = """
 #include <iostream>
 
@@ -189,9 +190,8 @@ int main(){
 }
 """
 
-@ultroid_cmd(
-    pattern="cpp",
-   only_devs=True)
+
+@ultroid_cmd(pattern="cpp", only_devs=True)
 async def doie(e):
     match = e.text.split(" ", maxsplit=1)
     try:
