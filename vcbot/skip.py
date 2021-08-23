@@ -5,6 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+• `{i}skip`
+   Skip the current song and play the next in queue, if any.
+"""
+
 from . import *
 
 

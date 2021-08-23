@@ -5,6 +5,25 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+• `{i}mutevc`
+   Mute playback.
+   
+• `{i}unmutevc`
+   UnMute playback.
+   
+• `{i}pausevc`
+   Pause playback.
+   
+• `{i}resumevc`
+   Resume playback.
+   
+• `{i}stopvc`
+   Stop the playback and leave the voice chat.
+   
+• `{i}replay`
+   Re-play the current song from the beginning.
+"""
 from . import *
 
 

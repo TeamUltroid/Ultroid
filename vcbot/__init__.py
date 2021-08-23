@@ -9,7 +9,7 @@ import asyncio
 from os import remove
 from time import time
 
-from pyUltroid import LOGS, CallsClient, asst, udB
+from pyUltroid import LOGS, CallsClient, asst, udB, vcClient
 from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
@@ -197,7 +197,7 @@ async def play_from_queue(chat_id):
         await asst.send_message(
             chat_id, "`Queue is empty. Leaving the voice chat now !`"
         )
-        ultSongs.group_call.stop()
+        await ultSongs.group_call.stop()
     except Exception as e:
         LOGS.info(e)
         await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))

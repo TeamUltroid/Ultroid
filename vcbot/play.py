@@ -5,6 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+• `{i}play <song name/song url/reply to file>`
+   Play the song in voice chat, or add the song to queue.
+"""
+
 import datetime
 
 from . import *
