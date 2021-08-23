@@ -195,6 +195,10 @@ async def doie(e):
     o_cpp = f"• **Eval-Cpp**\n`{match}`"
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
+        if len(o_cpp) > 3000:
+            with io.BytesIO(str.encode(o_cpp)) as out_file:
+                out_file.name = "error.txt"
+                return await msg.reply(f"`{match}`", file=out_file)
         return await eor(msg, o_cpp)
     m = await bash("./CppUltroid")
     if m[0] != "":
