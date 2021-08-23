@@ -16,6 +16,7 @@
 
 """
 
+import asyncio
 
 from pyUltroid.functions.afk_db import *
 from pyUltroid.functions.pmpermit_db import *
@@ -96,13 +97,15 @@ async def remove_afk(event):
     if is_afk():
         _, _, _, afk_time = is_afk()
         del_afk()
-        await event.reply(get_string("afk_1").format(afk_time))
+        off = await event.reply(get_string("afk_1").format(afk_time))
         await asst.send_message(LOG_CHANNEL, get_string("afk_2").format(afk_time))
         for x in old_afk_msg:
             try:
                 await x.delete()
             except BaseException:
                 pass
+        await asyncio.sleep(3)
+        await off.delete()
 
 
 @ultroid_bot.on(
