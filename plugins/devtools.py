@@ -174,7 +174,7 @@ DUMMY_CPP = """
 using namespace std;
 
 int main(){
-    {code}
+!code
 }
 """
 
@@ -188,7 +188,10 @@ async def doie(e):
         return await eor(e, "`Give Some C++ Code..`")
     msg = await eor(e, "`Processing...`")
     if "main(" not in match:
-        match = DUMMY_CPP.format(code=match)
+        new_m = ""
+        for i in match.split("\n"):
+            new_m += " "*4 + i + "\n"
+        match = DUMMY_CPP.replace("!code", new_m)
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
     o_cpp = f"• **Eval-Cpp**\n`{match}`"
