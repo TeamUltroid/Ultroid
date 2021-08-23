@@ -53,14 +53,8 @@ async def _(e):
     remove("neo.txt")
 
 
-@ultroid_cmd(pattern="bash", fullsudo=True)
+@ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    if Redis("I_DEV") != "True":
-        await eor(
-            event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n `{HNDLR}setredis I_DEV True`\n\nThis Might Be Dangerous.",
-        )
-        return
     xx = await eor(event, "`Processing...`")
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
@@ -101,15 +95,9 @@ async def _(event):
 p, pp = print, pprint  # ignore: pylint
 
 
-@ultroid_cmd(pattern="eval", fullsudo=True)
+@ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
     if len(event.text) > 5 and event.text[5] != " ":
-        return
-    if Redis("I_DEV") != "True":
-        await eor(
-            event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n {HNDLR}setredis I_DEV True\n\nThis Might Be Dangerous.",
-        )
         return
     xx = await eor(event, "`Processing ...`")
     try:
@@ -179,7 +167,6 @@ async def aexec(code, event):
 
     return await locals()["__aexec"](event, event.client)
 
-
 DUMMY_CPP = """
 #include <iostream>
 
@@ -190,8 +177,9 @@ int main(){
 }
 """
 
-
-@ultroid_cmd(pattern="cpp", only_devs=True)
+@ultroid_cmd(
+    pattern="cpp",
+   only_devs=True)
 async def doie(e):
     match = e.text.split(" ", maxsplit=1)
     try:
