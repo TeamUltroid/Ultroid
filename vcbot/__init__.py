@@ -3,11 +3,10 @@ from os import remove
 from time import time
 
 from pyUltroid import LOGS, CallsClient, asst, udB
-from pyUltroid.dB.core import ACTIVE_CALLS
+from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
-from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 from telethon import events
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
