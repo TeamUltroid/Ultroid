@@ -179,10 +179,19 @@ async def aexec(code, event):
 
     return await locals()["__aexec"](event, event.client)
 
+DUMMY_CPP = """
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    {code}
+}
+"""
 
 @ultroid_cmd(
     pattern="cpp",
-)  # only_devs=True)
+   only_devs=True)
 async def doie(e):
     match = e.text.split(" ", maxsplit=1)
     try:
@@ -190,6 +199,8 @@ async def doie(e):
     except IndexError:
         return await eor(e, "`Give Some C++ Code..`")
     msg = await eor(e, "`Processing...`")
+    if "main(" not in match:
+        match = DUMMY_CPP.format(code=match)
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
     o_cpp = f"• **Eval-Cpp**\n`{match}`"
