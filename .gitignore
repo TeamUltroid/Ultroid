@@ -35,7 +35,6 @@ bin-release/
 *.apk
 
 # temporary files
-vcbot-old
 *.raw
 tplugins
 tassistant

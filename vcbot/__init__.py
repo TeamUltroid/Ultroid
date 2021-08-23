@@ -1,11 +1,13 @@
+import asyncio
 from os import remove
+from time import time
 
 from telethon import events
 from pyUltroid import udB, asst, CallsClient, LOGS
 from pyUltroid.misc import sudoers
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc._wrappers import eod, eor
-from pyUltroid.dB.core import ACTIVE_CALLS
+from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
@@ -42,12 +44,19 @@ async def download(event, query, chat, ts):
     title = ytdl_data["title"]
     duration = ytdl_data["duration"]
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
-    await bash(f"ffmpeg -i {dl} -f s16le -ac 2 -ar 48000 -acodec pcm_s16le {song}")
+    await raw_converter(dl, song)
     try:
         remove(dl)
     except:
         pass
     return song, thumb, title, duration
+
+
+async def raw_converter(dl, song):
+    try:
+        await bash(f"ffmpeg -i {dl} -f s16le -ac 2 -ar 48000 -acodec pcm_s16le {song}")
+    except Exception as e:
+        LOGS.warning(e)
 
 
 def vc_asst(dec):
@@ -69,6 +78,62 @@ def vc_asst(dec):
     return ult
 
 
+def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
+    try:
+        n = sorted(list(VC_QUEUE[int(chat_id)].keys()))
+        play_at = n[-1] + 1
+    except BaseException:
+        play_at = 1
+    if VC_QUEUE.get(int(chat_id)):
+        VC_QUEUE[int(chat_id)].update(
+            {
+                play_at: {
+                    "song": song,
+                    "title": song_name,
+                    "thumb": thumb,
+                    "from_user": from_user,
+                    "duration": duration,
+                }
+            }
+        )
+    else:
+        VC_QUEUE.update(
+            {
+                int(chat_id): {
+                    play_at: {
+                        "song": song,
+                        "title": song_name,
+                        "thumb": thumb,
+                        "from_user": from_user,
+                        "duration": duration,
+                    }
+                }
+            }
+        )
+    return VC_QUEUE[int(chat_id)]
+
+
+def list_queue(chat):
+    if VC_QUEUE.get(chat):
+        txt, n = "", 0
+        for x in list(VC_QUEUE[chat].keys()):
+            n += 1
+            data = VC_QUEUE[chat][x]
+            txt += f'**{n}.{data["title"]}** : __By {data["from_user"]}__\n'
+        return txt
+
+
+def get_from_queue(chat_id):
+    play_this = list(VC_QUEUE[int(chat_id)].keys())[0]
+    info = VC_QUEUE[int(chat_id)][play_this]
+    song = info["song"]
+    title = info["title"]
+    thumb = info["thumb"]
+    from_user = info["from_user"]
+    duration = info["duration"]
+    return song, title, thumb, from_user, play_this, duration
+
+
 # --------------------------------------------------
 
 
@@ -81,6 +146,7 @@ class Player(object):
             try:
                 await self.group_call.start(chat)
             except Exception as e:
+                # TODO - start a vc if enough perms
                 return False, e
         return True, None
 
@@ -97,6 +163,37 @@ async def vc_joiner(event, chat_id):
     else:
         await eor(event, "**ERROR:**\n{}".format(err))
         return False
+
+
+async def play_from_queue(chat_id):
+    try:
+        LOGS.info(VC_QUEUE)
+        song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
+        ultSongs.group_call.input_file_name = song
+        xx = await asst.send_message(
+            chat_id,
+            "Now playing #{}: {}\nDuration: {}\nRequested by: {}".format(
+                pos, title, time_formatter(dur * 1000), from_user
+            ),
+            file=thumb,
+        )
+        VC_QUEUE[chat_id].pop(pos)
+        if not VC_QUEUE[chat_id]:
+            VC_QUEUE.pop(chat_id)
+        await asyncio.sleep(dur + 5)
+        await xx.delete()
+
+        LOGS.info(VC_QUEUE)
+
+    except (IndexError, KeyError):
+
+        LOGS.info(VC_QUEUE)
+        LOGS.info("Nothing in queue")
+
+        ultSongs.group_call.stop_playout()
+    except Exception as e:
+        LOGS.info(e)
+        await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
 
 
 @ultSongs.group_call.on_network_status_changed
@@ -116,11 +213,16 @@ async def on_network_changed(call, is_connected):
 
 @ultSongs.group_call.on_playout_ended
 async def playout_ended_handler(call, __):
+    chat_id = call.full_chat.id
+
+    if not str(chat_id).startswith("-100"):
+        chat_id = int("-100" + str(chat_id))
+
+    # remove the file
     try:
         remove(call._GroupCallFile__input_filename)
     except:
         pass
+
     # play the next song in queue
-    # if queue is empty, then leave vc
-    # TODO
-    call.stop_playout()
+    await play_from_queue(chat_id)
