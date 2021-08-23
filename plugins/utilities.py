@@ -55,7 +55,6 @@
 • `{i}thumb <reply to file>`
    Download the thumbnail of the replied file.
 """
-import asyncio
 import calendar
 import html
 import io
@@ -414,7 +413,9 @@ async def rmbg(event):
         out = ReTrieveFile(dl)
         os.remove(dl)
     else:
-        return await eod(event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
+        return await eod(
+            event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
+        )
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
     if "image" in contentType:
