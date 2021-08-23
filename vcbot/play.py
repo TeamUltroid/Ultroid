@@ -1,3 +1,10 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 import datetime
 
 from . import *
@@ -11,7 +18,11 @@ async def play_music_(event):
     xx = await eor(event, "`Processing...`")
 
     args = event.text.split(" ", 1)
-    chat = event.chat_id
+    chat = (
+        event.chat_id
+        if str(event.chat_id).startswith("-100")
+        else int("-100" + str(event.chat_id))
+    )
     from_user = event.sender_id
 
     try:

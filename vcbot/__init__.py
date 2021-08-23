@@ -1,3 +1,10 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 import asyncio
 from os import remove
 from time import time
@@ -38,7 +45,10 @@ async def download(event, query, chat, ts):
         "logtostderr": False,
     }
     ytdl_data = await dler(event, link)
-    YoutubeDL(opts).download([link])
+    try:
+        YoutubeDL(opts).download([link])
+    except Exception as e:
+        return await eor(event, str(e))
     dl = vid_id + ".mp3"
     title = ytdl_data["title"]
     duration = ytdl_data["duration"]
@@ -136,6 +146,7 @@ def get_from_queue(chat_id):
 # --------------------------------------------------
 
 
+# credits to @subinps for the basic working idea
 class Player(object):
     def __init__(self):
         self.group_call = CallsClient.get_file_group_call()
@@ -165,13 +176,13 @@ async def vc_joiner(event, chat_id):
 
 
 async def play_from_queue(chat_id):
+    chat_id = chat_id if str(chat_id).startswith("-100") else int("-100" + str(chat_id))
     try:
-        LOGS.info(VC_QUEUE)
         song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
-        ultSongs.group_call.input_file_name = song
+        ultSongs.group_call.input_filename = song
         xx = await asst.send_message(
             chat_id,
-            "Now playing #{}: {}\nDuration: {}\nRequested by: {}".format(
+            "**Now playing #{}**: `{}`\n**Duration:** `{}`\n**Requested by:** `{}`".format(
                 pos, title, time_formatter(dur * 1000), from_user
             ),
             file=thumb,
@@ -182,14 +193,11 @@ async def play_from_queue(chat_id):
         await asyncio.sleep(dur + 5)
         await xx.delete()
 
-        LOGS.info(VC_QUEUE)
-
     except (IndexError, KeyError):
-
-        LOGS.info(VC_QUEUE)
-        LOGS.info("Nothing in queue")
-
-        ultSongs.group_call.stop_playout()
+        await asst.send_message(
+            chat_id, "`Queue is empty. Leaving the voice chat now !`"
+        )
+        ultSongs.group_call.stop()
     except Exception as e:
         LOGS.info(e)
         await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
@@ -198,6 +206,7 @@ async def play_from_queue(chat_id):
 @ultSongs.group_call.on_network_status_changed
 async def on_network_changed(call, is_connected):
     chat = call.full_chat.id
+    chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
     if is_connected:
         if chat not in ACTIVE_CALLS:
             ACTIVE_CALLS.append(chat)
