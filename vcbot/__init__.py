@@ -7,12 +7,8 @@ from pyUltroid.dB.core import ACTIVE_CALLS
 from pyUltroid.functions.all import bash, dler, time_formatter
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
-<<<<<<< HEAD
 from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
-
-=======
 from telethon import events
->>>>>>> 08a10f7d089101452ff45837f2dc9ece12ab82ba
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
