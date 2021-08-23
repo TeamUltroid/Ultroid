@@ -30,50 +30,49 @@ from . import *
 
 @ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "`...`")
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
         data = ult.pattern_match.group(1).split(delim, maxsplit=1)
         udB.set(data[0], data[1])
         redisdata = Redis(data[0])
-        await ok.edit(
+        await eor(
+            ult,
             "Redis Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
                 data[0],
                 redisdata,
             ),
         )
     except BaseException:
-        await ok.edit("`Something Went Wrong`")
+        await eor(ult, "`Something Went Wrong`")
 
 
 @ultroid_cmd(pattern="delredis ?(.*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "`Deleting data from Redis ...`")
     try:
         key = ult.pattern_match.group(1)
         k = udB.delete(key)
         if k == 0:
-            return await ok.edit("`No Such Key.`")
-        await ok.edit(f"`Successfully deleted key {key}`")
+            return await eor(ult, "`No Such Key.`")
+        await eor(ult, f"`Successfully deleted key {key}`")
     except BaseException:
-        await ok.edit("`Something Went Wrong`")
+        await eor(ult, "`Something Went Wrong`")
 
 
 @ultroid_cmd(pattern="renredis ?(.*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "`...`")
     delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
     data = ult.pattern_match.group(1).split(delim)
     if Redis(data[0]):
         try:
             udB.rename(data[0], data[1])
-            await ok.edit(
+            await eor(
+                ult,
                 "Redis Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
                     data[0],
                     data[1],
                 ),
             )
         except BaseException:
-            await ok.edit("Something went wrong ...")
+            await eor(ult, "Something went wrong ...")
     else:
         await ok.edit("Key not found")
