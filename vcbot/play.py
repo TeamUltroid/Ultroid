@@ -18,10 +18,11 @@ from . import *
 @vc_asst("play")
 async def play_music_(event):
 
-    # TODO - file, cplay, radio
+    # TODO - cplay, radio
 
     xx = await eor(event, "`Processing...`")
 
+    reply = await event.get_reply_message() if event.reply_to_msg_id else None
     args = event.text.split(" ", 1)
     chat = (
         event.chat_id
@@ -33,11 +34,18 @@ async def play_music_(event):
     try:
         song = args[1]
     except IndexError:
-        return await eod(xx, "Please specify a song name !", time=10)
+        if not reply:
+            return await eod(
+                xx, "Please specify a song name or reply to a audio file !", time=10
+            )
 
     await eor(xx, "`Downloading and converting...`")
     TS = datetime.datetime.now().strftime("%H:%M:%S")
-    song, thumb, song_name, duration = await download(event, song, chat, TS)
+
+    if reply and (reply.audio or reply.video or reply.document):
+        song, thumb, song_name, duration = await file_download(event, reply, chat, TS)
+    else:
+        song, thumb, song_name, duration = await download(event, song, chat, TS)
 
     if not ultSongs.group_call.is_connected:
         # check if vc_Client is in call

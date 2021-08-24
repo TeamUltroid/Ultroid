@@ -61,9 +61,26 @@ async def download(event, query, chat, ts):
     return song, thumb, title, duration
 
 
+async def file_download(event, song, chat, ts):
+    song = f"VCSONG_{chat}_{ts}.raw"
+    t = await event.get_reply_message() if event.reply_to_msg_id else None
+    dl = await asst.download_media(song)
+    title = t.file.title
+    duration = t.file.duration
+    thumb = await asst.download_media(song, thumb=-1)
+    await raw_converter(dl, song)
+    try:
+        remove(dl)
+    except BaseException:
+        pass
+    return song, thumb, title, duration
+
+
 async def raw_converter(dl, song):
     try:
-        await bash(f"ffmpeg -i {dl} -f s16le -ac 2 -ar 48000 -acodec pcm_s16le {song}")
+        await bash(
+            f'ffmpeg -i "{dl}" -f s16le -ac 2 -ar 48000 -acodec pcm_s16le "{song}"'
+        )
     except Exception as e:
         LOGS.warning(e)
 
