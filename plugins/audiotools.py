@@ -80,7 +80,7 @@ async def gen_sample(e):
             return await eod(xxx, "`Wrong trim duration`")
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await xxx.edit(
-            f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Trimming Audio from `{ss}` to `{dd}`...`"
+            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Audio from `{ss}` to `{dd}`..."
         )
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -vn -acodec copy "{out}" -y'
         await bash(cmd)
@@ -94,12 +94,15 @@ async def gen_sample(e):
             "Uploading " + out + "...",
         )
         metadata = extractMetadata(createParser(out))
-        duration = 0
+        duration = vido.file.duration or 0
         artist = udB.get("artist") or ultroid_bot.first_name
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("artist"):
-            artist = metadata.get("artist")
+        try:
+            if metadata.has("duration"):
+                duration = metadata.get("duration").seconds
+            if metadata.has("artist"):
+                artist = metadata.get("artist")
+        except BaseException:
+            pass
         attributes = [
             DocumentAttributeAudio(
                 duration=duration,

@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
+import glob
 import os
 import time
 from datetime import datetime as dt
@@ -48,7 +49,7 @@ async def gen_sample(e):
         file_name = (file.name).split("/")[-1]
         out = file_name.replace(file_name.split(".")[-1], "_sample.mkv")
         xxx = await xxx.edit(
-            f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Generating Sample of {stime} seconds...`"
+            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating Sample of `{stime}` seconds..."
         )
         ss, dd = duration_s(file.name, stime)
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} "{out}" -y'
@@ -117,7 +118,7 @@ async def gen_shots(e):
         d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
         xxx = await xxx.edit(
-            f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Generating {shot} screenshots...`"
+            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating `{shot}` screenshots..."
         )
         tsec = genss(file.name)
         fps = shot / tsec
@@ -168,7 +169,7 @@ async def gen_sample(e):
             return await eod(xxx, "`Wrong trim duration`")
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await xxx.edit(
-            f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Trimming Video from `{ss}` to `{dd}`...`"
+            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Video from `{ss}` to `{dd}`..."
         )
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} "{out}" -y'
         await bash(cmd)

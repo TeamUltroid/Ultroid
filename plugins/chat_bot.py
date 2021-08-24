@@ -68,23 +68,23 @@ async def lister(event):
 
 async def chat_bot_fn(event, type_):
     if event.reply_to_msg_id:
-        user = (await event.get_reply_message()).sender_id
+        user = (await event.get_reply_message()).sender
     else:
-        temp = event.text.split(" ", 1)
+        temp = event.text.split(maxsplit=1)
         try:
-            user = (await event.client.get_entity(temp[1])).id
+            user = await event.client.get_entity(temp[1])
         except BaseException:
             if event.is_private:
-                user = event.chat_id
+                user = event.chat
             else:
                 return await eod(
                     event,
                     "Reply to a user or give me his id/username to add an AI ChatBot!",
                 )
     if type_ == "add":
-        add_chatbot(event.chat_id, user)
+        add_chatbot(event.chat_id, user.id)
     if type_ == "remov":
-        rem_chatbot(event.chat_id, user)
+        rem_chatbot(event.chat_id, user.id)
     await eor(
         event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})"
     )

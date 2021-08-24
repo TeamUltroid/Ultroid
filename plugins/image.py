@@ -25,5 +25,8 @@ async def f2i(e):
     shot = WebShot(quality=85)
     css = "body {background: white;} p {color: red;}"
     pic = await shot.create_pic_async(html=html, css=css)
-    await e.reply(file=pic)
+    try:
+        await e.reply(file=pic)
+    except BaseException:
+        await e.reply(file=pic, force_document=True)
     os.remove(pic)
