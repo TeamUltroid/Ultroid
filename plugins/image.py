@@ -12,7 +12,7 @@ from htmlwebshot import WebShot
 from . import *
 
 
-@ultroid_cmd("image ?(.*)")
+@ultroid_cmd(pattern="image ?(.*)")
 async def f2i(e):
     txt = e.pattern_match.group(1)
     if txt:
