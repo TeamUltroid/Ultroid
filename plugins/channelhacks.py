@@ -126,12 +126,12 @@ async def dd(event):
             return
     if is_source_channel_added(y):
         rem_source_channel(y)
-        await eod(x, "Source removed from database", time=3)
+        await eor(x, "Source removed from database", time=3)
     elif is_source_channel_added(y):
         rem_source_channel(y)
-        await eod(x, "Source removed from database")
+        await eor(x, "Source removed from database", time=5)
     elif not is_source_channel_added(y):
-        await eod(x, "Source channel is already removed from database. ", time=3)
+        await eor(x, "Source channel is already removed from database. ", time=3)
 
 
 @ultroid_cmd(pattern="listsource")
@@ -140,7 +140,7 @@ async def list_all(event):
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
-        return await eod(x, "No chats were added.", time=5)
+        return await eor(x, "No chats were added.", time=5)
     msg = "Source channels in database:\n"
     for channel in channels:
         name = ""
@@ -207,9 +207,9 @@ async def dd(event):
         await eor(x, "Destination removed from database")
     elif is_destination_added(y):
         rem_destination(y)
-        await eod(x, "Destination removed from database")
+        await eor(x, "Destination removed from database", time=5)
     elif not is_destination_added(y):
-        await eod(x, "Destination channel is already removed from database. ")
+        await eor(x, "Destination channel is already removed from database. ", time=5)
 
 
 @ultroid_cmd(pattern="listdest")
@@ -219,7 +219,7 @@ async def list_all(event):
     channels = get_destinations()
     num = get_no_destinations()
     if num == 0:
-        return await eod(x, "No chats were added.", time=5)
+        return await eor(x, "No chats were added.", time=5)
     msg = "Destination channels in database:\n"
     for channel in channels:
         name = ""

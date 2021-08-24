@@ -26,10 +26,10 @@ tr = Translator()
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
-        await eod(e, "AUTOCORRECT Feature On")
+        await eor(e, "AUTOCORRECT Feature On", time=5)
     else:
         udB.delete("AUTOCORRECT")
-        await eod(e, "AUTOCORRECT Feature Off")
+        await eor(e, "AUTOCORRECT Feature Off", time=5)
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))

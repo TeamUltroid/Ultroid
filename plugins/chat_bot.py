@@ -54,7 +54,7 @@ async def rem_chatBot(event):
 async def lister(event):
     users = get_all_added(event.chat.id)
     if udB.get("CHATBOT_USERS") is None:
-        return await eod(event, "`No user has AI added.`")
+        return await eor(event, "`No user has AI added.`", time=5)
     msg = ""
     for i in users:
         try:
@@ -68,12 +68,12 @@ async def lister(event):
 
 async def chat_bot_fn(event, type_):
     if event.reply_to_msg_id:
-        user = await (await event.get_reply_message()).get_sender()
+        user = (await event.get_reply_message()).sender_id
     else:
         temp = event.text.split(" ", 1)
         try:
-            usr = temp[1]
-        except IndexError:
+            user = (await event.client.get_entity(temp[1])).id
+        except BaseException:
             if event.is_private:
                 user = event.chat_id
             else:
@@ -81,11 +81,10 @@ async def chat_bot_fn(event, type_):
                     event,
                     "Reply to a user or give me his id/username to add an AI ChatBot!",
                 )
-        user = await event.client.get_entity(usr)
     if type_ == "add":
-        add_chatbot(event.chat.id, user.id)
+        add_chatbot(event.chat_id, user)
     if type_ == "remov":
-        rem_chatbot(event.chat.id, user.id)
+        rem_chatbot(event.chat_id, user)
     await eor(
-        event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})`"
+        event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})"
     )

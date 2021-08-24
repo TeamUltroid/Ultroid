@@ -21,17 +21,19 @@ async def oqha(e):
         text = (await e.get_reply_message()).text
         reply_to = e.reply_to_msg_id
     else:
-        return await eod(e, "What to Echo?")
+        return await eor(e, "What to Echo?", time=5)
     await e.client.send_message(e.chat_id, text, reply_to=reply_to)
 
 
-@ultroid_cmd(pattern="kickme", type=["manager"], allow_all=True)
+@ultroid_cmd(pattern="kickme$", type=["manager"], allow_all=True)
 async def doit(e):
+    if e.sender_id in DEVLIST:
+        return await eod(e, "`I will Not Kick You, my Developer..`")
     try:
         await e.client.kick_participant(e.chat_id, e.sender_id)
     except Exception as Fe:
-        return await eod(e, str(Fe))
-    await eod(e, "Yes, You are right, get out.")
+        return await eor(e, str(Fe), time=5)
+    await eor(e, "Yes, You are right, get out.", time=5)
 
 
 @ultroid_cmd(pattern="joke$", type=["manager"])

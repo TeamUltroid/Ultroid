@@ -10,7 +10,7 @@
 • `{i}bash <cmds>`
     Run linux commands on telegram.
 
-• `{i}eval <cmds>`
+• `{i}eval <code>`
     Evaluate python commands on telegram.
     Shortcuts:
         client = bot = event.client
@@ -18,6 +18,10 @@
         p = print
         reply = await event.get_reply_message()
         chat = event.chat_id
+
+• `{i}cpp <code>`
+    Run c++ code from Telegram.
+    It should be the complete file base.
 
 • `{i}sysinfo`
     Shows System Info.
@@ -49,19 +53,13 @@ async def _(e):
     remove("neo.txt")
 
 
-@ultroid_cmd(pattern="bash", fullsudo=True)
+@ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    if Redis("I_DEV") != "True":
-        await eor(
-            event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n `{HNDLR}setredis I_DEV True`\n\nThis Might Be Dangerous.",
-        )
-        return
     xx = await eor(event, "`Processing...`")
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`No cmd given`", time=10)
+        return await eor(xx, "`No cmd given`", time=10)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -97,21 +95,15 @@ async def _(event):
 p, pp = print, pprint  # ignore: pylint
 
 
-@ultroid_cmd(pattern="eval", fullsudo=True)
+@ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
     if len(event.text) > 5 and event.text[5] != " ":
-        return
-    if Redis("I_DEV") != "True":
-        await eor(
-            event,
-            f"Developer Restricted!\nIf you know what this does, and want to proceed\n\n {HNDLR}setredis I_DEV True\n\nThis Might Be Dangerous.",
-        )
         return
     xx = await eor(event, "`Processing ...`")
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`Give some python cmd`", time=5)
+        return await eor(xx, "`Give some python cmd`", time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr
@@ -153,7 +145,7 @@ async def _(event):
                 force_document=True,
                 thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
-                caption=f"```{cmd}```",
+                caption=f"```{cmd}```" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
             await xx.delete()
@@ -174,3 +166,50 @@ async def aexec(code, event):
     )
 
     return await locals()["__aexec"](event, event.client)
+
+
+DUMMY_CPP = """#include <iostream>
+using namespace std;
+
+int main(){
+!code
+}
+"""
+
+
+@ultroid_cmd(pattern="cpp", only_devs=True)
+async def doie(e):
+    match = e.text.split(" ", maxsplit=1)
+    try:
+        match = match[1]
+    except IndexError:
+        return await eor(e, "`Give Some C++ Code..`")
+    msg = await eor(e, "`Processing...`")
+    if "main(" not in match:
+        new_m = ""
+        for i in match.split("\n"):
+            new_m += " " * 4 + i + "\n"
+        match = DUMMY_CPP.replace("!code", new_m)
+    open("cpp-ultroid.cpp", "w").write(match)
+    m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
+    o_cpp = f"• **Eval-Cpp**\n`{match}`"
+    if m[1] != "":
+        o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
+        if len(o_cpp) > 3000:
+            with io.BytesIO(str.encode(o_cpp)) as out_file:
+                out_file.name = "error.txt"
+                return await msg.reply(f"`{match}`", file=out_file)
+        return await eor(msg, o_cpp)
+    m = await bash("./CppUltroid")
+    if m[0] != "":
+        o_cpp += f"\n\n**• Output :**\n`{m[0]}`"
+    if m[1] != "":
+        o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
+    if len(o_cpp) > 3000:
+        with io.BytesIO(str.encode(o_cpp)) as out_file:
+            out_file.name = "eval.txt"
+            await msg.reply(f"`{match}`", file=out_file)
+    else:
+        await eor(msg, o_cpp)
+    os.remove("CppUltroid")
+    os.remove("cpp-ultroid.cpp")

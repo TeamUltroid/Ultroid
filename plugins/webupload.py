@@ -34,7 +34,7 @@ async def _(event):
     if event.reply_to_msg_id:
         bb = await event.get_reply_message()
         if not bb.media:
-            return await eod(xx, "`Reply to media file`")
+            return await eor(xx, "`Reply to media file`", time=5)
         ccc = time.time()
         try:
             naam = await downloader(

@@ -174,4 +174,4 @@ async def _(e):
         await xxx.delete()
         os.remove(out)
     else:
-        await eod(e, "`Reply To Video File Only`")
+        await eor(e, "`Reply To Video File Only`", time=5)

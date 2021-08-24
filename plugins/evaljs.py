@@ -65,7 +65,7 @@ async def evaluateJs(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(xx, "`Give some JS command`", time=5)
+        return await eor(xx, "`Give some JS command`", time=5)
     if cmd and cmd != "":
         Thread(
             target=await evalJs(

@@ -69,14 +69,15 @@ async def pdfseimg(event):
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
     if not msg:
+        ok = []
         for num in range(pdf.numPages):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(num))
-            with open(os.path.join("pdf/ult{}.png".format(num + 1)), "wb") as f:
+            fil = os.path.join("pdf/ult{}.png".format(num + 1))
+            ok.append(fil)
+            with open(fil, "wb") as f:
                 pw.write(f)
         os.remove(pdfp)
-        afl = glob.glob("pdf/*")
-        ok = [*sorted(afl)]
         for z in ok:
             await event.client.send_file(event.chat_id, z, album=True)
         shutil.rmtree("pdf")

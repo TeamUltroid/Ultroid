@@ -44,7 +44,7 @@ async def af(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
+                return await eor(x, "`Unsupported Media`", time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)

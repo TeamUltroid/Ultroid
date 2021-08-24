@@ -29,10 +29,10 @@ from . import *
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
-        return await eod(e, get_string("autopic_1"))
+        return await eor(e, get_string("autopic_1"), time=5)
     clls = autopicsearch(search)
     if len(clls) == 0:
-        return await eod(e, get_string("autopic_2").format(search))
+        return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     ST = udB.get("SLEEP_TIME")
@@ -63,6 +63,6 @@ async def autopic(e):
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if gt != "True":
-        return await eod(ult, "AUTOPIC was not in used !!")
+        return await eor(ult, "AUTOPIC was not in used !!", time=5)
     udB.set("AUTOPIC", "None")
-    await eod(ult, "AUTOPIC Stopped !!")
+    await eor(ult, "AUTOPIC Stopped !!", time=5)

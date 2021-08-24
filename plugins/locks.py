@@ -29,10 +29,10 @@ from . import *
 async def lockho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`Give some Proper Input..`")
+        return await eor(e, "`Give some Proper Input..`", time=5)
     ml = lucks(mat)
     if not ml:
-        return await eod(e, "`Incorrect Input`")
+        return await eor(e, "`Incorrect Input`", time=5)
     await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Locked - `{mat}` ! ")
 
@@ -46,9 +46,9 @@ async def lockho(e):
 async def unlckho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`Give some Proper Input..`")
+        return await eor(e, "`Give some Proper Input..`", time=5)
     ml = unlucks(mat)
     if not ml:
-        return await eod(e, "`Incorrect Input`")
+        return await eor(e, "`Incorrect Input`", time=5)
     await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Unlocked - `{mat}` ! ")

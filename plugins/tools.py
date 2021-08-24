@@ -63,14 +63,16 @@ async def _(event):
         text = previous_message.message
         lan = input or "en"
     else:
-        return await eod(event, f"`{hndlr}tr LanguageCode` as reply to a message")
+        return await eor(
+            event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5
+        )
     translator = Translator()
     try:
         tt = translator.translate(text, dest=lan)
         output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
         await eor(event, output_str)
     except Exception as exc:
-        await eod(event, str(exc), time=17)
+        await eor(event, str(exc), time=17)
 
 
 @ultroid_cmd(
@@ -155,7 +157,7 @@ async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eod(ult, "`Input some link`")
+        return await eor(ult, "`Input some link`", time=5)
     await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
@@ -238,9 +240,9 @@ async def _(e):
         path = Path(".")
     else:
         if not os.path.isdir(path):
-            return await eod(e, "`Incorrect Directory.`")
+            return await eor(e, "`Incorrect Directory.`", time=5)
         if not os.listdir(path):
-            return await eod(e, "`This Directory is Empty.`")
+            return await eor(e, "`This Directory is Empty.`", time=5)
     files = path.iterdir()
     pyfiles = []
     jsons = []
@@ -361,9 +363,9 @@ async def lastname(steal):
             except YouBlockedUserError:
                 return await lol.edit("Please unblock @sangmatainfo_bot and try again")
             if (
-                response.text.startswith("No records found")
-                or respond.text.startswith("No records found")
-                or responds.text.startswith("No records found")
+                (response and response.text == "No records found")
+                or (respond and respond.text == "No records found")
+                or (responds and responds.text == "No records found")
             ):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])

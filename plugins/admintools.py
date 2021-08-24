@@ -52,9 +52,9 @@ import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import DeleteUserHistoryRequest, EditAdminRequest
+from telethon.tl.functions.channels import DeleteUserHistoryRequest
 from telethon.tl.functions.messages import SetHistoryTTLRequest
-from telethon.tl.types import ChatAdminRights, InputMessagesFilterPinned
+from telethon.tl.types import InputMessagesFilterPinned
 
 from . import *
 
@@ -69,27 +69,22 @@ async def prmte(ult):
     if not user:
         return await xx.edit("`Reply to a user to promote him!`")
     try:
-        await ult.client(
-            EditAdminRequest(
-                ult.chat_id,
-                user.id,
-                ChatAdminRights(
-                    add_admins=False,
-                    invite_users=True,
-                    change_info=False,
-                    ban_users=True,
-                    delete_messages=True,
-                    pin_messages=True,
-                ),
-                rank,
-            ),
+        await ult.client.edit_admin(
+            ult.chat_id,
+            user.id,
+            invite_users=True,
+            ban_users=True,
+            delete_messages=True,
+            pin_messages=True,
+            manage_call=True,
+            title=rank,
         )
         await eod(
             xx,
             f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
         )
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to promote you.`")
+    except Exception as ex:
+        return await xx.edit("`" + str(ex) + "`")
 
 
 @ultroid_cmd(
@@ -106,27 +101,22 @@ async def dmote(ult):
     if not user:
         return await xx.edit("`Reply to a user to demote him!`")
     try:
-        await ult.client(
-            EditAdminRequest(
-                ult.chat_id,
-                user.id,
-                ChatAdminRights(
-                    add_admins=None,
-                    invite_users=None,
-                    change_info=None,
-                    ban_users=None,
-                    delete_messages=None,
-                    pin_messages=None,
-                ),
-                rank,
-            ),
-        )
+        await ult.client.edit_admin(
+            ult.chat_id,
+            user.id,
+            invite_users=None,
+            ban_users=None,
+            delete_messages=None,
+            pin_messages=None,
+            manage_call=None,
+            title=rank,
+        ),
         await eod(
             xx,
             f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to demote you.`")
+    except Exception as ex:
+        return await xx.edit("`" + str(ex) + "`")
 
 
 @ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
@@ -195,7 +185,7 @@ async def uunban(ult):
 )
 async def kck(ult):
     ml = ult.text.split(" ", maxsplit=1)[0]
-    if "kickme" in ml:
+    if "kickme" in ult.text:
         return
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -227,7 +217,7 @@ async def tkicki(e):
     try:
         tme = huh[1]
     except IndexError:
-        return await eod(e, "`Time till kick?`", time=15)
+        return await eor(e, "`Time till kick?`", time=15)
     try:
         inputt = huh[2]
     except IndexError:
@@ -241,7 +231,7 @@ async def tkicki(e):
         userid = await get_user_id(inputt)
         fn = (await e.client.get_entity(userid)).first_name
     else:
-        return await eod(e, "`Reply to someone or use its id...`", time=3)
+        return await eor(e, "`Reply to someone or use its id...`", time=3)
     try:
         bun = await ban_time(e, tme)
         await e.client.edit_permissions(
@@ -332,11 +322,11 @@ async def fastpurger(purg):
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
             p += 0
-        return await eod(purg, f"Purged {p} Messages! ")
+        return await eor(purg, f"Purged {p} Messages! ", time=5)
     msgs = []
     count = 0
     if not (purg.reply_to_msg_id or match):
-        return await eod(purg, "`Reply to a message to purge from.`", time=10)
+        return await eor(purg, "`Reply to a message to purge from.`", time=10)
     async for msg in purg.client.iter_messages(chat, min_id=purg.reply_to_msg_id):
         msgs.append(msg)
         count += 1
@@ -362,7 +352,7 @@ async def fastpurgerme(purg):
         try:
             nnt = int(num)
         except BaseException:
-            await eod(purg, "`Give a Valid Input.. `")
+            await eor(purg, "`Give a Valid Input.. `", time=5)
             return
         mp = 0
         async for mm in purg.client.iter_messages(
@@ -370,7 +360,7 @@ async def fastpurgerme(purg):
         ):
             await mm.delete()
             mp += 1
-        await eod(purg, f"Purged {mp} Messages!")
+        await eor(purg, f"Purged {mp} Messages!", time=5)
         return
     chat = await purg.get_input_chat()
     msgs = []
@@ -415,9 +405,9 @@ async def _(e):
     name = (await e.get_reply_message()).sender
     try:
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-        await eod(e, f"Successfully Purged All Messages from {name.first_name}")
+        await eor(e, f"Successfully Purged All Messages from {name.first_name}", time=5)
     except Exception as er:
-        return await eod(xx, str(er))
+        return await eor(xx, str(er), time=5)
 
 
 @ultroid_cmd(
@@ -446,7 +436,7 @@ async def get_all_pinned(event):
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
     if a == "":
-        return await eod(x, "There is no message pinned in this group!")
+        return await eor(x, "There is no message pinned in this group!", time=5)
 
     await x.edit(m + a, parse_mode="html")
 
@@ -458,7 +448,7 @@ async def get_all_pinned(event):
 async def autodelte(ult):
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "1m", "off"]:
-        return await eod(ult, "`Please Use Proper Format..`")
+        return await eor(ult, "`Please Use Proper Format..`", time=5)
     if match == "24h":
         tt = 3600 * 24
     elif match == "7d":
@@ -470,5 +460,7 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await eod(ult, f"Auto Delete Setting is Already same to `{match}`")
+        return await eor(
+            ult, f"Auto Delete Setting is Already same to `{match}`", time=5
+        )
     await eor(ult, f"Auto Delete Status Changed to `{match}` !")

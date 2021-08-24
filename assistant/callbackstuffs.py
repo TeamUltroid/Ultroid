@@ -104,8 +104,7 @@ async def update(eve):
         )
         subprocess.run(
             [
-                "git",
-                "pull",
+                "git pull",
                 "&&",
                 "pip3 install -r requirements.txt",
                 "&&",

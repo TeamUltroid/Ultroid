@@ -32,7 +32,7 @@ async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
-        return await eod(e, "`Give the word to blacklist..`")
+        return await eor(e, "`Give the word to blacklist..`", time=5)
     wrd = e.text[11:]
     heh = wrd.split(" ")
     for z in heh:
@@ -45,7 +45,7 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eod(e, "`Give the word to remove from blacklist..`")
+        return await eor(e, "`Give the word to remove from blacklist..`", time=5)
     wrd = e.text[14:]
     heh = wrd.split(" ")
     for z in heh:

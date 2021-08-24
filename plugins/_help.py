@@ -40,7 +40,7 @@ async def _help(ult):
                     x += "\n© @TeamUltroid"
                     await eor(ult, x)
                 except BaseException:
-                    await eod(ult, get_string("help_1").format(plug), time=5)
+                    await eor(ult, get_string("help_1").format(plug), time=5)
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:

@@ -37,7 +37,7 @@ async def _(ult):
         except BaseException:
             name = ""
     else:
-        return await eod(ult, "`Reply to a msg or add it's id/username.`")
+        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
 
     if id == ultroid_bot.me.id:
         mmm += "You cant add yourself as Sudo User..."
@@ -54,7 +54,7 @@ async def _(ult):
             mmm += f"**Added **`{id}`** as SUDO User**"
     else:
         mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eod(ok, mmm)
+    await eor(ok, mmm, time=5)
 
 
 @ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
@@ -73,7 +73,7 @@ async def _(ult):
         except BaseException:
             name = ""
     else:
-        return await eod(ult, "`Reply to a msg or add it's id/username.`")
+        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
     if not is_sudo(id):
         if name != "":
             mmm += f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
@@ -86,7 +86,7 @@ async def _(ult):
             mmm += f"**Removed **`{id}`** from SUDO User(s)**"
     else:
         mmm += "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eod(ok, mmm)
+    await eor(ok, mmm, time=5)
 
 
 @ultroid_cmd(
@@ -96,7 +96,7 @@ async def _(ult):
     ok = await eor(ult, "`...`")
     sudos = Redis("SUDOS")
     if sudos == "" or sudos is None:
-        return await eod(ult, "`No SUDO User was assigned ...`", time=5)
+        return await eor(ult, "`No SUDO User was assigned ...`", time=5)
     sumos = sudos.split(" ")
     msg = ""
     for i in sumos:

@@ -30,9 +30,9 @@ from . import *
 async def uri_poll(e):
     match = e.pattern_match.group(1)
     if not match:
-        return await eod(e, "`Give Proper Input...`")
+        return await eor(e, "`Give Proper Input...`", time=5)
     if ";" not in match:
-        return await eod(e, "`Unable to Determine Options.`.")
+        return await eor(e, "`Unable to Determine Options.`.", time=5)
     ques = match.split(";")[0]
     option = match.split(";")[1::]
     publ = None
@@ -46,7 +46,7 @@ async def uri_poll(e):
             karzo = [str(int(ptype.split("_")[1]) - 1).encode()]
             ptype = ptype.split("_")[0]
         if ptype not in ["public", "quiz", "multiple"]:
-            return await eod(e, "`Invalid Poll Type...`")
+            return await eor(e, "`Invalid Poll Type...`", time=5)
         if ptype == "multiple":
             mpp = True
         elif ptype == "public":
@@ -54,7 +54,7 @@ async def uri_poll(e):
         elif ptype == "quiz":
             quizo = True
     if len(option) <= 1:
-        return await eod(e, "`Options Should be More than 1..`")
+        return await eor(e, "`Options Should be More than 1..`", time=5)
     m = await eor(e, "`Processing... `")
     OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
     await e.client.send_file(

@@ -32,7 +32,7 @@ async def searchunsl(ult):
     tep = await eor(ult, "`Processing... `")
     res = autopicsearch(query)
     if len(res) == 0:
-        return await eod(ult, "No Results Found !")
+        return await eor(ult, "No Results Found !", time=5)
     qas = res[:num]
     dir = "resources/downloads"
     CL = []

@@ -16,6 +16,7 @@
 
 """
 
+import asyncio
 
 from pyUltroid.functions.afk_db import *
 from pyUltroid.functions.pmpermit_db import *
@@ -49,9 +50,9 @@ async def set_afk(event):
             elif "sticker" in media_type:
                 media = reply.file.id
             else:
-                return await eod(event, "`Unsupported media`")
+                return await eor(event, "`Unsupported media`", time=5)
+    await eor(event, "`Done`", time=2)
     add_afk(text, media_type, media)
-    await eor(event, "`Done`")
     msg1, msg2 = None, None
     if text and media:
         if "sticker" in media_type:
@@ -85,7 +86,6 @@ async def set_afk(event):
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
-@ultroid_bot.on(events.MessageEdited(outgoing=True))
 async def remove_afk(event):
     if (
         event.is_private
@@ -97,13 +97,15 @@ async def remove_afk(event):
     if is_afk():
         _, _, _, afk_time = is_afk()
         del_afk()
-        await event.reply(get_string("afk_1").format(afk_time))
+        off = await event.reply(get_string("afk_1").format(afk_time))
         await asst.send_message(LOG_CHANNEL, get_string("afk_2").format(afk_time))
         for x in old_afk_msg:
             try:
                 await x.delete()
             except BaseException:
                 pass
+        await asyncio.sleep(3)
+        await off.delete()
 
 
 @ultroid_bot.on(

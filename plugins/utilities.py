@@ -55,7 +55,6 @@
 • `{i}thumb <reply to file>`
    Download the thumbnail of the replied file.
 """
-import asyncio
 import calendar
 import html
 import io
@@ -126,7 +125,7 @@ async def info(event):
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
         print("Exception:", e)
-        await eod(ok, f"`An unexpected error has occurred. {e}`")
+        await eor(ok, f"`An unexpected error has occurred. {e}`", time=5)
     return
 
 
@@ -225,9 +224,7 @@ async def stats(
     await ok.edit(response)
 
 
-@ultroid_cmd(
-    pattern="paste( (.*)|$)",
-)
+@ultroid_cmd(pattern="paste( (.*)|$)", type=["official", "manager"])
 async def _(event):
     xx = await eor(event, "` 《 Pasting... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
@@ -401,9 +398,9 @@ async def _(ult):
 )
 async def rmbg(event):
     RMBG_API = udB.get("RMBG_API")
-    xx = await eor(event, get_string("com_1"))
     if not RMBG_API:
-        return await xx.edit(
+        return await eor(
+            event,
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
     if event.reply_to_msg_id:
@@ -411,15 +408,14 @@ async def rmbg(event):
         dl = await event.client.download_media(reply.media)
         if not dl.endswith(("webp", "jpg", "png", "jpeg")):
             os.remove(dl)
-            return await xx.edit("`Unsupported Media`")
-        await xx.edit("`Sending to remove.bg`")
+            return await eor(event, "`Unsupported Media`")
+        xx = await eor(event, "`Sending to remove.bg`")
         out = ReTrieveFile(dl)
         os.remove(dl)
     else:
-        await xx.edit(f"Use `{HNDLR}rmbg` as reply to a pic to remove its background.")
-        await asyncio.sleep(5)
-        await xx.delete()
-        return
+        return await eod(
+            event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
+        )
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
     if "image" in contentType:
@@ -573,7 +569,7 @@ async def ipinfo(event):
     try:
         ipaddr = ip[1]
     except BaseException:
-        return await eod(event, "`Give me an IP address you noob!`")
+        return await eor(event, "`Give me an IP address you noob!`", time=5)
     if ipaddr == "":
         return
     url = f"https://ipinfo.io/{ipaddr}/geo"
@@ -614,7 +610,7 @@ async def ipinfo(event):
     except BaseException:
         err = det["error"]["title"]
         msg = det["error"]["message"]
-        await eod(event, f"ERROR:\n{err}\n{msg}")
+        await eor(event, f"ERROR:\n{err}\n{msg}", time=5)
 
 
 @ultroid_cmd(
@@ -623,9 +619,9 @@ async def ipinfo(event):
 async def copp(event):
     msg = await event.get_reply_message()
     if msg is None:
-        return await eod(event, f"Use `{hndlr}cpy` as reply to a message!")
+        return await eor(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
     _copied_msg["CLIPBOARD"] = msg
-    await eod(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
+    await eor(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
 
 
 @asst_cmd("pst")
@@ -653,7 +649,7 @@ async def toothpaste(event):
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
         )
     except Exception as ex:
-        return await eod(str(ex))
+        return await eor(str(ex), time=5)
 
 
 @ultroid_cmd(pattern="thumb$")
@@ -666,4 +662,4 @@ async def thumb_dl(event):
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
-    await eod(xx, "`Thumbnail sent, if available.`")
+    await eor(xx, "`Thumbnail sent, if available.`", time=5)

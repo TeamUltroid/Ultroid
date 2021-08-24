@@ -30,7 +30,9 @@ async def ac(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eod(e, "`Use this Command with Reply and word to use a command.`")
+        return await eor(
+            e, "`Use this Command with Reply and word to use a command.`", time=5
+        )
     if "/" in wrd:
         wrd = wrd.replace("/", "")
     if wt and wt.media:
@@ -42,7 +44,7 @@ async def ac(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
+                return await eor(x, "`Unsupported Media`", time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
@@ -62,7 +64,7 @@ async def ac(e):
 async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
-        return await eod(e, "`Give me the command which you want to remove.`")
+        return await eor(e, "`Give me the command which you want to remove.`", time=5)
     if wrd.startswith("/"):
         wrd = wrd.replace("/", "")
     rem_cmd(wrd)

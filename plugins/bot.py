@@ -103,7 +103,7 @@ async def cmds(event):
     fullsudo=True,
 )
 async def restartbt(ult):
-    ok = await eor(ult, "`Restarting...`")
+    ok = await eor(ult, "• `Restarting...`")
     if Var.HEROKU_API:
         await restart(ok)
     else:

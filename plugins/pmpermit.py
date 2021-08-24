@@ -129,12 +129,12 @@ async def delete_pm_warn_msgs(chat: int):
 )
 async def _(e):
     if not e.is_private:
-        return await eod(e, "`Use me in Private.`", time=3)
+        return await eor(e, "`Use me in Private.`", time=3)
     if not is_logger(str(e.chat_id)):
-        return await eod(e, "`Wasn't logging msgs from here.`", time=3)
+        return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
     nolog_user(str(e.chat_id))
-    return await eod(e, "`Now I Will log msgs from here.`", time=3)
+    return await eor(e, "`Now I Will log msgs from here.`", time=3)
 
 
 @ultroid_cmd(
@@ -142,12 +142,12 @@ async def _(e):
 )
 async def _(e):
     if not e.is_private:
-        return await eod(e, "`Use me in Private.`", time=3)
+        return await eor(e, "`Use me in Private.`", time=3)
     if is_logger(str(e.chat_id)):
-        return await eod(e, "`Wasn't logging msgs from here.`", time=3)
+        return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
     log_user(str(e.chat_id))
-    return await eod(e, "`Now I Won't log msgs from here.`", time=3)
+    return await eor(e, "`Now I Won't log msgs from here.`", time=3)
 
 
 @ultroid_bot.on(
@@ -397,16 +397,16 @@ if sett == "True":
         x = e.pattern_match.group(1)
         if x == "start":
             udB.set("MOVE_ARCHIVE", "True")
-            await eod(e, "Now I will move new Unapproved DM's to archive")
+            await eor(e, "Now I will move new Unapproved DM's to archive", time=5)
         elif x == "stop":
             udB.set("MOVE_ARCHIVE", "False")
-            await eod(e, "Now I won't move new Unapproved DM's to archive")
+            await eor(e, "Now I won't move new Unapproved DM's to archive", time=5)
         elif x == "clear":
             try:
                 await e.client.edit_folder(unpack=1)
-                await eod(e, "Unarchived all chats")
+                await eor(e, "Unarchived all chats", time=5)
             except Exception as mm:
-                await eod(e, str(mm))
+                await eor(e, str(mm), time=5)
 
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",
@@ -453,7 +453,7 @@ if sett == "True":
                     ],
                 )
         else:
-            await eod(apprvpm, "`User may already be approved.`")
+            await eor(apprvpm, "`User may already be approved.`", time=5)
 
     @ultroid_cmd(
         pattern="(da|disapprove)(?: |$)",
@@ -511,7 +511,7 @@ async def blockpm(block):
     elif block.is_private:
         user = block.chat_id
     else:
-        return await eod(block, NO_REPLY)
+        return await eor(block, NO_REPLY, time=5)
     if str(user) in DEVLIST:
         return await eor(
             block,
@@ -552,13 +552,13 @@ async def unblockpm(unblock):
     elif match:
         user = await get_user_id(match)
     else:
-        return await eod(unblock, NO_REPLY)
+        return await eor(unblock, NO_REPLY, time=5)
     try:
         await unblock.client(UnblockRequest(user))
         aname = await unblock.client.get_entity(user)
         await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
     except Exception as et:
-        await eod(unblock, f"ERROR - {et}")
+        await eor(unblock, f"ERROR - {et}", time=5)
     try:
         await asst.edit_message(
             int(udB.get("LOG_CHANNEL")),
@@ -582,7 +582,7 @@ async def unblockpm(unblock):
 async def list_approved(event):
     xx = await eor(event, get_string("com_1"))
     if udB.get("PMPERMIT") is None:
-        return await eod(xx, "`You haven't approved anyone yet!`")
+        return await eor(xx, "`You haven't approved anyone yet!`", time=5)
     users = []
     for i in [int(x) for x in udB.get("PMPERMIT").split(" ")]:
         try:

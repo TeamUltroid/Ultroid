@@ -28,7 +28,7 @@ async def logo_gen(event):
     xx = await eor(event, get_string("com_1"))
     name = event.pattern_match.group(1)
     if not name:
-        await eod(xx, "`Give a name too!`")
+        await eor(xx, "`Give a name too!`", time=5)
     bg_, font_ = None, None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
