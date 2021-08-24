@@ -73,7 +73,7 @@ async def chat_bot_fn(event, type_):
         temp = event.text.split(" ", 1)
         try:
             user = (await event.client.get_entity(temp[1])).id
-        except:
+        except BaseException:
             if event.is_private:
                 user = event.chat_id
             else:
