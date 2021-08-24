@@ -17,7 +17,7 @@ from telethon.tl.types import DocumentAttributeVideo
 from . import *
 
 
-@ultroid_cmd("sample ?(.*)")
+@ultroid_cmd(pattern="sample ?(.*)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
     stime = 45
@@ -88,7 +88,7 @@ async def gen_sample(e):
         await eor(e, "`Reply To Video File Only`", time=5)
 
 
-@ultroid_cmd("vshots ?(.*)")
+@ultroid_cmd(pattern="vshots ?(.*)")
 async def gen_shots(e):
     ss = e.pattern_match.group(1)
     shot = 5
@@ -131,7 +131,7 @@ async def gen_shots(e):
         await xxx.delete()
 
 
-@ultroid_cmd("vtrim ?(.*)")
+@ultroid_cmd(pattern="vtrim ?(.*)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
