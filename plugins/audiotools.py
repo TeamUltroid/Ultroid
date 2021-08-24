@@ -16,7 +16,7 @@ from telethon.tl.types import DocumentAttributeAudio
 from . import *
 
 
-@ultroid_cmd("makevoice")
+@ultroid_cmd(pattern="makevoice$")
 async def vnc(e):
     if not e.reply_to:
         return await eod(e, "Reply To Audio or video")
@@ -43,7 +43,7 @@ async def vnc(e):
     os.remove("out.opus")
 
 
-@ultroid_cmd("atrim ?(.*)")
+@ultroid_cmd(pattern="atrim ?(.*)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
