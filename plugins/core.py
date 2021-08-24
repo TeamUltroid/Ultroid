@@ -85,6 +85,7 @@ async def uninstall(event):
 
 @ultroid_cmd(
     pattern=r"load ?(.*)",
+    fullsudo=True,
 )
 async def load(event):
     shortname = event.pattern_match.group(1)
