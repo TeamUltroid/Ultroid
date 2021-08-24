@@ -47,15 +47,16 @@ upage = 0
 
 _main_help_menu = [
     [
-        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+        Button.inline("• Plugins", data="hrrrr"),
+        Button.inline("• Addons", data="frrr"),
     ],
     [
-        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+        Button.inline("Voice Chat", data="vc_helper"),
+        Button.inline("Inline Plugins", data="inlone"),
     ],
     [
-        Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+        Button.inline("⚙️ Owner Tools", data="ownr"),
+        Button.url("Settings ⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
     ],
     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
 ]
@@ -170,6 +171,16 @@ async def setting(event):
             [Button.inline("« Bᴀᴄᴋ", data="open")],
         ],
     )
+
+
+@callback("vc_helper")
+@owner
+async def on_vc_callback_query_handler(event):
+    xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
+        OWNER_NAME, len(VC_HELP)
+    )
+    buttons = page_num(0, VC_HELP, "vchelp", "vc")
+    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
 @callback("doupdate")
@@ -341,6 +352,30 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     re.compile(
+        rb"vchelp_next\((.+?)\)",
+    ),
+)
+@owner
+async def on_vc_callback_query_handler(event):
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number + 1, VC_HELP, "vchelp", "vc")
+    await event.edit(buttons=buttons, link_preview=False)
+
+
+@callback(
+    re.compile(
+        rb"vchelp_prev\((.+?)\)",
+    ),
+)
+@owner
+async def on_vc_callback_query_handler(event):
+    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+    buttons = page_num(current_page_number - 1, VC_HELP, "vchelp", "vc")
+    await event.edit(buttons=buttons, link_preview=False)
+
+
+@callback(
+    re.compile(
         rb"addon_next\((.+?)\)",
     ),
 )
@@ -383,6 +418,22 @@ async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
     current_page_number = int(upage)
     buttons = page_num(current_page_number, ADDONS, "addon", "add")
+    await event.edit(
+        f"{xhelps}",
+        file=_file_to_replace,
+        buttons=buttons,
+        link_preview=False,
+    )
+
+
+@callback("bvck")
+@owner
+async def bvckr(event):
+    xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
+        OWNER_NAME, len(VC_HELP)
+    )
+    current_page_number = int(upage)
+    buttons = page_num(current_page_number, VC_HELP, "vchelp", "vc")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -467,6 +518,51 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     re.compile(
+        b"vc_plugin_(.*)",
+    ),
+)
+@owner
+async def on_vc_plg_callback_query_handler(event):
+    plugin_name = event.data_match.group(1).decode("UTF-8")
+    help_string = f"Plugin Name - `{plugin_name}`\n"
+    try:
+        for i in VC_HELP[plugin_name]:
+            help_string += i
+    except BaseException:
+        pass
+    if help_string == "**Commands Available:**\n\n":
+        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
+    else:
+        reply_pop_up_alert = help_string
+    reply_pop_up_alert += "\n© @TeamUltroid"
+    buttons = [
+        [
+            Button.inline(
+                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                data=f"sndplug_{(event.data).decode('UTF-8')}",
+            )
+        ],
+        [
+            Button.inline("« Bᴀᴄᴋ", data="bvck"),
+            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
+        ],
+    ]
+    try:
+        if str(event.query.user_id) in owner_and_sudos():
+            await event.edit(
+                reply_pop_up_alert,
+                buttons=buttons,
+            )
+        else:
+            reply_pop_up_alert = notmine
+            await event.answer(reply_pop_up_alert, cache_time=0)
+    except BaseException:
+        halps = f"Do .help {plugin_name} to get the list of commands."
+        await event.edit(halps, buttons=buttons)
+
+
+@callback(
+    re.compile(
         b"add_plugin_(.*)",
     ),
 )
@@ -524,7 +620,7 @@ async def on_plug_in_callback_query_handler(event):
         await event.edit(halps, buttons=buttons)
 
 
-def page_num(page_number, loaded_plugins, prefix, type):
+def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
     number_of_cols = 2
     emoji = Redis("EMOJI_IN_HELP")
@@ -540,7 +636,7 @@ def page_num(page_number, loaded_plugins, prefix, type):
                 x,
                 multi,
             ),
-            data=f"{type}_plugin_{x}",
+            data=f"{type_}_plugin_{x}",
         )
         for x in helpable_plugins
     ]
