@@ -93,8 +93,10 @@ def vc_asst(dec):
         asst.add_event_handler(
             func,
             events.NewMessage(
-                incoming=True, pattern=re.compile(pattern + dec), from_users=VC_AUTHS(),
-                func= lambda e: not e.is_private and not e.via_bot_id
+                incoming=True,
+                pattern=re.compile(pattern + dec),
+                from_users=VC_AUTHS(),
+                func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
 
