@@ -28,14 +28,14 @@ async def play_music_(event):
         tiny_input = input.split()[0]
         if tiny_input.startswith("@"):
             try:
-                chat = int(f"-100{await get_user_id(tiny_input, client=vcClient)}")
+                chat = int(f"-100{await get_user_id(tiny_input, client=event.client)}")
                 song = input.split(maxsplit=1)[1]
             except IndexError:
                 pass
             except Exception as e:
                 return await eor(event, str(e))
         elif tiny_input.startswith("-"):
-            chat = int(f"-100{await get_user_id(int(tiny_input), client=vcClient)}")
+            chat = int(f"-100{await get_user_id(int(tiny_input), client=event.client)}")
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:
@@ -56,6 +56,7 @@ async def play_music_(event):
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(event, chat)):
             return
+        await asst.send_message(LOG_CHANNEL, f"Joined Vc at {chat}")
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
                 song_name, time_formatter(duration * 1000), chat, from_user
