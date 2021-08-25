@@ -17,10 +17,15 @@ from . import *
 
 @vc_asst("skip")
 async def skipper(event):
-    spli = event.text.split(" ", 1)
-    try:
-        chat = int(f"-100{await get_user_id(spli[1])}")
-    except IndexError:
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
         chat = event.chat_id
     ultSongs = Player(chat)
     try:
