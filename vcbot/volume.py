@@ -10,6 +10,7 @@ from . import *
 
 @vc_asst("volume")
 async def volume_setter(event):
+    ultSongs = Player(event.chat_id)
     if len(event.text.split()) > 1:
         vol = event.text.split()[1]
         if vol.isdigit():
