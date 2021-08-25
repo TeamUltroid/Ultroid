@@ -13,7 +13,7 @@ from time import time
 from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
-from pyUltroid.functions.all import bash, dler, get_user_id, time_formatter
+from pyUltroid.functions.all import bash, dler, get_user_id, time_formatter, inline_mention
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
