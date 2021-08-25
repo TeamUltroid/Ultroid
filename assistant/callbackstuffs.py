@@ -32,7 +32,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
     thumb = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
-    await eve.answer("Sending...")
+    await eve.answer("■ Sending ■")
     if name.startswith("def"):
         plug_name = name.replace("def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
@@ -122,7 +122,7 @@ async def update(eve):
 @callback("changes")
 @owner
 async def changes(okk):
-    await okk.answer("Generating Changelogs...")
+    await okk.answer("■ Generating Changelogs...")
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
