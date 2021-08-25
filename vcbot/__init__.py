@@ -97,6 +97,14 @@ def vc_asst(dec):
                 func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
+        vcClient.add_event_handler(
+            func,
+            events.NewMessage(
+                outgoing=True,
+                pattern=re.compile(pattern + dec),
+                func=lambda e: not e.is_private and not e.via_bot_id,
+            ),
+        )
 
     return ult
 
