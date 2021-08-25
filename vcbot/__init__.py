@@ -195,10 +195,10 @@ class Player:
 async def vc_joiner(event, chat_id):
     done, err = await Player(chat_id).startCall()
     if done:
-        await eor(event, "Joined VC in {}".format(chat_id))
+        await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
         return True
     else:
-        await eor(event, "**ERROR:**\n{}".format(err))
+        await asst.send_message(LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}")
         return False
 
 
@@ -221,10 +221,10 @@ async def play_from_queue(chat_id):
         await xx.delete()
 
     except (IndexError, KeyError):
-        await asst.send_message(LOG_CHANNEL, f"Leaved Vc of {chat_id}")
+        await asst.send_message(LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •")
         try:
             await asst.send_message(
-                chat_id, "• `Queue is empty. Leaving the voice chat now !`"
+                chat_id, "`Queue is empty. Leaving the voice chat now !`"
             )
         except BaseException:
             pass
