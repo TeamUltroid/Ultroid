@@ -11,7 +11,6 @@
 """
 
 import os
-from datetime import datetime as dt
 
 from . import *
 
@@ -20,7 +19,7 @@ from . import *
 async def play_music_(event):
     xx = await eor(event, "`Processing...`")
     chat = event.chat_id
-    from_user = inline_mention(await event.get_sender())
+    from_user = inline_mention(event.sender)
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -31,7 +30,7 @@ async def play_music_(event):
             chat = int(f"-100{await get_user_id(tiny_input)}")
             try:
                 song = input.split(maxsplit=1)[1]
-            except IndexError:
+            except BaseException:
                 pass
         else:
             song = input
@@ -40,16 +39,14 @@ async def play_music_(event):
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
     await eor(xx, "`Downloading and converting...`")
-    ts = dt.now().strftime("%H_%M_%S")
-    if reply and (reply.audio or reply.video or reply.document):
+    ts = (str(time.time()).split(".")[0]
+    if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, duration = await file_download(reply, chat, ts)
     else:
         song, thumb, song_name, duration = await download(event, song, chat, ts)
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
-        # check if vc_Client is in call
-        done = await vc_joiner(event, chat)
-        if not done:
+        if not (await vc_joiner(event, chat)):
             return
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** `{}`".format(
