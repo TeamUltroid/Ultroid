@@ -164,6 +164,7 @@ class Player(object):
             )
             self.group_call = _client.get_file_group_call()
             CLIENTS.update({chat: self.group_call})
+
     async def startCall(self, chat):
         if chat not in ACTIVE_CALLS:
             try:
