@@ -6,6 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 """
+✘ Commands Available -
+
 • `{i}mutevc`
    Mute playback.
 
