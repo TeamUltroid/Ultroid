@@ -152,7 +152,7 @@ async def download(event):
         for kk in kk:
             try:
                 try:
-                    res = await uploader(kk, kk, tt, xx, "Uploading {kk}...")
+                    res = await uploader(kk, kk, tt, xx, f"Uploading {kk}...")
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
