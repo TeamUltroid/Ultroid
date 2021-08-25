@@ -18,5 +18,5 @@ async def queue(event):
     chat = event.chat_id
     q = list_queue(chat)
     if not q:
-        return await eor(event, "Nothing in queue!")
-    await eor(event, "**Queue:**\n\n{}".format(q))
+        return await eor(event, "• Nothing in queue!")
+    await eor(event, "• **Queue:**\n\n{}".format(q))
