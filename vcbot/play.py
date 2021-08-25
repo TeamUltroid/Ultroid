@@ -13,6 +13,7 @@
 from datetime import datetime as dt
 
 from . import *
+import os
 
 
 @vc_asst("play")
@@ -58,7 +59,7 @@ async def play_music_(event):
 
         ultSongs.group_call.input_filename = song
         await xx.delete()
-        if thumb:
+        if os.path.exists(thumb):
             remove(thumb)
     else:
         add_to_queue(chat, song, song_name, thumb, from_user, duration)
