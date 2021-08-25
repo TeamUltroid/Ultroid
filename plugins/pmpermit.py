@@ -426,6 +426,7 @@ if sett == "True":
         if not is_approved(user.id):
             approve_user(user.id)
             try:
+                await delete_pm_warn_msgs(user.id)
                 await apprvpm.client.edit_folder(user.id, folder=0)
             except BaseException:
                 pass
