@@ -15,7 +15,12 @@ from . import *
 
 @vc_asst("skip")
 async def skipper(event):
-    chat = event.chat_id
+    spli = event.text.split(" ", 1)
+    try:
+        chat = int(f"-100{await get_user_id(spli[1])}")
+    except IndexError:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     try:
         remove(ultSongs.group_call._GroupCallFile__input_filename)
     except BaseException:
