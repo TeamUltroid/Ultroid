@@ -43,6 +43,7 @@ async def play_music_(event):
         song, thumb, song_name, duration = await file_download(reply, chat, ts)
     else:
         song, thumb, song_name, duration = await download(event, song, chat, ts)
+    ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
         # check if vc_Client is in call
         done = await vc_joiner(event, chat)
