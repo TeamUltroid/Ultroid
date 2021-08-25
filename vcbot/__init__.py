@@ -152,10 +152,9 @@ def get_from_queue(chat_id):
 
 # --------------------------------------------------
 
-
-# credits to @subinps for the basic working idea
-class Player(object):
+class Player:
     def __init__(self, chat):
+        self._chat = chat
         if CLIENTS.get(chat):
             self.group_call = CLIENTS[chat]
         else:
@@ -165,22 +164,19 @@ class Player(object):
             self.group_call = _client.get_file_group_call()
             CLIENTS.update({chat: self.group_call})
 
-    async def startCall(self, chat):
+    async def startCall(self):
         if chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(on_network_changed)
                 self.group_call.on_playout_ended(playout_ended_handler)
-                await self.group_call.start(chat)
+                await self.group_call.start(self._chat)
             except Exception as e:
                 return False, e
         return True, None
 
 
-# ultSongs = Player()
-
-
 async def vc_joiner(event, chat_id):
-    done, err = await Player(chat_id).startCall(chat_id)
+    done, err = await Player(chat_id).startCall()
     if done:
         await eor(event, "Joined VC in {}".format(chat_id))
         return True
@@ -217,7 +213,6 @@ async def play_from_queue(chat_id):
         await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
 
 
-# @ultSongs.group_call.on_network_status_changed
 async def on_network_changed(call, is_connected):
     chat = call.full_chat.id
     chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
@@ -232,8 +227,6 @@ async def on_network_changed(call, is_connected):
         except BaseException:
             pass
 
-
-# @ultSongs.group_call.on_playout_ended
 async def playout_ended_handler(call, __):
     chat = call.full_chat.id
     chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
