@@ -15,6 +15,7 @@ from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
     dler,
+    mediainfo,
     get_user_id,
     inline_mention,
     time_formatter,
