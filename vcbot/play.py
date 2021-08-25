@@ -26,8 +26,9 @@ async def play_music_(event):
         reply = await event.get_reply_message()
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
-        if input.split()[0].startswith(("@", "-")):
-            chat = int(f"-100{await get_user_id(input)}")
+        tiny_input = input.split()[0]
+        if tiny_input.startswith(("@", "-")):
+            chat = int(f"-100{await get_user_id(tiny_input)}")
             try:
                 song = input.split(maxsplit=1)[1]
             except IndexError:
