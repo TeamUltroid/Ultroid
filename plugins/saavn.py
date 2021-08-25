@@ -14,7 +14,6 @@
 import os
 import time
 
-import requests as r
 from telethon.tl.types import DocumentAttributeAudio
 
 from . import *
@@ -36,7 +35,7 @@ async def siesace(e):
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
-        message="`" + title+ "`" + "\n`From Saavn`",
+        message="`" + title + "`" + "\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
