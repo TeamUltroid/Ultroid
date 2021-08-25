@@ -17,12 +17,12 @@ from pyUltroid.functions.all import bash, dler, get_user_id, time_formatter
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
+from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
-CallsClient = GroupCallFactory(vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON)
-
+CLIENTS = {}
 
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
@@ -154,8 +154,16 @@ def get_from_queue(chat_id):
 
 # credits to @subinps for the basic working idea
 class Player(object):
-    def __init__(self):
-        self.group_call = CallsClient.get_file_group_call()
+    def __init__(self, chat):
+        try:
+            self._client = CLIENTS[chat]
+            self.group_call = self._client.get_file_group_call()
+        except KeyError:
+            _client = GroupCallFactory(vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON)
+            CLIENTS.update({chat:_client})
+            self.group_call = self._client.get_file_group_call()
+            self.group_call.on_network_status_changed(on_network_changed)
+            self.group_call.on_playout_ended(playout_ended_handler)
 
     async def startCall(self, chat):
         if chat not in ACTIVE_CALLS:
@@ -166,7 +174,7 @@ class Player(object):
         return True, None
 
 
-ultSongs = Player()
+# ultSongs = Player()
 
 
 async def vc_joiner(event, chat_id):
@@ -207,7 +215,7 @@ async def play_from_queue(chat_id):
         await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
 
 
-@ultSongs.group_call.on_network_status_changed
+# @ultSongs.group_call.on_network_status_changed
 async def on_network_changed(call, is_connected):
     chat = call.full_chat.id
     chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
@@ -223,7 +231,7 @@ async def on_network_changed(call, is_connected):
             pass
 
 
-@ultSongs.group_call.on_playout_ended
+# @ultSongs.group_call.on_playout_ended
 async def playout_ended_handler(call, __):
     chat = call.full_chat.id
     chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
