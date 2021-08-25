@@ -168,7 +168,6 @@ class Player(object):
             self.group_call.on_network_status_changed(on_network_changed)
             self.group_call.on_playout_ended(playout_ended_handler)
 
-
     async def startCall(self, chat):
         if chat not in ACTIVE_CALLS:
             try:
