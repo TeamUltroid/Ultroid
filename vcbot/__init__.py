@@ -158,16 +158,16 @@ class Player(object):
     def __init__(self, chat):
         try:
             _client = CLIENTS[chat]
-            group_call = _client.get_file_group_call()
+            self.group_call = _client.get_file_group_call()
         except KeyError:
             _client = GroupCallFactory(
                 vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
             )
             CLIENTS.update({chat: _client})
-            group_call = _client.get_file_group_call()
-            group_call.on_network_status_changed(on_network_changed)
-            group_call.on_playout_ended(playout_ended_handler)
-        return group_call
+            self.group_call = _client.get_file_group_call()
+            self.group_call.on_network_status_changed(on_network_changed)
+            self.group_call.on_playout_ended(playout_ended_handler)
+
 
     async def startCall(self, chat):
         if chat not in ACTIVE_CALLS:
