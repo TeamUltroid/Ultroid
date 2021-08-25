@@ -164,7 +164,7 @@ async def _(event):
         artist = ytdl_data["uploader"]
         views = numerize.numerize(ytdl_data["view_count"])
         thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", file_name=f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
         )
 
         duration = ytdl_data["duration"]
