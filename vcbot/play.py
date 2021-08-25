@@ -39,7 +39,7 @@ async def play_music_(event):
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
     await eor(xx, "`Downloading and converting...`")
-    ts = (str(time.time()).split(".")[0]
+    ts = str(time.time()).split(".")[0]
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, duration = await file_download(reply, chat, ts)
     else:
