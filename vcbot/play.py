@@ -26,8 +26,14 @@ async def play_music_(event):
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
         tiny_input = input.split()[0]
-        if tiny_input.startswith(("@", "-")):
+        if tiny_input.startswith("@"):
             chat = int(f"-100{await get_user_id(tiny_input)}")
+            try:
+                song = input.split(maxsplit=1)[1]
+            except BaseException:
+                pass
+        elif tiny_input.startswith("-"):
+            chat = int(f"-100{await get_user_id(int(tiny_input))}")
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:
