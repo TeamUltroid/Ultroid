@@ -152,6 +152,7 @@ def get_from_queue(chat_id):
 
 # --------------------------------------------------
 
+
 class Player:
     def __init__(self, chat):
         self._chat = chat
@@ -226,6 +227,7 @@ async def on_network_changed(call, is_connected):
             remove(call._GroupCallFile__input_filename)
         except BaseException:
             pass
+
 
 async def playout_ended_handler(call, __):
     chat = call.full_chat.id
