@@ -38,12 +38,19 @@ async def join_(event):
 
 @vc_asst("leavevc")
 async def leaver(event):
+    try:
+        chat = event.text.split(" ", 1)[1]
+        chat = int("-100{await get_user_id(chat)}")
+    except IndexError:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     await ultSongs.group_call.stop()
     await eor(event, "`Left the voice chat.`")
 
 
 @vc_asst("rejoin")
 async def rejoiner(event):
+    ultSongs = Player(event.chat_id)
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
