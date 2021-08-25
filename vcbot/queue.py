@@ -6,6 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 """
+✘ Commands Available -
+
 • `{i}queue`
    List the songs in queue.
 """
