@@ -24,6 +24,7 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
 CLIENTS = {}
 
+
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
     A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
@@ -159,8 +160,10 @@ class Player(object):
             self._client = CLIENTS[chat]
             self.group_call = self._client.get_file_group_call()
         except KeyError:
-            _client = GroupCallFactory(vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON)
-            CLIENTS.update({chat:_client})
+            _client = GroupCallFactory(
+                vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
+            )
+            CLIENTS.update({chat: _client})
             self.group_call = self._client.get_file_group_call()
             self.group_call.on_network_status_changed(on_network_changed)
             self.group_call.on_playout_ended(playout_ended_handler)
