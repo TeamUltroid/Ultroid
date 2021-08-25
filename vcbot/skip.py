@@ -6,6 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 """
+✘ Commands Available -
+
 • `{i}skip`
    Skip the current song and play the next in queue, if any.
 """
