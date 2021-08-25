@@ -6,12 +6,14 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import asyncio
+import re
 from os import remove
 from time import time
 
-from pyUltroid import LOGS, CallsClient, asst, udB, vcClient
+from pytgcalls import GroupCallFactory
+from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
-from pyUltroid.functions.all import bash, dler, time_formatter
+from pyUltroid.functions.all import bash, dler, get_user_id, time_formatter
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
@@ -20,6 +22,7 @@ from youtubesearchpython import VideosSearch
 
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
+CallsClient = GroupCallFactory(vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON)
 
 
 def VC_AUTHS():
@@ -54,50 +57,38 @@ async def download(event, query, chat, ts):
     duration = ytdl_data["duration"]
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
     await raw_converter(dl, song)
-    try:
-        remove(dl)
-    except BaseException:
-        pass
     return song, thumb, title, duration
 
 
-async def file_download(event, song, chat, ts):
+async def file_download(event, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
-    t = await event.get_reply_message() if event.reply_to_msg_id else None
-    dl = await asst.download_media(song)
-    title = t.file.title
-    duration = t.file.duration
-    thumb = await asst.download_media(song, thumb=-1)
+    thumb = None
+    dl = await event.download_media()
+    title = event.file.title
+    duration = event.file.duration
+    if event.document.thumbs:
+        thumb = await event.download_media(thumb=-1)
     await raw_converter(dl, song)
-    try:
-        remove(dl)
-    except BaseException:
-        pass
+    remove(dl)
     return song, thumb, title, duration
 
 
 async def raw_converter(dl, song):
-    try:
-        await bash(
-            f'ffmpeg -i "{dl}" -f s16le -ac 2 -ar 48000 -acodec pcm_s16le "{song}"'
-        )
-    except Exception as e:
-        LOGS.warning(e)
+    out, err = await bash(
+        f'ffmpeg -y -i "{dl}" -f s16le -ac 2 -ar 48000 -acodec pcm_s16le "{song}"'
+    )
+    if err != "":
+        LOGS.info(err)
 
 
 def vc_asst(dec):
     def ult(func):
-        pattern = "^/" + dec
-        asst.add_event_handler(
-            func,
-            events.NewMessage(incoming=True, pattern=pattern, from_users=VC_AUTHS()),
-        )
+        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
+        # pattern = f"^({pattern}|{pattern}@{asstUserName})"
         asst.add_event_handler(
             func,
             events.NewMessage(
-                incoming=True,
-                pattern=pattern + "@" + asstUserName,
-                from_users=VC_AUTHS(),
+                incoming=True, pattern=re.compile(pattern + dec), from_users=VC_AUTHS()
             ),
         )
 
@@ -173,7 +164,6 @@ class Player(object):
             try:
                 await self.group_call.start(chat)
             except Exception as e:
-                # TODO - start a vc if enough perms
                 return False, e
         return True, None
 
@@ -182,10 +172,9 @@ ultSongs = Player()
 
 
 async def vc_joiner(event, chat_id):
-    chat = chat_id  # TODO - channel, remote joins
-    done, err = await ultSongs.startCall(chat)
+    done, err = await ultSongs.startCall(chat_id)
     if done:
-        await eor(event, "Joined VC in {}".format(chat))
+        await eor(event, "Joined VC in {}".format(chat_id))
         return True
     else:
         await eor(event, "**ERROR:**\n{}".format(err))
@@ -238,16 +227,10 @@ async def on_network_changed(call, is_connected):
 
 @ultSongs.group_call.on_playout_ended
 async def playout_ended_handler(call, __):
-    chat_id = call.full_chat.id
-
-    if not str(chat_id).startswith("-100"):
-        chat_id = int("-100" + str(chat_id))
-
-    # remove the file
+    chat = call.full_chat.id
+    chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
     try:
         remove(call._GroupCallFile__input_filename)
     except BaseException:
         pass
-
-    # play the next song in queue
-    await play_from_queue(chat_id)
+    await play_from_queue(chat)

@@ -15,15 +15,8 @@ from . import *
 
 @vc_asst("queue")
 async def queue(event):
-    chat = (
-        event.chat_id
-        if str(event.chat_id).startswith("-100")
-        else int("-100" + str(event.chat_id))
-    )
-
+    chat = event.chat_id
     q = list_queue(chat)
-
-    if q == "":
+    if not q:
         return await eor(event, "Nothing in queue!")
-
     await eor(event, "**Queue:**\n\n{}".format(q))

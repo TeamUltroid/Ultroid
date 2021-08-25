@@ -1,3 +1,3 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
 pytgcalls
-py-Ultroid==53.8b0
+py-Ultroid==54.1b0

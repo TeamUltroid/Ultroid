@@ -10,9 +10,9 @@ from . import *
 
 @ultroid_cmd(pattern="dkick", type=["manager", "official"])
 async def dowj(e):
-    if e.is_reply:
-        replied = await e.get_reply_message()
-        user = (await replied.get_sender()).id
+    replied = await e.get_reply_message()
+    if replied:
+        user = replied.sender_id
     else:
         return await eor(e, "Reply to a message...")
     try:
@@ -25,9 +25,9 @@ async def dowj(e):
 
 @ultroid_cmd(pattern="dban", type=["manager", "official"])
 async def dowj(e):
-    if e.is_reply:
-        replied = await e.get_reply_message()
-        user = (await replied.get_sender()).id
+    replied = await e.get_reply_message()
+    if replied:
+        user = replied.sender_id
     else:
         return await eor(e, "Reply to a message...")
     try:

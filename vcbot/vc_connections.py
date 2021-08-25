@@ -23,18 +23,16 @@ from . import *
 
 @vc_asst("joinvc")
 async def join_(event):
-    txt = event.text.split(" ", 1)
-    try:
-        chat = txt[1]
-    except IndexError:
-        chat = event.chat_id
-    try:
-        chat = int(chat)
-    except ValueError:
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
         try:
-            chat = (await vcClient.get_entity(chat)).id
+            chat = (await event.client.get_entity(chat)).id
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
     await vc_joiner(event, chat)
 
 
