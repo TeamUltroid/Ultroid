@@ -79,17 +79,14 @@ async def file_download(event, chat, ts):
 
 
 async def raw_converter(dl, song):
-    out, err = await bash(
+    await bash(
         f'ffmpeg -y -i "{dl}" -f s16le -ac 2 -ar 48000 -acodec pcm_s16le "{song}"'
     )
-    if err != "":
-        LOGS.info(err)
 
 
 def vc_asst(dec):
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
-        # pattern = f"^({pattern}|{pattern}@{asstUserName})"
         asst.add_event_handler(
             func,
             events.NewMessage(
