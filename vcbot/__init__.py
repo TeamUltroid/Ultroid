@@ -181,7 +181,7 @@ class Player(object):
 
 
 async def vc_joiner(event, chat_id):
-    done, err = await ultSongs.startCall(chat_id)
+    done, err = await Player(chat_id).startCall(chat_id)
     if done:
         await eor(event, "Joined VC in {}".format(chat_id))
         return True
@@ -194,7 +194,7 @@ async def play_from_queue(chat_id):
     chat_id = chat_id if str(chat_id).startswith("-100") else int("-100" + str(chat_id))
     try:
         song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
-        ultSongs.group_call.input_filename = song
+        Player(chat_id).group_call.input_filename = song
         xx = await asst.send_message(
             chat_id,
             "**Now playing #{}**: `{}`\n**Duration:** `{}`\n**Requested by:** `{}`".format(
@@ -212,7 +212,7 @@ async def play_from_queue(chat_id):
         await asst.send_message(
             chat_id, "`Queue is empty. Leaving the voice chat now !`"
         )
-        await ultSongs.group_call.stop()
+        await Player(chat_id).group_call.stop()
     except Exception as e:
         LOGS.info(e)
         await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
