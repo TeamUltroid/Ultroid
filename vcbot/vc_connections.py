@@ -6,6 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 """
+✘ Commands Available -
+
 • `{i}joinvc <optional chat id/username>`
    Join the voice chat.
 
