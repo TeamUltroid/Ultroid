@@ -20,7 +20,7 @@ from . import *
 async def play_music_(event):
     xx = await eor(event, "`Processing...`")
     chat = event.chat_id
-    from_user = event.sender_id
+    from_user = inline_mention(await event.get_sender())
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
