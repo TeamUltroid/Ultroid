@@ -10,10 +10,10 @@
    Play the song in voice chat, or add the song to queue.
 """
 
+import os
 from datetime import datetime as dt
 
 from . import *
-import os
 
 
 @vc_asst("play")
