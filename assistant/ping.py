@@ -12,9 +12,9 @@ from datetime import datetime
 @owner
 async def _(event):
     start = datetime.now()
+    msg = await event.reply("Pong!")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await asst.send_message(
-        event.chat_id,
-        f"**Pong!!**\n `{ms} milliseconds`",
+    await msg.edit(
+        f"**Pong!!**\n `{ms} ms`"
     )
