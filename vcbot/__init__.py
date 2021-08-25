@@ -155,7 +155,6 @@ def get_from_queue(chat_id):
 
 # credits to @subinps for the basic working idea
 class Player(object):
-
     def __init__(self, chat):
         try:
             _client = CLIENTS[chat]
