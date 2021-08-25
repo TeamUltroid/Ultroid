@@ -29,33 +29,19 @@ async def siesace(e):
         return await eor(e, "`Give me Something to Search", time=5)
     hmm = time.time()
     lol = await eor(e, f"`Searching {song} on Saavn...`")
-    sung = song.replace(" ", "%20")
-    url = f"https://jostapi.herokuapp.com/saavn?query={sung}"
-    try:
-        k = (r.get(url)).json()[0]
-    except IndexError:
-        return await eor(lol, "`Song Not Found.. `", time=5)
-    except Exception as ex:
-        return await eor(lol, f"`{str(ex)}`", time=5)
-    try:
-        title = k["song"]
-        urrl = k["media_url"]
-        img = k["image"]
-        duration = k["duration"]
-        singers = k["primary_artists"]
-    except Exception as ex:
-        return await eor(lol, f"`{ex}`", time=5)
-    song = await fast_download(urrl, file_name=title + ".mp3")
-    thumb = await fast_download(img, file_name=title + ".jpg")
+    song, duration, performer, thumb = await saavn_dl(song)
+    if not song:
+        return await eod(lol, "`Song not found...`")
+    title = song.split(".")[0]
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
-        message="`" + title + "`" + "\n`From Saavn`",
+        message="`" + title+ "`" + "\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
                 title=title,
-                performer=singers,
+                performer=performer,
             )
         ],
         supports_streaming=True,
