@@ -17,7 +17,6 @@ from pyUltroid.functions.all import bash, dler, get_user_id, time_formatter
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
 
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -47,9 +46,8 @@ async def download(event, query, chat, ts):
         "quiet": True,
         "logtostderr": False,
     }
-    ytdl_data = await dler(event, link)
     try:
-        YoutubeDL(opts).download([link])
+        ytdl_data = await dler(event, url=link, opts=opts, download=True)
     except Exception as e:
         return await eor(event, str(e))
     dl = vid_id + ".mp3"
