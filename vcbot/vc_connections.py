@@ -30,7 +30,7 @@ async def join_(event):
         if not chat.startswith("@"):
             chat = int(chat)
         try:
-            chat = (await event.client.get_entity(chat)).id
+            chat = int("-100" + str((await event.client.get_entity(chat)).id))
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
@@ -40,10 +40,15 @@ async def join_(event):
 
 @vc_asst("leavevc")
 async def leaver(event):
-    try:
-        chat = event.text.split(maxsplit=1)[1]
-        chat = int(f"-100{await get_user_id(chat)}")
-    except IndexError:
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.stop()
@@ -52,7 +57,17 @@ async def leaver(event):
 
 @vc_asst("rejoin")
 async def rejoiner(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
