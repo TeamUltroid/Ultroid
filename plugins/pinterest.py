@@ -24,11 +24,9 @@ _base = "https://pinterestdownloader.com/download?url="
 
 
 def gib_link(link):
-    colon = "%3A"
-    slash = "%2F"
     if link.startswith("https"):
-        return _base + link.replace(":", colon).replace("/", slash)
-    return _base + f"https{colon}{slash}{slash}pin.it{slash}{link}"
+        return _base + link.replace(":", "%3A").replace("/", "%2F")
+    return _base + f"https%3A%2F%2Fpin.it%2F{link}"
 
 
 @ultroid_cmd(
