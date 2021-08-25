@@ -156,22 +156,21 @@ def get_from_queue(chat_id):
 # credits to @subinps for the basic working idea
 class Player(object):
     def __init__(self, chat):
-        try:
-            _client = CLIENTS[chat]
-            self.group_call = _client.get_file_group_call()
-        except KeyError:
+        if CLIENTS.get(chat):
+            self.group_call = CLIENTS[chat].get_file_group_call()
+        else:
             _client = GroupCallFactory(
                 vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
             )
             CLIENTS.update({chat: _client})
             self.group_call = _client.get_file_group_call()
-            self.group_call.on_network_status_changed(on_network_changed)
-            self.group_call.on_playout_ended(playout_ended_handler)
 
     async def startCall(self, chat):
         if chat not in ACTIVE_CALLS:
             try:
                 await self.group_call.start(chat)
+                self.group_call.on_network_status_changed(on_network_changed)
+                self.group_call.on_playout_ended(playout_ended_handler)
             except Exception as e:
                 return False, e
         return True, None
