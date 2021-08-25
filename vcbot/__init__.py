@@ -28,6 +28,7 @@ from youtubesearchpython import VideosSearch
 
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
+LOG_CHANNEL = int(udB["LOG_CHANNEL"))
 CLIENTS = {}
 
 
