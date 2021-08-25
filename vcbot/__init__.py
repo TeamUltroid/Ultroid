@@ -166,7 +166,7 @@ class Player:
             CLIENTS.update({chat: self.group_call})
 
     async def startCall(self):
-        if chat not in ACTIVE_CALLS:
+        if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(on_network_changed)
                 self.group_call.on_playout_ended(playout_ended_handler)
