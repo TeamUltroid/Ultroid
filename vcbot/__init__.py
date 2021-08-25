@@ -164,6 +164,7 @@ class Player(object):
                 vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
             )
             CLIENTS.update({chat: _client})
+            self._client = _client
             self.group_call = self._client.get_file_group_call()
             self.group_call.on_network_status_changed(on_network_changed)
             self.group_call.on_playout_ended(playout_ended_handler)
