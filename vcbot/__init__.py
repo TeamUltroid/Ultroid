@@ -28,7 +28,7 @@ from youtubesearchpython import VideosSearch
 
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
-LOG_CHANNEL = int(udB["LOG_CHANNEL"))
+LOG_CHANNEL = int(udB["LOG_CHANNEL"]))
 CLIENTS = {}
 
 
@@ -212,13 +212,17 @@ async def play_from_queue(chat_id):
         await xx.delete()
 
     except (IndexError, KeyError):
-        await asst.send_message(
-            chat_id, "• `Queue is empty. Leaving the voice chat now !`"
-        )
+        await asst.send_message(LOG_CHANNEL, f"Leaved Vc of {chat_id}")
+        try:
+            await asst.send_message(
+                chat_id, "• `Queue is empty. Leaving the voice chat now !`"
+            )
+        except BaseException:
+            pass
         await Player(chat_id).group_call.stop()
     except Exception as e:
         LOGS.info(e)
-        await asst.send_message(chat_id, f"**ERROR:** {e}")
+        await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
 
 
 async def on_network_changed(call, is_connected):
