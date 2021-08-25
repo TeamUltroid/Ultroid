@@ -12,7 +12,6 @@ from time import time
 
 from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
-from pyUltroid.dB.core import ACTIVE_CALLS, VC_QUEUE
 from pyUltroid.functions.all import (
     bash,
     dler,
@@ -29,6 +28,7 @@ from youtubesearchpython import VideosSearch
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
 LOG_CHANNEL = int(udB["LOG_CHANNEL"])
+ACTIVE_CALLS, VC_QUEUE = [], {}
 CLIENTS = {}
 
 
