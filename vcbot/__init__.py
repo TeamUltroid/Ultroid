@@ -193,7 +193,7 @@ async def play_from_queue(chat_id):
         Player(chat_id).group_call.input_filename = song
         xx = await asst.send_message(
             chat_id,
-            "**Now playing #{}**: `{}`\n**Duration:** `{}`\n**Requested by:** `{}`".format(
+            "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** `{}`".format(
                 pos, title, time_formatter(dur * 1000), from_user
             ),
             file=thumb,
@@ -206,12 +206,12 @@ async def play_from_queue(chat_id):
 
     except (IndexError, KeyError):
         await asst.send_message(
-            chat_id, "`Queue is empty. Leaving the voice chat now !`"
+            chat_id, "• `Queue is empty. Leaving the voice chat now !`"
         )
         await Player(chat_id).group_call.stop()
     except Exception as e:
         LOGS.info(e)
-        await asst.send_message(chat_id, "**ERROR:**\n{}".format(str(e)))
+        await asst.send_message(chat_id, f"**ERROR:** {e}")
 
 
 async def on_network_changed(call, is_connected):
