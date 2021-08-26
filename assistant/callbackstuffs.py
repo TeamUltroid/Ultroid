@@ -5,9 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import re, sys
-import subprocess
-from os import remove, execl
+import re
+import sys
+from os import execl, remove
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
