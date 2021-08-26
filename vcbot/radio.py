@@ -40,7 +40,7 @@ async def r_l(e):
             song, _ = await bash(f"youtube-dl -x -g {song}")
         else:
             return await eor(e, f"Only Live Youtube Urls/m3u8 Urls supported!\n{song}")
-    await raw_converter(song, file)
+    raw_converter(song, file)
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(e, chat)):
