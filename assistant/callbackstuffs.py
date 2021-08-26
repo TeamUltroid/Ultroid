@@ -5,9 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import re
+import re, sys
 import subprocess
-from os import remove
+from os import remove, execl
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
@@ -102,19 +102,8 @@ async def update(eve):
         await eve.edit(
             "`Userbot dyno build in progress, please wait for it to complete.`"
         )
-        subprocess.run(
-            [
-                "git",
-                "pull",
-                "&&",
-                "pip3 install -r requirements.txt",
-                "&&",
-                "python3",
-                "-m",
-                "pyUltroid",
-            ],
-            check=True,
-        )
+        await bash("git pull && pip3 install -r requirements.txt")
+        execl(sys.executable, sys.executable, "-m", "pyUltroid")
         await eve.edit(
             "`Successfully Updated!\nBot is restarting... Wait for Few Minutes!`"
         )
