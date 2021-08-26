@@ -7,6 +7,7 @@
 
 import asyncio
 import re
+import subprocess
 from os import remove
 from time import time
 
@@ -63,7 +64,7 @@ async def download(event, query, chat, ts):
     title = ytdl_data["title"]
     duration = ytdl_data["duration"]
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
-    await raw_converter(dl, song)
+    raw_converter(dl, song)
     return song, thumb, title, duration
 
 
@@ -75,14 +76,32 @@ async def file_download(event, chat, ts):
     duration = event.file.duration
     if event.document.thumbs:
         thumb = await event.download_media(thumb=-1)
-    await raw_converter(dl, song)
+    raw_converter(dl, song)
     remove(dl)
     return song, thumb, title, duration
 
 
-async def raw_converter(dl, song):
-    await bash(
-        f'ffmpeg -y -i "{dl}" -f s16le -ac 2 -ar 48000 -acodec pcm_s16le "{song}"'
+def raw_converter(dl, song):
+    subprocess.Popen(
+        [
+            "ffmpeg",
+            "-y",
+            "-i",
+            dl,
+            "-f",
+            "s16le",
+            "-ac",
+            "2",
+            "-ar",
+            "48000",
+            "-acodec",
+            "pcm_s16le",
+            song,
+        ],
+        stdin=None,
+        stdout=None,
+        stderr=None,
+        cwd=None,
     )
 
 
