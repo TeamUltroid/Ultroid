@@ -30,14 +30,14 @@ async def play_music_(event):
         tiny_input = input.split()[0]
         if tiny_input.startswith("@"):
             try:
-                chat = int(f"-100{await get_user_id(tiny_input, client=event.client)}")
+                chat = int(f"-100{await get_user_id(tiny_input, client=vcClient)}")
                 song = input.split(maxsplit=1)[1]
             except IndexError:
                 pass
             except Exception as e:
                 return await eor(event, str(e))
         elif tiny_input.startswith("-"):
-            chat = int(f"-100{await get_user_id(int(tiny_input), client=event.client)}")
+            chat = int(f"-100{await get_user_id(int(tiny_input), client=vcClient)}")
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:

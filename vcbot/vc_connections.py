@@ -30,7 +30,7 @@ async def join_(event):
         if not chat.startswith("@"):
             chat = int(chat)
         try:
-            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
@@ -45,7 +45,7 @@ async def leaver(event):
         if not chat.startswith("@"):
             chat = int(chat)
         try:
-            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
@@ -62,7 +62,7 @@ async def rejoiner(event):
         if not chat.startswith("@"):
             chat = int(chat)
         try:
-            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:

@@ -28,7 +28,7 @@ async def r_l(e):
             chat = int(input[1])
             song = e.text.split(maxsplit=2)[2]
         elif input[1].startswith("@"):
-            chat = int(f"-100{(await e.client.get_entity(input[1])).id}")
+            chat = int(f"-100{(await vcClient.get_entity(input[1])).id}")
             song = e.text.split(maxsplit=2)[2]
         else:
             song = e.text.split(maxsplit=1)[1]

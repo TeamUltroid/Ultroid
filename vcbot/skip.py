@@ -22,7 +22,7 @@ async def skipper(event):
         if not chat.startswith("@"):
             chat = int(chat)
         try:
-            chat = int("-100" + str((await event.client.get_entity(chat)).id))
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
