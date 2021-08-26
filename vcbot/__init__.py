@@ -26,6 +26,7 @@ from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
 from youtube_dl import YoutubeDL
 from youtubesearchpython import VideosSearch
+from strings import get_string
 
 _yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
