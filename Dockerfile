@@ -9,12 +9,8 @@ FROM theteamultroid/ultroid:main
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# set branch and upstream repo
-ENV UPSTREAM_REPO=https://github.com/TeamUltroid/Ultroid
-#RUN wget https://transfer.sh/1dCwpD6/upstream.sh && sh upstream.sh
-
 # clone the repo and change workdir
-RUN git clone -b dev $UPSTREAM_REPO /root/TeamUltroid/
+RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
 
 # install main requirements.
