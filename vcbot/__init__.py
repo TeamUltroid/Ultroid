@@ -218,8 +218,8 @@ async def vc_joiner(event, chat_id):
         await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
         return True
     await asst.send_message(
-            LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
-        )
+        LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
+    )
     return False
 
 
