@@ -10,6 +10,7 @@ ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # set branch
+RUN if [ $UPSTREAM_REPO ]; then export UPSTREAM_REPO=$UPSTREAM_REPO; else export UPSTREAM_REPO="https://github.com/TeamUltroid/Ultroid"; fi
 RUN if [ $BRANCH ]; then export BRANCH=$BRANCH; else export BRANCH="main"; fi
 
 # clone the repo and change workdir
