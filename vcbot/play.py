@@ -19,7 +19,7 @@ from . import *
 
 @vc_asst("play")
 async def play_music_(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     chat = event.chat_id
     from_user = inline_mention(event.sender)
     reply, song = None, None
