@@ -204,12 +204,33 @@ class Player:
     async def startCall(self):
         if self._chat not in ACTIVE_CALLS:
             try:
-                self.group_call.on_network_status_changed(on_network_changed)
-                self.group_call.on_playout_ended(playout_ended_handler)
+                self.group_call.on_network_status_changed(self.on_network_changed)
+                self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.start(self._chat)
             except Exception as e:
                 return False, e
         return True, None
+
+    async def on_network_changed(self, call, is_connected):
+        chat = self._chat
+        if is_connected:
+            if chat not in ACTIVE_CALLS:
+                ACTIVE_CALLS.append(chat)
+        else:
+            if chat in ACTIVE_CALLS:
+                ACTIVE_CALLS.remove(chat)
+            try:
+                remove(call._GroupCallFile__input_filename)
+            except BaseException:
+                pass
+
+    async def playout_ended_handler(self, call, __):
+        chat = self._chat
+        try:
+            remove(call._GroupCallFile__input_filename)
+        except BaseException:
+            pass
+        await play_from_queue(chat)
 
 
 async def vc_joiner(event, chat_id):
@@ -253,28 +274,3 @@ async def play_from_queue(chat_id):
     except Exception as e:
         LOGS.info(e)
         await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
-
-
-async def on_network_changed(call, is_connected):
-    chat = call.full_chat.id
-    chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
-    if is_connected:
-        if chat not in ACTIVE_CALLS:
-            ACTIVE_CALLS.append(chat)
-    else:
-        if chat in ACTIVE_CALLS:
-            ACTIVE_CALLS.remove(chat)
-        try:
-            remove(call._GroupCallFile__input_filename)
-        except BaseException:
-            pass
-
-
-async def playout_ended_handler(call, __):
-    chat = call.full_chat.id
-    chat = chat if str(chat).startswith("-100") else int("-100" + str(chat))
-    try:
-        remove(call._GroupCallFile__input_filename)
-    except BaseException:
-        pass
-    await play_from_queue(chat)
