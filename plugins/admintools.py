@@ -111,8 +111,8 @@ async def dmote(ult):
             title=rank,
         )
         await eod(
-            xx,
-            f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`")
+            xx, f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`"
+        )
     except Exception as ex:
         return await xx.edit("`" + str(ex) + "`")
 
