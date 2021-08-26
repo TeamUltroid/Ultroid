@@ -22,17 +22,16 @@ from . import *
 async def r_l(e):
     if not len(e.text.split()) > 1:
         return await eor(e, "Are You Kidding Me?\nWhat to Play?")
+    input = e.text.split()
+    if input[1].startswith("-"):
+        chat = int(input[1])
+        song = e.text.split(maxsplit=2)[2]
+    elif input[1].startswith("@"):
+        chat = int(f"-100{(await vcClient.get_entity(input[1])).id}")
+        song = e.text.split(maxsplit=2)[2]
     else:
-        input = e.text.split()
-        if input[1].startswith("-"):
-            chat = int(input[1])
-            song = e.text.split(maxsplit=2)[2]
-        elif input[1].startswith("@"):
-            chat = int(f"-100{(await vcClient.get_entity(input[1])).id}")
-            song = e.text.split(maxsplit=2)[2]
-        else:
-            song = e.text.split(maxsplit=1)[1]
-            chat = e.chat_id
+        song = e.text.split(maxsplit=1)[1]
+        chat = e.chat_id
     file = f"VCRADIO_{chat}.raw"
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
