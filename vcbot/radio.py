@@ -44,7 +44,6 @@ async def r_l(e):
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(e, chat)):
             return
-        await asst.send_message(LOG_CHANNEL, f"Joined VcRadio at {chat}")
         await eor(e, "Started Radio")
         ultSongs.group_call.input_filename = file
     else:
