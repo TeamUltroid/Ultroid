@@ -1,18 +1,19 @@
-from pyUltroid.dB.core import *
-from rextester_py import rexec_aio
-from telethon import events
 from pistonapi import PistonAPI
+from pyUltroid.dB.core import *
+from telethon import events
 
-#By @TechiError
+# By @TechiError
+
+
 @tgbot.on(events.InlineQuery(pattern=r"run (.*)"))
 async def teamultroid(event: events.InlineQuery.Event):
     builder = event.builder
     bot = await tgbot.get_me()
-    botuname = bot.username
+    bot.username
     piston = PistonAPI()
     if event.query.user_id in sed:
 
-        omk = event.text.split(' ', maxsplit=1)[1]
+        omk = event.text.split(" ", maxsplit=1)[1]
         if omk is not None:
             if "|" in omk:
                 lang, code = omk.split("|")
@@ -22,10 +23,10 @@ async def teamultroid(event: events.InlineQuery.Event):
             output = piston.execute(language=lang, code=code)
             outputt = output
             resultm = builder.article(
-                title="Code",#By @TechiError
+                title="Code",  # By @TechiError
                 description=f"Language-`{lang}` & Code-`{code}`",
                 text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`",
             )
-            await event.answer([resultm])            
+            await event.answer([resultm])
     else:
-        return#By @TechiError
+        return  # By @TechiError
