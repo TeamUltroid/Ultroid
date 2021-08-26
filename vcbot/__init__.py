@@ -145,13 +145,14 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
     return VC_QUEUE[int(chat_id)]
 
 
-def list_queue(chat):
+async def list_queue(chat):
     if VC_QUEUE.get(chat):
         txt, n = "", 0
         for x in list(VC_QUEUE[chat].keys()):
             n += 1
             data = VC_QUEUE[chat][x]
-            txt += f'**{n}.{data["title"]}** : __By {data["from_user"]}__\n'
+            user = await vcClient.get_entity(data["from_user"])
+            txt += f'**{n}.{data["title"]}** : __By {inline_mention(user)}__\n'
         return txt
 
 
