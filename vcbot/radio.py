@@ -15,6 +15,7 @@
    Stream Live YouTube.
 """
 
+import os
 from . import *
 
 
@@ -40,6 +41,9 @@ async def r_l(e):
         else:
             return await eor(e, f"Only Live Youtube Urls/m3u8 Urls supported!\n{song}")
     raw_converter(song, file)
+    await asyncio.sleep(2)
+    if not os.path.exists(file):
+        return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(e, chat)):
