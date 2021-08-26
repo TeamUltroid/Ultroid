@@ -9,8 +9,16 @@ FROM theteamultroid/ultroid:main
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# set branch
+if [ $BRANCH ]
+then
+    BRANCH=$BRANCH
+else
+    BRANCH="main"
+fi
+
 # clone the repo and change workdir
-RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+RUN git clone -b $BRANCH $UPSTREAM_REPO /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
 
 # install main requirements.
