@@ -501,7 +501,7 @@ if sett == "True":
             )
 
 
-@ultroid_cmd(pattern="block ?(.*)")
+@ultroid_cmd(pattern="block ?(.*)",fullsudo=True)
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.reply_to_msg_id:
@@ -512,7 +512,7 @@ async def blockpm(block):
     elif block.is_private:
         user = block.chat_id
     else:
-        return await eor(block, NO_REPLY, time=5)
+        return await eor(block, NO_REPLY, time=10)
     if str(user) in DEVLIST:
         return await eor(
             block,
