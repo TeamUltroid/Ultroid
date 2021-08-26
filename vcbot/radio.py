@@ -18,7 +18,7 @@
 from . import *
 
 
-@vc_asst("(radio|live)")
+@vc_asst("(radio|live|ytlive)")
 async def r_l(e):
     if not len(e.text.split()) > 1:
         return await eor(e, "Are You Kidding Me?\nWhat to Play?")
