@@ -16,8 +16,7 @@ from git import Repo
 
 from . import *
 
-CL = udB.get("INLINE_PIC")
-ULTPIC = CL or "resources/extras/inline.jpg"
+ULTPIC = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
 
 
 @ultroid_cmd(pattern="update ?(.*)")
