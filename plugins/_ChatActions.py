@@ -12,6 +12,7 @@ from pyUltroid.functions.clean_db import *
 from pyUltroid.functions.forcesub_db import *
 from pyUltroid.functions.gban_mute_db import *
 from pyUltroid.functions.greetings_db import *
+from pyUltroid.functions.username_db import *
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
@@ -150,3 +151,12 @@ async def chatBot_replies(e):
         msg = get_chatbot_reply(e, e.message.message)
         if msg:
             await e.reply(msg)
+    update_username(e.sender_id, e.sender.username)
+
+
+@ultroid_bot.on(events.Raw(types.UpdateUserName))
+async def uname_change(e):
+    old = get_username(e.user_id)
+    await ultroid_bot.send_message(
+        LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
+    )
