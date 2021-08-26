@@ -198,7 +198,6 @@ async def kck(ult):
         return await xx.edit("`I will Never kick that Guy..`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
-        await asyncio.sleep(0.9)
     except BadRequestError:
         return await xx.edit("`I don't have the right to kick a user.`")
     except Exception as e:
@@ -270,29 +269,20 @@ async def pin(msg):
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
-    if not ult.is_private:
-        # for (un)pin(s) in private messages
-        await ult.get_chat()
     ch = (ult.pattern_match.group(1)).strip()
     msg = ult.reply_to_msg_id
-    if msg and not ch:
-        try:
-            await ult.client.unpin_message(ult.chat_id, msg)
-        except BadRequestError:
-            return await xx.edit("`Hmm.. Guess I have no rights here!`")
-        except Exception as e:
-            return await xx.edit(f"**ERROR:**\n`{e}`")
+    if msg:
+        var = msg
     elif ch == "all":
-        try:
-            await ult.client.unpin_message(ult.chat_id)
-        except BadRequestError:
-            return await xx.edit("`Hmm.. Guess I have no rights here!`")
-        except Exception as e:
-            return await xx.edit(f"**ERROR:**`{e}`")
+        var = None
     else:
         return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
-    if not msg and ch != "all":
-        return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
+    try:
+        await ult.client.unpin_message(ult.chat_id)
+    except BadRequestError:
+        return await xx.edit("`Hmm.. Guess I have no rights here!`")
+    except Exception as e:
+        return await xx.edit(f"**ERROR:**`{e}`")
     await xx.edit("`Unpinned!`")
 
 
@@ -315,7 +305,7 @@ async def fastpurger(purg):
         await purg.client.delete_messages(
             purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)]
         )
-        await eor(purg, "__Purged Successfully!__")
+        await purg.respond("__Purged Successfully!__")
         return
     if match and not purg.is_reply:
         p = 0
