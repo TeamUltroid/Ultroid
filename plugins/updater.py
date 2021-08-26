@@ -13,7 +13,7 @@
 
 
 from git import Repo
-from os import excel
+
 from . import *
 
 CL = udB.get("INLINE_PIC")
@@ -27,7 +27,7 @@ async def _(e):
         if "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1):
             await bash("git pull && pip3 install -r requirements.txt")
             await eor(e, "`Fast Soft Updating...`")
-            execl(sys.executable, "python3" , "-m", "pyUltroid")
+            execl(sys.executable, "python3", "-m", "pyUltroid")
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
