@@ -58,7 +58,6 @@ async def play_music_(event):
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(event, chat)):
             return
-        await asst.send_message(LOG_CHANNEL, f"Joined Vc at {chat}")
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
                 song_name, time_formatter(duration * 1000), chat, from_user
