@@ -501,7 +501,7 @@ if sett == "True":
             )
 
 
-@ultroid_cmd(pattern="block ?(.*)",fullsudo=True)
+@ultroid_cmd(pattern="block ?(.*)", fullsudo=True)
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.reply_to_msg_id:
