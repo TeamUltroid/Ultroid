@@ -48,7 +48,6 @@
 • `{i}purgeall`
     Delete all msgs of replied user.
 """
-import asyncio
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
@@ -272,9 +271,9 @@ async def unp(ult):
     ch = (ult.pattern_match.group(1)).strip()
     msg = ult.reply_to_msg_id
     if msg:
-        var = msg
+        pass
     elif ch == "all":
-        var = None
+        pass
     else:
         return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
     try:
