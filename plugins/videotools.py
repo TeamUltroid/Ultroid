@@ -120,7 +120,7 @@ async def gen_shots(e):
         xxx = await xxx.edit(
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating `{shot}` screenshots..."
         )
-        os.system("rm -rf ss && mkdir ss")
+        await bash("rm -rf ss && mkdir ss")
         cmd = f'ffmpeg -i "{file.name}" -vf fps=0.01 -vframes {shot} "ss/pic%01d.png"'
         await bash(cmd)
         os.remove(file.name)
@@ -128,7 +128,7 @@ async def gen_shots(e):
         await e.client.send_message(
             e.chat_id, f"All {shot} screenshots", file=pic, album=True
         )
-        os.system("rm -rf ss")
+        await bash("rm -rf ss")
         await xxx.delete()
 
 
