@@ -37,6 +37,7 @@ from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
+import os, sys
 from . import *
 
 
@@ -105,9 +106,9 @@ async def cmds(event):
 async def restartbt(ult):
     ok = await eor(ult, "• `Restarting...`")
     if Var.HEROKU_API:
-        await restart(ok)
-    else:
-        await bash("pkill python3 && python3 -m pyUltroid")
+        return await restart(ok)
+    await bash("git pull && pip3 install -r requirements.txt")
+    os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
 @ultroid_cmd(
