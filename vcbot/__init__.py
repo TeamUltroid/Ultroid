@@ -222,7 +222,7 @@ class Player:
                 pass
 
     async def playout_ended_handler(self, call, __):
-        chat = self._chat
+        self._chat
         try:
             remove(call._GroupCallFile__input_filename)
         except BaseException:
@@ -230,35 +230,37 @@ class Player:
         await self.play_from_queue()
 
     async def play_from_queue(self):
-      chat_id = self._chat
-      try:
-        song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
-        self.group_call.input_filename = song
-        xx = await asst.send_message(
-            chat_id,
-            "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
-                pos, title, time_formatter(dur * 1000), from_user
-            ),
-            file=thumb,
-        )
-        VC_QUEUE[chat_id].pop(pos)
-        if not VC_QUEUE[chat_id]:
-            VC_QUEUE.pop(chat_id)
-        await asyncio.sleep(dur + 5)
-        await xx.delete()
-
-      except (IndexError, KeyError):
-        self.group_call.stop()
-        await asst.send_message(LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •")
+        chat_id = self._chat
         try:
-            await asst.send_message(
-                chat_id, "`Queue is empty. Left the voice chat now !`"
+            song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
+            self.group_call.input_filename = song
+            xx = await asst.send_message(
+                chat_id,
+                "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
+                    pos, title, time_formatter(dur * 1000), from_user
+                ),
+                file=thumb,
             )
-        except BaseException:
-            pass
-      except Exception as e:
-        LOGS.info(e)
-        await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
+            VC_QUEUE[chat_id].pop(pos)
+            if not VC_QUEUE[chat_id]:
+                VC_QUEUE.pop(chat_id)
+            await asyncio.sleep(dur + 5)
+            await xx.delete()
+
+        except (IndexError, KeyError):
+            self.group_call.stop()
+            await asst.send_message(
+                LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •"
+            )
+            try:
+                await asst.send_message(
+                    chat_id, "`Queue is empty. Left the voice chat now !`"
+                )
+            except BaseException:
+                pass
+        except Exception as e:
+            LOGS.info(e)
+            await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
 
 
 async def vc_joiner(event, chat_id):
