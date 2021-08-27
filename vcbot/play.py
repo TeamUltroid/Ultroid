@@ -51,12 +51,12 @@ async def play_music_(event):
     await eor(xx, "`Downloading and converting...`")
     ts = str(time()).split(".")[0]
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
-        song, thumb, song_name, duration = await file_download(reply, chat, ts)
+        song, thumb, song_name, duration = await file_download(xx, reply, chat, ts)
     else:
         song, thumb, song_name, duration = await download(song, chat, ts)
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
-        if not (await vc_joiner(event, chat)):
+        if not (await ultSongs.vc_joiner()):
             return
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
