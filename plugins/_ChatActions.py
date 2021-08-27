@@ -160,6 +160,12 @@ async def chatBot_replies(e):
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
     old = get_username(e.user_id)
-    await ultroid_bot.send_message(
-        LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
-    )
+    if old and e.username:
+        await ultroid_bot.send_message(
+            LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
+        )
+    elif old and not e.username:
+       await ultroid_bot.send_message(
+            LOG_CHANNEL, f"{inline_mention(e.user_id)} removed its username. (@{old})"
+        )
+    update_username(e.user_id, e.username)
