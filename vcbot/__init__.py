@@ -16,6 +16,7 @@ from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
     dler,
+    downloader,
     get_user_id,
     inline_mention,
     mediainfo,
@@ -65,16 +66,21 @@ async def live_dl(link, file):
     return thumb, title, duration
 
 
-async def file_download(event, chat, ts):
+async def file_download(event, reply , chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     thumb = None
-    dl = await event.download_media()
-    title = event.file.title
-    duration = event.file.duration
-    if event.document.thumbs:
-        thumb = await event.download_media(thumb=-1)
-    raw_converter(dl, song)
-    remove(dl)
+    title = reply.file.title if reply.file.title else reply.file.name
+    dl = await downloader(
+                    "resources/downloads/" + reply.file.name ,
+                    reply.media.document,
+                    event,
+                    time(),
+                    "Downloading " + title + "...",
+                )
+    duration = reply.file.duration
+    if reply.document.thumbs:
+        thumb = await reply.download_media(thumb=-1)
+    raw_converter(dl.name, song)
     return song, thumb, title, duration
 
 
@@ -249,6 +255,7 @@ class Player:
 
         except (IndexError, KeyError):
             await self.group_call.stop()
+            del CLIENTS[self._chat]
             await asst.send_message(
                 LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •"
             )
@@ -262,13 +269,15 @@ class Player:
             LOGS.info(e)
             await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
 
+    async def vc_joiner(event):
+        done, err = await self.startCall()
+        if done:
+            await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
+            return True
+        await asst.send_message(
+            LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
+        )
+        return False
 
-async def vc_joiner(event, chat_id):
-    done, err = await Player(chat_id).startCall()
-    if done:
-        await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
-        return True
-    await asst.send_message(
-        LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
-    )
-    return False
+
+# --------------------------------------------------
