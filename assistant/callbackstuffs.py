@@ -31,7 +31,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
-    thumb = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
+    thumb = "resources/extras/inline.jpg"
     await eve.answer("■ Sending ■")
     if name.startswith("def"):
         plug_name = name.replace("def_plugin_", "")
