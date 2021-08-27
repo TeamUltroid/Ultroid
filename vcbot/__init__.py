@@ -24,8 +24,7 @@ from pyUltroid.functions.all import (
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from youtube_dl import YoutubeDL
-from youtubesearchpython import VideosSearch
+from youtubesearchpython import VideosSearch, ResultMode
 
 from strings import get_string
 
@@ -42,33 +41,28 @@ def VC_AUTHS():
     return [int(x) for x in A_AUTH]
 
 
-async def download(event, query, chat, ts):
+async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     search = VideosSearch(query, limit=1).result()
     noo = search["result"][0]
     vid_id = noo["id"]
     link = _yt_base_url + vid_id
-    opts = {
-        "format": "bestaudio",
-        "addmetadata": True,
-        "key": "FFmpegMetadata",
-        "prefer_ffmpeg": True,
-        "geo_bypass": True,
-        "outtmpl": "%(id)s.mp3",
-        "quiet": True,
-        "logtostderr": False,
-    }
-    try:
-        ytdl_data = await dler(event, url=link, opts=opts, download=True)
-    except Exception as e:
-        return await eor(event, str(e))
-    dl = vid_id + ".mp3"
+    dl = await bash(f"youtube-dl -x -g {link}")
     title = ytdl_data["title"]
     duration = ytdl_data["duration"]
     thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
-    raw_converter(dl, song)
+    raw_converter(dl[0], song)
     return song, thumb, title, duration
 
+async def live_dl(link, file):
+    dl = await bash(f"youtube-dl -x -g {link}")
+    raw_converter(dl[0], file)
+    info = eval(Video.getInfo(link, mode = ResultMode.json))
+    title = info["title"]
+    thumb = info["thumbnails"][-1]["url"]
+    duration = "♾"
+    return file, thumb, title, duration
+    
 
 async def file_download(event, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
