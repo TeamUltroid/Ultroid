@@ -108,9 +108,6 @@ async def update(eve):
         )
         await bash("git pull && pip3 install -r requirements.txt")
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
-        await eve.edit(
-            "`Successfully Updated!\nBot is restarting... Wait for Few Minutes!`"
-        )
 
 
 @callback("changes")
@@ -119,7 +116,7 @@ async def changes(okk):
     await okk.answer("■ Generating Changelogs...")
     repo = Repo.init()
     ac_br = repo.active_branch
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + "\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
