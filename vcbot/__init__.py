@@ -62,7 +62,7 @@ async def live_dl(link, file):
     title = info["title"]
     thumb = info["thumbnails"][-1]["url"]
     duration = "♾"
-    return file, thumb, title, duration
+    return thumb, title, duration
 
 
 async def file_download(event, chat, ts):
