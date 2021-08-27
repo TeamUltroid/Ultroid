@@ -227,25 +227,13 @@ class Player:
             remove(call._GroupCallFile__input_filename)
         except BaseException:
             pass
-        await play_from_queue(chat)
+        await self.play_from_queue()
 
-
-async def vc_joiner(event, chat_id):
-    done, err = await Player(chat_id).startCall()
-    if done:
-        await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
-        return True
-    await asst.send_message(
-        LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
-    )
-    return False
-
-
-async def play_from_queue(chat_id):
-    chat_id = chat_id if str(chat_id).startswith("-100") else int("-100" + str(chat_id))
-    try:
+    async def play_from_queue(self):
+      chat_id = self._chat
+      try:
         song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
-        Player(chat_id).group_call.input_filename = song
+        self.group_call.input_filename = song
         xx = await asst.send_message(
             chat_id,
             "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
@@ -259,15 +247,26 @@ async def play_from_queue(chat_id):
         await asyncio.sleep(dur + 5)
         await xx.delete()
 
-    except (IndexError, KeyError):
+      except (IndexError, KeyError):
+        self.group_call.stop()
         await asst.send_message(LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •")
         try:
             await asst.send_message(
-                chat_id, "`Queue is empty. Leaving the voice chat now !`"
+                chat_id, "`Queue is empty. Left the voice chat now !`"
             )
         except BaseException:
             pass
-        await Player(chat_id).group_call.stop()
-    except Exception as e:
+      except Exception as e:
         LOGS.info(e)
         await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
+
+
+async def vc_joiner(event, chat_id):
+    done, err = await Player(chat_id).startCall()
+    if done:
+        await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
+        return True
+    await asst.send_message(
+        LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
+    )
+    return False
