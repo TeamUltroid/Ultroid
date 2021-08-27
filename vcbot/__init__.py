@@ -25,7 +25,7 @@ from pyUltroid.functions.all import (
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from youtubesearchpython import ResultMode, VideosSearch
+from youtubesearchpython import ResultMode, VideosSearch, Video
 
 from strings import get_string
 
