@@ -248,7 +248,7 @@ class Player:
             await xx.delete()
 
         except (IndexError, KeyError):
-            self.group_call.stop()
+            await self.group_call.stop()
             await asst.send_message(
                 LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •"
             )
