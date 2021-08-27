@@ -269,8 +269,9 @@ class Player:
             LOGS.info(e)
             await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
 
-    async def vc_joiner(event):
+    async def vc_joiner(self):
         done, err = await self.startCall()
+        chat_id = self._chat
         if done:
             await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
             return True
