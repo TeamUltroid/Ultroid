@@ -21,8 +21,8 @@ from . import *
 
 
 @vc_asst("radio")
-async def r_l(e):
-    xx = await eor(event, get_string("com_1"))
+async def radio_mirchi(e):
+    xx = await eor(e, get_string("com_1"))
     if not len(e.text.split()) > 1:
         return await eor(e, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
@@ -53,8 +53,8 @@ async def r_l(e):
 
 
 @vc_asst("(live|ytlive)")
-async def r_l(e):
-    xx = await eor(event, get_string("com_1"))
+async def live_stream(e):
+    xx = await eor(e, get_string("com_1"))
     if not len(e.text.split()) > 1:
         return await eor(e, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
