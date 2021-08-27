@@ -16,7 +16,7 @@ from pyUltroid.functions.sudos import *
 from pyUltroid.version import ultroid_version
 from telethon import Button
 from telethon.tl import functions, types
-
+from telethon.utils import get_display_name
 from strings import get_string
 
 try:
