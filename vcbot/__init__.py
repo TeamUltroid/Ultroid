@@ -49,7 +49,7 @@ async def download(query, chat, ts):
     dl = await bash(f"youtube-dl -x -g {link}")
     title = data["title"]
     duration = data["duration"]
-    thumb = data["thumbnails"][-1]["url"]
+    thumb = data["thumbnails"][-1]["url"] + ".jpg"
     raw_converter(dl[0], song)
     return song, thumb, title, duration
 
@@ -59,7 +59,7 @@ async def live_dl(link, file):
     raw_converter(dl[0], file)
     info = eval(Video.getInfo(link, mode=ResultMode.json))
     title = info["title"]
-    thumb = info["thumbnails"][-1]["url"]
+    thumb = info["thumbnails"][-1]["url"] + ".jpg"
     duration = "♾"
     return thumb, title, duration
 
