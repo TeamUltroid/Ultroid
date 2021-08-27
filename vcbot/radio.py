@@ -71,7 +71,7 @@ async def live_stream(e):
     is_live_vid = False
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
-    if is_live_vid == "true":
+    if is_live_vid != "true":
         return await eor(e, f"Only Live Youtube Urls supported!\n{song}")
     thumb, title, duration = await live_dl(song, file)
     await asyncio.sleep(2)
