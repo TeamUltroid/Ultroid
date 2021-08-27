@@ -186,14 +186,14 @@ async def on_vc_callback_query_handler(event):
 @callback("doupdate")
 @owner
 async def _(event):
-    check = await updater()
+    check = updater()
     if not check:
         return await event.answer(
             "You Are Already On Latest Version", cache_time=0, alert=True
         )
     repo = Repo.init()
     ac_br = repo.active_branch
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + "\n\nClick the below button to update!"
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))

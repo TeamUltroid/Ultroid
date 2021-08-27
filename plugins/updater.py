@@ -27,7 +27,7 @@ async def _(e):
             await bash("git pull && pip3 install -r requirements.txt")
             await xx.edit("`Fast Soft Updating...`")
             execl(sys.executable, sys.executable, "-m", "pyUltroid")
-    m = await updater()
+    m = updater()
     branch = (Repo.init()).active_branch
     if m:
         x = await asst.send_file(
