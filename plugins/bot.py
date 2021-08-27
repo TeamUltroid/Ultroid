@@ -28,6 +28,8 @@
 • `{i}shutdown`
     Turn off your bot.
 """
+import os
+import sys
 import time
 from datetime import datetime as dt
 from platform import python_version as pyver
@@ -37,7 +39,6 @@ from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
-import os, sys
 from . import *
 
 
