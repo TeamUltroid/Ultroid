@@ -24,7 +24,7 @@ from pyUltroid.functions.all import (
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from youtubesearchpython import VideosSearch, ResultMode
+from youtubesearchpython import ResultMode, VideosSearch
 
 from strings import get_string
 
@@ -54,15 +54,16 @@ async def download(query, chat, ts):
     raw_converter(dl[0], song)
     return song, thumb, title, duration
 
+
 async def live_dl(link, file):
     dl = await bash(f"youtube-dl -x -g {link}")
     raw_converter(dl[0], file)
-    info = eval(Video.getInfo(link, mode = ResultMode.json))
+    info = eval(Video.getInfo(link, mode=ResultMode.json))
     title = info["title"]
     thumb = info["thumbnails"][-1]["url"]
     duration = "♾"
     return file, thumb, title, duration
-    
+
 
 async def file_download(event, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
