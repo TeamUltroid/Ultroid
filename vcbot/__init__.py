@@ -15,10 +15,11 @@ from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
+    mediainfo,
     downloader,
     get_user_id,
     inline_mention,
-    mediainfo,
+    time_formatter,
 )
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
@@ -252,7 +253,7 @@ async def file_download(event, reply, chat, ts):
         time(),
         "Downloading " + title + "...",
     )
-    duration = reply.file.duration
+    duration = time_formatter(reply.file.duration * 1000)
     if reply.document.thumbs:
         thumb = await reply.download_media(thumb=-1)
     raw_converter(dl.name, song)
