@@ -58,14 +58,13 @@ async def play_music_(event):
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
+        ultSongs.group_call.input_filename = song
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
                 song_name, time_formatter(duration * 1000), chat, from_user
             ),
             file=thumb,
         )
-
-        ultSongs.group_call.input_filename = song
         await xx.delete()
         if os.path.exists(thumb):
             remove(thumb)
