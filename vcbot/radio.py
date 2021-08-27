@@ -64,12 +64,10 @@ async def r_l(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     file = f"VCRADIO_{chat}.raw"
-    live_link = None
+    is_live_vid = False
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
-        if is_live_vid == "true":
-            live_link, _ = await bash(f"youtube-dl -x -g {song}")
-    if not live_link:
+    if is_live_vid == "true":
         return await eor(e, f"Only Live Youtube Urls supported!\n{song}")
     thumb, title, duration = await live_dl(song, file)
     await asyncio.sleep(2)
