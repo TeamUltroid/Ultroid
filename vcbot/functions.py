@@ -20,9 +20,6 @@
 • `{i}resumevc`
    Resume playback.
 
-• `{i}stopvc`
-   Stop the playback and leave the voice chat.
-
 • `{i}replay`
    Re-play the current song from the beginning.
 """
@@ -55,18 +52,6 @@ async def resumer(event):
     ultSongs = Player(event.chat_id)
     ultSongs.group_call.resume_playout()
     await eor(event, "`Resumed playback in this chat.`")
-
-
-@vc_asst("(stopvc|leavevc)")
-async def stopper(event):
-    ultSongs = Player(event.chat_id)
-    ultSongs.group_call.stop()
-    await eor(event, "`Stopped playback in this chat.`")
-    try:
-        del CLIENTS[event.chat_id]
-        remove(ultSongs.group_call._GroupCallFile__input_filename)
-    except BaseException:
-        pass
 
 
 @vc_asst("replay")
