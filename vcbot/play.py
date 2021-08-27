@@ -53,7 +53,7 @@ async def play_music_(event):
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, duration = await file_download(reply, chat, ts)
     else:
-        song, thumb, song_name, duration = await download(event, song, chat, ts)
+        song, thumb, song_name, duration = await download(song, chat, ts)
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
         if not (await vc_joiner(event, chat)):
