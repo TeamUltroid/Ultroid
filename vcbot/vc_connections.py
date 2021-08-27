@@ -38,7 +38,7 @@ async def join_(event):
     await vc_joiner(event, chat)
 
 
-@vc_asst("leavevc")
+@vc_asst("(leavevc|stopvc)")
 async def leaver(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
@@ -52,6 +52,8 @@ async def leaver(event):
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.stop()
+    if CLIENTS.get(chat):
+        del CLIENTS[chat]
     await eor(event, "`Left the voice chat.`")
 
 
