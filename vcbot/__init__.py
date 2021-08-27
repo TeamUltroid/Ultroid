@@ -66,17 +66,17 @@ async def live_dl(link, file):
     return thumb, title, duration
 
 
-async def file_download(event, reply , chat, ts):
+async def file_download(event, reply, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     thumb = None
     title = reply.file.title if reply.file.title else reply.file.name
     dl = await downloader(
-                    "resources/downloads/" + reply.file.name ,
-                    reply.media.document,
-                    event,
-                    time(),
-                    "Downloading " + title + "...",
-                )
+        "resources/downloads/" + reply.file.name,
+        reply.media.document,
+        event,
+        time(),
+        "Downloading " + title + "...",
+    )
     duration = reply.file.duration
     if reply.document.thumbs:
         thumb = await reply.download_media(thumb=-1)
