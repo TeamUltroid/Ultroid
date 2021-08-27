@@ -42,7 +42,7 @@ async def r_l(e):
         return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
-        if not (await vc_joiner(e, chat)):
+        if not (await ultSongs.vc_joiner()):
             return
     await eor(xx, "• Started Radio 📻")
     ultSongs.group_call.input_filename = file
@@ -75,7 +75,7 @@ async def r_l(e):
         return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat)
     if not ultSongs.group_call.is_connected:
-        if not (await vc_joiner(e, chat)):
+        if not (await ultSongs.vc_joiner()):
             return
     from_user = inline_mention(e.sender)
     await xx.reply(
