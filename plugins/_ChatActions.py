@@ -165,7 +165,7 @@ async def uname_change(e):
             LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
         )
     elif old and not e.username:
-       await ultroid_bot.send_message(
+        await ultroid_bot.send_message(
             LOG_CHANNEL, f"{inline_mention(e.user_id)} removed its username. (@{old})"
         )
     update_username(e.user_id, e.username)
