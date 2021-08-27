@@ -68,7 +68,7 @@ async def r_l(e):
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
         if is_live_vid == "true":
-            live_link , _ = await bash(f"youtube-dl -x -g {song}")
+            live_link, _ = await bash(f"youtube-dl -x -g {song}")
     if not live_link:
         return await eor(e, f"Only Live Youtube Urls supported!\n{song}")
     thumb, title, duration = await live_dl(song, file)
@@ -81,11 +81,10 @@ async def r_l(e):
             return
     from_user = inline_mention(e.sender)
     await xx.reply(
-            "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                title, duration, chat, from_user
-            ),
-            file=thumb,
+        "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+            title, duration, chat, from_user
+        ),
+        file=thumb,
     )
     await xx.delete()
     ultSongs.group_call.input_filename = file
-
