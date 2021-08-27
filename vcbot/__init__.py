@@ -18,7 +18,7 @@ from pyUltroid.functions.all import (
     downloader,
     get_user_id,
     inline_mention,
-    mediainfo
+    mediainfo,
 )
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
