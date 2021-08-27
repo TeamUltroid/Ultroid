@@ -39,152 +39,6 @@ def VC_AUTHS():
     return [int(x) for x in A_AUTH]
 
 
-async def download(query, chat, ts):
-    song = f"VCSONG_{chat}_{ts}.raw"
-    search = VideosSearch(query, limit=1).result()
-    data = search["result"][0]
-    link = data["link"]
-    dl = await bash(f"youtube-dl -x -g {link}")
-    title = data["title"]
-    duration = data["duration"] or "♾"
-    thumb = data["thumbnails"][-1]["url"] + ".jpg"
-    raw_converter(dl[0], song)
-    return song, thumb, title, duration
-
-
-async def live_dl(link, file):
-    dl = await bash(f"youtube-dl -x -g {link}")
-    raw_converter(dl[0], file)
-    info = eval(Video.getInfo(link, mode=ResultMode.json))
-    title = info["title"]
-    thumb = info["thumbnails"][-1]["url"] + ".jpg"
-    duration = "♾"
-    return thumb, title, duration
-
-
-async def file_download(event, reply, chat, ts):
-    song = f"VCSONG_{chat}_{ts}.raw"
-    thumb = None
-    title = reply.file.title if reply.file.title else reply.file.name
-    dl = await downloader(
-        "resources/downloads/" + reply.file.name,
-        reply.media.document,
-        event,
-        time(),
-        "Downloading " + title + "...",
-    )
-    duration = reply.file.duration
-    if reply.document.thumbs:
-        thumb = await reply.download_media(thumb=-1)
-    raw_converter(dl.name, song)
-    return song, thumb, title, duration
-
-
-def raw_converter(dl, song):
-    subprocess.Popen(
-        [
-            "ffmpeg",
-            "-y",
-            "-i",
-            dl,
-            "-f",
-            "s16le",
-            "-ac",
-            "2",
-            "-ar",
-            "48000",
-            "-acodec",
-            "pcm_s16le",
-            song,
-        ],
-        stdin=None,
-        stdout=None,
-        stderr=None,
-        cwd=None,
-    )
-
-
-def vc_asst(dec):
-    def ult(func):
-        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
-        asst.add_event_handler(
-            func,
-            events.NewMessage(
-                incoming=True,
-                pattern=re.compile(pattern + dec),
-                from_users=VC_AUTHS(),
-                func=lambda e: not e.is_private and not e.via_bot_id,
-            ),
-        )
-        vcClient.add_event_handler(
-            func,
-            events.NewMessage(
-                outgoing=True,
-                pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id,
-            ),
-        )
-
-    return ult
-
-
-def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
-    try:
-        n = sorted(list(VC_QUEUE[int(chat_id)].keys()))
-        play_at = n[-1] + 1
-    except BaseException:
-        play_at = 1
-    if VC_QUEUE.get(int(chat_id)):
-        VC_QUEUE[int(chat_id)].update(
-            {
-                play_at: {
-                    "song": song,
-                    "title": song_name,
-                    "thumb": thumb,
-                    "from_user": from_user,
-                    "duration": duration,
-                }
-            }
-        )
-    else:
-        VC_QUEUE.update(
-            {
-                int(chat_id): {
-                    play_at: {
-                        "song": song,
-                        "title": song_name,
-                        "thumb": thumb,
-                        "from_user": from_user,
-                        "duration": duration,
-                    }
-                }
-            }
-        )
-    return VC_QUEUE[int(chat_id)]
-
-
-async def list_queue(chat):
-    if VC_QUEUE.get(chat):
-        txt, n = "", 0
-        for x in list(VC_QUEUE[chat].keys()):
-            n += 1
-            data = VC_QUEUE[chat][x]
-            user = await vcClient.get_entity(data["from_user"])
-            txt += f'**{n}.{data["title"]}** : __By {inline_mention(user)}__\n'
-        return txt
-
-
-def get_from_queue(chat_id):
-    play_this = list(VC_QUEUE[int(chat_id)].keys())[0]
-    info = VC_QUEUE[int(chat_id)][play_this]
-    song = info["song"]
-    title = info["title"]
-    thumb = info["thumb"]
-    from_user = info["from_user"]
-    duration = info["duration"]
-    return song, title, thumb, from_user, play_this, duration
-
-
 # --------------------------------------------------
 
 
@@ -273,5 +127,158 @@ class Player:
         )
         return False
 
+
+# --------------------------------------------------
+
+
+def vc_asst(dec):
+    def ult(func):
+        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
+        asst.add_event_handler(
+            func,
+            events.NewMessage(
+                incoming=True,
+                pattern=re.compile(pattern + dec),
+                from_users=VC_AUTHS(),
+                func=lambda e: not e.is_private and not e.via_bot_id,
+            ),
+        )
+        vcClient.add_event_handler(
+            func,
+            events.NewMessage(
+                outgoing=True,
+                pattern=re.compile(pattern + dec),
+                func=lambda e: not e.is_private and not e.via_bot_id,
+            ),
+        )
+
+    return ult
+
+
+# --------------------------------------------------
+
+
+def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
+    try:
+        n = sorted(list(VC_QUEUE[int(chat_id)].keys()))
+        play_at = n[-1] + 1
+    except BaseException:
+        play_at = 1
+    if VC_QUEUE.get(int(chat_id)):
+        VC_QUEUE[int(chat_id)].update(
+            {
+                play_at: {
+                    "song": song,
+                    "title": song_name,
+                    "thumb": thumb,
+                    "from_user": from_user,
+                    "duration": duration,
+                }
+            }
+        )
+    else:
+        VC_QUEUE.update(
+            {
+                int(chat_id): {
+                    play_at: {
+                        "song": song,
+                        "title": song_name,
+                        "thumb": thumb,
+                        "from_user": from_user,
+                        "duration": duration,
+                    }
+                }
+            }
+        )
+    return VC_QUEUE[int(chat_id)]
+
+
+async def list_queue(chat):
+    if VC_QUEUE.get(chat):
+        txt, n = "", 0
+        for x in list(VC_QUEUE[chat].keys()):
+            n += 1
+            data = VC_QUEUE[chat][x]
+            user = await vcClient.get_entity(data["from_user"])
+            txt += f'**{n}.{data["title"]}** : __By {inline_mention(user)}__\n'
+        return txt
+
+
+def get_from_queue(chat_id):
+    play_this = list(VC_QUEUE[int(chat_id)].keys())[0]
+    info = VC_QUEUE[int(chat_id)][play_this]
+    song = info["song"]
+    title = info["title"]
+    thumb = info["thumb"]
+    from_user = info["from_user"]
+    duration = info["duration"]
+    return song, title, thumb, from_user, play_this, duration
+
+# --------------------------------------------------
+
+
+async def download(query, chat, ts):
+    song = f"VCSONG_{chat}_{ts}.raw"
+    search = VideosSearch(query, limit=1).result()
+    data = search["result"][0]
+    link = data["link"]
+    dl = await bash(f"youtube-dl -x -g {link}")
+    title = data["title"]
+    duration = data["duration"] or "♾"
+    thumb = data["thumbnails"][-1]["url"] + ".jpg"
+    raw_converter(dl[0], song)
+    return song, thumb, title, duration
+
+
+async def live_dl(link, file):
+    dl = await bash(f"youtube-dl -x -g {link}")
+    raw_converter(dl[0], file)
+    info = eval(Video.getInfo(link, mode=ResultMode.json))
+    title = info["title"]
+    thumb = info["thumbnails"][-1]["url"] + ".jpg"
+    duration = "♾"
+    return thumb, title, duration
+
+
+async def file_download(event, reply, chat, ts):
+    song = f"VCSONG_{chat}_{ts}.raw"
+    thumb = None
+    title = reply.file.title if reply.file.title else reply.file.name
+    dl = await downloader(
+        "resources/downloads/" + reply.file.name,
+        reply.media.document,
+        event,
+        time(),
+        "Downloading " + title + "...",
+    )
+    duration = reply.file.duration
+    if reply.document.thumbs:
+        thumb = await reply.download_media(thumb=-1)
+    raw_converter(dl.name, song)
+    return song, thumb, title, duration
+
+
+def raw_converter(dl, song):
+    subprocess.Popen(
+        [
+            "ffmpeg",
+            "-y",
+            "-i",
+            dl,
+            "-f",
+            "s16le",
+            "-ac",
+            "2",
+            "-ar",
+            "48000",
+            "-acodec",
+            "pcm_s16le",
+            song,
+        ],
+        stdin=None,
+        stdout=None,
+        stderr=None,
+        cwd=None,
+    )
 
 # --------------------------------------------------
