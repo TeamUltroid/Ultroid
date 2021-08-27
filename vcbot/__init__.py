@@ -226,7 +226,6 @@ class Player:
                 pass
 
     async def playout_ended_handler(self, call, __):
-        self._chat
         try:
             remove(call._GroupCallFile__input_filename)
         except BaseException:
