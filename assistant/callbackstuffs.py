@@ -37,10 +37,14 @@ async def send(eve):
         plug_name = name.replace("def_plugin_", "")
         plugin = f"plugins/{plug_name}.py"
         data = "back"
-    else:
+    elif name.startswith("add"):
         plug_name = name.replace("add_plugin_", "")
         plugin = f"addons/{plug_name}.py"
         data = "buck"
+    else:
+        plug_name = name.replace("vc_plugin_", "")
+        plugin = f"vcbot/{plug_name}.py"
+        data = "vc_helper"
     buttons = [
         [
             Button.inline(
