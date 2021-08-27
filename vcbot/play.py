@@ -66,7 +66,7 @@ async def play_music_(event):
             file=thumb,
         )
         await xx.delete()
-        if os.path.exists(thumb):
+        if thumb and os.path.exists(thumb):
             remove(thumb)
     else:
         add_to_queue(chat, song, song_name, thumb, from_user, duration)
