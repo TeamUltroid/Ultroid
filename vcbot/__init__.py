@@ -15,12 +15,10 @@ from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
-    dler,
     downloader,
     get_user_id,
     inline_mention,
-    mediainfo,
-    time_formatter,
+    mediainfo
 )
 from pyUltroid.misc import sudoers
 from pyUltroid.misc._wrappers import eod, eor
@@ -48,7 +46,7 @@ async def download(query, chat, ts):
     link = data["link"]
     dl = await bash(f"youtube-dl -x -g {link}")
     title = data["title"]
-    duration = data["duration"]
+    duration = data["duration"] or "♾"
     thumb = data["thumbnails"][-1]["url"] + ".jpg"
     raw_converter(dl[0], song)
     return song, thumb, title, duration
@@ -240,15 +238,13 @@ class Player:
             xx = await asst.send_message(
                 chat_id,
                 "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
-                    pos, title, time_formatter(dur * 1000), from_user
+                    pos, title, dur, from_user
                 ),
                 file=thumb,
             )
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
                 VC_QUEUE.pop(chat_id)
-            await asyncio.sleep(dur + 5)
-            await xx.delete()
 
         except (IndexError, KeyError):
             await self.group_call.stop()
