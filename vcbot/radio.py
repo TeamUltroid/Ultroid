@@ -44,9 +44,9 @@ async def r_l(e):
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
-    await eor(xx, "• Started Radio 📻")
     ultSongs.group_call.input_filename = file
-
+    await xx.reply(f"• Started Radio 📻\n\n• Channel : `{song}`", file="https://telegra.ph/file/419bd79c53cca22ec24f0.jpg")
+    await xx.delete()
 
 @vc_asst("(live|ytlive)")
 async def r_l(e):
