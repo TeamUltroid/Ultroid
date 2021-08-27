@@ -15,10 +15,10 @@ from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
-    mediainfo,
     downloader,
     get_user_id,
     inline_mention,
+    mediainfo,
     time_formatter,
 )
 from pyUltroid.misc import sudoers
