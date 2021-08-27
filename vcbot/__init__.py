@@ -29,7 +29,6 @@ from youtubesearchpython import ResultMode, VideosSearch
 
 from strings import get_string
 
-_yt_base_url = "https://www.youtube.com/watch?v="
 asstUserName = asst.me.username
 LOG_CHANNEL = int(udB["LOG_CHANNEL"])
 ACTIVE_CALLS, VC_QUEUE = [], {}
@@ -45,13 +44,12 @@ def VC_AUTHS():
 async def download(query, chat, ts):
     song = f"VCSONG_{chat}_{ts}.raw"
     search = VideosSearch(query, limit=1).result()
-    noo = search["result"][0]
-    vid_id = noo["id"]
-    link = _yt_base_url + vid_id
+    data = search["result"][0]
+    link = data["link"]
     dl = await bash(f"youtube-dl -x -g {link}")
-    title = ytdl_data["title"]
-    duration = ytdl_data["duration"]
-    thumb = f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
+    title = data["title"]
+    duration = data["duration"]
+    thumb = data["thumbnails"][-1]["url"]
     raw_converter(dl[0], song)
     return song, thumb, title, duration
 
