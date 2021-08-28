@@ -99,14 +99,14 @@ async def _(event):
 async def cmds(event):
     await allcmds(event)
 
-
+heroku_api = Var.HEROKU_API
 @ultroid_cmd(
     pattern="restart$",
     fullsudo=True,
 )
 async def restartbt(ult):
     ok = await eor(ult, "• `Restarting...`")
-    if Var.HEROKU_API:
+    if Var.heroku_api:
         return await restart(ok)
     await bash("git pull && pip3 install -r requirements.txt")
     os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
