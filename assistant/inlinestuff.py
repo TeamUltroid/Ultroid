@@ -11,6 +11,7 @@ from re import compile as re_compile
 from re import findall
 
 import requests
+from bs4 import BeautifulSoup as bs
 from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
@@ -369,3 +370,34 @@ async def _(e):
             ),
         )
     await e.answer(modss, switch_pm="Search Mod Applications.", switch_pm_param="start")
+
+
+# Inspired by @FindXDaBot
+
+@in_pattern("xda")
+@in_owner
+async def xda_dev(event):
+    QUERY = event.text.split(" ", maxsplit=1)
+    try:
+        query = QUERY[1]
+    except IndexError:
+        return await event.answer([], switch_pm="Enter Query to Search", switch_pm_param="start")
+    le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
+    ct = requests.get(le).content
+    ml = bs(ct, "html.parser", from_encoding="utf-8")
+    ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
+    out = []
+    builder = event.builder
+    for on in ml:
+        data = on.find_all("img", "xda_image")[0]
+        title = data["alt"]
+        thumb = data["src"]
+        hre = i.find_all("div", "item_content")[0].find("h4").find("a")["href"]
+        desc = on.find_all("div","item_meta clearfix")[0].text
+        thumb = wb(thumb, 0, "image/jpeg", [])
+        text = f"[{title}]({hre})"
+        out.append(await builder.article(title=title, description=desc, url=hre, thumb=thumb))
+    uppar = "|| XDA Search Results ||"
+    if len(out) == 0:
+        uppar = "No Results Found :("
+    await event.answer(out, switch_pm=uppar, switch_pm_param="start")
