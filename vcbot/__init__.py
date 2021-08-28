@@ -116,7 +116,9 @@ class Player:
         done, err = await self.startCall()
         chat_id = self._chat
         if done:
-            await asst.send_message(self._current_chat, "• Joined VC in {}".format(chat_id))
+            await asst.send_message(
+                self._current_chat, "• Joined VC in {}".format(chat_id)
+            )
             return True
         await asst.send_message(
             LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
