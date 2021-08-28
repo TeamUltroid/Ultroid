@@ -29,7 +29,7 @@ async def volume_setter(event):
                 chat = int("-100" + str((await vcClient.get_entity(chat)).id))
             except Exception as e:
                 return await eor(event, "**ERROR:**\n{}".format(str(e)))
-        elif inp[1].isdigit() and len(inp)==2:
+        elif inp[1].isdigit() and len(inp) == 2:
             vol = int(inp[1])
             chat = event.chat_id
     else:
@@ -42,4 +42,3 @@ async def volume_setter(event):
         elif vol < 1:
             vol = 1
         return await eor(event, "• Volume Changed to `{}%` •".format(vol))
-    
