@@ -400,7 +400,9 @@ async def xda_dev(event):
         thumb = wb(thumb, 0, "image/jpeg", [])
         text = f"[{title}]({hre})"
         out.append(
-            await builder.article(title=title, description=desc, url=hre, thumb=thumb, text=text)
+            await builder.article(
+                title=title, description=desc, url=hre, thumb=thumb, text=text
+            )
         )
     uppar = "|| XDA Search Results ||"
     if len(out) == 0:
