@@ -398,9 +398,9 @@ async def xda_dev(event):
         hre = i.find_all("div", "item_content")[0].find("h4").find("a")["href"]
         desc = on.find_all("div", "item_meta clearfix")[0].text
         thumb = wb(thumb, 0, "image/jpeg", [])
-        f"[{title}]({hre})"
+        text = f"[{title}]({hre})"
         out.append(
-            await builder.article(title=title, description=desc, url=hre, thumb=thumb)
+            await builder.article(title=title, description=desc, url=hre, thumb=thumb, text=text)
         )
     uppar = "|| XDA Search Results ||"
     if len(out) == 0:
