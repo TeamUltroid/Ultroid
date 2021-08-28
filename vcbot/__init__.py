@@ -161,11 +161,11 @@ def vc_asst(dec):
 
 def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
     try:
-        n = sorted(list(VC_QUEUE[int(chat_id)].keys()))
+        n = sorted(list(VC_QUEUE[chat_id].keys()))
         play_at = n[-1] + 1
     except BaseException:
         play_at = 1
-    if VC_QUEUE.get(int(chat_id)):
+    if VC_QUEUE.get(chat_id):
         VC_QUEUE[int(chat_id)].update(
             {
                 play_at: {
@@ -180,7 +180,7 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
     else:
         VC_QUEUE.update(
             {
-                int(chat_id): {
+                chat_id: {
                     play_at: {
                         "song": song,
                         "title": song_name,
@@ -191,10 +191,10 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
                 }
             }
         )
-    return VC_QUEUE[int(chat_id)]
+    return VC_QUEUE[chat_id]
 
 
-async def list_queue(chat):
+def list_queue(chat):
     if VC_QUEUE.get(chat):
         txt, n = "", 0
         for x in list(VC_QUEUE[chat].keys()):
