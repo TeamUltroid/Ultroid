@@ -108,9 +108,8 @@ class Player:
             await asst.send_message(
                 self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
             )
-        except Exception as e:
-            LOGS.info(e)
-            await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
+        except Exception as er:
+            await asst.send_message(self._current_chat, f"**ERROR:** {er}")
 
     async def vc_joiner(self):
         done, err = await self.startCall()
@@ -121,7 +120,7 @@ class Player:
             )
             return True
         await asst.send_message(
-            LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
+            self._current_chat, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
         )
         return False
 
