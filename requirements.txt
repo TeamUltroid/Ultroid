@@ -1,4 +1,2 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
-pytgcalls
-pistonapi
 py-Ultroid==54.7b0
