@@ -30,13 +30,13 @@ from . import *
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
-
+heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 try:
-    if Var.HEROKU_API and Var.HEROKU_APP_NAME:
-        HEROKU_API = Var.HEROKU_API
-        HEROKU_APP_NAME = Var.HEROKU_APP_NAME
-        Heroku = heroku3.from_key(Var.HEROKU_API)
-        app = Heroku.app(Var.HEROKU_APP_NAME)
+    if heroku_api and app_name:
+        HEROKU_API = heroku_api
+        HEROKU_APP_NAME = app_name
+        Heroku = heroku3.from_key(heroku_api)
+        app = Heroku.app(app_name)
 except BaseException:
     HEROKU_API = None
     HEROKU_APP_NAME = None
@@ -90,7 +90,7 @@ def heroku_usage():
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
-        "Authorization": f"Bearer {Var.HEROKU_API}",
+        "Authorization": f"Bearer {heroku_api}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     her_url = f"https://api.heroku.com/accounts/{user_id}/actions/get-quota"
