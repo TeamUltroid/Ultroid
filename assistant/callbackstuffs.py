@@ -59,24 +59,24 @@ async def send(eve):
     ]
     await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
-
+heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 @callback("updatenow")
 @owner
 async def update(eve):
     repo = Repo()
     ac_br = repo.active_branch
     ups_rem = repo.remote("upstream")
-    if Var.HEROKU_API:
+    if heroku_api:
         import heroku3
 
         try:
-            heroku = heroku3.from_key(Var.HEROKU_API)
+            heroku = heroku3.from_key(heroku_api)
             heroku_app = None
             heroku_applications = heroku.apps()
         except BaseException:
             return await eve.edit("`Wrong HEROKU_API.`")
         for app in heroku_applications:
-            if app.name == Var.HEROKU_APP_NAME:
+            if app.name == app_name:
                 heroku_app = app
         if not heroku_app:
             await eve.edit("`Wrong HEROKU_APP_NAME.`")
@@ -88,7 +88,7 @@ async def update(eve):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + Var.HEROKU_API + "@"
+            "https://", "https://api:" + heroku_api + "@"
         )
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
