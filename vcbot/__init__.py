@@ -200,7 +200,7 @@ def list_queue(chat):
         for x in list(VC_QUEUE[chat].keys()):
             n += 1
             data = VC_QUEUE[chat][x]
-            txt += f'**{n}.{data["title"]}** : __By {data["from_user"}__\n'
+            txt += f'**{n}.{data["title"]}** : __By {data["from_user"]}__\n'
         return txt
 
 
