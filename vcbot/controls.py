@@ -35,7 +35,7 @@ async def join_(event):
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, event)
     if not ultSongs.group_call.is_connected:
         await ultSongs.vc_joiner()
 
@@ -52,7 +52,7 @@ async def leaver(event):
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, event)
     await ultSongs.group_call.stop()
     if CLIENTS.get(chat):
         del CLIENTS[chat]
@@ -71,7 +71,7 @@ async def rejoiner(event):
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, event)
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
