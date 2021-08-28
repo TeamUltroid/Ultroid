@@ -37,10 +37,10 @@ async def radio_mirchi(e):
         chat = e.chat_id
     file = f"VCRADIO_{chat}.raw"
     raw_converter(song, file)
-    await asyncio.sleep(2)
+    await asyncio.sleep(4)
     if not os.path.exists(file):
         return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
@@ -74,10 +74,10 @@ async def live_stream(e):
     if is_live_vid != "true":
         return await eor(e, f"Only Live Youtube Urls supported!\n{song}")
     thumb, title, duration = await live_dl(song, file)
-    await asyncio.sleep(2)
+    await asyncio.sleep(4)
     if not os.path.exists(file):
         return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
