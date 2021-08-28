@@ -44,8 +44,9 @@ def VC_AUTHS():
 
 
 class Player:
-    def __init__(self, chat):
+    def __init__(self, chat, event):
         self._chat = chat
+        self._current_chat = event.chat_id
         if CLIENTS.get(chat):
             self.group_call = CLIENTS[chat]
         else:
@@ -91,7 +92,7 @@ class Player:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
             self.group_call.input_filename = song
             xx = await asst.send_message(
-                chat_id,
+                self._current_chat,
                 "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
                     pos, title, dur, from_user
                 ),
@@ -105,14 +106,8 @@ class Player:
             await self.group_call.stop()
             del CLIENTS[self._chat]
             await asst.send_message(
-                LOG_CHANNEL, f"• Successfully Left Vc : `{chat_id}` •"
+                self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
             )
-            try:
-                await asst.send_message(
-                    chat_id, "`Queue is empty. Left the voice chat now !`"
-                )
-            except BaseException:
-                pass
         except Exception as e:
             LOGS.info(e)
             await asst.send_message(LOG_CHANNEL, f"**ERROR:** {e}")
@@ -121,7 +116,7 @@ class Player:
         done, err = await self.startCall()
         chat_id = self._chat
         if done:
-            await asst.send_message(LOG_CHANNEL, "• Joined VC in {}".format(chat_id))
+            await asst.send_message(self._current_chat, "• Joined VC in {}".format(chat_id))
             return True
         await asst.send_message(
             LOG_CHANNEL, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
