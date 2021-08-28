@@ -35,7 +35,9 @@ async def join_(event):
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
-    await vc_joiner(event, chat)
+    ultSongs = Player(chat)
+    if not ultSongs.group_call.is_connected:
+        await ultSongs.vc_joiner()
 
 
 @vc_asst("(leavevc|stopvc)")
