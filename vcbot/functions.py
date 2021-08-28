@@ -28,34 +28,84 @@ from . import *
 
 @vc_asst("mutevc")
 async def mute(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     await ultSongs.group_call.set_is_mute(True)
     await eor(event, "`Muted playback in this chat.`")
 
 
 @vc_asst("unmutevc")
 async def unmute(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     await ultSongs.group_call.set_is_mute(False)
     await eor(event, "`UnMuted playback in this chat.`")
 
 
 @vc_asst("pausevc")
 async def pauser(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     ultSongs.group_call.pause_playout()
     await eor(event, "`Paused playback in this chat.`")
 
 
 @vc_asst("resumevc")
 async def resumer(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     ultSongs.group_call.resume_playout()
     await eor(event, "`Resumed playback in this chat.`")
 
 
 @vc_asst("replay")
 async def replayer(event):
-    ultSongs = Player(event.chat_id)
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        if not chat.startswith("@"):
+            chat = int(chat)
+        try:
+            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+        except Exception as e:
+            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat)
     ultSongs.group_call.restart_playout()
     await eor(event, "`Re-playing the current song.`")
