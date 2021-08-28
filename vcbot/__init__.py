@@ -44,9 +44,9 @@ def VC_AUTHS():
 
 
 class Player:
-    def __init__(self, chat, event):
+    def __init__(self, chat, event=None):
         self._chat = chat
-        self._current_chat = event.chat_id
+        self._current_chat = event.chat_id if event else LOG_CHANNEL
         if CLIENTS.get(chat):
             self.group_call = CLIENTS[chat]
         else:
