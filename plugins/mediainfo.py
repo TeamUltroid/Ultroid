@@ -47,9 +47,10 @@ async def mi(e):
     else:
         naam = await r.download_media()
     out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
-    urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     if er:
+        LOGS.info(er)
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
+    urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     await ee.edit(
         f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
     )
