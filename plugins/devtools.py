@@ -129,6 +129,10 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
+
+    if hasattr(evaluation, "stringify"):
+        evaluation = evaluation.stringify()
+
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
