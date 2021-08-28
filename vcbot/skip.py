@@ -27,7 +27,7 @@ async def skipper(event):
             return await eor(event, "**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
-    ultSongs = Player(chat)
+    ultSongs = Player(chat, event)
     try:
         remove(ultSongs.group_call._GroupCallFile__input_filename)
     except BaseException:
