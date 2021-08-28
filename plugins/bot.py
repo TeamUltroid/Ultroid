@@ -99,7 +99,10 @@ async def _(event):
 async def cmds(event):
     await allcmds(event)
 
+
 heroku_api = Var.HEROKU_API
+
+
 @ultroid_cmd(
     pattern="restart$",
     fullsudo=True,
