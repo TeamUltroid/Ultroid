@@ -55,6 +55,8 @@ async def play_music_(event):
     else:
         song, thumb, song_name, duration = await download(song, chat, ts)
     ultSongs = Player(chat)
+    if len(song_name) > 37:
+        somg_name = song_name[:35] + "..."
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
