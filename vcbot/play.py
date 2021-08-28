@@ -19,13 +19,8 @@ from . import *
 
 @vc_asst("play")
 async def play_music_(event):
-    text = event.text
-    # For PlayFrom Conflict
-    try:
-        if len(text) > 4 and text[5] != " ":
-            return
-    except IndexError:
-        pass
+    if "playfrom" in event.text.split()[0]:
+        return # For PlayFrom Conflict
     xx = await eor(event, get_string("com_1"))
     chat = event.chat_id
     from_user = inline_mention(event.sender)
