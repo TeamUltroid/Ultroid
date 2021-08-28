@@ -374,6 +374,7 @@ async def _(e):
 
 # Inspired by @FindXDaBot
 
+
 @in_pattern("xda")
 @in_owner
 async def xda_dev(event):
@@ -381,7 +382,9 @@ async def xda_dev(event):
     try:
         query = QUERY[1]
     except IndexError:
-        return await event.answer([], switch_pm="Enter Query to Search", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="Enter Query to Search", switch_pm_param="start"
+        )
     le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
     ct = requests.get(le).content
     ml = bs(ct, "html.parser", from_encoding="utf-8")
@@ -393,10 +396,12 @@ async def xda_dev(event):
         title = data["alt"]
         thumb = data["src"]
         hre = i.find_all("div", "item_content")[0].find("h4").find("a")["href"]
-        desc = on.find_all("div","item_meta clearfix")[0].text
+        desc = on.find_all("div", "item_meta clearfix")[0].text
         thumb = wb(thumb, 0, "image/jpeg", [])
-        text = f"[{title}]({hre})"
-        out.append(await builder.article(title=title, description=desc, url=hre, thumb=thumb))
+        f"[{title}]({hre})"
+        out.append(
+            await builder.article(title=title, description=desc, url=hre, thumb=thumb)
+        )
     uppar = "|| XDA Search Results ||"
     if len(out) == 0:
         uppar = "No Results Found :("
