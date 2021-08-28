@@ -40,12 +40,14 @@ numpy
 oauth2client==4.1.3
 opencv-python-headless
 pillow>=7.0.0
+pistonapi
 play-scraper
 profanitydetector
 psutil
 pybase64
 pydictionary
 pypdf2
+pytgcalls
 pytz
 pyyaml
 qrcode
@@ -58,7 +60,6 @@ speedtest-cli==2.1.3
 tabulate
 telegraph
 tenacity
-tgcalls
 validators
 youtube-search-python
 youtube_dl
