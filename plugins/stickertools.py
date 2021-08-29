@@ -46,6 +46,7 @@ from telethon.tl.types import (
     DocumentAttributeSticker,
     MessageMediaPhoto,
 )
+from carbonnow import Carbon
 from telethon.utils import get_input_document
 
 from . import *
@@ -220,11 +221,14 @@ async def hehe(args):
     photo = None
     is_anim = False
     emoji = None
-    if message and message.media:
-        if isinstance(message.media, MessageMediaPhoto):
+    if message and (message.media or message.text):
+        if isinstance(message.media, MessageMediaPhoto) or message.text:
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
             photo = await ultroid_bot.download_media(message.photo, photo)
+            if not photo and message.text:
+                carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=message.text)
+                photo = await carbon.memorize("carbon_kang")
         elif "image" in message.media.document.mime_type.split("/"):
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
