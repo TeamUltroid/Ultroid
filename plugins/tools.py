@@ -37,7 +37,7 @@ from asyncio.exceptions import TimeoutError as AsyncTimeout
 from pathlib import Path
 
 import cv2
-from google_trans_new import google_translator()
+from google_trans_new import google_translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import YouBlockedUserError
