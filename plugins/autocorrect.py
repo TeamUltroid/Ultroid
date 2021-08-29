@@ -14,12 +14,10 @@
 """
 
 from gingerit.gingerit import GingerIt
-from googletrans import Translator
+from google_trans_new import google_translator
 from telethon import events
 
 from . import *
-
-tr = Translator()
 
 
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
@@ -37,12 +35,12 @@ async def gramme(event):
     if Redis("AUTOCORRECT") != "True":
         return
     t = event.text
-    tt = tr.translate(t)
     if t.startswith((HNDLR, ".", "?", "#", "_", "*", "'", "@", "[", "(", "+")):
         return
     if t.endswith(".."):
         return
-    if tt.src != "en":
+    tt = google_translator().detect(t)
+    if tt[0] != "en":
         return
     xx = GingerIt()
     x = xx.parse(t)
