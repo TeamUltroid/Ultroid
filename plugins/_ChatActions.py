@@ -152,24 +152,25 @@ async def chatBot_replies(e):
         if msg:
             await e.reply(msg)
     try:
-            if e.is_group:
-                update_username(e.sender_id, e.sender.username)
-            elif e.is_private:
-                update_username(e.sender_id, e.chat.username)
+        if e.is_group:
+            update_username(e.sender_id, e.sender.username)
+        elif e.is_private:
+            update_username(e.sender_id, e.chat.username)
     except BaseException:
-            pass
+        pass
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
-  if not udB.get("OFF_USERNAME_LOG")=="True":
-    old = get_username(e.user_id)
-    if old and e.username:
-        await ultroid_bot.send_message(
-            LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
-        )
-    elif old and not e.username:
-        await ultroid_bot.send_message(
-            LOG_CHANNEL, f"{inline_mention(e.user_id)} removed its username. (@{old})"
-        )
-    update_username(e.user_id, e.username)
+    if not udB.get("OFF_USERNAME_LOG") == "True":
+        old = get_username(e.user_id)
+        if old and e.username:
+            await ultroid_bot.send_message(
+                LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
+            )
+        elif old and not e.username:
+            await ultroid_bot.send_message(
+                LOG_CHANNEL,
+                f"{inline_mention(e.user_id)} removed its username. (@{old})",
+            )
+        update_username(e.user_id, e.username)
