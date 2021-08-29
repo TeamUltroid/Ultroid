@@ -54,7 +54,7 @@ async def all_messages_catcher(e):
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
-            await asst.send_message(NEEDTOLOG, send, buttons=buttons)
+            await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
         except Exception as me:
             LOGS.info(me)
             await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
