@@ -46,7 +46,7 @@ async def radio_mirchi(e):
             return
     ultSongs.group_call.input_filename = file
     await xx.reply(
-        f"• Started Radio 📻\n\n• Channel : `{song}`",
+        f"• Started Radio 📻\n\n• Station : `{song}`",
         file="https://telegra.ph/file/419bd79c53cca22ec24f0.jpg",
     )
     await xx.delete()
