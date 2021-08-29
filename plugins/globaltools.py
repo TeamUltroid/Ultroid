@@ -534,16 +534,10 @@ async def gstat_(e):
     elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
-        if (e.pattern_match.group(1)).isdigit():
-            try:
-                userid = (await e.client.get_entity(int(e.pattern_match.group(1)))).id
-            except ValueError as err:
-                return await eor(xx, f"{err}", time=5)
-        else:
-            try:
-                userid = (await e.client.get_entity(str(e.pattern_match.group(1)))).id
-            except ValueError as err:
-                return await eor(xx, f"{err}", time=5)
+        try:
+            userid = await get_user_id(e.pattern_match.group(1))
+        except Exception as err:
+            return await eor(xx, f"{err}", time=10)
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
