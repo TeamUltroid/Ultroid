@@ -151,13 +151,12 @@ async def chatBot_replies(e):
         msg = get_chatbot_reply(e, e.message.message)
         if msg:
             await e.reply(msg)
-    try:
-        if e.is_group:
-            update_username(e.sender_id, e.sender.username)
-        elif e.is_private:
-            update_username(e.sender_id, e.chat.username)
-    except BaseException:
-        pass
+    sender = await e.get_sender()
+    chat = await e.get_chat()
+    if e.is_group:
+        update_username(e.sender_id, sender.username)
+    elif e.is_private:
+        update_username(e.sender_id, chat.username)
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
@@ -165,11 +164,11 @@ async def uname_change(e):
     if not udB.get("OFF_USERNAME_LOG") == "True":
         old = get_username(e.user_id)
         if old and e.username:
-            await ultroid_bot.send_message(
-                LOG_CHANNEL, f"@{old} changes its username to @{e.username}"
+            await asst.send_message(
+                LOG_CHANNEL, f"∆ #UsernameUpdate\n\n@{old} changes its username to @{e.username}"
             )
         elif old and not e.username:
-            await ultroid_bot.send_message(
+            await asst.send_message(
                 LOG_CHANNEL,
                 f"{inline_mention(e.user_id)} removed its username. (@{old})",
             )
