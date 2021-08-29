@@ -23,7 +23,7 @@ google-assistant-sdk
 google-auth-httplib2==0.0.4
 google-auth-oauthlib==0.4.4
 google-auth==1.27.1
-googletrans==4.0.0rc1
+google-trans-new
 hachoir
 html-telegraph-poster
 htmlwebshot
