@@ -39,6 +39,7 @@ from os import remove
 import cv2
 import numpy as np
 import requests
+from carbonnow import Carbon
 from PIL import Image, ImageDraw
 from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
 from telethon.tl.types import (
@@ -46,7 +47,6 @@ from telethon.tl.types import (
     DocumentAttributeSticker,
     MessageMediaPhoto,
 )
-from carbonnow import Carbon
 from telethon.utils import get_input_document
 
 from . import *
@@ -227,7 +227,9 @@ async def hehe(args):
             photo = io.BytesIO()
             photo = await ultroid_bot.download_media(message.photo, photo)
             if not photo and message.text:
-                carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=message.text)
+                carbon = Carbon(
+                    base_url="https://carbonara.vercel.app/api/cook", code=message.text
+                )
                 photo = await carbon.memorize("carbon_kang")
         elif "image" in message.media.document.mime_type.split("/"):
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
