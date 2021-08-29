@@ -37,7 +37,7 @@ from asyncio.exceptions import TimeoutError as AsyncTimeout
 from pathlib import Path
 
 import cv2
-from googletrans import Translator
+from google_trans_new import google_translator()
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -66,13 +66,14 @@ async def _(event):
         return await eor(
             event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5
         )
-    translator = Translator()
+    translator = google_translator()
     try:
-        tt = translator.translate(text, dest=lan)
-        output_str = f"**TRANSLATED** from {tt.src} to {lan}\n{tt.text}"
+        tt = translator.translate(text, lang_tgt=lan)
+        fr = translator.detect(text)
+        output_str = f"**TRANSLATED** from {fr} to {lan}\n{tt}"
         await eor(event, output_str)
     except Exception as exc:
-        await eor(event, str(exc), time=17)
+        await eor(event, str(exc), time=5)
 
 
 @ultroid_cmd(
