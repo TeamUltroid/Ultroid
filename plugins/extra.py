@@ -45,7 +45,7 @@ async def newmsg(event):
 )
 async def delete_it(delme):
     msg_src = await delme.get_reply_message()
-    if msg_src
+    if msg_src:
         try:
             await msg_src.delete()
             await delme.delete()
