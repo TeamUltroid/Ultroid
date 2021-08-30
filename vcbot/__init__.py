@@ -23,6 +23,7 @@ from pyUltroid.functions.all import (
 )
 from pyUltroid.functions.vc_group import check_vcauth
 from pyUltroid.functions.vc_group import get_chats as get_vc
+from pyUltroid.misc._assistant import admin_check
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
