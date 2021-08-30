@@ -24,6 +24,7 @@ from pyUltroid.functions.all import (
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
+from pyUltroid.functions.vc_group import get_chats as get_vc
 from youtubesearchpython import ResultMode, Video, VideosSearch
 
 from strings import get_string
@@ -133,9 +134,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
 
         async def vc_handler(e):
-            VCAUTH = udB.get("VC_AUTH_GROUPS") or []
-            if VCAUTH:
-                VCAUTH = [int(e) for e in VCAUTH.split(" ")]
+            VCAUTH = list(get_vc.keys())
             if not (
                 (e.out)
                 or (str(e.sender_id) in from_users)
