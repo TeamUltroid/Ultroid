@@ -32,7 +32,9 @@ async def teamultroid(event: events.InlineQuery.Event):
     if lang in piston.languages.keys():
         version = piston.languages[lang]["version"]
     if not version:
-        return await event.answer([], switch_pm="Unsupported Language!", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="Unsupported Language!", switch_pm_param="start"
+        )
     output = piston.execute(language=lang, version=version, code=code)
     result = await builder.article(
         title="∆ Execute ∆",  # By @TechiError
