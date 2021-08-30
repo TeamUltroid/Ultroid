@@ -15,7 +15,7 @@ ID_CACHE = []
 @vc_asst("vchelp")
 async def helper(event):
     if not ID_CACHE:
-        ID_CACHE.append((await vcClient.get_me()).id)
+        ID_CACHE.append(str((await vcClient.get_me()).id))
     res = await event.client.inline_query(asst.me.username, "vchelp")
     try:
         await res[0].click(event.chat_id)
@@ -26,8 +26,8 @@ async def helper(event):
 @in_pattern("vchelp")
 async def wiqhshd(e):
     if not ID_CACHE:
-        ID_CACHE.append((await vcClient.get_me()).id)
-    if e.sender_id not in [*owner_and_sudos(), *ID_CACHE]:
+        ID_CACHE.append(str((await vcClient.get_me()).id))
+    if str(e.sender_id) not in [*owner_and_sudos(), *ID_CACHE]:
         return
     builder = e.builder
     res = [
