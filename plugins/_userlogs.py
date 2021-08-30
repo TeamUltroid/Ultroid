@@ -36,13 +36,12 @@ async def all_messages_catcher(e):
     except Exception:
         return LOGS.info("you given Wrong Grp/Channel ID in TAG_LOG.")
     x = await e.get_sender()
-    if x.bot or x.verified:
+    if isinstance(x, types.User) and (x.bot or x.verified):
         return
     y = e.chat
     where_n = get_display_name(y)
     who_n = get_display_name(x)
     where_l = e.message.message_link
-    send = await ultroid_bot.get_messages(e.chat_id, ids=e.id)
     buttons = [[Button.url(where_n, where_l)]]
     if x.username:
         who_l = f"https://t.me/{x.username}"
@@ -50,7 +49,7 @@ async def all_messages_catcher(e):
     else:
         buttons.append([Button.inline(who_n, data=f"who{x.id}")])
     try:
-        await asst.send_message(NEEDTOLOG, send, buttons=buttons)
+        await asst.send_message(NEEDTOLOG, e, buttons=buttons)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
