@@ -91,7 +91,7 @@ class Player:
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
             self.group_call.input_filename = song
-            xx = await asst.send_message(
+            xx = await vcClient.send_message(
                 self._current_chat,
                 "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
                     pos, title, dur, from_user
@@ -105,21 +105,21 @@ class Player:
         except (IndexError, KeyError):
             await self.group_call.stop()
             del CLIENTS[self._chat]
-            await asst.send_message(
+            await vcClient.send_message(
                 self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
             )
         except Exception as er:
-            await asst.send_message(self._current_chat, f"**ERROR:** {er}")
+            await vcClient.send_message(self._current_chat, f"**ERROR:** {er}")
 
     async def vc_joiner(self):
         done, err = await self.startCall()
         chat_id = self._chat
         if done:
-            await asst.send_message(
+            await vcClient.send_message(
                 self._current_chat, "• Joined VC in {}".format(chat_id)
             )
             return True
-        await asst.send_message(
+        await vcClient.send_message(
             self._current_chat, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
         )
         return False
