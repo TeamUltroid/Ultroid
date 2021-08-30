@@ -287,7 +287,7 @@ async def _(e):
                 same_peer=True,
             ),
         ],
-        [Button.switch_inline("xda Search", same_peer=True], 
+        [Button.switch_inline("xda Search", same_peer=True)], 
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
