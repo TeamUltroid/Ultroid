@@ -6,7 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pistonapi import PistonAPI
-from pyUltroid.dB.core import *
 from telethon import events
 
 from . import *
@@ -18,6 +17,7 @@ from . import *
 async def teamultroid(event: events.InlineQuery.Event):
     builder = event.builder
     piston = PistonAPI()
+    version = None
     try:
         omk = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -29,11 +29,14 @@ async def teamultroid(event: events.InlineQuery.Event):
     else:
         lang = "python 3"
         code = omk
-    output = piston.execute(language=lang, code=code)
-    outputt = output
-    resultm = builder.article(
-        title="Code",  # By @TechiError
-        description=f"Language-`{lang}` & Code-`{code}`",
-        text=f"Language:\n`{lang}`\n\nCode:\n`{code}`\n\nResult:\n`{outputt}`",
+    if lang in piston.languages.keys():
+        version = piston.languages[lang]["version"]
+    if not version:
+        return await event.answer([], switch_pm="Unsupported Language!", switch_pm_param="start")
+    output = piston.execute(language=lang, version=version, code=code)
+    result = await builder.article(
+        title="∆ Execute ∆",  # By @TechiError
+        description=f"Language-`{lang}`",
+        text=f"**Language:**\n`{lang}`\n\n**Code:**\n`{code}`\n\n**Result:**\n`{output}`",
     )
-    await event.answer([resultm])
+    await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
