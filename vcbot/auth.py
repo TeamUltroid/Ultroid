@@ -16,7 +16,7 @@ async def auth_group(event):
         return await event.reply("Already Authed This Chat!")
     add_vcauth(chat, admins=admins)
     kem = "Admins" if admins else "All"
-    await eor(f"• Added to AUTH Groups Successfully For `{kem}`.")
+    await eor(event, f"• Added to AUTH Groups Successfully For `{kem}`.")
 
 
 @vc_asst("remauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
