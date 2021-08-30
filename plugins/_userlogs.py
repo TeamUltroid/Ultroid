@@ -49,7 +49,7 @@ async def all_messages_catcher(e):
     else:
         buttons.append([Button.inline(who_n, data=f"who{x.id}")])
     try:
-        await asst.send_message(NEEDTOLOG, e.messsge, buttons=buttons)
+        await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
