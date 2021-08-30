@@ -27,7 +27,7 @@ async def teamultroid(event: events.InlineQuery.Event):
     if " | " in omk:
         lang, code = omk.split(" | ")
     else:
-        lang = "python 3"
+        lang = "python"
         code = omk
     if lang in piston.languages.keys():
         version = piston.languages[lang]["version"]
@@ -38,8 +38,8 @@ async def teamultroid(event: events.InlineQuery.Event):
     output = piston.execute(language=lang, version=version, code=code) or "Success"
     result = await builder.article(
         title="∆ Execute ∆",  # By @TechiError
-        description=f"Language-`{lang}`",
+        description=f"Language : {lang}",
         text=f"**Language:**\n`{lang}`\n\n**Code:**\n`{code}`\n\n**Result:**\n`{output}`",
-        buttons=Button.switch_inline("Use Again..", query=omk, same_peer=True),
+        buttons=Button.switch_inline("Use Again..", query="run " +omk, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
