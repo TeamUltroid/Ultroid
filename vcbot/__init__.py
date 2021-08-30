@@ -131,7 +131,7 @@ class Player:
 def vc_asst(dec, from_users=VC_AUTHS()):
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
-        VCAUTH = udB.get("VC_AUTH_GROUPS") or False
+        VCAUTH = udB.get("VC_AUTH_GROUPS") or []
         if VCAUTH:
             VCAUTH = [int(e) for e in VCAUTH.split(" ")]
         asst.add_event_handler(
@@ -150,7 +150,7 @@ def vc_asst(dec, from_users=VC_AUTHS()):
                 pattern=re.compile(pattern + dec),
                 func=lambda e: not e.is_private
                 and not e.via_bot_id
-                and (e.out or (e.chat_id in list(VCAUTH))),
+                and ((e.out) or (e.chat_id in list(VCAUTH))),
             ),
         )
 
