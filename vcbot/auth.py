@@ -1,7 +1,7 @@
 from . import *
 
 
-@vc_asst("authg", from_users=[udB["OWNER_ID"], *sudoers()])
+@vc_asst("authg", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def auth_group(event):
     chat = event.chat_id
     VC_SUDO_GRPS = udB.get("VC_AUTH_GROUPS")
@@ -16,7 +16,7 @@ async def auth_group(event):
     await event.reply("Added to AUTH Groups successfully!")
 
 
-@vc_asst("remauth", from_users=[udB["OWNER_ID"], *sudoers()])
+@vc_asst("remauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def auth_group(event):
     chat = event.chat_id
     VC_SUDO_GRPS = udB.get("VC_AUTH_GROUPS")
