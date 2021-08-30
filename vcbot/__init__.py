@@ -131,18 +131,23 @@ class Player:
 def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
+
         async def vc_handler(e):
             VCAUTH = udB.get("VC_AUTH_GROUPS") or []
             if VCAUTH:
                 VCAUTH = [int(e) for e in VCAUTH.split(" ")]
-            if not ((e.out) or (e.sender_id in from_users) or (vc_auth and e.chat_id in VCAUTH)):
+            if not (
+                (e.out)
+                or (e.sender_id in from_users)
+                or (vc_auth and e.chat_id in VCAUTH)
+            ):
                 return
+
         vcClient.add_event_handler(
             vc_handler,
             events.NewMessage(
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private
-                and not e.via_bot_id
+                func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
 
