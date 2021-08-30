@@ -165,7 +165,7 @@ async def uname_change(e):
         old = get_username(e.user_id)
         # Ignore Name Logs
         if old and old == e.username:
-            return 
+            return
         if old and e.username:
             await asst.send_message(
                 LOG_CHANNEL,
