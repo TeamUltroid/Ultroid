@@ -21,7 +21,8 @@ from pyUltroid.functions.all import (
     mediainfo,
     time_formatter,
 )
-from pyUltroid.functions.vc_group import get_chats as get_vc, check_vcauth
+from pyUltroid.functions.vc_group import check_vcauth
+from pyUltroid.functions.vc_group import get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
