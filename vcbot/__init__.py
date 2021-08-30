@@ -21,7 +21,7 @@ from pyUltroid.functions.all import (
     mediainfo,
     time_formatter,
 )
-from pyUltroid.misc import sudoers
+from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
 from youtubesearchpython import ResultMode, Video, VideosSearch
@@ -36,8 +36,8 @@ CLIENTS = {}
 
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
-    A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
-    return [int(x) for x in A_AUTH]
+    A_AUTH = [*owner_and_sudos(), *_vc_sudos]
+    return A_AUTH
 
 
 # --------------------------------------------------
@@ -129,8 +129,6 @@ class Player:
 
 
 def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
-    vcauth = vc_auth
-
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
 
@@ -140,14 +138,14 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 VCAUTH = [int(e) for e in VCAUTH.split(" ")]
             if not (
                 (e.out)
-                or (e.sender_id in from_users)
+                or (str(e.sender_id) in from_users)
                 or (vcauth and e.chat_id in VCAUTH)
             ):
                 return
             try:
                 await func(e)
             except Exception as er:
-                LOGS.info(f"VC - {e.chat_id} - {er}")
+                LOGS.info(f"VC Error - {e.chat_id} - {er}")
 
         vcClient.add_event_handler(
             vc_handler,
