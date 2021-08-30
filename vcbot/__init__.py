@@ -128,7 +128,7 @@ class Player:
 # --------------------------------------------------
 
 
-def vc_asst(dec):
+def vc_asst(dec, from_users=VC_AUTHS()):
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
         asst.add_event_handler(
@@ -136,7 +136,7 @@ def vc_asst(dec):
             events.NewMessage(
                 incoming=True,
                 pattern=re.compile(pattern + dec),
-                from_users=VC_AUTHS(),
+                from_users=from_users,
                 func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
