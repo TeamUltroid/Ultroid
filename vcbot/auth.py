@@ -1,5 +1,6 @@
-from . import *
 from pyUltroid.functions.vc_group import *
+
+from . import *
 
 
 @vc_asst("authg", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
@@ -11,10 +12,10 @@ async def auth_group(event):
         admins = True
     chat = event.chat_id
     cha, adm = check_vcauth(chat)
-    if cha and adm==admins:
+    if cha and adm == admins:
         return await event.reply("Already Authed This Chat!")
     add_vcauth(chat, admins=admins)
-    kem = "Admins" if admins else "All"
+    "Admins" if admins else "All"
     await eor("• Added to AUTH Groups Successfully For `{kem}`.")
 
 
