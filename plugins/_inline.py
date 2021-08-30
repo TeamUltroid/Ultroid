@@ -277,8 +277,8 @@ async def _(e):
         ],
         [
             Button.switch_inline(
-                "EBᴏᴏᴋs Uᴘʟᴏᴀᴅᴇʀ",
-                query="ebooks India",
+                "Piston Eval",
+                query="run import os",
                 same_peer=True,
             ),
             Button.switch_inline(
@@ -287,6 +287,7 @@ async def _(e):
                 same_peer=True,
             ),
         ],
+        [Button.switch_inline("xda Search", same_peer=True], 
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
