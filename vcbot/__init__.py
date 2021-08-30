@@ -147,10 +147,10 @@ def vc_asst(dec, from_users=VC_AUTHS()):
         vcClient.add_event_handler(
             func,
             events.NewMessage(
+                outgoing=True,
                 pattern=re.compile(pattern + dec),
                 func=lambda e: not e.is_private
                 and not e.via_bot_id
-                and ((e.out) or (e.chat_id in list(VCAUTH))),
             ),
         )
 
