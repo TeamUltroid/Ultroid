@@ -21,7 +21,7 @@ from pyUltroid.functions.all import (
     mediainfo,
     time_formatter,
 )
-from pyUltroid.functions.vc_group import get_chats as get_vc
+from pyUltroid.functions.vc_group import get_chats as get_vc, check_vcauth
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
@@ -141,6 +141,10 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
+            if vc_auth:
+                cha, adm = check_vcauth(e.chat_id)
+                if adm and not (await admin_check(e)):
+                    return
             try:
                 await func(e)
             except Exception as er:
@@ -232,7 +236,7 @@ async def live_dl(link, file):
 async def file_download(event, reply, chat, ts):
     song = f"vcbot/downloads/VCSONG_{chat}_{ts}.raw"
     thumb = None
-    title = reply.file.title if reply.file.title else reply.file.name
+    title = reply.file.title or reply.file.name
     dl = await downloader(
         "resources/downloads/" + reply.file.name,
         reply.media.document,
