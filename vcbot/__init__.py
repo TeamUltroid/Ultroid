@@ -149,8 +149,7 @@ def vc_asst(dec, from_users=VC_AUTHS()):
             events.NewMessage(
                 outgoing=True,
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private
-                and not e.via_bot_id
+                func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
 
