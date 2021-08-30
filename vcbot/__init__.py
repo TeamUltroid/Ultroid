@@ -139,14 +139,18 @@ def vc_asst(dec, from_users=VC_AUTHS()):
             events.NewMessage(
                 incoming=True,
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id and (e.sender_id in AUTH_USERS() or e.chat_id in list(VCAUTH)),
+                func=lambda e: not e.is_private
+                and not e.via_bot_id
+                and (e.sender_id in AUTH_USERS() or e.chat_id in list(VCAUTH)),
             ),
         )
         vcClient.add_event_handler(
             func,
             events.NewMessage(
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id and (e.outgoing or e.chat_id in list(VCAUTH)),
+                func=lambda e: not e.is_private
+                and not e.via_bot_id
+                and (e.outgoing or e.chat_id in list(VCAUTH)),
             ),
         )
 
