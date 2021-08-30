@@ -48,6 +48,7 @@ async def auth_group(event):
     rem_vcauth(chat)
     await eor(event, "Removed Chat from Vc AUTH Groups!")
 
+
 @vc_asst("listauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def listVc(e):
     chats = get_chats()
