@@ -130,6 +130,7 @@ class Player:
 
 def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
     vcauth = vc_auth
+
     def ult(func):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
 
