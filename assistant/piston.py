@@ -39,7 +39,7 @@ async def teamultroid(event: events.InlineQuery.Event):
     result = await builder.article(
         title="∆ Execute ∆",  # By @TechiError
         description=f"Language : {lang}",
-        text=f"**Language:**\n`{lang}`\n\n**Code:**\n`{code}`\n\n**Result:**\n`{output}`",
+        text=f"• **Language:**\n`{lang}`\n\n• **Code:**\n`{code}`\n\n• **Result:**\n`{output}`",
         buttons=Button.switch_inline("Use Again..", query="run " +omk, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
