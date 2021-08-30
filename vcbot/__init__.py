@@ -139,7 +139,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
             if not (
                 (e.out)
                 or (str(e.sender_id) in from_users)
-                or (vcauth and e.chat_id in VCAUTH)
+                or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
             try:
