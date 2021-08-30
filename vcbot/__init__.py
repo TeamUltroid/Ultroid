@@ -201,7 +201,7 @@ def get_from_queue(chat_id):
 
 
 async def download(query, chat, ts):
-    song = f"VCSONG_{chat}_{ts}.raw"
+    song = f"vcbot/downloads/VCSONG_{chat}_{ts}.raw"
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
     link = data["link"]
@@ -224,7 +224,7 @@ async def live_dl(link, file):
 
 
 async def file_download(event, reply, chat, ts):
-    song = f"VCSONG_{chat}_{ts}.raw"
+    song = f"vcbot/downloads/VCSONG_{chat}_{ts}.raw"
     thumb = None
     title = reply.file.title if reply.file.title else reply.file.name
     dl = await downloader(
@@ -236,7 +236,7 @@ async def file_download(event, reply, chat, ts):
     )
     duration = time_formatter(reply.file.duration * 1000)
     if reply.document.thumbs:
-        thumb = await reply.download_media(thumb=-1)
+        thumb = await reply.download_media("vcbot/downloads/", thumb=-1)
     raw_converter(dl.name, song)
     return song, thumb, title, duration
 
