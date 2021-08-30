@@ -141,7 +141,7 @@ def vc_asst(dec, from_users=VC_AUTHS()):
                 pattern=re.compile(pattern + dec),
                 func=lambda e: not e.is_private
                 and not e.via_bot_id
-                and (e.sender_id in AUTH_USERS() or e.chat_id in list(VCAUTH)),
+                and ((e.sender_id in AUTH_USERS()) or (e.chat_id in list(VCAUTH))),
             ),
         )
         vcClient.add_event_handler(
@@ -150,7 +150,7 @@ def vc_asst(dec, from_users=VC_AUTHS()):
                 pattern=re.compile(pattern + dec),
                 func=lambda e: not e.is_private
                 and not e.via_bot_id
-                and (e.out or e.chat_id in list(VCAUTH)),
+                and (e.out or (e.chat_id in list(VCAUTH))),
             ),
         )
 
