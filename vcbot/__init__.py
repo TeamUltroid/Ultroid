@@ -146,6 +146,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 await func(e)
             except Exception as er:
                 LOGS.info(f"VC - {e.chat_id} - {er}")
+
         vcClient.add_event_handler(
             vc_handler,
             events.NewMessage(
