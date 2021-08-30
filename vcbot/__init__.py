@@ -134,7 +134,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
         pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
 
         async def vc_handler(e):
-            VCAUTH = list(get_vc.keys())
+            VCAUTH = list(get_vc().keys())
             if not (
                 (e.out)
                 or (str(e.sender_id) in from_users)
