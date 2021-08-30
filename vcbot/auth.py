@@ -6,7 +6,7 @@ from . import *
 @vc_asst("authg", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def auth_group(event):
     try:
-        key = event.split(" ", maxsplit=1)[1]
+        key = event.text.split(" ", maxsplit=1)[1]
         admins = bool("admins" in key)
     except IndexError:
         admins = True
