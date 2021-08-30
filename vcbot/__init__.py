@@ -138,9 +138,13 @@ def vc_asst(dec, from_users=VC_AUTHS()):
             func,
             events.NewMessage(
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id
-                and ((e.out) or (e.sender_id in VC_AUTHS()) or (e.chat_id in list(VCAUTH))),
-  
+                func=lambda e: not e.is_private
+                and not e.via_bot_id
+                and (
+                    (e.out)
+                    or (e.sender_id in VC_AUTHS())
+                    or (e.chat_id in list(VCAUTH))
+                ),
             ),
         )
 
@@ -156,14 +160,15 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
         play_at = n[-1] + 1
     except BaseException:
         play_at = 1
-    stuff = {play_at: {
-                    "song": song,
-                    "title": song_name,
-                    "thumb": thumb,
-                    "from_user": from_user,
-                    "duration": duration,
-                }
-            }
+    stuff = {
+        play_at: {
+            "song": song,
+            "title": song_name,
+            "thumb": thumb,
+            "from_user": from_user,
+            "duration": duration,
+        }
+    }
     if VC_QUEUE.get(chat_id):
         VC_QUEUE[int(chat_id)].update(stuff)
     else:
