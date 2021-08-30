@@ -1,34 +1,28 @@
 from . import *
+from pyUltroid.functions.vc_group import *
 
 
 @vc_asst("authg", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def auth_group(event):
+    try:
+        key = event.split(" ", maxsplit=1)[1]
+        admins = bool("admins" in key)
+    except IndexError:
+        admins = True
     chat = event.chat_id
-    VC_SUDO_GRPS = udB.get("VC_AUTH_GROUPS")
-    if VC_SUDO_GRPS:
-        xnxx = VC_SUDO_GRPS.split(" ")
-        if str(chat) in xnxx:
-            return await event.reply("Already Authed This Chat!")
-        VC_SUDO_GRPS += f" {str(chat)}"
-        udB.set("VC_AUTH_GROUPS", str(VC_SUDO_GRPS))
-    else:
-        udB.set("VC_AUTH_GROUPS", str(chat))
-    await event.reply("Added to AUTH Groups successfully!")
+    cha, adm = check_vcauth(chat)
+    if cha and adm==admins:
+        return await event.reply("Already Authed This Chat!")
+    add_vcauth(chat, admins=admins)
+    kem = "Admins" if admins else "All"
+    await eor("• Added to AUTH Groups Successfully For `{kem}`.")
 
 
 @vc_asst("remauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
 async def auth_group(event):
     chat = event.chat_id
-    VC_SUDO_GRPS = udB.get("VC_AUTH_GROUPS")
-    if not VC_SUDO_GRPS:
-        return await eor(event, "Vc Auths Group's List is Empty...")
-    spli = VC_SUDO_GRPS.split(" ")
-    if str(chat) not in spli:
-        return await eor(event, "Chat is Not Added to Vc Auths.!")
-    spli = spli.remove(str(chat))
-    if not spli:
-        udB.delete("VC_AUTH_GROUPS")
-    else:
-        VC_SUDO_GRPS = "".join(f" {a}" for a in spli)[1:]
-        udB.set("VC_AUTH_GROUPS", VC_SUDO_GRPS)
-    await eor(event, "Removed from Vc AUTH Groups!")
+    gc, ad = get_chats(chat)
+    if not gc:
+        return await eor(event, "Chat is Not in Vc Auth list...")
+    rem_vcauth(chat)
+    await eor(event, "Removed Chat from Vc AUTH Groups!")
