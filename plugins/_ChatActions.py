@@ -163,9 +163,10 @@ async def chatBot_replies(e):
 async def uname_change(e):
     if not udB.get("OFF_USERNAME_LOG") == "True":
         old = get_username(e.user_id)
-        if old==e.username:
-            return
-        if old and e.username:
+        # Ignore Name Logs
+        if old and old == e.username:
+            return 
+        if old e.username:
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n@{old} changes its username to @{e.username}",
