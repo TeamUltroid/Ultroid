@@ -59,7 +59,7 @@ async def auth_group(event):
     await eor(event, "Removed Chat from Vc AUTH Groups!")
 
 
-@vc_asst("listauth", from_users=owner_and_sudos() , vc_auth=False)
+@vc_asst("listauth", from_users=owner_and_sudos(), vc_auth=False)
 async def listVc(e):
     chats = get_chats()
     if not chats:
@@ -71,7 +71,8 @@ async def listVc(e):
         text += f"∆ **{title}** [`{on}`] : `{st}`"
     await eor(e, text)
 
-@vc_asst("listvcaccess$", from_users=owner_and_sudos() , vc_auth=False)
+
+@vc_asst("listvcaccess$", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await eor(e, "`Getting Voice Chat Bot Users List...`")
     mm = get_vcsudos()
@@ -86,7 +87,7 @@ async def _(e):
     await xx.edit(pp)
 
 
-@vc_asst("rmvcaccess ?(.*)",from_users=owner_and_sudos() , vc_auth=False)
+@vc_asst("rmvcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await eor(e, "`Disapproving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
@@ -118,7 +119,7 @@ async def _(e):
         return await eor(xx, f"`{ex}`", time=5)
 
 
-@vc_asst("vcaccess ?(.*)",from_users=owner_and_sudos() , vc_auth=False)
+@vc_asst("vcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await eor(e, "`Approving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
