@@ -21,7 +21,7 @@ from pyUltroid.functions.all import (
     mediainfo,
     time_formatter,
 )
-from pyUltroid.misc import owner_and_sudos
+from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
 from youtubesearchpython import ResultMode, Video, VideosSearch
