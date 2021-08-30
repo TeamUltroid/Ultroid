@@ -16,14 +16,24 @@
 
 • `{i}listauth`
    Get All Vc Authorised Chat..
+
+• `{i}vcaccess <id/username/reply to msg>`
+    Give access of Voice Chat Bot.
+
+• `{i}rmvcaccess <id/username/reply to msg>`
+    Remove access of Voice Chat Bot.
+
+• `{i}listvcaccess`
+    Get The List of People having vc access.
 """
 
 from pyUltroid.functions.vc_group import *
+from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 
 from . import *
 
 
-@vc_asst("addauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
+@vc_asst("addauth", from_users=owner_and_sudos(), vc_auth=False)
 async def auth_group(event):
     try:
         key = event.text.split(" ", maxsplit=1)[1]
@@ -39,7 +49,7 @@ async def auth_group(event):
     await eor(event, f"• Added to AUTH Groups Successfully For `{kem}`.")
 
 
-@vc_asst("remauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
+@vc_asst("remauth", from_users=owner_and_sudos(), vc_auth=False)
 async def auth_group(event):
     chat = event.chat_id
     gc, ad = check_vcauth(chat)
@@ -49,7 +59,7 @@ async def auth_group(event):
     await eor(event, "Removed Chat from Vc AUTH Groups!")
 
 
-@vc_asst("listauth", from_users=[udB["OWNER_ID"], *sudoers()], vc_auth=False)
+@vc_asst("listauth", from_users=owner_and_sudos() , vc_auth=False)
 async def listVc(e):
     chats = get_chats()
     if not chats:
@@ -60,3 +70,81 @@ async def listVc(e):
         title = (await e.client.get_entity(on)).title
         text += f"∆ **{title}** [`{on}`] : `{st}`"
     await eor(e, text)
+
+@vc_asst("listvcaccess$", from_users=owner_and_sudos() , vc_auth=False)
+async def _(e):
+    xx = await eor(e, "`Getting Voice Chat Bot Users List...`")
+    mm = get_vcsudos()
+    pp = f"**{len(mm)} Voice Chat Bot Approved Users**\n"
+    if len(mm) > 0:
+        for m in mm:
+            try:
+                name = (await e.client.get_entity(int(m))).first_name
+                pp += f"• [{name}](tg://user?id={int(m)})\n"
+            except ValueError:
+                pp += f"• `{int(m)} » No Info`\n"
+    await xx.edit(pp)
+
+
+@vc_asst("rmvcaccess ?(.*)",from_users=owner_and_sudos() , vc_auth=False)
+async def _(e):
+    xx = await eor(e, "`Disapproving to access Voice Chat features...`")
+    input = e.pattern_match.group(1)
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+        name = (await e.client.get_entity(userid)).first_name
+    elif input:
+        try:
+            userid = await get_user_id(input)
+            name = (await e.client.get_entity(userid)).first_name
+        except ValueError as ex:
+            return await eor(xx, f"`{str(ex)}`", time=5)
+    else:
+        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+    if not is_vcsudo(userid):
+        return await eod(
+            xx,
+            f"[{name}](tg://user?id={userid})` is not approved to use my Voice Chat Bot.`",
+            time=5,
+        )
+    try:
+        del_vcsudo(userid)
+        await eod(
+            xx,
+            f"[{name}](tg://user?id={userid})` is removed from Voice Chat Bot Users.`",
+            time=5,
+        )
+    except Exception as ex:
+        return await eor(xx, f"`{ex}`", time=5)
+
+
+@vc_asst("vcaccess ?(.*)",from_users=owner_and_sudos() , vc_auth=False)
+async def _(e):
+    xx = await eor(e, "`Approving to access Voice Chat features...`")
+    input = e.pattern_match.group(1)
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+        name = (await e.client.get_entity(userid)).first_name
+    elif input:
+        try:
+            userid = await get_user_id(input)
+            name = (await e.client.get_entity(userid)).first_name
+        except ValueError as ex:
+            return await eor(xx, f"`{str(ex)}`", time=5)
+    else:
+        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+    if is_vcsudo(userid):
+        return await eod(
+            xx,
+            f"[{name}](tg://user?id={userid})` is already approved to use my Voice Chat Bot.`",
+            time=5,
+        )
+    try:
+        add_vcsudo(userid)
+        await eod(
+            xx,
+            f"[{name}](tg://user?id={userid})` is added to Voice Chat Bot Users.`",
+            time=5,
+        )
+    except Exception as ex:
+        return await eor(xx, f"`{ex}`", time=5)
