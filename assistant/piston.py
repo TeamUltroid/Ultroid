@@ -13,7 +13,7 @@ from . import *
 # By @TechiError
 
 
-@in_pattern(r"run (.*)")
+@in_pattern(r"run")
 async def teamultroid(event: events.InlineQuery.Event):
     builder = event.builder
     piston = PistonAPI()
@@ -24,8 +24,8 @@ async def teamultroid(event: events.InlineQuery.Event):
         return await event.answer(
             [], switch_pm="Enter Code...", switch_pm_param="start"
         )
-    if "|" in omk:
-        lang, code = omk.split("|")
+    if " | " in omk:
+        lang, code = omk.split(" | ")
     else:
         lang = "python 3"
         code = omk
@@ -35,10 +35,11 @@ async def teamultroid(event: events.InlineQuery.Event):
         return await event.answer(
             [], switch_pm="Unsupported Language!", switch_pm_param="start"
         )
-    output = piston.execute(language=lang, version=version, code=code)
+    output = piston.execute(language=lang, version=version, code=code) or "Success"
     result = await builder.article(
         title="∆ Execute ∆",  # By @TechiError
         description=f"Language-`{lang}`",
         text=f"**Language:**\n`{lang}`\n\n**Code:**\n`{code}`\n\n**Result:**\n`{output}`",
+        buttons=Button.switch_inline("Use Again..", query=omk, same_peer=True)
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
