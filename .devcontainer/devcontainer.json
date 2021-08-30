@@ -1,0 +1,30 @@
+{
+	"name": "devcontainer",
+	"settings": {
+		"workbench.colorTheme": "Default Dark+",
+		"terminal.integrated.defaultProfile.linux": "pwsh"
+	},
+	"extensions": [
+		// VS Code specific
+		"coenraads.bracket-pair-colorizer",
+		"vscode-icons-team.vscode-icons",
+		"editorconfig.editorconfig",
+		// GitHub specific
+		"eamodio.gitlens",
+		"cschleiden.vscode-github-actions",
+		"redhat.vscode-yaml",
+		"bierner.markdown-preview-github-styles",
+		"ban.spellright",
+		// Python specific,
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"VisualStudioExptTeam.vscodeintellicode"
+	],
+	"postCreateCommand": "pip install -r requirements.txt",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"remoteUser": "vscode"
+}
+
+// Built with ❤ by [Pipeline Foundation](https://pipeline.foundation)
