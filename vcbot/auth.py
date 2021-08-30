@@ -54,9 +54,9 @@ async def listVc(e):
     chats = get_chats()
     if not chats:
         return await eor(e, "• Vc Auth List is Empty..")
-    text = "• Vc Auth Chats\n\n"
+    text = "• **Vc Auth Chats •**\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
         title = (await e.client.get_entity(on)).title
-        text += f"∆ **{title}** [`{on}`] - {st}"
+        text += f"∆ **{title}** [`{on}`] : `{st}`"
     await eor(e, text)
