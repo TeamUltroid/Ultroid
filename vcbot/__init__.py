@@ -134,22 +134,13 @@ def vc_asst(dec, from_users=VC_AUTHS()):
         VCAUTH = udB.get("VC_AUTH_GROUPS") or []
         if VCAUTH:
             VCAUTH = [int(e) for e in VCAUTH.split(" ")]
-        asst.add_event_handler(
-            func,
-            events.NewMessage(
-                incoming=True,
-                pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private
-                and not e.via_bot_id
-                and ((e.sender_id in VC_AUTHS()) or (e.chat_id in list(VCAUTH))),
-            ),
-        )
         vcClient.add_event_handler(
             func,
             events.NewMessage(
-                outgoing=True,
                 pattern=re.compile(pattern + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id,
+                func=lambda e: not e.is_private and not e.via_bot_id
+                and ((e.out) or (e.sender_id in VC_AUTHS()) or (e.chat_id in list(VCAUTH))),
+  
             ),
         )
 
@@ -165,10 +156,7 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
         play_at = n[-1] + 1
     except BaseException:
         play_at = 1
-    if VC_QUEUE.get(chat_id):
-        VC_QUEUE[int(chat_id)].update(
-            {
-                play_at: {
+    stuff = {play_at: {
                     "song": song,
                     "title": song_name,
                     "thumb": thumb,
@@ -176,21 +164,10 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
                     "duration": duration,
                 }
             }
-        )
+    if VC_QUEUE.get(chat_id):
+        VC_QUEUE[int(chat_id)].update(stuff)
     else:
-        VC_QUEUE.update(
-            {
-                chat_id: {
-                    play_at: {
-                        "song": song,
-                        "title": song_name,
-                        "thumb": thumb,
-                        "from_user": from_user,
-                        "duration": duration,
-                    }
-                }
-            }
-        )
+        VC_QUEUE.update({chat_id: stuff})
     return VC_QUEUE[chat_id]
 
 
