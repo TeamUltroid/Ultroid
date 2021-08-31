@@ -12,7 +12,7 @@ from os import remove
 from time import time
 
 from pytgcalls import GroupCallFactory
-from pyUltroid import LOGS, asst, udB, vcClient
+from pyUltroid import LOGS, asst, udB, vcClient, HNDLR
 from pyUltroid.functions.all import (
     bash,
     downloader,
@@ -133,7 +133,7 @@ class Player:
 
 def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
     def ult(func):
-        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else "/"
+        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
 
         async def vc_handler(e):
             VCAUTH = list(get_vc().keys())
