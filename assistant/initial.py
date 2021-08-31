@@ -37,7 +37,7 @@ STRINGS = {
     5: """• **For Any Other Query or Suggestion**
   - Move to **@UltroidSupport**.
 
-• Thanks for Reaching till EnD.""",
+• Thanks for Reaching till END.""",
 }
 
 
