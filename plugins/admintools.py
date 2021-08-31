@@ -127,7 +127,7 @@ async def bban(ult):
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
-    except BadRequestError as e:
+    except BadRequestError:
         return await xx.edit(f"`I don't have the right to ban a user.`")
     except UserIdInvalidError:
         return await xx.edit("`I couldn't get who he is!`")
