@@ -33,7 +33,6 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd = {
             "format": "bestaudio",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -49,7 +48,6 @@ async def download_from_youtube_(event):
     elif opt == "v":
         ytd = {
             "format": "best",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -65,7 +63,6 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd = {
             "format": "bestaudio",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -82,7 +79,6 @@ async def download_from_youtube_(event):
     elif opt == "sv":
         ytd = {
             "format": "best",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
