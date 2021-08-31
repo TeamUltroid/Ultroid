@@ -94,4 +94,4 @@ async def download_from_youtube_(event):
         await eor(xx, "`Downloading video song...`")
     else:
         return
-    await download_yt(xx, event, url, ytd)
+    await download_yt(xx, url, ytd)
