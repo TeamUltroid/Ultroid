@@ -169,11 +169,11 @@ async def uname_change(e):
         if old and e.username:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n@{old} changes its username to @{e.username}",
+                f"∆ #UsernameUpdate\n\n@{old} changed username to @{e.username}",
             )
         elif old and not e.username:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"{inline_mention(e.user_id)} removed its username. (@{old})",
+                f"∆ #UsernameUpdate\n\n{inline_mention(e.user_id)} removed its username. (@{old})",
             )
         update_username(e.user_id, e.username)
