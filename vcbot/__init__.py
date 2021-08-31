@@ -11,7 +11,6 @@ import subprocess
 from os import remove
 from time import time
 
-
 from pytgcalls import GroupCallFactory
 from pyUltroid import LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
