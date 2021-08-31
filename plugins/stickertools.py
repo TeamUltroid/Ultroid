@@ -41,7 +41,7 @@ import numpy as np
 import requests
 from carbonnow import Carbon
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
+from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError, YouBlockedUserError
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
@@ -304,7 +304,12 @@ async def hehe(args):
             not in htmlstr
         ):
             async with ultroid_bot.conversation("@Stickers") as conv:
-                await conv.send_message("/addsticker")
+                try:
+                    await conv.send_message("/addsticker")
+                except YouBlockedUserError:
+                    LOGS.info("Unblocking @Stickers for kang...")
+                    await ultroid_bot(functions.contacts.UnblockRequest("stickers"))
+                    await conv.send_message("/addsticker")
                 await conv.get_response()
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
