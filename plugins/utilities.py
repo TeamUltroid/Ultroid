@@ -253,17 +253,17 @@ async def _(event):
         else:
             message = previous_message.message
     done, key = await get_paste(message)
-    if done:
-        link = "https://spaceb.in/" + key
-        raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
-        reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
-    else:
+    if not done:
         return await eor(xx, key)
+    link = "https://spaceb.in/" + key
+    raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
+    reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
     try:
-        ok = await event.client.inline_query(asst.me.username, q)
+        ok = await event.client.inline_query(asst.me.username, "paste " + key)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
-    except BaseException:
+    except BaseException as e:
+        LOGS.info(e)
         await xx.edit(reply_text)
 
 
