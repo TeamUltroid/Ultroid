@@ -124,18 +124,19 @@ async def inline_handler(event):
     await event.answer([result], gallery=True)
 
 
-@in_pattern("haste")
+@in_pattern("pasta")
 @in_owner
 async def _(event):
-    ok = event.text.split(" ")[1]
-    link = "https://hastebin.com/"
-    result = event.builder.article(
+    ok = event.text.split("-")[1]
+    link = "https://spaceb.in/" +ok
+    raw = "https://spaceb.in/api/v1/documents/{ok}/raw"
+    result = await event.builder.article(
         title="Paste",
-        text="Pᴀsᴛᴇᴅ Tᴏ Hᴀsᴛᴇʙɪɴ!",
+        text="Pasted to Spacebin 🌌!",
         buttons=[
             [
-                Button.url("HasteBin", url=f"{link}{ok}"),
-                Button.url("Raw", url=f"{link}raw/{ok}"),
+                Button.url("SpaceBin", url=link),
+                Button.url("Raw", url=raw),
             ],
         ],
     )
