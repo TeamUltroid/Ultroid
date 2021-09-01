@@ -6,40 +6,36 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pistonapi import PistonAPI
-from telethon import events
-
 from . import *
 
-# By @TechiError
-
-
-@in_pattern(r"run")
-async def teamultroid(event: events.InlineQuery.Event):
-    builder = event.builder
+@in_pattern("run")
+async def piston_run(event):
     piston = PistonAPI()
     version = None
     try:
-        omk = event.text.split(" ", maxsplit=1)[1]
+        lang = event.text.split()[1]
+        code = event.text.split(maxsplit=2)[2]
     except IndexError:
-        return await event.answer(
-            [], switch_pm="Enter Code...", switch_pm_param="start"
+        result = await event.builder.article(
+               title="Bad Query",
+               description="Usage: [Language] [code]",
+               text=f"**Inline Usage**\n\n`@{asst.me.username} run python print(\"hello world\")"
         )
-    if " | " in omk:
-        lang, code = omk.split(" | ")
-    else:
-        lang = "python"
-        code = omk
+        return await event.answer([result])
     if lang in piston.languages.keys():
         version = piston.languages[lang]["version"]
     if not version:
-        return await event.answer(
-            [], switch_pm="Unsupported Language!", switch_pm_param="start"
+        result = await event.builder.article(
+               title="Unsupported Language",
+               description="Usage: [Language] [code]",
+               text=f"**Inline Usage**\n\n`@{asst.me.username} run python print(\"hello world\")"
         )
+        return await event.answer([result])
     output = piston.execute(language=lang, version=version, code=code) or "Success"
-    result = await builder.article(
-        title="∆ Execute ∆",  # By @TechiError
-        description=f"Language : {lang}",
+    result = await event.builder.article(
+        title="Result",
+        description=output,
         text=f"• **Language:**\n`{lang}`\n\n• **Code:**\n`{code}`\n\n• **Result:**\n`{output}`",
-        buttons=Button.switch_inline("Use Again..", query="run " + omk, same_peer=True),
+        buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
