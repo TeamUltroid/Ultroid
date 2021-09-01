@@ -149,9 +149,11 @@ async def changes(okk):
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
     with open(ok, "r") as hmm:
-        _, key = get_paste(hmm.read())
-    link = "https://nekobin.com/" + key
-    raw = "https://nekobin.com/raw/" + key
+        _, key = await get_paste(hmm.read())
+    link = "https://spaceb.in/" + key
+    raw = link + "/raw"
+    if not _:
+        return await e.answer(key[:30], alert=True)
     data = "buck"
     if ok.startswith("plugins"):
         data = "back"
