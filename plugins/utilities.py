@@ -230,9 +230,9 @@ async def _(event):
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     if not (input_str or event.is_reply):
         return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
+    downloaded_file_name = None
     if input_str:
         message = input_str
-        downloaded_file_name = None
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.media:
@@ -251,18 +251,13 @@ async def _(event):
                 message = "`Include long text / Reply to text file`"
             os.remove(downloaded_file_name)
         else:
-            downloaded_file_name = None
             message = previous_message.message
+    done_or_not, key = await get_paste(message)
+    if done:
+        link = "https://spaceb.in/" + key
+        reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({link}/raw)"
     else:
-        downloaded_file_name = None
-        message = "`Include long text / Reply to text file`"
-    what, key = get_paste(message)
-    if "neko" in what:
-        q = f"paste {key}"
-        reply_text = f"• **Pasted to Nekobin :** [Neko](https://nekobin.com/{key})\n• **Raw Url :** : [Raw](https://nekobin.com/raw/{key})"
-    elif "haste" in what:
-        q = f"haste {key}"
-        reply_text = f"• **Pasted to HasteBin :** [Haste](https://hastebin.com/{key})\n• **Raw Url :** : [Raw](https://hastebin.com/raw/{key})"
+        return await eor(xx, key)
     try:
         ok = await event.client.inline_query(asst.me.username, q)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
