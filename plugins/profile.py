@@ -22,7 +22,6 @@
 • `{i}poto <username>`
     Upload the photo of Chat/User if Available.
 """
-import asyncio
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
@@ -49,6 +48,7 @@ async def _(ult):
         await eod(ok, f"Profile bio changed to\n`{set}`")
     except Exception as ex:
         await eod(ok, "Error occured.\n`{}`".format(str(ex)))
+
 
 # name changer
 
