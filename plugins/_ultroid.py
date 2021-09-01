@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from telethon.errors import ChatSendInlineForbiddenError
-from pyUltroid.misc._assistant import callback
+
 from assistant.initial import STRINGS
 
 from . import *
