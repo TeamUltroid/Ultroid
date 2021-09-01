@@ -6,8 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from telethon.errors import ChatSendInlineForbiddenError
-from . import *
 
+from . import *
 
 REPOMSG = """
 • **ULTROID USERBOT** •\n
