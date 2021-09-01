@@ -76,7 +76,7 @@ async def insta_dl(e):
             )
         await tt.delete()
         return await e.reply(
-            f"**Link:{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
+            f"**Link** :{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
             file=photo,
         )
     await eor(tt, "Please Fill Instagram Credential to Use this Command...")
