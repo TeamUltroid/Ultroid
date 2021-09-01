@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from telethon.errors import ChatSendInlineForbiddenError
+from assistant.initial import STRINGS
 
 from . import *
 
@@ -39,3 +40,10 @@ async def repify(e):
             await e.delete()
     except (ChatSendInlineForbiddenError):
         await eor(e, REPOMSG)
+
+
+@ultroid_cmd(pattern="ultroid")
+async def useUltroid(rs):
+    button = Button.inline("Start >>", "initft_2")
+    msg = await asst.send_message(LOG_CHANNEL, STRINGS[1], buttons=button)
+    await eor(rs, f"[Click Here]({msg.message_link})")
