@@ -30,7 +30,7 @@ async def piston_run(event):
         result = await event.builder.article(
             title="Unsupported Language",
             description="Usage: [Language] [code]",
-            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")',
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
     output = piston.execute(language=lang, version=version, code=code) or "Success"
