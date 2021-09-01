@@ -259,7 +259,7 @@ async def _(event):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
     try:
-        ok = await event.client.inline_query(asst.me.username, "paste " + key)
+        ok = await event.client.inline_query(asst.me.username, "pasta-" + key)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException as e:
