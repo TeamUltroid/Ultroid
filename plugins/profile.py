@@ -46,12 +46,9 @@ async def _(ult):
     set = ult.pattern_match.group(1)
     try:
         await ult.client(UpdateProfileRequest(about=set))
-        await ok.edit(f"Profile bio changed to\n`{set}`")
+        await eod(ok, f"Profile bio changed to\n`{set}`")
     except Exception as ex:
-        await ok.edit("Error occured.\n`{}`".format(str(ex)))
-    await asyncio.sleep(10)
-    await ok.delete()
-
+        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
 
 # name changer
 
@@ -71,11 +68,9 @@ async def _(ult):
                 last_name=last_name,
             ),
         )
-        await ok.edit(f"Name changed to `{names}`")
+        await eod(ok, f"Name changed to `{names}`")
     except Exception as ex:
-        await ok.edit("Error occured.\n`{}`".format(str(ex)))
-    await asyncio.sleep(10)
-    await ok.delete()
+        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
 
 
 # profile pic
@@ -95,12 +90,10 @@ async def _(ult):
             await ult.client(UploadProfilePhotoRequest(file))
         else:
             await ult.client(UploadProfilePhotoRequest(video=file))
-        await ok.edit("`My Profile Photo has Successfully Changed !`")
+        await eod(ok, "`My Profile Photo has Successfully Changed !`")
     except Exception as ex:
-        await ok.edit("Error occured.\n`{}`".format(str(ex)))
+        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
     os.remove(replfile)
-    await asyncio.sleep(10)
-    await ok.delete()
 
 
 # delete profile pic(s)
@@ -128,9 +121,7 @@ async def remove_profilepic(delpfp):
         for sep in pfplist.photos
     ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await ok.edit(f"`Successfully deleted {len(input_photos)} profile picture(s).`")
-    await asyncio.sleep(10)
-    await ok.delete()
+    await eod(ok, f"`Successfully deleted {len(input_photos)} profile picture(s).`")
 
 
 @ultroid_cmd(pattern="poto ?(.*)")
