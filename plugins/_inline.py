@@ -279,7 +279,7 @@ async def _(e):
         [
             Button.switch_inline(
                 "Piston Eval",
-                query="run import os",
+                query="run javascript console.log('Hello Ultroid')",
                 same_peer=True,
             ),
             Button.switch_inline(
