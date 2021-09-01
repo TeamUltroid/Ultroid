@@ -232,7 +232,7 @@ async def crbn(event):
         file=xx,
     )
 
- 
+
 @ultroid_cmd(
     pattern="ccarbon ?(.*)",
 )
