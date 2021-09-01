@@ -74,7 +74,7 @@ async def download_from_youtube_(event):
             return await eor(
                 xx, "Give me a (youtube) search query to download audio from!"
             )
-        url = await get_yt_link(query)
+        url = get_yt_link(query)
         await eor(xx, "`Downloading audio song...`")
     elif opt == "sv":
         ytd = {
@@ -90,7 +90,7 @@ async def download_from_youtube_(event):
             return await eor(
                 xx, "Give me a (youtube) search query to download video from!"
             )
-        url = await get_yt_link(query)
+        url = get_yt_link(query)
         await eor(xx, "`Downloading video song...`")
     else:
         return
