@@ -51,8 +51,8 @@ _main_help_menu = [
         Button.inline("• Addons", data="frrr"),
     ],
     [
-        Button.inline("Voice Chat", data="vc_helper"),
-        Button.inline("Inline Plugins", data="inlone"),
+        Button.inline("••Voice Chat", data="vc_helper"),
+        Button.inline("Inline Plugins••", data="inlone"),
     ],
     [
         Button.inline("⚙️ Owner Tools", data="ownr"),
@@ -63,10 +63,10 @@ _main_help_menu = [
 
 SUP_BUTTONS = [
     [
-        Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("Addons", url="https://github.com/TeamUltroid/UltroidAddons"),
+        Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
+        Button.url("• Addons •", url="https://github.com/TeamUltroid/UltroidAddons"),
     ],
-    [Button.url("Support", url="t.me/UltroidSupport")],
+    [Button.url("• Support •", url="t.me/UltroidSupport")],
 ]
 
 # --------------------BUTTONS--------------------#
@@ -129,10 +129,10 @@ async def inline_handler(event):
 async def _(event):
     ok = event.text.split("-")[1]
     link = "https://spaceb.in/" + ok
-    raw = "https://spaceb.in/api/v1/documents/{ok}/raw"
+    raw = f"https://spaceb.in/api/v1/documents/{ok}/raw"
     result = await event.builder.article(
         title="Paste",
-        text="Pasted to Spacebin 🌌!",
+        text="Pasted to Spacebin 🌌",
         buttons=[
             [
                 Button.url("SpaceBin", url=link),
