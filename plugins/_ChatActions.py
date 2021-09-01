@@ -151,56 +151,31 @@ async def chatBot_replies(e):
         msg = get_chatbot_reply(e, e.message.message)
         if msg:
             await e.reply(msg)
-    if not udB.get("OFF_USERNAME_LOG") == "True":
-        sender = await e.get_sender()
-        chat = await e.get_chat()
-        if e.is_group:
-            old = get_username(sender.username)
-            if old and old == sender.username:
-                return
-            if old and sender.username:
-                await asst.send_message(
-                    LOG_CHANNEL,
-                    f"∆ #UsernameUpdate\n\n@{old} changed username to @{sender.username}",
-                )
-            elif old and not sender.username:
-                await asst.send_message(
-                    LOG_CHANNEL,
-                    f"∆ #UsernameUpdate\n\n[{sender.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
-                )
-            update_username(e.sender_id, sender.username)
-        elif e.is_private:
-            old = get_username(chat.username)
-            if old and old == chat.username:
-                return
-            if old and chat.username:
-                await asst.send_message(
-                    LOG_CHANNEL,
-                    f"∆ #UsernameUpdate\n\n@{old} changed username to @{chat.username}",
-                )
-            elif old and not chat.username:
-                await asst.send_message(
-                    LOG_CHANNEL,
-                    f"∆ #UsernameUpdate\n\n[{chat.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
-                )
-            update_username(e.sender_id, chat.username)
-
+    sender = await e.get_sender()
+    chat = await e.get_chat()
+    if e.is_group:
+        await uname_stuff(e.sender_id, sender.username, sender.first_name)
+    elif e.is_private:
+        await uname_stuff(e.sender_id, chat.username, chat.first_name)
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
+    await uname_stuff(e.user_id, e.username, e.first_name)
+
+async def uname_stuff(id, uname, name):
     if not udB.get("OFF_USERNAME_LOG") == "True":
-        old = get_username(e.user_id)
+        old = get_username(id)
         # Ignore Name Logs
-        if old and old == e.username:
+        if old and old == uname:
             return
-        if old and e.username:
+        if old and uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n@{old} changed username to @{e.username}",
+                f"∆ #UsernameUpdate\n\n@{old} changed username to @{uname}",
             )
-        elif old and not e.username:
+        elif old and not uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n[{e.first_name}](tg://user?id={e.user_id}) removed its username. (@{old})",
+                f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id}) removed its username. (@{old})",
             )
-        update_username(e.user_id, e.username)
+        update_username(id, uname)
