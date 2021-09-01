@@ -158,9 +158,11 @@ async def chatBot_replies(e):
     elif e.is_private:
         await uname_stuff(e.sender_id, chat.username, chat.first_name)
 
+
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
     await uname_stuff(e.user_id, e.username, e.first_name)
+
 
 async def uname_stuff(id, uname, name):
     if not udB.get("OFF_USERNAME_LOG") == "True":
