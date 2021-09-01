@@ -128,7 +128,7 @@ async def inline_handler(event):
 @in_owner
 async def _(event):
     ok = event.text.split("-")[1]
-    link = "https://spaceb.in/" +ok
+    link = "https://spaceb.in/" + ok
     raw = "https://spaceb.in/api/v1/documents/{ok}/raw"
     result = await event.builder.article(
         title="Paste",
