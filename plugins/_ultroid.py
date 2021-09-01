@@ -6,10 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from telethon.errors import ChatSendInlineForbiddenError
-
-from assistant.initial import STRINGS
-
 from . import *
+
 
 REPOMSG = """
 • **ULTROID USERBOT** •\n
@@ -25,6 +23,10 @@ RP_BUTTONS = [
     ],
     [Button.url("Support Group", "t.me/ultroidsupport")],
 ]
+
+ULTSTRING = """🎇 **Thanks for Deploying Ultroid Userbot!**
+
+• Here, are the Some Basic stuff from, where you can Know, about its Usage."""
 
 
 @ultroid_cmd(
@@ -46,5 +48,5 @@ async def repify(e):
 @ultroid_cmd(pattern="ultroid")
 async def useUltroid(rs):
     button = Button.inline("Start >>", "initft_2")
-    msg = await asst.send_message(LOG_CHANNEL, STRINGS[1], buttons=button)
+    msg = await asst.send_message(LOG_CHANNEL, ULTSTRING, buttons=button)
     await eor(rs, f"[Click Here]({msg.message_link})")
