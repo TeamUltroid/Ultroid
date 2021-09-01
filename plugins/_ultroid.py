@@ -48,5 +48,5 @@ async def repify(e):
 @ultroid_cmd(pattern="ultroid")
 async def useUltroid(rs):
     button = Button.inline("Start >>", "initft_2")
-    msg = await asst.send_message(LOG_CHANNEL, ULTSTRING, buttons=button)
-    await eor(rs, f"[Click Here]({msg.message_link})")
+    msg = await asst.send_message(LOG_CHANNEL, ULTSTRING, file="https://telegra.ph/file/54a917cc9dbb94733ea5f.jpg", buttons=button)
+    await eor(rs, f"**[Click Here]({msg.message_link})**")
