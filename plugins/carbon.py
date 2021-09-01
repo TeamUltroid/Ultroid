@@ -197,7 +197,7 @@ async def crbn(event):
         try:
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
-            return await eor(event, "`Reply to Message or readable file..`")
+            return await eor(xxxx, "`Reply to Message or readable file..`")
     col = random.choice(all_col)
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
