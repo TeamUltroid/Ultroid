@@ -255,7 +255,8 @@ async def _(event):
     done, key = await get_paste(message)
     if done:
         link = "https://spaceb.in/" + key
-        reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({link}/raw)"
+        raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
+        reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
     else:
         return await eor(xx, key)
     try:
