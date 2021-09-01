@@ -6,7 +6,9 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pistonapi import PistonAPI
+
 from . import *
+
 
 @in_pattern("run")
 async def piston_run(event):
@@ -17,18 +19,18 @@ async def piston_run(event):
         code = event.text.split(maxsplit=2)[2]
     except IndexError:
         result = await event.builder.article(
-               title="Bad Query",
-               description="Usage: [Language] [code]",
-               text=f"**Inline Usage**\n\n`@{asst.me.username} run python print(\"hello world\")"
+            title="Bad Query",
+            description="Usage: [Language] [code]",
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")',
         )
         return await event.answer([result])
     if lang in piston.languages.keys():
         version = piston.languages[lang]["version"]
     if not version:
         result = await event.builder.article(
-               title="Unsupported Language",
-               description="Usage: [Language] [code]",
-               text=f"**Inline Usage**\n\n`@{asst.me.username} run python print(\"hello world\")"
+            title="Unsupported Language",
+            description="Usage: [Language] [code]",
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")',
         )
         return await event.answer([result])
     output = piston.execute(language=lang, version=version, code=code) or "Success"
