@@ -175,38 +175,15 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="carbon",
-)
-async def crbn(event):
-    xxxx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        temp = await event.get_reply_message()
-        if temp.media:
-            b = await event.client.download_media(temp)
-            with open(b) as a:
-                code = a.read()
-            os.remove(b)
-        else:
-            code = temp.message
-    else:
-        try:
-            code = event.text.split(" ", maxsplit=1)[1]
-        except IndexError:
-            return await eor(event, "`Reply to Message or readable file..`")
-    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code)
-    xx = await carbon.memorize("ultroid_carbon")
-    await xxxx.delete()
-    await event.reply(
-        f"Carbonised by {inline_mention(event.sender)}",
-        file=xx,
-    )
-
-
-@ultroid_cmd(
-    pattern="rcarbon",
+    pattern="^(rc|c)arbon",
 )
 async def crbn(event):
     xxxx = await eor(event, "Processing")
+    te = event.text
+    if te[1] == "r":
+        col = random.choice(all_col)
+    else:
+        col = None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
