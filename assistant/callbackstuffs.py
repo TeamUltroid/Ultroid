@@ -151,7 +151,7 @@ async def _(e):
     with open(ok, "r") as hmm:
         _, key = await get_paste(hmm.read())
     link = "https://spaceb.in/" + key
-    raw = link + "/raw"
+    raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
     data = "buck"
