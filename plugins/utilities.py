@@ -252,7 +252,7 @@ async def _(event):
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
-    done_or_not, key = await get_paste(message)
+    done, key = await get_paste(message)
     if done:
         link = "https://spaceb.in/" + key
         reply_text = f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({link}/raw)"
