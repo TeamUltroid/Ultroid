@@ -133,7 +133,7 @@ class Player:
 
 def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
     def ult(func):
-        pattern = "\\" + udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
+        handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
 
         async def vc_handler(e):
             VCAUTH = list(get_vc().keys())
@@ -155,7 +155,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
         vcClient.add_event_handler(
             vc_handler,
             events.NewMessage(
-                pattern=re.compile(pattern + dec),
+                pattern=re.compile(f"\\{handler}" + dec),
                 func=lambda e: not e.is_private and not e.via_bot_id,
             ),
         )
