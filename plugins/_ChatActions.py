@@ -155,7 +155,7 @@ async def chatBot_replies(e):
     sender = await e.get_sender()
     chat = await e.get_chat()
     if e.is_group:
-        old = get_username(sender.username):
+        old = get_username(sender.username)
         if old and old == sender.username:
             return
         if old and sender.username:
@@ -170,7 +170,7 @@ async def chatBot_replies(e):
             )
         update_username(e.sender_id, sender.username)
     elif e.is_private:
-        old = get_username(chat.username):
+        old = get_username(chat.username)
         if old and old == chat.username:
             return
         if old and chat.username:
