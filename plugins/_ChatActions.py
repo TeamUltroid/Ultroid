@@ -147,44 +147,44 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
-   if e.text and chatbot_stats(e.chat_id, e.sender_id):
+    if e.text and chatbot_stats(e.chat_id, e.sender_id):
         msg = get_chatbot_reply(e, e.message.message)
         if msg:
             await e.reply(msg)
-   if not udB.get("OFF_USERNAME_LOG") == "True":
-    sender = await e.get_sender()
-    chat = await e.get_chat()
-    if e.is_group:
-        old = get_username(sender.username)
-        if old and old == sender.username:
-            return
-        if old and sender.username:
-            await asst.send_message(
-                LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n@{old} changed username to @{sender.username}",
-            )
-        elif old and not sender.username:
-            await asst.send_message(
-                LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n[{sender.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
-            )
-        update_username(e.sender_id, sender.username)
-    elif e.is_private:
-        old = get_username(chat.username)
-        if old and old == chat.username:
-            return
-        if old and chat.username:
-            await asst.send_message(
-                LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n@{old} changed username to @{chat.username}",
-            )
-        elif old and not chat.username:
-            await asst.send_message(
-                LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n[{chat.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
-            )
-        update_username(e.sender_id, chat.username)
-    
+    if not udB.get("OFF_USERNAME_LOG") == "True":
+        sender = await e.get_sender()
+        chat = await e.get_chat()
+        if e.is_group:
+            old = get_username(sender.username)
+            if old and old == sender.username:
+                return
+            if old and sender.username:
+                await asst.send_message(
+                    LOG_CHANNEL,
+                    f"∆ #UsernameUpdate\n\n@{old} changed username to @{sender.username}",
+                )
+            elif old and not sender.username:
+                await asst.send_message(
+                    LOG_CHANNEL,
+                    f"∆ #UsernameUpdate\n\n[{sender.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
+                )
+            update_username(e.sender_id, sender.username)
+        elif e.is_private:
+            old = get_username(chat.username)
+            if old and old == chat.username:
+                return
+            if old and chat.username:
+                await asst.send_message(
+                    LOG_CHANNEL,
+                    f"∆ #UsernameUpdate\n\n@{old} changed username to @{chat.username}",
+                )
+            elif old and not chat.username:
+                await asst.send_message(
+                    LOG_CHANNEL,
+                    f"∆ #UsernameUpdate\n\n[{chat.first_name}](tg://user?id={e.sender_id}) removed its username. (@{old})",
+                )
+            update_username(e.sender_id, chat.username)
+
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
