@@ -63,6 +63,12 @@ async def lol(ult):
         __version__,
         kk,
     )
+    if udB.get("INLINE_ALIVE") and not ult.client._bot:
+        try:
+            res = await ult.client.inline_query(asst.me.username, "alive")
+            return await res[0].click(ult.chat_id)
+        except Exception as er:
+            LOGS.info(er)
     if pic is None:
         await eor(ult, als)
     elif "telegra" in pic:
@@ -169,5 +175,5 @@ async def inline_alive(ult):
             return await ult.answer(results)
         except Exception as er:
             LOGS.info(er)
-    result = [await builder.article("Alive", text=als, buttons=buttons)]
+    result = [await builder.article("Alive", text=als, link_preview=False, buttons=buttons)]
     await ult.answer(result)
