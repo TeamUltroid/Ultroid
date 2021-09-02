@@ -87,7 +87,9 @@ async def play_music_(event):
     limit = 10
     from_user = inline_mention(event.sender)
     if not len(event.text.split()) > 1:
-        return await msg.edit("Use in Proper Format\n`.playfrom <channel username> ; <limit>`")
+        return await msg.edit(
+            "Use in Proper Format\n`.playfrom <channel username> ; <limit>`"
+        )
     input = event.text.split(maxsplit=1)[1]
     if ";" in input:
         try:
@@ -103,8 +105,12 @@ async def play_music_(event):
     await eor(msg, "`• Starting Playing from Channel....`")
     send_message = True
     ultSongs = Player(chat, event)
-    async for song in event.client.iter_messages(fromchat,limit=limit, wait_for=10, filter=types.InputMessagesFilterMusic):
-        song, thumb, song_name, duration = await file_download(msg, song, chat, ts, str(time()).split(".")[0])
+    async for song in event.client.iter_messages(
+        fromchat, limit=limit, wait_for=10, filter=types.InputMessagesFilterMusic
+    ):
+        song, thumb, song_name, duration = await file_download(
+            msg, song, chat, ts, str(time()).split(".")[0]
+        )
         if len(song_name) > 37:
             song_name = song_name[:35] + "..."
         if not ultSongs.group_call.is_connected:
@@ -112,10 +118,10 @@ async def play_music_(event):
                 return
             ultSongs.group_call.input_filename = song
             await msg.reply(
-            "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                song_name, duration, chat, from_user
-            ),
-            file=thumb,
+                "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+                    song_name, duration, chat, from_user
+                ),
+                file=thumb,
             )
             if thumb and os.path.exists(thumb):
                 remove(thumb)
@@ -123,7 +129,7 @@ async def play_music_(event):
             add_to_queue(chat, song, song_name, thumb, from_user, duration)
             if send_message:
                 await eor(
-            msg,
-            f"▶ Added 🎵 **{song_name}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
-            )
-                send_message=False
+                    msg,
+                    f"▶ Added 🎵 **{song_name}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+                )
+                send_message = False
