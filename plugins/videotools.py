@@ -52,7 +52,7 @@ async def gen_sample(e):
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating Sample of `{stime}` seconds..."
         )
         ss, dd = duration_s(file.name, stime)
-        cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} "{out}" -y'
+        cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -codec copy -map 0 "{out}" -y'
         await bash(cmd)
         os.remove(file.name)
         f_time = time.time()
@@ -169,7 +169,7 @@ async def gen_sample(e):
         xxx = await xxx.edit(
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Video from `{ss}` to `{dd}`..."
         )
-        cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} "{out}" -y'
+        cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -codec copy -map 0 "{out}" -y'
         await bash(cmd)
         os.remove(file.name)
         f_time = time.time()
