@@ -153,9 +153,9 @@ async def chatBot_replies(e):
             await e.reply(msg)
     sender = await e.get_sender()
     chat = await e.get_chat()
-    if e.is_group:
+    if e.is_group and not sender.bot:
         await uname_stuff(e.sender_id, sender.username, sender.first_name)
-    elif e.is_private:
+    elif e.is_private and not chat.bot:
         await uname_stuff(e.sender_id, chat.username, chat.first_name)
 
 
