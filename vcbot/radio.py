@@ -24,7 +24,7 @@ from . import *
 async def radio_mirchi(e):
     xx = await eor(e, get_string("com_1"))
     if not len(e.text.split()) > 1:
-        return await eor(e, "Are You Kidding Me?\nWhat to Play?")
+        return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
         chat = int(input[1])
@@ -39,7 +39,7 @@ async def radio_mirchi(e):
     raw_converter(song, file)
     await asyncio.sleep(4)
     if not os.path.exists(file):
-        return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
+        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
@@ -56,7 +56,7 @@ async def radio_mirchi(e):
 async def live_stream(e):
     xx = await eor(e, get_string("com_1"))
     if not len(e.text.split()) > 1:
-        return await eor(e, "Are You Kidding Me?\nWhat to Play?")
+        return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
         chat = int(input[1])
@@ -72,11 +72,11 @@ async def live_stream(e):
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
     if is_live_vid != "true":
-        return await eor(e, f"Only Live Youtube Urls supported!\n{song}")
+        return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
     thumb, title, duration = await live_dl(song, file)
     await asyncio.sleep(4)
     if not os.path.exists(file):
-        return await eor(e, f"`{song}`\n\nNot a playable link.🥱")
+        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
