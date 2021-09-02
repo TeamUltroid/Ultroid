@@ -188,6 +188,6 @@ async def _(event):
     except BaseException:
         what, key = await get_paste(d)
         await xx.edit(
-                f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
-            )
+            f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
+        )
     os.remove(b)
