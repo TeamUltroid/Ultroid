@@ -175,5 +175,7 @@ async def inline_alive(ult):
             return await ult.answer(results)
         except Exception as er:
             LOGS.info(er)
-    result = [await builder.article("Alive", text=als, link_preview=False, buttons=buttons)]
+    result = [
+        await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
+    ]
     await ult.answer(result)
