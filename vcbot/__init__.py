@@ -36,6 +36,7 @@ asstUserName = asst.me.username
 LOG_CHANNEL = int(udB["LOG_CHANNEL"])
 ACTIVE_CALLS, VC_QUEUE = [], {}
 CLIENTS = {}
+MSGID_CACHE = {}
 
 
 def VC_AUTHS():
@@ -95,6 +96,9 @@ class Player:
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
             self.group_call.input_filename = song
+            if MSGID_CACHE.get(chat_id):
+                await MSGID_CACHE[chat_id].delete()
+                del MSGID_CACHE[chat_id]
             xx = await vcClient.send_message(
                 self._current_chat,
                 "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
@@ -102,6 +106,7 @@ class Player:
                 ),
                 file=thumb,
             )
+            MSGID_CACHE.update({chat_id:xx})
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
                 VC_QUEUE.pop(chat_id)
