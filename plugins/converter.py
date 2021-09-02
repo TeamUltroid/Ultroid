@@ -152,19 +152,18 @@ async def smak(event):
 )
 async def _(event):
     input_str = event.pattern_match.group(1)
-    if not input_str:
-        return await eor(event, "`Give The File Name.`", time=5)
+    if not (input_str and event.is_reply):
+        return await eor(event, "`Give The File Name and reply to message.`", time=5)
     xx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        a = await event.get_reply_message()
-        if not a.message:
-            return await xx.edit("`Reply to a message`")
-        with open(input_str, "w") as b:
-            b.write(str(a.message))
-        await xx.edit(f"**Packing into** `{input_str}`")
-        await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
-        await xx.delete()
-        os.remove(input_str)
+    a = await event.get_reply_message()
+    if not a.message:
+        return await xx.edit("`Reply to a message`")
+    with open(input_str, "w") as b:
+        b.write(str(a.message))
+    await xx.edit(f"**Packing into** `{input_str}`")
+    await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
+    await xx.delete()
+    os.remove(input_str)
 
 
 @ultroid_cmd(
@@ -187,9 +186,8 @@ async def _(event):
     try:
         await xx.edit(f"```{d}```")
     except BaseException:
-        what, key = get_paste(d)
-        if "neko" in what:
-            await xx.edit(
-                f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
+        what, key = await get_paste(d)
+        await xx.edit(
+                f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
             )
     os.remove(b)
