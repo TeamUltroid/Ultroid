@@ -12,7 +12,7 @@
    Play the song in voice chat, or add the song to queue.
 
 • `{i}playfrom <channel username> ; <limit>`
-   Play music from channel files at current chat.. 
+   Play music from channel files at current chat..
 """
 
 import os
