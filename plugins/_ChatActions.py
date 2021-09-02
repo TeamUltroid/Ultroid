@@ -167,7 +167,7 @@ async def uname_change(e):
 
 
 async def uname_stuff(id, uname, name):
-    if not udB.get("OFF_USERNAME_LOG") == "True":
+    if udB.get("USERNAME_LOG") == "True":
         old = get_username(id)
         # Ignore Name Logs
         if old and old == uname:
@@ -181,5 +181,10 @@ async def uname_stuff(id, uname, name):
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id}) removed its username. (@{old})",
+            )
+        elif not old and uname:
+            await asst.send_message(
+                LOG_CHANNEL,
+                f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id})'s new username --> @{uname}",
             )
         update_username(id, uname)
