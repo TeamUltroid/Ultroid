@@ -240,9 +240,9 @@ async def _(e):
     if not files:
         files = glob.glob("*")
     else:
-        if not glob.glob(path):
+        if not glob.glob(files):
             return await eor(e, "`Incorrect Directory.`", time=5)
-        if not glob.glob(path):
+        if not glob.glob(files):
             return await eor(e, "`This Directory is Empty.`", time=5)
     pyfiles = []
     jsons = []
