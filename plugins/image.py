@@ -16,10 +16,13 @@ from . import *
 async def f2i(e):
     txt = e.pattern_match.group(1)
     if txt:
-        html = txt
+        html = e.text.split(maxsplit=1)[1]
     elif e.reply_to:
         r = await e.get_reply_message()
-        html = await e.client.download_media(r.media)
+        if r.media:
+            html = await e.client.download_media(r.media)
+        elif r.text:
+            html = r.text
     else:
         return await eod(e, "`Either reply to any file or give any text`")
     shot = WebShot(quality=85)
@@ -30,3 +33,5 @@ async def f2i(e):
     except BaseException:
         await e.reply(file=pic, force_document=True)
     os.remove(pic)
+    if os.path.exists(html):
+        os.remove(html)
