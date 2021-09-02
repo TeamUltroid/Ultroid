@@ -1,4 +1,3 @@
-
 # Ultroid - UserBot
 # Copyright (C) 2021 TeamUltroid
 #
@@ -15,12 +14,30 @@ from . import *
 
 def on_converter(link, song):
     subprocess.Popen(
-        ['ffmpeg', '-i', dl, '-vn', '-f', 's16le', '-ac', '2', '-ar', '48000', '-acodec', 'pcm_s16le', '-filter:a', "atempo=1", song, '-y'],
+        [
+            "ffmpeg",
+            "-i",
+            dl,
+            "-vn",
+            "-f",
+            "s16le",
+            "-ac",
+            "2",
+            "-ar",
+            "48000",
+            "-acodec",
+            "pcm_s16le",
+            "-filter:a",
+            "atempo=1",
+            song,
+            "-y",
+        ],
         stdin=None,
         stdout=None,
         stderr=None,
         cwd=None,
     )
+
 
 @vc_asst("vidstream")
 async def fhehejs(ult):
