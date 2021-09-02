@@ -30,7 +30,8 @@ async def radio_mirchi(e):
         chat = int(input[1])
         song = e.text.split(maxsplit=2)[2]
     elif input[1].startswith("@"):
-        chat = int(f"-100{(await vcClient.get_entity(input[1])).id}")
+        cid = (await vcClient.get_entity(input[1])).id
+        chat = int(f"-100{cid}")
         song = e.text.split(maxsplit=2)[2]
     else:
         song = e.text.split(maxsplit=1)[1]
