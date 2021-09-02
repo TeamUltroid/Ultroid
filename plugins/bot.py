@@ -138,7 +138,7 @@ async def _(event):
 @in_pattern("alive")
 @in_owner
 async def inline_alive(ult):
-    udB.get("ALIVE_PIC")
+    pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
     y = Repo().active_branch
