@@ -35,9 +35,9 @@ async def vnc(e):
     )
     await xxx.edit(f"Downloaded Successfully, Now Converting to voice")
     await bash(
-        f"ffmpeg -i {file.name} -map 0:a -codec:a libopus -b:a 100k -vbr on out.opus"
+        f"ffmpeg -i '{file.name}' -map 0:a -codec:a libopus -b:a 100k -vbr on out.opus"
     )
-    await e.client.send_file(e.chat_id, "out.opus", force_document=False, reply_to=r)
+    await e.client.send_message(e.chat_id, file="out.opus", force_document=False, reply_to=r)
     await xxx.delete()
     os.remove(file.name)
     os.remove("out.opus")
