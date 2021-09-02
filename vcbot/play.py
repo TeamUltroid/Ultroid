@@ -42,7 +42,9 @@ async def play_music_(event):
             except Exception as e:
                 return await eor(event, str(e))
         elif tiny_input.startswith("-"):
-            chat = int("-100" + str(await get_user_id(int(tiny_input), client=vcClient)))
+            chat = int(
+                "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
+            )
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:
