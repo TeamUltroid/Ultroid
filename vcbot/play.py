@@ -93,7 +93,7 @@ async def play_music_(event):
     input = event.text.split(maxsplit=1)[1]
     if ";" in input:
         try:
-            limit = input.split(" ")
+            limit = input.split(";")
             input = limit[0]
             limit = int(limit[1])
         except IndexError:
