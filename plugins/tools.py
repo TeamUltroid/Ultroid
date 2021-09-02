@@ -35,7 +35,7 @@ import os
 import time
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 from pathlib import Path
-
+import glob
 import cv2
 from google_trans_new import google_translator
 from hachoir.metadata import extractMetadata
@@ -236,15 +236,14 @@ async def _(e):
     pattern="ls ?(.*)",
 )
 async def _(e):
-    path = Path(e.pattern_match.group(1))
-    if not path:
-        path = Path(".")
+    files = glob.glob(e.pattern_match.group(1))
+    if not files:
+        files = glob.glob("*")
     else:
-        if not os.path.isdir(path):
+        if not glob.glob(path):
             return await eor(e, "`Incorrect Directory.`", time=5)
-        if not os.listdir(path):
+        if not glob.glob(path):
             return await eor(e, "`This Directory is Empty.`", time=5)
-    files = path.iterdir()
     pyfiles = []
     jsons = []
     vdos = []
