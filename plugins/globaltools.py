@@ -27,6 +27,9 @@
 • `{i}gcast <Message> or <reply>`
     Globally Send that msg in all grps.
 
+• `{i}gcast <Message> or <reply>`
+    Globally Send that msg in grps where you are admin.
+
 • `{i}gucast <Message> or <reply>`
     Globally Send that msg in all Ur Chat Users.
 
@@ -356,7 +359,7 @@ async def _(e):
     await xx.edit(gb_msg)
 
 
-@ultroid_cmd(pattern="gcast ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="^g(admin|)cast ?(.*)", fullsudo=True)
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if xx:
@@ -371,14 +374,17 @@ async def gcast(event):
     err = ""
     async for x in event.client.iter_dialogs():
         if x.is_group:
-            chat = x.id
+            chat = x.entity.id
             if not is_gblacklisted(chat) and not int("-100" + str(chat)) in NOSPAM_CHAT:
-                try:
-                    done += 1
-                    await event.client.send_message(chat, msg)
-                except Exception as h:
-                    err += "• " + str(h) + "\n"
-                    er += 1
+                if event.text[1:5] == "admin" and not (x.entity.admin_rights or x.entity.creator):
+                    pass
+                else:
+                    try:
+                        done += 1
+                        await event.client.send_message(chat, msg)
+                    except Exception as h:
+                        err += "• " + str(h) + "\n"
+                        er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
     if err != "":
         open("gcast-error.log", "w").write(h)
