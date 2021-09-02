@@ -450,8 +450,7 @@ async def tagloggrr(e):
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
     await e.edit(
         "Choose Options",
-        buttons=[BUTTON,
-        [Button.inline("« Bᴀᴄᴋ", data="otvars")]],
+        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="otvars")]],
     )
 
 
@@ -492,13 +491,14 @@ async def taglogerr(event):
 @owner
 async def pmset(event):
     if not udB.get("ADDONS"):
-        BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],
+        BT = ([Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],)
     else:
-        BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],
+        BT = ([Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],)
     await event.edit(
         "ADDONS~ Extra Plugins:",
-        buttons=[BT,
-               [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        buttons=[
+            BT,
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
