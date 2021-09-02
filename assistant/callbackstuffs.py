@@ -533,7 +533,9 @@ async def pmset(event):
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
     await event.edit(
         f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
-        buttons=[BT, [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        buttons=[
+            BT,
+            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
@@ -957,8 +959,9 @@ async def alvcs(event):
         BT = [Button.inline("PMLOGGER OFF", data="pmlogof")]
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
-        buttons=[BT,
-        [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        buttons=[
+            BT,
+            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
 
