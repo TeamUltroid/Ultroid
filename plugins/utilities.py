@@ -452,7 +452,11 @@ async def telegraphcmd(event):
         content = reply.message
     else:
         getit = await reply.download_media()
-        if "document" not in mediainfo(reply.media):
+        dar = mediainfo(reply.media)
+        if dar == "sticker":
+            os.rename(getit, getit + ".jpg")
+            getit = getit + ".jpg"
+        if "document" not in dar:
             try:
                 nn = "https://telegra.ph" + uf(getit)[0]
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
