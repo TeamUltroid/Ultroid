@@ -109,7 +109,7 @@ async def play_music_(event):
         fromchat, limit=limit, wait_time=10, filter=types.InputMessagesFilterMusic
     ):
         song, thumb, song_name, duration = await file_download(
-            msg, song, chat, ts, str(time()).split(".")[0]
+            msg, song, chat, str(time()).split(".")[0]
         )
         if len(song_name) > 37:
             song_name = song_name[:35] + "..."
