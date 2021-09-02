@@ -25,9 +25,10 @@ from . import *
 
 @ultroid_cmd(
     pattern="poll ?(.*)",
-    groups_only=True,
 )
 async def uri_poll(e):
+    if not e.sender._bot and e.is_private:
+        return await eor(e, "`Use this in Group/Channel.`", time=15)
     match = e.pattern_match.group(1)
     if not match:
         return await eor(e, "`Give Proper Input...`", time=5)
