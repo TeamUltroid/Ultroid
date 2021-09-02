@@ -444,8 +444,8 @@ async def rmbg(event):
     pattern="telegraph ?(.*)",
 )
 async def telegraphcmd(event):
-    ultroid_bot = event.client
-    match = event.pattern_match.group(1) or "Ultroid"
+    event.client
+    event.pattern_match.group(1) or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
         return await eor(event, "`Reply to Message.`")
@@ -453,7 +453,7 @@ async def telegraphcmd(event):
         content = reply.message
     else:
         getit = await reply.download_media()
-        if not "document" in mediainfo(reply.media):
+        if "document" not in mediainfo(reply.media):
             try:
                 nn = "https://telegra.ph" + uf(getit)[0]
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
@@ -462,7 +462,7 @@ async def telegraphcmd(event):
             os.remove(getit)
             return await eor(event, amsg)
         with open(getit) as ab:
-           content = ab.read()
+            content = ab.read()
     makeit = telegraph.create_page(title=tcom, content=[content])
     war = makeit["url"]
     await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
