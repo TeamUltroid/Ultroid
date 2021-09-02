@@ -106,7 +106,7 @@ class Player:
                 ),
                 file=thumb,
             )
-            MSGID_CACHE.update({chat_id:xx})
+            MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
                 VC_QUEUE.pop(chat_id)
