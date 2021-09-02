@@ -27,7 +27,7 @@
 • `{i}gcast <Message> or <reply>`
     Globally Send that msg in all grps.
 
-• `{i}gcast <Message> or <reply>`
+• `{i}gadmincast <Message> or <reply>`
     Globally Send that msg in grps where you are admin.
 
 • `{i}gucast <Message> or <reply>`
@@ -361,7 +361,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="g(admin|)cast ?(.*)", fullsudo=True)
 async def gcast(event):
-    xx = event.pattern_match.group(1)
+    xx = event.pattern_match.group(2)
     if xx:
         msg = xx
     elif event.is_reply:
