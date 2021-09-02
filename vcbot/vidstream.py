@@ -45,8 +45,9 @@ async def fhehejs(ult):
         match = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eor(ult, "`Give link to play...`")
-    file = "vcbot/downloads/" + match[:10] + str(ult.chat_id) + ".raw"
+    file = "vcbot/downloads/" + str(ult.chat_id) + ".raw"
     on_converter(match, file)
     ultSongs = Player(ult.chat_id)
     await ultSongs.startCall()
+    ultSongs.group_call.input_filename = file
     await ultSongs.group_call.set_video_capture(match)
