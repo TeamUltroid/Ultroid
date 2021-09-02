@@ -52,6 +52,7 @@ class Player:
     def __init__(self, chat, event=None):
         self._chat = chat
         self._current_chat = event.chat_id if event else LOG_CHANNEL
+        self._video = False
         if CLIENTS.get(chat):
             self.group_call = CLIENTS[chat]
         else:
