@@ -242,11 +242,11 @@ async def file_download(event, reply, chat, ts, fast_download=True):
     title = reply.file.title or reply.file.name
     if fast_download:
         dl = await downloader(
-        "resources/downloads/" + reply.file.name,
-        reply.media.document,
-        event,
-        time(),
-        "Downloading " + title + "...",
+            "resources/downloads/" + reply.file.name,
+            reply.media.document,
+            event,
+            time(),
+            "Downloading " + title + "...",
         )
         dl = dl.name
     else:
