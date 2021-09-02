@@ -63,7 +63,8 @@ async def live_stream(e):
         chat = int(input[1])
         song = e.text.split(maxsplit=2)[2]
     elif input[1].startswith("@"):
-        chat = int("-100" + str((await vcClient.get_entity(input[1])).id))
+        cid_moosa = (await vcClient.get_entity(input[1])).id
+        chat = int("-100" + str(cid_moosa))
         song = e.text.split(maxsplit=2)[2]
     else:
         song = e.text.split(maxsplit=1)[1]
