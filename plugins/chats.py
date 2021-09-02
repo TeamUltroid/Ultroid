@@ -23,13 +23,16 @@
 
 
 from telethon.errors import ChatAdminRequiredError as no_admin
-from telethon.tl.functions.channels import CreateChannelRequest, DeleteChannelRequest, UpdateUsernameRequest
+from telethon.tl.functions.channels import (
+    CreateChannelRequest,
+    DeleteChannelRequest,
+    UpdateUsernameRequest,
+)
 from telethon.tl.functions.messages import (
     CreateChatRequest,
     DeleteChatUserRequest,
     ExportChatInviteRequest,
 )
-
 
 from . import *
 
@@ -118,11 +121,16 @@ async def _(e):
             created_chat_id = r.chats[0].id
             if username:
                 await e.client(UpdateUsernameRequest(created_chat_id, username))
-            result = username or (await e.client(
-                ExportChatInviteRequest(
-                    peer=created_chat_id,
-                ),
-            )).link
+            result = (
+                username
+                or (
+                    await e.client(
+                        ExportChatInviteRequest(
+                            peer=created_chat_id,
+                        ),
+                    )
+                ).link
+            )
             await xx.edit(
                 f"Your [{group_name}]({result}) Group/Channel Has been made Boss!",
                 link_preview=False,
