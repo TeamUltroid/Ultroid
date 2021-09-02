@@ -376,7 +376,7 @@ async def gcast(event):
         if x.is_group:
             chat = x.entity.id
             if not is_gblacklisted(chat) and not int("-100" + str(chat)) in NOSPAM_CHAT:
-                if event.text[1:5] == "admin" and not (
+                if event.text[2:7] == "admin" and not (
                     x.entity.admin_rights or x.entity.creator
                 ):
                     pass
