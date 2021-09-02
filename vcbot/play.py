@@ -108,9 +108,11 @@ async def play_music_(event):
     await eor(msg, "`• Starting Playing from Channel....`")
     send_message = True
     ultSongs = Player(chat, event)
+    count = 0
     async for song in event.client.iter_messages(
         fromchat, limit=limit, wait_time=10, filter=types.InputMessagesFilterMusic
     ):
+        count += 1
         song, thumb, song_name, duration = await file_download(
             msg, song, chat, str(time()).split(".")[0], fast_download=False
         )
@@ -130,7 +132,7 @@ async def play_music_(event):
                 remove(thumb)
         else:
             add_to_queue(chat, song, song_name, thumb, from_user, duration)
-            if send_message:
+            if send_message and count == 1:
                 await eor(
                     msg,
                     f"▶ Added 🎵 **{song_name}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
