@@ -138,7 +138,7 @@ async def _(event):
 @in_pattern("alive")
 @in_owner
 async def inline_alive(ult):
-    media = udB.get("ALIVE_PIC")
+    udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
     y = Repo().active_branch
@@ -155,8 +155,10 @@ async def inline_alive(ult):
         __version__,
         kk,
     )
-    buttons = [Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-              Button.inline("Help", "open")]
+    buttons = [
+        Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.inline("Help", "open"),
+    ]
     builder = ult.builder
     if pic:
         if ".jpg" in pic:
