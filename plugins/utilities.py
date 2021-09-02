@@ -444,8 +444,7 @@ async def rmbg(event):
     pattern="telegraph ?(.*)",
 )
 async def telegraphcmd(event):
-    event.client
-    event.pattern_match.group(1) or "Ultroid"
+    match = event.pattern_match.group(1) or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
         return await eor(event, "`Reply to Message.`")
@@ -463,7 +462,8 @@ async def telegraphcmd(event):
             return await eor(event, amsg)
         with open(getit) as ab:
             content = ab.read()
-    makeit = telegraph.create_page(title=tcom, content=[content])
+        os.remove(getit)
+    makeit = telegraph.create_page(title=match, content=[content])
     war = makeit["url"]
     await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
 
