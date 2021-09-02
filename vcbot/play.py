@@ -99,7 +99,7 @@ async def play_music_(event):
         except IndexError:
             pass
     try:
-        fromchat = (await event.client.get_entity(await get_user_id(input))).id
+        fromchat = (await event.client.get_entity(input)).id
     except Exception as er:
         return await eor(msg, str(er))
     await eor(msg, "`• Starting Playing from Channel....`")
