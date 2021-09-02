@@ -10,6 +10,9 @@
 
 • `{i}play <song name/song url/reply to file>`
    Play the song in voice chat, or add the song to queue.
+
+• `{i}playfrom <channel username> ; <limit>`
+   Play music from channel files at current chat.. 
 """
 
 import os
@@ -109,7 +112,7 @@ async def play_music_(event):
         fromchat, limit=limit, wait_time=10, filter=types.InputMessagesFilterMusic
     ):
         song, thumb, song_name, duration = await file_download(
-            msg, song, chat, str(time()).split(".")[0]
+            msg, song, chat, str(time()).split(".")[0], fast_download=False
         )
         if len(song_name) > 37:
             song_name = song_name[:35] + "..."
