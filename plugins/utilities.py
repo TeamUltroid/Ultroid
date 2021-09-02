@@ -445,58 +445,27 @@ async def rmbg(event):
 )
 async def telegraphcmd(event):
     ultroid_bot = event.client
-    input_str = event.pattern_match.group(1)
-    if event.reply_to_msg_id:
-        getmsg = await event.get_reply_message()
-        if (
-            getmsg.photo
-            or getmsg.video
-            or getmsg.gif
-            or not getmsg.photo
-            and not getmsg.video
-            and not getmsg.gif
-            and "pic" in mediainfo(getmsg.media)
-        ):
-            getit = await ultroid_bot.download_media(getmsg)
+    match = event.pattern_match.group(1) or "Ultroid"
+    reply = await event.get_reply_message()
+    if not reply:
+        return await eor(event, "`Reply to Message.`")
+    if not reply.media and reply.message:
+        content = reply.message
+    else:
+        getit = await reply.download_media()
+        if not "document" in mediainfo(reply.media):
             try:
-                variable = uf(getit)
-                os.remove(getit)
-                nn = "https://telegra.ph" + variable[0]
+                nn = "https://telegra.ph" + uf(getit)[0]
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
-                amsg = f"Error - {e}"
-            await eor(event, amsg)
-        elif (
-            not getmsg.photo
-            and not getmsg.video
-            and not getmsg.gif
-            and "pic" not in mediainfo(getmsg.media)
-            and getmsg.document
-        ):
-            getit = await ultroid_bot.download_media(getmsg)
-            with open(getit) as ab:
-                cd = ab.read()
-            tcom = input_str or "Ultroid"
-            makeit = telegraph.create_page(title=tcom, content=[f"{cd}"])
-            war = makeit["url"]
+                amsg = f"Error : {e}"
             os.remove(getit)
-            await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
-        elif (
-            not getmsg.photo
-            and not getmsg.video
-            and not getmsg.gif
-            and "pic" not in mediainfo(getmsg.media)
-            and not getmsg.document
-            and getmsg.text
-        ):
-            tcom = input_str or "Ultroid"
-            makeit = telegraph.create_page(title=tcom, content=[f"{getmsg.text}"])
-            war = makeit["url"]
-            await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
-        else:
-            await eor(event, "Reply to a Media or Text !")
-    else:
-        await eor(event, "Reply to a Message !")
+            return await eor(event, amsg)
+        with open(getit) as ab:
+           content = ab.read()
+    makeit = telegraph.create_page(title=tcom, content=[content])
+    war = makeit["url"]
+    await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
 
 
 @ultroid_cmd(pattern="json")
