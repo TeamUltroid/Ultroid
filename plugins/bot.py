@@ -64,6 +64,7 @@ async def lol(ult):
         kk,
     )
     if udB.get("INLINE_ALIVE") and not ult.client._bot:
+        await ult.delete()
         try:
             res = await ult.client.inline_query(asst.me.username, "alive")
             return await res[0].click(ult.chat_id)
