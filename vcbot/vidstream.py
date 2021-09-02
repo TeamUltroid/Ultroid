@@ -17,7 +17,7 @@ def on_converter(link, song):
         [
             "ffmpeg",
             "-i",
-            dl,
+            link,
             "-vn",
             "-f",
             "s16le",
