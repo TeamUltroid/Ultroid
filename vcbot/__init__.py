@@ -27,6 +27,7 @@ from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
+from telethon.tl import types
 from youtubesearchpython import ResultMode, Video, VideosSearch
 
 from strings import get_string
