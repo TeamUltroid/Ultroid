@@ -88,7 +88,7 @@ async def goimg(event):
         ok = pth[0][query]
     except BaseException:
         return await nn.edit("No Results Found :(")
-    await event.reply(file=ok, message=query, album=True)
+    await event.reply(file=ok, message=query)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 

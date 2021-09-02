@@ -126,7 +126,7 @@ async def gen_shots(e):
         os.remove(file.name)
         pic = glob.glob("ss/*")
         await e.client.send_message(
-            e.chat_id, f"All {shot} screenshots", file=pic, album=True
+            e.chat_id, f"All {shot} screenshots", file=pic
         )
         await bash("rm -rf ss")
         await xxx.delete()

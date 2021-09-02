@@ -47,6 +47,6 @@ async def searchunsl(ult):
         CL.append(Hp)
         nl += 1
     await ult.client.send_file(
-        ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n", album=True
+        ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n"
     )
     await tep.delete()

@@ -79,7 +79,7 @@ async def pdfseimg(event):
                 pw.write(f)
         os.remove(pdfp)
         for z in ok:
-            await event.client.send_file(event.chat_id, z, album=True)
+            await event.client.send_file(event.chat_id, z)
         shutil.rmtree("pdf")
         os.mkdir("pdf")
         await xx.delete()
