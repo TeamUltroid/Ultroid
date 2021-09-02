@@ -21,7 +21,7 @@ async def piston_run(event):
         result = await event.builder.article(
             title="Bad Query",
             description="Usage: [Language] [code]",
-            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")',
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
     if lang in piston.languages.keys():
