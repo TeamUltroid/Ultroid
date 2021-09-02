@@ -444,7 +444,7 @@ async def hndlrr(event):
 @callback("taglog")
 @owner
 async def tagloggrr(e):
-    if udB.get("TAG_LOG"):
+    if not udB.get("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
     else:
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
@@ -491,9 +491,9 @@ async def taglogerr(event):
 @owner
 async def pmset(event):
     if not udB.get("ADDONS"):
-        BT = ([Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],)
+        BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
     else:
-        BT = ([Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],)
+        BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")]
     await event.edit(
         "ADDONS~ Extra Plugins:",
         buttons=[
@@ -517,8 +517,7 @@ async def eddon(event):
 @callback("edof")
 @owner
 async def eddof(event):
-    var = "ADDONS"
-    await setit(event, var, "False")
+    udB.set("ADDONS", "False")
     await event.edit(
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart",
         buttons=get_back_button("eaddon"),
@@ -528,12 +527,13 @@ async def eddof(event):
 @callback("sudo")
 @owner
 async def pmset(event):
+    if not udB.get("SUDO"):
+        BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
+    else:
+        BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
     await event.edit(
         f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
-        buttons=[
-            [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")],
-            [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        buttons=[BT, [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
@@ -951,12 +951,14 @@ async def apof(event):
 @callback("pml")
 @owner
 async def alvcs(event):
+    if not udB.get("PMLOG"):
+        BT = [Button.inline("PMLOGGER ON", data="pmlog")]
+    else:
+        BT = [Button.inline("PMLOGGER OFF", data="pmlogof")]
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
-        buttons=[
-            [Button.inline("PMLOGGER ON", data="pmlog")],
-            [Button.inline("PMLOGGER OFF", data="pmlogof")],
-            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+        buttons=[BT,
+        [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
 
