@@ -444,13 +444,14 @@ async def hndlrr(event):
 @callback("taglog")
 @owner
 async def tagloggrr(e):
+    if udB.get("TAG_LOG"):
+        BUTTON = [Button.inline("SET TAG LOG", data="settag")]
+    else:
+        BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
     await e.edit(
         "Choose Options",
-        buttons=[
-            [Button.inline("SET TAG LOG", data="settag")],
-            [Button.inline("DELETE TAG LOG", data="deltag")],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
-        ],
+        buttons=[BUTTON,
+        [Button.inline("« Bᴀᴄᴋ", data="otvars")]],
     )
 
 
@@ -490,12 +491,14 @@ async def taglogerr(event):
 @callback("eaddon")
 @owner
 async def pmset(event):
+    if not udB.get("ADDONS"):
+        BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],
+    else:
+        BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],
     await event.edit(
         "ADDONS~ Extra Plugins:",
-        buttons=[
-            [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")],
-            [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+        buttons=[BT,
+               [Button.inline("« Bᴀᴄᴋ", data="otvars")],
         ],
     )
 
