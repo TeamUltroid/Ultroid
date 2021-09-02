@@ -133,3 +133,39 @@ async def _(event):
         await heroku_logs(event)
     else:
         await def_logs(event)
+
+
+@in_pattern("alive")
+@in_owner
+async def inline_alive(ult):
+    media = udB.get("ALIVE_PIC")
+    uptime = time_formatter((time.time() - start_time) * 1000)
+    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    y = Repo().active_branch
+    xx = Repo().remotes[0].config_reader.get("url")
+    rep = xx.replace(".git", f"/tree/{y}")
+    kk = f" `[{y}]({rep})` "
+    als = (get_string("alive_1")).format(
+        header,
+        OWNER_NAME,
+        ultroid_version,
+        UltVer,
+        uptime,
+        pyver(),
+        __version__,
+        kk,
+    )
+    buttons = [Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+              Button.inline("Help", "open")]
+    builder = ult.builder
+    if pic:
+        if ".jpg" in pic:
+            results = [await builder.photo(pic, text=als, buttons=buttons)]
+        else:
+            results = [await builder.document(pic, text=als, buttons=buttons)]
+        try:
+            return await ult.answer(results)
+        except Exception as er:
+            LOGS.info(er)
+    result = [await builder.article("Alive", text=als, buttons=buttons)]
+    await ult.answer(result)
