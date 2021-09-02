@@ -147,11 +147,13 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
+    sender = await e.get_sender()
+    if not isinstance(sender, types.User):
+        return
     if e.text and chatbot_stats(e.chat_id, e.sender_id):
         msg = get_chatbot_reply(e, e.message.message)
         if msg:
             await e.reply(msg)
-    sender = await e.get_sender()
     chat = await e.get_chat()
     if e.is_group and not sender.bot:
         await uname_stuff(e.sender_id, sender.username, sender.first_name)
