@@ -10,7 +10,7 @@ from . import *
 @asst.on(events.ChatAction())
 async def dueha(e):
     if not e.user_added:
-        retuen
+        return
     user = await e.get_user()
     if not user.is_self:
         return
