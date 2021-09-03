@@ -35,7 +35,7 @@ from strings import get_string
 asstUserName = asst.me.username
 LOG_CHANNEL = int(udB["LOG_CHANNEL"])
 ACTIVE_CALLS, VC_QUEUE = [], {}
-MSGID_CACHE, VIDEO_ON = {}, []
+MSGID_CACHE, VIDEO_ON = {}, {}
 CLIENTS = {}
 
 
@@ -63,11 +63,16 @@ class Player:
             CLIENTS.update({chat: self.group_call})
 
     async def startCall(self):
+        if VIDEO_ON:
+            for chats in VIDEO_ON:
+                await VIDEO_ON[chats].stop()
+            VIDEO_ON.clear()
         if self._video:
             for chats in CLIENTS:
                 if chats != self._chat:
                     await CLIENTS[chats].stop()
-            VIDEO_ON.append(self._chat)
+                    del CLIENTS[chats]
+            VIDEO_ON.update({self._chat: self.group_call})          
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
@@ -100,8 +105,6 @@ class Player:
     async def play_from_queue(self):
         chat_id = self._chat
         if chat_id in VIDEO_ON:
-            await self.group_call.stop()
-            del VIDEO_ON[self._chat]
             await self.startCall()
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
