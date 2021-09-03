@@ -15,7 +15,7 @@
    Creates screenshot of video..
 
 • `{i}vtrim <start time> - <end time>`
-    Crop a Lengthy video.. 
+    Crop a Lengthy video..
 """
 
 import glob
