@@ -101,6 +101,10 @@ class Player:
 
     async def play_from_queue(self):
         chat_id = self._chat
+        if chat_id in VIDEO_ON:
+            await self.group_call.stop()
+            await self.startCall()
+            del VIDEO_ON[self._chat]
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
             self.group_call.input_filename = song
@@ -122,8 +126,6 @@ class Player:
         except (IndexError, KeyError):
             await self.group_call.stop()
             del CLIENTS[self._chat]
-            if self._chat in VIDEO_ON:
-                del VIDEO_ON[self._chat]
             await vcClient.send_message(
                 self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
             )
