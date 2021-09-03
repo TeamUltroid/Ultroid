@@ -60,15 +60,15 @@ async def _(e):
         str(device["supported"])
         maintainer = device["maintainer"]["name"]
         link = f"https://orangefox.download/device/{codename}"
-        text = f"[\xad]({ofox})**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ••**\n\n"
-        text += f"`  Fᴜʟʟ Nᴀᴍᴇ: {fullname}`\n"
-        text += f"`  Cᴏᴅᴇɴᴀᴍᴇ: {codename}`\n"
-        text += f"`  Mᴀɪɴᴛᴀɪɴᴇʀ: {maintainer}`\n"
         for data in releases["data"]:
             release = data["type"]
             version = data["version"]
             size = humanbytes(data["size"])
             release_date = datetime.utcfromtimestamp(data["date"]).strftime("%Y-%m-%d")
+            text = f"[\xad]({ofox})**OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ**\n\n"
+            text += f"`  Fᴜʟʟ Nᴀᴍᴇ: {fullname}`\n"
+            text += f"`  Cᴏᴅᴇɴᴀᴍᴇ: {codename}`\n"
+            text += f"`  Mᴀɪɴᴛᴀɪɴᴇʀ: {maintainer}`\n"
             text += f"`  Bᴜɪʟᴅ Tʏᴘᴇ: {release}`\n"
             text += f"`  Vᴇʀsɪᴏɴ: {version}`\n"
             text += f"`  Sɪᴢᴇ: {size}`\n"
