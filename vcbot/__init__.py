@@ -68,8 +68,6 @@ class Player:
                 if chats != self._chat:
                     await CLIENTS[chats].stop()
             VIDEO_ON.append(self._chat)
-        elif VIDEO_ON:
-            await CLIENTS[VIDEO_ON[0]].stop()
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
@@ -103,8 +101,8 @@ class Player:
         chat_id = self._chat
         if chat_id in VIDEO_ON:
             await self.group_call.stop()
-            await self.startCall()
             del VIDEO_ON[self._chat]
+            await self.startCall()
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
             self.group_call.input_filename = song
