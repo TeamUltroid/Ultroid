@@ -601,4 +601,4 @@ async def ok(event):
     cv2.imwrite("output.png", constant)
     await event.client.send_file(event.chat.id, "output.png")
     os.remove("output.png")
-    os.remove(hm)
+    os.remove(okla)
