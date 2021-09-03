@@ -17,8 +17,6 @@ from telethon.utils import get_display_name
 from pyUltroid.functions.botchat_db import tag_add, who_tag
 from . import *
 
-# taglogger
-
 CACHE_SPAM = {}
 
 
@@ -81,12 +79,16 @@ async def all_messages_catcher(e):
         LOGS.info(str(er))
 
 if udB.get("TAG_LOG"):
-    @ultroid_bot.on(events.NewMessage(outgoing=True, chats=[int(udB.get("TAG_LOG"))], func=lambda e: e.reply_to))
+    @ultroid_bot.on(events.NewMessage(outgoing=True, chats=[int(udB["TAG_LOG"])], func=lambda e: e.reply_to))
     async def idk(e):
         id = e.reply_to_msg_id
         chat, msg = who_tag(id)
         if chat and msg:
-            await ultroid_bot.send_message(chat, e.message, reply_to=id)
+            try:
+                await ultroid_bot.send_message(chat, e.message, reply_to=id)
+            except:
+                pass
+
 
 @callback(re.compile("who(.*)"))
 async def _(e):
