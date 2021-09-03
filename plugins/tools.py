@@ -236,14 +236,15 @@ async def _(e):
     pattern="ls ?(.*)",
 )
 async def _(e):
-    files = glob.glob(e.pattern_match.group(1))
+    files = e.pattern_match.group(1)
     if not files:
-        files = glob.glob("*")
+        files = "*"
     else:
         if not glob.glob(files):
             return await eor(e, "`Incorrect Directory.`", time=5)
         if not glob.glob(files):
             return await eor(e, "`This Directory is Empty.`", time=5)
+    files = glob.glob(files)
     pyfiles = []
     jsons = []
     vdos = []
