@@ -309,7 +309,6 @@ async def hehe(args):
         ):
             async with ultroid_bot.conversation("@Stickers") as conv:
                 try:
-                    await conv.send_message("/cancel")
                     await conv.send_message("/addsticker")
                 except YouBlockedUserError:
                     LOGS.info("Unblocking @Stickers for kang...")
