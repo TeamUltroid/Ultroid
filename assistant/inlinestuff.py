@@ -9,10 +9,10 @@ import base64
 from random import choice
 from re import compile as re_compile
 from re import findall
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup as bs
-from orangefoxapi import OrangeFoxAPI
 from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
@@ -21,14 +21,11 @@ from telethon.tl.types import InputWebDocument as wb
 from plugins._inline import SUP_BUTTONS
 
 from . import *
-from . import humanbytes as hb
 
 ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
-
-ofox_api = OrangeFoxAPI()
 
 api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
     "ascii"
@@ -54,24 +51,28 @@ async def _(e):
             buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
         )
         await e.answer([kkkk])
-    a = ofox_api.releases(codename=match)
-    c = ofox_api.devices(codename=match)
-    if len(a.data) > 0:
+    device, releases = await get_ofox(match)
+    if device.get("detail") is not None:
         fox = []
-        for b in a.data:
-            ver = b.version
-            release = b.type
-            size = hb(b.size)
-            for z in c.data:
-                fullname = z.full_name
-                code = z.codename
-                link = f"https://orangefox.download/device/{code}"
-                text = f"**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ•[•]({ofox})** {fullname}\n"
-                text += f"**••Cᴏᴅᴇɴᴀᴍᴇ••** {code}\n"
-                text += f"**••Bᴜɪʟᴅ Tʏᴘᴇ••** {release}\n"
-                text += f"**••Vᴇʀsɪᴏɴ••** {ver}\n"
-                text += f"**••Sɪᴢᴇ••** {size}\n"
-                fox.append(
+        fullname = device["full_name"]
+        codename = device["codename"]
+        supported = str(device["supported"])
+        maintainer = device["maintainer"]["name"]
+        link = f"https://orangefox.download/device/{codename}"
+        text = f"[\xad]({ofox})**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ••**\n\n"
+        text += f"`  Fᴜʟʟ Nᴀᴍᴇ: {fullname}`\n"
+        text += f"`  Cᴏᴅᴇɴᴀᴍᴇ: {codename}`\n"
+        text += f"`  Mᴀɪɴᴛᴀɪɴᴇʀ: {maintainer}`\n"
+        for data in releases["data"]:
+            release = data["type"]
+            version = data["version"]
+            size = humanbytes(data["size"])
+            release_date = datetime.utcfromtimestamp(data["date"]).strftime("%Y-%m-%d")
+            text += f"`  Bᴜɪʟᴅ Tʏᴘᴇ: {release}`\n"
+            text += f"`  Vᴇʀsɪᴏɴ: {version}`\n"
+            text += f"`  Sɪᴢᴇ: {size}`\n"
+            text += f"`  Bᴜɪʟᴅ Dᴀᴛᴇ: {release_date}`"
+            fox.append(
                     await e.builder.article(
                         title=f"{fullname}",
                         description=f"{ver}\n{release}",
