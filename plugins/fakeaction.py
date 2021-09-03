@@ -28,9 +28,6 @@
 
 • `{i}fsticker <time/in secs>`
     `Show Fake sticker choosing Action in current chat.`
-
-• `{i}stopaction`
-   `Stop any ongoing Chat Action going in Chat.`
 """
 
 from . import *
@@ -43,7 +40,7 @@ async def _(e):
     if act in ["audio", "video"]:
         act = "record-" + act
     if not (t or t.isdigit()):
-        t = 100
+        t = 30
     else:
         try:
             t = int(t)
@@ -55,9 +52,3 @@ async def _(e):
     await eor(e, f"Starting Fake Action For {t} sec.", time=5)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)
-
-
-@ultroid_cmd(pattern="stopaction")
-async def do_it(e):
-    await e.client.action(e.chat_id, "cancel")
-    await eor(e, "Fake Action Stopped.", time=5)
