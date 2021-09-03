@@ -309,6 +309,7 @@ async def hehe(args):
         ):
             async with ultroid_bot.conversation("@Stickers") as conv:
                 try:
+                    await conv.send_message("/cancel")
                     await conv.send_message("/addsticker")
                 except YouBlockedUserError:
                     LOGS.info("Unblocking @Stickers for kang...")
@@ -323,6 +324,7 @@ async def hehe(args):
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
                     if is_anim:
+                        packname += "_anim"
                         packnick += " (Animated)"
                     await xx.edit(
                         "`Switching to Pack "
