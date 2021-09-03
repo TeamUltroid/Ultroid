@@ -3,7 +3,9 @@ name: PyLint
 on:
   push:
     paths:
-      - "*.py"
+      - *.py
+      - */*py
+      - */*/*py
 
 jobs:
 
