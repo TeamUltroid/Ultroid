@@ -383,10 +383,9 @@ async def fastpurgerme(purg):
     pattern="purgeall$",
 )
 async def _(e):
-    xx = await eor(e, get_string("com_1"))
-    if not e.reply_to_msg_id:
+    if not e.is_reply:
         return await eod(
-            xx,
+            e,
             "`Reply to someone's msg to delete.`",
         )
 
@@ -395,7 +394,7 @@ async def _(e):
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
         await eor(e, f"Successfully Purged All Messages from {name.first_name}", time=5)
     except Exception as er:
-        return await eor(xx, str(er), time=5)
+        return await eor(e, str(er), time=5)
 
 
 @ultroid_cmd(
