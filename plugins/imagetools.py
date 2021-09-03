@@ -7,6 +7,11 @@
 """
 ✘ Commands Available -
 
+• `{i}border <reply to photo/sticker>`
+    To create border around that media.. 
+    Ex - `{i}border 12,22,23
+       - `{i}border 12,22,23 ; width (in number)
+
 • `{i}grey <reply to any media>`
     To make it black nd white.
 
@@ -210,9 +215,9 @@ async def ultd(event):
         reply_to=event.reply_to_msg_id,
     )
     await xx.delete()
-    os.remove("ult.png")
-    os.remove("ult.jpg")
-    os.remove(ultt)
+    for i in ["ult.png", "ult.jpg", ultt]:
+        if os.path.exists(i):
+            os.remove(i)
 
 
 @ultroid_cmd(
@@ -570,3 +575,30 @@ async def ultd(event):
     os.remove("ult.png")
     os.remove("ult.webp")
     os.remove(ultt)
+
+
+@ultroid_cmd(pattern="border ?(.*)")
+async def ok(event):
+    hm = await event.get_reply_message()
+    if not (hm and (hm.photo or hm.sticker)):
+        return await eor(event, "`Reply to Sticker or Photo..`")
+    col = event.pattern_match.group(1)
+    if not col:
+        col = [255, 255,255]
+        wh = 20
+    else:            
+        try:
+            if ";" in col:
+                col_ = col.split(";", maxsplit=1)
+                wh = int(col_[1])
+                col = col_[0]
+            col = [float(col) for col in col.split(",")[:2]]
+        except ValueError:
+            return await eor(event, "`Not a Valid Input...`")
+    okla = await hm.download_media()
+    img1 = cv2.imread(okla)
+    constant= cv2.copyMakeBorder(img1,wh, wh, wh, wh,cv2.BORDER_CONSTANT,value=col)
+    cv2.imwrite('output.png',constant)
+    await event.client.send_file(event.chat.id,'output.png')
+    os.remove('output.png')
+    os.remove(hm)
