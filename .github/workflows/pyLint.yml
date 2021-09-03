@@ -1,11 +1,6 @@
 name: PyLint
 
-on:
-  push:
-    paths:
-      - *.py
-      - */*py
-      - */*/*py
+on: push
 
 jobs:
 
