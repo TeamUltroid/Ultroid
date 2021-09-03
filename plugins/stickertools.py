@@ -318,13 +318,10 @@ async def hehe(args):
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "120" or "50" in x.text:
+                while "120" in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
-                    if is_anim:
-                        packname += "_anim"
-                        packnick += " (Animated)"
                     await xx.edit(
                         "`Switching to Pack "
                         + str(pack)
@@ -332,10 +329,7 @@ async def hehe(args):
                     )
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    if x.text in [
-                        "Invalid pack selected.",
-                        "Please send me your sticker animation as a **file**.",
-                    ]:
+                    if x.text == "Invalid pack selected.":
                         await conv.send_message(cmd)
                         await conv.get_response()
                         await ultroid_bot.send_read_acknowledge(conv.chat_id)
