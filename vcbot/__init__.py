@@ -35,9 +35,8 @@ from strings import get_string
 asstUserName = asst.me.username
 LOG_CHANNEL = int(udB["LOG_CHANNEL"])
 ACTIVE_CALLS, VC_QUEUE = [], {}
+MSGID_CACHE, VIDEO_ON = {}, []
 CLIENTS = {}
-MSGID_CACHE = {}
-
 
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
@@ -49,10 +48,10 @@ def VC_AUTHS():
 
 
 class Player:
-    def __init__(self, chat, event=None):
+    def __init__(self, chat, event=None, video=False):
         self._chat = chat
         self._current_chat = event.chat_id if event else LOG_CHANNEL
-        self._video = False
+        self._video = video
         if CLIENTS.get(chat):
             self.group_call = CLIENTS[chat]
         else:
@@ -63,6 +62,13 @@ class Player:
             CLIENTS.update({chat: self.group_call})
 
     async def startCall(self):
+        if self._video:
+            for chats in CLIENTS:
+                if chats != self._chat:
+                    await CLIENTS[chats].stop()
+            VIDEO_ON.append(self._chat)
+        elif VIDEO_ON:
+            await CLIENTS[VIDEO_ON[0]].stop()
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
@@ -115,6 +121,8 @@ class Player:
         except (IndexError, KeyError):
             await self.group_call.stop()
             del CLIENTS[self._chat]
+            if self._chat in VIDEO_ON:
+                del VIDEO_ON[self._chat]
             await vcClient.send_message(
                 self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
             )
