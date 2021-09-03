@@ -67,6 +67,7 @@ class Player:
             for chats in VIDEO_ON:
                 await VIDEO_ON[chats].stop()
             VIDEO_ON.clear()
+            await asyncio.sleep(3)
         if self._video:
             for chats in CLIENTS:
                 if chats != self._chat:
