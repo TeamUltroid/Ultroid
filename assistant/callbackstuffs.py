@@ -109,6 +109,7 @@ async def update(eve):
         await eve.edit(
             "`Userbot dyno build in progress, please wait for it to complete.`"
         )
+        call_back()
         await bash("git pull && pip3 install -r requirements.txt")
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
