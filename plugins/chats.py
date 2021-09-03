@@ -128,7 +128,8 @@ async def _(e):
                 await e.client(UpdateUsernameRequest(created_chat_id, username))
                 result = "https://t.me/" + username
             else:
-                result = (await e.client(
+                result = (
+                    await e.client(
                         ExportChatInviteRequest(
                             peer=created_chat_id,
                         ),
