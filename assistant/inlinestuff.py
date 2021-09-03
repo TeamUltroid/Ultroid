@@ -53,7 +53,7 @@ async def _(e):
         )
         return await e.answer([kkkk])
     device, releases = await get_ofox(match)
-    if device.get("detail") is not None:
+    if device.get("detail") is None:
         fox = []
         fullname = device["full_name"]
         codename = device["codename"]
