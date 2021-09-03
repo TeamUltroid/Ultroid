@@ -6,10 +6,10 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+from datetime import datetime
 from random import choice
 from re import compile as re_compile
 from re import findall
-from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -56,7 +56,7 @@ async def _(e):
         fox = []
         fullname = device["full_name"]
         codename = device["codename"]
-        supported = str(device["supported"])
+        str(device["supported"])
         maintainer = device["maintainer"]["name"]
         link = f"https://orangefox.download/device/{codename}"
         text = f"[\xad]({ofox})**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ••**\n\n"
@@ -73,20 +73,20 @@ async def _(e):
             text += f"`  Sɪᴢᴇ: {size}`\n"
             text += f"`  Bᴜɪʟᴅ Dᴀᴛᴇ: {release_date}`"
             fox.append(
-                    await e.builder.article(
-                        title=f"{fullname}",
-                        description=f"{version}\n{release_date}",
-                        text=text,
-                        thumb=wb(ofox, 0, "image/jpeg", []),
-                        link_preview=True,
-                        buttons=[
-                            Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
-                            Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True
-                            ),
-                        ],
-                    )
+                await e.builder.article(
+                    title=f"{fullname}",
+                    description=f"{version}\n{release_date}",
+                    text=text,
+                    thumb=wb(ofox, 0, "image/jpeg", []),
+                    link_preview=True,
+                    buttons=[
+                        Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
+                        Button.switch_inline(
+                            "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True
+                        ),
+                    ],
                 )
+            )
         await e.answer(
             fox, switch_pm="OrangeFox Recovery Search.", switch_pm_param="start"
         )
