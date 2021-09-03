@@ -8,7 +8,7 @@
 ✘ Commands Available -
 
 • `{i}border <reply to photo/sticker>`
-    To create border around that media.. 
+    To create border around that media..
     Ex - `{i}border 12,22,23
        - `{i}border 12,22,23 ; width (in number)
 
@@ -584,9 +584,9 @@ async def ok(event):
         return await eor(event, "`Reply to Sticker or Photo..`")
     col = event.pattern_match.group(1)
     if not col:
-        col = [255, 255,255]
+        col = [255, 255, 255]
         wh = 20
-    else:            
+    else:
         try:
             if ";" in col:
                 col_ = col.split(";", maxsplit=1)
@@ -597,8 +597,8 @@ async def ok(event):
             return await eor(event, "`Not a Valid Input...`")
     okla = await hm.download_media()
     img1 = cv2.imread(okla)
-    constant= cv2.copyMakeBorder(img1,wh, wh, wh, wh,cv2.BORDER_CONSTANT,value=col)
-    cv2.imwrite('output.png',constant)
-    await event.client.send_file(event.chat.id,'output.png')
-    os.remove('output.png')
+    constant = cv2.copyMakeBorder(img1, wh, wh, wh, wh, cv2.BORDER_CONSTANT, value=col)
+    cv2.imwrite("output.png", constant)
+    await event.client.send_file(event.chat.id, "output.png")
+    os.remove("output.png")
     os.remove(hm)

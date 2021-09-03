@@ -7,6 +7,7 @@
 
 import re
 
+from pyUltroid.functions.botchat_db import who_tag
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
@@ -14,10 +15,11 @@ from telethon.errors.rpcerrorlist import (
     UserNotParticipantError,
 )
 from telethon.utils import get_display_name
-from pyUltroid.functions.botchat_db import tag_add, who_tag
+
 from . import *
 
 CACHE_SPAM = {}
+
 
 @ultroid_bot.on(
     events.NewMessage(
@@ -77,15 +79,21 @@ async def all_messages_catcher(e):
     except Exception as er:
         LOGS.info(str(er))
 
+
 if udB.get("TAG_LOG"):
-    @ultroid_bot.on(events.NewMessage(outgoing=True, chats=[int(udB["TAG_LOG"])], func=lambda e: e.reply_to))
+
+    @ultroid_bot.on(
+        events.NewMessage(
+            outgoing=True, chats=[int(udB["TAG_LOG"])], func=lambda e: e.reply_to
+        )
+    )
     async def idk(e):
         id = e.reply_to_msg_id
         chat, msg = who_tag(id)
         if chat and msg:
             try:
                 await ultroid_bot.send_message(chat, e.message, reply_to=id)
-            except:
+            except BaseException:
                 pass
 
 
