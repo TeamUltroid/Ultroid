@@ -8,13 +8,13 @@
 """
 ✘ Commands Available -
 
-• `{i}delchat`
+• `{i}delchat <optional- username/id>`
     Delete the group this cmd is used in.
 
 • `{i}getlink`
     Get link of group this cmd is used in.
 
-• `{i}create (g|b|c) <group_name> ; user`
+• `{i}create (g|b|c) <group_name> ; <optional-username>`
     Create group woth a specific name.
     g - megagroup/supergroup
     b - small group
@@ -38,13 +38,18 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="delchat$",
+    pattern="delchat",
     groups_only=True,
 )
 async def _(e):
     xx = await eor(e, "`Processing...`")
     try:
-        await e.client(DeleteChannelRequest(e.chat_id))
+        match = e.text.split(" ", maxsplit=1)[1]
+        chat = "-100" + str(await get_user_id(match))
+    except IndexError:
+        chat = e.chat_id
+    try:
+        await e.client(DeleteChannelRequest(chat))
     except TypeError:
         return await eor(xx, "`Cant delete this chat`", time=10)
     except no_admin:
@@ -77,8 +82,8 @@ async def _(e):
     type_of_group = e.pattern_match.group(1)
     group_name = e.pattern_match.group(2)
     username = None
-    if ";" in group_name:
-        group_ = group_name.split(";", maxsplit=1)
+    if " ; " in group_name:
+        group_ = group_name.split(" ; ", maxsplit=1)
         group_name = group_[0]
         username = group_[1]
     xx = await eor(e, "`Processing...`")
@@ -121,16 +126,14 @@ async def _(e):
             created_chat_id = r.chats[0].id
             if username:
                 await e.client(UpdateUsernameRequest(created_chat_id, username))
-            result = (
-                username
-                or (
-                    await e.client(
+                result = "https://t.me/" + username
+            else:
+                result = (await e.client(
                         ExportChatInviteRequest(
                             peer=created_chat_id,
                         ),
                     )
                 ).link
-            )
             await xx.edit(
                 f"Your [{group_name}]({result}) Group/Channel Has been made Boss!",
                 link_preview=False,
