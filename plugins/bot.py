@@ -116,6 +116,7 @@ heroku_api = Var.HEROKU_API
 )
 async def restartbt(ult):
     ok = await eor(ult, "• `Restarting...`")
+    call_back()
     if heroku_api:
         return await restart(ok)
     await bash("git pull && pip3 install -r requirements.txt")
