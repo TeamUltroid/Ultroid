@@ -72,7 +72,7 @@ class Player:
                 if chats != self._chat:
                     await CLIENTS[chats].stop()
                     del CLIENTS[chats]
-            VIDEO_ON.update({self._chat: self.group_call})          
+            VIDEO_ON.update({self._chat: self.group_call})
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
