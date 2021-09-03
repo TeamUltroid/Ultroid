@@ -14,7 +14,7 @@ from telethon.errors.rpcerrorlist import (
     UserNotParticipantError,
 )
 from telethon.utils import get_display_name
-
+from pyUltroid.functions.botchat_db import tag_add, who_tag
 from . import *
 
 # taglogger
@@ -49,11 +49,13 @@ async def all_messages_catcher(e):
     else:
         buttons.append([Button.inline(who_n, data=f"who{x.id}")])
     try:
-        await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
+        sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
+        add_tag(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
-            await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
+            sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
+            add_tag(send.id, e.chat_id, e.id)
         except Exception as me:
             LOGS.info(me)
             await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
@@ -78,6 +80,13 @@ async def all_messages_catcher(e):
     except Exception as er:
         LOGS.info(str(er))
 
+if udB.get("TAG_LOG"):
+    @ultroid_bot.on(events.NewMessage(outgoing=True, chats=[int(udB.get("TAG_LOG"))], func=lambda e: e.reply_to))
+    async def idk(e):
+        id = e.reply_to_msg_id
+        chat, msg = who_tag(id)
+        if chat and msg:
+            await ultroid_bot.send_message(chat, e.message, reply_to=id)
 
 @callback(re.compile("who(.*)"))
 async def _(e):
