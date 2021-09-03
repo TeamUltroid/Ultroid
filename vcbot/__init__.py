@@ -38,6 +38,7 @@ ACTIVE_CALLS, VC_QUEUE = [], {}
 MSGID_CACHE, VIDEO_ON = {}, []
 CLIENTS = {}
 
+
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
     A_AUTH = [*owner_and_sudos(), *_vc_sudos]
