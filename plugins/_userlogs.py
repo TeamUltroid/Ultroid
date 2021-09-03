@@ -19,7 +19,6 @@ from . import *
 
 CACHE_SPAM = {}
 
-
 @ultroid_bot.on(
     events.NewMessage(
         incoming=True,
