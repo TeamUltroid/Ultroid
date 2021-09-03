@@ -41,6 +41,7 @@ api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").
 @in_pattern("ofox")
 @in_owner
 async def _(e):
+    match = None
     try:
         match = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -50,7 +51,7 @@ async def _(e):
             text="**OFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ**\n\nYou didn't search anything",
             buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
         )
-        await e.answer([kkkk])
+        return await e.answer([kkkk])
     device, releases = await get_ofox(match)
     if device.get("detail") is not None:
         fox = []
