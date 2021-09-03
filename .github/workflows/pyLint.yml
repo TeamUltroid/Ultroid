@@ -1,6 +1,9 @@
 name: PyLint
 
-on: push
+on:
+  push:
+    paths:
+      - "*.py"
 
 jobs:
 
@@ -13,7 +16,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.9.x
 
       - name: Install Python lint libraries
         run: pip install autopep8 autoflake isort black
