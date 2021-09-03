@@ -583,9 +583,9 @@ async def ok(event):
     if not (hm and (hm.photo or hm.sticker)):
         return await eor(event, "`Reply to Sticker or Photo..`")
     col = event.pattern_match.group(1)
+    wh = 20
     if not col:
         col = [255, 255, 255]
-        wh = 20
     else:
         try:
             if ";" in col:
