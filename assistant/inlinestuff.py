@@ -75,7 +75,7 @@ async def _(e):
             fox.append(
                     await e.builder.article(
                         title=f"{fullname}",
-                        description=f"{ver}\n{release}",
+                        description=f"{version}\n{release_date}",
                         text=text,
                         thumb=wb(ofox, 0, "image/jpeg", []),
                         link_preview=True,
