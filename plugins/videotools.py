@@ -133,7 +133,7 @@ async def gen_shots(e):
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating `{shot}` screenshots..."
         )
         await bash("rm -rf ss && mkdir ss")
-        cmd = f'ffmpeg -i "{file.name}" -vf fps=0.01 -vframes {shot} "ss/pic%01d.png"'
+        cmd = f'ffmpeg -i "{file.name}" -vf fps=0.009 -vframes {shot} "ss/pic%01d.png"'
         await bash(cmd)
         os.remove(file.name)
         pic = glob.glob("ss/*")
