@@ -15,7 +15,7 @@ from . import *
 @ultroid_cmd(pattern="write ?(.*)")
 async def writer(e):
     if e.reply_to:
-        reply = await e.get_reply_message((
+        reply = await e.get_reply_message()
         text = reply.message
     elif e.pattern_match.group(1):
         text = e.text.split(maxsplit=1)[1]
