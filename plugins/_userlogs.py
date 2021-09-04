@@ -7,7 +7,7 @@
 
 import re
 
-from pyUltroid.functions.botchat_db import who_tag
+from pyUltroid.functions.botchat_db import who_tag, tag_add
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
@@ -49,12 +49,12 @@ async def all_messages_catcher(e):
         buttons.append([Button.inline(who_n, data=f"who{x.id}")])
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
-        add_tag(sent.id, e.chat_id, e.id)
+        tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
-            add_tag(send.id, e.chat_id, e.id)
+            tag_add(send.id, e.chat_id, e.id)
         except Exception as me:
             LOGS.info(me)
             await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
