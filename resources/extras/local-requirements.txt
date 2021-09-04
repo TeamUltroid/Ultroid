@@ -59,6 +59,7 @@ speedtest-cli==2.1.3
 tabulate
 telegraph
 tenacity
+tgcrypto
 validators
 youtube-search-python
 youtube_dl
