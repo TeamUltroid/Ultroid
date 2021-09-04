@@ -86,12 +86,12 @@ async def fl(e):
         return
     xx = (e.text).lower()
     chat = e.chat_id
-    x = get_filter(int(chat))
+    x = get_filter(chat)
     if x:
         for c in x:
             pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
             if re.search(pat, xx):
-                k = get_reply(int(chat), c)
+                k = x.get(c)
                 if k:
                     msg = k["msg"]
                     media = k["media"]
