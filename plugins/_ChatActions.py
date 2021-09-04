@@ -60,17 +60,16 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
     if ult.user_joined or ult.added_by:
         user = await ult.get_user()
         chat = await ult.get_chat()
-        if is_gbanned(str(user.id)) and chat.admin_rights:
+        reason = is_gbanned(user.id)
+        if reason and chat.admin_rights:
             try:
                 await ultroid_bot.edit_permissions(
                     chat.id,
                     user.id,
                     view_messages=False,
                 )
-                reason = get_gban_reason(user.id)
                 gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
-                if reason is not None:
-                    gban_watch += f"**Reason**: {reason}\n\n"
+                gban_watch += f"**Reason**: {reason}\n\n"
                 gban_watch += "`User Banned.`"
                 await ult.reply(gban_watch)
             except BaseException:
@@ -108,7 +107,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 )
                 await asyncio.sleep(150)
                 await send.delete()
-            elif not is_gbanned(str(user.id)):
+            elif not is_gbanned(user.id):
                 await ult.reply(file=med)
     if (ult.user_left or ult.user_kicked) and get_goodbye(ult.chat_id):
         user = await ult.get_user()
