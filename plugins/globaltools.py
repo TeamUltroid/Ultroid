@@ -283,8 +283,6 @@ async def _(e):
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
-    if not is_gbanned(userid):
-        return await eor(xx, "`User is not gbanned.`", time=3)
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
