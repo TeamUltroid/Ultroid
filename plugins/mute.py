@@ -35,9 +35,9 @@ from . import *
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def watcher(event):
-    if is_muted(f"{event.sender_id}_{event.chat_id}"):
+    if is_muted(event.chat_id, event.sender_id):
         await event.delete()
-    if event.via_bot and is_muted(f"{event.via_bot_id}_{event.chat_id}"):
+    if event.via_bot and is_muted(event.chat_id, event.via_bot_id):
         await event.delete()
 
 
@@ -72,7 +72,7 @@ async def startmute(event):
     if is_muted(f"{userid}_{chat_id}"):
         return await eor(xx, "`This user is already muted in this chat.`", time=5)
     try:
-        mute(f"{userid}_{chat_id}")
+        mute(chat_id, userid)
         await eor(xx, "`Successfully muted...`", time=3)
     except Exception as e:
         await eor(xx, "Error: " + f"`{e}`", time=5)
@@ -104,7 +104,7 @@ async def endmute(event):
     if not is_muted(f"{userid}_{chat_id}"):
         return await eor(xx, "`This user is not muted in this chat.`", time=3)
     try:
-        unmute(f"{userid}_{chat_id}")
+        unmute(chat_id, userid)
         await eor(xx, "`Successfully unmuted...`", time=3)
     except Exception as e:
         await eor(xx, "Error: " + f"`{e}`", time=5)
