@@ -56,5 +56,5 @@ async def video_c(ult):
     if not (await ultSongs.vc_joiner()):
         return
     ultSongs.group_call.input_filename = file
-    await ultSongs.group_call.set_video_capture(match)
+    await ultSongs.group_call.start_video(match)
     await eor(ult, f"Playing {match}")
