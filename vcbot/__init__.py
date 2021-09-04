@@ -78,7 +78,7 @@ class Player:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
                 self.group_call.on_playout_ended(self.playout_ended_handler)
-                await self.group_call.start(self._chat)
+                await self.group_call.join(self._chat)
             except Exception as e:
                 return False, e
         return True, None
