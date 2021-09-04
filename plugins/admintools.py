@@ -272,11 +272,11 @@ async def unp(ult):
     if msg:
         pass
     elif ch == "all":
-        pass
+        msg = None
     else:
         return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
     try:
-        await ult.client.unpin_message(ult.chat_id)
+        await ult.client.unpin_message(ult.chat_id, msg)
     except BadRequestError:
         return await xx.edit("`Hmm.. Guess I have no rights here!`")
     except Exception as e:
