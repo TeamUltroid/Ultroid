@@ -23,7 +23,7 @@ RUN wget --progress=dot:giga -O /deploy/addons.txt https://git.io/JWdOk && pip3 
 # remove wheel coz of warning
 RUN rm -rf /usr/local/lib/python3.9/site-packages/.wh
 
-RUN pip3 install -U pytgcalls==3.0.0.dev11
+RUN pip3 install -U pytgcalls==3.0.0.dev12
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
