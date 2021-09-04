@@ -90,12 +90,9 @@ async def notes(e):
     xx = (e.text).lower()
     if not xx.startswith("$"):
         return
-    xx = xx.replace("$", "")
-    x = get_snips()
-    if x:
-        if " " in xx:
-            xx = xx.split(" ")[0]
-        k = get_reply(xx)
+    xx = xx.replace("$", "").split()
+    for z in xx:
+        k = get_snips()
         if k:
             msg = k["msg"]
             media = k["media"]
