@@ -137,9 +137,11 @@ async def gen_shots(e):
         await bash(cmd)
         os.remove(file.name)
         pic = glob.glob("ss/*")
-        await e.client.send_message(
-            e.chat_id, f"Uploaded {len(pic)}/{shot} screenshots", file=pic
-        )
+        text = f"Uploaded {len(pic)}/{shot} screenshots"
+        if not pic:
+            text = "`Failed to Take Screenshots..`"
+            pic = None
+        await e.client.send_message(e.chat_id, text, file=pic)
         await bash("rm -rf ss")
         await xxx.delete()
 
