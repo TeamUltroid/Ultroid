@@ -7,7 +7,7 @@
 
 import re
 
-from pyUltroid.functions.botchat_db import who_tag, tag_add
+from pyUltroid.functions.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
