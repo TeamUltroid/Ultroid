@@ -8,13 +8,13 @@
 """
 ✘ Commands Available -
 
-•`{i}sample <time -at gap of>`
+•`{i}sample <duration in seconds>`
    Creates Short sample of video..
 
 • `{i}vshots <number of shots>`
    Creates screenshot of video..
 
-• `{i}vtrim <start time> - <end time>`
+• `{i}vtrim <start time> - <end time> in seconds`
     Crop a Lengthy video..
 """
 
@@ -33,7 +33,7 @@ from . import *
 @ultroid_cmd(pattern="sample ?(.*)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
-    stime = 45
+    stime = 35
     if sec and sec.isdigit():
         stime = int(sec)
     vido = await e.get_reply_message()
