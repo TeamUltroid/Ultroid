@@ -14,10 +14,14 @@ from . import *
 
 @ultroid_cmd(pattern="write ?(.*)")
 async def writer(e):
-    if not e.pattern_match.group(1):
+    if e.reply_to:
+        reply = await e.get_reply_message((
+        text = reply.message
+    elif e.pattern_match.group(1):
+        text = e.text.split(maxsplit=1)[1]
+    else:
         return await eod(e, "`Give Some Texts Too`")
     k = await eor(e, "`Processing...`")
-    text = e.text.split(maxsplit=1)[1]
     img = Image.open("resources/extras/template.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("resources/fonts/assfont.ttf", 30)
