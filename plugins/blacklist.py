@@ -65,12 +65,12 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def bl(e):
-    chat = e.chat_id
-    x = get_blacklist(int(chat))
-    if x and e.text:
-        xx = ((e.text).lower()).split()
-        yy = x.split("$|")
-        for z in xx:
-            if z in yy:
-                await e.delete()
-                break
+    x = get_blacklist(e.chat_id)
+    for z in e.text.lower().split():
+        for zz in x:
+            if z == zz:
+                try:
+                    await e.delete()
+                    break
+                except BaseException:
+                    break
