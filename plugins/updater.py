@@ -27,10 +27,11 @@ async def _(e):
     if m:
         if e.pattern_match.group(1):
             if "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1):
+                await bash("git pull -f && pip3 install -r requirements.txt")
                 call_back()
-                await bash("git pull && pip3 install -r requirements.txt")
                 await xx.edit("`Fast Soft Updating...`")
                 execl(sys.executable, "python3", "-m", "pyUltroid")
+                return
         x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             ULTPIC,
