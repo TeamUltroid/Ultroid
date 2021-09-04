@@ -294,7 +294,6 @@ async def _(e):
                 pass
     try:
         ungban(userid)
-        delete_gban_reason(userid)
         await e.client(UnblockRequest(int(userid)))
     except Exception as ex:
         return await eor(xx, str(ex))
@@ -348,8 +347,7 @@ async def _(e):
             except BaseException:
                 pass
     try:
-        gban(userid)
-        add_gban_reason(userid, reason)
+        gban(userid, reason)
         await e.client(BlockRequest(int(userid)))
     except Exception as ex:
         return await eor(xx, str(ex))
@@ -505,10 +503,10 @@ async def _(e):
     pattern="listgban",
 )
 async def list_gengbanned(event):
-    users = gbanned_user()
+    users = list_gbanned()
     x = await eor(event, get_string("com_1"))
     msg = ""
-    if not udB.get("GBAN"):
+    if not users:
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
@@ -516,7 +514,7 @@ async def list_gengbanned(event):
         except BaseException:
             name = i
         msg += f"**User**: {name}\n"
-        reason = get_gban_reason(i)
+        reason = users[i]
         msg += f"**Reason**: {reason}\n\n" if reason is not None else "\n"
     gbanned_users = f"**List of users GBanned by {OWNER_NAME}**:\n\n{msg}"
     if len(gbanned_users) > 4096:
@@ -551,7 +549,7 @@ async def gstat_(e):
     name = (await e.client.get_entity(userid)).first_name
     msg = "**" + name + " is "
     is_banned = is_gbanned(userid)
-    reason = get_gban_reason(userid)
+    reason = list_gbanned().get(userid)
     if is_banned:
         msg += "Globally Banned"
         msg += f" with reason** `{reason}`" if reason else ".**"
