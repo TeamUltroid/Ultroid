@@ -17,13 +17,8 @@ WORKDIR /root/TeamUltroid/
 COPY requirements.txt /deploy/
 RUN pip3 install --no-cache-dir -r /deploy/requirements.txt
 
-# install addons requirements
-RUN wget --progress=dot:giga -O /deploy/addons.txt https://git.io/JWdOk && pip3 install --no-cache-dir -r /deploy/addons.txt
-
-# remove wheel coz of warning
-RUN rm -rf /usr/local/lib/python3.9/site-packages/.wh
-
 RUN pip3 install -U pytgcalls==3.0.0.dev13
+
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
