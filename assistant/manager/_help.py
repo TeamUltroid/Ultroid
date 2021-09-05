@@ -33,7 +33,10 @@ ADMINTOOLS = """✘ **AdminTools** ✘
 • /tban (username/id/reply) (time) : Temporary ban a user
 • /tmute (username/id/reply) (time) : temporary Mutes a User.
 
-• /purge (purge messages)"""
+• /purge (purge messages)
+
+• /setgpic (reply photo) : keep Chat Photo of Group.
+• /delgpic : remove current chat Photo."""
 
 UTILITIES = """
 ✘ ** Utilities ** ✘
@@ -66,6 +69,7 @@ LOCKS = """
 - `pin` : for pins.
 - `changeinfo` : for change info right.
 """
+
 STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES}
 
 
