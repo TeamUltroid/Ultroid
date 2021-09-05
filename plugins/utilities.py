@@ -498,7 +498,7 @@ async def _(event):
         await eor(event, f"```{the_real_message}```")
 
 
-@ultroid_cmd(pattern="suggest",type=["official","manager"])
+@ultroid_cmd(pattern="suggest", type=["official", "manager"])
 async def sugg(event):
     sll = event.text.split(" ", maxsplit=1)
     try:
