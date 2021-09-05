@@ -296,16 +296,27 @@ async def otvaar(event):
             [
                 Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
                 Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
-            ],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
+            ],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
+
 @callback("oofdm")
 @owner
 async def euwhe(e):
-    BT = [[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ","dmof")],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ","dmof")],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ","dmhn")]]
-    await event.edit("About [Dual Mode](https://t.me/UltroidUpdates/18)", buttons=BT, link_preview=False)
+    BT = [
+        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
+        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
+        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
+    ]
+    await event.edit(
+        "About [Dual Mode](https://t.me/UltroidUpdates/18)",
+        buttons=BT,
+        link_preview=False,
+    )
+
 
 @callback("dmof")
 @owner
@@ -318,6 +329,7 @@ async def rhwhe(e):
         key = "On"
     Msg = "Dual Mode : " + key
     await e.edit(Msg, buttons=get_back_button("otvars"))
+
 
 @callback("dmhn")
 @owner
@@ -350,6 +362,7 @@ async def hndlrr(event):
                 f"{name} changed to {themssg}",
                 buttons=get_back_button("otvars"),
             )
+
 
 @callback("emoj")
 @owner
