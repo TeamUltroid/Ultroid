@@ -248,11 +248,15 @@ async def vid_download(query):
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
     link = data["link"]
-    vid = pafy.new(link).getbest().url
+    vid = pafy.new(link)
+    video = vid.getbest().url
+    for stream in vid.streams:
+        if stream.resolution == "1280x720":
+            video = stream.url
     title = data["title"]
     thumb = data["thumbnails"][-1]["url"] + ".jpg"
     duration = data["duration"] or "♾"
-    return vid, thumb, title, duration
+    return video, thumb, title, duration
 
 
 async def file_download(event, reply, fast_download=True):
