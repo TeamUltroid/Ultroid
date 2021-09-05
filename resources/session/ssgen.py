@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 # Ultroid - UserBot
 # Copyright (C) 2021 TeamUltroid
 #
