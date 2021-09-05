@@ -7,7 +7,7 @@
 """
 ✘ Commands Available
 
-• `{i}alive`
+• `{i}alive` | `{i}ialive`
     Check if your bot is working.
 
 • `{i}ping`
@@ -63,13 +63,6 @@ async def lol(ult):
         __version__,
         kk,
     )
-    if udB.get("INLINE_ALIVE") and not ult.client._bot:
-        await ult.delete()
-        try:
-            res = await ult.client.inline_query(asst.me.username, "alive")
-            return await res[0].click(ult.chat_id)
-        except Exception as er:
-            LOGS.info(er)
     if pic is None:
         await eor(ult, als)
     elif "telegra" in pic:
@@ -85,6 +78,19 @@ async def lol(ult):
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
+
+
+@ultroid_cmd(
+    pattern="ialive$",
+)
+async def is_on(ult):
+    if not ult.client._bot:
+        await ult.delete()
+        try:
+            res = await ult.client.inline_query(asst.me.username, "alive")
+            return await res[0].click(ult.chat_id)
+        except Exception as er:
+            LOGS.info(er)
 
 
 @ultroid_cmd(
