@@ -329,7 +329,7 @@ async def _(e):
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gban myself.`", time=3)
-    if str(userid) in DEVLIST:
+    if userid in DEVLIST:
         return await eor(xx, "`I can't gban my Developers.`", time=3)
     if is_gbanned(userid):
         return await eod(
@@ -429,7 +429,7 @@ async def gkick(e):
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gkick myself.`", time=3)
-    if str(userid) in DEVLIST:
+    if userid in DEVLIST:
         return await eor(xx, "`I can't gkick my Developers.`", time=3)
     async for gkick in e.client.iter_dialogs():
         if gkick.is_group or gkick.is_channel:
@@ -456,7 +456,7 @@ async def _(e):
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gmute myself.`", time=3)
-    if str(userid) in DEVLIST:
+    if userid in DEVLIST:
         return await eor(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
         return await eor(xx, "`User is already gmuted.`", time=4)
