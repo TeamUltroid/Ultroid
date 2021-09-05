@@ -21,7 +21,7 @@ from resources.extras.fonts import (
     _small_caps,
 )
 
-fonts = ["small caps ", "monospace ", "double stroke ", "script royal"]
+fonts = ["small caps ", "monospace ", "double stroke ", "script royal "]
 
 
 @ultroid_cmd(
@@ -48,13 +48,13 @@ async def _(e):
             return await eor(e, "`fonts small caps : Your Message`", time=5)
     if font not in fonts:
         return await eor(e, f"`{font} not in font list`.", time=5)
-    if font == "small caps ":
+    elif font == "small caps ":
         msg = gen_font(text, _small_caps)
-    if font == "monospace ":
+    elif font == "monospace ":
         msg = gen_font(text, _monospace)
-    if font == "double stroke ":
+    elif font == "double stroke ":
         msg = gen_font(text, _double_stroke)
-    if font == "script royal ":
+    elif font == "script royal ":
         msg = gen_font(text, _script_royal)
     await eor(e, msg)
 
