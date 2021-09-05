@@ -168,7 +168,7 @@ async def ex_aud(e):
     attributes = [
         DocumentAttributeAudio(
             duration=duration,
-            title=out_file.split(".")[0],
+            title=reply.file.name.split(".")[0],
             performer=artist,
         )
     ]
@@ -181,6 +181,6 @@ async def ex_aud(e):
         "Uploading " + out_file + "...",
     )
     await e.client.send_file(
-        e.chat_id, fo, attributes=attributes, reply_to=e.reply_to_msg_id
+        e.chat_id, fo, caption="`Extracted Audio from Video...`", thumb="resources/extras/ultroid.jpg",attributes=attributes, reply_to=e.reply_to_msg_id
     )
     await e.delete()
