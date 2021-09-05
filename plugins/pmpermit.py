@@ -181,7 +181,7 @@ if sett == "True":
         miss = await e.get_chat()
         if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
             return
-        if str(miss.id) in DEVLIST:
+        if miss.id in DEVLIST:
             return
         # do not approve if outgoing is a command.
         if e.text.startswith(HNDLR):
