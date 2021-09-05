@@ -76,9 +76,10 @@ MISC = """
 • /joke : Get Random Jokes.
 """
 
-STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc":MISC}
+STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc": MISC}
 
 MNGE = udB.get("MNGR_EMOJI") or "•"
+
 
 def get_buttons():
     BTTS = []
