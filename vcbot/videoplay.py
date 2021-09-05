@@ -7,6 +7,12 @@
 
 """
 ✘ Commands Available
+
+`{i}videoplay <song name\ url \ m3u8 links \ reply to video>`
+   Stream Videos at chat.
+   you can use remotely too
+   like `{i}videoplay @chat <input \ reply>`
+
 """
 
 
@@ -16,7 +22,7 @@ from requests.exceptions import MissingSchema
 from . import *
 
 
-@vc_asst("vidstream")
+@vc_asst("videoplay")
 async def video_c(event):
     xx = await eor(event, get_string("com_1"))
     chat = event.chat_id
