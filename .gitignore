@@ -21,6 +21,7 @@ __pycache__/
 venv/
 node_modules/
 glitch_me/
+src/glitch-me
 .idea/
 .vscode/
 temp/
