@@ -475,7 +475,7 @@ async def hndlrr(event):
     name = "Sudo Handler"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "Send The Symbol Which u want as Handler/Trigger to use bot\n\n use /cancel to cancel."
+            "Send The Symbol Which u want as Sudo Handler/Trigger to use bot\n\n use /cancel to cancel."
         )
 
         response = conv.wait_event(events.NewMessage(chats=pru))
@@ -1023,10 +1023,41 @@ async def alvcs(event):
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
-            BT,
+            BT,[Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ","pmlgg")],
             [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
+
+@callback("pmlgg")
+@owner
+async def disus(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "PMLOGGROUP"
+    name = "Pm Logger Group"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"Send The Symbol Which u want as your {name}\n\n use /cancel to cancel.",
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button("pml"),
+            )
+        elif len(themssg) > 1:
+            await conv.send_message(
+                "Incorrect Value",
+                buttons=get_back_button("pml"),
+            )
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message(
+                f"{name} changed to `{themssg}`",
+                buttons=get_back_button("pml"),
+            )
 
 
 @callback("pmlog")
