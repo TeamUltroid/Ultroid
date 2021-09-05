@@ -76,7 +76,7 @@ class Player:
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
-                self.group_call.on_playout_ended(self.playout_ended_handler)
+                # self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.join(self._chat)
             except Exception as e:
                 return False, e
@@ -90,16 +90,8 @@ class Player:
         else:
             if chat in ACTIVE_CALLS:
                 ACTIVE_CALLS.remove(chat)
-            try:
-                remove(call._GroupCallFile__input_filename)
-            except BaseException:
-                pass
 
     async def playout_ended_handler(self, call, __):
-        try:
-            remove(call._GroupCallFile__input_filename)
-        except BaseException:
-            pass
         await self.play_from_queue()
 
     async def play_from_queue(self):
@@ -250,6 +242,15 @@ async def live_dl(link):
     duration = "♾"
     return dl[0], thumb, title, duration
 
+async def vid_download(query):
+    search = VideosSearch(query, limit=1).result()
+    data = search["result"][0]
+    link = data["link"]
+    vid, aud = (await bash(f"youtube-dl -g {link}"))[0].split()
+    title = data["title"]
+    thumb = data["thumbnails"][-1]["url"] + ".jpg"
+    duration = data["duration"] or "♾"
+    return vid, aud, thumb, title, duration
 
 async def file_download(event, reply, fast_download=True):
     thumb = None
