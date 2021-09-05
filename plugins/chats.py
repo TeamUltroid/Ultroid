@@ -26,14 +26,14 @@ from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
     DeleteChannelRequest,
+    GetFullChannelRequest,
     UpdateUsernameRequest,
-    GetFullChannelRequest
 )
 from telethon.tl.functions.messages import (
     CreateChatRequest,
     DeleteChatUserRequest,
     ExportChatInviteRequest,
-    GetFullChatRequest
+    GetFullChatRequest,
 )
 
 from . import *
@@ -79,7 +79,7 @@ async def _(e):
     else:
         try:
             r = await e.client(
-            ExportChatInviteRequest(e.chat_id),
+                ExportChatInviteRequest(e.chat_id),
             )
         except no_admin:
             return await eor(xx, "`I m not an admin`", time=10)
