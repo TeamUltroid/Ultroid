@@ -120,26 +120,19 @@ async def _(e):
     huh = e.text.split(" ")
     try:
         tme = huh[1]
-    except BaseException:
+    except IndexError:
         return await eor(xx, "`Time till mute?`", time=5)
     try:
         input = huh[2]
-    except BaseException:
+    except IndexError:
         pass
     chat = await e.get_chat()
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(userid)).first_name
     elif input:
-        if input.isdigit():
-            try:
-                userid = input
-                name = (await e.client.get_entity(userid)).first_name
-            except ValueError as x:
-                return await xx.edit(str(x))
-        else:
-            userid = (await e.client.get_entity(input)).id
-            name = (await event.client.get_entity(userid)).first_name
+        userid = await get_user_id(input, client=e.client)
+        name = (await event.client.get_entity(userid)).first_name
     else:
         return await eor(xx, "`Reply to someone or use its id...`", time=3)
     if userid == ultroid_bot.uid:
@@ -174,15 +167,8 @@ async def _(e):
         userid = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(userid)).first_name
     elif input:
-        if input.isdigit():
-            try:
-                userid = input
-                name = (await e.client.get_entity(userid)).first_name
-            except ValueError as x:
-                return await xx.edit(str(x))
-        else:
-            userid = (await e.client.get_entity(input)).id
-            name = (await e.client.get_entity(userid)).first_name
+        userid = await get_user_id(input, client=e.client)
+        name = (await e.client.get_entity(userid)).first_name
     else:
         return await eor(xx, "`Reply to someone or use its id...`", time=3)
     try:
