@@ -5,7 +5,8 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import re, os
+import os
+import re
 
 from pyUltroid.functions.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
@@ -60,7 +61,9 @@ async def all_messages_catcher(e):
             if e.photo or e.sticker:
                 try:
                     media = await e.download_media()
-                    await asst.send_message(NEEDTOLOG, e.message, file=media, buttons=buttons)
+                    await asst.send_message(
+                        NEEDTOLOG, e.message, file=media, buttons=buttons
+                    )
                     return os.remove(media)
                 except Exception as er:
                     LOGS.debug(er)
