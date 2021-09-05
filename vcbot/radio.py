@@ -17,7 +17,7 @@
 
 
 from . import *
-
+import requests
 
 @vc_asst("radio")
 async def radio_mirchi(e):
@@ -35,6 +35,10 @@ async def radio_mirchi(e):
     else:
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
+    try:
+        requests.get(song)
+    except BaseException:
+        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")      
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
