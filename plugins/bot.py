@@ -91,6 +91,30 @@ async def is_on(ult):
             return await res[0].click(ult.chat_id)
         except Exception as er:
             LOGS.info(er)
+        return
+    pic = udB.get("ALIVE_PIC")
+    uptime = time_formatter((time.time() - start_time) * 1000)
+    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    y = Repo().active_branch
+    xx = Repo().remotes[0].config_reader.get("url")
+    rep = xx.replace(".git", f"/tree/{y}")
+    kk = f" `[{y}]({rep})` "
+    als = (get_string("alive_1")).format(
+        header,
+        OWNER_NAME,
+        ultroid_version,
+        UltVer,
+        uptime,
+        pyver(),
+        __version__,
+        kk,
+    )
+    buttons = [
+        Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.inline("Help", "open"),
+    ]
+    await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons)
+        
 
 
 @ultroid_cmd(
