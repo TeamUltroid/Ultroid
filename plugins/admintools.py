@@ -123,7 +123,7 @@ async def bban(ult):
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Reply to a user or give username to ban him!`")
-    if str(user.id) in DEVLIST:
+    if user.id in DEVLIST:
         return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
@@ -186,14 +186,13 @@ async def kck(ult):
     if "kickme" in ult.text:
         return
     xx = await eor(ult, get_string("com_1"))
-    await ult.get_chat()
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit("`Kick? Whom? I couldn't get his info...`")
-    if str(user.id) in DEVLIST:
+    if user.id in DEVLIST:
         return await xx.edit(" `Lol, I can't Kick my Developer`😂")
-    if user.id in [ultroid_bot.uid, asst.me.id]:
-        return await xx.edit("`I will Never kick that Guy..`")
+    if user.is_self:
+        return await xx.edit("`I Cant kick him ever...`")
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
     except BadRequestError:
