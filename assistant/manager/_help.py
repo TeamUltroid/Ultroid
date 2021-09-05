@@ -49,11 +49,9 @@ async def helpish(event):
         return
     BTTS = []
     keys = STRINGS
-    count = 0
-    while count != len(list(keys)):
+    while keys:
         BT = []
         for i in list(keys)[:2]:
-            count += 1
             BT.append(Button.inline(i, "hlp_" + i))
             del keys[i]
         BTTS.append(BT)
