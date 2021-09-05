@@ -99,9 +99,7 @@ async def _(event):
             await eor(
                 event,
                 "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".format(
-                    str(event.chat_id),
-                    str(r_msg.sender_id),
-                    str(r_msg.id)
+                    str(event.chat_id), str(r_msg.sender_id), str(r_msg.id)
                 ),
             )
     elif event.pattern_match.group(1):
@@ -114,7 +112,12 @@ async def _(event):
             ),
         )
     else:
-        await eor(event, "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(str(event.chat_id), str(event.id)))
+        await eor(
+            event,
+            "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(
+                str(event.chat_id), str(event.id)
+            ),
+        )
 
 
 @ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
