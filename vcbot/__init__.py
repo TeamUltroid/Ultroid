@@ -7,7 +7,6 @@
 
 import asyncio
 import re
-import subprocess
 from os import remove
 from time import time
 
@@ -109,7 +108,7 @@ class Player:
             await self.startCall()
         try:
             song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
-            self.group_call.input_filename = song
+            await self.group_call.start_audio(song)
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
@@ -232,8 +231,7 @@ def get_from_queue(chat_id):
 # --------------------------------------------------
 
 
-async def download(query, chat, ts):
-    song = f"vcbot/downloads/VCSONG_{chat}_{ts}.raw"
+async def download(query):
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
     link = data["link"]
@@ -241,22 +239,19 @@ async def download(query, chat, ts):
     title = data["title"]
     duration = data["duration"] or "♾"
     thumb = data["thumbnails"][-1]["url"] + ".jpg"
-    raw_converter(dl[0], song)
-    return song, thumb, title, duration
+    return dl[0], thumb, title, duration
 
 
-async def live_dl(link, file):
+async def live_dl(link):
     dl = await bash(f"youtube-dl -x -g {link}")
-    raw_converter(dl[0], file)
     info = eval(Video.getInfo(link, mode=ResultMode.json))
     title = info["title"]
     thumb = info["thumbnails"][-1]["url"] + ".jpg"
     duration = "♾"
-    return thumb, title, duration
+    return dl[0], thumb, title, duration
 
 
-async def file_download(event, reply, chat, ts, fast_download=True):
-    song = f"vcbot/downloads/VCSONG_{chat}_{ts}.raw"
+async def file_download(event, reply, fast_download=True):
     thumb = None
     title = reply.file.title or reply.file.name
     if fast_download:
@@ -273,32 +268,7 @@ async def file_download(event, reply, chat, ts, fast_download=True):
     duration = time_formatter(reply.file.duration * 1000)
     if reply.document.thumbs:
         thumb = await reply.download_media("vcbot/downloads/", thumb=-1)
-    raw_converter(dl, song)
-    return song, thumb, title, duration
-
-
-def raw_converter(dl, song):
-    subprocess.Popen(
-        [
-            "ffmpeg",
-            "-y",
-            "-i",
-            dl,
-            "-f",
-            "s16le",
-            "-ac",
-            "2",
-            "-ar",
-            "48000",
-            "-acodec",
-            "pcm_s16le",
-            song,
-        ],
-        stdin=None,
-        stdout=None,
-        stderr=None,
-        cwd=None,
-    )
+    return dl, thumb, title, duration
 
 
 # --------------------------------------------------
