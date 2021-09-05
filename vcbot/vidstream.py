@@ -51,7 +51,7 @@ async def video_c(event):
         )
     await eor(xx, "`Downloading and converting...`")
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
-        song, thumb, song_name, duration = await file_download(xx, reply)
+        song, thumb, title, duration = await file_download(xx, reply)
     else:
         try:
             requests.get(song)
