@@ -60,7 +60,7 @@ async def video_c(event):
             is_link = None
         except BaseException:
             is_link = False
-        if not is_link:
+        if is_link is False:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
         elif is_link is None:
             song, thumb, title, duration = await vid_download(song)
