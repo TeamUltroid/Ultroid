@@ -37,6 +37,7 @@ ADMINTOOLS = """✘ **AdminTools** ✘
 
 STRINGS = {"Admintools": ADMINTOOLS}
 
+
 def get_buttons():
     BTTS = []
     keys = STRINGS
@@ -48,6 +49,7 @@ def get_buttons():
         BTTS.append(BT)
     return BTTS
 
+
 @asst_cmd("help")
 async def helpish(event):
     if not event.is_private:
@@ -55,7 +57,9 @@ async def helpish(event):
         return await event.reply(
             "Contact me in PM for help!", buttons=Button.url("Click me for Help", url)
         )
-    if str(event.sender_id) in owner_and_sudos() and (udB.get("DUAL_MODE") and (udB.get("DUAL_HNDLR")=="/")):
+    if str(event.sender_id) in owner_and_sudos() and (
+        udB.get("DUAL_MODE") and (udB.get("DUAL_HNDLR") == "/")
+    ):
         return
     BTTS = get_buttons()
     await event.reply(START, buttons=BTTS)
