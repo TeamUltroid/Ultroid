@@ -88,18 +88,20 @@ async def _(event):
             bot_api_file_id = pack_bot_file_id(r_msg.media)
             await eor(
                 event,
-                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`".format(
+                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id),
                     str(r_msg.sender_id),
                     bot_api_file_id,
+                    str(r_msg.id),
                 ),
             )
         else:
             await eor(
                 event,
-                "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
+                "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id),
                     str(r_msg.sender_id),
+                    str(r_msg.id)
                 ),
             )
     elif event.pattern_match.group(1):
@@ -112,7 +114,7 @@ async def _(event):
             ),
         )
     else:
-        await eor(event, "**Current Chat ID:**  `{}`".format(str(event.chat_id)))
+        await eor(event, "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(str(event.chat_id), str(event.id)))
 
 
 @ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
