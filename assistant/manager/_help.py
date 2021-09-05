@@ -17,10 +17,10 @@ START = """
 🧑‍💻 Join **@TheUltroid**
 """
 
-ADMINTOOLS = """✘ **AdminTools** ✘ 
+ADMINTOOLS = """✘ **AdminTools** ✘
 
 • /pin : Pins the Replied Message
-• /pinned : Get Pinned message in chat. 
+• /pinned : Get Pinned message in chat.
 • /unpin : Unpin the Replied message
 • /unpin all : Unpin all Pinned Messages.
 
@@ -35,7 +35,8 @@ ADMINTOOLS = """✘ **AdminTools** ✘
 
 • /purge (purge messages)"""
 
-STRINGS = {"Admintools":ADMINTOOLS}
+STRINGS = {"Admintools": ADMINTOOLS}
+
 
 @ultroid_cmd(pattern="help", type="assistant")
 async def helpish(event):
@@ -51,7 +52,7 @@ async def helpish(event):
     while keys:
         BT = []
         for i in list(keys)[:2]:
-            BT.append(Button.inline(i, "hlp_"+i))
+            BT.append(Button.inline(i, "hlp_" + i))
             del keys[i]
         BTTS.append(BT)
-    await event.reply(START,buttons=BTTS)
+    await event.reply(START, buttons=BTTS)
