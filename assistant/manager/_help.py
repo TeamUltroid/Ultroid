@@ -7,9 +7,21 @@
 
 from . import *
 
+START = """
+🪅 **Help Menu** 🪅
 
-@ultroid_cmd(pattern="help", type="manager")
+✘  /start : Check I am Alive or not.
+✘  /help : Get This Message.
+✘  /repo : Get Bot's Repo..
+"""
+
+STRINGS = {"admintools":""}
+
+@ultroid_cmd(pattern="help", type="manager", allow_all=True)
 async def helpish(event):
+    if not event.is_private:
+        url = "https://t.me/" + asst.me.username +"?start=start"
+        return await event.reply("Contact me in PM for help!", buttons=Button.url("Click me for Help", url))
     if str(event.sender_id) in owner_and_sudos():
         return
-    await event.reply("Manager Help")
+    await event.reply(START)
