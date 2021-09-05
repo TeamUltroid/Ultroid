@@ -114,7 +114,6 @@ async def is_on(ult):
         Button.inline("Help", "open"),
     ]
     await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons)
-        
 
 
 @ultroid_cmd(
