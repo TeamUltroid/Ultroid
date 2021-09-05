@@ -36,7 +36,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(title)s.mp3",
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -51,7 +51,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(title)s.mp4",
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -66,7 +66,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(title)s.mp3",
         }
         try:
             query = event.text.split(" ", 1)[1]
@@ -82,7 +82,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(title)s.mp4",
         }
         try:
             query = event.text.split(" ", 1)[1]
