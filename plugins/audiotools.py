@@ -181,6 +181,11 @@ async def ex_aud(e):
         "Uploading " + out_file + "...",
     )
     await e.client.send_file(
-        e.chat_id, fo, caption="`Extracted Audio from Video...`", thumb="resources/extras/ultroid.jpg",attributes=attributes, reply_to=e.reply_to_msg_id
+        e.chat_id,
+        fo,
+        caption="`Extracted Audio from Video...`",
+        thumb="resources/extras/ultroid.jpg",
+        attributes=attributes,
+        reply_to=e.reply_to_msg_id,
     )
     await e.delete()
