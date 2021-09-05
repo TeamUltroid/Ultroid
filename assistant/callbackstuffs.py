@@ -296,11 +296,60 @@ async def otvaar(event):
             [
                 Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
                 Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
-            ],
+            ],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     )
 
+@callback("oofdm")
+@owner
+async def euwhe(e):
+    BT = [[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ","dmof")],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ","dmof")],[Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ","dmhn")]]
+    await event.edit("About [Dual Mode](https://t.me/UltroidUpdates/18)", buttons=BT, link_preview=False)
+
+@callback("dmof")
+@owner
+async def rhwhe(e):
+    if udB.get("DUAL_MODE"):
+        udB.delete("DUAL_MODE")
+        key = "Off"
+    else:
+        udB.set("DUAL_MODE", "True")
+        key = "On"
+    Msg = "Dual Mode : " + key
+    await e.edit(Msg, buttons=get_back_button("otvars"))
+
+@callback("dmhn")
+@owner
+async def hndlrr(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "DUAL_HNDLR"
+    name = "Dual Handler"
+    CH = udB.get(var) or "/"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"Send The Symbol Which u want as Handler/Trigger to use your Assistant bot\nUr Current Handler is [ `{CH}` ]\n\n use /cancel to cancel.",
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button("otvars"),
+            )
+        elif len(themssg) > 1:
+            await conv.send_message(
+                "Incorrect Handler",
+                buttons=get_back_button("otvars"),
+            )
+        else:
+            await setit(event, var, themssg)
+            await conv.send_message(
+                f"{name} changed to {themssg}",
+                buttons=get_back_button("otvars"),
+            )
 
 @callback("emoj")
 @owner
