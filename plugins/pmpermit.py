@@ -219,7 +219,7 @@ if sett == "True":
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
-        if str(user.id) in DEVLIST:
+        if user.id in DEVLIST:
             return
         apprv = is_approved(user.id)
         if not apprv and event.text != UND:
@@ -418,7 +418,7 @@ if sett == "True":
             user = await apprvpm.get_chat()
         else:
             return await apprvpm.edit(NO_REPLY)
-        if str(user.id) in DEVLIST:
+        if user.id in DEVLIST:
             return await eor(
                 apprvpm,
                 "Lol, He is my Developer\nHe is auto Approved",
@@ -466,7 +466,7 @@ if sett == "True":
             user = await e.get_chat()
         else:
             return await e.edit(NO_REPLY)
-        if str(user.id) in DEVLIST:
+        if user.id in DEVLIST:
             return await eor(
                 e,
                 "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
@@ -513,7 +513,7 @@ async def blockpm(block):
         user = block.chat_id
     else:
         return await eor(block, NO_REPLY, time=10)
-    if str(user) in DEVLIST:
+    if user in DEVLIST:
         return await eor(
             block,
             "`Lol, He is my Developer\nHe Can't Be Blocked`",
@@ -612,7 +612,7 @@ async def list_approved(event):
 @owner
 async def apr_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
-    if str(uid) in DEVLIST:
+    if uid in DEVLIST:
         await event.edit("It's a dev! Approved!")
     if not is_approved(uid):
         approve_user(uid)
@@ -790,9 +790,8 @@ async def in_pm_ans(event):
 
 
 @callback(re.compile("admin_only(.*)"))
+@owner
 async def _admin_tools(event):
-    if event.sender_id != OWNER_ID:
-        return await event.answer()
     chat = int(event.pattern_match.group(1))
     await event.edit(
         buttons=[
