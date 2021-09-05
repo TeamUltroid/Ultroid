@@ -10,15 +10,17 @@
 """
 
 
-from . import *
 import requests
 from requests.exceptions import MissingSchema
+
+from . import *
+
 
 @vc_asst("vidstream")
 async def video_c(event):
     xx = await eor(event, get_string("com_1"))
     chat = event.chat_id
-    from_user = inline_mention(event.sender)
+    inline_mention(event.sender)
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -58,9 +60,9 @@ async def video_c(event):
             is_link = None
         except BaseException:
             is_link = False
-        if is_link == False:
+        if not is_link:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
-        elif is_link==None:
+        elif is_link is None:
             song, thumb, song_name, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
             song, thumb, song_name, duration = await vid_download(song)
