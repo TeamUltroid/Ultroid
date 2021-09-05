@@ -27,11 +27,13 @@ from telethon.tl.functions.channels import (
     CreateChannelRequest,
     DeleteChannelRequest,
     UpdateUsernameRequest,
+    GetFullChannelRequest
 )
 from telethon.tl.functions.messages import (
     CreateChatRequest,
     DeleteChatUserRequest,
     ExportChatInviteRequest,
+    GetFullChatRequest
 )
 
 from . import *
@@ -65,14 +67,24 @@ async def _(e):
     type=["official", "manager"],
 )
 async def _(e):
-    xx = await eor(e, "`Processing...`")
-    try:
-        r = await e.client(
+    xx = await eor(e, get_string("com_1"))
+    chat = await e.get_chat()
+    if isinstance(chat, types.Chat):
+        FC = await e.client(GetFullChatRequest(chat.id))
+    elif isinstance(chat, types.Channel):
+        FC = await e.client(GetFullChannelRequest(chat.id))
+    Inv = FC.full_chat.exported_invite
+    if Inv and not Inv.revoked:
+        link = Inv.link
+    else:
+        try:
+            r = await e.client(
             ExportChatInviteRequest(e.chat_id),
-        )
-    except no_admin:
-        return await eor(xx, "`I m not an admin`", time=10)
-    await eor(xx, f"Link:- {r.link}", time=5)
+            )
+        except no_admin:
+            return await eor(xx, "`I m not an admin`", time=10)
+        link = r.link
+    await eor(xx, f"Link:- {link}")
 
 
 @ultroid_cmd(
