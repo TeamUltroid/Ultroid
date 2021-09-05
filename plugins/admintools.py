@@ -51,7 +51,8 @@
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import DeleteUserHistoryRequest
+from telethon.tl.functions.channels import DeleteUserHistoryRequest, GetFullChannelRequest
+from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.functions.messages import SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 
@@ -395,6 +396,21 @@ async def _(e):
     except Exception as er:
         return await eor(e, str(er), time=5)
 
+@ultroid_cmd(pattern="pinned", type=["official", "manager"], groups_only=True)
+async def djshsh(event):
+    chat = await event.get_chat()
+    if isinstance(chat, types.Chat):
+        FChat = await event.client(GetFullChatRequest(chat.id))
+    elif isinstance(chat, types.Channel):
+        FChat = await event.client(GetFullChannelRequest(chat.id))
+    else:
+        return
+    msg_id = FChat.full_chat.pinned_msg_id
+    if not msg_id:
+        return await eor(event, "No Pinned Message Found!") 
+    msg = await event.client.get_messages(chat.id, ids=msg_id)
+    await eor(event, f"Pinned Message in Current chat is [here]({msg.message_link}).")
+        
 
 @ultroid_cmd(
     pattern="listpinned$",
