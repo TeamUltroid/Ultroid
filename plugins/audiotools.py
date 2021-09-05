@@ -20,7 +20,7 @@
    To extract the audio from it.
 
 """
-  
+
 import os
 import time
 from datetime import datetime as dt
@@ -141,6 +141,7 @@ async def trim_aud(e):
         await xxx.delete()
     else:
         await eor(e, "`Reply To Video\\Audio File Only`", time=5)
+
 
 @ultroid_cmd(pattern="extractaudio")
 async def ex_aud(e):
