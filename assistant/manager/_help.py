@@ -20,7 +20,7 @@ START = """
 STRINGS = {"admintools": ""}
 
 
-@ultroid_cmd(pattern="help", type="manager")
+@ultroid_cmd(pattern="help", type="assistant")
 async def helpish(event):
     if not event.is_private:
         url = "https://t.me/" + asst.me.username + "?start=start"
