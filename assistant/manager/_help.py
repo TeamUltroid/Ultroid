@@ -106,6 +106,8 @@ async def helpish(event):
     ):
         return
     BTTS = get_buttons()
+    url = "https://t.me/" + asst.me.username + "?startgroup=true"
+    BTTS.append([Button.url("Add me to Group", url])
     await event.reply(START, buttons=BTTS)
 
 
