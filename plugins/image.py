@@ -5,6 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+✘ Commands Available -
+
+`{i}image <text or reply to html or any doc file>`
+   Creates image from html and any text.
+
+"""
+
 import os
 
 from htmlwebshot import WebShot
