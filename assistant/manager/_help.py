@@ -40,7 +40,7 @@ STRINGS = {"Admintools": ADMINTOOLS}
 
 def get_buttons():
     BTTS = []
-    keys = STRINGS
+    keys = STRINGS.copy()
     while keys:
         BT = []
         for i in list(keys)[:2]:
@@ -64,6 +64,10 @@ async def helpish(event):
     BTTS = get_buttons()
     await event.reply(START, buttons=BTTS)
 
+@callback("mngbtn")
+# @owner
+async def ehwhshd(e):
+    await e.edit(buttons=get_buttons())
 
 @callback(re.compile("hlp_(.*)"))
 async def do_something(event):
