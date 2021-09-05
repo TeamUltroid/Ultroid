@@ -9,7 +9,7 @@ import asyncio
 import re
 from os import remove
 from time import time
-
+import pafy
 from pytgcalls import GroupCallFactory
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
@@ -247,11 +247,11 @@ async def vid_download(query):
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
     link = data["link"]
-    vid, aud = (await bash(f"youtube-dl -g {link}"))[0].split()
+    vid = pafy.new(link).getbest().url
     title = data["title"]
     thumb = data["thumbnails"][-1]["url"] + ".jpg"
     duration = data["duration"] or "♾"
-    return vid, aud, thumb, title, duration
+    return vid, thumb, title, duration
 
 
 async def file_download(event, reply, fast_download=True):
