@@ -36,16 +36,11 @@ async def radio_mirchi(e):
     else:
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
-    file = f"VCRADIO_{chat}.raw"
-    raw_converter(song, file)
-    await asyncio.sleep(4)
-    if not os.path.exists(file):
-        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
-    ultSongs.group_call.input_filename = file
+    await ultSongs.group_call.start_audio(song)
     await xx.reply(
         f"• Started Radio 📻\n\n• Station : `{song}`",
         file="https://telegra.ph/file/419bd79c53cca22ec24f0.jpg",
@@ -69,16 +64,12 @@ async def live_stream(e):
     else:
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
-    file = f"VCRADIO_{chat}.raw"
     is_live_vid = False
     if re.search("youtube", song) or re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
     if is_live_vid != "true":
         return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
-    thumb, title, duration = await live_dl(song, file)
-    await asyncio.sleep(4)
-    if not os.path.exists(file):
-        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
+    file, thumb, title, duration = await live_dl(song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
@@ -91,4 +82,4 @@ async def live_stream(e):
         file=thumb,
     )
     await xx.delete()
-    ultSongs.group_call.input_filename = file
+    await ultSongs.group_call.start_audio(file)
