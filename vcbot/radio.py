@@ -42,7 +42,7 @@ async def radio_mirchi(e):
     await ultSongs.group_call.start_audio(song)
     await xx.reply(
         f"• Started Radio 📻\n\n• Station : `{song}`",
-        file="https://telegra.ph/file/419bd79c53cca22ec24f0.jpg",
+        file="https://telegra.ph/file/d09d4461199bdc7786b01.mp4",
     )
     await xx.delete()
 
