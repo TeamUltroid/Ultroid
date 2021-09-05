@@ -96,9 +96,7 @@ PMCMDS = [
 _not_approved = {}
 _to_delete = {}
 
-sett = Redis("PMSETTING")
-if not sett:
-    sett = "False"
+sett = Redis("PMSETTING") or "False"
 
 my_bot = asst.me.username
 
@@ -193,6 +191,7 @@ if sett == "True":
                 await ultroid_bot.edit_folder(miss.id, folder=0)
             except BaseException:
                 pass
+            name = get_display_name(e.sender)
             try:
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
@@ -231,7 +230,7 @@ if sett == "True":
             if event.media:
                 await event.delete()
             name = user.first_name
-            fullname = f"{name} {user.last_name}" if user.last_name else name
+            fullname = get_display_name(user)
             username = f"@{user.username}"
             mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
             count = len(get_approved())
