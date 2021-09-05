@@ -70,11 +70,13 @@ async def helpish(event):
 async def ehwhshd(e):
     await e.edit(buttons=get_buttons())
 
+
 @callback("mnghome")
 async def home_aja(e):
     await e.edit(START, buttons=get_buttons())
 
+
 @callback(re.compile("hlp_(.*)"))
 async def do_something(event):
     match = event.pattern_match.group(1).decode("utf-8")
-    await event.edit(STRINGS[match], buttons=Button.inline("<< Back","mnghome"))
+    await event.edit(STRINGS[match], buttons=Button.inline("<< Back", "mnghome"))
