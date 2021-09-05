@@ -13,7 +13,7 @@
 """
 
 import requests
-from pyUltroid.utils import load_addons
+from pyUltroid.startup.utils import load_addons
 
 from . import *
 
@@ -38,7 +38,7 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eor(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=5)
+        await eor(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=15)
     except Exception as e:
         await eod(
             xx,
