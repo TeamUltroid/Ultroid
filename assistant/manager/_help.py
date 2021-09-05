@@ -38,7 +38,7 @@ ADMINTOOLS = """✘ **AdminTools** ✘
 STRINGS = {"Admintools": ADMINTOOLS}
 
 
-@ultroid_cmd(pattern="help", type="assistant")
+@asst_cmd("help")
 async def helpish(event):
     if not event.is_private:
         url = "https://t.me/" + asst.me.username + "?start=start"
