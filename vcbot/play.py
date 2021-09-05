@@ -56,11 +56,10 @@ async def play_music_(event):
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
     await eor(xx, "`Downloading and converting...`")
-    ts = str(time()).split(".")[0]
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
-        song, thumb, song_name, duration = await file_download(xx, reply, chat, ts)
+        song, thumb, song_name, duration = await file_download(xx, reply)
     else:
-        song, thumb, song_name, duration = await download(song, chat, ts)
+        song, thumb, song_name, duration = await download(song)
     ultSongs = Player(chat, event)
     if len(song_name) > 37:
         song_name = song_name[:35] + "..."
@@ -116,7 +115,7 @@ async def play_music_(event):
     ):
         count += 1
         song, thumb, song_name, duration = await file_download(
-            msg, song, chat, str(time()).split(".")[0], fast_download=False
+            msg, song, fast_download=False
         )
         if len(song_name) > 37:
             song_name = song_name[:35] + "..."
