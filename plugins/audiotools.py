@@ -5,6 +5,22 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+
+"""
+✘ Commands Available -
+
+`{i}makevoice <reply to audio>`
+   creates a voice note from Audio.
+
+`{i}atrim <from time> - <to time>`
+   trim audio as per given time.
+   time must be in seconds. `{i}atrim 50-70`
+
+`{i}extractaudio <reply to media>
+   To extract the audio from it.
+
+"""
+  
 import os
 import time
 from datetime import datetime as dt
@@ -46,7 +62,7 @@ async def vnc(e):
 
 
 @ultroid_cmd(pattern="atrim ?(.*)")
-async def gen_sample(e):
+async def trim_aud(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
         return await eod(e, "`Give time in format to trim`")
@@ -125,3 +141,7 @@ async def gen_sample(e):
         await xxx.delete()
     else:
         await eor(e, "`Reply To Video\\Audio File Only`", time=5)
+
+@ultroid_cmd(pattern="extractaudio")
+async def ex_aud(e):
+    await eor(e, "#todo")
