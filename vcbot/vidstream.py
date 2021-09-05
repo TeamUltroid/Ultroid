@@ -20,7 +20,7 @@ from . import *
 async def video_c(event):
     xx = await eor(event, get_string("com_1"))
     chat = event.chat_id
-    inline_mention(event.sender)
+    from_user = inline_mention(event.sender)
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -63,13 +63,19 @@ async def video_c(event):
         if not is_link:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
         elif is_link is None:
-            song, thumb, song_name, duration = await vid_download(song)
+            song, thumb, title, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
-            song, thumb, song_name, duration = await vid_download(song)
+            song, thumb, title, duration = await vid_download(song)
         else:
-            song = song
+            song, thumb, title, duration  = song, "https://telegra.ph/file/04f662dddb9a390b6d154.jpg" , song, "♾"
     ultSongs = Player(chat, xx, True)
     if not (await ultSongs.vc_joiner()):
         return
+    await xx.reply(
+        "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+            title, duration, chat, from_user
+        ),
+        file=thumb,
+    )
     await ultSongs.group_call.start_video(song)
-    await eor(xx, f"Playing {song}")
+    await xx.delete()
