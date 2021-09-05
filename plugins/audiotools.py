@@ -153,12 +153,12 @@ async def ex_aud(e):
     msg = await eor(e, "`Processing...`")
     c_time = time.time()
     file = await downloader(
-            "resources/downloads/" + name,
-            vfile,
-            msg,
-            c_time,
-            "Downloading " + name + "...",
-        )
+        "resources/downloads/" + name,
+        vfile,
+        msg,
+        c_time,
+        "Downloading " + name + "...",
+    )
     out_file = file.name + ".aac"
     cmd = f"ffmpeg -i {file.name} -vn -acodec copy {out_file}"
     o, err = await bash(cmd)
@@ -166,19 +166,21 @@ async def ex_aud(e):
     duration = reply.file.duration
     artist = ultroid_bot.me.first_name
     attributes = [
-            DocumentAttributeAudio(
-                duration=duration,
-                title=out_file.split(".")[0],
-                performer=artist,
-            )
-        ]
+        DocumentAttributeAudio(
+            duration=duration,
+            title=out_file.split(".")[0],
+            performer=artist,
+        )
+    ]
     f_time = time.time()
     fo = await uploader(
-            out_file,
-            out_file,
-            f_time,
-            msg,
-            "Uploading " + out_file + "...",
-        )
-    await e.client.send_file(e.chat_id, fo, attributes=attributes, reply_to=e.reply_to_msg_id)
+        out_file,
+        out_file,
+        f_time,
+        msg,
+        "Uploading " + out_file + "...",
+    )
+    await e.client.send_file(
+        e.chat_id, fo, attributes=attributes, reply_to=e.reply_to_msg_id
+    )
     await e.delete()
