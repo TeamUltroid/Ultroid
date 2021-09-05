@@ -69,7 +69,7 @@ async def video_c(event):
         else:
             song, thumb, title, duration = (
                 song,
-                "https://telegra.ph/file/04f662dddb9a390b6d154.jpg",
+                "https://telegra.ph/file/22bb2349da20c7524e4db.mp4",
                 song,
                 "♾",
             )
