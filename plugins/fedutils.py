@@ -52,7 +52,7 @@ async def _(event):
         else:
             return await msg.edit("No user was designated.")
 
-    if str(FBAN) in DEVLIST:
+    if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
     if udB.get("FBAN_GROUP_ID"):
