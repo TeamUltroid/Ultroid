@@ -70,8 +70,15 @@ LOCKS = """
 - `changeinfo` : for change info right.
 """
 
-STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES}
+MISC = """
+✘  **Misc**  ✘
 
+• /joke : Get Random Jokes.
+"""
+
+STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc":MISC}
+
+MNGE = udB.get("MNGR_EMOJI") or "•"
 
 def get_buttons():
     BTTS = []
@@ -79,7 +86,8 @@ def get_buttons():
     while keys:
         BT = []
         for i in list(keys)[:2]:
-            BT.append(Button.inline(i, "hlp_" + i))
+            text = MNGE + " " + i + " " + MNGE
+            BT.append(Button.inline(text, "hlp_" + i))
             del keys[i]
         BTTS.append(BT)
     return BTTS
