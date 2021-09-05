@@ -143,6 +143,42 @@ async def trim_aud(e):
         await eor(e, "`Reply To Video\\Audio File Only`", time=5)
 
 
-@ultroid_cmd(pattern="extractaudio")
+@ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
-    await eor(e, "#todo")
+    reply = await e.get_reply_message()
+    if not (reply and reply.video):
+        return await eor(e, "`Reply to Video File..`")
+    name = reply.file.name or "video.mp4"
+    vfile = reply.media.document
+    msg = await eor(e, "`Processing...`")
+    c_time = time.time()
+    file = await downloader(
+            "resources/downloads/" + name,
+            vfile,
+            msg,
+            c_time,
+            "Downloading " + name + "...",
+        )
+    out_file = file.name + ".aac"
+    cmd = f"ffmpeg -i {file.name} -vn -acodec copy {out_file}"
+    o, err = await bash(cmd)
+    os.remove(file.name)
+    duration = reply.file.duration
+    artist = ultroid_bot.me.first_name
+    attributes = [
+            DocumentAttributeAudio(
+                duration=duration,
+                title=out_file.split(".")[0],
+                performer=artist,
+            )
+        ]
+    f_time = time.time()
+    fo = await uploader(
+            out_file,
+            out_file,
+            f_time,
+            msg,
+            "Uploading " + out_file + "...",
+        )
+    await e.client.send_file(e.chat_id, fo, attributes=attributes, reply_to=e.reply_to_msg_id)
+    await e.delete()
