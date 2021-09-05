@@ -40,6 +40,7 @@ UTILITIES = """
 
 • /info (reply/username/id) : get detailed info of user.
 • /id : get chat/user id.
+• /tr : Translate Languages..
 
 • /paste (reply file/text) : paste content on Spaceb.in
 • /meaning (text) : Get Meaning of that Word.
@@ -48,7 +49,24 @@ UTILITIES = """
 • /suggest (query/reply) : Creates a Yes / No Poll.
 """
 
-STRINGS = {"Admintools": ADMINTOOLS, "Utils": UTILITIES}
+LOCKS = """
+✘ ** Locks ** ✘
+
+• /lock (query) : lock particular content in chat.
+• /unlock (query) : Unlock some content.
+
+• All Queries
+- `msgs` : for messages.
+- `inlines` : for inline queries.
+- `media` : for all medias.
+- `games` : for games. 
+- `sticker` : for stickers.
+- `polls` : for polls.
+- `gif` : for gifs.
+- `pin` : for pins.
+- `changeinfo` : for change info right.
+"""
+STRINGS = {"Admintools": ADMINTOOLS, "locks":LOCKS, "Utils": UTILITIES}
 
 
 def get_buttons():
