@@ -13,12 +13,14 @@ START = """
 ✘  /start : Check I am Alive or not.
 ✘  /help : Get This Message.
 ✘  /repo : Get Bot's Repo..
+
+🧑‍💻 Join **@TheUltroid**
 """
 
 STRINGS = {"admintools": ""}
 
 
-@ultroid_cmd(pattern="help", type="manager", allow_all=True)
+@ultroid_cmd(pattern="help", type="manager")
 async def helpish(event):
     if not event.is_private:
         url = "https://t.me/" + asst.me.username + "?start=start"
