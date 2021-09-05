@@ -67,7 +67,7 @@ async def play_music_(event):
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
-        ultSongs.group_call.input_filename = song
+        await ultSongs.group_call.start_audio(song)
         await xx.reply(
             "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
                 song_name, duration, chat, from_user
@@ -123,7 +123,7 @@ async def play_music_(event):
         if not ultSongs.group_call.is_connected:
             if not (await ultSongs.vc_joiner()):
                 return
-            ultSongs.group_call.input_filename = song
+            await ultSongs.group_call.start_audio(song)
             await msg.reply(
                 "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
                     song_name, duration, chat, from_user
