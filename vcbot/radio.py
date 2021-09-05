@@ -15,7 +15,6 @@
    Stream Live YouTube.
 """
 
-import os
 
 from . import *
 
