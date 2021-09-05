@@ -56,6 +56,8 @@ async def leaver(event):
     await ultSongs.group_call.stop()
     if CLIENTS.get(chat):
         del CLIENTS[chat]
+    if VIDEO_ON.get(chat):
+        del VIDEO_ON[chat]
     await eor(event, "`Left the voice chat.`")
 
 
