@@ -38,8 +38,8 @@ ADMINTOOLS = """✘ **AdminTools** ✘
 UTILITIES = """
 ✘ ** Utilities ** ✘
 
-• /info (reply/username/id) : get detailed info of user. 
-• /id : get chat/user id. 
+• /info (reply/username/id) : get detailed info of user.
+• /id : get chat/user id.
 
 • /paste (reply file/text) : paste content on Spaceb.in
 • /meaning (text) : Get Meaning of that Word.
@@ -48,7 +48,7 @@ UTILITIES = """
 • /suggest (query/reply) : Creates a Yes / No Poll.
 """
 
-STRINGS = {"Admintools": ADMINTOOLS, "Utils":UTILITIES}
+STRINGS = {"Admintools": ADMINTOOLS, "Utils": UTILITIES}
 
 
 def get_buttons():
