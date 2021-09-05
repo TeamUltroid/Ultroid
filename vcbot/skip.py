@@ -28,8 +28,4 @@ async def skipper(event):
     else:
         chat = event.chat_id
     ultSongs = Player(chat, event)
-    try:
-        remove(ultSongs.group_call._GroupCallFile__input_filename)
-    except BaseException:
-        pass
     await ultSongs.play_from_queue()
