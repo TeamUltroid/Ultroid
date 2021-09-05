@@ -242,6 +242,7 @@ async def live_dl(link):
     duration = "♾"
     return dl[0], thumb, title, duration
 
+
 async def vid_download(query):
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
@@ -251,6 +252,7 @@ async def vid_download(query):
     thumb = data["thumbnails"][-1]["url"] + ".jpg"
     duration = data["duration"] or "♾"
     return vid, aud, thumb, title, duration
+
 
 async def file_download(event, reply, fast_download=True):
     thumb = None
