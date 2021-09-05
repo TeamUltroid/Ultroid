@@ -8,10 +8,10 @@
 """
 ✘ Commands Available
 
-`{i}videoplay <song name\ url \ m3u8 links \ reply to video>`
+`{i}videoplay <song name\\ url \\ m3u8 links \\ reply to video>`
    Stream Videos at chat.
    you can use remotely too
-   like `{i}videoplay @chat <input \ reply>`
+   like `{i}videoplay @chat <input \\ reply>`
 
 """
 
