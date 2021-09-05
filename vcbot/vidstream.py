@@ -82,5 +82,6 @@ async def video_c(event):
         ),
         file=thumb,
     )
-    await ultSongs.group_call.start_video(song)
+    await asyncio.sleep(1)
+    await ultSongs.group_call.start_video(song, with_audio=True)
     await xx.delete()
