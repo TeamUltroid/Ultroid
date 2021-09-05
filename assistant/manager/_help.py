@@ -45,7 +45,7 @@ async def helpish(event):
         return await event.reply(
             "Contact me in PM for help!", buttons=Button.url("Click me for Help", url)
         )
-    if str(event.sender_id) in owner_and_sudos():
+    if str(event.sender_id) in owner_and_sudos() and (udB.get("DUAL_MODE") and (udB.get("DUAL_HNDLR"=="/")):
         return
     BTTS = []
     keys = STRINGS
@@ -56,3 +56,9 @@ async def helpish(event):
             del keys[i]
         BTTS.append(BT)
     await event.reply(START, buttons=BTTS)
+
+
+@callback(re.compile("hlp_(.*)"))
+async def do_something(event):
+    match = event.pattern_match.group(1).decode("utf-8")
+    await event.edit(STRINGS[match])
