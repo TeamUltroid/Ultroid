@@ -59,14 +59,14 @@ LOCKS = """
 - `msgs` : for messages.
 - `inlines` : for inline queries.
 - `media` : for all medias.
-- `games` : for games. 
+- `games` : for games.
 - `sticker` : for stickers.
 - `polls` : for polls.
 - `gif` : for gifs.
 - `pin` : for pins.
 - `changeinfo` : for change info right.
 """
-STRINGS = {"Admintools": ADMINTOOLS, "locks":LOCKS, "Utils": UTILITIES}
+STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES}
 
 
 def get_buttons():
