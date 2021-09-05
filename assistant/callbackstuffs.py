@@ -305,7 +305,7 @@ async def otvaar(event):
 
 @callback("oofdm")
 @owner
-async def euwhe(e):
+async def euwhe(event):
     BT = [
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
