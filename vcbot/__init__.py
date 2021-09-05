@@ -260,7 +260,7 @@ async def vid_download(query):
 
 
 async def file_download(event, reply, fast_download=True):
-    thumb = None
+    thumb = "https://telegra.ph/file/22bb2349da20c7524e4db.mp4"
     title = reply.file.title or reply.file.name
     if fast_download:
         dl = await downloader(
