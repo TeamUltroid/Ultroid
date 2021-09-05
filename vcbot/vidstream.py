@@ -67,7 +67,12 @@ async def video_c(event):
         elif re.search("youtube", song) or re.search("youtu", song):
             song, thumb, title, duration = await vid_download(song)
         else:
-            song, thumb, title, duration  = song, "https://telegra.ph/file/04f662dddb9a390b6d154.jpg" , song, "♾"
+            song, thumb, title, duration = (
+                song,
+                "https://telegra.ph/file/04f662dddb9a390b6d154.jpg",
+                song,
+                "♾",
+            )
     ultSongs = Player(chat, xx, True)
     if not (await ultSongs.vc_joiner()):
         return
