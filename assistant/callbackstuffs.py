@@ -1023,10 +1023,12 @@ async def alvcs(event):
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
-            BT,[Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ","pmlgg")],
+            BT,
+            [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "pmlgg")],
             [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
         ],
     )
+
 
 @callback("pmlgg")
 @owner
