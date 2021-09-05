@@ -5,6 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+✘ Commands Available -
+
+`{i}write <text or reply to text>`
+   It will write on a paper.
+
+"""
+
 import os
 
 from PIL import Image, ImageDraw, ImageFont
