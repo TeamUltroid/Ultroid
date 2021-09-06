@@ -9,9 +9,9 @@ from pyUltroid.dB.core import *
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-from ._inline import _main_help_menu
 
 from . import *
+from ._inline import _main_help_menu
 
 C_PIC = udB.get("INLINE_PIC")
 _file_to_replace = C_PIC or "resources/extras/inline.jpg"
