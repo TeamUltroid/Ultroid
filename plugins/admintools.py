@@ -299,29 +299,23 @@ async def fastpurger(purg):
         ABC = None
     if ABC and purg.text[6] in ["m", "a"]:
         return
-    if purg.client._bot:
-        if not purg.is_reply:
-            return await eor(purg, "Reply to a Message!")
-        await purg.client.delete_messages(
-            purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id)]
-        )
-        await purg.respond("__Purged Successfully!__")
-        return
-    if match and not purg.is_reply:
+    if not purg._client._bot and match and not purg.is_reply:
         p = 0
         async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
             await msg.delete()
             p += 0
         return await eor(purg, f"Purged {p} Messages! ", time=5)
+    else:
+        match = None
     if not (purg.reply_to_msg_id or match):
         return await eor(purg, "`Reply to a message to purge from.`", time=10)
-    count = purg.reply_to_msg_id - purg.id
     try:
         await purg.client.delete_messages(
             chat, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
         )
     except Exception as er:
         LOGS.info(er)
+    count = purg.reply_to_msg_id - purg.id
     await eod(
         purg,
         "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
