@@ -218,7 +218,7 @@ async def pack_kangish(_):
 async def hehe(args):
     ultroid_bot = args.client
     xx = await eor(args, "`Processing...`")
-    user = await ultroid_bot.get_me()
+    user = ultroid_bot.me
     if not user.username:
         user.username = user.first_name
     message = await args.get_reply_message()
@@ -318,10 +318,12 @@ async def hehe(args):
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "120" in x.text:
+                while "120" or "50" in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
+                    if is_anim:
+                        packname += "_anim"
                     await xx.edit(
                         "`Switching to Pack "
                         + str(pack)
