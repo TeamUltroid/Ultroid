@@ -32,12 +32,11 @@ instagrapi
 jikanpy
 lottie
 lxml
-moviepy
 multiprocess
 numerize
 numpy
 oauth2client==4.1.3
-opencv-contrib-python-headless
+opencv-python-headless
 pillow>=7.0.0
 pistonapi
 play-scraper
