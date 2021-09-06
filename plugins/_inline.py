@@ -16,7 +16,7 @@ from pyUltroid.dB.core import *
 from pyUltroid.misc import owner_and_sudos
 from support import *
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
-
+from ._help import _main_help_menu
 from . import *
 
 # ================================================#
@@ -44,22 +44,6 @@ upage = 0
 
 
 # --------------------BUTTONS--------------------#
-
-_main_help_menu = [
-    [
-        Button.inline("• Plugins", data="hrrrr"),
-        Button.inline("• Addons", data="frrr"),
-    ],
-    [
-        Button.inline("••Voice Chat", data="vc_helper"),
-        Button.inline("Inline Plugins••", data="inlone"),
-    ],
-    [
-        Button.inline("⚙️ Owner Tools", data="ownr"),
-        Button.url("Settings ⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
-    ],
-    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-]
 
 SUP_BUTTONS = [
     [
