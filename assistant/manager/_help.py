@@ -112,7 +112,7 @@ async def helpish(event):
 
 
 @callback("mngbtn")
-# @owner
+@owner
 async def ehwhshd(e):
     await e.edit(buttons=get_buttons())
 
