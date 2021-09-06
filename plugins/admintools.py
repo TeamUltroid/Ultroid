@@ -315,7 +315,7 @@ async def fastpurger(purg):
         )
     except Exception as er:
         LOGS.info(er)
-    count = purg.reply_to_msg_id - purg.id
+    count = purg.id - purg.reply_to_msg_id
     await purg.respond(
         "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
     )
