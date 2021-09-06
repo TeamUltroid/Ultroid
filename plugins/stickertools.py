@@ -318,7 +318,7 @@ async def hehe(args):
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "120" or "50" in x.text:
+                while "120" in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
@@ -366,25 +366,6 @@ async def hehe(args):
                             parse_mode="md",
                         )
                         return
-                    elif x.text.startswith("Please send me your sticker animation"):
-                        if is_anim:
-                            await conv.send_file("AnimatedSticker.tgs")
-                            remove("AnimatedSticker.tgs")
-                        else:
-                            file.seek(0)
-                            await conv.send_file(file, force_document=True)
-                        x = await conv.get_response()
-                        if "Sorry, the file type is invalid." in x.text:
-                            await xx.edit(
-                                "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`",
-                            )
-                            return
-                        await conv.send_message(emoji)
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
-                        await conv.get_response()
-                        await conv.send_message("/done")
-                        await conv.get_response()
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
