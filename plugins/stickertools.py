@@ -220,7 +220,7 @@ async def hehe(args):
     xx = await eor(args, "`Processing...`")
     user = ultroid_bot.me
     if not user.username:
-        user.username = user.first_name
+       user.username = user.first_name
     message = await args.get_reply_message()
     photo = None
     is_anim = False
@@ -322,8 +322,6 @@ async def hehe(args):
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
-                    if is_anim:
-                        packname += "_anim"
                     await xx.edit(
                         "`Switching to Pack "
                         + str(pack)
@@ -368,6 +366,25 @@ async def hehe(args):
                             parse_mode="md",
                         )
                         return
+                    elif x.text.startswith("Please send me your sticker animation"):
+                        if is_anim:
+                            await conv.send_file("AnimatedSticker.tgs")
+                            remove("AnimatedSticker.tgs")
+                        else:
+                            file.seek(0)
+                            await conv.send_file(file, force_document=True)
+                        x = await conv.get_response()
+                        if "Sorry, the file type is invalid." in x.text:
+                             await xx.edit(
+                             "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`",
+                             )
+                             return
+                        await conv.send_message(emoji)
+                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
+                        await conv.get_response()
+                        await conv.send_message("/done")
+                        await conv.get_response()
+                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
