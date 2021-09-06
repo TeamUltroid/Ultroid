@@ -114,7 +114,9 @@ async def helpish(event):
 @callback("mngbtn")
 @owner
 async def ehwhshd(e):
-    await e.edit(buttons=get_buttons())
+    buttons=get_buttons()
+    buttons[-1].append(Button.inline("<< Back","open"))
+    await e.edit(buttons=buttons)
 
 
 @callback("mnghome")
