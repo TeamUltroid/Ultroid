@@ -220,7 +220,7 @@ async def hehe(args):
     xx = await eor(args, "`Processing...`")
     user = ultroid_bot.me
     if not user.username:
-       user.username = user.first_name
+        user.username = user.first_name
     message = await args.get_reply_message()
     photo = None
     is_anim = False
@@ -375,10 +375,10 @@ async def hehe(args):
                             await conv.send_file(file, force_document=True)
                         x = await conv.get_response()
                         if "Sorry, the file type is invalid." in x.text:
-                             await xx.edit(
-                             "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`",
-                             )
-                             return
+                            await xx.edit(
+                                "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`",
+                            )
+                            return
                         await conv.send_message(emoji)
                         await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.get_response()
