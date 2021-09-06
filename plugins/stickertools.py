@@ -331,9 +331,7 @@ async def hehe(args):
                     )
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    if x.text == "Invalid pack selected." or x.text.startswith(
-                        "Please send me your sticker"
-                    ):
+                    if x.text == "Invalid pack selected.":
                         await conv.send_message(cmd)
                         await conv.get_response()
                         await ultroid_bot.send_read_acknowledge(conv.chat_id)
