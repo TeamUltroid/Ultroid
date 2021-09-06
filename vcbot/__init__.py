@@ -10,7 +10,6 @@ import re
 from os import remove
 from time import time
 
-import pafy
 from pytgcalls import GroupCallFactory
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
@@ -28,7 +27,8 @@ from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
 from telethon.tl import types
-from youtubesearchpython import ResultMode, Video, VideosSearch
+from youtube_dl import YoutubeDL
+from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
 from strings import get_string
 
@@ -231,7 +231,7 @@ async def download(query):
     dl = await bash(f"youtube-dl -x -g {link}")
     title = data["title"]
     duration = data["duration"] or "♾"
-    thumb = data["thumbnails"][-1]["url"] + ".jpg"
+    thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     return dl[0], thumb, title, duration
 
 
@@ -239,24 +239,54 @@ async def live_dl(link):
     dl = await bash(f"youtube-dl -x -g {link}")
     info = eval(Video.getInfo(link, mode=ResultMode.json))
     title = info["title"]
-    thumb = info["thumbnails"][-1]["url"] + ".jpg"
+    thumb = f"https://i.ytimg.com/vi/{info['id']}/hqdefault.jpg"
     duration = "♾"
     return dl[0], thumb, title, duration
+
+
+async def get_stream_link(ytlink):
+    """
+    info = YoutubeDL({}).extract_info(url=ytlink, download=False)
+    k = ""
+    for x in info["formats"]:
+        h, w = ([x["height"], x["width"]])
+        if h and w:
+            if h <= 720 and w <= 1280:
+                k = x["url"]
+    return k
+    """
+    stream = await bash(f'youtube-dl -g -f "best[height<=720][width<=1280]" {ytlink}')
+    return stream[0]
 
 
 async def vid_download(query):
     search = VideosSearch(query, limit=1).result()
     data = search["result"][0]
     link = data["link"]
-    vid = pafy.new(link)
-    video = vid.getbest().url
-    for stream in vid.streams:
-        if stream.resolution == "1280x720":
-            video = stream.url
+    video = await get_stream_link(link)
     title = data["title"]
-    thumb = data["thumbnails"][-1]["url"] + ".jpg"
+    thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     duration = data["duration"] or "♾"
     return video, thumb, title, duration
+
+
+async def dl_playlist(chat, from_user, link):
+    vids = Playlist.getVideos(link)
+    try:
+        vid1 = vids["videos"][0]
+        duration = vid1["duration"] or "♾"
+        title = vid1["title"]
+        song = await bash(f"youtube-dl -x -g {vid1['link']}")
+        thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
+        return song[0], thumb, title, duration
+    finally:
+        vids = vids["videos"][1:]
+        for z in vids:
+            duration = z["duration"] or "♾"
+            title = z["title"]
+            song = await bash(f"youtube-dl -x -g {z['link']}")
+            thumb = f"https://i.ytimg.com/vi/{z['id']}/hqdefault.jpg"
+            add_to_queue(chat, song[0], title, thumb, from_user, duration)
 
 
 async def file_download(event, reply, fast_download=True):
