@@ -58,7 +58,7 @@ async def all_messages_catcher(e):
             tag_add(send.id, e.chat_id, e.id)
         except Exception as me:
             LOGS.info(me)
-            if e.photo or e.sticker:
+            if e.photo or e.sticker or e.gif:
                 try:
                     media = await e.download_media()
                     await asst.send_message(
