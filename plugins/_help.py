@@ -6,7 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pyUltroid.dB.core import *
-from pyUltroid.misc._assistant import in_pattern # pylint: disable=unused-import
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
@@ -17,6 +16,21 @@ from ._inline import _main_help_menu
 C_PIC = udB.get("INLINE_PIC")
 _file_to_replace = C_PIC or "resources/extras/inline.jpg"
 
+_main_help_menu = [
+    [
+        Button.inline("• Plugins", data="hrrrr"),
+        Button.inline("• Addons", data="frrr"),
+    ],
+    [
+        Button.inline("••Voice Chat", data="vc_helper"),
+        Button.inline("Inline Plugins••", data="inlone"),
+    ],
+    [
+        Button.inline("⚙️ Owner Tools", data="ownr"),
+        Button.url("Settings ⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+    ],
+    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+]
 
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
