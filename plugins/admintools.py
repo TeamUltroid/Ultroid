@@ -316,7 +316,9 @@ async def fastpurger(purg):
     if not (purg.reply_to_msg_id or match):
         return await eor(purg, "`Reply to a message to purge from.`", time=10)
     try:
-        await purg.client.delete_messages(chat, [a for a in range(purg.reply_to_msg_id, purg.id+1)])
+        await purg.client.delete_messages(
+            chat, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
+        )
     except Exception as er:
         LOGS.info(er)
     await eod(
