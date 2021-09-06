@@ -26,23 +26,23 @@
     Search Hd Wallpaper as Per ur Wish..
 """
 import os
+import time
 from datetime import datetime as dt
 from random import choice
 from shutil import rmtree
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
-
 import pytz
-import time
 import requests
 from bs4 import BeautifulSoup as b
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 from pyUltroid.functions.google_image import googleimagesdownload
+from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
 File = []
+
 
 @ultroid_cmd(
     pattern="getaudio$",
@@ -94,11 +94,11 @@ async def adaudroid(e):
     )
     out = "output.mp4"
     mmmm = await uploader(
-            out,
-            out,
-            time.time(),
-            xxx,
-            "Uploading " + out + "...",
+        out,
+        out,
+        time.time(),
+        xxx,
+        "Uploading " + out + "...",
     )
     metadata = extractMetadata(createParser(out))
     duration = metadata.get("duration").seconds
@@ -107,17 +107,17 @@ async def adaudroid(e):
     height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
     width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
     attributes = [
-            DocumentAttributeVideo(
-                duration=duration, w=width, h=height, supports_streaming=True
-            )
+        DocumentAttributeVideo(
+            duration=duration, w=width, h=height, supports_streaming=True
+        )
     ]
     await e.client.send_file(
-            e.chat_id,
-            mmmm,
-            thumb="resources/extras/ultroid.jpg",
-            attributes=attributes,
-            force_document=False,
-            reply_to=e.reply_to_msg_id,
+        e.chat_id,
+        mmmm,
+        thumb="resources/extras/ultroid.jpg",
+        attributes=attributes,
+        force_document=False,
+        reply_to=e.reply_to_msg_id,
     )
     await xxx.delete()
     os.remove(out)
