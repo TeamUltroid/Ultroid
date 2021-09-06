@@ -64,9 +64,7 @@ _main_help_menu = [
 SUP_BUTTONS = [
     [
         Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("• Addons •", url="https://github.com/TeamUltroid/UltroidAddons"),
-    ],
-    [Button.url("• Support •", url="t.me/UltroidSupport")],
+        Button.url("• Support •", url="t.me/UltroidSupport")],
 ]
 
 # --------------------BUTTONS--------------------#
@@ -78,9 +76,6 @@ async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
         MSG = "• **Ultroid Userbot •**"
-        uptime = time_formatter((time.time() - start_time) * 1000)
-        MSG += f"\n\n• **Uptime** - `{uptime}`\n"
-        MSG += f"• **OWNER** - `{OWNER_NAME}`"
         WEB0 = InputWebDocument(
             "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
         )
