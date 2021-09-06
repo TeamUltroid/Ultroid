@@ -32,6 +32,7 @@ _main_help_menu = [
     [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
 ]
 
+
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
     plug = ult.pattern_match.group(1)

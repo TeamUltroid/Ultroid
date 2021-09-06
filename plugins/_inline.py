@@ -16,8 +16,9 @@ from pyUltroid.dB.core import *
 from pyUltroid.misc import owner_and_sudos
 from support import *
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
-from ._help import _main_help_menu
+
 from . import *
+from ._help import _main_help_menu
 
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
