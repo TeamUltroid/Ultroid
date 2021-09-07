@@ -48,7 +48,7 @@ async def _(e):
             return await eor(e, "`fonts small caps : Your Message`", time=5)
     if font not in fonts:
         return await eor(e, f"`{font} not in font list`.", time=5)
-    elif font == "small caps ":
+    if font == "small caps ":
         msg = gen_font(text, _small_caps)
     elif font == "monospace ":
         msg = gen_font(text, _monospace)
