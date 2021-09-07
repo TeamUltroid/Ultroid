@@ -49,7 +49,7 @@ from tabulate import tabulate
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
-from telethon.utils import get_display_name
+from telethon.utils import get_display_name, resolve_bot_file_id
 
 from . import *
 
@@ -756,7 +756,7 @@ async def in_pm_ans(event):
         ]
     ]
     include_media = True
-    mime_type = None
+    mime_type, res = None, None
     cont = None
     try:
         ext = PMPIC.split(".")[-1].lower()
@@ -769,11 +769,19 @@ async def in_pm_ans(event):
         mime_type = "video/mp4"
         _type = "gif"
     else:
-        _type = "article"
-        include_media = False
-    if include_media:
-        cont = types.InputWebDocument(PMPIC, 0, mime_type, [])
-    res = [
+        try:
+            res = resolve_bot_file_id(PMPIC)
+        except ValueError:
+            pass
+        if res:
+            res = [await event.builder.document(res, title="Inline PmPermit", description="~ @TheUltroid", text=msg_,buttons=buttons, link_preview=False)]
+        else:
+            _type = "article"
+            include_media = False
+    if not res:
+        if include_media:
+            cont = types.InputWebDocument(PMPIC, 0, mime_type, [])
+        res = [
         event.builder.article(
             title="Inline PMPermit.",
             type=_type,
@@ -783,9 +791,9 @@ async def in_pm_ans(event):
             buttons=buttons,
             thumb=cont,
             content=cont,
-        )
-    ]
-    await event.answer(res)
+            )
+        ]
+    await event.answer(res, switch_pm="• Ultroid •",switch_pm_param="start")
 
 
 @callback(re.compile("admin_only(.*)"))
