@@ -305,9 +305,7 @@ async def fastpurger(purg):
             await msg.delete()
             p += 0
         return await eor(purg, f"Purged {p} Messages! ", time=5)
-    else:
-        match = None
-    if not (purg.reply_to_msg_id or match):
+    if not purg.reply_to_msg_id:
         return await eor(purg, "`Reply to a message to purge from.`", time=10)
     try:
         await purg.client.delete_messages(
