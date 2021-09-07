@@ -28,6 +28,7 @@
 • `{i}shutdown`
     Turn off your bot.
 """
+import logging
 import os
 import sys
 import time
@@ -41,8 +42,9 @@ from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
 from . import *
-import logging
+
 logging.basicConfig(level=logging.DEBUG)
+
 
 @ultroid_cmd(
     pattern="alive$",
