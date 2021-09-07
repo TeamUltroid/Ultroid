@@ -51,7 +51,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
-@callback("alive"):
+@callback("alive")
 async def alive(event):
     text = alive_txt.format(ultroid_version, UltVer, __version__)
     await event.answer(text, alert=True)
