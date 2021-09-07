@@ -159,7 +159,10 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")) and " | stream" in hmm:
+                if (
+                    title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
+                    and " | stream" in hmm
+                ):
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512

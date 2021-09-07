@@ -43,13 +43,14 @@ from telethon.utils import resolve_bot_file_id
 from . import *
 
 # Will move to strings
-alive_txt = """ 
+alive_txt = """
 The Ultroid Userbot
 
   ◍ Version - {}
   ◍ Py-Ultroid - {}
   ◍ Telethon - {}
 """
+
 
 @callback("alive")
 async def alive(event):
