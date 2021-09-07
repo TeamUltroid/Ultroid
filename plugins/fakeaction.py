@@ -25,16 +25,25 @@
 
 • `{i}fcontact <time/in secs>`
     `Show Fake contact choosing Action in current chat.`
+
+• `{i}fround <time/in secs>`
+    `Show Fake video message action in current chat. `
+
+• `{i}fphoto <time/in secs>`
+    `Show Fake sending photo in current chat. `
+
+• `{i}fdocument <time/in secs>`
+    `Show Fake sending document in current chat. `
 """
 
 from . import *
 
 
-@ultroid_cmd(pattern="f(typing|audio|contact|location|video|game) ?(.*)")
+@ultroid_cmd(pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)")
 async def _(e):
     act = e.pattern_match.group(1)
     t = e.pattern_match.group(2)
-    if act in ["audio", "video"]:
+    if act in ["audio", "round", "video"]:
         act = "record-" + act
     if not (t or t.isdigit()):
         t = 30
