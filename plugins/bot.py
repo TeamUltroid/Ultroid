@@ -45,6 +45,19 @@ from . import *
 
 logging.basicConfig(level=logging.DEBUG)
 
+alive_txt = """ # Will move to strings/
+The Ultroid Userbot
+
+  ◍ Version - {}
+  ◍ Py-Ultroid - {}
+  ◍ Telethon - {}
+"""
+
+@callback("alive"):
+async def alive(event):
+    text = alive_txt.format(ultroid_version, UltVer, __version__)
+    await event.answer(text, alert=True)
+
 
 @ultroid_cmd(
     pattern="alive$",
@@ -209,12 +222,12 @@ async def inline_alive(ult):
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
                     pic = _pic
+                    buttons.insert(0, [Button.inline("Stats", data="alive")])
                 results = [
                     await builder.document(
                         pic,
                         title="Inline Alive",
                         description="@TheUltroid",
-                        text=als,
                         buttons=buttons,
                     )
                 ]
