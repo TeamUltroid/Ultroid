@@ -28,7 +28,6 @@
 • `{i}shutdown`
     Turn off your bot.
 """
-import logging
 import os
 import sys
 import time
@@ -43,9 +42,8 @@ from telethon.utils import resolve_bot_file_id
 
 from . import *
 
-logging.basicConfig(level=logging.DEBUG)
-
-alive_txt = """ # Will move to strings/
+# Will move to strings
+alive_txt = """ 
 The Ultroid Userbot
 
   ◍ Version - {}
