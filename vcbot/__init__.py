@@ -26,7 +26,7 @@ from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from telethon.tl import types, functions
+from telethon.tl import functions, types
 from youtube_dl import YoutubeDL
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
@@ -44,7 +44,9 @@ def VC_AUTHS():
     A_AUTH = [*owner_and_sudos(), *_vc_sudos]
     return A_AUTH
 
+
 # --------------------------------------------------
+
 
 async def make_vc_active(chat):
     try:
@@ -52,19 +54,23 @@ async def make_vc_active(chat):
     except Exception as e:
         return False, e
     if isinstance(chat, types.Channel):
-        FC = await vcClient(functions.channels.GetFullChannelRequest(chat.id)) 
+        FC = await vcClient(functions.channels.GetFullChannelRequest(chat.id))
     elif isinstance(chat, types.Chat):
         FC = await vcClient(functions.messages.GetFullChatRequest(chat.id))
     else:
         return None, None
     if not FC.full_chat.call:
         try:
-            await vcClient(functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ"))
+            await vcClient(
+                functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
+            )
         except Exception as e:
             return False, e
     return True, None
 
+
 # --------------------------------------------------
+
 
 class Player:
     def __init__(self, chat, event=None, video=False):
@@ -149,7 +155,7 @@ class Player:
         done, err = await make_vc_active(chat_id)
         if done:
             done, err = await self.startCall()
-        
+
         if done:
             await vcClient.send_message(
                 self._current_chat, "• Joined VC in {}".format(chat_id)
