@@ -743,7 +743,7 @@ async def media(event):
     name = "Alive Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Alive Media**\nSend me a pic/gif/bot api id of sticker to set as alive media.\n\nUse /cancel to terminate the operation.",
+            "**Alive Media**\nSend me a pic/gif/media to set as alive media.\n\nUse /cancel to terminate the operation.",
         )
         response = await conv.get_response()
         try:
@@ -762,6 +762,8 @@ async def media(event):
             and not response.media
         ):
             url = response.text
+        elif response.sticker:
+            url = response.file.id
         else:
             try:
                 x = upl(media)
@@ -924,7 +926,7 @@ async def media(event):
     name = "PM Media"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**PM Media**\nSend me a pic/gif/ or link  to set as pmpermit media.\n\nUse /cancel to terminate the operation.",
+            "**PM Media**\nSend me a pic/gif/sticker/link  to set as pmpermit media.\n\nUse /cancel to terminate the operation.",
         )
         response = await conv.get_response()
         try:
@@ -943,6 +945,8 @@ async def media(event):
             and not response.media
         ):
             url = response.text
+        elif response.sticker:
+            url = response.file.id
         else:
             try:
                 x = upl(media)
