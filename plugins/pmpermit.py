@@ -774,7 +774,16 @@ async def in_pm_ans(event):
         except ValueError:
             pass
         if res:
-            res = [await event.builder.document(res, title="Inline PmPermit", description="~ @TheUltroid", text=msg_,buttons=buttons, link_preview=False)]
+            res = [
+                await event.builder.document(
+                    res,
+                    title="Inline PmPermit",
+                    description="~ @TheUltroid",
+                    text=msg_,
+                    buttons=buttons,
+                    link_preview=False,
+                )
+            ]
         else:
             _type = "article"
             include_media = False
@@ -782,18 +791,18 @@ async def in_pm_ans(event):
         if include_media:
             cont = types.InputWebDocument(PMPIC, 0, mime_type, [])
         res = [
-        event.builder.article(
-            title="Inline PMPermit.",
-            type=_type,
-            text=msg_,
-            description="@TeamUltroid",
-            include_media=include_media,
-            buttons=buttons,
-            thumb=cont,
-            content=cont,
+            event.builder.article(
+                title="Inline PMPermit.",
+                type=_type,
+                text=msg_,
+                description="@TeamUltroid",
+                include_media=include_media,
+                buttons=buttons,
+                thumb=cont,
+                content=cont,
             )
         ]
-    await event.answer(res, switch_pm="• Ultroid •",switch_pm_param="start")
+    await event.answer(res, switch_pm="• Ultroid •", switch_pm_param="start")
 
 
 @callback(re.compile("admin_only(.*)"))
