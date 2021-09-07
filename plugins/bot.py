@@ -28,6 +28,7 @@
 • `{i}shutdown`
     Turn off your bot.
 """
+import logging
 import os
 import sys
 import time
@@ -41,8 +42,9 @@ from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
 from . import *
-import logging
+
 logging.basicConfig(level=logging.DEBUG)
+
 
 @ultroid_cmd(
     pattern="alive$",
@@ -207,7 +209,15 @@ async def inline_alive(ult):
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
                     pic = _pic
-                results = [await builder.document(pic, title="Inline Alive", description="@TheUltroid", text=als, buttons=buttons)]
+                results = [
+                    await builder.document(
+                        pic,
+                        title="Inline Alive",
+                        description="@TheUltroid",
+                        text=als,
+                        buttons=buttons,
+                    )
+                ]
             return await ult.answer(results)
         except BaseException as er:
             LOGS.info(er)
