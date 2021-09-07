@@ -41,7 +41,8 @@ from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
 from . import *
-
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 @ultroid_cmd(
     pattern="alive$",
@@ -199,14 +200,14 @@ async def inline_alive(ult):
     ]
     builder = ult.builder
     if pic:
-        if ".jpg" in pic:
-            results = [await builder.photo(pic, text=als, buttons=buttons)]
-        else:
-            _pic = resolve_bot_file_id(pic)
-            if _pic:
-                pic = _pic
-            results = [await builder.document(pic, text=als, buttons=buttons)]
         try:
+            if ".jpg" in pic:
+                results = [await builder.photo(pic, text=als, buttons=buttons)]
+            else:
+                _pic = resolve_bot_file_id(pic)
+                if _pic:
+                    pic = _pic
+                results = [await builder.document(pic, text=als, buttons=buttons)]
             return await ult.answer(results)
         except BaseException as er:
             LOGS.info(er)
