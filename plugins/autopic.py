@@ -19,7 +19,6 @@ import os
 
 import requests as r
 from bs4 import BeautifulSoup as bs
-from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
@@ -43,16 +42,12 @@ async def autopic(e):
             if ge != "True":
                 return
             au = "https://unsplash.com" + lie["href"]
-            et = await e.client(getweb(au))
-            try:
-                kar = await e.client.download_media(et.webpage.photo)
-            except AttributeError:
-                ct = r.get(au).content
-                bsc = bs(ct, "html.parser", from_encoding="utf-8")
-                ft = bsc.find_all("img", "oCCRx")
-                li = ft[0]["src"]
-                kar = "autopic.png"
-                await download_file(li, kar)
+            ct = r.get(au).content
+            bsc = bs(ct, "html.parser", from_encoding="utf-8")
+            ft = bsc.find_all("img", "oCCRx")
+            li = ft[0]["src"]
+            kar = "autopic.png"
+            await download_file(li, kar)
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
