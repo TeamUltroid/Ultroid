@@ -25,15 +25,12 @@
 
 • `{i}fcontact <time/in secs>`
     `Show Fake contact choosing Action in current chat.`
-
-• `{i}fsticker <time/in secs>`
-    `Show Fake sticker choosing Action in current chat.`
 """
 
 from . import *
 
 
-@ultroid_cmd(pattern="f(typing|audio|contact|location|video|game|sticker) ?(.*)")
+@ultroid_cmd(pattern="f(typing|audio|contact|location|video|game) ?(.*)")
 async def _(e):
     act = e.pattern_match.group(1)
     t = e.pattern_match.group(2)
