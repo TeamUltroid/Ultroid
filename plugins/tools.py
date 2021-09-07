@@ -40,7 +40,7 @@ import cv2
 from google_trans_new import google_translator
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.errors.rpcerrorlist import YouBlockedUserError, MessageTooLongError
+from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
@@ -346,7 +346,9 @@ async def _(e):
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"
-            await e.reply(f"`{e.text}`", file=out_file,thumb="resources/extras/ultroid.jpg")
+            await e.reply(
+                f"`{e.text}`", file=out_file, thumb="resources/extras/ultroid.jpg"
+            )
         await e.delete()
 
 
