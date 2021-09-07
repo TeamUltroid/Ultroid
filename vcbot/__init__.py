@@ -52,8 +52,8 @@ def VC_AUTHS():
 async def make_vc_active(chat):
     try:
         await vcClient(
-                functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
-            )
+            functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
+        )
     except Exception as e:
         return False, e
     return True, None
