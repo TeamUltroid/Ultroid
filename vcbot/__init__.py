@@ -11,6 +11,7 @@ from os import remove
 from time import time
 
 from pytgcalls import GroupCallFactory
+from pytgcalls.exceptions import GroupCallNotFoundError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
@@ -50,22 +51,11 @@ def VC_AUTHS():
 
 async def make_vc_active(chat):
     try:
-        chat = await vcClient.get_entity(chat)
-    except Exception as e:
-        return False, e
-    if isinstance(chat, types.Channel):
-        FC = await vcClient(functions.channels.GetFullChannelRequest(chat.id))
-    elif isinstance(chat, types.Chat):
-        FC = await vcClient(functions.messages.GetFullChatRequest(chat.id))
-    else:
-        return None, None
-    if not FC.full_chat.call:
-        try:
-            await vcClient(
+        await vcClient(
                 functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
             )
-        except Exception as e:
-            return False, e
+    except Exception as e:
+        return False, e
     return True, None
 
 
@@ -103,6 +93,10 @@ class Player:
                 self.group_call.on_network_status_changed(self.on_network_changed)
                 # self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.join(self._chat)
+            except GroupCallNotFoundError:
+                dn, err = await make_vc_active(self._chat)
+                if err:
+                    return False, err
             except Exception as e:
                 return False, e
         return True, None
@@ -152,9 +146,7 @@ class Player:
 
     async def vc_joiner(self):
         chat_id = self._chat
-        done, err = await make_vc_active(chat_id)
-        if done:
-            done, err = await self.startCall()
+        done, err = await self.startCall()
 
         if done:
             await vcClient.send_message(
