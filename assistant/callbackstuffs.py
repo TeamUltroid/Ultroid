@@ -57,11 +57,7 @@ async def send(eve):
             Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ],
     ]
-    try:
-        await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
-    except Exception as er:
-        await eve.answer(str(er), alert=True)
-
+    await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
 
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 
