@@ -209,8 +209,10 @@ async def inline_alive(ult):
         kk,
     )
     buttons = [
-        [Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-        Button.url("Support", "t.me/UltroidSupport")]
+        [
+            Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+            Button.url("Support", "t.me/UltroidSupport"),
+        ]
     ]
     builder = ult.builder
     if pic:
