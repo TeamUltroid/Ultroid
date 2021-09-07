@@ -17,7 +17,7 @@ WORKDIR /root/TeamUltroid/
 COPY requirements.txt /deploy/
 RUN pip3 install --no-cache-dir -r /deploy/requirements.txt
 
-RUN pip3 install -U pytgcalls==3.0.0.dev14
+RUN pip3 install -U pytgcalls==3.0.0.dev15
 
 
 # start the bot
