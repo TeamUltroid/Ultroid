@@ -115,7 +115,7 @@ async def is_on(ult):
     )
     buttons = [
         Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-        Button.inline("Help", "open"),
+        Button.url("Support", "t.me/UltroidSupport"),
     ]
     await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons)
 
