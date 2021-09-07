@@ -68,7 +68,7 @@ async def video_c(event):
             is_link = False
         if is_link is False:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
-        elif is_link is None:
+        if is_link is None:
             song, thumb, title, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
             song, thumb, title, duration = await vid_download(song)
