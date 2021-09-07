@@ -29,6 +29,7 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
         "sndplug_(.*)",
     ),
 )
+@owner
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
     thumb = "resources/extras/inline.jpg"
