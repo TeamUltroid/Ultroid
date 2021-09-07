@@ -202,14 +202,13 @@ async def inline_alive(ult):
         if ".jpg" in pic:
             results = [await builder.photo(pic, text=als, buttons=buttons)]
         else:
-            try:
-                pic = resolve_bot_file_id(pic)
-            except ValueError:
-                pass
+            _pic = resolve_bot_file_id(pic)
+            if _pic:
+                pic = _pic
             results = [await builder.document(pic, text=als, buttons=buttons)]
         try:
             return await ult.answer(results)
-        except Exception as er:
+        except BaseException as er:
             LOGS.info(er)
     result = [
         await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
