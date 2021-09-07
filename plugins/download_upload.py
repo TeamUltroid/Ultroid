@@ -135,7 +135,7 @@ async def download(event):
     xx = await eor(event, get_string("com_1"))
     hmm = event.pattern_match.group(1)
     try:
-        kk = hmm.split(" | ")[0]
+        kk = hmm.split(" | stream")[0]
     except BaseException:
         pass
     try:
@@ -152,15 +152,14 @@ async def download(event):
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:
+            tt = time.time()
             try:
                 try:
                     res = await uploader(kk, kk, tt, xx, f"Uploading {kk}...")
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
-                    hmm = " | stream"
-                if " | stream" in hmm:
+                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")) and " | stream" in hmm:
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512
