@@ -261,6 +261,8 @@ async def _(event):
         f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
     )
     try:
+        if event.client._bot:
+            return await eor(xx, reply_text)
         ok = await event.client.inline_query(asst.me.username, "pasta-" + key)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
