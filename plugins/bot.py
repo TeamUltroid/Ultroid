@@ -38,6 +38,7 @@ from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.utils import resolve_bot_file_id
 
 from . import *
 
@@ -201,6 +202,10 @@ async def inline_alive(ult):
         if ".jpg" in pic:
             results = [await builder.photo(pic, text=als, buttons=buttons)]
         else:
+            try:
+                pic = resolve_bot_file_id(pic)
+            except ValueError:
+                pass
             results = [await builder.document(pic, text=als, buttons=buttons)]
         try:
             return await ult.answer(results)
