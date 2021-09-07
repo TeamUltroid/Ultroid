@@ -27,13 +27,13 @@
     `Show Fake contact choosing Action in current chat.`
 
 • `{i}fround <time/in secs>`
-    `Show Fake video message action in current chat. `
+    `Show Fake video message action in current chat.`
 
 • `{i}fphoto <time/in secs>`
-    `Show Fake sending photo in current chat. `
+    `Show Fake sending photo in current chat.`
 
 • `{i}fdocument <time/in secs>`
-    `Show Fake sending document in current chat. `
+    `Show Fake sending document in current chat.`
 """
 
 from . import *
