@@ -58,6 +58,6 @@ async def autopic(e):
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if gt != "True":
-        return await eor(ult, "AUTOPIC was not in used !!", time=5)
+        return await eor(ult, "AUTOPIC was not in use !!", time=5)
     udB.set("AUTOPIC", "None")
     await eor(ult, "AUTOPIC Stopped !!", time=5)
