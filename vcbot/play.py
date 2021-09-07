@@ -106,7 +106,7 @@ async def play_music_(event):
         fromchat = (await event.client.get_entity(input)).id
     except Exception as er:
         return await eor(msg, str(er))
-    await eor(msg, "`• Starting Playing from Channel....`")
+    await eor(msg, "`• Started Playing from Channel....`")
     send_message = True
     ultSongs = Player(chat, event)
     count = 0
