@@ -55,7 +55,7 @@ async def all_messages_catcher(e):
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
-            tag_add(send.id, e.chat_id, e.id)
+            tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             LOGS.info(me)
             if e.photo or e.sticker or e.gif:
@@ -66,7 +66,7 @@ async def all_messages_catcher(e):
                     )
                     return os.remove(media)
                 except Exception as er:
-                    LOGS.debug(er)
+                    LOGS.info(er)
             await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
     except (PeerIdInvalidError, ValueError):
         await asst.send_message(
