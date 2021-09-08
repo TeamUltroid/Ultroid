@@ -130,11 +130,11 @@ async def _(event):
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         if ytdl_data.get("artist"):
-            artist = info["artist"]
+            artist = ytdl_data["artist"]
         elif ytdl_data.get("creator"):
-            artist = info["creator"]
+            artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
-            artist = info["channel"]
+            artist = ytdl_data["channel"]
         views = numerize.numerize(ytdl_data["view_count"])
         await download_file(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
@@ -167,11 +167,11 @@ async def _(event):
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         if ytdl_data.get("artist"):
-            artist = info["artist"]
+            artist = ytdl_data["artist"]
         elif ytdl_data.get("creator"):
-            artist = info["creator"]
+            artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
-            artist = info["channel"]
+            artist = ytdl_data["channel"]
         views = numerize.numerize(ytdl_data["view_count"])
         thumb = await fast_download(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
