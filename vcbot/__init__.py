@@ -49,19 +49,6 @@ def VC_AUTHS():
 # --------------------------------------------------
 
 
-async def make_vc_active(chat):
-    try:
-        await vcClient(
-            functions.phone.CreateGroupCallRequest(chat.id, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
-        )
-    except Exception as e:
-        return False, e
-    return True, None
-
-
-# --------------------------------------------------
-
-
 class Player:
     def __init__(self, chat, event=None, video=False):
         self._chat = chat
@@ -75,6 +62,15 @@ class Player:
             )
             self.group_call = _client.get_group_call()
             CLIENTS.update({chat: self.group_call})
+
+    async def make_vc_active(self):
+        try:
+            await vcClient(
+            functions.phone.CreateGroupCallRequest(self._chat, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
+            )
+        except Exception as e:
+            return False, e
+        return True, None
 
     async def startCall(self):
         if VIDEO_ON:
@@ -94,7 +90,7 @@ class Player:
                 # self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.join(self._chat)
             except GroupCallNotFoundError:
-                dn, err = await make_vc_active(self._chat)
+                dn, err = await self.make_vc_active()
                 if err:
                     return False, err
             except Exception as e:
