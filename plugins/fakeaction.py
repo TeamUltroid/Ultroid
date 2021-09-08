@@ -35,7 +35,9 @@
 • `{i}fdocument <time/in secs>`
     `Show Fake sending document in current chat.`
 """
-import math, time
+import math
+import time
+
 from . import *
 
 
