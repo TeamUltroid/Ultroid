@@ -558,7 +558,7 @@ async def unblockpm(unblock):
         aname = await unblock.client.get_entity(user)
         await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
     except Exception as et:
-        await eor(unblock, f"ERROR - {et}", time=5)
+        return await eor(unblock, f"ERROR - {et}", time=5)
     try:
         await asst.edit_message(
             int(udB.get("LOG_CHANNEL")),
