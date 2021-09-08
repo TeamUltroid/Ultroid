@@ -256,7 +256,7 @@ async def download(query):
     link = data["link"]
     dl = await bash(f"youtube-dl -x -g {link}")
     title = data["title"]
-    duration = data["duration"] or "♾"
+    duration = data.get("duration") or "♾"
     thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     return dl[0], thumb, title, duration
 
@@ -281,7 +281,7 @@ async def get_stream_link(ytlink):
                 k = x["url"]
     return k
     """
-    stream = await bash(f'youtube-dl -g -f "best[height<=720][width<=1280]" {ytlink}')
+    stream = await bash(f'youtube-dl -g -f "best[height<=?720][width<=?1280]" {ytlink}')
     return stream[0]
 
 
@@ -292,7 +292,7 @@ async def vid_download(query):
     video = await get_stream_link(link)
     title = data["title"]
     thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
-    duration = data["duration"] or "♾"
+    duration = data.get("duration") or "♾"
     return video, thumb, title, duration
 
 
@@ -319,16 +319,18 @@ async def dl_playlist(chat, from_user, link):
     """
     links = get_videos_link(link)
     try:
-        vid1 = eval(Video.getInfo(links[0], mode=ResultMode.json))
-        duration = vid1["duration"] or "♾"
+        search = VideosSearch(links[0], limit=1).result()
+        vid1 = search["result"][0]
+        duration = vid1.get("duration") or "♾"
         title = vid1["title"]
         song = await bash(f"youtube-dl -x -g {vid1['link']}")
         thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
         return song[0], thumb, title, duration
     finally:
         for z in links[1:]:
-            vid = eval(Video.getInfo(z, mode=ResultMode.json))
-            duration = vid["duration"] or "♾"
+            search = VideosSearch(z, limit=1).result()
+            vid = search["result"][0]
+            duration = vid.get("duration") or "♾"
             title = vid["title"]
             song = await bash(f"youtube-dl -x -g {vid['link']}")
             thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
