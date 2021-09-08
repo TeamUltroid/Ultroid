@@ -40,23 +40,17 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
+    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(\d+)"
 )
 async def _(e):
     act = e.pattern_match.group(1)
     t = e.pattern_match.group(2)
     if act in ["audio", "round", "video"]:
         act = "record-" + act
-    if not (t or t.isdigit()):
-        t = 30
+    if t:
+        t = int(t)
     else:
-        try:
-            t = int(t)
-        except BaseException:
-            try:
-                t = await ban_time(e, t)
-            except BaseException:
-                return await eor(e, "`Incorrect Format`", time=5)
+        t = 60
     await eor(e, f"Starting Fake Action For {t} sec.", time=5)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)
