@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-#-----------------------------------------------------------#
+# -----------------------------------------------------------#
 #                                                           #
 #    _   _ _   _____ ____   ___ ___ ____   __     ______    #
 #   | | | | | |_   _|  _ \ / _ \_ _|  _ \  \ \   / / ___|   #
@@ -55,8 +55,6 @@ def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
     A_AUTH = [*owner_and_sudos(), *_vc_sudos]
     return A_AUTH
-
-
 
 
 class Player:
