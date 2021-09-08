@@ -129,7 +129,12 @@ async def _(event):
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
-        artist = ytdl_data["uploader"]
+        if ytdl_data.get("artist"):
+            artist = info["artist"]
+        elif ytdl_data.get("creator"):
+            artist = info["creator"]
+        elif ytdl_data.get("channel"):
+            artist = info["channel"]
         views = numerize.numerize(ytdl_data["view_count"])
         await download_file(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
@@ -161,12 +166,17 @@ async def _(event):
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
-        artist = ytdl_data["uploader"]
+        if ytdl_data.get("artist"):
+            artist = info["artist"]
+        elif ytdl_data.get("creator"):
+            artist = info["creator"]
+        elif ytdl_data.get("channel"):
+            artist = info["channel"]
         views = numerize.numerize(ytdl_data["view_count"])
         thumb = await fast_download(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
         )
-
+        hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         try:
             os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
@@ -177,8 +187,6 @@ async def _(event):
                 os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
         except Exception as ex:
             return await event.edit(str(ex))
-        wi, _ = await bash(f'mediainfo """{title}.mp4""" | grep "Width"')
-        hi, _ = await bash(f'mediainfo """{title}.mp4""" | grep "Height"')
         c_time = time.time()
         file = await uploader(
             f"{title}.mp4", f"{title}.mp4", c_time, event, "Uploading " + title + "..."
@@ -186,8 +194,8 @@ async def _(event):
         attributes = [
             DocumentAttributeVideo(
                 duration=int(duration),
-                w=int(wi.split(":")[1].split("pixels")[0].replace(" ", "")),
-                h=int(hi.split(":")[1].split("pixels")[0].replace(" ", "")),
+                w=wi,
+                h=hi,
                 supports_streaming=True,
             ),
         ]
