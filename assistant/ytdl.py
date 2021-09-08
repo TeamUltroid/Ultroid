@@ -172,7 +172,7 @@ async def _(event):
             os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
         except FileNotFoundError:
             try:
-                os.rename(f"{ytdl_data['id']}.mp4.mkv", f"{title}.mp4")
+                os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
             except FileNotFoundError:
                 os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
         except Exception as ex:
