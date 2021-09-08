@@ -77,7 +77,7 @@ async def rem_grp(e):
         except BaseException:
             return await eor(e, "Something Went Wrong", time=5)
     rem_night(e.chat_id)
-    await eor(e, "Done, Added Current Chat To Night Mode")
+    await eor(e, "Done, Removed Current Chat from Night Mode")
 
 
 @ultroid_cmd(pattern="listnm$")
