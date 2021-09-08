@@ -26,9 +26,9 @@ from pytgcalls.exceptions import GroupCallNotFoundError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
-    get_videos_link,
     downloader,
     get_user_id,
+    get_videos_link,
     inline_mention,
     mediainfo,
     time_formatter,
@@ -297,8 +297,9 @@ async def vid_download(query):
 
 
 async def dl_playlist(chat, from_user, link):
-    # untill issue get fix https://github.com/alexmercerind/youtube-search-python/issues/107
-    """ 
+    # untill issue get fix
+    # https://github.com/alexmercerind/youtube-search-python/issues/107
+    """
     vids = Playlist.getVideos(link)
     try:
         vid1 = vids["videos"][0]
