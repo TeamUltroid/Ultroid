@@ -26,6 +26,7 @@ from pytgcalls.exceptions import GroupCallNotFoundError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
+    get_videos_link,
     downloader,
     get_user_id,
     inline_mention,
@@ -296,6 +297,8 @@ async def vid_download(query):
 
 
 async def dl_playlist(chat, from_user, link):
+    # untill issue get fix https://github.com/alexmercerind/youtube-search-python/issues/107
+    """ 
     vids = Playlist.getVideos(link)
     try:
         vid1 = vids["videos"][0]
@@ -311,6 +314,23 @@ async def dl_playlist(chat, from_user, link):
             title = z["title"]
             song = await bash(f"youtube-dl -x -g {z['link']}")
             thumb = f"https://i.ytimg.com/vi/{z['id']}/hqdefault.jpg"
+            add_to_queue(chat, song[0], title, thumb, from_user, duration)
+    """
+    links = get_videos_link(link)
+    try:
+        vid1 = eval(Video.getInfo(links[0], mode=ResultMode.json))
+        duration = vid1["duration"] or "♾"
+        title = vid1["title"]
+        song = await bash(f"youtube-dl -x -g {vid1['link']}")
+        thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
+        return song[0], thumb, title, duration
+    finally:
+        for z in links[1:]:
+            vid = eval(Video.getInfo(z, mode=ResultMode.json))
+            duration = vid["duration"] or "♾"
+            title = vid["title"]
+            song = await bash(f"youtube-dl -x -g {vid['link']}")
+            thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
             add_to_queue(chat, song[0], title, thumb, from_user, duration)
 
 
