@@ -34,6 +34,8 @@ async def piston_run(event):
         )
         return await event.answer([result])
     output = piston.execute(language=lang, version=version, code=code) or "Success"
+    if len(output) > 3000:
+        output = output[:3000] + "..."
     result = await event.builder.article(
         title="Result",
         description=output,
