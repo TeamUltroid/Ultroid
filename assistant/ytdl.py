@@ -177,8 +177,8 @@ async def _(event):
                 os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
         except Exception as ex:
             return await event.edit(str(ex))
-        wi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Width"')
-        hi, _ = await bash(f'mediainfo "{title}.mp4" | grep "Height"')
+        wi, _ = await bash(f'mediainfo """{title}.mp4""" | grep "Width"')
+        hi, _ = await bash(f'mediainfo """{title}.mp4""" | grep "Height"')
         c_time = time.time()
         file = await uploader(
             f"{title}.mp4", f"{title}.mp4", c_time, event, "Uploading " + title + "..."
