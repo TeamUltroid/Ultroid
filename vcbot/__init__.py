@@ -66,7 +66,9 @@ class Player:
     async def make_vc_active(self):
         try:
             await vcClient(
-            functions.phone.CreateGroupCallRequest(self._chat, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ")
+                functions.phone.CreateGroupCallRequest(
+                    self._chat, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ"
+                )
             )
         except Exception as e:
             return False, e
