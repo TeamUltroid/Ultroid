@@ -35,12 +35,12 @@
 • `{i}fdocument <time/in secs>`
     `Show Fake sending document in current chat.`
 """
-
+import math, time
 from . import *
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(\\d+)"
+    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
 )
 async def _(e):
     act = e.pattern_match.group(1)
@@ -48,7 +48,7 @@ async def _(e):
     if act in ["audio", "round", "video"]:
         act = "record-" + act
     if t:
-        t = int(t)
+        t = math.ceil((await ban_time(e, t)) - time.time())
     else:
         t = 60
     await eor(e, f"Starting Fake Action For {t} sec.", time=5)
