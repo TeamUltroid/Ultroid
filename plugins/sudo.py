@@ -23,7 +23,6 @@ from . import *
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
-    ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         sender = await replied_to.get_sender()
@@ -56,13 +55,12 @@ async def _(ult):
             mmm = f"**Added **`{id}`** as SUDO User**"
     else:
         mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eor(ok, mmm, time=5)
+    await eor(ult, mmm, time=5)
 
 
 @ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
-    ok = await eor(ult, "`Updating SUDO Users List ...`")
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender_id
@@ -90,14 +88,13 @@ async def _(ult):
             mmm = f"**Removed **`{id}`** from SUDO User(s)**"
     else:
         mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eor(ok, mmm, time=5)
+    await eor(ult, mmm, time=5)
 
 
 @ultroid_cmd(
     pattern="listsudo$",
 )
 async def _(ult):
-    ok = await eor(ult, "`...`")
     sudos = Redis("SUDOS")
     if sudos == "" or sudos is None:
         return await eor(ult, "`No SUDO User was assigned ...`", time=5)
@@ -115,6 +112,6 @@ async def _(ult):
     m = udB.get("SUDO") or "False"
     if m == "False":
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await ok.edit(
+    return await eor(ult,
         f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
     )
