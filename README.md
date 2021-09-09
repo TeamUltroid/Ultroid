@@ -52,7 +52,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 ### Local Deploy - Latest Method
 This is the latest and most fastest method currently.<br>
-First, goto [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
+First, go to [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
 Then, do as its given in the `README.md` to add the executable to your system path.
 
 Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information on this.
