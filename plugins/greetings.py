@@ -81,7 +81,7 @@ async def setwel(event):
 @ultroid_cmd(pattern="clearwelcome$")
 async def clearwel(event):
     if not get_welcome(event.chat_id):
-        await eor(event, "`No welcome was set!`", time=5)
+        return await eor(event, "`No welcome was set!`", time=5)
     delete_welcome(event.chat_id)
     await eor(event, "`Welcome Note Deleted`", time=5)
 
@@ -90,7 +90,7 @@ async def clearwel(event):
 async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
-        await eor(event, "`No welcome was set!`", time=5)
+        return await eor(event, "`No welcome was set!`", time=5)
     msgg = wel["welcome"]
     med = wel["media"]
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
@@ -136,7 +136,7 @@ async def setgb(event):
 @ultroid_cmd(pattern="cleargoodbye$")
 async def clearwgb(event):
     if not get_goodbye(event.chat_id):
-        await eor(event, "`No goodbye was set!`", time=5)
+        return await eor(event, "`No goodbye was set!`", time=5)
     delete_goodbye(event.chat_id)
     await eor(event, "`Goodbye Note Deleted`", time=5)
 
@@ -145,7 +145,7 @@ async def clearwgb(event):
 async def listgd(event):
     wel = get_goodbye(event.chat_id)
     if not wel:
-        await eor(event, "`No goodbye was set!`", time=5)
+        return await eor(event, "`No goodbye was set!`", time=5)
     msgg = wel["goodbye"]
     med = wel["media"]
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
