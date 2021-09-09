@@ -18,12 +18,12 @@ from plugins import *
 from . import *
 
 Owner_info_msg = f"""
-<strong>Owner</strong> - {OWNER_NAME}
-<strong>OwnerID</strong> - <code>{OWNER_ID}</code>
+<strong>ⲃⲟⲧ ⲟⲱⲛⲉʀ </strong> - {OWNER_NAME}
+<strong>σѡɳϱɼ ɩ∂</strong> - <code>{OWNER_ID}</code>
 
 <strong>Message Forwards</strong> - {udB.get("PMBOT")}
 
-<strong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
+<strong>🧬Robot Version <a href=https://t.me /Team_Librarian>[v{ultroid_version}]</a>, 💫 Powered By @Team_Librarian</strong>
 """
 
 _settings = [
@@ -81,9 +81,9 @@ async def ultroid(event):
         u = await event.client.get_entity(event.chat_id)
         if not udB.get("STARTMSG"):
             if udB.get("PMBOT") == "True":
-                ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
+                ok = "💫H𐌴𐍰𐍰𐌏 D𐌴𐌳𐍂 𐍂𐌴𐌳D 𐍄H𐌴 𐌵ᖘᖘ𐌴𐍂 𐍄𐌴𐍇𐍄 𐍄H𐌴𐌽 𐍟𐌏𐌵 𐌾𐌳𐌽 𐌳𐍃𐌺 𐍟𐌏𐌵𐍂 Q𐌵𐌴𐍃𐍄𐌹𐌏𐌽𐍃"
             await event.reply(
-                f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
+                f"💁H𐌴𐍟 𐍄H𐌴𐍂𐌴 [{get_display_name(u)}](tg://user?id={u.id}), 𐍄H𐌴𐍃𐌴 𐌹𐍃 𐌳𐌽 𐌳𐍃𐍃𐌹𐍃𐍄𐌳𐌽𐍄 𐍂𐌏𐌱𐌏𐍄 𐌏𐍆 ᖘ𐌵𐍂𐌵𐍃H𐌏𐍄𐍄𐌳𐌼💫 [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
                 buttons=[Button.inline("Info.", data="ownerinfo")],
             )
         else:
@@ -91,7 +91,7 @@ async def ultroid(event):
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
                 Redis("STARTMSG").format(me=me, mention=mention),
-                buttons=[Button.inline("Info.", data="ownerinfo")],
+                buttons=[Button.inline("ᴄʟɪᴄᴋ ғᴏʀ ᴍᴏʀᴇ ɪɴғᴏ.", data="ownerinfo")],
             )
     else:
         name = get_display_name(event.sender_id)
