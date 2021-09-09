@@ -49,12 +49,11 @@ async def _(e):
     if not r:
         return await eor(e, pop)
     if isinstance(r.media, photu):
-        dl = await e.client.download_media(r.media)
-    elif isinstance(r.media, doc):
-        if r.media.document.thumbs:
-            dl = await e.client.download_media(r, thumb=-1)
-        else:
-            return await eor(e, pop)
+        dl = await r.download_media()
+    elif r.document and r.document.thumbs:
+        dl = await r.download_media(thumb=-1)
+    else:
+        return await eor(e, pop)
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
@@ -170,13 +169,10 @@ async def _(event):
     pattern="open$",
 )
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
-    if not event.reply_to_msg_id:
-        return await eor(xx, "`Reply to a readable file`", time=5)
-
     a = await event.get_reply_message()
-    if not a.media:
-        return await eor(xx, "`Reply to a readable file`", time=5)
+    if not (a and a.media):
+        return await eor(event, "`Reply to a readable file`", time=5)
+    xx = await eor(event, get_string("com_1"))
     b = await a.download_media()
     try:
         with open(b) as c:
