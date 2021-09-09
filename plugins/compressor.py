@@ -32,7 +32,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-compressor_queue = {}
+compressor_queue = []
 
 
 @ultroid_cmd(pattern="compress ?(.*)")
@@ -89,7 +89,7 @@ async def _(e):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
-            while proce.returncode != 0 and:
+            while proce.returncode != 0:
                 await asyncio.sleep(3)
                 with open(progress, "r+") as fil:
                     text = fil.read()
