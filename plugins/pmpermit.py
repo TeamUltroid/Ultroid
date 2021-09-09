@@ -184,22 +184,23 @@ if sett == "True":
         # do not approve if outgoing is a command.
         if e.text.startswith(HNDLR):
             return
-        if not is_approved(miss.id):
-            approve_user(miss.id)
-            await delete_pm_warn_msgs(miss.id)
-            try:
-                await ultroid_bot.edit_folder(miss.id, folder=0)
-            except BaseException:
-                pass
-            name = get_display_name(e.sender)
-            try:
-                await asst.edit_message(
+        if is_approved(miss.id):
+            return
+        approve_user(miss.id)
+        await delete_pm_warn_msgs(miss.id)
+        try:
+            await ultroid_bot.edit_folder(miss.id, folder=0)
+        except BaseException:
+            pass
+        name = get_display_name(e.chat)
+        try:
+            await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
                     _not_approved[miss.id],
                     f"#AutoApproved\n**OutGoing Message.**\nUser - [{miss.first_name}](tg://user?id={miss.id})",
                 )
-            except KeyError:
-                await asst.send_message(
+        except KeyError:
+            await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
                     f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id})",
                 )
