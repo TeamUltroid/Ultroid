@@ -195,15 +195,15 @@ if sett == "True":
         name = get_display_name(e.chat)
         try:
             await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    _not_approved[miss.id],
-                    f"#AutoApproved\n**OutGoing Message.**\nUser - [{miss.first_name}](tg://user?id={miss.id})",
-                )
+                int(udB.get("LOG_CHANNEL")),
+                _not_approved[miss.id],
+                f"#AutoApproved\n**OutGoing Message.**\nUser - [{miss.first_name}](tg://user?id={miss.id})",
+            )
         except KeyError:
             await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
-                    f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id})",
-                )
+                int(udB.get("LOG_CHANNEL")),
+                f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id})",
+            )
 
     @ultroid_bot.on(
         events.NewMessage(
