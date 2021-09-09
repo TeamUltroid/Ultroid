@@ -32,7 +32,6 @@ import time
 import cv2
 from PIL import Image
 from telegraph import upload_file as uf
-from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
 from . import *
