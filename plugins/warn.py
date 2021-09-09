@@ -30,7 +30,12 @@ from pyUltroid.functions.warn_db import *
 from . import *
 
 
-@ultroid_cmd(pattern="warn ?(.*)", type=["official", "manager"], groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="warn ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def warn(e):
     ultroid_bot = e.client
     reply = await e.get_reply_message()
@@ -99,7 +104,12 @@ async def warn(e):
     )
 
 
-@ultroid_cmd(pattern="resetwarn ?(.*)",type=["official", "manager"], groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="resetwarn ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def rwarn(e):
     reply = await e.get_reply_message()
     if reply:
@@ -120,7 +130,12 @@ async def rwarn(e):
     await eor(e, f"Cleared All Warns of {user}.")
 
 
-@ultroid_cmd(pattern="warns ?(.*)", type=["official", "manager"], groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="warns ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def twarns(e):
     reply = await e.get_reply_message()
     if reply:
