@@ -136,7 +136,7 @@ class Player:
                     pos, title, link, dur, from_user
                 ),
                 file=thumb,
-                link_preview=False, #will be false by default if sending file, fir bhi
+                link_preview=False,  # will be false by default if sending file, fir bhi
             )
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
@@ -337,7 +337,7 @@ async def dl_playlist(chat, from_user, link):
             title = vid["title"]
             song = await bash(f"youtube-dl -x -g {vid['link']}")
             thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
-            add_to_queue(chat, song[0], title, vid['link'], thumb, from_user, duration)
+            add_to_queue(chat, song[0], title, vid["link"], thumb, from_user, duration)
 
 
 async def file_download(event, reply, fast_download=True):
