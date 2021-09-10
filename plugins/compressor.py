@@ -195,6 +195,6 @@ async def _(e):
             await xxx.delete()
             os.remove(out)
             os.remove(progress)
-            compressor_queue.remove(progress)
+            compressor_queue.remove(comp)
     else:
         await eor(e, "`Reply To Video File Only`", time=5)
