@@ -154,7 +154,10 @@ class Player:
                 self._current_chat, f"• Successfully Left Vc : <code>{chat_id}</code> •"
             )
         except Exception:
-            await vcClient.send_message(self._current_chat, f"<strong>ERROR:</strong> <code>{format_exc()}</code>")
+            await vcClient.send_message(
+                self._current_chat,
+                f"<strong>ERROR:</strong> <code>{format_exc()}</code>",
+            )
 
     async def vc_joiner(self):
         chat_id = self._chat
@@ -166,7 +169,8 @@ class Player:
             )
             return True
         await vcClient.send_message(
-            self._current_chat, f"<strong>ERROR while Joining Vc -</strong> <code>{chat_id}</code> :\n<code>{format_exc()}</code>"
+            self._current_chat,
+            f"<strong>ERROR while Joining Vc -</strong> <code>{chat_id}</code> :\n<code>{format_exc()}</code>",
         )
         return False
 
@@ -197,7 +201,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 await asst.send_message(
                     LOG_CHANNEL,
                     f"VC Error - <code>{e.chat_id}</code>\n\n<code>{format_exc()}</code>",
-                    parse_mode="html"
+                    parse_mode="html",
                 )
 
         vcClient.add_event_handler(
