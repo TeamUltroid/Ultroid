@@ -87,7 +87,7 @@ class Player:
         try:
             await vcClient(
                 functions.phone.CreateGroupCallRequest(
-                    self._chat, title="🎧 Uʟᴛʀᴏɪᴅ Mᴜsɪᴄ"
+                    self._chat, title="🎧 Ultroid Music 🎶"
                 )
             )
         except Exception as e:
