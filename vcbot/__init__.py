@@ -125,7 +125,9 @@ class Player:
         if chat_id in VIDEO_ON:
             await self.startCall()
         try:
-            song, title, link, thumb, from_user, pos, dur = await get_from_queue(chat_id)
+            song, title, link, thumb, from_user, pos, dur = await get_from_queue(
+                chat_id
+            )
             await self.group_call.start_audio(song)
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
