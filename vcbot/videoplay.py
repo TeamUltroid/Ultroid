@@ -57,7 +57,7 @@ async def video_c(event):
         )
     await eor(xx, "`Downloading and converting...`")
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
-        song, thumb, title, duration = await file_download(xx, reply)
+        song, thumb, title, link, duration = await file_download(xx, reply)
     else:
         try:
             requests.get(song)
@@ -71,7 +71,7 @@ async def video_c(event):
         if is_link is None:
             song, thumb, title, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
-            song, thumb, title, duration = await vid_download(song)
+            song, thumb, title, link, duration = await vid_download(song)
         else:
             song, thumb, title, duration = (
                 song,
@@ -83,10 +83,11 @@ async def video_c(event):
     if not (await ultSongs.vc_joiner()):
         return
     await xx.reply(
-        "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-            title, duration, chat, from_user
+        "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+            title, link, duration, chat, from_user
         ),
         file=thumb,
+        link_preview=False,
     )
     await asyncio.sleep(1)
     await ultSongs.group_call.start_video(song, with_audio=True)
