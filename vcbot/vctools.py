@@ -73,7 +73,7 @@ async def pauser(event):
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
-    ultSongs.group_call.pause_playout()
+    await ultSongs.group_call.set_pause(True)
     await eor(event, "`Paused playback in this chat.`")
 
 
@@ -90,7 +90,7 @@ async def resumer(event):
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
-    ultSongs.group_call.resume_playout()
+    await ultSongs.group_call.set_pause(False)
     await eor(event, "`Resumed playback in this chat.`")
 
 
