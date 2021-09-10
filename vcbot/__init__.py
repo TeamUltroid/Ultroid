@@ -41,6 +41,7 @@ from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
+from telethon.utils import get_display_name
 from telethon.tl import functions, types
 from youtube_dl import YoutubeDL
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
@@ -52,6 +53,15 @@ LOG_CHANNEL = int(udB["LOG_CHANNEL"])
 ACTIVE_CALLS, VC_QUEUE = [], {}
 MSGID_CACHE, VIDEO_ON = {}, {}
 CLIENTS = {}
+
+
+def html_mention(event, sender_id=None, full_name=None):
+    if not full_name:
+        full_name = get_display_name(event.sender)
+    if not sender_id:
+        sender_id = event.sender_id
+    return "<a href={}>{}</a>".format(f"tg://user?id={sender_id}", full_name)
+
 
 
 def VC_AUTHS():
