@@ -16,20 +16,23 @@
 from . import *
 
 
-@ultroid_cmd(pattern="dm ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="dm", fullsudo=True)
 async def dm(e):
     if len(e.text) > 3 and e.text[3] != " ":  # weird fix
         return
-    if not e.pattern_match.group(1):
-        return
+    if not len(e.text.split()) > 1:
+        return await eor(e, "`Give Chat username or id where to send.`", time=5)
     chat = e.text.split()[1]
-    msg = e.text.split(maxsplit=2)[2]
     try:
         chat_id = await get_user_id(chat)
     except Exception as ex:
         return await eor(e, "`" + str(ex) + "`", time=5)
     if e.reply_to:
         msg = await e.get_reply_message()
+    elif len(e.text.split()) > 2:
+        msg = e.text.split(maxsplit=2)[2]
+    else:
+        return await eor(e, "`Give text to send or reply to msg`", time=5)
     try:
         await e.client.send_message(chat_id, msg)
         await eor(e, "`⚜️Message Delivered!⚜️`", time=5)
