@@ -109,7 +109,7 @@ class Player:
         if self._chat not in ACTIVE_CALLS:
             try:
                 self.group_call.on_network_status_changed(self.on_network_changed)
-                # self.group_call.on_playout_ended(self.playout_ended_handler)
+                self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.join(self._chat)
             except GroupCallNotFoundError:
                 dn, err = await self.make_vc_active()
