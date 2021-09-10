@@ -150,6 +150,7 @@ class Player:
                 ),
                 file=thumb,
                 link_preview=False,
+                parse_mode="html",
             )
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
@@ -161,6 +162,7 @@ class Player:
             del CLIENTS[self._chat]
             await vcClient.send_message(
                 self._current_chat, f"• Successfully Left Vc : <code>{chat_id}</code> •"
+                parse_mode="html",
             )
         except Exception:
             await vcClient.send_message(
@@ -210,7 +212,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
             try:
                 await func(e)
             except Exception:
-                LOGS.error(format_exc())
+                LOGS.exception(Exception)
                 await asst.send_message(
                     LOG_CHANNEL,
                     f"VC Error - <code>{e.chat_id}</code>\n\n<code>{format_exc()}</code>",
