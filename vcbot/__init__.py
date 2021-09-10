@@ -125,7 +125,7 @@ class Player:
         if chat_id in VIDEO_ON:
             await self.startCall()
         try:
-            song, title, thumb, from_user, pos, dur = get_from_queue(chat_id)
+            song, title, link, thumb, from_user, pos, dur = get_from_queue(chat_id)
             await self.group_call.start_audio(song)
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
@@ -136,7 +136,7 @@ class Player:
                     pos, title, link, dur, from_user
                 ),
                 file=thumb,
-                link_preview=False,  # will be false by default if sending file, fir bhi
+                link_preview=False,
             )
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
@@ -241,12 +241,14 @@ def list_queue(chat):
 def get_from_queue(chat_id):
     play_this = list(VC_QUEUE[int(chat_id)].keys())[0]
     info = VC_QUEUE[int(chat_id)][play_this]
-    song = info["song"]
+    song = info.get("song")
     title = info["title"]
     link = info["link"]
     thumb = info["thumb"]
     from_user = info["from_user"]
     duration = info["duration"]
+    if not song:
+        song, _ = await bash(f"youtube-dl -x -g {link}")
     return song, title, link, thumb, from_user, play_this, duration
 
 
@@ -316,9 +318,9 @@ async def dl_playlist(chat, from_user, link):
         for z in vids:
             duration = z["duration"] or "♾"
             title = z["title"]
-            song = await bash(f"youtube-dl -x -g {z['link']}")
+            # song = await bash(f"youtube-dl -x -g {z['link']}")
             thumb = f"https://i.ytimg.com/vi/{z['id']}/hqdefault.jpg"
-            add_to_queue(chat, song[0], title, z["link"] thumb, from_user, duration)
+            add_to_queue(chat, None, title, z["link"], thumb, from_user, duration)
     """
     links = get_videos_link(link)
     try:
@@ -335,9 +337,9 @@ async def dl_playlist(chat, from_user, link):
             vid = search["result"][0]
             duration = vid.get("duration") or "♾"
             title = vid["title"]
-            song = await bash(f"youtube-dl -x -g {vid['link']}")
+            # song = await bash(f"youtube-dl -x -g {vid['link']}")
             thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
-            add_to_queue(chat, song[0], title, vid["link"], thumb, from_user, duration)
+            add_to_queue(chat, None, title, vid["link"], thumb, from_user, duration)
 
 
 async def file_download(event, reply, fast_download=True):
