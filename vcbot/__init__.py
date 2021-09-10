@@ -166,6 +166,7 @@ class Player:
             await vcClient.send_message(
                 self._current_chat,
                 f"<strong>ERROR:</strong> <code>{format_exc()}</code>",
+                parse_mode="html"
             )
 
     async def vc_joiner(self):
@@ -174,12 +175,13 @@ class Player:
 
         if done:
             await vcClient.send_message(
-                self._current_chat, "• Joined VC in <code>{}</code>".format(chat_id)
+                self._current_chat, "• Joined VC in <code>{}</code>".format(chat_id), parse_mode="html"
             )
             return True
         await vcClient.send_message(
             self._current_chat,
-            f"<strong>ERROR while Joining Vc -</strong> <code>{chat_id}</code> :\n<code>{format_exc()}</code>",
+            f"<strong>ERROR while Joining Vc -</strong> <code>{chat_id}</code> :\n<code>{err}</code>",
+            parse_mode="html",
         )
         return False
 
