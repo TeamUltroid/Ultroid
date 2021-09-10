@@ -295,15 +295,6 @@ async def download(query):
     return dl[0], thumb, title, link, duration
 
 
-async def live_dl(link):
-    dl = await bash(f"youtube-dl -x -g {link}")
-    info = eval(Video.getInfo(link, mode=ResultMode.json))
-    title = info["title"]
-    thumb = f"https://i.ytimg.com/vi/{info['id']}/hqdefault.jpg"
-    duration = "♾"
-    return dl[0], thumb, title, link, duration
-
-
 async def get_stream_link(ytlink):
     """
     info = YoutubeDL({}).extract_info(url=ytlink, download=False)
