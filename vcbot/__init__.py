@@ -256,7 +256,7 @@ def list_queue(chat):
         for x in list(VC_QUEUE[chat].keys())[:15]:
             n += 1
             data = VC_QUEUE[chat][x]
-            txt += f'<strong>{n}. <a href={data["link"]}>{data["title"]} :</strong> <u>By {data["from_user"]}</u>\n'
+            txt += f'<strong>{n}. <a href={data["link"]}>{data["title"]}</a> :</strong> <u>By {data["from_user"]}</u>\n'
         return txt
 
 
