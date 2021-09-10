@@ -77,6 +77,8 @@ async def play_music_(event):
         if thumb and os.path.exists(thumb):
             remove(thumb)
     else:
+        if not (reply and reply.media and mediainfo(reply.media).startswith(("audio", "video"))):
+            song = None
         add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
         return await eor(
             xx,
