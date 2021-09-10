@@ -69,7 +69,7 @@ async def startmute(event):
             return await eor(xx, "`No proper admin rights...`", time=5)
     elif "creator" not in vars(chat) and not private:
         return await eor(xx, "`No proper admin rights...`", time=5)
-    if is_muted(f"{userid}_{chat_id}"):
+    if is_muted(chat_id, userid):
         return await eor(xx, "`This user is already muted in this chat.`", time=5)
     try:
         mute(chat_id, userid)
@@ -101,7 +101,7 @@ async def endmute(event):
     else:
         return await eor(xx, "`Reply to a user or add their userid.`", time=5)
     chat_id = event.chat_id
-    if not is_muted(f"{userid}_{chat_id}"):
+    if not is_muted(chat_id, userid):
         return await eor(xx, "`This user is not muted in this chat.`", time=3)
     try:
         unmute(chat_id, userid)
