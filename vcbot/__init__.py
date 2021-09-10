@@ -21,6 +21,7 @@ import re
 import traceback
 from os import remove
 from time import time
+from traceback import format_exc
 
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
@@ -135,8 +136,8 @@ class Player:
                 del MSGID_CACHE[chat_id]
             xx = await vcClient.send_message(
                 self._current_chat,
-                "🎧 **Now playing #{}**: [{}]({})\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
-                    pos, title, link, dur, from_user
+                "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
+                    pos, link, title, dur, from_user
                 ),
                 file=thumb,
                 link_preview=False,
@@ -150,10 +151,10 @@ class Player:
             await self.group_call.stop()
             del CLIENTS[self._chat]
             await vcClient.send_message(
-                self._current_chat, f"• Successfully Left Vc : `{chat_id}` •"
+                self._current_chat, f"• Successfully Left Vc : <code>{chat_id}</code> •"
             )
-        except Exception as er:
-            await vcClient.send_message(self._current_chat, f"**ERROR:** {er}")
+        except Exception:
+            await vcClient.send_message(self._current_chat, f"<strong>ERROR:</strong> <code>{format_exc()}</code>")
 
     async def vc_joiner(self):
         chat_id = self._chat
@@ -161,11 +162,11 @@ class Player:
 
         if done:
             await vcClient.send_message(
-                self._current_chat, "• Joined VC in {}".format(chat_id)
+                self._current_chat, "• Joined VC in <code>{}</code>".format(chat_id)
             )
             return True
         await vcClient.send_message(
-            self._current_chat, f"**ERROR while Joining Vc - `{chat_id}` :**\n{err}"
+            self._current_chat, f"<strong>ERROR while Joining Vc -</strong> <code>{chat_id}</code> :\n<code>{format_exc()}</code>"
         )
         return False
 
@@ -191,11 +192,12 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                     return
             try:
                 await func(e)
-            except Exception as er:
-                LOGS.exception(er)
+            except Exception:
+                LOGS.error(format_exc())
                 await asst.send_message(
                     LOG_CHANNEL,
-                    f"VC Error - `{e.chat_id}`\n\n`{sys.exc_info()[0]}`\n\n`{traceback.format_exc()}`\n\n`{sys.exc_info()[1]}`",
+                    f"VC Error - <code>{e.chat_id}</code>\n\n<code>{format_exc()}</code>",
+                    parse_mode="html"
                 )
 
         vcClient.add_event_handler(
@@ -238,10 +240,10 @@ def add_to_queue(chat_id, song, song_name, link, thumb, from_user, duration):
 def list_queue(chat):
     if VC_QUEUE.get(chat):
         txt, n = "", 0
-        for x in list(VC_QUEUE[chat].keys()):
+        for x in list(VC_QUEUE[chat].keys())[:15]:
             n += 1
             data = VC_QUEUE[chat][x]
-            txt += f'**{n}.[{data["title"]}]({data["link"]})** : __By {data["from_user"]}__\n'
+            txt += f'<strong>{n}. <a href={data["link"]}>{data["title"]} :</strong> <u>By {data["from_user"]}</u>\n'
         return txt
 
 
