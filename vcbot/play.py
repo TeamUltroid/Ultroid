@@ -24,7 +24,7 @@ from . import *
 async def play_music_(event):
     if "playfrom" in event.text.split()[0]:
         return  # For PlayFrom Conflict
-    xx = await eor(event, get_string("com_1"))
+    xx = await eor(event, get_string("com_1"), parse_mode="md")
     chat = event.chat_id
     from_user = inline_mention(event.sender)
     reply, song = None, None
@@ -55,7 +55,7 @@ async def play_music_(event):
         return await eor(
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
-    await eor(xx, "`Downloading and converting...`")
+    await eor(xx, "`Downloading and converting...`", parse_mode="md")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:
@@ -67,8 +67,8 @@ async def play_music_(event):
             return
         await ultSongs.group_call.start_audio(song)
         await xx.reply(
-            "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                song_name, link, duration, chat, from_user
+            "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+                link, song_name, duration, chat, from_user
             ),
             file=thumb,
             link_preview=False,
@@ -86,7 +86,7 @@ async def play_music_(event):
         add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
         return await eor(
             xx,
-            f"▶ Added 🎵 **[{song_name}]({link})** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+            f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
         )
 
 
@@ -129,8 +129,8 @@ async def play_music_(event):
                 return
             await ultSongs.group_call.start_audio(song)
             await msg.reply(
-                "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                    song_name, link, duration, chat, from_user
+                "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+                    link, song_name, duration, chat, from_user
                 ),
                 file=thumb,
                 link_preview=False,
