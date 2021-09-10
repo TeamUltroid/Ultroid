@@ -26,7 +26,7 @@ async def play_music_(event):
         return  # For PlayFrom Conflict
     xx = await eor(event, get_string("com_1"), parse_mode="md")
     chat = event.chat_id
-    from_user = inline_mention(event.sender)
+    from_user = html_mention(event)
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -95,7 +95,7 @@ async def play_music_(event):
     msg = await eor(event, get_string("com_1"))
     chat = event.chat_id
     limit = 10
-    from_user = inline_mention(event.sender)
+    from_user = html_mention(event)
     if not len(event.text.split()) > 1:
         return await msg.edit(
             "Use in Proper Format\n`.playfrom <channel username> ; <limit>`"
