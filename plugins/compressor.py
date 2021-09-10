@@ -66,6 +66,7 @@ async def _(e):
             c_time,
             "Downloading " + name + "...",
         )
+        d_time = time.time()
         o_size = os.path.getsize(file.name)
         diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
@@ -96,7 +97,7 @@ async def _(e):
             filename = comp["original_file"]
             out = comp["output"]
             crf = comp["crf"]
-            d_time = time.time()
+            k_time = time.time()
             proce = await asyncio.create_subprocess_shell(
                 f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{filename}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                 stdout=asyncio.subprocess.PIPE,
@@ -142,10 +143,10 @@ async def _(e):
                             )
                         except MessageNotModifiedError:
                             pass
-            os.remove(file.name)
+            os.remove(filename)
             c_size = os.path.getsize(out)
             f_time = time.time()
-            difff = time_formatter((f_time - d_time) * 1000)
+            difff = time_formatter((f_time - k_time) * 1000)
             await xxx.edit(
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
             )
