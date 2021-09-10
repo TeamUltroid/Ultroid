@@ -87,6 +87,7 @@ async def play_music_(event):
         return await eor(
             xx,
             f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+            parse_mode="html"
         )
 
 
