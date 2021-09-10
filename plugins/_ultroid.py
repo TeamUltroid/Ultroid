@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon.errors import ChatSendInlineForbiddenError
+from telethon.errors import ChatSendInlineForbiddenError, ChatSendMediaForbiddenError, BotMethodInvalidError
 
 from . import *
 
@@ -34,15 +34,15 @@ ULTSTRING = """🎇 **Thanks for Deploying Ultroid Userbot!**
     type=["official", "manager"],
 )
 async def repify(e):
-    if e.client._bot:
-        return await e.reply("• **Ultroid Userbot** •", buttons=RP_BUTTONS)
     try:
-        q = await e.client.inline_query(asst.me.username, "repo")
+        q = await e.client.inline_query(asst.me.username, "")
         await q[0].click(e.chat_id)
-        if e.out:
-            await e.delete()
-    except (ChatSendInlineForbiddenError):
-        await eor(e, REPOMSG)
+        return await e.delete()
+    except (ChatSendInlineForbiddenError, ChatSendMediaForbiddenError,BotMethodInvalidError):
+        pass
+    except Exception as er:
+        LOGS.info("Error while repo command : " + str(er))
+    await eor(e, REPOMSG)
 
 
 @ultroid_cmd(pattern="ultroid")
