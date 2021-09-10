@@ -78,7 +78,7 @@ async def live_stream(e):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
     if is_live_vid != "true":
         return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
-    file, thumb, title, link, duration = await live_dl(song)
+    file, thumb, title, link, duration = await download(song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
