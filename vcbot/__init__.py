@@ -161,7 +161,8 @@ class Player:
             await self.group_call.stop()
             del CLIENTS[self._chat]
             await vcClient.send_message(
-                self._current_chat, f"• Successfully Left Vc : <code>{chat_id}</code> •",
+                self._current_chat,
+                f"• Successfully Left Vc : <code>{chat_id}</code> •",
                 parse_mode="html",
             )
         except Exception:
