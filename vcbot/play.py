@@ -72,6 +72,7 @@ async def play_music_(event):
             ),
             file=thumb,
             link_preview=False,
+            parse_mode="html",
         )
         await xx.delete()
         if thumb and os.path.exists(thumb):
@@ -135,6 +136,7 @@ async def play_music_(event):
                 ),
                 file=thumb,
                 link_preview=False,
+                parse_mode="html",
             )
             if thumb and os.path.exists(thumb):
                 remove(thumb)
