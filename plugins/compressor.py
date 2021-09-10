@@ -91,7 +91,7 @@ async def _(e):
             }
         )
         if len(compressor_queue) > 1:
-            return await xxx.edit("Added to Queue for compression")
+            await xxx.edit("Added to Queue for compression")
         for comp in compressor_queue:
             progress = comp["progress_file"]
             filename = comp["original_file"]
