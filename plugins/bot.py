@@ -51,29 +51,18 @@ async def lol(ult):
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
-        header,
-        OWNER_NAME,
-        ultroid_version,
-        UltVer,
-        uptime,
-        pyver(),
-        __version__,
-        kk,
-    )
+    als = f"**{header}**"
     if pic is None:
         return await eor(ult, als)
     elif pic is not None and "telegra" in pic:
         try:
             await ult.reply(als, file=pic, link_preview=False)
-            await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
     else:
         try:
             await ult.reply(file=pic)
             await ult.reply(als, link_preview=False)
-            await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
 
