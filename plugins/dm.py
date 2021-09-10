@@ -22,8 +22,8 @@ async def dm(e):
         return
     if not e.pattern_match.group(1):
         return
-    msg = e.text.split(maxsplit=1)
-    chat = d.split()[0]
+    chat = e.text.split()[1]
+    msg = e.text.split(maxsplit=2)[2]
     try:
         chat_id = await get_user_id(chat)
     except Exception as ex:
