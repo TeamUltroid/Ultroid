@@ -67,10 +67,10 @@ async def _(e):
             "Downloading " + name + "...",
         )
         o_size = os.path.getsize(file.name)
-        d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
-        out = file_name.replace(file_name.split(".")[-1], "compressed.mkv")
+        number = random.randint(1, 10000)
+        out = file_name.replace(file_name.split(".")[-1], f"{number}-compressed.mkv")
         await xxx.edit(
             f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
         )
@@ -78,14 +78,20 @@ async def _(e):
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
         total_frames = x.split(":")[1].split("\n")[0]
-        number = random.randint(1, 10000)
         progress = f"progress-{number}.txt"
         with open(progress, "w") as fk:
             pass
-        compressor_queue.append(progress)
-        while os.path.exists(progress) and len(compressor_queue) != 0:
+        compressor_queue.append({"progress_file": progress, "original_file": file.name, "crf": crf, "output": out})
+        if len(compressor_queue) > 1:
+            return await xxx.edit("Added to Queue for compression")
+        for comp in compressor_queue:
+            progress = comp["progress_file"]
+            filename = comp["original_file"]
+            out = comp["output"]
+            crf = comp["crf"]
+            d_time = time.time()
             proce = await asyncio.create_subprocess_shell(
-                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
+                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{filename}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
