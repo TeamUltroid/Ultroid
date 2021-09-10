@@ -57,27 +57,27 @@ async def play_music_(event):
         )
     await eor(xx, "`Downloading and converting...`")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
-        song, thumb, song_name, duration = await file_download(xx, reply)
+        song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:
-        song, thumb, song_name, duration = await download(song)
+        song, thumb, song_name, link, duration = await download(song)
     ultSongs = Player(chat, event)
-    if len(song_name) > 37:
-        song_name = song_name[:35] + "..."
+    song_name = song_name[:30] + "..."
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
         await ultSongs.group_call.start_audio(song)
         await xx.reply(
-            "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                song_name, duration, chat, from_user
+            "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+                song_name, link, duration, chat, from_user
             ),
             file=thumb,
+            link_preview=False,
         )
         await xx.delete()
         if thumb and os.path.exists(thumb):
             remove(thumb)
     else:
-        add_to_queue(chat, song, song_name, thumb, from_user, duration)
+        add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
         return await eor(
             xx,
             f"▶ Added 🎵 **{song_name}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
@@ -111,31 +111,32 @@ async def play_music_(event):
     ultSongs = Player(chat, event)
     count = 0
     async for song in event.client.iter_messages(
-        fromchat, limit=limit, wait_time=10, filter=types.InputMessagesFilterMusic
+        fromchat, limit=limit, wait_time=5, filter=types.InputMessagesFilterMusic
     ):
         count += 1
-        song, thumb, song_name, duration = await file_download(
+        song, thumb, song_name, link, duration = await file_download(
             msg, song, fast_download=False
         )
-        if len(song_name) > 37:
-            song_name = song_name[:35] + "..."
+        song_name = song_name[:30] + "..."
         if not ultSongs.group_call.is_connected:
             if not (await ultSongs.vc_joiner()):
                 return
             await ultSongs.group_call.start_audio(song)
             await msg.reply(
-                "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                    song_name, duration, chat, from_user
+                "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+                    song_name, link, duration, chat, from_user
                 ),
                 file=thumb,
+                link_preview=False,
             )
             if thumb and os.path.exists(thumb):
                 remove(thumb)
         else:
-            add_to_queue(chat, song, song_name, thumb, from_user, duration)
+            add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
             if send_message and count == 1:
                 await eor(
                     msg,
-                    f"▶ Added 🎵 **{song_name}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+                    f"▶ Added 🎵 <strong><a href={link}>{song_name}</a></strong> to queue at <strong>#{list(VC_QUEUE[chat].keys())[-1]}.</strong>",
+                    parse_mode="html",
                 )
                 send_message = False
