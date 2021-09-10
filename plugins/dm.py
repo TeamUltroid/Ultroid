@@ -20,19 +20,16 @@ from . import *
 async def dm(e):
     if len(e.text) > 3 and e.text[3] != " ":  # weird fix
         return
-    d = e.pattern_match.group(1)
-    c = d.split(" ")
+    if not e.pattern_match.group(1):
+        return
+    msg = e.text.split(maxsplit=1)
+    chat = d.split()[0]
     try:
-        chat_id = await get_user_id(c[0])
+        chat_id = await get_user_id(chat)
     except Exception as ex:
         return await eor(e, "`" + str(ex) + "`", time=5)
-    masg = await e.get_reply_message()
-    if e.reply_to_msg_id:
-        await e.client.send_message(chat_id, masg)
-        await eor(e, "`⚜️Message Delivered!`", time=5)
-    msg = "".join(i + " " for i in c[1:])
-    if msg == "":
-        return
+    if e.reply_to:
+        msg = await e.get_reply_message()
     try:
         await e.client.send_message(chat_id, msg)
         await eor(e, "`⚜️Message Delivered!⚜️`", time=5)
