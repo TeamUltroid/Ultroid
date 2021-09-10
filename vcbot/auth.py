@@ -46,7 +46,7 @@ async def auth_group(event):
         return await event.reply("Already Authed This Chat!")
     add_vcauth(chat, admins=admins)
     kem = "Admins" if admins else "All"
-    await eor(event, f"• Added to AUTH Groups Successfully For `{kem}`.")
+    await eor(event, f"• Added to AUTH Groups Successfully For <code>{kem}</code>.", parse_mode='html')
 
 
 @vc_asst("remauth", from_users=owner_and_sudos(), vc_auth=False)
@@ -64,27 +64,27 @@ async def listVc(e):
     chats = get_chats()
     if not chats:
         return await eor(e, "• Vc Auth List is Empty..")
-    text = "• **Vc Auth Chats •**\n\n"
+    text = "• <strong>Vc Auth Chats •</strong>\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
         title = (await e.client.get_entity(on)).title
-        text += f"∆ **{title}** [`{on}`] : `{st}`"
-    await eor(e, text)
+        text += f"∆ <strong>{title}</strong> [ <code>{on}</code> ] : <code>{st}</code>"
+    await eor(e, text, parse_mode="html")
 
 
 @vc_asst("listvcaccess$", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await eor(e, "`Getting Voice Chat Bot Users List...`")
     mm = get_vcsudos()
-    pp = f"**{len(mm)} Voice Chat Bot Approved Users**\n"
+    pp = f"<strong>{len(mm)} Voice Chat Bot Approved Users</strong>\n"
     if len(mm) > 0:
         for m in mm:
             try:
                 name = (await e.client.get_entity(int(m))).first_name
-                pp += f"• [{name}](tg://user?id={int(m)})\n"
+                pp += f"• <a href=tg://user?id={int(m)}>{name}</a>\n"
             except ValueError:
-                pp += f"• `{int(m)} » No Info`\n"
-    await xx.edit(pp)
+                pp += f"• <code>{int(m)} » No Info</code>\n"
+    await xx.edit(pp, parse_mode="html")
 
 
 @vc_asst("rmvcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
