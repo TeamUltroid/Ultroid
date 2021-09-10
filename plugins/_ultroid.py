@@ -5,7 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon.errors import ChatSendInlineForbiddenError, ChatSendMediaForbiddenError, BotMethodInvalidError
+from telethon.errors import (
+    BotMethodInvalidError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+)
 
 from . import *
 
@@ -38,7 +42,11 @@ async def repify(e):
         q = await e.client.inline_query(asst.me.username, "")
         await q[0].click(e.chat_id)
         return await e.delete()
-    except (ChatSendInlineForbiddenError, ChatSendMediaForbiddenError,BotMethodInvalidError):
+    except (
+        ChatSendInlineForbiddenError,
+        ChatSendMediaForbiddenError,
+        BotMethodInvalidError,
+    ):
         pass
     except Exception as er:
         LOGS.info("Error while repo command : " + str(er))
