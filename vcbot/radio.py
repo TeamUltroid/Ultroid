@@ -78,17 +78,18 @@ async def live_stream(e):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
     if is_live_vid != "true":
         return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
-    file, thumb, title, duration = await live_dl(song)
+    file, thumb, title, link, duration = await live_dl(song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
     from_user = inline_mention(e.sender)
     await xx.reply(
-        "🎸 **Now playing:** `{}`\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-            title, duration, chat, from_user
+        "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+            title, link, duration, chat, from_user
         ),
         file=thumb,
+        link_preview=False,
     )
     await xx.delete()
     await ultSongs.group_call.start_audio(file)
