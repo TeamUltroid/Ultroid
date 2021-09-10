@@ -128,7 +128,7 @@ class Player:
             if chat in ACTIVE_CALLS:
                 ACTIVE_CALLS.remove(chat)
 
-    async def playout_ended_handler(self, call, __):
+    async def playout_ended_handler(self, call, source, mtype):
         await self.play_from_queue()
 
     async def play_from_queue(self):
