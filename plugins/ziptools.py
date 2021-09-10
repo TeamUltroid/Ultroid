@@ -7,7 +7,7 @@
 """
 ✘ Commands Available
 
-• `{i}zip <reply to file>
+• `{i}zip <reply to file>`
     zip the replied file
     To set password on zip: `{i}zip <password>` reply to file
 
