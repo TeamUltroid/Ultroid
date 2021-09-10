@@ -195,7 +195,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 LOGS.exception(er)
                 await asst.send_message(
                     LOG_CHANNEL,
-                    f"VC Error - `{e.chat_id}`\n\n`{sys.exc_info()[0]}`\n\n`{traceback.format_exc()}`",
+                    f"VC Error - `{e.chat_id}`\n\n`{sys.exc_info()[0]}`\n\n`{traceback.format_exc()}`\n\n`{sys.exc_info()[1]}`",
                 )
 
         vcClient.add_event_handler(
