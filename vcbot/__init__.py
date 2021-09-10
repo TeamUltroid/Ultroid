@@ -260,10 +260,11 @@ def add_to_queue(chat_id, song, song_name, link, thumb, from_user, duration):
 def list_queue(chat):
     if VC_QUEUE.get(chat):
         txt, n = "", 0
-        for x in list(VC_QUEUE[chat].keys())[:15]:
+        for x in list(VC_QUEUE[chat].keys())[:18]:
             n += 1
             data = VC_QUEUE[chat][x]
             txt += f'<strong>{n}. <a href={data["link"]}>{data["title"]}</a> :</strong> <i>By: {data["from_user"]}</i>\n'
+        txt += "\n\n....."
         return txt
 
 
@@ -367,7 +368,7 @@ async def file_download(event, reply, fast_download=True):
     title = reply.file.title or reply.file.name
     if fast_download:
         dl = await downloader(
-            "resources/downloads/" + reply.file.name,
+            "vcbot/downloads/" + reply.file.name,
             reply.media.document,
             event,
             time(),
