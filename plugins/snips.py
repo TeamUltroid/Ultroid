@@ -92,7 +92,7 @@ async def notes(e):
         return
     xx = xx.replace("$", "").split()
     for z in xx:
-        k = get_snips()
+        k = get_snips(z)
         if k:
             msg = k["msg"]
             media = k["media"]
