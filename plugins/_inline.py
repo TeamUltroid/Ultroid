@@ -1,9 +1,9 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021 Gladiator-007
 #
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# This file is a part of < https://github.com/Gladiator-007/Ultroid/ >
 # PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+# <https://www.github.com/Gladiator-007/Ultroid/blob/main/LICENSE/>.
 
 import re
 import time
@@ -60,8 +60,8 @@ _main_help_menu = [
 
 SUP_BUTTONS = [
     [
-        Button.url("Repo", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("Addons", url="https://github.com/TeamUltroid/UltroidAddons"),
+        Button.url("Repo", url="https://github.com/Gladiator-007/Ultroid"),
+        Button.url("Addons", url="https://github.com/Gladiator-007/UltroidAddons"),
     ],
     [Button.url("Support", url="t.me/UltroidSupport")],
 ]
@@ -243,12 +243,12 @@ async def _(e):
         [
             Button.switch_inline(
                 "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
-                query="go TeamUltroid",
+                query="go Gladiator-007",
                 same_peer=True,
             ),
             Button.switch_inline(
                 "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
-                query="yahoo TeamUltroid",
+                query="yahoo Gladiator-007",
                 same_peer=True,
             ),
         ],
@@ -438,7 +438,7 @@ async def on_plug_in_callback_query_handler(event):
         reply_pop_up_alert = f"{plugin_name} has no detailed help..."
     else:
         reply_pop_up_alert = help_string
-    reply_pop_up_alert += "\n© @TeamUltroid"
+    reply_pop_up_alert += "\n© @Gladiator-007"
     buttons = [
         [
             Button.inline(
@@ -497,7 +497,7 @@ async def on_plug_in_callback_query_handler(event):
         reply_pop_up_alert = f"{plugin_name} has no detailed help..."
     else:
         reply_pop_up_alert = help_string
-    reply_pop_up_alert += "\n© @TeamUltroid"
+    reply_pop_up_alert += "\n© @Gladiator-007"
     buttons = [
         [
             Button.inline(

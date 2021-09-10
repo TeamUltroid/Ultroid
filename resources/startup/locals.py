@@ -1,10 +1,10 @@
 # /usr/bin/python3
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021 Gladiator-007
 #
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# This file is a part of < https://github.com/Gladiator-007/Ultroid/ >
 # Please read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+# <https://www.github.com/Gladiator-007/Ultroid/blob/main/LICENSE/>.
 
 # Standalone file for facilitating local deploys.
 
@@ -32,7 +32,7 @@ def start():
         os.system("rm -rf Ultroid")
     except BaseException:
         pass
-    os.system("git clone https://github.com/TeamUltroid/Ultroid")
+    os.system("git clone https://github.com/Gladiator-007/Ultroid")
     print("\n\nDone")
     os.chdir("Ultroid")
     clear_screen()
@@ -71,7 +71,7 @@ def start():
     print(all_done)
     isitdone = input("\n\nIs it all correct? [y/n]")
     if isitdone == "y":
-        # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
+        # https://github.com/Gladiator-007/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f = open(".env", "w")
         f.write(all_done)
         f.close
@@ -79,7 +79,7 @@ def start():
         print("Oh, let's redo these then -_-")
         start()
     else:
-        # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
+        # https://github.com/Gladiator-007/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
         f = open(".env", "w")
         f.write(all_done)
         f.close
@@ -134,7 +134,7 @@ def check_for_py():
 
 def gen_session():
     print("\nProcessing...")
-    # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
+    # https://github.com/Gladiator-007/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
     os.system("python3 resources/session/ssgen.py")
     return
 

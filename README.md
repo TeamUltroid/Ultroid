@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./resources/extras/logo_readme.jpg" alt="TeamUltroid Logo">
+  <img src="./resources/extras/logo_readme.jpg" alt="Gladiator-007 Logo">
 </p>
 <h1 align="center">
   <b>Ultroid - UserBot</b>
@@ -7,17 +7,17 @@
 
 <b>A stable pluggable Telegram userbot + vc music bot, based on Telethon.</b>   
 
-[![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
-[![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
-[![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)   
+[![Stars](https://img.shields.io/github/stars/Gladiator-007/Ultroid?style=flat-square&color=yellow)](https://github.com/Gladiator-007/Ultroid/stargazers)
+[![Forks](https://img.shields.io/github/forks/Gladiator-007/Ultroid?style=flat-square&color=orange)](https://github.com/Gladiator-007/Ultroid/fork)
+[![Size](https://img.shields.io/github/repo-size/Gladiator-007/Ultroid?style=flat-square&color=green)](https://github.com/Gladiator-007/Ultroid/)   
 [![Python](https://img.shields.io/badge/Python-v3.9-blue)](https://www.python.org/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/TeamUltroid/Ultroid/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Gladiator-007/Ultroid/graphs/commit-activity)
 [![Docker Pulls](https://img.shields.io/docker/pulls/programmingerror/ultroid?style=flat-square)](https://img.shields.io/docker/pulls/programmingerror/ultroid?style=flat-square)
-[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/TeamUltroid/Ultroid)   
-[![Contributors](https://img.shields.io/github/contributors/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/graphs/contributors)
+[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/Gladiator-007/Ultroid)   
+[![Contributors](https://img.shields.io/github/contributors/Gladiator-007/Ultroid?style=flat-square&color=green)](https://github.com/Gladiator-007/Ultroid/graphs/contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
-[![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE)
-[![Sparkline](https://stars.medv.io/Teamultroid/Ultroid.svg)](https://stars.medv.io/TeamUltroid/Ultroid)
+[![License](https://img.shields.io/badge/License-AGPL-blue)](https://github.com/Gladiator-007/Ultroid/blob/main/LICENSE)
+[![Sparkline](https://stars.medv.io/Teamultroid/Ultroid.svg)](https://stars.medv.io/Gladiator-007/Ultroid)
 
 ----
 
@@ -43,7 +43,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ## Deploy to Railway
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2FTeamUltroid%2FUltroid%2Ftree%2Fmain&plugins=redis&envs=SESSION%2CAPI_ID%2CAPI_HASH&optionalEnvs=API_ID%2CAPI_HASH&SESSIONDesc=Your+telethon+session+string.&API_IDDesc=api_id%2C+from+my.telegram.org&API_HASHDesc=api_hash%2C+from+my.telegram.org)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2FGladiator-007%2FUltroid%2Ftree%2Fmain&plugins=redis&envs=SESSION%2CAPI_ID%2CAPI_HASH&optionalEnvs=API_ID%2CAPI_HASH&SESSIONDesc=Your+telethon+session+string.&API_IDDesc=api_id%2C+from+my.telegram.org&API_HASHDesc=api_hash%2C+from+my.telegram.org)
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
@@ -67,7 +67,7 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
 - Clone the repository: <br />
-`git clone https://github.com/TeamUltroid/Ultroid.git`
+`git clone https://github.com/Gladiator-007/Ultroid.git`
 - Go to the cloned folder: <br />
 `cd Ultroid`
 - Create a virtual env:   <br />
@@ -84,7 +84,7 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
     `sh -c "$(curl -fsSL https://git.io/JqgsR)"`
   - For Windows Users:
     `cd desktop ; wget https://git.io/JY9JI -o ultroid.py ; python ultroid.py`
-- Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
+- Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/Gladiator-007/Ultroid/blob/main/.env.sample).
 (You can either edit and rename the file or make a new file named `.env`.)
 - Run the bot:
   - Linux Users:
@@ -101,13 +101,13 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
 
 ## Session String
 Different ways to get your `SESSION`:
-* [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
+* [![Run on Repl.it](https://replit.com/badge/github/Gladiator-007/Ultroid)](https://replit.com/@Gladiator-007/UltroidStringSession)
 * Linux : `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
 * Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
 * TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
 
-Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid). <br />
+Made with 💕 by [@Gladiator-007](https://t.me/Gladiator-007). <br />
 
 # License
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
@@ -115,7 +115,7 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)
 
 # Credits
-* [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
+* [![Gladiator-007-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
 * [Dan](https://github.com/delivrance) for [Pyrogram.](https://github.com/pyrogram/pyrogram)
 * [Pytgcalls](https://github.com/pytgcalls) for [PyTgCalls.](https://github.com/pytgcalls/pytgcalls)
