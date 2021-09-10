@@ -59,5 +59,5 @@ async def live_stream(e):
         add_to_queue(chat, file, title, link, thumb, from_user, duration)
         return await eor(
             xx,
-            f"▶ Added 🎵 **{title}** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+            f"▶ Added 🎵 **[{title}]({link})** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
         )
