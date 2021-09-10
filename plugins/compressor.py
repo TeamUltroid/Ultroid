@@ -81,7 +81,14 @@ async def _(e):
         progress = f"progress-{number}.txt"
         with open(progress, "w") as fk:
             pass
-        compressor_queue.append({"progress_file": progress, "original_file": file.name, "crf": crf, "output": out})
+        compressor_queue.append(
+            {
+                "progress_file": progress,
+                "original_file": file.name,
+                "crf": crf,
+                "output": out,
+            }
+        )
         if len(compressor_queue) > 1:
             return await xxx.edit("Added to Queue for compression")
         for comp in compressor_queue:
