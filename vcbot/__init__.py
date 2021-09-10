@@ -132,10 +132,11 @@ class Player:
                 del MSGID_CACHE[chat_id]
             xx = await vcClient.send_message(
                 self._current_chat,
-                "🎧 **Now playing #{}**: `{}`\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
-                    pos, title, dur, from_user
+                "🎧 **Now playing #{}**: [{}]({})\n⏰ **Duration:** `{}`\n👤 **Requested by:** {}".format(
+                    pos, title, link, dur, from_user
                 ),
                 file=thumb,
+                link_preview=False, #will be false by default if sending file, fir bhi
             )
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
@@ -204,7 +205,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
 # --------------------------------------------------
 
 
-def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
+def add_to_queue(chat_id, song, song_name, link, thumb, from_user, duration):
     try:
         n = sorted(list(VC_QUEUE[chat_id].keys()))
         play_at = n[-1] + 1
@@ -214,6 +215,7 @@ def add_to_queue(chat_id, song, song_name, thumb, from_user, duration):
         play_at: {
             "song": song,
             "title": song_name,
+            "link": link,
             "thumb": thumb,
             "from_user": from_user,
             "duration": duration,
@@ -241,10 +243,11 @@ def get_from_queue(chat_id):
     info = VC_QUEUE[int(chat_id)][play_this]
     song = info["song"]
     title = info["title"]
+    link = info["link"]
     thumb = info["thumb"]
     from_user = info["from_user"]
     duration = info["duration"]
-    return song, title, thumb, from_user, play_this, duration
+    return song, title, link, thumb, from_user, play_this, duration
 
 
 # --------------------------------------------------
@@ -258,7 +261,7 @@ async def download(query):
     title = data["title"]
     duration = data.get("duration") or "♾"
     thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
-    return dl[0], thumb, title, duration
+    return dl[0], thumb, title, link, duration
 
 
 async def live_dl(link):
@@ -267,7 +270,7 @@ async def live_dl(link):
     title = info["title"]
     thumb = f"https://i.ytimg.com/vi/{info['id']}/hqdefault.jpg"
     duration = "♾"
-    return dl[0], thumb, title, duration
+    return dl[0], thumb, title, link, duration
 
 
 async def get_stream_link(ytlink):
@@ -293,7 +296,7 @@ async def vid_download(query):
     title = data["title"]
     thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     duration = data.get("duration") or "♾"
-    return video, thumb, title, duration
+    return video, thumb, title, link, duration
 
 
 async def dl_playlist(chat, from_user, link):
@@ -307,7 +310,7 @@ async def dl_playlist(chat, from_user, link):
         title = vid1["title"]
         song = await bash(f"youtube-dl -x -g {vid1['link']}")
         thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
-        return song[0], thumb, title, duration
+        return song[0], thumb, title, vid1["link"], duration
     finally:
         vids = vids["videos"][1:]
         for z in vids:
@@ -315,7 +318,7 @@ async def dl_playlist(chat, from_user, link):
             title = z["title"]
             song = await bash(f"youtube-dl -x -g {z['link']}")
             thumb = f"https://i.ytimg.com/vi/{z['id']}/hqdefault.jpg"
-            add_to_queue(chat, song[0], title, thumb, from_user, duration)
+            add_to_queue(chat, song[0], title, z["link"] thumb, from_user, duration)
     """
     links = get_videos_link(link)
     try:
@@ -325,7 +328,7 @@ async def dl_playlist(chat, from_user, link):
         title = vid1["title"]
         song = await bash(f"youtube-dl -x -g {vid1['link']}")
         thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
-        return song[0], thumb, title, duration
+        return song[0], thumb, title, vid1["link"], duration
     finally:
         for z in links[1:]:
             search = VideosSearch(z, limit=1).result()
@@ -334,7 +337,7 @@ async def dl_playlist(chat, from_user, link):
             title = vid["title"]
             song = await bash(f"youtube-dl -x -g {vid['link']}")
             thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
-            add_to_queue(chat, song[0], title, thumb, from_user, duration)
+            add_to_queue(chat, song[0], title, vid['link'], thumb, from_user, duration)
 
 
 async def file_download(event, reply, fast_download=True):
@@ -354,7 +357,7 @@ async def file_download(event, reply, fast_download=True):
     duration = time_formatter(reply.file.duration * 1000)
     if reply.document.thumbs:
         thumb = await reply.download_media("vcbot/downloads/", thumb=-1)
-    return dl, thumb, title, duration
+    return dl, thumb, title, reply.message_link, duration
 
 
 # --------------------------------------------------
