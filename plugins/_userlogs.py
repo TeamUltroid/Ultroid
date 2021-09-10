@@ -102,7 +102,7 @@ if udB.get("TAG_LOG"):
         chat, msg = who_tag(id)
         if chat and msg:
             try:
-                await ultroid_bot.send_message(chat, e.message, reply_to=id)
+                await ultroid_bot.send_message(chat, e.message, reply_to=msg)
             except BaseException:
                 pass
 
