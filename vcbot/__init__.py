@@ -41,8 +41,8 @@ from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from telethon import events
-from telethon.utils import get_display_name
 from telethon.tl import functions, types
+from telethon.utils import get_display_name
 from youtube_dl import YoutubeDL
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
@@ -61,7 +61,6 @@ def html_mention(event, sender_id=None, full_name=None):
     if not sender_id:
         sender_id = event.sender_id
     return "<a href={}>{}</a>".format(f"tg://user?id={sender_id}", full_name)
-
 
 
 def VC_AUTHS():
