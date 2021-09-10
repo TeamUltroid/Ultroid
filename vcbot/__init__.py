@@ -125,7 +125,7 @@ class Player:
         if chat_id in VIDEO_ON:
             await self.startCall()
         try:
-            song, title, link, thumb, from_user, pos, dur = get_from_queue(chat_id)
+            song, title, link, thumb, from_user, pos, dur = await get_from_queue(chat_id)
             await self.group_call.start_audio(song)
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
@@ -238,7 +238,7 @@ def list_queue(chat):
         return txt
 
 
-def get_from_queue(chat_id):
+async def get_from_queue(chat_id):
     play_this = list(VC_QUEUE[int(chat_id)].keys())[0]
     info = VC_QUEUE[int(chat_id)][play_this]
     song = info.get("song")
