@@ -62,7 +62,7 @@ async def all_messages_catcher(e):
                 try:
                     media = await e.download_media()
                     await asst.send_message(
-                        NEEDTOLOG, e.message, file=media, buttons=buttons
+                        NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
                     return os.remove(media)
                 except Exception as er:
