@@ -310,33 +310,37 @@ async def _(e):
     fls, fos = 0, 0
     flc, foc = 0, 0
     for i in omk:
-      try:
-        emoji = i.split()[0]
-        name = i.split(maxsplit=1)[1]
-        nam = name.split("/")[-1]
-        if os.path.isdir(name):
-            size = 0
-            for path, dirs, files in os.walk(name):
-                for f in files:
-                    fp = os.path.join(path, f)
-                    size += os.path.getsize(fp)
-            if hb(size):
-                text += emoji + f" `{nam}`" + "  `" + hb(size) + "`\n"
-                fos += size
+        try:
+            emoji = i.split()[0]
+            name = i.split(maxsplit=1)[1]
+            nam = name.split("/")[-1]
+            if os.path.isdir(name):
+                size = 0
+                for path, dirs, files in os.walk(name):
+                    for f in files:
+                        fp = os.path.join(path, f)
+                        size += os.path.getsize(fp)
+                if hb(size):
+                    text += emoji + f" `{nam}`" + "  `" + hb(size) + "`\n"
+                    fos += size
+                else:
+                    text += emoji + f" `{nam}`" + "\n"
+                foc += 1
             else:
-                text += emoji + f" `{nam}`" + "\n"
-            foc += 1
-        else:
-            if hb(int(os.path.getsize(name))):
-                text += (
-                    emoji + f" `{nam}`" + "  `" + hb(int(os.path.getsize(name))) + "`\n"
-                )
-                fls += int(os.path.getsize(name))
-            else:
-                text += emoji + f" `{nam}`" + "\n"
-            flc += 1
-      except:
-        pass
+                if hb(int(os.path.getsize(name))):
+                    text += (
+                        emoji
+                        + f" `{nam}`"
+                        + "  `"
+                        + hb(int(os.path.getsize(name)))
+                        + "`\n"
+                    )
+                    fls += int(os.path.getsize(name))
+                else:
+                    text += emoji + f" `{nam}`" + "\n"
+                flc += 1
+        except BaseException:
+            pass
     tfos, tfls, ttol = hb(fos), hb(fls), hb(fos + fls)
     if not hb(fos):
         tfos = "0 B"
