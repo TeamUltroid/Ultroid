@@ -345,7 +345,7 @@ async def dl_playlist(chat, from_user, link):
             thumb = f"https://i.ytimg.com/vi/{z['id']}/hqdefault.jpg"
             add_to_queue(chat, None, title, z["link"], thumb, from_user, duration)
     """
-    links = get_videos_link(link)
+    links = await get_videos_link(link)
     try:
         search = VideosSearch(links[0], limit=1).result()
         vid1 = search["result"][0]
