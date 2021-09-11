@@ -19,7 +19,7 @@
 • `{i}rmusers`
     Remove users specifically.
 """
-from telethon.tl.functions.channels import EditBannedRequest, EditPhotoRequest
+from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.types import (
     ChannelParticipantsKicked,
     ChatBannedRights,
@@ -111,38 +111,20 @@ async def _(event):
 @ultroid_cmd(
     pattern="rmusers ?(.*)",
     groups_only=True,
+    admins_only=True,
+    fullsudo=True,
 )
 async def _(event):
     xx = await eor(event, "Searching Participant Lists.")
     input_str = event.pattern_match.group(1)
-    if input_str:
-        chat = await event.get_chat()
-        if not (chat.admin_rights or chat.creator):
-            return await eor(xx, "`You aren't an admin here!`", time=5)
-    p = 0
-    b = 0
-    c = 0
-    d = 0
-    m = 0
-    n = 0
-    y = 0
-    w = 0
-    o = 0
-    q = 0
-    r = 0
+    p, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):
         p += 1
-        rights = ChatBannedRights(
-            until_date=None,
-            view_messages=True,
-        )
         if isinstance(i.status, UserStatusEmpty):
             y += 1
             if "empty" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     y -= 1
                 except BaseException:
@@ -151,9 +133,7 @@ async def _(event):
             m += 1
             if "month" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     m -= 1
                 except BaseException:
@@ -162,9 +142,7 @@ async def _(event):
             w += 1
             if "week" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     w -= 1
                 except BaseException:
@@ -173,9 +151,7 @@ async def _(event):
             o += 1
             if "offline" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     o -= 1
                 except BaseException:
@@ -184,9 +160,7 @@ async def _(event):
             q += 1
             if "online" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     q -= 1
                 except BaseException:
@@ -195,9 +169,7 @@ async def _(event):
             r += 1
             if "recently" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     r -= 1
                 except BaseException:
@@ -206,9 +178,7 @@ async def _(event):
             b += 1
             if "bot" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     b -= 1
                 except BaseException:
@@ -217,9 +187,7 @@ async def _(event):
             d += 1
             if "deleted" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     d -= 1
                 except BaseException:
@@ -228,36 +196,22 @@ async def _(event):
             n += 1
             if "none" in input_str:
                 try:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, i, rights),
-                    )
+                    await event.client.kick_participant(event.chat_id, i)
                     c += 1
                     n -= 1
                 except BaseException:
                     pass
-    required_string = ""
     if input_str:
-        required_string += f"**>> Kicked** `{c} / {p}` **users**\n\n"
-        required_string += f"  **••Deleted Accounts••** `{d}`\n"
-        required_string += f"  **••UserStatusEmpty••** `{y}`\n"
-        required_string += f"  **••UserStatusLastMonth••** `{m}`\n"
-        required_string += f"  **••UserStatusLastWeek••** `{w}`\n"
-        required_string += f"  **••UserStatusOffline••** `{o}`\n"
-        required_string += f"  **••UserStatusOnline••** `{q}`\n"
-        required_string += f"  **••UserStatusRecently••** `{r}`\n"
-        required_string += f"  **••Bots••** `{b}`\n"
-        required_string += f"  **••None••** `{n}`\n"
+        required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
     else:
-        required_string += f"**>> Total** `{p}` **users**\n\n"
-        required_string += f"  `{HNDLR}rmusers deleted`  **••**  `{d}`\n"
-        required_string += f"  `{HNDLR}rmusers empty`  **••**  `{y}`\n"
-        required_string += f"  `{HNDLR}rmusers month`  **••**  `{m}`\n"
-        required_string += f"  `{HNDLR}rmusers week`  **••**  `{w}`\n"
-        required_string += f"  `{HNDLR}rmusers offline`  **••**  `{o}`\n"
-        required_string += f"  `{HNDLR}rmusers online`  **••**  `{q}`\n"
-        required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
-        required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
-        required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`\n\n"
-        required_string += "**••Empty**  `Name with deleted Account`\n"
-        required_string += "**••None**  `Last Seen A Long Time Ago`\n"
+        required_string = f"**>> Total** `{p}` **users**\n\n"
+    required_string += f"  `{HNDLR}rmusers deleted`  **••**  `{d}`\n"
+    required_string += f"  `{HNDLR}rmusers empty`  **••**  `{y}`\n"
+    required_string += f"  `{HNDLR}rmusers month`  **••**  `{m}`\n"
+    required_string += f"  `{HNDLR}rmusers week`  **••**  `{w}`\n"
+    required_string += f"  `{HNDLR}rmusers offline`  **••**  `{o}`\n"
+    required_string += f"  `{HNDLR}rmusers online`  **••**  `{q}`\n"
+    required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
+    required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
+    required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`"
     await eor(xx, required_string)
