@@ -538,12 +538,10 @@ async def ipinfo(event):
     ip = event.text.split(" ")
     ipaddr = ""
     try:
-        ipaddr = ip[1]
-    except BaseException:
-        return await eor(event, "`Give me an IP address you noob!`", time=5)
-    if ipaddr == "":
-        return
-    url = f"https://ipinfo.io/{ipaddr}/geo"
+        ipaddr = "/" + ip[1]
+    except KeyError:
+        ipaddr = ""
+    url = f"https://ipinfo.io{ipaddr}/geo"
     det = requests.get(url).json()
     try:
         ip = det["ip"]
