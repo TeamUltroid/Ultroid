@@ -1,4 +1,3 @@
 https://github.com/New-dev0/Telethon/archive/Munch.zip
 py-Ultroid==62.3b0
-# pytgcalls==3.0.0.dev19
-git+https://github.com/New-dev0/tgcalls@patch-383#subdirectory=pytgcalls
+pytgcalls==3.0.0.dev19
