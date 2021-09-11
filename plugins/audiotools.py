@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-
 """
 ✘ Commands Available -
 
@@ -16,7 +15,7 @@
    trim audio as per given time.
    time must be in seconds. `{i}atrim 50-70`
 
-`{i}extractaudio <reply to media>
+`{i}extractaudio <reply to media>`
    To extract the audio from it.
 
 """
