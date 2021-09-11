@@ -281,7 +281,7 @@ async def get_from_queue(chat_id):
     from_user = info["from_user"]
     duration = info["duration"]
     if not song:
-        song, _ = await get_stream_link(link)
+        song = await get_stream_link(link)
     return song, title, link, thumb, from_user, play_this, duration
 
 
@@ -296,7 +296,7 @@ async def download(query):
     title = data["title"]
     duration = data.get("duration") or "♾"
     thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
-    return dl[0], thumb, title, link, duration
+    return dl, thumb, title, link, duration
 
 
 async def get_stream_link(ytlink):
@@ -353,7 +353,7 @@ async def dl_playlist(chat, from_user, link):
         title = vid1["title"]
         song = await get_stream_link(vid1["link"])
         thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
-        return song[0], thumb, title, vid1["link"], duration
+        return song, thumb, title, vid1["link"], duration
     finally:
         for z in links[1:]:
             search = VideosSearch(z, limit=1).result()
