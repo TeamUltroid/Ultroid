@@ -14,8 +14,7 @@ RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroi
 WORKDIR /root/TeamUltroid/
 
 # install main requirements.
-COPY requirements.txt /deploy/
-RUN pip3 install --no-cache-dir -r /deploy/requirements.txt && rm -rf deploy
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
