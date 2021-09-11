@@ -278,10 +278,14 @@ async def _(e):
     elif e.pattern_match.group(1):
         userid = await get_user_id(e.pattern_match.group(1))
     elif e.is_private:
-        userid = (await e.get_chat()).id
+        userid = e.chat_id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
-    name = (await e.client.get_entity(userid)).first_name
+    try:
+        name = (await e.client.get_entity(userid)).first_name
+    except:
+        userid = int(userid)
+        name = str(userid)
     chats = 0
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
@@ -290,13 +294,13 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
+    ungban(userid)
     try:
-        ungban(userid)
         await e.client(UnblockRequest(int(userid)))
-    except Exception as ex:
-        return await eor(xx, str(ex))
+    except BaseException:
+        pass
     await xx.edit(
-        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
+        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} common chats.\nRemoved from gbanwatch.`",
     )
 
 
@@ -318,14 +322,18 @@ async def _(e):
         except IndexError:
             reason = ""
     elif e.is_private:
-        userid = (await e.get_chat()).id
+        userid = e.chat_id
         try:
             reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
             reason = ""
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
-    name = (await e.client.get_entity(userid)).first_name
+    try:
+        name = (await e.client.get_entity(userid)).first_name
+    except:
+        userid = int(userid)
+        name = str(userid)
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gban myself.`", time=3)
@@ -344,13 +352,13 @@ async def _(e):
                 chats += 1
             except BaseException:
                 pass
+    gban(userid, reason)
     try:
-        gban(userid, reason)
         await e.client(BlockRequest(int(userid)))
-    except Exception as ex:
-        return await eor(xx, str(ex))
-    gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
-    if reason != "":
+    except BaseException:
+        pass
+    gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} common chats and added to gbanwatch!`"
+    if reason:
         gb_msg += f"\n**Reason** - {reason}"
     await xx.edit(gb_msg)
 
