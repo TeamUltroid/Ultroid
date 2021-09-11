@@ -186,7 +186,7 @@ async def download(event):
                             caption=f"`{kk}/{title}`",
                             supports_streaming=True,
                         )
-                    if res.name.endswith((".mkv", ".mp4", ".avi")):
+                    if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                         attributes = [
                             DocumentAttributeVideo(
                                 w=wi, h=hi, duration=duration, supports_streaming=True
@@ -260,7 +260,7 @@ async def download(event):
                         caption=f"`{title}`",
                         supports_streaming=True,
                     )
-                if res.name.endswith((".mkv", ".mp4", ".avi")):
+                if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
