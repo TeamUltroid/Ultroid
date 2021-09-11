@@ -69,13 +69,14 @@ async def video_c(event):
         if is_link is False:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
         if is_link is None:
-            song, thumb, title, duration = await vid_download(song)
+            song, thumb, title, link, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
             song, thumb, title, link, duration = await vid_download(song)
         else:
-            song, thumb, title, duration = (
+            song, thumb, title, link, duration = (
                 song,
                 "https://telegra.ph/file/22bb2349da20c7524e4db.mp4",
+                song,
                 song,
                 "♾",
             )
