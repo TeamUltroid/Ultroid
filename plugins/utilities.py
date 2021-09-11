@@ -119,12 +119,12 @@ async def date(event):
 )
 async def info(event):
     ok = await eor(event, get_string("com_1"))
-    chat = await get_chatinfo(event)
-    caption = await fetch_info(chat, event)
     try:
+        chat = await get_chatinfo(event)
+        caption = await fetch_info(chat, event)
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
-        print("Exception:", e)
+        LOGS.info(e)
         await eor(ok, f"`An unexpected error has occurred. {e}`", time=5)
     return
 
@@ -138,11 +138,9 @@ async def _(event):
     output_str = "".join(
         f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in r
     )
-
     if not r:
-        await eor(event, "`Not username Reserved`")
-    else:
-        await eor(event, output_str)
+        return await eor(event, "`No username Reserved`")
+    await eor(event, output_str)
 
 
 @ultroid_cmd(
@@ -591,7 +589,7 @@ async def ipinfo(event):
 )
 async def copp(event):
     msg = await event.get_reply_message()
-    if msg is None:
+    if not msg:
         return await eor(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
     _copied_msg["CLIPBOARD"] = msg
     await eor(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
@@ -622,7 +620,7 @@ async def toothpaste(event):
             f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
         )
     except Exception as ex:
-        return await eor(str(ex), time=5)
+        return await eor(event, str(ex), time=5)
 
 
 @ultroid_cmd(pattern="thumb$")
