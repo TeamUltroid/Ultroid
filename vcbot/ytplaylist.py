@@ -48,7 +48,7 @@ async def live_stream(e):
             return
         await xx.reply(
             "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                title, link, duration, chat, from_user
+                title[:30] + "...", link, duration, chat, from_user
             ),
             file=thumb,
             link_preview=False,
