@@ -539,7 +539,7 @@ async def ipinfo(event):
     ipaddr = ""
     try:
         ipaddr = "/" + ip[1]
-    except KeyError:
+    except IndexError:
         ipaddr = ""
     url = f"https://ipinfo.io{ipaddr}/geo"
     det = requests.get(url).json()
