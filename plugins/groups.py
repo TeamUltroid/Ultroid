@@ -32,6 +32,14 @@ from telethon.tl.types import (
 
 from . import *
 
+async def kick_participant(x: int, y: int, event, user: int):
+    try:
+        await event.client.kick_participant(event.chat_id, user)
+        x += 1
+        y -= 1
+    except:
+        pass
+
 
 @ultroid_cmd(
     pattern="setgpic ?(.*)",
@@ -122,84 +130,40 @@ async def _(event):
         if isinstance(i.status, UserStatusEmpty):
             y += 1
             if "empty" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    y -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, y, event, i)
         if isinstance(i.status, UserStatusLastMonth):
             m += 1
             if "month" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    m -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, w, event, i)
         if isinstance(i.status, UserStatusLastWeek):
             w += 1
             if "week" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    w -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, w, event, i)
         if isinstance(i.status, UserStatusOffline):
             o += 1
             if "offline" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    o -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, o, event, i)
         if isinstance(i.status, UserStatusOnline):
             q += 1
             if "online" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    q -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, q, event, i)
         if isinstance(i.status, UserStatusRecently):
             r += 1
             if "recently" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    r -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, r, event, i)
         if i.bot:
             b += 1
             if "bot" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    b -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, b, event, i)
         elif i.deleted:
             d += 1
             if "deleted" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    d -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, d, event, i)
         elif i.status is None:
             n += 1
             if "none" in input_str:
-                try:
-                    await event.client.kick_participant(event.chat_id, i)
-                    c += 1
-                    n -= 1
-                except BaseException:
-                    pass
+                await kick_participant(c, n, event, i)
+
     if input_str:
         required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
     else:
