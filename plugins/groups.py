@@ -32,12 +32,13 @@ from telethon.tl.types import (
 
 from . import *
 
+
 async def kick_participant(x: int, y: int, event, user: int):
     try:
         await event.client.kick_participant(event.chat_id, user)
         x += 1
         y -= 1
-    except:
+    except BaseException:
         pass
 
 
