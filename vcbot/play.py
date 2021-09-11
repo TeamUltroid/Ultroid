@@ -15,7 +15,6 @@
    Play music from channel files at current chat..
 """
 
-import os
 
 from . import *
 
@@ -76,7 +75,7 @@ async def play_music_(event):
         )
         await xx.delete()
         if thumb and os.path.exists(thumb):
-            remove(thumb)
+            os.remove(thumb)
     else:
         if not (
             reply
@@ -140,7 +139,7 @@ async def play_music_(event):
                 parse_mode="html",
             )
             if thumb and os.path.exists(thumb):
-                remove(thumb)
+                os.remove(thumb)
         else:
             add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
             if send_message and count == 1:
