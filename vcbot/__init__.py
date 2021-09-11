@@ -17,9 +17,9 @@
 
 
 import asyncio
+import os
 import re
 import traceback
-import os
 from time import time
 from traceback import format_exc
 
