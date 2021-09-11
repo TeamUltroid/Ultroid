@@ -109,19 +109,9 @@ async def remove_profilepic(delpfp):
         lim = int(group)
     else:
         lim = 1
-    pfplist = await delpfp.client(
-        GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim),
-    )
-    input_photos = [
-        InputPhoto(
-            id=sep.id,
-            access_hash=sep.access_hash,
-            file_reference=sep.file_reference,
-        )
-        for sep in pfplist.photos
-    ]
-    await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await eod(ok, f"`Successfully deleted {len(input_photos)} profile picture(s).`")
+    pfplist = await delpfp.client.get_profile_photos("me", limit=lim)
+    await delpfp.client(DeletePhotosRequest(pfplist))
+    await eod(ok, f"`Successfully deleted {len(pfplist)} profile picture(s).`")
 
 
 @ultroid_cmd(pattern="poto ?(.*)")
