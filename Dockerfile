@@ -15,7 +15,7 @@ WORKDIR /root/TeamUltroid/
 
 # install main requirements.
 COPY requirements.txt /deploy/
-RUN pip3 install --no-cache-dir -r /deploy/requirements.txt
+RUN pip3 install --no-cache-dir -r /deploy/requirements.txt && rm -rf deploy
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
