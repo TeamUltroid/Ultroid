@@ -283,7 +283,7 @@ async def _(e):
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     try:
         name = (await e.client.get_entity(userid)).first_name
-    except:
+    except BaseException:
         userid = int(userid)
         name = str(userid)
     chats = 0
@@ -331,7 +331,7 @@ async def _(e):
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     try:
         name = (await e.client.get_entity(userid)).first_name
-    except:
+    except BaseException:
         userid = int(userid)
         name = str(userid)
     chats = 0
