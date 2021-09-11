@@ -52,7 +52,9 @@ async def _(e):
     t = e.pattern_match.group(2)
     if act in ["audio", "round", "video"]:
         act = "record-" + act
-    if t:
+    if t.isdigit():
+        t = int(t)
+    elif t.endswith(("s", "h", "d", "m")):
         t = math.ceil((await ban_time(e, t)) - time.time())
     else:
         t = 60
