@@ -19,7 +19,7 @@
 import asyncio
 import re
 import traceback
-from os import remove
+import os
 from time import time
 from traceback import format_exc
 
@@ -130,7 +130,7 @@ class Player:
 
     async def playout_ended_handler(self, call, source, mtype):
         if os.path.exists(source):
-            remove(source)
+            os.remove(source)
         await self.play_from_queue()
 
     async def play_from_queue(self):
