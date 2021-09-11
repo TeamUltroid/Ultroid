@@ -137,7 +137,7 @@ class Player:
         chat_id = self._chat
         if chat_id in VIDEO_ON:
             await self.group_call.stop_video()
-            VIDEO_ON.remove(chat_id)
+            VIDEO_ON.pop(chat_id)
         try:
             song, title, link, thumb, from_user, pos, dur = await get_from_queue(
                 chat_id
