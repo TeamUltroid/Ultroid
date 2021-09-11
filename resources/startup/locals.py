@@ -75,8 +75,8 @@ def start():
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
-    os.system("pip3 install -r requirements.txt")
-    os.system("pip3 install -r resources/extras/local-requirements.txt")
+    os.system("pip3 install -r --no-cache-dir resources/extras/local-requirements.txt")
+    os.system("pip3 install -r --no-cache-dir requirements.txt")
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")
@@ -118,7 +118,7 @@ def check_for_py():
 
 def gen_session():
     print("\nProcessing...")
-    # https://github.com/TeamUltroid/Ultroid/blob/31b9eb1f4f8059e0ae66adb74cb6e8174df12eac/resources/startup/locals.py#L35
+    # https://github.com/TeamUltroid/Ultroid/main/resources/startup/locals.py#L35
     os.system("python3 resources/session/ssgen.py")
 
 
