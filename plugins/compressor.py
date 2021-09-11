@@ -66,12 +66,11 @@ async def _(e):
             c_time,
             "Downloading " + name + "...",
         )
-        d_time = time.time()
         o_size = os.path.getsize(file.name)
+        d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
-        number = random.randint(1, 10000)
-        out = file_name.replace(file_name.split(".")[-1], f"{number}-compressed.mkv")
+        out = file_name.replace(file_name.split(".")[-1], "compressed.mkv")
         await xxx.edit(
             f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
         )
@@ -79,27 +78,14 @@ async def _(e):
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
         total_frames = x.split(":")[1].split("\n")[0]
+        number = random.randint(1, 10000)
         progress = f"progress-{number}.txt"
         with open(progress, "w") as fk:
             pass
-        compressor_queue.append(
-            {
-                "progress_file": progress,
-                "original_file": file.name,
-                "crf": crf,
-                "output": out,
-            }
-        )
-        if len(compressor_queue) > 1:
-            await xxx.edit("Added to Queue for compression")
-        for comp in compressor_queue:
-            progress = comp["progress_file"]
-            filename = comp["original_file"]
-            out = comp["output"]
-            crf = comp["crf"]
-            k_time = time.time()
+        compressor_queue.append(progress)
+        while os.path.exists(progress) and len(compressor_queue) != 0:
             proce = await asyncio.create_subprocess_shell(
-                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{filename}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
+                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
@@ -143,10 +129,10 @@ async def _(e):
                             )
                         except MessageNotModifiedError:
                             pass
-            os.remove(filename)
+            os.remove(file.name)
             c_size = os.path.getsize(out)
             f_time = time.time()
-            difff = time_formatter((f_time - k_time) * 1000)
+            difff = time_formatter((f_time - d_time) * 1000)
             await xxx.edit(
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
             )
@@ -195,6 +181,6 @@ async def _(e):
             await xxx.delete()
             os.remove(out)
             os.remove(progress)
-            compressor_queue.remove(comp)
+            compressor_queue.remove(progress)
     else:
         await eor(e, "`Reply To Video File Only`", time=5)
