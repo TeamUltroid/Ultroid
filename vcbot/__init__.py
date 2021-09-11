@@ -351,7 +351,7 @@ async def dl_playlist(chat, from_user, link):
         vid1 = search["result"][0]
         duration = vid1.get("duration") or "♾"
         title = vid1["title"]
-        song = await get_stream_link(vid1['link'])
+        song = await get_stream_link(vid1["link"])
         thumb = f"https://i.ytimg.com/vi/{vid1['id']}/hqdefault.jpg"
         return song[0], thumb, title, vid1["link"], duration
     finally:
