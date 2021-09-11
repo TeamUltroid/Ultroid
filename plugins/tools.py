@@ -244,12 +244,13 @@ async def _(e):
     files = e.pattern_match.group(1)
     if not files:
         files = "*"
-    else:
-        if not glob.glob(files):
-            return await eor(e, "`Incorrect Directory.`", time=5)
-        if not glob.glob(files):
-            return await eor(e, "`This Directory is Empty.`", time=5)
+    elif files.endswith("/"):
+        files = files + "*"
+    elif "*" not in files:
+        files = files + "/*"
     files = glob.glob(files)
+    if not files:
+        return await eor(e, "`Directory Empty or Incorrect.`", time=5)
     pyfiles = []
     jsons = []
     vdos = []
@@ -270,9 +271,9 @@ async def _(e):
             pyfiles.append("🐍 " + str(file))
         elif str(file).endswith(".json"):
             jsons.append("🔮 " + str(file))
-        elif str(file).endswith((".mkv", ".mp4", ".avi", ".gif")):
+        elif str(file).endswith((".mkv", ".mp4", ".avi", ".gif", "webm")):
             vdos.append("🎥 " + str(file))
-        elif str(file).endswith((".mp3", ".ogg", ".m4a")):
+        elif str(file).endswith((".mp3", ".ogg", ".m4a", ".opus")):
             audios.append("🔊 " + str(file))
         elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp")):
             pics.append("🖼 " + str(file))
@@ -309,6 +310,7 @@ async def _(e):
     fls, fos = 0, 0
     flc, foc = 0, 0
     for i in omk:
+      try:
         emoji = i.split()[0]
         name = i.split(maxsplit=1)[1]
         nam = name.split("/")[-1]
@@ -333,6 +335,8 @@ async def _(e):
             else:
                 text += emoji + f" `{nam}`" + "\n"
             flc += 1
+      except:
+        pass
     tfos, tfls, ttol = hb(fos), hb(fls), hb(fos + fls)
     if not hb(fos):
         tfos = "0 B"
