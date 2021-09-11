@@ -9,6 +9,8 @@ FROM theteamultroid/ultroid:main
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN apt install ffmpeg-dev -y
+
 # clone the repo and change workdir
 RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
 WORKDIR /root/TeamUltroid/
