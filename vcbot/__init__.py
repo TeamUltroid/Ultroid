@@ -129,12 +129,15 @@ class Player:
                 ACTIVE_CALLS.remove(chat)
 
     async def playout_ended_handler(self, call, source, mtype):
+        if os.path.exists(source):
+            remove(source)
         await self.play_from_queue()
 
     async def play_from_queue(self):
         chat_id = self._chat
         if chat_id in VIDEO_ON:
-            await self.startCall()
+            await self.group_call.stop_video()
+            VIDEO_ON.remove(chat_id)
         try:
             song, title, link, thumb, from_user, pos, dur = await get_from_queue(
                 chat_id
