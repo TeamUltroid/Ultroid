@@ -125,7 +125,7 @@ async def dmote(ult):
             ),
         )
         await xx.edit(
-            f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
+            f"𝐊𝐢𝐝𝐝𝐨 𝐝𝐨𝐧'𝐭 𝐦𝐞𝐬𝐬 𝐰𝐢𝐭𝐡 𝐦𝐞...\n{inline_mention(user)} `is no longer an admin in {ult.chat.title}`",
         )
     except BadRequestError:
         return await xx.edit("`I don't have the right to demote you.`")
