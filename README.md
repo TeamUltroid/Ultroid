@@ -24,6 +24,7 @@
 # Deploy
 - [Heroku](#Deploy-to-Heroku)
 - [Local Machine](#Deploy-Locally)
+- [Railway](#Deploy-to-Railway)
 
 # Documentation 
 [![Documentation](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
