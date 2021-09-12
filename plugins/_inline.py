@@ -45,17 +45,17 @@ else:
 
 _main_help_menu = [
     [
-        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+        Button.inline("༆ Pʟᴜɢɪɴs༆", data="hrrrr"),
+        Button.inline("༆ Aᴅᴅᴏɴs ༆", data="frrr"),
     ],
     [
-        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+        Button.inline("༆ Oᴡɴᴇʀ ᴛᴏᴏʟꜱ ༆", data="ownr"),
+        Button.inline("༆ Iɴʟɪɴᴇ Pʟᴜɢɪɴs ༆", data="inlone"),
     ],
     [
         Button.url("⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
     ],
-    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+    [Button.inline("᯽ Cʟᴏꜱᴇ ᯽", data="close")],
 ]
 
 SUP_BUTTONS = [
@@ -63,7 +63,7 @@ SUP_BUTTONS = [
         Button.url("Repo", url="https://github.com/Gladiator-007/Ultroid"),
         Button.url("Addons", url="https://github.com/Gladiator-007/UltroidAddons"),
     ],
-    [Button.url("Support", url="t.me/UltroidSupport")],
+    [Button.url("Support", url="t.me/kindly_fuck_off")],
 ]
 
 # --------------------BUTTONS--------------------#
@@ -74,12 +74,12 @@ SUP_BUTTONS = [
 async def inline_alive(o):
     if len(o.text) == 0:
         b = o.builder
-        MSG = "• **Ultroid Userbot •**"
+        MSG = "• **Jarvis Userbot •**"
         uptime = time_formatter((time.time() - start_time) * 1000)
         MSG += f"\n\n• **Uptime** - `{uptime}`\n"
         MSG += f"• **OWNER** - `{OWNER_NAME}`"
         WEB0 = InputWebDocument(
-            "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+            "https://telegra.ph/file/8b72325fd84c922feebe3.jpg", 0, "image/jpg", []
         )
         RES = [
             InputBotInlineResult(
@@ -90,14 +90,14 @@ async def inline_alive(o):
                     media=True,
                     buttons=SUP_BUTTONS,
                 ),
-                title="Ultroid Userbot",
+                title="𝙹𝙰𝚁𝚅𝙸𝚂 Userbot",
                 description="Userbot | Telethon",
                 url=TLINK,
                 thumb=WEB0,
                 content=InputWebDocument(TLINK, 0, "image/jpg", []),
             )
         ]
-        await o.answer(RES, switch_pm=f"👥 ULTROID PORTAL", switch_pm_param="start")
+        await o.answer(RES, switch_pm=f"👥𝙹𝙰𝚁𝚅𝙸𝚂 PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd")
