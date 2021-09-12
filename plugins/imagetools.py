@@ -48,6 +48,9 @@
 • `{i}csample <color name /color code>`
    example : `{i}csample red`
              `{i}csample #ffffff`
+
+• `{i}pixelator <reply image>`
+    Create a Pixelated Image..
 """
 import asyncio
 import os
@@ -602,3 +605,27 @@ async def ok(event):
     await event.client.send_file(event.chat.id, "output.png")
     os.remove("output.png")
     os.remove(okla)
+
+
+@ultroid_cmd(pattern="pixelator ?(.*)")
+async def pixelator(event):
+    reply_message = await event.get_reply_message()
+    if not (reply_message and reply_message.photo):
+        return await eor(event, "`Reply to a photo`")
+    hw = 50
+    try:
+        hw = int(event.pattern_match.group(1))
+    except (ValueError, TypeError):
+        pass
+    msg = await eor(event, "`Processing...`")
+    image = await reply_message.download_media()
+    input_ = cv2.imread(image)
+    height, width = input_.shape[:2]
+    w, h = (hw, hw)
+    temp = cv2.resize(input_, (w, h), interpolation=cv2.INTER_LINEAR)
+    output = cv2.resize(temp, (width, height), interpolation=cv2.INTER_NEAREST)
+    cv2.imwrite("output.jpg", output)
+    await msg.respond("• Pixelated by Ultroid", file="output.jpg")
+    await msg.delete()
+    os.remove("output.jpg")
+    os.remove(image)
