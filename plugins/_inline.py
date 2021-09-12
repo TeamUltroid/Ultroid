@@ -22,7 +22,7 @@ from . import *
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
 
-TLINK = "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
+TLINK = "https://telegra.ph/file/8b72325fd84c922feebe3.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
