@@ -67,8 +67,9 @@ async def _(e):
     type=["official", "manager"],
 )
 async def _(e):
-    xx = await eor(e, get_string("com_1"))
     chat = await e.get_chat()
+    if chat.username:
+        return await eor(e, f"Username: @{chat.username}")
     if isinstance(chat, types.Chat):
         FC = await e.client(GetFullChatRequest(chat.id))
     elif isinstance(chat, types.Channel):
@@ -82,9 +83,9 @@ async def _(e):
                 ExportChatInviteRequest(e.chat_id),
             )
         except no_admin:
-            return await eor(xx, "`I m not an admin`", time=10)
+            return await eor(e, "`I m not an admin`", time=10)
         link = r.link
-    await eor(xx, f"Link:- {link}")
+    await eor(e, f"Link:- {link}")
 
 
 @ultroid_cmd(
