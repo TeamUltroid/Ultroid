@@ -91,8 +91,9 @@ async def remove_afk(event):
         event.is_private
         and Redis("PMSETTING") == "True"
         and not is_approved(event.chat_id)
-        and "afk" in event.text
     ):
+        return
+    elif "afk" in event.text.lower():
         return
     if is_afk():
         _, _, _, afk_time = is_afk()
@@ -116,11 +117,13 @@ async def on_afk(event):
         event.is_private
         and Redis("PMSETTING") == "True"
         and not is_approved(event.chat_id)
-        or not is_afk()
-        or "afk" in event.text
     ):
         return
-    if event.chat_id in NOSPAM_CHAT:
+    elif "afk" in event.text.lower():
+        return
+    elif not is_afk():
+        return
+    elif event.chat_id in NOSPAM_CHAT:
         return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None
