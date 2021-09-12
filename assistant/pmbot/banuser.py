@@ -22,7 +22,8 @@ async def banhammer(event):
         await asst.send_message(event.chat_id, f"#BAN\nUser - {target}")
         await asst.send_message(
             target,
-            "`Fuck off! You have been banned.`\n**Further messages you send will not be forwarded.**",
+            "`Fuck off! You have been banned.`\n**Now your messages won't be dilevered to your dad... keep crying!**",
+        )
 
     else:
         return await asst.send_message(event.chat_id, f"User is already banned!")
