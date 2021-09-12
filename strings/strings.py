@@ -25,7 +25,7 @@ def get_string(key: str) -> Any:
         try:
             return Trs.translate(
                 languages["en"][key], lang_tgt=udB.get("language")
-            ).text
+            )
         except KeyError:
             return f"Warning: could not load any string with the key {key}"
 
