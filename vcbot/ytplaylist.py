@@ -40,6 +40,7 @@ async def live_stream(e):
         requests.get(song)
     except BaseException:
         return await eor(xx, f"`Only Youtube Playlist please.`")
+    await xx.edit("`Keep patience... It'll take some time.`")
     file, thumb, title, link, duration = await dl_playlist(chat, from_user, song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
