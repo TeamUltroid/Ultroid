@@ -19,10 +19,11 @@ async def _help(ult):
     if plug:
         try:
             if plug in HELP:
+                xdusername = asst.me.username
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP[plug]:
                     output += i
-                output += "\n© @Gladiator-007"
+                output += f"\n© {xdusername}"
                 await eor(ult, output)
             elif plug in CMD_HELP:
                 kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
@@ -34,12 +35,13 @@ async def _help(ult):
                     for d in LIST[plug]:
                         x += HNDLR + d
                         x += "\n"
-                    x += "\n© @Gladiator-007"
+                    xdusername = asst.me.username
+                    x += f"\n© {xdusername}"
                     await eor(ult, x)
                 except BaseException:
                     await eod(ult, get_string("help_1").format(plug), time=5)
         except BaseException:
-            await eor(ult, "Error 🤔 occured.")
+            await eor(ult, "SOM3THING W3NT WRONG!")
     else:
         tgbot = asst.me.username
         try:
@@ -60,19 +62,19 @@ async def _help(ult):
                 ),
                 buttons=[
                     [
-                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
+                        Button.inline("༆ Pʟᴜɢɪɴs ༆", data="hrrrr"),
+                        Button.inline("༆ Aᴅᴅᴏɴs ༆", data="frrr"),
                     ],
                     [
-                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
+                        Button.inline("༆ Oᴡɴᴇʀ ᴛᴏᴏʟꜱ ༆", data="ownr"),
+                        Button.inline("༆ Iɴʟɪɴᴇ Pʟᴜɢɪɴs ༆", data="inlone"),
                     ],
                     [
                         Button.url(
                             "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{tgbot}?start=set"
                         ),
                     ],
-                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+                    [Button.inline("༆ Cʟᴏꜱᴇ ༆", data="close")],
                 ],
             )
         except rep:
