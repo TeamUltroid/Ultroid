@@ -9,8 +9,8 @@
 
 • `{i}border <reply to photo/sticker>`
     To create border around that media..
-    Ex - `{i}border 12,22,23
-       - `{i}border 12,22,23 ; width (in number)
+    Ex - `{i}border 12,22,23`
+       - `{i}border 12,22,23 ; width (in number)`
 
 • `{i}grey <reply to any media>`
     To make it black nd white.
