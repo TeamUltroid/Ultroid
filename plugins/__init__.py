@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import asyncio
+import os
 import time
 
 from pyUltroid import *
@@ -15,6 +16,7 @@ from pyUltroid.functions.sudos import *
 from pyUltroid.version import ultroid_version
 from telethon import Button
 from telethon.tl import functions, types
+from telethon.utils import get_display_name
 
 from strings import get_string
 
@@ -30,16 +32,22 @@ start_time = time.time()
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
+LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 
 List = []
 Dict = {}
 N = 0
 
+# Chats, which needs to be ignore for some cases
+# Considerably, there can be many
+# Feel Free to Add Any other...
+
 NOSPAM_CHAT = [
-    -1001387666944,  # @PyrogramChat
-    -1001109500936,  # @TelethonChat
-    -1001050982793,  # @Python
-    -1001256902287,  # @DurovsChat
+    -1001327032795,  # UltroidSupport
+    -1001387666944,  # PyrogramChat
+    -1001109500936,  # TelethonChat
+    -1001050982793,  # Python
+    -1001256902287,  # DurovsChat
 ]
 
 KANGING_STR = [

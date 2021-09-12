@@ -12,10 +12,12 @@
 
 • `{i}rcarbon <text/reply to msg/reply to document>`
     Carbonise the text, with random bg colours.
+
+• `{i}ccarbon <color ><text/reply to msg/reply to document>`
+    Carbonise the text, with custom bg colours.
 """
 import random
 
-import requests
 from carbonnow import Carbon
 
 from . import *
@@ -173,28 +175,33 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="carbon",
+    pattern="^(rc|c)arbon",
 )
 async def crbn(event):
-    xxxx = await eor(event, get_string("com_1"))
+    xxxx = await eor(event, "Processing")
+    te = event.text
+    if te[1] == "r":
+        col = random.choice(all_col)
+    else:
+        col = None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
             b = await event.client.download_media(temp)
-            a = open(b)
-            code = a.read()
-            a.close()
+            with open(b) as a:
+                code = a.read()
             os.remove(b)
         else:
             code = temp.message
     else:
-        code = event.text.split(" ", maxsplit=1)[1]
-    webs = requests.get("https://carbonara.vercel.app/api/cook")
-    if webs.status_code == 502:
-        return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
-    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code)
+        try:
+            code = event.text.split(" ", maxsplit=1)[1]
+        except IndexError:
+            return await eor(xxxx, "`Reply to Message or readable file..`")
+    col = random.choice(all_col)
+    carbon = Carbon(
+        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
+    )
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
@@ -204,33 +211,37 @@ async def crbn(event):
 
 
 @ultroid_cmd(
-    pattern="rcarbon",
+    pattern="ccarbon ?(.*)",
 )
 async def crbn(event):
-    xxxx = await eor(event, "Processing")
+    match = event.pattern_match.group(1)
+    if not match:
+        return await eor(event, "`Give Custom Color to Create Carbon...`")
+    msg = await eor(event, "Processing")
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
             b = await event.client.download_media(temp)
-            a = open(b)
-            code = a.read()
-            a.close()
+            with open(b) as a:
+                code = a.read()
             os.remove(b)
         else:
             code = temp.message
     else:
-        code = event.text.split(" ", maxsplit=1)[1]
-    col = random.choice(all_col)
-    webs = requests.get("https://carbonara.vercel.app/api/cook")
-    if webs.status_code == 502:
-        return await eor(
-            event, "`Temporary Server Error has Occured !\nPlease Try Again Later`"
-        )
+        try:
+            match = match.split(" ", maxsplit=1)
+            code = match[1]
+            match = match[0]
+        except IndexError:
+            return await eor(msg, "`Reply to Message or readable file..`")
     carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
+        base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
     )
-    xx = await carbon.memorize("ultroid_carbon")
-    await xxxx.delete()
+    try:
+        xx = await carbon.memorize("ultroid_carbon")
+    except Exception as er:
+        return await msg.edit(str(er))
+    await msg.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
         file=xx,

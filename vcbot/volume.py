@@ -5,50 +5,44 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyrogram.raw import functions
+"""
+✘ Commands Available -
+
+• `{i}volume <number>`
+   Put number between 1 to 100
+"""
 
 from . import *
 
 
-@asst.on_message(
-    filters.command(["volume", f"volume@{vcusername}"])
-    & filters.user(VC_AUTHS())
-    & ~filters.edited
-)
-async def chesendvolume(_, message):
-    mk = message.text.split(" ")
-    if not len(mk) > 1:
-        me = await Client.get_me()
-        fchat = await Client.send(
-            functions.channels.GetFullChannel(
-                channel=await Client.resolve_peer(message.chat.id)
-            )
-        )
-        mk = fchat.full_chat.call
-        Vl = await Client.send(
-            functions.phone.GetGroupParticipants(
-                call=mk,
-                ids=[await Client.resolve_peer(me.id)],
-                sources=[],
-                offset="",
-                limit=0,
-            )
-        )
-        try:
-            CML = Vl.participants[0].volume
-        except IndexError:
-            CML = 0
-        return await eor(message, f"**Current Volume :** {CML}%")
-    try:
-        if int(mk[1]) not in range(0, 201):
-            return await eor(message, "`Volume` should be in between `0-200`")
-        CallsClient.change_volume_call(message.chat.id, int(mk[1]))
-        msg = f"Volume Changed to `{mk[1]}%`"
-    except Exception as msg:
-        msg = str(msg)
-    await eor(message, msg)
-
-
-@Client.on_message(filters.me & filters.command("volume", HNDLR) & ~filters.edited)
-async def volplay(_, message):
-    await chesendvolume(_, message)
+@vc_asst("volume")
+async def volume_setter(event):
+    if len(event.text.split()) > 1:
+        inp = event.text.split()
+        if inp[1].startswith("@"):
+            chat = inp[1]
+            vol = int(inp[2])
+            try:
+                chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            except Exception as e:
+                return await eor(event, "**ERROR:**\n{}".format(str(e)))
+        elif inp[1].startswith("-"):
+            chat = int(inp[1])
+            vol = int(inp[2])
+            try:
+                chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            except Exception as e:
+                return await eor(event, "**ERROR:**\n{}".format(str(e)))
+        elif inp[1].isdigit() and len(inp) == 2:
+            vol = int(inp[1])
+            chat = event.chat_id
+    else:
+        return await eor(event, "`Please specify a volume from 1 to 200!`")
+    ultSongs = Player(chat)
+    if vol:
+        await ultSongs.group_call.set_my_volume(int(vol))
+        if vol > 200:
+            vol = 200
+        elif vol < 1:
+            vol = 1
+        return await eor(event, "• Volume Changed to `{}%` •".format(vol))

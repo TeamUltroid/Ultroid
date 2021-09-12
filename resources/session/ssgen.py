@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 # Ultroid - UserBot
 # Copyright (C) 2021 TeamUltroid
 #
@@ -19,11 +19,8 @@ a = r"""
 """
 
 
-def spinner(x):
-    if x == "tele":
-        print("Checking if Telethon is installed...")
-    else:
-        print("Checking if Pyrogram is installed...")
+def spinner():
+    print("Checking if Telethon is installed...")
     for _ in range(3):
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
@@ -54,12 +51,12 @@ def get_api_id_and_hash():
 
 def telethon_session():
     try:
-        spinner("tele")
+        spinner()
 
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except BaseException:
         print("Installing Telethon...")
-        os.system("pip install telethon")
+        os.system("pip install -U telethon")
 
         x = "\bDone. Installed and imported Telethon."
     clear_screen()
@@ -99,56 +96,15 @@ def telethon_session():
         exit(0)
 
 
-def pyro_session():
-    try:
-        spinner("pyro")
-        from pyrogram import Client
-
-        x = "\bFound an existing installation of Pyrogram...\nSuccessfully Imported.\n\n"
-    except BaseException:
-        print("Installing Pyrogram...")
-        os.system("pip install pyrogram tgcrypto")
-        x = "\bDone. Installed and imported Pyrogram."
-    clear_screen()
-    print(a)
-    print(x)
-
-    # generate a session
-    API_ID, API_HASH = get_api_id_and_hash()
-    print("Enter phone number when asked.\n\n")
-    with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
-        ss = pyro.export_session_string()
-        pyro.send_message(
-            "me",
-            f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid music bot. **DO NOT SHARE it.**",
-        )
-        print("Session has been sent to your saved messages!")
-        exit(0)
-
-
 def main():
     clear_screen()
     print(a)
-    try:
-        type_of_ss = int(
-            input(
-                "\nWhich session do you want to generate?\n1. User Session.\n2. VC Session.\n\nEnter choice:  "
-            )
-        )
-    except Exception as e:
-        print(e)
-        exit(0)
-    if type_of_ss == 1:
-        telethon_session()
-    elif type_of_ss == 2:
-        pyro_session()
+    telethon_session()
+    x = input("Run again? (y/n")
+    if x == "y":
+        main()
     else:
-        print("Lean English.")
-        x = input("Run again? (y/n")
-        if x == "y":
-            main()
-        else:
-            exit(0)
+        exit(0)
 
 
 main()

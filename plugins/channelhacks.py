@@ -45,7 +45,7 @@ from . import *
 
 @ultroid_bot.on(events.NewMessage())
 async def _(e):
-    if not udB.get("AUTOPOST") == "True":
+    if udB.get("AUTOPOST") != "True":
         return
     x = get_source_channels()
     th = await e.get_chat()
@@ -54,14 +54,9 @@ async def _(e):
     y = get_destinations()
     for ys in y:
         try:
-            if e.text and not e.media:
-                await ultroid_bot.send_message(int(ys), e.text)
-            elif e.media and e.text:
-                await ultroid_bot.send_file(int(ys), e.media, caption=e.text)
-            else:
-                await ultroid_bot.send_file(int(ys), e.media)
-        except Exception as e:
-            await ultroid_bot.send_message(bot.me.id, str(e))
+            await ultroid_bot.send_message(int(ys), e.message)
+        except Exception as ex:
+            await asst.send_message(int(udB["LOG_CHANNEL"]), str(ex))
 
 
 @ultroid_cmd(pattern="shift (.*)")
@@ -131,12 +126,12 @@ async def dd(event):
             return
     if is_source_channel_added(y):
         rem_source_channel(y)
-        await eod(x, "Source removed from database", time=3)
+        await eor(x, "Source removed from database", time=3)
     elif is_source_channel_added(y):
         rem_source_channel(y)
-        await eod(x, "Source removed from database")
+        await eor(x, "Source removed from database", time=5)
     elif not is_source_channel_added(y):
-        await eod(x, "Source channel is already removed from database. ", time=3)
+        await eor(x, "Source channel is already removed from database. ", time=3)
 
 
 @ultroid_cmd(pattern="listsource")
@@ -145,7 +140,7 @@ async def list_all(event):
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
-        return await eod(x, "No chats were added.", time=5)
+        return await eor(x, "No chats were added.", time=5)
     msg = "Source channels in database:\n"
     for channel in channels:
         name = ""
@@ -212,9 +207,9 @@ async def dd(event):
         await eor(x, "Destination removed from database")
     elif is_destination_added(y):
         rem_destination(y)
-        await eod(x, "Destination removed from database")
+        await eor(x, "Destination removed from database", time=5)
     elif not is_destination_added(y):
-        await eod(x, "Destination channel is already removed from database. ")
+        await eor(x, "Destination channel is already removed from database. ", time=5)
 
 
 @ultroid_cmd(pattern="listdest")
@@ -224,7 +219,7 @@ async def list_all(event):
     channels = get_destinations()
     num = get_no_destinations()
     if num == 0:
-        return await eod(x, "No chats were added.", time=5)
+        return await eor(x, "No chats were added.", time=5)
     msg = "Destination channels in database:\n"
     for channel in channels:
         name = ""

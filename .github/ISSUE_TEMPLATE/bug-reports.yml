@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-title: "[BUG REPORT]: "
+title: "[BUG REPORT]"
 labels: [bug]
 assignees:
   - xditya

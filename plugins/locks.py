@@ -7,10 +7,10 @@
 """
 ✘ Commands Available -
 
-• `{i}lock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
+• `{i}lock <msgs/media/sticker/gif/games/inlines/polls/invites/pin/changeinfo>`
     Lock the Used Setting in Used Group.
 
-• `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
+• `{i}unlock <msgs/media/sticker/gif/games/inlines/polls/invites/pin/changeinfo>`
     UNLOCK the Used Setting in Used Group.
 
 """
@@ -25,16 +25,14 @@ from . import *
     groups_only=True,
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
 )
 async def lockho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`Give some Proper Input..`")
-    try:
-        ml = lucks(mat)
-    except BaseException:
-        return await eod(e, "`Incorrect Input`")
+        return await eor(e, "`Give some Proper Input..`", time=5)
+    ml = lucks(mat)
+    if not ml:
+        return await eor(e, "`Incorrect Input`", time=5)
     await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Locked - `{mat}` ! ")
 
@@ -44,15 +42,13 @@ async def lockho(e):
     groups_only=True,
     admins_only=True,
     type=["official", "manager"],
-    ignore_dualmode=True,
 )
 async def unlckho(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        return await eod(e, "`Give some Proper Input..`")
-    try:
-        ml = unlucks(mat)
-    except BaseException:
-        return await eod(e, "`Incorrect Input`")
+        return await eor(e, "`Give some Proper Input..`", time=5)
+    ml = unlucks(mat)
+    if not ml:
+        return await eor(e, "`Incorrect Input`", time=5)
     await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     await eor(e, f"Unlocked - `{mat}` ! ")

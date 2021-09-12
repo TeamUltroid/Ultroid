@@ -13,12 +13,29 @@ build
 *.log
 target/npmlist.json
 package-lock.json
+
 # Directories
 addons/
+pyUltroid/
 __pycache__/
 venv/
 node_modules/
 glitch_me/
+src/glitch-me
 .idea/
 .vscode/
 temp/
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+.settings/
+*.swf
+*.air
+*.ipa
+*.apk
+
+# temporary files
+*.raw
+tplugins
+tassistant

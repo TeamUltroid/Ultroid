@@ -11,24 +11,63 @@
     Upload file to telegram chat.
     You Can Upload Folders too.
 
-• `{i}ul <path/to/file> | stream`
+• `{i}ul <path/to/file> (| stream)`
     Upload files as stream.
 
 • `{i}dl <filename(optional)>`
     Reply to file to download.
 
+• `{i}download <DDL> (| filename)`
+    Download using DDL. Will autogenerate filename if not given.
+
 """
+import asyncio
 import glob
 import os
 import time
 from datetime import datetime as dt
 
+from aiohttp.client_exceptions import InvalidURL
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from . import *
+
+
+@ultroid_cmd(
+    pattern="download ?(.*)",
+)
+async def down(event):
+    matched = event.pattern_match.group(1)
+    msg = await eor(event, "`Trying to download...`")
+    if not matched:
+        return await eor(msg, "`You forgot to give link :(`", time=5)
+    try:
+        splited = matched.split(" | ")
+        link = splited[0]
+        filename = splited[1]
+    except IndexError:
+        filename = None
+    s_time = time.time()
+    try:
+        filename = await fast_download(
+            link,
+            filename,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d,
+                    t,
+                    msg,
+                    s_time,
+                    f"Downloading from {link}",
+                )
+            ),
+        )
+    except InvalidURL:
+        return await eor(msg, "`Invalid URL provided :(`", time=5)
+    await eor(msg, f"`{filename} `downloaded.")
 
 
 @ultroid_cmd(
@@ -43,14 +82,11 @@ async def download(event):
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
-            return await eod(xx, get_string("udl_1"), time=5)
+            return await eor(xx, get_string("udl_1"), time=5)
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
-            if event.pattern_match.group(1):
-                filename = event.pattern_match.group(1)
-            else:
-                filename = ok.file.name
+            filename = event.pattern_match.group(1) or ok.file.name
             if not filename:
                 if "audio" in mime_type:
                     filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
@@ -94,10 +130,12 @@ async def download(event):
     pattern="ul ?(.*)",
 )
 async def download(event):
+    if event.text[1:].startswith("ultroid"):
+        return
     xx = await eor(event, get_string("com_1"))
     hmm = event.pattern_match.group(1)
     try:
-        kk = hmm.split(" | ")[0]
+        kk = hmm.split(" | stream")[0]
     except BaseException:
         pass
     try:
@@ -107,22 +145,24 @@ async def download(event):
     s = dt.now()
     tt = time.time()
     if not kk:
-        return await eod(xx, get_string("udl_3"))
-    elif os.path.isdir(kk):
+        return await eor(xx, get_string("udl_3"), time=5)
+    if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eod(xx, "`This Directory is Empty.`")
+            return await eor(xx, "`This Directory is Empty.`", time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:
+            tt = time.time()
             try:
                 try:
-                    res = await uploader(kk, kk, tt, xx, "Uploading {kk}...")
+                    res = await uploader(kk, kk, tt, xx, f"Uploading {kk}...")
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
-                    hmm = " | stream"
-                if " | stream" in hmm:
+                if (
+                    title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
+                    and " | stream" in hmm
+                ):
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512
@@ -138,10 +178,7 @@ async def download(event):
                         if metadata.has("artist"):
                             artist = metadata.get("artist")
                         else:
-                            if udB.get("artist"):
-                                artist = udB.get("artist")
-                            else:
-                                artist = ultroid_bot.first_name
+                            artist = udB.get("artist") or ultroid_bot.first_name
                     except AttributeError:
                         return await event.client.send_file(
                             event.chat_id,
@@ -149,7 +186,7 @@ async def download(event):
                             caption=f"`{kk}/{title}`",
                             supports_streaming=True,
                         )
-                    if res.name.endswith((".mkv", ".mp4", ".avi")):
+                    if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                         attributes = [
                             DocumentAttributeVideo(
                                 w=wi, h=hi, duration=duration, supports_streaming=True
@@ -215,10 +252,7 @@ async def download(event):
                     if metadata.has("artist"):
                         artist = metadata.get("artist")
                     else:
-                        if udB.get("artist"):
-                            artist = udB.get("artist")
-                        else:
-                            artist = ultroid_bot.first_name
+                        artist = udB.get("artist") or ultroid_bot.first_name
                 except AttributeError:
                     await event.client.send_file(
                         event.chat_id,
@@ -226,7 +260,7 @@ async def download(event):
                         caption=f"`{title}`",
                         supports_streaming=True,
                     )
-                if res.name.endswith((".mkv", ".mp4", ".avi")):
+                if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                     attributes = [
                         DocumentAttributeVideo(
                             w=wi, h=hi, duration=duration, supports_streaming=True
@@ -271,20 +305,20 @@ async def download(event):
             return await eor(xx, str(ve))
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t != "":
-        if os.path.isdir(kk):
-            size = 0
-            for path, dirs, files in os.walk(kk):
-                for f in files:
-                    fp = os.path.join(path, f)
-                    size += os.path.getsize(fp)
-            c = len(os.listdir(kk))
-            await xx.delete()
-            await event.client.send_message(
-                event.chat_id,
-                f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
-            )
-        else:
-            await eor(xx, f"Uploaded `{kk}` in `{t}`")
-    else:
+    if t == "":
         await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
+
+    elif os.path.isdir(kk):
+        size = 0
+        for path, dirs, files in os.walk(kk):
+            for f in files:
+                fp = os.path.join(path, f)
+                size += os.path.getsize(fp)
+        c = len(os.listdir(kk))
+        await xx.delete()
+        await event.client.send_message(
+            event.chat_id,
+            f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+        )
+    else:
+        await eor(xx, f"Uploaded `{kk}` in `{t}`")

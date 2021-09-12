@@ -57,4 +57,4 @@ async def button_parser(event):
         await asst.send_message(event.chat_id, text, buttons=buttons)
         await eor(event, "Done. Message sent.")
     except Exception as e:
-        await eod(event, "**ERROR:**\n{}".format(str(e)), time=5)
+        await eor(event, "**ERROR:**\n{}".format(str(e)), time=5)

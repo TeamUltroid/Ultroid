@@ -32,7 +32,7 @@ async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
-        return await eod(e, "`Give the word to blacklist..`")
+        return await eor(e, "`Give the word to blacklist..`", time=5)
     wrd = e.text[11:]
     heh = wrd.split(" ")
     for z in heh:
@@ -45,7 +45,7 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eod(e, "`Give the word to remove from blacklist..`")
+        return await eor(e, "`Give the word to remove from blacklist..`", time=5)
     wrd = e.text[14:]
     heh = wrd.split(" ")
     for z in heh:
@@ -65,12 +65,13 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def bl(e):
-    chat = e.chat_id
-    x = get_blacklist(int(chat))
-    if x and e.text:
-        xx = ((e.text).lower()).split()
-        yy = x.split("$|")
-        for z in xx:
-            if z in yy:
-                await e.delete()
-                break
+    x = get_blacklist(e.chat_id)
+    if x:
+        for z in e.text.lower().split():
+            for zz in x:
+                if z == zz:
+                    try:
+                        await e.delete()
+                        break
+                    except BaseException:
+                        break

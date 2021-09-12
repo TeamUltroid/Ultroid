@@ -30,24 +30,22 @@ async def _(event):
     try:
         file_name = vv[1]
     except IndexError:
-        pass
-    if event.reply_to_msg_id:
-        bb = await event.get_reply_message()
-        if bb.media:
-            ccc = time.time()
-            try:
-                naam = await downloader(
-                    bb.file.name,
-                    bb.media.document,
-                    xx,
-                    ccc,
-                    "Downloading " + bb.file.name + "...",
-                )
-                file_name = naam.name
-            except BaseException:
-                file_name = await event.client.download_media(bb)
-        else:
-            return await eod(xx, "`Reply to media file`")
+        return await eor(xx, "`Provide a File Name pls..")
+    bb = await event.get_reply_message()
+    if not (bb and bb.media):
+        return await eor(xx, "`Reply to media file..`")
+    ccc = time.time()
+    try:
+        naam = await downloader(
+            bb.file.name,
+            bb.media.document,
+            xx,
+            ccc,
+            "Downloading " + bb.file.name + "...",
+        )
+        file_name = naam.name
+    except BaseException:
+        file_name = await event.client.download_media(bb)
     try:
         results = await event.client.inline_query(
             asst.me.username,

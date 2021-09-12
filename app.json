@@ -37,12 +37,12 @@
             "value": ""
         },
         "HEROKU_API": {
-            "description": "Heroku API token. Needed if deploying on heroku ONLY.",
+            "description": "Heroku API token. Mandatory for Heroku Deploy...",
             "value": "",
             "required": false
         },
         "HEROKU_APP_NAME": {
-            "description": "Name of your heroku app, given in the first blank on this page. To be added if deploying to heroku ONLY.",
+            "description": "Name of your Heroku app, given in the first blank on this page. To be added if deploying to heroku ONLY.",
             "value": "",
             "required": false
         }

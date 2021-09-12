@@ -11,23 +11,27 @@
     See changelogs if any update is available.
 """
 
+
 from git import Repo
-from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
 from . import *
 
-ULTPIC = "resources/extras/inline.jpg"
-CL = udB.get("INLINE_PIC")
-if CL:
-    ULTPIC = CL
+ULTPIC = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
 
 
-@ultroid_cmd(pattern="update$")
+@ultroid_cmd(pattern="update ?(.*)")
 async def _(e):
     xx = await eor(e, "`Checking for updates...`")
-    m = await updater()
+    m = updater()
     branch = (Repo.init()).active_branch
     if m:
+        if e.pattern_match.group(1):
+            if "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1):
+                await bash("git pull -f && pip3 install -r requirements.txt")
+                call_back()
+                await xx.edit("`Fast Soft Updating...`")
+                execl(sys.executable, "python3", "-m", "pyUltroid")
+                return
         x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             ULTPIC,
@@ -35,10 +39,7 @@ async def _(e):
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
         )
-        if not e.client._bot:
-            Link = (await e.client(GetLink(x.chat_id, x.id))).link
-        else:
-            Link = f"https://t.me/c/{x.chat.id}/{x.id}"
+        Link = x.message_link
         await xx.edit(
             f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
             parse_mode="html",

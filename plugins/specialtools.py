@@ -26,64 +26,104 @@
     Search Hd Wallpaper as Per ur Wish..
 """
 import os
+import time
 from datetime import datetime as dt
 from random import choice
 from shutil import rmtree
 
-import moviepy.editor as m
 import pytz
 import requests
 from bs4 import BeautifulSoup as b
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 from pyUltroid.functions.google_image import googleimagesdownload
+from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
+
+File = []
 
 
 @ultroid_cmd(
     pattern="getaudio$",
 )
-async def daudtoid(event):
-    ureply = await event.get_reply_message()
-    if not (ureply and ("audio" in ureply.document.mime_type)):
-        await eor(event, "`Reply To Audio Only..`")
-        return
-    xx = await eor(event, "`processing...`")
-    d = os.path.join("resources/extras/", "ul.mp3")
-    await xx.edit("`Downloading... Large Files Takes Time..`")
-    await event.client.download_media(ureply, d)
-    await xx.edit("`Done.. Now reply to video In which u want to add that Audio`")
+async def daudtoid(e):
+    if not e.reply_to:
+        return await eod(e, "Reply To Audio or video")
+    r = await e.get_reply_message()
+    if not mediainfo(r.media).startswith(("audio", "video")):
+        return await eod(e, "Reply To Audio or video")
+    xxx = await eor(e, "`processing...`")
+    dl = r.file.name
+    c_time = time.time()
+    file = await downloader(
+        "resources/downloads/" + dl,
+        r.media.document,
+        xxx,
+        c_time,
+        "Downloading " + dl + "...",
+    )
+    File.append(file.name)
+    await xxx.edit("`Done.. Now reply to video In which u want to add this Audio`")
 
 
 @ultroid_cmd(
     pattern="addaudio$",
 )
-async def adaudroid(event):
-    ureply = await event.get_reply_message()
-    if not (ureply and ("video" in ureply.document.mime_type)):
-        await eor(event, "`Reply To Gif/Video In which u want to add audio.`")
-        return
-    xx = await eor(event, "`processing...`")
-    ultt = await ureply.download_media()
-    ls = os.listdir("resources/extras")
-    z = "ul.mp3"
-    x = "resources/extras/ul.mp3"
-    if z not in ls:
-        await xx.edit("`First reply an audio with .aw`")
-        return
-    video = m.VideoFileClip(ultt)
-    audio = m.AudioFileClip(x)
-    out = video.set_audio(audio)
-    out.write_videofile("ok.mp4", fps=30)
-    await event.client.send_file(
-        event.chat_id,
-        file="ok.mp4",
-        force_document=False,
-        reply_to=event.reply_to_msg_id,
+async def adaudroid(e):
+    if not e.reply_to:
+        return await eod(e, "Reply To video")
+    r = await e.get_reply_message()
+    if not mediainfo(r.media).startswith("video"):
+        return await eod(e, "Reply To video")
+    if not File or os.path.exists(File[0]):
+        return await xx.edit("`First reply an audio with .aw`")
+    xxx = await eor(e, "`processing...`")
+    dl = r.file.name
+    c_time = time.time()
+    file = await downloader(
+        "resources/downloads/" + dl,
+        r.media.document,
+        xxx,
+        c_time,
+        "Downloading " + dl + "...",
     )
-    os.remove("ok.mp4")
-    os.remove(x)
-    os.remove(ultt)
-    await xx.delete()
+    await xxx.edit(f"Downloaded Successfully, Now Adding Your Audio to video")
+    await bash(
+        f'ffmpeg -i "{file.name}" -i "{File[0]}" -shortest -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4'
+    )
+    out = "output.mp4"
+    mmmm = await uploader(
+        out,
+        out,
+        time.time(),
+        xxx,
+        "Uploading " + out + "...",
+    )
+    metadata = extractMetadata(createParser(out))
+    duration = metadata.get("duration").seconds
+    hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
+    wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
+    height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
+    width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+    attributes = [
+        DocumentAttributeVideo(
+            duration=duration, w=width, h=height, supports_streaming=True
+        )
+    ]
+    await e.client.send_file(
+        e.chat_id,
+        mmmm,
+        thumb="resources/extras/ultroid.jpg",
+        attributes=attributes,
+        force_document=False,
+        reply_to=e.reply_to_msg_id,
+    )
+    await xxx.delete()
+    os.remove(out)
+    os.remove(file.name)
+    File.clear()
+    os.remove(File[0])
 
 
 @ultroid_cmd(

@@ -6,13 +6,13 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+from datetime import datetime
 from random import choice
 from re import compile as re_compile
 from re import findall
 
 import requests
-from bs4 import BeautifulSoup
-from orangefoxapi import OrangeFoxAPI
+from bs4 import BeautifulSoup as bs
 from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
 from telethon import Button
@@ -21,15 +21,11 @@ from telethon.tl.types import InputWebDocument as wb
 from plugins._inline import SUP_BUTTONS
 
 from . import *
-from . import humanbytes as hb
 
 ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
-ps = "https://telegra.ph/file/de0b8d9c858c62fae3b6e.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
-
-ofox_api = OrangeFoxAPI()
 
 api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
     "ascii"
@@ -45,6 +41,7 @@ api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").
 @in_pattern("ofox")
 @in_owner
 async def _(e):
+    match = None
     try:
         match = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -54,39 +51,43 @@ async def _(e):
             text="**OFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ**\n\nYou didn't search anything",
             buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
         )
-        await e.answer([kkkk])
-    a = ofox_api.releases(codename=match)
-    c = ofox_api.devices(codename=match)
-    if len(a.data) > 0:
+        return await e.answer([kkkk])
+    device, releases = await get_ofox(match)
+    if device.get("detail") is None:
         fox = []
-        for b in a.data:
-            ver = b.version
-            release = b.type
-            size = hb(b.size)
-            for z in c.data:
-                fullname = z.full_name
-                code = z.codename
-                link = f"https://orangefox.download/device/{code}"
-                text = f"**••OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ•[•]({ofox})** {fullname}\n"
-                text += f"**••Cᴏᴅᴇɴᴀᴍᴇ••** {code}\n"
-                text += f"**••Bᴜɪʟᴅ Tʏᴘᴇ••** {release}\n"
-                text += f"**••Vᴇʀsɪᴏɴ••** {ver}\n"
-                text += f"**••Sɪᴢᴇ••** {size}\n"
-                fox.append(
-                    await e.builder.article(
-                        title=f"{fullname}",
-                        description=f"{ver}\n{release}",
-                        text=text,
-                        thumb=wb(ofox, 0, "image/jpeg", []),
-                        link_preview=True,
-                        buttons=[
-                            Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
-                            Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True
-                            ),
-                        ],
-                    )
+        fullname = device["full_name"]
+        codename = device["codename"]
+        str(device["supported"])
+        maintainer = device["maintainer"]["name"]
+        link = f"https://orangefox.download/device/{codename}"
+        for data in releases["data"]:
+            release = data["type"]
+            version = data["version"]
+            size = humanbytes(data["size"])
+            release_date = datetime.utcfromtimestamp(data["date"]).strftime("%Y-%m-%d")
+            text = f"[\xad]({ofox})**OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ**\n\n"
+            text += f"`  Fᴜʟʟ Nᴀᴍᴇ: {fullname}`\n"
+            text += f"`  Cᴏᴅᴇɴᴀᴍᴇ: {codename}`\n"
+            text += f"`  Mᴀɪɴᴛᴀɪɴᴇʀ: {maintainer}`\n"
+            text += f"`  Bᴜɪʟᴅ Tʏᴘᴇ: {release}`\n"
+            text += f"`  Vᴇʀsɪᴏɴ: {version}`\n"
+            text += f"`  Sɪᴢᴇ: {size}`\n"
+            text += f"`  Bᴜɪʟᴅ Dᴀᴛᴇ: {release_date}`"
+            fox.append(
+                await e.builder.article(
+                    title=f"{fullname}",
+                    description=f"{version}\n{release_date}",
+                    text=text,
+                    thumb=wb(ofox, 0, "image/jpeg", []),
+                    link_preview=True,
+                    buttons=[
+                        Button.url("Dᴏᴡɴʟᴏᴀᴅ", url=f"{link}"),
+                        Button.switch_inline(
+                            "Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True
+                        ),
+                    ],
                 )
+            )
         await e.answer(
             fox, switch_pm="OrangeFox Recovery Search.", switch_pm_param="start"
         )
@@ -301,7 +302,7 @@ async def _(e):
             await e.builder.article(
                 title=name,
                 description=ids,
-                thumb=wb(ps, 0, "image/jpeg", []),
+                thumb=wb(icon, 0, "image/jpeg", []),
                 text=text,
                 link_preview=True,
                 buttons=[
@@ -373,60 +374,39 @@ async def _(e):
     await e.answer(modss, switch_pm="Search Mod Applications.", switch_pm_param="start")
 
 
-@in_pattern("ebooks")
+# Inspired by @FindXDaBot
+
+
+@in_pattern("xda")
 @in_owner
-async def clip(e):
+async def xda_dev(event):
+    QUERY = event.text.split(" ", maxsplit=1)
     try:
-        quer = e.text.split(" ", maxsplit=1)[1]
+        query = QUERY[1]
     except IndexError:
-        await e.answer(
-            [], switch_pm="Enter Query to Look for EBook", switch_pm_param="start"
+        return await event.answer(
+            [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
-        return
-    quer = quer.replace(" ", "+")
-    sear = f"http://www.gutenberg.org/ebooks/search/?query={quer}&submit_search=Go%21"
-    magma = requests.get(sear).content
-    bs = BeautifulSoup(magma, "html.parser", from_encoding="utf-8")
-    out = bs.find_all("img")
-    Alink = bs.find_all("a", "link")
-    if len(out) == 0:
-        return await e.answer(
-            [], switch_pm="No Results Found !", switch_pm_param="start"
-        )
-    buil = e.builder
-    dont_take = [
-        "Authors",
-        "Did you mean",
-        "Sort Alpha",
-        "Sort by",
-        "Subjects",
-        "Bookshelves",
-    ]
-    hm = []
-    titles = []
-    for num in Alink:
-        try:
-            rt = num.find("span", "title").text
-            if not rt.startswith(tuple(dont_take)):
-                titles.append(rt)
-        except BaseException:
-            pass
-    for rs in range(len(out)):
-        if "/cache/epub" in out[rs]["src"]:
-            link = out[rs]["src"]
-            num = link.split("/")[3]
-            link = "https://gutenberg.org" + link.replace("small", "medium")
-            file = wb(link, 0, "image/jpeg", [])
-            hm.append(
-                buil.article(
-                    title=titles[rs],
-                    type="photo",
-                    description="GutenBerg Search",
-                    thumb=file,
-                    content=file,
-                    include_media=True,
-                    text=f"**• Ebook Search**\n\n->> `{titles[rs]}`",
-                    buttons=Button.inline("Get as Doc", data=f"ebk_{num}"),
-                )
+    le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
+    ct = requests.get(le).content
+    ml = bs(ct, "html.parser", from_encoding="utf-8")
+    ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
+    out = []
+    builder = event.builder
+    for on in ml:
+        data = on.find_all("img", "xda_image")[0]
+        title = data["alt"]
+        thumb = data["src"]
+        hre = on.find_all("div", "item_content")[0].find("h4").find("a")["href"]
+        desc = on.find_all("div", "item_meta clearfix")[0].text
+        thumb = wb(thumb, 0, "image/jpeg", [])
+        text = f"[{title}]({hre})"
+        out.append(
+            await builder.article(
+                title=title, description=desc, url=hre, thumb=thumb, text=text
             )
-    await e.answer(hm, switch_pm="Ebooks Search", switch_pm_param="start")
+        )
+    uppar = "|| XDA Search Results ||"
+    if len(out) == 0:
+        uppar = "No Results Found :("
+    await event.answer(out, switch_pm=uppar, switch_pm_param="start")
