@@ -155,9 +155,11 @@ async def chatBot_replies(e):
             await e.reply(msg)
     chat = await e.get_chat()
     if e.is_group and not sender.bot:
-        await uname_stuff(e.sender_id, sender.username, sender.first_name)
+        if sender.username:
+            await uname_stuff(e.sender_id, sender.username, sender.first_name)
     elif e.is_private and not sender.bot:
-        await uname_stuff(e.sender_id, chat.username, chat.first_name)
+        if chat.username:
+            await uname_stuff(e.sender_id, chat.username, chat.first_name)
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
