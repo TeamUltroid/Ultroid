@@ -19,7 +19,7 @@ async def helper(event):
 
 
 @in_pattern("vchelp")
-async def wiqhshd(e)
+async def wiqhshd(e):
     builder = e.builder
     res = [
         await builder.article(
