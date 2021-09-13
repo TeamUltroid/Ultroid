@@ -46,6 +46,7 @@ from telethon.errors import (
     PackShortNameOccupiedError,
     YouBlockedUserError,
 )
+from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
@@ -193,17 +194,18 @@ async def pack_kangish(_):
             udB.set("PACKKANG", str(ok))
         except PackShortNameOccupiedError:
             time.sleep(1)
-            pack += 1
-            _r_e_s = await asst(
+            try:
+                short_name = (await _.client(SuggestShortNameRequest(_packname))).shortname
+                _r_e_s = await asst(
                 functions.stickers.CreateStickerSetRequest(
                     user_id=_.sender_id,
                     title=_packname,
-                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                    short_name=f"u{short_name}_by_{asst.me.username}",
                     stickers=stiks,
-                )
-            )
-            ok.update({_.sender_id: pack})
-            udB.set("PACKKANG", str(ok))
+                    )
+                 )
+            except Exception as er:
+                 return await eor(_, str(er))
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
