@@ -167,19 +167,21 @@ async def ex_aud(e):
     attributes = [
         DocumentAttributeAudio(
             duration=duration,
-            title=reply.file.name.split(".")[0] if reply.file.name else "Extracted Audio",
+            title=reply.file.name.split(".")[0]
+            if reply.file.name
+            else "Extracted Audio",
             performer=artist,
         )
     ]
     f_time = time.time()
     try:
         fo = await uploader(
-        out_file,
-        out_file,
-        f_time,
-        msg,
-        "Uploading " + out_file + "...",
-       )
+            out_file,
+            out_file,
+            f_time,
+            msg,
+            "Uploading " + out_file + "...",
+        )
     except FileNotFoundError:
         return await eor(msg, "`No Audio Found...`")
     await e.client.send_file(

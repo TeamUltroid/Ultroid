@@ -79,7 +79,11 @@ async def imak(event):
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                reply.file.name if reply.file.name else str(time.time()), reply.media.document, xx, t, "Downloading..."
+                reply.file.name if reply.file.name else str(time.time()),
+                reply.media.document,
+                xx,
+                t,
+                "Downloading...",
             )
             file = image.name
         else:
