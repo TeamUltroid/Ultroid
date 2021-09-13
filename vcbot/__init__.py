@@ -40,7 +40,7 @@ from pyUltroid.functions.vc_group import get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
-from pyUltroid.version import version as UltVer
+from pyUltroid.version import __version__ as UltVer
 from telethon import events
 from telethon.tl import functions, types
 from telethon.utils import get_display_name
