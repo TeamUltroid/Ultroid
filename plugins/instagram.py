@@ -14,7 +14,7 @@
 • `{i}instadata <username>`
   `Get Instagram Data of someone or self`
 
-• Fill `INSTA_USERNAME` and `INSTA_PASS`
+• Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
   before using it..
 
 """
