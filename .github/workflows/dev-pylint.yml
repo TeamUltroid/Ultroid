@@ -1,10 +1,6 @@
 name: PyLint
 
-on:
-  workflow_dispatch:
-  push:
-    paths:
-      - "**.py"
+on: push
 
 jobs:
 
