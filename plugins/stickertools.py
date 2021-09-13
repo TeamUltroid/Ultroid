@@ -197,7 +197,7 @@ async def pack_kangish(_):
             try:
                 short_name = (
                     await _.client(SuggestShortNameRequest(_packname))
-                ).shortname
+                ).short_name
                 _r_e_s = await asst(
                     functions.stickers.CreateStickerSetRequest(
                         user_id=_.sender_id,
