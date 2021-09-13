@@ -26,7 +26,6 @@ from traceback import format_exc
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
-from pyUltroid.version import version as UltVer
 from pyUltroid.functions.all import (
     bash,
     downloader,
@@ -41,6 +40,7 @@ from pyUltroid.functions.vc_group import get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
+from pyUltroid.version import version as UltVer
 from telethon import events
 from telethon.tl import functions, types
 from telethon.utils import get_display_name
