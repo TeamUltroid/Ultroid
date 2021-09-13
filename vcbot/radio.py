@@ -9,7 +9,7 @@
 ✘ Commands Available -
 
 • `{i}radio <link>`
-   Stream Live Radio.
+   Stream Live Radio m3u8 links.
 
 • `{i}ytlive <link>`
    Stream Live YouTube.
