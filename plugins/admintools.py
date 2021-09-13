@@ -300,7 +300,7 @@ async def fastpurger(purg):
         return
     if not purg._client._bot and ((match) or (purg.is_reply and purg.is_private)):
         p = 0
-        async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match)):
+        async for msg in purg.client.iter_messages(purg.chat_id, limit=int(match) if match else None, min_id=purg.reply_to_msg_id if purg.is_reply else None):
             await msg.delete()
             p += 0
         return await eor(purg, f"Purged {p} Messages! ", time=5)
