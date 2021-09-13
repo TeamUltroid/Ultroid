@@ -145,7 +145,7 @@ async def trim_aud(e):
 @ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
     reply = await e.get_reply_message()
-    if not (reply and reply.video):
+    if not (reply and reply.media and mediainfo(reply.media).startswith("video")):
         return await eor(e, "`Reply to Video File..`")
     name = reply.file.name or "video.mp4"
     vfile = reply.media.document
@@ -167,18 +167,23 @@ async def ex_aud(e):
     attributes = [
         DocumentAttributeAudio(
             duration=duration,
-            title=reply.file.name.split(".")[0],
+            title=reply.file.name.split(".")[0]
+            if reply.file.name
+            else "Extracted Audio",
             performer=artist,
         )
     ]
     f_time = time.time()
-    fo = await uploader(
-        out_file,
-        out_file,
-        f_time,
-        msg,
-        "Uploading " + out_file + "...",
-    )
+    try:
+        fo = await uploader(
+            out_file,
+            out_file,
+            f_time,
+            msg,
+            "Uploading " + out_file + "...",
+        )
+    except FileNotFoundError:
+        return await eor(msg, "`No Audio Found...`")
     await e.client.send_file(
         e.chat_id,
         fo,
@@ -187,4 +192,4 @@ async def ex_aud(e):
         attributes=attributes,
         reply_to=e.reply_to_msg_id,
     )
-    await e.delete()
+    await msg.delete()

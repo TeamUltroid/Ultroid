@@ -20,6 +20,9 @@ STRINGS = {
 ❣ Made by **@TeamUltroid**""",
     3: """**💡• FAQs •**
 
+-> [Username Tracker](https://t.me/UltroidUpdates/24)
+-> [Keeping Custom Addons Repo](https://t.me/UltroidUpdates/28)
+-> [Disabling Deploy message](https://t.me/UltroidUpdates/27)
 -> [Setting up TimeZone](https://t.me/UltroidUpdates/22)
 -> [About Inline PmPermit](https://t.me/UltroidUpdates/21)
 -> [About Dual Mode](https://t.me/UltroidUpdates/18)

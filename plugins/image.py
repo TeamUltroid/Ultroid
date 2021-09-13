@@ -33,6 +33,7 @@ async def f2i(e):
             html = r.text
     else:
         return await eod(e, "`Either reply to any file or give any text`")
+    html = html.replace("\n", "<br>")
     shot = WebShot(quality=85)
     css = "body {background: white;} p {color: red;}"
     pic = await shot.create_pic_async(html=html, css=css)

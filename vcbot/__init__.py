@@ -40,6 +40,7 @@ from pyUltroid.functions.vc_group import get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import admin_check, in_pattern
 from pyUltroid.misc._wrappers import eod, eor
+from pyUltroid.version import __version__ as UltVer
 from telethon import events
 from telethon.tl import functions, types
 from telethon.utils import get_display_name
@@ -101,7 +102,7 @@ class Player:
             VIDEO_ON.clear()
             await asyncio.sleep(3)
         if self._video:
-            for chats in CLIENTS:
+            for chats in list(CLIENTS):
                 if chats != self._chat:
                     await CLIENTS[chats].stop()
                     del CLIENTS[chats]
@@ -219,7 +220,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 LOGS.exception(Exception)
                 await asst.send_message(
                     LOG_CHANNEL,
-                    f"VC Error - <code>{e.chat_id}</code>\n\n<code>{format_exc()}</code>",
+                    f"VC Error - <code>{UltVer}</code>\n\n<code>{e.text}</code>\n\n<code>{format_exc()}</code>",
                     parse_mode="html",
                 )
 
