@@ -151,10 +151,8 @@ async def pack_kangish(_):
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
-    animated = True
     if _e.file.mime_type == "image/webp":
-        # return await eor(_, "`Animated Stickers are not Supported...`")
-        animated = False
+        return await eor(_, "`Animated Stickers are not Supported...`")
     _id = _e.media.document.attributes[1].stickerset.id
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
@@ -177,7 +175,6 @@ async def pack_kangish(_):
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
-                animated=animated,
                 short_name=f"u{short_name}_by_{asst.me.username}",
                 stickers=stiks,
             )
