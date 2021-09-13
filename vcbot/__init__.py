@@ -26,6 +26,7 @@ from traceback import format_exc
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
+from pyUltroid.version import version as UltVer
 from pyUltroid.functions.all import (
     bash,
     downloader,
@@ -219,7 +220,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
                 LOGS.exception(Exception)
                 await asst.send_message(
                     LOG_CHANNEL,
-                    f"VC Error - <code>{e.chat_id}</code>\n\n<code>{e.text}</code>\n\n<code>{format_exc()}</code>",
+                    f"VC Error - <code>{UltVer}</code>\n\n<code>{e.text}</code>\n\n<code>{format_exc()}</code>",
                     parse_mode="html",
                 )
 
