@@ -56,16 +56,17 @@ SUP_BUTTONS = [
 # --------------------BUTTONS--------------------#
 
 
-@in_pattern("")
+@inline
 @in_owner
 async def inline_alive(o):
-    if len(o.text) == 0:
-        b = o.builder
-        MSG = "• **Ultroid Userbot •**"
-        WEB0 = InputWebDocument(
+    if not len(o.text) == 0:
+        return
+    b = o.builder
+    MSG = "• **Ultroid Userbot •**"
+    WEB0 = InputWebDocument(
             "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
         )
-        RES = [
+    RES = [
             InputBotInlineResult(
                 str(o.id),
                 "photo",
@@ -81,7 +82,7 @@ async def inline_alive(o):
                 content=InputWebDocument(TLINK, 0, "image/jpg", []),
             )
         ]
-        await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
+    await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd")
