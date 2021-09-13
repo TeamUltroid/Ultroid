@@ -11,8 +11,8 @@ from random import choice
 from re import compile as re_compile
 from re import findall
 
-import requests
 import aiohttp
+import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
 from search_engine_parser import GoogleSearch, YahooSearch
