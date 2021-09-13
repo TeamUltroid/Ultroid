@@ -167,7 +167,7 @@ async def ex_aud(e):
     attributes = [
         DocumentAttributeAudio(
             duration=duration,
-            title=reply.file.name.split(".")[0],
+            title=reply.file.name.split(".")[0] if reply.file.name else "Extracted Audio",
             performer=artist,
         )
     ]
