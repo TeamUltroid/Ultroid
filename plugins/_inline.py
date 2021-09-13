@@ -64,24 +64,24 @@ async def inline_alive(o):
     b = o.builder
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
-            "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
-        )
+        "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+    )
     RES = [
-            InputBotInlineResult(
-                str(o.id),
-                "photo",
-                send_message=await b._message(
-                    text=MSG,
-                    media=True,
-                    buttons=SUP_BUTTONS,
-                ),
-                title="Ultroid Userbot",
-                description="Userbot | Telethon",
-                url=TLINK,
-                thumb=WEB0,
-                content=InputWebDocument(TLINK, 0, "image/jpg", []),
-            )
-        ]
+        InputBotInlineResult(
+            str(o.id),
+            "photo",
+            send_message=await b._message(
+                text=MSG,
+                media=True,
+                buttons=SUP_BUTTONS,
+            ),
+            title="Ultroid Userbot",
+            description="Userbot | Telethon",
+            url=TLINK,
+            thumb=WEB0,
+            content=InputWebDocument(TLINK, 0, "image/jpg", []),
+        )
+    ]
     await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
