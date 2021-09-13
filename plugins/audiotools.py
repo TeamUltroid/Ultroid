@@ -145,7 +145,7 @@ async def trim_aud(e):
 @ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
     reply = await e.get_reply_message()
-    if not (reply and reply.video):
+    if not (reply and reply.media and mediainfo(reply.media). startswith ("video")):
         return await eor(e, "`Reply to Video File..`")
     name = reply.file.name or "video.mp4"
     vfile = reply.media.document
