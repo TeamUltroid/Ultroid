@@ -41,11 +41,7 @@ import numpy as np
 import requests
 from carbonnow import Carbon
 from PIL import Image, ImageDraw
-from telethon.errors import (
-    ChatSendStickersForbiddenError,
-    PackShortNameOccupiedError,
-    YouBlockedUserError,
-)
+from telethon.errors import ChatSendStickersForbiddenError, YouBlockedUserError
 from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import (
     DocumentAttributeFilename,
