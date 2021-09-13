@@ -5,8 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon import Button
-
+from telethon import Button, events
 from . import *
 
 ID_CACHE = []
@@ -23,7 +22,7 @@ async def helper(event):
         await eor(event, e)
 
 
-@in_pattern("vchelp")
+@asst.on(events.InlineQuery(pattern="vchelp"))
 async def wiqhshd(e):
     if not ID_CACHE:
         ID_CACHE.append(str((await vcClient.get_me()).id))
