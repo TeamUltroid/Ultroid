@@ -175,41 +175,18 @@ async def pack_kangish(_):
             )
         )
     try:
-        eval(udB.get("PACKKANG"))
-    except BaseException:
-        udB.set("PACKKANG", "{}")
-    ok = eval(udB.get("PACKKANG"))
-    try:
-        pack = ok[_.sender_id] + 1
-    except BaseException:
-        pack = 1
-    try:
+        short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
         _r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
                 animated=animated,
-                short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                short_name=f"u{short_name}_by_{asst.me.username}",
                 stickers=stiks,
             )
         )
-        ok.update({_.sender_id: pack})
-        udB.set("PACKKANG", str(ok))
-    except PackShortNameOccupiedError:
-        time.sleep(1)
-        try:
-            short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
-            _r_e_s = await asst(
-                functions.stickers.CreateStickerSetRequest(
-                    user_id=_.sender_id,
-                    title=_packname,
-                    animated=animated,
-                    short_name=f"u{short_name}_by_{asst.me.username}",
-                    stickers=stiks,
-                )
-            )
-        except Exception as er:
-            return await eor(_, str(er))
+    except BaseException as er:
+        return await eor(_, str(er))
     await eor(
         _,
         f"**Pack Kanged Successfully**.\n**Kanged Pack:** [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
