@@ -161,7 +161,10 @@ async def on_vc_callback_query_handler(event):
     xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
         OWNER_NAME, len(VC_HELP)
     )
-    buttons = page_num(0, VC_HELP, "vchelp", "vc")
+    try:
+        buttons = page_num(0, VC_HELP, "vchelp", "vc")
+    except ZeroDivisionError:
+        return await event.answer("Vc not Active.")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
