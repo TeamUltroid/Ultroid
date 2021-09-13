@@ -291,7 +291,6 @@ async def unp(ult):
     type=["official", "manager"],
 )
 async def fastpurger(purg):
-    chat = await purg.get_input_chat()
     match = purg.pattern_match.group(1)
     try:
         ABC = purg.text[6]
@@ -309,7 +308,7 @@ async def fastpurger(purg):
         return await eor(purg, "`Reply to a message to purge from.`", time=10)
     try:
         await purg.client.delete_messages(
-            chat, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
+            purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
         )
     except Exception as er:
         LOGS.info(er)
