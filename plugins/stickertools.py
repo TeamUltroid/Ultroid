@@ -170,8 +170,8 @@ async def pack_kangish(_):
         x = get_input_document(i)
         stiks.append(
             types.InputStickerSetItem(
-                    document=x,
-                    emoji=(i.attributes[1]).alt,
+                document=x,
+                emoji=(i.attributes[1]).alt,
             )
         )
     try:
@@ -185,37 +185,35 @@ async def pack_kangish(_):
         pack = 1
     try:
         _r_e_s = await asst(
-                functions.stickers.CreateStickerSetRequest(
-                    user_id=_.sender_id,
-                    title=_packname,
-                    animated=animated,
-                    short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
-                    stickers=stiks,
-                )
+            functions.stickers.CreateStickerSetRequest(
+                user_id=_.sender_id,
+                title=_packname,
+                animated=animated,
+                short_name=f"u{_.sender_id}_{pack}_by_{(await tgbot.get_me()).username}",
+                stickers=stiks,
             )
+        )
         ok.update({_.sender_id: pack})
         udB.set("PACKKANG", str(ok))
     except PackShortNameOccupiedError:
         time.sleep(1)
         try:
-           short_name = (
-                    await _.client(SuggestShortNameRequest(_packname))
-                ).short_name
+            short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
             _r_e_s = await asst(
-                    functions.stickers.CreateStickerSetRequest(
-                        user_id=_.sender_id,
-                        title=_packname,
-                        animated=animated,
-                        short_name=f"u{short_name}_by_{asst.me.username}",
-                        stickers=stiks,
-                    )
+                functions.stickers.CreateStickerSetRequest(
+                    user_id=_.sender_id,
+                    title=_packname,
+                    animated=animated,
+                    short_name=f"u{short_name}_by_{asst.me.username}",
+                    stickers=stiks,
                 )
+            )
         except Exception as er:
             return await eor(_, str(er))
     await eor(
-            _,
-            f"**Pack Kanged Successfully**.\n**Kanged Pack:** [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
-        )
+        _,
+        f"**Pack Kanged Successfully**.\n**Kanged Pack:** [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
+    )
 
 
 @ultroid_cmd(
