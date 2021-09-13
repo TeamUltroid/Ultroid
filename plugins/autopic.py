@@ -16,11 +16,9 @@
 """
 import asyncio
 import os
-import urllib
 
 import requests as r
 from bs4 import BeautifulSoup as bs
-from telethon.tl.functions.messages import GetWebPagePreviewRequest as getweb
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
@@ -30,33 +28,26 @@ from . import *
 async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
-        return await eod(e, get_string("autopic_1"))
+        return await eor(e, get_string("autopic_1"), time=5)
     clls = autopicsearch(search)
     if len(clls) == 0:
-        return await eod(e, get_string("autopic_2").format(search))
+        return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
     ST = udB.get("SLEEP_TIME")
-    if ST:
-        SLEEP_TIME = int(ST)
-    else:
-        SLEEP_TIME = 1221
+    SLEEP_TIME = int(ST) if ST else 1221
     while True:
         for lie in clls:
             ge = udB.get("AUTOPIC")
-            if not ge == "True":
+            if ge != "True":
                 return
             au = "https://unsplash.com" + lie["href"]
-            et = await e.client(getweb(au))
-            try:
-                kar = await e.client.download_media(et.webpage.photo)
-            except AttributeError:
-                ct = r.get(au).content
-                bsc = bs(ct, "html.parser", from_encoding="utf-8")
-                ft = bsc.find_all("img", "_2UpQX")
-                li = ft[0]["src"]
-                kar = "autopic.png"
-                urllib.request.urlretrieve(li, kar)
+            ct = r.get(au).content
+            bsc = bs(ct, "html.parser", from_encoding="utf-8")
+            ft = bsc.find_all("img", "oCCRx")
+            li = ft[0]["src"]
+            kar = "autopic.png"
+            await download_file(li, kar)
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
@@ -66,7 +57,7 @@ async def autopic(e):
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
-    if not gt == "True":
-        return await eod(ult, "AUTOPIC was not in used !!")
+    if gt != "True":
+        return await eor(ult, "AUTOPIC was not in use !!", time=5)
     udB.set("AUTOPIC", "None")
-    await eod(ult, "AUTOPIC Stopped !!")
+    await eor(ult, "AUTOPIC Stopped !!", time=5)

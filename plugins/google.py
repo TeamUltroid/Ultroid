@@ -32,7 +32,10 @@ from strings import get_string
 from . import *
 
 
-@ultroid_cmd(pattern="google ?(.*)", type=["official", "manager"], ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="google ?(.*)",
+    type=["official", "manager"],
+)
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
@@ -51,11 +54,9 @@ async def google(event):
             des = res["descriptions"][i]
             out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     except TypeError:
-        return await eod(event, f"`Can't find anything about {inp}`")
+        return await eor(event, f"`Can't find anything about {inp}`", time=5)
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    opn = []
-    for bkl in range(0, len(omk), 4095):
-        opn.append(omk[bkl : bkl + 4095])
+    opn = [omk[bkl : bkl + 4095] for bkl in range(0, len(omk), 4095)]
     for bc in opn:
         await event.respond(bc, link_preview=False)
     await x.delete()
@@ -87,7 +88,7 @@ async def goimg(event):
         ok = pth[0][query]
     except BaseException:
         return await nn.edit("No Results Found :(")
-    await event.reply(file=ok, message=query, album=True)
+    await event.reply(file=ok, message=query)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
 

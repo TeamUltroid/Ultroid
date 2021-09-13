@@ -25,14 +25,15 @@ from . import *
 
 @ultroid_cmd(
     pattern="poll ?(.*)",
-    groups_only=True,
 )
 async def uri_poll(e):
+    if not e.sender._bot and e.is_private:
+        return await eor(e, "`Use this in Group/Channel.`", time=15)
     match = e.pattern_match.group(1)
     if not match:
-        return await eod(e, "`Give Proper Input...`")
+        return await eor(e, "`Give Proper Input...`", time=5)
     if ";" not in match:
-        return await eod(e, "`Unable to Determine Options.`.")
+        return await eor(e, "`Unable to Determine Options.`.", time=5)
     ques = match.split(";")[0]
     option = match.split(";")[1::]
     publ = None
@@ -46,19 +47,17 @@ async def uri_poll(e):
             karzo = [str(int(ptype.split("_")[1]) - 1).encode()]
             ptype = ptype.split("_")[0]
         if ptype not in ["public", "quiz", "multiple"]:
-            return await eod(e, "`Invalid Poll Type...`")
-        if ptype == "public":
-            publ = True
-        if ptype == "quiz":
-            quizo = True
+            return await eor(e, "`Invalid Poll Type...`", time=5)
         if ptype == "multiple":
             mpp = True
+        elif ptype == "public":
+            publ = True
+        elif ptype == "quiz":
+            quizo = True
     if len(option) <= 1:
-        return await eod(e, "`Options Should be More than 1..`")
+        return await eor(e, "`Options Should be More than 1..`", time=5)
     m = await eor(e, "`Processing... `")
-    OUT = []
-    for on in range(len(option)):
-        OUT.append(PollAnswer(option[on], str(on).encode()))
+    OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
     await e.client.send_file(
         e.chat_id,
         InputMediaPoll(

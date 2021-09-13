@@ -69,16 +69,17 @@ async def pdfseimg(event):
     pdfp.replace(".pdf", "")
     pdf = PdfFileReader(pdfp)
     if not msg:
+        ok = []
         for num in range(pdf.numPages):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(num))
-            with open(os.path.join("pdf/ult{}.png".format(num + 1)), "wb") as f:
+            fil = os.path.join("pdf/ult{}.png".format(num + 1))
+            ok.append(fil)
+            with open(fil, "wb") as f:
                 pw.write(f)
         os.remove(pdfp)
-        afl = glob.glob("pdf/*")
-        ok = [*sorted(afl)]
         for z in ok:
-            await event.client.send_file(event.chat_id, z, album=True)
+            await event.client.send_file(event.chat_id, z)
         shutil.rmtree("pdf")
         os.mkdir("pdf")
         await xx.delete()
@@ -94,7 +95,7 @@ async def pdfseimg(event):
             )
             os.remove("ult.png")
         os.remove(pdfp)
-    elif msg:
+    else:
         o = int(msg) - 1
         pw = PdfFileWriter()
         pw.addPage(pdf.getPage(o))
@@ -151,33 +152,23 @@ async def pdfsetxt(event):
     if "-" in msg:
         u, d = msg.split("-")
         a = PdfFileReader(dl)
-        str = ""
-        for i in range(int(u) - 1, int(d)):
-            str += a.getPage(i).extractText()
+        str = "".join(a.getPage(i).extractText() for i in range(int(u) - 1, int(d)))
         text = f"{dl.split('.')[0]} {msg}.txt"
-        with open(text, "w") as f:
-            f.write(str)
-        await event.client.send_file(
-            event.chat_id,
-            text,
-            reply_to=event.reply_to_msg_id,
-        )
-        os.remove(text)
-        os.remove(dl)
     else:
         u = int(msg) - 1
         a = PdfFileReader(dl)
         str = a.getPage(u).extractText()
         text = f"{dl.split('.')[0]} Pg-{msg}.txt"
-        with open(text, "w") as f:
-            f.write(str)
-        await event.client.send_file(
-            event.chat_id,
-            text,
-            reply_to=event.reply_to_msg_id,
-        )
-        os.remove(text)
-        os.remove(dl)
+
+    with open(text, "w") as f:
+        f.write(str)
+    await event.client.send_file(
+        event.chat_id,
+        text,
+        reply_to=event.reply_to_msg_id,
+    )
+    os.remove(text)
+    os.remove(dl)
 
 
 @ultroid_cmd(
@@ -316,10 +307,7 @@ async def sendpdf(event):
         )
         return
     msg = event.pattern_match.group(1)
-    if msg:
-        ok = f"{msg}.pdf"
-    else:
-        ok = "My PDF File.pdf"
+    ok = f"{msg}.pdf" if msg else "My PDF File.pdf"
     merger = PdfFileMerger()
     afl = glob.glob("pdf/*")
     ok = [*sorted(afl)]

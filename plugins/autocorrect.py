@@ -14,24 +14,20 @@
 """
 
 from gingerit.gingerit import GingerIt
-from googletrans import Translator
+from google_trans_new import google_translator
 from telethon import events
 
 from . import *
 
-tr = Translator()
 
-
-@ultroid_cmd(pattern="autocorrect")
+@ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
-    if not is_fullsudo(e.sender_id):
-        return await eod(ult, "`This Command Is Sudo Restricted.`")
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
-        await eod(e, "AUTOCORRECT Feature On")
+        await eor(e, "AUTOCORRECT Feature On", time=5)
     else:
         udB.delete("AUTOCORRECT")
-        await eod(e, "AUTOCORRECT Feature Off")
+        await eor(e, "AUTOCORRECT Feature Off", time=5)
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
@@ -39,12 +35,12 @@ async def gramme(event):
     if Redis("AUTOCORRECT") != "True":
         return
     t = event.text
-    tt = tr.translate(t)
     if t.startswith((HNDLR, ".", "?", "#", "_", "*", "'", "@", "[", "(", "+")):
         return
     if t.endswith(".."):
         return
-    if tt.src != "en":
+    tt = google_translator().detect(t)
+    if tt[0] != "en":
         return
     xx = GingerIt()
     x = xx.parse(t)

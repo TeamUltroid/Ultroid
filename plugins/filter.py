@@ -44,12 +44,11 @@ async def af(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eod(x, "`Unsupported Media`")
-            else:
-                dl = await wt.download_media()
-                variable = uf(dl)
-                os.remove(dl)
-                m = "https://telegra.ph" + variable[0]
+                return await eor(x, "`Unsupported Media`", time=5)
+            dl = await wt.download_media()
+            variable = uf(dl)
+            os.remove(dl)
+            m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
@@ -87,12 +86,12 @@ async def fl(e):
         return
     xx = (e.text).lower()
     chat = e.chat_id
-    x = get_filter(int(chat))
+    x = get_filter(chat)
     if x:
         for c in x:
             pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
             if re.search(pat, xx):
-                k = get_reply(int(chat), c)
+                k = x.get(c)
                 if k:
                     msg = k["msg"]
                     media = k["media"]

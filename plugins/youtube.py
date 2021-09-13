@@ -33,7 +33,6 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd = {
             "format": "bestaudio",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -49,7 +48,6 @@ async def download_from_youtube_(event):
     elif opt == "v":
         ytd = {
             "format": "best",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -65,7 +63,6 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd = {
             "format": "bestaudio",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -77,12 +74,11 @@ async def download_from_youtube_(event):
             return await eor(
                 xx, "Give me a (youtube) search query to download audio from!"
             )
-        url = await get_yt_link(query)
+        url = get_yt_link(query)
         await eor(xx, "`Downloading audio song...`")
     elif opt == "sv":
         ytd = {
             "format": "best",
-            "writethumbnail": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
@@ -94,8 +90,8 @@ async def download_from_youtube_(event):
             return await eor(
                 xx, "Give me a (youtube) search query to download video from!"
             )
-        url = await get_yt_link(query)
+        url = get_yt_link(query)
         await eor(xx, "`Downloading video song...`")
     else:
         return
-    await download_yt(xx, event, url, ytd)
+    await download_yt(xx, url, ytd)

@@ -21,7 +21,7 @@ from . import *
 async def mi(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eod(e, "`Reply to any media`")
+        return await eor(e, "`Reply to any media`", time=5)
     xx = mediainfo(r.media)
     murl = r.media.stringify()
     url = make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
@@ -47,9 +47,10 @@ async def mi(e):
     else:
         naam = await r.download_media()
     out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
-    urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     if er:
+        LOGS.info(er)
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
+    urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     await ee.edit(
         f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
     )

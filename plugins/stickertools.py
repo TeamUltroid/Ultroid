@@ -26,7 +26,7 @@
     To extract round sticker.
 
 • `{i}waifu <text>`
-    paste text on random stickers.
+    p text on random stickers.
 
 """
 import asyncio
@@ -34,19 +34,24 @@ import io
 import os
 import random
 import re
-import urllib.request
 from os import remove
 
 import cv2
 import numpy as np
+import requests
+from carbonnow import Carbon
 from PIL import Image, ImageDraw
-from telethon.utils import get_input_document
-from telethon.errors import ChatSendStickersForbiddenError, PackShortNameOccupiedError
+from telethon.errors import (
+    ChatSendStickersForbiddenError,
+    PackShortNameOccupiedError,
+    YouBlockedUserError,
+)
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
     MessageMediaPhoto,
 )
+from telethon.utils import get_input_document
 
 from . import *
 
@@ -95,9 +100,10 @@ async def waifu(animu):
         await sticcers[0].click(
             animu.chat_id,
             reply_to=animu.reply_to_msg_id,
-            silent=True if animu.is_reply else False,
+            silent=bool(animu.is_reply),
             hide_via=True,
         )
+
         await xx.delete()
     except ChatSendStickersForbiddenError:
         await xx.edit("Sorry boss, I can't send Sticker Here !!")
@@ -112,15 +118,15 @@ async def uconverter(event):
     ok = ["image/webp", "application/x-tgsticker"]
     if not (a.media and a.media.document and a.media.document.mime_type in ok):
         return await eor(event, "`Reply to a Sticker...`")
-    input = event.pattern_match.group(1)
+    input_ = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
-    if "gif" in input:
+    if "gif" in input_:
         cmd = ["lottie_convert.py", b, "something.gif"]
         file = "something.gif"
-    elif "img" in input:
+    elif "img" in input_:
         cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
-    elif "sticker" in input:
+    elif "sticker" in input_:
         cmd = ["lottie_convert.py", b, "something.webp"]
         file = "something.webp"
     else:
@@ -212,18 +218,23 @@ async def pack_kangish(_):
 async def hehe(args):
     ultroid_bot = args.client
     xx = await eor(args, "`Processing...`")
-    user = await ultroid_bot.get_me()
+    user = ultroid_bot.me
     if not user.username:
         user.username = user.first_name
     message = await args.get_reply_message()
     photo = None
     is_anim = False
     emoji = None
-    if message and message.media:
-        if isinstance(message.media, MessageMediaPhoto):
+    if message and (message.media or message.text):
+        if isinstance(message.media, MessageMediaPhoto) or message.text:
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
             photo = await ultroid_bot.download_media(message.photo, photo)
+            if not photo and message.text:
+                carbon = Carbon(
+                    base_url="https://carbonara.vercel.app/api/cook", code=message.text
+                )
+                photo = await carbon.memorize("carbon_kang")
         elif "image" in message.media.document.mime_type.split("/"):
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
@@ -289,17 +300,20 @@ async def hehe(args):
             packnick += " (Animated)"
             cmd = "/newanimated"
 
-        response = urllib.request.urlopen(
-            urllib.request.Request(f"http://t.me/addstickers/{packname}"),
-        )
-        htmlstr = response.read().decode("utf8").split("\n")
+        response = requests.get(f"http://t.me/addstickers/{packname}")
+        htmlstr = response.text.split("\n")
 
         if (
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
             not in htmlstr
         ):
             async with ultroid_bot.conversation("@Stickers") as conv:
-                await conv.send_message("/addsticker")
+                try:
+                    await conv.send_message("/addsticker")
+                except YouBlockedUserError:
+                    LOGS.info("Unblocking @Stickers for kang...")
+                    await ultroid_bot(functions.contacts.UnblockRequest("stickers"))
+                    await conv.send_message("/addsticker")
                 await conv.get_response()
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
@@ -483,10 +497,9 @@ async def ultdestroy(event):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")
-    os.system("lottie_convert.py ultroid.tgs json.json")
-    json = open("json.json")
-    jsn = json.read()
-    json.close()
+    await bash("lottie_convert.py ultroid.tgs json.json")
+    with open("json.json") as json:
+        jsn = json.read()
     jsn = (
         jsn.replace("[100]", "[200]")
         .replace("[10]", "[40]")
@@ -503,7 +516,7 @@ async def ultdestroy(event):
         .replace("[9]", "[110]")
     )
     open("json.json", "w").write(jsn)
-    os.system("lottie_convert.py json.json ultroid.tgs")
+    await bash("lottie_convert.py json.json ultroid.tgs")
     await event.client.send_file(
         event.chat_id,
         file="ultroid.tgs",
@@ -522,18 +535,17 @@ async def ultiny(event):
     if not (reply and (reply.media)):
         await eor(event, "`Reply To Media`")
         return
-    xx = await eor(event, "`processing...`")
-    ik = await ultroid_bot.download_media(reply)
+    xx = await eor(event, "`Processing...`")
+    ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
-        os.system("lottie_convert.py ult.tgs json.json")
-        json = open("json.json")
-        jsn = json.read()
-        json.close()
+        await bash("lottie_convert.py ult.tgs json.json")
+        with open("json.json") as json:
+            jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
-        os.system("lottie_convert.py json.json ult.tgs")
+        await bash("lottie_convert.py json.json ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
     elif ik.endswith((".gif", ".mp4")):
