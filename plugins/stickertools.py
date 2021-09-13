@@ -195,17 +195,19 @@ async def pack_kangish(_):
         except PackShortNameOccupiedError:
             time.sleep(1)
             try:
-                short_name = (await _.client(SuggestShortNameRequest(_packname))).shortname
+                short_name = (
+                    await _.client(SuggestShortNameRequest(_packname))
+                ).shortname
                 _r_e_s = await asst(
-                functions.stickers.CreateStickerSetRequest(
-                    user_id=_.sender_id,
-                    title=_packname,
-                    short_name=f"u{short_name}_by_{asst.me.username}",
-                    stickers=stiks,
+                    functions.stickers.CreateStickerSetRequest(
+                        user_id=_.sender_id,
+                        title=_packname,
+                        short_name=f"u{short_name}_by_{asst.me.username}",
+                        stickers=stiks,
                     )
-                 )
+                )
             except Exception as er:
-                 return await eor(_, str(er))
+                return await eor(_, str(er))
         await eor(
             _,
             f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
