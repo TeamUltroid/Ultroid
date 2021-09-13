@@ -4,8 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-from telethon.errors import ChatSendInlineForbiddenError
-from telethon.errors.rpcerrorlist import BotMethodInvalidError as bmi
+
+from telethon.errors import (
+    BotMethodInvalidError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+)
 
 from . import *
 
@@ -16,13 +20,46 @@ REPOMSG = """
 • Support - @UltroidSupport
 """
 
+RP_BUTTONS = [
+    [
+        Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.url("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
+    ],
+    [Button.url("Support Group", "t.me/ultroidsupport")],
+]
 
-@ultroid_cmd(pattern="repo$", type=["official", "manager"], ignore_dualmode=True)
+ULTSTRING = """🎇 **Thanks for Deploying Ultroid Userbot!**
+
+• Here, are the Some Basic stuff from, where you can Know, about its Usage."""
+
+
+@ultroid_cmd(
+    pattern="repo$",
+    type=["official", "manager"],
+)
 async def repify(e):
     try:
-        q = await e.client.inline_query(asst.me.username, "repo")
+        q = await e.client.inline_query(asst.me.username, "")
         await q[0].click(e.chat_id)
-        if e.out:
-            await e.delete()
-    except (ChatSendInlineForbiddenError, bmi):
-        await eor(e, REPOMSG)
+        return await e.delete()
+    except (
+        ChatSendInlineForbiddenError,
+        ChatSendMediaForbiddenError,
+        BotMethodInvalidError,
+    ):
+        pass
+    except Exception as er:
+        LOGS.info("Error while repo command : " + str(er))
+    await eor(e, REPOMSG)
+
+
+@ultroid_cmd(pattern="ultroid")
+async def useUltroid(rs):
+    button = Button.inline("Start >>", "initft_2")
+    msg = await asst.send_message(
+        LOG_CHANNEL,
+        ULTSTRING,
+        file="https://telegra.ph/file/54a917cc9dbb94733ea5f.jpg",
+        buttons=button,
+    )
+    await eor(rs, f"**[Click Here]({msg.message_link})**")

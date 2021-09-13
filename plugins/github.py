@@ -29,7 +29,7 @@ async def gitsearch(event):
     try:
         uname = ult["login"]
         uid = ult["id"]
-        upic = ult["avatar_url"]
+        upic = f"https://avatars.githubusercontent.com/u/{uid}"
         ulink = ult["html_url"]
         uacc = ult["name"]
         ucomp = ult["company"]

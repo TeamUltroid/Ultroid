@@ -32,7 +32,6 @@ import time
 import cv2
 from PIL import Image
 from telegraph import upload_file as uf
-from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
 from . import *
@@ -49,12 +48,11 @@ async def _(e):
     if not r:
         return await eor(e, pop)
     if isinstance(r.media, photu):
-        dl = await e.client.download_media(r.media)
-    elif isinstance(r.media, doc):
-        if r.media.document.thumbs:
-            dl = await e.client.download_media(r, thumb=-1)
-        else:
-            return await eor(e, pop)
+        dl = await r.download_media()
+    elif r.document and r.document.thumbs:
+        dl = await r.download_media(thumb=-1)
+    else:
+        return await eor(e, pop)
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
@@ -152,48 +150,39 @@ async def smak(event):
 )
 async def _(event):
     input_str = event.pattern_match.group(1)
-    if not input_str:
-        return await eod(event, "`Give The File Name.`")
+    if not (input_str and event.is_reply):
+        return await eor(event, "`Give The File Name and reply to message.`", time=5)
     xx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        a = await event.get_reply_message()
-        if not a.message:
-            return await xx.edit("`Reply to a message`")
-        else:
-            b = open(input_str, "w")
-            b.write(str(a.message))
-            b.close()
-            await xx.edit(f"**Packing into** `{input_str}`")
-            await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
-            await xx.delete()
-            os.remove(input_str)
+    a = await event.get_reply_message()
+    if not a.message:
+        return await xx.edit("`Reply to a message`")
+    with open(input_str, "w") as b:
+        b.write(str(a.message))
+    await xx.edit(f"**Packing into** `{input_str}`")
+    await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
+    await xx.delete()
+    os.remove(input_str)
 
 
 @ultroid_cmd(
     pattern="open$",
 )
 async def _(event):
+    a = await event.get_reply_message()
+    if not (a and a.media):
+        return await eor(event, "`Reply to a readable file`", time=5)
     xx = await eor(event, get_string("com_1"))
-    if event.reply_to_msg_id:
-        a = await event.get_reply_message()
-        if a.media:
-            b = await a.download_media()
-            try:
-                c = open(b)
-                d = c.read()
-                c.close()
-            except UnicodeDecodeError:
-                return await eod(xx, "`Not A Readable File.`")
-            try:
-                await xx.edit(f"```{d}```")
-            except BaseException:
-                what, key = get_paste(d)
-                if "neko" in what:
-                    await xx.edit(
-                        f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [NEKOBIN](https://nekobin.com/{key})"
-                    )
-            os.remove(b)
-        else:
-            return await eod(xx, "`Reply to a readable file`")
-    else:
-        return await eod(xx, "`Reply to a readable file`")
+    b = await a.download_media()
+    try:
+        with open(b) as c:
+            d = c.read()
+    except UnicodeDecodeError:
+        return await eor(xx, "`Not A Readable File.`", time=5)
+    try:
+        await xx.edit(f"```{d}```")
+    except BaseException:
+        what, key = await get_paste(d)
+        await xx.edit(
+            f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
+        )
+    os.remove(b)

@@ -19,15 +19,11 @@ from . import *
 
 @asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def on_new_mssg(event):
-    incoming = event.raw_text
     who = event.sender_id
     if is_blacklisted(who):
         return
     # doesn't reply to that user anymore
-    if incoming.startswith("/"):
-        pass
-    elif who == OWNER_ID:
+    if event.text.startswith("/") or who == OWNER_ID:
         return
-    else:
-        xx = await event.forward_to(OWNER_ID)
-        add_stuff(xx.id, who)
+    xx = await event.forward_to(OWNER_ID)
+    add_stuff(xx.id, who)

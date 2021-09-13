@@ -26,23 +26,24 @@
 """
 
 from pyUltroid.functions.warn_db import *
-from telethon.utils import get_display_name
 
 from . import *
 
 
-@ultroid_cmd(pattern="warn ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="warn ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def warn(e):
     ultroid_bot = e.client
     reply = await e.get_reply_message()
-    if len(e.text) > 5:
-        if " " not in e.text[5]:
-            return
+    if len(e.text) > 5 and " " not in e.text[5]:
+        return
     if reply:
         user = reply.from_id.user_id
-        reason = "unknown"
-        if e.pattern_match.group(1):
-            reason = e.text[5:]
+        reason = e.text[5:] if e.pattern_match.group(1) else "unknown"
     else:
         try:
             user = e.text.split()[1]
@@ -52,16 +53,13 @@ async def warn(e):
             else:
                 user = int(user)
         except BaseException:
-            return await eod(e, "Reply To A User")
+            return await eor(e, "Reply To A User", time=5)
         try:
             reason = e.text.split(maxsplit=2)[-1]
         except BaseException:
             reason = "unknown"
     count, r = warns(e.chat_id, user)
-    if not r:
-        r = reason
-    else:
-        r = r + "|$|" + reason
+    r = reason if not r else r + "|$|" + reason
     try:
         x = udB.get("SETWARN")
         number, action = int(x.split()[0]), x.split()[1]
@@ -74,23 +72,23 @@ async def warn(e):
             try:
                 await ultroid_bot.edit_permissions(e.chat_id, user, view_messages=False)
             except BaseException:
-                return await eod(e, "`Something Went Wrong.`")
+                return await eor(e, "`Something Went Wrong.`", time=5)
         elif "kick" in action:
             try:
                 await ultroid_bot.kick_participant(e.chat_id, user)
             except BaseException:
-                return await eod(e, "`Something Went Wrong.`")
+                return await eor(e, "`Something Went Wrong.`", time=5)
         elif "mute" in action:
             try:
                 await ultroid_bot.edit_permissions(
                     e.chat_id, user, until_date=None, send_messages=False
                 )
             except BaseException:
-                return await eod(e, "`Something Went Wrong.`")
+                return await eor(e, "`Something Went Wrong.`", time=5)
         add_warn(e.chat_id, user, count + 1, r)
         c, r = warns(e.chat_id, user)
         ok = await ultroid_bot.get_entity(user)
-        user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+        user = inline_mention(ok)
         r = r.split("|$|")
         text = f"User {user} Got {action} Due to {count+1} Warns.\n\n"
         for x in range(c):
@@ -99,18 +97,23 @@ async def warn(e):
         return reset_warn(e.chat_id, ok.id)
     add_warn(e.chat_id, user, count + 1, r)
     ok = await ultroid_bot.get_entity(user)
-    user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+    user = inline_mention(ok)
     await eor(
         e,
         f"**WARNING :** {count+1}/{number}\n**To :**{user}\n**Be Careful !!!**\n\n**Reason** : {reason}",
     )
 
 
-@ultroid_cmd(pattern="resetwarn ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="resetwarn ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def rwarn(e):
     reply = await e.get_reply_message()
     if reply:
-        user = reply.from_id.user_id
+        user = reply.sender_id
     else:
         try:
             user = e.text.split()[1]
@@ -123,11 +126,16 @@ async def rwarn(e):
             return await eor(e, "Reply To user")
     reset_warn(e.chat_id, user)
     ok = await e.client.get_entity(user)
-    user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+    user = inline_mention(ok)
     await eor(e, f"Cleared All Warns of {user}.")
 
 
-@ultroid_cmd(pattern="warns ?(.*)", groups_only=True, admins_only=True)
+@ultroid_cmd(
+    pattern="warns ?(.*)",
+    type=["official", "manager"],
+    groups_only=True,
+    admins_only=True,
+)
 async def twarns(e):
     reply = await e.get_reply_message()
     if reply:
@@ -141,11 +149,11 @@ async def twarns(e):
             else:
                 user = int(user)
         except BaseException:
-            return await eod(e, "Reply To A User")
+            return await eor(e, "Reply To A User", time=5)
     c, r = warns(e.chat_id, user)
     if c and r:
         ok = await e.client.get_entity(user)
-        user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+        user = inline_mention(ok)
         r = r.split("|$|")
         text = f"User {user} Got {c} Warns.\n\n"
         for x in range(c):
@@ -155,7 +163,7 @@ async def twarns(e):
         await eor(e, "`No Warnings`")
 
 
-@ultroid_cmd(pattern="setwarn ?(.*)")
+@ultroid_cmd(pattern="setwarn ?(.*)", type=["official", "manager"])
 async def warnset(e):
     ok = e.pattern_match.group(1)
     if not ok:
@@ -164,12 +172,10 @@ async def warnset(e):
         try:
             number, action = int(ok.split()[0]), ok.split()[1]
         except BaseException:
-            return await eod(e, "`Incorrect Format`")
+            return await eor(e, "`Incorrect Format`", time=5)
         if ("ban" or "kick" or "mute") not in action:
-            return await eod(e, "`Only mute / ban / kick option suported`")
+            return await eor(e, "`Only mute / ban / kick option suported`", time=5)
         udB.set("SETWARN", f"{number} {action}")
-        return await eor(
-            e, f"Done Your Warn Count is now {number} and Action is {action}"
-        )
+        await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
     else:
-        await eod(e, "`Incorrect Format`")
+        await eor(e, "`Incorrect Format`", time=5)

@@ -17,19 +17,9 @@
 • `{i}vcinvite`
     Invite all members of group in Group Call.
     (You must be joined)
-
-• `{i}vcaccess <id/username/reply to msg>`
-    Give access of Voice Chat Bot.
-
-• `{i}rmvcaccess <id/username/reply to msg>`
-    Remove access of Voice Chat Bot.
-
-• `{i}listvcaccess`
-    Gwt The List of People having vc access.
 """
 
 
-from pyUltroid.functions.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -60,7 +50,7 @@ async def _(e):
         await e.client(stopvc(await get_call(e)))
         await eor(e, "`Voice Chat Stopped...`")
     except Exception as ex:
-        await eor(e, f"`{str(ex)}`")
+        await eor(e, f"`{ex}`")
 
 
 @ultroid_cmd(
@@ -94,89 +84,4 @@ async def _(e):
         await e.client(startvc(e.chat_id))
         await eor(e, "`Voice Chat Started...`")
     except Exception as ex:
-        await eor(e, f"`{str(ex)}`")
-
-
-@ultroid_cmd(
-    pattern="listvcaccess$",
-)
-async def _(e):
-    xx = await eor(e, "`Getting Voice Chat Bot Users List...`")
-    mm = get_vcsudos()
-    pp = f"**{len(mm)} Voice Chat Bot Approved Users**\n"
-    if len(mm) > 0:
-        for m in mm:
-            try:
-                name = (await e.client.get_entity(int(m))).first_name
-                pp += f"• [{name}](tg://user?id={int(m)})\n"
-            except ValueError:
-                pp += f"• `{int(m)} » No Info`\n"
-    await xx.edit(pp)
-
-
-@ultroid_cmd(
-    pattern="rmvcaccess ?(.*)",
-)
-async def _(e):
-    xx = await eor(e, "`Disapproving to access Voice Chat features...`")
-    input = e.pattern_match.group(1)
-    if e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(userid)).first_name
-    elif input:
-        try:
-            userid = await get_user_id(input)
-            name = (await e.client.get_entity(userid)).first_name
-        except ValueError as ex:
-            return await eod(xx, f"`{str(ex)}`", time=5)
-    else:
-        return await eod(xx, "`Reply to user's msg or add it's id/username...`", time=3)
-    if not is_vcsudo(userid):
-        return await eod(
-            xx,
-            f"[{name}](tg://user?id={userid})` is not approved to use my Voice Chat Bot.`",
-            time=5,
-        )
-    try:
-        del_vcsudo(userid)
-        await eod(
-            xx,
-            f"[{name}](tg://user?id={userid})` is removed from Voice Chat Bot Users.`",
-            time=5,
-        )
-    except Exception as ex:
-        return await eod(xx, f"`{str(ex)}`", time=5)
-
-
-@ultroid_cmd(
-    pattern="vcaccess ?(.*)",
-)
-async def _(e):
-    xx = await eor(e, "`Approving to access Voice Chat features...`")
-    input = e.pattern_match.group(1)
-    if e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(userid)).first_name
-    elif input:
-        try:
-            userid = await get_user_id(input)
-            name = (await e.client.get_entity(userid)).first_name
-        except ValueError as ex:
-            return await eod(xx, f"`{str(ex)}`", time=5)
-    else:
-        return await eod(xx, "`Reply to user's msg or add it's id/username...`", time=3)
-    if is_vcsudo(userid):
-        return await eod(
-            xx,
-            f"[{name}](tg://user?id={userid})` is already approved to use my Voice Chat Bot.`",
-            time=5,
-        )
-    try:
-        add_vcsudo(userid)
-        await eod(
-            xx,
-            f"[{name}](tg://user?id={userid})` is added to Voice Chat Bot Users.`",
-            time=5,
-        )
-    except Exception as ex:
-        return await eod(xx, f"`{str(ex)}`", time=5)
+        await eor(e, f"`{ex}`")

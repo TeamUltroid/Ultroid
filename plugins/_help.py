@@ -12,6 +12,25 @@ from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
 from . import *
 
+C_PIC = udB.get("INLINE_PIC")
+_file_to_replace = C_PIC or "resources/extras/inline.jpg"
+
+_main_help_menu = [
+    [
+        Button.inline("• Plugins", data="hrrrr"),
+        Button.inline("• Addons", data="frrr"),
+    ],
+    [
+        Button.inline("••Voice Chat", data="vc_helper"),
+        Button.inline("Inline Plugins••", data="inlone"),
+    ],
+    [
+        Button.inline("⚙️ Owner Tools", data="ownr"),
+        Button.url("Settings ⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+    ],
+    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+]
+
 
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
@@ -37,7 +56,7 @@ async def _help(ult):
                     x += "\n© @TeamUltroid"
                     await eor(ult, x)
                 except BaseException:
-                    await eod(ult, get_string("help_1").format(plug), time=5)
+                    await eor(ult, get_string("help_1").format(plug), time=5)
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
@@ -50,30 +69,17 @@ async def _help(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            return await ult.client.send_message(
-                ult.chat_id,
+            if udB.get("MANAGER") and udB.get("DUAL_HNDLR") == "/":
+                _main_help_menu[2:3] = [[Button.inline("• Manager Help •", "mngbtn")]]
+            return await ult.reply(
                 get_string("inline_4").format(
                     OWNER_NAME,
                     len(PLUGINS) - 5,
                     len(ADDONS),
                     cmd,
                 ),
-                buttons=[
-                    [
-                        Button.inline("• Pʟᴜɢɪɴs", data="hrrrr"),
-                        Button.inline("• Aᴅᴅᴏɴs", data="frrr"),
-                    ],
-                    [
-                        Button.inline("Oᴡɴᴇʀ•ᴛᴏᴏʟꜱ", data="ownr"),
-                        Button.inline("Iɴʟɪɴᴇ•Pʟᴜɢɪɴs", data="inlone"),
-                    ],
-                    [
-                        Button.url(
-                            "⚙️Sᴇᴛᴛɪɴɢs⚙️", url=f"https://t.me/{tgbot}?start=set"
-                        ),
-                    ],
-                    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
-                ],
+                file=_file_to_replace,
+                buttons=_main_help_menu,
             )
         except rep:
             return await eor(

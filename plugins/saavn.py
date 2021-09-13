@@ -13,9 +13,7 @@
 """
 import os
 import time
-from urllib.request import urlretrieve
 
-import requests as r
 from telethon.tl.types import DocumentAttributeAudio
 
 from . import *
@@ -27,30 +25,14 @@ from . import *
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
-        return await eod(e, "`Give me Something to Search")
+        return await eor(e, "`Give me Something to Search", time=5)
     hmm = time.time()
-    lol = await eor(e, "`Searching on Saavn...`")
-    sung = song.replace(" ", "%20")
-    url = f"https://jostapi.herokuapp.com/saavn?query={sung}"
-    try:
-        k = (r.get(url)).json()[0]
-    except IndexError:
-        return await eod(lol, "`Song Not Found.. `")
-    except Exception as ex:
-        return await eod(lol, f"`{str(ex)}`")
-    try:
-        title = k["song"]
-        urrl = k["media_url"]
-        img = k["image"]
-        duration = k["duration"]
-        singers = k["primary_artists"]
-    except Exception as ex:
-        return await eod(lol, f"`{str(ex)}`")
-    urlretrieve(urrl, title + ".mp3")
-    urlretrieve(img, title + ".jpg")
-    okk = await uploader(
-        title + ".mp3", title + ".mp3", hmm, lol, "Uploading " + title + "..."
-    )
+    lol = await eor(e, f"`Searching {song} on Saavn...`")
+    song, duration, performer, thumb = await saavn_dl(song)
+    if not song:
+        return await eod(lol, "`Song not found...`")
+    title = song.split(".")[0]
+    okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
         message="`" + title + "`" + "\n`From Saavn`",
@@ -58,12 +40,11 @@ async def siesace(e):
             DocumentAttributeAudio(
                 duration=int(duration),
                 title=title,
-                performer=singers,
+                performer=performer,
             )
         ],
         supports_streaming=True,
-        thumb=title + ".jpg",
+        thumb=thumb,
     )
     await lol.delete()
-    os.remove(title + ".mp3")
-    os.remove(title + ".jpg")
+    [os.remove(x) for x in [song, thumb]]

@@ -31,64 +31,28 @@ from . import *
 bot = "@MissRose_bot"
 
 
-@ultroid_cmd(pattern="superfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="superfban ?(.*)",
+)
 async def _(event):
     msg = await eor(event, "Starting a Mass-FedBan...")
+    inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        if previous_message.media:
-            downloaded_file_name = await event.client.download_media(
-                previous_message,
-                "fedlist",
-            )
-            file = open(downloaded_file_name, encoding="utf8")
-            lines = file.readlines()
-            for line in lines:
-                try:
-                    fedList.append(line[:36])
-                except BaseException:
-                    pass
-            arg = event.text.split(" ", maxsplit=2)
-            try:
-                FBAN = arg[1]
-                REASON = arg[2]
-            except IndexError:
-                try:
-                    FBAN = arg[1]
-                except IndexError:
-                    return await msg.edit("No user was designated.")
-                REASON = "#TBMassBanned "
-        else:
-            FBAN = previous_message.sender_id
-            try:
-                REASON = event.text.split(" ", maxsplit=1)[1]
-            except IndexError:
-                REASON = "#TBMassBanned"
-    else:
+        FBAN = (await event.get_reply_message()).sender_id
+        if inputt:
+            REASON = inputt
+    elif inputt and not event.reply_to_msg_id:
         REASON = "#TBMassBanned"
         arg = event.text.split()
         if len(arg) == 2:
-            FBAN = arg[1]
+            FBAN = await get_user_id(arg[1])
         elif len(arg) > 2:
-            FBAN = arg[1]
+            FBAN = await get_user_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit("No user was designated.")
 
-    if FBAN.startswith("@"):
-        usr = FBAN
-    else:
-        try:
-            usr = int(FBAN)
-        except BaseException:
-            return await msg.edit("Give username or id.")
-    try:
-        x = await event.client.get_entity(usr)
-        uid = x.id
-    except BaseException:
-        return await msg.edit("Incorrect user was designated.")
-
-    if str(uid) in DEVLIST:
+    if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
     if udB.get("FBAN_GROUP_ID"):
@@ -96,7 +60,7 @@ async def _(event):
     else:
         chat = await event.get_chat()
     fedList = []
-    if not len(fedList):
+    if not fedList:
         for a in range(3):
             async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
@@ -131,9 +95,8 @@ async def _(event):
                     elif "You can only use fed commands once every 5 minutes" in (
                         await bot_conv.get_edit
                     ):
-                        await msg.edit("Try again after 5 mins.")
-                        return
-                if len(fedList) == 0:
+                        return await msg.edit("Try again after 5 mins.")
+                if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
@@ -153,20 +116,18 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if len(fedList) == 0:
-            await msg.edit("Unable to collect FedAdminList.")
-            return
+        if not fedList:
+            return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
-        await ultroid.send_message(chat, f"/start")
+        await ultroid.send_message(chat, "/start")
     except BaseException:
-        await msg.edit("Specified FBan Group ID is incorrect.")
-        return
+        return await msg.edit("Specified FBan Group ID is incorrect.")
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
-        for n in range(len(excludeFed)):
-            excludeFed[n] = excludeFed[n].strip()
+        for num, item in enumerate(excludeFed):
+            excludeFed[num] = item.strip()
     exCount = 0
     for fed in fedList:
         if udB.get("EXCLUDE_FED") and fed in excludeFed:
@@ -175,18 +136,20 @@ async def _(event):
             continue
         await event.client.send_message(chat, f"/joinfed {fed}")
         await asyncio.sleep(3)
-        await event.client.send_message(chat, f"/fban {uid} {REASON}")
+        await event.client.send_message(chat, f"/fban {FBAN} {REASON}")
         await asyncio.sleep(3)
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f"Error in removing FedAdmin file.\n{str(e)}")
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
-@ultroid_cmd(pattern="superunfban ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="superunfban ?(.*)",
+)
 async def _(event):
     msg = await eor(event, "Starting a Mass-UnFedBan...")
     fedList = []
@@ -205,12 +168,8 @@ async def _(event):
                 except BaseException:
                     pass
             arg = event.text.split(" ", maxsplit=2)
-            if len(arg) > 2:
-                FBAN = arg[1]
-                REASON = arg[2]  # rose unbans now can have reasons
-            else:
-                FBAN = arg[1]
-                REASON = ""
+            FBAN = arg[1]
+            REASON = arg[2] if len(arg) > 2 else ""
         else:
             FBAN = previous_message.sender_id
             try:
@@ -237,7 +196,7 @@ async def _(event):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
-    if not len(fedList):
+    if not fedList:
         for a in range(3):
             async with event.client.conversation("@MissRose_bot") as bot_conv:
                 await bot_conv.send_message("/start")
@@ -272,9 +231,8 @@ async def _(event):
                     elif "You can only use fed commands once every 5 minutes" in (
                         await bot_conv.get_edit
                     ):
-                        await msg.edit("Try again after 5 mins.")
-                        return
-                if len(fedList) == 0:
+                        return await msg.edit("Try again after 5 mins.")
+                if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
                     )
@@ -294,19 +252,17 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if len(fedList) == 0:
-            await msg.edit("Unable to collect FedAdminList.")
-            return
+        if not fedList:
+            return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
-        await event.client.send_message(chat, f"/start")
+        await event.client.send_message(chat, "/start")
     except BaseException:
-        await msg.edit("Specified FBan Group ID is incorrect.")
-        return
+        return await msg.edit("Specified FBan Group ID is incorrect.")
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
-        for n in range(len(excludeFed)):
+        for n, m in enumerate(excludeFed):
             excludeFed[n] = excludeFed[n].strip()
     exCount = 0
     for fed in fedList:
@@ -321,13 +277,15 @@ async def _(event):
     try:
         os.remove("fedlist")
     except Exception as e:
-        print(f"Error in removing FedAdmin file.\n{str(e)}")
+        print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
         f"SuperUnFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\n Affected {len(fedList) - exCount} feds.\n#TB",
     )
 
 
-@ultroid_cmd(pattern="fstat ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="fstat ?(.*)",
+)
 async def _(event):
     ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
@@ -343,7 +301,6 @@ async def _(event):
         await ok.edit(
             "`Give me someones id, or reply to somones message to check his/her fedstat.`",
         )
-        return
     else:
         async with event.client.conversation(bot) as conv:
             try:
@@ -352,7 +309,7 @@ async def _(event):
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
                 if audio.message.startswith("This command can only be used once"):
-                    return await ok.edit(
+                    await ok.edit(
                         "Oops, you can use this command only once every minute!",
                     )
                 elif "Looks like" in audio.text:
@@ -374,7 +331,9 @@ async def _(event):
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
-@ultroid_cmd(pattern="fedinfo ?(.*)", ignore_dualmode=True)
+@ultroid_cmd(
+    pattern="fedinfo ?(.*)",
+)
 async def _(event):
     ok = await event.edit("`Extracting information...`")
     sysarg = event.pattern_match.group(1)
@@ -384,7 +343,7 @@ async def _(event):
             await conv.get_response()
             await conv.send_message("/fedinfo " + sysarg)
             audio = await conv.get_response()
-            await ultroid.send_read_acknowledge(bot)
+            await event.client.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
             await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")

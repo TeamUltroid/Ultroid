@@ -37,14 +37,12 @@ wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next ms
 wspr_2: "Message deleted"
 
 # afk
-afk_1: "`No Longer Afk\n\nWas away for ~ {}`"
-afk_2: "#AFK\nSet AFK mode to False.\nWas AFK for `{}`"
-afk_3: "`I'm currently AFK.\nLast seen {} ago.`\n\n**Reason:** `{}`"
-afk_4: "`I'm currently AFK.\n\nLast seen {} ago.`"
-afk_5: "`Going AFK.`\n\n**Reason:** `{}`"
-afk_6: "I'm going AFK."
-afk_7: "Currently AFK with reason {}"
-afk_8: "Currently AFK."
+afk_1: "**No Longer Afk**\n\nWas away for ~ `{}`"
+afk_2: "#AFK\nSet AFK mode to False.\nWas AFK since ~ `{}`"
+afk_3: "**I'm currently AFK.**\nLast seen `{}` ago.\n\n**Reason:** `{}`"
+afk_4: "**I'm currently AFK.**\n\nLast seen `{}` ago."
+afk_5: "**I'm Going AFK.**\n\n**Reason:** `{}`"
+afk_6: "**I'm Going AFK.**"
 
 # bot
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"

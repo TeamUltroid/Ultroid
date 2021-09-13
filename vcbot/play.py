@@ -5,121 +5,146 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import asyncio
-import os
-import random
+"""
+✘ Commands Available -
+
+• `{i}play <song name/song url/reply to file>`
+   Play the song in voice chat, or add the song to queue.
+
+• `{i}playfrom <channel username> ; <limit>`
+   Play music from channel files at current chat..
+"""
+
 
 from . import *
 
 
-@asst.on_message(
-    filters.command(["play", f"play@{vcusername}"])
-    & filters.user(VC_AUTHS())
-    & ~filters.edited
-    & filters.group
-)
-async def startup(_, message):
-    msg = await eor(message, "`Processing..`")
-    song = message.text.split(" ", maxsplit=1)
-    reply = message.reply_to_message
-
-    if len(song) > 1 and song[1].startswith("@" or "-"):
-        song = song[1].split(" ", maxsplit=1)
-        chat = await Client.get_chat(song[0])
-    else:
-        chat = message.chat
-
-    thumb, med, song_name = None, None, ""
-    if reply:
-        if reply.audio:
-            med = reply.audio
-            song_name = med.title
-        elif reply.video or reply.audio:
-            med = reply.video or reply.audio
-            song_name = med.file_name
-        if med and med.thumbs:
-            dll = med.thumbs[0].file_id
-            thumb = await asst.download_media(dll)
-    TS = dt.now().strftime("%H:%M:%S")
-    if not reply and len(song) > 1:
-        song, thumb, song_name, duration = await download(msg, song[1], chat.id, TS)
-    elif not reply and len(song) == 1:
-        return await msg.edit_text("Pls Give me Something to Play...")
-    elif not (reply.audio or reply.voice or reply.video):
-        return await msg.edit_text("Pls Reply to Audio File or Give Search Query...")
-    else:
-        dl = await reply.download()
-        duration = med.duration
-        song = f"VCSONG_{chat.id}_{TS}.raw"
-        await bash(
-            f'ffmpeg -i "{dl}" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 {song} -y'
-        )
-    from_user = message.from_user.mention
-    if chat.id in CallsClient.active_calls.keys():
-        add_to_queue(chat.id, song, song_name, from_user, duration)
-        return await msg.edit(
-            f"Added **{song_name}** to queue at #{list(QUEUE[chat.id].keys())[-1]}"
-        )
-    che = await vc_check(chat.id, chat.type)
-    if not che:
-        try:
-            Up = await Client.send(
-                functions.phone.CreateGroupCall(
-                    peer=await Client.resolve_peer(chat.id),
-                    random_id=random.randrange(1, 100),
-                )
+@vc_asst("play")
+async def play_music_(event):
+    if "playfrom" in event.text.split()[0]:
+        return  # For PlayFrom Conflict
+    xx = await eor(event, get_string("com_1"), parse_mode="md")
+    chat = event.chat_id
+    from_user = html_mention(event)
+    reply, song = None, None
+    if event.reply_to:
+        reply = await event.get_reply_message()
+    if len(event.text.split()) > 1:
+        input = event.text.split(maxsplit=1)[1]
+        tiny_input = input.split()[0]
+        if tiny_input.startswith("@"):
+            try:
+                chat = int("-100" + str(await get_user_id(tiny_input, client=vcClient)))
+                song = input.split(maxsplit=1)[1]
+            except IndexError:
+                pass
+            except Exception as e:
+                return await eor(event, str(e))
+        elif tiny_input.startswith("-"):
+            chat = int(
+                "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
             )
-        except Exception as E:
-            return await msg.edit_text(str(E))
-    if thumb:
-        await msg.delete()
-        msg = await message.reply_photo(
-            thumb,
-            caption=f"🎸 **Playing :** {song_name}\n**☘ Duration :** {time_formatter(duration*1000)}\n👤 **Requested By :** {from_user}",
-            reply_markup=reply_markup(chat.id),
+            try:
+                song = input.split(maxsplit=1)[1]
+            except BaseException:
+                pass
+        else:
+            song = input
+    if not (reply or song):
+        return await eor(
+            xx, "Please specify a song name or reply to a audio file !", time=5
         )
-        if os.path.exists(thumb):
-            os.remove(thumb)
-    try:
-        CallsClient.join_group_call(chat.id, song)
-    except Exception as E:
-        return await msg.edit_text(str(E))
-    CH = await asst.send_message(
-        LOG_CHANNEL, f"Joined Voice Call in {chat.title} [`{chat.id}`]"
-    )
-    await asyncio.sleep(duration)
-    os.remove(song)
-    await msg.delete()
-    await CH.delete()
-
-
-@Client.on_message(filters.me & filters.command(["play"], HNDLR) & ~filters.edited)
-async def cstartup(_, message):
-    await startup(_, message)
-
-
-async def queue_func(chat_id: int):
-    try:
-        song, title, from_user, pos, dur = get_from_queue(chat_id)
-        CallsClient.change_stream(chat_id, song)
-       #CallsClient._add_active_call(chat_id)
-        xx = await asst.send_message(
-            chat_id,
-            f"**Playing :** {title}\n**Duration** : {time_formatter(dur*1000)}\n**Requested by**: {from_user}",
-            reply_markup=reply_markup(chat_id),
+    await eor(xx, "`Downloading and converting...`", parse_mode="md")
+    if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
+        song, thumb, song_name, link, duration = await file_download(xx, reply)
+    else:
+        song, thumb, song_name, link, duration = await download(song)
+    ultSongs = Player(chat, event)
+    song_name = song_name[:30] + "..."
+    if not ultSongs.group_call.is_connected:
+        if not (await ultSongs.vc_joiner()):
+            return
+        await ultSongs.group_call.start_audio(song)
+        await xx.reply(
+            "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+                link, song_name, duration, chat, from_user
+            ),
+            file=thumb,
+            link_preview=False,
+            parse_mode="html",
         )
-        QUEUE[chat_id].pop(pos)
-        if not QUEUE[chat_id]:
-            QUEUE.pop(chat_id)
-        await asyncio.sleep(dur + 5)
-     #   CallsClient._remove_active_call(chat_id)
         await xx.delete()
-    except (IndexError, KeyError):
-        CallsClient.leave_group_call(chat_id)
-    except Exception as ap:
-        await asst.send_message(chat_id, f"`{str(ap)}`")
+        if thumb and os.path.exists(thumb):
+            os.remove(thumb)
+    else:
+        if not (
+            reply
+            and reply.media
+            and mediainfo(reply.media).startswith(("audio", "video"))
+        ):
+            song = None
+        add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
+        return await eor(
+            xx,
+            f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+            parse_mode="html",
+        )
 
 
-@CallsClient.on_stream_end()
-async def streamhandler(chat_id: int):
-    await queue_func(chat_id)
+@vc_asst("playfrom")
+async def play_music_(event):
+    msg = await eor(event, get_string("com_1"))
+    chat = event.chat_id
+    limit = 10
+    from_user = html_mention(event)
+    if not len(event.text.split()) > 1:
+        return await msg.edit(
+            "Use in Proper Format\n`.playfrom <channel username> ; <limit>`"
+        )
+    input = event.text.split(maxsplit=1)[1]
+    if ";" in input:
+        try:
+            limit = input.split(";")
+            input = limit[0]
+            limit = int(limit[1])
+        except (IndexError, ValueError):
+            pass
+    try:
+        fromchat = (await event.client.get_entity(input)).id
+    except Exception as er:
+        return await eor(msg, str(er))
+    await eor(msg, "`• Started Playing from Channel....`")
+    send_message = True
+    ultSongs = Player(chat, event)
+    count = 0
+    async for song in event.client.iter_messages(
+        fromchat, limit=limit, wait_time=5, filter=types.InputMessagesFilterMusic
+    ):
+        count += 1
+        song, thumb, song_name, link, duration = await file_download(
+            msg, song, fast_download=False
+        )
+        song_name = song_name[:30] + "..."
+        if not ultSongs.group_call.is_connected:
+            if not (await ultSongs.vc_joiner()):
+                return
+            await ultSongs.group_call.start_audio(song)
+            await msg.reply(
+                "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+                    link, song_name, duration, chat, from_user
+                ),
+                file=thumb,
+                link_preview=False,
+                parse_mode="html",
+            )
+            if thumb and os.path.exists(thumb):
+                os.remove(thumb)
+        else:
+            add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
+            if send_message and count == 1:
+                await eor(
+                    msg,
+                    f"▶ Added 🎵 <strong><a href={link}>{song_name}</a></strong> to queue at <strong>#{list(VC_QUEUE[chat].keys())[-1]}.</strong>",
+                    parse_mode="html",
+                )
+                send_message = False
