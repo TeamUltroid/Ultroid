@@ -306,6 +306,13 @@ async def fastpurger(purg):
         return await eor(purg, f"Purged {p} Messages! ", time=5)
     if not purg.reply_to_msg_id:
         return await eor(purg, "`Reply to a message to purge from.`", time=10)
+    if not purg._client._bot and e.is_private:
+        count = 0
+        async for m in purg.client.iter_messages(purg.chat_id, min_id=purg.reply_to_msg_id):
+            if m:
+                await m.delete()
+                count +=1
+        return await purg.respond(f"__Purged {count} messages__.")
     try:
         await purg.client.delete_messages(
             purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
