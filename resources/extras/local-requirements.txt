@@ -26,7 +26,7 @@ google-auth==1.27.1
 hachoir
 html-telegraph-poster
 htmlwebshot
-httplib2==0.13.1
+httplib2==0.19.0
 imutils
 instagrapi
 jikanpy
