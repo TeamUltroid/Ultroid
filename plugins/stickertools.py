@@ -210,10 +210,10 @@ async def pack_kangish(_):
                 return await eor(_, str(er))
         await eor(
             _,
-            f"Pack Kanged Successfully.\nKanged Pack: [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
+            f"**Pack Kanged Successfully**.\n**Kanged Pack:** [link](https://t.me/addstickers/{_r_e_s.set.short_name})",
         )
     else:
-        await eor(_, "Unsupported File")
+        await eor(_, "`Unsupported File...`")
 
 
 @ultroid_cmd(
