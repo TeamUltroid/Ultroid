@@ -11,6 +11,7 @@ from random import choice
 from re import compile as re_compile
 from re import findall
 
+import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
@@ -388,11 +389,12 @@ async def xda_dev(event):
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
     le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
-    ct = requests.get(le).content
+    async with aiohttp.ClientSession() as requests:
+        async with requests.get(le) as out:
+            ct = await out.read()
     ml = bs(ct, "html.parser", from_encoding="utf-8")
     ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
     out = []
-    builder = event.builder
     for on in ml:
         data = on.find_all("img", "xda_image")[0]
         title = data["alt"]
@@ -402,11 +404,11 @@ async def xda_dev(event):
         thumb = wb(thumb, 0, "image/jpeg", [])
         text = f"[{title}]({hre})"
         out.append(
-            await builder.article(
+            await event.builder.article(
                 title=title, description=desc, url=hre, thumb=thumb, text=text
             )
         )
     uppar = "|| XDA Search Results ||"
-    if len(out) == 0:
+    if not out:
         uppar = "No Results Found :("
     await event.answer(out, switch_pm=uppar, switch_pm_param="start")

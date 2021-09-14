@@ -126,7 +126,7 @@ async def is_on(ult):
         kk,
     )
     buttons = [
-        Button.inline("Stats", "alive"),
+        [Button.inline("Stats", "alive")],
         [
             Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
             Button.url("Support", "t.me/UltroidSupport"),

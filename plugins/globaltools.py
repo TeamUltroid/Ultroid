@@ -371,7 +371,9 @@ async def gcast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        return eor(event, "`Give some text to Globally Broadcast or reply a message..`")
+        return await eor(
+            event, "`Give some text to Globally Broadcast or reply a message..`"
+        )
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -406,7 +408,9 @@ async def gucast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        return eor(event, "`Give some text to Globally Broadcast or reply a message..`")
+        return await eor(
+            event, "`Give some text to Globally Broadcast or reply a message..`"
+        )
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0

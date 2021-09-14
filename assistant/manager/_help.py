@@ -115,7 +115,7 @@ async def helpish(event):
 @owner
 async def ehwhshd(e):
     buttons = get_buttons()
-    buttons[-1].append(Button.inline("<< Back", "open"))
+    buttons.append([Button.inline("<< Back", "open")])
     await e.edit(buttons=buttons)
 
 

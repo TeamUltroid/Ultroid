@@ -56,32 +56,32 @@ SUP_BUTTONS = [
 # --------------------BUTTONS--------------------#
 
 
-@in_pattern("")
-@in_owner
+@inline
 async def inline_alive(o):
-    if len(o.text) == 0:
-        b = o.builder
-        MSG = "• **Ultroid Userbot •**"
-        WEB0 = InputWebDocument(
-            "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+    if o.text or not str(o.sender_id) in owner_and_sudos():
+        return
+    b = o.builder
+    MSG = "• **Ultroid Userbot •**"
+    WEB0 = InputWebDocument(
+        "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+    )
+    RES = [
+        InputBotInlineResult(
+            str(o.id),
+            "photo",
+            send_message=await b._message(
+                text=MSG,
+                media=True,
+                buttons=SUP_BUTTONS,
+            ),
+            title="Ultroid Userbot",
+            description="Userbot | Telethon",
+            url=TLINK,
+            thumb=WEB0,
+            content=InputWebDocument(TLINK, 0, "image/jpg", []),
         )
-        RES = [
-            InputBotInlineResult(
-                str(o.id),
-                "photo",
-                send_message=await b._message(
-                    text=MSG,
-                    media=True,
-                    buttons=SUP_BUTTONS,
-                ),
-                title="Ultroid Userbot",
-                description="Userbot | Telethon",
-                url=TLINK,
-                thumb=WEB0,
-                content=InputWebDocument(TLINK, 0, "image/jpg", []),
-            )
-        ]
-        await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
+    ]
+    await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd")
@@ -161,7 +161,10 @@ async def on_vc_callback_query_handler(event):
     xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
         OWNER_NAME, len(VC_HELP)
     )
-    buttons = page_num(0, VC_HELP, "vchelp", "vc")
+    try:
+        buttons = page_num(0, VC_HELP, "vchelp", "vc")
+    except ZeroDivisionError:
+        return await event.answer("Vc not Active.")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 

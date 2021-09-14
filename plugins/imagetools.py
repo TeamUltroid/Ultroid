@@ -595,7 +595,7 @@ async def ok(event):
                 col_ = col.split(";", maxsplit=1)
                 wh = int(col_[1])
                 col = col_[0]
-            col = [float(col) for col in col.split(",")[:2]]
+            col = [int(col) for col in col.split(",")[:2]]
         except ValueError:
             return await eor(event, "`Not a Valid Input...`")
     okla = await hm.download_media()
@@ -605,6 +605,7 @@ async def ok(event):
     await event.client.send_file(event.chat.id, "output.png")
     os.remove("output.png")
     os.remove(okla)
+    await event.delete()
 
 
 @ultroid_cmd(pattern="pixelator ?(.*)")

@@ -41,7 +41,7 @@ async def live_stream(e):
     except BaseException:
         return await eor(xx, f"`Only Youtube Playlist please.`")
     await xx.edit("`Keep patience... It'll take some time.`")
-    file, thumb, title, link, duration = await dl_playlist(chat, from_user, song)
+    file, thumb, title, link, duration = await dl_playlist(chat, html_mention(e), song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
@@ -57,7 +57,7 @@ async def live_stream(e):
         await xx.delete()
         await ultSongs.group_call.start_audio(file)
     else:
-        from_user = html_mention(e.sender)
+        from_user = html_mention(e)
         add_to_queue(chat, file, title, link, thumb, from_user, duration)
         return await eor(
             xx,
