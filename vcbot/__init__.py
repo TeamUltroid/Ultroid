@@ -25,6 +25,7 @@ from traceback import format_exc
 
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
+from telethon.errors.rpcerrorlist import ParticipantJoinMissingError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.all import (
     bash,
@@ -143,7 +144,11 @@ class Player:
             song, title, link, thumb, from_user, pos, dur = await get_from_queue(
                 chat_id
             )
-            await self.group_call.start_audio(song)
+            try:
+                await self.group_call.start_audio(song)
+            except ParticipantJoinMissingError:
+                await self.vc_joiner()
+                await self.group_call.start_audio(song)
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
