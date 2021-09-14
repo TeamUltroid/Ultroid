@@ -206,7 +206,8 @@ def vc_asst(dec, **kwargs):
         kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
         handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
-        kwargs["from_users"] = VC_AUTHS()
+        from_users = VC_AUTHS()
+        kwargs["from_users"] = from_users
         vc_auth = kwargs.get("vc_auth", True)
 
         if "vc_auth" in kwargs:
@@ -216,7 +217,7 @@ def vc_asst(dec, **kwargs):
             VCAUTH = list(get_vc().keys())
             if not (
                 (e.out)
-                or (str(e.sender_id) in from_users)
+                or (e.sender_id in from_users)
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
