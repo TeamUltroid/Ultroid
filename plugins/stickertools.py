@@ -145,14 +145,12 @@ async def uconverter(event):
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker):
-        return await eor(_, "`Reply to Sticker.`")
+    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+        return await eor(_, "`Reply to Non Animated Sticker.`")
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
-    if _e.file.mime_type != "image/webp":
-        return await eor(_, "`Animated Stickers are not Supported...`")
     _id = _e.media.document.attributes[1].stickerset.id
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
