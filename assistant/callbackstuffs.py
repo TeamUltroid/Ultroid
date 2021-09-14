@@ -11,7 +11,7 @@ from os import execl, remove
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
-
+from telethon.types import MessageMediaWebPage
 from . import *
 
 # --------------------------------------------------------------------#
@@ -20,6 +20,15 @@ r = telegraph.create_account(short_name="Ultroid")
 auth_url = r["auth_url"]
 # --------------------------------------------------------------------#
 
+def text_to_url(event):
+    """function to get media url (with|without) Webpage"""
+    if isinstance(event.media, MessageMediaWebPage):
+        webpage = event.media.webpage
+        if webpage and webpage.type in ["photo"]:
+            return webpage.display_url
+    return event.text
+
+# --------------------------------------------------------------------#
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -754,16 +763,16 @@ async def media(event):
                 )
         except BaseException:
             pass
-        media = await event.client.download_media(response, "alvpc")
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
         ):
-            url = response.text
+            url = text_to_url(response)
         elif response.sticker:
             url = response.file.id
         else:
+            media = await event.client.download_media(response, "alvpc")
             try:
                 x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
@@ -941,9 +950,9 @@ async def media(event):
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
         ):
-            url = response.text
+            url = text_to_url(response)
         elif response.sticker:
             url = response.file.id
         else:
@@ -1261,9 +1270,10 @@ async def media(event):
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
+
         ):
-            url = response.text
+            url = text_to_url(response)
         else:
             try:
                 x = upl(media)
