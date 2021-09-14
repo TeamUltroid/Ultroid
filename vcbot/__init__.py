@@ -383,7 +383,7 @@ async def file_download(event, reply, fast_download=True):
         dl = dl.name
     else:
         dl = await reply.download_media()
-    duration = time_formatter(reply.file.duration * 1000)
+    duration = time_formatter(reply.file.duration * 1000) if reply.file.duration else "🤷‍♂️"
     if reply.document.thumbs:
         thumb = await reply.download_media("vcbot/downloads/", thumb=-1)
     return dl, thumb, title, reply.message_link, duration
