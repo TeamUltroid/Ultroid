@@ -401,19 +401,18 @@ async def rmbg(event):
             event,
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
-    if event.reply_to_msg_id:
-        reply = await event.get_reply_message()
-        dl = await event.client.download_media(reply.media)
-        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
-            os.remove(dl)
-            return await eor(event, "`Unsupported Media`")
-        xx = await eor(event, "`Sending to remove.bg`")
-        out = ReTrieveFile(dl)
-        os.remove(dl)
-    else:
+    if not event.reply_to_msg_id:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
         )
+    reply = await event.get_reply_message()
+    dl = await event.client.download_media(reply.media)
+    if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+        os.remove(dl)
+        return await eor(event, "`Unsupported Media`")
+    xx = await eor(event, "`Sending to remove.bg`")
+    out = ReTrieveFile(dl)
+    os.remove(dl)
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
     if "image" in contentType:

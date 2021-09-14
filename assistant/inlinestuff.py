@@ -408,7 +408,5 @@ async def xda_dev(event):
                 title=title, description=desc, url=hre, thumb=thumb, text=text
             )
         )
-    uppar = "|| XDA Search Results ||"
-    if not out:
-        uppar = "No Results Found :("
+    uppar = "No Results Found :(" if not out else "|| XDA Search Results ||"
     await event.answer(out, switch_pm=uppar, switch_pm_param="start")

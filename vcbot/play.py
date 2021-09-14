@@ -97,7 +97,7 @@ async def play_music_(event):
     chat = event.chat_id
     limit = 10
     from_user = html_mention(event)
-    if not len(event.text.split()) > 1:
+    if len(event.text.split()) <= 1:
         return await msg.edit(
             "Use in Proper Format\n`.playfrom <channel username> ; <limit>`"
         )

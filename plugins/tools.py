@@ -365,7 +365,7 @@ async def _(e):
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
-    if not (steal.is_reply or mat):
+    if not steal.is_reply and not mat:
         return await eor(steal, "`Use this command with reply or give Username/id...`")
     if mat:
         user_id = await get_user_id(mat)
@@ -391,16 +391,15 @@ async def lastname(steal):
             ):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
+            elif response.text.startswith("🔗"):
+                await lol.edit(respond.message)
+                await lol.reply(responds.message)
+            elif respond.text.startswith("🔗"):
+                await lol.edit(response.message)
+                await lol.reply(responds.message)
             else:
-                if response.text.startswith("🔗"):
-                    await lol.edit(respond.message)
-                    await lol.reply(responds.message)
-                elif respond.text.startswith("🔗"):
-                    await lol.edit(response.message)
-                    await lol.reply(responds.message)
-                else:
-                    await lol.edit(respond.message)
-                    await lol.reply(response.message)
+                await lol.edit(respond.message)
+                await lol.reply(response.message)
             await steal.client.delete_messages(
                 conv.chat_id,
                 [msg.id, responds.id, respond.id, response.id],

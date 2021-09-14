@@ -121,38 +121,40 @@ async def diesoon(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def cacheahs(ult):
-    if udB.get("FORCESUB"):
-        user = await ult.get_sender()
-        joinchat = get_forcesetting(ult.chat_id)
-        if not joinchat or user.bot:
-            return
-        if CACHE.get(ult.chat_id):
-            if CACHE[ult.chat_id].get(user.id):
-                CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
-            else:
-                CACHE[ult.chat_id].update({user.id: 1})
+    if not udB.get("FORCESUB"):
+        return
+
+    user = await ult.get_sender()
+    joinchat = get_forcesetting(ult.chat_id)
+    if not joinchat or user.bot:
+        return
+    if CACHE.get(ult.chat_id):
+        if CACHE[ult.chat_id].get(user.id):
+            CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
         else:
-            CACHE.update({ult.chat_id: {user.id: 1}})
-        count = CACHE[ult.chat_id][user.id]
-        if count == 11:
-            CACHE[ult.chat_id][user.id].update(1)
-            return
-        if count in range(2, 11):
-            return
-        try:
-            await ultroid_bot.get_permissions(int(joinchat), user.id)
-            return
-        except UserNotParticipantError:
-            pass
-        try:
-            await ultroid_bot.edit_permissions(
-                ult.chat_id, user.id, send_messages=False
-            )
-        except ChatAdminRequiredError:
-            return
-        except Exception as e:
-            LOGS.info(e)
-        res = await ultroid_bot.inline_query(
-            asst.me.username, f"fsub {user.id}_{joinchat}"
+            CACHE[ult.chat_id].update({user.id: 1})
+    else:
+        CACHE.update({ult.chat_id: {user.id: 1}})
+    count = CACHE[ult.chat_id][user.id]
+    if count == 11:
+        CACHE[ult.chat_id][user.id].update(1)
+        return
+    if count in range(2, 11):
+        return
+    try:
+        await ultroid_bot.get_permissions(int(joinchat), user.id)
+        return
+    except UserNotParticipantError:
+        pass
+    try:
+        await ultroid_bot.edit_permissions(
+            ult.chat_id, user.id, send_messages=False
         )
-        await res[0].click(ult.chat_id, reply_to=ult.id)
+    except ChatAdminRequiredError:
+        return
+    except Exception as e:
+        LOGS.info(e)
+    res = await ultroid_bot.inline_query(
+        asst.me.username, f"fsub {user.id}_{joinchat}"
+    )
+    await res[0].click(ult.chat_id, reply_to=ult.id)

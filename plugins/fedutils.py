@@ -41,7 +41,7 @@ async def _(event):
         FBAN = (await event.get_reply_message()).sender_id
         if inputt:
             REASON = inputt
-    elif inputt and not event.reply_to_msg_id:
+    elif inputt:
         REASON = "#TBMassBanned"
         arg = event.text.split()
         if len(arg) == 2:
@@ -116,8 +116,8 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if not fedList:
-            return await msg.edit("Unable to collect FedAdminList.")
+    if not fedList:
+        return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
         await ultroid.send_message(chat, "/start")
@@ -252,8 +252,8 @@ async def _(event):
                     In = True
             elif In:
                 tempFedId += x
-        if not fedList:
-            return await msg.edit("Unable to collect FedAdminList.")
+    if not fedList:
+        return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
         await event.client.send_message(chat, "/start")

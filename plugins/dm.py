@@ -20,7 +20,7 @@ from . import *
 async def dm(e):
     if len(e.text) > 3 and e.text[3] != " ":  # weird fix
         return
-    if not len(e.text.split()) > 1:
+    if len(e.text.split()) <= 1:
         return await eor(e, "`Give Chat username or id where to send.`", time=5)
     chat = e.text.split()[1]
     try:

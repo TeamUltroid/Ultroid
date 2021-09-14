@@ -25,13 +25,15 @@ async def _(e):
     m = updater()
     branch = (Repo.init()).active_branch
     if m:
-        if e.pattern_match.group(1):
-            if "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1):
-                await bash("git pull -f && pip3 install -r requirements.txt")
-                call_back()
-                await xx.edit("`Fast Soft Updating...`")
-                execl(sys.executable, "python3", "-m", "pyUltroid")
-                return
+        if e.pattern_match.group(1) and (
+            "fast" in e.pattern_match.group(1)
+            or "soft" in e.pattern_match.group(1)
+        ):
+            await bash("git pull -f && pip3 install -r requirements.txt")
+            call_back()
+            await xx.edit("`Fast Soft Updating...`")
+            execl(sys.executable, "python3", "-m", "pyUltroid")
+            return
         x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
             ULTPIC,

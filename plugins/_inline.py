@@ -58,7 +58,7 @@ SUP_BUTTONS = [
 
 @inline
 async def inline_alive(o):
-    if o.text or not str(o.sender_id) in owner_and_sudos():
+    if o.text or str(o.sender_id) not in owner_and_sudos():
         return
     b = o.builder
     MSG = "• **Ultroid Userbot •**"

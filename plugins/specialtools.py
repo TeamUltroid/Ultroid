@@ -88,7 +88,7 @@ async def adaudroid(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit(f"Downloaded Successfully, Now Adding Your Audio to video")
+    await xxx.edit('Downloaded Successfully, Now Adding Your Audio to video')
     await bash(
         f'ffmpeg -i "{file.name}" -i "{File[0]}" -shortest -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4'
     )

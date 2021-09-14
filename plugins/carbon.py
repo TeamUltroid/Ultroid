@@ -180,10 +180,7 @@ all_col = [
 async def crbn(event):
     xxxx = await eor(event, "Processing")
     te = event.text
-    if te[1] == "r":
-        col = random.choice(all_col)
-    else:
-        col = None
+    col = random.choice(all_col) if te[1] == "r" else None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:

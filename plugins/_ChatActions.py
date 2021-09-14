@@ -178,12 +178,12 @@ async def uname_stuff(id, uname, name):
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n@{old} changed username to @{uname}",
             )
-        elif old and not uname:
+        elif old:
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id}) removed its username. (@{old})",
             )
-        elif not old and uname:
+        elif uname:
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id})'s new username --> @{uname}",
