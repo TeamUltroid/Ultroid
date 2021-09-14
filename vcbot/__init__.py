@@ -198,9 +198,16 @@ class Player:
 # --------------------------------------------------
 
 
-def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
+def vc_asst(dec, **kwargs):
     def ult(func):
+        kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from,
         handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
+        kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
+        kwargs["from_users"] = VC_AUTHS()
+        vc_auth = kwargs.get("vc_auth", True)
+
+        if "vc_auth" in kwargs:
+            del kwargs["vc_auth"]
 
         async def vc_handler(e):
             VCAUTH = list(get_vc().keys())
@@ -226,10 +233,7 @@ def vc_asst(dec, from_users=VC_AUTHS(), vc_auth=True):
 
         vcClient.add_event_handler(
             vc_handler,
-            events.NewMessage(
-                pattern=re.compile(f"\\{handler}" + dec),
-                func=lambda e: not e.is_private and not e.via_bot_id,
-            ),
+            events.NewMessage(**kwargs),
         )
 
     return ult
