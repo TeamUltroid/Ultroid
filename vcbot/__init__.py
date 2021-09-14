@@ -203,7 +203,7 @@ class Player:
 
 def vc_asst(dec, **kwargs):
     def ult(func):
-        kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from,
+        kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
         handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         kwargs["from_users"] = VC_AUTHS()
