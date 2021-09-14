@@ -186,9 +186,7 @@ async def doie(e):
         return await eor(e, "`Give Some C++ Code..`")
     msg = await eor(e, "`Processing...`")
     if "main(" not in match:
-        new_m = ""
-        for i in match.split("\n"):
-            new_m += " " * 4 + i + "\n"
+        new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))
         match = DUMMY_CPP.replace("!code", new_m)
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")

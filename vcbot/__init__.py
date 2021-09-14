@@ -67,8 +67,7 @@ def html_mention(event, sender_id=None, full_name=None):
 
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
-    A_AUTH = [*owner_and_sudos(), *_vc_sudos]
-    return A_AUTH
+    return [*owner_and_sudos(), *_vc_sudos]
 
 
 class Player:
@@ -126,9 +125,8 @@ class Player:
         if is_connected:
             if chat not in ACTIVE_CALLS:
                 ACTIVE_CALLS.append(chat)
-        else:
-            if chat in ACTIVE_CALLS:
-                ACTIVE_CALLS.remove(chat)
+        elif chat in ACTIVE_CALLS:
+            ACTIVE_CALLS.remove(chat)
 
     async def playout_ended_handler(self, call, source, mtype):
         if os.path.exists(source):

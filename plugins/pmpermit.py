@@ -213,9 +213,7 @@ if sett == "True":
     )
     async def permitpm(event):
         t_in = Redis("INLINE_PM")
-        inline_pm = False
-        if t_in == "True":
-            inline_pm = True
+        inline_pm = t_in == "True"
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
@@ -274,19 +272,7 @@ if sett == "True":
                         mention=mention,
                     )
                     update_pm(user.id, message_, wrn)
-                    if not inline_pm:
-                        if PMPIC:
-                            _to_delete[user.id] = await ultroid.send_file(
-                                user.id,
-                                PMPIC,
-                                caption=message_,
-                            )
-                        else:
-                            _to_delete[user.id] = await ultroid_bot.send_message(
-                                user.id, message_
-                            )
-
-                    else:
+                    if inline_pm:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
                         try:
                             _to_delete[user.id] = await results[0].click(
@@ -294,6 +280,17 @@ if sett == "True":
                             )
                         except Exception as e:
                             LOGS.info(str(e))
+                    elif PMPIC:
+                        _to_delete[user.id] = await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        _to_delete[user.id] = await ultroid_bot.send_message(
+                            user.id, message_
+                        )
+
                 else:
                     await delete_pm_warn_msgs(user.id)
                     message_ = UNAPPROVED_MSG.format(
@@ -308,18 +305,7 @@ if sett == "True":
                         mention=mention,
                     )
                     update_pm(user.id, message_, wrn)
-                    if not inline_pm:
-                        if PMPIC:
-                            _to_delete[user.id] = await ultroid.send_file(
-                                user.id,
-                                PMPIC,
-                                caption=message_,
-                            )
-                        else:
-                            _to_delete[user.id] = await ultroid_bot.send_message(
-                                user.id, message_
-                            )
-                    else:
+                    if inline_pm:
                         try:
                             results = await ultroid.inline_query(
                                 my_bot, f"ip_{user.id}"
@@ -329,6 +315,16 @@ if sett == "True":
                             )
                         except Exception as e:
                             LOGS.info(str(e))
+                    elif PMPIC:
+                        _to_delete[user.id] = await ultroid.send_file(
+                            user.id,
+                            PMPIC,
+                            caption=message_,
+                        )
+                    else:
+                        _to_delete[user.id] = await ultroid_bot.send_message(
+                            user.id, message_
+                        )
                 LASTMSG.update({user.id: event.text})
             else:
                 await delete_pm_warn_msgs(user.id)
@@ -344,18 +340,7 @@ if sett == "True":
                     mention=mention,
                 )
                 update_pm(user.id, message_, wrn)
-                if not inline_pm:
-                    if PMPIC:
-                        _to_delete[user.id] = await ultroid_bot.send_file(
-                            user.id,
-                            PMPIC,
-                            caption=message_,
-                        )
-                    else:
-                        _to_delete[user.id] = await ultroid_bot.send_message(
-                            user.id, message_
-                        )
-                else:
+                if inline_pm:
                     try:
                         results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
                         _to_delete[user.id] = await results[0].click(
@@ -363,6 +348,16 @@ if sett == "True":
                         )
                     except Exception as e:
                         LOGS.info(str(e))
+                elif PMPIC:
+                    _to_delete[user.id] = await ultroid_bot.send_file(
+                        user.id,
+                        PMPIC,
+                        caption=message_,
+                    )
+                else:
+                    _to_delete[user.id] = await ultroid_bot.send_message(
+                        user.id, message_
+                    )
             LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
                 COUNT_PM.update({user.id: 1})

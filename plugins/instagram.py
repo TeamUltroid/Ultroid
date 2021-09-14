@@ -29,9 +29,7 @@ CLIENT = []
 
 
 def create_client(username, password):
-    settings = {}
-    if udB.get("INSTA_SET"):
-        settings = eval(udB.get("INSTA_SET"))
+    settings = eval(udB.get("INSTA_SET")) if udB.get("INSTA_SET") else {}
     try:
         return CLIENT[0]
     except IndexError:

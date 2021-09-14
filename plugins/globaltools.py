@@ -381,18 +381,20 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.entity.id
-            if not is_gblacklisted(chat) and not int("-100" + str(chat)) in NOSPAM_CHAT:
-                if event.text[2:7] == "admin" and not (
-                    x.entity.admin_rights or x.entity.creator
-                ):
-                    pass
-                else:
-                    try:
-                        done += 1
-                        await event.client.send_message(chat, msg)
-                    except Exception as h:
-                        err += "• " + str(h) + "\n"
-                        er += 1
+            if (
+                not is_gblacklisted(chat)
+                and int("-100" + str(chat)) not in NOSPAM_CHAT
+                and (
+                    event.text[2:7] != "admin"
+                    or (x.entity.admin_rights or x.entity.creator)
+                )
+            ):
+                try:
+                    done += 1
+                    await event.client.send_message(chat, msg)
+                except Exception as h:
+                    err += "• " + str(h) + "\n"
+                    er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
     if err != "":
         open("gcast-error.log", "w").write(h)

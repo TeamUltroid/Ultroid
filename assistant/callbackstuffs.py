@@ -156,9 +156,7 @@ async def _(e):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    data = "buck"
-    if ok.startswith("plugins"):
-        data = "back"
+    data = "back" if ok.startswith("plugins") else "buck"
     buttons = [
         Button.inline("« Bᴀᴄᴋ", data=data),
         Button.inline("••Cʟᴏꜱᴇ••", data="close"),
