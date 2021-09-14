@@ -66,14 +66,8 @@ def html_mention(event, sender_id=None, full_name=None):
 
 
 def VC_AUTHS():
-    __ = []
-    for _ in owner_and_sudos():
-        __.append(int(_))
-    if udB.get("VC_SUDOS"):
-        for _ in udB["VC_SUDOS"].split():
-            if not int(_) in __:
-                __.append(int(_))
-    return __
+    _vcsudos = udB.get("VC_SUDOS").split() or ""
+    return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
 class Player:
