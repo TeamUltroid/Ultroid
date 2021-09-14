@@ -65,10 +65,8 @@ async def video_c(event):
         except MissingSchema:
             is_link = None
         except BaseException:
-            is_link = False
-        if is_link == False:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
-        if is_link is None:
+        if not is_link:
             song, thumb, title, link, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):
             song, thumb, title, link, duration = await vid_download(song)
