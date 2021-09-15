@@ -30,7 +30,6 @@ import shutil
 import time
 
 import cv2
-import imutils
 import numpy as np
 import PIL
 from imutils.perspective import four_point_transform
@@ -188,7 +187,10 @@ async def imgscan(event):
     image = cv2.imread(ultt)
     original_image = image.copy()
     ratio = image.shape[0] / 500.0
-    image = imutils.resize(image, height=500)
+    hi, wid = image.shape[:2]
+    ra = 500 / float(hi)
+    dmes = (int(wid * ra), 500)
+    image = cv2.resize(image, dmes, interpolation=cv2.INTER_AREA)
     image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
     image_y = np.zeros(image_yuv.shape[0:2], np.uint8)
     image_y[:, :] = image_yuv[:, :, 0]
