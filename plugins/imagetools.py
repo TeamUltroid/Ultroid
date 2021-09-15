@@ -54,7 +54,7 @@
 """
 import asyncio
 import os
-
+import aiohttp
 import cv2
 import numpy as np
 from PIL import Image
@@ -63,7 +63,6 @@ from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,
     MessageDeleteForbiddenError,
 )
-from validators.url import url
 
 from . import *
 
@@ -557,15 +556,13 @@ async def ultd(event):
         file = "ult.png"
     got = upf(file)
     lnk = f"https://telegra.ph{got[0]}"
-    r = requests.get(
-        f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}",
-    ).json()
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}") as out:
+            r = await out.json()
     ms = r.get("message")
-    utd = url(ms)
-    if not utd:
-        return
-    with open("ult.png", "wb") as f:
-        f.write(requests.get(ms).content)
+    if not r["success"]:
+        return await xx.edit(ms)
+    await download_file(ms["message"], "ult.png")
     img = Image.open("ult.png").convert("RGB")
     img.save("ult.webp", "webp")
     await event.client.send_file(
