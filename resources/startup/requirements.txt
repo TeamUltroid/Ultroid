@@ -13,7 +13,7 @@ git+https://github.com/buddhhu/search-engine-parser.git
 git+https://github.com/1danish-00/carbon-now-sh-api-wrapper.git
 git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
-gitpython==3.0.18
+gitpython==3.1.23
 google-api-python-client==1.7.11
 google-auth-httplib2==0.0.4
 google-auth-oauthlib==0.4.4
