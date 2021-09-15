@@ -336,19 +336,14 @@ async def _(event):
     )
     chk = is_gbanned(user_id)
     if chk:
-        r = get_gban_reason(user_id)
         caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>"
-        if r:
-            caption += f"<b>Rᴇᴀsᴏɴ</b>: <code>{r}</code>"
+        caption += f"<b>Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"
     else:
         caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
-    message_id_to_reply = event.message.reply_to_msg_id
-    if not message_id_to_reply:
-        message_id_to_reply = event.message.id
     await event.client.send_message(
         event.chat_id,
         caption,
-        reply_to=message_id_to_reply,
+        reply_to=event.reply_to_msg_id,
         parse_mode="HTML",
         file=replied_user.profile_photo,
         force_document=False,
