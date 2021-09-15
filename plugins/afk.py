@@ -123,7 +123,9 @@ async def on_afk(event):
         return
     elif not is_afk():
         return
-    elif event.chat_id in NOSPAM_CHAT:
+    if event.chat_id in NOSPAM_CHAT:
+        return
+    if event.sender and (event.sender.bot or event.sender.verified):
         return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None
