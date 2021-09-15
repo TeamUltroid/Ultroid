@@ -43,7 +43,7 @@ pytz==2021.1
 qrcode==7.3
 requests==2.26.0
 shazamio==0.0.5
-tabulate=0.8.9
+tabulate==0.8.9
 telegraph==1.4.1
 tgcrypto==1.2.2
 youtube-search-python==1.4.7
