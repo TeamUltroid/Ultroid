@@ -199,53 +199,46 @@ async def hehe(args):
     photo = None
     is_anim = False
     emoji = None
-    if message and (message.media or message.text):
-        if isinstance(message.media, MessageMediaPhoto) or message.text:
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
-            photo = await ultroid_bot.download_media(message.photo, photo)
-            if not photo and message.text:
-                carbon = Carbon(
-                    base_url="https://carbonara.vercel.app/api/cook", code=message.text
-                )
-                photo = await carbon.memorize("carbon_kang")
-        elif "image" in message.media.document.mime_type.split("/"):
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
-            await ultroid_bot.download_file(message.media.document, photo)
-            if (
+    if not message:
+        return await eor(xx, "`Reply to message/media...`")
+    if message.photo:
+        photo = io.BytesIO()
+        photo = await ultroid_bot.download_media(message.photo, photo)
+    elif message.file and "image" in message.file.mime_type.split("/"):
+        photo = io.BytesIO()
+        await ultroid_bot.download_file(message.media.document, photo)
+        if (
                 DocumentAttributeFilename(file_name="sticker.webp")
                 in message.media.document.attributes
-            ):
-                emoji = message.media.document.attributes[1].alt
-        elif "video" in message.media.document.mime_type.split("/"):
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            xy = await message.download_media()
-            y = cv2.VideoCapture(xy)
-            heh, lol = y.read()
-            cv2.imwrite("ult.webp", lol)
-            photo = "ult.webp"
-        elif "tgsticker" in message.media.document.mime_type:
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            await ultroid_bot.download_file(
-                message.media.document,
-                "AnimatedSticker.tgs",
+         ):
+            emoji = message.media.document.attributes[1].alt
+       
+
+    elif message.file and "video" in message.file.mime_type.split("/"):
+        xy = await message.download_media()
+        y = cv2.VideoCapture(xy)
+        heh, lol = y.read()
+        cv2.imwrite("ult.webp", lol)
+        photo = "ult.webp"
+    elif message.file and "tgsticker" in message.file.mime_type:
+        await ultroid_bot.download_file(
+           message.media.document,
+           "AnimatedSticker.tgs",
+        )
+        attributes = message.media.document.attributes
+        for attribute in attributes:
+            if isinstance(attribute, DocumentAttributeSticker):
+                emoji = attribute.alt
+        is_anim = True
+        photo = 1
+    elif message.message:
+        carbon = Carbon(
+                base_url="https://carbonara.vercel.app/api/cook", code=message.message
             )
-
-            attributes = message.media.document.attributes
-            for attribute in attributes:
-                if isinstance(attribute, DocumentAttributeSticker):
-                    emoji = attribute.alt
-
-            is_anim = True
-            photo = 1
-        else:
-            await xx.edit("`Unsupported File!`")
-            return
+        photo = await carbon.memorize("carbon_kang")
     else:
-        await xx.edit("`I can't kang that...`")
-        return
-
+        return await xx.edit("`Unsupported File!`")
+    await xx.edit(f"`{random.choice(KANGING_STR)}`")
     if photo:
         splat = args.text.split()
         pack = 1
