@@ -2,8 +2,8 @@ aiohttp==3.7.3
 akinator.py==5.0.0
 apscheduler==3.7.0
 carbonnow==0.0.2
-cloudscraper=1.2.58
-emoji=1.4.2
+cloudscraper==1.2.58
+emoji==1.4.2
 enhancer
 faker==8.12.1
 fonttools==4.26.2
@@ -19,7 +19,7 @@ google-api-python-client==1.7.11
 google-auth-httplib2==0.0.4
 google-auth-oauthlib==0.4.4
 google-auth==1.27.1
-hachoir=3.1.2
+hachoir==3.1.2
 html-telegraph-poster==0.4.0
 htmlwebshot==0.1.2
 httplib2==0.19.0
