@@ -1,8 +1,6 @@
 aiohttp
 akinator.py
 apscheduler
-asyncurban
-cairosvg
 carbonnow
 cloudscraper
 emoji
@@ -27,7 +25,6 @@ hachoir
 html-telegraph-poster
 htmlwebshot
 httplib2==0.19.0
-imutils
 instagrapi
 jikanpy
 lottie
