@@ -19,7 +19,7 @@
 • `{i}ud <word>`
     Fetch word defenition from urbandictionary.
 """
-import asyncurban
+import aiohttp
 from PyDictionary import PyDictionary
 
 from . import *
@@ -112,14 +112,18 @@ async def mean(event):
 @ultroid_cmd(pattern="ud (.*)")
 async def _(event):
     word = event.pattern_match.group(1)
-    if word is None:
+    if not word:
         return await eor(event, "`No word given!`")
-    urban = asyncurban.UrbanDictionary()
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(
+            "http://api.urbandictionary.com/v0/define", 
+            params={"term":word}) as out:
+            out = await out.json()
     try:
-        mean = await urban.get_word(word)
-        await eor(
+        out = out["list"][0]
+    except KeyError:
+        return await eor(event, f"**No result found for** `{word}`")
+    await eor(
             event,
-            f"**Text**: `{mean.word}`\n\n**Meaning**: `{mean.definition}`\n\n**Example**: __{mean.example}__",
+            f"**Text**: `{out['word']}`\n\n**Meaning**: `{out['definition']}`\n\n**Example**: __{out['example']}__",
         )
-    except asyncurban.WordNotFoundError:
-        await eor(event, f"**No result found for** `{word}`")
