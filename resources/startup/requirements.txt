@@ -1,7 +1,6 @@
 aiohttp==3.7.3
 akinator.py==5.0.0
 apscheduler==3.7.0
-carbonnow==0.0.1
 cloudscraper==1.2.58
 emoji==1.4.2
 enhancer
