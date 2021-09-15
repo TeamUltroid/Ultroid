@@ -14,7 +14,7 @@
     To create Tiny stickers.
 
 • `{i}convert <gif/img/sticker>`
-    Reply to sticker to convert into gif or image.
+    Reply to animated sticker to convert it into gif or image or normal sticker.
 
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
@@ -112,47 +112,34 @@ async def waifu(animu):
 async def uconverter(event):
     xx = await eor(event, "`Processing...`")
     a = await event.get_reply_message()
-    ok = ["image/webp", "application/x-tgsticker"]
-    if not (a.media and a.media.document and a.media.document.mime_type in ok):
-        return await eor(event, "`Reply to a Sticker...`")
+    if not (a and a.media and "animated" in mediainfo(a.media)):
+        return await eor(event, "`Reply to an Animated Sticker...`")
     input_ = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
     if "gif" in input_:
-        cmd = ["lottie_convert.py", b, "something.gif"]
         file = "something.gif"
     elif "img" in input_:
-        cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
     elif "sticker" in input_:
-        cmd = ["lottie_convert.py", b, "something.webp"]
         file = "something.webp"
     else:
         return await xx.edit("**Please select from gif/img/sticker**")
-    process = await asyncio.create_subprocess_exec(
-        *cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await process.communicate()
-    stderr.decode().strip()
-    stdout.decode().strip()
-    os.remove(b)
+    await bash(f"lottie_convert.py {b} {file}")
     await event.client.send_file(event.chat_id, file, force_document=False)
-    os.remove(file)
     await xx.delete()
+    os.remove(file)
+    os.remove(b)
 
 
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker):
-        return await eor(_, "`Reply to Sticker.`")
+    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+        return await eor(_, "`Reply to Non Animated Sticker.`")
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"Ultroid Kang Pack By {_.sender_id}"
-    if _e.file.mime_type != "image/webp":
-        return await eor(_, "`Animated Stickers are not Supported...`")
     _id = _e.media.document.attributes[1].stickerset.id
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
@@ -201,53 +188,46 @@ async def hehe(args):
     photo = None
     is_anim = False
     emoji = None
-    if message and (message.media or message.text):
-        if isinstance(message.media, MessageMediaPhoto) or message.text:
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
-            photo = await ultroid_bot.download_media(message.photo, photo)
-            if not photo and message.text:
-                carbon = Carbon(
-                    base_url="https://carbonara.vercel.app/api/cook", code=message.text
-                )
-                photo = await carbon.memorize("carbon_kang")
-        elif "image" in message.media.document.mime_type.split("/"):
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
-            await ultroid_bot.download_file(message.media.document, photo)
-            if (
+    if not message:
+        return await eor(xx, "`Reply to message/media...`")
+    if message.photo:
+        photo = io.BytesIO()
+        photo = await ultroid_bot.download_media(message.photo, photo)
+    elif message.file and "image" in message.file.mime_type.split("/"):
+        photo = io.BytesIO()
+        await ultroid_bot.download_file(message.media.document, photo)
+        if (
                 DocumentAttributeFilename(file_name="sticker.webp")
                 in message.media.document.attributes
-            ):
-                emoji = message.media.document.attributes[1].alt
-        elif "video" in message.media.document.mime_type.split("/"):
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            xy = await message.download_media()
-            y = cv2.VideoCapture(xy)
-            heh, lol = y.read()
-            cv2.imwrite("ult.webp", lol)
-            photo = "ult.webp"
-        elif "tgsticker" in message.media.document.mime_type:
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            await ultroid_bot.download_file(
-                message.media.document,
-                "AnimatedSticker.tgs",
+         ):
+            emoji = message.media.document.attributes[1].alt
+       
+
+    elif message.file and "video" in message.file.mime_type.split("/"):
+        xy = await message.download_media()
+        y = cv2.VideoCapture(xy)
+        heh, lol = y.read()
+        cv2.imwrite("ult.webp", lol)
+        photo = "ult.webp"
+    elif message.file and "tgsticker" in message.file.mime_type:
+        await ultroid_bot.download_file(
+           message.media.document,
+           "AnimatedSticker.tgs",
+        )
+        attributes = message.media.document.attributes
+        for attribute in attributes:
+            if isinstance(attribute, DocumentAttributeSticker):
+                emoji = attribute.alt
+        is_anim = True
+        photo = 1
+    elif message.message:
+        carbon = Carbon(
+                base_url="https://carbonara.vercel.app/api/cook", code=message.message
             )
-
-            attributes = message.media.document.attributes
-            for attribute in attributes:
-                if isinstance(attribute, DocumentAttributeSticker):
-                    emoji = attribute.alt
-
-            is_anim = True
-            photo = 1
-        else:
-            await xx.edit("`Unsupported File!`")
-            return
+        photo = await carbon.memorize("carbon_kang")
     else:
-        await xx.edit("`I can't kang that...`")
-        return
-
+        return await xx.edit("`Unsupported File!`")
+    await xx.edit(f"`{random.choice(KANGING_STR)}`")
     if photo:
         splat = args.text.split()
         pack = 1
@@ -465,10 +445,8 @@ async def ultdround(event):
 )
 async def ultdestroy(event):
     ult = await event.get_reply_message()
-    if not event.is_reply:
-        return await eor(event, "`Reply to Animated Sticker Only...`")
     if not (
-        ult.media and ult.media.document and "tgsticker" in ult.media.document.mime_type
+        ult and ult.media and "animated" in mediainfo(a.media)
     ):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
