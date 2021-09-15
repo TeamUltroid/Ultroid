@@ -1051,7 +1051,7 @@ async def disus(event):
     name = "Pm Logger Group"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Send The Symbol Which u want as your {name}\n\n use /cancel to cancel.",
+            f"Send The Chat Id Which u want as your {name}\n\n use /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -1077,8 +1077,7 @@ async def disus(event):
 @callback("pmlog")
 @owner
 async def pmlog(event):
-    var = "PMLOG"
-    await setit(event, var, "True")
+    await setit(event, "PMLOG", "True")
     await event.edit(
         "Done!! PMLOGGER  Started!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
