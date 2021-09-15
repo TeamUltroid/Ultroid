@@ -23,7 +23,6 @@ html-telegraph-poster==0.4.0
 htmlwebshot==0.1.2
 httplib2==0.19.0
 instagrapi==1.13.1
-jikanpy==4.3.2
 lottie==0.6.9
 multiprocess==0.70.12.2
 numerize==0.12
