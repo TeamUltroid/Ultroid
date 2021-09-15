@@ -14,7 +14,7 @@
     To create Tiny stickers.
 
 • `{i}convert <gif/img/sticker>`
-    Reply to sticker to convert into gif or image.
+    Reply to animated sticker to convert it into gif or image or normal sticker.
 
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
@@ -112,34 +112,23 @@ async def waifu(animu):
 async def uconverter(event):
     xx = await eor(event, "`Processing...`")
     a = await event.get_reply_message()
-    ok = ["image/webp", "application/x-tgsticker"]
-    if not (a.media and a.media.document and a.media.document.mime_type in ok):
-        return await eor(event, "`Reply to a Sticker...`")
+    if not (a and a.media and "animated" in mediainfo(a.media)):
+        return await eor(event, "`Reply to an Animated Sticker...`")
     input_ = event.pattern_match.group(1)
     b = await event.client.download_media(a, "resources/downloads/")
     if "gif" in input_:
-        cmd = ["lottie_convert.py", b, "something.gif"]
         file = "something.gif"
     elif "img" in input_:
-        cmd = ["lottie_convert.py", b, "something.png"]
         file = "something.png"
     elif "sticker" in input_:
-        cmd = ["lottie_convert.py", b, "something.webp"]
         file = "something.webp"
     else:
         return await xx.edit("**Please select from gif/img/sticker**")
-    process = await asyncio.create_subprocess_exec(
-        *cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await process.communicate()
-    stderr.decode().strip()
-    stdout.decode().strip()
-    os.remove(b)
+    await bash(f"lottie_convert.py {b} {file}")
     await event.client.send_file(event.chat_id, file, force_document=False)
-    os.remove(file)
     await xx.delete()
+    os.remove(file)
+    os.remove(b)
 
 
 @ultroid_cmd(pattern="packkang")
@@ -456,10 +445,8 @@ async def ultdround(event):
 )
 async def ultdestroy(event):
     ult = await event.get_reply_message()
-    if not event.is_reply:
-        return await eor(event, "`Reply to Animated Sticker Only...`")
     if not (
-        ult.media and ult.media.document and "tgsticker" in ult.media.document.mime_type
+        ult and ult.media and "animated" in mediainfo(a.media)
     ):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
