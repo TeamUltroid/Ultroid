@@ -51,7 +51,6 @@ pyyaml
 qrcode
 requests
 requests-html
-scikit-image==0.18.2
 screen
 shazamio
 speedtest-cli==2.1.3
