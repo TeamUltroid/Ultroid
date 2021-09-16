@@ -121,7 +121,7 @@ async def _(event):
             out = await out.json()
     try:
         out = out["list"][0]
-    except KeyError:
+    except IndexError:
         return await eor(event, f"**No result found for** `{word}`")
     await eor(
             event,
