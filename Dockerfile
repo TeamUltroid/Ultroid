@@ -7,14 +7,13 @@ FROM theteamultroid/ultroid:dev
 
 # set timezone
 ENV TZ=Asia/Kolkata
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    # cloning the repo and other misc task
+    && git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/ \
+    && pip3 uninstall av -y && pip3 install --no-binary av
 
-# clone the repo and change workdir
-RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/
+# changing workdir
 WORKDIR /root/TeamUltroid/
-
-# install requirements.
-RUN pip3 uninstall av -y && pip3 install --no-binary av
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
