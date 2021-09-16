@@ -14,7 +14,7 @@ RUN git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroi
 WORKDIR /root/TeamUltroid/
 
 # install requirements.
-RUN pip3 uninstall av -y && pip3 install av --no-binary av
+RUN pip3 uninstall av -y && pip3 install --no-binary av
 
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
