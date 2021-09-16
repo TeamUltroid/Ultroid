@@ -52,8 +52,8 @@ async def rem_chatBot(event):
 
 @ultroid_cmd(pattern="listai")
 async def lister(event):
-    users = get_all_added(event.chat.id)
-    if udB.get("CHATBOT_USERS") is None:
+    users = get_all_added(event.chat_id)
+    if not users:
         return await eor(event, "`No user has AI added.`", time=5)
     msg = ""
     for i in users:
@@ -63,7 +63,8 @@ async def lister(event):
         except BaseException:
             user = f"`{i}`"
         msg += "- {}\n".format(user)
-    await eor(event, msg, link_preview=False)
+    if msg:
+        await eor(event, msg, link_preview=False)
 
 
 async def chat_bot_fn(event, type_):
