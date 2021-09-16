@@ -66,7 +66,7 @@ def html_mention(event, sender_id=None, full_name=None):
 
 
 def VC_AUTHS():
-    _vcsudos = udB.get("VC_SUDOS").split() or ""
+    _vcsudos = udB["VC_SUDOS"].split() if udB.get("VC_SUDOS") else ""
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
