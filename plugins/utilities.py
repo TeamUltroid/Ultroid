@@ -336,19 +336,14 @@ async def _(event):
     )
     chk = is_gbanned(user_id)
     if chk:
-        r = get_gban_reason(user_id)
-        caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>"
-        if r:
-            caption += f"<b>Rᴇᴀsᴏɴ</b>: <code>{r}</code>"
+        caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
+<b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
     else:
         caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
-    message_id_to_reply = event.message.reply_to_msg_id
-    if not message_id_to_reply:
-        message_id_to_reply = event.message.id
     await event.client.send_message(
         event.chat_id,
         caption,
-        reply_to=message_id_to_reply,
+        reply_to=event.reply_to_msg_id,
         parse_mode="HTML",
         file=replied_user.profile_photo,
         force_document=False,
@@ -401,19 +396,18 @@ async def rmbg(event):
             event,
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
-    if event.reply_to_msg_id:
-        reply = await event.get_reply_message()
-        dl = await event.client.download_media(reply.media)
-        if not dl.endswith(("webp", "jpg", "png", "jpeg")):
-            os.remove(dl)
-            return await eor(event, "`Unsupported Media`")
-        xx = await eor(event, "`Sending to remove.bg`")
-        out = ReTrieveFile(dl)
-        os.remove(dl)
-    else:
+    if not event.reply_to_msg_id:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
         )
+    reply = await event.get_reply_message()
+    dl = await event.client.download_media(reply.media)
+    if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+        os.remove(dl)
+        return await eor(event, "`Unsupported Media`")
+    xx = await eor(event, "`Sending to remove.bg`")
+    out = ReTrieveFile(dl)
+    os.remove(dl)
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
     if "image" in contentType:

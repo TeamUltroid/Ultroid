@@ -27,7 +27,7 @@ from pyUltroid.functions.chatBot_db import *
 
 @ultroid_cmd(pattern="repai")
 async def im_lonely_chat_with_me(event):
-    if event.reply_to_msg_id:
+    if event.reply_to:
         message = (await event.get_reply_message()).message
     else:
         try:
@@ -52,22 +52,22 @@ async def rem_chatBot(event):
 
 @ultroid_cmd(pattern="listai")
 async def lister(event):
-    users = get_all_added(event.chat.id)
-    if udB.get("CHATBOT_USERS") is None:
+    users = get_all_added(event.chat_id)
+    if not users:
         return await eor(event, "`No user has AI added.`", time=5)
-    msg = ""
+    msg = "**Total List Of AI Enabled Users In This Chat :**\n\n"
     for i in users:
         try:
             user = await event.client.get_entity(int(i))
             user = inline_mention(user)
         except BaseException:
             user = f"`{i}`"
-        msg += "- {}\n".format(user)
+        msg += "• {}\n".format(user)
     await eor(event, msg, link_preview=False)
 
 
 async def chat_bot_fn(event, type_):
-    if event.reply_to_msg_id:
+    if event.reply_to:
         user = (await event.get_reply_message()).sender
     else:
         temp = event.text.split(maxsplit=1)

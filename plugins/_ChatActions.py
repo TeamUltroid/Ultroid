@@ -63,7 +63,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         reason = is_gbanned(user.id)
         if reason and chat.admin_rights:
             try:
-                await ultroid_bot.edit_permissions(
+                await ult.client.edit_permissions(
                     chat.id,
                     user.id,
                     view_messages=False,
@@ -72,11 +72,11 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 gban_watch += f"**Reason**: {reason}\n\n"
                 gban_watch += "`User Banned.`"
                 await ult.reply(gban_watch)
-            except BaseException:
-                pass
+            except Exception as er:
+                LOGS.info(er)
 
         # greetings
-        if get_welcome(ult.chat_id):
+        elif get_welcome(ult.chat_id):
             user = await ult.get_user()
             chat = await ult.get_chat()
             title = chat.title or "this chat"
@@ -92,7 +92,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             msgg = wel["welcome"]
             med = wel["media"]
             userid = user.id
-            if msgg and not is_gbanned(str(user.id)):
+            if msgg:
                 send = await ult.reply(
                     msgg.format(
                         mention=mention,
@@ -107,9 +107,9 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                 )
                 await asyncio.sleep(150)
                 await send.delete()
-            elif not is_gbanned(user.id):
+            else:
                 await ult.reply(file=med)
-    if (ult.user_left or ult.user_kicked) and get_goodbye(ult.chat_id):
+    elif (ult.user_left or ult.user_kicked) and get_goodbye(ult.chat_id):
         user = await ult.get_user()
         chat = await ult.get_chat()
         title = chat.title or "this chat"
@@ -178,12 +178,12 @@ async def uname_stuff(id, uname, name):
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n@{old} changed username to @{uname}",
             )
-        elif old and not uname:
+        elif old:
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id}) removed its username. (@{old})",
             )
-        elif not old and uname:
+        elif uname:
             await asst.send_message(
                 LOG_CHANNEL,
                 f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id})'s new username --> @{uname}",
