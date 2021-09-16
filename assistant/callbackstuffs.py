@@ -11,7 +11,7 @@ from os import execl, remove
 
 from telegraph import Telegraph
 from telegraph import upload_file as upl
-from telethon.types import MessageMediaWebPage
+from telethon.tl.types import MessageMediaWebPage
 from . import *
 
 # --------------------------------------------------------------------#
