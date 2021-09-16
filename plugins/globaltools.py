@@ -512,7 +512,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="listgban",
+    pattern="listgban$",
 )
 async def list_gengbanned(event):
     users = list_gbanned()
@@ -525,13 +525,13 @@ async def list_gengbanned(event):
             name = (await ultroid.get_entity(int(i))).first_name
         except BaseException:
             name = i
-        msg += f"**User**: {name}\n"
+        msg += f"<strong>User</strong>: <a href=tg://user?id={i}>{name}</a>\n"
         reason = users[i]
-        msg += f"**Reason**: {reason}\n\n" if reason is not None else "\n"
-    gbanned_users = f"**List of users GBanned by {OWNER_NAME}**:\n\n{msg}"
+        msg += f"<strong>Reason</strong>: {reason}\n\n" if reason is not None else "\n"
+    gbanned_users = f"<strong>List of users GBanned by {OWNER_NAME}</strong>:\n\n{msg}"
     if len(gbanned_users) > 4096:
         with open("gbanned.txt", "w") as f:
-            f.write(gbanned_users.replace("`", "").replace("*", ""))
+            f.write(gbanned_users.replace("<strong>", "").replace("</strong>", "").replace("<a href=tg://user?id=", "").replace("</a>",""))
         await x.reply(
             file="gbanned.txt",
             message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
@@ -539,7 +539,7 @@ async def list_gengbanned(event):
         os.remove("gbanned.txt")
         await x.delete()
     else:
-        await x.edit(gbanned_users)
+        await x.edit(gbanned_users, parse_mode="html")
 
 
 @ultroid_cmd(
