@@ -33,7 +33,7 @@ from shutil import rmtree
 
 import pytz
 import requests
-from bs4 import BeautifulSoup as b
+from bs4 import BeautifulSoup as bs
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyUltroid.functions.google_image import googleimagesdownload
@@ -247,20 +247,17 @@ async def _(event):
     if not x:
         return await eor(event, "`Give something to search`")
     uu = await eor(event, "`Processing...`")
-    z = request.get("https://combot.org/telegram/stickers?q=" + x).text
-    xx = b(z, "lxml")
-    title = xx.find_all("div", "sticker-pack__title")
-    link = xx.find_all("a", target="_blank")
+    z = bs(await async_searcher("https://combot.org/telegram/stickers?q=" + x), "html.parser")
+    packs = z.find_all("div", "sticker-pack__header")
+    sticks = {}
+    for c in packs:
+        sticks[c.a["href"]] = c.find("div", {"class":"sticker-pack__title"}).text
     if not link:
         return await uu.edit("Found Nothing")
-    a = "SᴛɪᴄᴋEʀs Aᴡᴀɪʟᴀʙʟᴇ ~"
-    for xxx, yyy in zip(title, link):
-        v = xxx.get_text()
-        w = yyy["href"]
-        d = f"\n\n[{v}]({w})"
-        if d not in a:
-            a += d
-    await uu.edit(a)
+    a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
+    for sti in sticks.keys():
+        a += f"<a href=sti>sticks[sti]</a>\n"
+    await uu.edit(a, parse_mode="html")
 
 
 @ultroid_cmd(pattern="wall ?(.*)")
