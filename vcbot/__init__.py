@@ -31,6 +31,7 @@ from pyUltroid.functions.all import (
     bash,
     downloader,
     get_user_id,
+    is_url_ok,
     get_videos_link,
     inline_mention,
     mediainfo,
