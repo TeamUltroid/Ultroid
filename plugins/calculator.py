@@ -120,7 +120,7 @@ async def _(e):
             get = CALC[user]
         if get:
             CALC.update({user: get + x})
-            await e.answer(str(get + x))
+            return await e.answer(str(get + x))
         CALC.update({user: x})
         await e.answer(str(x))
 
