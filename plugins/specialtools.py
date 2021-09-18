@@ -252,7 +252,7 @@ async def _(event):
     sticks = {}
     for c in packs:
         sticks[c.a["href"]] = c.find("div", {"class":"sticker-pack__title"}).text
-    if not link:
+    if len(sticks) == 0:
         return await uu.edit("Found Nothing")
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
     for sti in sticks.keys():
