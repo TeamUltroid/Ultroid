@@ -16,8 +16,6 @@
 """
 
 
-import requests
-
 from . import *
 
 
@@ -37,9 +35,7 @@ async def radio_mirchi(e):
     else:
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
-    try:
-        requests.get(song)
-    except BaseException:
+    if not is_url_ok(song):
         return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
@@ -69,9 +65,7 @@ async def live_stream(e):
     else:
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
-    try:
-        requests.get(song)
-    except BaseException:
+    if not is_url_ok(song):
         return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     is_live_vid = False
     if re.search("youtu", song):
