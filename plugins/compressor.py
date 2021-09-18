@@ -95,7 +95,7 @@ async def _(e):
                     text = fil.read()
                     frames = re.findall("frame=(\\d+)", text)
                     size = re.findall("total_size=(\\d+)", text)
-
+                    speed = 0
                     if len(frames):
                         elapse = int(frames[-1])
                     if len(size):
