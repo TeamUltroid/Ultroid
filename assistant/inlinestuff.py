@@ -15,7 +15,7 @@ import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
-from search_engine_parser import GoogleSearch, YahooSearch
+from search_engine_parser import GoogleSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -25,7 +25,6 @@ from . import *
 
 ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
-yeah = "https://telegra.ph/file/e3c67885e16a194937516.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
 api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
@@ -217,63 +216,6 @@ async def gsearch(q_event):
         except IndexError:
             break
     await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
-
-
-@in_pattern("yahoo")
-@in_owner
-async def yahoosearch(q_event):
-    try:
-        match = q_event.text.split(" ", maxsplit=1)[1]
-    except IndexError:
-        await q_event.answer(
-            [], switch_pm="Yahoo Search. Enter a query!", switch_pm_param="start"
-        )
-    searcher = []
-    page = findall(r"page=\d+", match)
-    cache = False
-    try:
-        page = page[0]
-        page = page.replace("page=", "")
-        match = match.replace("page=" + page[0], "")
-    except IndexError:
-        page = 1
-    search_args = (str(match), int(page), bool(cache))
-    gsearch = YahooSearch()
-    gresults = await gsearch.async_search(*search_args)
-    msg = ""
-    for i in range(len(gresults["links"])):
-        try:
-            title = gresults["titles"][i]
-            link = gresults["links"][i]
-            desc = gresults["descriptions"][i]
-            msg += f"👉[{title}]({link})\n`{desc}`\n\n"
-            searcher.append(
-                await q_event.builder.article(
-                    title=title,
-                    description=desc,
-                    thumb=wb(yeah, 0, "image/jpeg", []),
-                    text=f"**Yᴀʜᴏᴏ Sᴇᴀʀᴄʜ**\n\n**••Tɪᴛʟᴇ••**\n`{title}`\n\n**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`",
-                    link_preview=False,
-                    buttons=[
-                        [Button.url("Lɪɴᴋ", url=f"{link}")],
-                        [
-                            Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                                query="yahoo ",
-                                same_peer=True,
-                            ),
-                            Button.switch_inline(
-                                "Sʜᴀʀᴇ",
-                                query=f"yahoo {match}",
-                                same_peer=False,
-                            ),
-                        ],
-                    ],
-                ),
-            )
-        except IndexError:
-            break
-    await q_event.answer(searcher, switch_pm="Yahoo Search.", switch_pm_param="start")
 
 
 @in_pattern("app")
