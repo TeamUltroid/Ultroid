@@ -14,6 +14,8 @@ import re
 
 from . import *
 
+CALC = {}
+
 m = [
     "AC",
     "C",
@@ -62,54 +64,64 @@ async def _(e):
 @owner
 async def _(e):
     x = (e.data_match.group(1)).decode()
+    user = e.query.user_id
+    get = None
     if x == "AC":
-        udB.delete("calc")
+        if CALC.get(user):
+            CALC.pop(user)
         await e.edit(
             "• Ultroid Inline Calculator •",
             buttons=[Button.inline("Open Calculator Again", data="recalc")],
         )
     elif x == "C":
-        udB.delete("calc")
+        if CALC.get(user):
+            CALC.pop(user)
         await e.answer("cleared")
     elif x == "⌫":
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
-            udB.set("calc", get[:-1])
+            CALC.update({user: get[:-1]})
             await e.answer(str(get[:-1]))
     elif x == "%":
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
-            udB.set("calc", get + "/100")
+            CALC.update({user: get + "/100"})
             await e.answer(str(get + "/100"))
     elif x == "÷":
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
-            udB.set("calc", get + "/")
+            CALC.update({user: get + "/"})
             await e.answer(str(get + "/"))
     elif x == "x":
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
-            udB.set("calc", get + "*")
+            CALC.update({user: get + "*"})
             await e.answer(str(get + "*"))
     elif x == "=":
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
             if get.endswith(("*", ".", "/", "-", "+")):
                 get = get[:-1]
-            out = await calcc(get, e)
+            out = eval(get)
             try:
                 num = float(out)
                 await e.answer(f"Answer : {num}", cache_time=0, alert=True)
             except BaseException:
-                udB.delete("calc")
+                CALC.pop(user)
                 await e.answer("Error", cache_time=0, alert=True)
         await e.answer("None")
     else:
-        get = udB.get("calc")
+        if CALC.get(user):
+            get = CALC[user]
         if get:
-            udB.set("calc", get + x)
+            CALC.update({user: get + x})
             await e.answer(str(get + x))
-        udB.set("calc", x)
+        CALC.update({user: x})
         await e.answer(str(x))
 
 
