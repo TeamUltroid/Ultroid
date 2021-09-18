@@ -1061,11 +1061,6 @@ async def disus(event):
                 "Cancelled!!",
                 buttons=get_back_button("pml"),
             )
-        elif len(themssg) > 1:
-            await conv.send_message(
-                "Incorrect Value",
-                buttons=get_back_button("pml"),
-            )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
