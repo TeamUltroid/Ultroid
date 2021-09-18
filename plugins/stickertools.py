@@ -446,7 +446,7 @@ async def ultdround(event):
 async def ultdestroy(event):
     ult = await event.get_reply_message()
     if not (
-        ult and ult.media and "animated" in mediainfo(a.media)
+        ult and ult.media and "animated" in mediainfo(ult.media)
     ):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
