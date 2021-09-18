@@ -1044,7 +1044,7 @@ async def disus(event):
     name = "Pm Logger Group"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Send The Symbol Which u want as your {name}\n\n use /cancel to cancel.",
+            f"Send The Chat Id of group Which u want as your {name}\n\n use /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -1052,11 +1052,6 @@ async def disus(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("pml"),
-            )
-        elif len(themssg) > 1:
-            await conv.send_message(
-                "Incorrect Value",
                 buttons=get_back_button("pml"),
             )
         else:
