@@ -15,10 +15,6 @@
 
 """
 
-
-import requests
-from requests.exceptions import MissingSchema
-
 from . import *
 
 
@@ -59,13 +55,7 @@ async def video_c(event):
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
         song, thumb, title, link, duration = await file_download(xx, reply)
     else:
-        try:
-            requests.get(song)
-            is_link = True
-        except MissingSchema:
-            is_link = None
-        except BaseException:
-            is_link = False
+        is_link = is_url_ok(song)
         if is_link is False:
             return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
         if is_link is None:
