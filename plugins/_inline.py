@@ -242,9 +242,11 @@ async def _(e):
                 query="go TeamUltroid",
                 same_peer=True,
             ),
+        ],
+        [
             Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Oɴ Yᴀʜᴏᴏ",
-                query="yahoo TeamUltroid",
+                "Search on XDA",
+                query="xda telegram",
                 same_peer=True,
             ),
         ],
@@ -272,7 +274,6 @@ async def _(e):
                 same_peer=True,
             ),
         ],
-        [Button.switch_inline("xda Search", query="xda telegram", same_peer=True)],
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
