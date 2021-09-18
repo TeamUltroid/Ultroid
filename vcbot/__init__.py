@@ -31,6 +31,7 @@ from pyUltroid.functions.all import (
     bash,
     downloader,
     get_user_id,
+    is_url_ok,
     get_videos_link,
     inline_mention,
     mediainfo,
@@ -365,12 +366,15 @@ async def dl_playlist(chat, from_user, link):
         return song, thumb, title, vid1["link"], duration
     finally:
         for z in links[1:]:
-            search = VideosSearch(z, limit=1).result()
-            vid = search["result"][0]
-            duration = vid.get("duration") or "♾"
-            title = vid["title"]
-            thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
-            add_to_queue(chat, None, title, vid["link"], thumb, from_user, duration)
+            try:
+                search = VideosSearch(z, limit=1).result()
+                vid = search["result"][0]
+                duration = vid.get("duration") or "♾"
+                title = vid["title"]
+                thumb = f"https://i.ytimg.com/vi/{vid['id']}/hqdefault.jpg"
+                add_to_queue(chat, None, title, vid["link"], thumb, from_user, duration)
+            except Exception as er:
+                LOGS.exception(er)
 
 
 async def file_download(event, reply, fast_download=True):

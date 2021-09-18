@@ -27,7 +27,7 @@ from . import *
     pattern="poll ?(.*)",
 )
 async def uri_poll(e):
-    if not e.sender._bot and e.is_private:
+    if not e.client._bot and e.is_private:
         return await eor(e, "`Use this in Group/Channel.`", time=15)
     match = e.pattern_match.group(1)
     if not match:

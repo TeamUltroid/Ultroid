@@ -13,8 +13,6 @@
 
 """
 
-import requests
-
 from . import *
 
 
@@ -36,9 +34,7 @@ async def live_stream(e):
         chat = e.chat_id
     if not (re.search("youtu", song) and re.search("playlist\\?list", song)):
         return await eor(xx, "Give only youtube playlist")
-    try:
-        requests.get(song)
-    except BaseException:
+    if not is_url_ok(song):
         return await eor(xx, f"`Only Youtube Playlist please.`")
     await xx.edit("`Keep patience... It'll take some time.`")
     file, thumb, title, link, duration = await dl_playlist(chat, html_mention(e), song)

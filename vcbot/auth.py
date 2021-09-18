@@ -71,7 +71,10 @@ async def listVc(e):
     text = "• <strong>Vc Auth Chats •</strong>\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
-        title = (await e.client.get_entity(on)).title
+        try:
+            title = (await e.client.get_entity(on)).title
+        except ValueError:
+            title = "No Info"
         text += f"∆ <strong>{title}</strong> [ <code>{on}</code> ] : <code>{st}</code>"
     await eor(e, text, parse_mode="html")
 
