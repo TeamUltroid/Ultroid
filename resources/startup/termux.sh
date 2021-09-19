@@ -1,10 +1,15 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/bash
 # Ultroid - UserBot
 # Copyright (C) 2021 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+
+archive=ubuntu.tar.gz
+directory=ubuntu-for-ultroid
+architecture=$(dpkg --print-architecture)
+    
 main(){
     install_ubuntu
     update_packages
@@ -12,28 +17,26 @@ main(){
     install_opencv
     install_pillow
     install_dependencies
-    should_start
+    # should_start
 }
 
-install_unbuntu(){
-    archive = "ubuntu.tar.gz"
-    directory = "ubuntu-for-ultroid"
-    architecture = $(dpkg --print-architecture)
-    if [ $architecture = "arm" ];
+install_ubuntu(){
+    if [ "$architecture" = "arm" ];
     then
         architecture = "armhf"
-    elif [ $architecture = "aarch64" ];
+    elif [ "$architecture" = "aarch64" ];
     then
         architecture = "arm64"
-    elif [ $architecture = "amd64" ];
+    elif [ "$architecture" = "amd64" ];
     then
         architecture = architecture
-    elif [ $architecture = "x86_64" ];
+    elif [ "$architecture" = "x86_64" ];
     then
         architecture = "amd64"
-    else;
-        echo "Unknown Architecture - $architecture!! Make sure you are using this in termux!"
+    else
+        echo "Unknown Architecture - $architecture!!"
         exit 1
+    fi
 
     echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
     curl -o http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz $archive
@@ -114,6 +117,7 @@ install_pillow(){
     echo "Installing Pillow..."
     export LDFLAGS="-L/system/lib/"
     export CFLAGS="-I/data/data/com.termux/files/usr/include/"
+    pip install -U pip wheel setuptools
     pip install Pillow
     clear
 }
@@ -121,7 +125,6 @@ install_pillow(){
 install_dependencies(){
     echo "Installing Dependencies..."
     wget -O requirements.txt https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/resources/startup/requirements.txt
-    pip install -U pip wheel setuptools
     pip install --no-cache-dir -r requirements.txt
     pip install av --no-binary av
     rm requirements.txt
