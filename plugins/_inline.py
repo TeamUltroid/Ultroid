@@ -10,14 +10,17 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-
+from telethon import Button
+from pyUltroid.dB._core import VC_HELP,HELP,PLUGINS,ADDONS,LIST
 from git import Repo
-from pyUltroid.dB.core import *
+#from pyUltroid.dB._core import *
+from pyUltroid.misc import CMD_HELP
+from pyUltroid.functions.helper import restart, gen_chlog, time_formatter, updater
 from pyUltroid.misc import owner_and_sudos
-from support import *
+from pyUltroid.misc._assistant import callback, owner, in_pattern, inline_owner as in_owner, inline
 from telethon.tl.types import InputBotInlineResult, InputWebDocument
+from . import OWNER_NAME, get_string, start_time, udB, HNDLR
 
-from . import *
 from ._help import _main_help_menu
 
 # ================================================#
@@ -610,7 +613,7 @@ async def on_plug_in_callback_query_handler(event):
 def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
     number_of_cols = 2
-    emoji = Redis("EMOJI_IN_HELP")
+    emoji = udB.get("EMOJI_IN_HELP")
     multi = emoji or "✘"
     global upage
     upage = page_number

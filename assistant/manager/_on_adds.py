@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
-
+from telethon import events
 
 @asst.on(events.ChatAction())
 async def dueha(e):

@@ -26,7 +26,7 @@
     d- days
     Mute user in current chat with time.
 """
-from pyUltroid.functions.all import ban_time
+from pyUltroid.functions.helper import ban_time
 from pyUltroid.functions.mute_db import is_muted, mute, unmute
 from telethon import events
 

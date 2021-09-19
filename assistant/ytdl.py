@@ -11,7 +11,7 @@ import re
 import time
 
 from numerize import numerize
-from pyUltroid.functions.all import *
+from pyUltroid.functions.helper import *
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb

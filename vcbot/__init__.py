@@ -27,7 +27,7 @@ from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
 from telethon.errors.rpcerrorlist import ParticipantJoinMissingError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
-from pyUltroid.functions.all import (
+from pyUltroid.functions.helper import (
     bash,
     downloader,
     get_user_id,

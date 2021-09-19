@@ -5,19 +5,20 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-
-from pyUltroid.functions.all import get_chatbot_reply
-from pyUltroid.functions.chatBot_db import chatbot_stats
-from pyUltroid.functions.clean_db import *
-from pyUltroid.functions.forcesub_db import *
-from pyUltroid.functions.gban_mute_db import *
-from pyUltroid.functions.greetings_db import *
-from pyUltroid.functions.username_db import *
+import asyncio
+from pyUltroid.functions.tools import get_chatbot_reply
+from pyUltroid.dB.chatBot_db import chatbot_stats
+from pyUltroid.dB.clean_db import is_clean_added
+from pyUltroid.dB.forcesub_db import get_forcesetting
+from pyUltroid.dB.gban_mute_db import is_gbanned
+from pyUltroid.dB.greetings_db import get_goodbye,get_welcome,must_thank
+from pyUltroid.dB import stickers
+from pyUltroid.dB.username_db import get_username, update_username
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
-
-from . import *
+from telethon import events
+from . import asst, ultroid_cmd, ultroid_bot, types, LOG_CHANNEL, LOGS, udB
 
 
 @ultroid_bot.on(events.ChatAction())
@@ -35,7 +36,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
-            await ultroid.send_message(ult.chat_id, file=sticker)
+            await ultroid_bot.send_message(ult.chat_id, file=sticker)
     # force subscribe
     if (
         udB.get("FORCESUB")

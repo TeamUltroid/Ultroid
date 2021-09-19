@@ -9,15 +9,11 @@ import asyncio
 import os
 import time
 
-from pyUltroid import *
-from pyUltroid.dB import *
-from pyUltroid.functions.all import *
-from pyUltroid.functions.sudos import *
-from pyUltroid.version import ultroid_version
+
+from pyUltroid import ultroid_bot, udB, LOGS, asst, HNDLR
+from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.misc._decorators import ultroid_cmd
-from telethon import Button
 from telethon.tl import functions, types
-from telethon.utils import get_display_name
 
 from strings import get_string
 

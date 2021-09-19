@@ -6,8 +6,8 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pyUltroid import *
-from pyUltroid.dB.database import Var
-from pyUltroid.functions.all import *
+# from pyUltroid.configs import Var
+from pyUltroid.functions.helper import *
 from telethon import Button, custom
 
 from strings import get_languages, get_string

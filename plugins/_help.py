@@ -5,11 +5,12 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyUltroid.dB.core import *
-from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
+from telethon.tl.custom import Button
+from telethon.errors.rpcerrorlist import BotInlineDisabledError
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
-from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-
+from telethon.errors.rpcerrorlist import BotResponseTimeoutError
+from pyUltroid.dB._core import LIST, LOADED, HELP, PLUGINS,ADDONS
+from pyUltroid.misc import CMD_HELP
 from . import *
 
 C_PIC = udB.get("INLINE_PIC")
@@ -81,12 +82,12 @@ async def _help(ult):
                 file=_file_to_replace,
                 buttons=_main_help_menu,
             )
-        except rep:
+        except BotResponseTimeoutError:
             return await eor(
                 ult,
                 get_string("help_2").format(HNDLR),
             )
-        except dis:
+        except BotInlineDisabledError:
             return await eor(ult, get_string("help_3"))
         await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
         await ult.delete()
