@@ -81,7 +81,7 @@ async def logo_gen(event):
         font=font,
         fill=(255, 255, 255),
     )
-    x = (image_width - w) / 2
+    x = (image_width - w) / 1.5
     y = (image_height - h) / 2
     draw.text(
         (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
