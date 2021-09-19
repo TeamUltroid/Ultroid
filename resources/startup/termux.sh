@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/bash
 # Ultroid - UserBot
 # Copyright (C) 2021 TeamUltroid
 #
@@ -31,8 +31,8 @@ install_unbuntu(){
     elif [ $architecture = "x86_64" ];
     then
         architecture = "amd64"
-    else;
-        echo "Unknown Architecture - $architecture!! Make sure you are using this in termux!"
+    else
+        echo "Unknown Architecture - $architecture!!"
         exit 1
 
     echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
