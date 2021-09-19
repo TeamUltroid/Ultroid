@@ -29,7 +29,7 @@ install_ubuntu(){
         architecture = "arm64"
     elif [ "$architecture" = "amd64" ];
     then
-        architecture = "$architecture"
+        architecture = ${architecture}
     elif [ "$architecture" = "x86_64" ];
     then
         architecture = "amd64"
