@@ -466,7 +466,7 @@ async def telegraphcmd(event):
     await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
 
 
-@ultroid_cmd(pattern="json")
+@ultroid_cmd(pattern="json$")
 async def _(event):
     the_real_message = None
     reply_to_id = None
@@ -617,10 +617,13 @@ async def toothpaste(event):
 
 @ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
-    if not event.reply_to_msg_id:
+    reply = await event.get_reply_message()
+    if not (reply or reply.file):
         return await eod(
             event, "`Please reply to a file to download its thumbnail!`", time=5
         )
+    if not reply.file.media.thumbs:
+        return await eod(event, "`Replied file has no thumbnail.`")
     xx = await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
