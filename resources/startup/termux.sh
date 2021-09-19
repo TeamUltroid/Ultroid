@@ -7,7 +7,6 @@
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-archive="ubuntu.tar.gz"
 directory="ubuntu-for-ultroid"
 architecture=$(dpkg --print-architecture)
     
@@ -40,7 +39,7 @@ install_ubuntu(){
     fi
 
     echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
-    curl -O http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz $archive
+    curl -O http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz ubuntu.tar.gz
 
     root=`pwd`
     mkdir -p $directory && cd $directory && tar -zxf $root/ubuntu.tar.gz --exclude='dev'||:
