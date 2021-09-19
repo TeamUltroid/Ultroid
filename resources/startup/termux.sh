@@ -39,9 +39,9 @@ install_ubuntu(){
     fi
 
     echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
-    curl -o http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz $archive
+    curl -O http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz $archive
 
-    root = `pwd`
+    root=`pwd`
     mkdir -p $directory && cd $directory && tar -zxf $root/ubuntu.tar.gz --exclude='dev'||:
 }       
 
