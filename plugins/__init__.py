@@ -20,14 +20,6 @@ from telethon.utils import get_display_name
 
 from strings import get_string
 
-try:
-    import glitch_me
-except ModuleNotFoundError:
-    os.system(
-        "pip3 install git+https://github.com/1Danish-00/glitch_me.git"
-    )
-
-
 start_time = time.time()
 
 OWNER_NAME = ultroid_bot.me.first_name
