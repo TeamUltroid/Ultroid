@@ -23,16 +23,16 @@ main(){
 install_ubuntu(){
     if [ "$architecture" = "arm" ];
     then
-        architecture = "armhf"
+        architecture="armhf"
     elif [ "$architecture" = "aarch64" ];
     then
-        architecture = "arm64"
+        architecture="arm64"
     elif [ "$architecture" = "amd64" ];
     then
-        architecture = "amd64"
+        architecture="amd64"
     elif [ "$architecture" = "x86_64" ];
     then
-        architecture = "amd64"
+        architecture="amd64"
     else
         echo "Unknown Architecture - $architecture!!"
         exit 1
