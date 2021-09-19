@@ -26,7 +26,7 @@ async def get_the_addons_lol(event):
     if thelink is None:
         return await eor(xx, fool, time=10)
     split_thelink = thelink.split("/")
-    if "raw" not in split_thelink:
+    if "raw" not in thelink:
         return await eor(xx, fool, time=10)
     name_of_it = split_thelink[(len(split_thelink) - 1)]
     plug = requests.get(thelink).text
