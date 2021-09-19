@@ -19,16 +19,16 @@ install_ubuntu(){
     archive = "ubuntu.tar.gz"
     directory = "ubuntu-for-ultroid"
     architecture = $(dpkg --print-architecture)
-    if [ $architecture = "arm" ];
+    if [ "$architecture" = "arm" ];
     then
         architecture = "armhf"
-    elif [ $architecture = "aarch64" ];
+    elif [ "$architecture" = "aarch64" ];
     then
         architecture = "arm64"
-    elif [ $architecture = "amd64" ];
+    elif [ "$architecture" = "amd64" ];
     then
         architecture = architecture
-    elif [ $architecture = "x86_64" ];
+    elif [ "$architecture" = "x86_64" ];
     then
         architecture = "amd64"
     else
