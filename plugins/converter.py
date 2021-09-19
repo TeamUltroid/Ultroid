@@ -44,9 +44,10 @@ opn = []
 )
 async def _(e):
     r = await e.get_reply_message()
-    pop = "`Reply to img or file with thumbnail.`"
-    if not r:
-        return await eor(e, pop)
+    if not (r or r.file):
+        return await eod(e, "`Reply to img or file with thumbnail.`")
+    if not r.file.media.thumbs:
+        return await eod(e, "Replied file has no thumbnail.`")
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
