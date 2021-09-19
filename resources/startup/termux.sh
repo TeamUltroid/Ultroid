@@ -12,10 +12,10 @@ main(){
     install_opencv
     install_pillow
     install_dependencies
-    should_start
+    # should_start
 }
 
-install_unbuntu(){
+install_ubuntu(){
     archive = "ubuntu.tar.gz"
     directory = "ubuntu-for-ultroid"
     architecture = $(dpkg --print-architecture)
@@ -115,6 +115,7 @@ install_pillow(){
     echo "Installing Pillow..."
     export LDFLAGS="-L/system/lib/"
     export CFLAGS="-I/data/data/com.termux/files/usr/include/"
+    pip install -U pip wheel setuptools
     pip install Pillow
     clear
 }
@@ -122,7 +123,6 @@ install_pillow(){
 install_dependencies(){
     echo "Installing Dependencies..."
     wget -O requirements.txt https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/resources/startup/requirements.txt
-    pip install -U pip wheel setuptools
     pip install --no-cache-dir -r requirements.txt
     pip install av --no-binary av
     rm requirements.txt
