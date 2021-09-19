@@ -6,6 +6,7 @@
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 main(){
+    install_ubuntu
     update_packages
     install_packages
     install_opencv
@@ -13,6 +14,33 @@ main(){
     install_dependencies
     should_start
 }
+
+install_unbuntu(){
+    archive = "ubuntu.tar.gz"
+    directory = "ubuntu-for-ultroid"
+    architecture = $(dpkg --print-architecture)
+    if [ $architecture = "arm" ];
+    then
+        architecture = "armhf"
+    elif [ $architecture = "aarch64" ];
+    then
+        architecture = "arm64"
+    elif [ $architecture = "amd64" ];
+    then
+        architecture = architecture
+    elif [ $architecture = "x86_64" ];
+    then
+        architecture = "amd64"
+    else;
+        echo "Unknown Architecture - $architecture!! Make sure you are using this in termux!"
+        exit 1
+
+    echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
+    curl -o http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz $archive
+
+    root = `pwd`
+    mkdir -p $directory && cd $directory && tar -zxf $root/ubuntu.tar.gz --exclude='dev'||:
+}       
 
 update_packages(){
     echo "Updating Packages..."
