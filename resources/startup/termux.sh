@@ -5,6 +5,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+
+archive = ubuntu.tar.gz
+directory = ubuntu-for-ultroid
+architecture = $(dpkg --print-architecture)
+    
 main(){
     install_ubuntu
     update_packages
@@ -16,9 +21,6 @@ main(){
 }
 
 install_ubuntu(){
-    archive = "ubuntu.tar.gz"
-    directory = "ubuntu-for-ultroid"
-    architecture = $(dpkg --print-architecture)
     if [ "$architecture" = "arm" ];
     then
         architecture = "armhf"
