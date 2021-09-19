@@ -124,7 +124,7 @@ install_pillow(){
 
 install_dependencies(){
     echo "Installing Dependencies..."
-    wget -O requirements.txt https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/resources/startup/requirements.txt
+    wget -O requirements.txt https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/resources/startup/optional-requirements.txt
     pip install --no-cache-dir -r requirements.txt
     pip install av --no-binary av
     rm requirements.txt
