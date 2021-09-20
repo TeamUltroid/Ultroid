@@ -11,6 +11,7 @@ import time
 
 
 from pyUltroid import ultroid_bot, udB, LOGS, asst, HNDLR
+from pyUltroid.functions.all import *
 from pyUltroid.version import ultroid_version, __version__
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.misc._decorators import ultroid_cmd
