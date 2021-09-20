@@ -39,10 +39,19 @@ install_ubuntu(){
     fi
 
     echo "Your architecture is $architecture. Downloading ubuntu package for your architecture."
-    curl -O http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz ubuntu.tar.gz
+    wget http://cdimage.ubuntu.com/ubuntu-base/releases/21.04/release/ubuntu-base-21.04-base-${architecture}.tar.gz -O "ubuntu.tar.gz"
 
     root=`pwd`
-    mkdir -p $directory && cd $directory && tar -zxf $root/ubuntu.tar.gz --exclude='dev'||:
+    mkdir -p $directory && cd $directory
+    tar -zxf $root/ubuntu.tar.gz --exclude='dev'||:
+    echo "nameserver 8.8.8.8\nnameserver 8.8.4.4\n" > etc/resolv.conf
+    stubs=()
+    stubs+=('usr/bin/groups')
+    for e in ${stubs[@]};
+    do
+        echo -e "#!/bin/sh\nexit" > "$e"
+    done
+    cd $root
 }       
 
 update_packages(){
