@@ -548,7 +548,7 @@ async def unblockpm(unblock):
         user = reply.sender_id
     elif match:
         user = None
-        if match != "all:
+        if match != "all":
             user = await get_user_id(match)
     else:
         return await eor(unblock, NO_REPLY, time=5)
