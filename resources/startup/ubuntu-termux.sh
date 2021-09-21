@@ -4,6 +4,9 @@ directory="ubuntu-for-ultroid"
 architecture=$(dpkg --print-architecture)
 
 install_ubuntu(){
+    apt update
+    apt upgrade -y
+    apt install proot wget -y
     if [ "$architecture" = "arm" ];
     then
         architecture="armhf"
