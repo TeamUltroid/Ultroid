@@ -252,14 +252,16 @@ async def _(event):
         "html.parser",
     )
     packs = z.find_all("div", "sticker-pack__header")
-    sticks = {}
-    for c in packs:
-        sticks[c.a["href"]] = c.find("div", {"class": "sticker-pack__title"}).text
-    if len(sticks) == 0:
+    sticks = {
+        c.a["href"]: c.find("div", {"class": "sticker-pack__title"}).text
+        for c in packs
+    }
+
+    if not sticks:
         return await uu.edit("Found Nothing")
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
-    for sti in sticks.keys():
-        a += f"<a href=sti>sticks[sti]</a>\n"
+    for _ in sticks:
+        a += '<a href=sti>sticks[sti]</a>\n'
     await uu.edit(a, parse_mode="html")
 
 
