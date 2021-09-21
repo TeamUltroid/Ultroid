@@ -17,7 +17,7 @@
 • `{i}block`
     To Block Someone in PM.
 
-• `{i}unblock`
+• `{i}unblock` | `{i}unblock all`
     To Unblock Someone in PM.
 
 • `{i}nologpm`
@@ -49,6 +49,7 @@ from tabulate import tabulate
 from telethon import events
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
+from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
 
 from . import *
@@ -546,9 +547,25 @@ async def unblockpm(unblock):
         reply = await unblock.get_reply_message()
         user = reply.sender_id
     elif match:
-        user = await get_user_id(match)
+        user = None
+        if match != "all:
+            user = await get_user_id(match)
     else:
         return await eor(unblock, NO_REPLY, time=5)
+    if match == "all":
+        count = 0
+        off_ = 0
+        u_s = await unblock.client(GetBlockedRequest(0, 0))
+        count += len(u_s.users)
+        if not count:
+            return await eor(unblock, "__You have not blocked Anyone...__")
+        [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
+        while not u_s.users:
+            off_ += 1
+            u_s = await unblock.client(GetBlockedRequest(off_, 0))
+            [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
+            count += len(u_s.users)
+        return await eor(unblock, f"__Unblocked {count} users.__")
     try:
         await unblock.client(UnblockRequest(user))
         aname = await unblock.client.get_entity(user)
