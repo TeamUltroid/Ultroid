@@ -76,10 +76,10 @@ install_ubuntu(){
     else
         \$command -c "\$com"
     fi
-    EOM
     termux-fix-shebang $bin
     chmod +x $bin
     rm ubuntu.tar.gz
+    EOM
 }
 
 install_ubuntu
