@@ -47,9 +47,12 @@ from pyUltroid.functions.logusers_db import *
 from pyUltroid.functions.pmpermit_db import *
 from tabulate import tabulate
 from telethon import events
-from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
+from telethon.tl.functions.contacts import (
+    BlockRequest,
+    GetBlockedRequest,
+    UnblockRequest,
+)
 from telethon.tl.functions.messages import ReportSpamRequest
-from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
 
 from . import *

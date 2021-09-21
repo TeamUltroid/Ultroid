@@ -26,8 +26,7 @@ async def _(e):
     branch = (Repo.init()).active_branch
     if m:
         if e.pattern_match.group(1) and (
-            "fast" in e.pattern_match.group(1)
-            or "soft" in e.pattern_match.group(1)
+            "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1)
         ):
             await bash("git pull -f && pip3 install -r requirements.txt")
             call_back()

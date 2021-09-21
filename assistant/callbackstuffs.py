@@ -12,6 +12,7 @@ from os import execl, remove
 from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon.tl.types import MessageMediaWebPage
+
 from . import *
 
 # --------------------------------------------------------------------#
@@ -19,6 +20,7 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name="Ultroid")
 auth_url = r["auth_url"]
 # --------------------------------------------------------------------#
+
 
 def text_to_url(event):
     """function to get media url (with|without) Webpage"""
@@ -28,7 +30,9 @@ def text_to_url(event):
             return webpage.display_url
     return event.text
 
+
 # --------------------------------------------------------------------#
+
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -1265,7 +1269,6 @@ async def media(event):
             not (response.text).startswith("/")
             and response.text != ""
             and (not response.media or isinstance(response.media, MessageMediaWebPage))
-
         ):
             url = text_to_url(response)
         else:

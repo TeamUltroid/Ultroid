@@ -43,11 +43,7 @@ from carbonnow import Carbon
 from PIL import Image, ImageDraw
 from telethon.errors import ChatSendStickersForbiddenError, YouBlockedUserError
 from telethon.tl.functions.stickers import SuggestShortNameRequest
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    MessageMediaPhoto,
-)
+from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
 
 from . import *
@@ -197,11 +193,10 @@ async def hehe(args):
         photo = io.BytesIO()
         await ultroid_bot.download_file(message.media.document, photo)
         if (
-                DocumentAttributeFilename(file_name="sticker.webp")
-                in message.media.document.attributes
-         ):
+            DocumentAttributeFilename(file_name="sticker.webp")
+            in message.media.document.attributes
+        ):
             emoji = message.media.document.attributes[1].alt
-       
 
     elif message.file and "video" in message.file.mime_type.split("/"):
         xy = await message.download_media()
@@ -211,8 +206,8 @@ async def hehe(args):
         photo = "ult.webp"
     elif message.file and "tgsticker" in message.file.mime_type:
         await ultroid_bot.download_file(
-           message.media.document,
-           "AnimatedSticker.tgs",
+            message.media.document,
+            "AnimatedSticker.tgs",
         )
         attributes = message.media.document.attributes
         for attribute in attributes:
@@ -222,8 +217,8 @@ async def hehe(args):
         photo = 1
     elif message.message:
         carbon = Carbon(
-                base_url="https://carbonara.vercel.app/api/cook", code=message.message
-            )
+            base_url="https://carbonara.vercel.app/api/cook", code=message.message
+        )
         photo = await carbon.memorize("carbon_kang")
     else:
         return await xx.edit("`Unsupported File!`")
@@ -445,9 +440,7 @@ async def ultdround(event):
 )
 async def ultdestroy(event):
     ult = await event.get_reply_message()
-    if not (
-        ult and ult.media and "animated" in mediainfo(ult.media)
-    ):
+    if not (ult and ult.media and "animated" in mediainfo(ult.media)):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
     xx = await eor(event, "`Processing...`")

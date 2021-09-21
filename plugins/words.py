@@ -116,14 +116,14 @@ async def _(event):
         return await eor(event, "`No word given!`")
     async with aiohttp.ClientSession() as ses:
         async with ses.get(
-            "http://api.urbandictionary.com/v0/define", 
-            params={"term":word}) as out:
+            "http://api.urbandictionary.com/v0/define", params={"term": word}
+        ) as out:
             out = await out.json()
     try:
         out = out["list"][0]
     except IndexError:
         return await eor(event, f"**No result found for** `{word}`")
     await eor(
-            event,
-            f"**Text**: `{out['word']}`\n\n**Meaning**: `{out['definition']}`\n\n**Example**: __{out['example']}__",
-        )
+        event,
+        f"**Text**: `{out['word']}`\n\n**Meaning**: `{out['definition']}`\n\n**Example**: __{out['example']}__",
+    )

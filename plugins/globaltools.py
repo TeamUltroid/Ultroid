@@ -531,7 +531,12 @@ async def list_gengbanned(event):
     gbanned_users = f"<strong>List of users GBanned by {OWNER_NAME}</strong>:\n\n{msg}"
     if len(gbanned_users) > 4096:
         with open("gbanned.txt", "w") as f:
-            f.write(gbanned_users.replace("<strong>", "").replace("</strong>", "").replace("<a href=tg://user?id=", "").replace("</a>",""))
+            f.write(
+                gbanned_users.replace("<strong>", "")
+                .replace("</strong>", "")
+                .replace("<a href=tg://user?id=", "")
+                .replace("</a>", "")
+            )
         await x.reply(
             file="gbanned.txt",
             message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",

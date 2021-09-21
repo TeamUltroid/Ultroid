@@ -9,12 +9,11 @@ import asyncio
 import os
 import time
 
-
-from pyUltroid import ultroid_bot, udB, LOGS, asst, HNDLR
+from pyUltroid import HNDLR, LOGS, asst, udB, ultroid_bot
 from pyUltroid.functions.all import *
-from pyUltroid.version import ultroid_version, __version__
-from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.misc._decorators import ultroid_cmd
+from pyUltroid.misc._wrappers import eod, eor
+from pyUltroid.version import __version__, ultroid_version
 from telethon.tl import functions, types
 
 from strings import get_string

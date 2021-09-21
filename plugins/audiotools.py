@@ -48,7 +48,7 @@ async def vnc(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit('Downloaded Successfully, Now Converting to voice')
+    await xxx.edit("Downloaded Successfully, Now Converting to voice")
     await bash(
         f"ffmpeg -i '{file.name}' -map 0:a -codec:a libopus -b:a 100k -vbr on out.opus"
     )

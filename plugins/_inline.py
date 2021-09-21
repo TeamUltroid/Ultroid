@@ -10,17 +10,20 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-from telethon import Button
-from pyUltroid.dB._core import VC_HELP,HELP,PLUGINS,ADDONS,LIST
-from git import Repo
-#from pyUltroid.dB._core import *
-from pyUltroid.misc import CMD_HELP
-from pyUltroid.functions.helper import restart, gen_chlog, time_formatter, updater
-from pyUltroid.misc import owner_and_sudos
-from pyUltroid.misc._assistant import callback, owner, in_pattern, inline_owner as in_owner, inline
-from telethon.tl.types import InputBotInlineResult, InputWebDocument
-from . import OWNER_NAME, get_string, start_time, udB, HNDLR
 
+from git import Repo
+from pyUltroid.dB._core import ADDONS, HELP, LIST, PLUGINS, VC_HELP
+from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
+
+# from pyUltroid.dB._core import *
+from pyUltroid.misc import CMD_HELP, owner_and_sudos
+from pyUltroid.misc._assistant import callback, in_pattern, inline
+from pyUltroid.misc._assistant import inline_owner as in_owner
+from pyUltroid.misc._assistant import owner
+from telethon import Button
+from telethon.tl.types import InputBotInlineResult, InputWebDocument
+
+from . import HNDLR, OWNER_NAME, get_string, start_time, udB
 from ._help import _main_help_menu
 
 # ================================================#

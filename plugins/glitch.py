@@ -21,11 +21,14 @@ try:
 except ModuleNotFoundError:
     glitch_me = None
 
+
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
     if not glitch_me:
-        return await eor(e, 
-            "`glitch_me` is not Installed!\nInstall it to use this Command...\nInstallation Cmd - `pip3 install git+https://github.com/1Danish-00/glitch_me.git`")
+        return await eor(
+            e,
+            "`glitch_me` is not Installed!\nInstall it to use this Command...\nInstallation Cmd - `pip3 install git+https://github.com/1Danish-00/glitch_me.git`",
+        )
     reply = await e.get_reply_message()
     if not (reply and reply.media):
         return await eor(e, "Reply to any media")

@@ -54,6 +54,7 @@
 """
 import asyncio
 import os
+
 import aiohttp
 import cv2
 import numpy as np
@@ -557,7 +558,9 @@ async def ultd(event):
     got = upf(file)
     lnk = f"https://telegra.ph{got[0]}"
     async with aiohttp.ClientSession() as ses:
-        async with ses.get(f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}") as out:
+        async with ses.get(
+            f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}"
+        ) as out:
             r = await out.json()
     ms = r.get("message")
     if not r["success"]:

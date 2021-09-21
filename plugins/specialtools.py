@@ -88,7 +88,7 @@ async def adaudroid(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit('Downloaded Successfully, Now Adding Your Audio to video')
+    await xxx.edit("Downloaded Successfully, Now Adding Your Audio to video")
     await bash(
         f'ffmpeg -i "{file.name}" -i "{File[0]}" -shortest -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4'
     )
@@ -247,11 +247,14 @@ async def _(event):
     if not x:
         return await eor(event, "`Give something to search`")
     uu = await eor(event, "`Processing...`")
-    z = bs(await async_searcher("https://combot.org/telegram/stickers?q=" + x), "html.parser")
+    z = bs(
+        await async_searcher("https://combot.org/telegram/stickers?q=" + x),
+        "html.parser",
+    )
     packs = z.find_all("div", "sticker-pack__header")
     sticks = {}
     for c in packs:
-        sticks[c.a["href"]] = c.find("div", {"class":"sticker-pack__title"}).text
+        sticks[c.a["href"]] = c.find("div", {"class": "sticker-pack__title"}).text
     if len(sticks) == 0:
         return await uu.edit("Found Nothing")
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
