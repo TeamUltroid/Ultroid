@@ -24,7 +24,6 @@ import aiohttp
 from . import *
 
 
-
 @ultroid_cmd(pattern="meaning", type=["official", "manager"])
 async def mean(event):
     wrd = event.text.split(" ", maxsplit=1)[1]
