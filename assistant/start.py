@@ -13,8 +13,6 @@ from pyUltroid.misc import owner_and_sudos
 from telethon import events
 from telethon.utils import get_display_name
 
-from plugins import *
-
 from . import *
 
 Owner_info_msg = f"""
