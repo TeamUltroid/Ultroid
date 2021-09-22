@@ -8,7 +8,7 @@
 from datetime import datetime
 
 from pytz import timezone as tz
-from pyUltroid.functions.asst_fns import *
+from pyUltroid.dB.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
 from telethon.utils import get_display_name
