@@ -19,7 +19,7 @@
 
 """
 
-from pyUltroid.functions.clean_db import *
+from pyUltroid.dB.clean_db import *
 
 from . import *
 
