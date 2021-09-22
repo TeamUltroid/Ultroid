@@ -122,8 +122,8 @@ async def remove_flood(e):
     except BaseException:
         pass
     if hmm:
-        return await eor(e, "`Antiflood Settings Disabled`", time=5)
-    await eor(e, "`No flood limits in this chat.`", time=5)
+        return await eor(e, get_string("antiflood_1"), time=5)
+    await eor(e, get_string("antiflood_2"), time=5)
 
 
 @ultroid_cmd(
@@ -134,4 +134,4 @@ async def getflood(e):
     ok = get_flood_limit(e.chat_id)
     if ok:
         return await eor(e, f"`Flood limit for this chat is {ok}.`", time=5)
-    await eor(e, "`No flood limits in this chat.`", time=5)
+    await eor(e, get_string("antiflood_2"), time=5)

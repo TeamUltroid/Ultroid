@@ -164,14 +164,14 @@ async def setting(event):
 @callback("vc_helper")
 @owner
 async def on_vc_callback_query_handler(event):
-    xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
+    xhelps = get_string("inline_6").format(
         OWNER_NAME, len(VC_HELP)
     )
     try:
         buttons = page_num(0, VC_HELP, "vchelp", "vc")
     except ZeroDivisionError:
         return await event.answer("Vc not Active.")
-    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
+    await event.edit(xhelps, buttons=buttons, link_preview=False)
 
 
 @callback("doupdate")
@@ -185,7 +185,7 @@ async def _(event):
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + "\n\nClick the below button to update!"
+    changelog_str = changelog + "\n\n" + get_string("inline_8")
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
         with open("ultroid_updates.txt", "w+") as file:
@@ -422,7 +422,7 @@ async def backr(event):
 @callback("bvck")
 @owner
 async def bvckr(event):
-    xhelps = "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid".format(
+    xhelps = get_string("inline_6").format(
         OWNER_NAME, len(VC_HELP)
     )
     current_page_number = int(upage)
@@ -505,8 +505,8 @@ async def on_plug_in_callback_query_handler(event):
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
-        halps = f"Do .help {plugin_name} to get the list of commands."
-        await event.edit(halps, buttons=buttons)
+        await event.edit(get_string("inline_7").format(plugin_name),
+     buttons=buttons)
 
 
 @callback(
@@ -609,7 +609,7 @@ async def on_plug_in_callback_query_handler(event):
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
-        halps = f"Do .help {plugin_name} to get the list of commands."
+        halps = get_string("inline_7").format(plugin_name)
         await event.edit(halps, buttons=buttons)
 
 

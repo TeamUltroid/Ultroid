@@ -16,7 +16,6 @@ from telethon.errors.rpcerrorlist import (
     UserNotParticipantError,
 )
 from telethon.utils import get_display_name
-
 from . import *
 
 CACHE_SPAM = {}
@@ -141,7 +140,7 @@ async def when_asst_added_to_chat(event):
 # log for user's new joins
 
 
-@ultroid.on(events.ChatAction)
+@ultroid_bot.on(events.ChatAction)
 async def when_ultd_added_to_chat(event):
     user = await event.get_user()
     chat = await event.get_chat()

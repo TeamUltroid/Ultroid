@@ -58,9 +58,8 @@ async def lsnote(e):
     x = list_blacklist(e.chat_id)
     if x:
         sd = "Blacklist Found In This Chats Are\n\n"
-        await eor(e, sd + x)
-    else:
-        await eor(e, "No Blacklist word Found Here")
+        return await eor(e, sd + x)
+    await eor(e, "No Blacklist word Found Here")
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))

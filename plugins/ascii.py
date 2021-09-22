@@ -23,8 +23,8 @@ from . import *
 )
 async def _(e):
     if not e.reply_to_msg_id:
-        return await eor(e, "`Reply to image.`")
-    m = await eor(e, "`Converting to html...`")
+        return await eor(e, get_string("ascii_1"))
+    m = await eor(e, get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
     char = "■" if not e.pattern_match.group(1) else e.pattern_match.group(1)
     converter = Img2HTMLConverter(char=char)

@@ -11,15 +11,26 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
+
 # help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
 
+# antiflood
+antiflood_1: "`Antiflood Settings Disabled`"
+antiflood_2: "`No flood limits in this chat.`"
+
+# ascii
+ascii_1: "`Reply to image.`"
+ascii_2: "`Converting to html...`"
+
 # autopic
 autopic_1: "Heya Give me some Text .."
 autopic_2: "No Results found for `{}`"
 autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
+autopic_4: "AUTOPIC was not in use !!"
+autopic_5: "AUTOPIC Stopped!"
 
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
@@ -27,6 +38,9 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇ�
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
+inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
+inline_7: "Do .help {} to get the list of commands."
+inline_8: "Click the below button to update!"
 
 # tagnotif
 tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
