@@ -9,8 +9,13 @@ import asyncio
 import os
 import time
 
-from pyUltroid import HNDLR, LOGS, asst, udB, ultroid_bot
-from pyUltroid.functions.all import *
+from pyUltroid import *
+from pyUltroid.functions.admins import *
+from pyUltroid.functions.helper import *
+from pyUltroid.functions.info import *
+from pyUltroid.functions.misc import *
+from pyUltroid.functions.tools import *
+from pyUltroid.functions.ytdl import *
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
