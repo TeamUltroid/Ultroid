@@ -18,7 +18,7 @@
 """
 import os
 
-from pyUltroid.functions.asstcmd_db import *
+from pyUltroid.dB.asstcmd_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
