@@ -14,6 +14,7 @@
 """
 
 import re
+
 import akinator
 from telethon.errors import BotMethodInvalidError
 
