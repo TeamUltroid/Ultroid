@@ -25,7 +25,7 @@
 
 """
 
-from pyUltroid.functions.warn_db import *
+from pyUltroid.dB.warn_db import *
 
 from . import *
 
