@@ -19,24 +19,35 @@
 • `{i}ud <word>`
     Fetch word defenition from urbandictionary.
 """
-import aiohttp
+import aiohttp, io
 
 from . import *
 
 
-@ultroid_cmd(pattern="meaning", type=["official", "manager"])
+@ultroid_cmd(pattern="meaning ?(.*)", type=["official", "manager"])
 async def mean(event):
-    wrd = event.text.split(" ", maxsplit=1)[1]
-    ok = dictionary.meaning(wrd)
+    wrd = event.pattern_match.group(1)
+    if not wrd:
+        return await eor(event, "`Give a Word to Find Its Meaning..`")
+    url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(wrd) as out:
+            out = await out.json()
     try:
-        p = ok["Noun"]
-    except BaseException:
-        return await eor(event, "Oops! No such word found!!")
-    x = get_string("wrd_1").format(wrd)
-    for c, i in enumerate(p, start=1):
-        x += f"**{c}.** `{i}`\n"
-    if len(x) > 4096:
-        with io.BytesIO(str.encode(x)) as fle:
+        return await eor(event, out["title"])
+    except (AttributeError, KeyError):
+        pass
+    text = f"**Word :** `{wrd}`\n"
+    meni = out[0]["meanings"][0]
+    defi = meni['definations'][0]
+    text+= f"**Meaning :** __{defi['defination']}__\n\n"
+    text += f"**Example :** __{defi['defination']['example']}"
+    if defi["synonyms"]:
+        text+="\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
+    if defi["antonyms"]:
+        text+="\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])
+    if len(text) > 4096:
+        with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
             await event.reply(
                 file=fle,
@@ -45,7 +56,7 @@ async def mean(event):
             )
             await event.delete()
     else:
-        await eor(event, x)
+        await eor(event, text)
 
 
 @ultroid_cmd(
