@@ -164,9 +164,7 @@ async def setting(event):
 @callback("vc_helper")
 @owner
 async def on_vc_callback_query_handler(event):
-    xhelps = get_string("inline_6").format(
-        OWNER_NAME, len(VC_HELP)
-    )
+    xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
     try:
         buttons = page_num(0, VC_HELP, "vchelp", "vc")
     except ZeroDivisionError:
@@ -422,9 +420,7 @@ async def backr(event):
 @callback("bvck")
 @owner
 async def bvckr(event):
-    xhelps = get_string("inline_6").format(
-        OWNER_NAME, len(VC_HELP)
-    )
+    xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
     current_page_number = int(upage)
     buttons = page_num(current_page_number, VC_HELP, "vchelp", "vc")
     await event.edit(
@@ -505,8 +501,7 @@ async def on_plug_in_callback_query_handler(event):
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
-        await event.edit(get_string("inline_7").format(plugin_name),
-     buttons=buttons)
+        await event.edit(get_string("inline_7").format(plugin_name), buttons=buttons)
 
 
 @callback(
