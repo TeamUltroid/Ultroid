@@ -66,8 +66,7 @@ async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
     user, rank = await get_user_info(ult)
-    if not rank:
-        rank = "Admin"
+    rank = rank or "Admin"
     if not user:
         return await xx.edit("`Reply to a user to promote him!`")
     try:
@@ -125,15 +124,15 @@ async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
     if not user:
-        return await xx.edit("`Reply to a user or give username to ban him!`")
+        return await xx.edit(get_string("ban_1"))
     if user.id in DEVLIST:
-        return await xx.edit(" `LoL, I can't Ban my Developer 😂`")
+        return await xx.edit(get_string("ban_2"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
     except BadRequestError:
-        return await xx.edit("`I don't have the right to ban a user.`")
+        return await xx.edit(get_string("ban_3"))
     except UserIdInvalidError:
-        return await xx.edit("`I couldn't get who he is!`")
+        return await xx.edit(get_string("adm_1"))
     senderme = inline_mention(await ult.get_sender())
     try:
         reply = await ult.get_reply_message()
@@ -163,13 +162,13 @@ async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
     if not user:
-        return await xx.edit("`Reply to a user or give username to unban him!`")
+        return await xx.edit(get_string("unban_1"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=True)
     except BadRequestError:
-        return await xx.edit("`I don't have the right to unban a user.`")
+        return await xx.edit(get_string("adm_2"))
     except UserIdInvalidError:
-        await xx.edit("`I couldn't get who he is!`")
+        await xx.edit(get_string("adm_1"))
     sender = inline_mention(await ult.get_sender())
     text = (
         f"{inline_mention(user)} **was unbanned by** {sender} **in** `{ult.chat.title}`"
@@ -185,25 +184,24 @@ async def uunban(ult):
     type=["official", "manager"],
 )
 async def kck(ult):
-    ml = ult.text.split(" ", maxsplit=1)[0]
     if "kickme" in ult.text:
         return
+    ml = ult.text.split(" ", maxsplit=1)[0]
     xx = await eor(ult, get_string("com_1"))
     user, reason = await get_user_info(ult)
     if not user:
-        return await xx.edit("`Kick? Whom? I couldn't get his info...`")
+        return await xx.edit(get_string("adm_1"))
     if user.id in DEVLIST:
-        return await xx.edit(" `Lol, I can't Kick my Developer`😂")
+        return await xx.edit(get_string("kick_2"))
     if user.is_self:
-        return await xx.edit("`I Cant kick him ever...`")
+        return await xx.edit(get_string("kick_3"))
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
-    except BadRequestError:
-        return await xx.edit("`I don't have the right to kick a user.`")
+    except BadRequestError as er:
+        LOGS.info(er)
+        return await xx.edit(get_string("kick_1"))
     except Exception as e:
-        return await xx.edit(
-            f"`I don't have the right to kick a user.`\n\n**ERROR**:\n`{str(e)}`",
-        )
+        LOGS.exception(e)
     text = f"{inline_mention(user)} **was kicked by** {inline_mention(await ult.get_sender())} **in** `{ult.chat.title}`"
     if reason:
         text += f"\n**Reason**: `{reason}`"
@@ -248,7 +246,7 @@ async def tkicki(e):
 @ultroid_cmd(pattern="pin$", type=["official", "manager"])
 async def pin(msg):
     if not msg.is_reply:
-        return await eor(msg, "Reply a Message to Pin !")
+        return await eor(msg, get_string("pin_1"))
     me = await msg.get_reply_message()
     if me.is_private:
         text = "`Pinned.`"
@@ -270,17 +268,17 @@ async def pin(msg):
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
     ch = (ult.pattern_match.group(1)).strip()
-    msg = ult.reply_to_msg_id
-    if msg:
-        pass
+    msg = None
+    if ult.is_reply:
+        msg = ult.reply_to_msg_id
     elif ch == "all":
-        msg = None
+        pass
     else:
-        return await xx.edit(f"Either reply to a message, or, use `{hndlr}unpin all`")
+        return await xx.edit(get_string("unpin_1").format(HNDLR))
     try:
         await ult.client.unpin_message(ult.chat_id, msg)
     except BadRequestError:
-        return await xx.edit("`Hmm.. Guess I have no rights here!`")
+        return await xx.edit(get_string("adm_2"))
     except Exception as e:
         return await xx.edit(f"**ERROR:**`{e}`")
     await xx.edit("`Unpinned!`")
@@ -309,7 +307,7 @@ async def fastpurger(purg):
             p += 0
         return await eor(purg, f"Purged {p} Messages! ", time=5)
     if not purg.reply_to_msg_id:
-        return await eor(purg, "`Reply to a message to purge from.`", time=10)
+        return await eor(purg, get_string("purge_1"), time=10)
     try:
         await purg.client.delete_messages(
             purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
@@ -376,7 +374,7 @@ async def _(e):
     if not e.is_reply:
         return await eod(
             e,
-            "`Reply to someone's msg to delete.`",
+            get_string("purgeall_1"),
         )
 
     name = (await e.get_reply_message()).sender
@@ -429,7 +427,7 @@ async def get_all_pinned(event):
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
     if a == "":
-        return await eor(x, "There is no message pinned in this group!", time=5)
+        return await eor(x, get_string("listpin_1"), time=5)
 
     await x.edit(m + a, parse_mode="html")
 
@@ -441,7 +439,7 @@ async def get_all_pinned(event):
 async def autodelte(ult):
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "1m", "off"]:
-        return await eor(ult, "`Please Use Proper Format..`", time=5)
+        return await eor(ult, "`Please Use in Proper Format..`", time=5)
     if match == "24h":
         tt = 3600 * 24
     elif match == "7d":

@@ -17,6 +17,23 @@ help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
 
+# admintools
+adm_1: "`I couldn't get who he is!`"
+adm_2: "`Hmm.. Guess I have no rights here!`"
+ban_1: "`Reply to a user or give username to ban him!`"
+ban_2: " `LoL, I can't Ban my Developer 😂`"
+ban_3: "`I don't have the right to ban a user.`"
+unban_1: "`Reply to a user or give username to unban him!`"
+unban_2: "`I don't have the right to unban a user.`"
+kick_1: "`I don't have the right to kick a user.`"
+kick_2: " `Lol, I can't Kick my Developer`😂"
+kick_3: "`I Cant kick him ever...`"
+pin_1: "`Reply to a message to pin it!`"
+unpin_1: "Either reply to a message, or, use `{}unpin all`"
+listpin_1: "There is no message pinned in this group!"
+purge_1: "`Reply to a message to purge from.`"
+purgeall_1: "`Reply to someone's msg to delete.`"
+
 # antiflood
 antiflood_1: "`Antiflood Settings Disabled`"
 antiflood_2: "`No flood limits in this chat.`"
