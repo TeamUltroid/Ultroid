@@ -19,7 +19,9 @@
 • `{i}ud <word>`
     Fetch word defenition from urbandictionary.
 """
-import aiohttp, io
+import io
+
+import aiohttp
 
 from . import *
 
@@ -39,13 +41,13 @@ async def mean(event):
         pass
     text = f"**Word :** `{wrd}`\n"
     meni = out[0]["meanings"][0]
-    defi = meni['definations'][0]
-    text+= f"**Meaning :** __{defi['defination']}__\n\n"
+    defi = meni["definations"][0]
+    text += f"**Meaning :** __{defi['defination']}__\n\n"
     text += f"**Example :** __{defi['defination']['example']}"
     if defi["synonyms"]:
-        text+="\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
+        text += "\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
     if defi["antonyms"]:
-        text+="\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])
+        text += "\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
