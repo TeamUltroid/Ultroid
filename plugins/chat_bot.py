@@ -21,7 +21,7 @@
    List the currently AI added users.
 """
 
-from pyUltroid.functions.chatBot_db import *
+from pyUltroid.dB.chatBot_db import *
 from pyUltroid.functions.helper import get_chatbot_reply
 
 
