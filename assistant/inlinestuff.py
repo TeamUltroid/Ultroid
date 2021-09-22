@@ -19,9 +19,14 @@ from search_engine_parser import GoogleSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
-from plugins._inline import SUP_BUTTONS
-
 from . import *
+
+SUP_BUTTONS = [
+    [
+        Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
+        Button.url("• Support •", url="t.me/UltroidSupport"),
+    ],
+]
 
 ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
