@@ -20,11 +20,9 @@
     Fetch word defenition from urbandictionary.
 """
 import aiohttp
-from PyDictionary import PyDictionary
 
 from . import *
 
-dictionary = PyDictionary()
 
 
 @ultroid_cmd(pattern="meaning", type=["official", "manager"])
@@ -42,7 +40,7 @@ async def mean(event):
         with io.BytesIO(str.encode(x)) as fle:
             fle.name = f"{wrd}-meanings.txt"
             await event.reply(
-                file=out_file,
+                file=fle,
                 force_document=True,
                 caption=f"Meanings of {wrd}",
             )
@@ -66,7 +64,7 @@ async def mean(event):
                 fle.name = f"{wrd}-synonyms.txt"
                 await event.client.send_file(
                     event.chat_id,
-                    out_file,
+                    fle,
                     force_document=True,
                     allow_cache=False,
                     caption=f"Synonyms of {wrd}",
@@ -96,7 +94,7 @@ async def mean(event):
                 fle.name = f"{wrd}-antonyms.txt"
                 await event.client.send_file(
                     event.chat_id,
-                    out_file,
+                    fle,
                     force_document=True,
                     allow_cache=False,
                     caption=f"Antonyms of {wrd}",
