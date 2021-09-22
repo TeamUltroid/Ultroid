@@ -30,13 +30,13 @@ from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.helper import (
     bash,
     downloader,
-    get_user_id,
-    is_url_ok,
-    get_videos_link,
     inline_mention,
     mediainfo,
     time_formatter,
 )
+from pyUltroid.functions.tools import is_url_ok
+from pyUltroid.functions.ytdl import get_videos_link, 
+from pyUltroid.functions.info import get_user_id
 from pyUltroid.functions.vc_group import check_vcauth
 from pyUltroid.functions.vc_group import get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
