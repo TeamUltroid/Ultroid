@@ -32,7 +32,10 @@ import traceback
 from os import remove
 from pprint import pprint
 
-from carbonnow import Carbon
+try:
+    from carbonnow import Carbon
+except ImportError:
+    Carbon = None
 
 from . import *
 
