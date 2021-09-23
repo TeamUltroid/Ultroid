@@ -32,7 +32,7 @@ And Turn On auto at morning
 """
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from pyUltroid.functions.night_db import *
+from pyUltroid.dB.night_db import *
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
