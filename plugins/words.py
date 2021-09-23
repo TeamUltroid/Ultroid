@@ -44,7 +44,9 @@ async def mean(event):
     text += f"• **Meaning :** __{defi['definition']}__\n\n"
     text += f"• **Example :** __{defi['definition']['example']}__"
     if defi["synonyms"]:
-        text += "\n\n• **Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+        text += (
+            "\n\n• **Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+        )
     if defi["antonyms"]:
         text += "\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])[:-1]
     if len(text) > 4096:
