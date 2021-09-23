@@ -76,7 +76,7 @@ async def _(ult):
     if not ult.is_reply:
         return await eor(ult, "`Reply to a Media..`", time=5)
     reply_message = await ult.get_reply_message()
-    ok = await eor(ult, "...")
+    ok = await eor(ult, get_string("com_1"))
     replfile = await reply_message.download_media()
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
@@ -96,7 +96,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="delpfp ?(.*)", fullsudo=True)
 async def remove_profilepic(delpfp):
-    ok = await eor(delpfp, "...")
+    ok = await eor(delpfp, "`...`")
     group = delpfp.text[8:]
     if group == "all":
         lim = 0
@@ -112,7 +112,7 @@ async def remove_profilepic(delpfp):
 @ultroid_cmd(pattern="poto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e, "`Processing...`")
+    a = await eor(e, get_string("com_1"))
     if not ult and e.is_reply:
         gs = await e.get_reply_message()
         ult = gs.sender_id
