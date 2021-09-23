@@ -388,7 +388,7 @@ async def se_gdgid(event):
             await event.builder.article(
                 title=img_["alt"],
                 description=bsu,
-                url=bsu + _end,
+                url=bsu + end_,
                 type="photo",
                 content=inp,
                 thumb=inp,
