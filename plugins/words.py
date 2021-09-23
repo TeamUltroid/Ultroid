@@ -17,7 +17,7 @@
     Get all antonyms.
 
 • `{i}ud <word>`
-    Fetch word defenition from urbandictionary.
+    Fetch word definition from urbandictionary.
 """
 import io
 
@@ -42,7 +42,7 @@ async def mean(event):
     meni = out[0]["meanings"][0]
     defi = meni["definitions"][0]
     text += f"**Meaning :** __{defi['definition']}__\n\n"
-    text += f"**Example :** __{defi['definition']['example']}"
+    text += f"**Example :** __{defi['example']}"
     if defi["synonyms"]:
         text += "\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
     if defi["antonyms"]:
