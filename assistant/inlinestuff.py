@@ -370,8 +370,8 @@ async def se_gdgid(event):
         )
     url = f"https://gadgets.ndtv.com/search?searchtext={text.replace(' ', '+')}"
     content = await async_searcher(url)
-    bs = bs(content, "html.parser", from_encoding="utf-8")
-    oO = bs.find_all("div", "rvw-imgbox")
+    bs_ = bs(content, "html.parser", from_encoding="utf-8")
+    oO = bs_.find_all("div", "rvw-imgbox")
     if not oO:
         return await event.answer(
             [], switch_pm="No Results Found :(", switch_pm_param="start"
