@@ -14,7 +14,7 @@
   `{i}img <query> ; <no of results>`
     For doing Images search.
 
-• `{i}reverse <query>`
+• `{i}reverse`
     Reply an Image or sticker to find its sauce.
 """
 import os
