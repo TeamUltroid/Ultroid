@@ -283,7 +283,7 @@ async def savepdf(event):
         a = dani_ck("pdf/scan.pdf")
         im1.save(a)
         await xx.edit(
-            f"Done, Now Reply Another Image/pdf if completed then use {hndlr}pdsend to merge nd send all as pdf",
+            f"Done, Now Reply Another Image/pdf if completed then use {HNDLR}pdsend to merge nd send all as pdf",
         )
         os.remove("o.png")
     elif ultt.endswith(".pdf"):
@@ -291,7 +291,7 @@ async def savepdf(event):
         await event.client.download_media(ok, a)
         await eor(
             event,
-            f"Done, Now Reply Another Image/pdf if completed then use {hndlr}pdsend to merge nd send all as pdf",
+            f"Done, Now Reply Another Image/pdf if completed then use {HNDLR}pdsend to merge nd send all as pdf",
         )
     else:
         await eor(event, "`Reply to a Image/pdf only...`")

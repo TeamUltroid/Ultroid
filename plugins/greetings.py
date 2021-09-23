@@ -158,7 +158,7 @@ async def thank_set(event):
     if not type_ or type_ == "":
         await eor(
             event,
-            f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{hndlr}thankmembers on` or `{hndlr}thankmembers off` to toggle current settings!",
+            f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{HNDLR}thankmembers on` or `{HNDLR}thankmembers off` to toggle current settings!",
         )
         return
     chat = event.chat_id

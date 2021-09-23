@@ -545,7 +545,7 @@ async def taglogerr(event):
     name = "Tag Log Group"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add your assistant and make it admin.\nGet the `{hndlr}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
+            f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -659,7 +659,7 @@ async def sfgrp(event):
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back.",
+            f"Make a group, add @MissRose_Bot, send `{HNDLR}id`, copy that and send it here.\nUse /cancel to go back.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -924,7 +924,7 @@ async def set_wrns(event):
         )
     else:
         await event.edit(
-            f"Something went wrong, please check your {hndlr}logs!",
+            f"Something went wrong, please check your {HNDLR}logs!",
             buttons=get_back_button("pmcstm"),
         )
 

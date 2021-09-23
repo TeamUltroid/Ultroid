@@ -64,7 +64,7 @@ async def _(event):
         lan = input or "en"
     else:
         return await eor(
-            event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5
+            event, f"`{HNDLR}tr LanguageCode` as reply to a message", time=5
         )
     translator = google_translator()
     try:

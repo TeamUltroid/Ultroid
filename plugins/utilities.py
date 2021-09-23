@@ -582,9 +582,9 @@ async def ipinfo(event):
 async def copp(event):
     msg = await event.get_reply_message()
     if not msg:
-        return await eor(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
+        return await eor(event, f"Use `{HNDLR}cpy` as reply to a message!", time=5)
     _copied_msg["CLIPBOARD"] = msg
-    await eor(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
+    await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
 @asst_cmd("pst")
@@ -609,7 +609,7 @@ async def toothpaste(event):
     except KeyError:
         return await eod(
             event,
-            f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
+            f"Nothing was copied! Use `{HNDLR}cpy` as reply to a message first!",
         )
     except Exception as ex:
         return await eor(event, str(ex), time=5)

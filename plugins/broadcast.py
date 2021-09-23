@@ -161,7 +161,7 @@ async def forw(event):
     channels = get_channels()
     x = await eor(event, "Sending...")
     if get_no_channels() == 0:
-        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
+        return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
     sent_count = 0
     if event.reply_to_msg_id:
@@ -203,12 +203,12 @@ async def sending(event):
         return await x.edit("Reply to a message to broadcast.")
     channels = get_channels()
     if get_no_channels() == 0:
-        return await x.edit(f"Please add channels by using `{hndlr}add` in them.")
+        return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.poll:
-            return await x.edit(f"Reply `{hndlr}forward` for polls.")
+            return await x.edit(f"Reply `{HNDLR}forward` for polls.")
         if previous_message:
             error_count = 0
             sent_count = 0

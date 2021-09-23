@@ -89,12 +89,12 @@ else:
     WARNS = 4
 NO_REPLY = get_string("pmperm_3")
 PMCMDS = [
-    f"{hndlr}a",
-    f"{hndlr}approve",
-    f"{hndlr}da",
-    f"{hndlr}disapprove",
-    f"{hndlr}block",
-    f"{hndlr}unblock",
+    f"{HNDLR}a",
+    f"{HNDLR}approve",
+    f"{HNDLR}da",
+    f"{HNDLR}disapprove",
+    f"{HNDLR}block",
+    f"{HNDLR}unblock",
 ]
 
 _not_approved = {}

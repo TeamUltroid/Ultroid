@@ -48,7 +48,7 @@ async def button_parser(event):
     except IndexError:
         return await eor(
             event,
-            f"**Please give some text!**\n**Format:** `{hndlr}botecho text \n[button_text_1](https://t.me/TheUltroid)\n[button_text_2](https://t.me/TeamUltroid)`",
+            f"**Please give some text!**\n**Format:** `{HNDLR}botecho text \n[button_text_1](https://t.me/TheUltroid)\n[button_text_2](https://t.me/TeamUltroid)`",
         )
     text, buttons = generate_url_button(text)
     try:
