@@ -23,7 +23,7 @@
 """
 import os
 
-from pyUltroid.functions.notes_db import *
+from pyUltroid.dB.notes_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
