@@ -58,7 +58,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -102,7 +102,7 @@ p, pp = print, pprint  # ignore: pylint
 async def _(event):
     if len(event.text) > 5 and event.text[5] != " ":
         return
-    xx = await eor(event, "`Processing ...`")
+    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -187,7 +187,7 @@ async def doie(e):
         match = match[1]
     except IndexError:
         return await eor(e, "`Give Some C++ Code..`")
-    msg = await eor(e, "`Processing...`")
+    msg = await eor(e, get_string("com_1"))
     if "main(" not in match:
         new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))
         match = DUMMY_CPP.replace("!code", new_m)
