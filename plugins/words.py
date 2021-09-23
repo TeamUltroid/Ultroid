@@ -17,7 +17,7 @@
     Get all antonyms.
 
 • `{i}ud <word>`
-    Fetch word definition from urbandictionary.
+    Fetch word defenition from urbandictionary.
 """
 import io
 
@@ -35,18 +35,18 @@ async def mean(event):
     url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
     out = await async_searcher(url, re_json=True)
     try:
-        return await eor(event, out["title"])
+        return await eor(event, f'**{out["title"]}**')
     except (KeyError, TypeError):
         pass
-    text = f"**Word :** `{wrd}`\n"
+    text = f"• **Word :** `{wrd}`\n"
     meni = out[0]["meanings"][0]
     defi = meni["definitions"][0]
-    text += f"**Meaning :** __{defi['definition']}__\n\n"
-    text += f"**Example :** __{defi['example']}"
+    text += f"• **Meaning :** __{defi['definition']}__\n\n"
+    text += f"• **Example :** __{defi['definition']['example']}__"
     if defi["synonyms"]:
-        text += "\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
+        text += "\n\n• **Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
     if defi["antonyms"]:
-        text += "\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])
+        text += "\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])[:-1]
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
