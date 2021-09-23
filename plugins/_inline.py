@@ -66,20 +66,16 @@ SUP_BUTTONS = [
 async def inline_alive(o):
     if o.text or str(o.sender_id) not in owner_and_sudos():
         return
-    b = o.builder
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
         "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
     )
     RES = [
-        InputBotInlineResult(
-            str(o.id),
-            "photo",
-            send_message=await b._message(
-                text=MSG,
-                media=True,
-                buttons=SUP_BUTTONS,
-            ),
+        await o.builder.article(
+            type="photo",
+            text=MSG,
+            include_media=True,
+            buttons=SUP_BUTTONS,
             title="Ultroid Userbot",
             description="Userbot | Telethon",
             url=TLINK,
