@@ -365,13 +365,17 @@ async def se_gdgid(event):
     try:
         text = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await event.answer([], switch_pm="Enter Query to Search..", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="Enter Query to Search..", switch_pm_param="start"
+        )
     url = f"https://gadgets.ndtv.com/search?searchtext={text.replace(' ', '+')}"
     content = await async_searcher(url)
     bs = bs(content, "html.parser", from_encoding="utf-8")
     oO = bs.find_all("div", "rvw-imgbox")
     if not oO:
-        return await event.answer([], switch_pm="No Results Found :(", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="No Results Found :(", switch_pm_param="start"
+        )
     OUT = []
     for con in oO:
         a_ = con.find("a")
@@ -380,6 +384,17 @@ async def se_gdgid(event):
         bsu = "https://gadgets.ndtv.com/"
         imglink = img_["src"].split("?downside=")[0]
         inp = InputWebDocument(imglink, 0, "image/jpeg", [])
-        OUT.append(await event.builder.article(title=img_["alt"], description=bsu, url=bsu+_end, type="photo", content=inp, thumb=inp, include_media=True, text = img_["alt"], buttons=Button.inline("Click for More", f"ga{end_}")))
+        OUT.append(
+            await event.builder.article(
+                title=img_["alt"],
+                description=bsu,
+                url=bsu + _end,
+                type="photo",
+                content=inp,
+                thumb=inp,
+                include_media=True,
+                text=img_["alt"],
+                buttons=Button.inline("Click for More", f"ga{end_}"),
+            )
+        )
     await event.answer(OUT, switch_pm="📱 Gadgets Search", switch_pm_param="start")
-    
