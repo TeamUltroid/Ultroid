@@ -62,7 +62,7 @@ SUP_BUTTONS = [
 # --------------------BUTTONS--------------------#
 
 
-@inline
+@in_pattern(pattern=None)
 async def inline_alive(o):
     if o.text or str(o.sender_id) not in owner_and_sudos():
         return
