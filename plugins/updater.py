@@ -7,6 +7,7 @@
 
 """
 ✘ Commands Available -
+
 • `{i}update`
     See changelogs if any update is available.
 """
