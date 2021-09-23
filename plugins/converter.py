@@ -75,7 +75,7 @@ async def imak(event):
     if not inp:
         await eor(event, "Give The name and extension of file")
         return
-    xx = await eor(event, get_string('com_1'))
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
