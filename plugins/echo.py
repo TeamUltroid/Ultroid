@@ -19,7 +19,7 @@
 
 """
 
-from pyUltroid.functions.echo_db import *
+from pyUltroid.dB.echo_db import *
 from telethon.utils import get_display_name
 
 from . import *
