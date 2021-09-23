@@ -22,8 +22,8 @@
 import io
 
 import aiohttp
-from pyUltroid.functions.tools import async_searcher
 from pyUltroid.functions.misc import get_synonyms_or_antonyms
+from pyUltroid.functions.tools import async_searcher
 
 from . import eor, ultroid_cmd
 
