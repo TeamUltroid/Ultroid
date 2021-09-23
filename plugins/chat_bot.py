@@ -22,7 +22,7 @@
 """
 
 from pyUltroid.dB.chatBot_db import *
-from pyUltroid.functions.helper import get_chatbot_reply
+from pyUltroid.functions.tools import get_chatbot_reply
 
 
 @ultroid_cmd(pattern="repai")
