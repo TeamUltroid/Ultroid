@@ -21,7 +21,7 @@
 
 import re
 
-from pyUltroid.functions.antiflood_db import (
+from pyUltroid.dB.antiflood_db import (
     get_flood,
     get_flood_limit,
     rem_flood,
