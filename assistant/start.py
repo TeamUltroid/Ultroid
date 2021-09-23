@@ -68,10 +68,8 @@ async def closet(lol):
     await lol.delete()
 
 
-@asst_cmd("start ?(.*)")
+@asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
-    if event.is_group:
-        return
     if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
         add_user(event.sender_id)
     if str(event.sender_id) not in owner_and_sudos():
