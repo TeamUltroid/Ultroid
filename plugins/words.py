@@ -41,8 +41,8 @@ async def mean(event):
     text = f"**Word :** `{wrd}`\n"
     meni = out[0]["meanings"][0]
     defi = meni["definations"][0]
-    text += f"**Meaning :** __{defi['defination']}__\n\n"
-    text += f"**Example :** __{defi['defination']['example']}"
+    text += f"**Meaning :** __{defi['definition']}__\n\n"
+    text += f"**Example :** __{defi['definition']['example']}"
     if defi["synonyms"]:
         text += "\n\n**Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])
     if defi["antonyms"]:
