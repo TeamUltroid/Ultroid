@@ -10,7 +10,6 @@
 • `{i}gadget <search query>`
     Gadget Search from Telegram.
 """
-import requests
 from bs4 import BeautifulSoup as bs
 
 from . import *
@@ -35,7 +34,9 @@ async def mobs(e):
     cont = await async_searcher(li["href"])
     nu = bs(cont, "html.parser", from_encoding="utf-8")
     req = nu.find_all("div", "_pdsd")
-    imu = nu.find_all("img", src=re.compile("https://i.gadgets360cdn.com/products/large/"))
+    imu = nu.find_all(
+        "img", src=re.compile("https://i.gadgets360cdn.com/products/large/")
+    )
     if imu:
         imu = imu[0]["src"]
     out += f"☑️ **[{li['title']}]({li['href']})**\n\n"
