@@ -25,6 +25,7 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
+
 from strings import get_string
 
 from . import *
@@ -44,10 +45,10 @@ async def google(event):
         return await eod(x, f"`Can't find anything about {inp}`")
     out = ""
     for res in gs:
-            text = res["title"]
-            url = res["link"]
-            des = res["description"]
-            out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
+        text = res["title"]
+        url = res["link"]
+        des = res["description"]
+        out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
     await eor(x, omk, link_preview=False)
 
