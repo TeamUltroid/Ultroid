@@ -41,7 +41,7 @@ async def google(event):
         return await eod(event, "`Give something to search..`")
     x = await eor(event, get_string("com_2"))
     gs = await google_search(inp)
-    if len(gs) == 0:
+    if not gs:
         return await eod(x, f"`Can't find anything about {inp}`")
     out = ""
     for res in gs:
