@@ -21,7 +21,7 @@
 import os
 import re
 
-from pyUltroid.functions.filter_db import *
+from pyUltroid.dB.filter_db import *
 from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
