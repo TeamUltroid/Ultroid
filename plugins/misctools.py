@@ -38,7 +38,7 @@ async def mobs(e):
         "img", src=re.compile("https://i.gadgets360cdn.com/products/large/")
     )
     if imu:
-        imu = imu[0]["src"].split("?")[0] + "downsize=*:420&output-quality=80"
+        imu = imu[0]["src"].split("?")[0] + "?downsize=*:420&output-quality=80"
     out += f"☑️ **[{title}]({li['href']})**\n\n"
     for fp in req:
         ty = fp.findNext()
