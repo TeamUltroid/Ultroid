@@ -175,7 +175,7 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="^(rc|c)arbon",
+    pattern="(rc|c)arbon",
 )
 async def crbn(event):
     xxxx = await eor(event, "Processing")
@@ -195,7 +195,6 @@ async def crbn(event):
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
             return await eor(xxxx, "`Reply to Message or readable file..`")
-    col = random.choice(all_col)
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
     )
