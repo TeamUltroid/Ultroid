@@ -38,7 +38,7 @@
 
 import asyncio
 
-from pyUltroid.functions.ch_db import *
+from pyUltroid.dB.ch_db import *
 
 from . import *
 
