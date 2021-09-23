@@ -75,7 +75,7 @@ async def imak(event):
     if not inp:
         await eor(event, "Give The name and extension of file")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string('com_1'))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
@@ -111,7 +111,7 @@ async def imak(event):
     if not (reply and (reply.media)):
         await eor(event, "Reply to any media.")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
     file = "ult.png"
     if image.endswith((".webp", ".png")):
@@ -135,7 +135,7 @@ async def smak(event):
     if not (reply and (reply.media)):
         await eor(event, "Reply to any media.")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
