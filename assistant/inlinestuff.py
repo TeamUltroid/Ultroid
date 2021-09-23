@@ -378,7 +378,7 @@ async def se_gdgid(event):
         end_ = a_["href"].split("/")[-1]
         img_ = a_.find("img")
         bsu = "https://gadgets.ndtv.com/"
-        imglink = img_.["src"].split("?downside=")[0]
+        imglink = img_["src"].split("?downside=")[0]
         inp = InputWebDocument(imglink, 0, "image/jpeg", [])
         OUT.append(await event.builder.article(title=img_["alt"], description=bsu, url=bsu+_end, type="photo", content=inp, thumb=inp, include_media=True, text = img_["alt"], buttons=Button.inline("Click for More", f"ga{end_}")))
     await event.answer(OUT, switch_pm="📱 Gadgets Search", switch_pm_param="start")
