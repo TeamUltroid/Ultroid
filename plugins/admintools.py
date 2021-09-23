@@ -57,6 +57,7 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
+from pyUltroid.dB import DEVLIST
 
 from . import *
 
