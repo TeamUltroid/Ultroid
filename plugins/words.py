@@ -23,7 +23,8 @@ import io
 
 import aiohttp
 from pyUltroid.functions.tools import async_searcher
-from . import ultroid_cmd, eor
+
+from . import eor, ultroid_cmd
 
 
 @ultroid_cmd(pattern="meaning ?(.*)", type=["official", "manager"])
