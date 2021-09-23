@@ -33,7 +33,7 @@
 """
 import os
 
-from pyUltroid.functions.greetings_db import *
+from pyUltroid.dB.greetings_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
