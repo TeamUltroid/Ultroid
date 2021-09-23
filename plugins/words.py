@@ -36,7 +36,7 @@ async def mean(event):
     out = await async_searcher(url, re_json=True)
     try:
         return await eor(event, out["title"])
-    except (AttributeError, KeyError):
+    except (KeyError, TypeError):
         pass
     text = f"**Word :** `{wrd}`\n"
     meni = out[0]["meanings"][0]
