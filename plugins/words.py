@@ -22,8 +22,8 @@
 import io
 
 import aiohttp
-
-from . import *
+from pyUltroid.functions.tools import async_searcher
+from . import ultroid_cmd, eor
 
 
 @ultroid_cmd(pattern="meaning ?(.*)", type=["official", "manager"])
@@ -32,9 +32,7 @@ async def mean(event):
     if not wrd:
         return await eor(event, "`Give a Word to Find Its Meaning..`")
     url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(wrd) as out:
-            out = await out.json()
+    out = await async_searcher(url, re_json=True)
     try:
         return await eor(event, out["title"])
     except (AttributeError, KeyError):
