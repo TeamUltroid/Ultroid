@@ -23,6 +23,7 @@ import io
 
 import aiohttp
 from pyUltroid.functions.tools import async_searcher
+from pyUltroid.functions.misc import get_synonyms_or_antonyms
 
 from . import eor, ultroid_cmd
 
@@ -67,7 +68,7 @@ async def mean(event):
 )
 async def mean(event):
     wrd = event.text.split(" ", maxsplit=1)[1]
-    ok = dictionary.synonym(wrd)
+    ok = await get_synonyms_or_antonyms(wrd)
     x = get_string("wrd_2").format(wrd)
     try:
         for c, i in enumerate(ok, start=1):
@@ -96,7 +97,7 @@ async def mean(event):
 async def mean(event):
     evid = event.message.id
     wrd = event.text.split(" ", maxsplit=1)[1]
-    ok = dictionary.antonym(wrd)
+    ok = await get_synonyms_or_antonyms(wrd)
     x = get_string("wrd_3").format(wrd)
     c = 1
     try:
