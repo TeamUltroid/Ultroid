@@ -19,8 +19,9 @@
 from os import remove
 
 import jikanpy
-from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
 from pyUltroid.functions.misc import airing_eps, get_anime_src_res
+from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
+
 from . import *
 
 
