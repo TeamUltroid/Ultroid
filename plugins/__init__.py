@@ -16,7 +16,7 @@ from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
 from pyUltroid.functions.tools import *
 from pyUltroid.functions.ytdl import *
-from pyUltroid.misc._assistant import callback, in_pattern, owner
+from pyUltroid.misc._assistant import callback, in_pattern, owner, inline_owner, inline
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
@@ -26,6 +26,10 @@ from telethon.tl import functions, types
 from strings import get_string
 
 Redis = udB.get
+inline = inline()
+owner = owner()
+in_owner = inline_owner()
+
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
