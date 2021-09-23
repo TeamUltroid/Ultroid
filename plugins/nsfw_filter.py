@@ -19,7 +19,7 @@ import os
 
 import requests
 from ProfanityDetector import detector
-from pyUltroid.functions.nsfw_db import *
+from pyUltroid.dB.nsfw_db import *
 
 from . import *
 
