@@ -13,6 +13,7 @@
     To get list of fonts
 """
 
+from . import ultroid_cmd, eor
 from resources.extras.fonts import (
     _default,
     _double_stroke,
