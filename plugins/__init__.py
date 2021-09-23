@@ -26,7 +26,6 @@ from telethon.tl import functions, types
 from strings import get_string
 
 Redis = udB.get
-inline = inline()
 owner = owner()
 in_owner = inline_owner()
 
