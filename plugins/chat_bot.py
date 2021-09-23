@@ -23,7 +23,7 @@
 
 from pyUltroid.dB.chatBot_db import *
 from pyUltroid.functions.tools import get_chatbot_reply
-
+from . import ultroid_cmd, eor
 
 @ultroid_cmd(pattern="repai")
 async def im_lonely_chat_with_me(event):
