@@ -14,7 +14,6 @@ from telethon import Button, custom
 
 from strings import get_languages, get_string
 
-inline = inline()
 owner = owner()
 in_owner = inline_owner()
 
