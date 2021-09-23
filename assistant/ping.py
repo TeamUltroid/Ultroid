@@ -7,7 +7,7 @@
 
 from datetime import datetime
 
-from .. import asst_cmd, owner
+from . import asst_cmd, owner
 
 
 @asst_cmd("ping$")
