@@ -21,7 +21,7 @@ from pyUltroid.misc._assistant import callback, in_pattern, inline
 from pyUltroid.misc._assistant import inline_owner as in_owner
 from pyUltroid.misc._assistant import owner
 from telethon import Button
-from telethon.tl.types import InputBotInlineResult, InputWebDocument
+from telethon.tl.types import InputWebDocument
 
 from . import HNDLR, OWNER_NAME, get_string, start_time, udB
 from ._help import _main_help_menu
