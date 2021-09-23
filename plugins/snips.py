@@ -23,7 +23,7 @@
 import os
 
 from pyUltroid.dB.snips_db import *
-from pyUltroid.functions import sudoers
+from pyUltroid.misc import sudoers
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
