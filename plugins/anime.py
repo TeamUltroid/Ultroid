@@ -20,14 +20,14 @@ from os import remove
 
 import jikanpy
 from telethon.errors.rpcerrorlist import MediaCaptionTooLongError
-
+from pyUltroid.functions.misc import airing_eps, get_anime_src_res
 from . import *
 
 
 @ultroid_cmd(pattern="airing")
 async def airing_anime(event):
     try:
-        await eor(event, airing_eps(), link_preview=False)
+        await eor(event, await airing_eps(), link_preview=False)
     except BaseException:
         info = airing_eps()
         t = (
@@ -47,10 +47,10 @@ async def airing_anime(event):
 @ultroid_cmd(pattern="anime ?(.*)")
 async def anilist(event):
     name = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
     if not name:
-        return await eor(x, "`Enter a anime name!`", time=5)
-    banner, title, year, episodes, info = get_anime_src_res(name)
+        return await eor(event, "`Enter a anime name!`", time=5)
+    x = await eor(event, get_string("com_1"))
+    banner, title, year, episodes, info = await get_anime_src_res(name)
     msg = f"**{title}**\n{year} | {episodes} Episodes.\n\n{info}"
     try:
         await event.reply(msg, file=banner, link_preview=True)
@@ -91,9 +91,8 @@ async def anime_char_search(event):
     pic = char_json["image_url"]
     msg = f"**[{char_json['name']}]({char_json['url']})**"
     if char_json["name_kanji"] != "Japanese":
-        msg += f" [{char_json['name_kanji']}]\n"
-    else:
-        msg += "\n"
+        msg += f" [{char_json['name_kanji']}]"
+    msg += "\n"
     if char_json["nicknames"]:
         nicknames_string = ", ".join(char_json["nicknames"])
         msg += f"\n**Nicknames** : `{nicknames_string}`\n"
