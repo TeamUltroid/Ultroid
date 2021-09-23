@@ -157,7 +157,7 @@ async def setting(event):
     )
 
 
-@callback("vc_helper")
+@callback(data="vc_helper")
 @owner
 async def on_vc_callback_query_handler(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
@@ -168,7 +168,7 @@ async def on_vc_callback_query_handler(event):
     await event.edit(xhelps, buttons=buttons, link_preview=False)
 
 
-@callback("doupdate")
+@callback(data="doupdate")
 @owner
 async def _(event):
     check = updater()
@@ -204,7 +204,7 @@ async def _(event):
         )
 
 
-@callback("pkng")
+@callback(data="pkng")
 async def _(event):
     start = datetime.now()
     end = datetime.now()
@@ -213,14 +213,14 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@callback("upp")
+@callback(data="upp")
 async def _(event):
     uptime = time_formatter((time.time() - start_time) * 1000)
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@callback("inlone")
+@callback(data="inlone")
 @owner
 async def _(e):
     button = [
@@ -284,7 +284,7 @@ async def _(e):
     await e.edit(buttons=button, link_preview=False)
 
 
-@callback("hrrrr")
+@callback(data="hrrrr")
 @owner
 async def on_plug_in_callback_query_handler(event):
     xhelps = helps.format(OWNER_NAME, len(PLUGINS))
@@ -292,7 +292,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
-@callback("frrr")
+@callback(data="frrr")
 @owner
 async def addon(event):
     halp = zhelps.format(OWNER_NAME, len(ADDONS))
@@ -307,14 +307,14 @@ async def addon(event):
         )
 
 
-@callback("rstrt")
+@callback(data="rstrt")
 @owner
 async def rrst(ult):
     await restart(ult)
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"helpme_next\((.+?)\)",
     ),
 )
@@ -326,7 +326,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"helpme_prev\((.+?)\)",
     ),
 )
@@ -338,7 +338,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"vchelp_next\((.+?)\)",
     ),
 )
@@ -350,7 +350,7 @@ async def on_vc_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"vchelp_prev\((.+?)\)",
     ),
 )
@@ -362,7 +362,7 @@ async def on_vc_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"addon_next\((.+?)\)",
     ),
 )
@@ -374,7 +374,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         rb"addon_prev\((.+?)\)",
     ),
 )
@@ -385,7 +385,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons, link_preview=False)
 
 
-@callback("back")
+@callback(data="back")
 @owner
 async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(PLUGINS))
@@ -399,7 +399,7 @@ async def backr(event):
     )
 
 
-@callback("buck")
+@callback(data="buck")
 @owner
 async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
@@ -413,7 +413,7 @@ async def backr(event):
     )
 
 
-@callback("bvck")
+@callback(data="bvck")
 @owner
 async def bvckr(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
@@ -427,7 +427,7 @@ async def bvckr(event):
     )
 
 
-@callback("open")
+@callback(data="open")
 @owner
 async def opner(event):
     z = []
@@ -446,7 +446,7 @@ async def opner(event):
     )
 
 
-@callback("close")
+@callback(data="close")
 @owner
 async def on_plug_in_callback_query_handler(event):
     await event.edit(
@@ -457,7 +457,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         b"def_plugin_(.*)",
     ),
 )
@@ -501,7 +501,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         b"vc_plugin_(.*)",
     ),
 )
@@ -546,7 +546,7 @@ async def on_vc_plg_callback_query_handler(event):
 
 
 @callback(
-    re.compile(
+    data=re.compile(
         b"add_plugin_(.*)",
     ),
 )
