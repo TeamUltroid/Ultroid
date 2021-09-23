@@ -383,7 +383,7 @@ async def se_gdgid(event):
         img_ = a_.find("img")
         bsu = "https://gadgets.ndtv.com/"
         imglink = img_["src"].split("?downside=")[0]
-        inp = InputWebDocument(imglink, 0, "image/jpeg", [])
+        inp = wb(imglink, 0, "image/jpeg", [])
         OUT.append(
             await event.builder.article(
                 title=img_["alt"],
