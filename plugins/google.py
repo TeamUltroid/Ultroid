@@ -24,9 +24,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
-from search_engine_parser import GoogleSearch
-from search_engine_parser.core.exceptions import NoResultsOrTrafficError as GoglError
-
+from pyUltroid.functions.misc import google_search
 from strings import get_string
 
 from . import *
@@ -39,28 +37,19 @@ from . import *
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await event.edit("`Give something to search..`")
+        return await eod(event, "`Give something to search..`")
     x = await eor(event, get_string("com_2"))
-    gs = GoogleSearch()
-    try:
-        res = await gs.async_search(f"{inp}", cache=False)
-    except GoglError as e:
-        return await eor(event, str(e))
+    gs = await google_search(inp)
+    if len(gs) == 0:
+        return await eod(x, f"`Can't find anything about {inp}`")
     out = ""
-    try:
-        for i in range(len(res["links"])):
-            text = res["titles"][i]
-            url = res["links"][i]
-            des = res["descriptions"][i]
+    for res in gs:
+            text = res["title"]
+            url = res["link"]
+            des = res["description"]
             out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
-    except TypeError:
-        return await eor(event, f"`Can't find anything about {inp}`", time=5)
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    opn = [omk[bkl : bkl + 4095] for bkl in range(0, len(omk), 4095)]
-    for bc in opn:
-        await event.respond(bc, link_preview=False)
-    await x.delete()
-    opn.clear()
+    await eor(x, omk, link_preview=False)
 
 
 @ultroid_cmd(pattern="img ?(.*)")
@@ -93,7 +82,7 @@ async def goimg(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="reverse")
+@ultroid_cmd(pattern="reverse$")
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
