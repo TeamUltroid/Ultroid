@@ -28,9 +28,9 @@ async def mobs(e):
     if not co:
         return await eor(e, "No Results Found!")
     bt = await eor(e, "`Processing...`")
-    imu = None
     out = "**📱 Mobile / Gadgets Search**\n\n"
     li = co[0].find("a")
+    imu, title = None, li["img"]["title"]
     cont = await async_searcher(li["href"])
     nu = bs(cont, "html.parser", from_encoding="utf-8")
     req = nu.find_all("div", "_pdsd")
@@ -39,7 +39,7 @@ async def mobs(e):
     )
     if imu:
         imu = imu[0]["src"]
-    out += f"☑️ **[{li['title']}]({li['href']})**\n\n"
+    out += f"☑️ **[{title}]({li['href']})**\n\n"
     for fp in req:
         ty = fp.findNext()
         out += f"- **{ty.text}** - `{ty.findNext().text}`\n"
