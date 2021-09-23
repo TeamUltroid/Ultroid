@@ -13,6 +13,7 @@
 
 """
 
+import string
 from gingerit.gingerit import GingerIt
 from google_trans_new import google_translator
 from telethon import events
@@ -24,20 +25,17 @@ from . import *
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
-        await eor(e, "AUTOCORRECT Feature On", time=5)
-    else:
-        udB.delete("AUTOCORRECT")
-        await eor(e, "AUTOCORRECT Feature Off", time=5)
+        return await eor(e, "AUTOCORRECT Feature On", time=5)
+    udB.delete("AUTOCORRECT")
+    await eor(e, "AUTOCORRECT Feature Off", time=5)
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
+@ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda x: x.text))
 async def gramme(event):
     if Redis("AUTOCORRECT") != "True":
         return
     t = event.text
-    if t.startswith((HNDLR, ".", "?", "#", "_", "*", "'", "@", "[", "(", "+")):
-        return
-    if t.endswith(".."):
+    if t[0] == HNDLR or t[0].lower() not in string.ascii_lowercase or t.endswith(".."):
         return
     tt = google_translator().detect(t)
     if tt[0] != "en":
