@@ -30,7 +30,7 @@ async def mobs(e):
     bt = await eor(e, "`Processing...`")
     out = "**📱 Mobile / Gadgets Search**\n\n"
     li = co[0].find("a")
-    imu, title = None, li["img"]["title"]
+    imu, title = None, li.find("img")["title"]
     cont = await async_searcher(li["href"])
     nu = bs(cont, "html.parser", from_encoding="utf-8")
     req = nu.find_all("div", "_pdsd")
