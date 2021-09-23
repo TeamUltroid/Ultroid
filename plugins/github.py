@@ -10,7 +10,6 @@
 • `{i}github <username>`
     Get full information of the users github profile.
 """
-import requests
 
 from . import *
 
