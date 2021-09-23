@@ -17,7 +17,7 @@ from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updat
 
 # from pyUltroid.dB._core import *
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
-from pyUltroid.misc._assistant import callback, in_pattern, inline
+from pyUltroid.misc._assistant import callback, in_pattern
 from pyUltroid.misc._assistant import inline_owner as in_owner
 from pyUltroid.misc._assistant import owner
 from telethon import Button
