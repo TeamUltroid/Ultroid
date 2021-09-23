@@ -9,6 +9,7 @@ from pyUltroid import *
 
 # from pyUltroid.configs import Var
 from pyUltroid.functions.helper import *
+from pyUltroid.misc._assistant import *
 from telethon import Button, custom
 
 from strings import get_languages, get_string
