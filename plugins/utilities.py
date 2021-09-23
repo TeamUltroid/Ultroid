@@ -80,7 +80,7 @@ from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, U
 from telethon.utils import get_input_location
 
 from . import *
-
+from . import asst_cmd as asst_
 # =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
@@ -587,7 +587,7 @@ async def copp(event):
     await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
-@asst_cmd("pst")
+@asst_("pst")
 async def pepsodent(event):
     await toothpaste(event)
 
