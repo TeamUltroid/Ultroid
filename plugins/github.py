@@ -25,7 +25,7 @@ async def gitsearch(event):
     except BaseException:
         return await xx.edit("`Search for whom? Give me a user name!!`")
     url = f"https://api.github.com/users/{usrname}"
-    ult = requests.get(url).json()
+    ult = await async_searcher(url, re_json=True)
     try:
         uname = ult["login"]
         uid = ult["id"]
