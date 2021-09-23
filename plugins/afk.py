@@ -18,8 +18,8 @@
 
 import asyncio
 
-from pyUltroid.functions.afk_db import *
-from pyUltroid.functions.pmpermit_db import *
+from pyUltroid.dB.afk_db import *
+from pyUltroid.dB.pmpermit_db import *
 from telegraph import upload_file as uf
 from telethon import events
 
