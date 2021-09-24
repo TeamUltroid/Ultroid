@@ -12,7 +12,7 @@ from math import ceil
 from os import remove
 
 from git import Repo
-from pyUltroid.dB._core import ADDONS, HELP, LIST, PLUGINS, VC_HELP
+from pyUltroid.dB._core import ADDONS, HELP, LIST, VC_HELP
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
 
 # from pyUltroid.dB._core import *
@@ -330,7 +330,9 @@ async def rrst(ult):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, list(HELP["Official"].keys()), "helpme", "def")
+    buttons = page_num(
+        current_page_number + 1, list(HELP["Official"].keys()), "helpme", "def"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -342,7 +344,9 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, list(HELP["Official"].keys()), "helpme", "def")
+    buttons = page_num(
+        current_page_number - 1, list(HELP["Official"].keys()), "helpme", "def"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -354,7 +358,9 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc")
+    buttons = page_num(
+        current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -366,7 +372,9 @@ async def on_vc_callback_query_handler(event):
 @owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc")
+    buttons = page_num(
+        current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -378,7 +386,9 @@ async def on_vc_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add")
+    buttons = page_num(
+        current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -390,7 +400,9 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add")
+    buttons = page_num(
+        current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add"
+    )
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -399,7 +411,9 @@ async def on_plug_in_callback_query_handler(event):
 async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["Official"].keys()), "helpme", "def")
+    buttons = page_num(
+        current_page_number, list(HELP["Official"].keys()), "helpme", "def"
+    )
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
