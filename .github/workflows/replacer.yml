@@ -1,0 +1,15 @@
+name: find and replace
+on: [workflow_dispatch]
+branches: [dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: ")\n@owner"
+          replace: ", owner=True)"
+          include: "plugins\/"
