@@ -14,7 +14,6 @@ from os import remove
 from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
-
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
