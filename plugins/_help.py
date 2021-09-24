@@ -47,13 +47,17 @@ async def _help(ult):
                 output += "\n© @TeamUltroid"
                 await eor(ult, output)
             elif plug in HELP["Addons"]:
-                kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
-                kk += str(HELP["Addons"][plug])
-                await eor(ult, kk)
+                output = f"**Plugin** - `{plug}`\n"
+                for i in HELP["Addons"][plug]:
+                    output += i
+                output += "\n© @TeamUltroid"
+                await eor(ult, output)
             elif plug in HELP["VCBot"]:
-                kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
-                kk += str(HELP["VCBot"][plug])
-                await eor(ult, kk)
+                output = f"**Plugin** - `{plug}`\n"
+                for i in HELP["VCBot"][plug]:
+                    output += i
+                output += "\n© @TeamUltroid"
+                await eor(ult, output)
             else:
                 try:
                     x = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
