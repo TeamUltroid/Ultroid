@@ -78,7 +78,7 @@ from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersReq
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
-
+from pyUltroid.misc._assistant import asst_cmd
 from . import *
 
 # =================================================================#
@@ -587,7 +587,7 @@ async def copp(event):
     await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
-@asst_cmd("pst")
+@asst_cmd(pattern="pst")
 async def pepsodent(event):
     await toothpaste(event)
 
