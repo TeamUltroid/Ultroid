@@ -55,8 +55,7 @@ async def _(e):
         )
 
 
-@callback("updtavail")
-@owner
+@callback("updtavail",owner=True)
 async def updava(event):
     await event.delete()
     await asst.send_file(
