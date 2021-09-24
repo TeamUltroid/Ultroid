@@ -41,8 +41,7 @@ async def doit(e):
         await e.delete()
 
 
-@callback(re.compile("aki_?(.*)"))
-@owner
+@callback(re.compile("aki_?(.*)"), owner=True)
 async def doai(e):
     adt = e.pattern_match.group(1).decode("utf-8")
     dt = adt.split("_")
