@@ -96,7 +96,7 @@ def get_buttons():
     return BTTS
 
 
-@asst_cmd("help")
+@asst_cmd(pattern="help")
 async def helpish(event):
     if not event.is_private:
         url = "https://t.me/" + asst.me.username + "?start=start"
