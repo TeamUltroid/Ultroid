@@ -84,8 +84,7 @@ async def inline_alive(o):
     await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
-@in_pattern("ultd")
-# @in_owner
+@in_pattern("ultd", owner=True)
 async def inline_handler(event):
     z = []
     PLUGINS = []
@@ -111,8 +110,7 @@ async def inline_handler(event):
     await event.answer([result], gallery=True)
 
 
-@in_pattern("pasta")
-# @in_owner
+@in_pattern("pasta", owner=True)
 async def _(event):
     ok = event.text.split("-")[1]
     link = "https://spaceb.in/" + ok
@@ -130,8 +128,7 @@ async def _(event):
     await event.answer([result])
 
 
-@callback("ownr")
-@owner()
+@callback("ownr", owner=True)
 async def setting(event):
     z = []
     PLUGINS = []
@@ -166,8 +163,7 @@ async def setting(event):
     )
 
 
-@callback(data="vc_helper")
-@owner()
+@callback(data="vc_helper", owner=True)
 async def on_vc_callback_query_handler(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     try:
@@ -177,8 +173,7 @@ async def on_vc_callback_query_handler(event):
     await event.edit(xhelps, buttons=buttons, link_preview=False)
 
 
-@callback(data="doupdate")
-@owner()
+@callback(data="doupdate", owner=True)
 async def _(event):
     check = updater()
     if not check:
@@ -229,8 +224,7 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@callback(data="inlone")
-@owner()
+@callback(data="inlone", owner=True)
 async def _(e):
     button = [
         [
@@ -293,16 +287,14 @@ async def _(e):
     await e.edit(buttons=button, link_preview=False)
 
 
-@callback(data="hrrrr")
-@owner()
+@callback(data="hrrrr", owner=True)
 async def on_plug_in_callback_query_handler(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     buttons = page_num(0, HELP["Official"].keys(), "helpme", "def")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
-@callback(data="frrr")
-@owner()
+@callback(data="frrr", owner=True)
 async def addon(event):
     halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
     if len(HELP["Addons"]) > 0:
@@ -316,8 +308,7 @@ async def addon(event):
         )
 
 
-@callback(data="rstrt")
-@owner()
+@callback(data="rstrt", owner=True)
 async def rrst(ult):
     await restart(ult)
 
@@ -325,9 +316,8 @@ async def rrst(ult):
 @callback(
     data=re.compile(
         rb"helpme_next\((.+?)\)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
@@ -339,9 +329,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"helpme_prev\((.+?)\)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
@@ -353,9 +342,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"vchelp_next\((.+?)\)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
@@ -367,9 +355,8 @@ async def on_vc_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"vchelp_prev\((.+?)\)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
@@ -381,9 +368,8 @@ async def on_vc_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"addon_next\((.+?)\)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
@@ -395,7 +381,7 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"addon_prev\((.+?)\)",
-    ),
+    ), owner=True
 )
 @owner()
 async def on_plug_in_callback_query_handler(event):
@@ -406,8 +392,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons, link_preview=False)
 
 
-@callback(data="back")
-@owner()
+@callback(data="back",owner=True)
 async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
@@ -422,8 +407,7 @@ async def backr(event):
     )
 
 
-@callback(data="buck")
-@owner()
+@callback(data="buck", owner=True)
 async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
@@ -436,8 +420,7 @@ async def backr(event):
     )
 
 
-@callback(data="bvck")
-@owner()
+@callback(data="bvck", owner=True)
 async def bvckr(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
@@ -450,8 +433,7 @@ async def bvckr(event):
     )
 
 
-@callback(data="open")
-@owner()
+@callback(data="open", owner=True)
 async def opner(event):
     z = []
     PLUGINS = []
@@ -475,8 +457,7 @@ async def opner(event):
     )
 
 
-@callback(data="close")
-@owner()
+@callback(data="close", owner=True)
 async def on_plug_in_callback_query_handler(event):
     await event.edit(
         get_string("inline_5"),
@@ -488,9 +469,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"def_plugin_(.*)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = f"Plugin Name - `{plugin_name}`\n"
@@ -532,9 +512,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"vc_plugin_(.*)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_vc_plg_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = f"Plugin Name - `{plugin_name}`\n"
@@ -577,9 +556,8 @@ async def on_vc_plg_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"add_plugin_(.*)",
-    ),
+    ), owner=True
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = ""
