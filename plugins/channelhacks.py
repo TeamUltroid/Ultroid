@@ -63,7 +63,7 @@ async def _(e):
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
-    z = await eor(e, get_string("com_1")
+    z = await eor(e, get_string("com_1"))
     a, b = x.split("|")
     try:
         c = int(a)
