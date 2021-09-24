@@ -621,7 +621,8 @@ async def list_approved(event):
 @callback(
     re.compile(
         b"approve_(.*)",
-    ),owner=True
+    ),
+    owner=True,
 )
 async def apr_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -663,7 +664,8 @@ async def apr_in(event):
 @callback(
     re.compile(
         b"disapprove_(.*)",
-    ),owner=True
+    ),
+    owner=True,
 )
 async def disapr_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -698,7 +700,8 @@ async def disapr_in(event):
 @callback(
     re.compile(
         b"block_(.*)",
-    ),owner=True
+    ),
+    owner=True,
 )
 async def blck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -719,7 +722,8 @@ async def blck_in(event):
 @callback(
     re.compile(
         b"unblock_(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
