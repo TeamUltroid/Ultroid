@@ -12,4 +12,4 @@ jobs:
         with:
           find: ")\n@owner"
           replace: ", owner=True)"
-          include: "plugins\/"
+          include: "plugins/"
