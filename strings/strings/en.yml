@@ -11,6 +11,7 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
+com_3: "`Invalid Input`"
 
 # help
 help_1: "`{}` is not a valid plugin!"
@@ -37,10 +38,25 @@ purgeall_1: "`Reply to someone's msg to delete.`"
 # antiflood
 antiflood_1: "`Antiflood Settings Disabled`"
 antiflood_2: "`No flood limits in this chat.`"
+antiflood_3: "`You have been muted.`"
+antiflood_4: "`Successfully Updated Antiflood Settings to {} in this chat.`"
+antiflood_5: "`Flood limit for this chat is {}.`"
 
 # ascii
 ascii_1: "`Reply to image.`"
 ascii_2: "`Converting to html...`"
+
+# audiotools
+audiotools_1: "Reply To Audio or video.."
+audiotools_2: "Downloaded Successfully, Now Converting to voice"
+audiotools_3: "`Give time in format to trim`"
+audiotools_4: "`Incorrect Data`"
+audiotools_5: "`Trying To Download...`"
+audiotools_6: "`Wrong trim duration`"
+audiotools_7: "Trimmed Audio From `{}` To `{}`"
+audiotools_8: "Reply to Video File..`"
+audiotools_9: "`No Audio Found...`"
+audiotools_10: "`Extracted Audio from Video...`"
 
 # autopic
 autopic_1: "Heya Give me some Text .."
