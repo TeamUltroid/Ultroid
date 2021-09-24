@@ -305,7 +305,7 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def addon(event):
     halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
-    if len(ADDONS) > 0:
+    if len(HELP["Addons"]) > 0:
         buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
         await event.edit(f"{halp}", buttons=buttons, link_preview=False)
     else:
