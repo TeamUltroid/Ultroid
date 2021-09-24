@@ -17,14 +17,13 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
-from . import callback, in_owner, in_pattern, owner
+from . import callback, in_pattern
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 
 
-@in_pattern("yt")
-@in_owner
+@in_pattern("yt", owner=True)
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -89,9 +88,8 @@ async def _(event):
 @callback(
     re.compile(
         "ytdl_(.*)",
-    ),
+    ),owner=True
 )
-@owner
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
     _lets_split = _e.split("_", maxsplit=1)
@@ -109,9 +107,8 @@ async def _(e):
 @callback(
     re.compile(
         "ytdownload_(.*)",
-    ),
+    ),owner=True
 )
-@owner
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
