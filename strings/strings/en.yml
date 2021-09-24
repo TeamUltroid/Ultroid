@@ -12,11 +12,17 @@ authors:
 com_1: "`Processing...`"
 com_2: "`Searching...`"
 com_3: "`Invalid Input`"
+com_4: "`UnSupported Media..`"
 
 # help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
+
+# userlogs
+userlogs_1: "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It"
+userlogs_2: "Add me to Your Tag Logger Chat to Log Tags"
+userlogs_3: "Leave Chat"
 
 # admintools
 adm_1: "`I couldn't get who he is!`"
@@ -57,6 +63,14 @@ audiotools_7: "Trimmed Audio From `{}` To `{}`"
 audiotools_8: "Reply to Video File..`"
 audiotools_9: "`No Audio Found...`"
 audiotools_10: "`Extracted Audio from Video...`"
+
+# asstcmd
+asstcmd_1: "`Use this Command with Reply and word to use a command.`"
+asstcmd_2: "`Give me the command which you want to remove.`"
+asstcmd_3: "Done Command: `/{}` Removed."
+asstcmd_4: "Done Command : `/{}` saved."
+asstcmd_5: "No commands found"
+asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
 
 # autopic
 autopic_1: "Heya Give me some Text .."
