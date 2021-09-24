@@ -639,7 +639,7 @@ def page_num(page_number, loaded_plugins, prefix, type_):
     global upage
     upage = page_number
     helpable_plugins = [p for p in loaded_plugins]
-    helpable_plugins = sorted(helpable_plugins)
+    helpable_plugins = sorted(helpable_plugins.keys())
     modules = [
         Button.inline(
             "{} {} {}".format(
