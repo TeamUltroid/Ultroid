@@ -63,7 +63,7 @@ async def _(e):
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
-    z = await eor(e, "`processing..`")
+    z = await eor(e, get_string("com_1")
     a, b = x.split("|")
     try:
         c = int(a)
@@ -111,7 +111,7 @@ async def source(e):
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "`Processing..`")
+    x = await eor(event, get_string("com_1")
     if chat_id == "all":
         await x.edit("`Removing...`")
         udB.delete("CH_SOURCE")
@@ -189,7 +189,7 @@ async def destination(e):
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "processing")
+    x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit("`Removing...`")
         udB.delete("CH_DESTINATION")

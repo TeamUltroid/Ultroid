@@ -178,7 +178,7 @@ all_col = [
     pattern="(rc|c)arbon",
 )
 async def crbn(event):
-    xxxx = await eor(event, "Processing")
+    xxxx = await eor(event, get_string("com_1"))
     te = event.text
     col = random.choice(all_col) if te[1] == "r" else None
     if event.reply_to_msg_id:
@@ -213,7 +213,7 @@ async def crbn(event):
     match = event.pattern_match.group(1)
     if not match:
         return await eor(event, "`Give Custom Color to Create Carbon...`")
-    msg = await eor(event, "Processing")
+    msg = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:

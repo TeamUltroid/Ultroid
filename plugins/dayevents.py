@@ -24,7 +24,7 @@ from . import *
 @ultroid_cmd(pattern="eod ?(.*)")
 async def diela(e):
     match = e.pattern_match.group(1)
-    m = await eor(e, "`Processing... `")
+    m = await eor(e, )
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
     if match:

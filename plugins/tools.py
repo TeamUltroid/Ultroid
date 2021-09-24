@@ -374,7 +374,7 @@ async def lastname(steal):
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    lol = await eor(steal, "`Processing !...`")
+    lol = await eor(steal, get_string("com_1"))
     try:
         async with steal.client.conversation(chat) as conv:
             try:

@@ -132,7 +132,7 @@ async def do_zip(event):
         return await eor(
             event, "First All Files Via {i}addzip then doZip to zip all files at one."
         )
-    xx = await eor(event, "`processing`")
+    xx = await eor(event, get_string("com_1"))
     if event.pattern_match.group(1):
         await bash(
             f"zip -r --password {event.pattern_match.group(1)} ultroid.zip zip/*"

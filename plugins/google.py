@@ -58,7 +58,7 @@ async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
         return await eor(event, "`Give something to search...`")
-    nn = await eor(event, "`Processing Keep Patience...`")
+    nn = await eor(event, get_string("com_1"))
     lmt = 5
     if ";" in query:
         try:

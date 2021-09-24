@@ -52,7 +52,7 @@ async def pdfseimg(event):
     if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, "Processing...")
+    xx = await eor(event, get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = "hehe.pdf"
