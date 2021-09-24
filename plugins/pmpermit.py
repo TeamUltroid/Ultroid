@@ -43,6 +43,7 @@
 import re
 from os import remove
 
+from pyUltroid.dB import DEVLIST
 from pyUltroid.dB.logusers_db import *
 from pyUltroid.dB.pmpermit_db import *
 from tabulate import tabulate
@@ -54,7 +55,7 @@ from telethon.tl.functions.contacts import (
 )
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
-from pyUltroid.dB import DEVLIST
+
 from . import *
 
 # ========================= CONSTANTS =============================
