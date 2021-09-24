@@ -25,7 +25,7 @@ import aiohttp
 from pyUltroid.functions.misc import get_synonyms_or_antonyms
 from pyUltroid.functions.tools import async_searcher
 
-from . import eor, ultroid_cmd
+from . import eor, ultroid_cmd, get_string
 
 
 @ultroid_cmd(pattern="meaning ?(.*)", type=["official", "manager"])
@@ -126,11 +126,7 @@ async def _(event):
     word = event.pattern_match.group(1)
     if not word:
         return await eor(event, "`No word given!`")
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(
-            "http://api.urbandictionary.com/v0/define", params={"term": word}
-        ) as out:
-            out = await out.json()
+    out = await async_searcher("http://api.urbandictionary.com/v0/define", params={"term": word}, re_json=True)
     try:
         out = out["list"][0]
     except IndexError:
