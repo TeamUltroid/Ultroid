@@ -40,9 +40,8 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 @callback(
     re.compile(
         "sndplug_(.*)",
-    ),
+    ), owner=True
 )
-@owner
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
     thumb = "resources/extras/inline.jpg"
@@ -77,8 +76,7 @@ async def send(eve):
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 
 
-@callback("updatenow")
-@owner
+@callback("updatenow", owner=True)
 async def update(eve):
     repo = Repo()
     ac_br = repo.active_branch
@@ -128,8 +126,7 @@ async def update(eve):
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@callback("changes")
-@owner
+@callback("changes", owner=True)
 async def changes(okk):
     await okk.answer("■ Generating Changelogs...")
     repo = Repo.init()
@@ -158,9 +155,8 @@ async def changes(okk):
 @callback(
     re.compile(
         "pasta-(.*)",
-    ),
+    ), owner=True
 )
-@owner
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
     with open(ok, "r") as hmm:
@@ -182,8 +178,7 @@ async def _(e):
     )
 
 
-@callback("authorise")
-@owner
+@callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -203,8 +198,7 @@ async def _(e):
     )
 
 
-@callback("folderid")
-@owner
+@callback("folderid", owner=True, func=lambdax: x.is_private)
 async def _(e):
     if not e.is_private:
         return
@@ -227,8 +221,7 @@ async def _(e):
         )
 
 
-@callback("clientsec")
-@owner
+@callback("clientsec", owner=True)
 async def _(e):
     if not e.is_private:
         return
