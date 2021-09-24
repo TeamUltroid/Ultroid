@@ -389,7 +389,6 @@ async def on_plug_in_callback_query_handler(event):
     ),
     owner=True,
 )
-@owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
