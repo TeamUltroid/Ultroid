@@ -41,15 +41,19 @@ async def _help(ult):
     plug = ult.pattern_match.group(1)
     if plug:
         try:
-            if plug in HELP:
+            if plug in HELP["Official"]:
                 output = f"**Plugin** - `{plug}`\n"
-                for i in HELP[plug]:
+                for i in HELP["Official"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
                 await eor(ult, output)
-            elif plug in CMD_HELP:
+            elif plug in HELP["Addons"]:
                 kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
-                kk += str(CMD_HELP[plug])
+                kk += str(HELP["Addons"][plug])
+                await eor(ult, kk)
+            elif plug in HELP["VCBot"]:
+                kk = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
+                kk += str(HELP["VCBot"][plug])
                 await eor(ult, kk)
             else:
                 try:
@@ -78,8 +82,8 @@ async def _help(ult):
             return await ult.reply(
                 get_string("inline_4").format(
                     OWNER_NAME,
-                    len(PLUGINS) - 5,
-                    len(ADDONS),
+                    len(HELP["Official"]) - 5,
+                    len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
                 file=_file_to_replace,
