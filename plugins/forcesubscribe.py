@@ -75,7 +75,7 @@ async def getfsr(e):
     await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 
 
-@in_pattern("fsub ?(.*)",owner=True)
+@in_pattern("fsub ?(.*)", owner=True)
 async def fcall(e):
     match = e.pattern_match.group(1)
     spli = match.split("_")
