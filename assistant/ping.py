@@ -10,7 +10,7 @@ from datetime import datetime
 from . import asst_cmd
 
 
-@asst_cmd(pattern="ping$", owner=True)
+@asst_cmd(pattern="ping$")
 async def _(event):
     start = datetime.now()
     msg = await event.reply("Pong!")
