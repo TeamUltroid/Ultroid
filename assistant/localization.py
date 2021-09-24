@@ -10,7 +10,7 @@ import re
 from . import *
 
 
-@callback("lang",owner=True)
+@callback("lang", owner=True)
 async def setlang(event):
     languages = get_languages()
     tultd = [
