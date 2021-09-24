@@ -88,7 +88,8 @@ async def _(event):
 @callback(
     re.compile(
         "ytdl_(.*)",
-    ),owner=True
+    ),
+    owner=True,
 )
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
@@ -107,7 +108,8 @@ async def _(e):
 @callback(
     re.compile(
         "ytdownload_(.*)",
-    ),owner=True
+    ),
+    owner=True,
 )
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
