@@ -80,7 +80,6 @@ from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, U
 from telethon.utils import get_input_location
 
 from . import *
-from . import asst_cmd as asst_
 
 # =================================================================#
 
