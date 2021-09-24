@@ -101,9 +101,7 @@ async def setflood(e):
         return await eor(e, get_string("com_3"), time=5)
     m = set_flood(e.chat_id, input_)
     if m:
-        return await eod(
-            e, get_string("antiflood_4").format(input_)
-        )
+        return await eod(e, get_string("antiflood_4").format(input_))
 
 
 @ultroid_cmd(

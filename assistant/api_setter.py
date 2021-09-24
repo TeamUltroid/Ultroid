@@ -9,6 +9,7 @@ from . import *
 
 # main menu for api setting
 
+
 @owner
 @callback("apiset")
 async def apiset(event):
@@ -21,6 +22,7 @@ async def apiset(event):
             [Button.inline("« Back", data="setter")],
         ],
     )
+
 
 @owner
 @callback("rmbg")
@@ -45,6 +47,7 @@ async def rmbgapi(event):
             buttons=get_back_button("apiset"),
         )
 
+
 @owner
 @callback("dapi")
 async def rmbgapi(event):
@@ -67,6 +70,7 @@ async def rmbgapi(event):
             f"{name} changed to {themssg}",
             buttons=get_back_button("apiset"),
         )
+
 
 @owner
 @callback("oapi")

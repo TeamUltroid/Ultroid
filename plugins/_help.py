@@ -5,8 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from pyUltroid.dB._core import ADDONS, HELP, LIST, PLUGINS
-from pyUltroid.misc import CMD_HELP
+from pyUltroid.dB._core import HELP, LIST
 from telethon.errors.rpcerrorlist import (
     BotInlineDisabledError,
     BotMethodInvalidError,
