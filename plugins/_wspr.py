@@ -55,8 +55,7 @@ async def _(e):
         await eor(e, "Add some id or username too")
 
 
-@in_pattern("msg")
-@in_owner
+@in_pattern("msg", owner=True)
 async def _(e):
     vvv = e.text
     zzz = vvv.split(" ", maxsplit=1)
