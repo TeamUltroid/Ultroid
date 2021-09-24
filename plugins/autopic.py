@@ -39,16 +39,9 @@ async def autopic(e):
     SLEEP_TIME = int(ST) if ST else 1221
     while True:
         for lie in clls:
-            ge = udB.get("AUTOPIC")
-            if ge != "True":
+            if udB.get("AUTOPIC") != "True":
                 return
-            au = "https://unsplash.com" + lie["href"]
-            ct = r.get(au).content
-            bsc = bs(ct, "html.parser", from_encoding="utf-8")
-            ft = bsc.find_all("img", "oCCRx")
-            li = ft[0]["src"]
-            kar = "autopic.png"
-            await download_file(li, kar)
+            kar = await download_file(lie, kar)
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
