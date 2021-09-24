@@ -33,7 +33,7 @@ async def searchunsl(ult):
     dir = "resources/downloads/"
     CL, nl= [], 0
     for rp in res:
-        Hp = await downloas_file(ft, f"{dir}img-{nl}.png"
+        Hp = await downloas_file(ft, f"{dir}img-{nl}.png")
         CL.append(Hp)
         nl += 1
     await ult.client.send_file(ult.chat_id, CL, caption=f"Uploaded {len(res)} Images\n")
