@@ -17,8 +17,6 @@
 import asyncio
 import os
 
-import requests as r
-from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
