@@ -169,9 +169,9 @@ async def setting(event):
 @callback(data="vc_helper")
 @owner()
 async def on_vc_callback_query_handler(event):
-    xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
+    xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     try:
-        buttons = page_num(0, VC_HELP, "vchelp", "vc")
+        buttons = page_num(0, HELP["VCBot"], "vchelp", "vc")
     except ZeroDivisionError:
         return await event.answer("Vc not Active.")
     await event.edit(xhelps, buttons=buttons, link_preview=False)
@@ -297,7 +297,7 @@ async def _(e):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
-    buttons = page_num(0, list(HELP["Official"].keys()), "helpme", "def")
+    buttons = page_num(0, HELP["Official"], "helpme", "def")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
@@ -306,7 +306,7 @@ async def on_plug_in_callback_query_handler(event):
 async def addon(event):
     halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
     if len(ADDONS) > 0:
-        buttons = page_num(0, list(HELP["Addons"].keys()), "addon", "add")
+        buttons = page_num(0, HELP["Addons"], "addon", "add")
         await event.edit(f"{halp}", buttons=buttons, link_preview=False)
     else:
         await event.answer(
@@ -331,7 +331,7 @@ async def rrst(ult):
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
-        current_page_number + 1, list(HELP["Official"].keys()), "helpme", "def"
+        current_page_number + 1, HELP["Official"], "helpme", "def"
     )
     await event.edit(buttons=buttons, link_preview=False)
 
