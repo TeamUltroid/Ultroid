@@ -34,11 +34,11 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
     # thank members
     if must_thank(ult.chat_id):
-        chat_count = len(await ult.client.get_participants(await ult.get_chat()))
+        chat_count = (await ult.client.get_participants(await ult.get_chat(), limit=0)).total
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
-            await ultroid_bot.send_message(ult.chat_id, file=sticker)
+            await ult.respond(file=sticker)
     # force subscribe
     if (
         udB.get("FORCESUB")
