@@ -296,17 +296,17 @@ async def _(e):
 @callback(data="hrrrr")
 @owner()
 async def on_plug_in_callback_query_handler(event):
-    xhelps = helps.format(OWNER_NAME, len(PLUGINS))
-    buttons = page_num(0, PLUGINS, "helpme", "def")
+    xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
+    buttons = page_num(0, list(HELP["Official"].keys()), "helpme", "def")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
 @callback(data="frrr")
 @owner()
 async def addon(event):
-    halp = zhelps.format(OWNER_NAME, len(ADDONS))
+    halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
     if len(ADDONS) > 0:
-        buttons = page_num(0, ADDONS, "addon", "add")
+        buttons = page_num(0, list(HELP["Addons"].keys()), "addon", "add")
         await event.edit(f"{halp}", buttons=buttons, link_preview=False)
     else:
         await event.answer(
@@ -330,7 +330,7 @@ async def rrst(ult):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, PLUGINS, "helpme", "def")
+    buttons = page_num(current_page_number + 1, list(HELP["Official"].keys()), "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -342,7 +342,7 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, PLUGINS, "helpme", "def")
+    buttons = page_num(current_page_number - 1, list(HELP["Official"].keys()), "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -354,7 +354,7 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, VC_HELP, "vchelp", "vc")
+    buttons = page_num(current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -366,7 +366,7 @@ async def on_vc_callback_query_handler(event):
 @owner()
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, VC_HELP, "vchelp", "vc")
+    buttons = page_num(current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -378,7 +378,7 @@ async def on_vc_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number + 1, ADDONS, "addon", "add")
+    buttons = page_num(current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -390,16 +390,16 @@ async def on_plug_in_callback_query_handler(event):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(current_page_number - 1, ADDONS, "addon", "add")
+    buttons = page_num(current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(data="back")
 @owner()
 async def backr(event):
-    xhelps = helps.format(OWNER_NAME, len(PLUGINS))
+    xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, PLUGINS, "helpme", "def")
+    buttons = page_num(current_page_number, list(HELP["Official"].keys()), "helpme", "def")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -411,9 +411,9 @@ async def backr(event):
 @callback(data="buck")
 @owner()
 async def backr(event):
-    xhelps = zhelps.format(OWNER_NAME, len(ADDONS))
+    xhelps = zhelps.format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, ADDONS, "addon", "add")
+    buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -425,9 +425,9 @@ async def backr(event):
 @callback(data="bvck")
 @owner()
 async def bvckr(event):
-    xhelps = get_string("inline_6").format(OWNER_NAME, len(VC_HELP))
+    xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, VC_HELP, "vchelp", "vc")
+    buttons = page_num(current_page_number, list(HELP["VCBot"].keys()), "vchelp", "vc")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -440,6 +440,12 @@ async def bvckr(event):
 @owner()
 async def opner(event):
     z = []
+    PLUGINS = []
+    ADDONS = []
+    if "Official" in HELP.keys():
+        PLUGINS = HELP["Official"]
+    if "Addons" in HELP.keys():
+        ADDONS = HELP["Addons"]
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -475,7 +481,7 @@ async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = f"Plugin Name - `{plugin_name}`\n"
     try:
-        for i in HELP[plugin_name]:
+        for i in HELP["Official"][plugin_name]:
             help_string += i
     except BaseException:
         pass
@@ -519,7 +525,7 @@ async def on_vc_plg_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = f"Plugin Name - `{plugin_name}`\n"
     try:
-        for i in VC_HELP[plugin_name]:
+        for i in HELP["VCBot"][plugin_name]:
             help_string += i
     except BaseException:
         pass
@@ -564,7 +570,7 @@ async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
     help_string = ""
     try:
-        for i in HELP[plugin_name]:
+        for i in HELP["Addons"][plugin_name]:
             help_string += i
     except BaseException:
         try:
