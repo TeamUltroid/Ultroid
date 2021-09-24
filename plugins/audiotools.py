@@ -185,7 +185,7 @@ async def ex_aud(e):
     await e.client.send_file(
         e.chat_id,
         fo,
-        caption=,get_string("audiotools_10"),
+        caption=get_string("audiotools_10"),
         thumb="resources/extras/ultroid.jpg",
         attributes=attributes,
         reply_to=e.reply_to_msg_id,
