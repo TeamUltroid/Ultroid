@@ -15,6 +15,7 @@ import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
+from pyUltroid.functions.tools import get_ofox, dloader
 from search_engine_parser import GoogleSearch
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb

@@ -86,8 +86,8 @@ async def ultroid(event):
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
-                Redis("STARTMSG").format(me=me, mention=mention),
-                file=Redis("STARTMEDIA"),
+                udB.get("STARTMSG").format(me=me, mention=mention),
+                file=udB.get("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")],
             )
     else:

@@ -7,10 +7,10 @@
 
 from pistonapi import PistonAPI
 
-from . import *
+from . import in_pattern, asst, Button
 
 
-@in_pattern("run")
+@in_pattern("run", owner=True)
 async def piston_run(event):
     piston = PistonAPI()
     version = None

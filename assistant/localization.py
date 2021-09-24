@@ -7,7 +7,7 @@
 
 import re
 
-from . import *
+from . import callback, Button, get_languages, udB, get_back_button
 
 
 @callback("lang", owner=True)
@@ -31,7 +31,7 @@ async def setlang(event):
 async def settt(event):
     lang = event.data_match.group(1).decode("UTF-8")
     languages = get_languages()
-    udB.set("language", f"{lang}")
+    udB.set("language", lang)
     await event.edit(
         f"Your language has been set to {languages[lang]['natively']} [{lang}].",
         buttons=get_back_button("lang"),
