@@ -44,13 +44,6 @@ if C_PIC:
 else:
     _file_to_replace = "resources/extras/inline.jpg"
 
-PLUGINS = []
-ADDONS = []
-if "Official" in HELP.keys():
-    PLUGINS = HELP["Official"]
-if "Addons" in HELP.keys():
-    ADDONS = HELP["Addons"]
-
 upage = 0
 # ============================================#
 
@@ -95,6 +88,12 @@ async def inline_alive(o):
 # @in_owner
 async def inline_handler(event):
     z = []
+    PLUGINS = []
+    ADDONS = []
+    if "Official" in HELP.keys():
+        PLUGINS = HELP["Official"]
+    if "Addons" in HELP.keys():
+        ADDONS = HELP["Addons"]
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -104,7 +103,7 @@ async def inline_handler(event):
         text=get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
-            len(PLUGINS),
+            len(ADDONS),
             len(z),
         ),
         buttons=_main_help_menu,
@@ -135,6 +134,12 @@ async def _(event):
 @owner()
 async def setting(event):
     z = []
+    PLUGINS = []
+    ADDONS = []
+    if "Official" in HELP.keys():
+        PLUGINS = HELP["Official"]
+    if "Addons" in HELP.keys():
+        ADDONS = HELP["Addons"]
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -142,7 +147,7 @@ async def setting(event):
         get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
-            len(PLUGINS),
+            len(ADDONS),
             len(z),
         ),
         file=_file_to_replace,
