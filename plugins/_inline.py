@@ -44,8 +44,8 @@ if C_PIC:
 else:
     _file_to_replace = "resources/extras/inline.jpg"
 
-PLUGINS = 0
-ADDONS = 0
+PLUGINS = []
+ADDONS = []
 if "Official" in HELP.keys():
     PLUGINS = HELP["Official"]
 if "Addons" in HELP.keys():
