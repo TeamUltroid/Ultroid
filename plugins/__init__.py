@@ -16,7 +16,7 @@ from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
 from pyUltroid.functions.tools import *
 from pyUltroid.functions.ytdl import *
-from pyUltroid.misc._assistant import callback, in_pattern, asst_cmd
+from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
