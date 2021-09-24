@@ -12,7 +12,7 @@ from math import ceil
 from os import remove
 
 from git import Repo
-from pyUltroid.dB._core import ADDONS, HELP, LIST
+from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
 
 # from pyUltroid.dB._core import *
