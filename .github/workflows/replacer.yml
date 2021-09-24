@@ -1,9 +1,7 @@
-name: find and replace
-on: [workflow_dispatch]
-branches: [dev]
-
+name: Replacer
+on: push
 jobs:
-  build:
+  Replace:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,4 +10,11 @@ jobs:
         with:
           find: ")\n@owner"
           replace: ", owner=True)"
-          include: "plugins/"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Replacer OP'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: ProgrammingError
+          commit_user_email: error@notavailable.live
+          commit_author: ProgrammingError <error@notavailable.live>
