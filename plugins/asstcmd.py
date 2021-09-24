@@ -79,12 +79,9 @@ async def lscmd(e):
     return await eor(e, get_string("asstcmd_5"))
 
 
-@asst.on(events.NewMessage(pattern="^/(.*)"))
+@asst.on(events.NewMessage(pattern="\\/"))
 async def ascmds(e):
-    xx = e.text
-    xx = (xx.replace("/", "")).lower()
-    if " " in xx:
-        xx = xx.split(" ")[0]
+    xx = (e.text.replace("/", "")).lower().split()[0]
     if cmd_reply(xx):
         msg, media = cmd_reply(xx)
         await e.reply(msg, file=media)
