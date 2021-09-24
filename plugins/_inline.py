@@ -357,7 +357,7 @@ async def on_plug_in_callback_query_handler(event):
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
-        current_page_number + 1, list(HELP["VCBot"][0].keys()), "vchelp", "vc"
+        current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
     )
     await event.edit(buttons=buttons, link_preview=False)
 
@@ -371,7 +371,7 @@ async def on_vc_callback_query_handler(event):
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
-        current_page_number - 1, list(HELP["VCBot"][0].keys()), "vchelp", "vc"
+        current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
     )
     await event.edit(buttons=buttons, link_preview=False)
 
@@ -385,7 +385,7 @@ async def on_vc_callback_query_handler(event):
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
     buttons = page_num(
-        current_page_number + 1, list(HELP["Addons"][0].keys()), "addon", "add"
+        current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add"
     )
     await event.edit(buttons=buttons, link_preview=False)
 
@@ -410,7 +410,7 @@ async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
     buttons = page_num(
-        current_page_number, list(HELP["Official"][0].keys()), "helpme", "def"
+        current_page_number, list(HELP["Official"].keys()), "helpme", "def"
     )
     await event.edit(
         f"{xhelps}",
@@ -425,9 +425,7 @@ async def backr(event):
 async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(
-        current_page_number, list(HELP["Addons"][0].keys()), "addon", "add"
-    )
+    buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -441,9 +439,7 @@ async def backr(event):
 async def bvckr(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(
-        current_page_number, list(HELP["VCBot"][0].keys()), "vchelp", "vc"
-    )
+    buttons = page_num(current_page_number, list(HELP["VCBot"].keys()), "vchelp", "vc")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
