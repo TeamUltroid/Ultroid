@@ -43,7 +43,7 @@ api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").
 )
 
 
-@in_pattern("ofox",owner=True)
+@in_pattern("ofox", owner=True)
 async def _(e):
     match = None
     try:
@@ -136,7 +136,8 @@ async def _(e):
 @callback(
     re_compile(
         "fl(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def _(e):
     t = (e.data).decode("UTF-8")
@@ -267,7 +268,7 @@ async def _(e):
     await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
 
 
-@in_pattern("mods",owner=True)
+@in_pattern("mods", owner=True)
 async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
