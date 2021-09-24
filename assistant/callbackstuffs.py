@@ -198,7 +198,7 @@ async def _(e):
     )
 
 
-@callback("folderid", owner=True, func=lambdax: x.is_private)
+@callback("folderid", owner=True, func=lambda x: x.is_private)
 async def _(e):
     if not e.is_private:
         return
@@ -236,8 +236,7 @@ async def _(e):
         )
 
 
-@callback("clientid")
-@owner
+@callback("clientid", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -254,8 +253,7 @@ async def _(e):
         )
 
 
-@callback("gdrive")
-@owner
+@callback("gdrive", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -276,8 +274,7 @@ async def _(e):
     )
 
 
-@callback("otvars")
-@owner
+@callback("otvars", owner=True)
 async def otvaar(event):
     await event.edit(
         "Other Variables to set for @TheUltroid:",
@@ -308,8 +305,7 @@ async def otvaar(event):
     )
 
 
-@callback("oofdm")
-@owner
+@callback("oofdm", owner=True)
 async def euwhe(event):
     BT = [
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
@@ -323,8 +319,7 @@ async def euwhe(event):
     )
 
 
-@callback("dmof")
-@owner
+@callback("dmof", owner=True)
 async def rhwhe(e):
     if udB.get("DUAL_MODE"):
         udB.delete("DUAL_MODE")
@@ -336,8 +331,7 @@ async def rhwhe(e):
     await e.edit(Msg, buttons=get_back_button("otvars"))
 
 
-@callback("dmhn")
-@owner
+@callback("dmhn", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -369,8 +363,7 @@ async def hndlrr(event):
             )
 
 
-@callback("emoj")
-@owner
+@callback("emoj", owner=True)
 async def emoji(event):
     await event.delete()
     pru = event.sender_id
@@ -399,8 +392,7 @@ async def emoji(event):
             )
 
 
-@callback("plg")
-@owner
+@callback("plg", owner=True)
 async def pluginch(event):
     await event.delete()
     pru = event.sender_id
@@ -434,8 +426,7 @@ async def pluginch(event):
             )
 
 
-@callback("hhndlr")
-@owner
+@callback("hhndlr", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -471,8 +462,7 @@ async def hndlrr(event):
             )
 
 
-@callback("shndlr")
-@owner
+@callback("shndlr", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -509,8 +499,7 @@ async def hndlrr(event):
             )
 
 
-@callback("taglog")
-@owner
+@callback("taglog", owner=True)
 async def tagloggrr(e):
     if not udB.get("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
@@ -522,15 +511,13 @@ async def tagloggrr(e):
     )
 
 
-@callback("deltag")
-@owner
+@callback("deltag", owner=True)
 async def delfuk(e):
     udB.delete("TAG_LOG")
     await e.answer("Done!!! TAG lOG Off")
 
 
-@callback("settag")
-@owner
+@callback("settag", owner=True)
 async def taglogerr(event):
     await event.delete()
     pru = event.sender_id
@@ -555,8 +542,7 @@ async def taglogerr(event):
         )
 
 
-@callback("eaddon")
-@owner
+@callback("eaddon", owner=True)
 async def pmset(event):
     if not udB.get("ADDONS"):
         BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
@@ -571,8 +557,7 @@ async def pmset(event):
     )
 
 
-@callback("edon")
-@owner
+@callback("edon", owner=True)
 async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
@@ -582,8 +567,7 @@ async def eddon(event):
     )
 
 
-@callback("edof")
-@owner
+@callback("edof", owner=True)
 async def eddof(event):
     udB.set("ADDONS", "False")
     await event.edit(
@@ -592,8 +576,7 @@ async def eddof(event):
     )
 
 
-@callback("sudo")
-@owner
+@callback("sudo", owner=True)
 async def pmset(event):
     if not udB.get("SUDO"):
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
@@ -608,8 +591,7 @@ async def pmset(event):
     )
 
 
-@callback("onsudo")
-@owner
+@callback("onsudo", owner=True)
 async def eddon(event):
     var = "SUDO"
     await setit(event, var, "True")
@@ -619,8 +601,7 @@ async def eddon(event):
     )
 
 
-@callback("ofsudo")
-@owner
+@callback("ofsudo", owner=True)
 async def eddof(event):
     var = "SUDO"
     await setit(event, var, "False")
@@ -630,8 +611,7 @@ async def eddof(event):
     )
 
 
-@callback("sfban")
-@owner
+@callback("sfban", owner=True)
 async def sfban(event):
     await event.edit(
         "SuperFban Settings:",
@@ -643,8 +623,7 @@ async def sfban(event):
     )
 
 
-@callback("sfgrp")
-@owner
+@callback("sfgrp", owner=True)
 async def sfgrp(event):
     await event.delete()
     name = "FBan Group ID"
@@ -669,8 +648,7 @@ async def sfgrp(event):
         )
 
 
-@callback("sfexf")
-@owner
+@callback("sfexf", owner=True)
 async def sfexf(event):
     await event.delete()
     name = "Excluded Feds"
@@ -696,8 +674,7 @@ async def sfexf(event):
         )
 
 
-@callback("alvcstm")
-@owner
+@callback("alvcstm", owner=True)
 async def alvcs(event):
     await event.edit(
         f"Customise your {HNDLR}alive. Choose from the below options -",
@@ -710,8 +687,7 @@ async def alvcs(event):
     )
 
 
-@callback("alvtx")
-@owner
+@callback("alvtx", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -739,8 +715,7 @@ async def name(event):
         )
 
 
-@callback("alvmed")
-@owner
+@callback("alvmed", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
@@ -786,8 +761,7 @@ async def media(event):
         )
 
 
-@callback("delmed")
-@owner
+@callback("delmed", owner=True)
 async def dell(event):
     try:
         udB.delete("ALIVE_PIC")
@@ -799,8 +773,7 @@ async def dell(event):
         )
 
 
-@callback("pmcstm")
-@owner
+@callback("pmcstm", owner=True)
 async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
@@ -823,8 +796,7 @@ async def alvcs(event):
     )
 
 
-@callback("pmtype")
-@owner
+@callback("pmtype", owner=True)
 async def pmtyp(event):
     await event.edit(
         "Select the type of PMPermit needed.",
@@ -836,8 +808,7 @@ async def pmtyp(event):
     )
 
 
-@callback("inpm_in")
-@owner
+@callback("inpm_in", owner=True)
 async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "True")
@@ -847,8 +818,7 @@ async def inl_on(event):
     )
 
 
-@callback("inpm_no")
-@owner
+@callback("inpm_no", owner=True)
 async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "False")
@@ -858,8 +828,7 @@ async def inl_on(event):
     )
 
 
-@callback("pmtxt")
-@owner
+@callback("pmtxt", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -892,8 +861,7 @@ async def name(event):
         )
 
 
-@callback("swarn")
-@owner
+@callback("swarn", owner=True)
 async def name(event):
     m = range(1, 10)
     tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
@@ -905,8 +873,7 @@ async def name(event):
     )
 
 
-@callback(re.compile(b"wrns_(.*)"))
-@owner
+@callback(re.compile(b"wrns_(.*)"), owner=True)
 async def set_wrns(event):
     value = int(event.data_match.group(1).decode("UTF-8"))
     dn = udB.set("PMWARNS", value)
@@ -922,8 +889,7 @@ async def set_wrns(event):
         )
 
 
-@callback("pmmed")
-@owner
+@callback("pmmed", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
@@ -969,8 +935,7 @@ async def media(event):
         )
 
 
-@callback("delpmmed")
-@owner
+@callback("delpmmed", owner=True)
 async def dell(event):
     try:
         udB.delete("PMPIC")
@@ -982,8 +947,7 @@ async def dell(event):
         )
 
 
-@callback("apauto")
-@owner
+@callback("apauto", owner=True)
 async def apauto(event):
     await event.edit(
         "This'll auto approve on outgoing messages",
@@ -995,8 +959,7 @@ async def apauto(event):
     )
 
 
-@callback("apon")
-@owner
+@callback("apon", owner=True)
 async def apon(event):
     var = "AUTOAPPROVE"
     await setit(event, var, "True")
@@ -1006,8 +969,7 @@ async def apon(event):
     )
 
 
-@callback("apof")
-@owner
+@callback("apof", owner=True)
 async def apof(event):
     try:
         udB.delete("AUTOAPPROVE")
@@ -1022,8 +984,7 @@ async def apof(event):
         )
 
 
-@callback("pml")
-@owner
+@callback("pml", owner=True)
 async def alvcs(event):
     if not udB.get("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
@@ -1039,8 +1000,7 @@ async def alvcs(event):
     )
 
 
-@callback("pmlgg")
-@owner
+@callback("pmlgg", owner=True)
 async def disus(event):
     await event.delete()
     pru = event.sender_id
@@ -1066,8 +1026,7 @@ async def disus(event):
             )
 
 
-@callback("pmlog")
-@owner
+@callback("pmlog", owner=True)
 async def pmlog(event):
     await setit(event, "PMLOG", "True")
     await event.edit(
@@ -1076,8 +1035,7 @@ async def pmlog(event):
     )
 
 
-@callback("pmlogof")
-@owner
+@callback("pmlogof", owner=True)
 async def pmlogof(event):
     try:
         udB.delete("PMLOG")
@@ -1092,8 +1050,7 @@ async def pmlogof(event):
         )
 
 
-@callback("ppmset")
-@owner
+@callback("ppmset", owner=True)
 async def pmset(event):
     await event.edit(
         "PMPermit Settings:",
@@ -1106,8 +1063,7 @@ async def pmset(event):
     )
 
 
-@callback("pmon")
-@owner
+@callback("pmon", owner=True)
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
@@ -1117,8 +1073,7 @@ async def pmonn(event):
     )
 
 
-@callback("pmoff")
-@owner
+@callback("pmoff", owner=True)
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
@@ -1128,8 +1083,7 @@ async def pmofff(event):
     )
 
 
-@callback("chatbot")
-@owner
+@callback("chatbot", owner=True)
 async def chbot(event):
     await event.edit(
         "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
@@ -1143,8 +1097,7 @@ async def chbot(event):
     )
 
 
-@callback("bwel")
-@owner
+@callback("bwel", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -1172,8 +1125,7 @@ async def name(event):
         )
 
 
-@callback("onchbot")
-@owner
+@callback("onchbot", owner=True)
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
@@ -1183,8 +1135,7 @@ async def chon(event):
     )
 
 
-@callback("ofchbot")
-@owner
+@callback("ofchbot", owner=True)
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "False")
@@ -1194,8 +1145,7 @@ async def chon(event):
     )
 
 
-@callback("vcb")
-@owner
+@callback("vcb", owner=True)
 async def vcb(event):
     await event.edit(
         "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
@@ -1207,8 +1157,7 @@ async def vcb(event):
     )
 
 
-@callback("vcs")
-@owner
+@callback("vcs", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -1236,8 +1185,7 @@ async def name(event):
         )
 
 
-@callback("inli_pic")
-@owner
+@callback("inli_pic", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
