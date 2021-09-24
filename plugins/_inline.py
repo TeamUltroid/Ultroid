@@ -15,7 +15,6 @@ from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
 
-# from pyUltroid.dB._core import *
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
@@ -60,10 +59,8 @@ SUP_BUTTONS = [
 # --------------------BUTTONS--------------------#
 
 
-@in_pattern()
+@in_pattern(owner=True, func=lambda x: not x.text)
 async def inline_alive(o):
-    if o.text or str(o.sender_id) not in owner_and_sudos():
-        return
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
         "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
@@ -296,13 +293,13 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(data="frrr", owner=True)
 async def addon(event):
-    halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
-    if len(HELP["Addons"]) > 0:
+    if HELP.get("Addons") and HELP["Addons"]:
+        halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
         buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
-        await event.edit(f"{halp}", buttons=buttons, link_preview=False)
+        await event.edit(halp, buttons=buttons, link_preview=False)
     else:
         await event.answer(
-            f"• Tʏᴘᴇ `{HNDLR}setredis ADDONS True`\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
+            f"• Tʏᴘᴇ {HNDLR}setredis ADDONS True\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
             cache_time=0,
             alert=True,
         )
