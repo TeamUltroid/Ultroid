@@ -6,9 +6,9 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
+from pyUltroid.misc import owner_and_sudos
 
-
-@asst_cmd(pattern="ban",owner=True)
+@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True))
 async def banhammer(event):
     if not event.is_private:
         return
@@ -27,7 +27,7 @@ async def banhammer(event):
     )
 
 
-@asst_cmd(pattern="unban", owner=True,func=lambda x: x.is_private)
+@asst_cmd(pattern="unban", from_users=owner_and_sudos(castint=True),func=lambda x: x.is_private)
 async def banhammer(event):
     x = await event.get_reply_message()
     if x is None:
