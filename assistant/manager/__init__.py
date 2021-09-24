@@ -6,3 +6,4 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from .. import *
+from pyUltroid.misc._decorators import ultroid_cmd
