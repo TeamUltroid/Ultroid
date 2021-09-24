@@ -87,7 +87,7 @@ async def inline_alive(o):
 
 
 @in_pattern("ultd")
-@in_owner
+# @in_owner
 async def inline_handler(event):
     z = []
     addons_len = 0
