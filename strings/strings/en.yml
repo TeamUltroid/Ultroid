@@ -122,8 +122,7 @@ bd_5: "`Added to database!`"
 bd_6: "`Channel is already is database!`"
 
 # carbon
-carbon_1: "Processing"
-carbon_2: "Carbonised by [{}](tg://user?id={})"
+carbon_1: "Carbonised by [{}](tg://user?id={})"
 
 # chats
 chats_1: "`Processing...`"

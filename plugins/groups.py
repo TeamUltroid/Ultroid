@@ -114,7 +114,7 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
-    xx = await eor(event, "Searching Participant Lists.")
+    xx = await eor(event, "`Searching Participant Lists.`")
     input_str = event.pattern_match.group(1)
     p, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):

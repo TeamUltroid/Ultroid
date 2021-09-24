@@ -82,7 +82,7 @@ async def gifs(ult):
             pass
     if not get:
         return await eor(ult, f"`{HNDLR}gif <query>`")
-    m = await eor(ult, "`Searching gif ...`")
+    m = await eor(ult, get_string("com_2"))
     gifs = await ult.client.inline_query("gif", get)
     if not n:
         await gifs[xx].click(
