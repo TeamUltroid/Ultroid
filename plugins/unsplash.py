@@ -12,6 +12,7 @@
 """
 
 from pyUltroid.functions.misc import unsplashsearch
+
 from . import *
 
 
@@ -31,7 +32,7 @@ async def searchunsl(ult):
     if not res:
         return await eor(ult, "No Results Found !", time=5)
     dir = "resources/downloads/"
-    CL, nl= [], 0
+    CL, nl = [], 0
     for rp in res:
         Hp = await downloas_file(ft, f"{dir}img-{nl}.png")
         CL.append(Hp)
