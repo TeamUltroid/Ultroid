@@ -53,15 +53,13 @@ async def icalc(e):
     await e.delete()
 
 
-@in_pattern("calc")
-@in_owner
+@in_pattern("calc", owner=True)
 async def _(e):
     calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
     await e.answer([calc])
 
 
-@callback(re.compile("calc(.*)"))
-@owner
+@callback(re.compile("calc(.*)"), owner=True)
 async def _(e):
     x = (e.data_match.group(1)).decode()
     user = e.query.user_id
@@ -125,8 +123,7 @@ async def _(e):
         await e.answer(str(x))
 
 
-@callback("recalc")
-@owner
+@callback("recalc", owner=True)
 async def _(e):
     m = [
         "AC",
