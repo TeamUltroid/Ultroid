@@ -193,8 +193,7 @@ async def _(event):
         await def_logs(event)
 
 
-@in_pattern("alive")
-@in_owner
+@in_pattern("alive",owner=True)
 async def inline_alive(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
