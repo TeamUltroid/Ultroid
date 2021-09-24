@@ -31,7 +31,7 @@ async def ac(e):
     wt = await e.get_reply_message()
     if not (wt and wrd):
         return await eor(
-            e, "`Use this Command with Reply and word to use a command.`", time=5
+            e, get_string("asstcmd_1"), time=5
         )
     if "/" in wrd:
         wrd = wrd.replace("/", "")
@@ -44,7 +44,7 @@ async def ac(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(x, "`Unsupported Media`", time=5)
+                return await eor(x, get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
@@ -57,35 +57,33 @@ async def ac(e):
             add_cmd(wrd, None, m)
     else:
         add_cmd(wrd, wt.text, None)
-    await eor(e, f"Done Command : `/{wrd}` saved.")
+    await eor(e, get_string("asstcmd_4").format(wrd))
 
 
 @ultroid_cmd(pattern="remcmd ?(.*)")
 async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
-        return await eor(e, "`Give me the command which you want to remove.`", time=5)
+        return await eor(e, get_string("asstcmd_2"), time=5)
     if wrd.startswith("/"):
         wrd = wrd.replace("/", "")
     rem_cmd(wrd)
-    await eor(e, f"Done Command: `/{wrd}` Removed.")
+    await eor(e, get_string("asstcmd_3").format(wrd))
 
 
 @ultroid_cmd(pattern="listcmd$")
 async def lscmd(e):
     if list_cmds():
-        ok = "**ALL ASSISTANT CMDS**\n\n"
+        ok = get_string("asstcmd_6")
         for x in list_cmds():
             ok += "/" + x + "\n"
         return await eor(e, ok)
-    return await eor(e, "No commands found")
+    return await eor(e, get_string("asstcmd_5"))
 
 
-@asst.on(events.NewMessage())
+@asst.on(events.NewMessage(pattern="^/(.*)"))
 async def ascmds(e):
     xx = e.text
-    if not xx.startswith("/"):
-        return
     xx = (xx.replace("/", "")).lower()
     if " " in xx:
         xx = xx.split(" ")[0]
