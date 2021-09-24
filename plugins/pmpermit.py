@@ -202,7 +202,7 @@ if sett == "True":
             await asst.edit_message(
                 int(udB.get("LOG_CHANNEL")),
                 _not_approved[miss.id],
-                f"#AutoApproved\n**OutGoing Message.**\nUser - [{miss.first_name}](tg://user?id={miss.id}) [`{miss.id}`]",
+                f"#AutoApproved : **OutGoing Message.**\nUser : **[{miss.first_name}](tg://user?id={miss.id})** [`{miss.id}`]",
             )
         except KeyError:
             await asst.send_message(
@@ -229,8 +229,8 @@ if sett == "True":
             if Redis("MOVE_ARCHIVE") == "True":
                 try:
                     await ultroid.edit_folder(user.id, folder=1)
-                except BaseException:
-                    pass
+                except BaseException as er:
+                    LOGS.info(er)
             if event.media:
                 await event.delete()
             name = user.first_name
@@ -243,7 +243,7 @@ if sett == "True":
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
                     _not_approved[user.id],
-                    f"Incoming PM from {mention} [`{user.id}`] with {wrn}/{WARNS} warning!",
+                    f"Incoming PM from **{mention}** [`{user.id}`] with **{wrn}/{WARNS}** warning!",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block PM", data=f"block_{user.id}"),
@@ -252,7 +252,7 @@ if sett == "True":
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
                     int(udB.get("LOG_CHANNEL")),
-                    f"Incoming PM from {mention} [`{user.id}`] with 1/{WARNS} warning!",
+                    f"Incoming PM from **{mention}** [`{user.id}`] with **1/{WARNS}** warning!",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block PM", data=f"block_{user.id}"),
@@ -387,7 +387,7 @@ if sett == "True":
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
                     _not_approved[user.id],
-                    f"[{name0}](tg://user?id={user.id}) [`{user.id}`] was Blocked for spamming.",
+                    f"**[{name0}](tg://user?id={user.id})** [`{user.id}`] was Blocked for spamming.",
                 )
 
     @ultroid_cmd(
@@ -676,7 +676,7 @@ async def disapr_in(event):
         except BaseException:
             user_name = ""
         await event.edit(
-            f"#DISAPPROVED\n\n[{user_name}](tg://user?id={uid}) [`{uid}`] `disapproved from PMs!`",
+            f"#DISAPPROVED\n\n**[{user_name}](tg://user?id={uid})** [`{uid}`] `disapproved from PMs!`",
             buttons=[
                 [
                     Button.inline("Approve PM", data=f"approve_{uid}"),
