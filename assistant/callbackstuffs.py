@@ -40,7 +40,8 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
 @callback(
     re.compile(
         "sndplug_(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
@@ -155,7 +156,8 @@ async def changes(okk):
 @callback(
     re.compile(
         "pasta-(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
