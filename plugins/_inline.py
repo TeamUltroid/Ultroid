@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-
+from . import *
 from git import Repo
 from pyUltroid.dB._core import ADDONS, HELP, LIST, PLUGINS, VC_HELP
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
