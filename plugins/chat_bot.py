@@ -24,7 +24,7 @@
 from pyUltroid.dB.chatBot_db import *
 from pyUltroid.functions.tools import get_chatbot_reply
 
-from . import eor, ultroid_cmd
+from . import eor, ultroid_cmd, eod, inline_mention
 
 
 @ultroid_cmd(pattern="repai")

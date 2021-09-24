@@ -29,7 +29,11 @@
 import os
 import time
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
 from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaPhoto as photu
@@ -69,12 +73,10 @@ async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
-        return
+        return await eor(event, get_string("cvt_1"))
     inp = event.pattern_match.group(1)
     if not inp:
-        await eor(event, "Give The name and extension of file")
-        return
+        return await eor(event, get_string("cvt_2")) 
     xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
@@ -133,7 +135,7 @@ async def imak(event):
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, "Reply to any media.")
+        await eor(event, get_string("cvt_3"))
         return
     xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
@@ -157,7 +159,7 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not (input_str and event.is_reply):
-        return await eor(event, "`Give The File Name and reply to message.`", time=5)
+        return await eor(event, get_string("cvt_1"), time=5)
     xx = await eor(event, get_string("com_1"))
     a = await event.get_reply_message()
     if not a.message:

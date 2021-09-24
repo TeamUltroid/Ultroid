@@ -125,17 +125,16 @@ bd_6: "`Channel is already is database!`"
 carbon_1: "Carbonised by [{}](tg://user?id={})"
 
 # chats
-chats_2: "`Cant delete this chat`"
-chats_3: "`I m not an admin`"
-chats_4: "#Deleted\nDeleted {}"
-chats_5: "Your [{}]({}) Group Made Boss!"
-chats_6: "Join @TeamUltroid"
+chats_1: "`Cant delete this chat`"
+chats_2: "`I m not an admin`"
+chats_3: "#Deleted\nDeleted {}"
+chats_4: "Your [{}]({}) Group Made Boss!"
+chats_5: "Join @TeamUltroid"
 
 # converter
 cvt_1: "Reply to any media/Document."
 cvt_2: "Give The name and extension of file"
-cvt_3: "`Processing...`"
-cvt_4: "Reply to any media."
+cvt_3: "Reply to any media."
 
 # core
 core_1: "Module Found"
