@@ -73,9 +73,7 @@ async def set_afk(event):
                 event.chat_id, get_string("afk_6"), file=media
             )
     elif text:
-        msg1 = await event.respond(
-            get_string("afk_5").format(text)
-        )
+        msg1 = await event.respond(get_string("afk_5").format(text))
     else:
         msg1 = await event.respond(get_string("afk_6"))
     old_afk_msg.append(msg1)
