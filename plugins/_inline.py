@@ -44,6 +44,13 @@ if C_PIC:
 else:
     _file_to_replace = "resources/extras/inline.jpg"
 
+PLUGINS = 0
+ADDONS = 0
+if "Official" in HELP.keys():
+    PLUGINS = HELP["Official"]
+if "Addons" in HELP.keys():
+    ADDONS = HELP["Addons"]
+
 upage = 0
 # ============================================#
 
@@ -88,12 +95,6 @@ async def inline_alive(o):
 # @in_owner
 async def inline_handler(event):
     z = []
-    addons_len = 0
-    plugins_len = 0
-    if "Official" in HELP.keys():
-        plugins_len = len(HELP["Official"])
-    if "Addons" in HELP.keys():
-        addons_len = len(HELP["Addons"])
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -102,8 +103,8 @@ async def inline_handler(event):
         link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
-            plugins_len,
-            addons_len,
+            len(PLUGINS),
+            len(PLUGINS),
             len(z),
         ),
         buttons=_main_help_menu,
@@ -134,20 +135,14 @@ async def _(event):
 @owner()
 async def setting(event):
     z = []
-    addons_len = 0
-    plugins_len = 0
-    if "Official" in HELP.keys():
-        plugins_len = len(HELP["Official"])
-    if "Addons" in HELP.keys():
-        addons_len = len(HELP["Addons"])
     for x in LIST.values():
         for y in x:
             z.append(y)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            plugins_len,
-            addons_len,
+            len(PLUGINS),
+            len(PLUGINS),
             len(z),
         ),
         file=_file_to_replace,
