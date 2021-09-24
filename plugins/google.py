@@ -88,7 +88,7 @@ async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
         return await eor(event, "`Reply to an Image`")
-    ult = await eor(event, "`Processing...`")
+    ult = await eor(event, get_string("com_1"))
     dl = await reply.download_media()
     img = Image.open(dl)
     x, y = img.size

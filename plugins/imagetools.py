@@ -91,7 +91,7 @@ async def sketch(e):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -161,7 +161,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        xx = await eor(event, "`Processing...`")
+        xx = await eor(event, get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -203,7 +203,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        xx = await eor(event, "`Processing...`")
+        xx = await eor(event, get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -246,7 +246,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -289,7 +289,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -333,7 +333,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -378,7 +378,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -425,7 +425,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -485,7 +485,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -550,7 +550,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -618,7 +618,7 @@ async def pixelator(event):
         hw = int(event.pattern_match.group(1))
     except (ValueError, TypeError):
         pass
-    msg = await eor(event, "`Processing...`")
+    msg = await eor(event, get_string("com_1"))
     image = await reply_message.download_media()
     input_ = cv2.imread(image)
     height, width = input_.shape[:2]

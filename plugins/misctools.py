@@ -27,7 +27,7 @@ async def mobs(e):
     co = b.find_all("div", "rvw-imgbox")
     if not co:
         return await eor(e, "No Results Found!")
-    bt = await eor(e, "`Processing...`")
+    bt = await eor(e, get_string("com_1"))
     out = "**📱 Mobile / Gadgets Search**\n\n"
     li = co[0].find("a")
     imu, title = None, li.find("img")["title"]

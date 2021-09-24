@@ -117,7 +117,7 @@ async def pdfsetxt(event):
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = ok.file.name
@@ -183,7 +183,7 @@ async def imgscan(event):
         await eor(event, "`Reply to a Image only...`")
         os.remove(ultt)
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     image = cv2.imread(ultt)
     original_image = image.copy()
     ratio = image.shape[0] / 500.0
@@ -243,7 +243,7 @@ async def savepdf(event):
         return
     ultt = await ok.download_media()
     if ultt.endswith(("png", "jpg", "jpeg", "webp")):
-        xx = await eor(event, "`Processing...`")
+        xx = await eor(event, get_string("com_1"))
         image = cv2.imread(ultt)
         original_image = image.copy()
         ratio = image.shape[0] / 500.0

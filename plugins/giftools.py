@@ -36,7 +36,7 @@ async def igif(e):
     wut = mediainfo(a.media)
     if "gif" not in wut:
         return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     z = await a.download_media()
     try:
         await bash(f'ffmpeg -i "{z}" -vf format=gray ult.gif -y')
@@ -56,7 +56,7 @@ async def igif(e):
     wut = mediainfo(a.media)
     if "gif" not in wut:
         return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     z = await a.download_media()
     try:
         await bash(
@@ -104,7 +104,7 @@ async def vtogif(e):
     wut = mediainfo(a.media)
     if "video" not in wut:
         return await eor(e, "`Reply To Video Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     dur = a.media.document.attributes[0].duration
     tt = time.time()
     if int(dur) < 120:

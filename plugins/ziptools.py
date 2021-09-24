@@ -35,7 +35,7 @@ async def zipp(event):
     if not reply:
         await eor(event, "Reply to any media/Document.")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
@@ -72,7 +72,7 @@ async def unzipp(event):
     if not reply:
         await eor(event, "Reply to any media/Document.")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if not hasattr(reply.media, "document"):
             return await xx.edit("`Reply to zip file only`")
@@ -109,7 +109,7 @@ async def azipp(event):
     if not reply:
         await eor(event, "Reply to any media/Document.")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if not os.path.isdir("zip"):
         os.mkdir("zip")
     if reply.media:

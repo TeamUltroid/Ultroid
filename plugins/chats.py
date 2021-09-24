@@ -44,7 +44,7 @@ from . import *
     groups_only=True,
 )
 async def _(e):
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     try:
         match = e.text.split(" ", maxsplit=1)[1]
         chat = "-100" + str(await get_user_id(match))
@@ -99,7 +99,7 @@ async def _(e):
         group_ = group_name.split(" ; ", maxsplit=1)
         group_name = group_[0]
         username = group_[1]
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     if type_of_group == "b":
         try:
             r = await e.client(

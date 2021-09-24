@@ -74,7 +74,7 @@ def deEmojify(inputString: str) -> str:
     pattern="waifu ?(.*)",
 )
 async def waifu(animu):
-    xx = await eor(animu, "`Processing...`")
+    xx = await eor(animu, get_string("com_1"))
     # """Creates random anime sticker!"""
     text = animu.pattern_match.group(1)
     if not text:
@@ -106,7 +106,7 @@ async def waifu(animu):
     pattern="convert ?(.*)",
 )
 async def uconverter(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     a = await event.get_reply_message()
     if not (a and a.media and "animated" in mediainfo(a.media)):
         return await eor(event, "`Reply to an Animated Sticker...`")
@@ -176,7 +176,7 @@ async def pack_kangish(_):
 )
 async def hehe(args):
     ultroid_bot = args.client
-    xx = await eor(args, "`Processing...`")
+    xx = await eor(args, get_string("com_1"))
     user = ultroid_bot.me
     if not user.username:
         user.username = user.first_name
@@ -390,7 +390,7 @@ async def hehe(args):
 )
 async def ultdround(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if not (ureply and (ureply.media)):
         await xx.edit("`Reply to any media`")
         return
@@ -408,7 +408,7 @@ async def ultdround(event):
         stderr.decode().strip()
         stdout.decode().strip()
     elif ultt.endswith((".gif", ".mp4", ".mkv")):
-        await xx.edit("`Processing...`")
+        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -443,7 +443,7 @@ async def ultdestroy(event):
     if not (ult and ult.media and "animated" in mediainfo(ult.media)):
         return await eor(event, "`Reply to Animated Sticker only`")
     await event.client.download_media(ult, "ultroid.tgs")
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     await bash("lottie_convert.py ultroid.tgs json.json")
     with open("json.json") as json:
         jsn = json.read()
@@ -482,7 +482,7 @@ async def ultiny(event):
     if not (reply and (reply.media)):
         await eor(event, "`Reply To Media`")
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):

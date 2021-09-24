@@ -20,7 +20,8 @@
 
 
 import re
-
+from pyUltroid.dB import DEVLIST
+from pyUltroid.functions.admins import admin_check
 from pyUltroid.dB.antiflood_db import get_flood, get_flood_limit, rem_flood, set_flood
 from telethon.events import NewMessage as NewMsg
 
@@ -47,7 +48,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if await check_if_admin(event) or event.sender.bot:
+        if await admin_check(event) or event.sender.bot:
             return
         if event.sender_id in DEVLIST:
             return

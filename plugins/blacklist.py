@@ -22,7 +22,7 @@
 """
 
 
-from pyUltroid.dB.blacklist_db import *
+from pyUltroid.dB.blacklist_db import add_blacklist, get_blacklist, rem_blacklist, list_blacklist
 
 from . import *
 

@@ -19,6 +19,7 @@ import os
 
 import requests as r
 from bs4 import BeautifulSoup as bs
+from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
 from . import *
@@ -29,7 +30,7 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"), time=5)
-    clls = autopicsearch(search)
+    clls = await unsplashsearch(search)
     if len(clls) == 0:
         return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))

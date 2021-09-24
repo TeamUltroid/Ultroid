@@ -7,9 +7,10 @@
 
 from pyUltroid import *
 
-# from pyUltroid.configs import Var
+
 from pyUltroid.functions.helper import *
-from pyUltroid.misc._assistant import *
+from pyUltroid.misc._assistant import callback, in_pattern, asst_cmd
+from pyUltroid.misc import owner_and_sudos
 from telethon import Button, custom
 
 from strings import get_languages, get_string

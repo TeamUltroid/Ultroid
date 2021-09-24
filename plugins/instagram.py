@@ -44,7 +44,7 @@ def create_client(username, password):
 async def insta_dl(e):
     match = e.pattern_match.group(1)
     replied = await e.get_reply_message()
-    tt = await eor(e, "`Processing...`")
+    tt = await eor(e, get_string("com_1"))
     if match:
         text = match
     elif e.is_reply and "insta" in replied.message:
@@ -87,7 +87,7 @@ async def soon_(e):
     if not un and up:
         return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
     match = e.pattern_match.group(1)
-    ew = await eor(e, "`Processing...`")
+    ew = await eor(e, get_string("com_1"))
     try:
         cl = create_client(un, up)
     except Exception as g:

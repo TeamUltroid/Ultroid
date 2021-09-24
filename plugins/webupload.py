@@ -25,7 +25,7 @@ from . import *
     pattern="webupload",
 )
 async def _(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     vv = event.text.split(" ", maxsplit=1)
     try:
         file_name = vv[1]

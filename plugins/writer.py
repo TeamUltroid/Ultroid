@@ -29,7 +29,7 @@ async def writer(e):
         text = e.text.split(maxsplit=1)[1]
     else:
         return await eod(e, "`Give Some Texts Too`")
-    k = await eor(e, "`Processing...`")
+    k = await eor(e, get_string("com_1"))
     img = Image.open("resources/extras/template.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("resources/fonts/assfont.ttf", 30)

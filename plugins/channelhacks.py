@@ -37,7 +37,7 @@
 """
 
 import asyncio
-
+import io
 from pyUltroid.dB.ch_db import *
 
 from . import *
@@ -96,7 +96,7 @@ async def source(e):
         y = int(x)
     except Exception:
         try:
-            y = int((await bot.get_entity(x)).id)
+            y = int((await ultroid_bot.get_entity(x)).id)
         except Exception as es:
             print(es)
             return
@@ -224,7 +224,7 @@ async def list_all(event):
     for channel in channels:
         name = ""
         try:
-            name = (await ultroid.get_entity(int(channel))).title
+            name = (await ultroid_bot.get_entity(int(channel))).title
         except BaseException:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"

@@ -53,7 +53,7 @@ async def daudtoid(e):
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, "Reply To Audio or video")
-    xxx = await eor(e, "`processing...`")
+    xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -78,7 +78,7 @@ async def adaudroid(e):
         return await eod(e, "Reply To video")
     if not File or os.path.exists(File[0]):
         return await xx.edit("`First reply an audio with .aw`")
-    xxx = await eor(e, "`processing...`")
+    xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -246,7 +246,7 @@ async def _(event):
     x = event.pattern_match.group(1)
     if not x:
         return await eor(event, "`Give something to search`")
-    uu = await eor(event, "`Processing...`")
+    uu = await eor(event, get_string("com_1"))
     z = bs(
         await async_searcher("https://combot.org/telegram/stickers?q=" + x),
         "html.parser",

@@ -10,7 +10,6 @@ import os
 import time
 
 from pyUltroid import *
-from pyUltroid.functions.admins import *
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
