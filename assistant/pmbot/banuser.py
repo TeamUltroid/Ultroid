@@ -8,8 +8,7 @@
 from . import *
 
 
-@asst_cmd(pattern="ban")
-@owner()
+@asst_cmd(pattern="ban",owner=True)
 async def banhammer(event):
     if not event.is_private:
         return
@@ -28,8 +27,7 @@ async def banhammer(event):
     )
 
 
-@asst_cmd(pattern="unban", func=lambda x: x.is_private)
-@owner()
+@asst_cmd(pattern="unban", owner=True,func=lambda x: x.is_private)
 async def banhammer(event):
     x = await event.get_reply_message()
     if x is None:
