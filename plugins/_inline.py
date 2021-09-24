@@ -90,6 +90,12 @@ async def inline_alive(o):
 @in_owner
 async def inline_handler(event):
     z = []
+    addons_len = 0
+    plugins_len = 0
+    if "Official" in HELP.keys():
+        plugins_len = len(HELP["Official"])
+    if "Addons" in HELP.keys():
+        addons_len = len(HELP["Addons"])
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -98,8 +104,8 @@ async def inline_handler(event):
         link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
+            plugins_len,
+            addons_len,
             len(z),
         ),
         buttons=_main_help_menu,
@@ -130,16 +136,21 @@ async def _(event):
 @owner
 async def setting(event):
     z = []
+    addons_len = 0
+    plugins_len = 0
+    if "Official" in HELP.keys():
+        plugins_len = len(HELP["Official"])
+    if "Addons" in HELP.keys():
+        addons_len = len(HELP["Addons"])
     for x in LIST.values():
         for y in x:
             z.append(y)
-    cmd = len(z)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
-            cmd,
+            plugins_len,
+            addons_len,
+            len(z),
         ),
         file=_file_to_replace,
         link_preview=False,
