@@ -125,7 +125,6 @@ bd_6: "`Channel is already is database!`"
 carbon_1: "Carbonised by [{}](tg://user?id={})"
 
 # chats
-chats_1: "`Processing...`"
 chats_2: "`Cant delete this chat`"
 chats_3: "`I m not an admin`"
 chats_4: "#Deleted\nDeleted {}"
