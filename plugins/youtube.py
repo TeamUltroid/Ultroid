@@ -20,7 +20,6 @@
    Search and download video from youtube.
 """
 from pyUltroid.functions.ytdl import *
-
 from . import *
 
 

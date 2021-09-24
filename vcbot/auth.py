@@ -27,7 +27,7 @@
     Get The List of People having vc access.
 """
 
-from pyUltroid.dB.vc_group import *
+from pyUltroid.dB.vc_group import get_chats, rem_vcauth, add_vcauth
 from pyUltroid.dB.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 
 from . import *
