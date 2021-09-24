@@ -73,11 +73,11 @@ async def set_afk(event):
                 event.chat_id, get_string("afk_6"), file=media
             )
     elif text:
-        msg1 = await ultroid_bot.send_message(
-            event.chat_id, get_string("afk_5").format(text)
+        msg1 = await event.respond(
+            get_string("afk_5").format(text)
         )
     else:
-        msg1 = await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
+        msg1 = await event.respond(get_string("afk_6"))
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)
@@ -105,7 +105,7 @@ async def remove_afk(event):
                 await x.delete()
             except BaseException:
                 pass
-        await asyncio.sleep(3)
+        await asyncio.sleep(10)
         await off.delete()
 
 
