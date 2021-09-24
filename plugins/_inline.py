@@ -425,7 +425,9 @@ async def backr(event):
 async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["Addons"][0].keys()), "addon", "add")
+    buttons = page_num(
+        current_page_number, list(HELP["Addons"][0].keys()), "addon", "add"
+    )
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -439,7 +441,9 @@ async def backr(event):
 async def bvckr(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["VCBot"][0].keys()), "vchelp", "vc")
+    buttons = page_num(
+        current_page_number, list(HELP["VCBot"][0].keys()), "vchelp", "vc"
+    )
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
