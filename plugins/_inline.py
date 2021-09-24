@@ -12,7 +12,7 @@ from math import ceil
 from os import remove
 
 from git import Repo
-from pyUltroid.dB._core import ADDONS, HELP, LIST, VC_HELP
+from pyUltroid.dB._core import ADDONS, HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, restart, time_formatter, updater
 
 # from pyUltroid.dB._core import *
@@ -330,9 +330,7 @@ async def rrst(ult):
 @owner()
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, HELP["Official"], "helpme", "def"
-    )
+    buttons = page_num(current_page_number + 1, HELP["Official"], "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
 
