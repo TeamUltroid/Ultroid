@@ -25,7 +25,7 @@
 
 """
 
-from pyUltroid.dB.warn_db import warns, reset_warn, add_warn
+from pyUltroid.dB.warn_db import add_warn, reset_warn, warns
 
 from . import *
 
