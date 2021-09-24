@@ -34,7 +34,9 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
     # thank members
     if must_thank(ult.chat_id):
-        chat_count = (await ult.client.get_participants(await ult.get_chat(), limit=0)).total
+        chat_count = (
+            await ult.client.get_participants(await ult.get_chat(), limit=0)
+        ).total
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
