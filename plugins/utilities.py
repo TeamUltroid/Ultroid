@@ -405,7 +405,7 @@ async def rmbg(event):
     dl = await event.client.download_media(reply.media)
     if not dl.endswith(("webp", "jpg", "png", "jpeg")):
         os.remove(dl)
-        return await eor(event, "`Unsupported Media`")
+        return await eor(event, get_string("com_4"))
     xx = await eor(event, "`Sending to remove.bg`")
     out = ReTrieveFile(dl)
     os.remove(dl)

@@ -111,7 +111,7 @@ async def source(e):
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1")
+    x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit("`Removing...`")
         udB.delete("CH_SOURCE")

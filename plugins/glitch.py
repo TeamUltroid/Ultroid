@@ -34,7 +34,7 @@ async def _(e):
         return await eor(e, "Reply to any media")
     wut = mediainfo(reply.media)
     if not wut.startswith(("pic", "sticker")):
-        return await eor(e, "`Unsupported Media`")
+        return await eor(e, get_string("com_4"))
     xx = await eor(e, "`Gliching...`")
     ok = await e.client.download_media(reply.media)
     cmd = f"glitch_me gif --line_count 200 -f 10 -d 50 '{ok}' ult.gif"

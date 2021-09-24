@@ -221,7 +221,7 @@ async def hehe(args):
         )
         photo = await carbon.memorize("carbon_kang")
     else:
-        return await xx.edit("`Unsupported File!`")
+        return await xx.edit(get_string("com_4"))
     await xx.edit(f"`{random.choice(KANGING_STR)}`")
     if photo:
         splat = args.text.split()
