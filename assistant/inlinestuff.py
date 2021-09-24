@@ -43,8 +43,7 @@ api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").
 )
 
 
-@in_pattern("ofox")
-@in_owner
+@in_pattern("ofox",owner=True)
 async def _(e):
     match = None
     try:
@@ -102,8 +101,7 @@ async def _(e):
         )
 
 
-@in_pattern("fl2lnk ?(.*)")
-@in_owner
+@in_pattern("fl2lnk ?(.*)", owner=True)
 async def _(e):
     file_path = e.pattern_match.group(1)
     file_name = file_path.split("/")[-1]
@@ -138,9 +136,8 @@ async def _(e):
 @callback(
     re_compile(
         "fl(.*)",
-    ),
+    ), owner=True
 )
-@owner
 async def _(e):
     t = (e.data).decode("UTF-8")
     data = t[2:]
@@ -151,8 +148,7 @@ async def _(e):
     await dloader(e, host, file)
 
 
-@in_pattern("repo")
-@in_owner
+@in_pattern("repo", owner=True)
 async def repo(e):
     res = [
         await e.builder.article(
@@ -166,8 +162,7 @@ async def repo(e):
     await e.answer(res, switch_pm="Ultroid Repo.", switch_pm_param="start")
 
 
-@in_pattern("go")
-@in_owner
+@in_pattern("go", owner=True)
 async def gsearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
@@ -223,8 +218,7 @@ async def gsearch(q_event):
     await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
 
 
-@in_pattern("app")
-@in_owner
+@in_pattern("app", owner=True)
 async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1]
@@ -273,8 +267,7 @@ async def _(e):
     await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
 
 
-@in_pattern("mods")
-@in_owner
+@in_pattern("mods",owner=True)
 async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
@@ -325,8 +318,7 @@ async def _(e):
 # Inspired by @FindXDaBot
 
 
-@in_pattern("xda")
-@in_owner
+@in_pattern("xda", owner=True)
 async def xda_dev(event):
     QUERY = event.text.split(" ", maxsplit=1)
     try:
