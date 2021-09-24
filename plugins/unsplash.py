@@ -38,4 +38,4 @@ async def searchunsl(ult):
         nl += 1
     await ult.client.send_file(ult.chat_id, CL, caption=f"Uploaded {len(res)} Images\n")
     await tep.delete()
-    [os.remove(img) for img in CL)
+    [os.remove(img) for img in CL]
