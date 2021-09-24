@@ -76,7 +76,7 @@ async def imak(event):
         return await eor(event, get_string("cvt_1"))
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, get_string("cvt_2")) 
+        return await eor(event, get_string("cvt_2"))
     xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
