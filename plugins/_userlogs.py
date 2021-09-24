@@ -34,7 +34,7 @@ async def all_messages_catcher(e):
     try:
         NEEDTOLOG = int(udB.get("TAG_LOG"))
     except Exception:
-        return LOGS.info("you given Wrong Grp/Channel ID in TAG_LOG.")
+        return LOGS.info("You have given Wrong Grp/Channel ID in TAG_LOG.")
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
         return
@@ -67,12 +67,15 @@ async def all_messages_catcher(e):
                     return os.remove(media)
                 except Exception as er:
                     LOGS.info(er)
-            await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
+            await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
     except (PeerIdInvalidError, ValueError):
-        await asst.send_message(
+        try:
+            CACHE_SPAM[NEEDTOLOG]
+        except KeyError:
+            await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
-            "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It",
-        )
+            get_string("userlogs_1"))
+            CACHE_SPAM.update({NEEDTOLOG:True})
     except ChatWriteForbiddenError:
         try:
             await asst.get_permissions(NEEDTOLOG, "me")
@@ -80,7 +83,7 @@ async def all_messages_catcher(e):
             MSG += "\n\nPlease Review the case or you can off"
             MSG += "Your TagLogger, if you dont want to use it"
         except UserNotParticipantError:
-            MSG = "Add me to Your Tag Logger Chat to Log Tags"
+            MSG = get_string("userlogs_2")
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
@@ -130,7 +133,7 @@ async def when_asst_added_to_chat(event):
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
     if user and user.is_self:
         tmp = event.added_by
-        buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
+        buttons = Button.inline(get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|bot")
         return await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
@@ -151,7 +154,7 @@ async def when_ultd_added_to_chat(event):
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
+    buttons = Button.inline(get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|user")
     if event.user_added:
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
