@@ -587,7 +587,7 @@ async def copp(event):
     await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
-@asst_("pst")
+@asst_cmd("pst")
 async def pepsodent(event):
     await toothpaste(event)
 
