@@ -10,8 +10,7 @@ from . import *
 # main menu for api setting
 
 
-@owner
-@callback("apiset")
+@callback("apiset", owner=True)
 async def apiset(event):
     await event.edit(
         get_string("ast_1"),
@@ -24,8 +23,7 @@ async def apiset(event):
     )
 
 
-@owner
-@callback("rmbg")
+@callback("rmbg", owner=True)
 async def rmbgapi(event):
     await event.delete()
     pru = event.sender_id
@@ -48,8 +46,7 @@ async def rmbgapi(event):
         )
 
 
-@owner
-@callback("dapi")
+@callback("dapi", owner=True)
 async def rmbgapi(event):
     await event.delete()
     pru = event.sender_id
@@ -72,8 +69,7 @@ async def rmbgapi(event):
         )
 
 
-@owner
-@callback("oapi")
+@callback("oapi", owner=True)
 async def rmbgapi(event):
     await event.delete()
     pru = event.sender_id
