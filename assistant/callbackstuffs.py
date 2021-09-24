@@ -9,12 +9,13 @@ import re
 import sys
 from os import execl, remove
 
+from pyUltroid.functions.gdrive import authorize, create_token_file
+from pyUltroid.functions.tools import get_paste
 from telegraph import Telegraph
 from telegraph import upload_file as upl
-from telethon.tl.types import MessageMediaWebPage
 from telethon import events
-from pyUltroid.functions.gdrive import create_token_file, authorize
-from pyUltroid.functions.tools import get_paste
+from telethon.tl.types import MessageMediaWebPage
+
 from . import *
 
 # --------------------------------------------------------------------#

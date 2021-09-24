@@ -7,7 +7,7 @@
 
 import re
 
-from . import callback, Button, get_languages, udB, get_back_button
+from . import Button, callback, get_back_button, get_languages, udB
 
 
 @callback("lang", owner=True)

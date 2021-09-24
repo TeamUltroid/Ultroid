@@ -7,7 +7,7 @@
 
 from pistonapi import PistonAPI
 
-from . import in_pattern, asst, Button
+from . import Button, asst, in_pattern
 
 
 @in_pattern("run", owner=True)

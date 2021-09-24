@@ -11,8 +11,14 @@ import re
 import time
 
 from numerize import numerize
+from pyUltroid.functions.helper import (
+    bash,
+    download_file,
+    fast_download,
+    time_formatter,
+    uploader,
+)
 from pyUltroid.functions.ytdl import dler
-from pyUltroid.functions.helper import download_file, uploader, fast_download, time_formatter, bash
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
