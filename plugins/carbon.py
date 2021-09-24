@@ -20,7 +20,7 @@ import random
 
 from carbonnow import Carbon
 
-from . import eor, inline_mention, os, ultroid_cmd, get_string
+from . import eor, get_string, inline_mention, os, ultroid_cmd
 
 all_col = [
     "Black",
