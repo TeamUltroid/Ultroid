@@ -10,8 +10,7 @@ import re
 from . import *
 
 
-@callback("lang")
-@owner
+@callback("lang",owner=True)
 async def setlang(event):
     languages = get_languages()
     tultd = [
@@ -28,8 +27,7 @@ async def setlang(event):
     await event.edit("List Of Available Languages.", buttons=buttons)
 
 
-@callback(re.compile(b"set_(.*)"))
-@owner
+@callback(re.compile(b"set_(.*)"), owner=True)
 async def settt(event):
     lang = event.data_match.group(1).decode("UTF-8")
     languages = get_languages()
