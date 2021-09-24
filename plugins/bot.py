@@ -132,7 +132,7 @@ async def is_on(ult):
             Button.url("Support", "t.me/UltroidSupport"),
         ],
     ]
-    await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons)
+    await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons, link_preview=False)
 
 
 @ultroid_cmd(
