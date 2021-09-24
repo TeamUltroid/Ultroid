@@ -114,7 +114,7 @@ async def inline_handler(event):
 
 
 @in_pattern("pasta")
-@in_owner
+# @in_owner
 async def _(event):
     ok = event.text.split("-")[1]
     link = "https://spaceb.in/" + ok
