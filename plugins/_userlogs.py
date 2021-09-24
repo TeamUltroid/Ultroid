@@ -172,9 +172,8 @@ async def when_ultd_added_to_chat(event):
 @callback(
     re.compile(
         "leave_ch_(.*)",
-    ),
+    ), owner=True
 )
-@owner
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
     ch_id, client = cht.split("|")
