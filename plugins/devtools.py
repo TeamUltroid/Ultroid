@@ -96,6 +96,7 @@ async def _(event):
 
 
 p, pp = print, pprint  # ignore: pylint
+bot = ultroid = ultroid_bot
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
