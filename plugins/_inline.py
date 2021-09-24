@@ -316,7 +316,8 @@ async def rrst(ult):
 @callback(
     data=re.compile(
         rb"helpme_next\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
@@ -329,7 +330,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"helpme_prev\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
@@ -342,7 +344,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"vchelp_next\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
@@ -355,7 +358,8 @@ async def on_vc_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"vchelp_prev\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
@@ -368,7 +372,8 @@ async def on_vc_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"addon_next\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
@@ -381,7 +386,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         rb"addon_prev\((.+?)\)",
-    ), owner=True
+    ),
+    owner=True,
 )
 @owner()
 async def on_plug_in_callback_query_handler(event):
@@ -392,7 +398,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons, link_preview=False)
 
 
-@callback(data="back",owner=True)
+@callback(data="back", owner=True)
 async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
@@ -469,7 +475,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"def_plugin_(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
@@ -512,7 +519,8 @@ async def on_plug_in_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"vc_plugin_(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_vc_plg_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
@@ -556,7 +564,8 @@ async def on_vc_plg_callback_query_handler(event):
 @callback(
     data=re.compile(
         b"add_plugin_(.*)",
-    ), owner=True
+    ),
+    owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     plugin_name = event.data_match.group(1).decode("UTF-8")
