@@ -104,8 +104,7 @@ async def ultroid(event):
             )
 
 
-@callback("mainmenu")
-@owner
+@callback("mainmenu", owner=True)
 async def ultroid(event):
     if event.is_group:
         return
@@ -115,8 +114,7 @@ async def ultroid(event):
     )
 
 
-@callback("stat")
-@owner
+@callback("stat", owner=True)
 async def botstat(event):
     ok = len(get_all_users())
     msg = """Ultroid Assistant - Stats
@@ -126,8 +124,7 @@ Total Users - {}""".format(
     await event.answer(msg, cache_time=0, alert=True)
 
 
-@callback("bcast")
-@owner
+@callback("bcast", owner=True)
 async def bdcast(event):
     ok = get_all_users()
     await event.edit(f"Broadcast to {len(ok)} users.")
@@ -161,8 +158,7 @@ Failed for {fail} user(s).""",
         )
 
 
-@callback("setter")
-@owner
+@callback("setter", owner=True)
 async def setting(event):
     await event.edit(
         "Choose from the below options -",
@@ -170,8 +166,7 @@ async def setting(event):
     )
 
 
-@callback("tz")
-@owner
+@callback("tz", owner=True)
 async def timezone_(event):
     await event.delete()
     pru = event.sender_id
