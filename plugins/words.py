@@ -42,7 +42,7 @@ async def mean(event):
     meni = out[0]["meanings"][0]
     defi = meni["definitions"][0]
     text += f"• **Meaning :** __{defi['definition']}__\n\n"
-    text += f"• **Example :** __{defi['definition']['example']}__"
+    text += f"• **Example :** __{defi['example']}__"
     if defi["synonyms"]:
         text += (
             "\n\n• **Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
