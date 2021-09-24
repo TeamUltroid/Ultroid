@@ -48,7 +48,7 @@ async def doai(e):
     dt = adt.split("_")
     ch = int(dt[0])
     mid = int(dt[1])
-    await e.edit("Processing... ")
+    await e.edit(get_string("com_1"))
     try:
         qu = games[ch][mid].start_game(child_mode=True)
         # child mode should be promoted
@@ -62,8 +62,7 @@ async def doai(e):
     await e.edit("Q. " + qu, buttons=bts)
 
 
-@callback(re.compile("aka_?(.*)"))
-@owner
+@callback(re.compile("aka_?(.*)"), owner=True)
 async def okah(e):
     mk = e.pattern_match.group(1).decode("utf-8").split("_")
     ch = int(mk[0])
@@ -89,8 +88,7 @@ async def okah(e):
     await e.edit(text, buttons=bts)
 
 
-@in_pattern(re.compile("aki_?(.*)"))
-@in_owner
+@in_pattern(re.compile("aki_?(.*)"), owner=True)
 async def eiagx(e):
     bts = Button.inline("Start Game", data=e.text)
     ci = types.InputWebDocument(aki_photo, 0, "image/jpeg", [])
