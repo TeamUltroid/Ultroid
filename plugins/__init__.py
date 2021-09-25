@@ -33,7 +33,7 @@ LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 Ttoken = udB.get("_TELEGRAPH_TOKEN")
 Telegraph = Telegraph(Ttoken)
 
-if not Ttkoken:
+if not Ttoken:
     short_name = OWNER_NAME if len(OWNER_NAME) < 32 else "Ultroid"
     author_url = (
         f"https://t.me/{ultroid_bot.me.username}" if ultroid_bot.me.username else None
