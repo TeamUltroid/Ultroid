@@ -120,7 +120,7 @@ async def _(event):
         return await msg.edit("Unable to collect FedAdminList.")
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
-        await ultroid.send_message(chat, "/start")
+        await ultroid_bot.send_message(chat, "/start")
     except BaseException:
         return await msg.edit("Specified FBan Group ID is incorrect.")
     await asyncio.sleep(3)
@@ -131,7 +131,7 @@ async def _(event):
     exCount = 0
     for fed in fedList:
         if udB.get("EXCLUDE_FED") and fed in excludeFed:
-            await ultroid.send_message(chat, f"{fed} Excluded.")
+            await ultroid_bot.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
         await event.client.send_message(chat, f"/joinfed {fed}")
@@ -270,9 +270,9 @@ async def _(event):
             await event.client.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
-        await ultroid.send_message(chat, f"/joinfed {fed}")
+        await ultroid_bot.send_message(chat, f"/joinfed {fed}")
         await asyncio.sleep(3)
-        await ultroid.send_message(chat, f"/unfban {FBAN} {REASON}")
+        await ultroid_bot.send_message(chat, f"/unfban {FBAN} {REASON}")
         await asyncio.sleep(3)
     try:
         os.remove("fedlist")
