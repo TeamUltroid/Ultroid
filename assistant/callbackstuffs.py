@@ -148,6 +148,7 @@ async def changes(okk):
             base_url="https://carbonara.vercel.app/api/cook",
             code=tl_chnglog,
             background=choice(ATRA_COL),
+            language="md",
         )
         img = await carbon.memorize("changelog")
         return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
