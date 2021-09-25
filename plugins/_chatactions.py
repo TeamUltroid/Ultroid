@@ -35,7 +35,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
     # thank members
     if must_thank(ult.chat_id):
         chat_count = (
-            await ult.client.get_participants(await ult.get_chat(), limit=0)
+            await ult.client.get_participants(ult.chat_id, limit=0)
         ).total
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
@@ -189,6 +189,6 @@ async def uname_stuff(id, uname, name):
         elif uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                get_string("can_4").format(f"[{name}](tg://user?id={id})", uname,
+                get_string("can_4").format(f"[{name}](tg://user?id={id})", uname),
             )
         update_username(id, uname)
