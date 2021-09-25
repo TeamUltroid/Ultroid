@@ -223,7 +223,7 @@ async def tkicki(e):
         )
         await eod(
             e,
-            get_string("tban_2").format(fn, chat.title, tme)
+            get_string("tban_2").format(fn, chat.title, tme),
             time=15,
         )
     except Exception as m:
