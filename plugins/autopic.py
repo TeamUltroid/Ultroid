@@ -17,6 +17,7 @@
 import asyncio
 import os
 from random import shuffle
+
 from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
@@ -45,6 +46,7 @@ async def autopic(e):
             os.remove(kar)
             await asyncio.sleep(SLEEP_TIME)
         shuffle(clls)
+
 
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
