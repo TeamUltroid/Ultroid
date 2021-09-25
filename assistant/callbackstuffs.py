@@ -17,7 +17,7 @@ from telethon import events
 from telethon.tl.types import MessageMediaWebPage
 
 try:
-    from carbon import Carbon
+    from carbonnow import Carbon
 except ImportError:
     Carbon = None
 from . import *
