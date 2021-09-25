@@ -15,7 +15,7 @@ from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
-
+from random import choice
 try:
     from carbonnow import Carbon
 except ImportError:
@@ -146,7 +146,7 @@ async def changes(okk):
         carbon = Carbon(
             base_url="https://carbonara.vercel.app/api/cook",
             code=changelog,
-            background=random.choice(ATRA_COL),
+            background=choice(ATRA_COL),
         )
         img = await carbon.memorize("changelog")
         return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
