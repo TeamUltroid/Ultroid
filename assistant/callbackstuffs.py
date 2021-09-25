@@ -15,8 +15,9 @@ from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
+
 try:
-   from carbon import Carbon
+    from carbon import Carbon
 except ImportError:
     Carbon = None
 from . import *
@@ -138,12 +139,14 @@ async def changes(okk):
     await okk.answer("■ Generating Changelogs...")
     repo = Repo.init()
     ac_br = repo.active_branch
-    button = Button.inline("Update Now", data="updatenow"),
+    button = (Button.inline("Update Now", data="updatenow"),)
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     if Carbon:
         carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=changelog, background=random.choice(ATRA_COL)
+            base_url="https://carbonara.vercel.app/api/cook",
+            code=changelog,
+            background=random.choice(ATRA_COL),
         )
         img = await carbon.memorize("changelog")
         return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
