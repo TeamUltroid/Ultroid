@@ -71,6 +71,11 @@ purge_1: "`Reply to a message to purge from.`"
 purgeall_1: "`Reply to someone's msg to delete.`"
 purgeall_2: "Successfully Purged All Messages from {}"
 
+# akinator
+aki_1: "Game has been Terminated...."
+aki_2: "Start Game"
+aki_3: "Timeout !"
+
 # antiflood
 antiflood_1: "`Antiflood Settings Disabled`"
 antiflood_2: "`No flood limits in this chat.`"
@@ -101,6 +106,10 @@ asstcmd_3: "Done Command: `/{}` Removed."
 asstcmd_4: "Done Command : `/{}` saved."
 asstcmd_5: "No commands found"
 asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
+
+# autocorrect
+act_1: "AUTOCORRECT Feature On"
+act_2: "AUTOCORRECT Feature Off"
 
 # autopic
 autopic_1: "Heya Give me some Text .."
@@ -146,6 +155,14 @@ ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 usage_simple: "**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
+
+# blacklist
+blk_1: "`Give the word to blacklist..`"
+blk_2: "Done : `{}` Blacklisted here."
+blk_3: "`Give the word to remove from blacklist..`"
+blk_4: "Done : `{}` Removed from Blacklist."
+blk_5: "Blacklist Found In This Chats Are :\n\n"
+blk_6: "No Blacklist word Found Here"
 
 # broadcast
 bd_1: "`Adding to db...`"
