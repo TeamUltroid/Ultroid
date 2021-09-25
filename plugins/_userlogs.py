@@ -34,7 +34,7 @@ async def all_messages_catcher(e):
     try:
         NEEDTOLOG = int(udB.get("TAG_LOG"))
     except Exception:
-        return LOGS.info("You have given Wrong Grp/Channel ID in TAG_LOG.")
+        return LOGS.info(get_string("userlogs_1"))
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
         return
@@ -79,9 +79,7 @@ async def all_messages_catcher(e):
     except ChatWriteForbiddenError:
         try:
             await asst.get_permissions(NEEDTOLOG, "me")
-            MSG = "Your Asst Cant Send Messages in Tag Log Chat."
-            MSG += "\n\nPlease Review the case or you can off"
-            MSG += "Your TagLogger, if you dont want to use it"
+            MSG = get_string("userlogs_4")
         except UserNotParticipantError:
             MSG = get_string("userlogs_2")
         try:
@@ -179,9 +177,11 @@ async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
     ch_id, client = cht.split("|")
     if client == "bot":
-        name = (await asst.get_entity(int(ch_id))).title
-        await asst.delete_dialog(int(ch_id))
+        client = asst
     elif client == "user":
-        name = (await ultroid_bot.get_entity(int(ch_id))).title
-        await ultroid_bot.delete_dialog(int(ch_id))
-    await event.edit(f"Left `{name}`")
+        client = ultroid_bot
+    else:
+        return
+    name = (await client.get_entity(int(ch_id))).title
+    await client.delete_dialog(int(ch_id))
+    await event.edit(get_string("userlogs_5").format(name))
