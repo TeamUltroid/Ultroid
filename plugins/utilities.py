@@ -65,7 +65,6 @@ from datetime import datetime as dt
 import requests
 from pyUltroid.dB.gban_mute_db import *
 from pyUltroid.misc._assistant import asst_cmd
-from telegraph import Telegraph
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
@@ -85,14 +84,6 @@ from . import *
 # =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
-
-# Telegraph Things
-telegraph = Telegraph()
-try:
-    telegraph.create_account(short_name=OWNER_NAME)
-
-except BaseException:
-    telegraph.create_account(short_name="Ultroid")
 
 _copied_msg = {}
 
@@ -462,7 +453,7 @@ async def telegraphcmd(event):
         with open(getit) as ab:
             content = ab.read()
         os.remove(getit)
-    makeit = telegraph.create_page(title=match, content=[content])
+    makeit = Telegraph.create_page(title=match, content=[content])
     war = makeit["url"]
     await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
 
