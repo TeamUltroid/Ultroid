@@ -68,7 +68,7 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
 `virtualenv -p /usr/bin/python3 venv`
 `. ./venv/bin/activate`
 - Install the requirements:   <br />
-`pip(3) install -U -r re*/ex*/local-requirements.txt`
+`pip(3) install -U -r re*/st*/optional-requirements.txt`
 `pip(3) install -U -r requirements.txt`
 - Generate your `SESSION`:
   - For Linux users:
