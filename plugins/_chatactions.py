@@ -73,12 +73,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                     user.id,
                     view_messages=False,
                 )
-                gban_watch = f"#GBanned_User Joined.\n\n**User** - [{user.first_name}](tg://user?id={user.id})\n"
-                gban_watch += f"**Reason**: {reason}\n\n"
-                gban_watch += "`User Banned.`"
+                gban_watch = get_string("can_1").format(inline_mention(user), reason)
                 await ult.reply(gban_watch)
             except Exception as er:
-                LOGS.info(er)
+                LOGS.exception(er)
 
         # greetings
         elif get_welcome(ult.chat_id):
@@ -87,10 +85,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             title = chat.title or "this chat"
             pp = await ult.client.get_participants(chat)
             count = len(pp)
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+            mention = inline_mention(user)
             name = user.first_name
             last = user.last_name
-            fullname = f"{name} {last}" if last else name
+            fullname = get_display_name(user)
             uu = user.username
             username = f"@{uu}" if uu else mention
             wel = get_welcome(ult.chat_id)
@@ -120,10 +118,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         title = chat.title or "this chat"
         pp = await ult.client.get_participants(chat)
         count = len(pp)
-        mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+        mention = inline_mention(user)
         name = user.first_name
         last = user.last_name
-        fullname = f"{name} {last}" if last else name
+        fullname = get_display_name(user)
         uu = user.username
         username = f"@{uu}" if uu else mention
         wel = get_goodbye(ult.chat_id)
@@ -181,16 +179,16 @@ async def uname_stuff(id, uname, name):
         if old and uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n@{old} changed username to @{uname}",
+                get_string("can_2").format(old, uname),
             )
         elif old:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id}) removed its username. (@{old})",
+                get_string("can_3").format(f"[{name}](tg://user?id={id})", old),
             )
         elif uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                f"∆ #UsernameUpdate\n\n[{name}](tg://user?id={id})'s new username --> @{uname}",
+                get_string("can_4").format(f"[{name}](tg://user?id={id})", uname,
             )
         update_username(id, uname)
