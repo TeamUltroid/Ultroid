@@ -80,7 +80,7 @@ async def _(event):
                     fedfile = await bot_conv.get_response()
                     await asyncio.sleep(3)
                     if fedfile.media:
-                        downloaded_file_name = await ultroid.download_media(
+                        downloaded_file_name = await ultroid_bot.download_media(
                             fedfile,
                             "fedlist",
                         )
@@ -156,7 +156,7 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.media:
-            downloaded_file_name = await ultroid.download_media(
+            downloaded_file_name = await ultroid_bot.download_media(
                 previous_message,
                 "fedlist",
             )
@@ -216,7 +216,7 @@ async def _(event):
                     fedfile = await bot_conv.get_response()
                     await asyncio.sleep(3)
                     if fedfile.media:
-                        downloaded_file_name = await ultroid.download_media(
+                        downloaded_file_name = await ultroid_bot.download_media(
                             fedfile,
                             "fedlist",
                         )

@@ -278,7 +278,7 @@ if sett == "True":
                     )
                     update_pm(user.id, message_, wrn)
                     if inline_pm:
-                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        results = await ultroid_bot.inline_query(my_bot, f"ip_{user.id}")
                         try:
                             _to_delete[user.id] = await results[0].click(
                                 user.id, reply_to=event.id, hide_via=True
@@ -312,7 +312,7 @@ if sett == "True":
                     update_pm(user.id, message_, wrn)
                     if inline_pm:
                         try:
-                            results = await ultroid.inline_query(
+                            results = await ultroid_bot.inline_query(
                                 my_bot, f"ip_{user.id}"
                             )
                             _to_delete[user.id] = await results[0].click(
@@ -347,7 +347,7 @@ if sett == "True":
                 update_pm(user.id, message_, wrn)
                 if inline_pm:
                     try:
-                        results = await ultroid.inline_query(my_bot, f"ip_{user.id}")
+                        results = await ultroid_bot.inline_query(my_bot, f"ip_{user.id}")
                         _to_delete[user.id] = await results[0].click(
                             user.id, reply_to=event.id, hide_via=True
                         )
