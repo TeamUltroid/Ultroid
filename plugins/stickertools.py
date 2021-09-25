@@ -164,7 +164,7 @@ async def pack_kangish(_):
         return await eor(_, str(er))
     await eor(
         _,
-        get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}",
+        get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}")
     )
 
 
