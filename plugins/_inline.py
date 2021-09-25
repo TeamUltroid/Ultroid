@@ -164,7 +164,7 @@ async def on_vc_callback_query_handler(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     try:
         buttons = page_num(0, HELP["VCBot"].keys(), "vchelp", "vc")
-    except ZeroDivisionError:
+    except (ZeroDivisionError, KeyError):
         return await event.answer("Vc not Active.")
     await event.edit(xhelps, buttons=buttons, link_preview=False)
 
@@ -292,7 +292,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(data="frrr", owner=True)
 async def addon(event):
-    if HELP.get("Addons") and HELP["Addons"]:
+    if HELP.get("Addons"):
         halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
         buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
         await event.edit(halp, buttons=buttons, link_preview=False)
@@ -410,7 +410,7 @@ async def backr(event):
 
 @callback(data="buck", owner=True)
 async def backr(event):
-    xhelps = zhelps.format(OWNER_NAME, len(HELP["VCBot"]))
+    xhelps = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
     current_page_number = int(upage)
     buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
