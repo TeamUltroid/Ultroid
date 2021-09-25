@@ -18,8 +18,9 @@ import os
 import random
 
 from PIL import Image, ImageDraw, ImageFont
-from telethon.tl.types import InputMessagesFilterPhotos
 from pyUltroid.functions.misc import unsplashsearch
+from telethon.tl.types import InputMessagesFilterPhotos
+
 from . import *
 
 
@@ -42,7 +43,7 @@ async def logo_gen(event):
                 bg_ = await temp.download_media()
     if not bg_:
         if event.client._bot:
-            SRCH = ["blur", "background", "neon lights", "wallpaper","nature","logo"]
+            SRCH = ["blur", "background", "neon lights", "wallpaper", "nature", "logo"]
             res = await unsplashsearch(random.choice(SRCH), limit=1)
             bg_ = await download_file(res[0], "resources/downloads/logo.png")
         else:
