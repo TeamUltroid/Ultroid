@@ -14,15 +14,32 @@ com_2: "`Searching...`"
 com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
 
+# chatactions
+can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
+can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
+can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
+
 # help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
+help_4: "• Plugins"
+help_5: "• Addons
+help_6: "••Voice Chat"
+help_7: "⚙️ Owner Tools"
+help_8: "Inline Plugins••"
+help_9: "Settings ⚙️"
+help_10: "••Cʟᴏꜱᴇ••"
+help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
+
 
 # userlogs
 userlogs_1: "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It"
 userlogs_2: "Add me to Your Tag Logger Chat to Log Tags"
 userlogs_3: "Leave Chat"
+userlogs_4: "Your Asst Bot Cant Send Messages in Tag Log Chat.\nAdd it to Get Your Tag Logs.."
+userlogs_5: "Left `{}`"
 
 # admintools
 adm_1: "`I couldn't get who he is!`"
@@ -88,6 +105,7 @@ inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
 inline_7: "Do .help {} to get the list of commands."
 inline_8: "Click the below button to update!"
+inline_9: "You Are Already On Latest Version"
 
 # tagnotif
 tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
@@ -96,6 +114,9 @@ tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
 # whisper
 wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
 wspr_2: "Message deleted"
+wspr_3: "Add some id or username too"
+wspr_4: "User {} Not Found\nSearch Again"
+wspr_5: "You Can't do this"
 
 # afk
 afk_1: "**No Longer Afk**\n\nWas away for ~ `{}`"
