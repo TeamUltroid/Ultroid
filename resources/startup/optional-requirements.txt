@@ -4,7 +4,6 @@ aiohttp==3.7.4.post0
 akinator.py==5.0.0
 apscheduler==3.7.0
 cloudscraper==1.2.58
-emoji==1.4.2
 enhancer
 faker==8.12.1
 fonttools==4.26.2
