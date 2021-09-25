@@ -59,7 +59,12 @@ async def _(event):
         views = v["viewCount"]["short"]
         publisher = v["channel"]["name"]
         published_on = v["publishedTime"]
-        description = v["descriptionSnippet"][0]["text"] if v.get("descriptionSnippet") and len(v["descriptionSnippet"][0]["text"]) < 500 else "None"
+        description = (
+            v["descriptionSnippet"][0]["text"]
+            if v.get("descriptionSnippet")
+            and len(v["descriptionSnippet"][0]["text"]) < 500
+            else "None"
+        )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
         text += f"<strong>Duration:-</strong> <code>{duration}</code>\n"
