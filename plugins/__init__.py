@@ -20,7 +20,7 @@ from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
 from telethon import Button, events
 from telethon.tl import functions, types
-
+from telegraph import Telegraph
 from strings import get_string
 
 Redis = udB.get
@@ -28,6 +28,15 @@ Redis = udB.get
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
+
+Ttoken = udB.get("_TELEGRAPH_TOKEN")
+Telegraph = Telegraph(Ttoken)
+
+if not Ttkoken:
+    short_name = OWNER_NAME if len(OWNER_NAME) < 32 else "Ultroid"
+    author_url = f"https://t.me/{ultroid_bot.me.username}" if ultroid_bot.me.username else None
+    Telegraph.create_account(short_name=short_name, author_name=author_name, author_url=author_url)
+    udB.set("_TELEGRAPH_TOKEN", Telegraph.get_access_token())
 
 List = []
 Dict = {}
