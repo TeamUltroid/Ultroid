@@ -19,18 +19,18 @@ _file_to_replace = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
 
 _main_help_menu = [
     [
-        Button.inline("• Plugins", data="hrrrr"),
-        Button.inline("• Addons", data="frrr"),
+        Button.inline(get_string("help_4"), data="hrrrr"),
+        Button.inline(get_string("help_5"), data="frrr"),
     ],
     [
-        Button.inline("••Voice Chat", data="vc_helper"),
-        Button.inline("Inline Plugins••", data="inlone"),
+        Button.inline(get_string("help_6"), data="vc_helper"),
+        Button.inline(get_string("help_7"), data="inlone"),
     ],
     [
-        Button.inline("⚙️ Owner Tools", data="ownr"),
-        Button.url("Settings ⚙️", url=f"https://t.me/{asst.me.username}?start=set"),
+        Button.inline(get_string("help_8"), data="ownr"),
+        Button.url(get_string("help_9"), url=f"https://t.me/{asst.me.username}?start=set"),
     ],
-    [Button.inline("••Cʟᴏꜱᴇ••", data="close")],
+    [Button.inline(get_string("help_10"), data="close")],
 ]
 
 
@@ -59,7 +59,7 @@ async def _help(ult):
                 await eor(ult, output)
             else:
                 try:
-                    x = f"Plugin Name-{plug}\n\n✘ Commands Available -\n\n"
+                    x = get_string("help_11").format(plug)
                     for d in LIST[plug]:
                         x += HNDLR + d
                         x += "\n"
@@ -67,7 +67,8 @@ async def _help(ult):
                     await eor(ult, x)
                 except BaseException:
                     await eor(ult, get_string("help_1").format(plug), time=5)
-        except BaseException:
+        except BaseException as er:
+            LOGS.exception(er)
             await eor(ult, "Error 🤔 occured.")
     else:
         try:
