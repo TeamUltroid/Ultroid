@@ -29,6 +29,7 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"), time=5)
+    e = await eor(e, get_string("com_1"))
     clls = await unsplashsearch(search, limit=50)
     if not clls:
         return await eor(e, get_string("autopic_2").format(search), time=5)
@@ -40,7 +41,7 @@ async def autopic(e):
         for lie in clls:
             if udB.get("AUTOPIC") != "True":
                 return
-            kar = await download_file(lie, kar)
+            kar = await download_file(lie, "autopic.png")
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
