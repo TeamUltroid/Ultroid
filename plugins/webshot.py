@@ -22,7 +22,7 @@ from . import *
 @ultroid_cmd(pattern="webshot ?(.*)")
 async def webss(event):
     xx = await eor(event, get_string("com_1"))
-    xurl = e.pattern_match.group(1)
+    xurl = event.pattern_match.group(1)
     if not xurl:
         return await eor(xx, "`Give a URL please!`", time=5)
     elif not is_url_ok(xurl):
