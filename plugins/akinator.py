@@ -35,7 +35,7 @@ async def doit(e):
         return await asst.send_file(
             e.chat_id,
             aki_photo,
-            buttons=Button.inline("Start Game", data=f"aki_{e.chat_id}_{e.id}"),
+            buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
         )
     if e.out:
         await e.delete()
@@ -52,7 +52,7 @@ async def doai(e):
         qu = games[ch][mid].start_game(child_mode=True)
         # child mode should be promoted
     except KeyError:
-        return await e.answer("Game has been Terminated....", alert=True)
+        return await e.answer(get_string("aki_1"), alert=True)
     bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
     cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
 
@@ -70,7 +70,7 @@ async def okah(e):
     try:
         gm = games[ch][mid]
     except KeyError:
-        await e.answer("Timeout !")
+        await e.answer(get_string("aki_3"))
         return
     text = gm.answer(ans)
     if gm.progression >= 80:
@@ -89,7 +89,7 @@ async def okah(e):
 
 @in_pattern(re.compile("aki_?(.*)"), owner=True)
 async def eiagx(e):
-    bts = Button.inline("Start Game", data=e.text)
+    bts = Button.inline(get_string("aki_2"), data=e.text)
     ci = types.InputWebDocument(aki_photo, 0, "image/jpeg", [])
     ans = [
         await e.builder.article(
