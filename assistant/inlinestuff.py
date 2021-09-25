@@ -9,14 +9,13 @@ import base64
 from datetime import datetime
 from random import choice
 from re import compile as re_compile
-from re import findall
 
 import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
-from pyUltroid.functions.tools import dloader, get_ofox
 from pyUltroid.functions.misc import google_search
+from pyUltroid.functions.tools import dloader, get_ofox
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
