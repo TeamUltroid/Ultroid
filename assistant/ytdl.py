@@ -10,13 +10,13 @@ import os
 import re
 import time
 
-from numerize import numerize
 from pyUltroid.functions.helper import (
     bash,
     download_file,
     fast_download,
     time_formatter,
     uploader,
+    numerize
 )
 from pyUltroid.functions.ytdl import dler
 from telethon import Button
