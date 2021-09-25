@@ -174,7 +174,7 @@ async def _(event):
     check = updater()
     if not check:
         return await event.answer(
-            "You Are Already On Latest Version", cache_time=0, alert=True
+            get_string("inline_9"), cache_time=0, alert=True
         )
     repo = Repo.init()
     ac_br = repo.active_branch
@@ -571,14 +571,12 @@ async def on_plug_in_callback_query_handler(event):
     except BaseException:
         try:
             for u in CMD_HELP[plugin_name]:
-                help_string = f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
+                help_string = get_string("help_11").format(plugin_name)
                 help_string += str(CMD_HELP[plugin_name])
         except BaseException:
             try:
                 if plugin_name in LIST:
-                    help_string = (
-                        f"Plugin Name-{plugin_name}\n\n✘ Commands Available-\n\n"
-                    )
+                    help_string = get_string("help_11").format(plugin_name)
                     for d in LIST[plugin_name]:
                         help_string += HNDLR + d
                         help_string += "\n"
