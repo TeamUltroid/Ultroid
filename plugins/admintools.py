@@ -69,7 +69,7 @@ async def prmte(ult):
     user, rank = await get_user_info(ult)
     rank = rank or "Admin"
     if not user:
-        return await xx.edit("`Reply to a user to promote him!`")
+        return await xx.edit(get_string("pro_1"))
     try:
         await ult.client.edit_admin(
             ult.chat_id,
@@ -83,10 +83,10 @@ async def prmte(ult):
         )
         await eod(
             xx,
-            f"{inline_mention(user)} `is now an admin in {ult.chat.title} with title {rank}.`",
+            get_string("pro2").format(inline_mention(user), ult.chat.title, rank)
         )
     except Exception as ex:
-        return await xx.edit("`" + str(ex) + "`")
+        return await xx.edit(f"`{ex}`")
 
 
 @ultroid_cmd(
@@ -101,7 +101,7 @@ async def dmote(ult):
     if not rank:
         rank = "Not Admin"
     if not user:
-        return await xx.edit("`Reply to a user to demote him!`")
+        return await xx.edit(get_string("de_1"))
     try:
         await ult.client.edit_admin(
             ult.chat_id,
@@ -114,10 +114,10 @@ async def dmote(ult):
             title=rank,
         )
         await eod(
-            xx, f"{inline_mention(user)} `is no longer an admin in {ult.chat.title}`"
+            xx, get_string("de_2").format(inline_mention(user), ult.chat.title)
         )
     except Exception as ex:
-        return await xx.edit("`" + str(ex) + "`")
+        return await xx.edit(f"`{ex}`")
 
 
 @ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
@@ -135,23 +135,11 @@ async def bban(ult):
     except UserIdInvalidError:
         return await xx.edit(get_string("adm_1"))
     senderme = inline_mention(await ult.get_sender())
-    try:
-        reply = await ult.get_reply_message()
-        if reply:
-            await reply.delete()
-    except BadRequestError:
-        return await xx.edit(
-            f"{inline_mention(user)}**was banned by** {senderme} **in** `{ult.chat.title}`\n**Reason**: `{reason}`\n**Messages Deleted**: `False`",
-        )
     userme = inline_mention(user)
+    text = get_string("ban_4").format(userme, senderme, ult.chat.title)
     if reason:
-        await xx.edit(
-            f"{userme} **was banned by** {senderme} **in** `{ult.chat.title}`\n**Reason**: `{reason}`",
-        )
-    else:
-        await xx.edit(
-            f"{userme} **was banned by** {senderme} **in** `{ult.chat.title}`",
-        )
+        text += get_string("ban_5").format(reason)
+    await xx.edit(text)
 
 
 @ultroid_cmd(
@@ -171,11 +159,9 @@ async def uunban(ult):
     except UserIdInvalidError:
         await xx.edit(get_string("adm_1"))
     sender = inline_mention(await ult.get_sender())
-    text = (
-        f"{inline_mention(user)} **was unbanned by** {sender} **in** `{ult.chat.title}`"
-    )
+    text = get_string("unban_3").format(user, sender, ult.chat.title)
     if reason:
-        text += f"\n**Reason**: `{reason}`"
+        text += get_string("ban_5").format(reason)
     await xx.edit(text)
 
 
@@ -203,9 +189,9 @@ async def kck(ult):
         return await xx.edit(get_string("kick_1"))
     except Exception as e:
         LOGS.exception(e)
-    text = f"{inline_mention(user)} **was kicked by** {inline_mention(await ult.get_sender())} **in** `{ult.chat.title}`"
+    text = get_string("kick_4").format(inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title)
     if reason:
-        text += f"\n**Reason**: `{reason}`"
+        text += get_string("ban_5").format(reason)
     await xx.edit(text)
 
 
@@ -215,7 +201,7 @@ async def tkicki(e):
     try:
         tme = huh[1]
     except IndexError:
-        return await eor(e, "`Time till kick?`", time=15)
+        return await eor(e, get_string("adm_3"), time=15)
     try:
         inputt = huh[2]
     except IndexError:
@@ -229,7 +215,7 @@ async def tkicki(e):
         userid = await get_user_id(inputt)
         fn = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(e, "`Reply to someone or use its id...`", time=3)
+        return await eor(e, get_string("tban_1"), time=3)
     try:
         bun = await ban_time(e, tme)
         await e.client.edit_permissions(
@@ -237,7 +223,7 @@ async def tkicki(e):
         )
         await eod(
             e,
-            f"`Successfully Banned` `{fn}` `in {chat.title} for {tme}`",
+            get_string("tban_2").format(fn, chat.title, tme)
             time=15,
         )
     except Exception as m:
@@ -256,7 +242,7 @@ async def pin(msg):
     try:
         await msg.client.pin_message(msg.chat_id, me.id, notify=False)
     except BadRequestError:
-        return await eor(msg, "`Hmm.. Guess I have no rights here!`")
+        return await eor(msg, get_string("adm_2"))
     except Exception as e:
         return await eor(msg, f"**ERROR:**`{e}`")
     await eor(msg, text)
@@ -329,7 +315,7 @@ async def fastpurgerme(purg):
         try:
             nnt = int(num)
         except BaseException:
-            await eor(purg, "`Give a Valid Input.. `", time=5)
+            await eor(purg, get_string("com_3"), time=5)
             return
         mp = 0
         async for mm in purg.client.iter_messages(
@@ -381,7 +367,7 @@ async def _(e):
     name = (await e.get_reply_message()).sender
     try:
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-        await eor(e, f"Successfully Purged All Messages from {name.first_name}", time=5)
+        await eor(e, get_sting("purgeall_2").format(name.first_name), time=5)
     except Exception as er:
         return await eor(e, str(er), time=5)
 
@@ -397,7 +383,7 @@ async def djshsh(event):
         return
     msg_id = FChat.full_chat.pinned_msg_id
     if not msg_id:
-        return await eor(event, "No Pinned Message Found!")
+        return await eor(event, get_string("pinned_1"))
     msg = await event.client.get_messages(chat.id, ids=msg_id)
     await eor(event, f"Pinned Message in Current chat is [here]({msg.message_link}).")
 
