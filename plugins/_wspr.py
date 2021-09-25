@@ -31,12 +31,7 @@ buddhhu = {}
 async def _(e):
     if e.reply_to_msg_id:
         okk = (await e.get_reply_message()).sender_id
-        try:
-            put = okk
-        except ValueError as ex:
-            return await eor(e, str(ex))
-        except AttributeError:
-            return await eor(e, "No username of replied user was found.")
+        put = okk
     else:
         put = e.pattern_match.group(1)
     if put:
@@ -50,9 +45,8 @@ async def _(e):
         except dis:
             return await eor(e, get_string("help_3"))
         await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
-        await e.delete()
-    else:
-        await eor(e, "Add some id or username too")
+        return await e.delete()
+    await eor(e, get_string("wspr_3"))
 
 
 @in_pattern("msg", owner=True)
@@ -118,7 +112,7 @@ async def _(e):
                 buttons=button,
             )
         except BaseException:
-            name = f"User {query} Not Found\nSearch Again"
+            name = get_string("wspr_4").format(user)
             sur = e.builder.article(
                 title=name,
                 text=name,
@@ -159,7 +153,7 @@ async def _(e):
         else:
             await e.answer("Not For You", alert=True)
     else:
-        await e.answer("Message Deleted", alert=True)
+        await e.answer(get_string("wspr_2"), alert=True)
 
 
 @callback(re.compile("del_(.*)"))
@@ -174,4 +168,4 @@ async def _(e):
             except np:
                 pass
     else:
-        await e.answer("You Can't do this", alert=True)
+        await e.answer(get_string("wspr_5"), alert=True)
