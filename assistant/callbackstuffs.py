@@ -8,6 +8,7 @@
 import re
 import sys
 from os import execl, remove
+from random import choice
 
 from pyUltroid.functions.gdrive import authorize, create_token_file
 from pyUltroid.functions.tools import get_paste
@@ -15,7 +16,7 @@ from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
-from random import choice
+
 try:
     from carbonnow import Carbon
 except ImportError:
