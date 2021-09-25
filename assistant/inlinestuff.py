@@ -16,7 +16,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from play_scraper import search
 from pyUltroid.functions.tools import dloader, get_ofox
-from search_engine_parser import GoogleSearch
+from pyUltroid.functions.misc import google_search
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -173,23 +173,13 @@ async def gsearch(q_event):
             [], switch_pm="Google Search. Enter a query!", switch_pm_param="start"
         )
     searcher = []
-    page = findall(r"page=\d+", match)
-    cache = False
-    try:
-        page = page[0]
-        page = page.replace("page=", "")
-        match = match.replace("page=" + page[0], "")
-    except IndexError:
-        page = 1
-    search_args = (str(match), int(page), bool(cache))
-    gsearch = GoogleSearch()
-    gresults = await gsearch.async_search(*search_args)
+    gresults = await google_search(match)
     msg = ""
-    for i in range(len(gresults["links"])):
+    for i in gresults:
         try:
-            title = gresults["titles"][i]
-            link = gresults["links"][i]
-            desc = gresults["descriptions"][i]
+            title = i["title"]
+            link = i["link"]
+            desc = i["description"]
             msg += f"👉[{title}]({link})\n`{desc}`\n\n"
             searcher.append(
                 await q_event.builder.article(
