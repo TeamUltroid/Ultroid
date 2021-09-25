@@ -228,7 +228,7 @@ if sett == "True":
         if not apprv and event.text != UND:
             if Redis("MOVE_ARCHIVE") == "True":
                 try:
-                    await ultroid.edit_folder(user.id, folder=1)
+                    await ultroid_bot.edit_folder(user.id, folder=1)
                 except BaseException as er:
                     LOGS.info(er)
             if event.media:
@@ -382,7 +382,7 @@ if sett == "True":
                     return LOGS.info("COUNT_PM is messed.")
                 await ultroid_bot(BlockRequest(user.id))
                 await ultroid_bot(ReportSpamRequest(peer=user.id))
-                name = await ultroid.get_entity(user.id)
+                name = await ultroid_bot.get_entity(user.id)
                 name0 = str(name.first_name)
                 await asst.edit_message(
                     int(udB.get("LOG_CHANNEL")),
@@ -729,7 +729,7 @@ async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
     await ultroid(UnblockRequest(uid))
     try:
-        user_name = (await ultroid.get_entity(uid)).first_name
+        user_name = (await ultroid_bot.get_entity(uid)).first_name
     except BaseException:
         user_name = ""
     await event.answer("UnBlocked.")
@@ -747,7 +747,7 @@ async def ytfuxist(e):
         await e.answer("Deleted.")
         await e.delete()
     except BaseException:
-        await ultroid.delete_messages(e.chat_id, e.id)
+        await ultroid_bot.delete_messages(e.chat_id, e.id)
 
 
 @in_pattern(re.compile("ip_(.*)"), owner=True)

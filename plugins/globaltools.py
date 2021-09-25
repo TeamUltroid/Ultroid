@@ -522,7 +522,7 @@ async def list_gengbanned(event):
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
-            name = (await ultroid.get_entity(int(i))).first_name
+            name = (await ultroid_bot.get_entity(int(i))).first_name
         except BaseException:
             name = i
         msg += f"<strong>User</strong>: <a href=tg://user?id={i}>{name}</a>\n"
@@ -592,7 +592,7 @@ async def gblacker(event, type_):
     except IndexError:
         pass
     try:
-        chat_id = (await ultroid.get_entity(chat)).id
+        chat_id = (await ultroid_bot.get_entity(chat)).id
     except Exception as e:
         return await eor(event, "**ERROR**\n`{}`".format(str(e)))
     if type_ == "add":
