@@ -19,8 +19,8 @@
 """
 
 import math
-from random import choice
 import shutil
+from random import choice
 
 import heroku3
 import psutil
