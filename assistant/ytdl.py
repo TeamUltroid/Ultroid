@@ -18,7 +18,7 @@ from pyUltroid.functions.helper import (
     time_formatter,
     uploader,
 )
-from pyUltroid.functions.ytdl import dler, get_data, get_buttons
+from pyUltroid.functions.ytdl import dler, get_buttons, get_data
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
