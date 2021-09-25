@@ -7,7 +7,6 @@
 
 import re
 import sys
-
 from os import execl, remove
 from random import choice
 
