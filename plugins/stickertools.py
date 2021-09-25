@@ -41,7 +41,7 @@ import numpy as np
 import requests
 from carbonnow import Carbon
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendStickersForbiddenError, YouBlockedUserError
+from telethon.errors import YouBlockedUserError
 from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
@@ -86,15 +86,15 @@ async def waifu(animu):
     waifus = [32, 33, 37, 40, 41, 42, 58, 20]
     finalcall = "#" + (str(random.choice(waifus)))
     sticcers = await animu.client.inline_query(
-            "stickerizerbot",
-            f"{finalcall}{(deEmojify(text))}",
-        )
+        "stickerizerbot",
+        f"{finalcall}{(deEmojify(text))}",
+    )
     await sticcers[0].click(
-            animu.chat_id,
-            reply_to=animu.reply_to_msg_id,
-            silent=bool(animu.is_reply),
-            hide_via=True,
-        )
+        animu.chat_id,
+        reply_to=animu.reply_to_msg_id,
+        silent=bool(animu.is_reply),
+        hide_via=True,
+    )
 
     await xx.delete()
 
@@ -164,7 +164,7 @@ async def pack_kangish(_):
         return await eor(_, str(er))
     await eor(
         _,
-        get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}")
+        get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
 
@@ -274,9 +274,7 @@ async def hehe(args):
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
-                    await xx.edit(
-                        get_string("sts_13").format(pack)
-                    )
+                    await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message(packname)
                     x = await conv.get_response()
                     if x.text == "Invalid pack selected.":
