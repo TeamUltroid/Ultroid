@@ -146,7 +146,7 @@ async def changes(okk):
     if Carbon:
         carbon = Carbon(
             base_url="https://carbonara.vercel.app/api/cook",
-            code=changelog,
+            code=tl_chnglog,
             background=choice(ATRA_COL),
         )
         img = await carbon.memorize("changelog")
