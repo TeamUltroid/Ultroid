@@ -43,7 +43,7 @@ async def logo_gen(event):
                 bg_ = await temp.download_media()
     if not bg_:
         if event.client._bot:
-            SRCH = ["blur", "background", "neon lights", "wallpaper", "nature", "logo"]
+            SRCH = ["blur background", "background", "neon lights", "wallpaper"]
             res = await unsplashsearch(random.choice(SRCH), limit=1)
             bg_ = await download_file(res[0], "resources/downloads/logo.png")
         else:
