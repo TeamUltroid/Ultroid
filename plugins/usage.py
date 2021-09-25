@@ -19,12 +19,13 @@
 """
 
 import math
+from random import choice
 import shutil
 
 import heroku3
 import psutil
 import requests
-from search_engine_parser.core.utils import get_rand_user_agent as grua
+from pyUltroid.functions import some_random_headers
 
 from . import *
 
@@ -86,10 +87,9 @@ def simple_usage():
 def heroku_usage():
     if HEROKU_API is None and HEROKU_APP_NAME is None:
         return False, "You do not use heroku, bruh!"
-    useragent = grua()
     user_id = Heroku.account().id
     headers = {
-        "User-Agent": useragent,
+        "User-Agent": choice(some_random_headers),
         "Authorization": f"Bearer {heroku_api}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
