@@ -28,8 +28,9 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"), time=5)
-    clls = await unsplashsearch(search)
-    if len(clls) == 0:
+    e = await eor(e, get_sting("com_1"))
+    clls = await unsplashsearch(search, limit=50)
+    if not clls:
         return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
