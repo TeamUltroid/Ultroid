@@ -15,8 +15,7 @@ from telethon.tl.custom import Button
 
 from . import *
 
-C_PIC = udB.get("INLINE_PIC")
-_file_to_replace = C_PIC or "resources/extras/inline.jpg"
+_file_to_replace = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
 
 _main_help_menu = [
     [
@@ -71,9 +70,8 @@ async def _help(ult):
         except BaseException:
             await eor(ult, "Error 🤔 occured.")
     else:
-        tgbot = asst.me.username
         try:
-            results = await ult.client.inline_query(tgbot, "ultd")
+            results = await ult.client.inline_query(asst.me.username, "ultd")
         except BotMethodInvalidError:
             z = []
             for x in LIST.values():
