@@ -16,7 +16,7 @@
 """
 import asyncio
 import os
-
+from random import shuffle
 from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
@@ -28,7 +28,6 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"), time=5)
-    e = await eor(e, get_sting("com_1"))
     clls = await unsplashsearch(search, limit=50)
     if not clls:
         return await eor(e, get_string("autopic_2").format(search), time=5)
@@ -45,7 +44,7 @@ async def autopic(e):
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
             await asyncio.sleep(SLEEP_TIME)
-
+        shuffle(clls)
 
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
