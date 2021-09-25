@@ -43,6 +43,7 @@ pytz==2021.1
 pyyaml==5.4.1
 qrcode==7.3
 requests==2.26.0
+scikit-image==0.18.2
 shazamio==0.0.5
 tabulate==0.8.9
 telegraph==1.4.1
