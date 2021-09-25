@@ -82,8 +82,7 @@ async def prmte(ult):
             title=rank,
         )
         await eod(
-            xx,
-            get_string("pro2").format(inline_mention(user), ult.chat.title, rank)
+            xx, get_string("pro2").format(inline_mention(user), ult.chat.title, rank)
         )
     except Exception as ex:
         return await xx.edit(f"`{ex}`")
@@ -113,9 +112,7 @@ async def dmote(ult):
             manage_call=None,
             title=rank,
         )
-        await eod(
-            xx, get_string("de_2").format(inline_mention(user), ult.chat.title)
-        )
+        await eod(xx, get_string("de_2").format(inline_mention(user), ult.chat.title))
     except Exception as ex:
         return await xx.edit(f"`{ex}`")
 
@@ -189,7 +186,9 @@ async def kck(ult):
         return await xx.edit(get_string("kick_1"))
     except Exception as e:
         LOGS.exception(e)
-    text = get_string("kick_4").format(inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title)
+    text = get_string("kick_4").format(
+        inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title
+    )
     if reason:
         text += get_string("ban_5").format(reason)
     await xx.edit(text)

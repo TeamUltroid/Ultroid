@@ -173,9 +173,7 @@ async def on_vc_callback_query_handler(event):
 async def _(event):
     check = updater()
     if not check:
-        return await event.answer(
-            get_string("inline_9"), cache_time=0, alert=True
-        )
+        return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")

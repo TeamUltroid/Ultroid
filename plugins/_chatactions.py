@@ -34,9 +34,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
     # thank members
     if must_thank(ult.chat_id):
-        chat_count = (
-            await ult.client.get_participants(ult.chat_id, limit=0)
-        ).total
+        chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
@@ -87,7 +85,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             count = len(pp)
             mention = inline_mention(user)
             name = user.first_name
-            last = user.last_name
+            user.last_name
             fullname = get_display_name(user)
             uu = user.username
             username = f"@{uu}" if uu else mention
@@ -120,7 +118,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         count = len(pp)
         mention = inline_mention(user)
         name = user.first_name
-        last = user.last_name
+        user.last_name
         fullname = get_display_name(user)
         uu = user.username
         username = f"@{uu}" if uu else mention
