@@ -26,9 +26,9 @@ from . import *
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
         udB.set("AUTOCORRECT", "True")
-        return await eor(e, "AUTOCORRECT Feature On", time=5)
+        return await eor(e, get_string("act_1"), time=5)
     udB.delete("AUTOCORRECT")
-    await eor(e, "AUTOCORRECT Feature Off", time=5)
+    await eor(e, get_string("act_2"), time=5)
 
 
 @ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda x: x.text))
