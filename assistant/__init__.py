@@ -13,7 +13,6 @@ from telethon import Button, custom
 
 from strings import get_languages, get_string
 
-
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
