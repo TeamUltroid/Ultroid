@@ -38,6 +38,5 @@ async def setit(event, name, value):
     except BaseException:
         return await event.edit("`Something Went Wrong`")
 
-
 def get_back_button(name):
     return [Button.inline("« Bᴀᴄᴋ", data=f"{name}")]
