@@ -16,7 +16,22 @@ from strings import get_languages, get_string
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
-ATRA_COL = ['DarkCyan', 'DeepSkyBlue', 'DarkTurquoise', 'Cyan', 'LightSkyBlue', 'Turquoise', 'MediumVioletRed', 'Aquamarine', 'Lightcyan', 'Azure', 'Moccasin', 'PowderBlue']
+ATRA_COL = [
+    "DarkCyan",
+    "DeepSkyBlue",
+    "DarkTurquoise",
+    "Cyan",
+    "LightSkyBlue",
+    "Turquoise",
+    "MediumVioletRed",
+    "Aquamarine",
+    "Lightcyan",
+    "Azure",
+    "Moccasin",
+    "PowderBlue",
+]
+
+
 async def setit(event, name, value):
     try:
         udB.set(name, value)
