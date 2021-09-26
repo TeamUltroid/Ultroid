@@ -76,7 +76,6 @@ async def send(eve):
         ],
         [
             Button.inline("« Bᴀᴄᴋ", data=data),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ],
     ]
     await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
