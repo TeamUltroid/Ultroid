@@ -35,8 +35,7 @@ async def gramme(event):
     if Redis("AUTOCORRECT") != "True":
         return
     t = event.text
-    if t[0] == HNDLR or t[0].lower(
-    ) not in string.ascii_lowercase or t.endswith(".."):
+    if t[0] == HNDLR or t[0].lower() not in string.ascii_lowercase or t.endswith(".."):
         return
     tt = google_translator().detect(t)
     if tt[0] != "en":

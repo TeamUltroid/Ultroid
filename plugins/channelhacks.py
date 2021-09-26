@@ -131,9 +131,7 @@ async def dd(event):
         rem_source_channel(y)
         await eor(x, get_string("cha_5"), time=5)
     elif not is_source_channel_added(y):
-        await eor(x,
-                  "Source channel is already removed from database. ",
-                  time=3)
+        await eor(x, "Source channel is already removed from database. ", time=3)
 
 
 @ultroid_cmd(pattern="listsource")
@@ -211,9 +209,7 @@ async def dd(event):
         rem_destination(y)
         await eor(x, "Destination removed from database", time=5)
     elif not is_destination_added(y):
-        await eor(x,
-                  "Destination channel is already removed from database. ",
-                  time=5)
+        await eor(x, "Destination channel is already removed from database. ", time=5)
 
 
 @ultroid_cmd(pattern="listdest")

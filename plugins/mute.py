@@ -42,7 +42,8 @@ async def watcher(event):
 
 
 @ultroid_cmd(
-    pattern="dmute ?(.*)", )
+    pattern="dmute ?(.*)",
+)
 async def startmute(event):
     xx = await eor(event, "`Muting...`")
     input = event.pattern_match.group(1)
@@ -69,9 +70,7 @@ async def startmute(event):
     elif "creator" not in vars(chat) and not private:
         return await eor(xx, "`No proper admin rights...`", time=5)
     if is_muted(chat_id, userid):
-        return await eor(xx,
-                         "`This user is already muted in this chat.`",
-                         time=5)
+        return await eor(xx, "`This user is already muted in this chat.`", time=5)
     try:
         mute(chat_id, userid)
         await eor(xx, "`Successfully muted...`", time=3)

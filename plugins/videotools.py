@@ -81,10 +81,9 @@ async def gen_sample(e):
         height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
         width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
         attributes = [
-            DocumentAttributeVideo(duration=duration,
-                                   w=width,
-                                   h=height,
-                                   supports_streaming=True)
+            DocumentAttributeVideo(
+                duration=duration, w=width, h=height, supports_streaming=True
+            )
         ]
         caption = f"A Sample Video Of `{stime}` seconds"
         await e.client.send_file(
@@ -203,10 +202,9 @@ async def gen_sample(e):
         height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
         width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
         attributes = [
-            DocumentAttributeVideo(duration=duration,
-                                   w=width,
-                                   h=height,
-                                   supports_streaming=True)
+            DocumentAttributeVideo(
+                duration=duration, w=width, h=height, supports_streaming=True
+            )
         ]
         caption = f"Trimmed Video From `{ss}` To `{dd}`"
         await e.client.send_file(

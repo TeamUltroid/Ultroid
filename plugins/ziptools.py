@@ -39,15 +39,15 @@ async def zipp(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(reply.file.name, reply.media.document, xx,
-                                     t, get_string("com_5"))
+            image = await downloader(
+                reply.file.name, reply.media.document, xx, t, get_string("com_5")
+            )
             file = image.name
         else:
             file = await event.download_media(reply)
     inp = file.replace(file.split(".")[-1], "zip")
     if event.pattern_match.group(1):
-        await bash(
-            f"zip -r --password {event.pattern_match.group(1)} {inp} {file}")
+        await bash(f"zip -r --password {event.pattern_match.group(1)} {inp} {file}")
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()
@@ -79,8 +79,9 @@ async def unzipp(event):
         file = reply.media.document
         if not reply.file.name.endswith(("zip", "rar", "exe")):
             return await xx.edit(get_string("zip_3"))
-        image = await downloader(reply.file.name, reply.media.document, xx, t,
-                                 get_string("com_5"))
+        image = await downloader(
+            reply.file.name, reply.media.document, xx, t, get_string("com_5")
+        )
         file = image.name
     if os.path.isdir("unzip"):
         await bash("rm -rf unzip")
@@ -141,8 +142,7 @@ async def do_zip(event):
     else:
         await bash("zip -r ultroid.zip zip/*")
     k = time.time()
-    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx,
-                         get_string("com_6"))
+    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, get_string("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,

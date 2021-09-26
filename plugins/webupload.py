@@ -20,7 +20,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="webupload", )
+    pattern="webupload",
+)
 async def _(event):
     xx = await eor(event, get_string("com_1"))
     vv = event.text.split(" ", maxsplit=1)
@@ -51,15 +52,15 @@ async def _(event):
     except rep:
         return await eor(
             xx,
-            get_string("help_2").format(HNDLR, ),
+            get_string("help_2").format(
+                HNDLR,
+            ),
         )
     except dis:
         return await eor(
             xx,
             get_string("help_3"),
         )
-    await results[0].click(event.chat_id,
-                           reply_to=event.reply_to_msg_id,
-                           hide_via=True)
+    await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
     await xx.delete()
     await event.delete()

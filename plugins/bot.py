@@ -59,7 +59,8 @@ async def alive(event):
 
 
 @ultroid_cmd(
-    pattern="alive$", )
+    pattern="alive$",
+)
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
@@ -96,7 +97,8 @@ async def lol(ult):
 
 
 @ultroid_cmd(
-    pattern="ialive$", )
+    pattern="ialive$",
+)
 async def is_on(ult):
     if not ult.client._bot:
         await ult.delete()
@@ -126,16 +128,13 @@ async def is_on(ult):
     buttons = [
         [Button.inline(get_string("bot_2"), "alive")],
         [
-            Button.url(get_string("bot_3"),
-                       "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
             Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
         ],
     ]
-    await ult.client.send_message(ult.chat_id,
-                                  als,
-                                  file=pic,
-                                  buttons=buttons,
-                                  link_preview=False)
+    await ult.client.send_message(
+        ult.chat_id, als, file=pic, buttons=buttons, link_preview=False
+    )
 
 
 @ultroid_cmd(
@@ -152,7 +151,8 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="cmds$", )
+    pattern="cmds$",
+)
 async def cmds(event):
     await allcmds(event)
 
@@ -212,11 +212,12 @@ async def inline_alive(ult):
         __version__,
         kk,
     )
-    buttons = [[
-        Button.url(get_string("bot_3"),
-                   "https://github.com/TeamUltroid/Ultroid"),
-        Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-    ]]
+    buttons = [
+        [
+            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
+        ]
+    ]
     builder = ult.builder
     if pic:
         try:
@@ -227,7 +228,8 @@ async def inline_alive(ult):
                 if _pic:
                     pic = _pic
                     buttons.insert(
-                        0, [Button.inline(get_string("bot_2"), data="alive")])
+                        0, [Button.inline(get_string("bot_2"), data="alive")]
+                    )
                 results = [
                     await builder.document(
                         pic,
@@ -240,9 +242,6 @@ async def inline_alive(ult):
         except BaseException as er:
             LOGS.info(er)
     result = [
-        await builder.article("Alive",
-                              text=als,
-                              link_preview=False,
-                              buttons=buttons)
+        await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
     ]
     await ult.answer(result)

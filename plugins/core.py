@@ -36,7 +36,8 @@ async def install(event):
 
 
 @ultroid_cmd(
-    pattern=r"unload ?(.*)", )
+    pattern=r"unload ?(.*)",
+)
 async def unload(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
@@ -48,9 +49,7 @@ async def unload(event):
     if zym in lsd:
         try:
             un_plug(shortname)
-            await eor(event,
-                      f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**",
-                      time=3)
+            await eor(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
         except Exception as ex:
             return await eor(event, str(ex))
     elif zym in lst:
@@ -60,7 +59,8 @@ async def unload(event):
 
 
 @ultroid_cmd(
-    pattern=r"uninstall ?(.*)", )
+    pattern=r"uninstall ?(.*)",
+)
 async def uninstall(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
@@ -72,9 +72,7 @@ async def uninstall(event):
     if zym in lsd:
         try:
             un_plug(shortname)
-            await eor(event,
-                      f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**",
-                      time=3)
+            await eor(event, f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
             os.remove(f"addons/{shortname}.py")
         except Exception as ex:
             return await eor(event, str(ex))

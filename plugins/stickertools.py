@@ -61,7 +61,8 @@ EMOJI_PATTERN = re.compile(
     "\U0001FA00-\U0001FA6F"  # Chess Symbols
     "\U0001FA70-\U0001FAFF"  # Symbols and Pictographs Extended-A
     "\U00002702-\U000027B0"  # Dingbats
-    "]+", )
+    "]+",
+)
 
 
 def deEmojify(inputString: str) -> str:
@@ -70,7 +71,8 @@ def deEmojify(inputString: str) -> str:
 
 
 @ultroid_cmd(
-    pattern="waifu ?(.*)", )
+    pattern="waifu ?(.*)",
+)
 async def waifu(animu):
     xx = await eor(animu, get_string("com_1"))
     # """Creates random anime sticker!"""
@@ -98,7 +100,8 @@ async def waifu(animu):
 
 
 @ultroid_cmd(
-    pattern="convert ?(.*)", )
+    pattern="convert ?(.*)",
+)
 async def uconverter(event):
     xx = await eor(event, get_string("com_1"))
     a = await event.get_reply_message()
@@ -134,7 +137,9 @@ async def pack_kangish(_):
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
         functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)))
+            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
+        )
+    )
     stiks = []
     for i in _get_stiks.documents:
         x = get_input_document(i)
@@ -142,29 +147,30 @@ async def pack_kangish(_):
             types.InputStickerSetItem(
                 document=x,
                 emoji=(i.attributes[1]).alt,
-            ))
+            )
+        )
     try:
-        short_name = (await
-                      _.client(SuggestShortNameRequest(_packname))).short_name
+        short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
         _r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
                 short_name=f"u{short_name}_by_{asst.me.username}",
                 stickers=stiks,
-            ))
+            )
+        )
     except BaseException as er:
         LOGS.exception(er)
         return await eor(_, str(er))
     await eor(
         _,
-        get_string("sts_5").format(
-            f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
+        get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
 
 @ultroid_cmd(
-    pattern="kang", )
+    pattern="kang",
+)
 async def hehe(args):
     ultroid_bot = args.client
     xx = await eor(args, get_string("com_1"))
@@ -183,8 +189,10 @@ async def hehe(args):
     elif message.file and "image" in message.file.mime_type.split("/"):
         photo = io.BytesIO()
         await ultroid_bot.download_file(message.media.document, photo)
-        if (DocumentAttributeFilename(file_name="sticker.webp")
-                in message.media.document.attributes):
+        if (
+            DocumentAttributeFilename(file_name="sticker.webp")
+            in message.media.document.attributes
+        ):
             emoji = message.media.document.attributes[1].alt
 
     elif message.file and "video" in message.file.mime_type.split("/"):
@@ -205,8 +213,9 @@ async def hehe(args):
         is_anim = True
         photo = 1
     elif message.message:
-        carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",
-                        code=message.message)
+        carbon = Carbon(
+            base_url="https://carbonara.vercel.app/api/cook", code=message.message
+        )
         photo = await carbon.memorize("carbon_kang")
     else:
         return await xx.edit(get_string("com_4"))
@@ -246,15 +255,16 @@ async def hehe(args):
         response = requests.get(f"http://t.me/addstickers/{packname}")
         htmlstr = response.text.split("\n")
 
-        if ("  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
-                not in htmlstr):
+        if (
+            "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
+            not in htmlstr
+        ):
             async with ultroid_bot.conversation("@Stickers") as conv:
                 try:
                     await conv.send_message("/addsticker")
                 except YouBlockedUserError:
                     LOGS.info("Unblocking @Stickers for kang...")
-                    await ultroid_bot(
-                        functions.contacts.UnblockRequest("stickers"))
+                    await ultroid_bot(functions.contacts.UnblockRequest("stickers"))
                     await conv.send_message("/addsticker")
                 await conv.get_response()
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
@@ -310,7 +320,9 @@ async def hehe(args):
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
-                    await xx.edit(get_string("sts_8"), )
+                    await xx.edit(
+                        get_string("sts_8"),
+                    )
                     return
                 await conv.send_message(emoji)
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
@@ -335,7 +347,9 @@ async def hehe(args):
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
-                    await xx.edit(get_string("sts_8"), )
+                    await xx.edit(
+                        get_string("sts_8"),
+                    )
                     return
                 await conv.send_message(emoji)
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
@@ -365,7 +379,8 @@ async def hehe(args):
 
 
 @ultroid_cmd(
-    pattern="round$", )
+    pattern="round$",
+)
 async def ultdround(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, get_string("com_1"))
@@ -414,7 +429,8 @@ async def ultdround(event):
 
 
 @ultroid_cmd(
-    pattern="destroy$", )
+    pattern="destroy$",
+)
 async def ultdestroy(event):
     ult = await event.get_reply_message()
     if not (ult and ult.media and "animated" in mediainfo(ult.media)):
@@ -424,13 +440,21 @@ async def ultdestroy(event):
     await bash("lottie_convert.py ultroid.tgs json.json")
     with open("json.json") as json:
         jsn = json.read()
-    jsn = (jsn.replace("[100]", "[200]").replace("[10]", "[40]").replace(
-        "[-1]", "[-10]").replace("[0]", "[15]").replace("[1]", "[20]").replace(
-            "[2]",
-            "[17]").replace("[3]", "[40]").replace("[4]", "[37]").replace(
-                "[5]",
-                "[60]").replace("[6]", "[70]").replace("[7]", "[40]").replace(
-                    "[8]", "[37]").replace("[9]", "[110]"))
+    jsn = (
+        jsn.replace("[100]", "[200]")
+        .replace("[10]", "[40]")
+        .replace("[-1]", "[-10]")
+        .replace("[0]", "[15]")
+        .replace("[1]", "[20]")
+        .replace("[2]", "[17]")
+        .replace("[3]", "[40]")
+        .replace("[4]", "[37]")
+        .replace("[5]", "[60]")
+        .replace("[6]", "[70]")
+        .replace("[7]", "[40]")
+        .replace("[8]", "[37]")
+        .replace("[9]", "[110]")
+    )
     open("json.json", "w").write(jsn)
     await bash("lottie_convert.py json.json ultroid.tgs")
     await event.client.send_file(
@@ -444,7 +468,8 @@ async def ultdestroy(event):
 
 
 @ultroid_cmd(
-    pattern="tiny$", )
+    pattern="tiny$",
+)
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -510,9 +535,7 @@ async def ultiny(event):
         back_im.save("o.webp", "WEBP", quality=95)
         file = "o.webp"
         os.remove("k.png")
-    await event.client.send_file(event.chat_id,
-                                 file,
-                                 reply_to=event.reply_to_msg_id)
+    await event.client.send_file(event.chat_id, file, reply_to=event.reply_to_msg_id)
     await xx.delete()
     os.remove(file)
     os.remove(ik)

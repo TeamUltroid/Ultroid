@@ -61,7 +61,8 @@ async def _(ult):
             UpdateProfileRequest(
                 first_name=first_name,
                 last_name=last_name,
-            ), )
+            ),
+        )
         await eod(ok, f"Name changed to `{names}`")
     except Exception as ex:
         await eod(ok, "Error occured.\n`{}`".format(str(ex)))

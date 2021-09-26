@@ -94,9 +94,13 @@ async def _(e):
         c = 0
         user.id = user.peer_id.user_id if e.is_private else user.from_id.user_id
         async for x in e.client.iter_dialogs():
-            if ("group" in key.lower() and x.is_group
-                    or "group" not in key.lower() and "channel" in key.lower()
-                    and x.is_channel):
+            if (
+                "group" in key.lower()
+                and x.is_group
+                or "group" not in key.lower()
+                and "channel" in key.lower()
+                and x.is_channel
+            ):
                 try:
                     await e.client(
                         EditAdminRequest(
@@ -104,15 +108,25 @@ async def _(e):
                             user.id,
                             _gpromote_rights,
                             rank,
-                        ), )
+                        ),
+                    )
                     c += 1
                 except BaseException:
                     pass
-            elif (("group" not in key.lower() or x.is_group)
-                  and ("group" in key.lower() or "channel" not in key.lower()
-                       or x.is_channel)
-                  and ("group" in key.lower() or "channel" in key.lower()
-                       or x.is_group or x.is_channel)):
+            elif (
+                ("group" not in key.lower() or x.is_group)
+                and (
+                    "group" in key.lower()
+                    or "channel" not in key.lower()
+                    or x.is_channel
+                )
+                and (
+                    "group" in key.lower()
+                    or "channel" in key.lower()
+                    or x.is_group
+                    or x.is_channel
+                )
+            ):
                 try:
                     await e.client(
                         EditAdminRequest(
@@ -120,7 +134,8 @@ async def _(e):
                             user.id,
                             _gpromote_rights,
                             rank,
-                        ), )
+                        ),
+                    )
                     c += 1
                 except Exception as er:
                     LOGS.info(er)
@@ -128,9 +143,9 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eor(e,
-                             "`Give someone's username/id or replied to user.",
-                             time=5)
+            return await eor(
+                e, "`Give someone's username/id or replied to user.", time=5
+            )
         user = k[1]
         if user.isdigit():
             user = int(user)
@@ -145,11 +160,16 @@ async def _(e):
         rank = k[3] if len(k) > 3 else "AdMin"
         c = 0
         async for x in e.client.iter_dialogs():
-            if ("group" in key.lower() and x.is_group
-                    or "group" not in key.lower() and "channel" in key.lower()
-                    and x.is_channel or "group" not in key.lower()
-                    and "channel" not in key.lower() and
-                (x.is_group or x.is_channel)):
+            if (
+                "group" in key.lower()
+                and x.is_group
+                or "group" not in key.lower()
+                and "channel" in key.lower()
+                and x.is_channel
+                or "group" not in key.lower()
+                and "channel" not in key.lower()
+                and (x.is_group or x.is_channel)
+            ):
                 try:
                     await ultroid_bot(
                         EditAdminRequest(
@@ -157,12 +177,12 @@ async def _(e):
                             user,
                             _gpromote_rights,
                             rank,
-                        ), )
+                        ),
+                    )
                     c += 1
                 except BaseException:
                     pass
-        await eor(ev,
-                  f"Promoted {name.first_name} in Total : {c} {key} chats.")
+        await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
 
 
 @ultroid_cmd(pattern="gdemote ?(.*)", fullsudo=True)
@@ -182,11 +202,16 @@ async def _(e):
         rank = "Not AdMin"
         c = 0
         async for x in e.client.iter_dialogs():
-            if ("group" in key.lower() and x.is_group
-                    or "group" not in key.lower() and "channel" in key.lower()
-                    and x.is_channel or "group" not in key.lower()
-                    and "channel" not in key.lower() and
-                (x.is_group or x.is_channel)):
+            if (
+                "group" in key.lower()
+                and x.is_group
+                or "group" not in key.lower()
+                and "channel" in key.lower()
+                and x.is_channel
+                or "group" not in key.lower()
+                and "channel" not in key.lower()
+                and (x.is_group or x.is_channel)
+            ):
                 try:
                     await ultroid_bot(
                         EditAdminRequest(
@@ -194,7 +219,8 @@ async def _(e):
                             user.id,
                             _gdemote_rights,
                             rank,
-                        ), )
+                        ),
+                    )
                     c += 1
                 except BaseException:
                     pass
@@ -202,9 +228,9 @@ async def _(e):
     else:
         k = e.text.split()
         if not k[1]:
-            return await eor(e,
-                             "`Give someone's username/id or replied to user.",
-                             time=5)
+            return await eor(
+                e, "`Give someone's username/id or replied to user.", time=5
+            )
         user = k[1]
         if user.isdigit():
             user = int(user)
@@ -219,11 +245,16 @@ async def _(e):
         rank = "Not AdMin"
         c = 0
         async for x in ultroid_bot.iter_dialogs():
-            if ("group" in key.lower() and x.is_group
-                    or "group" not in key.lower() and "channel" in key.lower()
-                    and x.is_channel or "group" not in key.lower()
-                    and "channel" not in key.lower() and
-                (x.is_group or x.is_channel)):
+            if (
+                "group" in key.lower()
+                and x.is_group
+                or "group" not in key.lower()
+                and "channel" in key.lower()
+                and x.is_channel
+                or "group" not in key.lower()
+                and "channel" not in key.lower()
+                and (x.is_group or x.is_channel)
+            ):
                 try:
                     await ultroid_bot(
                         EditAdminRequest(
@@ -231,7 +262,8 @@ async def _(e):
                             user,
                             _gdemote_rights,
                             rank,
-                        ), )
+                        ),
+                    )
                     c += 1
                 except BaseException:
                     pass
@@ -258,9 +290,7 @@ async def _(e):
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
-                await e.client.edit_permissions(ggban.id,
-                                                userid,
-                                                view_messages=True)
+                await e.client.edit_permissions(ggban.id, userid, view_messages=True)
                 chats += 1
             except BaseException:
                 pass
@@ -298,10 +328,7 @@ async def _(e):
         except IndexError:
             reason = ""
     else:
-        return await eor(xx,
-                         "`Reply to some msg or add their id.`",
-                         tome=5,
-                         time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     try:
         name = (await e.client.get_entity(userid)).first_name
     except BaseException:
@@ -321,9 +348,7 @@ async def _(e):
     async for ggban in e.client.iter_dialogs():
         if ggban.is_group or ggban.is_channel:
             try:
-                await e.client.edit_permissions(ggban.id,
-                                                userid,
-                                                view_messages=False)
+                await e.client.edit_permissions(ggban.id, userid, view_messages=False)
                 chats += 1
             except BaseException:
                 pass
@@ -347,8 +372,8 @@ async def gcast(event):
         msg = await event.get_reply_message()
     else:
         return await eor(
-            event,
-            "`Give some text to Globally Broadcast or reply a message..`")
+            event, "`Give some text to Globally Broadcast or reply a message..`"
+        )
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -356,10 +381,14 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.entity.id
-            if (not is_gblacklisted(chat)
-                    and int("-100" + str(chat)) not in NOSPAM_CHAT
-                    and (event.text[2:7] != "admin" or
-                         (x.entity.admin_rights or x.entity.creator))):
+            if (
+                not is_gblacklisted(chat)
+                and int("-100" + str(chat)) not in NOSPAM_CHAT
+                and (
+                    event.text[2:7] != "admin"
+                    or (x.entity.admin_rights or x.entity.creator)
+                )
+            ):
                 try:
                     done += 1
                     await event.client.send_message(chat, msg)
@@ -382,8 +411,8 @@ async def gucast(event):
         msg = await event.get_reply_message()
     else:
         return await eor(
-            event,
-            "`Give some text to Globally Broadcast or reply a message..`")
+            event, "`Give some text to Globally Broadcast or reply a message..`"
+        )
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -423,8 +452,7 @@ async def gkick(e):
                 chats += 1
             except BaseException:
                 pass
-    await xx.edit(
-        f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(pattern="gmute ?(.*)", fullsudo=True)
@@ -437,10 +465,7 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eor(xx,
-                         "`Reply to some msg or add their id.`",
-                         tome=5,
-                         time=5)
+        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
@@ -452,15 +477,12 @@ async def _(e):
     async for onmute in e.client.iter_dialogs():
         if onmute.is_group:
             try:
-                await e.client.edit_permissions(onmute.id,
-                                                userid,
-                                                send_messages=False)
+                await e.client.edit_permissions(onmute.id, userid, send_messages=False)
                 chats += 1
             except BaseException:
                 pass
     gmute(userid)
-    await xx.edit(
-        f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
@@ -481,19 +503,17 @@ async def _(e):
     async for hurr in e.client.iter_dialogs():
         if hurr.is_group:
             try:
-                await e.client.edit_permissions(hurr.id,
-                                                userid,
-                                                send_messages=True)
+                await e.client.edit_permissions(hurr.id, userid, send_messages=True)
                 chats += 1
             except BaseException:
                 pass
     ungmute(userid)
-    await xx.edit(
-        f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
 @ultroid_cmd(
-    pattern="listgban$", )
+    pattern="listgban$",
+)
 async def list_gengbanned(event):
     users = list_gbanned()
     x = await eor(event, get_string("com_1"))
@@ -512,14 +532,14 @@ async def list_gengbanned(event):
     if len(gbanned_users) > 4096:
         with open("gbanned.txt", "w") as f:
             f.write(
-                gbanned_users.replace("<strong>",
-                                      "").replace("</strong>", "").replace(
-                                          "<a href=tg://user?id=",
-                                          "").replace("</a>", ""))
+                gbanned_users.replace("<strong>", "")
+                .replace("</strong>", "")
+                .replace("<a href=tg://user?id=", "")
+                .replace("</a>", "")
+            )
         await x.reply(
             file="gbanned.txt",
-            message=
-            f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+            message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
         )
         os.remove("gbanned.txt")
         await x.delete()
@@ -528,7 +548,8 @@ async def list_gengbanned(event):
 
 
 @ultroid_cmd(
-    pattern="gstat ?(.*)", )
+    pattern="gstat ?(.*)",
+)
 async def gstat_(e):
     xx = await eor(e, get_string("com_1"))
     if e.is_private:

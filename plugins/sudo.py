@@ -38,9 +38,7 @@ async def _(ult):
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
-        return await eor(ult,
-                         "`Reply to a msg or add it's id/username.`",
-                         time=5)
+        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
 
     if id == ultroid_bot.me.id:
         mmm = "You cant add yourself as Sudo User..."
@@ -77,9 +75,7 @@ async def _(ult):
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
-        return await eor(ult,
-                         "`Reply to a msg or add it's id/username.`",
-                         time=5)
+        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
     if not is_sudo(id):
         if name != "":
             mmm = f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
@@ -96,7 +92,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="listsudo$", )
+    pattern="listsudo$",
+)
 async def _(ult):
     sudos = Redis("SUDOS")
     if sudos == "" or sudos is None:
@@ -115,6 +112,6 @@ async def _(ult):
     m = udB.get("SUDO") or "False"
     if m == "False":
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await eor(ult,
-                     f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}",
-                     link_preview=False)
+    return await eor(
+        ult, f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
+    )

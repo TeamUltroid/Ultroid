@@ -85,5 +85,5 @@ async def chat_bot_fn(event, type_):
     if type_ == "remov":
         rem_chatbot(event.chat_id, user.id)
     await eor(
-        event,
-        f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})")
+        event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})"
+    )

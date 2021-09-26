@@ -54,8 +54,9 @@ async def _(e):
         return await eor(xx, get_string("chats_1"), time=10)
     except no_admin:
         return await eor(xx, get_string("chats_2"), time=10)
-    await e.client.send_message(int(udB.get("LOG_CHANNEL")),
-                                get_string("chats_6").format(e.chat_id))
+    await e.client.send_message(
+        int(udB.get("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
+    )
 
 
 @ultroid_cmd(
@@ -76,7 +77,9 @@ async def _(e):
         link = Inv.link
     else:
         try:
-            r = await e.client(ExportChatInviteRequest(e.chat_id), )
+            r = await e.client(
+                ExportChatInviteRequest(e.chat_id),
+            )
         except no_admin:
             return await eor(e, get_string("chats_2"), time=10)
         link = r.link
@@ -84,7 +87,8 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="create (b|g|c)(?: |$)(.*)", )
+    pattern="create (b|g|c)(?: |$)(.*)",
+)
 async def _(e):
     type_of_group = e.pattern_match.group(1)
     group_name = e.pattern_match.group(2)
@@ -100,15 +104,20 @@ async def _(e):
                 CreateChatRequest(
                     users=["@missrose_bot"],
                     title=group_name,
-                ), )
+                ),
+            )
             created_chat_id = r.chats[0].id
             await e.client(
                 DeleteChatUserRequest(
                     chat_id=created_chat_id,
                     user_id="@missrose_bot",
-                ), )
+                ),
+            )
             result = await e.client(
-                ExportChatInviteRequest(peer=created_chat_id, ), )
+                ExportChatInviteRequest(
+                    peer=created_chat_id,
+                ),
+            )
             await xx.edit(
                 get_string("chats_4").format(group_name, result.link),
                 link_preview=False,
@@ -122,16 +131,21 @@ async def _(e):
                     title=group_name,
                     about=get_string("chats_5"),
                     megagroup=type_of_group != "c",
-                ))
+                )
+            )
 
             created_chat_id = r.chats[0].id
             if username:
-                await e.client(UpdateUsernameRequest(created_chat_id,
-                                                     username))
+                await e.client(UpdateUsernameRequest(created_chat_id, username))
                 result = "https://t.me/" + username
             else:
-                result = (await e.client(
-                    ExportChatInviteRequest(peer=created_chat_id, ), )).link
+                result = (
+                    await e.client(
+                        ExportChatInviteRequest(
+                            peer=created_chat_id,
+                        ),
+                    )
+                ).link
             await xx.edit(
                 get_string("chats_6").format(f"[{group_name}]({result})"),
                 link_preview=False,

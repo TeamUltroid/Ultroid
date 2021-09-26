@@ -41,11 +41,15 @@ async def mean(event):
     defi = out[0]["meanings"][0]["definitions"][0]
     text = get_string("wrd_1").format(wrd, defi["definition"], defi["example"])
     if defi["synonyms"]:
-        text += (f"\n\n• **{get_string('wrd_5')} :**" +
-                 "".join(f" {a}," for a in defi["synonyms"])[:-1])
+        text += (
+            f"\n\n• **{get_string('wrd_5')} :**"
+            + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+        )
     if defi["antonyms"]:
-        text += (f"\n\n**{get_string('wrd_6')} :**" +
-                 "".join(f" {a}," for a in defi["antonyms"])[:-1])
+        text += (
+            f"\n\n**{get_string('wrd_6')} :**"
+            + "".join(f" {a}," for a in defi["antonyms"])[:-1]
+        )
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
@@ -60,7 +64,8 @@ async def mean(event):
 
 
 @ultroid_cmd(
-    pattern="synonym", )
+    pattern="synonym",
+)
 async def mean(event):
     wrd = event.text.split(" ", maxsplit=1)[1]
     ok = await get_synonyms_or_antonyms(wrd, "synonyms")
@@ -87,7 +92,8 @@ async def mean(event):
 
 
 @ultroid_cmd(
-    pattern="antonym", )
+    pattern="antonym",
+)
 async def mean(event):
     evid = event.message.id
     wrd = event.text.split(" ", maxsplit=1)[1]
@@ -120,15 +126,14 @@ async def _(event):
     word = event.pattern_match.group(1)
     if not word:
         return await eor(event, get_string("autopic_1"))
-    out = await async_searcher("http://api.urbandictionary.com/v0/define",
-                               params={"term": word},
-                               re_json=True)
+    out = await async_searcher(
+        "http://api.urbandictionary.com/v0/define", params={"term": word}, re_json=True
+    )
     try:
         out = out["list"][0]
     except IndexError:
         return await eor(event, get_string("autopic_2").format(word))
     await eor(
         event,
-        get_string("wrd_1").format(out["word"], out["definition"],
-                                   out["example"]),
+        get_string("wrd_1").format(out["word"], out["definition"], out["example"]),
     )

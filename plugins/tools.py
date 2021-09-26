@@ -63,9 +63,9 @@ async def _(event):
         text = previous_message.message
         lan = input or "en"
     else:
-        return await eor(event,
-                         f"`{HNDLR}tr LanguageCode` as reply to a message",
-                         time=5)
+        return await eor(
+            event, f"`{HNDLR}tr LanguageCode` as reply to a message", time=5
+        )
     translator = google_translator()
     try:
         tt = translator.translate(text, lang_tgt=lan)
@@ -88,8 +88,7 @@ async def _(event):
             bot_api_file_id = pack_bot_file_id(r_msg.media)
             await eor(
                 event,
-                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`\n**Msg ID:**  `{}`"
-                .format(
+                "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id),
                     str(r_msg.sender_id),
                     bot_api_file_id,
@@ -99,9 +98,9 @@ async def _(event):
         else:
             await eor(
                 event,
-                "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".
-                format(str(event.chat_id), str(r_msg.sender_id),
-                       str(r_msg.id)),
+                "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".format(
+                    str(event.chat_id), str(r_msg.sender_id), str(r_msg.id)
+                ),
             )
     elif event.pattern_match.group(1):
         ids = await get_user_id(event.pattern_match.group(1))
@@ -116,13 +115,12 @@ async def _(event):
         await eor(
             event,
             "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(
-                str(event.chat_id), str(event.id)),
+                str(event.chat_id), str(event.id)
+            ),
         )
 
 
-@ultroid_cmd(pattern="bots ?(.*)",
-             groups_only=True,
-             type=["official", "manager"])
+@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
 async def _(ult):
     mentions = "**Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
@@ -138,8 +136,8 @@ async def _(ult):
             return await eor(ult, str(e))
     try:
         async for x in ult.client.iter_participants(
-                chat,
-                filter=ChannelParticipantsBots,
+            chat,
+            filter=ChannelParticipantsBots,
         ):
             if isinstance(x.participant, ChannelParticipantAdmin):
                 mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
@@ -159,7 +157,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="hl", )
+    pattern="hl",
+)
 async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
@@ -169,7 +168,8 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="circle$", )
+    pattern="circle$",
+)
 async def _(e):
     a = await e.get_reply_message()
     if a is None:
@@ -207,13 +207,10 @@ async def _(e):
             f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4'
         )
         taime = time.time()
-        foile = await uploader("circle.mp4", "circle.mp4", taime, z,
-                               "Uᴘʟᴏᴀᴅɪɴɢ...")
+        foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
         metadata = extractMetadata(createParser("circle.mp4"))
         duration = metadata.get("duration").seconds
-        attributes = [
-            video(duration=duration, w=320, h=320, round_message=True)
-        ]
+        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
             foile,
@@ -241,7 +238,8 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="ls ?(.*)", )
+    pattern="ls ?(.*)",
+)
 async def _(e):
     files = e.pattern_match.group(1)
     if not files:
@@ -330,8 +328,13 @@ async def _(e):
                 foc += 1
             else:
                 if hb(int(os.path.getsize(name))):
-                    text += (emoji + f" `{nam}`" + "  `" +
-                             hb(int(os.path.getsize(name))) + "`\n")
+                    text += (
+                        emoji
+                        + f" `{nam}`"
+                        + "  `"
+                        + hb(int(os.path.getsize(name)))
+                        + "`\n"
+                    )
                     fls += int(os.path.getsize(name))
                 else:
                     text += emoji + f" `{nam}`" + "\n"
@@ -351,19 +354,19 @@ async def _(e):
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"
-            await e.reply(f"`{e.text}`",
-                          file=out_file,
-                          thumb="resources/extras/ultroid.jpg")
+            await e.reply(
+                f"`{e.text}`", file=out_file, thumb="resources/extras/ultroid.jpg"
+            )
         await e.delete()
 
 
 @ultroid_cmd(
-    pattern="sg ?(.*)", )
+    pattern="sg ?(.*)",
+)
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
     if not steal.is_reply and not mat:
-        return await eor(
-            steal, "`Use this command with reply or give Username/id...`")
+        return await eor(steal, "`Use this command with reply or give Username/id...`")
     if mat:
         user_id = await get_user_id(mat)
     message = await steal.get_reply_message()
@@ -380,14 +383,14 @@ async def lastname(steal):
                 respond = await conv.get_response()
                 responds = await conv.get_response()
             except YouBlockedUserError:
-                return await lol.edit(
-                    "Please unblock @sangmatainfo_bot and try again")
-            if ((response and response.text == "No records found")
-                    or (respond and respond.text == "No records found")
-                    or (responds and responds.text == "No records found")):
+                return await lol.edit("Please unblock @sangmatainfo_bot and try again")
+            if (
+                (response and response.text == "No records found")
+                or (respond and respond.text == "No records found")
+                or (responds and responds.text == "No records found")
+            ):
                 await lol.edit("No records found for this user")
-                await steal.client.delete_messages(conv.chat_id,
-                                                   [msg.id, response.id])
+                await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
             elif response.text.startswith("🔗"):
                 await lol.edit(respond.message)
                 await lol.reply(responds.message)

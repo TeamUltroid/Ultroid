@@ -51,10 +51,9 @@ async def vnc(e):
     await bash(
         f"ffmpeg -i '{file.name}' -map 0:a -codec:a libopus -b:a 100k -vbr on out.opus"
     )
-    await e.client.send_message(e.chat_id,
-                                file="out.opus",
-                                force_document=False,
-                                reply_to=r)
+    await e.client.send_message(
+        e.chat_id, file="out.opus", force_document=False, reply_to=r
+    )
     await xxx.delete()
     os.remove(file.name)
     os.remove("out.opus")
@@ -69,8 +68,7 @@ async def trim_aud(e):
     if int(a) >= int(b):
         return await eod(e, get_string("audiotools_4"))
     vido = await e.get_reply_message()
-    if vido and vido.media and mediainfo(vido.media).startswith(
-        ("video", "audio")):
+    if vido and vido.media and mediainfo(vido.media).startswith(("video", "audio")):
         if hasattr(vido.media, "document"):
             vfile = vido.media.document
             name = vido.file.name
@@ -146,8 +144,7 @@ async def trim_aud(e):
 @ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
     reply = await e.get_reply_message()
-    if not (reply and reply.media
-            and mediainfo(reply.media).startswith("video")):
+    if not (reply and reply.media and mediainfo(reply.media).startswith("video")):
         return await eor(e, get_string("audiotools_8"))
     name = reply.file.name or "video.mp4"
     vfile = reply.media.document
@@ -168,7 +165,8 @@ async def ex_aud(e):
         DocumentAttributeAudio(
             duration=reply.file.duration,
             title=reply.file.name.split(".")[0]
-            if reply.file.name else "Extracted Audio",
+            if reply.file.name
+            else "Extracted Audio",
             performer=ultroid_bot.me.first_name,
         )
     ]

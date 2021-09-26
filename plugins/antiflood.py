@@ -31,14 +31,15 @@ _check_flood = {}
 if Redis("ANTIFLOOD") is not (None or ""):
 
     @ultroid_bot.on(
-        NewMsg(chats=list(get_flood().keys()), ), )
+        NewMsg(
+            chats=list(get_flood().keys()),
+        ),
+    )
     async def flood_checm(event):
         count = 1
         chat = (await event.get_chat()).title
         if event.chat_id in _check_flood.keys():
-            if event.sender_id == [
-                    x for x in _check_flood[event.chat_id].keys()
-            ][0]:
+            if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
                 count = _check_flood[event.chat_id][event.sender_id]
                 _check_flood[event.chat_id] = {event.sender_id: count + 1}
             else:
@@ -50,27 +51,31 @@ if Redis("ANTIFLOOD") is not (None or ""):
         if event.sender_id in DEVLIST:
             return
         if _check_flood[event.chat_id][event.sender_id] >= int(
-                get_flood_limit(event.chat_id)):
+            get_flood_limit(event.chat_id)
+        ):
             try:
                 name = event.sender.first_name
-                await event.client.edit_permissions(event.chat_id,
-                                                    event.sender_id,
-                                                    send_messages=False)
+                await event.client.edit_permissions(
+                    event.chat_id, event.sender_id, send_messages=False
+                )
                 del _check_flood[event.chat_id]
                 await event.reply(f"#AntiFlood\n\n{get_string('antiflood_3')}")
                 await asst.send_message(
                     int(Redis("LOG_CHANNEL")),
                     f"#Antiflood\n\n`Muted `[{name}](tg://user?id={event.sender_id})` in {chat}`",
                     buttons=Button.inline(
-                        "Unmute",
-                        data=f"anti_{event.sender_id}_{event.chat_id}"),
+                        "Unmute", data=f"anti_{event.sender_id}_{event.chat_id}"
+                    ),
                 )
             except BaseException:
                 pass
 
 
 @callback(
-    re.compile("anti_(.*)", ), )
+    re.compile(
+        "anti_(.*)",
+    ),
+)
 async def unmuting(e):
     ino = (e.data_match.group(1)).decode("UTF-8").split("_")
     user = int(ino[0])

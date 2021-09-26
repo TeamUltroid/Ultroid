@@ -41,8 +41,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern=
-    "f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)")
+    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
+)
 async def _(e):
     act = e.pattern_match.group(1)
     t = e.pattern_match.group(2)

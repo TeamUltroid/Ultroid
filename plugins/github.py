@@ -15,7 +15,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="github (.*)", )
+    pattern="github (.*)",
+)
 async def gitsearch(event):
     xx = await eor(event, get_string("com_2"))
     try:

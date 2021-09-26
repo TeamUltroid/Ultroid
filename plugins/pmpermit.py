@@ -70,8 +70,11 @@ if not Redis("PM_TEXT"):
         "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
     )
 else:
-    UNAPPROVED_MSG = ("**PMSecurity of {ON}!**\n\n" + Redis("PM_TEXT") +
-                      "\n\nYou have {warn}/{twarn} warnings!")
+    UNAPPROVED_MSG = (
+        "**PMSecurity of {ON}!**\n\n"
+        + Redis("PM_TEXT")
+        + "\n\nYou have {warn}/{twarn} warnings!"
+    )
 
 UNS = get_string("pmperm_2")
 # 1
@@ -122,7 +125,8 @@ async def delete_pm_warn_msgs(chat: int):
 
 
 @ultroid_cmd(
-    pattern="logpm$", )
+    pattern="logpm$",
+)
 async def _(e):
     if not e.is_private:
         return await eor(e, "`Use me in Private.`", time=3)
@@ -134,7 +138,8 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="nologpm$", )
+    pattern="nologpm$",
+)
 async def _(e):
     if not e.is_private:
         return await eor(e, "`Use me in Private.`", time=3)
@@ -149,7 +154,8 @@ async def _(e):
     events.NewMessage(
         incoming=True,
         func=lambda e: e.is_private,
-    ), )
+    ),
+)
 async def permitpm(event):
     user = await event.get_sender()
     if user.bot or user.is_self or user.verified:
@@ -169,11 +175,11 @@ if sett == "True":
         events.NewMessage(
             outgoing=True,
             func=lambda e: e.is_private and e.out,
-        ), )
+        ),
+    )
     async def autoappr(e):
         miss = await e.get_chat()
-        if miss.bot or miss.is_self or miss.verified or Redis(
-                "AUTOAPPROVE") != "True":
+        if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
             return
         if miss.id in DEVLIST:
             return
@@ -205,7 +211,8 @@ if sett == "True":
         events.NewMessage(
             incoming=True,
             func=lambda e: e.is_private and not e.out,
-        ), )
+        ),
+    )
     async def permitpm(event):
         t_in = Redis("INLINE_PM")
         inline_pm = t_in == "True"
@@ -269,10 +276,12 @@ if sett == "True":
                     update_pm(user.id, message_, wrn)
                     if inline_pm:
                         results = await ultroid_bot.inline_query(
-                            my_bot, f"ip_{user.id}")
+                            my_bot, f"ip_{user.id}"
+                        )
                         try:
                             _to_delete[user.id] = await results[0].click(
-                                user.id, reply_to=event.id, hide_via=True)
+                                user.id, reply_to=event.id, hide_via=True
+                            )
                         except Exception as e:
                             LOGS.info(str(e))
                     elif PMPIC:
@@ -283,7 +292,8 @@ if sett == "True":
                         )
                     else:
                         _to_delete[user.id] = await ultroid_bot.send_message(
-                            user.id, message_)
+                            user.id, message_
+                        )
 
                 else:
                     await delete_pm_warn_msgs(user.id)
@@ -302,9 +312,11 @@ if sett == "True":
                     if inline_pm:
                         try:
                             results = await ultroid_bot.inline_query(
-                                my_bot, f"ip_{user.id}")
+                                my_bot, f"ip_{user.id}"
+                            )
                             _to_delete[user.id] = await results[0].click(
-                                user.id, reply_to=event.id, hide_via=True)
+                                user.id, reply_to=event.id, hide_via=True
+                            )
                         except Exception as e:
                             LOGS.info(str(e))
                     elif PMPIC:
@@ -315,7 +327,8 @@ if sett == "True":
                         )
                     else:
                         _to_delete[user.id] = await ultroid_bot.send_message(
-                            user.id, message_)
+                            user.id, message_
+                        )
                 LASTMSG.update({user.id: event.text})
             else:
                 await delete_pm_warn_msgs(user.id)
@@ -334,9 +347,11 @@ if sett == "True":
                 if inline_pm:
                     try:
                         results = await ultroid_bot.inline_query(
-                            my_bot, f"ip_{user.id}")
+                            my_bot, f"ip_{user.id}"
+                        )
                         _to_delete[user.id] = await results[0].click(
-                            user.id, reply_to=event.id, hide_via=True)
+                            user.id, reply_to=event.id, hide_via=True
+                        )
                     except Exception as e:
                         LOGS.info(str(e))
                 elif PMPIC:
@@ -347,7 +362,8 @@ if sett == "True":
                     )
                 else:
                     _to_delete[user.id] = await ultroid_bot.send_message(
-                        user.id, message_)
+                        user.id, message_
+                    )
             LASTMSG.update({user.id: event.text})
             if user.id not in COUNT_PM:
                 COUNT_PM.update({user.id: 1})
@@ -376,19 +392,16 @@ if sett == "True":
                 )
 
     @ultroid_cmd(
-        pattern="(start|stop|clear)archive$", )
+        pattern="(start|stop|clear)archive$",
+    )
     async def _(e):
         x = e.pattern_match.group(1)
         if x == "start":
             udB.set("MOVE_ARCHIVE", "True")
-            await eor(e,
-                      "Now I will move new Unapproved DM's to archive",
-                      time=5)
+            await eor(e, "Now I will move new Unapproved DM's to archive", time=5)
         elif x == "stop":
             udB.set("MOVE_ARCHIVE", "False")
-            await eor(e,
-                      "Now I won't move new Unapproved DM's to archive",
-                      time=5)
+            await eor(e, "Now I won't move new Unapproved DM's to archive", time=5)
         elif x == "clear":
             try:
                 await e.client.edit_folder(unpack=1)
@@ -397,7 +410,8 @@ if sett == "True":
                 await eor(e, str(mm), time=5)
 
     @ultroid_cmd(
-        pattern="(a|approve)(?: |$)", )
+        pattern="(a|approve)(?: |$)",
+    )
     async def approvepm(apprvpm):
         if apprvpm.reply_to_msg_id:
             user = (await apprvpm.get_reply_message()).sender
@@ -427,8 +441,7 @@ if sett == "True":
                     _not_approved[user.id],
                     f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
                     buttons=[
-                        Button.inline("Disapprove PM",
-                                      data=f"disapprove_{user.id}"),
+                        Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                 )
@@ -437,8 +450,7 @@ if sett == "True":
                     int(udB.get("LOG_CHANNEL")),
                     f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
                     buttons=[
-                        Button.inline("Disapprove PM",
-                                      data=f"disapprove_{user.id}"),
+                        Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                 )
@@ -446,7 +458,8 @@ if sett == "True":
             await eor(apprvpm, "`User may already be approved.`", time=5)
 
     @ultroid_cmd(
-        pattern="(da|disapprove)(?: |$)", )
+        pattern="(da|disapprove)(?: |$)",
+    )
     async def disapprovepm(e):
         if e.reply_to_msg_id:
             user = (await e.get_reply_message()).sender
@@ -462,8 +475,7 @@ if sett == "True":
         if is_approved(user.id):
             disapprove_user(user.id)
             await eod(
-                e,
-                f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`"
+                e, f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`"
             )
             try:
                 await asst.edit_message(
@@ -486,8 +498,7 @@ if sett == "True":
                 )
         else:
             await eod(
-                e,
-                f"[{user.first_name}](tg://user?id={user.id}) was never approved!"
+                e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!"
             )
 
 
@@ -555,8 +566,7 @@ async def unblockpm(unblock):
         while not u_s.users:
             off_ += 1
             u_s = await unblock.client(GetBlockedRequest(off_, 0))
-            [(await unblock.client(UnblockRequest(user.id)))
-             for user in u_s.users]
+            [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
             count += len(u_s.users)
         return await eor(unblock, f"__Unblocked {count} users.__")
     try:
@@ -599,11 +609,10 @@ async def list_approved(event):
         users.append([name.strip(), str(i)])
     with open("approved_pms.txt", "w") as list_appr:
         list_appr.write(
-            tabulate(users, headers=["UserName", "UserID"],
-                     showindex="always"))
+            tabulate(users, headers=["UserName", "UserID"], showindex="always")
+        )
     await event.reply(
-        "List of users approved by [{}](tg://user?id={})".format(
-            OWNER_NAME, OWNER_ID),
+        "List of users approved by [{}](tg://user?id={})".format(OWNER_NAME, OWNER_ID),
         file="approved_pms.txt",
     )
     await xx.delete()
@@ -611,7 +620,9 @@ async def list_approved(event):
 
 
 @callback(
-    re.compile(b"approve_(.*)", ),
+    re.compile(
+        b"approve_(.*)",
+    ),
     owner=True,
 )
 async def apr_in(event):
@@ -652,7 +663,9 @@ async def apr_in(event):
 
 
 @callback(
-    re.compile(b"disapprove_(.*)", ),
+    re.compile(
+        b"disapprove_(.*)",
+    ),
     owner=True,
 )
 async def disapr_in(event):
@@ -686,7 +699,9 @@ async def disapr_in(event):
 
 
 @callback(
-    re.compile(b"block_(.*)", ),
+    re.compile(
+        b"block_(.*)",
+    ),
     owner=True,
 )
 async def blck_in(event):
@@ -706,7 +721,9 @@ async def blck_in(event):
 
 
 @callback(
-    re.compile(b"unblock_(.*)", ),
+    re.compile(
+        b"unblock_(.*)",
+    ),
     owner=True,
 )
 async def unblck_in(event):
@@ -747,10 +764,12 @@ async def in_pm_ans(event):
     except KeyError:
         msg_ = "**PMSecurity of {OWNER_NAME}**"
     wrns = f"{warns}/{WARNS}"
-    buttons = [[
-        Button.inline("Warns", data=f"admin_only{from_user}"),
-        Button.inline(wrns, data=f"don_{wrns}"),
-    ]]
+    buttons = [
+        [
+            Button.inline("Warns", data=f"admin_only{from_user}"),
+            Button.inline(wrns, data=f"don_{wrns}"),
+        ]
+    ]
     include_media = True
     mime_type, res = None, None
     cont = None
@@ -804,13 +823,15 @@ async def in_pm_ans(event):
 @callback(re.compile("admin_only(.*)"), owner=True)
 async def _admin_tools(event):
     chat = int(event.pattern_match.group(1))
-    await event.edit(buttons=[
-        [
-            Button.inline("Approve PM", data=f"approve_{chat}"),
-            Button.inline("Block PM", data=f"block_{chat}"),
+    await event.edit(
+        buttons=[
+            [
+                Button.inline("Approve PM", data=f"approve_{chat}"),
+                Button.inline("Block PM", data=f"block_{chat}"),
+            ],
+            [Button.inline("« Back", data=f"pmbk_{chat}")],
         ],
-        [Button.inline("« Back", data=f"pmbk_{chat}")],
-    ], )
+    )
 
 
 @callback(re.compile("don_(.*)"))
@@ -830,7 +851,11 @@ async def edt(event):
         LOGS.info(str(e))
         warns = "0"
     wrns = f"{warns}/{WARNS}"
-    await event.edit(buttons=[[
-        Button.inline("Warns", data=f"admin_only{from_user}"),
-        Button.inline(wrns, data=f"don_{wrns}"),
-    ]], )
+    await event.edit(
+        buttons=[
+            [
+                Button.inline("Warns", data=f"admin_only{from_user}"),
+                Button.inline(wrns, data=f"don_{wrns}"),
+            ]
+        ],
+    )

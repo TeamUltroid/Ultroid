@@ -82,8 +82,12 @@ async def get_var(event):
 
     elif opt == "keys":
         keys = sorted(udB.keys())
-        msg = "".join(f"• `{i}`" + "\n" for i in keys
-                      if not i.isdigit() and not i.startswith("-")
-                      and not i.startswith("GBAN_REASON_"))
+        msg = "".join(
+            f"• `{i}`" + "\n"
+            for i in keys
+            if not i.isdigit()
+            and not i.startswith("-")
+            and not i.startswith("GBAN_REASON_")
+        )
 
         await x.edit(f"**List of Redis Keys :**\n{msg}")

@@ -74,7 +74,8 @@ async def _(e):
             f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
         )
         x, y = await bash(
-            f'mediainfo --fullscan """{file.name}""" | grep "Frame count"')
+            f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
+        )
         total_frames = x.split(":")[1].split("\n")[0]
         number = random.randint(1, 10000)
         progress = f"progress-{number}.txt"
@@ -102,22 +103,29 @@ async def _(e):
                         time_diff = time.time() - int(d_time)
                         speed = round(elapse / time_diff, 2)
                     if int(speed) != 0:
-                        some_eta = (
-                            (int(total_frames) - elapse) / speed) * 1000
+                        some_eta = ((int(total_frames) - elapse) / speed) * 1000
                         text = f"`Compressing {file_name} at {crf} CRF.\n`"
                         progress_str = "`[{0}{1}] {2}%\n\n`".format(
                             "".join("●" for i in range(math.floor(per / 5))),
-                            "".join(""
-                                    for i in range(20 - math.floor(per / 5))),
+                            "".join("" for i in range(20 - math.floor(per / 5))),
                             round(per, 2),
                         )
 
-                        e_size = (humanbytes(size) + " of ~" + humanbytes(
-                            (size / per) * 100))
+                        e_size = (
+                            humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
+                        )
                         eta = "~" + time_formatter(some_eta)
                         try:
-                            await xxx.edit(text + progress_str + "`" + e_size +
-                                           "`" + "\n\n`" + eta + "`")
+                            await xxx.edit(
+                                text
+                                + progress_str
+                                + "`"
+                                + e_size
+                                + "`"
+                                + "\n\n`"
+                                + eta
+                                + "`"
+                            )
                         except MessageNotModifiedError:
                             pass
             os.remove(file.name)
@@ -144,15 +152,12 @@ async def _(e):
                 duration = metadata.get("duration").seconds
                 hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
                 wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-                height = int(
-                    hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-                width = int(
-                    wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+                height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
+                width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
                 attributes = [
-                    DocumentAttributeVideo(duration=duration,
-                                           w=width,
-                                           h=height,
-                                           supports_streaming=True)
+                    DocumentAttributeVideo(
+                        duration=duration, w=width, h=height, supports_streaming=True
+                    )
                 ]
                 await e.client.send_file(
                     e.chat_id,

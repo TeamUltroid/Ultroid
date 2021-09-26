@@ -25,7 +25,8 @@ buddhhu = {}
 
 
 @ultroid_cmd(
-    pattern="wspr ?(.*)", )
+    pattern="wspr ?(.*)",
+)
 async def _(e):
     if e.reply_to_msg_id:
         okk = await e.get_reply_message()
@@ -36,8 +37,7 @@ async def _(e):
         put = e.pattern_match.group(1)
     if put:
         try:
-            results = await e.client.inline_query(asst.me.username,
-                                                  f"msg {put}")
+            results = await e.client.inline_query(asst.me.username, f"msg {put}")
         except rep:
             return await eor(
                 e,
@@ -45,9 +45,7 @@ async def _(e):
             )
         except dis:
             return await eor(e, get_string("help_3"))
-        await results[0].click(e.chat_id,
-                               reply_to=e.reply_to_msg_id,
-                               hide_via=True)
+        await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
         return await e.delete()
     await eor(e, get_string("wspr_3"))
 
@@ -78,8 +76,7 @@ async def _(e):
     try:
         desc = zzz[2]
     except IndexError:
-        sur = e.builder.article(title="Type ur msg",
-                                text="You Didn't Type Your Msg")
+        sur = e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
         return await e.answer([sur])
     button = [
         Button.inline("Secret Msg", data=f"dd_{e.id}"),
@@ -164,7 +161,10 @@ async def _(e):
 
 
 @callback(
-    re.compile("dd_(.*)", ), )
+    re.compile(
+        "dd_(.*)",
+    ),
+)
 async def _(e):
     ids = int(e.pattern_match.group(1).decode("UTF-8"))
     if buddhhu.get(ids):

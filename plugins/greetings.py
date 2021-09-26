@@ -74,9 +74,7 @@ async def setwel(event):
         add_welcome(event.chat_id, r.message, None)
         await eor(x, "`Welcome note saved`")
     else:
-        await eor(x,
-                  "`Reply to message which u want to set as welcome`",
-                  time=5)
+        await eor(x, "`Reply to message which u want to set as welcome`", time=5)
 
 
 @ultroid_cmd(pattern="clearwelcome$")
@@ -131,9 +129,7 @@ async def setgb(event):
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goodbye note saved`")
     else:
-        await eor(x,
-                  "`Reply to message which u want to set as goodbye`",
-                  time=5)
+        await eor(x, "`Reply to message which u want to set as goodbye`", time=5)
 
 
 @ultroid_cmd(pattern="cleargoodbye$")
@@ -166,9 +162,7 @@ async def thank_set(event):
         return
     chat = event.chat_id
     if not str(chat).startswith("-"):
-        return await eor(event,
-                         "`Please use this command in a group!`",
-                         time=10)
+        return await eor(event, "`Please use this command in a group!`", time=10)
     if type_.lower() == "on":
         add_thanks(chat)
     elif type_.lower() == "off":

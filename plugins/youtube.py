@@ -25,7 +25,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="yt(a|v|sa|sv) ?(.*)", )
+    pattern="yt(a|v|sa|sv) ?(.*)",
+)
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
     xx = await eor(event, get_string("com_1"))

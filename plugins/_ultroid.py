@@ -22,8 +22,7 @@ REPOMSG = """
 
 RP_BUTTONS = [
     [
-        Button.url(get_string("bot_3"),
-                   "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
         Button.url("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
     ],
     [Button.url("Support Group", "t.me/ultroidsupport")],
@@ -44,9 +43,9 @@ async def repify(e):
         await q[0].click(e.chat_id)
         return await e.delete()
     except (
-            ChatSendInlineForbiddenError,
-            ChatSendMediaForbiddenError,
-            BotMethodInvalidError,
+        ChatSendInlineForbiddenError,
+        ChatSendMediaForbiddenError,
+        BotMethodInvalidError,
     ):
         pass
     except Exception as er:

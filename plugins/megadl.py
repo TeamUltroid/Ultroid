@@ -22,8 +22,7 @@ async def _(e):
     if os.path.isdir("mega"):
         await bash("rm -rf mega")
     os.mkdir("mega")
-    xx = await eor(
-        e, f"{get_string('com_1')}\nTo Check Progress : `{HNDLR}ls mega`")
+    xx = await eor(e, f"{get_string('com_1')}\nTo Check Progress : `{HNDLR}ls mega`")
     s = datetime.now()
     x, y = await bash(f"megadl {link} --path mega")
     ok = get_all_files("mega")

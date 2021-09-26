@@ -45,7 +45,8 @@ File = []
 
 
 @ultroid_cmd(
-    pattern="getaudio$", )
+    pattern="getaudio$",
+)
 async def daudtoid(e):
     if not e.reply_to:
         return await eod(e, "Reply To Audio or video")
@@ -63,12 +64,12 @@ async def daudtoid(e):
         "Downloading " + dl + "...",
     )
     File.append(file.name)
-    await xxx.edit(
-        "`Done.. Now reply to video In which u want to add this Audio`")
+    await xxx.edit("`Done.. Now reply to video In which u want to add this Audio`")
 
 
 @ultroid_cmd(
-    pattern="addaudio$", )
+    pattern="addaudio$",
+)
 async def adaudroid(e):
     if not e.reply_to:
         return await eod(e, "Reply To video")
@@ -106,10 +107,9 @@ async def adaudroid(e):
     height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
     width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
     attributes = [
-        DocumentAttributeVideo(duration=duration,
-                               w=width,
-                               h=height,
-                               supports_streaming=True)
+        DocumentAttributeVideo(
+            duration=duration, w=width, h=height, supports_streaming=True
+        )
     ]
     await e.client.send_file(
         e.chat_id,
@@ -127,7 +127,8 @@ async def adaudroid(e):
 
 
 @ultroid_cmd(
-    pattern=r"dob ?(.*)", )
+    pattern=r"dob ?(.*)",
+)
 async def hbd(event):
     if not event.pattern_match.group(1):
         return await eor(event, "`Put input in dd/mm/yyyy format`")
@@ -205,8 +206,7 @@ async def hbd(event):
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     sign = f"{sign}"
     params = (("sign", sign), ("today", day))
-    response = requests.post("https://aztro.sameerkumar.website/",
-                             params=params)
+    response = requests.post("https://aztro.sameerkumar.website/", params=params)
     json = response.json()
     dd = json.get("current_date")
     ds = json.get("description")
@@ -253,10 +253,7 @@ async def _(event):
     )
     packs = z.find_all("div", "sticker-pack__header")
     sticks = {
-        c.a["href"]: c.find("div", {
-            "class": "sticker-pack__title"
-        }).text
-        for c in packs
+        c.a["href"]: c.find("div", {"class": "sticker-pack__title"}).text for c in packs
     }
 
     if not sticks:
@@ -283,7 +280,6 @@ async def wall(event):
     }
     gi.download(args)
     xx = choice(os.listdir(os.path.abspath(f"./resources/downloads/{query}/")))
-    await event.client.send_file(event.chat_id,
-                                 f"./resources/downloads/{query}/{xx}")
+    await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()

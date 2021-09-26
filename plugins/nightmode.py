@@ -108,9 +108,9 @@ async def open_grp():
                         send_inline=False,
                         send_polls=False,
                     ),
-                ))
-            await ultroid_bot.send_message(
-                chat, "**NightMode Off**\n\nGroup Opened 🥳.")
+                )
+            )
+            await ultroid_bot.send_message(chat, "**NightMode Off**\n\nGroup Opened 🥳.")
         except Exception as er:
             LOGS.info(er)
 
@@ -129,10 +129,10 @@ async def close_grp():
                         until_date=None,
                         send_messages=True,
                     ),
-                ))
+                )
+            )
             await ultroid_bot.send_message(
-                chat,
-                f"**NightMode : Group Closed**\n\nGroup Will Open At `{h2}:{m2}`"
+                chat, f"**NightMode : Group Closed**\n\nGroup Will Open At `{h2}:{m2}`"
             )
         except Exception as er:
             LOGS.info(er)

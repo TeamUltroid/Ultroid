@@ -95,14 +95,12 @@ async def _(event):
     p = 0
     title = (await event.get_chat()).title
     async for i in event.client.iter_participants(
-            event.chat_id,
-            filter=ChannelParticipantsKicked,
-            aggressive=True,
+        event.chat_id,
+        filter=ChannelParticipantsKicked,
+        aggressive=True,
     ):
         try:
-            await event.client.edit_permissions(event.chat_id,
-                                                i,
-                                                view_messages=True)
+            await event.client.edit_permissions(event.chat_id, i, view_messages=True)
             p += 1
         except BaseException:
             pass

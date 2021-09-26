@@ -85,16 +85,14 @@ async def gifs(ult):
     m = await eor(ult, get_string("com_2"))
     gifs = await ult.client.inline_query("gif", get)
     if not n:
-        await gifs[xx].click(ult.chat_id,
-                             reply_to=ult.reply_to_msg_id,
-                             silent=True,
-                             hide_via=True)
+        await gifs[xx].click(
+            ult.chat_id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
+        )
     else:
         for x in range(n):
-            await gifs[x].click(ult.chat_id,
-                                reply_to=ult.reply_to_msg_id,
-                                silent=True,
-                                hide_via=True)
+            await gifs[x].click(
+                ult.chat_id, reply_to=ult.reply_to_msg_id, silent=True, hide_via=True
+            )
     await m.delete()
 
 
@@ -118,8 +116,7 @@ async def vtogif(e):
         filename = a.file.name
         if not filename:
             filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        vid = await downloader(filename, a.media.document, xx, tt,
-                               get_string("com_5"))
+        vid = await downloader(filename, a.media.document, xx, tt, get_string("com_5"))
         z = vid.name
         await bash(
             f'ffmpeg -ss 3 -t 100 -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif'
