@@ -112,7 +112,7 @@ act_1: "AUTOCORRECT Feature On"
 act_2: "AUTOCORRECT Feature Off"
 
 # autopic
-autopic_1: "Heya Give me some Text .."
+autopic_1: "`Give something to search...`"
 autopic_2: "No Results found for `{}`"
 autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
 autopic_4: "AUTOPIC was not in use !!"
@@ -230,6 +230,9 @@ sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
 sf_20: "`Extracting information...`"
 sf_21: "\n\nFedInfo Extracted by Ultroid"
 
+# extra
+ex_1: `Reply to message..`"
+
 # gdrive
 gdrive_1: "`You have already authorised with Google Drive`"
 gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
@@ -283,7 +286,7 @@ sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
 
 # webupload
-wbl_1:  "`Provide a File Name pls.."
+wbl_1:  "`Provide a File Name pls..`"
 
 # writer
 writer_1: "`Give Some Text Too`"
