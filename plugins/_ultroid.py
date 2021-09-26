@@ -22,7 +22,7 @@ REPOMSG = """
 
 RP_BUTTONS = [
     [
-        Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(get_strings('bot_3'), "https://github.com/TeamUltroid/Ultroid"),
         Button.url("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
     ],
     [Button.url("Support Group", "t.me/ultroidsupport")],

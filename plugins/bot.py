@@ -64,7 +64,7 @@ async def alive(event):
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_strings('bot_1')
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -110,7 +110,7 @@ async def is_on(ult):
         return
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_strings('bot_1')
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -126,10 +126,10 @@ async def is_on(ult):
         kk,
     )
     buttons = [
-        [Button.inline("Stats", "alive")],
+        [Button.inline(get_strings('bot_2'), "alive")],
         [
-            Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-            Button.url("Support", "t.me/UltroidSupport"),
+            Button.url(get_strings('bot_3'), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_strings('bot_4'), "t.me/UltroidSupport"),
         ],
     ]
     await ult.client.send_message(
@@ -165,7 +165,7 @@ heroku_api = Var.HEROKU_API
     fullsudo=True,
 )
 async def restartbt(ult):
-    ok = await eor(ult, "• `Restarting...`")
+    ok = await eor(ult, get_strings('bot_5'))
     call_back()
     if heroku_api:
         return await restart(ok)
@@ -197,7 +197,7 @@ async def _(event):
 async def inline_alive(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_strings('bot_1')
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -214,8 +214,8 @@ async def inline_alive(ult):
     )
     buttons = [
         [
-            Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-            Button.url("Support", "t.me/UltroidSupport"),
+            Button.url(get_strings('bot_3'), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_strings('bot_4'), "t.me/UltroidSupport"),
         ]
     ]
     builder = ult.builder
@@ -227,7 +227,7 @@ async def inline_alive(ult):
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
                     pic = _pic
-                    buttons.insert(0, [Button.inline("Stats", data="alive")])
+                    buttons.insert(0, [Button.inline(get_strings('bot_2'), data="alive")])
                 results = [
                     await builder.document(
                         pic,

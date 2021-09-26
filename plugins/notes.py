@@ -37,7 +37,7 @@ async def an(e):
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(
-            e, "`Use this Command with Reply and word to use a note.`", time=5
+            e, get_strings('notes_1'), time=5
         )
     if "#" in wrd:
         wrd = wrd.replace("#", "")
@@ -72,7 +72,7 @@ async def rn(e):
     chat = e.chat_id
     if not wrd:
         return await eor(
-            e, "`Give me the note handler which you want to remove.`", time=5
+            e, get_strings('notes_3'), time=5
         )
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
@@ -86,7 +86,7 @@ async def lsnote(e):
     if x:
         sd = "Notes Found In This Chats Are\n\n"
         return await eor(e, sd + x)
-    await eor(e, "No Notes Found Here")
+    await eor(e, get_strings('notes_5'))
 
 
 @ultroid_bot.on(events.NewMessage(pattern="^#(.*)"))

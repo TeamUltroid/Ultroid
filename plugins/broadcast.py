@@ -97,22 +97,22 @@ async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
-        await x.edit("`Removing...`")
+        await x.edit(get_strings('bd_8'))
         udB.delete("BROADCAST")
         await x.edit("Database cleared.")
         return
     if is_channel_added(chat_id):
         rem_channel(chat_id)
-        await x.edit("Removed from database")
+        await x.edit(get_strings('bd_7'))
         await asyncio.sleep(3)
         await x.delete()
     elif is_channel_added(event.chat_id):
         rem_channel(event.chat_id)
-        await x.edit("Removed from database")
+        await x.edit(get_strings('bd_7'))
         await asyncio.sleep(3)
         await x.delete()
     elif not is_channel_added(event.chat_id):
-        await x.edit("Channel is already removed from database. ")
+        await x.edit(get_strings('bd_9'))
         await asyncio.sleep(3)
         await x.delete()
 

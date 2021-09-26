@@ -54,7 +54,7 @@ async def rem_chatBot(event):
 async def lister(event):
     users = get_all_added(event.chat_id)
     if not users:
-        return await eor(event, "`No user has AI added.`", time=5)
+        return await eor(event, get_strings('chab_2'), time=5)
     msg = "**Total List Of AI Enabled Users In This Chat :**\n\n"
     for i in users:
         try:
@@ -79,7 +79,7 @@ async def chat_bot_fn(event, type_):
             else:
                 return await eod(
                     event,
-                    "Reply to a user or give me his id/username to add an AI ChatBot!",
+                    get_strings('chab_1'),
                 )
     if type_ == "add":
         add_chatbot(event.chat_id, user.id)
