@@ -25,6 +25,8 @@
 import os
 
 from bs4 import BeautifulSoup as bs
+from htmlwebshot import WebShot
+from img2html.converter import Img2HTMLConverter
 from requests import get
 
 from . import *
@@ -120,10 +122,6 @@ async def _gen_data(event):
     msg, pic = get_random_user_data()
     await event.reply(file=pic, message=msg)
     await x.delete()
-
-
-from htmlwebshot import WebShot
-from img2html.converter import Img2HTMLConverter
 
 
 @ultroid_cmd(
