@@ -51,43 +51,48 @@ async def _(e):
 
 @in_pattern("wspr", owner=True)
 async def _(e):
-    zzz = e.text.split(maxsplit=2)
-    query = zzz[1]
-    if query.isdigit():
-        query = int(query)
     iuser = e.query.user_id
+    zzz = e.text.split(maxsplit=2)
+    try:
+        query = zzz[1]
+        if query.isdigit():
+            query = int(query)
+        logi = await ultroid_bot.get_entity(query)
+    except IndexError:
+        sur = e.builder.article(title="Give Username",  description="You Didn't Type Username or id.", text="You Didn't Type Username or id.")
+        return await e.answer([sur])
+    except ValueError:
+        sur = e.builder.article(title="User Not Found", description="Make sure username or id is correct.", text="Make sure username or id is correct.")
+        return await e.answer([sur])
     try:
         desc = zzz[2]
     except IndexError:
-        desc = "Touch me"
-    try:
-        logi = await ultroid_bot.get_entity(query)
-        button = [
-            Button.inline("Secret Msg", data=f"dd_{e.id}"),
-            Button.inline("Delete Msg", data=f"del_{e.id}"),
-        ]
-        us = logi.username
-        sur = e.builder.article(
-            title=f"{logi.first_name}",
-            description=desc,
-            text=get_string("wspr_1").format(us),
-            buttons=button,
-        )
-        buddhhu.update({e.id: [logi.id, iuser]})
-        snap.update({e.id: desc})
-    except ValueError:
         sur = e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
+        return await e.answer([sur])
+    button = [
+        Button.inline("Secret Msg", data=f"dd_{e.id}"),
+        Button.inline("Delete Msg", data=f"del_{e.id}"),
+    ]
+    us = logi.username or logi.first_name
+    sur = e.builder.article(
+        title=f"{logi.first_name}",
+        description=desc,
+        text=get_string("wspr_1").format(us),
+        buttons=button,
+    )
+    buddhhu.update({e.id: [logi.id, iuser]})
+    snap.update({e.id: desc})
     await e.answer([sur])
 
 
 @in_pattern("msg", owner=True)
 async def _(e):
     zzz = e.text.split(maxsplit=1)
-    query = zzz[1]
-    if query.isdigit():
-        query = int(query)
     desc = "Touch me"
     try:
+        query = zzz[1]
+        if query.isdigit():
+            query = int(query)
         logi = await ultroid_bot(gu(id=query))
         name = logi.user.first_name
         ids = logi.user.id
@@ -131,6 +136,8 @@ async def _(e):
             text=text,
             buttons=button,
         )
+    except IndexError:
+        sur = e.builder.article(title="Give Username", description="You Didn't Type Username or id." ,text="You Didn't Type Username or id.")
     except BaseException:
         name = get_string("wspr_4").format(query)
         sur = e.builder.article(
