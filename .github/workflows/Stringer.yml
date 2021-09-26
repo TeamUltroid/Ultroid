@@ -1,4 +1,4 @@
-name: String-Replacer
+name: Replacer
 on: push
 jobs:
   Replace:
