@@ -38,10 +38,10 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eor(xx, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=15)
+        await eor(xx, get_string("core_17").format(shortname), time=15)
     except Exception as e:
         await eod(
             xx,
-            f"**Could not load** `{shortname}` **because of the following error.**\n`{e}`",
+            get_string("core_18").format(shortname, e)
             time=3,
         )
