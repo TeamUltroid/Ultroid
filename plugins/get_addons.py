@@ -42,6 +42,6 @@ async def get_the_addons_lol(event):
     except Exception as e:
         await eod(
             xx,
-            get_string("core_18").format(shortname, e)
+            get_string("core_18").format(shortname, e),
             time=3,
         )
