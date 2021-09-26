@@ -1,10 +1,5 @@
 name: Replacer
-on: push
-
-env:
-  GitHubMail: "newdev0@outlook.com"
-  GitHubName: "New-dev0"
-
+on: workflow_dispatch
 jobs:
   Replace:
     runs-on: ubuntu-latest
@@ -15,15 +10,12 @@ jobs:
         with:
           find: '"`Ooo Animated Sticker 👀...`"'
           replace: "get_string('sts_9')"
-          exclude: 'strings/'
-      - name: "Set Git Configs & Secrets"
-        run: |
-          git config --global user.email ${GitHubMail}
-          git config --global user.name ${GitHubName}
-          git config --global credential.helper store
-          echo "https://${GitHubName}:${{ secrets.G_TOKEN }}@github.com" > ~/.git-credentials
-      - name : push stuff
-        run: |
-          git add .
-          git commit -m "replace"
-          git push
+          exclude: ['strings/', ".gi*]
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Replacer OP'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: ProgrammingError
+          commit_user_email: error@notavailable.live
+          commit_author: ProgrammingError <error@notavailable.live>
