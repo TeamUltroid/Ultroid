@@ -35,7 +35,7 @@ async def af(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, get_strings('flr_1'))
+        return await eor(e, get_strings("flr_1"))
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -65,7 +65,7 @@ async def rf(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
-        return await eor(e, get_strings('flr_3'))
+        return await eor(e, get_strings("flr_3"))
     rem_filter(int(chat), wrd)
     await eor(e, get_string("flr_5").format(wrd))
 
@@ -77,7 +77,7 @@ async def lsnote(e):
         sd = "Filters Found In This Chats Are\n\n"
         await eor(e, sd + x)
     else:
-        await eor(e, get_strings('flr_6'))
+        await eor(e, get_strings("flr_6"))
 
 
 @ultroid_bot.on(events.NewMessage())
