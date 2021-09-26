@@ -57,7 +57,7 @@ async def af(e):
             add_filter(int(chat), wrd, None, m)
     else:
         add_filter(int(chat), wrd, wt.text, None)
-    await eor(e, f"Done : Filter `{wrd}` Saved.")
+    await eor(e, get_string("flr_4").format(wrd))
 
 
 @ultroid_cmd(pattern="remfilter ?(.*)")
@@ -67,7 +67,7 @@ async def rf(e):
     if not wrd:
         return await eor(e, "`Give the filter to remove..`")
     rem_filter(int(chat), wrd)
-    await eor(e, f"Done : Filter `{wrd}` Removed.")
+    await eor(e, get_string("flr_5").format(wrd))
 
 
 @ultroid_cmd(pattern="listfilter$")
