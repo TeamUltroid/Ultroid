@@ -240,6 +240,9 @@ gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`
 gdrive_6: "`Go to `{}` and send ``/auth.`"
 gdrive_7: "**Successfully uploaded the file to G-Drive :**\n\n[{}]({})"
 
+# mediainfo
+mdi_1: "More Explained Info"
+
 # pmpermit
 pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
 pmperm_2: "Eyy, I told you not to spam!\nYou've been blocked and reported, for now."
