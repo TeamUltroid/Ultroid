@@ -287,6 +287,16 @@ wbs_1: "`Give a URL please!`"
 wbs_2: "Invalid URL!"
 wbs_3:"**WebShot Generated**\n**URL**: {}"
 
+# youtube
+youtube_1:"Give me a (youtube) URL to download audio from!"
+youtube_2:"`Give A Direct Audio Link To Download`"
+youtube_3:"Give me a (youtube) URL to download video from!"
+youtube_4:"`Give A Direct Video Link To Download`"
+youtube_5:  "Give me a (youtube) search query to download audio from!"
+youtube_6:"`Downloading audio song...`"
+youtube_7: "Give me a (youtube) search query to download video from!"
+youtube_8:"`Downloading video song...`"
+
 # ---------------------------------------------------#
 
 # assisant
