@@ -57,7 +57,7 @@ async def _(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_strings('audiotools_5'))
+        xxx = await eor(e, get_strings("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,

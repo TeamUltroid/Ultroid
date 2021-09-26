@@ -42,7 +42,7 @@ async def install(event):
 async def unload(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_strings('core_9'))
+        await eor(event, get_strings("core_9"))
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
@@ -54,7 +54,7 @@ async def unload(event):
         except Exception as ex:
             return await eor(event, str(ex))
     elif zym in lst:
-        return await eor(event, get_strings('core_11'), time=3)
+        return await eor(event, get_strings("core_11"), time=3)
     else:
         return await eor(event, f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
 
@@ -65,7 +65,7 @@ async def unload(event):
 async def uninstall(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_strings('core_13'))
+        await eor(event, get_strings("core_13"))
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
@@ -78,7 +78,7 @@ async def uninstall(event):
         except Exception as ex:
             return await eor(event, str(ex))
     elif zym in lst:
-        return await eor(event, get_strings('core_15'), time=3)
+        return await eor(event, get_strings("core_15"), time=3)
     else:
         return await eor(event, f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
 
@@ -90,7 +90,7 @@ async def uninstall(event):
 async def load(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_strings('core_16'))
+        await eor(event, get_strings("core_16"))
         return
     try:
         try:

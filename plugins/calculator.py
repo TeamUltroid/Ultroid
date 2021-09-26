@@ -111,7 +111,7 @@ async def _(e):
                 await e.answer(f"Answer : {num}", cache_time=0, alert=True)
             except BaseException:
                 CALC.pop(user)
-                await e.answer(get_strings('sf_8'), cache_time=0, alert=True)
+                await e.answer(get_strings("sf_8"), cache_time=0, alert=True)
         await e.answer("None")
     else:
         if CALC.get(user):

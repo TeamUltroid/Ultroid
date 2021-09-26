@@ -80,7 +80,7 @@ async def broadcast_adder(event):
         if xx:
             await x.edit(get_string("bd_5"))
         else:
-            await x.edit(get_strings('sf_8'))
+            await x.edit(get_strings("sf_8"))
         await asyncio.sleep(3)
         await event.delete()
     elif is_channel_added(chat_id):
