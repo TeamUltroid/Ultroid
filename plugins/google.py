@@ -38,11 +38,11 @@ from . import *
 async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eod(event, "`Give something to search..`")
+        return await eod(event, get_string("autopic_1"))
     x = await eor(event, get_string("com_2"))
     gs = await google_search(inp)
-    if len(gs) == 0:
-        return await eod(x, f"`Can't find anything about {inp}`")
+    if not gs:
+        return await eod(x, get_string("autopic_2").format(inp))
     out = ""
     for res in gs:
         text = res["title"]
@@ -57,7 +57,7 @@ async def google(event):
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
-        return await eor(event, "`Give something to search...`")
+        return await eor(event, get_string("autopic_1"))
     nn = await eor(event, get_string("com_1"))
     lmt = 5
     if ";" in query:
@@ -77,7 +77,7 @@ async def goimg(event):
         pth = gi.download(args)
         ok = pth[0][query]
     except BaseException:
-        return await nn.edit("No Results Found :(")
+        return await nn.edit(get_string("autopic_2").format(query))
     await event.reply(file=ok, message=query)
     rmtree(f"./resources/downloads/{query}/")
     await nn.delete()
