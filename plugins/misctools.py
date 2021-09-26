@@ -8,6 +8,9 @@
 
 • `{i}gadget <search query>`
     Gadget Search from Telegram.
+
+• `{i}randomuser`
+   Generate details about a random user.
 """
 from bs4 import BeautifulSoup as bs
 
@@ -45,3 +48,11 @@ async def mobs(e):
     out += "_"
     await e.reply(out, file=imu)
     await bt.delete()
+
+
+@ultroid_cmd(pattern="randomuser")
+async def _gen_data(event):
+    x = await eor(event, get_string("com_1"))
+    msg, pic = get_random_user_data()
+    await event.reply(file=pic, message=msg)
+    await x.delete()
