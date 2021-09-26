@@ -37,14 +37,14 @@ async def _(e):
     try:
         font = input.split(":", maxsplit=1)[0]
     except IndexError:
-        return await eor(e, "`fonts small caps : Your Message`", time=5)
+        return await eor(e, "`font small caps : Your Message`", time=5)
     if reply:
         text = reply.message
     else:
         try:
             text = input.split(":", maxsplit=1)[1]
         except IndexError:
-            return await eor(e, "`fonts small caps : Your Message`", time=5)
+            return await eor(e, "`font small caps : Your Message`", time=5)
     if font not in fonts:
         return await eor(e, f"`{font} not in font list`.", time=5)
     if font == "small caps ":
