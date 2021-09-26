@@ -250,7 +250,7 @@ async def _(e):
         [
             Button.switch_inline(
                 "WʜɪSᴘᴇʀ",
-                query="msg username wspr Hello",
+                query="wspr @username Hello🎉",
                 same_peer=True,
             ),
             Button.switch_inline(
