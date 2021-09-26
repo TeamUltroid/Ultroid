@@ -51,13 +51,13 @@ async def _(e):
 
 @in_pattern("wspr", owner=True)
 async def _(e):
-    zzz = e.text.split(maxsplit=3)
-    query = zzz[2]
+    zzz = e.text.split(maxsplit=2)
+    query = zzz[1]
     if query.isdigit():
         query = int(query)
     iuser = e.query.user_id
     try:
-        desc = zzz[3]
+        desc = zzz[2]
     except IndexError:
         desc = "Touch me"
     try:
@@ -82,11 +82,10 @@ async def _(e):
 
 @in_pattern("msg", owner=True)
 async def _(e):
-    zzz = e.text.split(maxsplit=2)
-    query = zzz[2]
+    zzz = e.text.split(maxsplit=1)
+    query = zzz[1]
     if query.isdigit():
         query = int(query)
-    e.query.user_id
     desc = "Touch me"
     try:
         logi = await ultroid_bot(gu(id=query))
