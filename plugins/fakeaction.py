@@ -55,6 +55,6 @@ async def _(e):
         t = math.ceil((await ban_time(e, t)) - time.time())
     else:
         t = 60
-    await eor(e, f"Starting Fake Action For {t} sec.", time=5)
+    await eor(e, get_string("fka_1"), time=5)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)
