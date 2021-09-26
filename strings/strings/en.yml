@@ -231,7 +231,7 @@ sf_20: "`Extracting information...`"
 sf_21: "\n\nFedInfo Extracted by Ultroid"
 
 # extra
-ex_1: `Reply to message..`"
+ex_1: "`Reply to message..`"
 
 # gdrive
 gdrive_1: "`You have already authorised with Google Drive`"
