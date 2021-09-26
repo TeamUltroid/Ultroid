@@ -13,6 +13,7 @@ com_1: "`Processing...`"
 com_2: "`Searching...`"
 com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
+com_5: "`Downloading...`"
 
 # chatactions
 can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
@@ -266,9 +267,14 @@ udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
 udl_3: "`Give a specific path to file`"
 
 # words
-wrd_1: "**Word** - `{}`\n\n**Meanings** - \n"
+wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
 wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
 wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
+wrd_4: "`Give a Word to Find Its Meaning..`"
+wrd_5: "Synonyms"
+wrd_6: "Antonyms"
+wrd_7: "No synonym found!!\n\n`{}`"
+wrd_8: "No Antonyms found!!\n\n`{}`"
 
 # stickertools
 sts_1: "`You haven't written any article, Waifu is going away.`"
@@ -284,6 +290,12 @@ sts_10: "`Reply to any media`"
 sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
+
+# whichsong
+whs_1: "<• Reply to Audio File •>"
+whs_2: "`Trying to identify the song....`"
+whs_3: "Failed to Identify song :("
+whs_4: "**Song Recognised!**\nName: __{}__"
 
 # webupload
 wbl_1:  "`Provide a File Name pls..`"
