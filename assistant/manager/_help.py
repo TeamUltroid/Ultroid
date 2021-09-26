@@ -74,6 +74,7 @@ MISC = """
 ✘  **Misc**  ✘
 
 • /joke : Get Random Jokes.
+• /decide : Decide Something..
 """
 
 STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc": MISC}
@@ -99,7 +100,7 @@ def get_buttons():
 @asst_cmd(pattern="help")
 async def helpish(event):
     if not event.is_private:
-        url = "https://t.me/" + asst.me.username + "?start=start"
+        url = f"https://t.me/{asst.me.username}?start=start"
         return await event.reply(
             "Contact me in PM for help!", buttons=Button.url("Click me for Help", url)
         )
