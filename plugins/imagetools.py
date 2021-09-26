@@ -75,7 +75,7 @@ async def sketch(e):
     ureply = await e.get_reply_message()
     xx = await eor(e, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -145,7 +145,7 @@ async def _(event):
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
-        await eor(event, get_string('cvt_3'))
+        await eor(event, get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -187,7 +187,7 @@ async def ultd(event):
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
-        await eor(event, get_string('cvt_3'))
+        await eor(event, get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -230,7 +230,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -273,7 +273,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -317,7 +317,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -362,7 +362,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -409,7 +409,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -469,7 +469,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
@@ -534,7 +534,7 @@ async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
     if not (ureply and (ureply.media)):
-        await xx.edit(get_string('cvt_3'))
+        await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
