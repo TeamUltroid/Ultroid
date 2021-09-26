@@ -1,0 +1,20 @@
+name: Replacer
+on: push
+jobs:
+  Replace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: '"`Reply to any media`"'
+          replace: "get_string('cvt_3')"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Replacer OP'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: ProgrammingError
+          commit_user_email: error@notavailable.live
+          commit_author: ProgrammingError <error@notavailable.live>
