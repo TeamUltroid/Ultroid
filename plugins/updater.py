@@ -23,7 +23,7 @@ ULTPIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 
 @ultroid_cmd(pattern="update ?(.*)")
 async def _(e):
-    xx = await eor(e, get_strings('upd_1'))
+    xx = await eor(e, get_strings("upd_1"))
     m = updater()
     branch = (Repo.init()).active_branch
     if m:
@@ -32,7 +32,7 @@ async def _(e):
         ):
             await bash("git pull -f && pip3 install -r requirements.txt")
             call_back()
-            await xx.edit(get_strings('upd_7'))
+            await xx.edit(get_strings("upd_7"))
             os.execl(sys.executable, "python3", "-m", "pyUltroid")
             return
         x = await asst.send_file(
