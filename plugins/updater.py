@@ -32,7 +32,7 @@ async def _(e):
             await bash("git pull -f && pip3 install -r requirements.txt")
             call_back()
             await xx.edit("`Fast Soft Updating...`")
-            execl(sys.executable, "python3", "-m", "pyUltroid")
+            os.execl(sys.executable, "python3", "-m", "pyUltroid")
             return
         x = await asst.send_file(
             int(udB.get("LOG_CHANNEL")),
