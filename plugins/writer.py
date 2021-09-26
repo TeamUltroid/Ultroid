@@ -17,9 +17,11 @@
 
 import os
 
-from PIL import Image, ImageDraw, ImageFont
 from htmlwebshot import WebShot
+from PIL import Image, ImageDraw, ImageFont
+
 from . import *
+
 
 @ultroid_cmd(pattern="image ?(.*)")
 async def f2i(e):
