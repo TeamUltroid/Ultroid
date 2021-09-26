@@ -8,8 +8,9 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: '"`Reply to any media`"'
-          replace: "get_string('cvt_3')"
+          find: '"`Ooo Animated Sticker 👀...`"'
+          replace: "get_string('sts_9')"
+          exclude: 'strings/'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Replacer OP'
