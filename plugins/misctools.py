@@ -23,7 +23,7 @@ import os
 
 from bs4 import BeautifulSoup as bs
 from requests import get
-from datetime import datetime as dt
+
 from . import *
 
 _base = "https://pinterestdownloader.com/download?url="
@@ -55,6 +55,7 @@ async def diela(e):
     for eve in ml[:5]:
         te += "• " + f'[{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)
+
 
 @ultroid_cmd(
     pattern="pntrst ?(.*)",
