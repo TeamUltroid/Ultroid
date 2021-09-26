@@ -121,7 +121,7 @@ async def broadcast_remover(event):
     pattern="listchannels$",
 )
 async def list_all(event):
-    x = await eor(event, "`Calculating...`")
+    x = await eor(event, get_string("com_1"))
     channels = get_channels()
     num = get_no_channels()
     if num == 0:
@@ -156,7 +156,7 @@ async def list_all(event):
 )
 async def forw(event):
     if not event.is_reply:
-        return await eor(event, "Reply to a message to broadcast.")
+        return await eor(event, get_string("ex_1"))
     ultroid_bot = event.client
     channels = get_channels()
     x = await eor(event, "Sending...")
@@ -200,7 +200,7 @@ async def forw(event):
 async def sending(event):
     x = await eor(event, get_string("com_1"))
     if not event.is_reply:
-        return await x.edit("Reply to a message to broadcast.")
+        return await x.edit(get_string("ex_1"))
     channels = get_channels()
     if get_no_channels() == 0:
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
