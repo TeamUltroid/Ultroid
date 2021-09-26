@@ -33,7 +33,7 @@ async def zipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
     xx = await eor(event, get_string("com_1"))
     if reply.media:
@@ -70,15 +70,15 @@ async def unzipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
     xx = await eor(event, get_string("com_1"))
     if reply.media:
         if not hasattr(reply.media, "document"):
-            return await xx.edit("`Reply to zip file only`")
+            return await xx.edit(get_string("zip_3"))
         file = reply.media.document
         if not reply.file.name.endswith(("zip", "rar", "exe")):
-            return await xx.edit("`Reply To zipped File only`")
+            return await xx.edit(get_string("zip_3"))
         image = await downloader(
             reply.file.name, reply.media.document, xx, t, "Downloading..."
         )
@@ -107,7 +107,7 @@ async def azipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
     xx = await eor(event, get_string("com_1"))
     if not os.path.isdir("zip"):
@@ -130,7 +130,7 @@ async def azipp(event):
 async def do_zip(event):
     if not os.path.isdir("zip"):
         return await eor(
-            event, "First All Files Via {i}addzip then doZip to zip all files at one."
+            event, get_string("zip_2").format(HNDLR)
         )
     xx = await eor(event, get_string("com_1"))
     if event.pattern_match.group(1):
