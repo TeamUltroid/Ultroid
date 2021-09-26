@@ -39,13 +39,17 @@ async def mean(event):
     except (KeyError, TypeError):
         pass
     defi = out[0]["meanings"][0]["definitions"][0]
-    text = get_string("wrd_1").format(wrd, defi['definition'], defi['example'])
+    text = get_string("wrd_1").format(wrd, defi["definition"], defi["example"])
     if defi["synonyms"]:
         text += (
-            f"\n\n• **{get_string('wrd_5')} :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+            f"\n\n• **{get_string('wrd_5')} :**"
+            + "".join(f" {a}," for a in defi["synonyms"])[:-1]
         )
     if defi["antonyms"]:
-        text += f"\n\n**{get_string('wrd_6')} :**" + "".join(f" {a}," for a in defi["antonyms"])[:-1]
+        text += (
+            f"\n\n**{get_string('wrd_6')} :**"
+            + "".join(f" {a}," for a in defi["antonyms"])[:-1]
+        )
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
@@ -131,5 +135,5 @@ async def _(event):
         return await eor(event, get_string("autopic_2").format(word))
     await eor(
         event,
-        get_string("wrd_1").format(out['word'], out['definition'], out['example'])
+        get_string("wrd_1").format(out["word"], out["definition"], out["example"]),
     )
