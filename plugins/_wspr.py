@@ -21,7 +21,7 @@ from telethon.tl.types import UserStatusRecently as rec
 
 from . import *
 
-snap = {}
+
 buddhhu = {}
 
 
@@ -90,8 +90,7 @@ async def _(e):
         text=get_string("wspr_1").format(us),
         buttons=button,
     )
-    buddhhu.update({e.id: [logi.id, iuser]})
-    snap.update({e.id: desc})
+    buddhhu.update({e.id: [logi.id, iuser, desc]})
     await e.answer([sur])
 
 
@@ -171,7 +170,7 @@ async def _(e):
     ids = int(e.pattern_match.group(1).decode("UTF-8"))
     if buddhhu.get(ids):
         if e.sender_id in buddhhu[ids]:
-            await e.answer(snap[ids], alert=True)
+            await e.answer(buddhhu[ids][-1], alert=True)
         else:
             await e.answer("Not For You", alert=True)
     else:
@@ -184,7 +183,6 @@ async def _(e):
     if buddhhu.get(ids):
         if e.sender_id in buddhhu[ids]:
             buddhhu.pop(ids)
-            snap.pop(ids)
             try:
                 await e.edit(get_string("wspr_2"))
             except np:
