@@ -50,7 +50,7 @@ async def _(event):
             FBAN = await get_user_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
-            return await msg.edit("No user was designated.")
+            return await msg.edit(get_strings('sf_22'))
 
     if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
