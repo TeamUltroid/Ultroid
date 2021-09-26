@@ -40,11 +40,11 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, "Give me a (youtube) URL to download audio from!")
+            return await eor(xx, get_string("youtube_1"))
         try:
             request.get(url)
         except BaseException:
-            return await eor(xx, "`Give A Direct Audio Link To Download`")
+            return await eor(xx, get_string("youtube_2"))
     elif opt == "v":
         ytd = {
             "format": "best",
@@ -55,11 +55,11 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, "Give me a (youtube) URL to download video from!")
+            return await eor(xx, get_string("youtube_3"))
         try:
             request.get(url)
         except BaseException:
-            return await eor(xx, "`Give A Direct Video Link To Download`")
+            return await eor(xx, get_string("youtube_4"))
     elif opt == "sa":
         ytd = {
             "format": "bestaudio",
@@ -72,10 +72,10 @@ async def download_from_youtube_(event):
             query = event.text.split(" ", 1)[1]
         except IndexError:
             return await eor(
-                xx, "Give me a (youtube) search query to download audio from!"
+                xx, get_string("youtube_5")
             )
         url = get_yt_link(query)
-        await eor(xx, "`Downloading audio song...`")
+        await eor(xx, get_string("youtube_6"))
     elif opt == "sv":
         ytd = {
             "format": "best",
@@ -88,10 +88,9 @@ async def download_from_youtube_(event):
             query = event.text.split(" ", 1)[1]
         except IndexError:
             return await eor(
-                xx, "Give me a (youtube) search query to download video from!"
-            )
+                xx, get_string("youtube_7"))
         url = get_yt_link(query)
-        await eor(xx, "`Downloading video song...`")
+        await eor(xx, get_string("youtube_8"))
     else:
         return
     await download_yt(xx, url, ytd)
