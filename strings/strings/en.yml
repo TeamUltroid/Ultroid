@@ -240,6 +240,9 @@ core_16: "`Give name of plugin which u want to load`"
 core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
 core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
 
+# fake action
+fka_1: "Starting Fake Action For {} sec."
+
 # fedutils
 sf_1: "Starting a Mass-FedBan..."
 sf_2: "`No user designated!`"
@@ -262,6 +265,29 @@ sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
 sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
 sf_20: "`Extracting information...`"
 sf_21: "\n\nFedInfo Extracted by Ultroid"
+sf_22: "No user was designated."
+sf_23: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+
+# filter
+flr_1: "`Use this command word to set as filter and reply...`"
+flr_2: "Filters Found In This Chats Are\n\n"
+flr_3: "`Give the filter to remove..`"
+flr_4: "Done : Filter `{}` Saved."
+flr_5: "Done : Filter `{}` Removed."
+flr_6: "No Filters Found Here"
+
+# fontgen
+fgn_1: "**Available Fonts**\n\n"
+
+# force subscribe
+fsub_1: "Give Channel where you want User to Join !"
+fsub_2: "Give Correct Channel Username or id"
+fsub_3: "ForceSub was not Active in this Chat !"
+fsub_4: "Join Channel"
+fsub_5: "Unmute Me"
+fsub_6: "Please Join That Channel !\nThen Click This Button !"
+fsub_7: "This Message is Not for You"
+fsub_8: "Thanks For Joining ! "
 
 # extra
 ex_1: "`Reply to message..`"
@@ -275,6 +301,9 @@ gdrive_4: "`Something went wrong! Send `/auth` again.\nIf the same happens, cont
 gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
 gdrive_6: "`Go to `{}` and send ``/auth.`"
 gdrive_7: "**Successfully uploaded the file to G-Drive :**\n\n[{}]({})"
+
+# get addons
+gas_1: "Please provide a raw link!"
 
 # mediainfo
 mdi_1: "More Explained Info"
@@ -307,6 +336,10 @@ wrd_5: "Synonyms"
 wrd_6: "Antonyms"
 wrd_7: "No synonym found!!\n\n`{}`"
 wrd_8: "No Antonyms found!!\n\n`{}`"
+
+# profanitY
+prof_1: "`Added This Chat for Profanity Filtering!`"
+prof_2: "`Removed This Chat from Profanity Filtering!`"
 
 # notes
 notes_1: "`Use this Command with Reply and word to use a note.`"
