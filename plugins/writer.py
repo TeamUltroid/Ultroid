@@ -28,7 +28,7 @@ async def writer(e):
     elif e.pattern_match.group(1):
         text = e.text.split(maxsplit=1)[1]
     else:
-        return await eod(e, "`Give Some Texts Too`")
+        return await eod(e, get_string("writer_1"))
     k = await eor(e, get_string("com_1"))
     img = Image.open("resources/extras/template.jpg")
     draw = ImageDraw.Draw(img)
