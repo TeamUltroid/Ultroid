@@ -61,6 +61,7 @@ import os
 import aiohttp
 import cv2
 import numpy as np
+from htmlwebshot import WebShot
 from PIL import Image
 from telegraph import upload_file as upf
 from telethon.errors.rpcerrorlist import (
@@ -69,8 +70,6 @@ from telethon.errors.rpcerrorlist import (
 )
 
 from . import *
-
-from htmlwebshot import WebShot
 
 
 @ultroid_cmd(pattern="image ?(.*)")
