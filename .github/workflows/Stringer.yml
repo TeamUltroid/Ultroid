@@ -9,7 +9,7 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: '"`Ooo Animated Sticker 👀...`")'
+          find: '"`Ooo Animated Sticker 👀...`"'
           replace: "get_string('sts_9')"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
