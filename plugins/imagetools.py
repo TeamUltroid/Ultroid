@@ -79,7 +79,7 @@ async def sketch(e):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -149,7 +149,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        xx = await eor(event, get_string('sts_9'))
+        xx = await eor(event, get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -191,7 +191,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        xx = await eor(event, get_string('sts_9'))
+        xx = await eor(event, get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -234,7 +234,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -277,7 +277,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -321,7 +321,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -366,7 +366,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -413,7 +413,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -473,7 +473,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -538,7 +538,7 @@ async def ultd(event):
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        await xx.edit(get_string('sts_9'))
+        await xx.edit(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
