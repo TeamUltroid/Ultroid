@@ -1,5 +1,5 @@
-name: Replacer
-on: workflow_dispatch
+name: String-Replacer
+on: push
 jobs:
   Replace:
     runs-on: ubuntu-latest
