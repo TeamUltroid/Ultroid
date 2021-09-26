@@ -30,8 +30,10 @@ buddhhu = {}
 )
 async def _(e):
     if e.reply_to_msg_id:
-        okk = (await e.get_reply_message()).sender_id
-        put = okk
+        okk = await e.get_reply_message()
+        if okk.sender.username:
+            put = f"@{okk.sender.username}"
+        put = okk.sender_id
     else:
         put = e.pattern_match.group(1)
     if put:
@@ -187,5 +189,5 @@ async def _(e):
                 await e.edit(get_string("wspr_2"))
             except np:
                 pass
-    else:
-        await e.answer(get_string("wspr_5"), alert=True)
+        else:
+            await e.answer(get_string("wspr_5"), alert=True)
