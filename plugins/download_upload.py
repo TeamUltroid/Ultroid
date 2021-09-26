@@ -41,9 +41,9 @@ from . import *
 )
 async def down(event):
     matched = event.pattern_match.group(1)
-    msg = await eor(event, get_strings('udl_4'))
+    msg = await eor(event, get_strings("udl_4"))
     if not matched:
-        return await eor(msg, get_strings('udl_5'), time=5)
+        return await eor(msg, get_strings("udl_5"), time=5)
     try:
         splited = matched.split(" | ")
         link = splited[0]
@@ -114,7 +114,7 @@ async def download(event):
                         t,
                         xx,
                         k,
-                        get_strings('com_5'),
+                        get_strings("com_5"),
                     ),
                 ),
             )
@@ -148,7 +148,7 @@ async def download(event):
         return await eor(xx, get_string("udl_3"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eor(xx, get_strings('udl_6'), time=5)
+            return await eor(xx, get_strings("udl_6"), time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:

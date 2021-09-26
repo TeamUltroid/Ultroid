@@ -183,4 +183,4 @@ async def _(e):
             os.remove(progress)
             compressor_queue.remove(progress)
     else:
-        await eor(e, get_strings('audiotools_8'), time=5)
+        await eor(e, get_strings("audiotools_8"), time=5)

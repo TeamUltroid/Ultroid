@@ -40,7 +40,7 @@ async def zipp(event):
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                reply.file.name, reply.media.document, xx, t, get_strings('com_5')
+                reply.file.name, reply.media.document, xx, t, get_strings("com_5")
             )
             file = image.name
         else:
@@ -51,7 +51,7 @@ async def zipp(event):
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, get_strings('com_6'))
+    xxx = await uploader(inp, inp, k, xx, get_strings("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,
@@ -80,7 +80,7 @@ async def unzipp(event):
         if not reply.file.name.endswith(("zip", "rar", "exe")):
             return await xx.edit(get_string("zip_3"))
         image = await downloader(
-            reply.file.name, reply.media.document, xx, t, get_strings('com_5')
+            reply.file.name, reply.media.document, xx, t, get_strings("com_5")
         )
         file = image.name
     if os.path.isdir("unzip"):
@@ -91,7 +91,7 @@ async def unzipp(event):
     ok = get_all_files("unzip")
     for x in ok:
         k = time.time()
-        xxx = await uploader(x, x, k, xx, get_strings('com_6'))
+        xxx = await uploader(x, x, k, xx, get_strings("com_6"))
         await event.client.send_file(
             event.chat_id,
             xxx,
@@ -116,7 +116,11 @@ async def azipp(event):
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                "zip/" + reply.file.name, reply.media.document, xx, t, get_strings('com_5')
+                "zip/" + reply.file.name,
+                reply.media.document,
+                xx,
+                t,
+                get_strings("com_5"),
             )
             file = image.name
         else:
@@ -138,7 +142,7 @@ async def do_zip(event):
     else:
         await bash("zip -r ultroid.zip zip/*")
     k = time.time()
-    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, get_strings('com_6'))
+    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, get_strings("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,
