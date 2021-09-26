@@ -21,7 +21,6 @@ from telethon.tl.types import UserStatusRecently as rec
 
 from . import *
 
-
 buddhhu = {}
 
 
