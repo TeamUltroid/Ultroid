@@ -10,9 +10,10 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-
+from random import choice
 from git import Repo
 from pyUltroid.dB._core import HELP, LIST
+from pyUltroid.dB import ULTROID_IMAGES
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
 from pyUltroid.misc._assistant import callback, in_pattern
@@ -40,7 +41,8 @@ if C_PIC:
     _file_to_replace = C_PIC
     TLINK = C_PIC
 else:
-    _file_to_replace = "resources/extras/inline.jpg"
+    _file_to_replace = choice(ULTROID_IMAGES)
+
 
 upage = 0
 # ============================================#
