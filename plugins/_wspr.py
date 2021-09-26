@@ -59,10 +59,18 @@ async def _(e):
             query = int(query)
         logi = await ultroid_bot.get_entity(query)
     except IndexError:
-        sur = e.builder.article(title="Give Username",  description="You Didn't Type Username or id.", text="You Didn't Type Username or id.")
+        sur = e.builder.article(
+            title="Give Username",
+            description="You Didn't Type Username or id.",
+            text="You Didn't Type Username or id.",
+        )
         return await e.answer([sur])
     except ValueError:
-        sur = e.builder.article(title="User Not Found", description="Make sure username or id is correct.", text="Make sure username or id is correct.")
+        sur = e.builder.article(
+            title="User Not Found",
+            description="Make sure username or id is correct.",
+            text="Make sure username or id is correct.",
+        )
         return await e.answer([sur])
     try:
         desc = zzz[2]
@@ -137,7 +145,11 @@ async def _(e):
             buttons=button,
         )
     except IndexError:
-        sur = e.builder.article(title="Give Username", description="You Didn't Type Username or id." ,text="You Didn't Type Username or id.")
+        sur = e.builder.article(
+            title="Give Username",
+            description="You Didn't Type Username or id.",
+            text="You Didn't Type Username or id.",
+        )
     except BaseException:
         name = get_string("wspr_4").format(query)
         sur = e.builder.article(
