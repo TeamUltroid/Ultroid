@@ -6,6 +6,9 @@
 """
 ✘ Commands Available -
 
+• `{i}eod` or `{i}eod <dd/mm>`
+    `Get Event of the Day`
+
 • `{i}pntrst <link/id>`
     Download and send pinterest pins
 
@@ -20,7 +23,7 @@ import os
 
 from bs4 import BeautifulSoup as bs
 from requests import get
-
+from datetime import datetime as dt
 from . import *
 
 _base = "https://pinterestdownloader.com/download?url="
@@ -31,6 +34,27 @@ def gib_link(link):
         return _base + link.replace(":", "%3A").replace("/", "%2F")
     return _base + f"https%3A%2F%2Fpin.it%2F{link}"
 
+
+@ultroid_cmd(pattern="eod ?(.*)")
+async def diela(e):
+    match = e.pattern_match.group(1)
+    m = await eor(e, get_string("com_1"))
+    li = "https://daysoftheyear.com"
+    te = "🎊 **Events of the Day**\n\n"
+    if match:
+        date = match.split("/")[0]
+        month = match.split("/")[1]
+        li += "/days/2021/" + month + "/" + date
+        te = get_string("eod_2").format(match)
+    else:
+        da = dr.today().strftime("%F").split("-")
+        li += "/days/2021/" + da[1] + "/" + da[2]
+    ct = r.get(li).content
+    bt = bs(ct, "html.parser", from_encoding="utf-8")
+    ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
+    for eve in ml[:5]:
+        te += "• " + f'[{eve.text}]({eve["href"]})\n'
+    await m.edit(te, link_preview=False)
 
 @ultroid_cmd(
     pattern="pntrst ?(.*)",
