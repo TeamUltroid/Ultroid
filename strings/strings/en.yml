@@ -185,9 +185,9 @@ chats_4: "Your [{}]({}) Group Made Boss!"
 chats_5: "Join @TeamUltroid"
 
 # converter
-cvt_1: "Reply to any media/Document."
+cvt_1: "`Reply to any media/Document.`"
 cvt_2: "Give The name and extension of file"
-cvt_3: "Reply to media."
+cvt_3: "`Reply to media..`"
 
 # core
 core_1: "Module Found"
@@ -287,7 +287,7 @@ sts_6: "`Reply to message/media...`"
 sts_7: "`Sticker added in a Different Pack !\nThis Pack is Newly created!\nYour pack can be found` [here](t.me/addstickers/{})"
 sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`"
 sts_9: "`Ooo Animated Sticker 👀...`"
-sts_10: get_string('cvt_3')
+sts_10: "`Reply to any media`"
 sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
