@@ -10,7 +10,7 @@ jobs:
         with:
           find: '"`Ooo Animated Sticker 👀...`"'
           replace: "get_string('sts_9')"
-          exclude: ['strings/', ".gi*]
+          exclude: ['strings/', ".gi*"]
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Replacer OP'
