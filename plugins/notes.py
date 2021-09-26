@@ -63,7 +63,7 @@ async def an(e):
             add_note(int(chat), wrd, None, m)
     else:
         add_note(int(chat), wrd, wt.text, None)
-    await eor(e, f"Done Note : `#{wrd}` saved.")
+    await eor(e, get_string("notes_2").format(wrd))
 
 
 @ultroid_cmd(pattern="remnote ?(.*)", admins_only=True)
@@ -85,16 +85,13 @@ async def lsnote(e):
     x = list_note(e.chat_id)
     if x:
         sd = "Notes Found In This Chats Are\n\n"
-        await eor(e, sd + x)
-    else:
-        await eor(e, "No Notes Found Here")
+        return await eor(e, sd + x)
+    await eor(e, "No Notes Found Here")
 
 
-@ultroid_bot.on(events.NewMessage())
+@ultroid_bot.on(events.NewMessage(pattern="^#(.*)"))
 async def notes(e):
     xx = e.text
-    if not xx.startswith("#"):
-        return
     xx = (xx.replace("#", "")).lower().split()
     chat = e.chat_id
     for word in xx:
