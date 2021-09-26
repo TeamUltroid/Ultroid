@@ -11,11 +11,13 @@ from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     BotResponseTimeoutError,
 )
+from random import choice
+from pyUltroid.dB import ULTROID_IMAGES
 from telethon.tl.custom import Button
 
 from . import *
 
-_file_to_replace = udB.get("INLINE_PIC") or "resources/extras/inline.jpg"
+_file_to_replace = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 
 _main_help_menu = [
     [
