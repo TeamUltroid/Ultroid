@@ -185,7 +185,7 @@ chats_5: "Join @TeamUltroid"
 # converter
 cvt_1: "Reply to any media/Document."
 cvt_2: "Give The name and extension of file"
-cvt_3: "Reply to any media."
+cvt_3: "Reply to media."
 
 # core
 core_1: "Module Found"
@@ -278,6 +278,9 @@ sts_10: "`Reply to any media`"
 sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
+
+# webupload
+wbl_1:  "`Provide a File Name pls.."
 
 # writer
 writer_1: "`Give Some Text Too`"
