@@ -186,13 +186,9 @@ async def _(e):
     if not _:
         return await e.answer(key[:30], alert=True)
     data = "back" if ok.startswith("plugins") else "buck"
-    buttons = [
-        Button.inline("« Bᴀᴄᴋ", data=data),
-        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-    ]
     await e.edit(
         f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
-        buttons=buttons,
+        buttons=Button.inline("« Bᴀᴄᴋ", data=data),
         link_preview=False,
         parse_mode="html",
     )
