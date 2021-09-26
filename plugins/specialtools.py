@@ -260,7 +260,7 @@ async def _(event):
         return await uu.edit("Found Nothing")
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
     for _ in sticks:
-        a += "<a href=sti>sticks[sti]</a>\n"
+        a += f"<a href=sti>{sticks[_]}</a>\n"
     await uu.edit(a, parse_mode="html")
 
 
