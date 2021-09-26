@@ -30,7 +30,7 @@ async def webss(event):
     shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
     pic = await shot.create_pic_async(url=xurl)
     await xx.reply(
-        get_string("wbs_3").format(xurl), 
+        get_string("wbs_3").format(xurl),
         file=pic,
         link_preview=False,
         force_document=True,
