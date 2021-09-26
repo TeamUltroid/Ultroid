@@ -151,7 +151,7 @@ async def setting(event):
                 Button.inline("•Uᴘᴛɪᴍᴇ•", data="upp"),
             ],
             [
-                Button.inline("•Rᴇsᴛᴀʀᴛ•", data="rstrt"),
+                Button.inline("•Stats•", data="alive"),
                 Button.inline("•Uᴘᴅᴀᴛᴇ•", data="doupdate"),
             ],
             [Button.inline("« Bᴀᴄᴋ", data="open")],
@@ -239,8 +239,6 @@ async def _(e):
                 query="go TeamUltroid",
                 same_peer=True,
             ),
-        ],
-        [
             Button.switch_inline(
                 "Search on XDA",
                 query="xda telegram",
@@ -300,11 +298,6 @@ async def addon(event):
             cache_time=0,
             alert=True,
         )
-
-
-@callback(data="rstrt", owner=True)
-async def rrst(ult):
-    await restart(ult)
 
 
 @callback(
