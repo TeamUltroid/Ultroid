@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -70,7 +69,9 @@ async def warn(e):
     if count + 1 >= number:
         if "ban" in action:
             try:
-                await ultroid_bot.edit_permissions(e.chat_id, user, view_messages=False)
+                await ultroid_bot.edit_permissions(e.chat_id,
+                                                   user,
+                                                   view_messages=False)
             except BaseException:
                 return await eor(e, "`Something Went Wrong.`", time=5)
         elif "kick" in action:
@@ -80,9 +81,10 @@ async def warn(e):
                 return await eor(e, "`Something Went Wrong.`", time=5)
         elif "mute" in action:
             try:
-                await ultroid_bot.edit_permissions(
-                    e.chat_id, user, until_date=None, send_messages=False
-                )
+                await ultroid_bot.edit_permissions(e.chat_id,
+                                                   user,
+                                                   until_date=None,
+                                                   send_messages=False)
             except BaseException:
                 return await eor(e, "`Something Went Wrong.`", time=5)
         add_warn(e.chat_id, user, count + 1, r)
@@ -174,8 +176,11 @@ async def warnset(e):
         except BaseException:
             return await eor(e, "`Incorrect Format`", time=5)
         if ("ban" or "kick" or "mute") not in action:
-            return await eor(e, "`Only mute / ban / kick option suported`", time=5)
+            return await eor(e,
+                             "`Only mute / ban / kick option suported`",
+                             time=5)
         udB.set("SETWARN", f"{number} {action}")
-        await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
+        await eor(
+            e, f"Done Your Warn Count is now {number} and Action is {action}")
     else:
         await eor(e, "`Incorrect Format`", time=5)

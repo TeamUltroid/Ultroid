@@ -3,7 +3,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -35,8 +34,7 @@ async def mobs(e):
     nu = bs(cont, "html.parser", from_encoding="utf-8")
     req = nu.find_all("div", "_pdsd")
     imu = nu.find_all(
-        "img", src=re.compile("https://i.gadgets360cdn.com/products/large/")
-    )
+        "img", src=re.compile("https://i.gadgets360cdn.com/products/large/"))
     if imu:
         imu = imu[0]["src"].split("?")[0] + "?downsize=*:420&output-quality=80"
     out += f"☑️ **[{title}]({li['href']})**\n\n"

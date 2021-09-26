@@ -37,8 +37,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="download ?(.*)",
-)
+    pattern="download ?(.*)", )
 async def down(event):
     matched = event.pattern_match.group(1)
     msg = await eor(event, get_string("udl_4"))
@@ -55,15 +54,15 @@ async def down(event):
         filename = await fast_download(
             link,
             filename,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: asyncio.get_event_loop().
+            create_task(
                 progress(
                     d,
                     t,
                     msg,
                     s_time,
                     f"Downloading from {link}",
-                )
-            ),
+                )),
         )
     except InvalidURL:
         return await eor(msg, "`Invalid URL provided :(`", time=5)
@@ -71,8 +70,7 @@ async def down(event):
 
 
 @ultroid_cmd(
-    pattern="dl ?(.*)",
-)
+    pattern="dl ?(.*)", )
 async def download(event):
     if not event.reply_to_msg_id:
         return await eor(event, get_string("cvt_3"))
@@ -89,9 +87,11 @@ async def download(event):
             filename = event.pattern_match.group(1) or ok.file.name
             if not filename:
                 if "audio" in mime_type:
-                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
+                    filename = "audio_" + dt.now().isoformat(
+                        "_", "seconds") + ".ogg"
                 elif "video" in mime_type:
-                    filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+                    filename = "video_" + dt.now().isoformat(
+                        "_", "seconds") + ".mp4"
             try:
                 result = await downloader(
                     "resources/downloads/" + filename,
@@ -108,15 +108,14 @@ async def download(event):
             file_name = await event.client.download_media(
                 ok,
                 d,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        xx,
-                        k,
-                        get_string("com_5"),
-                    ),
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().
+                create_task(progress(
+                    d,
+                    t,
+                    xx,
+                    k,
+                    get_string("com_5"),
+                ), ),
             )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
@@ -127,8 +126,7 @@ async def download(event):
 
 
 @ultroid_cmd(
-    pattern="ul ?(.*)",
-)
+    pattern="ul ?(.*)", )
 async def download(event):
     if event.text[1:].startswith("ultroid"):
         return
@@ -159,10 +157,8 @@ async def download(event):
                 except MessageNotModifiedError as err:
                     return await xx.edit(str(err))
                 title = kk.split("/")[-1]
-                if (
-                    title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
-                    and " | stream" in hmm
-                ):
+                if (title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
+                        and " | stream" in hmm):
                     metadata = extractMetadata(createParser(res.name))
                     wi = 512
                     hi = 512
@@ -178,7 +174,8 @@ async def download(event):
                         if metadata.has("artist"):
                             artist = metadata.get("artist")
                         else:
-                            artist = udB.get("artist") or ultroid_bot.first_name
+                            artist = udB.get(
+                                "artist") or ultroid_bot.first_name
                     except AttributeError:
                         return await event.client.send_file(
                             event.chat_id,
@@ -188,11 +185,13 @@ async def download(event):
                         )
                     if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                         attributes = [
-                            DocumentAttributeVideo(
-                                w=wi, h=hi, duration=duration, supports_streaming=True
-                            )
+                            DocumentAttributeVideo(w=wi,
+                                                   h=hi,
+                                                   duration=duration,
+                                                   supports_streaming=True)
                         ]
-                    elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                    elif res.name.endswith(
+                        (".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                         attributes = [
                             DocumentAttributeAudio(
                                 duration=duration,
@@ -262,11 +261,13 @@ async def download(event):
                     )
                 if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                     attributes = [
-                        DocumentAttributeVideo(
-                            w=wi, h=hi, duration=duration, supports_streaming=True
-                        )
+                        DocumentAttributeVideo(w=wi,
+                                               h=hi,
+                                               duration=duration,
+                                               supports_streaming=True)
                     ]
-                elif res.name.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
+                elif res.name.endswith(
+                    (".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                     attributes = [
                         DocumentAttributeAudio(
                             duration=duration,

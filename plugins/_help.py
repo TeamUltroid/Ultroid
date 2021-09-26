@@ -31,9 +31,8 @@ _main_help_menu = [
     ],
     [
         Button.inline(get_string("help_8"), data="ownr"),
-        Button.url(
-            get_string("help_9"), url=f"https://t.me/{asst.me.username}?start=set"
-        ),
+        Button.url(get_string("help_9"),
+                   url=f"https://t.me/{asst.me.username}?start=set"),
     ],
     [Button.inline(get_string("help_10"), data="close")],
 ]
@@ -85,7 +84,9 @@ async def _help(ult):
                     z.append(y)
             cmd = len(z) + 10
             if udB.get("MANAGER") and udB.get("DUAL_HNDLR") == "/":
-                _main_help_menu[2:3] = [[Button.inline("• Manager Help •", "mngbtn")]]
+                _main_help_menu[2:3] = [[
+                    Button.inline("• Manager Help •", "mngbtn")
+                ]]
             return await ult.reply(
                 get_string("inline_4").format(
                     OWNER_NAME,
@@ -103,5 +104,7 @@ async def _help(ult):
             )
         except BotInlineDisabledError:
             return await eor(ult, get_string("help_3"))
-        await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
+        await results[0].click(ult.chat_id,
+                               reply_to=ult.reply_to_msg_id,
+                               hide_via=True)
         await ult.delete()

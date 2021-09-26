@@ -4,8 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-
 """
 ✘ Commands Available -
 
@@ -21,7 +19,6 @@
     Note - You Need to be Admin in Both Channel/Chats
         in order to Use ForceSubscribe.
 """
-
 
 import re
 
@@ -72,7 +69,8 @@ async def getfsr(e):
     if not res:
         return await eor(e, "ForceSub is Not Active In This Chat !", time=5)
     cha = await e.client.get_entity(int(res))
-    await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
+    await eor(e,
+              f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 
 
 @in_pattern("fsub ?(.*)", owner=True)
@@ -110,11 +108,11 @@ async def diesoon(e):
         await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
     except UserNotParticipantError:
         return await e.answer(
-            "Please Join That Channel !\nThen Click This Button !", alert=True
-        )
-    await ultroid_bot.edit_permissions(
-        e.chat_id, int(spli[0]), send_messages=True, until_date=None
-    )
+            "Please Join That Channel !\nThen Click This Button !", alert=True)
+    await ultroid_bot.edit_permissions(e.chat_id,
+                                       int(spli[0]),
+                                       send_messages=True,
+                                       until_date=None)
     await e.edit(get_string("fsub_8"))
 
 
@@ -129,7 +127,8 @@ async def cacheahs(ult):
         return
     if CACHE.get(ult.chat_id):
         if CACHE[ult.chat_id].get(user.id):
-            CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
+            CACHE[ult.chat_id].update(
+                {user.id: CACHE[ult.chat_id][user.id] + 1})
         else:
             CACHE[ult.chat_id].update({user.id: 1})
     else:
@@ -146,10 +145,13 @@ async def cacheahs(ult):
     except UserNotParticipantError:
         pass
     try:
-        await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+        await ultroid_bot.edit_permissions(ult.chat_id,
+                                           user.id,
+                                           send_messages=False)
     except ChatAdminRequiredError:
         return
     except Exception as e:
         LOGS.info(e)
-    res = await ultroid_bot.inline_query(asst.me.username, f"fsub {user.id}_{joinchat}")
+    res = await ultroid_bot.inline_query(asst.me.username,
+                                         f"fsub {user.id}_{joinchat}")
     await res[0].click(ult.chat_id, reply_to=ult.id)

@@ -24,8 +24,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="poll ?(.*)",
-)
+    pattern="poll ?(.*)", )
 async def uri_poll(e):
     if not e.client._bot and e.is_private:
         return await eor(e, "`Use this in Group/Channel.`", time=15)
@@ -57,11 +56,19 @@ async def uri_poll(e):
     if len(option) <= 1:
         return await eor(e, "`Options Should be More than 1..`", time=5)
     m = await eor(e, get_string("com_1"))
-    OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
+    OUT = [
+        PollAnswer(option[on],
+                   str(on).encode()) for on in range(len(option))
+    ]
     await e.client.send_file(
         e.chat_id,
         InputMediaPoll(
-            Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
+            Poll(20,
+                 ques,
+                 OUT,
+                 multiple_choice=mpp,
+                 public_voters=publ,
+                 quiz=quizo),
             correct_answers=karzo,
         ),
     )

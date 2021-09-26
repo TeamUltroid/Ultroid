@@ -44,8 +44,7 @@ opn = []
 
 
 @ultroid_cmd(
-    pattern="thumbnail$",
-)
+    pattern="thumbnail$", )
 async def _(e):
     r = await e.get_reply_message()
     if not (r or r.file):
@@ -67,8 +66,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="rename ?(.*)",
-)
+    pattern="rename ?(.*)", )
 async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
@@ -106,8 +104,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-    pattern="mtoi$",
-)
+    pattern="mtoi$", )
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -130,8 +127,7 @@ async def imak(event):
 
 
 @ultroid_cmd(
-    pattern="mtos$",
-)
+    pattern="mtos$", )
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -154,8 +150,7 @@ async def smak(event):
 
 
 @ultroid_cmd(
-    pattern="doc ?(.*)",
-)
+    pattern="doc ?(.*)", )
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not (input_str and event.is_reply):
@@ -173,8 +168,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="open$",
-)
+    pattern="open$", )
 async def _(event):
     a = await event.get_reply_message()
     if not (a and a.media):

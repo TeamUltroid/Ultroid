@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -58,20 +57,20 @@ async def set_afk(event):
         if "sticker" in media_type:
             msg1 = await ultroid_bot.send_file(event.chat_id, file=media)
             msg2 = await ultroid_bot.send_message(
-                event.chat_id, get_string("afk_5").format(text)
-            )
+                event.chat_id,
+                get_string("afk_5").format(text))
         else:
             msg1 = await ultroid_bot.send_message(
-                event.chat_id, get_string("afk_5").format(text), file=media
-            )
+                event.chat_id, get_string("afk_5").format(text), file=media)
     elif media:
         if "sticker" in media_type:
             msg1 = await ultroid_bot.send_file(event.chat_id, file=media)
-            msg2 = await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
+            msg2 = await ultroid_bot.send_message(event.chat_id,
+                                                  get_string("afk_6"))
         else:
-            msg1 = await ultroid_bot.send_message(
-                event.chat_id, get_string("afk_6"), file=media
-            )
+            msg1 = await ultroid_bot.send_message(event.chat_id,
+                                                  get_string("afk_6"),
+                                                  file=media)
     elif text:
         msg1 = await event.respond(get_string("afk_5").format(text))
     else:
@@ -85,11 +84,8 @@ async def set_afk(event):
 
 @ultroid_bot.on(events.NewMessage(outgoing=True))
 async def remove_afk(event):
-    if (
-        event.is_private
-        and Redis("PMSETTING") == "True"
-        and not is_approved(event.chat_id)
-    ):
+    if (event.is_private and Redis("PMSETTING") == "True"
+            and not is_approved(event.chat_id)):
         return
     elif "afk" in event.text.lower():
         return
@@ -97,7 +93,8 @@ async def remove_afk(event):
         _, _, _, afk_time = is_afk()
         del_afk()
         off = await event.reply(get_string("afk_1").format(afk_time))
-        await asst.send_message(LOG_CHANNEL, get_string("afk_2").format(afk_time))
+        await asst.send_message(LOG_CHANNEL,
+                                get_string("afk_2").format(afk_time))
         for x in old_afk_msg:
             try:
                 await x.delete()
@@ -108,14 +105,11 @@ async def remove_afk(event):
 
 
 @ultroid_bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
-)
+    events.NewMessage(incoming=True,
+                      func=lambda e: bool(e.mentioned or e.is_private)), )
 async def on_afk(event):
-    if (
-        event.is_private
-        and Redis("PMSETTING") == "True"
-        and not is_approved(event.chat_id)
-    ):
+    if (event.is_private and Redis("PMSETTING") == "True"
+            and not is_approved(event.chat_id)):
         return
     elif "afk" in event.text.lower():
         return
@@ -130,17 +124,19 @@ async def on_afk(event):
     if text and media:
         if "sticker" in media_type:
             msg1 = await event.reply(file=media)
-            msg2 = await event.reply(get_string("afk_3").format(afk_time, text))
+            msg2 = await event.reply(
+                get_string("afk_3").format(afk_time, text))
         else:
-            msg1 = await event.reply(
-                get_string("afk_3").format(afk_time, text), file=media
-            )
+            msg1 = await event.reply(get_string("afk_3").format(
+                afk_time, text),
+                                     file=media)
     elif media:
         if "sticker" in media_type:
             msg1 = await event.reply(file=media)
             msg2 = await event.reply(get_string("afk_4").format(afk_time))
         else:
-            msg1 = await event.reply(get_string("afk_4").format(afk_time), file=media)
+            msg1 = await event.reply(get_string("afk_4").format(afk_time),
+                                     file=media)
     elif text:
         msg1 = await event.reply(get_string("afk_3").format(afk_time, text))
     else:

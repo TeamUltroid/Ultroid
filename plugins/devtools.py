@@ -41,11 +41,11 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="sysinfo$",
-)
+    pattern="sysinfo$", )
 async def _(e):
     xx = await eor(e, get_string("com_1"))
-    x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    x, y = await bash(
+        "neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
@@ -133,13 +133,14 @@ async def _(event):
     else:
         evaluation = "Success"
     final_output = (
-        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".
+        format(
             cmd,
             evaluation,
-        )
-    )
+        ))
     if len(final_output) > 4096:
-        ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
+        ultd = final_output.replace("`", "").replace("**",
+                                                     "").replace("__", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
@@ -157,16 +158,10 @@ async def _(event):
 
 
 async def aexec(code, event):
-    exec(
-        (
-            (
-                ("async def __aexec(e, client): " + "\n message = event = e")
-                + "\n reply = await event.get_reply_message()"
-            )
-            + "\n chat = (await event.get_chat()).id"
-        )
-        + "".join(f"\n {l}" for l in code.split("\n"))
-    )
+    exec(((("async def __aexec(e, client): " + "\n message = event = e") +
+           "\n reply = await event.get_reply_message()") +
+          "\n chat = (await event.get_chat()).id") +
+         "".join(f"\n {l}" for l in code.split("\n")))
 
     return await locals()["__aexec"](event, event.client)
 

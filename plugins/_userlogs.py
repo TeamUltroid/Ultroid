@@ -26,8 +26,7 @@ CACHE_SPAM = {}
     events.NewMessage(
         incoming=True,
         func=lambda e: (e.mentioned),
-    ),
-)
+    ), )
 async def all_messages_catcher(e):
     if not udB.get("TAG_LOG"):
         return
@@ -61,20 +60,22 @@ async def all_messages_catcher(e):
             if e.photo or e.sticker or e.gif:
                 try:
                     media = await e.download_media()
-                    await asst.send_message(
-                        NEEDTOLOG, e.message.text, file=media, buttons=buttons
-                    )
+                    await asst.send_message(NEEDTOLOG,
+                                            e.message.text,
+                                            file=media,
+                                            buttons=buttons)
                     return os.remove(media)
                 except Exception as er:
                     LOGS.info(er)
-            await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
+            await asst.send_message(NEEDTOLOG,
+                                    get_string("com_4"),
+                                    buttons=buttons)
     except (PeerIdInvalidError, ValueError):
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
-            await asst.send_message(
-                int(udB.get("LOG_CHANNEL")), get_string("userlogs_1")
-            )
+            await asst.send_message(int(udB.get("LOG_CHANNEL")),
+                                    get_string("userlogs_1"))
             CACHE_SPAM.update({NEEDTOLOG: True})
     except ChatWriteForbiddenError:
         try:
@@ -94,10 +95,9 @@ async def all_messages_catcher(e):
 if udB.get("TAG_LOG"):
 
     @ultroid_bot.on(
-        events.NewMessage(
-            outgoing=True, chats=[int(udB["TAG_LOG"])], func=lambda e: e.reply_to
-        )
-    )
+        events.NewMessage(outgoing=True,
+                          chats=[int(udB["TAG_LOG"])],
+                          func=lambda e: e.reply_to))
     async def idk(e):
         id = e.reply_to_msg_id
         chat, msg = who_tag(id)
@@ -131,9 +131,8 @@ async def when_asst_added_to_chat(event):
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
     if user and user.is_self:
         tmp = event.added_by
-        buttons = Button.inline(
-            get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|bot"
-        )
+        buttons = Button.inline(get_string("userlogs_3"),
+                                data=f"leave_ch_{event.chat_id}|bot")
         return await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
@@ -154,9 +153,8 @@ async def when_ultd_added_to_chat(event):
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    buttons = Button.inline(
-        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|user"
-    )
+    buttons = Button.inline(get_string("userlogs_3"),
+                            data=f"leave_ch_{event.chat_id}|user")
     if event.user_added:
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
@@ -168,9 +166,7 @@ async def when_ultd_added_to_chat(event):
 
 
 @callback(
-    re.compile(
-        "leave_ch_(.*)",
-    ),
+    re.compile("leave_ch_(.*)", ),
     owner=True,
 )
 async def leave_ch_at(event):

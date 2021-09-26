@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -57,15 +56,15 @@ async def insta_dl(e):
         try:
             CL = create_client(un, up)
             media = CL.video_download(CL.media_pk_from_url(text))
-            await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
+            await e.reply(f"**Uploaded Successfully\nLink :** {text}",
+                          file=media)
             await tt.delete()
             os.remove(media)
             return
         except Exception as B:
             return await eor(tt, str(B))
     if isinstance(e.media, types.MessageMediaWebPage) and isinstance(
-        e.media.webpage, types.WebPage
-    ):
+            e.media.webpage, types.WebPage):
         photo = e.media.webpage.photo or e.media.webpage.document
         if not photo:
             return await eor(
@@ -85,7 +84,8 @@ async def soon_(e):
     un = udB.get("INSTA_USERNAME")
     up = udB.get("INSTA_PASSWORD")
     if not un and up:
-        return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
+        return await eor(e,
+                         "`Please Fill Instagram Credentials to Use This...`")
     match = e.pattern_match.group(1)
     ew = await eor(e, get_string("com_1"))
     try:

@@ -69,8 +69,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="sketch$",
-)
+    pattern="sketch$", )
 async def sketch(e):
     ureply = await e.get_reply_message()
     xx = await eor(e, "`...`")
@@ -101,7 +100,9 @@ async def sketch(e):
     inverted_gray_image = 255 - gray_image
     blurred_img = cv2.GaussianBlur(inverted_gray_image, (21, 21), 0)
     inverted_blurred_img = 255 - blurred_img
-    pencil_sketch_IMG = cv2.divide(gray_image, inverted_blurred_img, scale=256.0)
+    pencil_sketch_IMG = cv2.divide(gray_image,
+                                   inverted_blurred_img,
+                                   scale=256.0)
     cv2.imwrite("ultroid.png", pencil_sketch_IMG)
     await e.reply(file="ultroid.png")
     await xx.delete()
@@ -131,17 +132,15 @@ async def _(event):
     os.remove("ult.jpg")
     os.remove(image)
     if "status" in r.json():
-        return await event.edit(
-            r.json()["status"] + "\nGet api nd set `{i}setredis DEEP_API key`"
-        )
+        return await event.edit(r.json()["status"] +
+                                "\nGet api nd set `{i}setredis DEEP_API key`")
     r_json = r.json()["output_url"]
     await event.client.send_file(event.chat_id, r_json, reply_to=reply)
     await xx.delete()
 
 
 @ultroid_cmd(
-    pattern="grey$",
-)
+    pattern="grey$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
@@ -182,8 +181,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="blur$",
-)
+    pattern="blur$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
@@ -224,8 +222,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="negative$",
-)
+    pattern="negative$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -267,8 +264,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="mirror$",
-)
+    pattern="mirror$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -311,8 +307,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="flip$",
-)
+    pattern="flip$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -356,8 +351,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="quad$",
-)
+    pattern="quad$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -403,8 +397,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="toon$",
-)
+    pattern="toon$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -463,8 +456,7 @@ async def ultd(event):
 
 
 @ultroid_cmd(
-    pattern="danger$",
-)
+    pattern="danger$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -515,11 +507,12 @@ async def sampl(ult):
         try:
             try:
                 await ult.delete()
-                await ult.client.send_message(
-                    ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
-                )
+                await ult.client.send_message(ult.chat_id,
+                                              f"Colour Sample for `{color}` !",
+                                              file="csample.png")
             except MessageDeleteForbiddenError:
-                await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
+                await ult.reply(f"Colour Sample for `{color}` !",
+                                file="csample.png")
         except ChatSendMediaForbiddenError:
             await eor(ult, "Umm! Sending Media is disabled here!")
 
@@ -528,8 +521,7 @@ async def sampl(ult):
 
 
 @ultroid_cmd(
-    pattern="blue$",
-)
+    pattern="blue$", )
 async def ultd(event):
     ureply = await event.get_reply_message()
     xx = await eor(event, "`...`")
@@ -559,7 +551,7 @@ async def ultd(event):
     lnk = f"https://telegra.ph{got[0]}"
     async with aiohttp.ClientSession() as ses:
         async with ses.get(
-            f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}"
+                f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}"
         ) as out:
             r = await out.json()
     ms = r.get("message")
@@ -600,7 +592,13 @@ async def ok(event):
             return await eor(event, "`Not a Valid Input...`")
     okla = await hm.download_media()
     img1 = cv2.imread(okla)
-    constant = cv2.copyMakeBorder(img1, wh, wh, wh, wh, cv2.BORDER_CONSTANT, value=col)
+    constant = cv2.copyMakeBorder(img1,
+                                  wh,
+                                  wh,
+                                  wh,
+                                  wh,
+                                  cv2.BORDER_CONSTANT,
+                                  value=col)
     cv2.imwrite("output.png", constant)
     await event.client.send_file(event.chat.id, "output.png")
     os.remove("output.png")

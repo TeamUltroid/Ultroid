@@ -20,8 +20,7 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="saavn ?(.*)",
-)
+    pattern="saavn ?(.*)", )
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:

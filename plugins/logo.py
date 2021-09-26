@@ -43,14 +43,15 @@ async def logo_gen(event):
                 bg_ = await temp.download_media()
     if not bg_:
         if event.client._bot:
-            SRCH = ["blur background", "background", "neon lights", "wallpaper"]
+            SRCH = [
+                "blur background", "background", "neon lights", "wallpaper"
+            ]
             res = await unsplashsearch(random.choice(SRCH), limit=1)
             bg_ = await download_file(res[0], "resources/downloads/logo.png")
         else:
             pics = []
             async for i in event.client.iter_messages(
-                "@UltroidLogos", filter=InputMessagesFilterPhotos
-            ):
+                    "@UltroidLogos", filter=InputMessagesFilterPhotos):
                 pics.append(i)
             id_ = random.choice(pics)
             bg_ = await id_.download_media()
@@ -81,9 +82,12 @@ async def logo_gen(event):
     )
     x = (image_width - w) / 2
     y = (image_height - h) / 2
-    draw.text(
-        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
-    )
+    draw.text((x, y),
+              name,
+              font=font,
+              fill="white",
+              stroke_width=strke,
+              stroke_fill="black")
     flnme = "ultd.png"
     img.save(flnme, "png")
     await xx.edit("`Done!`")

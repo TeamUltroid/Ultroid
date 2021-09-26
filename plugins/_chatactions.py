@@ -34,29 +34,27 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
     # thank members
     if must_thank(ult.chat_id):
-        chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
+        chat_count = (await ult.client.get_participants(ult.chat_id,
+                                                        limit=0)).total
         if chat_count % 100 == 0:
             stik_id = chat_count / 100 - 1
             sticker = stickers[stik_id]
             await ult.respond(file=sticker)
     # force subscribe
-    if (
-        udB.get("FORCESUB")
-        and ((ult.user_joined or ult.user_added))
-        and get_forcesetting(ult.chat_id)
-    ):
+    if (udB.get("FORCESUB") and ((ult.user_joined or ult.user_added))
+            and get_forcesetting(ult.chat_id)):
         user = await ult.get_user()
         if not user.bot:
             joinchat = get_forcesetting(ult.chat_id)
             try:
-                await ultroid_bot(GetParticipantRequest(int(joinchat), user.id))
+                await ultroid_bot(GetParticipantRequest(
+                    int(joinchat), user.id))
             except UserNotParticipantError:
-                await ultroid_bot.edit_permissions(
-                    ult.chat_id, user.id, send_messages=False
-                )
+                await ultroid_bot.edit_permissions(ult.chat_id,
+                                                   user.id,
+                                                   send_messages=False)
                 res = await ultroid_bot.inline_query(
-                    asst.me.username, f"fsub {user.id}_{joinchat}"
-                )
+                    asst.me.username, f"fsub {user.id}_{joinchat}")
                 await res[0].click(ult.chat_id, reply_to=ult.action_message.id)
 
     # gban checks
@@ -71,7 +69,8 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                     user.id,
                     view_messages=False,
                 )
-                gban_watch = get_string("can_1").format(inline_mention(user), reason)
+                gban_watch = get_string("can_1").format(
+                    inline_mention(user), reason)
                 await ult.reply(gban_watch)
             except Exception as er:
                 LOGS.exception(er)
@@ -182,11 +181,13 @@ async def uname_stuff(id, uname, name):
         elif old:
             await asst.send_message(
                 LOG_CHANNEL,
-                get_string("can_3").format(f"[{name}](tg://user?id={id})", old),
+                get_string("can_3").format(f"[{name}](tg://user?id={id})",
+                                           old),
             )
         elif uname:
             await asst.send_message(
                 LOG_CHANNEL,
-                get_string("can_4").format(f"[{name}](tg://user?id={id})", uname),
+                get_string("can_4").format(f"[{name}](tg://user?id={id})",
+                                           uname),
             )
         update_username(id, uname)

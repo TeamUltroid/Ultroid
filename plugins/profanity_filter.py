@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -15,7 +14,6 @@
    From chat from Profanity list.
 
 """
-
 
 from ProfanityDetector import detector
 from pyUltroid.dB.nsfw_db import is_profan, profan_chat, rem_profan

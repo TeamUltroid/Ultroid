@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -18,7 +17,6 @@
     Invite all members of group in Group Call.
     (You must be joined)
 """
-
 
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
@@ -37,7 +35,7 @@ async def get_call(event):
 
 def user_list(l, n):
     for i in range(0, len(l), n):
-        yield l[i : i + n]
+        yield l[i:i + n]
 
 
 @ultroid_cmd(

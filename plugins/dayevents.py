@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -37,7 +36,9 @@ async def diela(e):
         li += "/days/2021/" + da[1] + "/" + da[2]
     ct = r.get(li).content
     bt = bs(ct, "html.parser", from_encoding="utf-8")
-    ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
+    ml = bt.find_all("a",
+                     "js-link-target",
+                     href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:
         te += "• " + f'[{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)

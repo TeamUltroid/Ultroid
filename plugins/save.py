@@ -21,8 +21,7 @@ async def saf(e):
     x = await e.get_reply_message()
     if not x:
         return await eod(
-            e, "Reply to Any Message to save it to ur saved messages", time=5
-        )
+            e, "Reply to Any Message to save it to ur saved messages", time=5)
     if e.out:
         await e.client.send_message("me", x)
     else:
@@ -35,8 +34,7 @@ async def saf(e):
     x = await e.get_reply_message()
     if not x:
         return await eod(
-            e, "Reply to Any Message to save it to ur saved messages", time=5
-        )
+            e, "Reply to Any Message to save it to ur saved messages", time=5)
     if e.out:
         await x.forward_to("me")
     else:

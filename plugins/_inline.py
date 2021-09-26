@@ -44,10 +44,8 @@ if C_PIC:
 else:
     _file_to_replace = choice(ULTROID_IMAGES)
 
-
 upage = 0
 # ============================================#
-
 
 # --------------------BUTTONS--------------------#
 
@@ -65,8 +63,8 @@ SUP_BUTTONS = [
 async def inline_alive(o):
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
-        "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
-    )
+        "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg",
+        [])
     RES = [
         await o.builder.article(
             type="photo",
@@ -176,7 +174,9 @@ async def on_vc_callback_query_handler(event):
 async def _(event):
     check = updater()
     if not check:
-        return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
+        return await event.answer(get_string("inline_9"),
+                                  cache_time=0,
+                                  alert=True)
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
@@ -304,86 +304,68 @@ async def addon(event):
 
 
 @callback(
-    data=re.compile(
-        rb"helpme_next\((.+?)\)",
-    ),
+    data=re.compile(rb"helpme_next\((.+?)\)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, HELP["Official"].keys(), "helpme", "def"
-    )
+    buttons = page_num(current_page_number + 1, HELP["Official"].keys(),
+                       "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(
-    data=re.compile(
-        rb"helpme_prev\((.+?)\)",
-    ),
+    data=re.compile(rb"helpme_prev\((.+?)\)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["Official"].keys()), "helpme", "def"
-    )
+    buttons = page_num(current_page_number - 1, list(HELP["Official"].keys()),
+                       "helpme", "def")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(
-    data=re.compile(
-        rb"vchelp_next\((.+?)\)",
-    ),
+    data=re.compile(rb"vchelp_next\((.+?)\)", ),
     owner=True,
 )
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
-    )
+    buttons = page_num(current_page_number + 1, list(HELP["VCBot"].keys()),
+                       "vchelp", "vc")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(
-    data=re.compile(
-        rb"vchelp_prev\((.+?)\)",
-    ),
+    data=re.compile(rb"vchelp_prev\((.+?)\)", ),
     owner=True,
 )
 async def on_vc_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
-    )
+    buttons = page_num(current_page_number - 1, list(HELP["VCBot"].keys()),
+                       "vchelp", "vc")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(
-    data=re.compile(
-        rb"addon_next\((.+?)\)",
-    ),
+    data=re.compile(rb"addon_next\((.+?)\)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add"
-    )
+    buttons = page_num(current_page_number + 1, list(HELP["Addons"].keys()),
+                       "addon", "add")
     await event.edit(buttons=buttons, link_preview=False)
 
 
 @callback(
-    data=re.compile(
-        rb"addon_prev\((.+?)\)",
-    ),
+    data=re.compile(rb"addon_prev\((.+?)\)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
     current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add"
-    )
+    buttons = page_num(current_page_number - 1, list(HELP["Addons"].keys()),
+                       "addon", "add")
     await event.edit(buttons=buttons, link_preview=False)
 
 
@@ -391,9 +373,8 @@ async def on_plug_in_callback_query_handler(event):
 async def backr(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     current_page_number = int(upage)
-    buttons = page_num(
-        current_page_number, list(HELP["Official"].keys()), "helpme", "def"
-    )
+    buttons = page_num(current_page_number, list(HELP["Official"].keys()),
+                       "helpme", "def")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -406,7 +387,8 @@ async def backr(event):
 async def backr(event):
     xhelps = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
+    buttons = page_num(current_page_number, list(HELP["Addons"].keys()),
+                       "addon", "add")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -419,7 +401,8 @@ async def backr(event):
 async def bvckr(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
     current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["VCBot"].keys()), "vchelp", "vc")
+    buttons = page_num(current_page_number, list(HELP["VCBot"].keys()),
+                       "vchelp", "vc")
     await event.edit(
         f"{xhelps}",
         file=_file_to_replace,
@@ -461,9 +444,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @callback(
-    data=re.compile(
-        b"def_plugin_(.*)",
-    ),
+    data=re.compile(b"def_plugin_(.*)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
@@ -500,13 +481,12 @@ async def on_plug_in_callback_query_handler(event):
             reply_pop_up_alert = notmine
             await event.answer(reply_pop_up_alert, cache_time=0)
     except BaseException:
-        await event.edit(get_string("inline_7").format(plugin_name), buttons=buttons)
+        await event.edit(get_string("inline_7").format(plugin_name),
+                         buttons=buttons)
 
 
 @callback(
-    data=re.compile(
-        b"vc_plugin_(.*)",
-    ),
+    data=re.compile(b"vc_plugin_(.*)", ),
     owner=True,
 )
 async def on_vc_plg_callback_query_handler(event):
@@ -548,9 +528,7 @@ async def on_vc_plg_callback_query_handler(event):
 
 
 @callback(
-    data=re.compile(
-        b"add_plugin_(.*)",
-    ),
+    data=re.compile(b"add_plugin_(.*)", ),
     owner=True,
 )
 async def on_plug_in_callback_query_handler(event):
@@ -620,32 +598,30 @@ def page_num(page_number, loaded_plugins, prefix, type_):
                 multi,
             ),
             data=f"{type_}_plugin_{x}",
-        )
-        for x in helpable_plugins
+        ) for x in helpable_plugins
     ]
     pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols]))
     if len(modules) % number_of_cols == 1:
-        pairs.append((modules[-1],))
+        pairs.append((modules[-1], ))
     max_num_pages = ceil(len(pairs) / number_of_rows)
     modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline(
-                    "« Pʀᴇᴠɪᴏᴜs",
-                    data=f"{prefix}_prev({modulo_page})",
-                ),
-                Button.inline("« Bᴀᴄᴋ »", data="open"),
-                Button.inline(
-                    "Nᴇxᴛ »",
-                    data=f"{prefix}_next({modulo_page})",
-                ),
-            ),
-        ]
+        pairs = pairs[modulo_page * number_of_rows:number_of_rows *
+                      (modulo_page + 1)] + [
+                          (
+                              Button.inline(
+                                  "« Pʀᴇᴠɪᴏᴜs",
+                                  data=f"{prefix}_prev({modulo_page})",
+                              ),
+                              Button.inline("« Bᴀᴄᴋ »", data="open"),
+                              Button.inline(
+                                  "Nᴇxᴛ »",
+                                  data=f"{prefix}_next({modulo_page})",
+                              ),
+                          ),
+                      ]
     else:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
+        pairs = pairs[modulo_page * number_of_rows:number_of_rows *
+                      (modulo_page + 1)] + [(Button.inline("« Bᴀᴄᴋ »",
+                                                           data="open"), )]
     return pairs

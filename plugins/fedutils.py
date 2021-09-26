@@ -32,8 +32,7 @@ bot = "@MissRose_bot"
 
 
 @ultroid_cmd(
-    pattern="superfban ?(.*)",
-)
+    pattern="superfban ?(.*)", )
 async def _(event):
     msg = await eor(event, get_string("sf_1"))
     inputt = event.pattern_match.group(1)
@@ -70,9 +69,7 @@ async def _(event):
                 try:
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
-                    return await msg.edit(
-                        get_string("sf_4"),
-                    )
+                    return await msg.edit(get_string("sf_4"), )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
                     await response.click(0)
@@ -146,8 +143,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="superunfban ?(.*)",
-)
+    pattern="superunfban ?(.*)", )
 async def _(event):
     msg = await eor(event, get_string("sf_15"))
     fedList = []
@@ -204,9 +200,7 @@ async def _(event):
                 try:
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
-                    return await msg.edit(
-                        get_string("sf_4"),
-                    )
+                    return await msg.edit(get_string("sf_4"), )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
                     await response.click(0)
@@ -280,8 +274,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="fstat ?(.*)",
-)
+    pattern="fstat ?(.*)", )
 async def _(event):
     ok = await eor(event, "`Checking...`")
     if event.reply_to_msg_id:
@@ -294,9 +287,7 @@ async def _(event):
         sysarg = event.pattern_match.group(1)
         user = sysarg
     if sysarg == "":
-        await ok.edit(
-            get_string("sf_17"),
-        )
+        await ok.edit(get_string("sf_17"), )
     else:
         async with event.client.conversation(bot) as conv:
             try:
@@ -304,7 +295,8 @@ async def _(event):
                 await conv.get_response()
                 await conv.send_message("/fedstat " + sysarg)
                 audio = await conv.get_response()
-                if audio.message.startswith("This command can only be used once"):
+                if audio.message.startswith(
+                        "This command can only be used once"):
                     await ok.edit(
                         "Oops, you can use this command only once every minute!",
                     )
@@ -315,7 +307,8 @@ async def _(event):
                     await event.client.send_file(
                         event.chat_id,
                         audio,
-                        caption=f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
+                        caption=
+                        f"List of feds {user} has been banned in.\n\nCollected using Ultroid.",
                         link_preview=False,
                     )
                     await ok.delete()
@@ -324,12 +317,12 @@ async def _(event):
                     await ok.edit(okk.message)
                 await ultroid.send_read_acknowledge(bot)
             except YouBlockedUserError:
-                await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
+                await ok.edit(
+                    "**Error**\n `Unblock` @MissRose_Bot `and try again!")
 
 
 @ultroid_cmd(
-    pattern="fedinfo ?(.*)",
-)
+    pattern="fedinfo ?(.*)", )
 async def _(event):
     ok = await event.edit(get_string("sf_20"))
     sysarg = event.pattern_match.group(1)
@@ -342,4 +335,5 @@ async def _(event):
             await event.client.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")
         except YouBlockedUserError:
-            await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
+            await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!"
+                          )

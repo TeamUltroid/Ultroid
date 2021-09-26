@@ -41,17 +41,13 @@ async def broadcast_adder(event):
     if msgg == "all":
         await x.edit(get_string("bd_2"))
         chats = [
-            e.entity
-            for e in await event.client.get_dialogs()
+            e.entity for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
         for i in chats:
             try:
-                if (
-                    i.broadcast
-                    and (i.creator or i.admin_rights)
-                    and not is_channel_added(i.id)
-                ):
+                if (i.broadcast and (i.creator or i.admin_rights)
+                        and not is_channel_added(i.id)):
                     new += 1
                     cid = f"-100{i.id}"
                     add_channel(int(cid))
@@ -118,8 +114,7 @@ async def broadcast_remover(event):
 
 
 @ultroid_cmd(
-    pattern="listchannels$",
-)
+    pattern="listchannels$", )
 async def list_all(event):
     x = await eor(event, get_string("com_1"))
     channels = get_channels()
@@ -161,7 +156,8 @@ async def forw(event):
     channels = get_channels()
     x = await eor(event, "Sending...")
     if get_no_channels() == 0:
-        return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
+        return await x.edit(
+            f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
     sent_count = 0
     if event.reply_to_msg_id:
@@ -188,9 +184,8 @@ async def forw(event):
             )
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
-        await ultroid_bot.send_message(
-            int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
-        )
+        await ultroid_bot.send_message(int(udB.get("LOG_CHANNEL")),
+                                       f"{error_count} Errors")
 
 
 @ultroid_cmd(
@@ -203,7 +198,8 @@ async def sending(event):
         return await x.edit(get_string("ex_1"))
     channels = get_channels()
     if get_no_channels() == 0:
-        return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
+        return await x.edit(
+            f"Please add channels by using `{HNDLR}add` in them.")
     await x.edit("Sending....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -214,7 +210,8 @@ async def sending(event):
             sent_count = 0
             for channel in channels:
                 try:
-                    await ultroid_bot.send_message(int(channel), previous_message)
+                    await ultroid_bot.send_message(int(channel),
+                                                   previous_message)
                     sent_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -229,7 +226,8 @@ async def sending(event):
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
                     )
-            await x.edit(f"{sent_count} messages sent with {error_count} errors.")
+            await x.edit(
+                f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 await ultroid_bot.send_message(
                     int(udB.get("LOG_CHANNEL")),

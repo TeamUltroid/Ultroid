@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -42,8 +41,8 @@ from . import *
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
-)
+    pattern=
+    "f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)")
 async def _(e):
     act = e.pattern_match.group(1)
     t = e.pattern_match.group(2)

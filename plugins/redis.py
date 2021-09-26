@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -31,7 +30,8 @@ from . import *
 @ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)
 async def _(ult):
     try:
-        delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
+        delim = " " if re.search("[|]",
+                                 ult.pattern_match.group(1)) is None else " | "
         data = ult.pattern_match.group(1).split(delim, maxsplit=1)
         udB.set(data[0], data[1])
         redisdata = Redis(data[0])
@@ -60,14 +60,16 @@ async def _(ult):
 
 @ultroid_cmd(pattern="renredis ?(.*)", fullsudo=True)
 async def _(ult):
-    delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
+    delim = " " if re.search("[|]",
+                             ult.pattern_match.group(1)) is None else " | "
     data = ult.pattern_match.group(1).split(delim)
     if Redis(data[0]):
         try:
             udB.rename(data[0], data[1])
             await eor(
                 ult,
-                "Redis Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
+                "Redis Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".
+                format(
                     data[0],
                     data[1],
                 ),

@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -20,7 +19,6 @@
   'if a person uses blacklist Word his/her msg will be deleted'
   'And u Must be Admin in that Chat'
 """
-
 
 from pyUltroid.dB.blacklist_db import (
     add_blacklist,

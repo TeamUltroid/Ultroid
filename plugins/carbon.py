@@ -175,8 +175,7 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="(rc|c)arbon",
-)
+    pattern="(rc|c)arbon", )
 async def crbn(event):
     xxxx = await eor(event, get_string("com_1"))
     te = event.text
@@ -195,9 +194,9 @@ async def crbn(event):
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
             return await eor(xxxx, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
-    )
+    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",
+                    code=code,
+                    background=col)
     xx = await carbon.memorize("ultroid_carbon")
     await xxxx.delete()
     await event.reply(
@@ -207,8 +206,7 @@ async def crbn(event):
 
 
 @ultroid_cmd(
-    pattern="ccarbon ?(.*)",
-)
+    pattern="ccarbon ?(.*)", )
 async def crbn(event):
     match = event.pattern_match.group(1)
     if not match:
@@ -230,9 +228,9 @@ async def crbn(event):
             match = match[0]
         except IndexError:
             return await eor(msg, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
-    )
+    carbon = Carbon(base_url="https://carbonara.vercel.app/api/cook",
+                    code=code,
+                    background=match)
     try:
         xx = await carbon.memorize("ultroid_carbon")
     except Exception as er:

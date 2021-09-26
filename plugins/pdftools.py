@@ -44,12 +44,12 @@ if not os.path.isdir("pdf"):
 
 
 @ultroid_cmd(
-    pattern="pdf ?(.*)",
-)
+    pattern="pdf ?(.*)", )
 async def pdfseimg(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
-    if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
+    if not (ok and (ok.document and
+                    (ok.document.mime_type == "application/pdf"))):
         await eor(event, "`Reply The pdf u Want to Download..`")
         return
     xx = await eor(event, get_string("com_1"))
@@ -89,9 +89,7 @@ async def pdfseimg(event):
             pw.addPage(pdf.getPage(o))
             with open(os.path.join("ult.png"), "wb") as f:
                 pw.write(f)
-            await event.reply(
-                file="ult.png",
-            )
+            await event.reply(file="ult.png", )
             os.remove("ult.png")
         os.remove(pdfp)
     else:
@@ -109,8 +107,7 @@ async def pdfseimg(event):
 
 
 @ultroid_cmd(
-    pattern="pdtext ?(.*)",
-)
+    pattern="pdtext ?(.*)", )
 async def pdfsetxt(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
@@ -151,7 +148,8 @@ async def pdfsetxt(event):
     if "-" in msg:
         u, d = msg.split("-")
         a = PdfFileReader(dl)
-        str = "".join(a.getPage(i).extractText() for i in range(int(u) - 1, int(d)))
+        str = "".join(
+            a.getPage(i).extractText() for i in range(int(u) - 1, int(d)))
         text = f"{dl.split('.')[0]} {msg}.txt"
     else:
         u = int(msg) - 1
@@ -171,8 +169,7 @@ async def pdfsetxt(event):
 
 
 @ultroid_cmd(
-    pattern="pdscan ?(.*)",
-)
+    pattern="pdscan ?(.*)", )
 async def imgscan(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
@@ -204,7 +201,8 @@ async def imgscan(event):
     polygons = []
     for cnt in contours:
         hull = cv2.convexHull(cnt)
-        polygons.append(cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False))
+        polygons.append(
+            cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False))
         sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
         cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
         simplified_cnt = sortedPoly[0]
@@ -223,7 +221,9 @@ async def imgscan(event):
     im1 = image1.convert("RGB")
     scann = f"Scanned {ultt.split('.')[0]}.pdf"
     im1.save(scann)
-    await event.client.send_file(event.chat_id, scann, reply_to=event.reply_to_msg_id)
+    await event.client.send_file(event.chat_id,
+                                 scann,
+                                 reply_to=event.reply_to_msg_id)
     await xx.delete()
     os.remove(ultt)
     os.remove("o.png")
@@ -231,8 +231,7 @@ async def imgscan(event):
 
 
 @ultroid_cmd(
-    pattern="pdsave ?(.*)",
-)
+    pattern="pdsave ?(.*)", )
 async def savepdf(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
@@ -262,8 +261,8 @@ async def savepdf(event):
         for cnt in contours:
             hull = cv2.convexHull(cnt)
             polygons.append(
-                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False),
-            )
+                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True),
+                                 False), )
             sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
             simplified_cnt = sortedPoly[0]
@@ -299,8 +298,7 @@ async def savepdf(event):
 
 
 @ultroid_cmd(
-    pattern="pdsend ?(.*)",
-)
+    pattern="pdsend ?(.*)", )
 async def sendpdf(event):
     if not os.path.exists("pdf/scan.pdf"):
         await eor(
@@ -317,7 +315,9 @@ async def sendpdf(event):
         if item.endswith("pdf"):
             merger.append(item)
     merger.write(ok)
-    await event.client.send_file(event.chat_id, ok, reply_to=event.reply_to_msg_id)
+    await event.client.send_file(event.chat_id,
+                                 ok,
+                                 reply_to=event.reply_to_msg_id)
     os.remove(ok)
     shutil.rmtree("pdf/")
     os.makedirs("pdf/")

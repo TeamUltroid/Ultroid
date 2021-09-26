@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -28,7 +27,8 @@ from . import *
 async def addnsfw(e):
     if not udB.get("DEEP_API"):
         return await eor(
-            e, f"Get Api from deepai.org and Add It `{HNDLR}setredis DEEP_API your-api`"
+            e,
+            f"Get Api from deepai.org and Add It `{HNDLR}setredis DEEP_API your-api`"
         )
     action = e.pattern_match.group(1)
     if not action or ("ban" or "kick" or "mute") not in action:
@@ -87,9 +87,10 @@ async def checknsfw(e):
                     )
                 if "mute" in action:
                     try:
-                        await ultroid_bot.edit_permissions(
-                            chat, e.sender_id, until_date=None, send_messages=False
-                        )
+                        await ultroid_bot.edit_permissions(chat,
+                                                           e.sender_id,
+                                                           until_date=None,
+                                                           send_messages=False)
                         await ultroid_bot.send_message(
                             chat,
                             f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}",
@@ -101,9 +102,9 @@ async def checknsfw(e):
                         )
                 elif "ban" in action:
                     try:
-                        await ultroid_bot.edit_permissions(
-                            chat, e.sender_id, view_messages=False
-                        )
+                        await ultroid_bot.edit_permissions(chat,
+                                                           e.sender_id,
+                                                           view_messages=False)
                         await ultroid_bot.send_message(
                             chat,
                             f"NSFW Warn 3/3 to [{e.sender.first_name}](tg://user?id={e.sender_id})\n\n**Action Taken** : {action}",
