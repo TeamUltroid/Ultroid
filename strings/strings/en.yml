@@ -279,6 +279,14 @@ sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
 
+# writer
+writer_1: "`Give Some Text Too`"
+
+# webshot
+wbs_1: "`Give a URL please!`"
+wbs_2: "Invalid URL!"
+wbs_3:"**WebShot Generated**\n**URL**: {}"
+
 # ---------------------------------------------------#
 
 # assisant
