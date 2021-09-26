@@ -5,14 +5,15 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+from random import choice
+
+from pyUltroid.dB import ULTROID_IMAGES
 from pyUltroid.dB._core import HELP, LIST
 from telethon.errors.rpcerrorlist import (
     BotInlineDisabledError,
     BotMethodInvalidError,
     BotResponseTimeoutError,
 )
-from random import choice
-from pyUltroid.dB import ULTROID_IMAGES
 from telethon.tl.custom import Button
 
 from . import *
