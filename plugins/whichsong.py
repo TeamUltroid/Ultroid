@@ -16,7 +16,7 @@ from os import remove
 
 from shazamio import Shazam
 
-from . import ultroid_cmd, eor, get_string, mediainfo
+from . import eor, get_string, mediainfo, ultroid_cmd
 
 shazam = Shazam()
 
@@ -24,7 +24,7 @@ shazam = Shazam()
 @ultroid_cmd(pattern="whichsong$")
 async def song_recog(event):
     reply = await event.get_reply_message()
-    t_ = mediainfo(reply.media)
+    mediainfo(reply.media)
     if not (reply and mediainfo(reply.media) == "audio"):
         return await eor(event, get_string("whs_1"), time=5)
     xx = await eor(event, get_string("com_5"))
