@@ -11,9 +11,11 @@
     See changelogs if any update is available.
 """
 
+from random import choice
+
 from git import Repo
 from pyUltroid.dB import ULTROID_IMAGES
-from random import choice
+
 from . import *
 
 ULTPIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
