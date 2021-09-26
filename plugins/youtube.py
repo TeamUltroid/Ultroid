@@ -71,9 +71,7 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await eor(
-                xx, get_string("youtube_5")
-            )
+            return await eor(xx, get_string("youtube_5"))
         url = get_yt_link(query)
         await eor(xx, get_string("youtube_6"))
     elif opt == "sv":
@@ -87,8 +85,7 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await eor(
-                xx, get_string("youtube_7"))
+            return await eor(xx, get_string("youtube_7"))
         url = get_yt_link(query)
         await eor(xx, get_string("youtube_8"))
     else:
