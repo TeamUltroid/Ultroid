@@ -33,7 +33,7 @@ async def _(event):
         return await eor(xx, get_string("wbl_1"))
     bb = await event.get_reply_message()
     if not (bb and bb.media):
-        return await eor(xx, get_string("wbl_2"))
+        return await eor(xx, get_string("cvt_3"))
     ccc = time.time()
     try:
         naam = await downloader(
