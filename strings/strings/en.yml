@@ -297,6 +297,11 @@ youtube_6: "`Downloading audio song...`"
 youtube_7: "Give me a (youtube) search query to download video from!"
 youtube_8: "`Downloading video song...`"
 
+# ziptools
+zip_1: "Reply to any media/Document."
+zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
+zip_3: "`Reply to zip file only`"
+
 # ---------------------------------------------------#
 
 # assisant
