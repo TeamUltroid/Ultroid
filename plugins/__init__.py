@@ -35,6 +35,7 @@ Telegraph = Telegraph(Ttoken)
 
 if not Ttoken:
     short_name = OWNER_NAME if len(OWNER_NAME) < 32 else "Ultroid"
+    author_name = shortname
     author_url = (
         f"https://t.me/{ultroid_bot.me.username}" if ultroid_bot.me.username else None
     )
