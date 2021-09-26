@@ -31,24 +31,21 @@ from . import eor, get_string, ultroid_cmd
 async def mean(event):
     wrd = event.pattern_match.group(1)
     if not wrd:
-        return await eor(event, "`Give a Word to Find Its Meaning..`")
+        return await eor(event, get_string("wrd_4"))
     url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
     out = await async_searcher(url, re_json=True)
     try:
         return await eor(event, f'**{out["title"]}**')
     except (KeyError, TypeError):
         pass
-    text = f"• **Word :** `{wrd}`\n"
-    meni = out[0]["meanings"][0]
-    defi = meni["definitions"][0]
-    text += f"• **Meaning :** __{defi['definition']}__\n\n"
-    text += f"• **Example :** __{defi['example']}__"
+    defi = out[0]["meanings"][0]["definitions"][0]
+    text = get_string("wrd_1").format(wrd, defi['definition'], defi['example'])
     if defi["synonyms"]:
         text += (
-            "\n\n• **Synonyms :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+            f"\n\n• **{get_string('wrd_5')} :**" + "".join(f" {a}," for a in defi["synonyms"])[:-1]
         )
     if defi["antonyms"]:
-        text += "\n\n**Antonyms :**" + "".join(f" {a}," for a in defi["antonyms"])[:-1]
+        text += f"\n\n**{get_string('wrd_6')} :**" + "".join(f" {a}," for a in defi["antonyms"])[:-1]
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
             fle.name = f"{wrd}-meanings.txt"
@@ -87,7 +84,7 @@ async def mean(event):
         else:
             await event.edit(x)
     except Exception as e:
-        await event.edit(f"No synonym found!!\n{e}")
+        await event.edit(get_string("wrd_7").format(e))
 
 
 @ultroid_cmd(
@@ -117,22 +114,22 @@ async def mean(event):
         else:
             await event.edit(x)
     except Exception as e:
-        await event.edit(f"No antonym found!!\n{e}")
+        await event.edit(get_string("wrd_8").format(e))
 
 
 @ultroid_cmd(pattern="ud (.*)")
 async def _(event):
     word = event.pattern_match.group(1)
     if not word:
-        return await eor(event, "`No word given!`")
+        return await eor(event, get_string("autopic_1"))
     out = await async_searcher(
         "http://api.urbandictionary.com/v0/define", params={"term": word}, re_json=True
     )
     try:
         out = out["list"][0]
     except IndexError:
-        return await eor(event, f"**No result found for** `{word}`")
+        return await eor(event, get_string("autopic_2").format(word))
     await eor(
         event,
-        f"**Text**: `{out['word']}`\n\n**Meaning**: `{out['definition']}`\n\n**Example**: __{out['example']}__",
+        get_string("wrd_1").format(out['word'], out['definition'], out['example'])
     )
