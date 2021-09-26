@@ -41,9 +41,9 @@ from . import *
 )
 async def down(event):
     matched = event.pattern_match.group(1)
-    msg = await eor(event, "`Trying to download...`")
+    msg = await eor(event, get_strings('udl_4'))
     if not matched:
-        return await eor(msg, "`You forgot to give link :(`", time=5)
+        return await eor(msg, get_strings('udl_5'), time=5)
     try:
         splited = matched.split(" | ")
         link = splited[0]
@@ -75,7 +75,7 @@ async def down(event):
 )
 async def download(event):
     if not event.reply_to_msg_id:
-        return await eor(event, "`Reply to a Media Message`")
+        return await eor(event, get_string("cvt_3"))
     xx = await eor(event, get_string("com_1"))
     s = dt.now()
     k = time.time()
@@ -114,7 +114,7 @@ async def download(event):
                         t,
                         xx,
                         k,
-                        "Downloading...",
+                        get_strings('com_5'),
                     ),
                 ),
             )
@@ -148,7 +148,7 @@ async def download(event):
         return await eor(xx, get_string("udl_3"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eor(xx, "`This Directory is Empty.`", time=5)
+            return await eor(xx, get_strings('udl_6'), time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:

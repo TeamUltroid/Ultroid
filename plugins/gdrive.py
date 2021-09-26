@@ -68,7 +68,7 @@ async def _(event):
                 reply_message.media.document,
                 mone,
                 dddd,
-                "Downloading...",
+                get_strings('com_5'),
             )
             filename = downloaded_file_name.name
         except TypeError:

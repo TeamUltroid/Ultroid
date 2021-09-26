@@ -49,9 +49,9 @@ opn = []
 async def _(e):
     r = await e.get_reply_message()
     if not (r or r.file):
-        return await eod(e, "`Reply to img or file with thumbnail.`")
+        return await eod(e, get_strings('cvt_4'))
     if not r.file.media.thumbs:
-        return await eod(e, "Replied file has no thumbnail.`")
+        return await eod(e, get_strings('cvt_5'))
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
@@ -63,7 +63,7 @@ async def _(e):
     nn = "https://telegra.ph" + variable[0]
     udB.set("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
-    await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
+    await eor(e, get_string("cvt_6").format(nn), link_preview=False)
 
 
 @ultroid_cmd(
@@ -86,7 +86,7 @@ async def imak(event):
                 reply.media.document,
                 xx,
                 t,
-                "Downloading...",
+                get_strings('com_5'),
             )
 
             file = image.name
@@ -94,7 +94,7 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     os.rename(file, inp)
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, "Uploading...")
+    xxx = await uploader(inp, inp, k, xx, get_strings('com_6'))
     await event.reply(
         f"`{xxx.name}`",
         file=xxx,
@@ -111,7 +111,7 @@ async def imak(event):
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, "Reply to any media.")
+        await eor(event, get_string("cvt_3"))
         return
     xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
@@ -163,7 +163,7 @@ async def _(event):
     xx = await eor(event, get_string("com_1"))
     a = await event.get_reply_message()
     if not a.message:
-        return await xx.edit("`Reply to a message`")
+        return await xx.edit(get_string("ex_1"))
     with open(input_str, "w") as b:
         b.write(str(a.message))
     await xx.edit(f"**Packing into** `{input_str}`")
@@ -178,14 +178,14 @@ async def _(event):
 async def _(event):
     a = await event.get_reply_message()
     if not (a and a.media):
-        return await eor(event, "`Reply to a readable file`", time=5)
+        return await eor(event, get_strings('cvt_7'), time=5)
     xx = await eor(event, get_string("com_1"))
     b = await a.download_media()
     try:
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eor(xx, "`Not A Readable File.`", time=5)
+        return await eor(xx, get_strings('cvt_8'), time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:

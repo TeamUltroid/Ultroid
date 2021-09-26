@@ -44,15 +44,14 @@ from . import *
     pattern="sysinfo$",
 )
 async def _(e):
-    xx = await eor(e, "`Sending...`")
+    xx = await eor(e, get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
-    haa = await ok.save("neofetch")
+    haa = await ok.memorize("neofetch")
     await e.reply(file=haa)
     await xx.delete()
-    remove("neofetch.jpg")
     remove("neo.txt")
 
 
@@ -62,7 +61,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, "`No cmd given`", time=10)
+        return await eor(xx, get_strings('devs_1'), time=10)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -107,7 +106,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, "`Give some python cmd`", time=5)
+        return await eor(xx, get_strings('devs_2'), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr
@@ -187,7 +186,7 @@ async def doie(e):
     try:
         match = match[1]
     except IndexError:
-        return await eor(e, "`Give Some C++ Code..`")
+        return await eor(e, get_strings('devs_3'))
     msg = await eor(e, get_string("com_1"))
     if "main(" not in match:
         new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))

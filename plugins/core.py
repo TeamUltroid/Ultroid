@@ -98,10 +98,10 @@ async def load(event):
         except BaseException:
             pass
         load_addons(shortname)
-        await eor(event, f"**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{shortname}`", time=3)
+        await eor(event, get_string("core_17").format(shortname), time=3)
     except Exception as e:
         await eod(
             event,
-            f"**Could not load** `{shortname}` **because of the following error.**\n`{e}`",
+            get_string("core_18").format(shortname, e),
             time=3,
         )

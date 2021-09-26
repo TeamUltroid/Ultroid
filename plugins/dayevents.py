@@ -24,16 +24,14 @@ from . import *
 @ultroid_cmd(pattern="eod ?(.*)")
 async def diela(e):
     match = e.pattern_match.group(1)
-    m = await eor(
-        e,
-    )
+    m = await eor(e, get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
     if match:
         date = match.split("/")[0]
         month = match.split("/")[1]
         li += "/days/2021/" + month + "/" + date
-        te = f"• **Events for {match}/2021**\n\n"
+        te = get_string("eod_2").format(match)
     else:
         da = dr.today().strftime("%F").split("-")
         li += "/days/2021/" + da[1] + "/" + da[2]

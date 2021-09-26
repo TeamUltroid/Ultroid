@@ -30,7 +30,7 @@ async def _(e):
     c = 0
     for kk in ok:
         try:
-            res = await uploader(kk, kk, tt, xx, "Uploading...")
+            res = await uploader(kk, kk, tt, xx, get_strings('com_6'))
             await e.client.send_file(
                 e.chat_id,
                 res,
