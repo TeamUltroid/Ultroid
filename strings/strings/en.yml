@@ -56,7 +56,7 @@ ban_2: " `LoL, I can't Ban my Developer 😂`"
 ban_3: "`I don't have the right to ban a user.`"
 ban_4: "{} **was banned by** {} **in** `{}`"
 ban_5: "\n**Reason**: `{}`"
-tban_1: "`Reply to someone or use its id...`"
+tban_1: "`Reply to someone or give its id...`"
 tban_2: "`Successfully Banned` `{}` `in {} for {}`"
 unban_1: "`Reply to a user or give username to unban him!`"
 unban_2: "`I don't have the right to unban a user.`"
@@ -151,6 +151,11 @@ afk_5: "**I'm Going AFK.**\n\n**Reason:** `{}`"
 afk_6: "**I'm Going AFK.**"
 
 # bot
+bot_1: "Hey,  I am alive."
+bot_2: "Stats"
+bot_3: "Repo"
+bot_4: "Support"
+bot_5: "• `Restarting...`"
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
@@ -173,9 +178,34 @@ bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
 bd_4: "Channels added!"
 bd_5: "`Added to database!`"
 bd_6: "`Channel is already is database!`"
+bd_7: "Removed from database"
+bd_8: "`Removing...`"
+bd_9: "Channel is already removed from database. "
+
+
+# calculator
+calc_1: "• Ultroid Inline Calculator •"
+calc_2: "Open Calculator Again"
+
+# channel hacks
+cha_1: "invalid Channel given"
+cha_2: "Source added succesfully"
+cha_3: "Source channel already added"
+cha_4: "Source database cleared."
+cha_5: "Source removed from database"
+cha_6: "Source channel is already removed from database."
+cha_7: "Destination channels in database:"
+cha_8: "Source channels in database:"
 
 # carbon
 carbon_1: "Carbonised by [{}](tg://user?id={})"
+carbon_2: "`Reply to Message or readable file..`"
+carbon_3: "`Give Custom Color to Create Carbon...`"
+
+# chat_bot
+chab_1: "Reply to a user or give me his id/username to add an AI ChatBot!"
+chab_2: "`No user has AI added.`"
+chab_3: "**Total List Of AI Enabled Users In This Chat :**\n\n"
 
 # chats
 chats_1: "`Cant delete this chat`"
@@ -183,6 +213,7 @@ chats_2: "`I m not an admin`"
 chats_3: "#Deleted\nDeleted {}"
 chats_4: "Your [{}]({}) Group Made Boss!"
 chats_5: "Join @TeamUltroid"
+chats_6: "Your {} Group/Channel Has been made Boss!"
 
 # converter
 cvt_1: "`Reply to any media/Document.`"
@@ -276,6 +307,13 @@ wrd_5: "Synonyms"
 wrd_6: "Antonyms"
 wrd_7: "No synonym found!!\n\n`{}`"
 wrd_8: "No Antonyms found!!\n\n`{}`"
+
+# notes
+notes_1: "`Use this Command with Reply and word to use a note.`"
+notes_2: "Done Note : `#{}` saved."
+notes_3: "`Give me the note handler which you want to remove.`"
+notes_4: "Notes Found In This Chats Are\n\n"
+notes_5: "No Notes Found Here"
 
 # stickertools
 sts_1: "`You haven't written any article, Waifu is going away.`"
