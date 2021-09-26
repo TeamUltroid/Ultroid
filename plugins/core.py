@@ -23,6 +23,9 @@
 
 • `{i}help <plugin name>`
     Shows you a help menu (like this) for every plugin.
+
+• `{i}getaddons <raw link to code>`
+    Load Plugins from the given raw link.
 """
 
 import os
@@ -101,6 +104,35 @@ async def load(event):
     except Exception as e:
         await eod(
             event,
+            get_string("core_18").format(shortname, e),
+            time=3,
+        )
+
+
+@ultroid_cmd(pattern="getaddons ?(.*)", fullsudo=True)
+async def get_the_addons_lol(event):
+    thelink = event.pattern_match.group(1)
+    xx = await eor(event, get_string("com_1"))
+    fool = get_string("gas_1")
+    if thelink is None:
+        return await eor(xx, fool, time=10)
+    split_thelink = thelink.split("/")
+    if "raw" not in thelink:
+        return await eor(xx, fool, time=10)
+    name_of_it = split_thelink[(len(split_thelink) - 1)]
+    plug = requests.get(thelink).text
+    fil = f"addons/{name_of_it}"
+    await xx.edit("Packing the codes...")
+    with open(fil, "w", encoding="utf-8") as uult:
+        uult.write(plug)
+    await xx.edit("Packed. Now loading the plugin..")
+    shortname = name_of_it.split(".")[0]
+    try:
+        load_addons(shortname)
+        await eor(xx, get_string("core_17").format(shortname), time=15)
+    except Exception as e:
+        await eod(
+            xx,
             get_string("core_18").format(shortname, e),
             time=3,
         )
