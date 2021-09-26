@@ -61,7 +61,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, get_strings("devs_1"), time=10)
+        return await eor(xx, get_string("devs_1"), time=10)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -106,7 +106,7 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, get_strings("devs_2"), time=5)
+        return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr
@@ -186,7 +186,7 @@ async def doie(e):
     try:
         match = match[1]
     except IndexError:
-        return await eor(e, get_strings("devs_3"))
+        return await eor(e, get_string("devs_3"))
     msg = await eor(e, get_string("com_1"))
     if "main(" not in match:
         new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))

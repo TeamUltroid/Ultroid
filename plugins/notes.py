@@ -36,7 +36,7 @@ async def an(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, get_strings("notes_1"), time=5)
+        return await eor(e, get_string("notes_1"), time=5)
     if "#" in wrd:
         wrd = wrd.replace("#", "")
     if wt and wt.media:
@@ -69,7 +69,7 @@ async def rn(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
-        return await eor(e, get_strings("notes_3"), time=5)
+        return await eor(e, get_string("notes_3"), time=5)
     if wrd.startswith("#"):
         wrd = wrd.replace("#", "")
     rem_note(int(chat), wrd)
@@ -82,7 +82,7 @@ async def lsnote(e):
     if x:
         sd = "Notes Found In This Chats Are\n\n"
         return await eor(e, sd + x)
-    await eor(e, get_strings("notes_5"))
+    await eor(e, get_string("notes_5"))
 
 
 @ultroid_bot.on(events.NewMessage(pattern="^#(.*)"))

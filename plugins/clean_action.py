@@ -27,13 +27,13 @@ from . import *
 @ultroid_cmd(pattern="addclean$", admins_only=True)
 async def _(e):
     add_clean(e.chat_id)
-    await eor(e, get_strings("clan_1"), time=5)
+    await eor(e, get_string("clan_1"), time=5)
 
 
 @ultroid_cmd(pattern="remclean$")
 async def _(e):
     rem_clean(e.chat_id)
-    await eor(e, get_strings("clan_2"), time=5)
+    await eor(e, get_string("clan_2"), time=5)
 
 
 @ultroid_cmd(pattern="listclean$")
@@ -46,8 +46,8 @@ async def _(e):
             try:
                 title = e.chat.title
             except BaseException:
-                title = get_strings("clan_3")
+                title = get_string("clan_3")
             o += x + " " + title + "\n"
         await eor(e, o)
     else:
-        await eor(e, get_strings("clan_4"), time=5)
+        await eor(e, get_string("clan_4"), time=5)

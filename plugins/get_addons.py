@@ -22,7 +22,7 @@ from . import *
 async def get_the_addons_lol(event):
     thelink = event.pattern_match.group(1)
     xx = await eor(event, get_string("com_1"))
-    fool = get_strings("gas_1")
+    fool = get_string("gas_1")
     if thelink is None:
         return await eor(xx, fool, time=10)
     split_thelink = thelink.split("/")

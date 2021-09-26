@@ -49,9 +49,9 @@ opn = []
 async def _(e):
     r = await e.get_reply_message()
     if not (r or r.file):
-        return await eod(e, get_strings("cvt_4"))
+        return await eod(e, get_string("cvt_4"))
     if not r.file.media.thumbs:
-        return await eod(e, get_strings("cvt_5"))
+        return await eod(e, get_string("cvt_5"))
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
@@ -86,7 +86,7 @@ async def imak(event):
                 reply.media.document,
                 xx,
                 t,
-                get_strings("com_5"),
+                get_string("com_5"),
             )
 
             file = image.name
@@ -94,7 +94,7 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     os.rename(file, inp)
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, get_strings("com_6"))
+    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
         f"`{xxx.name}`",
         file=xxx,
@@ -178,14 +178,14 @@ async def _(event):
 async def _(event):
     a = await event.get_reply_message()
     if not (a and a.media):
-        return await eor(event, get_strings("cvt_7"), time=5)
+        return await eor(event, get_string("cvt_7"), time=5)
     xx = await eor(event, get_string("com_1"))
     b = await a.download_media()
     try:
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eor(xx, get_strings("cvt_8"), time=5)
+        return await eor(xx, get_string("cvt_8"), time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:

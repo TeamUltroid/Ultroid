@@ -40,18 +40,18 @@ CACHE = {}
 async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
-        return await eor(e, get_strings("fsub_1"), time=5)
+        return await eor(e, get_string("fsub_1"), time=5)
     if match.startswith("@"):
         ch = match
     else:
         try:
             ch = int(match)
         except BaseException:
-            return await eor(e, get_strings("fsub_2"), time=5)
+            return await eor(e, get_string("fsub_2"), time=5)
     try:
         match = (await e.client.get_entity(ch)).id
     except BaseException:
-        return await eor(e, get_strings("fsub_2"), time=5)
+        return await eor(e, get_string("fsub_2"), time=5)
     if not str(match).startswith("-100"):
         match = int("-100" + str(match))
     add_forcesub(e.chat_id, match)
@@ -62,7 +62,7 @@ async def addfor(e):
 async def remor(e):
     res = rem_forcesub(e.chat_id)
     if not res:
-        return await eor(e, get_strings("fsub_3"), time=5)
+        return await eor(e, get_string("fsub_3"), time=5)
     await eor(e, "Removed ForceSub...")
 
 
@@ -92,8 +92,8 @@ async def fcall(e):
             title="forcesub",
             text=text,
             buttons=[
-                [Button.url(text=get_strings("fsub_4"), url=el)],
-                [Button.inline(get_strings("fsub_5"), data=f"unm_{match}")],
+                [Button.url(text=get_string("fsub_4"), url=el)],
+                [Button.inline(get_string("fsub_5"), data=f"unm_{match}")],
             ],
         )
     ]
@@ -105,7 +105,7 @@ async def diesoon(e):
     match = (e.data_match.group(1)).decode("UTF-8")
     spli = match.split("_")
     if e.sender_id != int(spli[0]):
-        return await e.answer(get_strings("fsub_7"), alert=True)
+        return await e.answer(get_string("fsub_7"), alert=True)
     try:
         await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
     except UserNotParticipantError:
@@ -115,7 +115,7 @@ async def diesoon(e):
     await ultroid_bot.edit_permissions(
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
-    await e.edit(get_strings("fsub_8"))
+    await e.edit(get_string("fsub_8"))
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))

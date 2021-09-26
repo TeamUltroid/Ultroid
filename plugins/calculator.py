@@ -47,7 +47,7 @@ lst.append([Button.inline("=", data="calc=")])
 async def icalc(e):
     udB.delete("calc")
     if e.client._bot:
-        return await e.reply(get_strings("calc_1"), buttons=lst)
+        return await e.reply(get_string("calc_1"), buttons=lst)
     results = await e.client.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
     await e.delete()
@@ -55,7 +55,7 @@ async def icalc(e):
 
 @in_pattern("calc", owner=True)
 async def _(e):
-    calc = e.builder.article("Calc", text=get_strings("calc_1"), buttons=lst)
+    calc = e.builder.article("Calc", text=get_string("calc_1"), buttons=lst)
     await e.answer([calc])
 
 
@@ -68,8 +68,8 @@ async def _(e):
         if CALC.get(user):
             CALC.pop(user)
         await e.edit(
-            get_strings("calc_1"),
-            buttons=[Button.inline(get_strings("calc_2"), data="recalc")],
+            get_string("calc_1"),
+            buttons=[Button.inline(get_string("calc_2"), data="recalc")],
         )
     elif x == "C":
         if CALC.get(user):
@@ -150,4 +150,4 @@ async def _(e):
     tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
     lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
     lst.append([Button.inline("=", data="calc=")])
-    await e.edit(get_strings("calc_1"), buttons=lst)
+    await e.edit(get_string("calc_1"), buttons=lst)

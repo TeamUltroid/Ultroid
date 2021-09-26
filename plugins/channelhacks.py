@@ -71,7 +71,7 @@ async def _(e):
         try:
             c = (await e.client.get_entity(a)).id
         except Exception:
-            await z.edit(get_strings("cha_1"))
+            await z.edit(get_string("cha_1"))
             return
     try:
         d = int(b)
@@ -79,7 +79,7 @@ async def _(e):
         try:
             d = (await e.client.get_entity(b)).id
         except Exception:
-            await z.edit(get_strings("cha_1"))
+            await z.edit(get_string("cha_1"))
             return
     async for msg in e.client.iter_messages(int(c), reverse=True):
         try:
@@ -103,9 +103,9 @@ async def source(e):
             return
     if not is_source_channel_added(y):
         add_source_channel(y)
-        await eor(e, get_strings("cha_2"))
+        await eor(e, get_string("cha_2"))
     elif is_source_channel_added(y):
-        await eor(e, get_strings("cha_3"))
+        await eor(e, get_string("cha_3"))
 
 
 @ultroid_cmd(pattern="dsource ?(.*)")
@@ -113,9 +113,9 @@ async def dd(event):
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
-        await x.edit(get_strings("bd_8"))
+        await x.edit(get_string("bd_8"))
         udB.delete("CH_SOURCE")
-        await x.edit(get_strings("cha_4"))
+        await x.edit(get_string("cha_4"))
         return
     try:
         y = int(chat_id)
@@ -127,10 +127,10 @@ async def dd(event):
             return
     if is_source_channel_added(y):
         rem_source_channel(y)
-        await eor(x, get_strings("cha_5"), time=3)
+        await eor(x, get_string("cha_5"), time=3)
     elif is_source_channel_added(y):
         rem_source_channel(y)
-        await eor(x, get_strings("cha_5"), time=5)
+        await eor(x, get_string("cha_5"), time=5)
     elif not is_source_channel_added(y):
         await eor(x, "Source channel is already removed from database. ", time=3)
 
@@ -142,7 +142,7 @@ async def list_all(event):
     num = get_no_source_channels()
     if num == 0:
         return await eor(x, "No chats were added.", time=5)
-    msg = get_strings("cha_8")
+    msg = get_string("cha_8")
     for channel in channels:
         name = ""
         try:
@@ -191,7 +191,7 @@ async def dd(event):
     chat_id = event.pattern_match.group(1)
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
-        await x.edit(get_strings("bd_8"))
+        await x.edit(get_string("bd_8"))
         udB.delete("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
@@ -221,7 +221,7 @@ async def list_all(event):
     num = get_no_destinations()
     if not num:
         return await eor(x, "No chats were added.", time=5)
-    msg = get_strings("cha_7")
+    msg = get_string("cha_7")
     for channel in channels:
         name = ""
         try:

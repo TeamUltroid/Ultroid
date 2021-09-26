@@ -194,7 +194,7 @@ async def crbn(event):
         try:
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
-            return await eor(xxxx, get_strings("carbon_2"))
+            return await eor(xxxx, get_string("carbon_2"))
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
     )
@@ -212,7 +212,7 @@ async def crbn(event):
 async def crbn(event):
     match = event.pattern_match.group(1)
     if not match:
-        return await eor(event, get_strings("carbon_3"))
+        return await eor(event, get_string("carbon_3"))
     msg = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
@@ -229,7 +229,7 @@ async def crbn(event):
             code = match[1]
             match = match[0]
         except IndexError:
-            return await eor(msg, get_strings("carbon_2"))
+            return await eor(msg, get_string("carbon_2"))
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
     )
