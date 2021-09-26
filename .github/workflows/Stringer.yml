@@ -13,9 +13,9 @@ jobs:
           exclude: 'strings/'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Replacer OP'
+          commit_message: 'Hurrr2'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: ProgrammingError
-          commit_user_email: error@notavailable.live
-          commit_author: ProgrammingError <error@notavailable.live>
+          commit_user_name: New-dev0
+          commit_user_email: newdev0@outlook.com
+          commit_author: New-dev0 <newdev0@outlook.com>
