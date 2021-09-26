@@ -48,26 +48,48 @@ async def _(e):
         return await e.delete()
     await eor(e, get_string("wspr_3"))
 
+@in_pattern("wspr", owner=True)
+async def _(e):
+    zzz = e.text.split(maxsplit=3)
+    query = zzz[2]
+    if query.isdigit():
+        query = int(query)
+    iuser = e.query.user_id
+    try:
+        desc = zzz[3]
+    except IndexError:
+        desc = "Touch me"
+    try:
+            logi = await ultroid_bot.get_entity(query)
+            button = [
+                Button.inline("Secret Msg", data=f"dd_{e.id}"),
+                Button.inline("Delete Msg", data=f"del_{e.id}"),
+            ]
+            us = logi.username
+            sur = e.builder.article(
+                title=f"{logi.first_name}",
+                description=desc,
+                text=get_string("wspr_1").format(us),
+                buttons=button,
+            )
+            buddhhu.update({e.id: [logi.id, iuser]})
+            snap.update({e.id: desc})
+    except ValueError:
+            sur = e.builder.article(
+                title="Type ur msg", text="You Didn't Type Your Msg"
+            )
+    await e.answer([sur])
+
 
 @in_pattern("msg", owner=True)
 async def _(e):
-    vvv = e.text
-    zzz = vvv.split(" ", maxsplit=1)
-    try:
-        ggg = zzz[1]
-        sed = ggg.split(" wspr ", maxsplit=1)
-        query = sed[0].replace(" ", "")
-        if query.isdigit():
-            query = int(query)
-    except IndexError:
-        return
+    zzz = e.text.split(maxsplit=2)
+    query = zzz[2]
+    if query.isdigit():
+        query = int(query)
     iuser = e.query.user_id
+    desc = "Touch me"
     try:
-        desc = sed[1]
-    except IndexError:
-        desc = "Touch me"
-    if "wspr" not in vvv:
-        try:
             logi = await ultroid_bot(gu(id=query))
             name = logi.user.first_name
             ids = logi.user.id
@@ -101,7 +123,7 @@ async def _(e):
                 Button.url("Private", url=url),
                 Button.switch_inline(
                     "Secret msg",
-                    query=f"msg {query} wspr Hello 👋",
+                    query=f"wspr {query} Hello 👋",
                     same_peer=True,
                 ),
             ]
@@ -111,32 +133,13 @@ async def _(e):
                 text=text,
                 buttons=button,
             )
-        except BaseException:
-            name = get_string("wspr_4").format(user)
+    except BaseException:
+            name = get_string("wspr_4").format(query)
             sur = e.builder.article(
                 title=name,
                 text=name,
             )
-    else:
-        try:
-            logi = await ultroid_bot.get_entity(query)
-            button = [
-                Button.inline("Secret Msg", data=f"dd_{e.id}"),
-                Button.inline("Delete Msg", data=f"del_{e.id}"),
-            ]
-            us = logi.username
-            sur = e.builder.article(
-                title=f"{logi.first_name}",
-                description=desc,
-                text=get_string("wspr_1").format(us),
-                buttons=button,
-            )
-            buddhhu.update({e.id: [logi.id, iuser]})
-            snap.update({e.id: desc})
-        except ValueError:
-            sur = e.builder.article(
-                title="Type ur msg", text="You Didn't Type Your Msg"
-            )
+    
     await e.answer([sur])
 
 
