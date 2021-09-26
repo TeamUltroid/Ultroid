@@ -137,19 +137,19 @@ async def dd(event):
 
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
-    x = await eor(event, "`Calculating...`")
+    x = await eor(event, get_string("com_1"))
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
         return await eor(x, "No chats were added.", time=5)
-    msg = "Source channels in database:\n"
+    msg = "Source channels in database:"
     for channel in channels:
         name = ""
         try:
             name = (await event.client.get_entity(int(channel))).title
         except BaseException:
             name = ""
-        msg += f"=> **{name}** [`{channel}`]\n"
+        msg += f"\n=> **{name}** [`{channel}`]"
     msg += f"\nTotal {get_no_source_channels()} channels."
     if len(msg) > 4096:
         MSG = msg.replace("*", "").replace("`", "")
@@ -216,19 +216,19 @@ async def dd(event):
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     ultroid_bot = event.client
-    x = await eor(event, "`Calculating...`")
+    x = await eor(event, get_string("com_1"))
     channels = get_destinations()
     num = get_no_destinations()
-    if num == 0:
+    if not num:
         return await eor(x, "No chats were added.", time=5)
-    msg = "Destination channels in database:\n"
+    msg = "Destination channels in database:"
     for channel in channels:
         name = ""
         try:
             name = (await ultroid_bot.get_entity(int(channel))).title
         except BaseException:
             name = ""
-        msg += f"=> **{name}** [`{channel}`]\n"
+        msg += f"\n=> **{name}** [`{channel}`]"
     msg += f"\nTotal {get_no_destinations()} channels."
     if len(msg) > 4096:
         MSG = msg.replace("*", "").replace("`", "")
