@@ -35,7 +35,7 @@ bot = "@MissRose_bot"
     pattern="superfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, "Starting a Mass-FedBan...")
+    msg = await eor(event, get_strings('sf_1'))
     inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         FBAN = (await event.get_reply_message()).sender_id
@@ -71,7 +71,7 @@ async def _(event):
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
                     return await msg.edit(
-                        "`Seems like rose isn't responding, or, the plugin is misbehaving`",
+                        get_strings('sf_4'),
                     )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
@@ -92,10 +92,10 @@ async def _(event):
                                 fedList.append(line[:36])
                             except BaseException:
                                 pass
-                    elif "You can only use fed commands once every 5 minutes" in (
+                    elif get_strings('sf_5') in (
                         await bot_conv.get_edit
                     ):
-                        return await msg.edit("Try again after 5 mins.")
+                        return await msg.edit(get_strings('sf_6'))
                 if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
@@ -103,7 +103,7 @@ async def _(event):
                 else:
                     break
         else:
-            await msg.edit("Error")
+            await msg.edit(get_strings('sf_8'))
         In = False
         tempFedId = ""
         for x in response.text:
@@ -117,12 +117,12 @@ async def _(event):
             elif In:
                 tempFedId += x
     if not fedList:
-        return await msg.edit("Unable to collect FedAdminList.")
+        return await msg.edit(get_strings('sf_9'))
     await msg.edit(f"FBaning in {len(fedList)} feds.")
     try:
         await ultroid_bot.send_message(chat, "/start")
     except BaseException:
-        return await msg.edit("Specified FBan Group ID is incorrect.")
+        return await msg.edit(get_strings('sf_11'))
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
@@ -151,7 +151,7 @@ async def _(event):
     pattern="superunfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, "Starting a Mass-UnFedBan...")
+    msg = await eor(event, get_strings('sf_15'))
     fedList = []
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -185,13 +185,13 @@ async def _(event):
                 FBAN = arg[1]
                 REASON = arg[2]
             except BaseException:
-                return await msg.edit("`No user designated!`")
+                return await msg.edit(get_strings('sf_2'))
         else:
             try:
                 FBAN = arg[1]
                 REASON = " #TBMassUnBanned "
             except BaseException:
-                return await msg.edit("`No user designated!`")
+                return await msg.edit(get_strings('sf_2'))
     if udB.get("FBAN_GROUP_ID"):
         chat = int(udB.get("FBAN_GROUP_ID"))
     else:
@@ -207,7 +207,7 @@ async def _(event):
                     response = await bot_conv.get_response()
                 except asyncio.exceptions.TimeoutError:
                     return await msg.edit(
-                        "`Seems like rose isn't responding, or, the plugin is misbehaving`",
+                        get_strings('sf_4'),
                     )
                 await asyncio.sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
@@ -228,10 +228,10 @@ async def _(event):
                                 fedList.append(line[:36])
                             except BaseException:
                                 pass
-                    elif "You can only use fed commands once every 5 minutes" in (
+                    elif get_strings('sf_5') in (
                         await bot_conv.get_edit
                     ):
-                        return await msg.edit("Try again after 5 mins.")
+                        return await msg.edit(get_strings('sf_6'))
                 if not fedList:
                     await msg.edit(
                         f"Unable to collect FedAdminList. Retrying ({a+1}/3)...",
@@ -239,7 +239,7 @@ async def _(event):
                 else:
                     break
         else:
-            await msg.edit("Error")
+            await msg.edit(get_strings('sf_8'))
         In = False
         tempFedId = ""
         for x in response.text:
@@ -253,12 +253,12 @@ async def _(event):
             elif In:
                 tempFedId += x
     if not fedList:
-        return await msg.edit("Unable to collect FedAdminList.")
+        return await msg.edit(get_strings('sf_9'))
     await msg.edit(f"UnFBaning in {len(fedList)} feds.")
     try:
         await event.client.send_message(chat, "/start")
     except BaseException:
-        return await msg.edit("Specified FBan Group ID is incorrect.")
+        return await msg.edit(get_strings('sf_11'))
     await asyncio.sleep(3)
     if udB.get("EXCLUDE_FED"):
         excludeFed = udB.get("EXCLUDE_FED").split(" ")
@@ -299,7 +299,7 @@ async def _(event):
         user = sysarg
     if sysarg == "":
         await ok.edit(
-            "`Give me someones id, or reply to somones message to check his/her fedstat.`",
+            get_strings('sf_17'),
         )
     else:
         async with event.client.conversation(bot) as conv:
@@ -335,7 +335,7 @@ async def _(event):
     pattern="fedinfo ?(.*)",
 )
 async def _(event):
-    ok = await event.edit("`Extracting information...`")
+    ok = await event.edit(get_strings('sf_20'))
     sysarg = event.pattern_match.group(1)
     async with event.client.conversation(bot) as conv:
         try:

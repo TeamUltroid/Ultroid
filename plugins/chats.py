@@ -53,9 +53,9 @@ async def _(e):
     try:
         await e.client(DeleteChannelRequest(chat))
     except TypeError:
-        return await eor(xx, "`Cant delete this chat`", time=10)
+        return await eor(xx, get_strings('chats_1'), time=10)
     except no_admin:
-        return await eor(xx, "`I m not an admin`", time=10)
+        return await eor(xx, get_strings('chats_2'), time=10)
     await e.client.send_message(
         int(udB.get("LOG_CHANNEL")), f"#Deleted\nDeleted {e.chat_id}"
     )
@@ -83,7 +83,7 @@ async def _(e):
                 ExportChatInviteRequest(e.chat_id),
             )
         except no_admin:
-            return await eor(e, "`I m not an admin`", time=10)
+            return await eor(e, get_strings('chats_2'), time=10)
         link = r.link
     await eor(e, f"Link:- {link}")
 
@@ -131,7 +131,7 @@ async def _(e):
             r = await e.client(
                 CreateChannelRequest(
                     title=group_name,
-                    about="Join @TeamUltroid",
+                    about=get_strings('chats_5'),
                     megagroup=type_of_group != "c",
                 )
             )

@@ -46,7 +46,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_strings('audiotools_5'))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -117,7 +117,7 @@ async def gen_shots(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_strings('audiotools_5'))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -150,10 +150,10 @@ async def gen_shots(e):
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
-        return await eod(e, "`Give time in format to trim`")
+        return await eod(e, get_strings('audiotools_3'))
     a, b = sec.split("-")
     if int(a) >= int(b):
-        return await eod(e, "`Incorrect Data`")
+        return await eod(e, get_strings('audiotools_4'))
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
         if hasattr(vido.media, "document"):
@@ -164,7 +164,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_strings('audiotools_5'))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -180,7 +180,7 @@ async def gen_sample(e):
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.mkv")
         if int(b) > int(genss(file.name)):
             os.remove(file.name)
-            return await eod(xxx, "`Wrong trim duration`")
+            return await eod(xxx, get_strings('audiotools_6'))
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await xxx.edit(
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Video from `{ss}` to `{dd}`..."

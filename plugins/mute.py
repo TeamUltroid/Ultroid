@@ -134,7 +134,7 @@ async def _(e):
         userid = await get_user_id(input, client=e.client)
         name = (await event.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_strings('tban_1'), time=3)
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't mute myself.`", time=3)
     try:
@@ -170,7 +170,7 @@ async def _(e):
         userid = await get_user_id(input, client=e.client)
         name = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_strings('tban_1'), time=3)
     try:
         await e.client.edit_permissions(
             chat.id,
@@ -210,7 +210,7 @@ async def _(e):
             userid = (await e.client.get_entity(input)).id
             name = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_strings('tban_1'), time=3)
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't mute myself.`", time=3)
     try:
