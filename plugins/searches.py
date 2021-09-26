@@ -31,6 +31,7 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
+from telethon.tl.types import DocumentAttributeAudio
 
 from strings import get_string
 
@@ -177,9 +178,6 @@ async def reverse(event):
     )
     rmtree(f"./resources/downloads/{text}/")
     os.remove(dl)
-
-
-from telethon.tl.types import DocumentAttributeAudio
 
 
 @ultroid_cmd(
