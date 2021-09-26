@@ -129,9 +129,7 @@ async def azipp(event):
 @ultroid_cmd(pattern="dozip ?(.*)")
 async def do_zip(event):
     if not os.path.isdir("zip"):
-        return await eor(
-            event, get_string("zip_2").format(HNDLR)
-        )
+        return await eor(event, get_string("zip_2").format(HNDLR))
     xx = await eor(event, get_string("com_1"))
     if event.pattern_match.group(1):
         await bash(
