@@ -15,7 +15,6 @@
 
 • Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
   before using it..
-
 """
 
 import os
@@ -27,16 +26,37 @@ from . import *
 CLIENT = []
 
 
-def create_client(username, password):
-    settings = eval(udB.get("INSTA_SET")) if udB.get("INSTA_SET") else {}
+async def create_instagram_client(event):
     try:
         return CLIENT[0]
     except IndexError:
-        cl = instagrapi.Client(settings)
+        pass
+    username = udB.get("INSTA_USERNAME")
+    password = udB.get("INSTA_PASSWORD")
+    if not (username and password):
+        return
+    settings = eval(udB.get("INSTA_SET")) if udB.get("INSTA_SET") else {}
+    cl = instagrapi.Client(settings)
+    try:
         cl.login(username, password)
-        CLIENT.append(cl)
-        udB.set("INSTA_SET", str(cl.get_settings()))
-        return cl
+    except EOFError:
+        await event.edit(f"Check Pm From @{asst.me.username}")
+        log = int(udB["LOG_CHANNEL"])
+        async with asst.conversation(ultroid_bot.uid, timeout=60*2) as conv:
+            msg = await conv.send_message("Enter The **Instagram Verification Code** Sent to Your Email..")
+            ct = await conv.get_response()
+            while not ct.text.isdigit()
+                if ct.message == "/cancel":
+                    await conv.send_message("Canceled Verification!")
+                    return
+                await conv.send_message("CODE SHOULD BE INTEGER\n\nUse /cancel to Cancel Process...")
+        cl.login(username, password, verification_code=ct.text)
+    except Exception as er:
+        LOGS.exception(er)
+        return await eor(event, str(er))
+    CLIENT.append(cl)
+    udB.set("INSTA_SET", str(cl.get_settings()))
+    return cl
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -50,17 +70,17 @@ async def insta_dl(e):
         text = replied.message
     else:
         return await eor(tt, "Provide a Link to Download...")
-    un = udB.get("INSTA_USERNAME")
-    up = udB.get("INSTA_PASSWORD")
-    if un and up:
+    
+    CL = await create_instagram_client(un, up)
+    if CL:
         try:
-            CL = create_client(un, up)
             media = CL.video_download(CL.media_pk_from_url(text))
             await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
             await tt.delete()
             os.remove(media)
             return
         except Exception as B:
+            LOGS.exception(B)
             return await eor(tt, str(B))
     if isinstance(e.media, types.MessageMediaWebPage) and isinstance(
         e.media.webpage, types.WebPage
@@ -81,16 +101,11 @@ async def insta_dl(e):
 
 @ultroid_cmd(pattern="instadata ?(.*)")
 async def soon_(e):
-    un = udB.get("INSTA_USERNAME")
-    up = udB.get("INSTA_PASSWORD")
-    if not un and up:
+    cl = await create_isntagram_client(e)
+    if not cl:
         return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
     match = e.pattern_match.group(1)
     ew = await eor(e, get_string("com_1"))
-    try:
-        cl = create_client(un, up)
-    except Exception as g:
-        return await eor(ew, str(g))
     if match:
         try:
             iid = cl.user_id_from_username(match)
