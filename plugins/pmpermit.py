@@ -556,19 +556,20 @@ async def unblockpm(unblock):
     else:
         return await eor(unblock, NO_REPLY, time=5)
     if match == "all":
-        count = 0
-        off_ = 0
+        msg = await eor(unblock, get_string("com_1"))
         u_s = await unblock.client(GetBlockedRequest(0, 0))
-        count += len(u_s.users)
+        count = len(u_s.users)
         if not count:
-            return await eor(unblock, "__You have not blocked Anyone...__")
+            return await eor(msg, "__You have not blocked Anyone...__")
         [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
+        # GetBlockedRequest return 20 users at most.
+        if count < 20:
+            return await eor(msg, f"__Unblocked {count} Users!__")
         while not u_s.users:
-            off_ += 1
-            u_s = await unblock.client(GetBlockedRequest(off_, 0))
+            u_s = await unblock.client(GetBlockedRequest(0, 0))
             [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
             count += len(u_s.users)
-        return await eor(unblock, f"__Unblocked {count} users.__")
+        return await eor(msg, f"__Unblocked {count} users.__")
     try:
         await unblock.client(UnblockRequest(user))
         aname = await unblock.client.get_entity(user)
