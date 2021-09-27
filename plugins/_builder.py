@@ -17,9 +17,11 @@ async def ibuild(e):
     if not n.isdigit():
         return
     ok = STUFF.get(int(n))
-    txt = ok.get("msg") or "Hey!"
+    txt = ok.get("msg") or None
     pic = ok.get("media") or None
     btn = ok.get("button") or None
+    if not (pic and txt):
+        txt = "Hey!"
     if pic:
         try:
             if ".jpg" in pic:
