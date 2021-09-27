@@ -35,7 +35,8 @@ import os
 from pyUltroid.dB.greetings_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from ._builder import something
 from . import *
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
@@ -45,6 +46,9 @@ Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{u
 async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
+    btn =None
+    if r.buttons:
+        btn = format_btn(r.buttons)
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -64,12 +68,18 @@ async def setwel(event):
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
-            add_welcome(event.chat_id, r.message, m)
+            txt = r.text
+            if not btn:
+                txt, btn = get_msg_button(r.text)
+            add_welcome(event.chat_id, txt, m, btn)
         else:
-            add_welcome(event.chat_id, None, m)
+            add_welcome(event.chat_id, None, m, btn)
         await eor(x, get_string("grt_1"))
     elif r and r.text:
-        add_welcome(event.chat_id, r.message, None)
+        txt = r.text
+        if not btn:
+            txt, btn = get_msg_button(r.text)
+        add_welcome(event.chat_id, txt, None, btn)
         await eor(x, get_string("grt_1"))
     else:
         await eor(x, get_string("grt_3"), time=5)
@@ -90,6 +100,9 @@ async def listwel(event):
         return await eor(event, get_string("grt_4"), time=5)
     msgg = wel["welcome"]
     med = wel["media"]
+    if wel.get("button"):
+        btn = create_tl_btn(wel["button"])
+        return await something(event, msgd, med, btn)
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
@@ -98,6 +111,9 @@ async def listwel(event):
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
+    btn =None
+    if r.buttons:
+        btn = format_btn(r.buttons)
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -117,12 +133,18 @@ async def setgb(event):
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
-            add_goodbye(event.chat_id, r.message, m)
+            txt = r.text
+            if not btn:
+                txt, btn = get_msg_button(r.text)
+            add_goodbye(event.chat_id, txt, m, btn)
         else:
-            add_goodbye(event.chat_id, None, m)
+            add_goodbye(event.chat_id, None, m, btn)
         await eor(x, "`Goodbye note saved`")
     elif r and r.text:
-        add_goodbye(event.chat_id, r.message, None)
+        txt = r.text
+        if not btn:
+            txt, btn = get_msg_button(r.text)
+        add_goodbye(event.chat_id, txt, None, btn)
         await eor(x, "`Goodbye note saved`")
     else:
         await eor(x, get_string("grt_7"), time=5)
@@ -143,6 +165,9 @@ async def listgd(event):
         return await eor(event, get_string("grt_6"), time=5)
     msgg = wel["goodbye"]
     med = wel["media"]
+    if wel.get("button"):
+        btn = create_tl_btn(wel["button"])
+        return await something(event, msgd, med, btn)
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
