@@ -21,7 +21,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
 from . import LOG_CHANNEL, LOGS, asst, types, udB, ultroid_bot
-
+from pyUltroid.functions.helper import inline_mention
 
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
