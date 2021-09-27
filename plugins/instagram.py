@@ -45,7 +45,7 @@ async def create_instagram_client(event):
         async with asst.conversation(ultroid_bot.uid, timeout=60*2) as conv:
             msg = await conv.send_message("Enter The **Instagram Verification Code** Sent to Your Email..")
             ct = await conv.get_response()
-            while not ct.text.isdigit()
+            while not ct.text.isdigit():
                 if ct.message == "/cancel":
                     await conv.send_message("Canceled Verification!")
                     return
