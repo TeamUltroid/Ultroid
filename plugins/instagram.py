@@ -38,6 +38,7 @@ async def create_instagram_client(event):
     settings = eval(udB.get("INSTA_SET")) if udB.get("INSTA_SET") else {}
     cl = instagrapi.Client(settings)
     try:
+        raise EOFError
         cl.login(username, password)
     except EOFError:
         await event.edit(f"Check Pm From @{asst.me.username}")
