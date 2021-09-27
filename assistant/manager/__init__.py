@@ -7,3 +7,4 @@
 
 from .. import *
 from pyUltroid.misc._decorators import ultroid_cmd
+from pyUltroid.functions.helper import inline_mention
