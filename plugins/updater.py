@@ -23,7 +23,7 @@ ULTPIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 
 @ultroid_cmd(pattern="update ?(.*)")
 async def _(e):
-    xx = await eor(e, get_strings("upd_1"))
+    xx = await eor(e, get_string("upd_1"))
     m = updater()
     branch = (Repo.init()).active_branch
     if m:
