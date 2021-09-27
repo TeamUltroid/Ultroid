@@ -1,5 +1,7 @@
-from . import *
 from telethon.utils import resolve_bot_file_id
+
+from . import *
+
 
 @in_pattern("stf(.*)", owner=True)
 async def ibuild(e):
@@ -12,7 +14,9 @@ async def ibuild(e):
     if pic:
         try:
             if ".jpg" in pic:
-                results = [await builder.photo(pic, text=txt, buttons=btn, link_preview=False)]
+                results = [
+                    await builder.photo(pic, text=txt, buttons=btn, link_preview=False)
+                ]
             else:
                 _pic = resolve_bot_file_id(pic)
                 results = [
@@ -22,7 +26,7 @@ async def ibuild(e):
                         text=txt,
                         description="@TheUltroid",
                         buttons=btn,
-                        link_preview=False
+                        link_preview=False,
                     )
                 ]
             return await e.answer(results)
@@ -33,8 +37,9 @@ async def ibuild(e):
     ]
     await e.answer(result)
 
+
 async def something(e, msg, media, button):
-    num = len(STUFF) +1 
+    num = len(STUFF) + 1
     STUFF.update({num: {"msg": msg, "media": media, "button": button}})
     try:
         res = await e.client.inline_query(asst.me.username, f"stf{num}")
