@@ -146,6 +146,8 @@ async def bban(ult):
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
+    if ult.text[1:].startswith("unbanall"):
+        return
     user, reason = await get_user_info(ult)
     if not user:
         return await xx.edit(get_string("unban_1"))
