@@ -36,6 +36,7 @@ from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
     DeleteChannelRequest,
+    EditPhotoRequest,
     GetFullChannelRequest,
     UpdateUsernameRequest,
 )
@@ -44,6 +45,15 @@ from telethon.tl.functions.messages import (
     DeleteChatUserRequest,
     ExportChatInviteRequest,
     GetFullChatRequest,
+)
+from telethon.tl.types import (
+    ChannelParticipantsKicked,
+    UserStatusEmpty,
+    UserStatusLastMonth,
+    UserStatusLastWeek,
+    UserStatusOffline,
+    UserStatusOnline,
+    UserStatusRecently,
 )
 
 from . import *
@@ -165,20 +175,8 @@ async def _(e):
         except Exception as ex:
             await xx.edit(str(ex))
 
+
 # ---------------------------------------------------------------- #
-
-from telethon.tl.functions.channels import EditPhotoRequest
-from telethon.tl.types import (
-    ChannelParticipantsKicked,
-    UserStatusEmpty,
-    UserStatusLastMonth,
-    UserStatusLastWeek,
-    UserStatusOffline,
-    UserStatusOnline,
-    UserStatusRecently,
-)
-
-from . import *
 
 
 @ultroid_cmd(
