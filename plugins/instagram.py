@@ -105,7 +105,7 @@ async def insta_dl(e):
 
 @ultroid_cmd(pattern="instadata ?(.*)")
 async def soon_(e):
-    cl = await create_isntagram_client(e)
+    cl = await create_instagram_client(e)
     if not cl:
         return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
     match = e.pattern_match.group(1)
