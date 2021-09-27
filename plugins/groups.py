@@ -22,6 +22,7 @@
 from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.types import (
     ChannelParticipantsKicked,
+    ChannelParticipantAdmin,
     UserStatusEmpty,
     UserStatusLastMonth,
     UserStatusLastWeek,
@@ -114,92 +115,96 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
-    xx = await eor(event, "`Searching Participant Lists.`")
+    xx = await eor(event, get_string("com_1"))
     input_str = event.pattern_match.group(1)
-    p, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    p,a, b, c, d, m, n, y, w, o, q, r = 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):
-        p += 1
+        p += 1 # Total Count
         if isinstance(i.status, UserStatusEmpty):
-            y += 1
             if "empty" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    y -= 1
                 except BaseException:
                     pass
+            else:
+                y+=1
         if isinstance(i.status, UserStatusLastMonth):
-            m += 1
             if "month" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    m -= 1
                 except BaseException:
                     pass
+            else:
+                m+=1
         if isinstance(i.status, UserStatusLastWeek):
-            w += 1
             if "week" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    w -= 1
                 except BaseException:
                     pass
+            else:
+                w+=1
         if isinstance(i.status, UserStatusOffline):
-            o += 1
             if "offline" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    o -= 1
                 except BaseException:
                     pass
+            else:
+                o+=1
         if isinstance(i.status, UserStatusOnline):
-            q += 1
             if "online" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    q -= 1
                 except BaseException:
                     pass
+            else:
+                q+=1
         if isinstance(i.status, UserStatusRecently):
-            r += 1
             if "recently" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    r -= 1
                 except BaseException:
                     pass
+            else:
+                r+=1
         if i.bot:
-            b += 1
             if "bot" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    b -= 1
                 except BaseException:
                     pass
+            else:
+                b+=1
         elif i.deleted:
-            d += 1
             if "deleted" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    d -= 1
                 except BaseException:
                     pass
+            else:
+                d+=1
         elif i.status is None:
-            n += 1
             if "none" in input_str:
                 try:
                     await event.client.kick_participant(event.chat_id, i)
                     c += 1
-                    n -= 1
                 except BaseException:
                     pass
+            else:
+                n+=1
+        if instance(i.participant, ChannelParticipantAdmin) and i.participant.admin_rights.anonymous:
+            # Ignore Anonymous Admin as official clients don't count
+            p-=1
+
     if input_str:
         required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
     else:
