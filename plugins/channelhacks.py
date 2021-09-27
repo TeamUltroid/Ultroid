@@ -16,19 +16,19 @@
 
 🔹 For auto-posting/forwarding all new message from any source channel to any destination channel.
 
-   * `asource <channel username or id>`
+   `{i}asource <channel username or id>`
       This add source channel to database
-   * `dsource <channel username or id>`
+   `{i}dsource <channel username or id>`
       This remove source channels from database
-   * `listsource <channel username or id>`
+   `{i}listsource <channel username or id>`
       Show list of source channels
 
 
-   * `{i}adest <channel username or id>`
+   `{i}adest <channel username or id>`
       This add Ur channels to database
-   * `{i}ddest <channel username or id>`
+   `{i}ddest <channel username or id>`
       This Remove Ur channels from database
-   * `{i}listdest <channel username or id>`
+   `{i}listdest <channel username or id>`
       Show List of Ur channels
 
    'you can set many channels in database'
