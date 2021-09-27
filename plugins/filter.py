@@ -29,8 +29,6 @@ from telethon.utils import pack_bot_file_id
 from . import *
 from ._builder import something
 
-from . import *
-
 
 @ultroid_cmd(pattern="addfilter ?(.*)")
 async def af(e):
