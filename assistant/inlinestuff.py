@@ -10,11 +10,10 @@ from datetime import datetime
 from random import choice
 from re import compile as re_compile
 
-import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import dloader, get_ofox, async_searcher
+from pyUltroid.functions.tools import async_searcher, dloader, get_ofox
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -208,7 +207,6 @@ async def gsearch(q_event):
     await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
 
 
-
 @in_pattern("mods", owner=True)
 async def _(e):
     try:
@@ -291,7 +289,6 @@ async def xda_dev(event):
     await event.answer(out, switch_pm=uppar, switch_pm_param="start")
 
 
-
 @in_pattern("app", owner=True)
 async def _(e):
     try:
@@ -301,7 +298,7 @@ async def _(e):
             [], switch_pm="App search. Enter app name!", switch_pm_param="start"
         )
     foles = []
-    base_uri= "https://play.google.com"
+    base_uri = "https://play.google.com"
     url = f"{base_uri}/store/search?q={f.replace(' ', '%20')}&c=apps"
     aap = await async_searcher(url, re_content=True)
     b_ = bs(aap, "html.parser", from_encoding="utf-8")
@@ -311,8 +308,14 @@ async def _(e):
         scra = await async_searcher(url, re_content=True)
         bp = bs(scra, "html.parser", from_encoding="utf-8")
         name = z.find("div", "WsMG1c nnK0zc")["title"]
-        desc = str(bp.find("div", jsname="sngebd")).replace('<div jsname="sngebd">', "").replace("<br/>", "\n").replace("</div>", "")[:300] + "..."
-        dev = z.find("div","KoLSrc").text
+        desc = (
+            str(bp.find("div", jsname="sngebd"))
+            .replace('<div jsname="sngebd">', "")
+            .replace("<br/>", "\n")
+            .replace("</div>", "")[:300]
+            + "..."
+        )
+        dev = z.find("div", "KoLSrc").text
         icon = z.find("img", "T75of QNCnCf")["data-src"]
         text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({icon})\n"
         text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
