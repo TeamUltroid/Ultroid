@@ -14,6 +14,7 @@ from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.username_db import get_username, update_username
+from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import get_chatbot_reply
 from telethon import events
 from telethon.errors.rpcerrorlist import UserNotParticipantError
@@ -21,7 +22,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
 from . import LOG_CHANNEL, LOGS, asst, types, udB, ultroid_bot
-from pyUltroid.functions.helper import inline_mention
+
 
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics

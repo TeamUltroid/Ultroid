@@ -32,7 +32,8 @@
 
 """
 import glob
-import os, io
+import io
+import os
 import time
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
