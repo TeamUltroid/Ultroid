@@ -77,7 +77,7 @@ async def insta_dl(e):
 async def soon_(e):
     cl = await create_instagram_client(e)
     if not cl:
-        if cl == False:
+        if not cl:
             return
         return await eor(e, "`Please Fill Instagram Credentials to Use This...`")
     match = e.pattern_match.group(1)
