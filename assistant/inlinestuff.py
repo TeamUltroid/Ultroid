@@ -171,13 +171,11 @@ async def gsearch(q_event):
         )
     searcher = []
     gresults = await google_search(match)
-    msg = ""
     for i in gresults:
         try:
             title = i["title"]
             link = i["link"]
             desc = i["description"]
-            msg += f"👉[{title}]({link})\n`{desc}`\n\n"
             searcher.append(
                 await q_event.builder.article(
                     title=title,
