@@ -14,7 +14,7 @@ from . import *
 async def ibuild(e):
     n = e.pattern_match.group(1)
     builder = e.builder
-    if not n.isdigit():
+    if not (n and n.isdigit()):
         return
     ok = STUFF.get(int(n))
     txt = ok.get("msg") or None
@@ -24,7 +24,7 @@ async def ibuild(e):
         txt = "Hey!"
     if pic:
         try:
-            if pic.endwith((".jpg", ".mp4")):
+            if pic.endswith((".jpg", ".mp4")):
                 results = [
                     await builder.photo(pic, text=txt, buttons=btn, link_preview=False)
                 ]
