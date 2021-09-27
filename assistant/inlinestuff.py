@@ -312,7 +312,7 @@ async def _(e):
     aap = await async_searcher(url, re_content=True)
     b_ = bs(aap, "html.parser", from_encoding="utf-8")
     aap = b_.find_all("div", "Vpfmgd")
-    for z in aap[:25]:
+    for z in aap[:10]:
         url = base_uri + z.find("a")["href"]
         scra = await async_searcher(url, re_content=True)
         bp = bs(scra, "html.parser", from_encoding="utf-8")
