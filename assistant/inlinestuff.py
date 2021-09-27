@@ -13,9 +13,8 @@ from re import compile as re_compile
 import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
-from play_scraper import search
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import dloader, get_ofox
+from pyUltroid.functions.tools import dloader, get_ofox, async_searcher
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -209,54 +208,6 @@ async def gsearch(q_event):
     await q_event.answer(searcher, switch_pm="Google Search.", switch_pm_param="start")
 
 
-@in_pattern("app", owner=True)
-async def _(e):
-    try:
-        f = e.text.split(" ", maxsplit=1)[1]
-    except IndexError:
-        await e.answer(
-            [], switch_pm="App search. Enter app name!", switch_pm_param="start"
-        )
-    foles = []
-    aap = search(f)
-    for z in aap:
-        name = z["title"]
-        desc = z["description"]
-        price = z["price"]
-        dev = z["developer"]
-        icon = z["icon"]
-        url = z["url"]
-        ids = z["app_id"]
-        text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({icon})\n"
-        text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
-        text += f"**••Pʀɪᴄᴇ••** `{price}`\n\n"
-        text += f"**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`"
-        foles.append(
-            await e.builder.article(
-                title=name,
-                description=ids,
-                thumb=wb(icon, 0, "image/jpeg", []),
-                text=text,
-                link_preview=True,
-                buttons=[
-                    [Button.url("Lɪɴᴋ", url=f"https://play.google.com{url}")],
-                    [
-                        Button.switch_inline(
-                            "Mᴏʀᴇ Aᴘᴘs",
-                            query="app ",
-                            same_peer=True,
-                        ),
-                        Button.switch_inline(
-                            "Sʜᴀʀᴇ",
-                            query=f"app {f}",
-                            same_peer=False,
-                        ),
-                    ],
-                ],
-            ),
-        )
-    await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
-
 
 @in_pattern("mods", owner=True)
 async def _(e):
@@ -319,9 +270,7 @@ async def xda_dev(event):
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
     le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
-    async with aiohttp.ClientSession() as requests:
-        async with requests.get(le) as out:
-            ct = await out.read()
+    ct = await async_searcher(ct, re_content=True)
     ml = bs(ct, "html.parser", from_encoding="utf-8")
     ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
     out = []
@@ -340,3 +289,56 @@ async def xda_dev(event):
         )
     uppar = "No Results Found :(" if not out else "|| XDA Search Results ||"
     await event.answer(out, switch_pm=uppar, switch_pm_param="start")
+
+
+
+@in_pattern("app", owner=True)
+async def _(e):
+    try:
+        f = e.text.split(" ", maxsplit=1)[1]
+    except IndexError:
+        await e.answer(
+            [], switch_pm="App search. Enter app name!", switch_pm_param="start"
+        )
+    foles = []
+    base_uri= "https://play.google.com"
+    url = f"{base_uri}/store/search?q={f.replace(' ', '%20')}&c=apps"
+    aap = await async_searcher(url, re_content=True)
+    b_ = bs(aap, "html.parser", from_encoding="utf-8")
+    aap = b_.find_all("div", "Vpfmgd")
+    for z in aap[:25]:
+        url = base_uri + z.find("a")["href"]
+        scra = await async_searcher(url, re_content=True)
+        bp = bs(scra, "html.parser", from_encoding="utf-8")
+        name = z.find("div", "WsMG1c nnK0zc")["title"]
+        desc = str(bp.find("div", jsname="sngebd")).replace('<div jsname="sngebd">', "").replace("<br/>", "\n").replace("</div>", "")[:300] + "..."
+        dev = z.find("div","KoLSrc").text
+        icon = z.find("img", "T75of QNCnCf")["data-src"]
+        text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({icon})\n"
+        text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
+        text += f"**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`"
+        foles.append(
+            await e.builder.article(
+                title=name,
+                description=dev,
+                thumb=wb(icon, 0, "image/jpeg", []),
+                text=text,
+                link_preview=True,
+                buttons=[
+                    [Button.url("Lɪɴᴋ", url=url)],
+                    [
+                        Button.switch_inline(
+                            "Mᴏʀᴇ Aᴘᴘs",
+                            query="app ",
+                            same_peer=True,
+                        ),
+                        Button.switch_inline(
+                            "Sʜᴀʀᴇ",
+                            query=f"app {f}",
+                            same_peer=False,
+                        ),
+                    ],
+                ],
+            ),
+        )
+    await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
