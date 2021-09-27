@@ -11,7 +11,7 @@ Incoming Message(s) forwarder.
 """
 
 from telethon import events
-
+from pyUltroid.functions.helper import inline_mention
 from . import *
 
 # if incoming
@@ -26,4 +26,6 @@ async def on_new_mssg(event):
     if event.text.startswith("/") or who == OWNER_ID:
         return
     xx = await event.forward_to(OWNER_ID)
+    if event.fwd_from:
+        await xx.reply(f"From **{inline_mention(event.sender)}** [`{event.sender_id}`]")
     add_stuff(xx.id, who)
