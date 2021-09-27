@@ -21,9 +21,13 @@ import os
 import re
 
 from pyUltroid.dB.filter_db import *
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
+
+from . import *
+from ._builder import something
 
 from . import *
 
@@ -35,6 +39,9 @@ async def af(e):
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(e, get_string("flr_1"))
+    btn = None
+    if wt.buttons:
+        btn = format_btn(wt.buttons)
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -51,11 +58,17 @@ async def af(e):
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
-            add_filter(int(chat), wrd, wt.text, m)
+            txt = wt.text
+            if not btn:
+                txt, btn = get_msg_button(wt.text)
+            add_filter(int(chat), wrd, txt, m, btn)
         else:
-            add_filter(int(chat), wrd, None, m)
+            add_filter(int(chat), wrd, None, m, btn)
     else:
-        add_filter(int(chat), wrd, wt.text, None)
+        txt = wt.text
+        if not btn:
+            txt, btn = get_msg_button(wt.text)
+        add_filter(int(chat), wrd, txt, None, btn)
     await eor(e, get_string("flr_4").format(wrd))
 
 
@@ -94,4 +107,7 @@ async def fl(e):
                 if k:
                     msg = k["msg"]
                     media = k["media"]
+                    if k.get("button"):
+                        btn = create_tl_btn(k["button"])
+                        return await something(e, msg, media, btn)
                     await e.reply(msg, file=media)
