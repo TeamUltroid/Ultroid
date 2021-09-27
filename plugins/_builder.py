@@ -52,6 +52,8 @@ async def something(e, msg, media, button, reply=True):
     STUFF.update({num: {"msg": msg, "media": media, "button": button}})
     try:
         res = await e.client.inline_query(asst.me.username, f"stf{num}")
-        return await res[0].click(e.chat_id, reply_to=e if reply else None, hide_via=True, silent=True)
+        return await res[0].click(
+            e.chat_id, reply_to=e if reply else None, hide_via=True, silent=True
+        )
     except Exception as er:
         LOGS.info(er)
