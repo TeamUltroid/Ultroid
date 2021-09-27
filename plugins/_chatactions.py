@@ -15,12 +15,12 @@ from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.username_db import get_username, update_username
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.functions.tools import get_chatbot_reply
+from pyUltroid.functions.tools import get_chatbot_reply, create_tl_btn
 from telethon import events
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
-
+from ._builder import something
 from . import LOG_CHANNEL, LOGS, asst, types, udB, ultroid_bot
 
 
@@ -92,11 +92,11 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             username = f"@{uu}" if uu else mention
             wel = get_welcome(ult.chat_id)
             msgg = wel["welcome"]
-            med = wel["media"]
+            med = wel["media"] or None
             userid = user.id
+            msg = None
             if msgg:
-                send = await ult.reply(
-                    msgg.format(
+                msg = msgg.format(
                         mention=mention,
                         group=title,
                         count=count,
@@ -104,7 +104,13 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
                         fullname=fullname,
                         username=username,
                         userid=userid,
-                    ),
+                    )
+            if wel.get("button"):
+                btn = create_tl_btn(wel["button"])
+                await something(ult, msg, med, btn)
+            elif msg:
+                send = await ult.reply(
+                    msg,
                     file=med,
                 )
                 await asyncio.sleep(150)
@@ -127,23 +133,29 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         msgg = wel["goodbye"]
         med = wel["media"]
         userid = user.id
+        msg = None
         if msgg:
-            send = await ult.reply(
-                msgg.format(
-                    mention=mention,
-                    group=title,
-                    count=count,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    userid=userid,
-                ),
-                file=med,
-            )
-            await asyncio.sleep(150)
-            await send.delete()
+            msg = msgg.format(
+                        mention=mention,
+                        group=title,
+                        count=count,
+                        name=name,
+                        fullname=fullname,
+                        username=username,
+                        userid=userid,
+                    )
+        if wel.get("button"):
+                btn = create_tl_btn(wel["button"])
+                await something(ult, msg, med, btn)
+        elif msg:
+                send = await ult.reply(
+                    msg,
+                    file=med,
+                )
+                await asyncio.sleep(150)
+                await send.delete()
         else:
-            await ult.reply(file=med)
+                await ult.reply(file=med)
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
