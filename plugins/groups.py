@@ -202,7 +202,7 @@ async def _(event):
             else:
                 n += 1
         if (
-            instance(i.participant, ChannelParticipantAdmin)
+            isinstance(i.participant, ChannelParticipantAdmin)
             and i.participant.admin_rights.anonymous
         ):
             # Ignore Anonymous Admin as official clients don't count
