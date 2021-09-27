@@ -297,8 +297,13 @@ async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer(
-            [], switch_pm="App search. Enter app name!", switch_pm_param="start"
+        swa = "App search. Enter app name!"
+        res = []
+        if APP_CACHE:
+            [res.append(APP_CACHE[a][0]) for a in APP_CACHE.keys()]
+            swa= "Recent Searches.."
+        return await e.answer(
+            res, switch_pm=swa, switch_pm_param="start"
         )
     try:
         return await e.answer(
