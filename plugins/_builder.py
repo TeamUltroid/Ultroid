@@ -24,19 +24,51 @@ async def ibuild(e):
         txt = "Hey!"
     if pic:
         try:
-            if pic.endswith((".jpg", ".mp4")):
-                results = [
-                    await builder.photo(pic, text=txt, buttons=btn, link_preview=False)
-                ]
+            include_media = True
+            mime_type, _pic = None, None
+            cont, results = None, None
+            try:
+                ext = pic.split(".")[-1].lower()
+            except:
+                ext = None
+            if ext in ["img", "jpg", "png"]:
+                _type = "photo"
+                mime_type = "image/jpg"
+            elif ext in ["mp4", "mkv", "gif"]:
+                mime_type = "video/mp4"
+                _type = "gif"
             else:
-                _pic = resolve_bot_file_id(pic)
+                try:
+                    _pic = resolve_bot_file_id(pic)
+                except:
+                    pass
+                if _pic:
+                    results = [
+                        await builder.document(
+                            _pic,
+                            title="Ultroid Op",
+                            text=txt,
+                            description="@TheUltroid",
+                            buttons=btn,
+                            link_preview=False,
+                        )
+                    ]
+                else:
+                    _type = "article"
+                    include_media = False
+            if not results:
+                if include_media:
+                    cont = types.InputWebDocument(pic, 0, mime_type, [])
                 results = [
-                    await builder.document(
-                        _pic,
+                    await builder.article(
                         title="Ultroid Op",
+                        type=_type,
                         text=txt,
-                        description="@TheUltroid",
+                        description="@TeamUltroid",
+                        include_media=include_media,
                         buttons=btn,
+                        thumb=cont,
+                        content=cont,
                         link_preview=False,
                     )
                 ]
