@@ -39,6 +39,7 @@ async def an(e):
         return await eor(e, "Give word to set as snip and reply to a message.")
     if "$" in wrd:
         wrd = wrd.replace("$", "")
+    btn = None
     if wt.buttons:
         btn = format_btn(wt.buttons)
     if wt and wt.media:
@@ -110,11 +111,11 @@ async def notes(e):
             if rep:
                 if k.get("button"):
                     btn = create_tl_btn(k["button"])
-                    return await something(k, msg, media, btn)
+                    return await something(rep, msg, media, btn)
                 await rep.reply(msg, file=media)
             else:
                 await e.delete()
                 if k.get("button"):
                     btn = create_tl_btn(k["button"])
-                    return await something(k, msg, media, btn, reply=None)
+                    return await something(e, msg, media, btn, reply=None)
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
