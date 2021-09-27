@@ -21,7 +21,6 @@
 """
 from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.types import (
-    ChannelParticipantAdmin,
     ChannelParticipantsKicked,
     UserStatusEmpty,
     UserStatusLastMonth,
