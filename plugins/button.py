@@ -27,8 +27,8 @@ async def butt(event):
     media, text = None, None
     if event.reply_to:
         wt = await event.get_reply_message()
-        if wut.text:
-            text = wut.text
+        if wt.text:
+            text = wt.text
         if wt.media:
             wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
