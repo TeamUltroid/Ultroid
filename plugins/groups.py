@@ -201,13 +201,6 @@ async def _(event):
                     pass
             else:
                 n += 1
-        if (
-            isinstance(i.participant, ChannelParticipantAdmin)
-            and i.participant.admin_rights.anonymous
-        ):
-            # Ignore Anonymous Admin as official clients don't count
-            p -= 1
-
     if input_str:
         required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
     else:
