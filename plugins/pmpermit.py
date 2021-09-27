@@ -565,7 +565,7 @@ async def unblockpm(unblock):
         # GetBlockedRequest return 20 users at most.
         if count < 20:
             return await eor(msg, f"__Unblocked {count} Users!__")
-        while not u_s.users:
+        while u_s.users:
             u_s = await unblock.client(GetBlockedRequest(0, 0))
             [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
             count += len(u_s.users)
