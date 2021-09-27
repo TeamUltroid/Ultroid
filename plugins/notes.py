@@ -25,7 +25,7 @@ import os
 from pyUltroid.dB.notes_db import *
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-
+from pyUltroid.functions.tools import get_msg_button , create_tl_btn, format_btn
 from . import *
 
 
@@ -38,6 +38,9 @@ async def an(e):
         return await eor(e, get_string("notes_1"), time=5)
     if "#" in wrd:
         wrd = wrd.replace("#", "")
+    btn = None
+    if wt.buttons:
+        btn = format_btn(wt.buttons)
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -55,11 +58,17 @@ async def an(e):
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
-            add_note(int(chat), wrd, wt.text, m)
+            txt = wt.text
+            if not btn:
+                txt, btn = get_msg_button(wt.text)
+            add_note(int(chat), wrd, txt, m, btn)
         else:
-            add_note(int(chat), wrd, None, m)
+            add_note(int(chat), wrd, None, m, btn)
     else:
-        add_note(int(chat), wrd, wt.text, None)
+       txt = wt.text
+       if not btn:
+           txt, btn = get_msg_button(wt.text)
+       add_note(int(chat), wrd, txt, None, btn)
     await eor(e, get_string("notes_2").format(wrd))
 
 
@@ -94,4 +103,7 @@ async def notes(e):
         if k:
             msg = k["msg"]
             media = k["media"]
+            if k.get("button"):
+                btn = create_tl_btn(k["button"])
+                return await something(e, msg, media, btn)
             await e.reply(msg, file=media)
