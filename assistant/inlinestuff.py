@@ -288,8 +288,9 @@ async def xda_dev(event):
     uppar = "No Results Found :(" if not out else "|| XDA Search Results ||"
     await event.answer(out, switch_pm=uppar, switch_pm_param="start")
 
- 
+
 APP_CACHE = {}
+
 
 @in_pattern("app", owner=True)
 async def _(e):
@@ -300,7 +301,9 @@ async def _(e):
             [], switch_pm="App search. Enter app name!", switch_pm_param="start"
         )
     try:
-        return await e.answer(APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start")
+        return await e.answer(
+            APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start"
+        )
     except KeyError:
         pass
     foles = []
@@ -350,5 +353,5 @@ async def _(e):
                 ],
             ),
         )
-    APP_CACHE.update({f:foles})
+    APP_CACHE.update({f: foles})
     await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
