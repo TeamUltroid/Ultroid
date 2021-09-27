@@ -41,15 +41,19 @@ async def create_instagram_client(event):
         cl.login(username, password)
     except EOFError:
         await event.edit(f"Check Pm From @{asst.me.username}")
-        log = int(udB["LOG_CHANNEL"])
-        async with asst.conversation(ultroid_bot.uid, timeout=60*2) as conv:
-            msg = await conv.send_message("Enter The **Instagram Verification Code** Sent to Your Email..")
+        int(udB["LOG_CHANNEL"])
+        async with asst.conversation(ultroid_bot.uid, timeout=60 * 2) as conv:
+            await conv.send_message(
+                "Enter The **Instagram Verification Code** Sent to Your Email.."
+            )
             ct = await conv.get_response()
             while not ct.text.isdigit():
                 if ct.message == "/cancel":
                     await conv.send_message("Canceled Verification!")
                     return
-                await conv.send_message("CODE SHOULD BE INTEGER\n\nUse /cancel to Cancel Process...")
+                await conv.send_message(
+                    "CODE SHOULD BE INTEGER\n\nUse /cancel to Cancel Process..."
+                )
         cl.login(username, password, verification_code=ct.text)
     except Exception as er:
         LOGS.exception(er)
@@ -70,7 +74,7 @@ async def insta_dl(e):
         text = replied.message
     else:
         return await eor(tt, "Provide a Link to Download...")
-    
+
     CL = await create_instagram_client(un, up)
     if CL:
         try:
