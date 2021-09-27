@@ -29,7 +29,7 @@ async def ibuild(e):
             cont, results = None, None
             try:
                 ext = pic.split(".")[-1].lower()
-            except:
+            except BaseException:
                 ext = None
             if ext in ["img", "jpg", "png"]:
                 _type = "photo"
@@ -40,7 +40,7 @@ async def ibuild(e):
             else:
                 try:
                     _pic = resolve_bot_file_id(pic)
-                except:
+                except BaseException:
                     pass
                 if _pic:
                     results = [
