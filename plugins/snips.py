@@ -25,6 +25,8 @@ from pyUltroid.dB.snips_db import *
 from pyUltroid.misc import sudoers
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from ._builder import something
 
 from . import *
 
@@ -37,6 +39,8 @@ async def an(e):
         return await eor(e, "Give word to set as snip and reply to a message.")
     if "$" in wrd:
         wrd = wrd.replace("$", "")
+    if wt.buttons:
+        btn = format_btn(wt.buttons)
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -54,11 +58,17 @@ async def an(e):
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
-            add_snip(wrd, wt.text, m)
+            txt = wt.text
+            if not btn:
+                txt, btn = get_msg_button(wt.text)
+            add_snip(wrd, txt, m, btn)
         else:
-            add_snip(wrd, None, m)
+            add_snip(wrd, None, m, btn)
     else:
-        add_snip(wrd, wt.text, None)
+        txt = wt.text
+        if not btn:
+            txt, btn = get_msg_button(wt.text)
+        add_snip(wrd, txt, None, btn)
     await eor(e, f"Done : snip `${wrd}` Saved.")
 
 
@@ -98,7 +108,13 @@ async def notes(e):
             media = k["media"]
             rep = await e.get_reply_message()
             if rep:
+                if k.get("button"):
+                    btn = create_tl_btn(k["button"])
+                    return await something(k, msg, media, btn)
                 await rep.reply(msg, file=media)
             else:
-                await ultroid_bot.send_message(e.chat_id, msg, file=media)
                 await e.delete()
+                if k.get("button"):
+                    btn = create_tl_btn(k["button"])
+                    return await something(k, msg, media, btn, reply=None)
+                await ultroid_bot.send_message(e.chat_id, msg, file=media)
