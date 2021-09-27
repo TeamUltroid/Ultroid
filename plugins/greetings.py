@@ -67,27 +67,27 @@ async def setwel(event):
             add_welcome(event.chat_id, r.message, m)
         else:
             add_welcome(event.chat_id, None, m)
-        await eor(x, get_strings("grt_1"))
+        await eor(x, get_string("grt_1"))
     elif r and r.text:
         add_welcome(event.chat_id, r.message, None)
-        await eor(x, get_strings("grt_1"))
+        await eor(x, get_string("grt_1"))
     else:
-        await eor(x, get_strings("grt_3"), time=5)
+        await eor(x, get_string("grt_3"), time=5)
 
 
 @ultroid_cmd(pattern="clearwelcome$", groups_only=True)
 async def clearwel(event):
     if not get_welcome(event.chat_id):
-        return await eor(event, get_strings("grt_4"), time=5)
+        return await eor(event, get_string("grt_4"), time=5)
     delete_welcome(event.chat_id)
-    await eor(event, get_strings("grt_5"), time=5)
+    await eor(event, get_string("grt_5"), time=5)
 
 
 @ultroid_cmd(pattern="getwelcome$", groups_only=True)
 async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
-        return await eor(event, get_strings("grt_4"), time=5)
+        return await eor(event, get_string("grt_4"), time=5)
     msgg = wel["welcome"]
     med = wel["media"]
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
@@ -125,13 +125,13 @@ async def setgb(event):
         add_goodbye(event.chat_id, r.message, None)
         await eor(x, "`Goodbye note saved`")
     else:
-        await eor(x, get_strings("grt_7"), time=5)
+        await eor(x, get_string("grt_7"), time=5)
 
 
 @ultroid_cmd(pattern="cleargoodbye$", groups_only=True)
 async def clearwgb(event):
     if not get_goodbye(event.chat_id):
-        return await eor(event, get_strings("grt_6"), time=5)
+        return await eor(event, get_string("grt_6"), time=5)
     delete_goodbye(event.chat_id)
     await eor(event, "`Goodbye Note Deleted`", time=5)
 
@@ -140,7 +140,7 @@ async def clearwgb(event):
 async def listgd(event):
     wel = get_goodbye(event.chat_id)
     if not wel:
-        return await eor(event, get_strings("grt_6"), time=5)
+        return await eor(event, get_string("grt_6"), time=5)
     msgg = wel["goodbye"]
     med = wel["media"]
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
