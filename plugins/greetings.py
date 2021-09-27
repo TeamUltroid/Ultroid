@@ -103,7 +103,7 @@ async def listwel(event):
     med = wel["media"]
     if wel.get("button"):
         btn = create_tl_btn(wel["button"])
-        return await something(event, msgd, med, btn)
+        return await something(event, msgg, med, btn)
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
@@ -168,7 +168,7 @@ async def listgd(event):
     med = wel["media"]
     if wel.get("button"):
         btn = create_tl_btn(wel["button"])
-        return await something(event, msgd, med, btn)
+        return await something(event, msgg, med, btn)
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
