@@ -23,9 +23,10 @@
 import os
 
 from pyUltroid.dB.notes_db import *
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-from pyUltroid.functions.tools import get_msg_button , create_tl_btn, format_btn
+
 from . import *
 
 
@@ -65,10 +66,10 @@ async def an(e):
         else:
             add_note(int(chat), wrd, None, m, btn)
     else:
-       txt = wt.text
-       if not btn:
-           txt, btn = get_msg_button(wt.text)
-       add_note(int(chat), wrd, txt, None, btn)
+        txt = wt.text
+        if not btn:
+            txt, btn = get_msg_button(wt.text)
+        add_note(int(chat), wrd, txt, None, btn)
     await eor(e, get_string("notes_2").format(wrd))
 
 
