@@ -7,6 +7,8 @@ from . import *
 async def ibuild(e):
     n = e.pattern_match.group(1)
     builder = e.builder
+    if not n.isdigit():
+        return
     ok = STUFF.get(int(n))
     txt = ok.get("msg") or "Hey!"
     pic = ok.get("media") or None
