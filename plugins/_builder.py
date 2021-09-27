@@ -8,7 +8,7 @@ async def ibuild(e):
     n = e.pattern_match.group(1)
     builder = e.builder
     ok = STUFF.get(int(n))
-    txt = ok.get("msg") or None
+    txt = ok.get("msg") or "Hey!"
     pic = ok.get("media") or None
     btn = ok.get("button") or None
     if pic:
