@@ -24,7 +24,7 @@ async def ibuild(e):
         txt = "Hey!"
     if pic:
         try:
-            if ".jpg" in pic:
+            if pic.endwith((".jpg", ".mp4")):
                 results = [
                     await builder.photo(pic, text=txt, buttons=btn, link_preview=False)
                 ]
@@ -50,6 +50,8 @@ async def ibuild(e):
 
 
 async def something(e, msg, media, button, reply=True):
+    if e.client._bot:
+        return await e.reply(msg, file=media, buttons=button)
     num = len(STUFF) + 1
     STUFF.update({num: {"msg": msg, "media": media, "button": button}})
     try:
