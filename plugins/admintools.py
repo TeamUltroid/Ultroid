@@ -82,7 +82,7 @@ async def prmte(ult):
             title=rank,
         )
         await eod(
-            xx, get_string("pro2").format(inline_mention(user), ult.chat.title, rank)
+            xx, get_string("pro_2").format(inline_mention(user), ult.chat.title, rank)
         )
     except Exception as ex:
         return await xx.edit(f"`{ex}`")
