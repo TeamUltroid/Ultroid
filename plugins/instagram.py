@@ -13,6 +13,15 @@
 • `{i}instadata <username>`
   `Get Instagram Data of someone or self`
 
+• `{i}instaul <reply media/photo>`
+  `Upload Media to Instagram...`
+
+• `{i}igtv <reply media/photo>`
+  `Upload Media to Igtv...`
+
+• `{i}reels <reply media/photo>`
+  `Upload Media to Instagram reels...`
+
 • Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
   before using it..
 """
@@ -96,3 +105,32 @@ async def soon_(e):
         attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")],
     )
     await ew.delete()
+
+@ultroid_cmd(pattern="(instaul|reels|igtv) ?(.*)")
+async def insta_karbon(event):
+    cl = await create_instagram_client(event)
+    if not cl:
+        return await eor(event, "`Please Fill Instagram Credentials to Use This...`")
+    replied = await event.get_reply_message()
+    type_ = event.pattern_match.group(1)
+    caption = event.pattern_match.group(2) or "`Telegram To Instagram Upload\nBy Ultroid..`"
+    if not (replied and (replied.photo or replied.video)):
+        return await eor(event, "`Reply to Photo Or Video...`")
+    dle = await replied.download_media()
+    if replied.photo:
+        method = cl.photo_upload
+    elif type_ == "instaul":
+        method = cl.video_upload
+    elif type_ == "igtv":
+        method = cl.igtv_upload
+    elif type_ == "reels":
+        method = cl.clip_upload
+    else:
+        return await eor(event, "`Use In Proper Format...`")
+    msg = await eor(event, get_string("com_1"))
+    try:
+        uri = method(dle, caption=caption)
+        await msg.edit(f"_Uploaded To Instagram!__\n~ {uri.thumbnail_uri}")
+    except Exception as er:
+        LOGS.exception(er)
+        await msg.edit(er)
