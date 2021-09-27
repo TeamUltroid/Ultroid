@@ -33,11 +33,12 @@
 import os
 
 from pyUltroid.dB.greetings_db import *
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
-from ._builder import something
+
 from . import *
+from ._builder import something
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
@@ -46,7 +47,7 @@ Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{u
 async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    btn =None
+    btn = None
     if r.buttons:
         btn = format_btn(r.buttons)
     if r and r.media:
@@ -111,7 +112,7 @@ async def listwel(event):
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    btn =None
+    btn = None
     if r.buttons:
         btn = format_btn(r.buttons)
     if r and r.media:
