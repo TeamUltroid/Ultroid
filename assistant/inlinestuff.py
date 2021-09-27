@@ -301,10 +301,8 @@ async def _(e):
         res = []
         if APP_CACHE:
             [res.append(APP_CACHE[a][0]) for a in APP_CACHE.keys()]
-            swa= "Recent Searches.."
-        return await e.answer(
-            res, switch_pm=swa, switch_pm_param="start"
-        )
+            swa = "Recent Searches.."
+        return await e.answer(res, switch_pm=swa, switch_pm_param="start")
     try:
         return await e.answer(
             APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start"
