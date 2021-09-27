@@ -19,49 +19,8 @@
 
 import os
 
-import instagrapi
 
 from . import *
-
-CLIENT = []
-
-
-async def create_instagram_client(event):
-    try:
-        return CLIENT[0]
-    except IndexError:
-        pass
-    username = udB.get("INSTA_USERNAME")
-    password = udB.get("INSTA_PASSWORD")
-    if not (username and password):
-        return
-    settings = eval(udB.get("INSTA_SET")) if udB.get("INSTA_SET") else {}
-    cl = instagrapi.Client(settings)
-    try:
-        raise EOFError
-        cl.login(username, password)
-    except EOFError:
-        await event.edit(f"Check Pm From @{asst.me.username}")
-        int(udB["LOG_CHANNEL"])
-        async with asst.conversation(ultroid_bot.uid, timeout=60 * 2) as conv:
-            await conv.send_message(
-                "Enter The **Instagram Verification Code** Sent to Your Email.."
-            )
-            ct = await conv.get_response()
-            while not ct.text.isdigit():
-                if ct.message == "/cancel":
-                    await conv.send_message("Canceled Verification!")
-                    return
-                await conv.send_message(
-                    "CODE SHOULD BE INTEGER\n\nUse /cancel to Cancel Process..."
-                )
-        cl.login(username, password, verification_code=ct.text)
-    except Exception as er:
-        LOGS.exception(er)
-        return await eor(event, str(er))
-    CLIENT.append(cl)
-    udB.set("INSTA_SET", str(cl.get_settings()))
-    return cl
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
