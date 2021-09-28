@@ -162,9 +162,7 @@ async def ex_aud(e):
             title=reply.file.name.split(".")[0]
             if reply.file.name
             else "Extracted Audio",
-            performer=reply.file.performer
-            if reply.file.performer
-            else artist,
+            performer=reply.file.performer if reply.file.performer else artist,
         )
     ]
     f_time = time.time()
