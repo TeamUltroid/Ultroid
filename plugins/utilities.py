@@ -65,6 +65,7 @@ from datetime import datetime as dt
 import requests
 from pyUltroid.dB.gban_mute_db import *
 from pyUltroid.misc._assistant import asst_cmd
+from pyUltroid.functions.info import *
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
@@ -112,8 +113,7 @@ async def date(event):
 async def info(event):
     ok = await eor(event, get_string("com_1"))
     try:
-        chat = await get_chatinfo(event)
-        caption = await fetch_info(chat, event)
+        caption = await fetch_info(event)
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
         LOGS.info(e)
