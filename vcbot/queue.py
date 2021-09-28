@@ -35,7 +35,7 @@ async def queue(event):
         return await eor(event, "• Nothing in queue!")
     await eor(event, "• <strong>Queue:</strong>\n\n{}".format(q), parse_mode="html")
 
-@vc_asst("queue")
+@vc_asst("clearqueue")
 async def queue(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
