@@ -20,6 +20,7 @@ from pyUltroid.misc import CMD_HELP, owner_and_sudos
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
 from telethon.tl.types import InputWebDocument
+from telethon.utils import resolve_bot_file_id
 
 from . import HNDLR, OWNER_NAME, get_string, start_time, udB
 from ._help import _main_help_menu
@@ -649,9 +650,8 @@ def page_num(page_number, loaded_plugins, prefix, type_):
     return pairs
 
 
-from telethon.utils import resolve_bot_file_id
-
 # --------------------------------------------------------------------------------- #
+
 
 @in_pattern("stf(.*)", owner=True)
 async def ibuild(e):
