@@ -14,7 +14,7 @@
 
 from sys import modules
 
-from . import eor, ultroid_cmd
+from . import eor, ultroid_cmd, HNDLR
 
 fonts = ["small caps", "monospace", "double stroke", "script royal"]
 _default = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
