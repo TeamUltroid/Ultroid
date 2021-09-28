@@ -138,4 +138,4 @@ async def insta_karbon(event):
         await msg.edit(f"_Uploaded To Instagram!__\n~ {uri.thumbnail_uri}")
     except Exception as er:
         LOGS.exception(er)
-        await msg.edit(er)
+        await msg.edit(str(er))
