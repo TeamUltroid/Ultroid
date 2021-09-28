@@ -28,8 +28,7 @@ import time
 from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
@@ -120,10 +119,7 @@ async def download(event):
             )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t != "":
-        await eor(xx, get_string("udl_2").format(file_name, t))
-    else:
-        await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
+    await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
 
 
 @ultroid_cmd(
@@ -164,29 +160,11 @@ async def download(event):
                     title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
                     and " | stream" in hmm
                 ):
-                    metadata = extractMetadata(createParser(res.name))
-                    wi = 512
-                    hi = 512
-                    duration = 0
-                    artist = ""
-                    try:
-                        if metadata.has("width"):
-                            wi = metadata.get("width")
-                        if metadata.has("height"):
-                            hi = metadata.get("height")
-                        if metadata.has("duration"):
-                            duration = metadata.get("duration").seconds
-                        if metadata.has("artist"):
-                            artist = metadata.get("artist")
-                        else:
-                            artist = udB.get("artist") or ultroid_bot.first_name
-                    except AttributeError:
-                        return await event.client.send_file(
-                            event.chat_id,
-                            res,
-                            caption=f"`{kk}/{title}`",
-                            supports_streaming=True,
-                        )
+                    data = await metadata(res.name)
+                    wi = data["width"]
+                    hi = data["height"]
+                    duration = data["duration"]
+                    artist = data["performer"]
                     if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                         attributes = [
                             DocumentAttributeVideo(
@@ -238,29 +216,11 @@ async def download(event):
             if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                 hmm = " | stream"
             if " | stream" in hmm:
-                metadata = extractMetadata(createParser(res.name))
-                wi = 512
-                hi = 512
-                duration = 0
-                artist = ""
-                try:
-                    if metadata.has("width"):
-                        wi = metadata.get("width")
-                    if metadata.has("height"):
-                        hi = metadata.get("height")
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
-                    if metadata.has("artist"):
-                        artist = metadata.get("artist")
-                    else:
-                        artist = udB.get("artist") or ultroid_bot.first_name
-                except AttributeError:
-                    await event.client.send_file(
-                        event.chat_id,
-                        res,
-                        caption=f"`{title}`",
-                        supports_streaming=True,
-                    )
+                data = await metadata(res.name)
+                wi = data["width"]
+                hi = data["height"]
+                duration = data["duration"]
+                artist = data["performer"]
                 if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                     attributes = [
                         DocumentAttributeVideo(
