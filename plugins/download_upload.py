@@ -118,7 +118,7 @@ async def download(event):
                 ),
             )
     e = dt.now()
-    t = time_formatter(((e - s).seconds) * 1000)
+    time_formatter(((e - s).seconds) * 1000)
     await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
 
 
