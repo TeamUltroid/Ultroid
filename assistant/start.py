@@ -6,11 +6,12 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from datetime import datetime
-
+import time
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
+from strings.strings import get_string
 from telethon.utils import get_display_name
 
 from . import *
@@ -70,11 +71,11 @@ async def closet(lol):
 
 @asst_cmd(pattern="ping$")
 async def _(event):
-    start = datetime.now()
+    start = time.time()
     msg = await event.reply("Pong!")
-    end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    await msg.edit(f"**Pong!!**\n `{ms} ms`")
+    end = round((time.time() - start)*1000)
+    uptime = time_formatter((time.time() - start_time) * 1000)
+    await msg.edit(get_string("ping").format(end, uptime))
 
 
 @asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
