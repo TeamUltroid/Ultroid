@@ -73,8 +73,7 @@ async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
         return await eor(e, get_string("asstcmd_2"), time=5)
-    if wrd.startswith("/"):
-        wrd = wrd.replace("/", "")
+    wrd = wrd.replace("/", "")
     rem_cmd(wrd)
     await eor(e, get_string("asstcmd_3").format(wrd))
 
