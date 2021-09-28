@@ -68,6 +68,15 @@ async def closet(lol):
     await lol.delete()
 
 
+@asst_cmd(pattern="ping$")
+async def _(event):
+    start = datetime.now()
+    msg = await event.reply("Pong!")
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
+    await msg.edit(f"**Pong!!**\n `{ms} ms`")
+
+
 @asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
     if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
