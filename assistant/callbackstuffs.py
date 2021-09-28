@@ -9,7 +9,6 @@ import re
 import sys
 from os import execl, remove
 from random import choice
-
 from pyUltroid.functions.gdrive import authorize, create_token_file
 from pyUltroid.functions.tools import get_paste
 from telegraph import Telegraph
@@ -143,6 +142,7 @@ async def changes(okk):
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     if Carbon:
+        await okk.edit("• Writing Changelogs 📝 •")
         carbon = Carbon(
             base_url="https://carbonara.vercel.app/api/cook",
             code=tl_chnglog,
