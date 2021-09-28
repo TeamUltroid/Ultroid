@@ -22,7 +22,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
 from . import LOG_CHANNEL, LOGS, asst, types, udB, ultroid_bot
-from ._builder import something
+from ._inline import something
 
 
 @ultroid_bot.on(events.ChatAction())
