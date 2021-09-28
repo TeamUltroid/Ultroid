@@ -66,7 +66,7 @@ from . import *
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
-    user, rank = await get_user_info(ult)
+    user, rank = await get_uinfo(ult)
     rank = rank or "Admin"
     if not user:
         return await xx.edit(get_string("pro_1"))
@@ -96,7 +96,7 @@ async def prmte(ult):
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
-    user, rank = await get_user_info(ult)
+    user, rank = await get_uinfo(ult)
     if not rank:
         rank = "Not Admin"
     if not user:
@@ -120,7 +120,7 @@ async def dmote(ult):
 @ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
 async def bban(ult):
     xx = await eor(ult, get_string("com_1"))
-    user, reason = await get_user_info(ult)
+    user, reason = await get_uinfo(ult)
     if not user:
         return await xx.edit(get_string("ban_1"))
     if user.id in DEVLIST:
@@ -148,7 +148,7 @@ async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
         return
-    user, reason = await get_user_info(ult)
+    user, reason = await get_uinfo(ult)
     if not user:
         return await xx.edit(get_string("unban_1"))
     try:
@@ -174,7 +174,7 @@ async def kck(ult):
         return
     ml = ult.text.split(" ", maxsplit=1)[0]
     xx = await eor(ult, get_string("com_1"))
-    user, reason = await get_user_info(ult)
+    user, reason = await get_uinfo(ult)
     if not user:
         return await xx.edit(get_string("adm_1"))
     if user.id in DEVLIST:
