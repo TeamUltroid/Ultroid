@@ -4,13 +4,13 @@ aiohttp==3.7.4.post0
 akinator.py==5.0.0
 apscheduler==3.7.0
 cloudscraper==1.2.58
-enhancer==0.1b0
+enhancer==0.2b0
 faker==8.12.1
 fonttools==4.26.2
 gdown==3.13.0
 gingerit==0.8.2
 git+https://github.com/buddhhu/img2html.git
-git+https://github.com/New-dev0/instagrapi
+git+https://github.com/New-dev0/instagrapi.git
 git+https://github.com/1danish-00/carbon-now-sh-api-wrapper.git
 git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
