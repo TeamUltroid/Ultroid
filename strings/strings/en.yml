@@ -215,10 +215,25 @@ chats_4: "Your [{}]({}) Group Made Boss!"
 chats_5: "Join @TeamUltroid"
 chats_6: "Your {} Group/Channel Has been made Boss!"
 
+# clean action
+clan_1: "Added Clean Action Setting For this Chat"
+clan_2: "Removed Clean Action Setting For this Chat"
+clan_3: "`Invalid ID`"
+clan_4: "`No Chat Added`"
+
 # converter
 cvt_1: "`Reply to any media/Document.`"
 cvt_2: "Give The name and extension of file"
 cvt_3: "`Reply to media..`"
+cvt_4: "`Reply to img or file with thumbnail.`"
+cvt_5: "Replied file has no thumbnail.`"
+cvt_6: "Added [This]({}) As Your Custom Thumbnail"
+cvt_7: "`Reply to a readable file`"
+cvt_8: "`Not A Readable File.`"
+
+# eventsofday
+eod_1: "🎊 **Events of the Day**\n\n"
+eod_2: "• **Events for {}/2021**\n\n"
 
 # core
 core_1: "Module Found"
@@ -239,6 +254,19 @@ core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴ
 core_16: "`Give name of plugin which u want to load`"
 core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
 core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
+
+# devtools
+devs_1: "`No cmd given`"
+devs_2: "`Give some python cmd`"
+devs_3: "`Give Some C++ Code..`"
+
+# dm
+dm_1: "`Give Chat username or id where to send.`"
+dm_2: "`Give text to send or reply to msg`"
+dm_3: "`⚜️Message Delivered!⚜️`"
+dm_4: f"Error : {}\nRead Usage : `{}help dm`"
+dm_5: "`Check in Private.`"
+dm_6: "`No message found to deliver :(`"
 
 # fake action
 fka_1: "Starting Fake Action For {} sec."
@@ -335,6 +363,9 @@ upd_7: "`Fast Soft Updating...`"
 udl_1: "`Reply to the file/media you want to download...`"
 udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
 udl_3: "`Give a specific path to file`"
+udl_4: "`Trying to download...`"
+udl_5: "`You forgot to give link :(`"
+udl_6: "`This Directory is Empty.`"
 
 # words
 wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
