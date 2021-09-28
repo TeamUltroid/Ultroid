@@ -29,7 +29,7 @@ _script_royal = "𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜�
 async def _(e):
     input = e.pattern_match.group(1)
     reply = await e.get_reply_message()
-    help = modules[__name__].__doc__.format(i=HNDLR))
+    help = modules[__name__].__doc__.format(i=HNDLR)
     if not input:
         m = "**Available Fonts**\n\n"
         for x in fonts:
