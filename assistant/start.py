@@ -5,14 +5,16 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from datetime import datetime
 import time
+from datetime import datetime
+
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
-from strings.strings import get_string
 from telethon.utils import get_display_name
+
+from strings.strings import get_string
 
 from . import *
 
@@ -73,7 +75,7 @@ async def closet(lol):
 async def _(event):
     start = time.time()
     msg = await event.reply("Pong!")
-    end = round((time.time() - start)*1000)
+    end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await msg.edit(get_string("ping").format(end, uptime))
 
