@@ -31,7 +31,6 @@
 import os
 import sys
 import time
-from datetime import datetime as dt
 from platform import python_version as pyver
 
 from git import Repo
