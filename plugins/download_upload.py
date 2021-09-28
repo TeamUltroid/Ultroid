@@ -144,6 +144,7 @@ async def download(event):
         title = hmm
     s = dt.now()
     tt = time.time()
+    ko = kk
     if not kk:
         return await eor(xx, get_string("udl_3"), time=5)
     if os.path.isdir(kk):
@@ -305,20 +306,17 @@ async def download(event):
             return await eor(xx, str(ve))
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t == "":
-        await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-    elif os.path.isdir(kk):
+    if os.path.isdir(ko):
         size = 0
-        for path, dirs, files in os.walk(kk):
+        for path, dirs, files in os.walk(ko):
             for f in files:
                 fp = os.path.join(path, f)
                 size += os.path.getsize(fp)
-        c = len(os.listdir(kk))
+        c = len(os.listdir(ko))
         await xx.delete()
         await event.client.send_message(
             event.chat_id,
-            f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+            f"Uploaded `{ko}` Folder, Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
         )
     else:
         await eor(xx, f"Uploaded `{kk}` in `{t}`")
