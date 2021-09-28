@@ -27,7 +27,7 @@ from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
 
 from . import *
-from ._builder import something
+from ._inline import something
 
 
 @ultroid_cmd(pattern="addfilter ?(.*)")
