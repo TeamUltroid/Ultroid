@@ -19,7 +19,7 @@ from . import *
 
 
 @vc_asst("queue")
-async def queue(event):
+async def lstqueue(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
         if not chat.startswith("@"):
@@ -36,7 +36,7 @@ async def queue(event):
     await eor(event, "• <strong>Queue:</strong>\n\n{}".format(q), parse_mode="html")
 
 @vc_asst("clearqueue")
-async def queue(event):
+async def clean_queue(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
         if not chat.startswith("@"):
@@ -49,4 +49,4 @@ async def queue(event):
         chat = event.chat_id
     if VC_QUEUE.get(chat):
         VC_QUEUE.pop(chat)
-    await eor(event, "`Cleaned All Queues In Chat`")
+    await eor(event, "`Cleaned All Queues In Chat`", time=5)
