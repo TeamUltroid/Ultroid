@@ -13,8 +13,9 @@
 """
 
 from . import eor, ultroid_cmd
+from sys import modules
 
-fonts = ["small caps ", "monospace ", "double stroke ", "script royal "]
+fonts = ["small caps", "monospace", "double stroke", "script royal"]
 _default = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 _small_caps = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘϙʀsᴛᴜᴠᴡxʏᴢABCDEFGHIJKLMNOPQRSTUVWXYZ"
 _monospace = "𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉"
@@ -28,31 +29,35 @@ _script_royal = "𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜�
 async def _(e):
     input = e.pattern_match.group(1)
     reply = await e.get_reply_message()
+    help = modules[__name__].__doc__.format(i=HNDLR))
     if not input:
         m = "**Available Fonts**\n\n"
         for x in fonts:
             m += f"• `{x}`\n"
         return await eor(e, m, time=5)
-    try:
-        font = input.split(":", maxsplit=1)[0]
-    except IndexError:
-        return await eor(e, "`font small caps : Your Message`", time=5)
-    if reply:
-        text = reply.message
-    else:
+    if not input and not reply:
+        return await eor(e, help)
+    if input and not reply:
         try:
-            text = input.split(":", maxsplit=1)[1]
+            _ = input.split(":", maxsplit=1)
+            font = _[0][:-1]
+            text = _[1]
         except IndexError:
-            return await eor(e, "`font small caps : Your Message`", time=5)
+            await eod(e, help)
+    elif reply and not input:
+        await eod(e, "`Give font dude :/`")
+    else:
+        font = input
+        text = reply.message
     if font not in fonts:
         return await eor(e, f"`{font} not in font list`.", time=5)
-    if font == "small caps ":
+    if font == "small caps":
         msg = gen_font(text, _small_caps)
-    elif font == "monospace ":
+    elif font == "monospace":
         msg = gen_font(text, _monospace)
-    elif font == "double stroke ":
+    elif font == "double stroke":
         msg = gen_font(text, _double_stroke)
-    elif font == "script royal ":
+    elif font == "script royal":
         msg = gen_font(text, _script_royal)
     await eor(e, msg)
 
