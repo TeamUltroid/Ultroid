@@ -22,8 +22,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
@@ -74,12 +73,10 @@ async def gen_sample(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = metadata.get("duration").seconds
-        hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-        wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-        height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-        width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+        data = await metadata(out)
+        width = data["width"]
+        height = data["height"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeVideo(
                 duration=duration, w=width, h=height, supports_streaming=True
@@ -195,12 +192,10 @@ async def gen_sample(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = metadata.get("duration").seconds
-        hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-        wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-        height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-        width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+        data = await metadata(out)
+        width = data["width"]
+        height = data["height"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeVideo(
                 duration=duration, w=width, h=height, supports_streaming=True
