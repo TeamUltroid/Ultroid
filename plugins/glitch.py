@@ -20,10 +20,11 @@ from . import *
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
     try:
-        import glitch_me
+        pass
     except ModuleNotFoundError:
-        await bash("git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
-    )
+        await bash(
+            "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
+        )
     reply = await e.get_reply_message()
     if not (reply and reply.media):
         return await eor(e, "Reply to any media")
