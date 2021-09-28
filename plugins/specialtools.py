@@ -34,8 +34,7 @@ from shutil import rmtree
 import pytz
 import requests
 from bs4 import BeautifulSoup as bs
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.types import DocumentAttributeVideo
 
@@ -100,12 +99,10 @@ async def adaudroid(e):
         xxx,
         "Uploading " + out + "...",
     )
-    metadata = extractMetadata(createParser(out))
-    duration = metadata.get("duration").seconds
-    hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-    wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-    height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-    width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+    data = await metadata(out)
+    width = data["width"]
+    height = data["height"]
+    duration = data["duration"]
     attributes = [
         DocumentAttributeVideo(
             duration=duration, w=width, h=height, supports_streaming=True
