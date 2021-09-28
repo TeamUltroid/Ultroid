@@ -12,8 +12,9 @@
     To get list of fonts
 """
 
-from . import eor, ultroid_cmd
 from sys import modules
+
+from . import eor, ultroid_cmd
 
 fonts = ["small caps", "monospace", "double stroke", "script royal"]
 _default = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
