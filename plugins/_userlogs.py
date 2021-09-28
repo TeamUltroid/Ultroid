@@ -43,7 +43,7 @@ async def all_messages_catcher(e):
     who_n = get_display_name(x)
     where_l = e.message.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    if x.username:
+    if hasattr(x, "username") and x.username:
         who_l = f"https://t.me/{x.username}"
         buttons.append([Button.url(who_n, who_l)])
     else:
@@ -125,20 +125,21 @@ async def when_asst_added_to_chat(event):
         return
     user = await event.get_user()
     chat = await event.get_chat()
-    if chat.username:
+    if hasattr(chat, "username") and chat.username:
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    if user and user.is_self:
-        tmp = event.added_by
-        buttons = Button.inline(
+    if not (user and user.is_self):
+        return
+    tmp = event.added_by
+    buttons = Button.inline(
             get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|bot"
-        )
-        return await asst.send_message(
+    )
+    await asst.send_message(
             int(udB.get("LOG_CHANNEL")),
             f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
             buttons=buttons,
-        )
+    )
 
 
 # log for user's new joins
@@ -150,7 +151,7 @@ async def when_ultd_added_to_chat(event):
     chat = await event.get_chat()
     if not (user and user.is_self):
         return
-    if chat.username:
+    if hasattr(chat, "username") and chat.username:
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
