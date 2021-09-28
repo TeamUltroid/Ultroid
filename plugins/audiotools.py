@@ -110,20 +110,18 @@ async def trim_aud(e):
             "Uploading " + out + "...",
         )
         metadata = extractMetadata(createParser(out))
-        duration = vido.file.duration or 0
+        duration = 0
         artist = udB.get("artist") or ultroid_bot.first_name
         try:
             if metadata.has("duration"):
                 duration = metadata.get("duration").seconds
-            if metadata.has("artist"):
-                artist = metadata.get("artist")
         except BaseException:
             pass
         attributes = [
             DocumentAttributeAudio(
                 duration=duration,
                 title=out.split(".")[0],
-                performer=artist,
+                performer=vido.file.performer if vido.file.performer else artist,
             )
         ]
         caption = get_string("audiotools_7").format(ss, dd)
@@ -167,7 +165,7 @@ async def ex_aud(e):
             title=reply.file.name.split(".")[0]
             if reply.file.name
             else "Extracted Audio",
-            performer=ultroid_bot.me.first_name,
+            performer=reply.file.performer if reply.file.performer else ultroid_bot.me.first_name,
         )
     ]
     f_time = time.time()
