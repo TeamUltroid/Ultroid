@@ -16,19 +16,14 @@ import os
 
 from . import *
 
-try:
-    import glitch_me
-except ModuleNotFoundError:
-    glitch_me = None
-
 
 @ultroid_cmd(pattern="glitch$")
 async def _(e):
-    if not glitch_me:
-        return await eor(
-            e,
-            "`glitch_me` is not Installed!\nInstall it to use this Command...\nInstallation Cmd - `pip3 install git+https://github.com/1Danish-00/glitch_me.git`",
-        )
+    try:
+        import glitch_me
+    except ModuleNotFoundError:
+        await bash("git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
+    )
     reply = await e.get_reply_message()
     if not (reply and reply.media):
         return await eor(e, "Reply to any media")
