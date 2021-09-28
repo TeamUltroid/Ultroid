@@ -39,8 +39,7 @@ from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
 from google_trans_new import google_translator
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
@@ -209,8 +208,8 @@ async def _(e):
         )
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
-        metadata = extractMetadata(createParser("circle.mp4"))
-        duration = metadata.get("duration").seconds
+        data = await metadata("circle.mp4")
+        duration = data["duration"]
         attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
