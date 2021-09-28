@@ -118,8 +118,8 @@ async def download(event):
                 ),
             )
     e = dt.now()
-    time_formatter(((e - s).seconds) * 1000)
-    await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
+    t = time_formatter(((e - s).seconds) * 1000)
+    await eor(xx, get_string("udl_2").format(file_name, t))
 
 
 @ultroid_cmd(
@@ -279,4 +279,4 @@ async def download(event):
             f"Uploaded `{ko}` Folder, Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
         )
     else:
-        await eor(xx, f"Uploaded `{kk}` in `{t}`")
+        await eor(xx, f"Uploaded `{ko}` in `{t}`")
