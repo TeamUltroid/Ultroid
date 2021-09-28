@@ -23,8 +23,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeAudio
 
 from . import *
@@ -109,14 +108,9 @@ async def trim_aud(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = 0
-        artist = udB.get("artist") or ultroid_bot.first_name
-        try:
-            if metadata.has("duration"):
-                duration = metadata.get("duration").seconds
-        except BaseException:
-            pass
+        data = await metadata(out)
+        artist = data["performer"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeAudio(
                 duration=duration,
@@ -159,15 +153,18 @@ async def ex_aud(e):
     cmd = f"ffmpeg -i {file.name} -vn -acodec copy {out_file}"
     o, err = await bash(cmd)
     os.remove(file.name)
+    data = await metadata(out_file)
+    artist = data["performer"]
+    duration = data["duration"]
     attributes = [
         DocumentAttributeAudio(
-            duration=reply.file.duration,
+            duration=reply.file.duration or duration,
             title=reply.file.name.split(".")[0]
             if reply.file.name
             else "Extracted Audio",
             performer=reply.file.performer
             if reply.file.performer
-            else ultroid_bot.me.first_name,
+            else artist,
         )
     ]
     f_time = time.time()
