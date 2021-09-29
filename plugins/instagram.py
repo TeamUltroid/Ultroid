@@ -179,15 +179,17 @@ async def bhoot_ayaa(event):
         try:
             me = rp["media_or_ad"]
             url = me["image_versions2"]["candidates"][1]["url"]
-            text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
-            res.append(
-            await event.builder.document(
-                title="Instagram",
-                file=url,
-                force_document=False,
-                #                supports_streaming=True,
-                text=text,
+            text = (
+                f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
             )
+            res.append(
+                await event.builder.document(
+                    title="Instagram",
+                    file=url,
+                    force_document=False,
+                    #                supports_streaming=True,
+                    text=text,
+                )
             )
         except Exception as er:
             LOGS.exception(er)
