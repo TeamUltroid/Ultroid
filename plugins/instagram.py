@@ -45,7 +45,7 @@ async def insta_dl(e):
     else:
         return await eor(tt, "Provide a Link to Download...")
 
-    CL = await create_instagram_client(un, up)
+    CL = await create_instagram_client(e)
     if CL:
         try:
             media = CL.video_download(CL.media_pk_from_url(text))
@@ -122,20 +122,25 @@ async def insta_karbon(event):
     if not (replied and (replied.photo or replied.video)):
         return await eor(event, "`Reply to Photo Or Video...`")
     dle = await replied.download_media()
+    title = None
     if replied.photo:
         method = cl.photo_upload
     elif type_ == "instaul":
         method = cl.video_upload
     elif type_ == "igtv":
         method = cl.igtv_upload
+        title = caption
     elif type_ == "reels":
         method = cl.clip_upload
     else:
         return await eor(event, "`Use In Proper Format...`")
     msg = await eor(event, get_string("com_1"))
     try:
-        uri = method(dle, caption=caption)
-        await msg.edit(f"_Uploaded To Instagram!__\n~ {uri.thumbnail_uri}")
+        if title:
+          uri = method(dle, caption=caption, title=title)
+        else:
+          uri = method(dle, caption=caption)
+        await msg.edit(f"_Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}", link_preview=False)
     except Exception as er:
         LOGS.exception(er)
         await msg.edit(str(er))
