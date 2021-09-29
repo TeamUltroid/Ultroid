@@ -29,7 +29,6 @@
     p text on random stickers.
 
 """
-import asyncio
 import io
 import os
 import random
