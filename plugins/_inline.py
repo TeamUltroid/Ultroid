@@ -703,7 +703,7 @@ async def ibuild(e):
                     include_media = False
             if not results:
                 if include_media:
-                    cont = types.InputWebDocument(pic, 0, mime_type, [])
+                    cont = InputWebDocument(pic, 0, mime_type, [])
                 results = [
                     await builder.article(
                         title="Ultroid Op",
