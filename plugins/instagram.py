@@ -50,7 +50,7 @@ async def insta_dl(e):
         try:
             media = CL.media_info(CL.media_pk_from_url(text))
             if media.media_type == 1:  # photo
-                media = Cl.photo_download(media)
+                media = CL.photo_download(media)
             elif media.media_type == 2 and media.product_type == "feed":  # video:
                 media = CL.video_download(media)
             elif media.media_type == 2 and media.product_type == "igtv":  # igtv:
