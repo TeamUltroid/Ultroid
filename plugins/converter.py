@@ -119,6 +119,8 @@ async def imak(event):
     if image.endswith((".webp", ".png")):
         c = Image.open(image)
         c.save(file)
+    elif image.endswith(".tgs"):
+        await bash(f"lottie_convert.py '{image}' {file}")
     else:
         img = cv2.VideoCapture(image)
         ult, roid = img.read()
