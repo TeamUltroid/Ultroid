@@ -19,7 +19,7 @@ from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
-from telethon.tl.types import InputWebDocument
+from telethon.tl.types import InputWebDocument, Message
 from telethon.utils import resolve_bot_file_id
 
 from . import HNDLR, LOGS, OWNER_NAME, asst, get_string, start_time, udB
@@ -734,7 +734,7 @@ async def something(e, msg, media, button, reply=True):
     try:
         res = await e.client.inline_query(asst.me.username, f"stf{num}")
         return await res[0].click(
-            e.chat_id, reply_to=e if reply else None, hide_via=True, silent=True
+            e.chat_id, reply_to=bool(isinstance(e, Message) and reply), hide_via=True, silent=True
         )
     except Exception as er:
         LOGS.info(er)
