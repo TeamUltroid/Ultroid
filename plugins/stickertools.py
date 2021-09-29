@@ -117,7 +117,7 @@ async def uconverter(event):
         file = "something.webp"
     else:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
-    await bash(f"lottie_convert.py {b} {file}")
+    await bash(f"lottie_convert.py '{b}' {file}")
     await event.client.send_file(event.chat_id, file, force_document=False)
     await xx.delete()
     os.remove(file)
@@ -390,16 +390,8 @@ async def ultdround(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
+        await bash(f"lottie_convert.py '{ultt}' {file}")
     elif ultt.endswith((".gif", ".mp4", ".mkv")):
         await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
