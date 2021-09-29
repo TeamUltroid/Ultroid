@@ -168,14 +168,15 @@ async def insta_karbon(event):
 @in_pattern(pattern="instatm", owner=True)
 async def bhoot_ayaa(event):
     if not udB.get("INSTA_SET"):
-      return await event.answer([], switch_pm="Fill Instagram Credentials First.", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="Fill Instagram Credentials First.", switch_pm_param="start"
+        )
     insta = create_instagram_client(event)
     posts = insta.get_timeline_feed()
     res = []
-    para = f"Showing {posts['num_results']} Feeds.."
+    f"Showing {posts['num_results']} Feeds.."
     for rp in posts["feed_items"]:
         me = rp["media_or_ad"]
         url = me["image_versions2"]["candidates"][1]["url"]
         res.append(await event.builder.document(title="Instagram", file=url))
     await event.answer(res, gallery=True)
-        
