@@ -179,5 +179,5 @@ async def bhoot_ayaa(event):
         me = rp["media_or_ad"]
         url = me["image_versions2"]["candidates"][1]["url"]
         text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me.code}"
-        res.append(await event.builder.document(title="Instagram", file=url, force_document=False, supports_streaming=True, text=))
+        res.append(await event.builder.document(title="Instagram", file=url, force_document=False, supports_streaming=True, text=text))
     await event.answer(res, gallery=True, switch_pm="Instagram", switch_pm_param="start")
