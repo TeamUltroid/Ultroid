@@ -121,11 +121,9 @@ async def gpoto(e):
     try:
         okla = await e.client.download_profile_photo(
             ult,
-            "profile.jpg",
-            download_big=True,
         )
         await a.delete()
         await e.reply(file=okla)
         os.remove(okla)
     except Exception as er:
-        await eor(e, f"ERROR - {er}")
+        await eor(e, f"ERROR : `{er}`")
