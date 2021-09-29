@@ -103,7 +103,7 @@ async def is_on(ult):
         await ult.delete()
         try:
             res = await ult.client.inline_query(asst.me.username, "alive")
-            return await res[0].click(ult.chat_id)
+            await res[0].click(ult.chat_id)
         except Exception as er:
             LOGS.info(er)
         return
@@ -142,7 +142,7 @@ async def is_on(ult):
 )
 async def _(event):
     start = time.time()
-    x = await eor(event, "`Pong !`")
+    x = await eor(event, "Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
