@@ -118,6 +118,8 @@ async def uconverter(event):
     else:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
     await bash(f"lottie_convert.py {b} {file}")
+    while not os.path.exists(file):
+        await asyncio.sleep(0.1)
     await event.client.send_file(event.chat_id, file, force_document=False)
     await xx.delete()
     os.remove(file)
