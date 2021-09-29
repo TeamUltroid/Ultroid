@@ -178,7 +178,7 @@ async def bhoot_ayaa(event):
     for rp in posts["feed_items"]:
         me = rp["media_or_ad"]
         url = me["image_versions2"]["candidates"][1]["url"]
-        text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me.code}"
+        text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
         res.append(
             await event.builder.document(
                 title="Instagram",
