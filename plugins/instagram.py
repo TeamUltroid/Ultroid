@@ -48,21 +48,22 @@ async def insta_dl(e):
     CL = await create_instagram_client(e)
     if CL:
         try:
-            media = CL.media_info(CL.media_pk_from_url(text))
+            mpk = CL.media_pk_from_url(text)
+            media = CL.media_info(mpk)
             if media.media_type == 1:  # photo
-                media = CL.photo_download(media)
+                media = CL.photo_download(mpk)
             elif media.media_type == 2 and media.product_type == "feed":  # video:
-                media = CL.video_download(media)
+                media = CL.video_download(mpk)
             elif media.media_type == 2 and media.product_type == "igtv":  # igtv:
-                media = CL.igtv_download(media)
+                media = CL.igtv_download(mpk)
             elif (
                 media.media_type == 2 and media.product_type == "clips"
             ):  # clips/reels:
-                media = CL.clip_download(media)
+                media = CL.clip_download(mpk)
             elif media.media_type == 8:  # Album:
-                media = CL.album_download(media)
+                media = CL.album_download(mpk)
             else:
-                LOGS.info(f"UnPredictable Media Type : {media}")
+                LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
             await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
             await tt.delete()
