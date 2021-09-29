@@ -176,10 +176,11 @@ async def bhoot_ayaa(event):
     res = []
     f"Showing {posts['num_results']} Feeds.."
     for rp in posts["feed_items"]:
-        me = rp["media_or_ad"]
-        url = me["image_versions2"]["candidates"][1]["url"]
-        text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
-        res.append(
+        try:
+            me = rp["media_or_ad"]
+            url = me["image_versions2"]["candidates"][1]["url"]
+            text = f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
+            res.append(
             await event.builder.document(
                 title="Instagram",
                 file=url,
@@ -187,7 +188,9 @@ async def bhoot_ayaa(event):
                 #                supports_streaming=True,
                 text=text,
             )
-        )
+            )
+        except Exception as er:
+            LOGS.exception(er)
     await event.answer(
         res, gallery=True, switch_pm="Instagram", switch_pm_param="start"
     )
