@@ -22,6 +22,9 @@
 • `{i}reels <reply video> <caption>`
   `Upload Media to Instagram reels...`
 
+• Go Inline with Your Assistant with query `instatm`
+   To get home page's posts...
+
 • Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
   before using it..
 """
