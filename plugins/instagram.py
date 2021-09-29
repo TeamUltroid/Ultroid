@@ -171,7 +171,7 @@ async def bhoot_ayaa(event):
         return await event.answer(
             [], switch_pm="Fill Instagram Credentials First.", switch_pm_param="start"
         )
-    insta = create_instagram_client(event)
+    insta = await create_instagram_client(event)
     posts = insta.get_timeline_feed()
     res = []
     f"Showing {posts['num_results']} Feeds.."
