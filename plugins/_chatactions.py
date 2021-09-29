@@ -165,7 +165,7 @@ async def chatBot_replies(e):
     if not isinstance(sender, types.User):
         return
     if e.text and chatbot_stats(e.chat_id, e.sender_id):
-        msg = await get_chatbot_reply(e, e.message.message)
+        msg = await get_chatbot_reply(e.message.message)
         if msg:
             await e.reply(msg)
     chat = await e.get_chat()
