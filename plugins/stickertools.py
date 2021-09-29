@@ -108,7 +108,7 @@ async def uconverter(event):
     if not (a and a.media and "animated" in mediainfo(a.media)):
         return await eor(event, get_string("sts_2"))
     input_ = event.pattern_match.group(1)
-    b = await event.client.download_media(a, "resources/downloads/")
+    b = await a.download_media("resources/downloads/")
     if "gif" in input_:
         file = "something.gif"
     elif "img" in input_:
@@ -118,8 +118,6 @@ async def uconverter(event):
     else:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
     await bash(f"lottie_convert.py {b} {file}")
-    while not os.path.exists(file):
-        await asyncio.sleep(0.1)
     await event.client.send_file(event.chat_id, file, force_document=False)
     await xx.delete()
     os.remove(file)
