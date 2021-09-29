@@ -13,13 +13,13 @@
 • `{i}instadata <username>`
   `Get Instagram Data of someone or self`
 
-• `{i}instaul <reply media/photo>`
+• `{i}instaul <reply video/photo> <caption>`
   `Upload Media to Instagram...`
 
-• `{i}igtv <reply media/photo>`
+• `{i}igtv <reply video> <caption>`
   `Upload Media to Igtv...`
 
-• `{i}reels <reply media/photo>`
+• `{i}reels <reply video> <caption>`
   `Upload Media to Instagram reels...`
 
 • Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
@@ -48,7 +48,20 @@ async def insta_dl(e):
     CL = await create_instagram_client(e)
     if CL:
         try:
-            media = CL.video_download(CL.media_pk_from_url(text))
+            media = CL.media_info(CL.media_pk_from_url(text))
+            if media.media_type == 1: # photo
+              media = Cl.photo_download(media)
+            elif media.media_type == 2 and media.product_type == "feed": # video:
+              media = CL.video_download(media)
+            elif media.media_type == 2 and media.product_type == "igtv": # igtv:
+              media = CL.igtv_download(media)
+            elif media.media_type == 2 and media.product_type == "clips": # clips/reels:
+              media = CL.clip_download(media)
+            elif media.media_type == 8: # Album:
+              media = CL.album_download(media)
+            else:
+              LOGS.info(f"UnPredictable Media Type : {media}")
+              return
             await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
             await tt.delete()
             os.remove(media)
@@ -117,9 +130,9 @@ async def insta_karbon(event):
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
     caption = (
-        event.pattern_match.group(2) or "`Telegram To Instagram Upload\nBy Ultroid..`"
+        event.pattern_match.group(2) or "Telegram To Instagram Upload\nBy Ultroid.."
     )
-    if not (replied and (replied.photo or replied.video)):
+    if not (replied and (replied.photo or (replied.video and not replied.gif))):
         return await eor(event, "`Reply to Photo Or Video...`")
     dle = await replied.download_media()
     title = None
@@ -141,7 +154,7 @@ async def insta_karbon(event):
         else:
             uri = method(dle, caption=caption)
         await msg.edit(
-            f"_Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+            f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
             link_preview=False,
         )
     except Exception as er:
