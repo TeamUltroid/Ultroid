@@ -184,7 +184,7 @@ async def bhoot_ayaa(event):
                 title="Instagram",
                 file=url,
                 force_document=False,
-                support_streaming=True,
+#                supports_streaming=True,
                 text=text,
             )
         )
