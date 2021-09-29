@@ -652,6 +652,7 @@ def page_num(page_number, loaded_plugins, prefix, type_):
 
 # --------------------------------------------------------------------------------- #
 
+STUFF = {}
 
 @in_pattern("stf(.*)", owner=True)
 async def ibuild(e):
