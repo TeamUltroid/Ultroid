@@ -137,10 +137,13 @@ async def insta_karbon(event):
     msg = await eor(event, get_string("com_1"))
     try:
         if title:
-          uri = method(dle, caption=caption, title=title)
+            uri = method(dle, caption=caption, title=title)
         else:
-          uri = method(dle, caption=caption)
-        await msg.edit(f"_Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}", link_preview=False)
+            uri = method(dle, caption=caption)
+        await msg.edit(
+            f"_Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+            link_preview=False,
+        )
     except Exception as er:
         LOGS.exception(er)
         await msg.edit(str(er))
