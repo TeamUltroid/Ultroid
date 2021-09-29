@@ -29,7 +29,7 @@
 import os
 
 from pyUltroid.functions.misc import create_instagram_client
-
+from telethon.tl.types import InputWebDocument
 from . import *
 
 
@@ -182,13 +182,15 @@ async def bhoot_ayaa(event):
             text = (
                 f"| Instagram Inline Search |\n~ https://instagram.com/p/{me['code']}"
             )
+            file = InputWebDocument(url, 0, "image/jpeg", [])
             res.append(
-                await event.builder.document(
+                await event.builder.article(
                     title="Instagram",
-                    file=url,
-                    force_document=False,
-                    #                supports_streaming=True,
+                    type="photo",
+                    content=file,
+                    thumb=file,
                     text=text,
+                    include_media=True,
                 )
             )
         except Exception as er:
