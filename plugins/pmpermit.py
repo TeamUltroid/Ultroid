@@ -729,7 +729,7 @@ async def blck_in(event):
 )
 async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
-    await ultroid(UnblockRequest(uid))
+    await ultroid_bot(UnblockRequest(uid))
     try:
         user_name = (await ultroid_bot.get_entity(uid)).first_name
     except BaseException:
