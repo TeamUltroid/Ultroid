@@ -388,7 +388,6 @@ sudo_2: "You cant add yourself as Sudo User..."
 sudo_3: "`No SUDO User was assigned ...`"
 
 # unsplash
-unspl_1: "Give me Something to Search"
 unspl_1: "No Results Found !"
 
 # updater
