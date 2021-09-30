@@ -22,6 +22,9 @@
 • `{i}reels <reply video> <caption>`
   `Upload Media to Instagram reels...`
 
+• Go Inline with Your Assistant with query `instatm`
+   To get home page's posts...
+
 • Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
   before using it..
 """
@@ -134,7 +137,9 @@ async def insta_karbon(event):
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
     caption = (
-        event.pattern_match.group(2) or "Telegram To Instagram Upload\nBy Ultroid.."
+        event.pattern_match.group(2)
+        or replied.message
+        or "Telegram To Instagram Upload\nBy Ultroid.."
     )
     if not (replied and (replied.photo or replied.video)):
         return await eor(event, "`Reply to Photo Or Video...`")
