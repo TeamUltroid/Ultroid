@@ -24,6 +24,7 @@
 # Deploy
 - [Heroku](#Deploy-to-Heroku)
 - [Local Machine](#Deploy-Locally)
+- [Special Method](#Special-Method)
 
 # Documentation 
 [![Documentation](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
@@ -42,15 +43,6 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
-- [Latest Method](#local-deploy---latest-method)
-
-
-### Local Deploy - Latest Method
-This is the latest and most fastest method currently.<br>
-First, go to [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
-Then, do as it's given in the `README.md` to add the executable to your system path.
-
-Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information.
 
 
 ### Local Deploy - Easy Method
@@ -85,6 +77,16 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
    `bash resources/startup/startup.sh`
   - Windows Users:
     `python(3) -m pyUltroid`
+
+## Special Method :rocket:
+This is the latest and most fastest method currently.<br>
+First, go to [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
+Then, do as it's given in the [`README.md`](https://github.com/BLUE-DEVIL1134/UltroidCli#readme) to add the executable to your system path.<br>
+This can work on both server like `heroku`, `qovery`, `railway` or `localhost`.
+
+Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information.
+
+_Guess what? This is the **first userbot project** that has it's own_ `CLI`!
 
 ## Necessary Variables
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
