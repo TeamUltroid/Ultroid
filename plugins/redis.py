@@ -24,7 +24,7 @@
 
 import re
 
-from . import ultroid_bot, eor, ultroid_cmd, udB, Redis
+from . import Redis, eor, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)

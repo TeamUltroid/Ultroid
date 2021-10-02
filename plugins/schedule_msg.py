@@ -13,10 +13,10 @@
     eg. `{i}schedule Hello 1h` It deliver msg after an hour.
 """
 from datetime import timedelta
-import imp
 
-from . import ultroid_bot, ultroid_cmd, eor
 from pyUltroid.functions.admins import ban_time
+
+from . import eor, ultroid_cmd
 
 
 @ultroid_cmd(pattern="schedule ?(.*)", fullsudo=True)

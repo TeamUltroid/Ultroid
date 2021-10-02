@@ -16,7 +16,20 @@ from random import choice
 from git import Repo
 from pyUltroid.dB import ULTROID_IMAGES
 
-from . import ultroid_cmd, eor, udB, call_back, get_string, os, asst, sys, callback, Button, updater, bash
+from . import (
+    Button,
+    asst,
+    bash,
+    call_back,
+    callback,
+    eor,
+    get_string,
+    os,
+    sys,
+    udB,
+    ultroid_cmd,
+    updater,
+)
 
 ULTPIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 

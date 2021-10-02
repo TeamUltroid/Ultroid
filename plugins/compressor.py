@@ -28,7 +28,18 @@ from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
 
-from . import ultroid_cmd, mediainfo, eor, get_string, time_formatter, bash, math, humanbytes, downloader, uploader
+from . import (
+    bash,
+    downloader,
+    eor,
+    get_string,
+    humanbytes,
+    math,
+    mediainfo,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(pattern="compress ?(.*)")

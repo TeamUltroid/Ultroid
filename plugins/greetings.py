@@ -32,12 +32,22 @@
 """
 import os
 
-from pyUltroid.dB.greetings_db import add_welcome, get_welcome, delete_welcome, add_goodbye, get_goodbye, delete_goodbye, must_thank, add_thanks, remove_thanks
+from pyUltroid.dB.greetings_db import (
+    add_goodbye,
+    add_thanks,
+    add_welcome,
+    delete_goodbye,
+    delete_welcome,
+    get_goodbye,
+    get_welcome,
+    must_thank,
+    remove_thanks,
+)
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import ultroid_bot, ultroid_cmd, eor, mediainfo, get_string, HNDLR
+from . import HNDLR, eor, get_string, mediainfo, ultroid_cmd
 from ._inline import something
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"

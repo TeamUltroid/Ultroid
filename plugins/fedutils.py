@@ -24,10 +24,10 @@ Specify FBan Group and Feds to exclude in the assistant.
 import asyncio
 import os
 
+from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import ultroid_bot, ultroid_cmd, get_user_id, eor, udB, get_string
-from pyUltroid.dB import DEVLIST
+from . import eor, get_string, get_user_id, udB, ultroid_bot, ultroid_cmd
 
 bot = "@MissRose_bot"
 

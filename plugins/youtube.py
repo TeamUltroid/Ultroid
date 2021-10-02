@@ -19,9 +19,9 @@
 • `{i}ytsv <(youtube) search query>`
    Search and download video from youtube.
 """
-from pyUltroid.functions.ytdl import get_yt_link, download_yt
+from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
-from . import ultroid_cmd, eor, requests, get_string
+from . import eor, get_string, requests, ultroid_cmd
 
 
 @ultroid_cmd(

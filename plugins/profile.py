@@ -27,7 +27,7 @@ import os
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from . import ultroid_bot, ultroid_cmd, get_string, eor, eod, mediainfo
+from . import eod, eor, get_string, mediainfo, ultroid_cmd
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 

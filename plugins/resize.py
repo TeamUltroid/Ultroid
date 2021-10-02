@@ -16,7 +16,7 @@
 """
 from PIL import Image
 
-from . import ultroid_cmd, eor, get_string, os, HNDLR
+from . import HNDLR, eor, get_string, os, ultroid_cmd
 
 
 @ultroid_cmd(pattern="size$")

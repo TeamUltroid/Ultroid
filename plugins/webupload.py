@@ -16,7 +16,7 @@ import time
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 
-from . import ultroid_cmd, get_string, eor, HNDLR, downloader, asst
+from . import HNDLR, asst, downloader, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(

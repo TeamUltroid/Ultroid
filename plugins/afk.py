@@ -17,12 +17,22 @@
 
 import asyncio
 
-from pyUltroid.dB.afk_db import is_afk, add_afk, del_afk
+from pyUltroid.dB.afk_db import add_afk, del_afk, is_afk
 from pyUltroid.dB.pmpermit_db import is_approved
 from telegraph import upload_file as uf
 from telethon import events
 
-from . import get_string, ultroid_cmd, eor, ultroid_bot, mediainfo, asst, LOG_CHANNEL, Redis, NOSPAM_CHAT
+from . import (
+    LOG_CHANNEL,
+    NOSPAM_CHAT,
+    Redis,
+    asst,
+    eor,
+    get_string,
+    mediainfo,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 old_afk_msg = []
 

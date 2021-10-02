@@ -14,7 +14,7 @@
 """
 import os
 
-from . import ultroid_cmd, bash, eor, mediainfo, get_string
+from . import bash, eor, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="glitch$")

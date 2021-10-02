@@ -56,7 +56,17 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from . import ultroid_cmd, eor, get_string, get_user_id, types, udB, HNDLR, os, mediainfo
+from . import (
+    HNDLR,
+    eor,
+    get_string,
+    get_user_id,
+    mediainfo,
+    os,
+    types,
+    udB,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(

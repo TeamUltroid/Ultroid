@@ -50,6 +50,7 @@
 """
 
 from pyUltroid.dB import DEVLIST
+from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import (
@@ -59,8 +60,19 @@ from telethon.tl.functions.channels import (
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 
-from . import get_string, ultroid_cmd, LOGS, eor, eod, get_uinfo, inline_mention, get_user_id, HNDLR, ultroid_bot, types
-from pyUltroid.functions.admins import ban_time
+from . import (
+    HNDLR,
+    LOGS,
+    eod,
+    eor,
+    get_string,
+    get_uinfo,
+    get_user_id,
+    inline_mention,
+    types,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])

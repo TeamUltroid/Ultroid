@@ -27,7 +27,8 @@ from pyUltroid.dB.blacklist_db import (
     rem_blacklist,
 )
 
-from . import ultroid_cmd, get_string, eor, ultroid_bot, events
+from . import eor, events, get_string, ultroid_bot, ultroid_cmd
+
 
 @ultroid_cmd(pattern="blacklist ?(.*)", admins_only=True)
 async def af(e):

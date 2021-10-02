@@ -20,7 +20,7 @@
     Forward that replied msg to ur saved messages.
 """
 
-from . import ultroid_cmd, eor, get_string, get_user_id, eod, HNDLR
+from . import HNDLR, eod, eor, get_string, get_user_id, ultroid_cmd
 
 
 @ultroid_cmd(pattern="dm", fullsudo=True)
