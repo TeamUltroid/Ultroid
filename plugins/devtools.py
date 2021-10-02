@@ -36,7 +36,7 @@ try:
 except ImportError:
     Carbon = None
 
-from . import bash, eor, get_string, os, ultroid_bot, ultroid_cmd
+from . import *
 
 
 @ultroid_cmd(
