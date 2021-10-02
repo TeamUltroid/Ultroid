@@ -21,7 +21,6 @@
 
 • `{i}cpp <code>`
     Run c++ code from Telegram.
-    It should be the complete file base.
 
 • `{i}sysinfo`
     Shows System Info.
@@ -73,7 +72,7 @@ async def _(event):
         _o = stdout.split("\n")
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
-    if not stderr and not stdout:
+    if not (stderr and stdout):
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
@@ -197,6 +196,9 @@ async def doie(e):
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
         if len(o_cpp) > 3000:
+            os.remove("cpp-ultroid.cpp")
+            if os.path.exists("CppUltroid"):
+                os.remove("CppUltroid")
             with io.BytesIO(str.encode(o_cpp)) as out_file:
                 out_file.name = "error.txt"
                 return await msg.reply(f"`{match}`", file=out_file)
