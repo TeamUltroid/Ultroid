@@ -79,9 +79,8 @@ async def _(ult):
     ok = await eor(ult, get_string("com_1"))
     replfile = await reply_message.download_media()
     file = await ult.client.upload_file(replfile)
-    mediain = mediainfo(reply_message.media)
     try:
-        if "pic" in mediain:
+        if "pic" in mediainfo(reply_message.media):
             await ult.client(UploadProfilePhotoRequest(file))
         else:
             await ult.client(UploadProfilePhotoRequest(video=file))
@@ -113,17 +112,16 @@ async def remove_profilepic(delpfp):
 async def gpoto(e):
     ult = e.pattern_match.group(1)
     a = await eor(e, get_string("com_1"))
-    if not ult and e.is_reply:
+    if ult:
+        pass
+    elif e.is_reply:
         gs = await e.get_reply_message()
         ult = gs.sender_id
-    if not (ult or e.is_reply):
+    else:
         ult = e.chat_id
-    try:
-        okla = await e.client.download_profile_photo(
-            ult,
-        )
-        await a.delete()
-        await e.reply(file=okla)
-        os.remove(okla)
-    except Exception as er:
-        await eor(e, f"ERROR : `{er}`")
+    okla = await e.client.download_profile_photo(ult)
+    if not okla:
+        return await eor(a, "`Pfp Not Found...`")
+    await a.delete()
+    await e.reply(file=okla)
+    os.remove(okla)
