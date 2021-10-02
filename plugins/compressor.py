@@ -78,9 +78,9 @@ async def _(e):
         with open(progress, "w") as fk:
             pass
         proce = await asyncio.create_subprocess_shell(
-                f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
+            f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
         while proce.returncode != 0:
             await asyncio.sleep(3)
@@ -92,42 +92,40 @@ async def _(e):
                 if len(frames):
                     elapse = int(frames[-1])
                 if len(size):
-                        size = int(size[-1])
-                        per = elapse * 100 / int(total_frames)
-                        time_diff = time.time() - int(d_time)
-                        speed = round(elapse / time_diff, 2)
+                    size = int(size[-1])
+                    per = elapse * 100 / int(total_frames)
+                    time_diff = time.time() - int(d_time)
+                    speed = round(elapse / time_diff, 2)
                 if int(speed) != 0:
-                        some_eta = ((int(total_frames) - elapse) / speed) * 1000
-                        text = f"`Compressing {file_name} at {crf} CRF.\n`"
-                        progress_str = "`[{0}{1}] {2}%\n\n`".format(
-                            "".join("●" for i in range(math.floor(per / 5))),
-                            "".join("" for i in range(20 - math.floor(per / 5))),
-                            round(per, 2),
-                        )
+                    some_eta = ((int(total_frames) - elapse) / speed) * 1000
+                    text = f"`Compressing {file_name} at {crf} CRF.\n`"
+                    progress_str = "`[{0}{1}] {2}%\n\n`".format(
+                        "".join("●" for i in range(math.floor(per / 5))),
+                        "".join("" for i in range(20 - math.floor(per / 5))),
+                        round(per, 2),
+                    )
 
-                        e_size = (
-                            humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
+                    e_size = humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
+                    eta = "~" + time_formatter(some_eta)
+                    try:
+                        await xxx.edit(
+                            text
+                            + progress_str
+                            + "`"
+                            + e_size
+                            + "`"
+                            + "\n\n`"
+                            + eta
+                            + "`"
                         )
-                        eta = "~" + time_formatter(some_eta)
-                        try:
-                            await xxx.edit(
-                                text
-                                + progress_str
-                                + "`"
-                                + e_size
-                                + "`"
-                                + "\n\n`"
-                                + eta
-                                + "`"
-                            )
-                        except MessageNotModifiedError:
-                            pass
+                    except MessageNotModifiedError:
+                        pass
         os.remove(file.name)
         c_size = os.path.getsize(out)
         f_time = time.time()
         difff = time_formatter((f_time - d_time) * 1000)
         await xxx.edit(
-                f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
+            f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
         )
         differ = 100 - ((c_size / o_size) * 100)
         caption = f"**Original Size: **`{humanbytes(o_size)}`\n"
@@ -135,42 +133,42 @@ async def _(e):
         caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
         caption += f"\n**Time Taken To Compress: **`{difff}`"
         mmmm = await uploader(
-                out,
-                out,
-                f_time,
-                xxx,
-                "Uploading " + out + "...",
+            out,
+            out,
+            f_time,
+            xxx,
+            "Uploading " + out + "...",
         )
         if to_stream:
-                data = await metadata(out)
-                width = data["width"]
-                height = data["height"]
-                duration = data["duration"]
-                attributes = [
-                    DocumentAttributeVideo(
-                        duration=duration, w=width, h=height, supports_streaming=True
-                    )
-                ]
-                await e.client.send_file(
-                    e.chat_id,
-                    mmmm,
-                    thumb="resources/extras/ultroid.jpg",
-                    caption=caption,
-                    attributes=attributes,
-                    force_document=False,
-                    reply_to=e.reply_to_msg_id,
+            data = await metadata(out)
+            width = data["width"]
+            height = data["height"]
+            duration = data["duration"]
+            attributes = [
+                DocumentAttributeVideo(
+                    duration=duration, w=width, h=height, supports_streaming=True
                 )
+            ]
+            await e.client.send_file(
+                e.chat_id,
+                mmmm,
+                thumb="resources/extras/ultroid.jpg",
+                caption=caption,
+                attributes=attributes,
+                force_document=False,
+                reply_to=e.reply_to_msg_id,
+            )
         else:
-                await e.client.send_file(
-                    e.chat_id,
-                    mmmm,
-                    thumb="resources/extras/ultroid.jpg",
-                    caption=caption,
-                    force_document=True,
-                    reply_to=e.reply_to_msg_id,
-                )
-                await xxx.delete()
-                os.remove(out)
-                os.remove(progress)
+            await e.client.send_file(
+                e.chat_id,
+                mmmm,
+                thumb="resources/extras/ultroid.jpg",
+                caption=caption,
+                force_document=True,
+                reply_to=e.reply_to_msg_id,
+            )
+            await xxx.delete()
+            os.remove(out)
+            os.remove(progress)
     else:
         await eor(e, get_string("audiotools_8"), time=5)
