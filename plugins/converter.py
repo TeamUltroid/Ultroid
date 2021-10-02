@@ -7,7 +7,6 @@
 """
 ✘ Commands Available -
 
-
 • `{i}mtoi <reply to media>`
     Media to image conversion
 
@@ -45,7 +44,6 @@ from . import (
     eor,
     get_paste,
     get_string,
-    pop,
     udB,
     ultroid_cmd,
     uploader,
@@ -68,7 +66,7 @@ async def _(e):
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
     else:
-        return await eor(e, pop)
+        return await eor(e, "`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
