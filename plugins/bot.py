@@ -144,7 +144,7 @@ async def _(event):
     if event.out:
         await event.delete()
     start = time.time()
-    x = await event.reply("Pong !")
+    x = await event.respond("Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
