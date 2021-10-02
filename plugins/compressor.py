@@ -30,8 +30,6 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-compressor_queue = []
-
 
 @ultroid_cmd(pattern="compress ?(.*)")
 async def _(e):
@@ -76,32 +74,29 @@ async def _(e):
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
         total_frames = x.split(":")[1].split("\n")[0]
-        number = random.randint(1, 10000)
-        progress = f"progress-{number}.txt"
+        progress = f"progress.txt"
         with open(progress, "w") as fk:
             pass
-        compressor_queue.append(progress)
-        while os.path.exists(progress) and len(compressor_queue) != 0:
-            proce = await asyncio.create_subprocess_shell(
+        proce = await asyncio.create_subprocess_shell(
                 f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-            )
-            while proce.returncode != 0:
-                await asyncio.sleep(3)
-                with open(progress, "r+") as fil:
-                    text = fil.read()
-                    frames = re.findall("frame=(\\d+)", text)
-                    size = re.findall("total_size=(\\d+)", text)
-                    speed = 0
-                    if len(frames):
-                        elapse = int(frames[-1])
-                    if len(size):
+        )
+        while proce.returncode != 0:
+            await asyncio.sleep(3)
+            with open(progress, "r+") as fil:
+                text = fil.read()
+                frames = re.findall("frame=(\\d+)", text)
+                size = re.findall("total_size=(\\d+)", text)
+                speed = 0
+                if len(frames):
+                    elapse = int(frames[-1])
+                if len(size):
                         size = int(size[-1])
                         per = elapse * 100 / int(total_frames)
                         time_diff = time.time() - int(d_time)
                         speed = round(elapse / time_diff, 2)
-                    if int(speed) != 0:
+                if int(speed) != 0:
                         some_eta = ((int(total_frames) - elapse) / speed) * 1000
                         text = f"`Compressing {file_name} at {crf} CRF.\n`"
                         progress_str = "`[{0}{1}] {2}%\n\n`".format(
@@ -127,26 +122,26 @@ async def _(e):
                             )
                         except MessageNotModifiedError:
                             pass
-            os.remove(file.name)
-            c_size = os.path.getsize(out)
-            f_time = time.time()
-            difff = time_formatter((f_time - d_time) * 1000)
-            await xxx.edit(
+        os.remove(file.name)
+        c_size = os.path.getsize(out)
+        f_time = time.time()
+        difff = time_formatter((f_time - d_time) * 1000)
+        await xxx.edit(
                 f"`Compressed {humanbytes(o_size)} to {humanbytes(c_size)} in {difff}\nTrying to Upload...`"
-            )
-            differ = 100 - ((c_size / o_size) * 100)
-            caption = f"**Original Size: **`{humanbytes(o_size)}`\n"
-            caption += f"**Compressed Size: **`{humanbytes(c_size)}`\n"
-            caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
-            caption += f"\n**Time Taken To Compress: **`{difff}`"
-            mmmm = await uploader(
+        )
+        differ = 100 - ((c_size / o_size) * 100)
+        caption = f"**Original Size: **`{humanbytes(o_size)}`\n"
+        caption += f"**Compressed Size: **`{humanbytes(c_size)}`\n"
+        caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
+        caption += f"\n**Time Taken To Compress: **`{difff}`"
+        mmmm = await uploader(
                 out,
                 out,
                 f_time,
                 xxx,
                 "Uploading " + out + "...",
-            )
-            if to_stream:
+        )
+        if to_stream:
                 data = await metadata(out)
                 width = data["width"]
                 height = data["height"]
@@ -165,7 +160,7 @@ async def _(e):
                     force_document=False,
                     reply_to=e.reply_to_msg_id,
                 )
-            else:
+        else:
                 await e.client.send_file(
                     e.chat_id,
                     mmmm,
@@ -177,6 +172,5 @@ async def _(e):
             await xxx.delete()
             os.remove(out)
             os.remove(progress)
-            compressor_queue.remove(progress)
     else:
         await eor(e, get_string("audiotools_8"), time=5)
