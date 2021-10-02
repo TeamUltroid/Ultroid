@@ -201,6 +201,4 @@ async def bhoot_ayaa(event):
             )
         except Exception as er:
             LOGS.exception(er)
-    await event.answer(
-        res, gallery=True, switch_pm=switch_pm, switch_pm_param="start"
-    )
+    await event.answer(res, gallery=True, switch_pm=switch_pm, switch_pm_param="start")
