@@ -15,7 +15,7 @@ import os
 
 from htmlwebshot import WebShot
 
-from . import *
+from . import ultroid_cmd, get_string, eor, is_url_ok
 
 
 @ultroid_cmd(pattern="webshot ?(.*)")

@@ -17,7 +17,7 @@
 from pyUltroid.functions.admins import lock_unlock
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
-from . import *
+from . import udB, ultroid_cmd, eor
 
 
 @ultroid_cmd(

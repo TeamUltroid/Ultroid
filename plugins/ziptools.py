@@ -25,7 +25,7 @@
 import os
 import time
 
-from . import *
+from . import ultroid_cmd, eor, get_string, bash, downloader, get_all_files, asyncio, HNDLR, uploader
 
 
 @ultroid_cmd(pattern="zip ?(.*)")

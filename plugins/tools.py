@@ -45,7 +45,7 @@ from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
-from . import *
+from . import ultroid_cmd, HNDLR, eor, downloader, uploader, bash, get_user_id, get_string
 from . import humanbytes as hb
 
 

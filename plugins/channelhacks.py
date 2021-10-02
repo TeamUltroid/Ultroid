@@ -38,9 +38,9 @@
 import asyncio
 import io
 
-from pyUltroid.dB.ch_db import *
+from pyUltroid.dB.ch_db import get_source_channels, get_no_source_channels, get_destinations, get_no_destinations, add_destination, rem_destination, is_destination_added, is_source_channel_added, add_source_channel, rem_source_channel
 
-from . import *
+from . import ultroid_cmd, ultroid_bot, events, udB, asst, eor, get_string
 
 
 @ultroid_bot.on(events.NewMessage())

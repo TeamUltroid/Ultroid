@@ -17,7 +17,7 @@ import re
 import akinator
 from telethon.errors import BotMethodInvalidError
 
-from . import *
+from . import get_string, ultroid_cmd, asst, types, callback, Button, in_pattern
 
 games = {}
 aki_photo = "https://telegra.ph/file/b0ff07069e8637783fdae.jpg"

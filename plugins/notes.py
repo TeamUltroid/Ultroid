@@ -22,12 +22,12 @@
 """
 import os
 
-from pyUltroid.dB.notes_db import *
+from pyUltroid.dB.notes_db import add_note, rem_note, list_note, get_notes
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import *
+from . import ultroid_bot, ultroid_cmd, eor, get_string, mediainfo, events
 from ._inline import something
 
 
@@ -52,7 +52,7 @@ async def an(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(x, get_string("com_4"), time=5)
+                return await eor(e, get_string("com_4"), time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)

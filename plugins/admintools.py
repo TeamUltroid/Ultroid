@@ -59,7 +59,8 @@ from telethon.tl.functions.channels import (
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 
-from . import *
+from . import get_string, ultroid_cmd, LOGS, eor, eod, get_uinfo, inline_mention, get_user_id, HNDLR, ultroid_bot, types
+from pyUltroid.functions.admins import ban_time
 
 
 @ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
@@ -368,7 +369,7 @@ async def _(e):
     name = (await e.get_reply_message()).sender
     try:
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-        await eor(e, get_sting("purgeall_2").format(name.first_name), time=5)
+        await eor(e, get_string("purgeall_2").format(name.first_name), time=5)
     except Exception as er:
         return await eor(e, str(er), time=5)
 

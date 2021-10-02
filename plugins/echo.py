@@ -18,10 +18,10 @@
 
 """
 
-from pyUltroid.dB.echo_db import *
+from pyUltroid.dB.echo_db import add_echo, rem_echo, check_echo, list_echo
 from telethon.utils import get_display_name
 
-from . import *
+from . import ultroid_cmd, eor, events, ultroid_bot, LOGS
 
 
 @ultroid_cmd(pattern="addecho ?(.*)")

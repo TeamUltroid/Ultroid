@@ -34,7 +34,7 @@ import os
 from pyUltroid.functions.misc import create_instagram_client
 from telethon.tl.types import InputWebDocument
 
-from . import *
+from . import ultroid_cmd, udB, eor, get_string, types, LOGS, in_pattern
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")

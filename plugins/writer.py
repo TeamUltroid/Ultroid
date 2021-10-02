@@ -20,7 +20,7 @@ import os
 from htmlwebshot import WebShot
 from PIL import Image, ImageDraw, ImageFont
 
-from . import *
+from . import ultroid_cmd, get_string, eor, eod, text_set
 
 
 @ultroid_cmd(pattern="image ?(.*)")

@@ -37,7 +37,8 @@
 import math
 import time
 
-from . import *
+from . import ultroid_cmd, eor, get_string, asyncio
+from pyUltroid.functions.admins import ban_time
 
 
 @ultroid_cmd(

@@ -25,7 +25,7 @@ from datetime import datetime as dt
 from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
-from . import *
+from . import ultroid_cmd, downloader, eor, mediainfo, get_string, bash, duration_s, time_formatter, humanbytes, eod, genss, stdr, uploader
 
 
 @ultroid_cmd(pattern="sample ?(.*)")

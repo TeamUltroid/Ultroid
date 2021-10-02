@@ -24,7 +24,7 @@ from pyUltroid.dB.antiflood_db import get_flood, get_flood_limit, rem_flood, set
 from pyUltroid.functions.admins import admin_check
 from telethon.events import NewMessage as NewMsg
 
-from . import *
+from . import Redis, ultroid_bot, ultroid_cmd, asst, Button, get_string, callback, eor, eod
 
 _check_flood = {}
 

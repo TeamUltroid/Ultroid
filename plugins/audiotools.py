@@ -26,7 +26,7 @@ from datetime import datetime as dt
 from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import *
+from . import ultroid_bot, ultroid_cmd, get_string, eor, eod, mediainfo, downloader, bash, time_formatter, genss, stdr, humanbytes, uploader
 
 
 @ultroid_cmd(pattern="makevoice$")

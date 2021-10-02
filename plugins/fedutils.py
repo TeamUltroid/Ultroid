@@ -26,7 +26,8 @@ import os
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import *
+from . import ultroid_bot, ultroid_cmd, get_user_id, eor, udB, get_string
+from pyUltroid.dB import DEVLIST
 
 bot = "@MissRose_bot"
 
@@ -322,7 +323,7 @@ async def _(event):
                 else:
                     okk = await conv.get_edit()
                     await ok.edit(okk.message)
-                await ultroid.send_read_acknowledge(bot)
+                await ultroid_bot.send_read_acknowledge(bot)
             except YouBlockedUserError:
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 

@@ -63,8 +63,7 @@ import time
 from datetime import datetime as dt
 
 import requests
-from pyUltroid.dB.gban_mute_db import *
-from pyUltroid.functions.info import *
+from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
@@ -80,7 +79,7 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
 
-from . import *
+from . import ultroid_cmd, udB, eor, ultroid_bot, asst, inline_mention, LOGS, get_paste, get_string, HNDLR, fetch_info, get_full_user, ReTrieveFile, eod, Image, mediainfo, Telegraph
 
 # =================================================================#
 

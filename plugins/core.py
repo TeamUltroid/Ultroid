@@ -30,7 +30,8 @@
 
 import os
 
-from . import *
+from . import safeinstall, ultroid_cmd, eor, get_string, un_plug, eod, requests
+from pyUltroid.startup.loader import load_addons
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)

@@ -32,7 +32,7 @@ from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
-from . import *
+from . import get_string, ultroid_cmd, eor, fast_download, progress, downloader, uploader, time_formatter, humanbytes
 
 
 @ultroid_cmd(

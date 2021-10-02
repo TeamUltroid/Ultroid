@@ -18,7 +18,7 @@ from gingerit.gingerit import GingerIt
 from google_trans_new import google_translator
 from telethon import events
 
-from . import *
+from . import ultroid_cmd, ultroid_bot, eor, get_string, Redis, udB, HNDLR
 
 
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)

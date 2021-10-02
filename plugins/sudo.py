@@ -16,9 +16,9 @@
 • `{i}listsudo`
     List all sudo users.
 """
-from pyUltroid.dB.sudos import *
+from pyUltroid.dB.sudos import is_sudo, add_sudo, del_sudo
 
-from . import *
+from . import udB, ultroid_cmd, get_display_name, Redis, eor, get_user_id, ultroid_bot
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)

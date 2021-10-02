@@ -28,10 +28,11 @@
 import os
 import time
 from datetime import datetime
+from async_timeout import asyncio
 
-from pyUltroid.functions.gdrive import *
+from pyUltroid.functions.gdrive import authorize, list_files, file_ops, upload_file, gsearch, create_directory, DoTeskWithDir
 
-from . import *
+from . import HNDLR, eor, eod, ultroid_cmd, get_string, asst, downloader, Redis
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -140,7 +141,7 @@ async def sch(event):
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eor(mone, get_string("gdrive_6").format(asst.me.username), time=5)
+        return await eor(event, get_string("gdrive_6").format(asst.me.username), time=5)
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(input_str):
         return await eor(event, f"Directory {input_str} does not seem to exist", time=5)

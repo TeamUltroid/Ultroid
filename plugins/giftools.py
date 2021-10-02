@@ -25,7 +25,7 @@ import random
 import time
 from datetime import datetime as dt
 
-from . import *
+from . import HNDLR, ultroid_cmd, mediainfo, eor, bash, LOGS, get_string, downloader
 
 
 @ultroid_cmd(pattern="bwgif$")

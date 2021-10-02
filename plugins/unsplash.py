@@ -13,7 +13,7 @@
 
 from pyUltroid.functions.misc import unsplashsearch
 
-from . import *
+from . import ultroid_cmd, eor, download_file, os, get_string
 
 
 @ultroid_cmd(pattern="unsplash ?(.*)")

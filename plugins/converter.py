@@ -38,7 +38,7 @@ from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import *
+from . import ultroid_cmd, eor, get_string, eod, pop, udB, bash, get_paste, downloader, uploader
 
 opn = []
 

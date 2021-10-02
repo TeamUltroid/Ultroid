@@ -14,7 +14,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from . import *
+from . import ultroid_cmd, eor, mediainfo, make_html_telegraph, get_string, bash, LOGS, downloader
 
 
 @ultroid_cmd(pattern="mediainfo$")

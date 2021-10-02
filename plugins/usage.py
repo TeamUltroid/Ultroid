@@ -20,13 +20,14 @@
 import math
 import shutil
 from random import choice
+from turtle import undobufferentries
 
 import heroku3
 import psutil
 import requests
 from pyUltroid.functions import some_random_headers
 
-from . import *
+from . import ultroid_cmd, eor, Var, humanbytes, get_string, udB
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
