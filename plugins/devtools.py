@@ -72,7 +72,7 @@ async def _(event):
         _o = stdout.split("\n")
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
-    if not (stderr and stdout):
+    if not stderr and not stdout:
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
