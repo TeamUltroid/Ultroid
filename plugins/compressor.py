@@ -169,8 +169,8 @@ async def _(e):
                     force_document=True,
                     reply_to=e.reply_to_msg_id,
                 )
-            await xxx.delete()
-            os.remove(out)
-            os.remove(progress)
+                await xxx.delete()
+                os.remove(out)
+                os.remove(progress)
     else:
         await eor(e, get_string("audiotools_8"), time=5)
