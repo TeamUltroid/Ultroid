@@ -18,26 +18,18 @@
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
 
-• `{i}tban <time> <reply to msg/ use id>`
-    s- seconds | m- minutes
-    h- hours |  d- days
-    Ban user in current chat with time.
-
 • `{i}pin <reply to message>`
     Pin the message in the chat
-    for silent pin use ({i}pin silent).
-
 • `{i}unpin (all) <reply to message>`
     Unpin the messages in the chat.
 
 • `{i}pinned`
    Get pinned message in the current chat.
+• `{i}listpinned`
+   Get all pinned messages in current chat
 
 • `{i}autodelete <24h/7d/1m/off>`
    Enable Auto Delete Messages in Chat.
-
-• `{i}listpinned`
-   Get all pinned messages in current chat.
 
 • `{i}purge <reply to message>`
     Purge all messages from the replied message.
