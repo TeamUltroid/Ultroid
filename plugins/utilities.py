@@ -415,7 +415,7 @@ async def rmbg(event):
         os.remove(dl)
         return await eor(event, get_string("com_4"))
     xx = await eor(event, "`Sending to remove.bg`")
-    out = ReTrieveFile(dl)
+    out = await ReTrieveFile(dl)
     os.remove(dl)
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
@@ -544,8 +544,7 @@ async def ipinfo(event):
         ipaddr = "/" + ip[1]
     except IndexError:
         ipaddr = ""
-    url = f"https://ipinfo.io{ipaddr}/geo"
-    det = requests.get(url).json()
+    det = await async_searcher(f"https://ipinfo.io{ipaddr}/geo", re_json=True)
     try:
         ip = det["ip"]
         city = det["city"]
@@ -637,4 +636,3 @@ async def thumb_dl(event):
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
-    await eor(xx, "`Thumbnail sent, if available.`", time=5)
