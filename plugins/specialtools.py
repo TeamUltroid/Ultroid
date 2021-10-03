@@ -32,7 +32,6 @@ from random import choice
 from shutil import rmtree
 
 import pytz
-import requests
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.tools import metadata
@@ -214,7 +213,9 @@ async def hbd(event):
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     sign = f"{sign}"
     params = (("sign", sign), ("today", day))
-    json = await async_searcher("https://aztro.sameerkumar.website/", post=True, params=params, re_json=True)
+    json = await async_searcher(
+        "https://aztro.sameerkumar.website/", post=True, params=params, re_json=True
+    )
     dd = json.get("current_date")
     ds = json.get("description")
     lt = json.get("lucky_time")
