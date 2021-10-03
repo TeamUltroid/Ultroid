@@ -391,7 +391,7 @@ async def backr(event):
         current_page_number, list(HELP["Official"].keys()), "helpme", "def"
     )
     await event.edit(
-        f"{xhelps}",
+        xhelps,
         file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
@@ -404,7 +404,7 @@ async def backr(event):
     current_page_number = int(upage)
     buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
-        f"{xhelps}",
+        xhelps,
         file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
@@ -475,17 +475,17 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = [
-        [
+    buttons = []
+    if INLINE_PIC:
+        buttons.append([
             Button.inline(
                 "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
                 data=f"sndplug_{(event.data).decode('UTF-8')}",
             )
-        ],
-        [
-            Button.inline("« Bᴀᴄᴋ", data="back"),
-        ],
-    ]
+        ])
+    buttons.append([
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+        ])
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
@@ -518,17 +518,17 @@ async def on_vc_plg_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = [
-        [
+    buttons = []
+    if INLINE_PIC:
+        buttons.append([
             Button.inline(
                 "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
                 data=f"sndplug_{(event.data).decode('UTF-8')}",
             )
-        ],
-        [
-            Button.inline("« Bᴀᴄᴋ", data="bvck"),
-        ],
-    ]
+        ])
+    buttons.append([
+            Button.inline("« Bᴀᴄᴋ", data="buck"),
+        ])
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
@@ -574,17 +574,17 @@ async def on_plug_in_callback_query_handler(event):
     else:
         reply_pop_up_alert = help_string
     reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = [
-        [
+    buttons = []
+    if INLINE_PIC:
+        buttons.append([
             Button.inline(
                 "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
                 data=f"sndplug_{(event.data).decode('UTF-8')}",
             )
-        ],
-        [
+        ])
+    buttons.append([
             Button.inline("« Bᴀᴄᴋ", data="buck"),
-        ],
-    ]
+        ])
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
