@@ -10,10 +10,8 @@ import time
 from datetime import datetime
 from math import ceil
 from os import remove
-from random import choice
 
 from git import Repo
-from pyUltroid.dB import ULTROID_IMAGES
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
 from pyUltroid.misc import CMD_HELP, owner_and_sudos
