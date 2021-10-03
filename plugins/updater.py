@@ -18,6 +18,7 @@ from pyUltroid.dB import ULTROID_IMAGES
 
 from . import (
     Button,
+    INLINE_PIC,
     asst,
     bash,
     call_back,
@@ -31,7 +32,7 @@ from . import (
     updater,
 )
 
-ULTPIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
+ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
 
 
 @ultroid_cmd(pattern="update ?(.*)")
