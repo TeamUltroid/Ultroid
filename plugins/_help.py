@@ -18,8 +18,6 @@ from telethon.tl.custom import Button
 
 from . import *
 
-_file_to_replace = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
-
 _main_help_menu = [
     [
         Button.inline(get_string("help_4"), data="hrrrr"),
@@ -93,7 +91,7 @@ async def _help(ult):
                     len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
-                file=_file_to_replace,
+                file=INLINE_PIC,
                 buttons=_main_help_menu,
             )
         except BotResponseTimeoutError:
