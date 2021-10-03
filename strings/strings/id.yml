@@ -339,10 +339,50 @@ grt_7: "`Balas pesan yang ingin Anda atur sebagai selamat tinggal`"
 # mediainfo
 mdi_1: "Info Lebih Jelas"
 
+# nightmode
+nightm_1: "Berikan Waktu dalam format yang benar"
+nightm_2: "Waktu berhasil disetel"
+nightm_3: "Berhasil Menambahkan Obrolan Saat Ini Ke Mode Malam"
+nightm_4: "Berhasil Menghapus Obrolan Saat Ini dari Mode Malam"
+nightm_5: "Ada yang Salah"
+
 # pmpermit
 pmperm_1: "Harap tunggu saya merespons atau Anda akan diblokir dan dilaporkan sebagai spam!!"
 pmperm_2: "Anda telah melakukan spamming pada pesan Boss saya."
 pmperm_3: "Balas pesan seseorang atau coba perintah ini secara pribadi."
+
+# schedule_msg
+schdl_1: "`Berhasil Membuat Pesan terjadwal `"
+schdl_2: "`Format Salah`"
+
+# searches
+srch_1: "`Kamu Mencari apa? Berikan saya username!!`"
+srch_2: "`Tidak ada pengguna yang ditemukan...`"
+srch_3: "`Lagu tidak ditemukan...`"
+
+# snip
+snip_1: "Berikan kata untuk ditetapkan sebagai snip dan balas pesan."
+snip_2: "Berikan kata untuk dihapus..."
+snip_3: "Tidak Ada Snips Yang disimpan Di Sini."
+
+# specialtools
+spcltool_1: "Balas Audio atau video"
+spcltool_2: "`Selesai.. Sekarang balas video yang ingin Anda tambahkan Audio ini`"
+spcltool_3: "Balas ke video"
+spcltool_4: "`Pertama balas audio dengan .raw`"
+spcltool_5: "Berhasil Diunduh, Sekarang Menambahkan Audio Anda ke Video"
+spcltool_6: "`Masukkan input dalam format dd/mm/yyyy`"
+spcltool_7: "`Selamat Ulang Tahun Untuk Kamu 🎉🎊`"
+spcltool_8: "Berikan sesuatu untuk dicari.."
+spcltool_9: "Tidak Menemukan Apa-apa"
+
+# sudo
+sudo_1: "`Balas pesan atau tambahkan id/username.`"
+sudo_2: "Anda tidak dapat menambahkan diri sendiri sebagai Pengguna Sudo..."
+sudo_3: "`Tidak ada Pengguna SUDO yang ditetapkan...`"
+
+# unsplash
+unspl_1: "Tidak ada hasil yang ditemukan!"
 
 # updater
 upd_1: "`Memeriksa pembaruan, harap tunggu....`"
