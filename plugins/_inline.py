@@ -28,7 +28,7 @@ from ._help import _main_help_menu
 # ================================================#
 notmine = f"This bot is for {OWNER_NAME}"
 
-TLINK = "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
+TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get("ADDONS")
@@ -37,13 +37,6 @@ if add_ons == "True" or add_ons is None:
 else:
     zhelps = get_string("inline_3")
 
-C_PIC = udB.get("INLINE_PIC")
-
-if C_PIC:
-    _file_to_replace = C_PIC
-    TLINK = C_PIC
-else:
-    _file_to_replace = choice(ULTROID_IMAGES)
 
 upage = 0
 # ============================================#
@@ -95,7 +88,7 @@ async def inline_handler(event):
         for y in x:
             z.append(y)
     result = event.builder.photo(
-        file=_file_to_replace,
+        file=INLINE_PIC,
         link_preview=False,
         text=get_string("inline_4").format(
             OWNER_NAME,
