@@ -38,8 +38,8 @@
    List all approved PMs.
 """
 
-import re
 import asyncio
+import re
 from os import remove
 
 from pyUltroid.dB import DEVLIST
@@ -569,8 +569,8 @@ async def unblockpm(unblock):
         while u_s.users:
             u_s = await unblock.client(GetBlockedRequest(0, 0))
             for user in u_s.users:
-                 await asyncio.sleep(1.5)
-                 await unblock.client(UnblockRequest(user.id))
+                await asyncio.sleep(1.5)
+                await unblock.client(UnblockRequest(user.id))
             count += len(u_s.users)
         return await eor(msg, f"__Unblocked {count} users.__")
     try:
