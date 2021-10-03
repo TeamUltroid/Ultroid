@@ -17,8 +17,8 @@ from git import Repo
 from pyUltroid.dB import ULTROID_IMAGES
 
 from . import (
-    Button,
     INLINE_PIC,
+    Button,
     asst,
     bash,
     call_back,
