@@ -165,7 +165,7 @@ async def on_vc_callback_query_handler(event):
         buttons = page_num(0, HELP["VCBot"].keys(), "vchelp", "vc")
     except (ZeroDivisionError, KeyError):
         return await event.answer("Vc not Active.")
-    await event.edit(xhelps, buttons=buttons, link_preview=False)
+    await event.edit(xhelps, file=INLINE_PIC, buttons=buttons, link_preview=False)
 
 
 @callback(data="doupdate", owner=True)
@@ -330,34 +330,6 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     data=re.compile(
-        rb"vchelp_next\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_vc_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(
-    data=re.compile(
-        rb"vchelp_prev\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_vc_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["VCBot"].keys()), "vchelp", "vc"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(
-    data=re.compile(
         rb"addon_next\((.+?)\)",
     ),
     owner=True,
@@ -406,19 +378,6 @@ async def backr(event):
     buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
         xhelps,
-        file=INLINE_PIC,
-        buttons=buttons,
-        link_preview=False,
-    )
-
-
-@callback(data="bvck", owner=True)
-async def bvckr(event):
-    xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
-    current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["VCBot"].keys()), "vchelp", "vc")
-    await event.edit(
-        f"{xhelps}",
         file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
@@ -535,7 +494,7 @@ async def on_vc_plg_callback_query_handler(event):
         )
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("« Bᴀᴄᴋ", data="vc_helper"),
         ]
     )
     try:
