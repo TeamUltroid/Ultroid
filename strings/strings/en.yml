@@ -2,11 +2,12 @@ name: English
 natively: English
 
 authors:
+  - karboncopy
   - xditya
   - rojserbest
   - sppidy
   - ProgrammingError
-  - avish-kumar1
+  - aviskumar
 
 # commons
 com_1: "`Processing...`"
@@ -345,10 +346,50 @@ grt_7: "`Reply to message which u want to set as goodbye`"
 # mediainfo
 mdi_1: "More Explained Info"
 
+# nightmode
+nightm_1: "Give Time in correct format"
+nightm_2: "Setted time successfully"
+nightm_3: "Done, Added Current Chat To Night Mode"
+nightm_4: "Done, Removed Current Chat from Night Mode"
+nightm_5: "Something Went Wrong"
+
 # pmpermit
 pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
 pmperm_2: "Eyy, I told you not to spam!\nYou've been blocked and reported, for now."
 pmperm_3: "Reply to someone's message or try this command in private."
+
+# schedule_msg
+schdl_1: "`Scheduled msg Succesfully`"
+schdl_2: "`Incorrect Format`"
+
+# searches
+srch_1: "`Search for whom? Give me a user name!!`"
+srch_2: "`No such user found...`"
+srch_3: "`Song not found...`"
+
+# snip
+snip_1: "Give word to set as snip and reply to a message."
+snip_2: "Give the word to remove..."
+snip_3: "No Snips Found Here."
+
+# specialtools
+spcltool_1: "Reply To Audio or video"
+spcltool_2: "`Done.. Now reply to video In which u want to add this Audio`"
+spcltool_3: "Reply To video"
+spcltool_4: "`First reply an audio with .raw`"
+spcltool_5: "Downloaded Successfully, Now Adding Your Audio to video"
+spcltool_6: "`Put input in dd/mm/yyyy format`"
+spcltool_7: "`Happy Birthday To U🎉🎊`"
+spcltool_8: "Give something to search.."
+spcltool_9: "Found Nothing"
+
+# sudo
+sudo_1: "`Reply to a msg or add it's id/username.`"
+sudo_2: "You cant add yourself as Sudo User..."
+sudo_3: "`No SUDO User was assigned ...`"
+
+# unsplash
+unspl_1: "No Results Found !"
 
 # updater
 upd_1: "`Checking for updates...`"

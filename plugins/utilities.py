@@ -62,7 +62,6 @@ import os
 import time
 from datetime import datetime as dt
 
-import requests
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
@@ -415,7 +414,7 @@ async def rmbg(event):
         os.remove(dl)
         return await eor(event, get_string("com_4"))
     xx = await eor(event, "`Sending to remove.bg`")
-    out = ReTrieveFile(dl)
+    out = await ReTrieveFile(dl)
     os.remove(dl)
     contentType = out.headers.get("content-type")
     rmbgp = "ult.png"
@@ -544,8 +543,7 @@ async def ipinfo(event):
         ipaddr = "/" + ip[1]
     except IndexError:
         ipaddr = ""
-    url = f"https://ipinfo.io{ipaddr}/geo"
-    det = requests.get(url).json()
+    det = await async_searcher(f"https://ipinfo.io{ipaddr}/geo", re_json=True)
     try:
         ip = det["ip"]
         city = det["city"]
@@ -633,8 +631,7 @@ async def thumb_dl(event):
         )
     if not reply.file.media.thumbs:
         return await eod(event, "`Replied file has no thumbnail.`")
-    xx = await eor(event, get_string("com_1"))
+    await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
-    await eor(xx, "`Thumbnail sent, if available.`", time=5)
