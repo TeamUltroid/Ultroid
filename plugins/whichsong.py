@@ -23,7 +23,6 @@ shazam = Shazam()
 @ultroid_cmd(pattern="whichsong$")
 async def song_recog(event):
     reply = await event.get_reply_message()
-    mediainfo(reply.media)
     if not (reply and mediainfo(reply.media) == "audio"):
         return await eor(event, get_string("whs_1"), time=5)
     xx = await eor(event, get_string("com_5"))
