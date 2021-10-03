@@ -158,9 +158,7 @@ async def _(e):
 )
 async def permitpm(event):
     user = await event.get_sender()
-    if user.bot or user.is_self or user.verified:
-        return
-    if is_logger(user.id):
+    if user.bot or user.is_self or user.verified or is_logger(user.id):
         return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
