@@ -170,9 +170,10 @@ async def on_vc_callback_query_handler(event):
 
 @callback(data="doupdate", owner=True)
 async def _(event):
-    check = updater()
-    if not check:
+    if not updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
+    if not INLINE_PIC:
+        return await event.answer(f"Do {HNDLR}update")
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
@@ -201,7 +202,7 @@ async def _(event):
         )
 
 
-@callback(data="pkng")
+@callback(data="pkng", owner=True)
 async def _(event):
     start = datetime.now()
     end = datetime.now()
@@ -210,7 +211,7 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@callback(data="upp")
+@callback(data="upp", owner=True)
 async def _(event):
     uptime = time_formatter((time.time() - start_time) * 1000)
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
