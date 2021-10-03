@@ -8,8 +8,10 @@
 import asyncio
 import os
 import time
+from random import choice
 
 from pyUltroid import *
+from pyUltroid.dB import ULTROID_IMAGES
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
@@ -18,8 +20,6 @@ from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
-from random import choice
-from pyUltroid.dB import ULTROID_IMAGES
 from telegraph import Telegraph
 from telethon import Button, events
 from telethon.tl import functions, types
