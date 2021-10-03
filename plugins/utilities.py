@@ -62,7 +62,6 @@ import os
 import time
 from datetime import datetime as dt
 
-import requests
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
@@ -632,7 +631,7 @@ async def thumb_dl(event):
         )
     if not reply.file.media.thumbs:
         return await eod(event, "`Replied file has no thumbnail.`")
-    xx = await eor(event, get_string("com_1"))
+    await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
