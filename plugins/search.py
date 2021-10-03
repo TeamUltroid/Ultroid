@@ -156,13 +156,13 @@ async def reverse(event):
         allow_redirects=False,
     )
     loc = grs.headers.get("Location")
-    response = requests.get(
+    response = await async_searcher(
         loc,
         headers={
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
-    xx = bs(response.text, "html.parser")
+    xx = bs(response, "html.parser")
     div = xx.find_all("div", {"class": "r5a77d"})[0]
     alls = div.find("a")
     link = alls["href"]

@@ -25,6 +25,7 @@ src/glitch-me
 .idea/
 .vscode/
 temp/
+pdf/
 bin-debug/
 bin-release/
 [Oo]bj/

@@ -39,6 +39,7 @@
 """
 
 import re
+import asyncio
 from os import remove
 
 from pyUltroid.dB import DEVLIST
@@ -158,9 +159,7 @@ async def _(e):
 )
 async def permitpm(event):
     user = await event.get_sender()
-    if user.bot or user.is_self or user.verified:
-        return
-    if is_logger(user.id):
+    if user.bot or user.is_self or user.verified or is_logger(user.id):
         return
     if Redis("PMLOG") == "True":
         pl = udB.get("PMLOGGROUP")
@@ -561,13 +560,17 @@ async def unblockpm(unblock):
         count = len(u_s.users)
         if not count:
             return await eor(msg, "__You have not blocked Anyone...__")
-        [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
+        for user in u_s.users:
+            await asyncio.sleep(1.5)
+            await unblock.client(UnblockRequest(user.id))
         # GetBlockedRequest return 20 users at most.
         if count < 20:
             return await eor(msg, f"__Unblocked {count} Users!__")
         while u_s.users:
             u_s = await unblock.client(GetBlockedRequest(0, 0))
-            [(await unblock.client(UnblockRequest(user.id))) for user in u_s.users]
+            for user in u_s.users:
+                 await asyncio.sleep(1.5)
+                 await unblock.client(UnblockRequest(user.id))
             count += len(u_s.users)
         return await eor(msg, f"__Unblocked {count} users.__")
     try:
