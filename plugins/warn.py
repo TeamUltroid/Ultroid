@@ -26,7 +26,7 @@
 
 from pyUltroid.dB.warn_db import add_warn, reset_warn, warns
 
-from . import *
+from . import eor, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(

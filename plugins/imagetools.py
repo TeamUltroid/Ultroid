@@ -65,7 +65,7 @@ from telethon.errors.rpcerrorlist import (
     MessageDeleteForbiddenError,
 )
 
-from . import *
+from . import Redis, download_file, eor, get_string, requests, udB, ultroid_cmd
 
 
 @ultroid_cmd(

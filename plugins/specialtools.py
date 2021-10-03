@@ -38,7 +38,18 @@ from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
-from . import *
+from . import (
+    async_searcher,
+    bash,
+    downloader,
+    eod,
+    eor,
+    get_string,
+    mediainfo,
+    ultroid_bot,
+    ultroid_cmd,
+    uploader,
+)
 
 File = []
 
@@ -76,7 +87,7 @@ async def adaudroid(e):
     if not mediainfo(r.media).startswith("video"):
         return await eod(e, "Reply To video")
     if not File or os.path.exists(File[0]):
-        return await xx.edit("`First reply an audio with .aw`")
+        return await e.edit("`First reply an audio with .aw`")
     xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()

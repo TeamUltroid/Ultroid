@@ -23,13 +23,23 @@
 """
 
 import os
+from datetime import datetime
 
 from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
 from requests import get
 
-from . import *
+from . import (
+    async_searcher,
+    eor,
+    fast_download,
+    get_random_user_data,
+    get_string,
+    re,
+    requests,
+    ultroid_cmd,
+)
 
 _base = "https://pinterestdownloader.com/download?url="
 
@@ -52,9 +62,9 @@ async def diela(e):
         li += "/days/2021/" + month + "/" + date
         te = get_string("eod_2").format(match)
     else:
-        da = dr.today().strftime("%F").split("-")
+        da = datetime.today().strftime("%F").split("-")
         li += "/days/2021/" + da[1] + "/" + da[2]
-    ct = r.get(li).content
+    ct = requests.get(li).content
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:

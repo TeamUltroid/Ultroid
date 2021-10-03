@@ -24,7 +24,7 @@
 
 import re
 
-from . import *
+from . import Redis, eor, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)
@@ -74,4 +74,4 @@ async def _(ult):
         except BaseException:
             await eor(ult, "Something went wrong ...")
     else:
-        await oor(ult, "Key not found")
+        await eor(ult, "Key not found")

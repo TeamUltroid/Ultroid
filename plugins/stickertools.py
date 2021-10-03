@@ -45,7 +45,20 @@ from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
 
-from . import *
+from . import (
+    KANGING_STR,
+    LOGS,
+    asst,
+    bash,
+    eor,
+    functions,
+    get_string,
+    mediainfo,
+    resize_photo,
+    types,
+    udB,
+    ultroid_cmd,
+)
 
 EMOJI_PATTERN = re.compile(
     "["

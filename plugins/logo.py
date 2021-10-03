@@ -21,7 +21,15 @@ from PIL import Image, ImageDraw, ImageFont
 from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.types import InputMessagesFilterPhotos
 
-from . import *
+from . import (
+    OWNER_ID,
+    OWNER_NAME,
+    download_file,
+    eor,
+    get_string,
+    mediainfo,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="logo ?(.*)")

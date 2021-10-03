@@ -14,7 +14,9 @@
 """
 from datetime import timedelta
 
-from . import *
+from pyUltroid.functions.admins import ban_time
+
+from . import eor, ultroid_cmd
 
 
 @ultroid_cmd(pattern="schedule ?(.*)", fullsudo=True)

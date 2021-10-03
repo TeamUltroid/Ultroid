@@ -18,26 +18,18 @@
 • `{i}kick <reply to user/userid/username> <reason>`
     Kick the user from the chat.
 
-• `{i}tban <time> <reply to msg/ use id>`
-    s- seconds | m- minutes
-    h- hours |  d- days
-    Ban user in current chat with time.
-
 • `{i}pin <reply to message>`
     Pin the message in the chat
-    for silent pin use ({i}pin silent).
-
 • `{i}unpin (all) <reply to message>`
     Unpin the messages in the chat.
 
 • `{i}pinned`
    Get pinned message in the current chat.
+• `{i}listpinned`
+   Get all pinned messages in current chat
 
 • `{i}autodelete <24h/7d/1m/off>`
    Enable Auto Delete Messages in Chat.
-
-• `{i}listpinned`
-   Get all pinned messages in current chat.
 
 • `{i}purge <reply to message>`
     Purge all messages from the replied message.
@@ -50,6 +42,7 @@
 """
 
 from pyUltroid.dB import DEVLIST
+from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import (
@@ -59,7 +52,19 @@ from telethon.tl.functions.channels import (
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    eod,
+    eor,
+    get_string,
+    get_uinfo,
+    get_user_id,
+    inline_mention,
+    types,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
@@ -368,7 +373,7 @@ async def _(e):
     name = (await e.get_reply_message()).sender
     try:
         await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
-        await eor(e, get_sting("purgeall_2").format(name.first_name), time=5)
+        await eor(e, get_string("purgeall_2").format(name.first_name), time=5)
     except Exception as er:
         return await eor(e, str(er), time=5)
 

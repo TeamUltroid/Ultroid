@@ -24,7 +24,7 @@ from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import *
+from . import eor, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="qrcode ?(.*)")

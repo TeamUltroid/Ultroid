@@ -33,9 +33,16 @@ from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 from telethon.tl.types import DocumentAttributeAudio
 
-from strings import get_string
-
-from . import *
+from . import (
+    async_searcher,
+    eod,
+    eor,
+    get_string,
+    saavn_dl,
+    time,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(

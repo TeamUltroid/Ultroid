@@ -18,9 +18,9 @@ import os
 
 import requests
 from ProfanityDetector import detector
-from pyUltroid.dB.nsfw_db import *
+from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 
-from . import *
+from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)

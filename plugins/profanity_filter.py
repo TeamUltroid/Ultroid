@@ -18,7 +18,7 @@
 from ProfanityDetector import detector
 from pyUltroid.dB.nsfw_db import is_profan, profan_chat, rem_profan
 
-from . import *
+from . import eor, events, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)

@@ -285,7 +285,7 @@ if sett == "True":
                         except Exception as e:
                             LOGS.info(str(e))
                     elif PMPIC:
-                        _to_delete[user.id] = await ultroid.send_file(
+                        _to_delete[user.id] = await ultroid_bot.send_file(
                             user.id,
                             PMPIC,
                             caption=message_,
@@ -320,7 +320,7 @@ if sett == "True":
                         except Exception as e:
                             LOGS.info(str(e))
                     elif PMPIC:
-                        _to_delete[user.id] = await ultroid.send_file(
+                        _to_delete[user.id] = await ultroid_bot.send_file(
                             user.id,
                             PMPIC,
                             caption=message_,

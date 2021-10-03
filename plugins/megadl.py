@@ -13,7 +13,19 @@
 import time
 from datetime import datetime
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    bash,
+    eor,
+    get_all_files,
+    get_string,
+    humanbytes,
+    os,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(pattern="megadl ?(.*)")

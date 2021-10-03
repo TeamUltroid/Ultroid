@@ -24,7 +24,7 @@ from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
-from . import *
+from . import eor, ultroid_cmd
 
 
 async def get_call(event):

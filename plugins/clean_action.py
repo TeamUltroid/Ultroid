@@ -18,9 +18,9 @@
 
 """
 
-from pyUltroid.dB.clean_db import *
+from pyUltroid.dB.clean_db import add_clean, rem_clean
 
-from . import *
+from . import eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)

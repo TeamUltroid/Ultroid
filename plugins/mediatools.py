@@ -14,7 +14,16 @@ import os
 import time
 from datetime import datetime as dt
 
-from . import *
+from . import (
+    LOGS,
+    bash,
+    downloader,
+    eor,
+    get_string,
+    make_html_telegraph,
+    mediainfo,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="mediainfo$")

@@ -22,13 +22,24 @@
 
 import re
 
-from pyUltroid.dB.forcesub_db import *
+from pyUltroid.dB.forcesub_db import add_forcesub, get_forcesetting, rem_forcesub
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from . import *
+from . import (
+    LOGS,
+    asst,
+    callback,
+    eor,
+    events,
+    get_string,
+    in_pattern,
+    udB,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 CACHE = {}
 

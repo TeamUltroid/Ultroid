@@ -34,12 +34,13 @@ from pyUltroid.functions.helper import (
     mediainfo,
     time_formatter,
 )
+from pyUltroid.functions.admins import admin_check
 from pyUltroid.functions.tools import is_url_ok
 from pyUltroid.functions.ytdl import get_videos_link
 from pyUltroid.functions.info import get_user_id
 from pyUltroid.dB.vc_group import check_vcauth, get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
-from pyUltroid.misc._assistant import admin_check, in_pattern
+from pyUltroid.misc._assistant import in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__ as UltVer
 from telethon import events

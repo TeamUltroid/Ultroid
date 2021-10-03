@@ -12,7 +12,7 @@
 """
 import re
 
-from . import *
+from . import Button, asst, callback, get_string, in_pattern, udB, ultroid_cmd
 
 CALC = {}
 

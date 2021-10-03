@@ -50,13 +50,38 @@
 """
 import os
 
-from pyUltroid.dB.gban_mute_db import *
-from pyUltroid.dB.gcast_blacklist_db import *
+from pyUltroid.dB import DEVLIST
+from pyUltroid.dB.gban_mute_db import (
+    gban,
+    gmute,
+    is_gbanned,
+    is_gmuted,
+    list_gbanned,
+    ungban,
+    ungmute,
+)
+from pyUltroid.dB.gcast_blacklist_db import (
+    add_gblacklist,
+    is_gblacklisted,
+    rem_gblacklist,
+)
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    NOSPAM_CHAT,
+    OWNER_ID,
+    OWNER_NAME,
+    eod,
+    eor,
+    get_string,
+    get_user_id,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 _gpromote_rights = ChatAdminRights(
     add_admins=False,
@@ -365,6 +390,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="g(admin|)cast ?(.*)", fullsudo=True)
 async def gcast(event):
+    text = ""
     xx = event.pattern_match.group(2)
     if xx:
         msg = xx
@@ -582,7 +608,7 @@ async def blacklist_(event):
 
 @ultroid_cmd(pattern="ungblacklist")
 async def ungblacker(event):
-    await glacker(event, "remove")
+    await gblacker(event, "remove")
 
 
 async def gblacker(event, type_):

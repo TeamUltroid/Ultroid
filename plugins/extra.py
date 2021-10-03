@@ -23,7 +23,7 @@ import asyncio
 
 from telethon.events import NewMessage as NewMsg
 
-from . import *
+from . import HNDLR, eor, get_string, ultroid_bot, ultroid_cmd
 
 _new_msgs = {}
 

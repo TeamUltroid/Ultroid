@@ -19,9 +19,9 @@
 • `{i}ytsv <(youtube) search query>`
    Search and download video from youtube.
 """
-from pyUltroid.functions.ytdl import *
+from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
-from . import *
+from . import eor, get_string, requests, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -42,7 +42,7 @@ async def download_from_youtube_(event):
         if not url:
             return await eor(xx, get_string("youtube_1"))
         try:
-            request.get(url)
+            requests.get(url)
         except BaseException:
             return await eor(xx, get_string("youtube_2"))
     elif opt == "v":
@@ -57,7 +57,7 @@ async def download_from_youtube_(event):
         if not url:
             return await eor(xx, get_string("youtube_3"))
         try:
-            request.get(url)
+            requests.get(url)
         except BaseException:
             return await eor(xx, get_string("youtube_4"))
     elif opt == "sa":

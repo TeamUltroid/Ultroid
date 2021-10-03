@@ -36,7 +36,7 @@ from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
 
-from . import *
+from . import ultroid_cmd
 
 
 @ultroid_cmd(

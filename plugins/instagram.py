@@ -34,7 +34,7 @@ import os
 from pyUltroid.functions.misc import create_instagram_client
 from telethon.tl.types import InputWebDocument
 
-from . import *
+from . import LOGS, eor, get_string, in_pattern, types, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -180,7 +180,7 @@ async def bhoot_ayaa(event):
     insta = await create_instagram_client(event)
     posts = insta.get_timeline_feed()
     res = []
-    f"Showing {posts['num_results']} Feeds.."
+    switch_pm = f"Showing {posts['num_results']} Feeds.."
     for rp in posts["feed_items"]:
         try:
             me = rp["media_or_ad"]
@@ -201,6 +201,4 @@ async def bhoot_ayaa(event):
             )
         except Exception as er:
             LOGS.exception(er)
-    await event.answer(
-        res, gallery=True, switch_pm="Instagram", switch_pm_param="start"
-    )
+    await event.answer(res, gallery=True, switch_pm=switch_pm, switch_pm_param="start")

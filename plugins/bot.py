@@ -39,7 +39,29 @@ from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
-from . import *
+from . import (
+    LOGS,
+    OWNER_NAME,
+    Button,
+    Var,
+    allcmds,
+    asst,
+    bash,
+    call_back,
+    callback,
+    def_logs,
+    eor,
+    get_string,
+    heroku_logs,
+    in_pattern,
+    restart,
+    shutdown,
+    start_time,
+    time_formatter,
+    udB,
+    ultroid_cmd,
+    ultroid_version,
+)
 
 # Will move to strings
 alive_txt = """
@@ -144,7 +166,7 @@ async def _(event):
     if event.out:
         await event.delete()
     start = time.time()
-    x = await event.reply("Pong !")
+    x = await event.respond("Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))

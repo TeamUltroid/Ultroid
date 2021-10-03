@@ -11,7 +11,7 @@ from telethon.errors import (
     ChatSendMediaForbiddenError,
 )
 
-from . import *
+from . import LOG_CHANNEL, LOGS, Button, asst, eor, get_string, ultroid_cmd
 
 REPOMSG = """
 • **ULTROID USERBOT** •\n

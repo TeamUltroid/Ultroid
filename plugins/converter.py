@@ -7,7 +7,6 @@
 """
 ✘ Commands Available -
 
-
 • `{i}mtoi <reply to media>`
     Media to image conversion
 
@@ -38,7 +37,17 @@ from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import *
+from . import (
+    bash,
+    downloader,
+    eod,
+    eor,
+    get_paste,
+    get_string,
+    udB,
+    ultroid_cmd,
+    uploader,
+)
 
 opn = []
 
@@ -57,7 +66,7 @@ async def _(e):
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
     else:
-        return await eor(e, pop)
+        return await eor(e, "`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]

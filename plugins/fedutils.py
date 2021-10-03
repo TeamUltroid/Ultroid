@@ -24,9 +24,10 @@ Specify FBan Group and Feds to exclude in the assistant.
 import asyncio
 import os
 
+from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import *
+from . import eor, get_string, get_user_id, udB, ultroid_bot, ultroid_cmd
 
 bot = "@MissRose_bot"
 
@@ -322,7 +323,7 @@ async def _(event):
                 else:
                     okk = await conv.get_edit()
                     await ok.edit(okk.message)
-                await ultroid.send_read_acknowledge(bot)
+                await ultroid_bot.send_read_acknowledge(bot)
             except YouBlockedUserError:
                 await ok.edit("**Error**\n `Unblock` @MissRose_Bot `and try again!")
 

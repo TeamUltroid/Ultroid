@@ -34,7 +34,7 @@ from pyUltroid.dB.night_db import *
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from . import *
+from . import LOGS, eor, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="nmtime ?(.*)")
@@ -57,7 +57,7 @@ async def add_grp(e):
     pat = e.pattern_match.group(1)
     if pat:
         try:
-            add_night((await bot.get_entity(pat)).id)
+            add_night((await ultroid_bot.get_entity(pat)).id)
             return await eor(e, f"Done, Added {pat} To Night Mode.")
         except BaseException:
             return await eor(e, "Something Went Wrong", time=5)
@@ -70,7 +70,7 @@ async def rem_grp(e):
     pat = e.pattern_match.group(1)
     if pat:
         try:
-            rem_night((await bot.get_entity(pat)).id)
+            rem_night((await ultroid_bot.get_entity(pat)).id)
             return await eor(e, f"Done, Removed {pat} To Night Mode.")
         except BaseException:
             return await eor(e, "Something Went Wrong", time=5)
