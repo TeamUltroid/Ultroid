@@ -85,17 +85,21 @@ async def inline_handler(event):
     for x in LIST.values():
         for y in x:
             z.append(y)
-    result = event.builder.photo(
-        file=INLINE_PIC,
-        link_preview=False,
-        text=get_string("inline_4").format(
+    text = get_string("inline_4").format(
             OWNER_NAME,
             len(PLUGINS),
             len(ADDONS),
             len(z),
-        ),
-        buttons=_main_help_menu,
     )
+    if INLINE_PIC:
+        result = await event.builder.photo(
+        file=INLINE_PIC,
+        link_preview=False,
+        text=text,
+        buttons=_main_help_menu,
+        )
+    else:
+        result = await event.builder.article(title="Ultroid Help Menu", text=text, buttons=_main_help_menu)
     await event.answer([result], gallery=True)
 
 
