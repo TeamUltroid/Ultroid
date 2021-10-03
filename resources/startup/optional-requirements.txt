@@ -45,5 +45,7 @@ telegraph==1.4.1
 tgcrypto==1.2.2
 youtube-search-python==1.4.7
 youtube_dl==2021.6.6
+emoji
+speedtest-cli
 
 # -------------------------------------------------------#
