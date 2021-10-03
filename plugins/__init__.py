@@ -32,6 +32,8 @@ OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
+if INLINE_PIC == "False":
+    INLINE_PIC = None
 Ttoken = udB.get("_TELEGRAPH_TOKEN")
 Telegraph = Telegraph(Ttoken)
 
