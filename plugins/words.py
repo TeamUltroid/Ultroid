@@ -39,7 +39,8 @@ async def mean(event):
     except (KeyError, TypeError):
         pass
     defi = out[0]["meanings"][0]["definitions"][0]
-    text = get_string("wrd_1").format(wrd, defi["definition"], defi["example"])
+    ex = "None" if not defi.get("example") else defi["example"]
+    text = get_string("wrd_1").format(wrd, defi["definition"], ex)
     if defi["synonyms"]:
         text += (
             f"\n\n• **{get_string('wrd_5')} :**"
