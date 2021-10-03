@@ -21,22 +21,34 @@ from . import eor, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="(un|)lock ?(.*)",
+    pattern="lock ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
+)
+async def lockho(e):
+    mat = e.pattern_match.group(1)
+    if not mat:
+        return await eor(e, "`Give some Proper Input..`", time=5)
+    ml = lock_unlock(mat)
+    if not ml:
+        return await eor(e, "`Incorrect Input`", time=5)
+    await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    await eor(e, f"Locked - `{mat}` ! ")
+
+
+@ultroid_cmd(
+    pattern="unlock ?(.*)",
     groups_only=True,
     admins_only=True,
     type=["official", "manager"],
 )
 async def unlckho(e):
-    mat = e.pattern_match.group(2)
+    mat = e.pattern_match.group(1)
     if not mat:
         return await eor(e, "`Give some Proper Input..`", time=5)
-    lock = True
-    text = "Locked"
-    if e.text[1:].startswith("un"):
-        lock = False
-        text = "Unlocked"
-    ml = lock_unlock(mat, lock=lock)
+    ml = lock_unlock(mat, lock=False)
     if not ml:
         return await eor(e, "`Incorrect Input`", time=5)
     await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
-    await eor(e, f"{text} - `{mat}` ! ")
+    await eor(e, f"Unlocked - `{mat}` ! ")
