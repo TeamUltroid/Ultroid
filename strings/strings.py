@@ -5,7 +5,7 @@ from google_trans_new import google_translator
 from pyUltroid import udB
 from yaml import safe_load
 
-language = udB.get("language") or "en"
+language = [udB.get("language") or "en"]
 languages = {}
 
 Trs = google_translator()
@@ -21,6 +21,7 @@ for file in listdir(strings_folder):
 
 
 def get_string(key: str) -> Any:
+    language = language[0]
     try:
         return languages[language][key]
     except KeyError:
