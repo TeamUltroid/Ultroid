@@ -18,6 +18,8 @@ from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
+from random import choice
+from pyUltroid.dB import ULTROID_IMAGES
 from telegraph import Telegraph
 from telethon import Button, events
 from telethon.tl import functions, types
@@ -29,7 +31,7 @@ Redis = udB.get
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-
+INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 Ttoken = udB.get("_TELEGRAPH_TOKEN")
 Telegraph = Telegraph(Ttoken)
 
