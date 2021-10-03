@@ -7,7 +7,7 @@
 
 import re
 
-from ..strings.strings import language
+from . import language
 from . import Button, callback, get_back_button, get_languages, udB
 
 
