@@ -26,7 +26,10 @@ def get_string(key: str) -> Any:
     except KeyError:
         try:
             tr = Trs.translate(languages["en"][key], lang_tgt=language)
-            languages[language][key] = tr
+            if languages.get(language):
+                languages[language][key] = tr
+            else:
+                languages.update({language:{key:tr})
             return tr
         except KeyError:
             return f"Warning: could not load any string with the key `{key}`"
