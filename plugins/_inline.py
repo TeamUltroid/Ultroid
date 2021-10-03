@@ -142,7 +142,7 @@ async def setting(event):
             len(ADDONS),
             len(z),
         ),
-        file=_file_to_replace,
+        file=INLINE_PIC,
         link_preview=False,
         buttons=[
             [
@@ -392,7 +392,7 @@ async def backr(event):
     )
     await event.edit(
         f"{xhelps}",
-        file=_file_to_replace,
+        file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
     )
@@ -405,7 +405,7 @@ async def backr(event):
     buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
     await event.edit(
         f"{xhelps}",
-        file=_file_to_replace,
+        file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
     )
@@ -418,7 +418,7 @@ async def bvckr(event):
     buttons = page_num(current_page_number, list(HELP["VCBot"].keys()), "vchelp", "vc")
     await event.edit(
         f"{xhelps}",
-        file=_file_to_replace,
+        file=INLINE_PIC,
         buttons=buttons,
         link_preview=False,
     )
