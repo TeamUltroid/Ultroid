@@ -477,15 +477,19 @@ async def on_plug_in_callback_query_handler(event):
     reply_pop_up_alert += "\n© @TeamUltroid"
     buttons = []
     if INLINE_PIC:
-        buttons.append([
-            Button.inline(
-                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                data=f"sndplug_{(event.data).decode('UTF-8')}",
-            )
-        ])
-    buttons.append([
+        buttons.append(
+            [
+                Button.inline(
+                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                )
+            ]
+        )
+    buttons.append(
+        [
             Button.inline("« Bᴀᴄᴋ", data="buck"),
-        ])
+        ]
+    )
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
@@ -520,15 +524,19 @@ async def on_vc_plg_callback_query_handler(event):
     reply_pop_up_alert += "\n© @TeamUltroid"
     buttons = []
     if INLINE_PIC:
-        buttons.append([
-            Button.inline(
-                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                data=f"sndplug_{(event.data).decode('UTF-8')}",
-            )
-        ])
-    buttons.append([
+        buttons.append(
+            [
+                Button.inline(
+                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                )
+            ]
+        )
+    buttons.append(
+        [
             Button.inline("« Bᴀᴄᴋ", data="buck"),
-        ])
+        ]
+    )
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
@@ -576,15 +584,19 @@ async def on_plug_in_callback_query_handler(event):
     reply_pop_up_alert += "\n© @TeamUltroid"
     buttons = []
     if INLINE_PIC:
-        buttons.append([
-            Button.inline(
-                "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                data=f"sndplug_{(event.data).decode('UTF-8')}",
-            )
-        ])
-    buttons.append([
+        buttons.append(
+            [
+                Button.inline(
+                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                )
+            ]
+        )
+    buttons.append(
+        [
             Button.inline("« Bᴀᴄᴋ", data="buck"),
-        ])
+        ]
+    )
     try:
         if str(event.query.user_id) in owner_and_sudos():
             await event.edit(
