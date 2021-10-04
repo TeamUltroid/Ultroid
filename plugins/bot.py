@@ -33,6 +33,7 @@ import sys
 import time
 from platform import python_version as pyver
 from random import choice
+
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
@@ -45,6 +46,7 @@ except ImportError:
     Carbon = None
 
 from . import (
+    ATRA_COL,
     LOGS,
     OWNER_NAME,
     Button,
@@ -66,7 +68,6 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
-    ATRA_COL
 )
 
 # Will move to strings
