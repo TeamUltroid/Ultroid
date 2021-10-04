@@ -22,6 +22,9 @@
 • `{i}logs (sys)`
     Get the full terminal logs.
 
+• `{i}logs carbon`
+    Get the carbonized sys logs.
+
 • `{i}logs heroku`
    Get the latest 100 lines of heroku logs.
 
@@ -220,7 +223,7 @@ async def _(event):
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
         code = open("ultroid.log", "r").read()
-        file = await Carbon().memorize(code=code, background=choice(ATRA_COL))
+        file = await Carbon(code=code, background=choice(ATRA_COL)).memorize("ultroid-logs")
         await event.reply("**Ultroid Logs.**", file=file)
     else:
         await def_logs(event)
