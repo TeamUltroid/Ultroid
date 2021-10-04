@@ -10,27 +10,12 @@ from pyUltroid.functions.helper import *
 from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from telethon import Button, custom
+from plugins import ATRA_COL
 
 from strings import get_languages, get_string, language
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
-
-ATRA_COL = [
-    "DarkCyan",
-    "DeepSkyBlue",
-    "DarkTurquoise",
-    "Cyan",
-    "LightSkyBlue",
-    "Turquoise",
-    "MediumVioletRed",
-    "Aquamarine",
-    "Lightcyan",
-    "Azure",
-    "Moccasin",
-    "PowderBlue",
-]
-
 
 async def setit(event, name, value):
     try:
