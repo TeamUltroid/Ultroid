@@ -32,12 +32,17 @@ import os
 import sys
 import time
 from platform import python_version as pyver
-
+from random import choice
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
+
+try:
+    from carbonnow import Carbon
+except ImportError:
+    Carbon = None
 
 from . import (
     LOGS,
@@ -61,6 +66,7 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
+    ATRA_COL
 )
 
 # Will move to strings
@@ -204,15 +210,20 @@ async def shutdownbot(ult):
 
 
 @ultroid_cmd(
-    pattern="logs ?(|heroku|sys)",
+    pattern="logs ?(|carbon|heroku|sys)",
     chats=[],
 )
 async def _(event):
     opt = event.pattern_match.group(1)
     if opt == "heroku":
         await heroku_logs(event)
+    elif opt == "carbon" and Carbon:
+        code = open("ultroid.log", "r").read()
+        file = await Carbon().memorize(code=code, background=choice(ATRA_COL))
+        await event.reply("**Ultroid Logs.**", file=file)
     else:
         await def_logs(event)
+    await event.delete()
 
 
 @in_pattern("alive", owner=True)
