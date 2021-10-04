@@ -223,7 +223,9 @@ async def _(event):
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
         code = open("ultroid.log", "r").read()
-        file = await Carbon(code=code, background=choice(ATRA_COL)).memorize("ultroid-logs")
+        file = await Carbon(code=code, background=choice(ATRA_COL)).memorize(
+            "ultroid-logs"
+        )
         await event.reply("**Ultroid Logs.**", file=file)
     else:
         await def_logs(event)
