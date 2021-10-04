@@ -26,6 +26,7 @@ from telethon.tl import functions, types
 
 from strings import get_string
 
+
 Redis = udB.get
 
 OWNER_NAME = ultroid_bot.me.first_name
