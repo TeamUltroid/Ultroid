@@ -146,8 +146,7 @@ async def bdcast(event):
         )
         response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
         response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
+        if response.message == "/cancel":
             return await conv.send_message("Cancelled!!")
         success = 0
         fail = 0
@@ -155,7 +154,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), f"{themssg}")
+                await asst.send_message(int(i), response)
                 success += 1
             except BaseException:
                 fail += 1
