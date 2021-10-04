@@ -221,7 +221,8 @@ async def _(event):
     opt = event.pattern_match.group(1)
     if opt == "heroku":
         await heroku_logs(event)
-    elif opt == "carbon":
+    elif opt == "carbon" and Carbon:
+        event = await eor(event, get_string("com_1"))
         code = open("ultroid.log", "r").read()[-2500:]
         file = await Carbon(code=code, background=choice(ATRA_COL)).memorize(
             "ultroid-logs"
