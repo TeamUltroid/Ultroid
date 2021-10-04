@@ -222,7 +222,7 @@ def vc_asst(dec, **kwargs):
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
-            if vc_auth:
+            elif vc_auth:
                 cha, adm = check_vcauth(e.chat_id)
                 if adm and not (await admin_check(e)):
                     return
