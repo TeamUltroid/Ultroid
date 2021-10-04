@@ -166,7 +166,7 @@ async def gsearch(q_event):
     try:
         match = q_event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await q_event.answer(
+        return await q_event.answer(
             [], switch_pm="Google Search. Enter a query!", switch_pm_param="start"
         )
     searcher = []
