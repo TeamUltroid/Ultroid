@@ -266,7 +266,7 @@ async def xda_dev(event):
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
     le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
-    ct = await async_searcher(ct, re_content=True)
+    ct = await async_searcher(le, re_content=True)
     ml = bs(ct, "html.parser", from_encoding="utf-8")
     ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
     out = []
