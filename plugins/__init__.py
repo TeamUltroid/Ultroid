@@ -78,3 +78,18 @@ KANGING_STR = [
     "Imprisoning this sticker...",
     "Mr.Steal-Your-Sticker is stealing this sticker... ",
 ]
+
+ATRA_COL = [
+    "DarkCyan",
+    "DeepSkyBlue",
+    "DarkTurquoise",
+    "Cyan",
+    "LightSkyBlue",
+    "Turquoise",
+    "MediumVioletRed",
+    "Aquamarine",
+    "Lightcyan",
+    "Azure",
+    "Moccasin",
+    "PowderBlue",
+]
