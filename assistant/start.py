@@ -154,7 +154,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), response)
+                await asst.send_message(int(i), response.message)
                 success += 1
             except BaseException:
                 fail += 1
@@ -162,10 +162,10 @@ async def bdcast(event):
         time_taken = (end - start).seconds
         await conv.send_message(
             f"""
-Broadcast completed in {time_taken} seconds.
+**Broadcast completed in {time_taken} seconds.**
 Total Users in Bot - {len(ok)}
-Sent to {success} users.
-Failed for {fail} user(s).""",
+**Sent to** : `{success} users.`
+**Failed for** : `{fail} user(s).`""",
         )
 
 
