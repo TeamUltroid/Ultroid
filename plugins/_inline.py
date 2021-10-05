@@ -642,7 +642,7 @@ async def ibuild(e):
             mime_type, _pic = None, None
             cont, results = None, None
             try:
-                ext = pic.split(".")[-1].lower()
+                ext = str(pic).split(".")[-1].lower()
             except BaseException:
                 ext = None
             if ext in ["img", "jpg", "png"]:
@@ -653,7 +653,10 @@ async def ibuild(e):
                 _type = "gif"
             else:
                 try:
-                    _pic = resolve_bot_file_id(pic)
+                    if "telethon.tl.types" in str(type(pic))
+                        _pic = pic
+                    else:
+                        _pic = resolve_bot_file_id(pic)
                 except BaseException:
                     pass
                 if _pic:
@@ -695,7 +698,7 @@ async def ibuild(e):
     await e.answer(result)
 
 
-async def something(e, msg, media, button, reply=True):
+async def something(e, msg, media, button, reply=True, chat=None):
     if e.client._bot:
         return await e.reply(msg, file=media, buttons=button)
     num = len(STUFF) + 1
@@ -703,7 +706,7 @@ async def something(e, msg, media, button, reply=True):
     try:
         res = await e.client.inline_query(asst.me.username, f"stf{num}")
         return await res[0].click(
-            e.chat_id,
+            chat if chat else e.chat_id,
             reply_to=bool(isinstance(e, Message) and reply),
             hide_via=True,
             silent=True,
