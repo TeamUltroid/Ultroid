@@ -69,7 +69,6 @@ from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
-from ._inline import something
 
 from . import (
     HNDLR,
@@ -84,6 +83,7 @@ from . import (
     ultroid_bot,
     ultroid_cmd,
 )
+from ._inline import something
 
 _gpromote_rights = ChatAdminRights(
     add_admins=False,
