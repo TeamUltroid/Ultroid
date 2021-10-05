@@ -65,6 +65,8 @@ from pyUltroid.dB.gcast_blacklist_db import (
     is_gblacklisted,
     rem_gblacklist,
 )
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
@@ -390,16 +392,21 @@ async def _(e):
 
 @ultroid_cmd(pattern="g(admin|)cast ?(.*)", fullsudo=True)
 async def gcast(event):
-    text = ""
+    text, btn, reply = "", None, None
     xx = event.pattern_match.group(2)
     if xx:
         msg = xx
+        msg, btn = get_msg_button(msg)
     elif event.is_reply:
-        msg = await event.get_reply_message()
+        reply = await event.get_reply_message()
+        msg = reply.text
+        if reply.buttons:
+            btn = format_btn(reply.buttons)
     else:
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
         )
+    
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -416,8 +423,12 @@ async def gcast(event):
                 )
             ):
                 try:
+                    if btn:
+                        btn = create_tl_btn(btn)
+                        await something(e, msg, reply.media, btn, chat=chat, reply=False)
+                    else:
+                        await event.client.send_message(chat, msg, file=reply.media if reply else None)
                     done += 1
-                    await event.client.send_message(chat, msg)
                 except Exception as h:
                     err += "• " + str(h) + "\n"
                     er += 1
