@@ -402,6 +402,8 @@ async def gcast(event):
         msg = reply.text
         if reply.buttons:
             btn = format_btn(reply.buttons)
+        else:
+            msg, btn = get_msg_button(msg)
     else:
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
