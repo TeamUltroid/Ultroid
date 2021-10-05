@@ -653,7 +653,7 @@ async def ibuild(e):
                 _type = "gif"
             else:
                 try:
-                    if "telethon.tl.types" in str(type(pic))
+                    if "telethon.tl.types" in str(type(pic)):
                         _pic = pic
                     else:
                         _pic = resolve_bot_file_id(pic)
