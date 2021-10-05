@@ -17,6 +17,7 @@
 
 
 from . import *
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 
 
 @vc_asst("play")
@@ -65,15 +66,19 @@ async def play_music_(event):
         if not (await ultSongs.vc_joiner()):
             return
         await ultSongs.group_call.start_audio(song)
-        await xx.reply(
-            "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+        text = "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
                 link, song_name, duration, chat, from_user
-            ),
+        )
+        try:
+            await xx.reply(
+            text,
             file=thumb,
             link_preview=False,
             parse_mode="html",
-        )
-        await xx.delete()
+            )
+            await xx.delete()
+        except ChatSendMediaForbiddenError:
+            await eor(xx, text, link_preview=False)
         if thumb and os.path.exists(thumb):
             os.remove(thumb)
     else:
@@ -130,14 +135,19 @@ async def play_music_(event):
             if not (await ultSongs.vc_joiner()):
                 return
             await ultSongs.group_call.start_audio(song)
-            await msg.reply(
-                "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
+            text = "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
                     link, song_name, duration, chat, from_user
-                ),
+            )
+            try:
+                await msg.reply(
+                text,
                 file=thumb,
                 link_preview=False,
                 parse_mode="html",
-            )
+                )
+            except ChatSendMediaForbiddenError:
+                await msg.reply(text, link_preview=False,
+                    parse_mode="html")
             if thumb and os.path.exists(thumb):
                 os.remove(thumb)
         else:
