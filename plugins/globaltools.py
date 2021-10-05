@@ -428,7 +428,7 @@ async def gcast(event):
                     if btn:
                         btn = create_tl_btn(btn)
                         await something(
-                            e, msg, reply.media, btn, chat=chat, reply=False
+                            event, msg, reply.media, btn, chat=chat, reply=False
                         )
                     else:
                         await event.client.send_message(
