@@ -25,7 +25,7 @@ from traceback import format_exc
 
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
-from telethon.errors.rpcerrorlist import ParticipantJoinMissingError
+from telethon.errors.rpcerrorlist import ParticipantJoinMissingError, ChatSendMediaForbiddenError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.helper import (
     bash,
@@ -151,7 +151,11 @@ class Player:
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
-            xx = await vcClient.send_message(
+            text = "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
+                    pos, link, title, dur, from_user
+            )
+            try:
+                xx = await vcClient.send_message(
                 self._current_chat,
                 "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
                     pos, link, title, dur, from_user
@@ -159,7 +163,11 @@ class Player:
                 file=thumb,
                 link_preview=False,
                 parse_mode="html",
-            )
+                )
+            except ChatSendMediaForbiddenError:
+                xx = await vcClient.send_message(
+                self._current_chat,text, link_preview=False,
+                parse_mode="html")
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
