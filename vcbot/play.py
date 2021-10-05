@@ -106,7 +106,8 @@ async def play_music_(event):
         try:
             limit = input.split(";")
             input = limit[0]
-            limit = int(limit[1])
+            limit = int(limit[1]) if limit[1].isdigit() else 10
+            input = int(input)
         except (IndexError, ValueError):
             pass
     try:
