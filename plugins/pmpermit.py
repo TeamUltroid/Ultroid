@@ -173,20 +173,14 @@ if sett == "True":
     @ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
-            func=lambda e: e.is_private and e.out,
+            func=lambda e: e.is_private and e.out and e.chat_id not in DEVLIST and e.text and not e.text.startswith(HNDLR) and not is_approved(e.chat_id) and not e.chat.bot and not e.chat.is_self and not e.chat.verified and not e.chat.support,
         ),
     )
     async def autoappr(e):
         miss = await e.get_chat()
-        if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
-            return
-        if miss.id in DEVLIST:
+        if Redis("AUTOAPPROVE") != "True":
             return
         # do not approve if outgoing is a command.
-        if e.text.startswith(HNDLR):
-            return
-        if is_approved(miss.id):
-            return
         approve_user(miss.id)
         await delete_pm_warn_msgs(miss.id)
         try:
