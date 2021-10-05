@@ -15,6 +15,7 @@
 
 """
 
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from . import *
 
 
@@ -73,13 +74,17 @@ async def video_c(event):
     ultSongs = Player(chat, xx, True)
     if not (await ultSongs.vc_joiner()):
         return
-    await xx.reply(
-        "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
+    text = "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
             title, link, duration, chat, from_user
-        ),
+    )
+    try:
+        await xx.reply(
+        text,
         file=thumb,
         link_preview=False,
-    )
+        )
+    except ChatSendMediaForbiddenError:
+        await xx.reply(text, link_preview=False)
     await asyncio.sleep(1)
     await ultSongs.group_call.start_video(song, with_audio=True)
     await xx.delete()
