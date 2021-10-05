@@ -69,6 +69,7 @@ from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
+from ._inline import something
 
 from . import (
     HNDLR,
@@ -437,7 +438,7 @@ async def gcast(event):
                     er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
     if err != "":
-        open("gcast-error.log", "w").write(h)
+        open("gcast-error.log", "w+").write(err)
         text += f"\nYou can do `{HNDLR}ul gcast-error.log` to know error report."
     await kk.edit(text)
 
@@ -461,8 +462,8 @@ async def gucast(event):
             chat = x.id
             if not is_gblacklisted(chat):
                 try:
-                    done += 1
                     await ultroid_bot.send_message(chat, msg)
+                    done += 1
                 except BaseException:
                     er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
