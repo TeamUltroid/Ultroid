@@ -173,7 +173,16 @@ if sett == "True":
     @ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
-            func=lambda e: e.is_private and e.out and e.chat_id not in DEVLIST and e.text and not e.text.startswith(HNDLR) and not is_approved(e.chat_id) and not e.chat.bot and not e.chat.is_self and not e.chat.verified and not e.chat.support,
+            func=lambda e: e.is_private
+            and e.out
+            and e.chat_id not in DEVLIST
+            and e.text
+            and not e.text.startswith(HNDLR)
+            and not is_approved(e.chat_id)
+            and not e.chat.bot
+            and not e.chat.is_self
+            and not e.chat.verified
+            and not e.chat.support,
         ),
     )
     async def autoappr(e):
