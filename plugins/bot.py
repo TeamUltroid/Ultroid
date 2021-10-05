@@ -224,7 +224,7 @@ async def _(event):
     elif opt == "carbon" and Carbon:
         event = await eor(event, get_string("com_1"))
         code = open("ultroid.log", "r").read()[-2500:]
-        file = await Carbon(code=code, background=choice(ATRA_COL)).memorize(
+        file = await Carbon(base_url="https://carbonara.vercel.app/api/cook", code=code, background=choice(ATRA_COL)).memorize(
             "ultroid-logs"
         )
         await event.reply("**Ultroid Logs.**", file=file)
