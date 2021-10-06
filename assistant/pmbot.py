@@ -12,9 +12,9 @@
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
-from telethon.utils import get_display_name
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
+from telethon.utils import get_display_name
 
 from . import *
 
@@ -47,7 +47,9 @@ async def on_out_mssg(event):
     if event.text.startswith("/who"):
         try:
             k = await asst.get_entity(to_user)
-            return await event.reply(f"**Name :** {get_display_name(k)}\n**ID :** `{k.id}`\n**Link :** {inline_mention(k)}")
+            return await event.reply(
+                f"**Name :** {get_display_name(k)}\n**ID :** `{k.id}`\n**Link :** {inline_mention(k)}"
+            )
         except BaseException:
             return
     elif event.text.startswith("/"):
