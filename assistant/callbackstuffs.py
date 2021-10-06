@@ -16,6 +16,7 @@ from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
+from pyUltroid.startup.loader import Loader
 
 try:
     from carbonnow import Carbon
@@ -529,7 +530,7 @@ async def tagloggrr(e):
 
 
 @callback("deltag", owner=True)
-async def delfuk(e):
+async def _(e):
     udB.delete("TAG_LOG")
     await e.answer("Done!!! TAG lOG Off")
 
@@ -1146,6 +1147,7 @@ async def name(event):
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
+    Loader(path="assistant/pmbot", key="PM Bot", logger=LOGS).load(cmd_help=None)
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
