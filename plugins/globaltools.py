@@ -425,9 +425,9 @@ async def gcast(event):
             ):
                 try:
                     if btn:
-                        bt = create_tl_btn(bt)
+                        bt = create_tl_btn(btn)
                         await something(
-                            event, msg, reply.media, bt, chat=chat, reply=False
+                            event, msg, reply.media if reply else None, bt, chat=chat, reply=False
                         )
                     else:
                         await event.client.send_message(
@@ -446,11 +446,17 @@ async def gcast(event):
 
 @ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
 async def gucast(event):
+    msg, btn, reply = "", None, None
     xx = event.pattern_match.group(1)
     if xx:
-        msg = xx
+        msg, btn = get_msg_button(event.text.split(maxsplit=1)[1])
     elif event.is_reply:
-        msg = await event.get_reply_message()
+        reply = await event.get_reply_message()
+        msg = reply.text
+        if reply.buttons:
+            btn = format_btn(reply.buttons)
+        else:
+            msg, btn = get_msg_button(msg)
     else:
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
@@ -463,7 +469,15 @@ async def gucast(event):
             chat = x.id
             if not is_gblacklisted(chat):
                 try:
-                    await ultroid_bot.send_message(chat, msg)
+                    if btn:
+                        bt = create_tl_btn(btn)
+                        await something(
+                            event, msg, reply.media if reply else None, bt, chat=chat, reply=False
+                        )
+                    else:
+                        await event.client.send_message(
+                            chat, msg, file=reply.media if reply else None
+                        )
                     done += 1
                 except BaseException:
                     er += 1
