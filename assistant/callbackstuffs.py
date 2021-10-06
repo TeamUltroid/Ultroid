@@ -11,7 +11,7 @@ from os import execl, remove
 from random import choice
 
 from pyUltroid.functions.gdrive import authorize, create_token_file
-from pyUltroid.functions.tools import get_paste
+from pyUltroid.functions.tools import get_paste, telegraph_client
 from pyUltroid.startup.loader import Loader
 from telegraph import Telegraph
 from telegraph import upload_file as upl
@@ -25,9 +25,7 @@ except ImportError:
 from . import *
 
 # --------------------------------------------------------------------#
-telegraph = Telegraph()
-r = telegraph.create_account(short_name="Ultroid")
-auth_url = r["auth_url"]
+telegraph = telegraph_client()
 # --------------------------------------------------------------------#
 
 
@@ -1147,7 +1145,7 @@ async def name(event):
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
-    Loader(path="assistant/pmbot", key="PM Bot", logger=LOGS).load(cmd_help=None)
+    Loader(path="assistant/pmbot.py", key="PM Bot").load_single(log=True)
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
