@@ -28,10 +28,10 @@ async def banhammer(event):
 
 
 @asst_cmd(pattern="unban", from_users=owner_and_sudos(castint=True),func=lambda x: x.is_private)
-async def banhammer(event):
+async def unbanhammer(event):
     x = await event.get_reply_message()
     if x is None:
-        return await event.edit("Please reply to someone to ban him.")
+        return await event.edit("Please reply to someone to Unban him.")
     target = get_who(x.id)
     if not is_blacklisted(target):
         return await asst.send_message(event.chat_id, "User was never banned!")
