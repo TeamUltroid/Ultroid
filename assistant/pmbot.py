@@ -11,6 +11,7 @@
 
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
+from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
 
@@ -34,31 +35,26 @@ async def on_new_mssg(event):
 # --------------------------------------- Outgoing -------------------------------------------- #
 
 
-@asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private and e.is_reply))
+@asst.on(events.NewMessage(from_users=[OWNER_ID], incoming=True, func=lambda e: e.is_private and e.is_reply))
 async def on_out_mssg(event):
     x = await event.get_reply_message()
-    who = event.sender_id
-    if who != OWNER_ID:
-        return
     to_user = get_who(x.id)
     if event.text.startswith("/who"):
         try:
             k = await asst.get_entity(to_user)
-            return await event.reply(f"[{k.first_name}](tg://user?id={k.id})")
+            return await event.reply(f"{inline_mention(k)} [`{k.id}`]")
         except BaseException:
             return
     elif event.text.startswith("/"):
         return
     if to_user:
-        await asst.send_message(to_user, event)
+        await asst.send_message(to_user, event.message)
 
 
 # --------------------------------------- Ban/Unban -------------------------------------------- #
 
 
-@asst_cmd(
-    pattern="ban", from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
-)
+@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True), func= lambda x: x.is_private)
 async def banhammer(event):
     x = await event.get_reply_message()
     if not x:
