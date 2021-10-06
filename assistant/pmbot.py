@@ -35,7 +35,11 @@ async def on_new_mssg(event):
 # --------------------------------------- Outgoing -------------------------------------------- #
 
 
-@asst.on(events.NewMessage(from_users=[OWNER_ID], incoming=True, func=lambda e: e.is_private and e.is_reply))
+@asst.on(
+    events.NewMessage(
+        from_users=[OWNER_ID], incoming=True, func=lambda e: e.is_private and e.is_reply
+    )
+)
 async def on_out_mssg(event):
     x = await event.get_reply_message()
     to_user = get_who(x.id)
@@ -54,7 +58,9 @@ async def on_out_mssg(event):
 # --------------------------------------- Ban/Unban -------------------------------------------- #
 
 
-@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True), func= lambda x: x.is_private)
+@asst_cmd(
+    pattern="ban", from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
+)
 async def banhammer(event):
     x = await event.get_reply_message()
     if not x:
