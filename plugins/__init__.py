@@ -20,7 +20,6 @@ from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid.misc._decorators import ultroid_cmd
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
-from telegraph import Telegraph
 from telethon import Button, events
 from telethon.tl import functions, types
 
@@ -34,19 +33,7 @@ LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 if INLINE_PIC == "False":
     INLINE_PIC = None
-Ttoken = udB.get("_TELEGRAPH_TOKEN")
-Telegraph = Telegraph(Ttoken)
-
-if not Ttoken:
-    short_name = OWNER_NAME if len(OWNER_NAME) < 32 else "Ultroid"
-    author_name = short_name
-    author_url = (
-        f"https://t.me/{ultroid_bot.me.username}" if ultroid_bot.me.username else None
-    )
-    Telegraph.create_account(
-        short_name=short_name, author_name=author_name, author_url=author_url
-    )
-    udB.set("_TELEGRAPH_TOKEN", Telegraph.get_access_token())
+Telegraph = telegraph_client()
 
 List = []
 Dict = {}
