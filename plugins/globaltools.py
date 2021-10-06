@@ -427,7 +427,12 @@ async def gcast(event):
                     if btn:
                         bt = create_tl_btn(btn)
                         await something(
-                            event, msg, reply.media if reply else None, bt, chat=chat, reply=False
+                            event,
+                            msg,
+                            reply.media if reply else None,
+                            bt,
+                            chat=chat,
+                            reply=False,
                         )
                     else:
                         await event.client.send_message(
@@ -472,7 +477,12 @@ async def gucast(event):
                     if btn:
                         bt = create_tl_btn(btn)
                         await something(
-                            event, msg, reply.media if reply else None, bt, chat=chat, reply=False
+                            event,
+                            msg,
+                            reply.media if reply else None,
+                            bt,
+                            chat=chat,
+                            reply=False,
                         )
                     else:
                         await event.client.send_message(
