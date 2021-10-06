@@ -203,7 +203,7 @@ async def siesace(e):
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
         file=okk,
-        message="`" + title + "`" + "\n`From Saavn`",
+        message=f"`{title}`\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
