@@ -425,9 +425,9 @@ async def gcast(event):
             ):
                 try:
                     if btn:
-                        btn = create_tl_btn(btn)
+                        bt = create_tl_btn(bt)
                         await something(
-                            event, msg, reply.media, btn, chat=chat, reply=False
+                            event, msg, reply.media, bt, chat=chat, reply=False
                         )
                     else:
                         await event.client.send_message(
@@ -435,7 +435,6 @@ async def gcast(event):
                         )
                     done += 1
                 except Exception as h:
-                    LOGS.exception(h)
                     err += "• " + str(h) + "\n"
                     er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
