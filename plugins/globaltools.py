@@ -435,6 +435,7 @@ async def gcast(event):
                         )
                     done += 1
                 except Exception as h:
+                    LOGS.exception(h)
                     err += "• " + str(h) + "\n"
                     er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
