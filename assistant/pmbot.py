@@ -11,7 +11,6 @@
 
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
-from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon import events
 
@@ -57,7 +56,9 @@ async def on_out_mssg(event):
 # --------------------------------------- Ban/Unban -------------------------------------------- #
 
 
-@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True), func= lambda x: x.is_private)
+@asst_cmd(
+    pattern="ban", from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
+)
 async def banhammer(event):
     x = await event.get_reply_message()
     if not x:
