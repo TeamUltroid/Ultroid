@@ -33,7 +33,7 @@ LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 if INLINE_PIC == "False":
     INLINE_PIC = None
-TelegraphClient = telegraph_client()
+Telegraph = telegraph_client()
 
 List = []
 Dict = {}
