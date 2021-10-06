@@ -29,8 +29,6 @@ async def on_new_mssg(event):
     if event.text.startswith("/") or who == OWNER_ID:
         return
     xx = await event.forward_to(OWNER_ID)
-    if event.fwd_from:
-        await xx.reply(f"From **{inline_mention(event.sender)}** [`{event.sender_id}`]")
     add_stuff(xx.id, who)
 
 
@@ -59,19 +57,17 @@ async def on_out_mssg(event):
 # --------------------------------------- Ban/Unban -------------------------------------------- #
 
 
-@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True))
+@asst_cmd(pattern="ban", from_users=owner_and_sudos(castint=True), func= lambda x: x.is_private)
 async def banhammer(event):
-    if not event.is_private:
-        return
     x = await event.get_reply_message()
-    if x is None:
-        return await event.edit("Please reply to someone to ban him.")
+    if not x:
+        return await event.reply("Please reply to someone to ban him.")
     target = get_who(x.id)
     if is_blacklisted(target):
-        return await asst.send_message(event.chat_id, "User is already banned!")
+        return await event.reply("User is already banned!")
 
     blacklist_user(target)
-    await asst.send_message(event.chat_id, f"#BAN\nUser - {target}")
+    await event.reply(f"#BAN\nUser : {target}")
     await asst.send_message(
         target,
         "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**",
@@ -81,18 +77,18 @@ async def banhammer(event):
 @asst_cmd(
     pattern="unban",
     from_users=owner_and_sudos(castint=True),
-    func=lambda x: x.is_private and x.is_reply,
+    func=lambda x: x.is_private,
 )
 async def unbanhammer(event):
     x = await event.get_reply_message()
-    if x is None:
-        return await event.edit("Please reply to someone to Unban him.")
+    if not x:
+        return await event.reply("Please reply to someone to Unban him.")
     target = get_who(x.id)
     if not is_blacklisted(target):
-        return await asst.send_message(event.chat_id, "User was never banned!")
+        return await event.reply("User was never banned!")
 
     rem_blacklist(target)
-    await asst.send_message(event.chat_id, f"#UNBAN\nUser - {target}")
+    await event.reply(f"#UNBAN\nUser : {target}")
     await asst.send_message(target, "`Congrats! You have been unbanned.`")
 
 
