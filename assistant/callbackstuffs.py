@@ -13,7 +13,6 @@ from random import choice
 from pyUltroid.functions.gdrive import authorize, create_token_file
 from pyUltroid.functions.tools import get_paste, telegraph_client
 from pyUltroid.startup.loader import Loader
-from telegraph import Telegraph
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
