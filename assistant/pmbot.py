@@ -11,6 +11,8 @@
 
 from telethon import events
 from pyUltroid.functions.helper import inline_mention
+from pyUltroid.dB.asst_fns import *
+from pyUltroid.dB.botchat_db import *
 from . import *
 
 # --------------------------------------- Incoming -------------------------------------------- #
