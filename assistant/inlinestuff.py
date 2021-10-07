@@ -364,8 +364,6 @@ PISTON_LANGS = {}
 
 @in_pattern("run", owner=True)
 async def piston_run(event):
-    PistonAPI()
-    version = None
     try:
         lang = event.text.split()[1]
         code = event.text.split(maxsplit=2)[2]
