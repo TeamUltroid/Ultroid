@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: 3.9.x
       - name: Install Stuff
-        run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt install wget -y
+        run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt install wget -y && pip install pyyaml
       - name: dl stuff
         run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/9223460aa13edc0d0cf87cfd3f20908cfa21e571/stringzer.py
       - name: do stuff
