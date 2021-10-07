@@ -141,15 +141,18 @@ async def changes(okk):
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     if Carbon:
-        await okk.edit("• Writing Changelogs 📝 •")
-        carbon = Carbon(
-            base_url="https://carbonara.vercel.app/api/cook",
+        try:
+            await okk.edit("• Writing Changelogs 📝 •")
+            carbon = Carbon(
+            base_url="https://carbonara-42.herokuapp.com/api/cook",
             code=tl_chnglog,
             background=choice(ATRA_COL),
             language="md",
-        )
-        img = await carbon.memorize("changelog")
-        return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
+            )
+            img = await carbon.memorize("changelog")
+            return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
+        except Exception as er:
+            LOGS.exception(er)
     changelog_str = changelog + cli
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
