@@ -144,13 +144,15 @@ async def changes(okk):
         try:
             await okk.edit("• Writing Changelogs 📝 •")
             carbon = Carbon(
-            base_url="https://carbonara-42.herokuapp.com/api/cook",
-            code=tl_chnglog,
-            background=choice(ATRA_COL),
-            language="md",
+                base_url="https://carbonara-42.herokuapp.com/api/cook",
+                code=tl_chnglog,
+                background=choice(ATRA_COL),
+                language="md",
             )
             img = await carbon.memorize("changelog")
-            return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
+            return await okk.edit(
+                f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
+            )
         except Exception as er:
             LOGS.exception(er)
     changelog_str = changelog + cli
