@@ -389,6 +389,7 @@ async def piston_run(event):
     output = (
         await async_searcher(
             PISTON_URI + "execute",
+            post=True,
             json={"language": lang, "version": version, "code": code},
         )
         or "Success"
