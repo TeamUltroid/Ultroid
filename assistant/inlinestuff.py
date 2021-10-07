@@ -356,3 +356,44 @@ async def _(e):
         )
     APP_CACHE.update({f: foles})
     await e.answer(foles, switch_pm="Application Searcher.", switch_pm_param="start")
+
+
+PISTON_URI = "https://emkc.org/api/v2/piston/"
+PISTON_LANGS = {}
+
+@in_pattern("run", owner=True)
+async def piston_run(event):
+    piston = PistonAPI()
+    version = None
+    try:
+        lang = event.text.split()[1]
+        code = event.text.split(maxsplit=2)[2]
+    except IndexError:
+        result = await event.builder.article(
+            title="Bad Query",
+            description="Usage: [Language] [code]",
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
+        )
+        return await event.answer([result])
+    if not PISTON_LANGS:
+        se = await async_searcher(PISTON_URI+"runtimes", re_json=True)
+        PISTON_LANGS.update({ lang.pop("language"): lang for lang in se}) 
+    if lang in PISTON_LANGS.keys():
+        version = PISTON_LANGS[lang]["version"]
+    else:
+        result = await event.builder.article(
+            title="Unsupported Language",
+            description="Usage: [Language] [code]",
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
+        )
+        return await event.answer([result])
+    output = await async_searcher(PISTON_URI + "execute", json={"language":lang, "version":version, "code":code}) or "Success"
+    if len(output) > 3000:
+        output = output[:3000] + "..."
+    result = await event.builder.article(
+        title="Result",
+        description=output,
+        text=f"• **Language:**\n`{lang}`\n\n• **Code:**\n`{code}`\n\n• **Result:**\n`{output}`",
+        buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
+    )
+    await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
