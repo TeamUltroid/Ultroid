@@ -391,6 +391,7 @@ async def piston_run(event):
             PISTON_URI + "execute",
             post=True,
             json={"language": lang, "version": version, "files": [{"content": code}]},
+            re_json=True,
         )
     )["run"]["output"] or "Success"
     if len(output) > 3000:
