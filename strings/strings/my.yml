@@ -53,8 +53,6 @@ Terakhir dilihat {} lepas.`"
 afk_5: "`Saya akan pergi AFK.`\n\n
 **Sebab:** `{}`"
 afk_6: "Saya akan pergi AFK."
-afk_7: "Sedang AFK dengan sebab {}"
-afk_8: "Sedang AFK."
 
 # bot
 alive_1: "**Userbot Ultroid...**\n\n
@@ -195,3 +193,4 @@ wrd_3: "**Perkataan** - `{}`\n\n**Antonim** - \n"
 ast_1: "Pilih API mana yang ingin anda tetapkan."
 ast_2: "**remove.bg API**\nMasukkan API key anda dari remove.bg.\n\nGuna /cancel untuk menghentikan operasi."
 ast_3: "Hi {}. Sila semak pilihan"
+

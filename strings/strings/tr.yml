@@ -36,8 +36,6 @@ afk_3: "Şu anda AFK'yım.\n Son görülmem: {} önce `\n\n **Sebebi:** `{}`"
 afk_4: "`Şu anda AFK'yım.\n\n Son görülmem: {} önce.`"
 afk_5: "`Artık AFK'yım.`\n\n **Sebebi:** `{}`"
 afk_6: "Artık AFK'yım."
-afk_7: "Şu anda AFK.\n**AFK olma nedeni:** `{}`"
-afk_8: "Şu anda AFK."
 #bot
 alive_1: "**Ultroid UserBot...**\n\n **{}**\n\n ┏━━━━━━━━━━━━━━━━━━━━━\n ┣ **Botun Sahibi** - `{}`\n ┣ **Sürüm** - `{}`\n ┣ **Çalışma Süresi** - `{}`\n ┣ **Python** - `{}`\n ┣ **Telethon** - `{}`\n ┣ **Branch** - `{}`\n ┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Günlükleri.\n[Buraya]({}) da yapıştırıldı!"
@@ -140,3 +138,4 @@ wrd_3: "**Kelime** - `{}`\n\n**Zıt anlamlısı** - \n"
 ast_1: "Hangi API'yi ayarlamak istediğinizi seçin."
 ast_2: "**remove.bg API'si**\nAPI anahtarınızı remove.bg'den alın ve bana gönderin.\n\nİşlemi sonlandırmak için /cancel komutunu kullanın."
 ast_3: "Selam {}. Lütfen seçeneklere göz atın."
+

@@ -482,3 +482,4 @@ zip_3: "`Reply to zip file only`"
 ast_1: "Choose which API you want to set."
 ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
+

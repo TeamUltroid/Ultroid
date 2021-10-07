@@ -40,8 +40,6 @@ afk_3: "`Atualmente estou AFK.\nVisto pela última vez {} atrás.`\n\n**Reason:*
 afk_4: "`Atualmente estou em AFK.\n\nVisto pela última vez {} atrás.`"
 afk_5: "`Ficando em AFK.`\n\n**Reason:** `{}`"
 afk_6: "Estou ficando AFK."
-afk_7: "Está AFK pelo motivo {}"
-afk_8: "Atualmente AFK."
 
 # bot
 alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Proprietário** - `{}`\n┣ **Versão** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **Em Atividade** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Filial** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
@@ -158,3 +156,4 @@ wrd_3: "**Palavra** - `{}`\n\n**Antônimos** - \n"
 ast_1: "Escolha qual API você deseja utilizar."
 ast_2: "**remove.bg API**\nInsira sua chave API de remove.bg.\n\nUse /cancel para encerrar a operação."
 ast_3: "Hey {}. Por favor, navegue pelas opções"
+
