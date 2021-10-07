@@ -8,6 +8,7 @@
 
 import aiohttp
 import random
+from pyUltroid.dB import DEVLIST
 from . import *
 
 
