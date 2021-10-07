@@ -117,6 +117,8 @@ async def play_music_(event):
         try:
             limit = input.split(";")
             input = limit[0].strip()
+            if input.startswith("-") or input.isdigit():
+                input = int(input)
             limit = int(limit[1].strip()) if limit[1].strip().isdigit() else 10
             input = await get_user_id(input)
         except (IndexError, ValueError):
