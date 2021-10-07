@@ -27,4 +27,4 @@
 | ka | Kannada [ಕನ್ನಡ] | 115 | 235 |
 
 
-If Strings are not present, Google Translation is used to Translate them at time of Usage.
+If Strings are not present, Google Translation will be used to Translate them at time of Usage.
