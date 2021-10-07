@@ -5,7 +5,6 @@ akinator.py
 apscheduler
 cloudscraper
 enhancer==0.2b0
-fonttools==4.26.2
 gdown
 gingerit
 git+https://github.com/buddhhu/img2html.git
