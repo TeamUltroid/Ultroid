@@ -90,7 +90,7 @@ Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli
 ## Necessary Variables
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
 - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
-- `REDIS_PASSWORD ` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
+- `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
 
 ## Session String
 Different ways to get your `SESSION`:
