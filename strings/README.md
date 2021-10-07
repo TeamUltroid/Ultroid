@@ -4,7 +4,7 @@
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
 | en | English [English] | 350 | 0 |
-| ru | Russian [Русский] | 350 | 0 |
+| ru | Russian [Русский] | 350 | NULL |
 | it | Italian [italiano] | 115 | 235 |
 | az | Azerbaijani [Azərbaycanca] | 3 | 347 |
 | ar | Arabic [العربية] | 115 | 235 |
@@ -20,11 +20,11 @@
 | ml | Malayalam [മലയാളം] | 115 | 235 |
 | od | Odia [ଓଡିଆ] | 115 | 235 |
 | fr | French [français] | 3 | 347 |
-| id | Indonesia [Indonesia] | 349 | 1 |
+| id | Indonesia [Indonesia] | 349 | [1](https://hastebin.com/raw/ifigixadim) |
 | ta | தமிழ் [தமிழ்] | 115 | 235 |
 | es | Spanish [Español] | 115 | 235 |
 | gu | Gujarati [ગુજરાતી] | 115 | 235 |
 | ka | Kannada [ಕನ್ನಡ] | 115 | 235 |
 
 
-If Strings are not present, Google Translation is used to Translate them at time of Usage.
+If Strings are not present, Google Translation will be used to Translate them at time of Usage.
