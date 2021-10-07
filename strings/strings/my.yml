@@ -193,4 +193,3 @@ wrd_3: "**Perkataan** - `{}`\n\n**Antonim** - \n"
 ast_1: "Pilih API mana yang ingin anda tetapkan."
 ast_2: "**remove.bg API**\nMasukkan API key anda dari remove.bg.\n\nGuna /cancel untuk menghentikan operasi."
 ast_3: "Hi {}. Sila semak pilihan"
-
