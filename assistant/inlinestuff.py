@@ -386,11 +386,13 @@ async def piston_run(event):
             text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
-    output = (await async_searcher(
+    output = (
+        await async_searcher(
             PISTON_URI + "execute",
             post=True,
             json={"language": lang, "version": version, "files": [{"content": code}]},
-        ))["run"]["output"] or "Success"
+        )
+    )["run"]["output"] or "Success"
     if len(output) > 3000:
         output = output[:3000] + "..."
     result = await event.builder.article(
