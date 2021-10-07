@@ -3,8 +3,7 @@ name: Strings Analysis
 on:
   push:
     branches: dev
-  paths:
-    strings/strings/
+    paths: strings/strings/
   workflow_dispatch:
 
 jobs:
