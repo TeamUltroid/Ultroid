@@ -361,9 +361,10 @@ async def _(e):
 PISTON_URI = "https://emkc.org/api/v2/piston/"
 PISTON_LANGS = {}
 
+
 @in_pattern("run", owner=True)
 async def piston_run(event):
-    piston = PistonAPI()
+    PistonAPI()
     version = None
     try:
         lang = event.text.split()[1]
@@ -376,8 +377,8 @@ async def piston_run(event):
         )
         return await event.answer([result])
     if not PISTON_LANGS:
-        se = await async_searcher(PISTON_URI+"runtimes", re_json=True)
-        PISTON_LANGS.update({ lang.pop("language"): lang for lang in se}) 
+        se = await async_searcher(PISTON_URI + "runtimes", re_json=True)
+        PISTON_LANGS.update({lang.pop("language"): lang for lang in se})
     if lang in PISTON_LANGS.keys():
         version = PISTON_LANGS[lang]["version"]
     else:
@@ -387,7 +388,13 @@ async def piston_run(event):
             text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
-    output = await async_searcher(PISTON_URI + "execute", json={"language":lang, "version":version, "code":code}) or "Success"
+    output = (
+        await async_searcher(
+            PISTON_URI + "execute",
+            json={"language": lang, "version": version, "code": code},
+        )
+        or "Success"
+    )
     if len(output) > 3000:
         output = output[:3000] + "..."
     result = await event.builder.article(
