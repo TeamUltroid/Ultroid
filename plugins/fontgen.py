@@ -30,7 +30,7 @@ _script_royal = "𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜�
 async def _(e):
     input = e.pattern_match.group(1)
     reply = await e.get_reply_message()
-    help = modules[__name__].__doc__.format(i=HNDLR)
+    help = __doc__.format(i=HNDLR)
     if not input:
         m = "**Available Fonts**\n\n"
         for x in fonts:
@@ -44,9 +44,9 @@ async def _(e):
             font = _[0][:-1]
             text = _[1]
         except IndexError:
-            await eod(e, help)
+            return await eod(e, help)
     elif reply and not input:
-        await eod(e, "`Give font dude :/`")
+        return await eod(e, "`Give font dude :/`")
     else:
         font = input
         text = reply.message
