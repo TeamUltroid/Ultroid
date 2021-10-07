@@ -12,7 +12,6 @@
     To get list of fonts
 """
 
-from sys import modules
 
 from . import HNDLR, eod, eor, ultroid_cmd
 
