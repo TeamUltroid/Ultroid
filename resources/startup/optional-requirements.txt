@@ -3,7 +3,6 @@
 aiohttp==3.7.4.post0
 akinator.py
 apscheduler
-cloudscraper
 enhancer==0.2b0
 gdown
 gingerit
