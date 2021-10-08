@@ -21,7 +21,7 @@ from . import *
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
-@asst.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+@asst_cmd(load=AST_PLUGINS, incoming=True, func=lambda e: e.is_private)
 async def on_new_mssg(event):
     who = event.sender_id
     if is_blacklisted(who):
@@ -36,10 +36,8 @@ async def on_new_mssg(event):
 # --------------------------------------- Outgoing -------------------------------------------- #
 
 
-@asst.on(
-    events.NewMessage(
+@asst_cmd(load=AST_PLUGINS,
         from_users=[OWNER_ID], incoming=True, func=lambda e: e.is_private and e.is_reply
-    )
 )
 async def on_out_mssg(event):
     x = await event.get_reply_message()
@@ -62,7 +60,7 @@ async def on_out_mssg(event):
 
 
 @asst_cmd(
-    pattern="ban", from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
+    pattern="ban", load=AST_PLUGINS, from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
 )
 async def banhammer(event):
     x = await event.get_reply_message()
@@ -82,6 +80,7 @@ async def banhammer(event):
 
 @asst_cmd(
     pattern="unban",
+    load=AST_PLUGINS,
     from_users=owner_and_sudos(castint=True),
     func=lambda x: x.is_private,
 )
