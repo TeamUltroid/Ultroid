@@ -122,26 +122,28 @@ async def dmote(ult):
         return await xx.edit(f"`{ex}`")
 
 
-@ultroid_cmd(pattern="ban ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="ban ?(.*)",
+admins_only=True,
+type=["official", "manager"],
+)
 async def bban(ult):
-    xx = await eor(ult, get_string("com_1"))
     user, reason = await get_uinfo(ult)
     if not user:
-        return await xx.edit(get_string("ban_1"))
+        return await eod(ult, get_string("ban_1"))
     if user.id in DEVLIST:
-        return await xx.edit(get_string("ban_2"))
+        return await eod(ult, get_string("ban_2"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
     except BadRequestError:
-        return await xx.edit(get_string("ban_3"))
+        return await eod(ult, get_string("ban_3"))
     except UserIdInvalidError:
-        return await xx.edit(get_string("adm_1"))
+        return await eod(ult, get_string("adm_1"))
     senderme = inline_mention(await ult.get_sender())
     userme = inline_mention(user)
     text = get_string("ban_4").format(userme, senderme, ult.chat.title)
     if reason:
         text += get_string("ban_5").format(reason)
-    await xx.edit(text)
+    await eod(ult, text)
 
 
 @ultroid_cmd(
