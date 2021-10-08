@@ -1150,6 +1150,11 @@ async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
     Loader(path="assistant/pmbot.py", key="PM Bot").load_single(log=True)
+    if AST_PLUGINS.get("pmbot"):
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.remove_event_handler(i)
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.add_event_handler(i, events.NewMessage(**e))
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
@@ -1160,6 +1165,9 @@ async def chon(event):
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "False")
+    if AST_PLUGINS.get("pmbot"):
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.remove_event_handler(i)
     await event.edit(
         "Done! Chat People Via This Bot Stopped.",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
