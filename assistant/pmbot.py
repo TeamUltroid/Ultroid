@@ -13,7 +13,6 @@ from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
-from telethon import events
 from telethon.utils import get_display_name
 
 from . import *
@@ -36,8 +35,11 @@ async def on_new_mssg(event):
 # --------------------------------------- Outgoing -------------------------------------------- #
 
 
-@asst_cmd(load=AST_PLUGINS,
-        from_users=[OWNER_ID], incoming=True, func=lambda e: e.is_private and e.is_reply
+@asst_cmd(
+    load=AST_PLUGINS,
+    from_users=[OWNER_ID],
+    incoming=True,
+    func=lambda e: e.is_private and e.is_reply,
 )
 async def on_out_mssg(event):
     x = await event.get_reply_message()
@@ -60,7 +62,10 @@ async def on_out_mssg(event):
 
 
 @asst_cmd(
-    pattern="ban", load=AST_PLUGINS, from_users=owner_and_sudos(castint=True), func=lambda x: x.is_private
+    pattern="ban",
+    load=AST_PLUGINS,
+    from_users=owner_and_sudos(castint=True),
+    func=lambda x: x.is_private,
 )
 async def banhammer(event):
     x = await event.get_reply_message()
