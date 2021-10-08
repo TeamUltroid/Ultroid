@@ -85,6 +85,7 @@ from . import (
     ReTrieveFile,
     Telegraph,
     asst,
+    async_searcher,
     eod,
     eor,
     fetch_info,
@@ -96,7 +97,6 @@ from . import (
     udB,
     ultroid_bot,
     ultroid_cmd,
-    async_searcher
 )
 
 # =================================================================#
