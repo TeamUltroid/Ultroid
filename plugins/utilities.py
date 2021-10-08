@@ -419,8 +419,8 @@ async def rmbg(event):
     dn, out = await ReTrieveFile(dl)
     os.remove(dl)
     if not dn:
-        dr = out['errors'][0]
-        de = dr['detail'] if dr.get("detail") else ""
+        dr = out["errors"][0]
+        de = dr["detail"] if dr.get("detail") else ""
         return await xx.edit(
             f"**ERROR ~** `{dr['title']}`,\n`{de}`",
         )
