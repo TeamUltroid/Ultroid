@@ -86,6 +86,7 @@ from . import (
     Telegraph,
     asst,
     async_searcher,
+    check_filename,
     eod,
     eor,
     fetch_info,
@@ -415,31 +416,28 @@ async def rmbg(event):
         os.remove(dl)
         return await eor(event, get_string("com_4"))
     xx = await eor(event, "`Sending to remove.bg`")
-    out = await ReTrieveFile(dl)
+    dn, out = await ReTrieveFile(dl)
     os.remove(dl)
-    contentType = out.headers.get("content-type")
-    rmbgp = "ult.png"
-    if "image" in contentType:
-        with open(rmbgp, "wb") as rmbg:
-            rmbg.write(out.content)
-    else:
-        error = out.json()
-        await xx.edit(
-            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`",
+    if not dn:
+        dr = out['errors'][0]
+        de = dr['detail'] if dr.get("detail") else ""
+        return await xx.edit(
+            f"**ERROR ~** `{dr['title']}`,\n`{de}`",
         )
-    zz = Image.open(rmbgp)
+    zz = Image.open(out)
     if zz.mode != "RGB":
         zz.convert("RGB")
-    zz.save("ult.webp", "webp")
+    wbn = check_filename("ult-rmbg.webp")
+    zz.save(wbn, "webp")
     await event.client.send_file(
         event.chat_id,
-        rmbgp,
+        out,
         force_document=True,
         reply_to=reply,
     )
-    await event.client.send_file(event.chat_id, "ult.webp", reply_to=reply)
-    os.remove(rmbgp)
-    os.remove("ult.webp")
+    await event.client.send_file(event.chat_id, wbn, reply_to=reply)
+    os.remove(out)
+    os.remove(wbn)
     await xx.delete()
 
 
