@@ -67,6 +67,7 @@ from . import (
     restart,
     shutdown,
     start_time,
+    Telegraph,
     time_formatter,
     udB,
     ultroid_cmd,
@@ -186,7 +187,7 @@ async def _(event):
     pattern="cmds$",
 )
 async def cmds(event):
-    await allcmds(event)
+    await allcmds(event, Telegraph)
 
 
 heroku_api = Var.HEROKU_API
