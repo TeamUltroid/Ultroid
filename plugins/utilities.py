@@ -96,6 +96,7 @@ from . import (
     udB,
     ultroid_bot,
     ultroid_cmd,
+    async_searcher
 )
 
 # =================================================================#
