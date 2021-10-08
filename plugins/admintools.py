@@ -122,9 +122,10 @@ async def dmote(ult):
         return await xx.edit(f"`{ex}`")
 
 
-@ultroid_cmd(pattern="ban ?(.*)",
-admins_only=True,
-type=["official", "manager"],
+@ultroid_cmd(
+    pattern="ban ?(.*)",
+    admins_only=True,
+    type=["official", "manager"],
 )
 async def bban(ult):
     user, reason = await get_uinfo(ult)
