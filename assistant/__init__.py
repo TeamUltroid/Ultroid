@@ -17,6 +17,7 @@ from strings import get_languages, get_string, language
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 
+AST_PLUGINS = {}
 
 async def setit(event, name, value):
     try:
