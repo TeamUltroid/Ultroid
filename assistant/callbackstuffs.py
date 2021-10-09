@@ -104,7 +104,7 @@ async def update(eve):
             repo.__del__()
             return
         await eve.edit(
-            "`Userbot dyno build in progress, please wait for it to complete.`"
+            get_strings('clst_1')
         )
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
@@ -125,7 +125,7 @@ async def update(eve):
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
     else:
         await eve.edit(
-            "`Userbot dyno build in progress, please wait for it to complete.`"
+            get_strings('clst_1')
         )
         call_back()
         await bash("git pull && pip3 install -r requirements.txt")
@@ -134,7 +134,7 @@ async def update(eve):
 
 @callback("changes", owner=True)
 async def changes(okk):
-    await okk.answer("■ Generating Changelogs...")
+    await okk.answer(get_strings('clst_3'))
     repo = Repo.init()
     ac_br = repo.active_branch
     button = (Button.inline("Update Now", data="updatenow"),)
@@ -785,10 +785,10 @@ async def media(event):
 async def dell(event):
     try:
         udB.delete("ALIVE_PIC")
-        return await event.edit("Done!", buttons=get_back_button("alvcstm"))
+        return await event.edit(get_strings('clst_5'), buttons=get_back_button("alvcstm"))
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_strings('clst_4'),
             buttons=get_back_button("alvcstm"),
         )
 
@@ -959,10 +959,10 @@ async def media(event):
 async def dell(event):
     try:
         udB.delete("PMPIC")
-        return await event.edit("Done!", buttons=get_back_button("pmcstm"))
+        return await event.edit(get_strings('clst_5'), buttons=get_back_button("pmcstm"))
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_strings('clst_4'),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 
@@ -999,7 +999,7 @@ async def apof(event):
         )
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_strings('clst_4'),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 
@@ -1065,7 +1065,7 @@ async def pmlogof(event):
         )
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_strings('clst_4'),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 

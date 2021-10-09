@@ -263,7 +263,7 @@ async def xda_dev(event):
         query = QUERY[1]
     except IndexError:
         return await event.answer(
-            [], switch_pm="Enter Query to Search", switch_pm_param="start"
+            [], switch_pm=get_strings('instu_3'), switch_pm_param="start"
         )
     le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
     ct = await async_searcher(le, re_content=True)
@@ -295,11 +295,11 @@ async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        swa = "App search. Enter app name!"
+        swa = get_strings('instu_1')
         res = []
         if APP_CACHE:
             [res.append(APP_CACHE[a][0]) for a in APP_CACHE.keys()]
-            swa = "Recent Searches.."
+            swa = get_strings('instu_2')
         return await e.answer(res, switch_pm=swa, switch_pm_param="start")
     try:
         return await e.answer(
@@ -393,7 +393,7 @@ async def piston_run(event):
             json={"language": lang, "version": version, "files": [{"content": code}]},
             re_json=True,
         )
-    )["run"]["output"] or "Success"
+    )["run"]["output"] or get_strings('instu_4')
     if len(output) > 3000:
         output = output[:3000] + "..."
     result = await event.builder.article(

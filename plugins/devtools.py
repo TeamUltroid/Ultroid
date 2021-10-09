@@ -130,7 +130,7 @@ async def _(event):
     elif stdout:
         evaluation = stdout
     else:
-        evaluation = "Success"
+        evaluation = get_strings('instu_4')
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
