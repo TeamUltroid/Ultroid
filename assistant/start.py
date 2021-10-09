@@ -92,7 +92,7 @@ async def ultroid(event):
             if event.sender.username:
                 buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
             await event.client.send_message(
-                int(udB["LOG_CHANNEL"]), msg, buttons=buttons, parse_mode="html"
+                int(udB["LOG_CHANNEL"]), msg, buttons=buttons
             )
     if str(event.sender_id) not in owner_and_sudos():
         ok = ""
