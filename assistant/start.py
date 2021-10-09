@@ -86,7 +86,7 @@ async def ultroid(event):
     if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
         add_user(event.sender_id)
         kak_uiw = udB.get("OFF_START_LOG")
-        if kak_uiw and kak_uiw != "True":
+        if not kak_uiw or kak_uiw != "True":
             msg = f"{inline_mention(event.sender)} [`{event.sender_id}`] started your [Assistant bot](@{asst.me.username})!"
             buttons = [[Button.inline("Info ℹ️", "itkkstyo")]]
             if event.sender.username:
