@@ -87,14 +87,14 @@ async def ultroid(event):
         add_user(event.sender_id)
         kak_uiw = udB.get("OFF_START_LOG")
         if not kak_uiw or kak_uiw != "True":
-            msg = f"{inline_mention(event.sender)} [`{event.sender_id}`] started your [Assistant bot](@{asst.me.username})!"
+            msg = f'<a href="tg://user?id={event.sender_id}>{get_display_name(event.sender)}</a> [<code>{event.sender_id}</code>] started your <a href="t.me/{asst.me.username}">Assistant bot</a>!'
             buttons = [[Button.inline("Info ℹ️", "itkkstyo")]]
             if event.sender.username:
                 buttons[0].append(
-                    Button.url("🤵‍♂ User", "t.me/" + event.sender.username)
+                    Button.url("User", "t.me/" + event.sender.username)
                 )
             await event.client.send_message(
-                int(udB["LOG_CHANNEL"]), msg, buttons=buttons
+                int(udB["LOG_CHANNEL"]), msg, buttons=buttons, parse_mode="html"
             )
     if str(event.sender_id) not in owner_and_sudos():
         ok = ""
@@ -130,7 +130,7 @@ async def ultroid(event):
 
 @callback("itkkstyo", owner=True)
 async def ekekdhdb(e):
-    text = f"When New Visitor will visit your Assistant Bot\nYou will get this message!\nTo Disable : {HNDLR}setredis OFF_START_LOG True"
+    text = f"When New Visitor will visit your Assistant Bot. You will get this log message!\n\nTo Disable : {HNDLR}setredis OFF_START_LOG True"
     await e.answer(text, alert=True)
 
 
