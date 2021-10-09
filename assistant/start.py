@@ -11,7 +11,8 @@ from datetime import datetime
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
-from telethon import events
+from pyUltroid.functions.helper import inline_mention
+from telethon import events, Button
 from telethon.utils import get_display_name
 
 from strings.strings import get_string
@@ -84,6 +85,13 @@ async def _(event):
 async def ultroid(event):
     if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
         add_user(event.sender_id)
+        kak_uiw = udB.get("OFF_START_LOG"):
+        if kak_uiw and kak_uiw != "True":
+            msg = f"{inline_mention(event.sender)} [`{event.sender_id}`] started your [Assistant bot](@{asst.me.username})!"
+            buttons = [[Button.inline("Info ℹ️","itkkstyo")]]
+            if event.sender.username:
+                buttons[0].append(Button.url("🤵‍♂ User", "t.me/"+event.sender.username))
+            await event.client.send_message(int(udB["LOG_CHANNEL"]), msg, buttons=buttons)
     if str(event.sender_id) not in owner_and_sudos():
         ok = ""
         u = await event.client.get_entity(event.chat_id)
@@ -115,6 +123,11 @@ async def ultroid(event):
                 buttons=_start,
             )
 
+
+@callback("itkkstyo", owner=True)
+async def ekekdhdb(e):
+    text = f"When New Visitor will visit your Assistant Bot\nYou will get this message!\nTo Disable : {HNDLR}setredis OFF_START_LOG True"
+    await e.answer(text, alert=True)
 
 @callback("mainmenu", owner=True)
 async def ultroid(event):
