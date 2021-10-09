@@ -172,6 +172,7 @@ async def is_on(ult):
 @ultroid_cmd(
     pattern="ping$",
     chats=[],
+    type=["official", "assistant"]
 )
 async def _(event):
     if event.out:
