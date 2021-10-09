@@ -269,6 +269,9 @@ dm_4: "Error : {}\nRead Usage : `{}help dm`"
 dm_5: "`Check in Private.`"
 dm_6: "`No message found to deliver :(`"
 
+# echo
+echo_1: "**Activated Echo For Users:**\n\n"
+
 # fake action
 fka_1: "Starting Fake Action For {} sec."
 
@@ -476,10 +479,21 @@ zip_1: "Reply to any media/Document."
 zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
 zip_3: "`Reply to zip file only`"
 
-# ---------------------------------------------------#
+# ------------------------- assistant --------------------------#
 
-# assisant
 ast_1: "Choose which API you want to set."
 ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
 
+# inlinestuff
+instu_1: "App search. Enter app name!"
+instu_2: "Recent Searches.."
+instu_3: "Enter Query to Search"
+instu_4: "Success"
+
+# callbackstuffs
+clst_1: "`Userbot dyno build in progress, please wait for it to complete.`"
+clst_2: "`Successfully Updated!\nRestarting, please wait...`"
+clst_3: "■ Generating Changelogs..."
+clst_4: "Something went wrong..."
+clst_5: "Done!"
