@@ -109,7 +109,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, get_strings('schdl_2'), time=5)
+        return await eor(e, get_string('schdl_2'), time=5)
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Promoting Replied User Globally`")
@@ -217,7 +217,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, get_strings('schdl_2'), time=5)
+        return await eor(e, get_string('schdl_2'), time=5)
     user = await e.get_reply_message()
     if user:
         user.id = user.peer_id.user_id if e.is_private else user.from_id.user_id

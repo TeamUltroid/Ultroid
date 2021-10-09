@@ -30,7 +30,7 @@ async def searchunsl(ult):
     tep = await eor(ult, get_string("com_1"))
     res = await unsplashsearch(query, limit=num)
     if not res:
-        return await eor(ult, get_strings('unspl_1'), time=5)
+        return await eor(ult, get_string('unspl_1'), time=5)
     dir = "resources/downloads/"
     CL, nl = [], 0
     for rp in res:

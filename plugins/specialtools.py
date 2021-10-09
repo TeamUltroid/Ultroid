@@ -58,10 +58,10 @@ File = []
 )
 async def daudtoid(e):
     if not e.reply_to:
-        return await eod(e, get_strings('spcltool_1'))
+        return await eod(e, get_string('spcltool_1'))
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
-        return await eod(e, get_strings('spcltool_1'))
+        return await eod(e, get_string('spcltool_1'))
     xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
@@ -73,7 +73,7 @@ async def daudtoid(e):
         "Downloading " + dl + "...",
     )
     File.append(file.name)
-    await xxx.edit(get_strings('spcltool_2'))
+    await xxx.edit(get_string('spcltool_2'))
 
 
 @ultroid_cmd(
@@ -81,10 +81,10 @@ async def daudtoid(e):
 )
 async def adaudroid(e):
     if not e.reply_to:
-        return await eod(e, get_strings('spcltool_3'))
+        return await eod(e, get_string('spcltool_3'))
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith("video"):
-        return await eod(e, get_strings('spcltool_3'))
+        return await eod(e, get_string('spcltool_3'))
     if not File or os.path.exists(File[0]):
         return await e.edit("`First reply an audio with .aw`")
     xxx = await eor(e, get_string("com_1"))
@@ -97,7 +97,7 @@ async def adaudroid(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit(get_strings('spcltool_5'))
+    await xxx.edit(get_string('spcltool_5'))
     await bash(
         f'ffmpeg -i "{file.name}" -i "{File[0]}" -shortest -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4'
     )
@@ -138,7 +138,7 @@ async def adaudroid(e):
 )
 async def hbd(event):
     if not event.pattern_match.group(1):
-        return await eor(event, get_strings('spcltool_6'))
+        return await eor(event, get_string('spcltool_6'))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
         nam = await event.client.get_entity(kk.from_id)
@@ -159,7 +159,7 @@ async def hbd(event):
     try:
         jn = dt.strptime(paida, "%d/%m/%Y")
     except BaseException:
-        return await eor(event, get_strings('spcltool_6'))
+        return await eor(event, get_string('spcltool_6'))
     jnm = zn.localize(jn)
     zinda = abhi - jnm
     barsh = (zinda.total_seconds()) / (365.242 * 24 * 3600)
@@ -265,7 +265,7 @@ async def _(event):
     }
 
     if not sticks:
-        return await uu.edit(get_strings('spcltool_9'))
+        return await uu.edit(get_string('spcltool_9'))
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
     for _ in sticks:
         a += f"<a href={_}>{sticks[_]}</a>\n"
