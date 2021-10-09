@@ -18,7 +18,9 @@ from strings.strings import get_string
 
 from . import *
 
-Owner_info_msg = udB.get("BOT_INFO_START") or f"""
+Owner_info_msg = (
+    udB.get("BOT_INFO_START")
+    or f"""
 <strong>Owner</strong> - {OWNER_NAME}
 <strong>OwnerID</strong> - <code>{OWNER_ID}</code>
 
@@ -26,6 +28,7 @@ Owner_info_msg = udB.get("BOT_INFO_START") or f"""
 
 <strong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
 """
+)
 
 _settings = [
     [
@@ -92,7 +95,9 @@ async def ultroid(event):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
             await event.reply(
                 f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
-                buttons=[Button.inline("Info.", data="ownerinfo")] if Owner_info_msg != "False" else None,
+                buttons=[Button.inline("Info.", data="ownerinfo")]
+                if Owner_info_msg != "False"
+                else None,
             )
         else:
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
