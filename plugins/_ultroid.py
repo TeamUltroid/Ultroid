@@ -53,7 +53,7 @@ async def repify(e):
     await eor(e, REPOMSG)
 
 
-@ultroid_cmd(pattern="ultroid")
+@ultroid_cmd(pattern="ultroid$")
 async def useUltroid(rs):
     button = Button.inline("Start >>", "initft_2")
     msg = await asst.send_message(
