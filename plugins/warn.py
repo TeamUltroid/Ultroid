@@ -171,10 +171,10 @@ async def warnset(e):
         try:
             number, action = int(ok.split()[0]), ok.split()[1]
         except BaseException:
-            return await eor(e, get_string('schdl_2'), time=5)
+            return await eor(e, get_string("schdl_2"), time=5)
         if ("ban" or "kick" or "mute") not in action:
             return await eor(e, "`Only mute / ban / kick option suported`", time=5)
         udB.set("SETWARN", f"{number} {action}")
         await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
     else:
-        await eor(e, get_string('schdl_2'), time=5)
+        await eor(e, get_string("schdl_2"), time=5)

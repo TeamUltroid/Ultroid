@@ -36,7 +36,7 @@ async def an(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eor(e, get_string('snip_1'))
+        return await eor(e, get_string("snip_1"))
     if "$" in wrd:
         wrd = wrd.replace("$", "")
     btn = None
@@ -77,7 +77,7 @@ async def an(e):
 async def rs(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
-        return await eor(e, get_string('snip_2'))
+        return await eor(e, get_string("snip_2"))
     if wrd.startswith("$"):
         wrd = wrd.replace("$", "")
     rem_snip(wrd)

@@ -53,7 +53,7 @@ async def gitsearch(event):
     try:
         usrname = event.pattern_match.group(1)
     except BaseException:
-        return await xx.edit(get_string('srch_1'))
+        return await xx.edit(get_string("srch_1"))
     url = f"https://api.github.com/users/{usrname}"
     ult = await async_searcher(url, re_json=True)
     try:
@@ -70,7 +70,7 @@ async def gitsearch(event):
         ufollowers = ult["followers"]
         ufollowing = ult["following"]
     except BaseException:
-        return await xx.edit(get_string('srch_2'))
+        return await xx.edit(get_string("srch_2"))
     fullusr = f"""
 **[GITHUB]({ulink})**
 **Name** - {uacc}
@@ -198,7 +198,7 @@ async def siesace(e):
     lol = await eor(e, f"`Searching {song} on Saavn...`")
     song, duration, performer, thumb = await saavn_dl(song)
     if not song:
-        return await eod(lol, get_string('srch_3'))
+        return await eod(lol, get_string("srch_3"))
     title = song.split(".")[0]
     okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
     await e.reply(
