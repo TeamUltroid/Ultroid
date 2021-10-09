@@ -10,7 +10,6 @@ from datetime import datetime
 
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
-from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon import Button, events
 from telethon.utils import get_display_name
@@ -90,9 +89,7 @@ async def ultroid(event):
             msg = f'<a href="tg://user?id={event.sender_id}>{get_display_name(event.sender)}</a> [<code>{event.sender_id}</code>] started your <a href="t.me/{asst.me.username}">Assistant bot</a>!'
             buttons = [[Button.inline("Info ℹ️", "itkkstyo")]]
             if event.sender.username:
-                buttons[0].append(
-                    Button.url("User", "t.me/" + event.sender.username)
-                )
+                buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
             await event.client.send_message(
                 int(udB["LOG_CHANNEL"]), msg, buttons=buttons, parse_mode="html"
             )
