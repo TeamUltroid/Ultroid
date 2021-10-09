@@ -7,11 +7,9 @@
 """
 ✘ Commands Available -
 
-• `{i}kickme`
-    Leaves the group in which it is used.
+• `{i}kickme` : Leaves the group.
 
-• `{i}date`
-    Show Calender.
+• `{i}date` : Show Calender.
 
 • `{i}chatinfo`
     Get full info about the group/chat.
@@ -19,8 +17,7 @@
 • `{i}listreserved`
     List all usernames (channels/groups) you own.
 
-• `{i}stats`
-    See your profile stats.
+• `{i}stats` : See your profile stats.
 
 • `{i}paste`
     Include long text / Reply to text file.
@@ -43,17 +40,14 @@
 • `{i}suggest <reply to message> or <poll title>`
     Create a Yes/No poll for the replied suggestion.
 
-• `{i}ipinfo <ip address>`
-    Get info about that IP address.
+• `{i}ipinfo <ipAddress>` : Get info about that IP address.
 
 • `{i}cpy <reply to message>`
    Copy the replied message, with formatting. Expires in 24hrs.
-
 • `{i}pst`
    Paste the copied message, with formatting.
 
-• `{i}thumb <reply to file>`
-   Download the thumbnail of the replied file.
+• `{i}thumb <reply file>` : Download the thumbnail of the replied file.
 """
 import calendar
 import html
