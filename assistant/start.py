@@ -11,6 +11,7 @@ from datetime import datetime
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.misc import owner_and_sudos
+from pyUltroid.functions.helper import inline_mention
 from telethon import Button, events
 from telethon.utils import get_display_name
 
@@ -86,7 +87,7 @@ async def ultroid(event):
         add_user(event.sender_id)
         kak_uiw = udB.get("OFF_START_LOG")
         if not kak_uiw or kak_uiw != "True":
-            msg = f'<a href="tg://user?id={event.sender_id}>{get_display_name(event.sender)}</a> [<code>{event.sender_id}</code>] started your <a href="t.me/{asst.me.username}">Assistant bot</a>!'
+            msg = f"{inline_mention(event.sender)} [`{event.sender_id}`] started your [Assistant bot](@{asst.me.username})"
             buttons = [[Button.inline("Info ℹ️", "itkkstyo")]]
             if event.sender.username:
                 buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
@@ -131,10 +132,8 @@ async def ekekdhdb(e):
     await e.answer(text, alert=True)
 
 
-@callback("mainmenu", owner=True)
+@callback("mainmenu", owner=True, func=lambda x: not x.is_group)
 async def ultroid(event):
-    if event.is_group:
-        return
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
         buttons=_start,
