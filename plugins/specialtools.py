@@ -268,7 +268,7 @@ async def _(event):
         return await uu.edit(get_string("spcltool_9"))
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
     for _, value in sticks.items():
-        a += f'<a href={_}>{value}</a>\n'
+        a += f"<a href={_}>{value}</a>\n"
     await uu.edit(a, parse_mode="html")
 
 
