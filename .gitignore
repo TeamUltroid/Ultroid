@@ -11,17 +11,12 @@ build
 /*.png
 /*.mp4
 *.log
-target/npmlist.json
-package-lock.json
 
 # Directories
 addons/
 pyUltroid/
 __pycache__/
 venv/
-node_modules/
-glitch_me/
-src/glitch-me
 .idea/
 .vscode/
 temp/
