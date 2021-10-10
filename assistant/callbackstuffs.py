@@ -1108,7 +1108,7 @@ async def hhh(e):
     async with e.client.conversation(e.chat_id) as conv:
         await conv.send_message("Send Any Media to keep at your Bot's welcome ")
         msg = await conv.get_response()
-        if not msg.media or msg.startswith("/"):
+        if not msg.media or msg.text.startswith("/"):
             return await conv.send_message(
                 "Terminated!", buttons=get_back_button("chatbot")
             )
