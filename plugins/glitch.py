@@ -23,7 +23,7 @@ async def _(e):
         import glitch_me  # ignore :pylint
     except ModuleNotFoundError:
         await bash(
-            "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
+            "pip install -e git+https://github.com/1Danish-00/glitch_me.git#egg=glitch_me"
         )
     reply = await e.get_reply_message()
     if not (reply and reply.media):
