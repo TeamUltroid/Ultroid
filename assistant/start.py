@@ -21,12 +21,12 @@ from . import *
 Owner_info_msg = (
     udB.get("BOT_INFO_START")
     or f"""
-<strong>Owner</strong> - {OWNER_NAME}
-<strong>OwnerID</strong> - <code>{OWNER_ID}</code>
+**Owner** - {OWNER_NAME}
+**OwnerID** - `{OWNER_ID}`
 
-<strong>Message Forwards</strong> - {udB.get("PMBOT")}
+**Message Forwards** - {udB.get("PMBOT")}
 
-<strong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
+**Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
 """
 )
 
@@ -65,7 +65,6 @@ async def own(event):
         Owner_info_msg,
         buttons=[Button.inline("Close", data="closeit")],
         link_preview=False,
-        parse_mode="html",
     )
 
 
@@ -149,7 +148,7 @@ Total Users - {}""".format(
 @callback("bcast", owner=True)
 async def bdcast(event):
     ok = get_all_users()
-    await event.edit(f"Broadcast to {len(ok)} users.")
+    await event.edit(f"• Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
             "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
