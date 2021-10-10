@@ -3,7 +3,7 @@
 
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
-| en | English [English] | 382 | 0 |
+| en | English [English] | 382 | NULL |
 | ru | Russian [Русский] | 382 | NULL |
 | it | Italian [italiano] | 115 | 267 |
 | az | Azerbaijani [Azərbaycanca] | 3 | 379 |
