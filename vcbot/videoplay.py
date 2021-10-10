@@ -52,7 +52,7 @@ async def video_c(event):
         return await eor(
             xx, get_string('vcbot_15'), time=5
         )
-    await eor(xx, "`Downloading and converting...`")
+    await eor(xx, get_string('vcbot_20'))
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
         song, thumb, title, link, duration = await file_download(xx, reply)
     else:

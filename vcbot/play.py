@@ -61,7 +61,7 @@ async def play_music_(event):
         return await eor(
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
-    await eor(xx, "`Downloading and converting...`", parse_mode="md")
+    await eor(xx, get_string('vcbot_20'), parse_mode="md")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:

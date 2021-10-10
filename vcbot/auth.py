@@ -43,7 +43,7 @@ async def auth_group(event):
     chat = event.chat_id
     cha, adm = check_vcauth(chat)
     if cha and adm == admins:
-        return await event.reply("Already Authed This Chat!")
+        return await event.reply(get_string('vcbot_19'))
     add_vcauth(chat, admins=admins)
     kem = "Admins" if admins else "All"
     await eor(
@@ -58,7 +58,7 @@ async def auth_group(event):
     chat = event.chat_id
     gc, ad = check_vcauth(chat)
     if not gc:
-        return await eor(event, "Chat is Not in Vc Auth list...")
+        return await eor(event, get_string('vcbot_16'))
     rem_vcauth(chat)
     await eor(event, get_string('vcbot_10'))
 
@@ -67,7 +67,7 @@ async def auth_group(event):
 async def listVc(e):
     chats = get_chats()
     if not chats:
-        return await eor(e, "• Vc Auth List is Empty..")
+        return await eor(e, get_string('vcbot_18'))
     text = "• <strong>Vc Auth Chats •</strong>\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
@@ -108,7 +108,7 @@ async def _(e):
         except ValueError as ex:
             return await eor(xx, f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+        return await eor(xx, get_string('vcbot_17'), time=3)
     if not is_vcsudo(userid):
         return await eod(
             xx,
@@ -140,7 +140,7 @@ async def _(e):
         except ValueError as ex:
             return await eor(xx, f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, "`Reply to user's msg or add it's id/username...`", time=3)
+        return await eor(xx, get_string('vcbot_17'), time=3)
     if is_vcsudo(userid):
         return await eod(
             xx,
