@@ -14,10 +14,11 @@ from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon.errors.rpcerrorlist import UserNotParticipantError
-from telethon.utils import get_display_name
-from telethon.types import Channel, Chat
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
+from telethon.types import Channel, Chat
+from telethon.utils import get_display_name
+
 from . import *
 
 FSUB = udB.get_redis("PMBOT_FSUB")
@@ -45,21 +46,21 @@ async def on_new_mssg(event):
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
-                        uri = "t.me/"+TAHC_.username
+                        uri = "t.me/" + TAHC_.username
                     elif CACHE.get(chat):
                         uri = CACHE[chat]
                     else:
                         if isinstance(TAHC_, Channel):
-                           FUGB_ = await event.client(GetFullChannelRequest(chat))
+                            await event.client(GetFullChannelRequest(chat))
                         elif isinstance(TAHC_, Chat):
-                           FUGB = await event.client(GetFullChatRequest(chat))
+                            FUGB = await event.client(GetFullChatRequest(chat))
                         else:
-                           return
+                            return
                         if FUGB.full_chat.exported_invite:
-                           CACHE[chat] = FUGB.full_chat.exported_invite.link
-                           uri = CACHE[chat]
+                            CACHE[chat] = FUGB.full_chat.exported_invite.link
+                            uri = CACHE[chat]
                         else:
-                           pass #todo: Generate New?
+                            pass  # todo: Generate New?
                     BTTS.append(get_display_name(TAHC_), uri)
                 except Exception as er:
                     LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
