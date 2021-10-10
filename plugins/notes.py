@@ -95,11 +95,9 @@ async def lsnote(e):
 
 @ultroid_bot.on(events.NewMessage())
 async def notes(e):
-    xx = e.text.lower().split()
-    xx = [z.replace("#", "") for z in xx if z.startswith("#")]
-    chat = e.chat_id
+    xx = [z.replace("#", "") for z in e.text.lower().split() if z.startswith("#")]
     for word in xx:
-        k = get_notes(chat, word)
+        k = get_notes(e.chat_id, word)
         if k:
             msg = k["msg"]
             media = k["media"]
