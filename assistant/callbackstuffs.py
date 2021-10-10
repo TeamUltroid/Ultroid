@@ -1102,6 +1102,15 @@ async def pmofff(event):
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
     )
 
+@callback("botmew", owner=True)
+async def hhh(e):
+    async with e.client.conversation(e.chat_id) as conv:
+       await conv.send_message("Send Any Media to keep at your Bot's welcome ")
+       msg = await conv.get_response()
+       if not msg.media or msg.startswith("/"):
+           return await conv.send_message("Terminated!", buttons=get_back_button("chatbot"))
+       udB.set("STARTMEDIA", msg.file.id)
+       await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 @callback("chatbot", owner=True)
 async def chbot(event):
@@ -1111,6 +1120,7 @@ async def chbot(event):
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
