@@ -51,7 +51,7 @@ async def on_new_mssg(event):
                         uri = CACHE[chat]
                     else:
                         if isinstance(TAHC_, Channel):
-                            await event.client(GetFullChannelRequest(chat))
+                            FUGB = await event.client(GetFullChannelRequest(chat))
                         elif isinstance(TAHC_, Chat):
                             FUGB = await event.client(GetFullChatRequest(chat))
                         else:
