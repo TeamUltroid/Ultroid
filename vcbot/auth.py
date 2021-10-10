@@ -60,7 +60,7 @@ async def auth_group(event):
     if not gc:
         return await eor(event, "Chat is Not in Vc Auth list...")
     rem_vcauth(chat)
-    await eor(event, "Removed Chat from Vc AUTH Groups!")
+    await eor(event, get_string('vcbot_10'))
 
 
 @vc_asst("listauth", from_users=owner_and_sudos(), vc_auth=False)
@@ -81,7 +81,7 @@ async def listVc(e):
 
 @vc_asst("listvcaccess$", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, "`Getting Voice Chat Bot Users List...`")
+    xx = await eor(e, get_string('vcbot_11'))
     mm = get_vcsudos()
     pp = f"<strong>{len(mm)} Voice Chat Bot Approved Users</strong>\n"
     if len(mm) > 0:

@@ -50,7 +50,7 @@ async def video_c(event):
             song = input
     if not (reply or song):
         return await eor(
-            xx, "Please specify a song name or reply to a video file !", time=5
+            xx, get_string('vcbot_15'), time=5
         )
     await eor(xx, "`Downloading and converting...`")
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
