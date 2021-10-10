@@ -37,9 +37,7 @@ async def af(e):
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(e, get_string("flr_1"))
-    btn = None
-    if wt.buttons:
-        btn = format_btn(wt.buttons)
+    btn = format_btn(wt.buttons) if wt.buttons else None
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):

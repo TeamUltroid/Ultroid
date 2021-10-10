@@ -267,9 +267,7 @@ async def unp(ult):
     msg = None
     if ult.is_reply:
         msg = ult.reply_to_msg_id
-    elif ch == "all":
-        pass
-    else:
+    elif ch != "all":
         return await xx.edit(get_string("unpin_1").format(HNDLR))
     try:
         await ult.client.unpin_message(ult.chat_id, msg)

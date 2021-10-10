@@ -40,9 +40,7 @@ async def an(e):
         return await eor(e, get_string("notes_1"), time=5)
     if "#" in wrd:
         wrd = wrd.replace("#", "")
-    btn = None
-    if wt.buttons:
-        btn = format_btn(wt.buttons)
+    btn = format_btn(wt.buttons) if wt.buttons else None
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):

@@ -76,12 +76,8 @@ async def inline_alive(o):
 @in_pattern("ultd", owner=True)
 async def inline_handler(event):
     z = []
-    PLUGINS = []
-    ADDONS = []
-    if "Official" in HELP.keys():
-        PLUGINS = HELP["Official"]
-    if "Addons" in HELP.keys():
-        ADDONS = HELP["Addons"]
+    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
+    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -126,12 +122,8 @@ async def _(event):
 @callback("ownr", owner=True)
 async def setting(event):
     z = []
-    PLUGINS = []
-    ADDONS = []
-    if "Official" in HELP.keys():
-        PLUGINS = HELP["Official"]
-    if "Addons" in HELP.keys():
-        ADDONS = HELP["Addons"]
+    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
+    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -387,12 +379,8 @@ async def backr(event):
 @callback(data="open", owner=True)
 async def opner(event):
     z = []
-    PLUGINS = []
-    ADDONS = []
-    if "Official" in HELP.keys():
-        PLUGINS = HELP["Official"]
-    if "Addons" in HELP.keys():
-        ADDONS = HELP["Addons"]
+    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
+    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -706,10 +694,11 @@ async def something(e, msg, media, button, reply=True, chat=None):
     try:
         res = await e.client.inline_query(asst.me.username, f"stf{num}")
         return await res[0].click(
-            chat if chat else e.chat_id,
+            chat or e.chat_id,
             reply_to=bool(isinstance(e, Message) and reply),
             hide_via=True,
             silent=True,
         )
+
     except Exception as er:
         LOGS.info(er)

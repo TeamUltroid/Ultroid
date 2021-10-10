@@ -47,7 +47,7 @@ async def butt(event):
             pack_bot_file_id(wt.media)
     if not text:
         text = event.text.split(maxsplit=1)
-        if not len(text) > 1:
+        if len(text) <= 1:
             return await eor(
                 event,
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
