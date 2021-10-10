@@ -4,7 +4,7 @@
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
 | en | English [English] | 360 | 0 |
-| ru | Russian [Русский] | 350 | 10 |
+| ru | Russian [Русский] | 360 | NULL |
 | it | Italian [italiano] | 115 | 245 |
 | az | Azerbaijani [Azərbaycanca] | 3 | 357 |
 | ar | Arabic [العربية] | 115 | 245 |
