@@ -30,7 +30,7 @@ bin-release/
 *.air
 *.ipa
 *.apk
-
+*.iso
 # temporary files
 *.raw
 tplugins
