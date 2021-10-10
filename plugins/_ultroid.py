@@ -11,7 +11,7 @@ from telethon.errors import (
     ChatSendMediaForbiddenError,
 )
 
-from . import *
+from . import LOG_CHANNEL, LOGS, Button, asst, eor, get_string, ultroid_cmd
 
 REPOMSG = """
 • **ULTROID USERBOT** •\n
@@ -22,7 +22,7 @@ REPOMSG = """
 
 RP_BUTTONS = [
     [
-        Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
         Button.url("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
     ],
     [Button.url("Support Group", "t.me/ultroidsupport")],
@@ -53,7 +53,7 @@ async def repify(e):
     await eor(e, REPOMSG)
 
 
-@ultroid_cmd(pattern="ultroid")
+@ultroid_cmd(pattern="ultroid$")
 async def useUltroid(rs):
     button = Button.inline("Start >>", "initft_2")
     msg = await asst.send_message(

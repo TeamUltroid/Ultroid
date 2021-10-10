@@ -16,12 +16,12 @@
 """
 import asyncio
 import os
+from random import shuffle
 
-import requests as r
-from bs4 import BeautifulSoup as bs
+from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
-from . import *
+from . import download_file, eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -29,8 +29,9 @@ async def autopic(e):
     search = e.pattern_match.group(1)
     if not search:
         return await eor(e, get_string("autopic_1"), time=5)
-    clls = autopicsearch(search)
-    if len(clls) == 0:
+    e = await eor(e, get_string("com_1"))
+    clls = await unsplashsearch(search, limit=50)
+    if not clls:
         return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))
     udB.set("AUTOPIC", "True")
@@ -38,26 +39,20 @@ async def autopic(e):
     SLEEP_TIME = int(ST) if ST else 1221
     while True:
         for lie in clls:
-            ge = udB.get("AUTOPIC")
-            if ge != "True":
+            if udB.get("AUTOPIC") != "True":
                 return
-            au = "https://unsplash.com" + lie["href"]
-            ct = r.get(au).content
-            bsc = bs(ct, "html.parser", from_encoding="utf-8")
-            ft = bsc.find_all("img", "oCCRx")
-            li = ft[0]["src"]
-            kar = "autopic.png"
-            await download_file(li, kar)
+            kar = await download_file(lie, "autopic.png")
             file = await e.client.upload_file(kar)
             await e.client(UploadProfilePhotoRequest(file))
             os.remove(kar)
             await asyncio.sleep(SLEEP_TIME)
+        shuffle(clls)
 
 
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
     gt = udB.get("AUTOPIC")
     if gt != "True":
-        return await eor(ult, "AUTOPIC was not in use !!", time=5)
+        return await eor(ult, get_string("autopic_4"), time=5)
     udB.set("AUTOPIC", "None")
-    await eor(ult, "AUTOPIC Stopped !!", time=5)
+    await eor(ult, get_string("autopic_5"), time=5)

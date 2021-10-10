@@ -16,15 +16,15 @@
 """
 from PIL import Image
 
-from . import *
+from . import HNDLR, eor, get_string, os, ultroid_cmd
 
 
 @ultroid_cmd(pattern="size$")
 async def size(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eor(e, "`Reply To image`")
-    k = await eor(e, "`Processing...`")
+        return await eor(e, get_string("ascii_1"))
+    k = await eor(e, get_string("com_1"))
     if hasattr(r.media, "document"):
         img = await e.client.download_media(r, thumb=-1)
     else:
@@ -39,13 +39,13 @@ async def size(e):
 async def size(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eor(e, "`Reply To image`")
+        return await eor(e, get_string("ascii_1"))
     sz = e.pattern_match.group(1)
     if not sz:
         return await eor(
             f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ", time=5
         )
-    k = await eor(e, "`Processing...`")
+    k = await eor(e, get_string("com_1"))
     if hasattr(r.media, "document"):
         img = await e.client.download_media(r, thumb=-1)
     else:

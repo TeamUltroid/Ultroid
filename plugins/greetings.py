@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -33,21 +32,32 @@
 """
 import os
 
-from pyUltroid.functions.greetings_db import *
+from pyUltroid.dB.greetings_db import (
+    add_goodbye,
+    add_thanks,
+    add_welcome,
+    delete_goodbye,
+    delete_welcome,
+    get_goodbye,
+    get_welcome,
+    must_thank,
+    remove_thanks,
+)
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import *
+from . import HNDLR, eor, get_string, mediainfo, ultroid_cmd
+from ._inline import something
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
 
-@ultroid_cmd(pattern="setwelcome")
+@ultroid_cmd(pattern="setwelcome", groups_only=True)
 async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    if event.is_private:
-        return await eor(x, "Please use this in a group and not PMs!", time=10)
+    btn = format_btn(r.buttons) if r.buttons else None
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -57,7 +67,7 @@ async def setwel(event):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
-                return await eor(x, "`Unsupported Media`", time=5)
+                return await eor(x, get_string("com_4"), time=5)
             dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -67,42 +77,50 @@ async def setwel(event):
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
-            add_welcome(event.chat_id, r.message, m)
+            txt = r.text
+            if not btn:
+                txt, btn = get_msg_button(r.text)
+            add_welcome(event.chat_id, txt, m, btn)
         else:
-            add_welcome(event.chat_id, None, m)
-        await eor(x, "`Welcome note saved`")
+            add_welcome(event.chat_id, None, m, btn)
+        await eor(x, get_string("grt_1"))
     elif r and r.text:
-        add_welcome(event.chat_id, r.message, None)
-        await eor(x, "`Welcome note saved`")
+        txt = r.text
+        if not btn:
+            txt, btn = get_msg_button(r.text)
+        add_welcome(event.chat_id, txt, None, btn)
+        await eor(x, get_string("grt_1"))
     else:
-        await eor(x, "`Reply to message which u want to set as welcome`", time=5)
+        await eor(x, get_string("grt_3"), time=5)
 
 
-@ultroid_cmd(pattern="clearwelcome$")
+@ultroid_cmd(pattern="clearwelcome$", groups_only=True)
 async def clearwel(event):
     if not get_welcome(event.chat_id):
-        return await eor(event, "`No welcome was set!`", time=5)
+        return await eor(event, get_string("grt_4"), time=5)
     delete_welcome(event.chat_id)
-    await eor(event, "`Welcome Note Deleted`", time=5)
+    await eor(event, get_string("grt_5"), time=5)
 
 
-@ultroid_cmd(pattern="getwelcome$")
+@ultroid_cmd(pattern="getwelcome$", groups_only=True)
 async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
-        return await eor(event, "`No welcome was set!`", time=5)
+        return await eor(event, get_string("grt_4"), time=5)
     msgg = wel["welcome"]
     med = wel["media"]
+    if wel.get("button"):
+        btn = create_tl_btn(wel["button"])
+        return await something(event, msgg, med, btn)
     await event.reply(f"**Welcome Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
 
-@ultroid_cmd(pattern="setgoodbye")
+@ultroid_cmd(pattern="setgoodbye", groups_only=True)
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    if event.is_private:
-        return await eor(x, "Please use this in a group and not PMs!", time=10)
+    btn = format_btn(r.buttons) if r.buttons else None
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -112,7 +130,7 @@ async def setgb(event):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
-                return await eor(x, "`Unsupported Media`", time=5)
+                return await eor(x, get_string("com_4"), time=5)
             dl = await r.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -122,48 +140,55 @@ async def setgb(event):
         else:
             m = pack_bot_file_id(r.media)
         if r.text:
-            add_goodbye(event.chat_id, r.message, m)
+            txt = r.text
+            if not btn:
+                txt, btn = get_msg_button(r.text)
+            add_goodbye(event.chat_id, txt, m, btn)
         else:
-            add_goodbye(event.chat_id, None, m)
+            add_goodbye(event.chat_id, None, m, btn)
         await eor(x, "`Goodbye note saved`")
     elif r and r.text:
-        add_goodbye(event.chat_id, r.message, None)
+        txt = r.text
+        if not btn:
+            txt, btn = get_msg_button(r.text)
+        add_goodbye(event.chat_id, txt, None, btn)
         await eor(x, "`Goodbye note saved`")
     else:
-        await eor(x, "`Reply to message which u want to set as goodbye`", time=5)
+        await eor(x, get_string("grt_7"), time=5)
 
 
-@ultroid_cmd(pattern="cleargoodbye$")
+@ultroid_cmd(pattern="cleargoodbye$", groups_only=True)
 async def clearwgb(event):
     if not get_goodbye(event.chat_id):
-        return await eor(event, "`No goodbye was set!`", time=5)
+        return await eor(event, get_string("grt_6"), time=5)
     delete_goodbye(event.chat_id)
     await eor(event, "`Goodbye Note Deleted`", time=5)
 
 
-@ultroid_cmd(pattern="getgoodbye$")
+@ultroid_cmd(pattern="getgoodbye$", groups_only=True)
 async def listgd(event):
     wel = get_goodbye(event.chat_id)
     if not wel:
-        return await eor(event, "`No goodbye was set!`", time=5)
+        return await eor(event, get_string("grt_6"), time=5)
     msgg = wel["goodbye"]
     med = wel["media"]
+    if wel.get("button"):
+        btn = create_tl_btn(wel["button"])
+        return await something(event, msgg, med, btn)
     await event.reply(f"**Goodbye Note in this chat**\n\n`{msgg}`", file=med)
     await event.delete()
 
 
-@ultroid_cmd(pattern="thankmembers (on|off)")
+@ultroid_cmd(pattern="thankmembers (on|off)", groups_only=True)
 async def thank_set(event):
     type_ = event.pattern_match.group(1)
     if not type_ or type_ == "":
         await eor(
             event,
-            f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{hndlr}thankmembers on` or `{hndlr}thankmembers off` to toggle current settings!",
+            f"**Current Chat Settings:**\n**Thanking Members:** `{must_thank(event.chat_id)}`\n\nUse `{HNDLR}thankmembers on` or `{HNDLR}thankmembers off` to toggle current settings!",
         )
         return
     chat = event.chat_id
-    if not str(chat).startswith("-"):
-        return await eor(event, "`Please use this command in a group!`", time=10)
     if type_.lower() == "on":
         add_thanks(chat)
     elif type_.lower() == "off":

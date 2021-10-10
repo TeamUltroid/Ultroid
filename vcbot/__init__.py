@@ -25,22 +25,22 @@ from traceback import format_exc
 
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
-from telethon.errors.rpcerrorlist import ParticipantJoinMissingError
+from telethon.errors.rpcerrorlist import ParticipantJoinMissingError, ChatSendMediaForbiddenError
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
-from pyUltroid.functions.all import (
+from pyUltroid.functions.helper import (
     bash,
     downloader,
-    get_user_id,
-    is_url_ok,
-    get_videos_link,
     inline_mention,
     mediainfo,
     time_formatter,
 )
-from pyUltroid.functions.vc_group import check_vcauth
-from pyUltroid.functions.vc_group import get_chats as get_vc
+from pyUltroid.functions.admins import admin_check
+from pyUltroid.functions.tools import is_url_ok
+from pyUltroid.functions.ytdl import get_videos_link
+from pyUltroid.functions.info import get_user_id
+from pyUltroid.dB.vc_group import check_vcauth, get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
-from pyUltroid.misc._assistant import admin_check, in_pattern
+from pyUltroid.misc._assistant import in_pattern
 from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__ as UltVer
 from telethon import events
@@ -151,7 +151,11 @@ class Player:
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
-            xx = await vcClient.send_message(
+            text = "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
+                    pos, link, title, dur, from_user
+            )
+            try:
+                xx = await vcClient.send_message(
                 self._current_chat,
                 "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
                     pos, link, title, dur, from_user
@@ -159,7 +163,11 @@ class Player:
                 file=thumb,
                 link_preview=False,
                 parse_mode="html",
-            )
+                )
+            except ChatSendMediaForbiddenError:
+                xx = await vcClient.send_message(
+                self._current_chat,text, link_preview=False,
+                parse_mode="html")
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
@@ -222,7 +230,7 @@ def vc_asst(dec, **kwargs):
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
-            if vc_auth:
+            elif vc_auth:
                 cha, adm = check_vcauth(e.chat_id)
                 if adm and not (await admin_check(e)):
                     return

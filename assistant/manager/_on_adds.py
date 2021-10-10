@@ -6,12 +6,11 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from . import *
+from telethon import events
 
 
-@asst.on(events.ChatAction())
+@asst.on(events.ChatAction(func= lambda x: x.user_added))
 async def dueha(e):
-    if not e.user_added:
-        return
     user = await e.get_user()
     if not user.is_self:
         return

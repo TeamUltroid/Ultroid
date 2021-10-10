@@ -25,7 +25,7 @@ import random
 import time
 from datetime import datetime as dt
 
-from . import *
+from . import HNDLR, LOGS, bash, downloader, eor, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="bwgif$")
@@ -36,7 +36,7 @@ async def igif(e):
     wut = mediainfo(a.media)
     if "gif" not in wut:
         return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     z = await a.download_media()
     try:
         await bash(f'ffmpeg -i "{z}" -vf format=gray ult.gif -y')
@@ -56,7 +56,7 @@ async def igif(e):
     wut = mediainfo(a.media)
     if "gif" not in wut:
         return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     z = await a.download_media()
     try:
         await bash(
@@ -82,7 +82,7 @@ async def gifs(ult):
             pass
     if not get:
         return await eor(ult, f"`{HNDLR}gif <query>`")
-    m = await eor(ult, "`Searching gif ...`")
+    m = await eor(ult, get_string("com_2"))
     gifs = await ult.client.inline_query("gif", get)
     if not n:
         await gifs[xx].click(
@@ -104,7 +104,7 @@ async def vtogif(e):
     wut = mediainfo(a.media)
     if "video" not in wut:
         return await eor(e, "`Reply To Video Only`", time=5)
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     dur = a.media.document.attributes[0].duration
     tt = time.time()
     if int(dur) < 120:
@@ -116,7 +116,7 @@ async def vtogif(e):
         filename = a.file.name
         if not filename:
             filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        vid = await downloader(filename, a.media.document, xx, tt, "Downloading...")
+        vid = await downloader(filename, a.media.document, xx, tt, get_string("com_5"))
         z = vid.name
         await bash(
             f'ffmpeg -ss 3 -t 100 -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif'

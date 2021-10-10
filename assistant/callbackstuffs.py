@@ -7,17 +7,38 @@
 
 import re
 import sys
+from asyncio.exceptions import TimeoutError as AsyncTimeOut
 from os import execl, remove
+from random import choice
 
-from telegraph import Telegraph
+from pyUltroid.functions.gdrive import authorize, create_token_file
+from pyUltroid.functions.tools import get_paste, telegraph_client
+from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
+from telethon import events
+from telethon.tl.types import MessageMediaWebPage
+from telethon.utils import get_peer_id
 
+try:
+    from carbonnow import Carbon
+except ImportError:
+    Carbon = None
 from . import *
 
 # --------------------------------------------------------------------#
-telegraph = Telegraph()
-r = telegraph.create_account(short_name="Ultroid")
-auth_url = r["auth_url"]
+telegraph = telegraph_client()
+# --------------------------------------------------------------------#
+
+
+def text_to_url(event):
+    """function to get media url (with|without) Webpage"""
+    if isinstance(event.media, MessageMediaWebPage):
+        webpage = event.media.webpage
+        if webpage and webpage.type in ["photo"]:
+            return webpage.display_url
+    return event.text
+
+
 # --------------------------------------------------------------------#
 
 
@@ -28,8 +49,8 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
     re.compile(
         "sndplug_(.*)",
     ),
+    owner=True,
 )
-@owner
 async def send(eve):
     name = (eve.data_match.group(1)).decode("UTF-8")
     thumb = "resources/extras/inline.jpg"
@@ -55,7 +76,6 @@ async def send(eve):
         ],
         [
             Button.inline("« Bᴀᴄᴋ", data=data),
-            Button.inline("••Cʟᴏꜱᴇ••", data="close"),
         ],
     ]
     await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
@@ -64,8 +84,7 @@ async def send(eve):
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 
 
-@callback("updatenow")
-@owner
+@callback("updatenow", owner=True)
 async def update(eve):
     repo = Repo()
     ac_br = repo.active_branch
@@ -86,9 +105,7 @@ async def update(eve):
             await eve.edit("`Wrong HEROKU_APP_NAME.`")
             repo.__del__()
             return
-        await eve.edit(
-            "`Userbot dyno build in progress, please wait for it to complete.`"
-        )
+        await eve.edit(get_string("clst_1"))
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
@@ -107,22 +124,36 @@ async def update(eve):
             return
         await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
     else:
-        await eve.edit(
-            "`Userbot dyno build in progress, please wait for it to complete.`"
-        )
+        await eve.edit(get_string("clst_1"))
         call_back()
         await bash("git pull && pip3 install -r requirements.txt")
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@callback("changes")
-@owner
+@callback("changes", owner=True)
 async def changes(okk):
-    await okk.answer("■ Generating Changelogs...")
+    await okk.answer(get_string("clst_3"))
     repo = Repo.init()
     ac_br = repo.active_branch
+    button = (Button.inline("Update Now", data="updatenow"),)
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    changelog_str = changelog + "\n\nClick the below button to update!"
+    cli = "\n\nClick the below button to update!"
+    if Carbon:
+        try:
+            await okk.edit("• Writing Changelogs 📝 •")
+            carbon = Carbon(
+                base_url="https://carbonara-42.herokuapp.com/api/cook",
+                code=tl_chnglog,
+                background=choice(ATRA_COL),
+                language="md",
+            )
+            img = await carbon.memorize("changelog")
+            return await okk.edit(
+                f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
+            )
+        except Exception as er:
+            LOGS.exception(er)
+    changelog_str = changelog + cli
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
         await asyncio.sleep(2)
@@ -137,7 +168,7 @@ async def changes(okk):
         return
     await okk.edit(
         changelog_str,
-        buttons=Button.inline("Update Now", data="updatenow"),
+        buttons=button,
         parse_mode="html",
     )
 
@@ -146,8 +177,8 @@ async def changes(okk):
     re.compile(
         "pasta-(.*)",
     ),
+    owner=True,
 )
-@owner
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
     with open(ok, "r") as hmm:
@@ -156,23 +187,16 @@ async def _(e):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    data = "buck"
-    if ok.startswith("plugins"):
-        data = "back"
-    buttons = [
-        Button.inline("« Bᴀᴄᴋ", data=data),
-        Button.inline("••Cʟᴏꜱᴇ••", data="close"),
-    ]
+    data = "back" if ok.startswith("plugins") else "buck"
     await e.edit(
         f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
-        buttons=buttons,
+        buttons=Button.inline("« Bᴀᴄᴋ", data=data),
         link_preview=False,
         parse_mode="html",
     )
 
 
-@callback("authorise")
-@owner
+@callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -192,8 +216,7 @@ async def _(e):
     )
 
 
-@callback("folderid")
-@owner
+@callback("folderid", owner=True, func=lambda x: x.is_private)
 async def _(e):
     if not e.is_private:
         return
@@ -216,8 +239,7 @@ async def _(e):
         )
 
 
-@callback("clientsec")
-@owner
+@callback("clientsec", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -232,8 +254,7 @@ async def _(e):
         )
 
 
-@callback("clientid")
-@owner
+@callback("clientid", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -250,8 +271,7 @@ async def _(e):
         )
 
 
-@callback("gdrive")
-@owner
+@callback("gdrive", owner=True)
 async def _(e):
     if not e.is_private:
         return
@@ -272,8 +292,7 @@ async def _(e):
     )
 
 
-@callback("otvars")
-@owner
+@callback("otvars", owner=True)
 async def otvaar(event):
     await event.edit(
         "Other Variables to set for @TheUltroid:",
@@ -304,8 +323,7 @@ async def otvaar(event):
     )
 
 
-@callback("oofdm")
-@owner
+@callback("oofdm", owner=True)
 async def euwhe(event):
     BT = [
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
@@ -319,8 +337,7 @@ async def euwhe(event):
     )
 
 
-@callback("dmof")
-@owner
+@callback("dmof", owner=True)
 async def rhwhe(e):
     if udB.get("DUAL_MODE"):
         udB.delete("DUAL_MODE")
@@ -332,8 +349,7 @@ async def rhwhe(e):
     await e.edit(Msg, buttons=get_back_button("otvars"))
 
 
-@callback("dmhn")
-@owner
+@callback("dmhn", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -365,8 +381,7 @@ async def hndlrr(event):
             )
 
 
-@callback("emoj")
-@owner
+@callback("emoj", owner=True)
 async def emoji(event):
     await event.delete()
     pru = event.sender_id
@@ -395,8 +410,7 @@ async def emoji(event):
             )
 
 
-@callback("plg")
-@owner
+@callback("plg", owner=True)
 async def pluginch(event):
     await event.delete()
     pru = event.sender_id
@@ -430,8 +444,7 @@ async def pluginch(event):
             )
 
 
-@callback("hhndlr")
-@owner
+@callback("hhndlr", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -467,8 +480,7 @@ async def hndlrr(event):
             )
 
 
-@callback("shndlr")
-@owner
+@callback("shndlr", owner=True)
 async def hndlrr(event):
     await event.delete()
     pru = event.sender_id
@@ -505,8 +517,7 @@ async def hndlrr(event):
             )
 
 
-@callback("taglog")
-@owner
+@callback("taglog", owner=True)
 async def tagloggrr(e):
     if not udB.get("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
@@ -518,15 +529,13 @@ async def tagloggrr(e):
     )
 
 
-@callback("deltag")
-@owner
-async def delfuk(e):
+@callback("deltag", owner=True)
+async def _(e):
     udB.delete("TAG_LOG")
     await e.answer("Done!!! TAG lOG Off")
 
 
-@callback("settag")
-@owner
+@callback("settag", owner=True)
 async def taglogerr(event):
     await event.delete()
     pru = event.sender_id
@@ -534,7 +543,7 @@ async def taglogerr(event):
     name = "Tag Log Group"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add your assistant and make it admin.\nGet the `{hndlr}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
+            f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -551,8 +560,7 @@ async def taglogerr(event):
         )
 
 
-@callback("eaddon")
-@owner
+@callback("eaddon", owner=True)
 async def pmset(event):
     if not udB.get("ADDONS"):
         BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
@@ -567,8 +575,7 @@ async def pmset(event):
     )
 
 
-@callback("edon")
-@owner
+@callback("edon", owner=True)
 async def eddon(event):
     var = "ADDONS"
     await setit(event, var, "True")
@@ -578,8 +585,7 @@ async def eddon(event):
     )
 
 
-@callback("edof")
-@owner
+@callback("edof", owner=True)
 async def eddof(event):
     udB.set("ADDONS", "False")
     await event.edit(
@@ -588,8 +594,7 @@ async def eddof(event):
     )
 
 
-@callback("sudo")
-@owner
+@callback("sudo", owner=True)
 async def pmset(event):
     if not udB.get("SUDO"):
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
@@ -604,8 +609,7 @@ async def pmset(event):
     )
 
 
-@callback("onsudo")
-@owner
+@callback("onsudo", owner=True)
 async def eddon(event):
     var = "SUDO"
     await setit(event, var, "True")
@@ -615,8 +619,7 @@ async def eddon(event):
     )
 
 
-@callback("ofsudo")
-@owner
+@callback("ofsudo", owner=True)
 async def eddof(event):
     var = "SUDO"
     await setit(event, var, "False")
@@ -626,8 +629,7 @@ async def eddof(event):
     )
 
 
-@callback("sfban")
-@owner
+@callback("sfban", owner=True)
 async def sfban(event):
     await event.edit(
         "SuperFban Settings:",
@@ -639,8 +641,7 @@ async def sfban(event):
     )
 
 
-@callback("sfgrp")
-@owner
+@callback("sfgrp", owner=True)
 async def sfgrp(event):
     await event.delete()
     name = "FBan Group ID"
@@ -648,7 +649,7 @@ async def sfgrp(event):
     pru = event.sender_id
     async with asst.conversation(pru) as conv:
         await conv.send_message(
-            f"Make a group, add @MissRose_Bot, send `{hndlr}id`, copy that and send it here.\nUse /cancel to go back.",
+            f"Make a group, add @MissRose_Bot, send `{HNDLR}id`, copy that and send it here.\nUse /cancel to go back.",
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -665,8 +666,7 @@ async def sfgrp(event):
         )
 
 
-@callback("sfexf")
-@owner
+@callback("sfexf", owner=True)
 async def sfexf(event):
     await event.delete()
     name = "Excluded Feds"
@@ -692,8 +692,7 @@ async def sfexf(event):
         )
 
 
-@callback("alvcstm")
-@owner
+@callback("alvcstm", owner=True)
 async def alvcs(event):
     await event.edit(
         f"Customise your {HNDLR}alive. Choose from the below options -",
@@ -706,8 +705,7 @@ async def alvcs(event):
     )
 
 
-@callback("alvtx")
-@owner
+@callback("alvtx", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -735,8 +733,7 @@ async def name(event):
         )
 
 
-@callback("alvmed")
-@owner
+@callback("alvmed", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
@@ -756,16 +753,16 @@ async def media(event):
                 )
         except BaseException:
             pass
-        media = await event.client.download_media(response, "alvpc")
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
         ):
-            url = response.text
+            url = text_to_url(response)
         elif response.sticker:
             url = response.file.id
         else:
+            media = await event.client.download_media(response, "alvpc")
             try:
                 x = upl(media)
                 url = f"https://telegra.ph/{x[0]}"
@@ -782,21 +779,21 @@ async def media(event):
         )
 
 
-@callback("delmed")
-@owner
+@callback("delmed", owner=True)
 async def dell(event):
     try:
         udB.delete("ALIVE_PIC")
-        return await event.edit("Done!", buttons=get_back_button("alvcstm"))
+        return await event.edit(
+            get_string("clst_5"), buttons=get_back_button("alvcstm")
+        )
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_string("clst_4"),
             buttons=get_back_button("alvcstm"),
         )
 
 
-@callback("pmcstm")
-@owner
+@callback("pmcstm", owner=True)
 async def alvcs(event):
     await event.edit(
         "Customise your PMPERMIT Settings -",
@@ -819,8 +816,7 @@ async def alvcs(event):
     )
 
 
-@callback("pmtype")
-@owner
+@callback("pmtype", owner=True)
 async def pmtyp(event):
     await event.edit(
         "Select the type of PMPermit needed.",
@@ -832,8 +828,7 @@ async def pmtyp(event):
     )
 
 
-@callback("inpm_in")
-@owner
+@callback("inpm_in", owner=True)
 async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "True")
@@ -843,8 +838,7 @@ async def inl_on(event):
     )
 
 
-@callback("inpm_no")
-@owner
+@callback("inpm_no", owner=True)
 async def inl_on(event):
     var = "INLINE_PM"
     await setit(event, var, "False")
@@ -854,8 +848,7 @@ async def inl_on(event):
     )
 
 
-@callback("pmtxt")
-@owner
+@callback("pmtxt", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -888,8 +881,7 @@ async def name(event):
         )
 
 
-@callback("swarn")
-@owner
+@callback("swarn", owner=True)
 async def name(event):
     m = range(1, 10)
     tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
@@ -901,8 +893,7 @@ async def name(event):
     )
 
 
-@callback(re.compile(b"wrns_(.*)"))
-@owner
+@callback(re.compile(b"wrns_(.*)"), owner=True)
 async def set_wrns(event):
     value = int(event.data_match.group(1).decode("UTF-8"))
     dn = udB.set("PMWARNS", value)
@@ -913,13 +904,12 @@ async def set_wrns(event):
         )
     else:
         await event.edit(
-            f"Something went wrong, please check your {hndlr}logs!",
+            f"Something went wrong, please check your {HNDLR}logs!",
             buttons=get_back_button("pmcstm"),
         )
 
 
-@callback("pmmed")
-@owner
+@callback("pmmed", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
@@ -943,9 +933,9 @@ async def media(event):
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
         ):
-            url = response.text
+            url = text_to_url(response)
         elif response.sticker:
             url = response.file.id
         else:
@@ -965,21 +955,19 @@ async def media(event):
         )
 
 
-@callback("delpmmed")
-@owner
+@callback("delpmmed", owner=True)
 async def dell(event):
     try:
         udB.delete("PMPIC")
-        return await event.edit("Done!", buttons=get_back_button("pmcstm"))
+        return await event.edit(get_string("clst_5"), buttons=get_back_button("pmcstm"))
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_string("clst_4"),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 
 
-@callback("apauto")
-@owner
+@callback("apauto", owner=True)
 async def apauto(event):
     await event.edit(
         "This'll auto approve on outgoing messages",
@@ -991,8 +979,7 @@ async def apauto(event):
     )
 
 
-@callback("apon")
-@owner
+@callback("apon", owner=True)
 async def apon(event):
     var = "AUTOAPPROVE"
     await setit(event, var, "True")
@@ -1002,8 +989,7 @@ async def apon(event):
     )
 
 
-@callback("apof")
-@owner
+@callback("apof", owner=True)
 async def apof(event):
     try:
         udB.delete("AUTOAPPROVE")
@@ -1013,13 +999,12 @@ async def apof(event):
         )
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_string("clst_4"),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 
 
-@callback("pml")
-@owner
+@callback("pml", owner=True)
 async def alvcs(event):
     if not udB.get("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
@@ -1035,8 +1020,7 @@ async def alvcs(event):
     )
 
 
-@callback("pmlgg")
-@owner
+@callback("pmlgg", owner=True)
 async def disus(event):
     await event.delete()
     pru = event.sender_id
@@ -1062,19 +1046,16 @@ async def disus(event):
             )
 
 
-@callback("pmlog")
-@owner
+@callback("pmlog", owner=True)
 async def pmlog(event):
-    var = "PMLOG"
-    await setit(event, var, "True")
+    await setit(event, "PMLOG", "True")
     await event.edit(
         "Done!! PMLOGGER  Started!!",
         buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
     )
 
 
-@callback("pmlogof")
-@owner
+@callback("pmlogof", owner=True)
 async def pmlogof(event):
     try:
         udB.delete("PMLOG")
@@ -1084,13 +1065,12 @@ async def pmlogof(event):
         )
     except BaseException:
         return await event.edit(
-            "Something went wrong...",
+            get_string("clst_4"),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
 
 
-@callback("ppmset")
-@owner
+@callback("ppmset", owner=True)
 async def pmset(event):
     await event.edit(
         "PMPermit Settings:",
@@ -1103,8 +1083,7 @@ async def pmset(event):
     )
 
 
-@callback("pmon")
-@owner
+@callback("pmon", owner=True)
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
@@ -1114,8 +1093,7 @@ async def pmonn(event):
     )
 
 
-@callback("pmoff")
-@owner
+@callback("pmoff", owner=True)
 async def pmofff(event):
     var = "PMSETTING"
     await setit(event, var, "False")
@@ -1125,8 +1103,20 @@ async def pmofff(event):
     )
 
 
-@callback("chatbot")
-@owner
+@callback("botmew", owner=True)
+async def hhh(e):
+    async with e.client.conversation(e.chat_id) as conv:
+        await conv.send_message("Send Any Media to keep at your Bot's welcome ")
+        msg = await conv.get_response()
+        if not msg.media or msg.text.startswith("/"):
+            return await conv.send_message(
+                "Terminated!", buttons=get_back_button("chatbot")
+            )
+        udB.set("STARTMEDIA", msg.file.id)
+        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
+
+
+@callback("chatbot", owner=True)
 async def chbot(event):
     await event.edit(
         "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
@@ -1134,14 +1124,50 @@ async def chbot(event):
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
+            [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
     )
 
 
-@callback("bwel")
-@owner
+@callback("pmfs", owner=True)
+async def heheh(event):
+    Ll = []
+    err = ""
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message(
+            "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot"
+        )
+        await conv.send_message(
+            "Example : \n`-1001234567\n-100778888`\n\nFor Multiple Chat(s)."
+        )
+        try:
+            msg = await conv.get_response()
+        except AsyncTimeOut:
+            return await conv.send_message("TimeUp!\nStart from /start back.")
+        if not msg.text or msg.text.startswith("/"):
+            return await conv.send_message(
+                "Cancelled!", buttons=get_back_button("chatbot")
+            )
+        for chat in msg.message.split("\n"):
+            if chat.startswith("-") or chat.isdigit():
+                chat = int(chat)
+            try:
+                CHSJSHS = await event.client.get_entity(chat)
+                Ll.append(get_peer_id(CHSJSHS))
+            except Exception as er:
+                err += f"**{chat}** : {er}\n"
+        if err:
+            return await conv.send_message(err)
+        udB.set("PMBOT_FSUB", str(Ll))
+        await conv.send_message(
+            "Done!\nRestart Your Bot.", buttons=get_back_button("chatbot")
+        )
+
+
+@callback("bwel", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -1169,30 +1195,36 @@ async def name(event):
         )
 
 
-@callback("onchbot")
-@owner
+@callback("onchbot", owner=True)
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
+    Loader(path="assistant/pmbot.py", key="PM Bot").load_single()
+    if AST_PLUGINS.get("pmbot"):
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.remove_event_handler(i)
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.add_event_handler(i, events.NewMessage(**e))
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
     )
 
 
-@callback("ofchbot")
-@owner
+@callback("ofchbot", owner=True)
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "False")
+    if AST_PLUGINS.get("pmbot"):
+        for i, e in AST_PLUGINS["pmbot"]:
+            event.client.remove_event_handler(i)
     await event.edit(
         "Done! Chat People Via This Bot Stopped.",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
     )
 
 
-@callback("vcb")
-@owner
+@callback("vcb", owner=True)
 async def vcb(event):
     await event.edit(
         "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
@@ -1204,8 +1236,7 @@ async def vcb(event):
     )
 
 
-@callback("vcs")
-@owner
+@callback("vcs", owner=True)
 async def name(event):
     await event.delete()
     pru = event.sender_id
@@ -1233,8 +1264,7 @@ async def name(event):
         )
 
 
-@callback("inli_pic")
-@owner
+@callback("inli_pic", owner=True)
 async def media(event):
     await event.delete()
     pru = event.sender_id
@@ -1258,9 +1288,9 @@ async def media(event):
         if (
             not (response.text).startswith("/")
             and response.text != ""
-            and not response.media
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
         ):
-            url = response.text
+            url = text_to_url(response)
         else:
             try:
                 x = upl(media)

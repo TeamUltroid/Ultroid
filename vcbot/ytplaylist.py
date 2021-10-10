@@ -19,7 +19,7 @@ from . import *
 @vc_asst("ytplaylist")
 async def live_stream(e):
     xx = await eor(e, get_string("com_1"))
-    if not len(e.text.split()) > 1:
+    if len(e.text.split()) <= 1:
         return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
@@ -33,10 +33,10 @@ async def live_stream(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     if not (re.search("youtu", song) and re.search("playlist\\?list", song)):
-        return await eor(xx, "Give only youtube playlist")
+        return await eor(xx, get_string('vcbot_8'))
     if not is_url_ok(song):
-        return await eor(xx, f"`Only Youtube Playlist please.`")
-    await xx.edit("`Keep patience... It'll take some time.`")
+        return await eor(xx, '`Only Youtube Playlist please.`')
+    await xx.edit(get_string('vcbot_7'))
     file, thumb, title, link, duration = await dl_playlist(chat, html_mention(e), song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:

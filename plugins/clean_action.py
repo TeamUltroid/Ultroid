@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,21 +18,21 @@
 
 """
 
-from pyUltroid.functions.clean_db import *
+from pyUltroid.dB.clean_db import add_clean, rem_clean
 
-from . import *
+from . import eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)
 async def _(e):
     add_clean(e.chat_id)
-    await eor(e, "Added Clean Action Setting For this Chat", time=5)
+    await eor(e, get_string("clan_1"), time=5)
 
 
 @ultroid_cmd(pattern="remclean$")
 async def _(e):
     rem_clean(e.chat_id)
-    await eor(e, "Removed Clean Action Setting For this Chat", time=5)
+    await eor(e, get_string("clan_2"), time=5)
 
 
 @ultroid_cmd(pattern="listclean$")
@@ -46,8 +45,8 @@ async def _(e):
             try:
                 title = e.chat.title
             except BaseException:
-                title = "`Invalid ID`"
+                title = get_string("clan_3")
             o += x + " " + title + "\n"
         await eor(e, o)
     else:
-        await eor(e, "`No Chat Added`", time=5)
+        await eor(e, get_string("clan_4"), time=5)

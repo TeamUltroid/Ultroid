@@ -14,14 +14,23 @@ import os
 import time
 from datetime import datetime as dt
 
-from . import *
+from . import (
+    LOGS,
+    bash,
+    downloader,
+    eor,
+    get_string,
+    make_html_telegraph,
+    mediainfo,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="mediainfo$")
 async def mi(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eor(e, "`Reply to any media`", time=5)
+        return await eor(e, get_string("cvt_3"), time=5)
     xx = mediainfo(r.media)
     murl = r.media.stringify()
     url = make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
@@ -52,6 +61,6 @@ async def mi(e):
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
     urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     await ee.edit(
-        f"**[{xx}]({url})**\n\n[More Explained Info]({urll})", link_preview=False
+        f"**[{xx}]({url})**\n\n[{get_string('mdi_1')}]({urll})", link_preview=False
     )
     os.remove(naam)

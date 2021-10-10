@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -21,10 +20,14 @@
   'And u Must be Admin in that Chat'
 """
 
+from pyUltroid.dB.blacklist_db import (
+    add_blacklist,
+    get_blacklist,
+    list_blacklist,
+    rem_blacklist,
+)
 
-from pyUltroid.functions.blacklist_db import *
-
-from . import *
+from . import eor, events, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="blacklist ?(.*)", admins_only=True)
@@ -32,12 +35,12 @@ async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
-        return await eor(e, "`Give the word to blacklist..`", time=5)
+        return await eor(e, get_string("blk_1"), time=5)
     wrd = e.text[11:]
     heh = wrd.split(" ")
     for z in heh:
         add_blacklist(int(chat), z.lower())
-    await eor(e, f"Done : `{wrd}` Blacklisted here.")
+    await eor(e, get_string("blk_2").format(wrd))
 
 
 @ultroid_cmd(pattern="remblacklist ?(.*)", admins_only=True)
@@ -45,22 +48,21 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, "`Give the word to remove from blacklist..`", time=5)
+        return await eor(e, get_string("blk_3"), time=5)
     wrd = e.text[14:]
     heh = wrd.split(" ")
     for z in heh:
         rem_blacklist(int(chat), z.lower())
-    await eor(e, f"Done : `{wrd}` Removed from Blacklist.")
+    await eor(e, get_string("blk_4").format(wrd))
 
 
 @ultroid_cmd(pattern="listblacklist$", admins_only=True)
 async def lsnote(e):
     x = list_blacklist(e.chat_id)
     if x:
-        sd = "Blacklist Found In This Chats Are\n\n"
-        await eor(e, sd + x)
-    else:
-        await eor(e, "No Blacklist word Found Here")
+        sd = get_string("blk_5")
+        return await eor(e, sd + x)
+    await eor(e, get_string("blk_6"))
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))

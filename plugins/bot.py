@@ -22,6 +22,9 @@
 • `{i}logs (sys)`
     Get the full terminal logs.
 
+• `{i}logs carbon`
+    Get the carbonized sys logs.
+
 • `{i}logs heroku`
    Get the latest 100 lines of heroku logs.
 
@@ -31,8 +34,8 @@
 import os
 import sys
 import time
-from datetime import datetime as dt
 from platform import python_version as pyver
+from random import choice
 
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
@@ -40,7 +43,36 @@ from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
-from . import *
+try:
+    from carbonnow import Carbon
+except ImportError:
+    Carbon = None
+
+from . import (
+    ATRA_COL,
+    LOGS,
+    OWNER_NAME,
+    Button,
+    Telegraph,
+    Var,
+    allcmds,
+    asst,
+    bash,
+    call_back,
+    callback,
+    def_logs,
+    eor,
+    get_string,
+    heroku_logs,
+    in_pattern,
+    restart,
+    shutdown,
+    start_time,
+    time_formatter,
+    udB,
+    ultroid_cmd,
+    ultroid_version,
+)
 
 # Will move to strings
 alive_txt = """
@@ -64,7 +96,7 @@ async def alive(event):
 async def lol(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -104,13 +136,13 @@ async def is_on(ult):
         await ult.delete()
         try:
             res = await ult.client.inline_query(asst.me.username, "alive")
-            return await res[0].click(ult.chat_id)
+            await res[0].click(ult.chat_id)
         except Exception as er:
             LOGS.info(er)
         return
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -126,33 +158,33 @@ async def is_on(ult):
         kk,
     )
     buttons = [
-        [Button.inline("Stats", "alive")],
+        [Button.inline(get_string("bot_2"), "alive")],
         [
-            Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-            Button.url("Support", "t.me/UltroidSupport"),
+            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
         ],
     ]
-    await ult.client.send_message(ult.chat_id, als, file=pic, buttons=buttons)
+    await ult.client.send_message(
+        ult.chat_id, als, file=pic, buttons=buttons, link_preview=False
+    )
 
 
-@ultroid_cmd(
-    pattern="ping$",
-    chats=[],
-)
+@ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
-    start = dt.now()
-    x = await eor(event, "`Pong !`")
-    end = dt.now()
-    ms = (end - start).microseconds / 1000
+    if event.out:
+        await event.delete()
+    start = time.time()
+    x = await event.respond("Pong !")
+    end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
-    await x.edit(get_string("ping").format(ms, uptime))
+    await x.edit(get_string("ping").format(end, uptime))
 
 
 @ultroid_cmd(
     pattern="cmds$",
 )
 async def cmds(event):
-    await allcmds(event)
+    await allcmds(event, Telegraph)
 
 
 heroku_api = Var.HEROKU_API
@@ -163,7 +195,7 @@ heroku_api = Var.HEROKU_API
     fullsudo=True,
 )
 async def restartbt(ult):
-    ok = await eor(ult, "• `Restarting...`")
+    ok = await eor(ult, get_string("bot_5"))
     call_back()
     if heroku_api:
         return await restart(ok)
@@ -180,23 +212,32 @@ async def shutdownbot(ult):
 
 
 @ultroid_cmd(
-    pattern="logs ?(|heroku|sys)",
+    pattern="logs ?(.*)",
     chats=[],
 )
 async def _(event):
     opt = event.pattern_match.group(1)
     if opt == "heroku":
         await heroku_logs(event)
+    elif opt == "carbon" and Carbon:
+        event = await eor(event, get_string("com_1"))
+        code = open("ultroid.log", "r").read()[-2500:]
+        file = await Carbon(
+            base_url="https://carbonara.vercel.app/api/cook",
+            code=code,
+            background=choice(ATRA_COL),
+        ).memorize("ultroid-logs")
+        await event.reply("**Ultroid Logs.**", file=file)
     else:
         await def_logs(event)
+    await event.delete()
 
 
-@in_pattern("alive")
-@in_owner
+@in_pattern("alive", owner=True)
 async def inline_alive(ult):
     pic = udB.get("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or "Hey,  I am alive."
+    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -213,8 +254,8 @@ async def inline_alive(ult):
     )
     buttons = [
         [
-            Button.url("Repo", "https://github.com/TeamUltroid/Ultroid"),
-            Button.url("Support", "t.me/UltroidSupport"),
+            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
         ]
     ]
     builder = ult.builder
@@ -226,7 +267,9 @@ async def inline_alive(ult):
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
                     pic = _pic
-                    buttons.insert(0, [Button.inline("Stats", data="alive")])
+                    buttons.insert(
+                        0, [Button.inline(get_string("bot_2"), data="alive")]
+                    )
                 results = [
                     await builder.document(
                         pic,

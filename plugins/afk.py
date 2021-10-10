@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -18,12 +17,22 @@
 
 import asyncio
 
-from pyUltroid.functions.afk_db import *
-from pyUltroid.functions.pmpermit_db import *
+from pyUltroid.dB.afk_db import add_afk, del_afk, is_afk
+from pyUltroid.dB.pmpermit_db import is_approved
 from telegraph import upload_file as uf
 from telethon import events
 
-from . import *
+from . import (
+    LOG_CHANNEL,
+    NOSPAM_CHAT,
+    Redis,
+    asst,
+    eor,
+    get_string,
+    mediainfo,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 old_afk_msg = []
 
@@ -47,10 +56,10 @@ async def set_afk(event):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
                 media = f"https://telegra.ph{iurl[0]}"
-            elif "sticker" in media_type:
+            elif "sticker" or "audio" in media_type:
                 media = reply.file.id
             else:
-                return await eor(event, "`Unsupported media`", time=5)
+                return await eor(event, get_string("com_4"), time=5)
     await eor(event, "`Done`", time=2)
     add_afk(text, media_type, media)
     msg1, msg2 = None, None
@@ -73,11 +82,9 @@ async def set_afk(event):
                 event.chat_id, get_string("afk_6"), file=media
             )
     elif text:
-        msg1 = await ultroid_bot.send_message(
-            event.chat_id, get_string("afk_5").format(text)
-        )
+        msg1 = await event.respond(get_string("afk_5").format(text))
     else:
-        msg1 = await ultroid_bot.send_message(event.chat_id, get_string("afk_6"))
+        msg1 = await event.respond(get_string("afk_6"))
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)
@@ -105,7 +112,7 @@ async def remove_afk(event):
                 await x.delete()
             except BaseException:
                 pass
-        await asyncio.sleep(3)
+        await asyncio.sleep(10)
         await off.delete()
 
 
@@ -123,7 +130,10 @@ async def on_afk(event):
         return
     elif not is_afk():
         return
-    elif event.chat_id in NOSPAM_CHAT:
+    if event.chat_id in NOSPAM_CHAT:
+        return
+    sender = await event.get_sender()
+    if sender.bot or sender.verified:
         return
     text, media_type, media, afk_time = is_afk()
     msg1, msg2 = None, None

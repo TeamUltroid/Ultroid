@@ -7,7 +7,6 @@
 """
 ✘ Commands Available -
 
-
 • `{i}mtoi <reply to media>`
     Media to image conversion
 
@@ -29,12 +28,26 @@
 import os
 import time
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
 from PIL import Image
 from telegraph import upload_file as uf
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import *
+from . import (
+    bash,
+    downloader,
+    eod,
+    eor,
+    get_paste,
+    get_string,
+    udB,
+    ultroid_cmd,
+    uploader,
+)
 
 opn = []
 
@@ -44,21 +57,22 @@ opn = []
 )
 async def _(e):
     r = await e.get_reply_message()
-    pop = "`Reply to img or file with thumbnail.`"
-    if not r:
-        return await eor(e, pop)
+    if not (r or r.file):
+        return await eod(e, get_string("cvt_4"))
+    if not r.file.media.thumbs:
+        return await eod(e, get_string("cvt_5"))
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
     else:
-        return await eor(e, pop)
+        return await eor(e, "`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
     udB.set("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
-    await eor(e, f"Added [This]({nn}) As Your Custom Thumbnail", link_preview=False)
+    await eor(e, get_string("cvt_6").format(nn), link_preview=False)
 
 
 @ultroid_cmd(
@@ -68,29 +82,28 @@ async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
-        return
+        return await eor(event, get_string("cvt_1"))
     inp = event.pattern_match.group(1)
     if not inp:
-        await eor(event, "Give The name and extension of file")
-        return
-    xx = await eor(event, "`Processing...`")
+        return await eor(event, get_string("cvt_2"))
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                reply.file.name if reply.file.name else str(time.time()),
+                reply.file.name or str(time.time()),
                 reply.media.document,
                 xx,
                 t,
-                "Downloading...",
+                get_string("com_5"),
             )
+
             file = image.name
         else:
             file = await event.client.download_media(reply.media)
     os.rename(file, inp)
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, "Uploading...")
+    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
         f"`{xxx.name}`",
         file=xxx,
@@ -107,14 +120,16 @@ async def imak(event):
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, "Reply to any media.")
+        await eor(event, get_string("cvt_3"))
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
     file = "ult.png"
     if image.endswith((".webp", ".png")):
         c = Image.open(image)
         c.save(file)
+    elif image.endswith(".tgs"):
+        await bash(f"lottie_convert.py '{image}' {file}")
     else:
         img = cv2.VideoCapture(image)
         ult, roid = img.read()
@@ -131,9 +146,9 @@ async def imak(event):
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, "Reply to any media.")
+        await eor(event, get_string("cvt_3"))
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     image = await reply.download_media()
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
@@ -155,11 +170,11 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not (input_str and event.is_reply):
-        return await eor(event, "`Give The File Name and reply to message.`", time=5)
+        return await eor(event, get_string("cvt_1"), time=5)
     xx = await eor(event, get_string("com_1"))
     a = await event.get_reply_message()
     if not a.message:
-        return await xx.edit("`Reply to a message`")
+        return await xx.edit(get_string("ex_1"))
     with open(input_str, "w") as b:
         b.write(str(a.message))
     await xx.edit(f"**Packing into** `{input_str}`")
@@ -174,14 +189,14 @@ async def _(event):
 async def _(event):
     a = await event.get_reply_message()
     if not (a and a.media):
-        return await eor(event, "`Reply to a readable file`", time=5)
+        return await eor(event, get_string("cvt_7"), time=5)
     xx = await eor(event, get_string("com_1"))
     b = await a.download_media()
     try:
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eor(xx, "`Not A Readable File.`", time=5)
+        return await eor(xx, get_string("cvt_8"), time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:

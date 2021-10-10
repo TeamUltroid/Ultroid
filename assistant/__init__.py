@@ -6,14 +6,18 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pyUltroid import *
-from pyUltroid.dB.database import Var
-from pyUltroid.functions.all import *
+from pyUltroid.functions.helper import *
+from pyUltroid.misc import owner_and_sudos
+from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from telethon import Button, custom
 
-from strings import get_languages, get_string
+from plugins import ATRA_COL
+from strings import get_languages, get_string, language
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
+
+AST_PLUGINS = {}
 
 
 async def setit(event, name, value):

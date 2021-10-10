@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -17,19 +16,19 @@
 
 🔹 For auto-posting/forwarding all new message from any source channel to any destination channel.
 
-   * `asource <channel username or id>`
+   `{i}asource <channel username or id>`
       This add source channel to database
-   * `dsource <channel username or id>`
+   `{i}dsource <channel username or id>`
       This remove source channels from database
-   * `listsource <channel username or id>`
+   `{i}listsource <channel username or id>`
       Show list of source channels
 
 
-   * `{i}adest <channel username or id>`
+   `{i}adest <channel username or id>`
       This add Ur channels to database
-   * `{i}ddest <channel username or id>`
+   `{i}ddest <channel username or id>`
       This Remove Ur channels from database
-   * `{i}listdest <channel username or id>`
+   `{i}listdest <channel username or id>`
       Show List of Ur channels
 
    'you can set many channels in database'
@@ -37,10 +36,22 @@
 """
 
 import asyncio
+import io
 
-from pyUltroid.functions.ch_db import *
+from pyUltroid.dB.ch_db import (
+    add_destination,
+    add_source_channel,
+    get_destinations,
+    get_no_destinations,
+    get_no_source_channels,
+    get_source_channels,
+    is_destination_added,
+    is_source_channel_added,
+    rem_destination,
+    rem_source_channel,
+)
 
-from . import *
+from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_bot.on(events.NewMessage())
@@ -62,7 +73,7 @@ async def _(e):
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
-    z = await eor(e, "`processing..`")
+    z = await eor(e, get_string("com_1"))
     a, b = x.split("|")
     try:
         c = int(a)
@@ -70,7 +81,7 @@ async def _(e):
         try:
             c = (await e.client.get_entity(a)).id
         except Exception:
-            await z.edit("invalid Channel given")
+            await z.edit(get_string("cha_1"))
             return
     try:
         d = int(b)
@@ -78,7 +89,7 @@ async def _(e):
         try:
             d = (await e.client.get_entity(b)).id
         except Exception:
-            await z.edit("invalid Channel given")
+            await z.edit(get_string("cha_1"))
             return
     async for msg in e.client.iter_messages(int(c), reverse=True):
         try:
@@ -96,25 +107,25 @@ async def source(e):
         y = int(x)
     except Exception:
         try:
-            y = int((await bot.get_entity(x)).id)
+            y = int((await ultroid_bot.get_entity(x)).id)
         except Exception as es:
             print(es)
             return
     if not is_source_channel_added(y):
         add_source_channel(y)
-        await eor(e, "Source added succesfully")
+        await eor(e, get_string("cha_2"))
     elif is_source_channel_added(y):
-        await eor(e, "Source channel already added")
+        await eor(e, get_string("cha_3"))
 
 
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "`Processing..`")
+    x = await eor(event, get_string("com_1"))
     if chat_id == "all":
-        await x.edit("`Removing...`")
+        await x.edit(get_string("bd_8"))
         udB.delete("CH_SOURCE")
-        await x.edit("Source database cleared.")
+        await x.edit(get_string("cha_4"))
         return
     try:
         y = int(chat_id)
@@ -126,29 +137,29 @@ async def dd(event):
             return
     if is_source_channel_added(y):
         rem_source_channel(y)
-        await eor(x, "Source removed from database", time=3)
+        await eor(x, get_string("cha_5"), time=3)
     elif is_source_channel_added(y):
         rem_source_channel(y)
-        await eor(x, "Source removed from database", time=5)
+        await eor(x, get_string("cha_5"), time=5)
     elif not is_source_channel_added(y):
         await eor(x, "Source channel is already removed from database. ", time=3)
 
 
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
-    x = await eor(event, "`Calculating...`")
+    x = await eor(event, get_string("com_1"))
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
         return await eor(x, "No chats were added.", time=5)
-    msg = "Source channels in database:\n"
+    msg = get_string("cha_8")
     for channel in channels:
         name = ""
         try:
             name = (await event.client.get_entity(int(channel))).title
         except BaseException:
             name = ""
-        msg += f"=> **{name}** [`{channel}`]\n"
+        msg += f"\n=> **{name}** [`{channel}`]"
     msg += f"\nTotal {get_no_source_channels()} channels."
     if len(msg) > 4096:
         MSG = msg.replace("*", "").replace("`", "")
@@ -188,9 +199,9 @@ async def destination(e):
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, "processing")
+    x = await eor(event, get_string("com_1"))
     if chat_id == "all":
-        await x.edit("`Removing...`")
+        await x.edit(get_string("bd_8"))
         udB.delete("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
@@ -215,19 +226,19 @@ async def dd(event):
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     ultroid_bot = event.client
-    x = await eor(event, "`Calculating...`")
+    x = await eor(event, get_string("com_1"))
     channels = get_destinations()
     num = get_no_destinations()
-    if num == 0:
+    if not num:
         return await eor(x, "No chats were added.", time=5)
-    msg = "Destination channels in database:\n"
+    msg = get_string("cha_7")
     for channel in channels:
         name = ""
         try:
-            name = (await ultroid.get_entity(int(channel))).title
+            name = (await ultroid_bot.get_entity(int(channel))).title
         except BaseException:
             name = ""
-        msg += f"=> **{name}** [`{channel}`]\n"
+        msg += f"\n=> **{name}** [`{channel}`]"
     msg += f"\nTotal {get_no_destinations()} channels."
     if len(msg) > 4096:
         MSG = msg.replace("*", "").replace("`", "")

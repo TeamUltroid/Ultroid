@@ -24,7 +24,7 @@ from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import *
+from . import eor, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="qrcode ?(.*)")
@@ -37,7 +37,7 @@ async def cd(e):
         msg = msg
     else:
         return await eor(e, "`Give Some Text or Reply", time=5)
-    kk = await eor(e, "`processing`")
+    kk = await eor(e, get_string("com_1"))
     pfp = await e.client.get_profile_photos(ultroid_bot.uid)
     img = "resources/extras/teamultroid.jpg"
     if len(pfp) >= 1:
@@ -62,7 +62,7 @@ async def qrwater(e):
     r = await e.get_reply_message()
     if not (msg and r and r.media):
         return await eor(e, "`Reply Any Media and Give Text`", time=5)
-    kk = await eor(e, "`processing`")
+    kk = await eor(e, get_string("com_1"))
     if isinstance(r.media, photu):
         dl = await e.client.download_media(r.media)
     elif isinstance(r.media, doc):
@@ -87,7 +87,7 @@ async def decod(e):
     r = await e.get_reply_message()
     if not (r and r.media):
         return await eor(e, "`Reply to Qrcode Media`", time=5)
-    kk = await eor(e, "`processing`")
+    kk = await eor(e, get_string("com_1"))
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif isinstance(r.media, doc):

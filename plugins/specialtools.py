@@ -32,14 +32,23 @@ from random import choice
 from shutil import rmtree
 
 import pytz
-import requests
-from bs4 import BeautifulSoup as b
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.google_image import googleimagesdownload
+from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
-from . import *
+from . import (
+    async_searcher,
+    bash,
+    downloader,
+    eod,
+    eor,
+    get_string,
+    mediainfo,
+    ultroid_bot,
+    ultroid_cmd,
+    uploader,
+)
 
 File = []
 
@@ -49,11 +58,11 @@ File = []
 )
 async def daudtoid(e):
     if not e.reply_to:
-        return await eod(e, "Reply To Audio or video")
+        return await eod(e, get_string("spcltool_1"))
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
-        return await eod(e, "Reply To Audio or video")
-    xxx = await eor(e, "`processing...`")
+        return await eod(e, get_string("spcltool_1"))
+    xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -64,7 +73,7 @@ async def daudtoid(e):
         "Downloading " + dl + "...",
     )
     File.append(file.name)
-    await xxx.edit("`Done.. Now reply to video In which u want to add this Audio`")
+    await xxx.edit(get_string("spcltool_2"))
 
 
 @ultroid_cmd(
@@ -72,13 +81,13 @@ async def daudtoid(e):
 )
 async def adaudroid(e):
     if not e.reply_to:
-        return await eod(e, "Reply To video")
+        return await eod(e, get_string("spcltool_3"))
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith("video"):
-        return await eod(e, "Reply To video")
+        return await eod(e, get_string("spcltool_3"))
     if not File or os.path.exists(File[0]):
-        return await xx.edit("`First reply an audio with .aw`")
-    xxx = await eor(e, "`processing...`")
+        return await e.edit("`First reply an audio with .aw`")
+    xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -88,7 +97,7 @@ async def adaudroid(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit(f"Downloaded Successfully, Now Adding Your Audio to video")
+    await xxx.edit(get_string("spcltool_5"))
     await bash(
         f'ffmpeg -i "{file.name}" -i "{File[0]}" -shortest -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4'
     )
@@ -100,12 +109,10 @@ async def adaudroid(e):
         xxx,
         "Uploading " + out + "...",
     )
-    metadata = extractMetadata(createParser(out))
-    duration = metadata.get("duration").seconds
-    hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-    wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-    height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-    width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+    data = await metadata(out)
+    width = data["width"]
+    height = data["height"]
+    duration = data["duration"]
     attributes = [
         DocumentAttributeVideo(
             duration=duration, w=width, h=height, supports_streaming=True
@@ -131,7 +138,7 @@ async def adaudroid(e):
 )
 async def hbd(event):
     if not event.pattern_match.group(1):
-        return await eor(event, "`Put input in dd/mm/yyyy format`")
+        return await eor(event, get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
         nam = await event.client.get_entity(kk.from_id)
@@ -152,7 +159,7 @@ async def hbd(event):
     try:
         jn = dt.strptime(paida, "%d/%m/%Y")
     except BaseException:
-        return await eor(event, "`Put input in dd/mm/yyyy format`")
+        return await eor(event, get_string("spcltool_6"))
     jnm = zn.localize(jn)
     zinda = abhi - jnm
     barsh = (zinda.total_seconds()) / (365.242 * 24 * 3600)
@@ -206,8 +213,9 @@ async def hbd(event):
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     sign = f"{sign}"
     params = (("sign", sign), ("today", day))
-    response = requests.post("https://aztro.sameerkumar.website/", params=params)
-    json = response.json()
+    json = await async_searcher(
+        "https://aztro.sameerkumar.website/", post=True, params=params, re_json=True
+    )
     dd = json.get("current_date")
     ds = json.get("description")
     lt = json.get("lucky_time")
@@ -246,21 +254,22 @@ async def _(event):
     x = event.pattern_match.group(1)
     if not x:
         return await eor(event, "`Give something to search`")
-    uu = await eor(event, "`Processing...`")
-    z = request.get("https://combot.org/telegram/stickers?q=" + x).text
-    xx = b(z, "lxml")
-    title = xx.find_all("div", "sticker-pack__title")
-    link = xx.find_all("a", target="_blank")
-    if not link:
-        return await uu.edit("Found Nothing")
-    a = "SᴛɪᴄᴋEʀs Aᴡᴀɪʟᴀʙʟᴇ ~"
-    for xxx, yyy in zip(title, link):
-        v = xxx.get_text()
-        w = yyy["href"]
-        d = f"\n\n[{v}]({w})"
-        if d not in a:
-            a += d
-    await uu.edit(a)
+    uu = await eor(event, get_string("com_1"))
+    z = bs(
+        await async_searcher("https://combot.org/telegram/stickers?q=" + x),
+        "html.parser",
+    )
+    packs = z.find_all("div", "sticker-pack__header")
+    sticks = {
+        c.a["href"]: c.find("div", {"class": "sticker-pack__title"}).text for c in packs
+    }
+
+    if not sticks:
+        return await uu.edit(get_string("spcltool_9"))
+    a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
+    for _, value in sticks.items():
+        a += f"<a href={_}>{value}</a>\n"
+    await uu.edit(a, parse_mode="html")
 
 
 @ultroid_cmd(pattern="wall ?(.*)")
@@ -268,7 +277,7 @@ async def wall(event):
     inp = event.pattern_match.group(1)
     if not inp:
         return await eor(event, "`Give me something to search..`")
-    nn = await eor(event, "`Processing Keep Patience...`")
+    nn = await eor(event, get_string("com_1"))
     query = f"hd {inp}"
     gi = googleimagesdownload()
     args = {

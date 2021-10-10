@@ -10,19 +10,27 @@ import os
 import re
 import time
 
-from numerize import numerize
-from pyUltroid.functions.all import *
+from pyUltroid.functions.helper import (
+    bash,
+    download_file,
+    fast_download,
+    numerize,
+    time_formatter,
+    uploader,
+)
+from pyUltroid.functions.ytdl import dler, get_buttons, get_data
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
+from . import callback, in_pattern
+
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 
 
-@in_pattern("yt")
-@in_owner
+@in_pattern("yt", owner=True)
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -48,9 +56,23 @@ async def _(event):
         link = _yt_base_url + ids
         title = v["title"]
         duration = v["duration"]
+        views = v["viewCount"]["short"]
+        publisher = v["channel"]["name"]
+        published_on = v["publishedTime"]
+        description = (
+            v["descriptionSnippet"][0]["text"]
+            if v.get("descriptionSnippet")
+            and len(v["descriptionSnippet"][0]["text"]) < 500
+            else "None"
+        )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
-        text = f"**•Tɪᴛʟᴇ•** `{title}`\n\n**••[Lɪɴᴋ]({link})••**\n\n**••Dᴜʀᴀᴛɪᴏɴ••** `{duration}`\n\n\n"
-        desc = f"Title : {title}\nDuration : {duration}"
+        text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
+        text += f"<strong>Duration:-</strong> <code>{duration}</code>\n"
+        text += f"<strong>Views:- </strong> <code>{views}</code>\n"
+        text += f"<strong>Publisher:- </strong> <code>{publisher}</code>\n"
+        text += f"<strong>Published:- </strong> <code>{published_on}</code>\n"
+        text += f"<strong>Description:- </strong> <code>{description}</code>"
+        desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         results.append(
             await event.builder.article(
@@ -61,6 +83,7 @@ async def _(event):
                 content=file,
                 text=text,
                 include_media=True,
+                parse_mode="html",
                 buttons=[
                     [
                         Button.inline("Audio", data=f"ytdl_audio_{ids}"),
@@ -88,8 +111,8 @@ async def _(event):
     re.compile(
         "ytdl_(.*)",
     ),
+    owner=True,
 )
-@owner
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
     _lets_split = _e.split("_", maxsplit=1)
@@ -108,8 +131,8 @@ async def _(e):
     re.compile(
         "ytdownload_(.*)",
     ),
+    owner=True,
 )
-@owner
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
     lets_split = url.split("_", maxsplit=1)
@@ -135,7 +158,7 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize.numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data["view_count"])
         await download_file(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
@@ -172,7 +195,7 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize.numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
         )

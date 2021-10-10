@@ -28,12 +28,21 @@ import time
 from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
-from . import *
+from . import (
+    downloader,
+    eor,
+    fast_download,
+    get_string,
+    humanbytes,
+    progress,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(
@@ -41,9 +50,9 @@ from . import *
 )
 async def down(event):
     matched = event.pattern_match.group(1)
-    msg = await eor(event, "`Trying to download...`")
+    msg = await eor(event, get_string("udl_4"))
     if not matched:
-        return await eor(msg, "`You forgot to give link :(`", time=5)
+        return await eor(msg, get_string("udl_5"), time=5)
     try:
         splited = matched.split(" | ")
         link = splited[0]
@@ -75,7 +84,7 @@ async def down(event):
 )
 async def download(event):
     if not event.reply_to_msg_id:
-        return await eor(event, "`Reply to a Media Message`")
+        return await eor(event, get_string("cvt_3"))
     xx = await eor(event, get_string("com_1"))
     s = dt.now()
     k = time.time()
@@ -114,16 +123,13 @@ async def download(event):
                         t,
                         xx,
                         k,
-                        "Downloading...",
+                        get_string("com_5"),
                     ),
                 ),
             )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t != "":
-        await eor(xx, get_string("udl_2").format(file_name, t))
-    else:
-        await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
+    await eor(xx, get_string("udl_2").format(file_name, t))
 
 
 @ultroid_cmd(
@@ -144,11 +150,12 @@ async def download(event):
         title = hmm
     s = dt.now()
     tt = time.time()
+    ko = kk
     if not kk:
         return await eor(xx, get_string("udl_3"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eor(xx, "`This Directory is Empty.`", time=5)
+            return await eor(xx, get_string("udl_6"), time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:
@@ -163,29 +170,11 @@ async def download(event):
                     title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac"))
                     and " | stream" in hmm
                 ):
-                    metadata = extractMetadata(createParser(res.name))
-                    wi = 512
-                    hi = 512
-                    duration = 0
-                    artist = ""
-                    try:
-                        if metadata.has("width"):
-                            wi = metadata.get("width")
-                        if metadata.has("height"):
-                            hi = metadata.get("height")
-                        if metadata.has("duration"):
-                            duration = metadata.get("duration").seconds
-                        if metadata.has("artist"):
-                            artist = metadata.get("artist")
-                        else:
-                            artist = udB.get("artist") or ultroid_bot.first_name
-                    except AttributeError:
-                        return await event.client.send_file(
-                            event.chat_id,
-                            res,
-                            caption=f"`{kk}/{title}`",
-                            supports_streaming=True,
-                        )
+                    data = await metadata(res.name)
+                    wi = data["width"]
+                    hi = data["height"]
+                    duration = data["duration"]
+                    artist = data["performer"]
                     if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                         attributes = [
                             DocumentAttributeVideo(
@@ -237,29 +226,11 @@ async def download(event):
             if title.endswith((".mp3", ".m4a", ".opus", ".ogg", ".flac")):
                 hmm = " | stream"
             if " | stream" in hmm:
-                metadata = extractMetadata(createParser(res.name))
-                wi = 512
-                hi = 512
-                duration = 0
-                artist = ""
-                try:
-                    if metadata.has("width"):
-                        wi = metadata.get("width")
-                    if metadata.has("height"):
-                        hi = metadata.get("height")
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
-                    if metadata.has("artist"):
-                        artist = metadata.get("artist")
-                    else:
-                        artist = udB.get("artist") or ultroid_bot.first_name
-                except AttributeError:
-                    await event.client.send_file(
-                        event.chat_id,
-                        res,
-                        caption=f"`{title}`",
-                        supports_streaming=True,
-                    )
+                data = await metadata(res.name)
+                wi = data["width"]
+                hi = data["height"]
+                duration = data["duration"]
+                artist = data["performer"]
                 if res.name.endswith((".mkv", ".mp4", ".avi", "webm")):
                     attributes = [
                         DocumentAttributeVideo(
@@ -305,20 +276,17 @@ async def download(event):
             return await eor(xx, str(ve))
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    if t == "":
-        await eor(xx, f"Uploaded `{kk}` in `0 second(s)`")
-
-    elif os.path.isdir(kk):
+    if os.path.isdir(ko):
         size = 0
-        for path, dirs, files in os.walk(kk):
+        for path, dirs, files in os.walk(ko):
             for f in files:
                 fp = os.path.join(path, f)
                 size += os.path.getsize(fp)
-        c = len(os.listdir(kk))
+        c = len(os.listdir(ko))
         await xx.delete()
         await event.client.send_message(
             event.chat_id,
-            f"Uploaded Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
+            f"Uploaded `{ko}` Folder, Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
         )
     else:
-        await eor(xx, f"Uploaded `{kk}` in `{t}`")
+        await eor(xx, f"Uploaded `{ko}` in `{t}`")

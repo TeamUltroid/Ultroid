@@ -25,7 +25,17 @@
 import os
 import time
 
-from . import *
+from . import (
+    HNDLR,
+    asyncio,
+    bash,
+    downloader,
+    eor,
+    get_all_files,
+    get_string,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(pattern="zip ?(.*)")
@@ -33,14 +43,14 @@ async def zipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                reply.file.name, reply.media.document, xx, t, "Downloading..."
+                reply.file.name, reply.media.document, xx, t, get_string("com_5")
             )
             file = image.name
         else:
@@ -51,7 +61,7 @@ async def zipp(event):
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, "Uploading...")
+    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,
@@ -70,17 +80,17 @@ async def unzipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if reply.media:
         if not hasattr(reply.media, "document"):
-            return await xx.edit("`Reply to zip file only`")
+            return await xx.edit(get_string("zip_3"))
         file = reply.media.document
         if not reply.file.name.endswith(("zip", "rar", "exe")):
-            return await xx.edit("`Reply To zipped File only`")
+            return await xx.edit(get_string("zip_3"))
         image = await downloader(
-            reply.file.name, reply.media.document, xx, t, "Downloading..."
+            reply.file.name, reply.media.document, xx, t, get_string("com_5")
         )
         file = image.name
     if os.path.isdir("unzip"):
@@ -91,7 +101,7 @@ async def unzipp(event):
     ok = get_all_files("unzip")
     for x in ok:
         k = time.time()
-        xxx = await uploader(x, x, k, xx, "Uploading...")
+        xxx = await uploader(x, x, k, xx, get_string("com_6"))
         await event.client.send_file(
             event.chat_id,
             xxx,
@@ -107,16 +117,20 @@ async def azipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, "Reply to any media/Document.")
+        await eor(event, get_string("zip_1"))
         return
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     if not os.path.isdir("zip"):
         os.mkdir("zip")
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                "zip/" + reply.file.name, reply.media.document, xx, t, "Downloading..."
+                "zip/" + reply.file.name,
+                reply.media.document,
+                xx,
+                t,
+                get_string("com_5"),
             )
             file = image.name
         else:
@@ -129,10 +143,8 @@ async def azipp(event):
 @ultroid_cmd(pattern="dozip ?(.*)")
 async def do_zip(event):
     if not os.path.isdir("zip"):
-        return await eor(
-            event, "First All Files Via {i}addzip then doZip to zip all files at one."
-        )
-    xx = await eor(event, "`processing`")
+        return await eor(event, get_string("zip_2").format(HNDLR))
+    xx = await eor(event, get_string("com_1"))
     if event.pattern_match.group(1):
         await bash(
             f"zip -r --password {event.pattern_match.group(1)} ultroid.zip zip/*"
@@ -140,7 +152,7 @@ async def do_zip(event):
     else:
         await bash("zip -r ultroid.zip zip/*")
     k = time.time()
-    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, "Uploading...")
+    xxx = await uploader("ultroid.zip", "ultroid.zip", k, xx, get_string("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,

@@ -50,13 +50,40 @@
 """
 import os
 
-from pyUltroid.functions.gban_mute_db import *
-from pyUltroid.functions.gcast_blacklist_db import *
+from pyUltroid.dB import DEVLIST
+from pyUltroid.dB.gban_mute_db import (
+    gban,
+    gmute,
+    is_gbanned,
+    is_gmuted,
+    list_gbanned,
+    ungban,
+    ungmute,
+)
+from pyUltroid.dB.gcast_blacklist_db import (
+    add_gblacklist,
+    is_gblacklisted,
+    rem_gblacklist,
+)
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    NOSPAM_CHAT,
+    OWNER_ID,
+    OWNER_NAME,
+    eod,
+    eor,
+    get_string,
+    get_user_id,
+    ultroid_bot,
+    ultroid_cmd,
+)
+from ._inline import something
 
 _gpromote_rights = ChatAdminRights(
     add_admins=False,
@@ -82,7 +109,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, "`Incorrect Format`", time=5)
+        return await eor(e, get_string("schdl_2"), time=5)
     user = await e.get_reply_message()
     if user:
         ev = await eor(e, "`Promoting Replied User Globally`")
@@ -190,7 +217,7 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, "`Incorrect Format`", time=5)
+        return await eor(e, get_string("schdl_2"), time=5)
     user = await e.get_reply_message()
     if user:
         user.id = user.peer_id.user_id if e.is_private else user.from_id.user_id
@@ -365,15 +392,22 @@ async def _(e):
 
 @ultroid_cmd(pattern="g(admin|)cast ?(.*)", fullsudo=True)
 async def gcast(event):
+    text, btn, reply = "", None, None
     xx = event.pattern_match.group(2)
     if xx:
-        msg = xx
+        msg, btn = get_msg_button(event.text.split(maxsplit=1)[1])
     elif event.is_reply:
-        msg = await event.get_reply_message()
+        reply = await event.get_reply_message()
+        msg = reply.text
+        if reply.buttons:
+            btn = format_btn(reply.buttons)
+        else:
+            msg, btn = get_msg_button(msg)
     else:
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
         )
+
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -381,32 +415,53 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.entity.id
-            if not is_gblacklisted(chat) and not int("-100" + str(chat)) in NOSPAM_CHAT:
-                if event.text[2:7] == "admin" and not (
-                    x.entity.admin_rights or x.entity.creator
-                ):
-                    pass
-                else:
-                    try:
-                        done += 1
-                        await event.client.send_message(chat, msg)
-                    except Exception as h:
-                        err += "• " + str(h) + "\n"
-                        er += 1
+            if (
+                not is_gblacklisted(chat)
+                and int("-100" + str(chat)) not in NOSPAM_CHAT
+                and (
+                    event.text[2:7] != "admin"
+                    or (x.entity.admin_rights or x.entity.creator)
+                )
+            ):
+                try:
+                    if btn:
+                        bt = create_tl_btn(btn)
+                        await something(
+                            event,
+                            msg,
+                            reply.media if reply else None,
+                            bt,
+                            chat=chat,
+                            reply=False,
+                        )
+                    else:
+                        await event.client.send_message(
+                            chat, msg, file=reply.media if reply else None
+                        )
+                    done += 1
+                except Exception as h:
+                    err += "• " + str(h) + "\n"
+                    er += 1
     text += f"Done in {done} chats, error in {er} chat(s)"
     if err != "":
-        open("gcast-error.log", "w").write(h)
+        open("gcast-error.log", "w+").write(err)
         text += f"\nYou can do `{HNDLR}ul gcast-error.log` to know error report."
     await kk.edit(text)
 
 
 @ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
 async def gucast(event):
+    msg, btn, reply = "", None, None
     xx = event.pattern_match.group(1)
     if xx:
-        msg = xx
+        msg, btn = get_msg_button(event.text.split(maxsplit=1)[1])
     elif event.is_reply:
-        msg = await event.get_reply_message()
+        reply = await event.get_reply_message()
+        msg = reply.text
+        if reply.buttons:
+            btn = format_btn(reply.buttons)
+        else:
+            msg, btn = get_msg_button(msg)
     else:
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
@@ -419,8 +474,21 @@ async def gucast(event):
             chat = x.id
             if not is_gblacklisted(chat):
                 try:
+                    if btn:
+                        bt = create_tl_btn(btn)
+                        await something(
+                            event,
+                            msg,
+                            reply.media if reply else None,
+                            bt,
+                            chat=chat,
+                            reply=False,
+                        )
+                    else:
+                        await event.client.send_message(
+                            chat, msg, file=reply.media if reply else None
+                        )
                     done += 1
-                    await ultroid_bot.send_message(chat, msg)
                 except BaseException:
                     er += 1
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
@@ -510,7 +578,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="listgban",
+    pattern="listgban$",
 )
 async def list_gengbanned(event):
     users = list_gbanned()
@@ -520,16 +588,21 @@ async def list_gengbanned(event):
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
-            name = (await ultroid.get_entity(int(i))).first_name
+            name = (await ultroid_bot.get_entity(int(i))).first_name
         except BaseException:
             name = i
-        msg += f"**User**: {name}\n"
+        msg += f"<strong>User</strong>: <a href=tg://user?id={i}>{name}</a>\n"
         reason = users[i]
-        msg += f"**Reason**: {reason}\n\n" if reason is not None else "\n"
-    gbanned_users = f"**List of users GBanned by {OWNER_NAME}**:\n\n{msg}"
+        msg += f"<strong>Reason</strong>: {reason}\n\n" if reason is not None else "\n"
+    gbanned_users = f"<strong>List of users GBanned by {OWNER_NAME}</strong>:\n\n{msg}"
     if len(gbanned_users) > 4096:
         with open("gbanned.txt", "w") as f:
-            f.write(gbanned_users.replace("`", "").replace("*", ""))
+            f.write(
+                gbanned_users.replace("<strong>", "")
+                .replace("</strong>", "")
+                .replace("<a href=tg://user?id=", "")
+                .replace("</a>", "")
+            )
         await x.reply(
             file="gbanned.txt",
             message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
@@ -537,7 +610,7 @@ async def list_gengbanned(event):
         os.remove("gbanned.txt")
         await x.delete()
     else:
-        await x.edit(gbanned_users)
+        await x.edit(gbanned_users, parse_mode="html")
 
 
 @ultroid_cmd(
@@ -575,7 +648,7 @@ async def blacklist_(event):
 
 @ultroid_cmd(pattern="ungblacklist")
 async def ungblacker(event):
-    await glacker(event, "remove")
+    await gblacker(event, "remove")
 
 
 async def gblacker(event, type_):
@@ -585,7 +658,7 @@ async def gblacker(event, type_):
     except IndexError:
         pass
     try:
-        chat_id = (await ultroid.get_entity(chat)).id
+        chat_id = (await ultroid_bot.get_entity(chat)).id
     except Exception as e:
         return await eor(event, "**ERROR**\n`{}`".format(str(e)))
     if type_ == "add":

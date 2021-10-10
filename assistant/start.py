@@ -8,23 +8,27 @@
 from datetime import datetime
 
 from pytz import timezone as tz
-from pyUltroid.functions.asst_fns import *
+from pyUltroid.dB.asst_fns import *
+from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
-from telethon import events
+from telethon import Button, events
 from telethon.utils import get_display_name
 
-from plugins import *
+from strings.strings import get_string
 
 from . import *
 
-Owner_info_msg = f"""
-<strong>Owner</strong> - {OWNER_NAME}
-<strong>OwnerID</strong> - <code>{OWNER_ID}</code>
+Owner_info_msg = (
+    udB.get("BOT_INFO_START")
+    or f"""
+**Owner** - {OWNER_NAME}
+**OwnerID** - `{OWNER_ID}`
 
-<strong>Message Forwards</strong> - {udB.get("PMBOT")}
+**Message Forwards** - {udB.get("PMBOT")}
 
-<strong>Ultroid <a href=https://github.com/TeamUltroid/Ultroid>[v{ultroid_version}]</a>, powered by @TeamUltroid</strong>
+**Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
 """
+)
 
 _settings = [
     [
@@ -61,7 +65,6 @@ async def own(event):
         Owner_info_msg,
         buttons=[Button.inline("Close", data="closeit")],
         link_preview=False,
-        parse_mode="html",
     )
 
 
@@ -70,12 +73,19 @@ async def closet(lol):
     await lol.delete()
 
 
-@asst_cmd("start ?(.*)")
+@asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
-    if event.is_group:
-        return
     if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
         add_user(event.sender_id)
+        kak_uiw = udB.get("OFF_START_LOG")
+        if not kak_uiw or kak_uiw != "True":
+            msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
+            buttons = [[Button.inline("Info", "itkkstyo")]]
+            if event.sender.username:
+                buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
+            await event.client.send_message(
+                int(udB["LOG_CHANNEL"]), msg, buttons=buttons
+            )
     if str(event.sender_id) not in owner_and_sudos():
         ok = ""
         u = await event.client.get_entity(event.chat_id)
@@ -84,13 +94,17 @@ async def ultroid(event):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
             await event.reply(
                 f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
-                buttons=[Button.inline("Info.", data="ownerinfo")],
+                file=udB.get("STARTMEDIA"),
+                buttons=[Button.inline("Info.", data="ownerinfo")]
+                if Owner_info_msg != "False"
+                else None,
             )
         else:
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
-                Redis("STARTMSG").format(me=me, mention=mention),
+                udB.get("STARTMSG").format(me=me, mention=mention),
+                file=udB.get("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")],
             )
     else:
@@ -107,19 +121,21 @@ async def ultroid(event):
             )
 
 
-@callback("mainmenu")
-@owner
+@callback("itkkstyo", owner=True)
+async def ekekdhdb(e):
+    text = f"When New Visitor will visit your Assistant Bot. You will get this log message!\n\nTo Disable : {HNDLR}setredis OFF_START_LOG True"
+    await e.answer(text, alert=True)
+
+
+@callback("mainmenu", owner=True, func=lambda x: not x.is_group)
 async def ultroid(event):
-    if event.is_group:
-        return
     await event.edit(
         get_string("ast_3").format(OWNER_NAME),
         buttons=_start,
     )
 
 
-@callback("stat")
-@owner
+@callback("stat", owner=True)
 async def botstat(event):
     ok = len(get_all_users())
     msg = """Ultroid Assistant - Stats
@@ -129,19 +145,17 @@ Total Users - {}""".format(
     await event.answer(msg, cache_time=0, alert=True)
 
 
-@callback("bcast")
-@owner
+@callback("bcast", owner=True)
 async def bdcast(event):
     ok = get_all_users()
-    await event.edit(f"Broadcast to {len(ok)} users.")
+    await event.edit(f"• Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
             "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
         )
         response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
         response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
+        if response.message == "/cancel":
             return await conv.send_message("Cancelled!!")
         success = 0
         fail = 0
@@ -149,7 +163,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), f"{themssg}")
+                await asst.send_message(int(i), response.message)
                 success += 1
             except BaseException:
                 fail += 1
@@ -157,15 +171,14 @@ async def bdcast(event):
         time_taken = (end - start).seconds
         await conv.send_message(
             f"""
-Broadcast completed in {time_taken} seconds.
+**Broadcast completed in {time_taken} seconds.**
 Total Users in Bot - {len(ok)}
-Sent to {success} users.
-Failed for {fail} user(s).""",
+**Sent to** : `{success} users.`
+**Failed for** : `{fail} user(s).`""",
         )
 
 
-@callback("setter")
-@owner
+@callback("setter", owner=True)
 async def setting(event):
     await event.edit(
         "Choose from the below options -",
@@ -173,8 +186,7 @@ async def setting(event):
     )
 
 
-@callback("tz")
-@owner
+@callback("tz", owner=True)
 async def timezone_(event):
     await event.delete()
     pru = event.sender_id

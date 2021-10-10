@@ -26,11 +26,11 @@
     d- days
     Mute user in current chat with time.
 """
-from pyUltroid.functions.all import ban_time
-from pyUltroid.functions.mute_db import is_muted, mute, unmute
+from pyUltroid.dB.mute_db import is_muted, mute, unmute
+from pyUltroid.functions.admins import ban_time
 from telethon import events
 
-from . import *
+from . import eod, eor, get_string, get_user_id, ultroid_bot, ultroid_cmd
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
@@ -132,9 +132,9 @@ async def _(e):
         name = (await e.client.get_entity(userid)).first_name
     elif input:
         userid = await get_user_id(input, client=e.client)
-        name = (await event.client.get_entity(userid)).first_name
+        name = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_string("tban_1"), time=3)
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't mute myself.`", time=3)
     try:
@@ -170,7 +170,7 @@ async def _(e):
         userid = await get_user_id(input, client=e.client)
         name = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_string("tban_1"), time=3)
     try:
         await e.client.edit_permissions(
             chat.id,
@@ -210,7 +210,7 @@ async def _(e):
             userid = (await e.client.get_entity(input)).id
             name = (await e.client.get_entity(userid)).first_name
     else:
-        return await eor(xx, "`Reply to someone or use its id...`", time=3)
+        return await eor(xx, get_string("tban_1"), time=3)
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't mute myself.`", time=3)
     try:

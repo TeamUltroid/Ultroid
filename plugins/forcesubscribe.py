@@ -4,8 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-
 """
 ✘ Commands Available -
 
@@ -22,16 +20,26 @@
         in order to Use ForceSubscribe.
 """
 
-
 import re
 
-from pyUltroid.functions.forcesub_db import *
+from pyUltroid.dB.forcesub_db import add_forcesub, get_forcesetting, rem_forcesub
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from . import *
+from . import (
+    LOGS,
+    asst,
+    callback,
+    eor,
+    events,
+    get_string,
+    in_pattern,
+    udB,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 CACHE = {}
 
@@ -40,18 +48,18 @@ CACHE = {}
 async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
-        return await eor(e, "Give Channel where you want User to Join !", time=5)
+        return await eor(e, get_string("fsub_1"), time=5)
     if match.startswith("@"):
         ch = match
     else:
         try:
             ch = int(match)
         except BaseException:
-            return await eor(e, "Give Correct Channel Username or id", time=5)
+            return await eor(e, get_string("fsub_2"), time=5)
     try:
         match = (await e.client.get_entity(ch)).id
     except BaseException:
-        return await eor(e, "Give Correct Channel Username or id", time=5)
+        return await eor(e, get_string("fsub_2"), time=5)
     if not str(match).startswith("-100"):
         match = int("-100" + str(match))
     add_forcesub(e.chat_id, match)
@@ -62,7 +70,7 @@ async def addfor(e):
 async def remor(e):
     res = rem_forcesub(e.chat_id)
     if not res:
-        return await eor(e, "ForceSub was not Active in this Chat !", time=5)
+        return await eor(e, get_string("fsub_3"), time=5)
     await eor(e, "Removed ForceSub...")
 
 
@@ -75,8 +83,7 @@ async def getfsr(e):
     await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 
 
-@in_pattern("fsub ?(.*)")
-@in_owner
+@in_pattern("fsub ?(.*)", owner=True)
 async def fcall(e):
     match = e.pattern_match.group(1)
     spli = match.split("_")
@@ -93,8 +100,8 @@ async def fcall(e):
             title="forcesub",
             text=text,
             buttons=[
-                [Button.url(text="Join Channel", url=el)],
-                [Button.inline("Unmute Me", data=f"unm_{match}")],
+                [Button.url(text=get_string("fsub_4"), url=el)],
+                [Button.inline(get_string("fsub_5"), data=f"unm_{match}")],
             ],
         )
     ]
@@ -106,7 +113,7 @@ async def diesoon(e):
     match = (e.data_match.group(1)).decode("UTF-8")
     spli = match.split("_")
     if e.sender_id != int(spli[0]):
-        return await e.answer("This Message is Not for You", alert=True)
+        return await e.answer(get_string("fsub_7"), alert=True)
     try:
         await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
     except UserNotParticipantError:
@@ -116,43 +123,41 @@ async def diesoon(e):
     await ultroid_bot.edit_permissions(
         e.chat_id, int(spli[0]), send_messages=True, until_date=None
     )
-    await e.edit("Thanks For Joining ! ")
+    await e.edit(get_string("fsub_8"))
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def cacheahs(ult):
-    if udB.get("FORCESUB"):
-        user = await ult.get_sender()
-        joinchat = get_forcesetting(ult.chat_id)
-        if not joinchat or user.bot:
-            return
-        if CACHE.get(ult.chat_id):
-            if CACHE[ult.chat_id].get(user.id):
-                CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
-            else:
-                CACHE[ult.chat_id].update({user.id: 1})
+    if not udB.get("FORCESUB"):
+        return
+
+    user = await ult.get_sender()
+    joinchat = get_forcesetting(ult.chat_id)
+    if not joinchat or user.bot:
+        return
+    if CACHE.get(ult.chat_id):
+        if CACHE[ult.chat_id].get(user.id):
+            CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
         else:
-            CACHE.update({ult.chat_id: {user.id: 1}})
-        count = CACHE[ult.chat_id][user.id]
-        if count == 11:
-            CACHE[ult.chat_id][user.id].update(1)
-            return
-        if count in range(2, 11):
-            return
-        try:
-            await ultroid_bot.get_permissions(int(joinchat), user.id)
-            return
-        except UserNotParticipantError:
-            pass
-        try:
-            await ultroid_bot.edit_permissions(
-                ult.chat_id, user.id, send_messages=False
-            )
-        except ChatAdminRequiredError:
-            return
-        except Exception as e:
-            LOGS.info(e)
-        res = await ultroid_bot.inline_query(
-            asst.me.username, f"fsub {user.id}_{joinchat}"
-        )
-        await res[0].click(ult.chat_id, reply_to=ult.id)
+            CACHE[ult.chat_id].update({user.id: 1})
+    else:
+        CACHE.update({ult.chat_id: {user.id: 1}})
+    count = CACHE[ult.chat_id][user.id]
+    if count == 11:
+        CACHE[ult.chat_id][user.id].update(1)
+        return
+    if count in range(2, 11):
+        return
+    try:
+        await ultroid_bot.get_permissions(int(joinchat), user.id)
+        return
+    except UserNotParticipantError:
+        pass
+    try:
+        await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+    except ChatAdminRequiredError:
+        return
+    except Exception as e:
+        LOGS.info(e)
+    res = await ultroid_bot.inline_query(asst.me.username, f"fsub {user.id}_{joinchat}")
+    await res[0].click(ult.chat_id, reply_to=ult.id)

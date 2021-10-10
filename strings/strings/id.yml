@@ -3,85 +3,168 @@ natively: Indonesia
 
 authors:
   - itsmenandos
+  - mrismanaziz
 
 # commons
 com_1: "`Memproses...`"
 com_2: "`Sedang Mencari...`"
+com_3: "`Yang anda Masukan Tidak Valid`"
+com_4: "`Media Tidak Didukung..`"
+com_5: "`Mengunduh...`"
+com_6: "`Mengunggah...`"
+
+# chatactions
+can_1: "**#GBanned_User** Bergabung.\n\n**User** : {}\n**Karena**: {}\n\n`Pengguna dibanned.`"
+can_2: "∆ **#UsernameUpdate**\n\n@{} mengubah username menjadi @{}"
+can_3: "∆ **#UsernameUpdate**\n\n{} menghapus username. (@{})"
+can_4: "∆ **#UsernameUpdate**\n\n{}'s username baru --> @{}"
+
 # help
 help_1: "`{}` bukan plugin yang valid!"
 help_2: "Bot tidak menanggapi inline kueri.\nLebih baik untuk menggunakan `{}restart`"
 help_3: "`Tolong aktifkan inline mode bot Anda dari` @Botfather."
-help_4: "Heioo...., \nAnda sedang mengaktifkan Mode Bot. \nPengguna Mode Bot tidak dapat mendapatkan bantuan secara langsung ... \nLebih baik cipy dan paste yang berikut di obrolan dan Klik Pop Up \n\n `@{} ultd`"
+help_4: "• Plugins"
+help_5: "• Addons"
+help_6: "••Voice Chat"
+help_7: "Inline Plugins••"
+help_8: "⚙️ Owner Tools"
+help_9: "Pengaturan ⚙️"
+help_10: "••ᴛᴜᴛᴜᴘ••"
+help_11: "Nama Plugin-{}\n\n✘ Perintah Tersedia -\n\n"
+
+# userlogs
+userlogs_1: "Id Obrolan yang Anda Masukan Di Tag Logger Salah, Harap Perbaiki"
+userlogs_2: "Tambahkan saya ke Grup Tag Log Anda untuk Menyimpan Tag"
+userlogs_3: "Tinggalkan Obrolan"
+userlogs_4: "Bot Asst Anda Tidak Dapat Mengirim Pesan di Grup Tag Log.\nTambahkan untuk Mendapatkan Tag Log Anda.."
+userlogs_5: "Keluar `{}`"
+
+# admintools
+adm_1: "`Saya tidak tahu siapa dia!`"
+adm_2: "`Hmm.. Sepertinya saya tidak punya hak di sini!`"
+adm_3: "`Sediakan Waktu juga..`"
+pro_1: "`Balas pengguna untuk mempromosikannya!`"
+pro_2: "{} **sekarang menjadi admin di** {} **dengan judul** {}"
+de_1: "`Balas ke pengguna untuk menurunkannya!`"
+de_2: "{} `bukan lagi admin di {}`"
+ban_1: "`Balas ke pengguna atau berikan nama pengguna untuk mencekalnya!`"
+ban_2: " `LoL, saya tidak bisa Mencekal Developer saya 😂`"
+ban_3: "`Saya tidak berhak membanned pengguna.`"
+ban_4: "{} **Telah dibanned oleh** {} **di** `{}`"
+ban_5: "\n**Alasan**: `{}`"
+tban_1: "`Membalas pesan seseorang atau memberikan id-nya...`"
+tban_2: "**Berhasil dibanned** `{}` **dalam** `{}` **untuk** `{}`"
+unban_1: "`Balas ke pengguna atau berikan nama pengguna untuk membatalkan banned!`"
+unban_2: "`Saya tidak berhak membatalkan pemblokiran pengguna.`"
+unban_3: "{} **Telah diunbanned oleh** {} **di** `{}`"
+kick_1: "`Saya tidak berhak menendang pengguna.`"
+kick_2: " `Lol, saya tidak bisa Mengkick Developer saya`😂"
+kick_3: "`Saya tidak bisa menendangnya...`"
+kick_4: "{} **dikick oleh** {} **di** `{}`"
+pin_1: "`Balas pesan untuk menyematkannya!`"
+pinned_1: "Pesan yang Disematkan Tidak Ditemukan!"
+unpin_1: "Balas pesan, atau, gunakan `{}unpin all`"
+listpin_1: "Tidak ada pesan yang disematkan di grup ini!"
+purge_1: "`Balas pesan yang akan dibersihkan.`"
+purgeall_1: "`Balas pesan seseorang untuk dihapus.`"
+purgeall_2: "Berhasil Membersihkan Semua Pesan dari {}"
+
+# akinator
+aki_1: "Game telah Dihentikan...."
+aki_2: "Memulai permainan"
+aki_3: "Waktu habis !"
+
+# antiflood
+antiflood_1: "`Pengaturan Antiflood Dinonaktifkan`"
+antiflood_2: "`Tidak ada flood limit dalam obrolan ini.`"
+antiflood_3: "`Anda telah dibisukan.`"
+antiflood_4: "`Berhasil Memperbarui Setelan Antiflood ke {} dalam grup ini.`"
+antiflood_5: "`Batas Flood limit untuk grup ini adalah {}.`"
+
+# ascii
+ascii_1: "`Mohon Balas ke gambar.`"
+ascii_2: "`Mengconvert ke html...`"
+
+# audiotools
+audiotools_1: "Balas Audio atau video.."
+audiotools_2: "Berhasil Diunduh, Sekarang Mengonversi ke suara"
+audiotools_3: "`Berikan waktu dalam format untuk memangkas`"
+audiotools_4: "`Data Salah`"
+audiotools_5: "`Mencoba Mengunduh...`"
+audiotools_6: "`Durasi pemangkasan salah`"
+audiotools_7: "Audio yang Dipangkas Dari `{}` Ke `{}`"
+audiotools_8: "Balas ke File Video..`"
+audiotools_9: "`Tidak Ada Audio Ditemukan...`"
+audiotools_10: "`Audio yang Diekstrak dari Video...`"
+
+# asstcmd
+asstcmd_1: "`Gunakan Perintah ini dengan Balasan dan kata untuk menggunakan perintah.`"
+asstcmd_2: "`Beri saya perintah yang ingin Anda hapus.`"
+asstcmd_3: "Perintah: `/{}` Berhasil Dihapus."
+asstcmd_4: "Perintah: `/{}` Berhasil Disimpan."
+asstcmd_5: "Tidak ada perintah yang ditemukan"
+asstcmd_6: "**DAFTAR CMD ASSISTANT**\n\n"
+
+# autocorrect
+act_1: "Fitur AUTOCORRECT Berhasil Diaktifkan"
+act_2: "Fitur AUTOCORRECT Berhasil Dinonaktifkan"
 
 # autopic
-autopic_1: "Haisss, beri aku suatu kata .."
-autopic_2: "Tidak ada hasil yang ditemukan untuk `{}`"
-autopic_3: "Mendapatkan koleksi `{}` yang terkait dengan penelusuran Anda !\nMemulai Autopic !"
+autopic_1: "`Berikan keyword untuk dicari...`"
+autopic_2: "Tidak ada Hasil yang ditemukan untuk `{}`"
+autopic_3: "Mendapatkan Koleksi `{}` yang terkait dengan keyword Anda !\nMemulai Autopic !"
+autopic_4: "AUTOPIC tidak digunakan !!"
+autopic_5: "AUTOPIC Berhenti!"
 
 # inline
-inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Pʟᴜɢɪɴs ~ {}**"
-inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Aᴅᴅᴏɴs ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
-Aᴅᴅᴏɴs ~ {}\n\n
-Pᴇʀɢɪ Dᴀɴ Tᴀᴍʙᴀʜᴋᴀɴ `ADDONS` Vᴀʀ Dᴇɴɢᴀɴ Vᴀʟᴜᴇ Tʀᴜᴇ**"
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nᴋᴇᴛɪᴋ `.setredis ADDONS True` ᴅᴀɴ ʀᴇsᴛᴀʀᴛ ᴜɴᴛᴜᴋ ᴍᴇɴᴅᴀᴘᴀᴛᴋᴀɴ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Tᴇʟᴀʜ Dɪᴛᴜᴛᴜᴘ**"
+inline_7: "Ketik `.help {}` untuk mendapatkan daftar perintah."
+inline_8: "Klik tombol di bawah ini untuk memperbarui!"
+inline_9: "Anda Sudah Menggunakan Versi Terbaru"
 
 # tagnotif
-tagnot_1: "{} menandai anda dalam {}\n\n```{}```\n\n[📨Message📨]({})"
-tagnot_2: "{} menandai anda dalam {}\n\n [📨Message📨]({})"
+tagnot_1: "{} menandai anda dalam {}\n\n```{}```\n\n[📨 Pesan 📨]({})"
+tagnot_2: "{} menandai anda dalam {}\n\n [📨 Pesan 📨]({})"
 
 # whisper
 wspr_1: "@{} pesan rahasia buatmu.\nHapus pesanmu setelah membaca.\nAtau pesan selanjutnya tidak bisa diterima."
 wspr_2: "Pesan dihapus!"
+wspr_3: "Tambahkan beberapa id atau username juga"
+wspr_4: "Pengguna {} Tidak Ditemukan\nMohon Cari Lagi"
+wspr_5: "Anda tidak dapat melakukan ini"
 
 # afk
-afk_1: "`Tidak Lagi Afk\n\n
-Karena ~ {}`"
-afk_2: "#AFK\n
-Menyetel AFK mode ke False.\n
-AFK untuk {}`"
-afk_3: "Gua lagi AFK.\n
-Terakhir dilihat {} yang lalu.`\n\n
-**Karena:** `{}`"
-afk_4: "`Gua lagi AFK.\n\n
-Terakhir dilihat {} yang lalu.`"
-afk_5: "`AFK dulu.`\n\n
-**Karena:** `{}`"
-afk_6: "AFK dulu gua."
-afk_7: "Lagi Afk karena {}"
-afk_8: "Lagi AFK."
+afk_1: "**Tidak Lagi AFK**\n**Karena ~** `{}`"
+afk_2: "**#AFK**\n**Menyetel AFK ke mode** `False`\n**AFK untuk** `{}`"
+afk_3: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**\n**Karena:** `{}`"
+afk_4: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**"
+afk_5: "`AFK dulu.`\n\n**Karena:** `{}`"
+afk_6: "Bye Gua AFK dulu."
 
 # bot
-alive_1: "**The Ultroid Userbot...**\n\n
-**{}**\n\n
-┏━━━━━━━━━━━━━━━━━━━━━\n
-┣ **Pemilik** - `{}`\n
-┣ **Versi** - `{}`\n
-┣ **UpTime** - `{}`\n
-┣ **Python** - `{}`\n
-┣ **Telethon** - `{}`\n
-┣ **Branch** - `{}`\n
-┗━━━━━━━━━━━━━━━━━━━━━"
+bot_1: "Hey, I am alive."
+bot_2: "Stats"
+bot_3: "Repo"
+bot_4: "Support"
+bot_5: "• `Restarting...`"
+alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Pemilik** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
-usage: "**⚙️ Dyno Usage ⚙️**:\n\n
- -> `Pemakaian Dyno Untuk`  **{}**:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
- -> `Sisa kuota jam dyno bulan ini`:\n
-     •  `{}`**h**  `{}`**m**
-**|**  [`{}`**%**]\n\n
-**Total Ruang Disk: {}\n\n**
-**Terpakai: {}  Kosong: {}\n\n**
-**📊Penggunaan Data📊\n\nUpload: {}\nDown: {}\n\n**
-**CPU: {}%\nRAM: {}%\nDISK: {}%**"
+usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+usage_simple: "**Total Ruang Disk:** `{}`\n**Terpakai:** `{}`\n**Kosong:** `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Sedang Mematikan bot...`"
+
+# blacklist
+blk_1: "`Berikan kata blacklist untuk ditambahkan..`"
+blk_2: "Berhasil: `{}` Memasukan Daftar Kata Terlarang di sini."
+blk_3: "`Berikan kata untuk dihapus dari Kata Terlarang..`"
+blk_4: "Berhasil Menghapus `{}` dari Kata Terlarang."
+blk_5: "Daftar Kata Terlarang Yang Ditemukan Dalam Obrolan Ini Adalah :\n\n"
+blk_6: "Tidak Ada Daftar Kata Terlarang Yang Ditemukan Di Sini"
 
 # broadcast
 bd_1: "`Menambahkan ke database...`"
@@ -90,32 +173,69 @@ bd_3: "**Berhasil.**\nChats sudah ada dalam Database: {}\nBaru ditambahkan: {}"
 bd_4: "Channels ditambahkan!"
 bd_5: "`Menambahkan ke database!`"
 bd_6: "`Channel sudah ada dalam database!`"
+bd_7: "Dihapus dari database"
+bd_8: "`Menghapus...`"
+bd_9: "Channel sudah dihapus dari database."
+
+# calculator
+calc_1: "• Ultroid Inline Calculator •"
+calc_2: "Buka Kalkulator Lagi"
+
+# channel hacks
+cha_1: "Channel yang diberikan tidak valid"
+cha_2: "Sumber Channel berhasil ditambahkan"
+cha_3: "Sumber Channel sudah ditambahkan"
+cha_4: "Database sumber Channel dihapus."
+cha_5: "Sumber Channel dihapus dari database"
+cha_6: "Sumber Channel sudah dihapus dari database."
+cha_7: "Channel tujuan di database:"
+cha_8: "Sumber Channel dalam database:"
 
 # carbon
-carbon_1: "Memproses..."
-carbon_2: "Carbonised oleh [{}](tg://user?id={})"
+carbon_1: "Carbonised oleh [{}](tg://user?id={})"
+carbon_2: "`Balas Pesan atau file yang dapat dibaca..`"
+carbon_3: "`Berikan Warna Kustom untuk Membuat Carbon...`"
+
+# chat_bot
+chab_1: "Balas ke pesan pengguna atau beri saya id/username untuk menambahkan ChatBot AI!"
+chab_2: "`Tidak ada pengguna yang menambahkan AI.`"
+chab_3: "**Total Daftar Pengguna yang Diaktifkan AI Dalam Grup Ini :**\n\n"
 
 # chats
-chats_1: "`Memproses...`"
-chats_2: "`Tidak bisa menghapus chat ini zzzz`"
-chats_3: "`Gua bukan admin`"
-chats_4: "#Terhapus\nTerhapus {}"
-chats_5: "Anda [{}]({}) Grup telah dibuat oleh boss!"
-chats_6: "Join @TeamUltroid"
+chats_1: "`Tidak dapat menghapus obrolan ini`"
+chats_2: "`Saya bukan admin`"
+chats_3: "**#Dihapus**\nMenghapus {}"
+chats_4: "Berhasil Membuat [{}]({}) Grup Anda!"
+chats_5: "Join @TeamUltroid"
+chats_6: "Grup/Channel {} Anda Telah Menjadi Bos!"
+
+# clean action
+clan_1: "Menambahkan Pengaturan Tindakan Bersih Untuk Obrolan ini"
+clan_2: "Pengaturan Tindakan Bersih yang Dihapus Untuk Obrolan ini"
+clan_3: "`ID Tidak Valid`"
+clan_4: "`Tidak Ada Obrolan Yang Ditambah`"
 
 # converter
-cvt_1: "Balas ke media/Dokumen apapun."
-cvt_2: "Beri Nama dan ekstensi file"
-cvt_3: "`Memproses...`"
-cvt_4: "Balas ke media."
+cvt_1: "`Balas ke media/Dokumen apa pun.`"
+cvt_2: "Berikan Nama dan Ekstensi File"
+cvt_3: "`Balas ke media..`"
+cvt_4: "`Balas ke img atau file dengan thumbnail.`"
+cvt_5: "File yang dibalas tidak memiliki thumbnail.`"
+cvt_6: "Menambahkan [Ini]({}) Sebagai Gambar Kecil Khusus Anda"
+cvt_7: "`Membalas ke file yang dapat dibaca`"
+cvt_8: "`Bukan File yang Dapat Dibaca.`"
+
+# eventsofday
+eod_1: "🎊 *Acara Hari Ini**\n\n"
+eod_2: "• **Acara untuk {}/2021**\n\n"
 
 # core
 core_1: "`Modul ditemukan`"
-core_2: "{}.py gunakan .paste untuk menempel di neko dan raw.."
+core_2: "{}.py gunakan `.paste` untuk menempel di neko dan raw.."
 core_3: "`Cari lagi..?`"
 core_4: "Modul {} ditemukan"
-core_5: "{}.py gunakan .paste untuk menempel di neko dan raw.."
-core_6: "Modul {}.py tidak ada"
+core_5: "{}.py gunakan `.paste` untuk menempel di neko dan raw.."
+core_6: "Tidak dapat Menemukan Modul {}.py"
 core_7: "Tidak Ada Modul Seperti Itu"
 core_8: "Ga ada modul yang namanya {}.py"
 core_9: "`Beri tau nama plugin yang ingin Anda unload`"
@@ -128,6 +248,22 @@ core_15: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bɪsᴀ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ 
 core_16: "`Beri tau nama plugin yang ingin Anda load`"
 core_17: "**Bᴇʀʜᴀsɪʟ Dɪ Lᴏᴀᴅ** `{}`"
 core_18: "**Tidak dapat diload** `{}` **karena kesalahan berikut.**\n`{}`"
+
+# devtools
+devs_1: "`Tidak ada cmd yang diberikan`"
+devs_2: "`Berikan beberapa python cmd`"
+devs_3: "`Berikan Beberapa Kode C++..`"
+
+# dm
+dm_1: "`Berikan username atau id Obrolan ke mana harus mengirim.`"
+dm_2: "`Berikan teks untuk mengirim atau membalas pesan`"
+dm_3: "**⚜️Berhasil Mengirim Pesan!⚜️**"
+dm_4: "ERROR: {}\nBaca Cara Menggunakan Ketik `{}help dm`"
+dm_5: "`Silahkan Check di Private.`"
+dm_6: "`Tidak ditemukan pesan untuk dikirim :(`"
+
+# fake action
+fka_1: "Memulai Fake Action Untuk {} detik."
 
 # fedutils
 sf_1: "Memulai Mass-FedBan..."
@@ -151,6 +287,32 @@ sf_18: "Daftar feds {} telah dibanned.\n\nDikumpulkan menggunakan Ultroid."
 sf_19: "**Kesalahan**\n `Unblock` @MissRose_Bot `dan coba lagi!"
 sf_20: "`Mengekstrak informasi...`"
 sf_21: "\n\nFedInfo diekstrak oleh Ultroid"
+sf_22: "Tidak ada pengguna yang ditunjuk."
+sf_23: "**Error**\n**Buka Blokir** @MissRose_Bot **dan coba lagi!**"
+
+# filter
+flr_1: "`Masukan keyword perintah ini untuk ditetapkan sebagai filter dan balas...`"
+flr_2: "Daftar Filter Yang Aktif Disini adalah\n\n"
+flr_3: "`Berikan filter untuk dihapus..`"
+flr_4: "**Berhasil Menyimpan Filter** `{}`"
+flr_5: "**Berhasil Menghapus Filter** `{}`"
+flr_6: "Tidak Ada Filter Apapun Disini"
+
+# fontgen
+fgn_1: "**Font yang tersedia**\n\n"
+
+# force subscribe
+fsub_1: "Berikan Channel tempat Anda ingin Pengguna Bergabung!"
+fsub_2: "Berikan Username atau ID Channel yang Benar"
+fsub_3: "ForceSub tidak Aktif dalam Obrolan ini !"
+fsub_4: "Bergabung dengan Channel"
+fsub_5: "Bunyikan Saya"
+fsub_6: "Silakan Gabung Channel!\nKemudian Klik Tombol Ini!"
+fsub_7: "Pesan Ini Bukan untuk Anda"
+fsub_8: "Terima Kasih Telah Bergabung!"
+
+# extra
+ex_1: "`Balas pesan...`"
 
 # gdrive
 gdrive_1: "`Anda telah memberi otorisasi dengan Google Drive`"
@@ -162,33 +324,162 @@ gdrive_5: "`Berhasil!\nAnda siap untuk menggunakan Google Drive dengan Ultroid U
 gdrive_6: "`Pergi ke `{}` dan kirim ``/auth.`"
 gdrive_7: "**File Berhasil Diupload kedalam G-Drive :**\n\n[{}]({})"
 
+# get addons
+gas_1: "Harap berikan link raw!"
+
+# greetings
+grt_1: "`Berhasil Menyimpan Catatan selamat datang`"
+grt_2: "Silakan gunakan ini dalam grup dan bukan PM!"
+grt_3: "`Balas pesan yang ingin Anda atur sebagai selamat datang`"
+grt_4: "`Tidak ada sambutan yang ditetapkan!`"
+grt_5: "`Berhasil Menghapus Catatan Selamat Datang`"
+grt_6: "`Tidak ada perpisahan yang ditetapkan!`"
+grt_7: "`Balas pesan yang ingin Anda atur sebagai selamat tinggal`"
+
+# mediainfo
+mdi_1: "Info Lebih Jelas"
+
+# nightmode
+nightm_1: "Berikan Waktu dalam format yang benar"
+nightm_2: "Waktu berhasil disetel"
+nightm_3: "Berhasil Menambahkan Obrolan Saat Ini Ke Mode Malam"
+nightm_4: "Berhasil Menghapus Obrolan Saat Ini dari Mode Malam"
+nightm_5: "Ada yang Salah"
+
 # pmpermit
 pmperm_1: "Harap tunggu saya merespons atau Anda akan diblokir dan dilaporkan sebagai spam!!"
 pmperm_2: "Anda telah melakukan spamming pada pesan Boss saya."
 pmperm_3: "Balas pesan seseorang atau coba perintah ini secara pribadi."
+
+# schedule_msg
+schdl_1: "`Berhasil Membuat Pesan terjadwal `"
+schdl_2: "`Format Salah`"
+
+# searches
+srch_1: "`Kamu Mencari apa? Berikan saya username!!`"
+srch_2: "`Tidak ada pengguna yang ditemukan...`"
+srch_3: "`Lagu tidak ditemukan...`"
+
+# snip
+snip_1: "Berikan kata untuk ditetapkan sebagai snip dan balas pesan."
+snip_2: "Berikan kata untuk dihapus..."
+snip_3: "Tidak Ada Snips Yang disimpan Di Sini."
+
+# specialtools
+spcltool_1: "Balas Audio atau video"
+spcltool_2: "`Selesai.. Sekarang balas video yang ingin Anda tambahkan Audio ini`"
+spcltool_3: "Balas ke video"
+spcltool_4: "`Pertama balas audio dengan .raw`"
+spcltool_5: "Berhasil Diunduh, Sekarang Menambahkan Audio Anda ke Video"
+spcltool_6: "`Masukkan input dalam format dd/mm/yyyy`"
+spcltool_7: "`Selamat Ulang Tahun Untuk Kamu 🎉🎊`"
+spcltool_8: "Berikan sesuatu untuk dicari.."
+spcltool_9: "Tidak Menemukan Apa-apa"
+
+# sudo
+sudo_1: "`Balas pesan atau tambahkan id/username.`"
+sudo_2: "Anda tidak dapat menambahkan diri sendiri sebagai Pengguna Sudo..."
+sudo_3: "`Tidak ada Pengguna SUDO yang ditetapkan...`"
+
+# unsplash
+unspl_1: "Tidak ada hasil yang ditemukan!"
 
 # updater
 upd_1: "`Memeriksa pembaruan, harap tunggu....`"
 upd_2: "`Oops.. Updater tidak dapat melanjutkan karena beberapa masalah.`\n\n**LOGTRACE:**\n"
 upd_3: "**UPDATE baru tersedia untuk [[{}]]({}/tree/{}):\n\nPERUBAHAN:**\n\n{}"
 upd_4: "`Perubahan log terlalu besar, lihat file untuk melihatnya.`"
-upd_5: "Gunakan `{}update now` untuk update bot."
-upd_6: "{}\n\nGunakan `{}update now` untuk update bot."
-upd_7: "\n`BOT Anda sudah`  **paling-terbaru**  `dengan`  **[[{}]]({}/tree/{})**\n"
+upd_5: "Klik tombol di bawah ini untuk memperbarui."
+upd_6: "\n**BOT Anda sudah paling-terbaru dengan [[{}]]({}/tree/{})**\n"
+upd_7: "`Pembaruan Lembut Tapi Cepat...`"
+
 
 # upload download
 udl_1: "`Balas ke file/media yang ingin Anda download...`"
 udl_2: "Download Berhasil..\nTo\n`{}`\nin `{}`"
 udl_3: "`Berikan tempat penyimpanan khusus ke file`"
+udl_4: "`Mencoba mengunduh...`"
+udl_5: "`Anda lupa memberikan link :(`"
+udl_6: "`Direktori Ini Kosong.`"
 
 # words
-wrd_1: "**Kata** - `{}`\n\n**Arti** - \n"
-wrd_2: "**Kata** - `{}`\n\n**Sinonim** - \n"
-wrd_3: "**Kata** - `{}`\n\n**Antonim** - \n"
+wrd_1: "• **Kata :** `{}`\n• **Arti :** __{}__\n\n• **Contoh :** __{}__"
+wrd_2: "• **Kata** - `{}`\n\n• **Sinonim** - \n"
+wrd_3: "• **Kata** - `{}`\n\n• **Antonim** - \n"
+wrd_4: "`Berikan Kata untuk Menemukan Maknanya..`"
+wrd_5: "Sinonim"
+wrd_6: "Antonim"
+wrd_7: "Tidak ada sinonim yang ditemukan!!\n\n`{}`"
+wrd_8: "Tidak ada Antonim yang ditemukan!!\n\n`{}`"
+
+# profanitY
+prof_1: "`Menambahkan Obrolan Ini untuk Penyaringan Kata-kata Tidak Senonoh!`"
+prof_2: "`Menghapus Obrolan Ini dari Pemfilteran Kata-Kata Tidak Senonoh!`"
+
+# notes
+notes_1: "`Use this Command with Reply and word to use a note.`"
+notes_2: "Done Note : `#{}` saved."
+notes_3: "`Give me the note handler which you want to remove.`"
+notes_4: "Notes Found In This Chats Are\n\n"
+notes_5: "No Notes Found Here"
+
+notes_1: "`Gunakan Perintah ini dengan Balasan dan kata untuk menggunakan catatan.`"
+notes_2: "Berhasil Menyimpan Catatan `#{}`"
+notes_3: "`Beri saya handler catatan yang ingin Anda hapus.`"
+notes_4: "Catatan Yang Ditemukan Dalam Obrolan Ini\n\n"
+notes_5: "Tidak Ada Catatan Yang Ditemukan Di Sini"
+
+# stickertools
+sts_1: "`Anda belum menulis artikel apa pun, Waifu akan pergi.`"
+sts_2: "`Balas ke Stiker Animasi...`"
+sts_3: "**Silakan pilih dari {} **"
+sts_4: "`Balas ke Stiker Non Animasi.`"
+sts_5: "**Paket Sticker Berhasil Dicuri**.\n**Sticker Pack:** [Link]({})"
+sts_6: "`Membalas pesan/media...`"
+sts_7: "**Stiker ditambahkan dalam Paket Berbeda !\nPaket Ini Baru dibuat!\nPaket Anda dapat ditemukan** [disini](t.me/addstickers/{})"
+sts_8: "`Gagal menambahkan stiker, gunakan bot` @Stickers `untuk menambahkan stiker secara manual.`"
+sts_9: "`Ooo Animated Sticker 👀...`"
+sts_10: "`Balas ke media apa pun...`"
+sts_11: "Colong Sticker dulu yee kan..."
+sts_12: "**Kanged!**\n**Emoji :** {}\n**Sticker Pack** [disini](t.me/addstickers/{})"
+sts_13: "`Beralih ke Sticker Pack {} karena ruang yang tidak mencukupi`"
+
+# whichsong
+whs_1: "<• Balas ke File Audio •>"
+whs_2: "`Mencoba mengidentifikasi lagu....`"
+whs_3: "Gagal Mengidentifikasi lagu :("
+whs_4: "**Lagu Ditemukan!**\nNama: __{}__"
+
+# webupload
+wbl_1:  "`Berikan Nama File..`"
+
+# writer
+writer_1: "`Berikan Beberapa Teks Juga`"
+
+# webshot
+wbs_1: "`Tolong berikan URL!`"
+wbs_2: "Invalid URL!"
+wbs_3: "**Berhasil Mengambil WebShot**\n**URL**: {}"
+
+# youtube
+youtube_1: "Beri saya URL (youtube) untuk mengunduh audio!"
+youtube_2: "`Berikan Link Audio Langsung Untuk Mengunduh`"
+youtube_3: "Beri saya URL (youtube) untuk mengunduh video!"
+youtube_4: "`Berikan Tautan Video Langsung Untuk Mengunduh`"
+youtube_5: "Beri saya keyword penelusuran (youtube) untuk mengunduh audio!"
+youtube_6: "`Mengunduh lagu audio...`"
+youtube_7: "Beri saya keyword penelusuran (youtube) untuk mengunduh video!"
+youtube_8: "`Mengunduh video...`"
+
+# ziptools
+zip_1: "Balas ke media/Dokumen apa pun."
+zip_2: "Pertama tambahkan All Files Via `{}addzip` lalu doZip untuk zip semua file sekaligus."
+zip_3: "`Hanya Balas ke file zip saja`"
 
 # ---------------------------------------------------#
 
 # assisant
 ast_1: "Pilih API yang ingin Anda setel."
 ast_2: "**remove.bg API**\nMasukkan API key Anda dari remove.bg.\n\nGunakan /cancel untuk membatalkan."
-ast_3: "Woii {}. Silakan telusuri opsi"
+ast_3: "Haloo {}. Silakan telusuri opsi"
+

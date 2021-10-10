@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -38,7 +37,9 @@
 import math
 import time
 
-from . import *
+from pyUltroid.functions.admins import ban_time
+
+from . import asyncio, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -55,6 +56,6 @@ async def _(e):
         t = math.ceil((await ban_time(e, t)) - time.time())
     else:
         t = 60
-    await eor(e, f"Starting Fake Action For {t} sec.", time=5)
+    await eor(e, get_string("fka_1").format(str(t)), time=5)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)

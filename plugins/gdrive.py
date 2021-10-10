@@ -4,8 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-
 """
 ✘ Commands Available
 
@@ -27,12 +25,21 @@
     If added then all uploaded files will be placed here.
 """
 
-
 import os
 import time
 from datetime import datetime
 
-from . import *
+from pyUltroid.functions.gdrive import (
+    DoTeskWithDir,
+    authorize,
+    create_directory,
+    file_ops,
+    gsearch,
+    list_files,
+    upload_file,
+)
+
+from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -66,7 +73,7 @@ async def _(event):
                 reply_message.media.document,
                 mone,
                 dddd,
-                "Downloading...",
+                get_string("com_5"),
             )
             filename = downloaded_file_name.name
         except TypeError:
@@ -141,7 +148,7 @@ async def sch(event):
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eor(mone, get_string("gdrive_6").format(asst.me.username), time=5)
+        return await eor(event, get_string("gdrive_6").format(asst.me.username), time=5)
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(input_str):
         return await eor(event, f"Directory {input_str} does not seem to exist", time=5)

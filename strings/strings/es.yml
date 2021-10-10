@@ -41,8 +41,6 @@ afk_3: "Estoy AFK\nVisto por ultima vez {}`\n**Razón:** `{}`"
 afk_4: "Ultima vez visto {}.`"
 afk_5: "`Yendo AFK.`\n\n**Razón:** `{}`"
 afk_6: "Me voy AFK."
-afk_7: "Actualmente AFK con el motivo de: {}"
-afk_8: "Actualmente AFK."
 
 #bot
 alive_1: "**El Userbot Ultroid...**\n\n **{}**\n\n ┏━━━━━━━━━━━━━━━━━━━━━\n ┣ **Dueño** - `{}`\n ┣ **Versión** - `{}`\n ┣ **Tiempo de actividad** - `{}`\n ┣ **Python** - `{}`\n ┣ **Telethon** - `{}`\n ┣ **Rama** - `{}`\n ┗━━━━━━━━━━━━━━━━━━━━━"
@@ -157,3 +155,4 @@ wrd_3: "**Palabra** - `{}`\n\n**Antonimos** -\n"
 ast_1: "Elija qué API desea configurar."
 ast_2: "**remove.bg API**\nIngrese su clave API de remove.bg.\nUsa /cancel para terminar la operación."
 ast_3: "Hola {}. Porfavor navegue por las opciones"
+

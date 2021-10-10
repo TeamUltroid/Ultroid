@@ -16,8 +16,9 @@
 • `{i}listsudo`
     List all sudo users.
 """
+from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 
-from . import *
+from . import Redis, eor, get_display_name, get_user_id, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
@@ -38,10 +39,10 @@ async def _(ult):
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
-        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
+        return await eor(ult, get_string("sudo_1"), time=5)
 
     if id == ultroid_bot.me.id:
-        mmm = "You cant add yourself as Sudo User..."
+        mmm = get_string("sudo_2")
     elif is_sudo(id):
         if name != "":
             mmm = f"[{name}](tg://user?id={id}) `is already a SUDO User ...`"
@@ -75,7 +76,7 @@ async def _(ult):
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
-        return await eor(ult, "`Reply to a msg or add it's id/username.`", time=5)
+        return await eor(ult, get_string("sudo_1"), time=5)
     if not is_sudo(id):
         if name != "":
             mmm = f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
@@ -97,7 +98,7 @@ async def _(ult):
 async def _(ult):
     sudos = Redis("SUDOS")
     if sudos == "" or sudos is None:
-        return await eor(ult, "`No SUDO User was assigned ...`", time=5)
+        return await eor(ult, get_string("sudo_3"), time=5)
     sumos = sudos.split(" ")
     msg = ""
     for i in sumos:

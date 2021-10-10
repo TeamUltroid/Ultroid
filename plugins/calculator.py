@@ -12,7 +12,7 @@
 """
 import re
 
-from . import *
+from . import Button, asst, callback, get_string, in_pattern, udB, ultroid_cmd
 
 CALC = {}
 
@@ -47,21 +47,19 @@ lst.append([Button.inline("=", data="calc=")])
 async def icalc(e):
     udB.delete("calc")
     if e.client._bot:
-        return await e.reply("• Ultroid Inline Calculator •", buttons=lst)
+        return await e.reply(get_string("calc_1"), buttons=lst)
     results = await e.client.inline_query(asst.me.username, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
     await e.delete()
 
 
-@in_pattern("calc")
-@in_owner
+@in_pattern("calc", owner=True)
 async def _(e):
-    calc = e.builder.article("Calc", text="• Ultroid Inline Calculator •", buttons=lst)
+    calc = e.builder.article("Calc", text=get_string("calc_1"), buttons=lst)
     await e.answer([calc])
 
 
-@callback(re.compile("calc(.*)"))
-@owner
+@callback(re.compile("calc(.*)"), owner=True)
 async def _(e):
     x = (e.data_match.group(1)).decode()
     user = e.query.user_id
@@ -70,8 +68,8 @@ async def _(e):
         if CALC.get(user):
             CALC.pop(user)
         await e.edit(
-            "• Ultroid Inline Calculator •",
-            buttons=[Button.inline("Open Calculator Again", data="recalc")],
+            get_string("calc_1"),
+            buttons=[Button.inline(get_string("calc_2"), data="recalc")],
         )
     elif x == "C":
         if CALC.get(user):
@@ -113,7 +111,7 @@ async def _(e):
                 await e.answer(f"Answer : {num}", cache_time=0, alert=True)
             except BaseException:
                 CALC.pop(user)
-                await e.answer("Error", cache_time=0, alert=True)
+                await e.answer(get_string("sf_8"), cache_time=0, alert=True)
         await e.answer("None")
     else:
         if CALC.get(user):
@@ -125,8 +123,7 @@ async def _(e):
         await e.answer(str(x))
 
 
-@callback("recalc")
-@owner
+@callback("recalc", owner=True)
 async def _(e):
     m = [
         "AC",
@@ -153,4 +150,4 @@ async def _(e):
     tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
     lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
     lst.append([Button.inline("=", data="calc=")])
-    await e.edit("Noice Inline Calculator", buttons=lst)
+    await e.edit(get_string("calc_1"), buttons=lst)

@@ -20,7 +20,7 @@
 """
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 
-from . import *
+from . import eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -56,7 +56,7 @@ async def uri_poll(e):
             quizo = True
     if len(option) <= 1:
         return await eor(e, "`Options Should be More than 1..`", time=5)
-    m = await eor(e, "`Processing... `")
+    m = await eor(e, get_string("com_1"))
     OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
     await e.client.send_file(
         e.chat_id,

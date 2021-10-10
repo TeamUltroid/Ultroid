@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -19,13 +18,25 @@
     g - megagroup/supergroup
     b - small group
     c - channel
-"""
 
+• `{i}setgpic <reply to Photo><chat username>`
+    Set Profile photo of Group.
+
+• `{i}delgpic <chat username -optional>`
+    Delete Profile photo of Group.
+
+• `{i}unbanall`
+    Unban all Members of a group.
+
+• `{i}rmusers`
+    Remove users specifically.
+"""
 
 from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
     DeleteChannelRequest,
+    EditPhotoRequest,
     GetFullChannelRequest,
     UpdateUsernameRequest,
 )
@@ -35,8 +46,27 @@ from telethon.tl.functions.messages import (
     ExportChatInviteRequest,
     GetFullChatRequest,
 )
+from telethon.tl.types import (
+    ChannelParticipantsKicked,
+    UserStatusEmpty,
+    UserStatusLastMonth,
+    UserStatusLastWeek,
+    UserStatusOffline,
+    UserStatusOnline,
+    UserStatusRecently,
+)
 
-from . import *
+from . import (
+    HNDLR,
+    eor,
+    get_string,
+    get_user_id,
+    mediainfo,
+    os,
+    types,
+    udB,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(
@@ -44,7 +74,7 @@ from . import *
     groups_only=True,
 )
 async def _(e):
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     try:
         match = e.text.split(" ", maxsplit=1)[1]
         chat = "-100" + str(await get_user_id(match))
@@ -53,11 +83,11 @@ async def _(e):
     try:
         await e.client(DeleteChannelRequest(chat))
     except TypeError:
-        return await eor(xx, "`Cant delete this chat`", time=10)
+        return await eor(xx, get_string("chats_1"), time=10)
     except no_admin:
-        return await eor(xx, "`I m not an admin`", time=10)
+        return await eor(xx, get_string("chats_2"), time=10)
     await e.client.send_message(
-        int(udB.get("LOG_CHANNEL")), f"#Deleted\nDeleted {e.chat_id}"
+        int(udB.get("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
 
@@ -83,7 +113,7 @@ async def _(e):
                 ExportChatInviteRequest(e.chat_id),
             )
         except no_admin:
-            return await eor(e, "`I m not an admin`", time=10)
+            return await eor(e, get_string("chats_2"), time=10)
         link = r.link
     await eor(e, f"Link:- {link}")
 
@@ -99,7 +129,7 @@ async def _(e):
         group_ = group_name.split(" ; ", maxsplit=1)
         group_name = group_[0]
         username = group_[1]
-    xx = await eor(e, "`Processing...`")
+    xx = await eor(e, get_string("com_1"))
     if type_of_group == "b":
         try:
             r = await e.client(
@@ -121,7 +151,7 @@ async def _(e):
                 ),
             )
             await xx.edit(
-                f"Your [{group_name}]({result.link}) Group Made Boss!",
+                get_string("chats_4").format(group_name, result.link),
                 link_preview=False,
             )
         except Exception as ex:
@@ -131,7 +161,7 @@ async def _(e):
             r = await e.client(
                 CreateChannelRequest(
                     title=group_name,
-                    about="Join @TeamUltroid",
+                    about=get_string("chats_5"),
                     megagroup=type_of_group != "c",
                 )
             )
@@ -149,8 +179,194 @@ async def _(e):
                     )
                 ).link
             await xx.edit(
-                f"Your [{group_name}]({result}) Group/Channel Has been made Boss!",
+                get_string("chats_6").format(f"[{group_name}]({result})"),
                 link_preview=False,
             )
         except Exception as ex:
             await xx.edit(str(ex))
+
+
+# ---------------------------------------------------------------- #
+
+
+@ultroid_cmd(
+    pattern="setgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
+)
+async def _(ult):
+    if not ult.is_reply:
+        return await eor(ult, "`Reply to a Media..`", time=5)
+    match = ult.pattern_match.group(1)
+    if not ult.client._bot and match:
+        try:
+            chat = await get_user_id(match)
+        except Exception as ok:
+            return await eor(ult, str(ok))
+    else:
+        chat = ult.chat_id
+    reply_message = await ult.get_reply_message()
+    if reply_message.media:
+        replfile = await reply_message.download_media()
+    else:
+        return await eor(ult, "Reply to a Photo or Video..")
+    file = await ult.client.upload_file(replfile)
+    mediain = mediainfo(reply_message.media)
+    try:
+        if "pic" not in mediain:
+            file = types.InputChatUploadedPhoto(video=file)
+        await ult.client(EditPhotoRequest(chat, file))
+        await eor(ult, "`Group Photo has Successfully Changed !`", time=5)
+    except Exception as ex:
+        await eor(ult, "Error occured.\n`{}`".format(str(ex)), time=5)
+    os.remove(replfile)
+
+
+@ultroid_cmd(
+    pattern="delgpic ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    type=["official", "manager"],
+)
+async def _(ult):
+    match = ult.pattern_match.group(1)
+    chat = ult.chat_id
+    if not ult.client._bot and match:
+        chat = match
+    try:
+        await ult.client(EditPhotoRequest(chat, types.InputChatPhotoEmpty()))
+        text = "`Removed Chat Photo..`"
+    except Exception as E:
+        text = str(E)
+    return await eor(ult, text, time=5)
+
+
+@ultroid_cmd(
+    pattern="unbanall$",
+    groups_only=True,
+)
+async def _(event):
+    xx = await eor(event, "Searching Participant Lists.")
+    p = 0
+    title = (await event.get_chat()).title
+    async for i in event.client.iter_participants(
+        event.chat_id,
+        filter=ChannelParticipantsKicked,
+        aggressive=True,
+    ):
+        try:
+            await event.client.edit_permissions(event.chat_id, i, view_messages=True)
+            p += 1
+        except BaseException:
+            pass
+    await eor(xx, f"{title}: {p} unbanned", time=5)
+
+
+@ultroid_cmd(
+    pattern="rmusers ?(.*)",
+    groups_only=True,
+    admins_only=True,
+    fullsudo=True,
+)
+async def _(event):
+    xx = await eor(event, get_string("com_1"))
+    input_str = event.pattern_match.group(1)
+    p, a, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    async for i in event.client.iter_participants(event.chat_id):
+        p += 1  # Total Count
+        if isinstance(i.status, UserStatusEmpty):
+            if "empty" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                y += 1
+        if isinstance(i.status, UserStatusLastMonth):
+            if "month" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                m += 1
+        if isinstance(i.status, UserStatusLastWeek):
+            if "week" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                w += 1
+        if isinstance(i.status, UserStatusOffline):
+            if "offline" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                o += 1
+        if isinstance(i.status, UserStatusOnline):
+            if "online" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                q += 1
+        if isinstance(i.status, UserStatusRecently):
+            if "recently" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                r += 1
+        if i.bot:
+            if "bot" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                b += 1
+        elif i.deleted:
+            if "deleted" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                d += 1
+        elif i.status is None:
+            if "none" in input_str:
+                try:
+                    await event.client.kick_participant(event.chat_id, i)
+                    c += 1
+                except BaseException:
+                    pass
+            else:
+                n += 1
+    if input_str:
+        required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
+    else:
+        required_string = f"**>> Total** `{p}` **users**\n\n"
+    required_string += f"  `{HNDLR}rmusers deleted`  **••**  `{d}`\n"
+    required_string += f"  `{HNDLR}rmusers empty`  **••**  `{y}`\n"
+    required_string += f"  `{HNDLR}rmusers month`  **••**  `{m}`\n"
+    required_string += f"  `{HNDLR}rmusers week`  **••**  `{w}`\n"
+    required_string += f"  `{HNDLR}rmusers offline`  **••**  `{o}`\n"
+    required_string += f"  `{HNDLR}rmusers online`  **••**  `{q}`\n"
+    required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
+    required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
+    required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`"
+    await eor(xx, required_string)

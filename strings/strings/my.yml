@@ -53,8 +53,6 @@ Terakhir dilihat {} lepas.`"
 afk_5: "`Saya akan pergi AFK.`\n\n
 **Sebab:** `{}`"
 afk_6: "Saya akan pergi AFK."
-afk_7: "Sedang AFK dengan sebab {}"
-afk_8: "Sedang AFK."
 
 # bot
 alive_1: "**Userbot Ultroid...**\n\n

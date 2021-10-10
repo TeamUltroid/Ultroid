@@ -7,11 +7,9 @@
 """
 ✘ Commands Available -
 
-• `{i}kickme`
-    Leaves the group in which it is used.
+• `{i}kickme` : Leaves the group.
 
-• `{i}date`
-    Show Calender.
+• `{i}date` : Show Calender.
 
 • `{i}chatinfo`
     Get full info about the group/chat.
@@ -19,8 +17,7 @@
 • `{i}listreserved`
     List all usernames (channels/groups) you own.
 
-• `{i}stats`
-    See your profile stats.
+• `{i}stats` : See your profile stats.
 
 • `{i}paste`
     Include long text / Reply to text file.
@@ -43,17 +40,14 @@
 • `{i}suggest <reply to message> or <poll title>`
     Create a Yes/No poll for the replied suggestion.
 
-• `{i}ipinfo <ip address>`
-    Get info about that IP address.
+• `{i}ipinfo <ipAddress>` : Get info about that IP address.
 
 • `{i}cpy <reply to message>`
    Copy the replied message, with formatting. Expires in 24hrs.
-
 • `{i}pst`
    Paste the copied message, with formatting.
 
-• `{i}thumb <reply to file>`
-   Download the thumbnail of the replied file.
+• `{i}thumb <reply file>` : Download the thumbnail of the replied file.
 """
 import calendar
 import html
@@ -62,9 +56,8 @@ import os
 import time
 from datetime import datetime as dt
 
-import requests
-from pyUltroid.functions.gban_mute_db import *
-from telegraph import Telegraph
+from pyUltroid.dB.gban_mute_db import is_gbanned
+from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
@@ -79,19 +72,31 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
 from telethon.utils import get_input_location
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    Image,
+    ReTrieveFile,
+    Telegraph,
+    asst,
+    async_searcher,
+    check_filename,
+    eod,
+    eor,
+    fetch_info,
+    get_full_user,
+    get_paste,
+    get_string,
+    inline_mention,
+    mediainfo,
+    udB,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 # =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
-
-# Telegraph Things
-telegraph = Telegraph()
-try:
-    telegraph.create_account(short_name=OWNER_NAME)
-
-except BaseException:
-    telegraph.create_account(short_name="Ultroid")
 
 _copied_msg = {}
 
@@ -120,8 +125,7 @@ async def date(event):
 async def info(event):
     ok = await eor(event, get_string("com_1"))
     try:
-        chat = await get_chatinfo(event)
-        caption = await fetch_info(chat, event)
+        caption = await fetch_info(event)
         await ok.edit(caption, parse_mode="html")
     except Exception as e:
         LOGS.info(e)
@@ -274,7 +278,7 @@ async def _(event):
     type=["official", "manager"],
 )
 async def _(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     replied_user, error_i_a = await get_full_user(event)
     if replied_user is None:
         await xx.edit("Please reply to a user.\nError - " + str(error_i_a))
@@ -404,33 +408,30 @@ async def rmbg(event):
     dl = await event.client.download_media(reply.media)
     if not dl.endswith(("webp", "jpg", "png", "jpeg")):
         os.remove(dl)
-        return await eor(event, "`Unsupported Media`")
+        return await eor(event, get_string("com_4"))
     xx = await eor(event, "`Sending to remove.bg`")
-    out = ReTrieveFile(dl)
+    dn, out = await ReTrieveFile(dl)
     os.remove(dl)
-    contentType = out.headers.get("content-type")
-    rmbgp = "ult.png"
-    if "image" in contentType:
-        with open(rmbgp, "wb") as rmbg:
-            rmbg.write(out.content)
-    else:
-        error = out.json()
-        await xx.edit(
-            f"**Error ~** `{error['errors'][0]['title']}`,\n`{error['errors'][0]['detail']}`",
+    if not dn:
+        dr = out["errors"][0]
+        de = dr["detail"] if dr.get("detail") else ""
+        return await xx.edit(
+            f"**ERROR ~** `{dr['title']}`,\n`{de}`",
         )
-    zz = Image.open(rmbgp)
+    zz = Image.open(out)
     if zz.mode != "RGB":
         zz.convert("RGB")
-    zz.save("ult.webp", "webp")
+    wbn = check_filename("ult-rmbg.webp")
+    zz.save(wbn, "webp")
     await event.client.send_file(
         event.chat_id,
-        rmbgp,
+        out,
         force_document=True,
         reply_to=reply,
     )
-    await event.client.send_file(event.chat_id, "ult.webp", reply_to=reply)
-    os.remove(rmbgp)
-    os.remove("ult.webp")
+    await event.client.send_file(event.chat_id, wbn, reply_to=reply)
+    os.remove(out)
+    os.remove(wbn)
     await xx.delete()
 
 
@@ -461,12 +462,12 @@ async def telegraphcmd(event):
         with open(getit) as ab:
             content = ab.read()
         os.remove(getit)
-    makeit = telegraph.create_page(title=match, content=[content])
+    makeit = Telegraph.create_page(title=match, content=[content])
     war = makeit["url"]
     await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
 
 
-@ultroid_cmd(pattern="json")
+@ultroid_cmd(pattern="json$")
 async def _(event):
     the_real_message = None
     reply_to_id = None
@@ -535,8 +536,7 @@ async def ipinfo(event):
         ipaddr = "/" + ip[1]
     except IndexError:
         ipaddr = ""
-    url = f"https://ipinfo.io{ipaddr}/geo"
-    det = requests.get(url).json()
+    det = await async_searcher(f"https://ipinfo.io{ipaddr}/geo", re_json=True)
     try:
         ip = det["ip"]
         city = det["city"]
@@ -582,12 +582,12 @@ async def ipinfo(event):
 async def copp(event):
     msg = await event.get_reply_message()
     if not msg:
-        return await eor(event, f"Use `{hndlr}cpy` as reply to a message!", time=5)
+        return await eor(event, f"Use `{HNDLR}cpy` as reply to a message!", time=5)
     _copied_msg["CLIPBOARD"] = msg
-    await eor(event, f"Copied. Use `{hndlr}pst` to paste!", time=10)
+    await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
-@asst_cmd("pst")
+@asst_cmd(pattern="pst$")
 async def pepsodent(event):
     await toothpaste(event)
 
@@ -609,7 +609,7 @@ async def toothpaste(event):
     except KeyError:
         return await eod(
             event,
-            f"Nothing was copied! Use `{hndlr}cpy` as reply to a message first!",
+            f"Nothing was copied! Use `{HNDLR}cpy` as reply to a message first!",
         )
     except Exception as ex:
         return await eor(event, str(ex), time=5)
@@ -617,12 +617,14 @@ async def toothpaste(event):
 
 @ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
-    if not event.reply_to_msg_id:
+    reply = await event.get_reply_message()
+    if not (reply or reply.file):
         return await eod(
             event, "`Please reply to a file to download its thumbnail!`", time=5
         )
-    xx = await eor(event, get_string("com_1"))
+    if not reply.file.media.thumbs:
+        return await eod(event, "`Replied file has no thumbnail.`")
+    await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
     m = await event.client.download_media(x, thumb=-1)
     await event.reply(file=m)
-    await eor(xx, "`Thumbnail sent, if available.`", time=5)

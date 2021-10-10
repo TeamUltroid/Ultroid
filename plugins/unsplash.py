@@ -9,13 +9,11 @@
 
 • {i}unsplash <search query> ; <no of pics>
     Unsplash Image Search.
-
 """
 
-import requests as r
-from bs4 import BeautifulSoup as bs
+from pyUltroid.functions.misc import unsplashsearch
 
-from . import *
+from . import download_file, eor, get_string, os, ultroid_cmd
 
 
 @ultroid_cmd(pattern="unsplash ?(.*)")
@@ -29,22 +27,16 @@ async def searchunsl(ult):
     else:
         num = 5
         query = match
-    tep = await eor(ult, "`Processing... `")
-    res = autopicsearch(query)
-    if len(res) == 0:
-        return await eor(ult, "No Results Found !", time=5)
-    qas = res[:num]
-    dir = "resources/downloads"
-    CL = []
-    nl = 0
-    for rp in qas:
-        li = "https://unsplash.com" + rp["href"]
-        ct = r.get(li).content
-        bst = bs(ct, "html.parser", from_encoding="utf-8")
-        ft = bst.find_all("img", "oCCRx")[0]["src"]
-        Hp = dir + "img" + f"{nl}.png"
-        await download_file(ft, Hp)
+    tep = await eor(ult, get_string("com_1"))
+    res = await unsplashsearch(query, limit=num)
+    if not res:
+        return await eor(ult, get_string("unspl_1"), time=5)
+    dir = "resources/downloads/"
+    CL, nl = [], 0
+    for rp in res:
+        Hp = await download_file(rp, f"{dir}img-{nl}.png")
         CL.append(Hp)
         nl += 1
-    await ult.client.send_file(ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n")
+    await ult.client.send_file(ult.chat_id, CL, caption=f"Uploaded {len(res)} Images!")
     await tep.delete()
+    [os.remove(img) for img in CL]

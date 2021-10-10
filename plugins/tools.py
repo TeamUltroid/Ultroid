@@ -32,21 +32,22 @@
 
 """
 import glob
+import io
 import os
 import time
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
 from google_trans_new import google_translator
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
-from . import *
+from . import HNDLR, bash, downloader, eor, get_string, get_user_id
 from . import humanbytes as hb
+from . import ultroid_cmd, uploader
 
 
 @ultroid_cmd(pattern="tr", type=["official", "manager"])
@@ -64,7 +65,7 @@ async def _(event):
         lan = input or "en"
     else:
         return await eor(
-            event, f"`{hndlr}tr LanguageCode` as reply to a message", time=5
+            event, f"`{HNDLR}tr LanguageCode` as reply to a message", time=5
         )
     translator = google_translator()
     try:
@@ -208,8 +209,8 @@ async def _(e):
         )
         taime = time.time()
         foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
-        metadata = extractMetadata(createParser("circle.mp4"))
-        duration = metadata.get("duration").seconds
+        data = await metadata("circle.mp4")
+        duration = data["duration"]
         attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
@@ -365,7 +366,7 @@ async def _(e):
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
-    if not (steal.is_reply or mat):
+    if not steal.is_reply and not mat:
         return await eor(steal, "`Use this command with reply or give Username/id...`")
     if mat:
         user_id = await get_user_id(mat)
@@ -374,7 +375,7 @@ async def lastname(steal):
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    lol = await eor(steal, "`Processing !...`")
+    lol = await eor(steal, get_string("com_1"))
     try:
         async with steal.client.conversation(chat) as conv:
             try:
@@ -391,16 +392,15 @@ async def lastname(steal):
             ):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
+            elif response.text.startswith("🔗"):
+                await lol.edit(respond.message)
+                await lol.reply(responds.message)
+            elif respond.text.startswith("🔗"):
+                await lol.edit(response.message)
+                await lol.reply(responds.message)
             else:
-                if response.text.startswith("🔗"):
-                    await lol.edit(respond.message)
-                    await lol.reply(responds.message)
-                elif respond.text.startswith("🔗"):
-                    await lol.edit(response.message)
-                    await lol.reply(responds.message)
-                else:
-                    await lol.edit(respond.message)
-                    await lol.reply(response.message)
+                await lol.edit(respond.message)
+                await lol.reply(response.message)
             await steal.client.delete_messages(
                 conv.chat_id,
                 [msg.id, responds.id, respond.id, response.id],

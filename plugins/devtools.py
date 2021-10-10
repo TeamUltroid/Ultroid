@@ -21,7 +21,6 @@
 
 • `{i}cpp <code>`
     Run c++ code from Telegram.
-    It should be the complete file base.
 
 • `{i}sysinfo`
     Shows System Info.
@@ -32,7 +31,10 @@ import traceback
 from os import remove
 from pprint import pprint
 
-from carbonnow import Carbon
+try:
+    from carbonnow import Carbon
+except ImportError:
+    Carbon = None
 
 from . import *
 
@@ -41,25 +43,24 @@ from . import *
     pattern="sysinfo$",
 )
 async def _(e):
-    xx = await eor(e, "`Sending...`")
+    xx = await eor(e, get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
-    haa = await ok.save("neofetch")
+    haa = await ok.memorize("neofetch")
     await e.reply(file=haa)
     await xx.delete()
-    remove("neofetch.jpg")
     remove("neo.txt")
 
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    xx = await eor(event, "`Processing...`")
+    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, "`No cmd given`", time=10)
+        return await eor(xx, get_string("devs_1"), time=10)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -93,17 +94,18 @@ async def _(event):
 
 
 p, pp = print, pprint  # ignore: pylint
+bot = ultroid = ultroid_bot
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
     if len(event.text) > 5 and event.text[5] != " ":
         return
-    xx = await eor(event, "`Processing ...`")
+    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, "`Give some python cmd`", time=5)
+        return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr
@@ -128,7 +130,7 @@ async def _(event):
     elif stdout:
         evaluation = stdout
     else:
-        evaluation = "Success"
+        evaluation = get_string("instu_4")
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
@@ -183,12 +185,10 @@ async def doie(e):
     try:
         match = match[1]
     except IndexError:
-        return await eor(e, "`Give Some C++ Code..`")
-    msg = await eor(e, "`Processing...`")
+        return await eor(e, get_string("devs_3"))
+    msg = await eor(e, get_string("com_1"))
     if "main(" not in match:
-        new_m = ""
-        for i in match.split("\n"):
-            new_m += " " * 4 + i + "\n"
+        new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))
         match = DUMMY_CPP.replace("!code", new_m)
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
@@ -196,6 +196,9 @@ async def doie(e):
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
         if len(o_cpp) > 3000:
+            os.remove("cpp-ultroid.cpp")
+            if os.path.exists("CppUltroid"):
+                os.remove("CppUltroid")
             with io.BytesIO(str.encode(o_cpp)) as out_file:
                 out_file.name = "error.txt"
                 return await msg.reply(f"`{match}`", file=out_file)

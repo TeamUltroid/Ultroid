@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -21,8 +20,10 @@
    List the currently AI added users.
 """
 
-from pyUltroid.functions.all import get_chatbot_reply
-from pyUltroid.functions.chatBot_db import *
+from pyUltroid.dB.chatBot_db import add_chatbot, get_all_added, rem_chatbot
+from pyUltroid.functions.tools import get_chatbot_reply
+
+from . import eod, eor, get_string, inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(pattern="repai")
@@ -33,9 +34,7 @@ async def im_lonely_chat_with_me(event):
         try:
             message = event.text.split(" ", 1)[1]
         except IndexError:
-            return await eod(
-                event, "Give a message or Reply to a User's Message.", time=10
-            )
+            return await eod(event, get_string("tban_1"), time=10)
     reply_ = get_chatbot_reply(event, message=message)
     await eor(event, reply_)
 
@@ -54,7 +53,7 @@ async def rem_chatBot(event):
 async def lister(event):
     users = get_all_added(event.chat_id)
     if not users:
-        return await eor(event, "`No user has AI added.`", time=5)
+        return await eor(event, get_string("chab_2"), time=5)
     msg = "**Total List Of AI Enabled Users In This Chat :**\n\n"
     for i in users:
         try:
@@ -79,7 +78,7 @@ async def chat_bot_fn(event, type_):
             else:
                 return await eod(
                     event,
-                    "Reply to a user or give me his id/username to add an AI ChatBot!",
+                    get_string("chab_1"),
                 )
     if type_ == "add":
         add_chatbot(event.chat_id, user.id)

@@ -8,35 +8,38 @@
 import asyncio
 import os
 import time
+from random import choice
 
 from pyUltroid import *
-from pyUltroid.dB import *
-from pyUltroid.functions.all import *
-from pyUltroid.functions.sudos import *
-from pyUltroid.version import ultroid_version
-from telethon import Button
+from pyUltroid.dB import ULTROID_IMAGES
+from pyUltroid.functions.helper import *
+from pyUltroid.functions.info import *
+from pyUltroid.functions.misc import *
+from pyUltroid.functions.tools import *
+from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
+from pyUltroid.misc._decorators import ultroid_cmd
+from pyUltroid.misc._wrappers import eod, eor
+from pyUltroid.version import __version__, ultroid_version
+from telethon import Button, events
 from telethon.tl import functions, types
-from telethon.utils import get_display_name
 
 from strings import get_string
 
-try:
-    import glitch_me
-except ModuleNotFoundError:
-    os.system(
-        "git clone https://github.com/1Danish-00/glitch_me.git && pip install -e ./glitch_me"
-    )
-
-
-start_time = time.time()
+Redis = udB.get
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.me.id
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
+INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
+if INLINE_PIC == "False":
+    INLINE_PIC = None
+Telegraph = telegraph_client()
 
 List = []
 Dict = {}
 N = 0
+
+STUFF = {}
 
 # Chats, which needs to be ignore for some cases
 # Considerably, there can be many
@@ -61,4 +64,19 @@ KANGING_STR = [
     "Roses are red violets are blue, kanging this sticker so my pack looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal-Your-Sticker is stealing this sticker... ",
+]
+
+ATRA_COL = [
+    "DarkCyan",
+    "DeepSkyBlue",
+    "DarkTurquoise",
+    "Cyan",
+    "LightSkyBlue",
+    "Turquoise",
+    "MediumVioletRed",
+    "Aquamarine",
+    "Lightcyan",
+    "Azure",
+    "Moccasin",
+    "PowderBlue",
 ]

@@ -7,9 +7,19 @@
 
 
 import aiohttp
-
+import random
+from pyUltroid.dB import DEVLIST
 from . import *
 
+
+@ultroid_cmd(pattern="decide", type="manager")
+async def dheh(e):
+    text = ["Yes", "NoU", "Maybe", "IDK"]
+    text = random.choice(text)
+    ri = e.id
+    if e.is_reply:
+        ri = e.reply_to_msg_id
+    await e.client.send_message(e.chat_id, text, reply_to=ri)
 
 @ultroid_cmd(pattern="echo ?(.*)", type=["manager"])
 async def oqha(e):

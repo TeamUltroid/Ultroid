@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -24,21 +23,33 @@ import os
 import time
 from datetime import datetime as dt
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import *
+from . import (
+    bash,
+    downloader,
+    eod,
+    eor,
+    genss,
+    get_string,
+    humanbytes,
+    mediainfo,
+    stdr,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(pattern="makevoice$")
 async def vnc(e):
     if not e.reply_to:
-        return await eod(e, "Reply To Audio or video")
+        return await eod(e, get_string("audiotools_1"))
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
-        return await eod(e, "Reply To Audio or video")
-    xxx = await eor(e, "`processing...`")
+        return await eod(e, get_string("spcltool_1"))
+    xxx = await eor(e, get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -48,7 +59,7 @@ async def vnc(e):
         c_time,
         "Downloading " + dl + "...",
     )
-    await xxx.edit(f"Downloaded Successfully, Now Converting to voice")
+    await xxx.edit(get_string("audiotools_2"))
     await bash(
         f"ffmpeg -i '{file.name}' -map 0:a -codec:a libopus -b:a 100k -vbr on out.opus"
     )
@@ -64,10 +75,10 @@ async def vnc(e):
 async def trim_aud(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
-        return await eod(e, "`Give time in format to trim`")
+        return await eod(e, get_string("audiotools_3"))
     a, b = sec.split("-")
     if int(a) >= int(b):
-        return await eod(e, "`Incorrect Data`")
+        return await eod(e, get_string("audiotools_4"))
     vido = await e.get_reply_message()
     if vido and vido.media and mediainfo(vido.media).startswith(("video", "audio")):
         if hasattr(vido.media, "document"):
@@ -78,7 +89,7 @@ async def trim_aud(e):
             name = ""
         if not name:
             name = dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -94,7 +105,7 @@ async def trim_aud(e):
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.aac")
         if int(b) > int(genss(file.name)):
             os.remove(file.name)
-            return await eod(xxx, "`Wrong trim duration`")
+            return await eod(xxx, get_string("audiotools_6"))
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await xxx.edit(
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Audio from `{ss}` to `{dd}`..."
@@ -110,24 +121,18 @@ async def trim_aud(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = vido.file.duration or 0
-        artist = udB.get("artist") or ultroid_bot.first_name
-        try:
-            if metadata.has("duration"):
-                duration = metadata.get("duration").seconds
-            if metadata.has("artist"):
-                artist = metadata.get("artist")
-        except BaseException:
-            pass
+        data = await metadata(out)
+        artist = data["performer"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeAudio(
                 duration=duration,
                 title=out.split(".")[0],
-                performer=artist,
+                performer=vido.file.performer or artist,
             )
         ]
-        caption = f"Trimmed Audio From `{ss}` To `{dd}`"
+
+        caption = get_string("audiotools_7").format(ss, dd)
         await e.client.send_file(
             e.chat_id,
             mmmm,
@@ -139,17 +144,17 @@ async def trim_aud(e):
         )
         await xxx.delete()
     else:
-        await eor(e, "`Reply To Video\\Audio File Only`", time=5)
+        await eor(e, get_string("audiotools_1"), time=5)
 
 
 @ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
     reply = await e.get_reply_message()
     if not (reply and reply.media and mediainfo(reply.media).startswith("video")):
-        return await eor(e, "`Reply to Video File..`")
+        return await eor(e, get_string("audiotools_8"))
     name = reply.file.name or "video.mp4"
     vfile = reply.media.document
-    msg = await eor(e, "`Processing...`")
+    msg = await eor(e, get_string("com_1"))
     c_time = time.time()
     file = await downloader(
         "resources/downloads/" + name,
@@ -162,17 +167,19 @@ async def ex_aud(e):
     cmd = f"ffmpeg -i {file.name} -vn -acodec copy {out_file}"
     o, err = await bash(cmd)
     os.remove(file.name)
-    duration = reply.file.duration
-    artist = ultroid_bot.me.first_name
+    data = await metadata(out_file)
+    artist = data["performer"]
+    duration = data["duration"]
     attributes = [
         DocumentAttributeAudio(
-            duration=duration,
+            duration=reply.file.duration or duration,
             title=reply.file.name.split(".")[0]
             if reply.file.name
             else "Extracted Audio",
-            performer=artist,
+            performer=reply.file.performer or artist,
         )
     ]
+
     f_time = time.time()
     try:
         fo = await uploader(
@@ -183,11 +190,11 @@ async def ex_aud(e):
             "Uploading " + out_file + "...",
         )
     except FileNotFoundError:
-        return await eor(msg, "`No Audio Found...`")
+        return await eor(msg, get_string("audiotools_9"))
     await e.client.send_file(
         e.chat_id,
         fo,
-        caption="`Extracted Audio from Video...`",
+        caption=get_string("audiotools_10"),
         thumb="resources/extras/ultroid.jpg",
         attributes=attributes,
         reply_to=e.reply_to_msg_id,

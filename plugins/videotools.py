@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available -
 
@@ -23,11 +22,24 @@ import os
 import time
 from datetime import datetime as dt
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
-from . import *
+from . import (
+    bash,
+    downloader,
+    duration_s,
+    eod,
+    eor,
+    genss,
+    get_string,
+    humanbytes,
+    mediainfo,
+    stdr,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 
 @ultroid_cmd(pattern="sample ?(.*)")
@@ -46,7 +58,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -75,12 +87,10 @@ async def gen_sample(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = metadata.get("duration").seconds
-        hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-        wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-        height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-        width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+        data = await metadata(out)
+        width = data["width"]
+        height = data["height"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeVideo(
                 duration=duration, w=width, h=height, supports_streaming=True
@@ -117,7 +127,7 @@ async def gen_shots(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -150,10 +160,10 @@ async def gen_shots(e):
 async def gen_sample(e):
     sec = e.pattern_match.group(1)
     if not sec or "-" not in sec:
-        return await eod(e, "`Give time in format to trim`")
+        return await eod(e, get_string("audiotools_3"))
     a, b = sec.split("-")
     if int(a) >= int(b):
-        return await eod(e, "`Incorrect Data`")
+        return await eod(e, get_string("audiotools_4"))
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
         if hasattr(vido.media, "document"):
@@ -164,7 +174,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, "`Trying To Download...`")
+        xxx = await eor(e, get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -180,7 +190,7 @@ async def gen_sample(e):
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.mkv")
         if int(b) > int(genss(file.name)):
             os.remove(file.name)
-            return await eod(xxx, "`Wrong trim duration`")
+            return await eod(xxx, get_string("audiotools_6"))
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await xxx.edit(
             f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Video from `{ss}` to `{dd}`..."
@@ -196,12 +206,10 @@ async def gen_sample(e):
             xxx,
             "Uploading " + out + "...",
         )
-        metadata = extractMetadata(createParser(out))
-        duration = metadata.get("duration").seconds
-        hi, _ = await bash(f'mediainfo "{out}" | grep "Height"')
-        wi, _ = await bash(f'mediainfo "{out}" | grep "Width"')
-        height = int(hi.split(":")[1].split("pixels")[0].replace(" ", ""))
-        width = int(wi.split(":")[1].split("pixels")[0].replace(" ", ""))
+        data = await metadata(out)
+        width = data["width"]
+        height = data["height"]
+        duration = data["duration"]
         attributes = [
             DocumentAttributeVideo(
                 duration=duration, w=width, h=height, supports_streaming=True

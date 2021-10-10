@@ -18,11 +18,12 @@
 """
 import os
 
-from pyUltroid.functions.asstcmd_db import *
+from pyUltroid.dB.asstcmd_db import *
+from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import *
+from . import asst_cmd, eor, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addcmd ?(.*)")
@@ -30,11 +31,10 @@ async def ac(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eor(
-            e, "`Use this Command with Reply and word to use a command.`", time=5
-        )
+        return await eor(e, get_string("asstcmd_1"), time=5)
     if "/" in wrd:
         wrd = wrd.replace("/", "")
+    btn = format_btn(wt.buttons) if wt.buttons else None
     if wt and wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
@@ -44,7 +44,7 @@ async def ac(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(x, "`Unsupported Media`", time=5)
+                return await eor(e, get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
@@ -52,43 +52,45 @@ async def ac(e):
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
-            add_cmd(wrd, wt.text, m)
+            txt = wt.text
+            if not btn:
+                txt, btn = get_msg_button(wt.text)
+            add_cmd(wrd, txt, m, btn)
         else:
             add_cmd(wrd, None, m)
     else:
-        add_cmd(wrd, wt.text, None)
-    await eor(e, f"Done Command : `/{wrd}` saved.")
+        txt = wt.text
+        if not btn:
+            txt, btn = get_msg_button(wt.text)
+        add_cmd(wrd, txt, None, btn)
+    await eor(e, get_string("asstcmd_4").format(wrd))
 
 
 @ultroid_cmd(pattern="remcmd ?(.*)")
 async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
-        return await eor(e, "`Give me the command which you want to remove.`", time=5)
-    if wrd.startswith("/"):
-        wrd = wrd.replace("/", "")
+        return await eor(e, get_string("asstcmd_2"), time=5)
+    wrd = wrd.replace("/", "")
     rem_cmd(wrd)
-    await eor(e, f"Done Command: `/{wrd}` Removed.")
+    await eor(e, get_string("asstcmd_3").format(wrd))
 
 
 @ultroid_cmd(pattern="listcmd$")
 async def lscmd(e):
     if list_cmds():
-        ok = "**ALL ASSISTANT CMDS**\n\n"
+        ok = get_string("asstcmd_6")
         for x in list_cmds():
             ok += "/" + x + "\n"
         return await eor(e, ok)
-    return await eor(e, "No commands found")
+    return await eor(e, get_string("asstcmd_5"))
 
 
-@asst.on(events.NewMessage())
+@asst_cmd(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds()))
 async def ascmds(e):
-    xx = e.text
-    if not xx.startswith("/"):
-        return
-    xx = (xx.replace("/", "")).lower()
-    if " " in xx:
-        xx = xx.split(" ")[0]
+    xx = (e.text.replace("/", "")).lower().split()[0]
     if cmd_reply(xx):
-        msg, media = cmd_reply(xx)
-        await e.reply(msg, file=media)
+        msg, media, bt = cmd_reply(xx)
+        if bt:
+            bt = create_tl_btn(bt)
+        await e.reply(msg, file=media, buttons=bt)

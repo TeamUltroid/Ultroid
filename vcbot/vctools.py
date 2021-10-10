@@ -40,7 +40,7 @@ async def mute(event):
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_is_mute(True)
-    await eor(event, "`Muted playback in this chat.`")
+    await eor(event, get_string('vcbot_12'))
 
 
 @vc_asst("unmutevc")
@@ -74,7 +74,7 @@ async def pauser(event):
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_pause(True)
-    await eor(event, "`Paused playback in this chat.`")
+    await eor(event, get_string('vcbot_14'))
 
 
 @vc_asst("resumevc")
@@ -91,7 +91,7 @@ async def resumer(event):
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_pause(False)
-    await eor(event, "`Resumed playback in this chat.`")
+    await eor(event, get_string('vcbot_13'))
 
 
 @vc_asst("replay")

@@ -54,8 +54,6 @@ Ultima visualizzazione {} fa.`"
 afk_5: "`Andando AFK.`\n\n
 **Ragione:** `{}`"
 afk_6: "Sto andando AFK."
-afk_7: "Attualmente AFK con ragione {}"
-afk_8: "Attualmente AFK."
 
 # bot
 alive_1: "**L'Ultroid Userbot...**\n\n
@@ -193,3 +191,4 @@ wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
 ast_1: "Scegli quale API desideri impostare."
 ast_2: "**remove.bg API**\nInserisci la tua chiave API da remove.bg.\n\nUsa /cancel per terminare l'operazione."
 ast_3: "Ciao {}. Si prega di sfogliare le opzioni"
+

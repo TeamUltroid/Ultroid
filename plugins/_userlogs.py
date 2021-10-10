@@ -8,7 +8,7 @@
 import os
 import re
 
-from pyUltroid.functions.botchat_db import tag_add, who_tag
+from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
     MediaEmptyError,
@@ -34,7 +34,7 @@ async def all_messages_catcher(e):
     try:
         NEEDTOLOG = int(udB.get("TAG_LOG"))
     except Exception:
-        return LOGS.info("you given Wrong Grp/Channel ID in TAG_LOG.")
+        return LOGS.info(get_string("userlogs_1"))
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
         return
@@ -43,7 +43,7 @@ async def all_messages_catcher(e):
     who_n = get_display_name(x)
     where_l = e.message.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    if x.username:
+    if hasattr(x, "username") and x.username:
         who_l = f"https://t.me/{x.username}"
         buttons.append([Button.url(who_n, who_l)])
     else:
@@ -67,20 +67,21 @@ async def all_messages_catcher(e):
                     return os.remove(media)
                 except Exception as er:
                     LOGS.info(er)
-            await asst.send_message(NEEDTOLOG, "`Unsupported Media`", buttons=buttons)
+            await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
     except (PeerIdInvalidError, ValueError):
-        await asst.send_message(
-            int(udB.get("LOG_CHANNEL")),
-            "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It",
-        )
+        try:
+            CACHE_SPAM[NEEDTOLOG]
+        except KeyError:
+            await asst.send_message(
+                int(udB.get("LOG_CHANNEL")), get_string("userlogs_1")
+            )
+            CACHE_SPAM.update({NEEDTOLOG: True})
     except ChatWriteForbiddenError:
         try:
             await asst.get_permissions(NEEDTOLOG, "me")
-            MSG = "Your Asst Cant Send Messages in Tag Log Chat."
-            MSG += "\n\nPlease Review the case or you can off"
-            MSG += "Your TagLogger, if you dont want to use it"
+            MSG = get_string("userlogs_4")
         except UserNotParticipantError:
-            MSG = "Add me to Your Tag Logger Chat to Log Tags"
+            MSG = get_string("userlogs_2")
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
@@ -124,34 +125,39 @@ async def when_asst_added_to_chat(event):
         return
     user = await event.get_user()
     chat = await event.get_chat()
-    if chat.username:
+    if hasattr(chat, "username") and chat.username:
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    if user and user.is_self:
-        tmp = event.added_by
-        buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|bot")
-        return await asst.send_message(
-            int(udB.get("LOG_CHANNEL")),
-            f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
-            buttons=buttons,
-        )
+    if not (user and user.is_self):
+        return
+    tmp = event.added_by
+    buttons = Button.inline(
+        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|bot"
+    )
+    await asst.send_message(
+        int(udB.get("LOG_CHANNEL")),
+        f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
+        buttons=buttons,
+    )
 
 
 # log for user's new joins
 
 
-@ultroid.on(events.ChatAction)
+@ultroid_bot.on(events.ChatAction)
 async def when_ultd_added_to_chat(event):
     user = await event.get_user()
     chat = await event.get_chat()
     if not (user and user.is_self):
         return
-    if chat.username:
+    if hasattr(chat, "username") and chat.username:
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    buttons = Button.inline("Leave Chat", data=f"leave_ch_{event.chat_id}|user")
+    buttons = Button.inline(
+        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|user"
+    )
     if event.user_added:
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
@@ -166,15 +172,17 @@ async def when_ultd_added_to_chat(event):
     re.compile(
         "leave_ch_(.*)",
     ),
+    owner=True,
 )
-@owner
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
     ch_id, client = cht.split("|")
     if client == "bot":
-        name = (await asst.get_entity(int(ch_id))).title
-        await asst.delete_dialog(int(ch_id))
+        client = asst
     elif client == "user":
-        name = (await ultroid_bot.get_entity(int(ch_id))).title
-        await ultroid_bot.delete_dialog(int(ch_id))
-    await event.edit(f"Left `{name}`")
+        client = ultroid_bot
+    else:
+        return
+    name = (await client.get_entity(int(ch_id))).title
+    await client.delete_dialog(int(ch_id))
+    await event.edit(get_string("userlogs_5").format(name))

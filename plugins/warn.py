@@ -4,7 +4,6 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
 ✘ Commands Available
 
@@ -25,9 +24,9 @@
 
 """
 
-from pyUltroid.functions.warn_db import *
+from pyUltroid.dB.warn_db import add_warn, reset_warn, warns
 
-from . import *
+from . import eor, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -172,10 +171,10 @@ async def warnset(e):
         try:
             number, action = int(ok.split()[0]), ok.split()[1]
         except BaseException:
-            return await eor(e, "`Incorrect Format`", time=5)
+            return await eor(e, get_string("schdl_2"), time=5)
         if ("ban" or "kick" or "mute") not in action:
             return await eor(e, "`Only mute / ban / kick option suported`", time=5)
         udB.set("SETWARN", f"{number} {action}")
         await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
     else:
-        await eor(e, "`Incorrect Format`", time=5)
+        await eor(e, get_string("schdl_2"), time=5)

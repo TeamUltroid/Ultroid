@@ -23,7 +23,7 @@ import asyncio
 
 from telethon.events import NewMessage as NewMsg
 
-from . import *
+from . import HNDLR, eor, get_string, ultroid_bot, ultroid_cmd
 
 _new_msgs = {}
 
@@ -51,7 +51,7 @@ async def delete_it(delme):
             await delme.delete()
         except Exception as e:
             await eor(
-                delme, f"Couldn't delete the message.\n\n**ERROR:**\n`{str(e)}`", time=5
+                delme, f"Couldn't delete the message.\n\n**ERROR:**\n`{e}`", time=5
             )
 
 
@@ -62,9 +62,8 @@ async def copy(e):
     reply = await e.get_reply_message()
     if reply:
         await reply.reply(reply)
-        await e.delete()
-    else:
-        await eor(e, "`Reply To any message`", time=5)
+        return await e.delete()
+    await eor(e, get_string("ex_1"), time=5)
 
 
 @ultroid_cmd(

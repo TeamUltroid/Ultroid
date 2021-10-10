@@ -27,7 +27,7 @@ import os
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from . import *
+from . import eod, eor, get_string, mediainfo, ultroid_cmd
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
@@ -76,12 +76,11 @@ async def _(ult):
     if not ult.is_reply:
         return await eor(ult, "`Reply to a Media..`", time=5)
     reply_message = await ult.get_reply_message()
-    ok = await eor(ult, "...")
+    ok = await eor(ult, get_string("com_1"))
     replfile = await reply_message.download_media()
     file = await ult.client.upload_file(replfile)
-    mediain = mediainfo(reply_message.media)
     try:
-        if "pic" in mediain:
+        if "pic" in mediainfo(reply_message.media):
             await ult.client(UploadProfilePhotoRequest(file))
         else:
             await ult.client(UploadProfilePhotoRequest(video=file))
@@ -96,7 +95,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="delpfp ?(.*)", fullsudo=True)
 async def remove_profilepic(delpfp):
-    ok = await eor(delpfp, "...")
+    ok = await eor(delpfp, "`...`")
     group = delpfp.text[8:]
     if group == "all":
         lim = 0
@@ -112,20 +111,17 @@ async def remove_profilepic(delpfp):
 @ultroid_cmd(pattern="poto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e, "`Processing...`")
-    if not ult and e.is_reply:
+    a = await eor(e, get_string("com_1"))
+    if ult:
+        pass
+    elif e.is_reply:
         gs = await e.get_reply_message()
         ult = gs.sender_id
-    if not (ult or e.is_reply):
+    else:
         ult = e.chat_id
-    try:
-        okla = await e.client.download_profile_photo(
-            ult,
-            "profile.jpg",
-            download_big=True,
-        )
-        await a.delete()
-        await e.reply(file=okla)
-        os.remove(okla)
-    except Exception as er:
-        await eor(e, f"ERROR - {er}")
+    okla = await e.client.download_profile_photo(ult)
+    if not okla:
+        return await eor(a, "`Pfp Not Found...`")
+    await a.delete()
+    await e.reply(file=okla)
+    os.remove(okla)

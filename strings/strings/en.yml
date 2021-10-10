@@ -2,24 +2,124 @@ name: English
 natively: English
 
 authors:
+  - karboncopy
   - xditya
   - rojserbest
   - sppidy
   - ProgrammingError
-  - avish-kumar1
+  - aviskumar
 
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
+com_3: "`Invalid Input`"
+com_4: "`UnSupported Media..`"
+com_5: "`Downloading...`"
+com_6: "`Uploading...`"
+
+# chatactions
+can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
+can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
+can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
+
 # help
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
+help_4: "• Plugins"
+help_5: "• Addons"
+help_6: "••Voice Chat"
+help_7: "Inline Plugins••"
+help_8: "⚙️ Owner Tools"
+help_9: "Settings ⚙️"
+help_10: "••Cʟᴏꜱᴇ••"
+help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
+
+
+# userlogs
+userlogs_1: "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It"
+userlogs_2: "Add me to Your Tag Logger Chat to Log Tags"
+userlogs_3: "Leave Chat"
+userlogs_4: "Your Asst Bot Cant Send Messages in Tag Log Chat.\nAdd it to Get Your Tag Logs.."
+userlogs_5: "Left `{}`"
+
+# admintools
+adm_1: "`I couldn't get who he is!`"
+adm_2: "`Hmm.. Guess I have no rights here!`"
+adm_3: "`Provide a Time too..`"
+pro_1: "`Reply to a user to promote him!`"
+pro_2:  "{} `is now an admin in {} with title {}.`"
+de_1: "`Reply to a user to demote him!`"
+de_2: "{} `is no longer an admin in {}`"
+ban_1: "`Reply to a user or give username to ban him!`"
+ban_2: " `LoL, I can't Ban my Developer 😂`"
+ban_3: "`I don't have the right to ban a user.`"
+ban_4: "{} **was banned by** {} **in** `{}`"
+ban_5: "\n**Reason**: `{}`"
+tban_1: "`Reply to someone or give its id...`"
+tban_2: "`Successfully Banned` `{}` `in {} for {}`"
+unban_1: "`Reply to a user or give username to unban him!`"
+unban_2: "`I don't have the right to unban a user.`"
+unban_3: "{} **was unbanned by** {} **in** `{}`"
+kick_1: "`I don't have the right to kick a user.`"
+kick_2: " `Lol, I can't Kick my Developer`😂"
+kick_3: "`I Cant kick him ever...`"
+kick_4: "{} **was kicked by** {} **in** `{}`"
+pin_1: "`Reply to a message to pin it!`"
+pinned_1: "No Pinned Message Found!"
+unpin_1: "Either reply to a message, or, use `{}unpin all`"
+listpin_1: "There is no message pinned in this group!"
+purge_1: "`Reply to a message to purge from.`"
+purgeall_1: "`Reply to someone's msg to delete.`"
+purgeall_2: "Successfully Purged All Messages from {}"
+
+# akinator
+aki_1: "Game has been Terminated...."
+aki_2: "Start Game"
+aki_3: "Timeout !"
+
+# antiflood
+antiflood_1: "`Antiflood Settings Disabled`"
+antiflood_2: "`No flood limits in this chat.`"
+antiflood_3: "`You have been muted.`"
+antiflood_4: "`Successfully Updated Antiflood Settings to {} in this chat.`"
+antiflood_5: "`Flood limit for this chat is {}.`"
+
+# ascii
+ascii_1: "`Reply to image.`"
+ascii_2: "`Converting to html...`"
+
+# audiotools
+audiotools_1: "Reply To Audio or video.."
+audiotools_2: "Downloaded Successfully, Now Converting to voice"
+audiotools_3: "`Give time in format to trim`"
+audiotools_4: "`Incorrect Data`"
+audiotools_5: "`Trying To Download...`"
+audiotools_6: "`Wrong trim duration`"
+audiotools_7: "Trimmed Audio From `{}` To `{}`"
+audiotools_8: "Reply to Video File..`"
+audiotools_9: "`No Audio Found...`"
+audiotools_10: "`Extracted Audio from Video...`"
+
+# asstcmd
+asstcmd_1: "`Use this Command with Reply and word to use a command.`"
+asstcmd_2: "`Give me the command which you want to remove.`"
+asstcmd_3: "Done Command: `/{}` Removed."
+asstcmd_4: "Done Command : `/{}` saved."
+asstcmd_5: "No commands found"
+asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
+
+# autocorrect
+act_1: "AUTOCORRECT Feature On"
+act_2: "AUTOCORRECT Feature Off"
 
 # autopic
-autopic_1: "Heya Give me some Text .."
+autopic_1: "`Give something to search...`"
 autopic_2: "No Results found for `{}`"
 autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
+autopic_4: "AUTOPIC was not in use !!"
+autopic_5: "AUTOPIC Stopped!"
 
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
@@ -27,6 +127,10 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇ�
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
+inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
+inline_7: "Do .help {} to get the list of commands."
+inline_8: "Click the below button to update!"
+inline_9: "You Are Already On Latest Version"
 
 # tagnotif
 tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
@@ -35,6 +139,9 @@ tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
 # whisper
 wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
 wspr_2: "Message deleted"
+wspr_3: "Add some id or username too"
+wspr_4: "User {} Not Found\nSearch Again"
+wspr_5: "You Can't do this"
 
 # afk
 afk_1: "**No Longer Afk**\n\nWas away for ~ `{}`"
@@ -45,12 +152,25 @@ afk_5: "**I'm Going AFK.**\n\n**Reason:** `{}`"
 afk_6: "**I'm Going AFK.**"
 
 # bot
+bot_1: "Hey,  I am alive."
+bot_2: "Stats"
+bot_3: "Repo"
+bot_4: "Support"
+bot_5: "• `Restarting...`"
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 usage_simple: "**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 shutdown: "GoodBye {}.\n`Shutting down...`"
+
+# blacklist
+blk_1: "`Give the word to blacklist..`"
+blk_2: "Done : `{}` Blacklisted here."
+blk_3: "`Give the word to remove from blacklist..`"
+blk_4: "Done : `{}` Removed from Blacklist."
+blk_5: "Blacklist Found In This Chats Are :\n\n"
+blk_6: "No Blacklist word Found Here"
 
 # broadcast
 bd_1: "`Adding to db...`"
@@ -59,24 +179,62 @@ bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
 bd_4: "Channels added!"
 bd_5: "`Added to database!`"
 bd_6: "`Channel is already is database!`"
+bd_7: "Removed from database"
+bd_8: "`Removing...`"
+bd_9: "Channel is already removed from database. "
+
+
+# calculator
+calc_1: "• Ultroid Inline Calculator •"
+calc_2: "Open Calculator Again"
+
+# channel hacks
+cha_1: "invalid Channel given"
+cha_2: "Source added succesfully"
+cha_3: "Source channel already added"
+cha_4: "Source database cleared."
+cha_5: "Source removed from database"
+cha_6: "Source channel is already removed from database."
+cha_7: "Destination channels in database:"
+cha_8: "Source channels in database:"
 
 # carbon
-carbon_1: "Processing"
-carbon_2: "Carbonised by [{}](tg://user?id={})"
+carbon_1: "Carbonised by [{}](tg://user?id={})"
+carbon_2: "`Reply to Message or readable file..`"
+carbon_3: "`Give Custom Color to Create Carbon...`"
+
+# chat_bot
+chab_1: "Reply to a user or give me his id/username to add an AI ChatBot!"
+chab_2: "`No user has AI added.`"
+chab_3: "**Total List Of AI Enabled Users In This Chat :**\n\n"
 
 # chats
-chats_1: "`Processing...`"
-chats_2: "`Cant delete this chat`"
-chats_3: "`I m not an admin`"
-chats_4: "#Deleted\nDeleted {}"
-chats_5: "Your [{}]({}) Group Made Boss!"
-chats_6: "Join @TeamUltroid"
+chats_1: "`Cant delete this chat`"
+chats_2: "`I m not an admin`"
+chats_3: "#Deleted\nDeleted {}"
+chats_4: "Your [{}]({}) Group Made Boss!"
+chats_5: "Join @TeamUltroid"
+chats_6: "Your {} Group/Channel Has been made Boss!"
+
+# clean action
+clan_1: "Added Clean Action Setting For this Chat"
+clan_2: "Removed Clean Action Setting For this Chat"
+clan_3: "`Invalid ID`"
+clan_4: "`No Chat Added`"
 
 # converter
-cvt_1: "Reply to any media/Document."
+cvt_1: "`Reply to any media/Document.`"
 cvt_2: "Give The name and extension of file"
-cvt_3: "`Processing...`"
-cvt_4: "Reply to any media."
+cvt_3: "`Reply to media..`"
+cvt_4: "`Reply to img or file with thumbnail.`"
+cvt_5: "Replied file has no thumbnail.`"
+cvt_6: "Added [This]({}) As Your Custom Thumbnail"
+cvt_7: "`Reply to a readable file`"
+cvt_8: "`Not A Readable File.`"
+
+# eventsofday
+eod_1: "🎊 **Events of the Day**\n\n"
+eod_2: "• **Events for {}/2021**\n\n"
 
 # core
 core_1: "Module Found"
@@ -97,6 +255,25 @@ core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴ
 core_16: "`Give name of plugin which u want to load`"
 core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
 core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
+
+# devtools
+devs_1: "`No cmd given`"
+devs_2: "`Give some python cmd`"
+devs_3: "`Give Some C++ Code..`"
+
+# dm
+dm_1: "`Give Chat username or id where to send.`"
+dm_2: "`Give text to send or reply to msg`"
+dm_3: "`⚜️Message Delivered!⚜️`"
+dm_4: "Error : {}\nRead Usage : `{}help dm`"
+dm_5: "`Check in Private.`"
+dm_6: "`No message found to deliver :(`"
+
+# echo
+echo_1: "**Activated Echo For Users:**\n\n"
+
+# fake action
+fka_1: "Starting Fake Action For {} sec."
 
 # fedutils
 sf_1: "Starting a Mass-FedBan..."
@@ -120,6 +297,32 @@ sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
 sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
 sf_20: "`Extracting information...`"
 sf_21: "\n\nFedInfo Extracted by Ultroid"
+sf_22: "No user was designated."
+sf_23: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+
+# filter
+flr_1: "`Use this command word to set as filter and reply...`"
+flr_2: "Filters Found In This Chats Are\n\n"
+flr_3: "`Give the filter to remove..`"
+flr_4: "Done : Filter `{}` Saved."
+flr_5: "Done : Filter `{}` Removed."
+flr_6: "No Filters Found Here"
+
+# fontgen
+fgn_1: "**Available Fonts**\n\n"
+
+# force subscribe
+fsub_1: "Give Channel where you want User to Join !"
+fsub_2: "Give Correct Channel Username or id"
+fsub_3: "ForceSub was not Active in this Chat !"
+fsub_4: "Join Channel"
+fsub_5: "Unmute Me"
+fsub_6: "Please Join That Channel !\nThen Click This Button !"
+fsub_7: "This Message is Not for You"
+fsub_8: "Thanks For Joining ! "
+
+# extra
+ex_1: "`Reply to message..`"
 
 # gdrive
 gdrive_1: "`You have already authorised with Google Drive`"
@@ -131,33 +334,191 @@ gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`
 gdrive_6: "`Go to `{}` and send ``/auth.`"
 gdrive_7: "**Successfully uploaded the file to G-Drive :**\n\n[{}]({})"
 
+# get addons
+gas_1: "Please provide a raw link!"
+
+# greetings
+grt_1: "`Welcome note saved`"
+grt_2: "Please use this in a group and not PMs!"
+grt_3: "`Reply to message which u want to set as welcome`"
+grt_4: "`No welcome was set!`"
+grt_5: "`Welcome Note Deleted`"
+grt_6: "`No goodbye was set!`"
+grt_7: "`Reply to message which u want to set as goodbye`"
+
+# mediainfo
+mdi_1: "More Explained Info"
+
+# nightmode
+nightm_1: "Give Time in correct format"
+nightm_2: "Setted time successfully"
+nightm_3: "Done, Added Current Chat To Night Mode"
+nightm_4: "Done, Removed Current Chat from Night Mode"
+nightm_5: "Something Went Wrong"
+
 # pmpermit
 pmperm_1: "Please wait for me to respond or you will be blocked and reported as spam!!"
 pmperm_2: "Eyy, I told you not to spam!\nYou've been blocked and reported, for now."
 pmperm_3: "Reply to someone's message or try this command in private."
 
+# schedule_msg
+schdl_1: "`Scheduled msg Succesfully`"
+schdl_2: "`Incorrect Format`"
+
+# searches
+srch_1: "`Search for whom? Give me a user name!!`"
+srch_2: "`No such user found...`"
+srch_3: "`Song not found...`"
+
+# snip
+snip_1: "Give word to set as snip and reply to a message."
+snip_2: "Give the word to remove..."
+snip_3: "No Snips Found Here."
+
+# specialtools
+spcltool_1: "Reply To Audio or video"
+spcltool_2: "`Done.. Now reply to video In which u want to add this Audio`"
+spcltool_3: "Reply To video"
+spcltool_4: "`First reply an audio with .raw`"
+spcltool_5: "Downloaded Successfully, Now Adding Your Audio to video"
+spcltool_6: "`Put input in dd/mm/yyyy format`"
+spcltool_7: "`Happy Birthday To U🎉🎊`"
+spcltool_8: "Give something to search.."
+spcltool_9: "Found Nothing"
+
+# sudo
+sudo_1: "`Reply to a msg or add it's id/username.`"
+sudo_2: "You cant add yourself as Sudo User..."
+sudo_3: "`No SUDO User was assigned ...`"
+
+# unsplash
+unspl_1: "No Results Found !"
+
 # updater
-upd_1: "`Checking for updates, please wait....`"
+upd_1: "`Checking for updates...`"
 upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
 upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
 upd_4: "`Changelog is too big, view the file to see it.`"
 upd_5: "Click the below button to update."
-upd_6: "Click the below button to update."
-upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_6: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_7: "`Fast Soft Updating...`"
 
 # upload download
 udl_1: "`Reply to the file/media you want to download...`"
 udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
 udl_3: "`Give a specific path to file`"
+udl_4: "`Trying to download...`"
+udl_5: "`You forgot to give link :(`"
+udl_6: "`This Directory is Empty.`"
 
 # words
-wrd_1: "**Word** - `{}`\n\n**Meanings** - \n"
+wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
 wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
 wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
+wrd_4: "`Give a Word to Find Its Meaning..`"
+wrd_5: "Synonyms"
+wrd_6: "Antonyms"
+wrd_7: "No synonym found!!\n\n`{}`"
+wrd_8: "No Antonyms found!!\n\n`{}`"
 
-# ---------------------------------------------------#
+# profanitY
+prof_1: "`Added This Chat for Profanity Filtering!`"
+prof_2: "`Removed This Chat from Profanity Filtering!`"
 
-# assisant
+# notes
+notes_1: "`Use this Command with Reply and word to use a note.`"
+notes_2: "Done Note : `#{}` saved."
+notes_3: "`Give me the note handler which you want to remove.`"
+notes_4: "Notes Found In This Chats Are\n\n"
+notes_5: "No Notes Found Here"
+
+# stickertools
+sts_1: "`You haven't written any article, Waifu is going away.`"
+sts_2: "`Reply to an Animated Sticker...`"
+sts_3: "**Please select from {} **"
+sts_4: "`Reply to Non Animated Sticker.`"
+sts_5: "**Pack Kanged Successfully**.\n**Kanged Pack:** [link]({})"
+sts_6: "`Reply to message/media...`"
+sts_7: "`Sticker added in a Different Pack !\nThis Pack is Newly created!\nYour pack can be found` [here](t.me/addstickers/{})"
+sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`"
+sts_9:  "`Ooo Animated Sticker 👀...`"
+sts_10: "`Reply to any media...`"
+sts_11: "Kanging this Sticker..."
+sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
+sts_13: "`Switching to Pack {} due to insufficient space`"
+
+# whichsong
+whs_1: "<• Reply to Audio File •>"
+whs_2: "`Trying to identify the song....`"
+whs_3: "Failed to Identify song :("
+whs_4: "**Song Recognised!**\nName: __{}__"
+
+# webupload
+wbl_1:  "`Provide a File Name pls..`"
+
+# writer
+writer_1: "`Give Some Text Too`"
+
+# webshot
+wbs_1: "`Give a URL please!`"
+wbs_2: "Invalid URL!"
+wbs_3: "**WebShot Generated**\n**URL**: {}"
+
+# youtube
+youtube_1: "Give me a (youtube) URL to download audio from!"
+youtube_2: "`Give A Direct Audio Link To Download`"
+youtube_3: "Give me a (youtube) URL to download video from!"
+youtube_4: "`Give A Direct Video Link To Download`"
+youtube_5: "Give me a (youtube) search query to download audio from!"
+youtube_6: "`Downloading audio song...`"
+youtube_7: "Give me a (youtube) search query to download video from!"
+youtube_8: "`Downloading video song...`"
+
+# ziptools
+zip_1: "Reply to any media/Document."
+zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
+zip_3: "`Reply to zip file only`"
+
+# ------------------------- assistant --------------------------#
+
 ast_1: "Choose which API you want to set."
 ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
+
+# inlinestuff
+instu_1: "App search. Enter app name!"
+instu_2: "Recent Searches.."
+instu_3: "Enter Query to Search"
+instu_4: "Success"
+
+# callbackstuffs
+clst_1: "`Userbot dyno build in progress, please wait for it to complete.`"
+clst_2: "`Successfully Updated!\nRestarting, please wait...`"
+clst_3: "■ Generating Changelogs..."
+clst_4: "Something went wrong..."
+clst_5: "Done!"
+
+# -------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Left the voice chat.`"
+vcbot_2: "**ERROR:**\n{}"
+vcbot_3: "• Volume Changed to `{}%` •"
+vcbot_4: "`Please specify a volume from 1 to 200!`"
+vcbot_5: "`Re-joining this voice chat.`"
+vcbot_6: "You haven't connected to a voice chat!"
+vcbot_7: "`Keep patience... It'll take some time.`"
+vcbot_8: "Give only youtube playlist"
+vcbot_9: "Are You Kidding Me?\nWhat to Play?"
+vcbot_10: "Removed Chat from Vc AUTH Groups!"
+vcbot_11: "`Getting Voice Chat Bot Users List...`"
+vcbot_12: "`Muted playback in this chat.`"
+vcbot_13: "`Resumed playback in this chat.`"
+vcbot_14: "`Paused playback in this chat.`"
+vcbot_15: "Please specify a song name or reply to a video file !"
+vcbot_16: "Chat is Not in Vc Auth list..."
+vcbot_17: "`Reply to user's msg or add it's id/username...`"
+vcbot_18: "• Vc Auth List is Empty.."
+vcbot_19: "Already Authed This Chat!"
+vcbot_20: "`Downloading and converting...`"
+vcbot_21: "• Nothing in queue!"
+vcbot_22: "`Cleaned All Queues In Chat`"

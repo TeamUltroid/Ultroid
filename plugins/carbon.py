@@ -20,7 +20,7 @@ import random
 
 from carbonnow import Carbon
 
-from . import *
+from . import eor, get_string, inline_mention, os, ultroid_cmd
 
 all_col = [
     "Black",
@@ -175,15 +175,12 @@ all_col = [
 
 
 @ultroid_cmd(
-    pattern="^(rc|c)arbon",
+    pattern="(rc|c)arbon",
 )
 async def crbn(event):
-    xxxx = await eor(event, "Processing")
+    xxxx = await eor(event, get_string("com_1"))
     te = event.text
-    if te[1] == "r":
-        col = random.choice(all_col)
-    else:
-        col = None
+    col = random.choice(all_col) if te[1] == "r" else None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
@@ -197,8 +194,7 @@ async def crbn(event):
         try:
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
-            return await eor(xxxx, "`Reply to Message or readable file..`")
-    col = random.choice(all_col)
+            return await eor(xxxx, get_string("carbon_2"))
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
     )
@@ -216,8 +212,8 @@ async def crbn(event):
 async def crbn(event):
     match = event.pattern_match.group(1)
     if not match:
-        return await eor(event, "`Give Custom Color to Create Carbon...`")
-    msg = await eor(event, "Processing")
+        return await eor(event, get_string("carbon_3"))
+    msg = await eor(event, get_string("com_1"))
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
@@ -233,7 +229,7 @@ async def crbn(event):
             code = match[1]
             match = match[0]
         except IndexError:
-            return await eor(msg, "`Reply to Message or readable file..`")
+            return await eor(msg, get_string("carbon_2"))
     carbon = Carbon(
         base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
     )
