@@ -66,6 +66,8 @@ async def on_new_mssg(event):
         if MSG and BTTS:
             return await event.reply(MSG, buttons=BTTS)
     xx = await event.forward_to(OWNER_ID)
+    if event.fwd_from:
+        await xx.reply(f"From {inline_mention(event.sender)} [`{event.sender_id}`]")
     add_stuff(xx.id, who)
 
 
