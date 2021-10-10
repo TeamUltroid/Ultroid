@@ -15,10 +15,13 @@ from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.utils import get_display_name
-
+from telethon.types import Channel, Chat
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.messages import GetFullChatRequest
 from . import *
 
 FSUB = udB.get_redis("PMBOT_FSUB")
+CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
@@ -32,19 +35,36 @@ async def on_new_mssg(event):
         return
     if FSUB:
         MSG = ""
+        BTTS = []
         for chat in FSUB:
             try:
                 await event.client.get_permissions(chat, event.sender_id)
             except UserNotParticipantError:
                 if not MSG:
-                    MSG += "You need to Join Below Chat(s) in order to Chat to my Master!\n\n"
+                    MSG += **"You need to Join Below Chat(s) in order to Chat to my Master!\n\n**"
                 try:
                     TAHC_ = await event.client.get_entity(chat)
-                    MSG += f"- [{get_display_name(TAHC_)}](@{TAHC_.username})\n"
+                    if hasattr(TAHC_, "username") and TAHC_.username:
+                        uri = "t.me/"+TAHC_.username
+                    elif CACHE.get(chat):
+                        uri = CACHE[chat]
+                    else:
+                        if isinstance(TAHC_, Channel):
+                           FUGB_ = await event.client(GetFullChannelRequest(chat))
+                        elif isinstance(TAHC_, Chat):
+                           FUGB = await event.client(GetFullChatRequest(chat))
+                        else:
+                           return
+                        if FUGB.full_chat.exported_invite:
+                           CACHE[chat] = FUGB.full_chat.exported_invite.link
+                           uri = CACHE[chat]
+                        else:
+                           pass #todo: Generate New?
+                    BTTS.append(get_display_name(TAHC_), uri)
                 except Exception as er:
                     LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
-        if MSG:
-            return await event.reply(MSG)
+        if MSG and BTTS:
+            return await event.reply(MSG, buttons=BTTS)
     xx = await event.forward_to(OWNER_ID)
     add_stuff(xx.id, who)
 
@@ -65,7 +85,7 @@ async def on_out_mssg(event):
         try:
             k = await asst.get_entity(to_user)
             return await event.reply(
-                f"**Name :** {get_display_name(k)}\n**ID :** `{k.id}`\n**Link :** {inline_mention(k)}"
+                f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}"
             )
         except BaseException:
             return
