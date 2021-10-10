@@ -35,7 +35,7 @@ async def join_(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await eor(event, get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat, event)
@@ -52,7 +52,7 @@ async def leaver(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await eor(event, get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -73,7 +73,7 @@ async def rejoiner(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await eor(event, get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -95,14 +95,14 @@ async def volume_setter(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await eor(event, get_string("vcbot_2").format(str(e)))
     elif inp[1].startswith("-"):
         chat = int(inp[1])
         vol = int(inp[2])
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await eor(event, get_string("vcbot_2").format(str(e)))
     elif inp[1].isdigit() and len(inp) == 2:
         vol = int(inp[1])
         chat = event.chat_id
