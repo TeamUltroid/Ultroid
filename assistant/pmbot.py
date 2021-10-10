@@ -16,7 +16,7 @@ from pyUltroid.misc import owner_and_sudos
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
-from telethon.types import Channel, Chat
+from telethon.tl.types import Channel, Chat
 from telethon.utils import get_display_name
 
 from . import *
