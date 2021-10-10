@@ -49,11 +49,9 @@ from . import (
     pattern="github (.*)",
 )
 async def gitsearch(event):
-    xx = await eor(event, get_string("com_2"))
-    try:
-        usrname = event.pattern_match.group(1)
-    except BaseException:
-        return await xx.edit(get_string("srch_1"))
+    usrname = event.pattern_match.group(1)
+    if not usrname:
+        return await eor(event, get_string("srch_1"))
     url = f"https://api.github.com/users/{usrname}"
     ult = await async_searcher(url, re_json=True)
     try:
@@ -70,7 +68,7 @@ async def gitsearch(event):
         ufollowers = ult["followers"]
         ufollowing = ult["following"]
     except BaseException:
-        return await xx.edit(get_string("srch_2"))
+        return await eor(event, get_string("srch_2"))
     fullusr = f"""
 **[GITHUB]({ulink})**
 **Name** - {uacc}
@@ -84,8 +82,8 @@ async def gitsearch(event):
 **Followers** - {ufollowers}
 **Following** - {ufollowing}
 """
-    await xx.delete()
-    await event.reply(fullusr, file=upic)
+    await event.respond(fullusr, file=upic)
+    await event.delete()
 
 
 @ultroid_cmd(
