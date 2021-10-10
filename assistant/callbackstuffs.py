@@ -16,7 +16,7 @@ from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
-
+from asyncio.exceptions import TimeoutError as AsyncTimeOut
 try:
     from carbonnow import Carbon
 except ImportError:
@@ -1109,11 +1109,38 @@ async def chbot(event):
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
+            [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
     )
 
+@callback("pmfs$", owner=True)
+async def heheh(event):
+    Ll = []
+    err = ""
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message("• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot")
+        await conv.send_message("Example : \n`-1001234567\n-100778888\n\nFor Multiple Chat(s).")
+        try:
+           msg = await conv.get_response()
+        except AsyncTimeOut:
+           return await conv.send_message("TimeUp!\nStart from /start back.")
+        if not msg.text or msg.text.startswith("/"):
+           return await conv.send_message("Cancelled!", buttons=get_back_button("chatbot"))
+        for chat in msg.message.split("\n"):
+           if chat.isdigit():
+              chat = int(chat)
+           try:
+              CHSJSHS = await event.client.get_entity(chat)
+              P_id = get_peer_id(CHSJSHS)
+              Ll.append(P_id)
+           except Exception as er:
+              er += f"**{chat}** : {er}\n"
+        if err:
+            return await conv.send_message(err)
+        udB.set("PMBOT_FSUB", str(Ll))
+        await conv.send_message("Done!\nRestart Your Bot.", buttons=get_back_button("chatbot"))
 
 @callback("bwel", owner=True)
 async def name(event):
