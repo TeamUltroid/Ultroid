@@ -5,7 +5,7 @@ aiohttp==3.7.4.post0
 akinator.py
 apscheduler
 bs4
-enhancer==0.2b0
+enhancer==0.1.8
 gdown
 gingerit
 git+https://github.com/buddhhu/img2html.git
