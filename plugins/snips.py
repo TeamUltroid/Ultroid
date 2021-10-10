@@ -96,7 +96,7 @@ async def lsnote(e):
 async def notes(e):
     if not e.out and str(e.sender_id) not in sudoers():
         return
-    xx = [z.replace("$", "") for z in e.text.lower.split() if z.startswith("$")]
+    xx = [z.replace("$", "") for z in e.text.lower().split() if z.startswith("$")]
     for z in xx:
         k = get_snips(z)
         if k:
