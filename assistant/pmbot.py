@@ -14,9 +14,10 @@ from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon.utils import get_display_name
-
+from telethon.errors.rpcerrorlist import UserNotParticipantError
 from . import *
 
+FSUB = udB.get_redis("PMBOT_FSUB")
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
@@ -28,6 +29,21 @@ async def on_new_mssg(event):
     # doesn't reply to that user anymore
     if event.text.startswith("/") or who == OWNER_ID:
         return
+    if FSUB:
+        MSG = ""
+        for chat in FSUB:
+            try:
+                await event.client.get_permissions(chat, event.sender_id)
+            except UserNotParticipantError:
+                if not MSG:
+                    MSG += "You need to Join Below Chat(s) in order to Chat to my Master!\n\n"
+                try:
+                    TAHC_ = await event.client.get_entity(chat)
+                    MSG += f"- [{get_display_name(TAHC_)}](@{TAHC_.username})\n"
+                except Exception as er:
+                    LOGS.exception(f"Error On PmBot Force Sub!"\n - {chat} \n{er}")
+        if MSG:
+            return await event.reply(MSG)
     xx = await event.forward_to(OWNER_ID)
     add_stuff(xx.id, who)
 
