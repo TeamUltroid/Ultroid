@@ -394,7 +394,8 @@ async def djshsh(event):
     if not msg_id:
         return await eor(event, get_string("pinned_1"))
     msg = await event.client.get_messages(chat.id, ids=msg_id)
-    await eor(event, f"Pinned Message in Current chat is [here]({msg.message_link}).")
+    if msg:
+        await eor(event, f"Pinned Message in Current chat is [here]({msg.message_link}).")
 
 
 @ultroid_cmd(
