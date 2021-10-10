@@ -17,7 +17,7 @@ from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
-
+from telethon.utils import get_peer_id
 try:
     from carbonnow import Carbon
 except ImportError:
@@ -1126,7 +1126,7 @@ async def heheh(event):
             "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot"
         )
         await conv.send_message(
-            "Example : \n`-1001234567\n-100778888\n\nFor Multiple Chat(s)."
+            "Example : \n`-1001234567\n-100778888`\n\nFor Multiple Chat(s)."
         )
         try:
             msg = await conv.get_response()
@@ -1141,8 +1141,7 @@ async def heheh(event):
                 chat = int(chat)
             try:
                 CHSJSHS = await event.client.get_entity(chat)
-                P_id = get_peer_id(CHSJSHS)
-                Ll.append(P_id)
+                Ll.append(get_peer_id(CHSJSHS))
             except Exception as er:
                 err += f"**{chat}** : {er}\n"
         if err:
