@@ -93,9 +93,9 @@ async def lsnote(e):
     await eor(e, get_string("notes_5"))
 
 
-@ultroid_bot.on(events.NewMessage())
+@ultroid_bot.on(events.NewMessage(func=lambda x: x.text.startswith("#")))
 async def notes(e):
-    xx = e.text.lower.split()
+    xx = e.text.lower().split()
     xx = [z.replace("#", "") for z in xx if z.startswith("#")]
     chat = e.chat_id
     for word in xx:
