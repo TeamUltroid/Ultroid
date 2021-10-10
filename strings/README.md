@@ -4,7 +4,7 @@
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
 | en | English [English] | 382 | 0 |
-| ru | Russian [Русский] | 375 | [7](https://hastebin.com/raw/akirofogiy) |
+| ru | Russian [Русский] | 382 | NULL |
 | it | Italian [italiano] | 115 | 267 |
 | az | Azerbaijani [Azərbaycanca] | 3 | 379 |
 | ar | Arabic [العربية] | 115 | 267 |
