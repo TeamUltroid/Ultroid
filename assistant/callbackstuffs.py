@@ -1137,14 +1137,14 @@ async def heheh(event):
                 "Cancelled!", buttons=get_back_button("chatbot")
             )
         for chat in msg.message.split("\n"):
-            if chat.isdigit():
+            if chat.startswith("-") or chat.isdigit():
                 chat = int(chat)
             try:
                 CHSJSHS = await event.client.get_entity(chat)
                 P_id = get_peer_id(CHSJSHS)
                 Ll.append(P_id)
             except Exception as er:
-                er += f"**{chat}** : {er}\n"
+                err += f"**{chat}** : {er}\n"
         if err:
             return await conv.send_message(err)
         udB.set("PMBOT_FSUB", str(Ll))
