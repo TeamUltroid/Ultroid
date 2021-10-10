@@ -172,7 +172,7 @@ async def play_music_(event):
 @vc_asst("radio")
 async def radio_mirchi(e):
     xx = await eor(e, get_string("com_1"))
-    if not len(e.text.split()) > 1:
+    if len(e.text.split()) <= 1:
         return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
@@ -188,9 +188,10 @@ async def radio_mirchi(e):
     if not is_url_ok(song):
         return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
-    if not ultSongs.group_call.is_connected:
-        if not (await ultSongs.vc_joiner()):
-            return
+    if not ultSongs.group_call.is_connected and not (
+        await ultSongs.vc_joiner()
+    ):
+        return
     await ultSongs.group_call.start_audio(song)
     await xx.reply(
         f"• Started Radio 📻\n\n• Station : `{song}`",
@@ -224,9 +225,10 @@ async def live_stream(e):
         return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
     file, thumb, title, link, duration = await download(song)
     ultSongs = Player(chat, e)
-    if not ultSongs.group_call.is_connected:
-        if not (await ultSongs.vc_joiner()):
-            return
+    if not ultSongs.group_call.is_connected and not (
+        await ultSongs.vc_joiner()
+    ):
+        return
     from_user = inline_mention(e.sender)
     await xx.reply(
         "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(

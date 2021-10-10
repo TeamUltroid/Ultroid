@@ -63,7 +63,7 @@ async def _(e):
 
 
 def gen_font(text, new_font):
-    new_font = " ".join(_ for _ in new_font).split()
+    new_font = " ".join(new_font).split()
     for q in text:
         if q in _default:
             new = new_font[_default.index(q)]

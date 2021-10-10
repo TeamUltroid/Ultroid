@@ -128,9 +128,10 @@ async def trim_aud(e):
             DocumentAttributeAudio(
                 duration=duration,
                 title=out.split(".")[0],
-                performer=vido.file.performer if vido.file.performer else artist,
+                performer=vido.file.performer or artist,
             )
         ]
+
         caption = get_string("audiotools_7").format(ss, dd)
         await e.client.send_file(
             e.chat_id,
@@ -175,9 +176,10 @@ async def ex_aud(e):
             title=reply.file.name.split(".")[0]
             if reply.file.name
             else "Extracted Audio",
-            performer=reply.file.performer if reply.file.performer else artist,
+            performer=reply.file.performer or artist,
         )
     ]
+
     f_time = time.time()
     try:
         fo = await uploader(

@@ -267,8 +267,8 @@ async def _(event):
     if not sticks:
         return await uu.edit(get_string("spcltool_9"))
     a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
-    for _ in sticks:
-        a += f"<a href={_}>{sticks[_]}</a>\n"
+    for _, value in sticks.items():
+        a += f"<a href={_}>{value}</a>\n"
     await uu.edit(a, parse_mode="html")
 
 

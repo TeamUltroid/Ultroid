@@ -60,8 +60,6 @@ async def on_new_mssg(event):
                         if FUGB.full_chat.exported_invite:
                             CACHE[chat] = FUGB.full_chat.exported_invite.link
                             uri = CACHE[chat]
-                        else:
-                            pass  # todo: Generate New?
                     BTTS.append(Button.url(get_display_name(TAHC_), uri))
                 except Exception as er:
                     LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
