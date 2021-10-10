@@ -56,7 +56,7 @@ async def set_afk(event):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
                 media = f"https://telegra.ph{iurl[0]}"
-            elif "sticker" in media_type:
+            elif "sticker" or "audio" in media_type:
                 media = reply.file.id
             else:
                 return await eor(event, get_string("com_4"), time=5)
