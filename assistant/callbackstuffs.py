@@ -1117,7 +1117,7 @@ async def chbot(event):
     )
 
 
-@callback("pmfs$", owner=True)
+@callback("pmfs", owner=True)
 async def heheh(event):
     Ll = []
     err = ""
