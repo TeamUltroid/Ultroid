@@ -41,7 +41,7 @@ async def on_new_mssg(event):
                 await event.client.get_permissions(chat, event.sender_id)
             except UserNotParticipantError:
                 if not MSG:
-                    MSG += **"You need to Join Below Chat(s) in order to Chat to my Master!\n\n**"
+                    MSG += "**You need to Join Below Chat(s) in order to Chat to my Master!\n\n**"
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
