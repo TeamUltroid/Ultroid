@@ -41,7 +41,7 @@ async def on_new_mssg(event):
                     TAHC_ = await event.client.get_entity(chat)
                     MSG += f"- [{get_display_name(TAHC_)}](@{TAHC_.username})\n"
                 except Exception as er:
-                    LOGS.exception(f"Error On PmBot Force Sub!"\n - {chat} \n{er}")
+                    LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
         if MSG:
             return await event.reply(MSG)
     xx = await event.forward_to(OWNER_ID)
