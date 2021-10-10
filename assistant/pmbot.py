@@ -18,6 +18,7 @@ from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import Channel, Chat
 from telethon.utils import get_display_name
+from telethon.tl.custom import Button
 
 from . import *
 
@@ -61,7 +62,7 @@ async def on_new_mssg(event):
                             uri = CACHE[chat]
                         else:
                             pass  # todo: Generate New?
-                    BTTS.append(get_display_name(TAHC_), uri)
+                    BTTS.append(Button.url(get_display_name(TAHC_), uri))
                 except Exception as er:
                     LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
         if MSG and BTTS:
