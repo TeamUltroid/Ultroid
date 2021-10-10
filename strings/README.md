@@ -3,28 +3,28 @@
 
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
-| en | English [English] | 360 | 0 |
-| ru | Russian [Русский] | 360 | NULL |
-| it | Italian [italiano] | 115 | 245 |
-| az | Azerbaijani [Azərbaycanca] | 3 | 357 |
-| ar | Arabic [العربية] | 115 | 245 |
-| bn | bengoli [বাংলা] | 115 | 245 |
-| fa | Persian [Farsi] | 114 | 246 |
-| mr | Marathi [मराठी] | 115 | 245 |
-| si | sinhala [සිංහල] | 115 | 245 |
-| tr | Turkish [Türk] | 115 | 245 |
-| pt-br | Portuguese [Português] | 114 | 246 |
-| my | Malaysia [Bahasa Malaysia] | 114 | 246 |
-| cn | Chinese [简体中文] | 115 | 245 |
-| hi | Hindi [हिंदी] | 115 | 245 |
-| ml | Malayalam [മലയാളം] | 115 | 245 |
-| od | Odia [ଓଡିଆ] | 115 | 245 |
-| fr | French [français] | 3 | 357 |
-| id | Indonesia [Indonesia] | 349 | 11 |
-| ta | தமிழ் [தமிழ்] | 115 | 245 |
-| es | Spanish [Español] | 115 | 245 |
-| gu | Gujarati [ગુજરાતી] | 115 | 245 |
-| ka | Kannada [ಕನ್ನಡ] | 115 | 245 |
+| en | English [English] | 382 | 0 |
+| ru | Russian [Русский] | 375 | [7](https://hastebin.com/raw/akirofogiy) |
+| it | Italian [italiano] | 115 | 267 |
+| az | Azerbaijani [Azərbaycanca] | 3 | 379 |
+| ar | Arabic [العربية] | 115 | 267 |
+| bn | bengoli [বাংলা] | 115 | 267 |
+| fa | Persian [Farsi] | 114 | 268 |
+| mr | Marathi [मराठी] | 115 | 267 |
+| si | sinhala [සිංහල] | 115 | 267 |
+| tr | Turkish [Türk] | 115 | 267 |
+| pt-br | Portuguese [Português] | 114 | 268 |
+| my | Malaysia [Bahasa Malaysia] | 114 | 268 |
+| cn | Chinese [简体中文] | 115 | 267 |
+| hi | Hindi [हिंदी] | 115 | 267 |
+| ml | Malayalam [മലയാളം] | 115 | 267 |
+| od | Odia [ଓଡିଆ] | 115 | 267 |
+| fr | French [français] | 3 | 379 |
+| id | Indonesia [Indonesia] | 349 | 33 |
+| ta | தமிழ் [தமிழ்] | 115 | 267 |
+| es | Spanish [Español] | 115 | 267 |
+| gu | Gujarati [ગુજરાતી] | 115 | 267 |
+| ka | Kannada [ಕನ್ನಡ] | 115 | 267 |
 
 
 If Strings are not present, Google Translation will be used to Translate them at time of Usage.
