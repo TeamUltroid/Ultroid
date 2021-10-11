@@ -1125,11 +1125,24 @@ async def chbot(event):
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
+            [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
         link_preview=False,
     )
+
+@callback("botinfe", owner=True)
+async def hhh(e):
+    async with e.client.conversation(e.chat_id) as conv:
+        await conv.send_message("Send message to set to Display, when user Press Info button in Bot Welcome!\n\nsend `False` to completely remove that button..")
+        msg = await conv.get_response()
+        if msg.media or msg.text.startswith("/"):
+            return await conv.send_message(
+                "Terminated!", buttons=get_back_button("chatbot")
+            )
+        udB.set("BOT_INFO_START", msg.text)
+        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 
 @callback("pmfs", owner=True)
