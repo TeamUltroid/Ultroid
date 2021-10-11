@@ -215,7 +215,7 @@ if sett == "True":
     async def permitpm(event):
         inline_pm = False
         if Redis("INLINE_PM") and Redis("INLINE_PM") == "True":
-           inline_pm = not inline_pm
+            inline_pm = not inline_pm
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
