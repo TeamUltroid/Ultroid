@@ -9,6 +9,7 @@ from datetime import datetime
 
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
+from pyUltroid.dB.sudos import is_fullsudo
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import owner_and_sudos
 from telethon import Button, events
@@ -86,7 +87,7 @@ async def ultroid(event):
             await event.client.send_message(
                 int(udB["LOG_CHANNEL"]), msg, buttons=buttons
             )
-    if str(event.sender_id) not in owner_and_sudos():
+    if (event.sender_id != OWNER_ID) and not is_fullsudo(event.sender_id):
         ok = ""
         u = await event.client.get_entity(event.chat_id)
         if not udB.get("STARTMSG"):
@@ -153,8 +154,7 @@ async def bdcast(event):
         await conv.send_message(
             "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
         )
-        response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
-        response = await response
+        response = await conv.get_response()
         if response.message == "/cancel":
             return await conv.send_message("Cancelled!!")
         success = 0

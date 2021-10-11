@@ -25,7 +25,7 @@ from ._inline import something
 
 @ultroid_cmd(pattern="button")
 async def butt(event):
-    media, text = None, None
+    media, wut, text = None, None, None
     if event.reply_to:
         wt = await event.get_reply_message()
         if wt.text:

@@ -35,19 +35,8 @@ except ImportError:
 
 from PIL import Image
 from telegraph import upload_file as uf
-from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import (
-    bash,
-    downloader,
-    eod,
-    eor,
-    get_paste,
-    get_string,
-    udB,
-    ultroid_cmd,
-    uploader,
-)
+from . import bash, downloader, eor, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
 
@@ -57,11 +46,7 @@ opn = []
 )
 async def _(e):
     r = await e.get_reply_message()
-    if not (r or r.file):
-        return await eod(e, get_string("cvt_4"))
-    if not r.file.media.thumbs:
-        return await eod(e, get_string("cvt_5"))
-    if isinstance(r.media, photu):
+    if r.photo:
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)

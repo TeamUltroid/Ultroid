@@ -85,7 +85,7 @@ async def _(e):
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
         total_frames = x.split(":")[1].split("\n")[0]
-        progress = "progress.txt"
+        progress = f"progress-{c_time}.txt"
         with open(progress, "w") as fk:
             pass
         proce = await asyncio.create_subprocess_shell(
