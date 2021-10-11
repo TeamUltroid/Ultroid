@@ -622,7 +622,7 @@ async def ibuild(e):
     txt = ok.get("msg") or None
     pic = ok.get("media") or None
     btn = ok.get("button") or None
-    if not (pic and txt):
+    if not (pic or txt):
         txt = "Hey!"
     if pic:
         try:
