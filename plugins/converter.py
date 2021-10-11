@@ -57,11 +57,11 @@ opn = []
 )
 async def _(e):
     r = await e.get_reply_message()
-    if not (r or r.file):
+    if not (r and r.file):
         return await eod(e, get_string("cvt_4"))
-    if not r.file.media.thumbs:
+    if not r.document.thumbs:
         return await eod(e, get_string("cvt_5"))
-    if isinstance(r.media, photu):
+    if r.photo:
         dl = await r.download_media()
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
