@@ -153,8 +153,7 @@ async def bdcast(event):
         await conv.send_message(
             "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
         )
-        response = conv.wait_event(events.NewMessage(chats=OWNER_ID))
-        response = await response
+        response = await conv.get_response()
         if response.message == "/cancel":
             return await conv.send_message("Cancelled!!")
         success = 0
