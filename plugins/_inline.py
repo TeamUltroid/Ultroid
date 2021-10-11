@@ -435,7 +435,7 @@ async def on_plug_in_callback_query_handler(event):
         )
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
+            Button.inline("« Bᴀᴄᴋ", data="back"),
         ]
     )
     try:
