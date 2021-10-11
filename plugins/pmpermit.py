@@ -213,15 +213,15 @@ if sett == "True":
         ),
     )
     async def permitpm(event):
-        t_in = Redis("INLINE_PM")
-        inline_pm = t_in == "True"
+        inline_pm = False
+        if Redis("INLINE_PM") and Redis("INLINE_PM") == "True":
+           inline_pm = not inline_pm
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
         if user.id in DEVLIST:
             return
-        apprv = is_approved(user.id)
-        if not apprv and event.text != UND:
+        if not is_approved(user.id) and event.text != UND:
             if Redis("MOVE_ARCHIVE") == "True":
                 try:
                     await ultroid_bot.edit_folder(user.id, folder=1)
