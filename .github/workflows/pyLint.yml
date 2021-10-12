@@ -24,7 +24,7 @@ jobs:
       - name: lint with isort and black
         run: |
           isort assistant/*.py
-          isort assistant/manager*.py
+          isort assistant/manager/*.py
           black assistant/*.py
           black assistant/manager/*.py
           isort plugins/*.py
