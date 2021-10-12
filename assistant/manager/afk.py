@@ -72,5 +72,4 @@ async def make_change(event):
         dont_send = True
       if not dont_send:
         await event.reply(msg)
-    return  
-.
+    return
