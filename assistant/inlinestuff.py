@@ -290,18 +290,21 @@ async def xda_dev(event):
 APP_CACHE = {}
 RECENTS = {}
 
+
 @in_pattern("app", owner=True)
 async def _(e):
     try:
         f = e.text.split(" ", maxsplit=1)[1].lower()
     except IndexError:
-        swa = get_string("instu_1")
+        get_string("instu_1")
         res = []
         if APP_CACHE and RECENTS.get(e.sender_id):
             for a in RECENTS[e.sender_id]:
                 if APP_CACHE.get(a):
                     res.append(APP_CACHE[a][0])
-        return await e.answer(res, switch_pm=get_string("instu_2"), switch_pm_param="start")
+        return await e.answer(
+            res, switch_pm=get_string("instu_2"), switch_pm_param="start"
+        )
     try:
         return await e.answer(
             APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start"
