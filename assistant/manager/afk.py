@@ -17,7 +17,7 @@ AFK = {}
 @asst_cmd(pattern="afk", func=lambda x: not x.is_private)
 async def go_afk(event):
   sender = await event.get_sender()
-  if not isinstance(sender, User):
+  if (not isinstance(sender, User)) or sender.bot:
     return
   try:
     reason = event.text.split(" ", maxsplit=1)[1]
@@ -49,7 +49,7 @@ async def make_change(event):
     name = get_display_name(event.sender)
     cha_send = chat_[event.sender_id]
     reason = cha_send["reason"]
-    msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_formatter(cha_send['time']-time.time())}"
+    msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_formatter((cha_send['time']-time.time())*1000)}"
     await event.reply(msg)
     del chat_[event.sender_id]
     if not chat_:
@@ -61,7 +61,7 @@ async def make_change(event):
     if replied.sender_id in chat_.keys():
       s_der = chat_[replied.sender_id]
       res_ = s_der["reason"]
-      time_ = time_formatter(s_der["time"] - time.time())
+      time_ = time_formatter((s_der["time"] - time.time())*1000)
       msg = f"**{name}** is AFK Currently!\n**From :** {time_}" 
       if res_ and isinstance(res_, str):
         msg += f"\n**Reason :** {res_}"
