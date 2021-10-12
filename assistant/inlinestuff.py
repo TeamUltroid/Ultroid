@@ -298,7 +298,7 @@ async def _(e):
         swa = get_string("instu_1")
         res = []
         if APP_CACHE and RECENTS.get(e.sender_id):
-            [res.append(APP_CACHE[a][0]) for a in RECENTS[event.sender_id]]
+            [res.append(APP_CACHE[a][0]) for a in RECENTS[e.sender_id]]
             swa = get_string("instu_2")
         return await e.answer(res, switch_pm=swa, switch_pm_param="start")
     try:
