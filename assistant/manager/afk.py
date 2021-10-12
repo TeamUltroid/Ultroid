@@ -25,7 +25,7 @@ async def go_afk(event):
     reason = None
   if event.is_reply:
     replied = await event.get_reply_message()
-    if not reason and replied.text:
+    if not reason and replied.text and not replied.media:
       reason = replied.text
   time_ = time.time()
   if AFK.get(event.chat_id):
@@ -45,10 +45,11 @@ async def go_afk(event):
 async def make_change(event):
   chat_ = AFK[event.chat_id]
   name = get_display_name(event.sender)
+  dont_send = None
   if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
     cha_send = chat_[event.sender_id]
     reason = cha_send["reason"]
-    msg = f"**{name}** is No Longer AFK!\n**Was AFK for {time_formatter(cha_send['time']-time.time())}"
+    msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_formatter(cha_send['time']-time.time())}"
     await event.reply(msg)
     del chat_[event.sender_id]
     if not chat_:
@@ -57,4 +58,15 @@ async def make_change(event):
   if event.is_reply:
     replied = await event.get_reply_message()
     if replied.sender_id in chat_.keys():
-      return # msg
+      s_der = chat_[replied.sender_id]
+      res_ = s_der["reason"]
+      time_ = time_formatter(res_["time"] - time.time())
+      msg = f"**{name}** is AFK Currently!\n**From :** {time_}" 
+      if res_ and isinstance(res_, str):
+        msg += f"**Reason :** {res_}"
+      elif res_ and isinstance(res_, Message):
+        await event.reply(res)
+        dont_send = True
+      if not dont_send:
+        await event.reply(msg)
+    return  
