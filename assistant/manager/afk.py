@@ -44,9 +44,9 @@ async def go_afk(event):
 @asst.on(NewMessage(func=lambda x: AFK.get(x.chat_id)))
 async def make_change(event):
   chat_ = AFK[event.chat_id]
-  name = get_display_name(event.sender)
   dont_send = None
-  if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
+  if event.sender_id in chat_.keys() and not event.text.startswith("/afk")
+    name = get_display_name(event.sender):
     cha_send = chat_[event.sender_id]
     reason = cha_send["reason"]
     msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_formatter(cha_send['time']-time.time())}"
@@ -57,13 +57,14 @@ async def make_change(event):
     return
   if event.is_reply:
     replied = await event.get_reply_message()
+    name = get_display_name(replied.sender)
     if replied.sender_id in chat_.keys():
       s_der = chat_[replied.sender_id]
       res_ = s_der["reason"]
       time_ = time_formatter(s_der["time"] - time.time())
       msg = f"**{name}** is AFK Currently!\n**From :** {time_}" 
       if res_ and isinstance(res_, str):
-        msg += f"**Reason :** {res_}"
+        msg += f"\n**Reason :** {res_}"
       elif res_ and isinstance(res_, Message):
         await event.reply(res)
         dont_send = True
