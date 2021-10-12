@@ -45,7 +45,7 @@ async def go_afk(event):
 async def make_change(event):
   chat_ = AFK[event.chat_id]
   dont_send = None
-  if event.sender_id in chat_.keys() and not event.text.startswith("/afk")
+  if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
     name = get_display_name(event.sender):
     cha_send = chat_[event.sender_id]
     reason = cha_send["reason"]
