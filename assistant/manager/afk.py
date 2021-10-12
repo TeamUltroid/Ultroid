@@ -8,7 +8,7 @@
 import time
 from . import asst_cmd, asst
 from telethon.events import NewMessage, ChatAction
-from telethon.tl.types import User
+from telethon.tl.types import User, Message
 from telethon.utils import get_display_name
 from pyUltroid.functions.helper import inline_mention, time_formatter
 
@@ -43,7 +43,7 @@ async def go_afk(event):
   await event.reply(msg)
 
   
-@asst.on(NewMessage(func=lambda x: AFK.get(x.chat_id)))
+@asst.on(NewMessage(func=lambda x: AFK.get(x.chat_id) and not x.is_private))
 async def make_change(event):
   chat_ = AFK[event.chat_id]
   dont_send = None
@@ -73,3 +73,4 @@ async def make_change(event):
       if not dont_send:
         await event.reply(msg)
     return  
+.
