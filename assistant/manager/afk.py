@@ -60,7 +60,7 @@ async def make_change(event):
     if replied.sender_id in chat_.keys():
       s_der = chat_[replied.sender_id]
       res_ = s_der["reason"]
-      time_ = time_formatter(res_["time"] - time.time())
+      time_ = time_formatter(s_der["time"] - time.time())
       msg = f"**{name}** is AFK Currently!\n**From :** {time_}" 
       if res_ and isinstance(res_, str):
         msg += f"**Reason :** {res_}"
