@@ -6,9 +6,11 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import aiohttp
 import random
+
+import aiohttp
 from pyUltroid.dB import DEVLIST
+
 from . import *
 
 
@@ -20,6 +22,7 @@ async def dheh(e):
     if e.is_reply:
         ri = e.reply_to_msg_id
     await e.client.send_message(e.chat_id, text, reply_to=ri)
+
 
 @ultroid_cmd(pattern="echo ?(.*)", type=["manager"])
 async def oqha(e):

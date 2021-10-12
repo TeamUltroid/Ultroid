@@ -5,11 +5,12 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from . import *
 from telethon import events
 
+from . import *
 
-@asst.on(events.ChatAction(func= lambda x: x.user_added))
+
+@asst.on(events.ChatAction(func=lambda x: x.user_added))
 async def dueha(e):
     user = await e.get_user()
     if not user.is_self:
