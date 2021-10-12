@@ -10,7 +10,7 @@ from . import asst_cmd, asst
 from telethon.events import NewMessage, ChatAction
 from telethon.tl.types import User
 from telethon.utils import get_display_name
-from pyUltroid.functions.helper import inline_mention
+from pyUltroid.functions.helper import inline_mention, time_formatter
 
 AFK = {}
 
@@ -45,7 +45,7 @@ async def go_afk(event):
 async def make_change(event):
   chat_ = AFK[event.chat_id]
   name = get_display_name(event.sender)
-  if event.sender_id in chat_.keys():
+  if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
     cha_send = chat_[event.sender_id]
     reason = cha_send["reason"]
     msg = f"**{name}** is No Longer AFK!\n**Was AFK for {time_formatter(cha_send['time']-time.time())}"
@@ -54,4 +54,7 @@ async def make_change(event):
     if not chat_:
       del AFK[event.chat_id]
     return
-  
+  if event.is_reply:
+    replied = await event.get_reply_message()
+    if replied.sender_id in chat_.keys():
+      return # msg
