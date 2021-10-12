@@ -298,9 +298,10 @@ async def _(e):
         swa = get_string("instu_1")
         res = []
         if APP_CACHE and RECENTS.get(e.sender_id):
-            [res.append(APP_CACHE[a][0]) for a in RECENTS[e.sender_id]]
-            swa = get_string("instu_2")
-        return await e.answer(res, switch_pm=swa, switch_pm_param="start")
+            for a in RECENTS[e.sender_id]:
+                if APP_CACHE.get(a):
+                    res.append(APP_CACHE[a][0])
+        return await e.answer(res, switch_pm=get_string("instu_2"), switch_pm_param="start")
     try:
         return await e.answer(
             APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start"
