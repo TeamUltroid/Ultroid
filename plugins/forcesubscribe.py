@@ -25,6 +25,7 @@ import re
 from pyUltroid.dB.forcesub_db import add_forcesub, get_forcesetting, rem_forcesub
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticipantError
 from telethon.tl.custom import Button
+from telethon.tl.types import User
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
@@ -133,7 +134,7 @@ async def cacheahs(ult):
 
     user = await ult.get_sender()
     joinchat = get_forcesetting(ult.chat_id)
-    if not joinchat or user.bot:
+    if (not joinchat) or (isinstance(user, User) and user.bot):
         return
     if CACHE.get(ult.chat_id):
         if CACHE[ult.chat_id].get(user.id):
