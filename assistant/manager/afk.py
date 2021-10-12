@@ -27,11 +27,11 @@ async def go_afk(event):
     replied = await event.get_reply_message()
     if not reason and replied.text:
       reason = replied.text
-  time = time.time()
+  time_ = time.time()
   if AFK.get(e.chat_id):
-    AFk[event.chat_id].update({event.sender_id:{"reason":reason,"time":time}})
+    AFk[event.chat_id].update({event.sender_id:{"reason":reason,"time":time_}})
   else:
-    AFK.update({event.chat_id:{event.sender_id:{"reason":reason,"time":time}}})
+    AFK.update({event.chat_id:{event.sender_id:{"reason":reason,"time":time_}}})
   mention = inline_mention(sender)
   msg = f"**{mention} went AFK Now!**"
   if reason and not isinstance(reason, str):
