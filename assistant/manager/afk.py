@@ -9,7 +9,12 @@ from datetime import datetime as dt
 
 from pyUltroid.functions.helper import inline_mention, time_formatter
 from telethon.events import NewMessage
-from telethon.tl.types import Message, User, MessageEntityMentionCode, MessageEntityMention
+from telethon.tl.types import (
+    Message,
+    MessageEntityMention,
+    MessageEntityMentionCode,
+    User,
+)
 from telethon.utils import get_display_name
 
 from . import asst, asst_cmd
