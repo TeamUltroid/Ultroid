@@ -78,7 +78,7 @@ async def make_change(event):
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
             elif res_ and isinstance(res_, Message):
-                await event.reply(res)
+                await event.reply(res_)
                 dont_send = True
             if not dont_send:
                 await event.reply(msg)
