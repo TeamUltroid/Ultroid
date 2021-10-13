@@ -56,7 +56,7 @@ async def make_change(event):
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
         time_ = time_formatter((cha_send['time']-dt.now()).microseconds)
-        msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {}"
+        msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_}"
         await event.reply(msg)
         del chat_[event.sender_id]
         if not chat_:
