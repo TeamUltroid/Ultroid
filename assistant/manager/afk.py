@@ -5,11 +5,11 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import time
+from datetime import datetime as dt
 
 from pyUltroid.functions.helper import inline_mention, time_formatter
 from telethon.events import NewMessage
-from telethon.tl.types import Message, User
+from telethon.tl.types import Message, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
 from . import asst, asst_cmd
@@ -32,7 +32,7 @@ async def go_afk(event):
             reason = replied.text
         else:
             reason = replied
-    time_ = time.time()
+    time_ = dt.now()
     if AFK.get(event.chat_id):
         AFk[event.chat_id].update({event.sender_id: {"reason": reason, "time": time_}})
     else:
@@ -55,8 +55,8 @@ async def make_change(event):
     if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
-        cha_send["reason"]
-        msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_formatter(cha_send['time']-time.time())}"
+        time_ = time_formatter((cha_send['time']-dt.now()).microseconds)
+        msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {}"
         await event.reply(msg)
         del chat_[event.sender_id]
         if not chat_:
@@ -68,7 +68,7 @@ async def make_change(event):
         if replied.sender_id in chat_.keys():
             s_der = chat_[replied.sender_id]
             res_ = s_der["reason"]
-            time_ = time_formatter(s_der["time"] - time.time())
+            time_ = time_formatter((s_der["time"] - dt.now()).microseconds)
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
@@ -78,3 +78,20 @@ async def make_change(event):
             if not dont_send:
                 await event.reply(msg)
         return
+    ST_SPAM = []
+    for ent, text in event.get_entities_text():
+        dont_send = None
+        if isinstance(ent, MessageEntityMentionCode) and ent.user_id in chat_.keys() and ent.user_id not in ST_SPAM:
+            ST_SPAM.append(en.user_id)
+            s_der = chat_[en.user_id]
+            name = get_display_name(await event.client.get_entity(en.user_id))
+            res_ = s_der["reason"]
+            time_ = time_formatter((s_der["time"] - dt.now()).microseconds)
+            msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
+            if res_ and isinstance(res_, str):
+                msg += f"\n**Reason :** {res_}"
+            elif res_ and isinstance(res_, Message):
+                await event.reply(res)
+                dont_send = True
+            if not dont_send:
+                await event.reply(msg)
