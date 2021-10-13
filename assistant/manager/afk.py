@@ -9,7 +9,7 @@ from datetime import datetime as dt
 
 from pyUltroid.functions.helper import inline_mention, time_formatter
 from telethon.events import NewMessage
-from telethon.tl.types import Message, User
+from telethon.tl.types import Message, User, MessageEntityMentionCode, MessageEntityMention
 from telethon.utils import get_display_name
 
 from . import asst, asst_cmd
@@ -80,15 +80,21 @@ async def make_change(event):
         return
     ST_SPAM = []
     for ent, text in event.get_entities_text():
-        dont_send = None
-        if (
-            isinstance(ent, MessageEntityMentionCode)
-            and ent.user_id in chat_.keys()
-            and ent.user_id not in ST_SPAM
+        dont_send, entity = None, None
+        if isinstance(ent, MessageEntityMentionCode):
+            c_id = en.user_id
+        elif isinstance(ent, MessageEntityMention):
+            c_id = text
+        else:
+            c_id = None
+        if c_id:
+            entity = await event.client.get_entity(c_id)
+        if entity and entity.id in chat_.keys()
+            and entity.id not in ST_SPAM
         ):
-            ST_SPAM.append(en.user_id)
-            s_der = chat_[en.user_id]
-            name = get_display_name(await event.client.get_entity(en.user_id))
+            ST_SPAM.append(entity.id)
+            s_der = chat_[entity.id]
+            name = get_display_name(entity)
             res_ = s_der["reason"]
             time_ = time_formatter((s_der["time"] - dt.now()).microseconds)
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
