@@ -12,7 +12,7 @@ from telethon.events import NewMessage
 from telethon.tl.types import (
     Message,
     MessageEntityMention,
-    MessageEntityMentionCode,
+    MessageEntityMentionName,
     User,
 )
 from telethon.utils import get_display_name
@@ -86,7 +86,7 @@ async def make_change(event):
     ST_SPAM = []
     for ent, text in event.get_entities_text():
         dont_send, entity = None, None
-        if isinstance(ent, MessageEntityMentionCode):
+        if isinstance(ent, MessageEntityMentionName):
             c_id = en.user_id
         elif isinstance(ent, MessageEntityMention):
             c_id = text
