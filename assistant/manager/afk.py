@@ -9,7 +9,7 @@ from datetime import datetime as dt
 
 from pyUltroid.functions.helper import inline_mention, time_formatter
 from telethon.events import NewMessage
-from telethon.tl.types import Message, MessageEntityMentionName, User
+from telethon.tl.types import Message, User
 from telethon.utils import get_display_name
 
 from . import asst, asst_cmd
@@ -55,7 +55,7 @@ async def make_change(event):
     if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
-        time_ = time_formatter((cha_send['time']-dt.now()).microseconds)
+        time_ = time_formatter((cha_send["time"] - dt.now()).microseconds)
         msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_}"
         await event.reply(msg)
         del chat_[event.sender_id]
@@ -81,7 +81,11 @@ async def make_change(event):
     ST_SPAM = []
     for ent, text in event.get_entities_text():
         dont_send = None
-        if isinstance(ent, MessageEntityMentionCode) and ent.user_id in chat_.keys() and ent.user_id not in ST_SPAM:
+        if (
+            isinstance(ent, MessageEntityMentionCode)
+            and ent.user_id in chat_.keys()
+            and ent.user_id not in ST_SPAM
+        ):
             ST_SPAM.append(en.user_id)
             s_der = chat_[en.user_id]
             name = get_display_name(await event.client.get_entity(en.user_id))
