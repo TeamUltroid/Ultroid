@@ -129,7 +129,7 @@ async def goimg(event):
             "format": "jpg",
             "output_directory": "./resources/downloads/",
         }
-        pth = gi.download(args)
+        pth = await gi.download(args)
         ok = pth[0][query]
     except BaseException:
         return await nn.edit(get_string("autopic_2").format(query))
@@ -173,7 +173,7 @@ async def reverse(event):
         "format": "jpg",
         "output_directory": "./resources/downloads/",
     }
-    pth = gi.download(args)
+    pth = await gi.download(args)
     ok = pth[0][text]
     await event.client.send_file(
         event.chat_id,
