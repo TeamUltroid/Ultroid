@@ -41,7 +41,7 @@ async def all_messages_catcher(e):
     y = e.chat
     where_n = get_display_name(y)
     who_n = get_display_name(x)
-    where_l = e.message.message_link
+    where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
     if hasattr(x, "username") and x.username:
         who_l = f"https://t.me/{x.username}"
