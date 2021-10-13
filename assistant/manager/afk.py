@@ -89,9 +89,7 @@ async def make_change(event):
             c_id = None
         if c_id:
             entity = await event.client.get_entity(c_id)
-        if entity and entity.id in chat_.keys()
-            and entity.id not in ST_SPAM
-        ):
+        if entity and entity.id in chat_.keys() and entity.id not in ST_SPAM:
             ST_SPAM.append(entity.id)
             s_der = chat_[entity.id]
             name = get_display_name(entity)
