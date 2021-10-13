@@ -509,7 +509,8 @@ async def sugg(event):
         text = "Do you Agree to Replied Suggestion ?"
     reply_to = event.reply_to_msg_id if event.is_reply else event.id
     try:
-        await event.client.send_file(event.chat_id,
+        await event.client.send_file(
+            event.chat_id,
             file=InputMediaPoll(
                 poll=Poll(
                     id=12345,
@@ -517,7 +518,7 @@ async def sugg(event):
                     answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
                 ),
             ),
-            reply_to=reply_to
+            reply_to=reply_to,
         )
     except Exception as e:
         return await eod(
