@@ -117,10 +117,7 @@ async def banhammer(event):
 
     blacklist_user(target)
     await event.reply(f"#BAN\nUser : {target}")
-    await asst.send_message(
-        target,
-        get_string("pmbot_4")
-    )
+    await asst.send_message(target, get_string("pmbot_4"))
 
 
 @asst_cmd(
