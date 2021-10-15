@@ -1154,7 +1154,7 @@ async def heheh(event):
     err = ""
     async with event.client.conversation(event.chat_id) as conv:
         await conv.send_message(
-            "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot\n\n• Send /clear to disable PmBot Force sub..\n• • Send /cancel to stop this process..")
+            "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot\n\n• Send /clear to disable PmBot Force sub..\n• • Send /cancel to stop this process.."
         )
         await conv.send_message(
             "Example : \n`-1001234567\n-100778888`\n\nFor Multiple Chat(s)."
