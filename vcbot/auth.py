@@ -39,7 +39,7 @@ async def auth_group(event):
         key = event.text.split(" ", maxsplit=1)[1]
         admins = bool("admins" in key)
     except IndexError:
-        admins = True
+        admins = False
     chat = event.chat_id
     cha, adm = check_vcauth(chat)
     if cha and adm == admins:
