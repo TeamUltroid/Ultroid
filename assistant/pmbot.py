@@ -43,7 +43,7 @@ async def on_new_mssg(event):
                 await event.client.get_permissions(chat, event.sender_id)
             except UserNotParticipantError:
                 if not MSG:
-                    MSG += "**You need to Join Below Chat(s) in order to Chat to my Master!\n\n**"
+                    MSG += get_string("pmbot_1")
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
@@ -110,16 +110,16 @@ async def on_out_mssg(event):
 async def banhammer(event):
     x = await event.get_reply_message()
     if not x:
-        return await event.reply("Please reply to someone to ban him.")
+        return await event.reply(get_string("pmbot_2"))
     target = get_who(x.id)
     if is_blacklisted(target):
-        return await event.reply("User is already banned!")
+        return await event.reply(get_string("pmbot_3"))
 
     blacklist_user(target)
     await event.reply(f"#BAN\nUser : {target}")
     await asst.send_message(
         target,
-        "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**",
+        get_string("pmbot_4")
     )
 
 
@@ -132,14 +132,14 @@ async def banhammer(event):
 async def unbanhammer(event):
     x = await event.get_reply_message()
     if not x:
-        return await event.reply("Please reply to someone to Unban him.")
+        return await event.reply(get_string("pmbot_5"))
     target = get_who(x.id)
     if not is_blacklisted(target):
-        return await event.reply("User was never banned!")
+        return await event.reply(get_string("pmbot_6"))
 
     rem_blacklist(target)
     await event.reply(f"#UNBAN\nUser : {target}")
-    await asst.send_message(target, "`Congrats! You have been unbanned.`")
+    await asst.send_message(target, get_string("pmbot_7"))
 
 
 # --------------------------------------- END -------------------------------------------- #
