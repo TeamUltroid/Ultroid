@@ -498,6 +498,15 @@ clst_3: "■ Generating Changelogs..."
 clst_4: "Something went wrong..."
 clst_5: "Done!"
 
+# pmbot
+pmbot_1: "**You need to join below chat(s) in order to chat with my master!\n\n**"
+pmbot_2: "Please reply to someone to ban him."
+pmbot_3: "User is already banned!"
+pmbot_4: "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**"
+pmbot_5: "Please reply to someone to Unban him."
+pmbot_6: "User was never banned!"
+pmbot_7: 
+
 # -------------------------- VcBot ------------------------------- #
 
 vcbot_1: "`Left the voice chat.`"
