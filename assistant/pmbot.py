@@ -9,6 +9,7 @@
 
 # --------------------------------------- Imports -------------------------------------------- #
 
+import os
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
@@ -86,12 +87,15 @@ async def on_out_mssg(event):
     if event.text.startswith("/who"):
         try:
             k = await asst.get_entity(to_user)
-            return await event.reply(
+            photu = await event.client.download_profile_photo(k.id)
+            await event.reply(
                 f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}",
-                file=await event.client.download_profile_photo(k.id),
-            )
-        except BaseException:
+                file=photu)
+            if photu:
+                os.remove(photu)
             return
+        except BaseException as er:
+            return await event.reply("**ERROR : **"+str(er))
     elif event.text.startswith("/"):
         return
     if to_user:
