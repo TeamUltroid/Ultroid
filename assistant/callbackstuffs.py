@@ -1167,7 +1167,7 @@ async def heheh(event):
             timyork = "Cancelled!"
             if msg.text == "/clear":
                 udB.delete("PMBOT_FSUB")
-                timyork = "Done! Force Subscribe Stopped\nRestart your Bot!")
+                timyork = "Done! Force Subscribe Stopped\nRestart your Bot!"
             return await conv.send_message(
                 "Cancelled!", buttons=get_back_button("chatbot")
             )
