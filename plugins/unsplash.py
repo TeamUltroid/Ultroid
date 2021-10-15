@@ -34,9 +34,9 @@ async def searchunsl(ult):
     dir = "resources/downloads/"
     CL, nl = [], 0
     for rp in res:
-        Hp = await download_file(rp, f"{dir}img-{nl}.png")
-        CL.append(Hp)
+        CL.append(download_file(rp, f"{dir}img-{nl}.png"))
         nl += 1
-    await ult.client.send_file(ult.chat_id, CL, caption=f"Uploaded {len(res)} Images!")
+    imgs = [z for z in (await asyncio.gather(*CL)) if z]
+    await ult.client.send_file(ult.chat_id, imgs, caption=f"Uploaded {len(imgs)} Images!")
     await tep.delete()
-    [os.remove(img) for img in CL]
+    [os.remove(img) for img in imgs]
