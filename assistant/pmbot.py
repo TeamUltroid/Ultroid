@@ -87,7 +87,8 @@ async def on_out_mssg(event):
         try:
             k = await asst.get_entity(to_user)
             return await event.reply(
-                f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}"
+                f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}",
+                file=await event.client.download_profile_photo(k.id)
             )
         except BaseException:
             return
