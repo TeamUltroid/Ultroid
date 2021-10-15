@@ -1154,7 +1154,7 @@ async def heheh(event):
     err = ""
     async with event.client.conversation(event.chat_id) as conv:
         await conv.send_message(
-            "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot"
+            "• Send The Chat Id(s), which you want user to Join Before using Chat/Pm Bot\n\n• Send /clear to disable PmBot Force sub..\n• • Send /cancel to stop this process..")
         )
         await conv.send_message(
             "Example : \n`-1001234567\n-100778888`\n\nFor Multiple Chat(s)."
@@ -1162,8 +1162,12 @@ async def heheh(event):
         try:
             msg = await conv.get_response()
         except AsyncTimeOut:
-            return await conv.send_message("TimeUp!\nStart from /start back.")
+            return await conv.send_message("**• TimeUp!**\nStart from /start back.")
         if not msg.text or msg.text.startswith("/"):
+            timyork = "Cancelled!"
+            if msg.text == "/clear":
+                udB.delete("PMBOT_FSUB")
+                timyork = "Done! Force Subscribe Stopped\nRestart your Bot!")
             return await conv.send_message(
                 "Cancelled!", buttons=get_back_button("chatbot")
             )
