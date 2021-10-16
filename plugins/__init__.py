@@ -26,10 +26,10 @@ from telethon.tl import functions, types
 from strings import get_string
 
 Redis = udB.get
-client = bot = ultroid_bot
 
 OWNER_NAME = ultroid_bot.me.first_name
-OWNER_ID = ultroid_bot.me.id
+OWNER_ID = ultroid_bot.uid
+
 LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
 INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
 if INLINE_PIC == "False":
