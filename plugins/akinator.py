@@ -20,7 +20,7 @@ from telethon.errors import BotMethodInvalidError
 from . import Button, asst, callback, get_string, in_pattern, types, ultroid_cmd
 
 games = {}
-aki_photo = "https://telegra.ph/file/b0ff07069e8637783fdae.jpg"
+aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
 
 
 @ultroid_cmd(pattern="akinator")
