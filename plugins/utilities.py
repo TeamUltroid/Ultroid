@@ -139,11 +139,11 @@ async def info(event):
 async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
     r = result.chats
+    if not r:
+        return await eor(event, "`No username Reserved`")
     output_str = "".join(
         f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in r
     )
-    if not r:
-        return await eor(event, "`No username Reserved`")
     await eor(event, output_str)
 
 
