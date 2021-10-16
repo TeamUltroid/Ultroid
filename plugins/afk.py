@@ -39,9 +39,7 @@ old_afk_msg = []
 
 @ultroid_cmd(pattern="afk ?(.*)", fullsudo=True)
 async def set_afk(event):
-    if event.client._bot:
-        await eor(event, "Master, I am a Bot, I cant go AFK..")
-    elif is_afk():
+    if event.client._bot or is_afk():
         return
     text, media, media_type = None, None, None
     if event.pattern_match.group(1):
@@ -101,6 +99,8 @@ async def remove_afk(event):
     ):
         return
     elif "afk" in event.text.lower():
+        return
+    elif event.chat_id in NOSPAM_CHAT:
         return
     if is_afk():
         _, _, _, afk_time = is_afk()
