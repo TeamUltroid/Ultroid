@@ -463,8 +463,7 @@ async def telegraphcmd(event):
             content = ab.read()
         os.remove(getit)
     makeit = Telegraph.create_page(title=match, content=[content])
-    war = makeit["url"]
-    await eor(event, f"Pasted to Telegraph : [Telegraph]({war})")
+    await eor(event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})")
 
 
 @ultroid_cmd(pattern="json$")
@@ -602,10 +601,6 @@ async def colgate(event):
 async def toothpaste(event):
     try:
         await event.respond(_copied_msg["CLIPBOARD"])
-        try:
-            await event.delete()
-        except BaseException:
-            pass
     except KeyError:
         return await eod(
             event,
@@ -613,7 +608,7 @@ async def toothpaste(event):
         )
     except Exception as ex:
         return await eor(event, str(ex), time=5)
-
+    await event.delete()
 
 @ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
