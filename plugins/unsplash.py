@@ -21,21 +21,16 @@ async def searchunsl(ult):
     match = ult.pattern_match.group(1)
     if not match:
         return await eor(ult, "Give me Something to Search")
+    num = 5
     if ";" in match:
         num = int(match.split(";")[1])
-        query = match.split(";")[0]
-    else:
-        num = 5
-        query = match
+        match = match.split(";")[0]
     tep = await eor(ult, get_string("com_1"))
-    res = await unsplashsearch(query, limit=num)
+    res = await unsplashsearch(match, limit=num)
     if not res:
         return await eor(ult, get_string("unspl_1"), time=5)
     dir = "resources/downloads/"
-    CL, nl = [], 0
-    for rp in res:
-        CL.append(download_file(rp, f"{dir}img-{nl}.png"))
-        nl += 1
+    CL = [download_file(rp, check_filename(dir+f"{match}.png") for rp in res]
     imgs = [z for z in (await asyncio.gather(*CL)) if z]
     await ult.client.send_file(
         ult.chat_id, imgs, caption=f"Uploaded {len(imgs)} Images!"
