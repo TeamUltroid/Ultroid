@@ -19,7 +19,7 @@ jobs:
       - name: Install Stuff
         run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt install wget -y && pip install pyyaml requests
       - name: dl stuff
-        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/035d53b6d2eb1119f219f5c3698e114421aa8f73/stringzer.py
+        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/fd071b9a61fbfa7ca70774295486e630ed606fd5/stringzer.py
       - name: do stuff
         run: python stringizer.py && rm stringizer.py
       - uses: stefanzweifel/git-auto-commit-action@v4
