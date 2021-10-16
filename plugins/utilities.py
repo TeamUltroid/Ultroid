@@ -610,6 +610,7 @@ async def toothpaste(event):
         return await eor(event, str(ex), time=5)
     await event.delete()
 
+
 @ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
     reply = await event.get_reply_message()
