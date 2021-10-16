@@ -13,7 +13,7 @@
 
 from pyUltroid.functions.misc import unsplashsearch
 
-from . import asyncio, check_filename, download_file, eor, get_string, os, ultroid_cmd
+from . import asyncio, download_file, eor, get_string, os, ultroid_cmd
 
 
 @ultroid_cmd(pattern="unsplash ?(.*)")
@@ -29,7 +29,6 @@ async def searchunsl(ult):
     res = await unsplashsearch(match, limit=num)
     if not res:
         return await eor(ult, get_string("unspl_1"), time=5)
-    dir = "resources/downloads/"
     CL = []
     for e, rp in enumerate(res):
         CL.append(download_file(rp, f"{match}-{e}.png"))
