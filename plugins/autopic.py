@@ -20,7 +20,7 @@ from random import shuffle
 
 from pyUltroid.functions.misc import unsplashsearch
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
-
+from apscheduler.schedulers.asyncio import AsyncIOScheduler # ignore: pylint
 from . import download_file, eor, get_string, udB, ultroid_cmd
 
 
