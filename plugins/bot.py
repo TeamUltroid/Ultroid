@@ -21,10 +21,8 @@
 
 • `{i}logs (sys)`
     Get the full terminal logs.
-
 • `{i}logs carbon`
     Get the carbonized sys logs.
-
 • `{i}logs heroku`
    Get the latest 100 lines of heroku logs.
 
