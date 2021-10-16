@@ -30,7 +30,9 @@ async def searchunsl(ult):
     if not res:
         return await eor(ult, get_string("unspl_1"), time=5)
     dir = "resources/downloads/"
-    CL = [download_file(rp, check_filename(dir + f"{match}.png")) for rp in res]
+    CL = []
+    for e, rp in enumerate(res):
+        CL.append(download_file(rp, f"{match}-{e}.png"))
     imgs = [z for z in (await asyncio.gather(*CL)) if z]
     await ult.client.send_file(
         ult.chat_id, imgs, caption=f"Uploaded {len(imgs)} Images!"
