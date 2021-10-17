@@ -67,6 +67,7 @@ async def make_change(event):
         if not chat_:
             del AFK[event.chat_id]
         return
+    ST_SPAM = []
     if event.is_reply:
         replied = await event.get_reply_message()
         name = get_display_name(replied.sender)
@@ -77,13 +78,12 @@ async def make_change(event):
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
-            elif res_ and isinstance(res_, Message):
+            elif res_ and isinstance(res_, Message) and not res_.media:
                 await event.reply(res_)
                 dont_send = True
             if not dont_send:
                 await event.reply(msg)
-        return
-    ST_SPAM = []
+        ST_SPAM.append(replied.sender_id)
     for ent, text in event.get_entities_text():
         dont_send, entity = None, None
         if isinstance(ent, MessageEntityMentionName):
@@ -103,7 +103,7 @@ async def make_change(event):
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
-            elif res_ and isinstance(res_, Message):
+            elif res_ and isinstance(res_, Message) and not res_.media:
                 await event.reply(res)
                 dont_send = True
             if not dont_send:
