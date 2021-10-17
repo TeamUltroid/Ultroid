@@ -24,7 +24,7 @@ from telethon.utils import get_display_name
 
 from . import *
 
-FSUB = udB.get_redis("PMBOT_FSUB")
+FSUB = udB.get_key("PMBOT_FSUB")
 CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
 
