@@ -91,7 +91,7 @@ async def all_messages_catcher(e):
         LOGS.info(str(er))
 
 
-if udB.get("TAG_LOG"):
+if udB.get("TAG_LOG") and not udB.get("OFF_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(
