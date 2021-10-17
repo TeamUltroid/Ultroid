@@ -86,7 +86,7 @@ async def get_var(event):
             f"• `{i}`" + "\n"
             for i in keys
             if not i.isdigit()
-            and not i.startswith("-")
+            and not i.startswith("-" or "_")
             and not i.startswith("GBAN_REASON_")
         )
 
