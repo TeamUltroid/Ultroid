@@ -31,11 +31,6 @@ import traceback
 from os import remove
 from pprint import pprint
 
-try:
-    from carbonnow import Carbon
-except ImportError:
-    Carbon = None
-
 from . import *
 
 
@@ -47,8 +42,7 @@ async def _(e):
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
-    ok = Carbon(base_url="https://carbonara.vercel.app/api/cook", code=p)
-    haa = await ok.memorize("neofetch")
+    haa = await Carbon(code=p, file_name="neofetch")
     await e.reply(file=haa)
     await xx.delete()
     remove("neo.txt")
