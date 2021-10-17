@@ -193,7 +193,7 @@ async def crbn(event):
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
             return await eor(xxxx, get_string("carbon_2"))
-    xx = await Carbon(code=code, file_name="ultroid_carbon", background=col)
+    xx = await Carbon(code=code, file_name="ultroid_carbon", backgroundColor=col)
     await xxxx.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
@@ -225,7 +225,7 @@ async def crbn(event):
             match = match[0]
         except IndexError:
             return await eor(msg, get_string("carbon_2"))
-    xx = await Carbon(code=code, background=match)
+    xx = await Carbon(code=code, backgroundColor=match)
     await msg.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
