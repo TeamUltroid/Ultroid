@@ -13,13 +13,14 @@ git+https://github.com/New-dev0/instagrapi.git
 git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
 gitpython==3.1.23
-google-api-python-client>=1.12.5
+google-api-python-client==1.7.11
 html-telegraph-poster==0.4.0
 htmlwebshot==0.1.2
+httplib2==0.13.1
 lottie==0.6.9
 multiprocess==0.70.12.2
 numpy==1.21.2
-oauth2client>=4.0.0
+oauth2client==4.1.3
 opencv-python-headless
 pillow>=7.0.0
 profanitydetector
