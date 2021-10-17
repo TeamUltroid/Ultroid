@@ -41,12 +41,12 @@ from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
-
 from . import (
     ATRA_COL,
     LOGS,
     OWNER_NAME,
     Button,
+    Carbon,
     Telegraph,
     Var,
     allcmds,
@@ -66,7 +66,6 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
-    Carbon
 )
 
 # Will move to strings
