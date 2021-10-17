@@ -12,7 +12,7 @@ from os import execl, remove
 from random import choice
 
 from pyUltroid.functions.gdrive import authorize, create_token_file
-from pyUltroid.functions.tools import get_paste, telegraph_client, Carbon
+from pyUltroid.functions.tools import Carbon, get_paste, telegraph_client
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import events
@@ -137,14 +137,12 @@ async def changes(okk):
     try:
         await okk.edit("• Writing Changelogs 📝 •")
         img = await Carbon(
-                file_name="changelog",
-                code=tl_chnglog,
-                background=choice(ATRA_COL),
-                language="md",
-            )
-        return await okk.edit(
-                f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
+            file_name="changelog",
+            code=tl_chnglog,
+            background=choice(ATRA_COL),
+            language="md",
         )
+        return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
     except Exception as er:
         LOGS.exception(er)
     changelog_str = changelog + cli
