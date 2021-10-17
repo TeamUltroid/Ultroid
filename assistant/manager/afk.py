@@ -55,8 +55,10 @@ async def go_afk(event):
 
 @asst.on(NewMessage(func=lambda x: AFK.get(x.chat_id) and not x.is_private))
 async def make_change(event):
+    if event.text.startswith("/afk"):
+        return
     chat_ = AFK[event.chat_id]
-    if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
+    if event.sender_id in chat_.keys():
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
         time_ = time_formatter((cha_send["time"] - dt.now()).microseconds)
