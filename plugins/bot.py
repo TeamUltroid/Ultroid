@@ -41,10 +41,6 @@ from telethon import __version__
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 from telethon.utils import resolve_bot_file_id
 
-try:
-    from carbonnow import Carbon
-except ImportError:
-    Carbon = None
 
 from . import (
     ATRA_COL,
@@ -70,6 +66,7 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
+    Carbon
 )
 
 # Will move to strings
@@ -221,10 +218,10 @@ async def _(event):
         event = await eor(event, get_string("com_1"))
         code = open("ultroid.log", "r").read()[-2500:]
         file = await Carbon(
-            base_url="https://carbonara.vercel.app/api/cook",
+            file_name="ultroid-logs",
             code=code,
             background=choice(ATRA_COL),
-        ).memorize("ultroid-logs")
+        )
         await event.reply("**Ultroid Logs.**", file=file)
     else:
         await def_logs(event)
