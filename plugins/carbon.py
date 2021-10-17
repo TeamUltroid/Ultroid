@@ -18,7 +18,7 @@
 """
 import random
 
-from . import eor, get_string, inline_mention, os, ultroid_cmd, Carbon
+from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
 
 all_col = [
     "Black",
