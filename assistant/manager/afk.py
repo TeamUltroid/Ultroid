@@ -31,7 +31,7 @@ async def go_afk(event):
         reason = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         reason = None
-    if event.is_reply:
+    if event.is_reply and not reason:
         replied = await event.get_reply_message()
         if not reason and replied.text and not replied.media:
             reason = replied.text
@@ -49,7 +49,7 @@ async def go_afk(event):
     if reason and not isinstance(reason, str):
         await event.reply(reason)
     else:
-        msg += f"\n\n**Reason : ** {reason}"
+        msg += f"\n\n**Reason : ** `{reason}`"
     await event.reply(msg)
 
 
