@@ -18,9 +18,7 @@
 """
 import random
 
-from carbonnow import Carbon
-
-from . import eor, get_string, inline_mention, os, ultroid_cmd
+from . import eor, get_string, inline_mention, os, ultroid_cmd, Carbon
 
 all_col = [
     "Black",
@@ -195,10 +193,7 @@ async def crbn(event):
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
             return await eor(xxxx, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
-    )
-    xx = await carbon.memorize("ultroid_carbon")
+    xx = await Carbon(code=code, file_name="ultroid_carbon", background=col)
     await xxxx.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
@@ -230,13 +225,7 @@ async def crbn(event):
             match = match[0]
         except IndexError:
             return await eor(msg, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
-    )
-    try:
-        xx = await carbon.memorize("ultroid_carbon")
-    except Exception as er:
-        return await msg.edit(str(er))
+    xx = await Carbon(code=code, background=match)
     await msg.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
