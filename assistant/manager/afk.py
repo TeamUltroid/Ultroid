@@ -56,7 +56,6 @@ async def go_afk(event):
 @asst.on(NewMessage(func=lambda x: AFK.get(x.chat_id) and not x.is_private))
 async def make_change(event):
     chat_ = AFK[event.chat_id]
-    dont_send = None
     if event.sender_id in chat_.keys() and not event.text.startswith("/afk"):
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
@@ -80,8 +79,6 @@ async def make_change(event):
                 msg += f"\n**Reason :** {res_}"
             elif res_ and isinstance(res_, Message):
                 await event.reply(res_)
-            #                dont_send = True
-            #            if not dont_send:
             await event.reply(msg)
         ST_SPAM.append(replied.sender_id)
     for ent, text in event.get_entities_text():
@@ -104,7 +101,5 @@ async def make_change(event):
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
             elif res_ and isinstance(res_, Message):
-                await event.reply(res)
-            #                dont_send = True
-            #            if not dont_send:
+                await event.reply(res_)
             await event.reply(msg)
