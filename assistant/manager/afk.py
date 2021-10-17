@@ -80,8 +80,8 @@ async def make_change(event):
                 msg += f"\n**Reason :** {res_}"
             elif res_ and isinstance(res_, Message):
                 await event.reply(res_)
-#                dont_send = True
-#            if not dont_send:
+            #                dont_send = True
+            #            if not dont_send:
             await event.reply(msg)
         ST_SPAM.append(replied.sender_id)
     for ent, text in event.get_entities_text():
@@ -105,6 +105,6 @@ async def make_change(event):
                 msg += f"\n**Reason :** {res_}"
             elif res_ and isinstance(res_, Message):
                 await event.reply(res)
-#                dont_send = True
-#            if not dont_send:
+            #                dont_send = True
+            #            if not dont_send:
             await event.reply(msg)
