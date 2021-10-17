@@ -61,7 +61,7 @@ async def make_change(event):
     if event.sender_id in chat_.keys():
         name = get_display_name(event.sender)
         cha_send = chat_[event.sender_id]
-        time_ = time_formatter((cha_send["time"] - dt.now()).microseconds)
+        time_ = time_formatter((dt.now() - cha_send["time"]).microseconds)
         msg = f"**{name}** is No Longer AFK!\n**Was AFK for** {time_}"
         await event.reply(msg)
         del chat_[event.sender_id]
@@ -75,7 +75,7 @@ async def make_change(event):
         if replied.sender_id in chat_.keys():
             s_der = chat_[replied.sender_id]
             res_ = s_der["reason"]
-            time_ = time_formatter((s_der["time"] - dt.now()).microseconds)
+            time_ = time_formatter((dt.now() - s_der["time"]).microseconds)
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
@@ -98,7 +98,7 @@ async def make_change(event):
             s_der = chat_[entity.id]
             name = get_display_name(entity)
             res_ = s_der["reason"]
-            time_ = time_formatter((s_der["time"] - dt.now()).microseconds)
+            time_ = time_formatter((dt.now() - s_der["time"]).microseconds)
             msg = f"**{name}** is AFK Currently!\n**From :** {time_}"
             if res_ and isinstance(res_, str):
                 msg += f"\n**Reason :** {res_}"
