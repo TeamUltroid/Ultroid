@@ -219,7 +219,7 @@ async def _(event):
         file = await Carbon(
             file_name="ultroid-logs",
             code=code,
-            background=choice(ATRA_COL),
+            backgroundColor=choice(ATRA_COL),
         )
         await event.reply("**Ultroid Logs.**", file=file)
     else:
