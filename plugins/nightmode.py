@@ -34,7 +34,7 @@ from pyUltroid.dB.night_db import *
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from . import LOGS, eor, ultroid_bot, ultroid_cmd, get_string
+from . import LOGS, eor, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="nmtime ?(.*)")
