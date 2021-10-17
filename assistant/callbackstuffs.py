@@ -12,17 +12,13 @@ from os import execl, remove
 from random import choice
 
 from pyUltroid.functions.gdrive import authorize, create_token_file
-from pyUltroid.functions.tools import get_paste, telegraph_client
+from pyUltroid.functions.tools import get_paste, telegraph_client, Carbon
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import events
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
 
-try:
-    from carbonnow import Carbon
-except ImportError:
-    Carbon = None
 from . import *
 
 # --------------------------------------------------------------------#
@@ -138,21 +134,19 @@ async def changes(okk):
     button = (Button.inline("Update Now", data="updatenow"),)
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
-    if Carbon:
-        try:
-            await okk.edit("• Writing Changelogs 📝 •")
-            carbon = Carbon(
-                base_url="https://carbonara-42.herokuapp.com/api/cook",
+    try:
+        await okk.edit("• Writing Changelogs 📝 •")
+        img = await Carbon(
+                file_name="changelog",
                 code=tl_chnglog,
                 background=choice(ATRA_COL),
                 language="md",
             )
-            img = await carbon.memorize("changelog")
-            return await okk.edit(
+        return await okk.edit(
                 f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
-            )
-        except Exception as er:
-            LOGS.exception(er)
+        )
+    except Exception as er:
+        LOGS.exception(er)
     changelog_str = changelog + cli
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
