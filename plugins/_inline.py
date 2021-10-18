@@ -14,7 +14,7 @@ from os import remove
 from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
-from pyUltroid.misc import CMD_HELP, owner_and_sudos
+from pyUltroid.misc import CMD_HELP
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
@@ -439,8 +439,8 @@ async def on_plug_in_callback_query_handler(event):
     )
     try:
         await event.edit(
-                reply_pop_up_alert,
-                buttons=buttons,
+            reply_pop_up_alert,
+            buttons=buttons,
         )
     except BaseException:
         await event.edit(get_string("inline_7").format(plugin_name), buttons=buttons)
@@ -482,8 +482,8 @@ async def on_vc_plg_callback_query_handler(event):
     )
     try:
         await event.edit(
-                reply_pop_up_alert,
-                buttons=buttons,
+            reply_pop_up_alert,
+            buttons=buttons,
         )
     except BaseException:
         halps = f"Do .help {plugin_name} to get the list of commands."
