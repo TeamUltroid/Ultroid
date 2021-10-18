@@ -438,14 +438,10 @@ async def on_plug_in_callback_query_handler(event):
         ]
     )
     try:
-        if str(event.query.user_id) in owner_and_sudos():
-            await event.edit(
+        await event.edit(
                 reply_pop_up_alert,
                 buttons=buttons,
-            )
-        else:
-            reply_pop_up_alert = notmine
-            await event.answer(reply_pop_up_alert, cache_time=0)
+        )
     except BaseException:
         await event.edit(get_string("inline_7").format(plugin_name), buttons=buttons)
 
@@ -485,14 +481,10 @@ async def on_vc_plg_callback_query_handler(event):
         ]
     )
     try:
-        if str(event.query.user_id) in owner_and_sudos():
-            await event.edit(
+        await event.edit(
                 reply_pop_up_alert,
                 buttons=buttons,
-            )
-        else:
-            reply_pop_up_alert = notmine
-            await event.answer(reply_pop_up_alert, cache_time=0)
+        )
     except BaseException:
         halps = f"Do .help {plugin_name} to get the list of commands."
         await event.edit(halps, buttons=buttons)
