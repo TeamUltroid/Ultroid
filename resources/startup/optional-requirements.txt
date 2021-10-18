@@ -23,7 +23,6 @@ multiprocess==0.70.12.2
 numpy==1.21.2
 opencv-python-headless
 pillow>=7.0.0
-profanitydetector
 psutil==5.8.0
 pypdf2==1.26.0
 pytz==2021.1
