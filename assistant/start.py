@@ -76,7 +76,7 @@ async def closet(lol):
 
 @asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
-    if not is_added(event.sender_id) and str(event.sender_id) not in owner_and_sudos():
+    if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
         add_user(event.sender_id)
         kak_uiw = udB.get("OFF_START_LOG")
         if not kak_uiw or kak_uiw != "True":
