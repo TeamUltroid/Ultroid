@@ -546,8 +546,8 @@ async def on_plug_in_callback_query_handler(event):
     )
     try:
         await event.edit(
-                reply_pop_up_alert,
-                buttons=buttons,
+            reply_pop_up_alert,
+            buttons=buttons,
         )
     except BaseException:
         halps = get_string("inline_7").format(plugin_name)
