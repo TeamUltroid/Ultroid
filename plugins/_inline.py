@@ -24,7 +24,6 @@ from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, start_time,
 from ._help import _main_help_menu
 
 # ================================================#
-notmine = f"This bot is for {OWNER_NAME}"
 
 TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
@@ -546,14 +545,10 @@ async def on_plug_in_callback_query_handler(event):
         ]
     )
     try:
-        if event.query.user_id in owner_and_sudos():
-            await event.edit(
+        await event.edit(
                 reply_pop_up_alert,
                 buttons=buttons,
-            )
-        else:
-            reply_pop_up_alert = notmine
-            await event.answer(reply_pop_up_alert, cache_time=0)
+        )
     except BaseException:
         halps = get_string("inline_7").format(plugin_name)
         await event.edit(halps, buttons=buttons)
