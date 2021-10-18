@@ -9,16 +9,16 @@
 
 • **DataBase Commands, do not use if you don't know what it is.**
 
-• `{i}setredis key | value`
-    Redis Set Value.
+• `{i}setdb key | value`
+    Set Value in Database.
     e.g :
-    `{i}setredis hi there`
-    `{i}setredis hi there | ultroid here`
+    `{i}setdb hi there`
+    `{i}setdb hi there | ultroid here`
 
-• `{i}delredis key`
-    Delete Key from Redis DB
+• `{i}deldb key`
+    Delete Key from DB.
 
-• `{i}renredis old keyname | new keyname`
+• `{i}rendb old keyname | new keyname`
     Update Key Name
 """
 
@@ -27,7 +27,7 @@ import re
 from . import Redis, eor, udB, ultroid_cmd
 
 
-@ultroid_cmd(pattern="setredis ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="setdb ?(.*)", fullsudo=True)
 async def _(ult):
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
@@ -36,7 +36,7 @@ async def _(ult):
         redisdata = Redis(data[0])
         await eor(
             ult,
-            "Redis Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
+            "DB Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
                 data[0],
                 redisdata,
             ),
@@ -45,7 +45,7 @@ async def _(ult):
         await eor(ult, "`Something Went Wrong`")
 
 
-@ultroid_cmd(pattern="delredis ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="deldb ?(.*)", fullsudo=True)
 async def _(ult):
     try:
         key = ult.pattern_match.group(1)
@@ -57,7 +57,7 @@ async def _(ult):
         await eor(ult, "`Something Went Wrong`")
 
 
-@ultroid_cmd(pattern="renredis ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="rendb ?(.*)", fullsudo=True)
 async def _(ult):
     delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
     data = ult.pattern_match.group(1).split(delim)
@@ -66,7 +66,7 @@ async def _(ult):
             udB.rename(data[0], data[1])
             await eor(
                 ult,
-                "Redis Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
+                "DB Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
                     data[0],
                     data[1],
                 ),
