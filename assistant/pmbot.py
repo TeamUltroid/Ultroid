@@ -110,7 +110,7 @@ async def on_out_mssg(event):
 @asst_cmd(
     pattern="ban",
     load=AST_PLUGINS,
-    from_users=owner_and_sudos(castint=True),
+    from_users=owner_and_sudos(),
     func=lambda x: x.is_private,
 )
 async def banhammer(event):
@@ -129,7 +129,7 @@ async def banhammer(event):
 @asst_cmd(
     pattern="unban",
     load=AST_PLUGINS,
-    from_users=owner_and_sudos(castint=True),
+    from_users=owner_and_sudos(),
     func=lambda x: x.is_private,
 )
 async def unbanhammer(event):
