@@ -13,7 +13,6 @@ from pyUltroid.dB.clean_db import is_clean_added
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
-from pyUltroid.dB.username_db import get_username, update_username
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import create_tl_btn, get_chatbot_reply
 from telethon import events
