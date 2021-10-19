@@ -12,11 +12,12 @@
   Upload to pdisk.net from a URL.
 
 • `{i}pdisk <name> ; <description> (reply to file)`
-  Upload the replied file to pdisk.net. 
+  Upload the replied file to pdisk.net.
 """
 
 import requests
-from . import HNDLR, LOGS, downloader, eor, get_string, ultroid_cmd, udB
+
+from . import HNDLR, eor, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="pdisk")
