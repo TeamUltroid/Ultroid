@@ -70,7 +70,6 @@ async def make_change(event):
         del chat_[event.sender_id]
         if not chat_:
             del AFK[event.chat_id]
-        return
     ST_SPAM = []
     replied = await event.get_reply_message()
     if replied:
