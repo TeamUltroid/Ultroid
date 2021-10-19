@@ -72,8 +72,8 @@ async def make_change(event):
             del AFK[event.chat_id]
         return
     ST_SPAM = []
-    if event.is_reply:
-        replied = await event.get_reply_message()
+    replied = await event.get_reply_message()
+    if replied:
         name = get_display_name(replied.sender)
         if replied.sender_id in chat_.keys():
             s_der = chat_[replied.sender_id]
@@ -89,7 +89,7 @@ async def make_change(event):
     for ent, text in event.get_entities_text():
         dont_send, entity = None, None
         if isinstance(ent, MessageEntityMentionName):
-            c_id = en.user_id
+            c_id = ent.user_id
         elif isinstance(ent, MessageEntityMention):
             c_id = text
         else:
