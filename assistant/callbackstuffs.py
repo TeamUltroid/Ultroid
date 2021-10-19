@@ -524,7 +524,7 @@ async def tagloggrr(e):
 @callback("deltag", owner=True)
 async def _(e):
     udB.delete("TAG_LOG")
-    await e.answer("Done!!! TAG lOG Off")
+    await e.answer("Done!!! Tag Logger has been turned Off")
 
 
 @callback("settag", owner=True)
