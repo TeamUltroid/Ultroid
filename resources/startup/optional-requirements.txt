@@ -12,6 +12,7 @@ git+https://github.com/buddhhu/img2html.git
 git+https://github.com/New-dev0/instagrapi.git
 git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
+git+https://github.com/deta/deta-python.git
 gitpython==3.1.23
 google-api-python-client
 google-auth-httplib2
@@ -21,6 +22,7 @@ htmlwebshot==0.1.2
 lottie==0.6.9
 multiprocess==0.70.12.2
 numpy==1.21.2
+nest_asyncio
 opencv-python-headless
 pillow>=7.0.0
 psutil==5.8.0
