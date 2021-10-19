@@ -180,7 +180,8 @@ async def uname_change(e):
 
 async def uname_stuff(id, uname, name):
     if udB.get("USERNAME_LOG") == "True":
-        old = get_username(id)
+        old_ = udB.get_key("USERNAME_DB") or {}
+        old = old_.get(id)
         # Ignore Name Logs
         if old and old == uname:
             return
@@ -199,4 +200,6 @@ async def uname_stuff(id, uname, name):
                 LOG_CHANNEL,
                 get_string("can_4").format(f"[{name}](tg://user?id={id})", uname),
             )
-        update_username(id, uname)
+         
+        old_[id] = uname
+        udB.set_key("USERNAME_DB", str(old_))
