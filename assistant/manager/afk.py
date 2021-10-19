@@ -39,7 +39,7 @@ async def go_afk(event):
             reason = replied
     time_ = dt.now()
     if AFK.get(event.chat_id):
-        AFk[event.chat_id].update({event.sender_id: {"reason": reason, "time": time_}})
+        AFK[event.chat_id].update({event.sender_id: {"reason": reason, "time": time_}})
     else:
         AFK.update(
             {event.chat_id: {event.sender_id: {"reason": reason, "time": time_}}}
