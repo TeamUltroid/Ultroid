@@ -13,8 +13,8 @@
 • `{i}get type <variable name>`
    Get variable type.
 
-• `{i}get redis <key>`
-   Get redis value of the given key.
+• `{i}get db <key>`
+   Get db value of the given key.
 
 • `{i}get keys`
    Get all redis keys.
@@ -73,7 +73,7 @@ async def get_var(event):
         if c == 0:
             await eor(x, "Such a var doesn't exist!", time=5)
 
-    elif opt == "redis":
+    elif opt == "db":
         val = udB.get(varname)
         if val is not None:
             await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
@@ -86,8 +86,9 @@ async def get_var(event):
             f"• `{i}`" + "\n"
             for i in keys
             if not i.isdigit()
-            and not i.startswith("-" or "_")
+            and not i.startswith("-")
+            and not i.startswith("_")
             and not i.startswith("GBAN_REASON_")
         )
 
-        await x.edit(f"**List of Redis Keys :**\n{msg}")
+        await x.edit(f"**List of DB Keys :**\n{msg}")
