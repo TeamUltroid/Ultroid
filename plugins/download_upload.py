@@ -153,6 +153,8 @@ async def download(event):
     ko = kk
     if not kk:
         return await eor(xx, get_string("udl_3"), time=5)
+    if kk == ".env" or ".session" in kk:
+        return await eod(xx, get_string("udl_7"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
             return await eor(xx, get_string("udl_6"), time=5)
