@@ -134,13 +134,13 @@ async def insta_karbon(event):
         return await eor(event, "`Please Fill Instagram Credentials to Use This...`")
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
+    if not (replied and (replied.photo or replied.video)):
+        return await eor(event, "`Reply to Photo Or Video...`")
     caption = (
         event.pattern_match.group(2)
         or replied.message
         or "Telegram To Instagram Upload\nBy Ultroid.."
     )
-    if not (replied and (replied.photo or replied.video)):
-        return await eor(event, "`Reply to Photo Or Video...`")
     dle = await replied.download_media()
     title = None
     if replied.photo:
