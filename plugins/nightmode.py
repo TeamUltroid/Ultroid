@@ -22,7 +22,7 @@ And Turn On auto at morning
    List NightMode
    To Get All List of Groups where NightMode Active.
 
-• `{i}nmtime <close hour> <close min> <open hour> <open min>
+• `{i}nmtime <close hour> <close min> <open hour> <open min>`
    NightMode Time
    By Default Its close 00:00 , open 07:00
    Use 24hr format
