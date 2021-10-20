@@ -410,6 +410,7 @@ udl_3: "`Give a specific path to file`"
 udl_4: "`Trying to download...`"
 udl_5: "`You forgot to give link :(`"
 udl_6: "`This Directory is Empty.`"
+udl_7: "`You can't do that!`"
 
 # words
 wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
