@@ -80,11 +80,10 @@ async def choose_cata(event):
             re_json=True,
         )
         qs = qsss["results"]
-        LOGS.info(qsss)
         TRIVIA_CHATS.update({event.chat_id: {}})
         for q in qs:
             opts = [PollAnswer(q["correct_answer"], b"0")]
-            [opts.append(a, a.encode()) for a in q["incorrect_answers"]]
+            [opts.append(PollAnswer(a, a.encode())) for a in q["incorrect_answers"]]
             shuffle(opts)
             poll = InputMediaPoll(
                 Poll(
