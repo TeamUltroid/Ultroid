@@ -76,7 +76,7 @@ async def files(event):
 )
 async def _(event):
     mone = await eor(event, get_string("com_1"))
-    if not os.path.exists(GDrive.auth_token):
+    if not os.path.exists(GDrive.token_file):
         return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     filename = None
