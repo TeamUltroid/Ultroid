@@ -57,7 +57,7 @@ async def files(event):
             await eve.delete()
         except BaseException:
             pass
-        await event.send_file(
+        await event.client.send_file(
             event.chat_id,
             "drive-files.txt",
             thumb="resources/extras/ultroid.jpg",
