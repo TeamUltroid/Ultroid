@@ -4,8 +4,9 @@ import asyncio
 import re
 from html import unescape
 from random import randrange, shuffle
-from telethon.events import Raw
+
 from pyUltroid.functions.tools import async_searcher
+from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from . import *
@@ -114,9 +115,7 @@ async def choose_cata(event):
 
 
 @asst.on(
-    Raw(
-        UpdateMessagePollVote, func=lambda x: TRIVIA_CHATS and POLLS.get(x.poll_id)
-    )
+    Raw(UpdateMessagePollVote, func=lambda x: TRIVIA_CHATS and POLLS.get(x.poll_id))
 )
 async def pollish(eve):
     if not POLLS.get(eve.poll_id)["chat"] in TRIVIA_CHATS.keys():
