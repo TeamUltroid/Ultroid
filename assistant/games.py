@@ -66,7 +66,6 @@ async def choose_cata(event):
         text = "Choose Number of Questions.."
     elif match[0] == "s":
         cat, le, nu = match[2:].split("_")
-        LOGS.info(cat)
         msg = await event.edit(
             f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}"
         )
@@ -77,7 +76,7 @@ async def choose_cata(event):
             msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None
         )
         qsss = await async_searcher(
-            f"https://opentdb.com/api.php?amount={nu}&category={cat}&difficulty={le}",
+            f"https://opentdb.com/api.php?amount={nu}&category={cat}&difficulty={le.lower()}",
             re_json=True,
         )
         qs = qsss["results"]
