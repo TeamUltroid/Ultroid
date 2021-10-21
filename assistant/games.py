@@ -107,7 +107,7 @@ async def choose_cata(event):
                 solution_entities=[],
             )
             m_ = await event.client.send_message(event.chat_id, file=poll)
-            POLLS.update({m_: {"chat": m_.chat_id, "answer": ansi}})
+            POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(30)
         return
     await event.edit(text, buttons=buttons)
