@@ -33,7 +33,7 @@ async def choose_cata(event):
                 buttons.append((btt[-1]))
             buttons.append(Button.inline("Cancel ❌", "delit"))
             CAT_BTS.update({"category":buttons})
-         text = "Choose Category!"
+        text = "Choose Category!"
     elif match[0] == "d":
          cat = match[1:]
          buttons = [Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS)
