@@ -93,7 +93,7 @@ async def choose_cata(event):
         )
         qs = qsss["results"]
         TRIVIA_CHATS.update({chat: {}})
-        for q in qs:
+        for copper, q in enumerate(qs):
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
@@ -106,7 +106,7 @@ async def choose_cata(event):
             poll = InputMediaPoll(
                 Poll(
                     0,
-                    unescape(q["question"]),
+                    f"{copper}. " + unescape(q["question"]),
                     answers=opts,
                     public_voters=True,
                     quiz=True,
