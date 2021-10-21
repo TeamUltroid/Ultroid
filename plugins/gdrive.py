@@ -26,7 +26,7 @@
 """
 
 import os
-import time
+import time, asyncio
 from datetime import datetime
 
 from pyUltroid.functions.gDrive import GDriveManager
