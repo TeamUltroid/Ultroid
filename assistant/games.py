@@ -1,11 +1,18 @@
-# copyright aaja
+# Ultroid - UserBot
+# Copyright (C) 2020 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 
 import asyncio
-import re
+import re, uuid
 from html import unescape
 from random import randrange, shuffle
 
 from pyUltroid.functions.tools import async_searcher
+from pyUltroid.functions.helper import inline_mention
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
@@ -68,6 +75,7 @@ async def choose_cata(event):
         buttons.append(get_back_button("trzia" + match))
         text = "Choose Number of Questions.."
     elif match[0] == "s":
+        chat = event.chat_id
         cat, le, nu = match[2:].split("_")
         msg = await event.edit(
             f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}"
@@ -83,13 +91,13 @@ async def choose_cata(event):
             re_json=True,
         )
         qs = qsss["results"]
-        TRIVIA_CHATS.update({event.chat_id: {}})
+        TRIVIA_CHATS.update({chat: {}})
         for q in qs:
-            ansi = str(randrange(1000, 2000)).encode()
+            ansi = str(uuid.uuid1()).encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
                 opts.append(
-                    PollAnswer(unescape(a), str(randrange(1000, 2000)).encode())
+                    PollAnswer(unescape(a), str(uuid.uuid1()).encode())
                 )
                 for a in q["incorrect_answers"]
             ]
@@ -107,9 +115,25 @@ async def choose_cata(event):
                 solution="Join @TeamUltroid",
                 solution_entities=[],
             )
-            m_ = await event.client.send_message(event.chat_id, file=poll)
+            m_ = await event.client.send_message(chat, file=poll)
             POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(30)
+        if not TRIVIA_CHAT[chat]:
+            await event.respond("No-One Got Any Score in the Quiz!\nBetter Luck Next Time!")
+        else:
+            LBD = "🎯 Scoreboard of the last Quiz.\n\n"
+            ignore_ = []
+            TRC = TRIVIA_CHATS[chat]
+            for value in sorted(TRC.values())[:10]:
+                for mm in TRC[chat].keys():
+                    if mm not in _ignore and TRC[mm] == value:
+                        user = inline_mention(await event.client.get_entity(mm))
+                        LBD += f"• {user} - {value}"
+            await event.respond(LBD)
+        del TRIVIA_CHATS[chat]
+        for key in POLLS.keys():
+            if key["chat"] == chat:
+                del POLLS[key]
         return
     await event.edit(text, buttons=buttons)
 
