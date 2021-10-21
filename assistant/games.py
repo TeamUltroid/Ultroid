@@ -94,10 +94,10 @@ async def choose_cata(event):
         qs = qsss["results"]
         TRIVIA_CHATS.update({chat: {}})
         for q in qs:
-            ansi = str(uuid.uuid1()).encode()
+            ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
-                opts.append(PollAnswer(unescape(a), str(uuid.uuid1()).encode()))
+                opts.append(PollAnswer(unescape(a), str(uuid.uuid1()).split("-")[0].encode()))
                 for a in q["incorrect_answers"]
             ]
             shuffle(opts)
