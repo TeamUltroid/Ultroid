@@ -20,6 +20,7 @@ TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 
+
 @callback(re.compile("trzia(.*)"), owner=True)
 async def choose_cata(event):
     match = event.data_match.group(1).decode("utf-8")
@@ -50,7 +51,7 @@ async def choose_cata(event):
         buttons.append(get_back_button("trzia"))
         text = "Choose Difficulty Level"
     elif match[0] == "c":
-        m= match[1:]
+        m = match[1:]
         buttons = [[Button.inline(str(i), f"trzias{m}_{i}") for i in range(10, 70, 20)]]
         buttons.append(get_back_button(match))
     await event.edit(text, buttons=buttons)
