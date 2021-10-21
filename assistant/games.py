@@ -7,8 +7,8 @@
 
 
 import asyncio
-import re
 import operator
+import re
 import uuid
 from html import unescape
 from random import shuffle
@@ -132,7 +132,9 @@ async def choose_cata(event):
             LBD = "🎯 Scoreboard of the last Quiz.\n\n"
             TRC = TRIVIA_CHATS[chat]
             ignore_ = []
-            for userid, user_score in dict(sorted(TRC.items(), key=operator.itemgetter(1),reverse=True)).items():
+            for userid, user_score in dict(
+                sorted(TRC.items(), key=operator.itemgetter(1), reverse=True)
+            ).items():
                 if userid not in ignore_:
                     user = inline_mention(await event.client.get_entity(userid))
                     LBD += f"• {user} - {user_score}\n"
