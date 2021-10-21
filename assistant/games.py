@@ -40,8 +40,8 @@ async def choose_cata(event):
                 btt.append(Button.inline(name, f"trziad_{i['id']}"))
             buttons = list(zip(btt[::2], btt[1::2]))
             if len(btt) % 2 == 1:
-                buttons.append((btt[-1]))
-            buttons.append(Button.inline("Cancel ❌", "delit"))
+                buttons.append((btt[-1],))
+            buttons.append([Button.inline("Cancel ❌", "delit")])
             TR_BTS.update({"category": buttons})
         text = "Choose Category!"
     elif match[0] == "d":
