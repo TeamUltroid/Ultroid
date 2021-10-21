@@ -119,7 +119,7 @@ async def choose_cata(event):
             m_ = await event.client.send_message(chat, file=poll)
             POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(30)
-        if not TRIVIA_CHAT[chat]:
+        if not TRIVIA_CHATS[chat]:
             await event.respond(
                 "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
             )
