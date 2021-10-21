@@ -1,8 +1,8 @@
 # copyright aaja
 
 import asyncio
-from html import unescape
 import re
+from html import unescape
 from random import randrange, shuffle
 
 from pyUltroid.functions.tools import async_searcher
@@ -86,7 +86,9 @@ async def choose_cata(event):
             ansi = str(randrange(1000, 2000)).encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
-                opts.append(PollAnswer(unescape(a), str(randrange(1000, 2000)).encode()))
+                opts.append(
+                    PollAnswer(unescape(a), str(randrange(1000, 2000)).encode())
+                )
                 for a in q["incorrect_answers"]
             ]
             shuffle(opts)
