@@ -52,7 +52,11 @@ async def files(event):
         await eve.edit(msg, link_preview=False)
     else:
         with open("drive-files.txt", "w") as f:
-            f.write(msg.replace("[", "File Name: ").replace("](", " Link: ").replace(")", ""))
+            f.write(
+                msg.replace("[", "File Name: ")
+                .replace("](", " Link: ")
+                .replace(")", "")
+            )
         try:
             await eve.delete()
         except BaseException:
@@ -116,7 +120,9 @@ async def _(event):
         start_time = time.time()
         g_drive_link = await GDrive._upload_file(
             filename,
-            progress_bar = lambda x, y: asyncio.get_event_loop().create_task(progress(x, y, mone, start_time, f"Uploading {filename} on GDrive..."))
+            progress_bar=lambda x, y: asyncio.get_event_loop().create_task(
+                progress(x, y, mone, start_time, f"Uploading {filename} on GDrive...")
+            ),
         )
         await mone.edit(get_string("gdrive_7").format(filename, g_drive_link))
     except Exception as e:
