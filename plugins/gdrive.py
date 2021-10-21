@@ -25,8 +25,9 @@
     If added then all uploaded files will be placed here.
 """
 
+import asyncio
 import os
-import time, asyncio
+import time
 from datetime import datetime
 
 from pyUltroid.functions.gDrive import GDriveManager
