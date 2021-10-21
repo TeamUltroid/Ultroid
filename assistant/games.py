@@ -53,7 +53,7 @@ async def choose_cata(event):
     elif match[0] == "c":
         m = match[1:]
         buttons = [[Button.inline(str(i), f"trzias{m}_{i}") for i in range(10, 70, 20)]]
-        buttons.append(get_back_button("trzia"+match))
+        buttons.append(get_back_button("trzia" + match))
         text = "Choose Number of Questions.."
     elif match[0] == "s":
         cat, le, nu = match[2:].split("_")
