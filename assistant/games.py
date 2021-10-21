@@ -6,7 +6,7 @@ from html import unescape
 from random import randrange, shuffle
 
 from pyUltroid.functions.tools import async_searcher
-from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
+from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from . import *
 
@@ -23,7 +23,7 @@ async def magic(event):
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
-
+POLLS = {}
 
 @callback(re.compile("ctdown(.*)"), owner=True)
 async def ct_spam(e):
@@ -95,16 +95,32 @@ async def choose_cata(event):
             poll = InputMediaPoll(
                 Poll(
                     0,
-                    q["question"],
+                    unescape(q["question"]),
                     answers=opts,
                     public_voters=True,
                     quiz=True,
                     close_period=30,
                 ),
                 correct_answers=[ansi],
-                #                solution="Join @TeamUltroid",
+                solution="Join @TeamUltroid",
+                solution_entities=[],
             )
-            await event.client.send_message(event.chat_id, file=poll)
+            m_ = await event.client.send_message(event.chat_id, file=poll)
+            POLLS.update({m_ :{"chat":m_.chat_id, "answer":ansi}})
             await asyncio.sleep(30)
         return
     await event.edit(text, buttons=buttons)
+
+
+@asst.on(events.Raw(UpdateMessagePollVote,  func=lambda x : TRIVIA_CHATS and POLLS.get(x.poll_id)))
+async def pollish(eve):
+    if not POLLS.get(eve.poll_id)["chat"] in TRIVIA_CHATS.keys():
+        return
+    if POLLS[eve.poll_id]["answer"] != eve.options[0]:
+        return
+    chat = POLLS.get(eve.poll_id)["chat"]
+    user = eve.user_id
+    if not TRIVIA_CHATS.get(chat, {}).get(user):
+        TRIVIA_CHATS[chat][user] = 1
+    else:
+        TRIVIA_CHATS[chat][user] = TRIVIA_CHATS[chat][user]+1
