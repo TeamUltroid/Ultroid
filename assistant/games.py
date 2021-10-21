@@ -1,18 +1,22 @@
 # copyright aaja
 
 import re
+
 from . import *
 
 
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
-    buttons = [[Button.inline("Trivia Quiz", "trzia")],
-        [Button.inline("Cancel ❌","delit")]]
+    buttons = [
+        [Button.inline("Trivia Quiz", "trzia")],
+        [Button.inline("Cancel ❌", "delit")],
+    ]
     await event.reply("Choose The Game 🎮", buttons=buttons)
 
 
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
+
 
 @callback(re.compile("trzia(.*)"), owner=True)
 async def choose_cata(event):
@@ -21,7 +25,11 @@ async def choose_cata(event):
         if TR_BTS.get("category"):
             buttons = CAT_BTS["category"]
         else:
-            req = (await async_searcher("https://opentdb.com/api_category.php", re_json=True))["trivia_categories"]
+            req = (
+                await async_searcher(
+                    "https://opentdb.com/api_category.php", re_json=True
+                )
+            )["trivia_categories"]
             btt = []
             for i in req:
                 name = i["name"]
@@ -32,12 +40,11 @@ async def choose_cata(event):
             if len(btt) % 2 == 1:
                 buttons.append((btt[-1]))
             buttons.append(Button.inline("Cancel ❌", "delit"))
-            CAT_BTS.update({"category":buttons})
+            CAT_BTS.update({"category": buttons})
         text = "Choose Category!"
     elif match[0] == "d":
-         cat = match[1:]
-         buttons = [Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS]
-         buttons.append(get_back_button("trzia"))
-         text = "Choose Difficulty Level"
+        cat = match[1:]
+        buttons = [Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS]
+        buttons.append(get_back_button("trzia"))
+        text = "Choose Difficulty Level"
     await event.edit(text, buttons=buttons)
-        
