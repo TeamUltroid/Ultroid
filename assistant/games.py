@@ -21,7 +21,7 @@ async def choose_cata(event):
         if TR_BTS.get("category"):
             buttons = CAT_BTS["category"]
         else:
-            req = await async_searcher("https://opentdb.com/api_category.php", re_json=True)["trivia_categories"]
+            req = (await async_searcher("https://opentdb.com/api_category.php", re_json=True))["trivia_categories"]
             btt = []
             for i in req:
                 name = i["name"]
