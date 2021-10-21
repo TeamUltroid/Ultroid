@@ -95,7 +95,7 @@ async def choose_cata(event):
                     close_period=30,
                 ),
                 correct_answers=[b"0"],
-#                solution="Join @TeamUltroid",
+                #                solution="Join @TeamUltroid",
             )
             await event.client.send_message(event.chat_id, file=poll)
             await asyncio.sleep(30)
