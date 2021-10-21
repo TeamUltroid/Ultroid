@@ -1,6 +1,7 @@
 # copyright aaja
 
 import asyncio
+from html import unescape
 import re
 from random import randrange, shuffle
 
@@ -82,9 +83,10 @@ async def choose_cata(event):
         qs = qsss["results"]
         TRIVIA_CHATS.update({event.chat_id: {}})
         for q in qs:
-            opts = [PollAnswer(q["correct_answer"], b"0")]
+            ansi = str(randrange(1000, 2000)).encode()
+            opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
-                opts.append(PollAnswer(a, str(randrange(1000, 2000)).encode()))
+                opts.append(PollAnswer(unescape(a), str(randrange(1000, 2000)).encode()))
                 for a in q["incorrect_answers"]
             ]
             shuffle(opts)
@@ -97,7 +99,7 @@ async def choose_cata(event):
                     quiz=True,
                     close_period=30,
                 ),
-                correct_answers=[b"0"],
+                correct_answers=[ansi],
                 #                solution="Join @TeamUltroid",
             )
             await event.client.send_message(event.chat_id, file=poll)
