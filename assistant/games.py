@@ -7,12 +7,13 @@
 
 
 import asyncio
-import re, uuid
+import re
+import uuid
 from html import unescape
-from random import randrange, shuffle
+from random import shuffle
 
-from pyUltroid.functions.tools import async_searcher
 from pyUltroid.functions.helper import inline_mention
+from pyUltroid.functions.tools import async_searcher
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
@@ -96,9 +97,7 @@ async def choose_cata(event):
             ansi = str(uuid.uuid1()).encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
-                opts.append(
-                    PollAnswer(unescape(a), str(uuid.uuid1()).encode())
-                )
+                opts.append(PollAnswer(unescape(a), str(uuid.uuid1()).encode()))
                 for a in q["incorrect_answers"]
             ]
             shuffle(opts)
@@ -119,10 +118,11 @@ async def choose_cata(event):
             POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(30)
         if not TRIVIA_CHAT[chat]:
-            await event.respond("No-One Got Any Score in the Quiz!\nBetter Luck Next Time!")
+            await event.respond(
+                "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
+            )
         else:
             LBD = "🎯 Scoreboard of the last Quiz.\n\n"
-            ignore_ = []
             TRC = TRIVIA_CHATS[chat]
             for value in sorted(TRC.values())[:10]:
                 for mm in TRC[chat].keys():
