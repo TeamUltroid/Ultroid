@@ -33,7 +33,7 @@ from pyUltroid.functions.gDrive import GDriveManager
 
 from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
-Gdrive = GDriveManager()
+GDrive = GDriveManager()
 
 
 @ultroid_cmd(
