@@ -18,7 +18,7 @@ async def magic(event):
 
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
-
+TRIVIA_CHATS = {}
 
 @callback(re.compile("trzia(.*)"), owner=True)
 async def choose_cata(event):
@@ -46,7 +46,11 @@ async def choose_cata(event):
         text = "Choose Category!"
     elif match[0] == "d":
         cat = match[1:]
-        buttons = [[Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS]]
+        buttons = [[Button.inline(i, f"trziac{cat}_{i}") for i in DIFI_KEYS]]
         buttons.append(get_back_button("trzia"))
         text = "Choose Difficulty Level"
+    elif match[0] == "c":
+        m= match[1:]
+        buttons = [[Button.inline(str(i), f"trzias{m}_{i}") for i in range(10, 70, 20)]]
+        buttons.append(get_back_button(match))
     await event.edit(text, buttons=buttons)
