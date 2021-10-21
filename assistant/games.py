@@ -46,7 +46,7 @@ async def choose_cata(event):
         text = "Choose Category!"
     elif match[0] == "d":
         cat = match[1:]
-        buttons = [Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS]
+        buttons = [[Button.inline(i, f"trzias{cat}_{i[0]}") for i in DIFI_KEYS]]
         buttons.append(get_back_button("trzia"))
         text = "Choose Difficulty Level"
     await event.edit(text, buttons=buttons)
