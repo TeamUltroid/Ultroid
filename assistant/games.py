@@ -1,7 +1,7 @@
 # copyright aaja
 
 import re
-
+from pyUltroid.functions.tools import async_searcher
 from . import *
 
 
