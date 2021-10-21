@@ -52,7 +52,7 @@ async def files(event):
         await eve.edit(msg, link_preview=False)
     else:
         with open("drive-files.txt", "w") as f:
-            f.write(msg.replace("[", "").replace("](", " ").replace(")", ""))
+            f.write(msg.replace("[", "File Name: ").replace("](", " Link: ").replace(")", ""))
         try:
             await eve.delete()
         except BaseException:
@@ -63,6 +63,7 @@ async def files(event):
             thumb="resources/extras/ultroid.jpg",
             reply_to=eve,
         )
+        os.remove("drive-files.txt")
 
 
 @ultroid_cmd(
@@ -70,10 +71,10 @@ async def files(event):
 )
 async def _(event):
     mone = await eor(event, get_string("com_1"))
-    if not os.path.exists(TOKEN_FILE):
-        return await eor(mone, get_string("gdrive_6").format(asst.me.username), time=5)
+    if not os.path.exists(GDrive.auth_token):
+        return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
-    required_file_name = None
+    filename = None
     start = datetime.now()
     dddd = time.time()
     if event.reply_to_msg_id and not input_str:
@@ -95,38 +96,29 @@ async def _(event):
             return await eor(mone, str(e), time=10)
         end = datetime.now()
         ms = (end - start).seconds
-        required_file_name = filename
         await mone.edit(
             f"Downloaded to `{filename}` in {ms} seconds.",
         )
     elif input_str:
-        input_str = input_str.strip()
-        if os.path.exists(input_str):
-            end = datetime.now()
-            ms = (end - start).seconds
-            required_file_name = input_str
-            await mone.edit(f"Found `{required_file_name}` in {ms} seconds.")
+        filename = input_str.strip()
+        if os.path.exists(filename):
+            await mone.edit(f"Found `{filename}`")
         else:
             return await eod(
                 mone,
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
-    if not required_file_name:
+    if filename:
         return await eor(mone, "`File Not found in local server.`", time=10)
 
-    http = authorize(TOKEN_FILE, None)
-    file_name, mime_type = file_ops(required_file_name)
     try:
-        g_drive_link = await upload_file(
-            http,
-            required_file_name,
-            file_name,
-            mime_type,
-            mone,
-            Redis("GDRIVE_FOLDER_ID"),
+        start_time = time.time()
+        g_drive_link = await GDrive._upload_file(
+            filename,
+            progress_bar = lambda x, y: asyncio.get_event_loop().create_task(progress(x, y, mone, start_time, f"Uploading {filename} on GDrive..."))
         )
-        await mone.edit(get_string("gdrive_7").format(file_name, g_drive_link))
+        await mone.edit(get_string("gdrive_7").format(filename, g_drive_link))
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
