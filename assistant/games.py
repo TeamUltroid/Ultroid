@@ -76,11 +76,12 @@ async def choose_cata(event):
             msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None
         )
         qsss = await async_searcher(
-            f"https://opentdb.com/api.php?amount={nu}1&category={cat}&difficulty={le}",
+            f"https://opentdb.com/api.php?amount={nu}&category={cat}&difficulty={le}",
             re_json=True,
         )
         qs = qsss["results"]
-        LOGS.info(qsss)
+        if not qs:
+            return await event.answer("No Questions Found...")
         TRIVIA_CHATS.update({event.chat_id: {}})
         for q in qs:
             opts = [PollAnswer(q["correct_answer"], b"0")]
