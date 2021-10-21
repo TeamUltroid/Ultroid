@@ -131,7 +131,7 @@ async def choose_cata(event):
             LBD = "🎯 Scoreboard of the last Quiz.\n\n"
             TRC = TRIVIA_CHATS[chat]
             ignore_ = []
-            for value in reversed(TRC.values())[:10]:
+            for value in list(reversed(TRC.values()))[:10]:
                 for mm in TRC.keys():
                     if mm not in ignore_ and TRC[mm] == value:
                         user = inline_mention(await event.client.get_entity(mm))
