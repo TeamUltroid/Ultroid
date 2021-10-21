@@ -70,6 +70,9 @@ async def choose_cata(event):
         for i in reversed(range(5)):
             msg = await msg.edit(buttons=Button.inline(str(i), f"ctdown{i}"))
             await asyncio.sleep(1)
-        await msg.edit(msg.text + "\n\n• Send /cancel to stop the Quiz...")
+        await msg.edit(msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None)
+        qsss = await async_searcher(f"https://opentdb.com/api.php?amount={nu}1&category={cat}&difficulty={le}&type=multiple", re_json=True)
+        qs = qsss["results"]
+ #       TRIVIA_CHAT.update()
         return
     await event.edit(text, buttons=buttons)
