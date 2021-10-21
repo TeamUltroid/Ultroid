@@ -7,7 +7,7 @@ from . import *
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
     buttons = [[Button.inline("Trivia Quiz", "trzia")],
-        Button.inline("Cancel ❌","delit")]]
+        [Button.inline("Cancel ❌","delit")]]
     await event.reply("Choose The Game 🎮", buttons=buttons)
 
 
