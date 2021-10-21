@@ -2,9 +2,9 @@
 
 import asyncio
 import re
-
+from random import shuffle
 from pyUltroid.functions.tools import async_searcher
-
+from telethon.tl.types import InputMediaPoll, PollAnswer, Poll
 from . import *
 
 
@@ -74,10 +74,17 @@ async def choose_cata(event):
             msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None
         )
         qsss = await async_searcher(
-            f"https://opentdb.com/api.php?amount={nu}1&category={cat}&difficulty={le}&type=multiple",
+            f"https://opentdb.com/api.php?amount={nu}1&category={cat}&difficulty={le}",
             re_json=True,
         )
-        qsss["results"]
-        #       TRIVIA_CHAT.update()
+        qs = qsss["results"]
+        TRIVIA_CHAT.update({event.chat_id:{}})
+        for q in qs:
+            opts = [PollAnswer(q["correct_answer"], b"0")]
+            [opts.append(a, a.encode()) for a in q["incorrect_answers"]]
+            shuffle(opts)
+            poll = InputMediaPoll(Poll(0, q["question"], answers=opts, public_voters=True, quiz=True, close_period=30), correct_answers=[b'0'], solution="Join @TeamUltroid")
+            await event.client.send_message(event.chat_id, file=poll)
+            await asyncio.sleep(30)
         return
     await event.edit(text, buttons=buttons)
