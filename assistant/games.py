@@ -25,7 +25,7 @@ async def choose_cata(event):
     match = event.data_match.group(1).decode("utf-8")
     if not match:
         if TR_BTS.get("category"):
-            buttons = CAT_BTS["category"]
+            buttons = TR_BTS["category"]
         else:
             req = (
                 await async_searcher(
@@ -42,7 +42,7 @@ async def choose_cata(event):
             if len(btt) % 2 == 1:
                 buttons.append((btt[-1]))
             buttons.append(Button.inline("Cancel ❌", "delit"))
-            CAT_BTS.update({"category": buttons})
+            TR_BTS.update({"category": buttons})
         text = "Choose Category!"
     elif match[0] == "d":
         cat = match[1:]
