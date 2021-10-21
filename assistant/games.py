@@ -106,7 +106,7 @@ async def choose_cata(event):
             poll = InputMediaPoll(
                 Poll(
                     0,
-                    f"{copper}. " + unescape(q["question"]),
+                    f"{copper+1}. " + unescape(q["question"]),
                     answers=opts,
                     public_voters=True,
                     quiz=True,
