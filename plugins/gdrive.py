@@ -114,7 +114,7 @@ async def _(event):
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
-    if filename:
+    if not filename:
         return await eor(mone, "`File Not found in local server.`", time=10)
 
     try:
