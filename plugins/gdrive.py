@@ -35,6 +35,7 @@ from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
 Gdrive = GDriveManager()
 
+
 @ultroid_cmd(
     pattern="listdrive$",
 )
@@ -51,10 +52,17 @@ async def files(event):
         await eve.edit(msg, link_preview=False)
     else:
         with open("drive-files.txt", "w") as f:
-            f.write(msg.replace("[","").replace("]("," ").replace(")",""))
-        try: await eve.delete()
-        except: pass
-        await event.send_file(event.chat_id, "drive-files.txt", thumb="resources/extras/ultroid.jpg", reply_to=eve) 
+            f.write(msg.replace("[", "").replace("](", " ").replace(")", ""))
+        try:
+            await eve.delete()
+        except BaseException:
+            pass
+        await event.send_file(
+            event.chat_id,
+            "drive-files.txt",
+            thumb="resources/extras/ultroid.jpg",
+            reply_to=eve,
+        )
 
 
 @ultroid_cmd(
