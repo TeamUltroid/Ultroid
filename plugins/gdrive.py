@@ -29,29 +29,32 @@ import os
 import time
 from datetime import datetime
 
-from pyUltroid.functions.gdrive import (
-    DoTeskWithDir,
-    authorize,
-    create_directory,
-    file_ops,
-    gsearch,
-    list_files,
-    upload_file,
-)
+from pyUltroid.functions.gDrive import GDriveManager
 
 from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
-TOKEN_FILE = "resources/auths/auth_token.txt"
-
+Gdrive = GDriveManager()
 
 @ultroid_cmd(
     pattern="listdrive$",
 )
 async def files(event):
-    if not os.path.exists(TOKEN_FILE):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username), time=5)
-    http = authorize(TOKEN_FILE, None)
-    await eor(event, list_files(http))
+    files = GDrive._list_files()
+    eve = await eor(event, get_string("com_1"))
+    msg = f"{len(files.keys())} files found in gdrive.\n\n"
+    if files:
+        for _ in files:
+            msg += f"> [{files[_]}]({_})\n"
+    else:
+        msg += "Nothing in Gdrive"
+    if len(msg) < 4096:
+        await eve.edit(msg, link_preview=False)
+    else:
+        with open("drive-files.txt", "w") as f:
+            f.write(msg.replace("[","").replace("]("," ").replace(")",""))
+        try: await eve.delete()
+        except: pass
+        await event.send_file(event.chat_id, "drive-files.txt", thumb="resources/extras/ultroid.jpg", reply_to=eve) 
 
 
 @ultroid_cmd(
