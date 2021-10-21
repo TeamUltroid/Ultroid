@@ -1,7 +1,8 @@
 # copyright aaja
 
-import re
 import asyncio
+import re
+
 from pyUltroid.functions.tools import async_searcher
 
 from . import *
@@ -20,10 +21,11 @@ TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 
+
 @callback(re.compile("ctdown(.*)"), owner=True)
 async def ct_spam(e):
     n = e.data_match.group(1).decode("utf-8")
-    await e.answer(f"Wait {n} seconds..",  alert=True)
+    await e.answer(f"Wait {n} seconds..", alert=True)
 
 
 @callback(re.compile("trzia(.*)"), owner=True)
@@ -62,10 +64,12 @@ async def choose_cata(event):
         text = "Choose Number of Questions.."
     elif match[0] == "s":
         cat, le, nu = match[2:].split("_")
-        msg = await event.edit(f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}")
+        msg = await event.edit(
+            f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}"
+        )
         for i in reversed(range(5)):
             msg = await msg.edit(buttons=Button.inline(str(i), f"ctdown{i}"))
             await asyncio.sleep(1)
-        await msg.edit(msg.text +"\n\n• Send /cancel to stop the Quiz...")
+        await msg.edit(msg.text + "\n\n• Send /cancel to stop the Quiz...")
         return
     await event.edit(text, buttons=buttons)
