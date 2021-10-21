@@ -11,7 +11,7 @@ from asyncio.exceptions import TimeoutError as AsyncTimeOut
 from os import execl, remove
 from random import choice
 
-from pyUltroid.functions.gdrive import authorize, create_token_file
+from pyUltroid.functions.gDrive import GDriveManager
 from pyUltroid.functions.tools import Carbon, get_paste, telegraph_client
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
@@ -23,6 +23,7 @@ from . import *
 
 # --------------------------------------------------------------------#
 telegraph = telegraph_client()
+GDrive = GDriveManager()
 # --------------------------------------------------------------------#
 
 
@@ -195,17 +196,19 @@ async def _(e):
     if not udB.get("GDRIVE_CLIENT_ID"):
         return await e.edit(
             "Client ID and Secret is Empty.\nFill it First.",
-            buttons=Button.inline("Back", data="gdrive"),
+            buttons=get_back_button("gdrive"),
         )
-    storage = await create_token_file(TOKEN_FILE, e)
-    authorize(TOKEN_FILE, storage)
-    f = open(TOKEN_FILE)
-    token_file_data = f.read()
-    udB.set("GDRIVE_TOKEN", token_file_data)
-    await e.reply(
-        "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
-        buttons=Button.inline("Main Menu", data="setter"),
-    )
+    url = GDrive._create_token_file()
+    async with asst.conversation(e.sender_id) as conv:
+        await conv.send_message(url + "\nGo to the above link and send me the code you get.")
+        code = await conv.get_response()
+        if GDrive._create_token_file(code=code.message):
+            await conv.send_message(
+                "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
+                buttons=Button.inline("Main Menu", data="setter"),
+            )
+        else:
+            await conv.send_message("Wrong code! Click authorise again.")
 
 
 @callback("folderid", owner=True, func=lambda x: x.is_private)
