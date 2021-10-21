@@ -3,8 +3,10 @@
 import asyncio
 import re
 from random import shuffle
+
 from pyUltroid.functions.tools import async_searcher
-from telethon.tl.types import InputMediaPoll, PollAnswer, Poll
+from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
+
 from . import *
 
 
@@ -78,12 +80,23 @@ async def choose_cata(event):
             re_json=True,
         )
         qs = qsss["results"]
-        TRIVIA_CHAT.update({event.chat_id:{}})
+        TRIVIA_CHAT.update({event.chat_id: {}})
         for q in qs:
             opts = [PollAnswer(q["correct_answer"], b"0")]
             [opts.append(a, a.encode()) for a in q["incorrect_answers"]]
             shuffle(opts)
-            poll = InputMediaPoll(Poll(0, q["question"], answers=opts, public_voters=True, quiz=True, close_period=30), correct_answers=[b'0'], solution="Join @TeamUltroid")
+            poll = InputMediaPoll(
+                Poll(
+                    0,
+                    q["question"],
+                    answers=opts,
+                    public_voters=True,
+                    quiz=True,
+                    close_period=30,
+                ),
+                correct_answers=[b"0"],
+                solution="Join @TeamUltroid",
+            )
             await event.client.send_message(event.chat_id, file=poll)
             await asyncio.sleep(30)
         return
