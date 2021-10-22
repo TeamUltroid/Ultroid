@@ -25,14 +25,13 @@
     If added then all uploaded files will be placed here.
 """
 
-import asyncio
 import os
 import time
 from datetime import datetime
 
 from pyUltroid.functions.gDrive import GDriveManager
 
-from . import Redis, asst, downloader, eod, eor, get_string, progress, ultroid_cmd
+from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
 GDrive = GDriveManager()
 
