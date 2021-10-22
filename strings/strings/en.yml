@@ -508,7 +508,6 @@ pmbot_6: "User was never banned!"
 pmbot_7: "`Congrats! You have been unbanned.`"
 
 # -------------------------- VcBot ------------------------------- #
-
 vcbot_1: "`Left the voice chat.`"
 vcbot_2: "**ERROR:**\n{}"
 vcbot_3: "• Volume Changed to `{}%` •"
