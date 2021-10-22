@@ -118,12 +118,9 @@ async def _(event):
         return await eor(mone, "`File Not found in local server.`", time=10)
 
     try:
-        start_time = time.time()
         g_drive_link = await GDrive._upload_file(
+            mone,
             filename,
-            progress_bar=lambda x, y: asyncio.get_event_loop().create_task(
-                progress(x, y, mone, start_time, f"Uploading {filename} on GDrive...")
-            ),
         )
         await mone.edit(get_string("gdrive_7").format(filename, g_drive_link))
     except Exception as e:
