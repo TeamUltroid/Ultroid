@@ -120,7 +120,7 @@ async def choose_cata(event):
                     answers=opts,
                     public_voters=True,
                     quiz=True,
-                    close_period=in_,
+                    close_period=int(in_),
                 ),
                 correct_answers=[ansi],
                 solution="Join @TeamUltroid",
