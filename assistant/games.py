@@ -73,17 +73,22 @@ async def choose_cata(event):
         text = "Choose Difficulty Level"
     elif match[0] == "c":
         m = match[1:]
-        buttons = [[Button.inline(str(i), f"trzias{m}_{i}") for i in range(10, 70, 20)]]
+        buttons = [[Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
         buttons.append(get_back_button("trzia" + match))
         text = "Choose Number of Questions.."
+    elif match[0] == "t":
+        m_ = match[1:]
+        buttons = [[Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60]]]
+        buttons.append(get_back_button("trziac" + m_))
+        text = "Choose Time Interval..."
     elif match[0] == "s":
         chat = event.chat_id
-        cat, le, nu = match[2:].split("_")
+        cat, le, nu, in_ = match[2:].split("_")
         msg = await event.edit(
             f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}"
         )
         for i in reversed(range(5)):
-            msg = await msg.edit(buttons=Button.inline(str(i), f"ctdown{i}"))
+            msg = await msg.edit(buttons=Button.inline(f"{i} ⏰", f"ctdown{i}"))
             await asyncio.sleep(1)
         await msg.edit(
             msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None
@@ -111,11 +116,11 @@ async def choose_cata(event):
             poll = InputMediaPoll(
                 Poll(
                     0,
-                    f"{copper+1}. " + unescape(q["question"]),
+                    f"[{copper+1}].  " + unescape(q["question"]),
                     answers=opts,
                     public_voters=True,
                     quiz=True,
-                    close_period=30,
+                    close_period=in_,
                 ),
                 correct_answers=[ansi],
                 solution="Join @TeamUltroid",
@@ -129,13 +134,13 @@ async def choose_cata(event):
                 "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
             )
         else:
-            LBD = "🎯 Scoreboard of the last Quiz.\n\n"
+            LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
             TRC = TRIVIA_CHATS[chat]
             for userid, user_score in dict(
                 sorted(TRC.items(), key=operator.itemgetter(1), reverse=True)
             ).items():
                 user = inline_mention(await event.client.get_entity(userid))
-                LBD += f"• {user} - {user_score}\n"
+                LBD += f"••• {user} - {user_score}\n"
             await event.respond(LBD)
         del TRIVIA_CHATS[chat]
         for key in POLLS.keys():
