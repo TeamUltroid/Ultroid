@@ -505,7 +505,7 @@ pmbot_3: "User is already banned!"
 pmbot_4: "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**"
 pmbot_5: "Please reply to someone to Unban him."
 pmbot_6: "User was never banned!"
-pmbot_7: 
+pmbot_7: "`Congrats! You have been unbanned.`"
 
 # -------------------------- VcBot ------------------------------- #
 
