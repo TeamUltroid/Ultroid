@@ -74,7 +74,7 @@ async def choose_cata(event):
     elif match[0] == "c":
         m = match[1:]
         buttons = [[Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
-        buttons.append(get_back_button("trzia" + match))
+        buttons.append(get_back_button("trziad" + match))
         text = "Choose Number of Questions.."
     elif match[0] == "t":
         m_ = match[1:]
@@ -128,7 +128,7 @@ async def choose_cata(event):
             )
             m_ = await event.client.send_message(chat, file=poll)
             POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
-            await asyncio.sleep(30)
+            await asyncio.sleep(int(in_))
         if not TRIVIA_CHATS[chat]:
             await event.respond(
                 "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
