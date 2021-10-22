@@ -13,6 +13,9 @@
 • `{i}stopvc`
     Stop Group Call in a group.
 
+• `{i}vctitle`
+    Change the title Group call.
+
 • `{i}vcinvite`
     Invite all members of group in Group Call.
     (You must be joined)
@@ -21,6 +24,7 @@
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
+from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
@@ -81,5 +85,19 @@ async def _(e):
     try:
         await e.client(startvc(e.chat_id))
         await eor(e, "`Voice Chat Started...`")
+    except Exception as ex:
+        await eor(e, f"`{ex}`")
+
+
+@ultroid_cmd(
+    pattern="vctitle(?: |$)(.*)",
+    admins_only=True,
+    groups_only=True,
+)
+async def _(e):
+    title = e.pattern_match.group(1)
+    try:
+        await e.client(settitle(call=await get_call(e), title=title.strip()))
+        await eor(e, "**Successfully Changed VC Title to** `{title}`")
     except Exception as ex:
         await eor(e, f"`{ex}`")
