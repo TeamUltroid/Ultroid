@@ -20,7 +20,7 @@
 | ml | Malayalam [മലയാളം] | 115 | 275 |
 | od | Odia [ଓଡିଆ] | 115 | 275 |
 | fr | French [français] | 3 | 387 |
-| id | Indonesia [Indonesia] | 349 | 41 |
+| id | Indonesia [Indonesia] | 389 | 1 |
 | ta | தமிழ் [தமிழ்] | 115 | 275 |
 | es | Spanish [Español] | 115 | 275 |
 | gu | Gujarati [ગુજરાતી] | 115 | 275 |
