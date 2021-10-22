@@ -178,7 +178,7 @@ all_col = [
 async def crbn(event):
     xxxx = await eor(event, get_string("com_1"))
     te = event.text
-    col = random.choice(all_col) if te[1] == "r" else None
+    col = random.choice(all_col) if te[1] == "r" else "White"
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
