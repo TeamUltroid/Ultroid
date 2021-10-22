@@ -77,7 +77,9 @@ async def choose_cata(event):
         text = "Choose Number of Questions.."
     elif match[0] == "t":
         m_ = match[1:]
-        buttons = [[Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]]
+        buttons = [
+            [Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]
+        ]
         text = "Choose Time Interval..."
     elif match[0] == "s":
         chat = event.chat_id
