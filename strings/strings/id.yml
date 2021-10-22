@@ -501,7 +501,7 @@ pmbot_3: "Pengguna sudah dibanned!"
 pmbot_4: "`Selamat tinggal! Kamu di blokir.`\n**Pesan yang Anda kirim tidak akan diteruskan.**"
 pmbot_5: "Tolong balas seseorang untuk Unban dia."
 pmbot_6: "Pengguna ini tidak pernah dibanned!"
-pmbot_7: 
+pmbot_7: "`Selamat! Anda telah dibatalkan pemblokirannya.`"
 
 # -------------------------- VcBot ------------------------------- #
 
