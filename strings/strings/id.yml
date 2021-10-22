@@ -482,7 +482,7 @@ ast_3: "Haloo {}. Silakan telusuri opsi"
 
 # inlinestuff
 instu_1: "Pencarian aplikasi. Masukkan nama aplikasi!"
-instu_2: "Histroy Pencarian terkini"
+instu_2: "History Pencarian terkini"
 instu_3: "Masukkan Keyword untuk dicari"
 instu_4: "Berhasil"
 
