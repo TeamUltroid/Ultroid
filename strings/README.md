@@ -16,7 +16,7 @@
 | pt-br | Portuguese [Português] | 114 | 276 |
 | my | Malaysia [Bahasa Malaysia] | 114 | 276 |
 | cn | Chinese [简体中文] | 115 | 275 |
-| hi | Hindi [हिंदी] | 112 | 278 |
+| hi | Hindi [हिंदी] | 113 | 277 |
 | ml | Malayalam [മലയാളം] | 115 | 275 |
 | od | Odia [ଓଡିଆ] | 115 | 275 |
 | fr | French [français] | 3 | 387 |
