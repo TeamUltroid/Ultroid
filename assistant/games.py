@@ -35,6 +35,9 @@ DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
 
+@callback("delit")
+async def delete_it(event):
+    await event.delete()
 
 @callback(re.compile("ctdown(.*)"), owner=True)
 async def ct_spam(e):
@@ -99,11 +102,14 @@ async def choose_cata(event):
         )
         qs = qsss["results"]
         if not qs:
-            await event.respond("Sorry, No Question Found for the given limit..")
+            await event.respond("Sorry, No Question Found for the given Criteria..")
             await event.delete()
             return
         TRIVIA_CHATS.update({chat: {}})
         for copper, q in enumerate(qs):
+            if TRIVIA_CHATS[chat].get("cancel"):
+                await event.respond("Cancelled!")
+                break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
@@ -164,3 +170,9 @@ async def pollish(eve):
         TRIVIA_CHATS[chat][user] = 1
     else:
         TRIVIA_CHATS[chat][user] = TRIVIA_CHATS[chat][user] + 1
+
+
+@asst_cmd("cancel", owner=True, func= lambda x: TRIVIA_CHATS.get(x.chat_id))
+async def cancelish(event):
+    chat = TRIVIA_CHATS.get(event.chat_id)
+    chat.update({"cancel":True})
