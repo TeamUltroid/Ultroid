@@ -42,7 +42,6 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.functions.messages import (
     CreateChatRequest,
-    DeleteChatUserRequest,
     ExportChatInviteRequest,
     GetFullChatRequest,
 )
@@ -58,6 +57,7 @@ from telethon.tl.types import (
 
 from . import (
     HNDLR,
+    asst,
     eor,
     get_string,
     get_user_id,
@@ -66,7 +66,6 @@ from . import (
     types,
     udB,
     ultroid_cmd,
-    asst
 )
 
 
