@@ -98,7 +98,7 @@ async def _(e):
 )
 async def _(e):
     chat = await e.get_chat()
-    if hasattr(chat,"username") and chat.username:
+    if hasattr(chat, "username") and chat.username:
         return await eor(e, f"Username: @{chat.username}")
     if isinstance(chat, types.Chat):
         FC = await e.client(GetFullChatRequest(chat.id))
