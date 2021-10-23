@@ -325,7 +325,7 @@ async def hehe(args):
                         await conv.get_response()
                         await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await xx.edit(
-                            get_string("sts_7").format("sts_7"),
+                            get_string("sts_7").format(packname),
                             parse_mode="md",
                         )
                         return
