@@ -110,7 +110,6 @@ async def choose_cata(event):
         TRIVIA_CHATS.update({chat: {}})
         for copper, q in enumerate(qs):
             if TRIVIA_CHATS[chat].get("cancel"):
-                await event.respond("Cancelled!")
                 break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
@@ -144,6 +143,8 @@ async def choose_cata(event):
         else:
             LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
             TRC = TRIVIA_CHATS[chat]
+            if "cancel" in TRC.keys():
+                del TRC["cancel"]
             for userid, user_score in dict(
                 sorted(TRC.items(), key=operator.itemgetter(1), reverse=True)
             ).items():
@@ -178,3 +179,4 @@ async def pollish(eve):
 async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
     chat.update({"cancel": True})
+    await event.respond("Cancelled!")
