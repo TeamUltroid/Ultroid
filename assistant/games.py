@@ -109,7 +109,7 @@ async def choose_cata(event):
             return
         TRIVIA_CHATS.update({chat: {}})
         for copper, q in enumerate(qs):
-            if TRIVIA_CHATS[chat].get("cancel"):
+            if TRIVIA_CHATS[chat].get("cancel") is not None:
                 break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
