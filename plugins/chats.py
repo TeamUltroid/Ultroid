@@ -92,12 +92,16 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="getlink",
+    pattern="getlink$",
     groups_only=True,
     type=["official", "manager"],
 )
 async def _(e):
-    chat = await e.get_chat()
+    reply = await e.get_reply_message()
+    if reply and not isinstance(reply.sender, User):
+        chat = await reply.get_sender()
+    else:
+        chat = await e.get_chat()
     if hasattr(chat, "username") and chat.username:
         return await eor(e, f"Username: @{chat.username}")
     if isinstance(chat, types.Chat):
