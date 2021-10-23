@@ -66,6 +66,7 @@ from . import (
     types,
     udB,
     ultroid_cmd,
+    asst
 )
 
 
@@ -134,17 +135,11 @@ async def _(e):
         try:
             r = await e.client(
                 CreateChatRequest(
-                    users=["@missrose_bot"],
+                    users=[asst.me.username],
                     title=group_name,
                 ),
             )
             created_chat_id = r.chats[0].id
-            await e.client(
-                DeleteChatUserRequest(
-                    chat_id=created_chat_id,
-                    user_id="@missrose_bot",
-                ),
-            )
             result = await e.client(
                 ExportChatInviteRequest(
                     peer=created_chat_id,
