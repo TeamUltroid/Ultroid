@@ -46,8 +46,8 @@ from telethon.tl.functions.messages import (
     GetFullChatRequest,
 )
 from telethon.tl.types import (
-    User,
     ChannelParticipantsKicked,
+    User,
     UserStatusEmpty,
     UserStatusLastMonth,
     UserStatusLastWeek,
