@@ -5,7 +5,7 @@
 |----|-------|-------|---|
 | en | English [English] | 390 | 0 |
 | ru | Russian [Русский] | 382 | 8 |
-| it | Italian [italiano] | 115 | 275 |
+| it | Italian [italiano] | 114 | 276 |
 | az | Azerbaijani [Azərbaycanca] | 3 | 387 |
 | ar | Arabic [العربية] | 115 | 275 |
 | bn | bengoli [বাংলা] | 115 | 275 |
