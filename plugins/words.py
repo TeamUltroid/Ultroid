@@ -87,9 +87,9 @@ async def mean(event):
                 )
                 await event.delete()
         else:
-            await event.edit(x)
+            await eor(event, x)
     except Exception as e:
-        await event.edit(get_string("wrd_7").format(e))
+        await eor(event, get_string("wrd_7").format(e))
 
 
 @ultroid_cmd(
@@ -117,9 +117,9 @@ async def mean(event):
                 )
                 await event.delete()
         else:
-            await event.edit(x)
+            await eor(event, x)
     except Exception as e:
-        await event.edit(get_string("wrd_8").format(e))
+        await eor(event, get_string("wrd_8").format(e))
 
 
 @ultroid_cmd(pattern="ud (.*)")
