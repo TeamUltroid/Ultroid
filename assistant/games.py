@@ -171,7 +171,7 @@ async def pollish(eve):
     if not TRIVIA_CHATS.get(chat, {}).get(user):
         TRIVIA_CHATS[chat][user] = 1
     else:
-        TRIVIA_CHATS[chat][user] = TRIVIA_CHATS[chat][user] + 1
+        TRIVIA_CHATS[chat][user] += 1
 
 
 @asst_cmd("cancel", owner=True, func=lambda x: TRIVIA_CHATS.get(x.chat_id))
