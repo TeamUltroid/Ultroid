@@ -97,10 +97,9 @@ carbon_2: "Carbonised by [{}](tg://user?id={})"
 # chats
 chats_1: "`In lavorazione...`"
 chats_2: "`Impossibile eliminare questa chat`"
-chats_3: "`Non sono un admin`"
-chats_4: "#Deleted\nDeleted {}"
-chats_5: "Il tuo [{}]({}) Gruppo fatto capo!"
-chats_6: "Entra in @TeamUltroid"
+chats_3: "#Deleted\nDeleted {}"
+chats_4: "Il tuo [{}]({}) Gruppo fatto capo!"
+chats_5: "Entra in @TeamUltroid"
 
 # converter
 cvt_1: "Rispondi a qualsiasi media / documento."
