@@ -13,7 +13,7 @@
 • `{i}stopvc`
     Stop Group Call in a group.
 
-• `{i}vctitle`
+• `{i}vctitle <title>`
     Change the title Group call.
 
 • `{i}vcinvite`
@@ -96,6 +96,8 @@ async def _(e):
 )
 async def _(e):
     title = e.pattern_match.group(1)
+    if not title:
+        return await eor(e, "No input Found!", time=5)
     try:
         await e.client(settitle(call=await get_call(e), title=title.strip()))
         await eor(e, "**Successfully Changed VC Title to** `{title}`")
