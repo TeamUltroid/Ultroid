@@ -282,7 +282,10 @@ async def hehe(args):
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "120" in x.text:
+                t = "120"
+                if is_anim:
+                    t = "50"
+                while t in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"@{user.username}'s Pack {pack}"
