@@ -35,9 +35,11 @@ DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
 
+
 @callback("delit")
 async def delete_it(event):
     await event.delete()
+
 
 @callback(re.compile("ctdown(.*)"), owner=True)
 async def ct_spam(e):
@@ -172,7 +174,7 @@ async def pollish(eve):
         TRIVIA_CHATS[chat][user] = TRIVIA_CHATS[chat][user] + 1
 
 
-@asst_cmd("cancel", owner=True, func= lambda x: TRIVIA_CHATS.get(x.chat_id))
+@asst_cmd("cancel", owner=True, func=lambda x: TRIVIA_CHATS.get(x.chat_id))
 async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
-    chat.update({"cancel":True})
+    chat.update({"cancel": True})
