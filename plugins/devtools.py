@@ -4,6 +4,7 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 
@@ -25,7 +26,8 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-import io
+
+from io import BytesIO
 import sys
 import traceback
 from os import remove
@@ -70,18 +72,19 @@ async def _(event):
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
-        with open("bash.txt", "w") as out_file:
-            out_file.write(ultd)
-        await event.client.send_file(
-            event.chat_id,
-            out_file,
-            force_document=True,
-            thumb="resources/extras/ultroid.jpg",
-            allow_cache=False,
-            caption=f"`{cmd}`" if len(cmd) < 998 else None,
-            reply_to=reply_to_id,
-        )
-        await xx.delete()
+        with BytesIO(str.encode(ultd)) as out_file:
+            out_file.name = "bash.txt"
+            await event.client.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                thumb="resources/extras/ultroid.jpg",
+                allow_cache=False,
+                caption=f"`{cmd}`" if len(cmd) < 998 else None,
+                reply_to=reply_to_id,
+            )
+
+            await xx.delete()
     else:
         await xx.edit(OUT)
 
@@ -157,18 +160,18 @@ async def _(event):
     )
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
-        with open("eval.txt", "w") as out_file:
-            out_file.write(ultd)
-        await event.client.send_file(
-            event.chat_id,
-            out_file,
-            force_document=True,
-            thumb="resources/extras/ultroid.jpg",
-            allow_cache=False,
-            caption=f"```{cmd}```" if len(cmd) < 998 else None,
-            reply_to=reply_to_id,
-        )
-        await xx.delete()
+        with BytesIO(str.encode(ultd)) as out_file:
+            out_file.name = "eval.txt"
+            await event.client.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                thumb="resources/extras/ultroid.jpg",
+                allow_cache=False,
+                caption=f"```{cmd}```" if len(cmd) < 998 else None,
+                reply_to=reply_to_id,
+            )
+            await xx.delete()
     else:
         await xx.edit(final_output)
 
@@ -217,7 +220,7 @@ async def doie(e):
             os.remove("cpp-ultroid.cpp")
             if os.path.exists("CppUltroid"):
                 os.remove("CppUltroid")
-            with io.BytesIO(str.encode(o_cpp)) as out_file:
+            with BytesIO(str.encode(o_cpp)) as out_file:
                 out_file.name = "error.txt"
                 return await msg.reply(f"`{match}`", file=out_file)
         return await eor(msg, o_cpp)
@@ -227,7 +230,7 @@ async def doie(e):
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
     if len(o_cpp) > 3000:
-        with io.BytesIO(str.encode(o_cpp)) as out_file:
+        with BytesIO(str.encode(o_cpp)) as out_file:
             out_file.name = "eval.txt"
             await msg.reply(f"`{match}`", file=out_file)
     else:
