@@ -29,7 +29,7 @@
 
 import sys
 import traceback
-from io import BytesIO
+from io import BytesIO, StringsIO
 from os import remove
 from pprint import pprint
 
@@ -131,8 +131,8 @@ async def _(event):
         )
     old_stderr = sys.stderr
     old_stdout = sys.stdout
-    redirected_output = sys.stdout = io.StringIO()
-    redirected_error = sys.stderr = io.StringIO()
+    redirected_output = sys.stdout = StringIO()
+    redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
     try:
