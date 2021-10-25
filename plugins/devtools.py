@@ -30,6 +30,7 @@ import sys
 import traceback
 from os import remove
 from pprint import pprint
+from telethon.utils import get_display_name
 
 from . import *
 
@@ -105,8 +106,9 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     if (
-        "_ignore_eval.clear()",
-        "DeleteAccountRequest" or "functions.account.DeleteAccountRequest",
+        "_ignore_eval.clear()"
+        or "DeleteAccountRequest"
+        or "functions.account.DeleteAccountRequest",
     ) in cmd:
         if event.sender_id in _ignore_eval:
             return await xx.edit(
@@ -114,7 +116,7 @@ async def _(event):
             )
         warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
         await warning.reply(
-            f"Account Deletion Request by [{get_display_name(await event.get_sender())}](tg://user?id={event.sender_id})"
+            f"Malicious Activities suspected by [{get_display_name(await event.get_sender())}](tg://user?id={event.sender_id})"
         )
         _ignore_eval.append(event.sender_id)
         return await xx.edit(
