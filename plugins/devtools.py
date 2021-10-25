@@ -117,7 +117,7 @@ async def _(event):
             )
         warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
         await warning.reply(
-            f"Malicious Activities suspected by [{get_display_name(await event.get_sender())}](tg://user?id={event.sender_id})"
+            f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
         )
         _ignore_eval.append(event.sender_id)
         return await xx.edit(
