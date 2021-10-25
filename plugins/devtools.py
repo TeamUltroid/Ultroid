@@ -90,6 +90,7 @@ async def _(event):
 p, pp = print, pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
+_ignore_eval = []
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
@@ -102,6 +103,13 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
+    if ("_ignore_eval.clear()", "DeleteAccountRequest" or "functions.account.DeleteAccountRequest") in cmd:
+        if event.sender_id in _ignore_eval:
+            return await xx.edit("`You cannot use this command now. Contact owner of this bot!`")
+        warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
+        await warning.reply(f"Account Deletion Request by [{get_display_name(await event.get_sender())}](tg://user?id={event.sender_id})")
+        _ignore_eval.append(event.sender_id)
+        return await xx.edit("`Malicious Activities suspected⚠️!\nReported to owner. Aborted this request!`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
