@@ -111,7 +111,7 @@ async def _(event):
             "DeleteAccountRequest",
             "functions.account.DeleteAccountRequest",
         ]
-    ):
+    ) and not event.out:
         if event.sender_id in _ignore_eval:
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
