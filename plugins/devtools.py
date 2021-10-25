@@ -70,9 +70,9 @@ async def _(event):
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
-        with io.BytesIO(str.encode(ultd)) as out_file:
-            out_file.name = "bash.txt"
-            await event.client.send_file(
+        with open("bash.txt", "w") as out_file:
+            out_file.write(ultd)
+        await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -80,9 +80,8 @@ async def _(event):
                 allow_cache=False,
                 caption=f"`{cmd}`" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
-            )
-
-            await xx.delete()
+        )
+        await xx.delete()
     else:
         await xx.edit(OUT)
 
@@ -113,7 +112,7 @@ async def _(event):
                 "functions.account.DeleteAccountRequest",
             ]
         )
-        or not event.out
+        and not event.out
     ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
@@ -158,9 +157,9 @@ async def _(event):
     )
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
-        with io.BytesIO(str.encode(ultd)) as out_file:
-            out_file.name = "eval.txt"
-            await event.client.send_file(
+        with open("eval.txt", "w") as out_file:
+            out_file.write(ultd)
+        await event.client.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
@@ -168,8 +167,8 @@ async def _(event):
                 allow_cache=False,
                 caption=f"```{cmd}```" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
-            )
-            await xx.delete()
+        )
+        await xx.delete()
     else:
         await xx.edit(final_output)
 
