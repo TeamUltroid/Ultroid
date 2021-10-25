@@ -104,14 +104,17 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-    if any(
-        item in cmd
-        for item in [
-            "_ignore_eval",
-            "DeleteAccountRequest",
-            "functions.account.DeleteAccountRequest",
-        ]
-    ) and not event.out:
+    if (
+        any(
+            item in cmd
+            for item in [
+                "_ignore_eval",
+                "DeleteAccountRequest",
+                "functions.account.DeleteAccountRequest",
+            ]
+        )
+        and not event.out
+    ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
