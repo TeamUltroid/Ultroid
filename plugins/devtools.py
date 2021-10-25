@@ -31,8 +31,6 @@ import traceback
 from os import remove
 from pprint import pprint
 
-from telethon.utils import get_display_name
-
 from . import *
 
 
@@ -106,7 +104,16 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-    if any(["_ignore_eval.clear()", "DeleteAccountRequest", "functions.account.DeleteAccountRequest"]) in cmd:
+    if (
+        any(
+            [
+                "_ignore_eval.clear()",
+                "DeleteAccountRequest",
+                "functions.account.DeleteAccountRequest",
+            ]
+        )
+        in cmd
+    ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
