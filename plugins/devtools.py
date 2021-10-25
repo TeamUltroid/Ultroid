@@ -29,7 +29,7 @@
 
 import sys
 import traceback
-from io import BytesIO
+from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
 
