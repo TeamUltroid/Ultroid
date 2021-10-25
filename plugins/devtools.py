@@ -73,13 +73,13 @@ async def _(event):
         with open("bash.txt", "w") as out_file:
             out_file.write(ultd)
         await event.client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                thumb="resources/extras/ultroid.jpg",
-                allow_cache=False,
-                caption=f"`{cmd}`" if len(cmd) < 998 else None,
-                reply_to=reply_to_id,
+            event.chat_id,
+            out_file,
+            force_document=True,
+            thumb="resources/extras/ultroid.jpg",
+            allow_cache=False,
+            caption=f"`{cmd}`" if len(cmd) < 998 else None,
+            reply_to=reply_to_id,
         )
         await xx.delete()
     else:
@@ -160,13 +160,13 @@ async def _(event):
         with open("eval.txt", "w") as out_file:
             out_file.write(ultd)
         await event.client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                thumb="resources/extras/ultroid.jpg",
-                allow_cache=False,
-                caption=f"```{cmd}```" if len(cmd) < 998 else None,
-                reply_to=reply_to_id,
+            event.chat_id,
+            out_file,
+            force_document=True,
+            thumb="resources/extras/ultroid.jpg",
+            allow_cache=False,
+            caption=f"```{cmd}```" if len(cmd) < 998 else None,
+            reply_to=reply_to_id,
         )
         await xx.delete()
     else:
