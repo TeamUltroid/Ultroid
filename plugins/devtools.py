@@ -27,9 +27,9 @@
     Shows System Info.
 """
 
+from io import BytesIO
 import sys
 import traceback
-from io import BytesIO
 from os import remove
 from pprint import pprint
 
@@ -115,7 +115,7 @@ async def _(event):
                 "functions.account.DeleteAccountRequest",
             ]
         )
-        and not event.out
+        and not event.sender_id == event.client.uid
     ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
