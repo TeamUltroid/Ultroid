@@ -17,7 +17,7 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
-• `{i}listdrive`
+• `{i}listgdrive`
     List all GDrive files.
 
 • `{i}gfolder`
@@ -37,7 +37,7 @@ GDrive = GDriveManager()
 
 
 @ultroid_cmd(
-    pattern="listdrive$",
+    pattern="listgdrive$",
 )
 async def files(event):
     files = GDrive._list_files()
