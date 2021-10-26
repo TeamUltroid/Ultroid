@@ -55,7 +55,7 @@ async def files(event):
             f.write(
                 msg.replace("[", "File Name: ")
                 .replace("](", "\n» Link: ")
-                .replace(")", "")
+                .replace(")\n", "\n\n")
             )
         try:
             await eve.delete()
