@@ -54,8 +54,8 @@ async def files(event):
         with open("drive-files.txt", "w") as f:
             f.write(
                 msg.replace("[", "File Name: ")
-                .replace("](", "\n » Link: ")
-                .replace(")", "\n")
+                .replace("](", "\n» Link: ")
+                .replace(")", "")
             )
         try:
             await eve.delete()
