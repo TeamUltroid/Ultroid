@@ -30,11 +30,10 @@
 
 import os
 import time
-from datetime import datetime
 
 from pyUltroid.functions.gDrive import GDriveManager
 
-from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
+from . import asst, downloader, eod, eor, get_string, ultroid_cmd
 
 GDrive = GDriveManager()
 
@@ -52,7 +51,10 @@ async def gdown(event):
     event = await eor(event, get_string("com_1"))
     start_time = time.time()
     filename = await GDrive._download_file(event, match, filename)
-    await event.edit(f"`Downloaded {filename} in {time_formatter(time.time() - start_time)}`")
+    await event.edit(
+        f"`Downloaded {filename} in {time_formatter(time.time() - start_time)}`"
+    )
+
 
 @ultroid_cmd(
     pattern="listgdrive$",
@@ -141,6 +143,7 @@ async def _(event):
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
+
 """
 @ultroid_cmd(
     pattern="drivesearch ?(.*)",
@@ -187,13 +190,17 @@ async def _(event):
     await eor(a, get_string("gdrive_7").format(input_str, dir_link), time=5)
 """
 
+
 @ultroid_cmd(
     pattern="gfolder$",
 )
 async def _(event):
     if GDrive.folder_id:
         await eod(
-            event, "`Here is Your G-Drive Folder link : `\n" + "https://drive.google.com/folderview?id="+ GDrive.folder_id
+            event,
+            "`Here is Your G-Drive Folder link : `\n"
+            + "https://drive.google.com/folderview?id="
+            + GDrive.folder_id,
         )
     else:
         await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
