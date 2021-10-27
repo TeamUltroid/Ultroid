@@ -192,10 +192,8 @@ async def _(event):
 )
 async def _(event):
     if GDrive.folder_id:
-        folder_link = "https://drive.google.com/folderview?id=" + GDrive.folder_id,
-        )
         await eod(
-            event, "`Here is Your G-Drive Folder link : `\n" + folder_link
+            event, "`Here is Your G-Drive Folder link : `\n" + "https://drive.google.com/folderview?id="+ GDrive.folder_id
         )
     else:
         await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
