@@ -115,7 +115,7 @@ async def _(event):
                 "functions.account.DeleteAccountRequest",
             ]
         )
-        and not event.sender_id == event.client.uid
+        and event.sender_id != ultroid_bot.uid
     ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
