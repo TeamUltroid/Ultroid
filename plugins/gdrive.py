@@ -50,10 +50,10 @@ async def gdown(event):
     if " | " in match:
         filename = match.split(" | ")[1].strip()
     event = await eor(event, get_string("com_1"))
-    start_time = time.time()
+    _start = time.time()
     filename = await GDrive._download_file(event, match, filename)
     await event.edit(
-        f"`Downloaded {filename} in {time_formatter(time.time() - start_time)}`"
+        f"`Downloaded {filename} in {time_formatter(time.time() - _start)}`"
     )
 
 
