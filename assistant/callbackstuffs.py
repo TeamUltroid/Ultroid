@@ -204,7 +204,7 @@ async def _(e):
             url + "\nGo to the above link and send me the code you get."
         )
         code = await conv.get_response()
-        if GDrive._create_token_file(code=code.message):
+        if GDrive._create_token_file(code=code.text):
             await conv.send_message(
                 "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
                 buttons=Button.inline("Main Menu", data="setter"),
