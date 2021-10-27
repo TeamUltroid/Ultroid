@@ -53,7 +53,7 @@ async def gdown(event):
     _start = time.time()
     filename = await GDrive._download_file(event, match, filename)
     await event.edit(
-        f"`Downloaded {filename} in {time_formatter(time.time() - _start)}`"
+        f"`Downloaded {filename} in {time_formatter((time.time() - _start)*1000)}`"
     )
 
 
