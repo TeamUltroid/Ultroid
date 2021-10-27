@@ -141,7 +141,7 @@ async def _(event):
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
-""'
+"""
 @ultroid_cmd(
     pattern="drivesearch ?(.*)",
 )
