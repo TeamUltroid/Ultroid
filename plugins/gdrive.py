@@ -11,6 +11,9 @@
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
+• `{i}gdown <file id/link> | <filename>`
+    Download from Gdrive link or file id.
+
 • `{i}drivesearch <file name>`
     Search file name on Google Drive and get link.
 
@@ -35,6 +38,21 @@ from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
 
 GDrive = GDriveManager()
 
+
+@ultroid_cmd(
+    pattern="gdown ?(.*)",
+)
+async def gdown(event):
+    match = event.pattern_match.group(1)
+    if not match:
+        return await eod(event, "`Give file id or Gdrive link to download from!`")
+    filename = None
+    if " | " in match:
+        filename = match.split(" | ")[1].strip()
+    event = await eor(event, get_string("com_1"))
+    start_time = time.time()
+    filename = await GDrive._download_file(event, match, filename)
+    await event.edit(f"`Downloaded {filename} in {time_formatter(time.time() - start_time)}`")
 
 @ultroid_cmd(
     pattern="listgdrive$",
@@ -79,8 +97,7 @@ async def _(event):
         return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     filename = None
-    start = datetime.now()
-    dddd = time.time()
+    start = time.time()
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         try:
@@ -88,7 +105,7 @@ async def _(event):
                 "resources/downloads/" + reply_message.file.name,
                 reply_message.media.document,
                 mone,
-                dddd,
+                start,
                 get_string("com_5"),
             )
             filename = downloaded_file_name.name
@@ -98,10 +115,8 @@ async def _(event):
             )
         except Exception as e:
             return await eor(mone, str(e), time=10)
-        end = datetime.now()
-        ms = (end - start).seconds
         await mone.edit(
-            f"Downloaded to `{filename}` in {ms} seconds.",
+            f"Downloaded to `{filename}` in {time_formatter(time.time() - start)}",
         )
     elif input_str:
         filename = input_str.strip()
@@ -113,6 +128,7 @@ async def _(event):
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
+
     if not filename:
         return await eor(mone, "`File Not found in local server.`", time=10)
 
@@ -125,7 +141,7 @@ async def _(event):
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
-
+""'
 @ultroid_cmd(
     pattern="drivesearch ?(.*)",
 )
@@ -169,18 +185,17 @@ async def _(event):
     await DoTeskWithDir(http, input_str, event, dir_id)
     dir_link = f"https://drive.google.com/folderview?id={dir_id}"
     await eor(a, get_string("gdrive_7").format(input_str, dir_link), time=5)
-
+"""
 
 @ultroid_cmd(
     pattern="gfolder$",
 )
 async def _(event):
-    if Redis("GDRIVE_FOLDER_ID"):
-        folder_link = "https://drive.google.com/folderview?id=" + Redis(
-            "GDRIVE_FOLDER_ID",
+    if GDrive.folder_id:
+        folder_link = "https://drive.google.com/folderview?id=" + GDrive.folder_id,
         )
-        await eor(
-            event, "`Here is Your G-Drive Folder link : `\n" + folder_link, time=5
+        await eod(
+            event, "`Here is Your G-Drive Folder link : `\n" + folder_link
         )
     else:
-        await eor(event, "Set GDRIVE_FOLDER_ID with value of your folder id", time=5)
+        await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
