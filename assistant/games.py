@@ -153,7 +153,7 @@ async def choose_cata(event):
             await event.respond(LBD)
         del TRIVIA_CHATS[chat]
         for key in POLLS.keys():
-            if key["chat"] == chat:
+            if POLLS[key]["chat"] == chat:
                 del POLLS[key]
         return
     await event.edit(text, buttons=buttons)
