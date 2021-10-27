@@ -193,11 +193,6 @@ async def _(e):
 async def _(e):
     if not e.is_private:
         return
-    if not udB.get("GDRIVE_CLIENT_ID"):
-        return await e.edit(
-            "Client ID and Secret is Empty.\nFill it First.",
-            buttons=get_back_button("gdrive"),
-        )
     url = GDrive._create_token_file()
     async with asst.conversation(e.sender_id) as conv:
         await conv.send_message(
