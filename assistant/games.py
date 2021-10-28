@@ -11,7 +11,7 @@ import operator
 import re
 import uuid
 from html import unescape
-from random import shuffle
+from random import shuffle, choice
 
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
@@ -35,7 +35,8 @@ TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
-CONGO_STICKER = "CAADAgADSgIAAladvQrJasZoYBh68AI"
+CONGO_STICKER = ["CAADAgADSgIAAladvQrJasZoYBh68AI","CAADAgADXhIAAuyZKUl879mlR_dkOwI",
+    "CAADAgADpQAD9wLID-xfZCDwOI5LAg", "CAADAgADjAADECECEFZM-SrKO9GgAg", "CAADAgADSwIAAj-VzArAzNCDiGWAHAI"]
 
 
 @callback("delit")
@@ -144,7 +145,7 @@ async def choose_cata(event):
             )
         else:
             try:
-                await event.respond(file=CONGO_STICKER)
+                await event.respond(file=choice(CONGO_STICKER))
             except ChatSendStickersForbiddenError:
                 pass
             LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
