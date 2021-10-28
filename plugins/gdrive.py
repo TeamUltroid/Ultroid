@@ -52,9 +52,11 @@ async def gdown(event):
         filename = match.split(" | ")[1].strip()
     eve = await eor(event, get_string("com_1"))
     _start = time.time()
-    filename = await GDrive._download_file(eve, match, filename)
+    status, response = await GDrive._download_file(eve, match, filename)
+    if not status:
+        return await eve.edit(response)
     await eve.edit(
-        f"`Downloaded {filename} in {time_formatter((time.time() - _start)*1000)}`"
+        f"`Downloaded {response} in {time_formatter((time.time() - _start)*1000)}`"
     )
 
 
@@ -138,7 +140,7 @@ async def _(event):
             mone,
             filename,
         )
-        await mone.edit(get_string("gdrive_7").format(filename, g_drive_link))
+        await mone.edit(get_string("gdrive_7").format(filename.split("/")[-1], g_drive_link))
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
