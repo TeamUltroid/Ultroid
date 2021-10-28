@@ -238,6 +238,7 @@ async def _(e):
     await e.edit(
         "Click Authorise and send the code.\n\nYou can use your own CLIENT ID and SECRET by [this](https://t.me/UltroidUpdates/36)",
         buttons=[
+            [
                 Button.inline("Folder ID", data="folderid"),
                 Button.inline("Authorise", data="authorise"),
             ],
