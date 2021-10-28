@@ -37,6 +37,7 @@ TRIVIA_CHATS = {}
 POLLS = {}
 CONGO_STICKER = "CAADAgADSgIAAladvQrJasZoYBh68AI"
 
+
 @callback("delit")
 async def delete_it(event):
     await event.delete()
