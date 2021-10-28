@@ -41,6 +41,7 @@ GDrive = GDriveManager()
 
 @ultroid_cmd(
     pattern="gdown ?(.*)",
+    fullsudo=True,
 )
 async def gdown(event):
     match = event.pattern_match.group(1)
@@ -59,6 +60,7 @@ async def gdown(event):
 
 @ultroid_cmd(
     pattern="listgdrive$",
+    fullsudo=True,
 )
 async def files(event):
     files = GDrive._list_files()
@@ -93,6 +95,7 @@ async def files(event):
 
 @ultroid_cmd(
     pattern="ugdrive ?(.*)",
+    fullsudo=True,
 )
 async def _(event):
     mone = await eor(event, get_string("com_1"))
@@ -143,6 +146,7 @@ async def _(event):
 """
 @ultroid_cmd(
     pattern="drivesearch ?(.*)",
+    fullsudo=True,
 )
 async def sch(event):
     if not os.path.exists(TOKEN_FILE):
@@ -166,6 +170,7 @@ async def sch(event):
 
 @ultroid_cmd(
     pattern="udir ?(.*)",
+    fullsudo=True,
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
@@ -189,6 +194,7 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="gfolder$",
+    fullsudo=True,
 )
 async def _(event):
     if GDrive.folder_id:
