@@ -194,9 +194,10 @@ async def _(e):
     if not e.is_private:
         return
     url = GDrive._create_token_file()
+    await e.edit("Go to the below link and send the code!")
     async with asst.conversation(e.sender_id) as conv:
         await conv.send_message(
-            url + "\nGo to the above link and send me the code you get."
+            url
         )
         code = await conv.get_response()
         if GDrive._create_token_file(code=code.text):
@@ -218,8 +219,7 @@ async def _(e):
         + "1. Open Google Drive App.\n"
         + "2. Create Folder.\n"
         + "3. Make that folder public.\n"
-        + "4. Copy link of that folder.\n"
-        + "5. Send all characters which is after id= .",
+        + "4. Send link of that folder."
     )
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
@@ -231,54 +231,17 @@ async def _(e):
         )
 
 
-@callback("clientsec", owner=True)
-async def _(e):
-    if not e.is_private:
-        return
-    await e.edit("Send your CLIENT SECRET")
-    async with asst.conversation(e.sender_id) as conv:
-        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
-        repl = await reply
-        udB.set("GDRIVE_CLIENT_SECRET", repl.text)
-        await repl.reply(
-            "Success!\nNow You Can Authorise or add FOLDER ID.",
-            buttons=get_back_button("gdrive"),
-        )
-
-
-@callback("clientid", owner=True)
-async def _(e):
-    if not e.is_private:
-        return
-    await e.edit("Send your CLIENT ID ending with .com")
-    async with asst.conversation(e.sender_id) as conv:
-        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
-        repl = await reply
-        if not repl.text.endswith(".com"):
-            return await repl.reply("`Wrong CLIENT ID`")
-        udB.set("GDRIVE_CLIENT_ID", repl.text)
-        await repl.reply(
-            "Success now set CLIENT SECRET",
-            buttons=get_back_button("gdrive"),
-        )
-
-
 @callback("gdrive", owner=True)
 async def _(e):
     if not e.is_private:
         return
     await e.edit(
-        "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
+        "Click Authorise and send the code.\n\nYou can use your own CLIENT ID and SECRET by [this](https://t.me/UltroidUpdates/36)",
         buttons=[
-            [
-                Button.inline("Cʟɪᴇɴᴛ Iᴅ", data="clientid"),
-                Button.inline("Cʟɪᴇɴᴛ Sᴇᴄʀᴇᴛ", data="clientsec"),
+                Button.inline("Folder ID", data="folderid"),
+                Button.inline("Authorise", data="authorise"),
             ],
-            [
-                Button.inline("Fᴏʟᴅᴇʀ Iᴅ", data="folderid"),
-                Button.inline("Aᴜᴛʜᴏʀɪsᴇ", data="authorise"),
-            ],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Back", data="otvars")],
         ],
         link_preview=False,
     )
