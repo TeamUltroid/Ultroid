@@ -196,9 +196,7 @@ async def _(e):
     url = GDrive._create_token_file()
     await e.edit("Go to the below link and send the code!")
     async with asst.conversation(e.sender_id) as conv:
-        await conv.send_message(
-            url
-        )
+        await conv.send_message(url)
         code = await conv.get_response()
         if GDrive._create_token_file(code=code.text):
             await conv.send_message(
