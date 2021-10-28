@@ -25,7 +25,7 @@
 
 • `{i}gfolder`
     Link to your Google Drive Folder.
-    If added then all uploaded files will be placed here.
+    If added then all files will be uploaded in this folder.
 """
 
 import os
@@ -49,10 +49,10 @@ async def gdown(event):
     filename = None
     if " | " in match:
         filename = match.split(" | ")[1].strip()
-    event = await eor(event, get_string("com_1"))
+    eve = await eor(event, get_string("com_1"))
     _start = time.time()
-    filename = await GDrive._download_file(event, match, filename)
-    await event.edit(
+    filename = await GDrive._download_file(eve, match, filename)
+    await eve.edit(
         f"`Downloaded {filename} in {time_formatter((time.time() - _start)*1000)}`"
     )
 
@@ -123,17 +123,12 @@ async def _(event):
         )
     elif input_str:
         filename = input_str.strip()
-        if os.path.exists(filename):
-            await mone.edit(f"Found `{filename}`")
-        else:
+        if not os.path.exists(filename):
             return await eod(
                 mone,
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
-
-    if not filename:
-        return await eor(mone, "`File Not found in local server.`", time=10)
 
     try:
         g_drive_link = await GDrive._upload_file(
