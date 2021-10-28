@@ -140,7 +140,9 @@ async def _(event):
             mone,
             filename,
         )
-        await mone.edit(get_string("gdrive_7").format(filename.split("/")[-1], g_drive_link))
+        await mone.edit(
+            get_string("gdrive_7").format(filename.split("/")[-1], g_drive_link)
+        )
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
