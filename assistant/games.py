@@ -11,7 +11,7 @@ import operator
 import re
 import uuid
 from html import unescape
-from random import shuffle, choice
+from random import choice, shuffle
 
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
@@ -35,8 +35,13 @@ TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
-CONGO_STICKER = ["CAADAgADSgIAAladvQrJasZoYBh68AI","CAADAgADXhIAAuyZKUl879mlR_dkOwI",
-    "CAADAgADpQAD9wLID-xfZCDwOI5LAg", "CAADAgADjAADECECEFZM-SrKO9GgAg", "CAADAgADSwIAAj-VzArAzNCDiGWAHAI"]
+CONGO_STICKER = [
+    "CAADAgADSgIAAladvQrJasZoYBh68AI",
+    "CAADAgADXhIAAuyZKUl879mlR_dkOwI",
+    "CAADAgADpQAD9wLID-xfZCDwOI5LAg",
+    "CAADAgADjAADECECEFZM-SrKO9GgAg",
+    "CAADAgADSwIAAj-VzArAzNCDiGWAHAI",
+]
 
 
 @callback("delit")
