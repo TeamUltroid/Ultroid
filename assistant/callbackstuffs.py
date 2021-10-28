@@ -140,7 +140,7 @@ async def changes(okk):
         img = await Carbon(
             file_name="changelog",
             code=tl_chnglog,
-            background=choice(ATRA_COL),
+            backgroundColor=choice(ATRA_COL),
             language="md",
         )
         return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
