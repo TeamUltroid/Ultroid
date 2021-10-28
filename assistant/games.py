@@ -15,6 +15,7 @@ from random import shuffle
 
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
+from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
@@ -34,7 +35,7 @@ TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
-
+CONGO_STICKER = "CAADAgADSgIAAladvQrJasZoYBh68AI"
 
 @callback("delit")
 async def delete_it(event):
@@ -141,6 +142,10 @@ async def choose_cata(event):
                 "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
             )
         else:
+            try:
+                await event.respond(file=CONGO_STICKER)
+            except ChatSendStickersForbiddenError:
+                pass
             LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
             TRC = TRIVIA_CHATS[chat]
             if "cancel" in TRC.keys():
