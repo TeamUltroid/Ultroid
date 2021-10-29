@@ -75,9 +75,13 @@ async def reverse_gif(event):
     a = await event.get_reply_message()
     if not (a and a.media) and "video" not in mediainfo(a.media):
         return await eor(e, "`Reply To Video only`", time=5)
-    await eor(e, get_string("com_1"))
-    a.file.duration
-
+    msg = await eor(e, get_string("com_1"))
+    dur = a.file.duration
+    file = await a.download_media()
+    await bash(f'ffmpeg -i "{file}" -vf reverse -af areverse reversed.mp4 -y')
+    await event.respond("- **Reversed Video/GIF**", file="reversed.mp4")
+    os.remove(file)
+    os.remove("reversed.mp4")
 
 @ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
