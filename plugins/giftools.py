@@ -70,6 +70,14 @@ async def igif(e):
         LOGS.info(er)
 
 
+@ultroid_cmd(pattern="rvgif$")
+async def reverse_gif(event):
+    a = await event.get_reply_message()
+    if not (a and a.media) and not "video" in mediainfo(a.media):
+        return await eor(e, "`Reply To Video only`", time=5)
+    xx = await eor(e, get_string("com_1"))
+    dur = a.file.duration
+
 @ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
     get = ult.pattern_match.group(1)
