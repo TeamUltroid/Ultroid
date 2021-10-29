@@ -12,28 +12,26 @@ import re
 import uuid
 from html import unescape
 from random import choice, shuffle
-from pyUltroid.misc import owner_and_sudos
+
+import akinator
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
+from pyUltroid.misc import owner_and_sudos
+from telethon.errors import BotMethodInvalidError
 from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from . import *
-
-
-import re
-
-import akinator
-from telethon.errors import BotMethodInvalidError
-
 from . import Button, asst, callback, get_string, in_pattern, types, ultroid_cmd
 
 games = {}
 aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
 
 
-@ultroid_cmd(pattern="akinator", type=["official","assistant"], from_users=owner_and_sudos())
+@ultroid_cmd(
+    pattern="akinator", type=["official", "assistant"], from_users=owner_and_sudos()
+)
 async def doit(e):
     sta = akinator.Akinator()
     games.update({e.chat_id: {e.id: sta}})
@@ -116,6 +114,7 @@ async def eiagx(e):
 
 # ----------------------- Main Command ------------------- #
 
+
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
     buttons = [
@@ -123,6 +122,7 @@ async def magic(event):
         [Button.inline("Cancel ❌", "delit")],
     ]
     await event.reply("Choose The Game 🎮", buttons=buttons)
+
 
 # -------------------------- Trivia ----------------------- #
 
