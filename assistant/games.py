@@ -301,4 +301,4 @@ async def cancelish(event):
 
 
 if HELP.get("Official"):
-    HELP["Official"].update({"games":__doc__.format(i=HNDLR)})
+    HELP["Official"].update({"games": __doc__.format(i=HNDLR)})
