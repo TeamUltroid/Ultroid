@@ -80,6 +80,7 @@ async def reverse_gif(event):
     file = await a.download_media()
     await bash(f'ffmpeg -i "{file}" -vf reverse -af areverse reversed.mp4 -y')
     await event.respond("- **Reversed Video/GIF**", file="reversed.mp4")
+    await msg.delete()
     os.remove(file)
     os.remove("reversed.mp4")
 
