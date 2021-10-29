@@ -270,7 +270,8 @@ async def choose_cata(event):
                 LBD += f"••• {user} - {user_score}\n"
             await event.respond(LBD)
         del TRIVIA_CHATS[chat]
-        for key in POLLS.keys():
+        list_ = list(POLLS.copy().keys())
+        for key in list_:
             if POLLS[key]["chat"] == chat:
                 del POLLS[key]
         return
