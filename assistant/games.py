@@ -298,7 +298,3 @@ async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
     chat.update({"cancel": True})
     await event.respond("Cancelled!")
-
-
-if HELP.get("Official"):
-    HELP["Official"].update({"games": __doc__.format(i=HNDLR)})
