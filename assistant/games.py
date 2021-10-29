@@ -5,6 +5,13 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+• `{i}akinator` | `/akinator`
+   Start akinator game from Userbot/Assistant
+
+• `/startgame`
+   Open Portal for Games
+"""
 
 import asyncio
 import operator
@@ -291,3 +298,7 @@ async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
     chat.update({"cancel": True})
     await event.respond("Cancelled!")
+
+
+if HELP.get("Official"):
+    HELP["Official"].update({"games":__doc__.format(i=HNDLR)})
