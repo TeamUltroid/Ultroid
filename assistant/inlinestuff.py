@@ -10,7 +10,6 @@ from datetime import datetime
 from random import choice
 from re import compile as re_compile
 
-import requests
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import async_searcher, dloader, get_ofox
