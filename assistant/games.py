@@ -18,7 +18,10 @@ from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
 from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._decorators import ultroid_cmd
-from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError, BotMethodInvalidError
+from telethon.errors.rpcerrorlist import (
+    BotMethodInvalidError,
+    ChatSendStickersForbiddenError,
+)
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
