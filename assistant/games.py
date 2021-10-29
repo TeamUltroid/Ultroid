@@ -17,13 +17,14 @@ import akinator
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
 from pyUltroid.misc import owner_and_sudos
-from telethon.errors import BotMethodInvalidError
-from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError
+from pyUltroid.misc._decorators import ultroid_cmd
+from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError, BotMethodInvalidError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from . import *
-from . import Button, asst, callback, get_string, in_pattern, types, ultroid_cmd
+
+# -------------------------- Akinator ----------------------- #
 
 games = {}
 aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
