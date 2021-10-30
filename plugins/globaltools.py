@@ -646,11 +646,10 @@ async def ungblacker(event):
 
 
 async def gblacker(event, type_):
-    chat = (await event.get_chat()).id
     try:
         chat = int(event.text.split(" ", 1)[1])
     except IndexError:
-        pass
+        chat = event.chat_id
     try:
         chat_id = (await ultroid_bot.get_entity(chat)).id
     except Exception as e:
