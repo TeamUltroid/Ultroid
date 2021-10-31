@@ -24,7 +24,7 @@ from pyUltroid.functions.tools import (
 )
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
-from telethon import events
+from telethon import events, Button
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
 
@@ -1320,18 +1320,20 @@ async def fdroid_dler(event):
     )
     tt = time.time()
     file = await uploader(file, file, tt, event, "Uploading...")
+    buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
-        msg = await event.edit(f"**• {title} •**", file=file)
+        msg = await event.edit(f"**• {title} •**", file=file, buttons=buttons)
     except Exception as er:
         LOGS.exception(er)
         try:
-            await event.client.edit_message(
+            msg = await event.client.edit_message(
                 await event.get_input_chat(),
                 event.message_id,
                 f"**• {title} •**",
+                buttons=buttons,
                 file=file,
             )
         except Exception as er:
             LOGS.exception(er)
-            await event.edit(f"**ERROR**: `{er}`")
+            return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
     FD_MEDIA.update({uri: msg.media})
