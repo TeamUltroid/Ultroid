@@ -56,7 +56,7 @@ async def gdown(event):
     if not status:
         return await eve.edit(response)
     await eve.edit(
-        f"`Downloaded {response} in {time_formatter((time.time() - _start)*1000)}`"
+        f"`Downloaded `{response}`` in {time_formatter((time.time() - _start)*1000)}`"
     )
 
 
