@@ -408,3 +408,28 @@ async def piston_run(event):
         buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
+    
+    
+@in_pattern("fdroid", owner=True)
+async def do_magic(event):
+    try:
+        match = event.text.split(" ", maxsplit=1)[1]
+    except IndexError:
+        return await event.answer([], switch_pm="Enter Query to Search", switch_pm_param="start")
+    link = "https://search.f-droid.org/?q=" + match.replace(" ", "+")
+    content = await async_searcher(link, re_content=True)
+    BSC = bs(content, "html.parser", from_encoding="utf-8")
+    ress = []
+    for dat in BSC.find_all("a", "package-header")[:10]:
+        image = dat.find("img", "package-icon")["src"]
+        title = dat.find("h4", "package-name").text.strip()
+        desc = dat.find("span", "package-summary").text.strip()
+        text = f"• **Name :** `{title}`\n"
+        text += f"• **Description :** `{desc}`"
+        text += f"• **License :** `{dat.find('span', 'package-license').text.strip()}`"
+        imga = wb(image, 0, "image/jpeg", [])
+        ress.append(await event.builder.article(title=title, type="photo", description=desc, text=text, content=imga, thumb=imga include_media=True))
+    msg = "No Results Found"
+    if ress:
+        msg = f"Showing {len(ress)} Results!"
+    await event.answer(ress, switch_pm=msg, switch_pm_param="start")
