@@ -24,7 +24,7 @@ from pyUltroid.functions.tools import (
 )
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
-from telethon import events, Button
+from telethon import Button, events
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
 
