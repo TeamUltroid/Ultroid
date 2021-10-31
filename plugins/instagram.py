@@ -32,9 +32,10 @@
 import os
 
 from pyUltroid.functions.misc import create_instagram_client
-from telethon.tl.types import InputWebDocument
+from pyUltroid.functions.helper import numerize
+from telethon.tl.types import InputWebDocument, MessageMediaWebPage, WebPage, DocumentAttributeFilename
 
-from . import LOGS, eor, get_string, in_pattern, types, udB, ultroid_cmd
+from . import LOGS, eor, get_string, in_pattern, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -76,8 +77,8 @@ async def insta_dl(e):
         except Exception as B:
             LOGS.exception(B)
             return await eor(tt, str(B))
-    if isinstance(e.media, types.MessageMediaWebPage) and isinstance(
-        e.media.webpage, types.WebPage
+    if isinstance(e.media, MessageMediaWebPage) and isinstance(
+        e.media.webpage, WebPage
     ):
         photo = e.media.webpage.photo or e.media.webpage.document
         if not photo:
@@ -114,15 +115,15 @@ async def soon_(e):
     msg = f"• **Full Name** : __{data.full_name}__"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
-    msg += f"\n• **Posts Count** : {data.media_count}"
-    msg += f"\n• **Followers** : {data.follower_count}"
-    msg += f"\n• **Following** : {data.following_count}"
+    msg += f"\n• **Posts Count** : {numerize(data.media_count)}"
+    msg += f"\n• **Followers** : {numerize(data.follower_count)}"
+    msg += f"\n• **Following** : {numerize(data.following_count)}"
     msg += f"\n• **Category** : {data.category_name}"
     await e.reply(
         msg,
         file=photo,
         force_document=True,
-        attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")],
+        attributes=[DocumentAttributeFilename("InstaUltroid.jpg")],
     )
     await ew.delete()
 
