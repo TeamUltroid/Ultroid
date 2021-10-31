@@ -12,7 +12,9 @@ from os import execl, remove
 from random import choice
 
 from pyUltroid.functions.gDrive import GDriveManager
-from pyUltroid.functions.tools import Carbon, get_paste, telegraph_client
+from bs4 import BeautifulSoup as bs
+from pyUltroid.functions.tools import Carbon, get_paste, telegraph_client, async_searcher
+from pyUltroid.functions.helper import download_file
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import events
@@ -1280,3 +1282,18 @@ async def media(event):
             f"{name} has been set.",
             buttons=get_back_button("setter"),
         )
+
+FD_MEDIA = {}
+
+@callback(re.compile("fd(.*)"), owner=True)
+async def fdroid_dler(event):
+    uri = event.data_match.group(1).decode("utf-8")
+    if FD_MEDIA.get(uri):
+        return await event.edit(file=FD_MEDIA[uri])
+    URL = f"https://f-droid.org/packages/{uri}"
+    conte = await async_searcher(URL, re_content=True)
+    BSC = bs(conte, "html.parser", from_encoding="utf-8")
+    dl_ = BSC.find("p", "package-version-download")["href"]
+    file = await download_file(dl_, uri.split(".")[-1] + dl_.split(".")[-1])
+    msg = await event.edit(file=file)
+    FD_MEDIA.update({uri:msg.media})
