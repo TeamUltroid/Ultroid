@@ -409,7 +409,9 @@ async def piston_run(event):
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
 
+
 FDROID_ = {}
+
 
 @in_pattern("fdroid", owner=True)
 async def do_magic(event):
@@ -420,7 +422,9 @@ async def do_magic(event):
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
     if FDROID_.get(match):
-        return await event.answer(FDROID_[match], switch_pm=f"• Results for {match}", switch_pm_param="start")
+        return await event.answer(
+            FDROID_[match], switch_pm=f"• Results for {match}", switch_pm_param="start"
+        )
     link = "https://search.f-droid.org/?q=" + match.replace(" ", "+")
     content = await async_searcher(link, re_content=True)
     BSC = bs(content, "html.parser", from_encoding="utf-8")
@@ -442,11 +446,16 @@ async def do_magic(event):
                 content=imga,
                 thumb=imga,
                 include_media=True,
-                buttons=[Button.inline("• Download •", "fd"+dat["href"].split("packages/")[-1]), Button.switch_inline("• Share •", query=event.text)],
+                buttons=[
+                    Button.inline(
+                        "• Download •", "fd" + dat["href"].split("packages/")[-1]
+                    ),
+                    Button.switch_inline("• Share •", query=event.text),
+                ],
             )
         )
     msg = "No Results Found"
     if ress:
         msg = f"Showing {len(ress)} Results!"
-    FDROID_.update({match:ress})
+    FDROID_.update({match: ress})
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
