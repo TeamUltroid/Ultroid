@@ -409,15 +409,18 @@ async def piston_run(event):
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
 
+FDROID_ = {}
 
 @in_pattern("fdroid", owner=True)
 async def do_magic(event):
     try:
-        match = event.text.split(" ", maxsplit=1)[1]
+        match = event.text.split(" ", maxsplit=1)[1].lower()
     except IndexError:
         return await event.answer(
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
+    if FDROID_.get(match):
+        return await event.answer(FDROID_[match], switch_pm=f"• Results for {match}", switch_pm_param="start")
     link = "https://search.f-droid.org/?q=" + match.replace(" ", "+")
     content = await async_searcher(link, re_content=True)
     BSC = bs(content, "html.parser", from_encoding="utf-8")
@@ -427,7 +430,7 @@ async def do_magic(event):
         title = dat.find("h4", "package-name").text.strip()
         desc = dat.find("span", "package-summary").text.strip()
         text = f"• **Name :** `{title}`\n"
-        text += f"• **Description :** `{desc}`"
+        text += f"• **Description :** `{desc}`\n"
         text += f"• **License :** `{dat.find('span', 'package-license').text.strip()}`"
         imga = wb(image, 0, "image/jpeg", [])
         ress.append(
@@ -439,10 +442,11 @@ async def do_magic(event):
                 content=imga,
                 thumb=imga,
                 include_media=True,
-                buttons=Button.switch_inline("Share", query=event.text),
+                buttons=[Button.inline("• Download •", "fd"+dat["href"].split("packages/")[-1]), Button.switch_inline("• Share •", query=event.text)],
             )
         )
     msg = "No Results Found"
     if ress:
         msg = f"Showing {len(ress)} Results!"
+    FDROID_.update({match:ress})
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
