@@ -433,7 +433,7 @@ async def do_magic(event):
         image = dat.find("img", "package-icon")["src"]
         title = dat.find("h4", "package-name").text.strip()
         desc = dat.find("span", "package-summary").text.strip()
-        text = f"• **Name :** `{title}`\n"
+        text = f"• **Name :** `{title}`\n\n"
         text += f"• **Description :** `{desc}`\n"
         text += f"• **License :** `{dat.find('span', 'package-license').text.strip()}`"
         imga = wb(image, 0, "image/jpeg", [])
