@@ -428,7 +428,7 @@ async def do_magic(event):
         text += f"• **Description :** `{desc}`"
         text += f"• **License :** `{dat.find('span', 'package-license').text.strip()}`"
         imga = wb(image, 0, "image/jpeg", [])
-        ress.append(await event.builder.article(title=title, type="photo", description=desc, text=text, content=imga, thumb=imga include_media=True))
+        ress.append(await event.builder.article(title=title, type="photo", description=desc, text=text, content=imga, thumb=imga, include_media=True, buttons=Button.switch_inline("Share", query=event.text),))
     msg = "No Results Found"
     if ress:
         msg = f"Showing {len(ress)} Results!"
