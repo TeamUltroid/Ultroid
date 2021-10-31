@@ -5,8 +5,10 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import re, asyncio, time
+import asyncio
+import re
 import sys
+import time
 from asyncio.exceptions import TimeoutError as AsyncTimeOut
 from os import execl, remove
 from random import choice
@@ -1302,15 +1304,20 @@ async def fdroid_dler(event):
     BSC = bs(conte, "html.parser", from_encoding="utf-8")
     dl_ = BSC.find("p", "package-version-download").find("a")["href"]
     s_time = time.time()
-    file = await fast_download(dl_, filename=uri.split(".")[-1] +"." +dl_.split(".")[-1],
-                               progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d,
-                    t,
-                    event,
-                    s_time,
-                    "Downloading...",
-                )
-            ),)
-    msg = await event.edit(f"**• {BSC.find('h3', 'package-name').text.strip()} •**", file=file)
+    file = await fast_download(
+        dl_,
+        filename=uri.split(".")[-1] + "." + dl_.split(".")[-1],
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(
+                d,
+                t,
+                event,
+                s_time,
+                "Downloading...",
+            )
+        ),
+    )
+    msg = await event.edit(
+        f"**• {BSC.find('h3', 'package-name').text.strip()} •**", file=file
+    )
     FD_MEDIA.update({uri: msg.media})
