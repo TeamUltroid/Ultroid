@@ -1303,7 +1303,7 @@ async def fdroid_dler(event):
     conte = await async_searcher(URL, re_content=True)
     BSC = bs(conte, "html.parser", from_encoding="utf-8")
     dl_ = BSC.find("p", "package-version-download").find("a")["href"]
-    title = BSC.find('h3', 'package-name').text.strip()
+    title = BSC.find("h3", "package-name").text.strip()
     s_time = time.time()
     file = await fast_download(
         dl_,
@@ -1321,13 +1321,16 @@ async def fdroid_dler(event):
     tt = time.time()
     file = await uploader(file, file, tt, event, "Uploading...")
     try:
-        msg = await event.edit(
-        f"**• {title} •**", file=file
-        )
+        msg = await event.edit(f"**• {title} •**", file=file)
     except Exception as er:
         LOGS.exception(er)
         try:
-            await event.client.edit_message(await event.get_input_chat(), event.message_id,f"**• {title} •**", file=file)
+            await event.client.edit_message(
+                await event.get_input_chat(),
+                event.message_id,
+                f"**• {title} •**",
+                file=file,
+            )
         except Exception as er:
             LOGS.exception(er)
             await event.edit(f"**ERROR**: `{er}`")
