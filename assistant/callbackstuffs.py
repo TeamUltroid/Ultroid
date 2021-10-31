@@ -1336,4 +1336,5 @@ async def fdroid_dler(event):
         except Exception as er:
             LOGS.exception(er)
             return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
-    FD_MEDIA.update({uri: msg.media})
+    if msg:
+        FD_MEDIA.update({uri: msg.media})
