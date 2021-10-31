@@ -15,7 +15,7 @@ from random import choice
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.gDrive import GDriveManager
-from pyUltroid.functions.helper import fast_download, progress
+from pyUltroid.functions.helper import fast_download, progress, uploader
 from pyUltroid.functions.tools import (
     Carbon,
     async_searcher,
@@ -1317,6 +1317,8 @@ async def fdroid_dler(event):
             )
         ),
     )
+    tt = time.time()
+    file = await uploader(file, file, tt, event, "Uploading...")
     msg = await event.edit(
         f"**• {BSC.find('h3', 'package-name').text.strip()} •**", file=file
     )
