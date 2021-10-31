@@ -31,9 +31,14 @@
 
 import os
 
-from pyUltroid.functions.misc import create_instagram_client
 from pyUltroid.functions.helper import numerize
-from telethon.tl.types import InputWebDocument, MessageMediaWebPage, WebPage, DocumentAttributeFilename
+from pyUltroid.functions.misc import create_instagram_client
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    InputWebDocument,
+    MessageMediaWebPage,
+    WebPage,
+)
 
 from . import LOGS, eor, get_string, in_pattern, udB, ultroid_cmd
 
