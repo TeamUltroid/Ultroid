@@ -1300,7 +1300,7 @@ async def fdroid_dler(event):
     URL = f"https://f-droid.org/packages/{uri}"
     conte = await async_searcher(URL, re_content=True)
     BSC = bs(conte, "html.parser", from_encoding="utf-8")
-    dl_ = BSC.find("p", "package-version-download")["href"]
+    dl_ = BSC.find("p", "package-version-download").find("a")["href"]
     file = await download_file(dl_, uri.split(".")[-1] + dl_.split(".")[-1])
     msg = await event.edit(file=file)
     FD_MEDIA.update({uri: msg.media})
