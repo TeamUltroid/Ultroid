@@ -41,7 +41,17 @@ from telethon.tl.types import (
     WebPage,
 )
 
-from . import LOGS, asst, Button, callback, eor, get_string, in_pattern, udB, ultroid_cmd
+from . import (
+    LOGS,
+    Button,
+    asst,
+    callback,
+    eor,
+    get_string,
+    in_pattern,
+    udB,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
