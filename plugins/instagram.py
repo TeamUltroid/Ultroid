@@ -203,7 +203,7 @@ async def instapl(event):
 
 @callback(compile("instd(.*)"), owner=True)
 async def dele_post(event):
-    CL = await create_instagram_client()
+    CL = await create_instagram_client(event)
     if not CL:
         return await event.answer("Fill Instagram Credentials", alert=True)
     await event.answer("• Deleting...")
