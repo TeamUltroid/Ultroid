@@ -114,10 +114,9 @@ async def on_out_mssg(event):
     func=lambda x: x.is_private,
 )
 async def banhammer(event):
-    x = await event.get_reply_message()
-    if not x:
+    if not event.is_reply:
         return await event.reply(get_string("pmbot_2"))
-    target = get_who(x.id)
+    target = get_who(event.reply_to_msg_id)
     if is_blacklisted(target):
         return await event.reply(get_string("pmbot_3"))
 
@@ -133,10 +132,9 @@ async def banhammer(event):
     func=lambda x: x.is_private,
 )
 async def unbanhammer(event):
-    x = await event.get_reply_message()
-    if not x:
+    if not event.is_reply:
         return await event.reply(get_string("pmbot_5"))
-    target = get_who(x.id)
+    target = get_who(event.reply_to_msg_id)
     if not is_blacklisted(target):
         return await event.reply(get_string("pmbot_6"))
 
