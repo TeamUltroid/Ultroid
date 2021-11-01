@@ -188,7 +188,7 @@ async def instapl(event):
             await event.builder.article(
                 title="Instagram Post", 
                 text="**Uploaded on Instagram**",
-                buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])]
+                buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])])
         ]
     )
 
