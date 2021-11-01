@@ -40,6 +40,7 @@ from telethon.tl.types import (
     MessageMediaWebPage,
     WebPage,
 )
+from telethon.errors.rpcerrorlist import ChatSendInlineForbiddenError
 
 from . import (
     LOGS,
@@ -149,6 +150,7 @@ async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:
         return await eor(event, "`Please Fill Instagram Credentials to Use This...`")
+    msg = await eor(event, get_string("com_1"))
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
     if not (replied and (replied.photo or replied.video)):
@@ -170,27 +172,34 @@ async def insta_karbon(event):
     elif type_ == "reels":
         method = cl.clip_upload
     else:
-        return await eor(event, "`Use In Proper Format...`")
-    msg = await eor(event, get_string("com_1"))
+        return await eor(msg, "`Use In Proper Format...`")
     try:
         if title:
             uri = method(dle, caption=caption, title=title)
         else:
             uri = method(dle, caption=caption)
-        if not event.client._bot:
+        os.remove(dle)
+    except Exception as er:
+        LOGS.exception(er)
+        return await msg.edit(str(er))
+    if not event.client._bot:
+        try:
             que = await event.client.inline_query(
-                asst.me.username, f"instp-{uri.code}_{uri.pk}"
+            asst.me.username, f"instp-{uri.code}_{uri.pk}"
             )
             await que[0].click(event.chat_id, reply_to=replied.id)
-        else:
-            await msg.edit(
+            await msg.delete()
+        except ChatSendInlineForbiddenError:
+            pass
+        except Exception as er:
+            return await msg.edit(str(er))
+    await msg.edit(
                 f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
                 buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
                 link_preview=False,
-            )
-    except Exception as er:
-        LOGS.exception(er)
-        await msg.edit(str(er))
+       
+    )
+    
 
 
 @in_pattern("instp-(.*)", owner=True)
@@ -218,7 +227,7 @@ async def dele_post(event):
         return await event.answer("Fill Instagram Credentials", alert=True)
     await event.answer("• Deleting...")
     try:
-        CL.media_delete(int(event.data_match.group(1).decode("utf-8")))
+        CL.media_delete(event.data_match.group(1).decode("utf-8"))
     except Exception as er:
         return await event.edit("ERROR: " + str(er))
     await event.edit("**• Deleted!**")
