@@ -30,7 +30,7 @@
 """
 
 import os
-
+from re import compile
 from pyUltroid.functions.helper import numerize
 from pyUltroid.functions.misc import create_instagram_client
 from telethon.tl.types import (
@@ -200,13 +200,14 @@ async def instapl(event):
     )
 
 
-@callback("instd(.*)", owner=True)
+@callback(compile("instd(.*)"), owner=True)
 async def dele_post(event):
     CL = await create_instagram_client()
     if not CL:
         return await event.answer("Fill Instagram Credentials", alert=True)
+    await event.answer("• Deleting...")
     try:
-        CL.delete_media(int(event.pattern_match.group(1)))
+        CL.delete_media(int(event.data_match.group(1).decode("utf-8")))
     except Exception as er:
         return await event.answer(str(er))
     await event.edit("**• Deleted!**")
