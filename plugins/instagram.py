@@ -41,7 +41,7 @@ from telethon.tl.types import (
     WebPage,
 )
 
-from . import LOGS, Button, callback, eor, get_string, in_pattern, udB, ultroid_cmd
+from . import LOGS, asst, Button, callback, eor, get_string, in_pattern, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -171,7 +171,7 @@ async def insta_karbon(event):
             que = await event.client.inline_query(
                 asst.me.username, f"instp-{uri.code}_{uri.pk}"
             )
-            await que[0].click(event.chat_id)
+            await que[0].click(event.chat_id, reply_to=replied.id)
         else:
             await msg.edit(
                 f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
