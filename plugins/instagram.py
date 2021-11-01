@@ -89,7 +89,10 @@ async def insta_dl(e):
                 return
             await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
             await tt.delete()
-            os.remove(media)
+            if not isinstance(media, list):
+                os.remove(media)
+            else:
+                [os.remove(media) for media in media]
             return
         except Exception as B:
             LOGS.exception(B)
