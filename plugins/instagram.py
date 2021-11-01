@@ -167,17 +167,20 @@ async def insta_karbon(event):
         else:
             uri = method(dle, caption=caption)
         if not event.client._bot:
-            que = await event.client.inline_query(asst.me.username, f"instp-{uri.code}_{uri.pk}")
+            que = await event.client.inline_query(
+                asst.me.username, f"instp-{uri.code}_{uri.pk}"
+            )
             await que[0].click(event.chat_id)
         else:
             await msg.edit(
-            f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
-            buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
-            link_preview=False,
+                f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+                buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
+                link_preview=False,
             )
     except Exception as er:
         LOGS.exception(er)
         await msg.edit(str(er))
+
 
 @in_pattern("instp-(.*)", owner=True)
 async def instapl(event):
@@ -186,11 +189,16 @@ async def instapl(event):
     await event.answer(
         [
             await event.builder.article(
-                title="Instagram Post", 
+                title="Instagram Post",
                 text="**Uploaded on Instagram**",
-                buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])])
+                buttons=[
+                    Button.url(" •View•", uri),
+                    Button.inline("•Delete•", "instd" + match[1]),
+                ],
+            )
         ]
     )
+
 
 @callback("instd(.*)", owner=True)
 async def dele_post(event):
