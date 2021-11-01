@@ -11,33 +11,58 @@
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
+• `{i}gdown <file id/link> | <filename>`
+    Download from Gdrive link or file id.
+
 • `{i}drivesearch <file name>`
     Search file name on Google Drive and get link.
 
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
-• `{i}listdrive`
+• `{i}listgdrive`
     List all GDrive files.
 
 • `{i}gfolder`
     Link to your Google Drive Folder.
-    If added then all uploaded files will be placed here.
+    If added then all files will be uploaded in this folder.
 """
 
 import os
 import time
-from datetime import datetime
 
 from pyUltroid.functions.gDrive import GDriveManager
+from pyUltroid.functions.helper import time_formatter
 
-from . import Redis, asst, downloader, eod, eor, get_string, ultroid_cmd
+from . import asst, downloader, eod, eor, get_string, ultroid_cmd
 
 GDrive = GDriveManager()
 
 
 @ultroid_cmd(
-    pattern="listdrive$",
+    pattern="gdown ?(.*)",
+    fullsudo=True,
+)
+async def gdown(event):
+    match = event.pattern_match.group(1)
+    if not match:
+        return await eod(event, "`Give file id or Gdrive link to download from!`")
+    filename = None
+    if " | " in match:
+        filename = match.split(" | ")[1].strip()
+    eve = await eor(event, get_string("com_1"))
+    _start = time.time()
+    status, response = await GDrive._download_file(eve, match, filename)
+    if not status:
+        return await eve.edit(response)
+    await eve.edit(
+        f"`Downloaded ``{response}`` in {time_formatter((time.time() - _start)*1000)}`"
+    )
+
+
+@ultroid_cmd(
+    pattern="listgdrive$",
+    fullsudo=True,
 )
 async def files(event):
     files = GDrive._list_files()
@@ -54,8 +79,8 @@ async def files(event):
         with open("drive-files.txt", "w") as f:
             f.write(
                 msg.replace("[", "File Name: ")
-                .replace("](", " Link: ")
-                .replace(")", "")
+                .replace("](", "\n» Link: ")
+                .replace(")\n", "\n\n")
             )
         try:
             await eve.delete()
@@ -72,6 +97,7 @@ async def files(event):
 
 @ultroid_cmd(
     pattern="ugdrive ?(.*)",
+    fullsudo=True,
 )
 async def _(event):
     mone = await eor(event, get_string("com_1"))
@@ -79,8 +105,7 @@ async def _(event):
         return await eod(mone, get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     filename = None
-    start = datetime.now()
-    dddd = time.time()
+    start = time.time()
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         try:
@@ -88,7 +113,7 @@ async def _(event):
                 "resources/downloads/" + reply_message.file.name,
                 reply_message.media.document,
                 mone,
-                dddd,
+                start,
                 get_string("com_5"),
             )
             filename = downloaded_file_name.name
@@ -98,36 +123,34 @@ async def _(event):
             )
         except Exception as e:
             return await eor(mone, str(e), time=10)
-        end = datetime.now()
-        ms = (end - start).seconds
         await mone.edit(
-            f"Downloaded to `{filename}` in {ms} seconds.",
+            f"Downloaded to `{filename}` in {time_formatter(time.time() - start)}",
         )
     elif input_str:
         filename = input_str.strip()
-        if os.path.exists(filename):
-            await mone.edit(f"Found `{filename}`")
-        else:
+        if not os.path.exists(filename):
             return await eod(
                 mone,
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
-    if not filename:
-        return await eor(mone, "`File Not found in local server.`", time=10)
 
     try:
         g_drive_link = await GDrive._upload_file(
             mone,
             filename,
         )
-        await mone.edit(get_string("gdrive_7").format(filename, g_drive_link))
+        await mone.edit(
+            get_string("gdrive_7").format(filename.split("/")[-1], g_drive_link)
+        )
     except Exception as e:
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
 
+"""
 @ultroid_cmd(
     pattern="drivesearch ?(.*)",
+    fullsudo=True,
 )
 async def sch(event):
     if not os.path.exists(TOKEN_FILE):
@@ -151,6 +174,7 @@ async def sch(event):
 
 @ultroid_cmd(
     pattern="udir ?(.*)",
+    fullsudo=True,
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
@@ -169,18 +193,20 @@ async def _(event):
     await DoTeskWithDir(http, input_str, event, dir_id)
     dir_link = f"https://drive.google.com/folderview?id={dir_id}"
     await eor(a, get_string("gdrive_7").format(input_str, dir_link), time=5)
+"""
 
 
 @ultroid_cmd(
     pattern="gfolder$",
+    fullsudo=True,
 )
 async def _(event):
-    if Redis("GDRIVE_FOLDER_ID"):
-        folder_link = "https://drive.google.com/folderview?id=" + Redis(
-            "GDRIVE_FOLDER_ID",
-        )
-        await eor(
-            event, "`Here is Your G-Drive Folder link : `\n" + folder_link, time=5
+    if GDrive.folder_id:
+        await eod(
+            event,
+            "`Here is Your G-Drive Folder link : `\n"
+            + "https://drive.google.com/folderview?id="
+            + GDrive.folder_id,
         )
     else:
-        await eor(event, "Set GDRIVE_FOLDER_ID with value of your folder id", time=5)
+        await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")

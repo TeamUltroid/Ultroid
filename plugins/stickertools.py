@@ -288,6 +288,8 @@ async def hehe(args):
                 while t in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
+                    if is_anim:
+                        packname += "_anim"
                     packnick = f"@{user.username}'s Pack {pack}"
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message(packname)
@@ -323,7 +325,7 @@ async def hehe(args):
                         await conv.get_response()
                         await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await xx.edit(
-                            get_string("sts_7").format("sts_7"),
+                            get_string("sts_7").format(packname),
                             parse_mode="md",
                         )
                         return

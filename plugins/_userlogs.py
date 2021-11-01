@@ -29,18 +29,17 @@ CACHE_SPAM = {}
     ),
 )
 async def all_messages_catcher(e):
+    x = await e.get_sender()
+    if isinstance(x, types.User) and (x.bot or x.verified):
+        return
     if not udB.get("TAG_LOG"):
         return
     try:
         NEEDTOLOG = int(udB.get("TAG_LOG"))
     except Exception:
         return LOGS.info(get_string("userlogs_1"))
-    x = await e.get_sender()
-    if isinstance(x, types.User) and (x.bot or x.verified):
-        return
     y = e.chat
-    where_n = get_display_name(y)
-    who_n = get_display_name(x)
+    where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
     if hasattr(x, "username") and x.username:
@@ -57,7 +56,8 @@ async def all_messages_catcher(e):
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
-            LOGS.info(me)
+            if not isinstance(me, (PeerIdInvalidError, ValueError)):
+                LOGS.info(me)
             if e.photo or e.sticker or e.gif:
                 try:
                     media = await e.download_media()

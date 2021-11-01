@@ -4,6 +4,7 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 
@@ -25,9 +26,10 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-import io
+
 import sys
 import traceback
+from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
 
@@ -70,7 +72,7 @@ async def _(event):
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
-        with io.BytesIO(str.encode(ultd)) as out_file:
+        with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
                 event.chat_id,
@@ -90,6 +92,8 @@ async def _(event):
 p, pp = print, pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
+_ignore_eval = []
+
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
@@ -102,10 +106,33 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
+    if (
+        any(
+            item in cmd
+            for item in [
+                "_ignore_eval",
+                "DeleteAccountRequest",
+                "functions.account.DeleteAccountRequest",
+            ]
+        )
+        and event.sender_id != ultroid_bot.uid
+    ):
+        if event.sender_id in _ignore_eval:
+            return await xx.edit(
+                "`You cannot use this command now. Contact owner of this bot!`"
+            )
+        warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
+        await warning.reply(
+            f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
+        )
+        _ignore_eval.append(event.sender_id)
+        return await xx.edit(
+            "`Malicious Activities suspected⚠️!\nReported to owner. Aborted this request!`"
+        )
     old_stderr = sys.stderr
     old_stdout = sys.stdout
-    redirected_output = sys.stdout = io.StringIO()
-    redirected_error = sys.stderr = io.StringIO()
+    redirected_output = sys.stdout = StringIO()
+    redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
     try:
@@ -133,7 +160,7 @@ async def _(event):
     )
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
-        with io.BytesIO(str.encode(ultd)) as out_file:
+        with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
                 event.chat_id,
@@ -193,7 +220,7 @@ async def doie(e):
             os.remove("cpp-ultroid.cpp")
             if os.path.exists("CppUltroid"):
                 os.remove("CppUltroid")
-            with io.BytesIO(str.encode(o_cpp)) as out_file:
+            with BytesIO(str.encode(o_cpp)) as out_file:
                 out_file.name = "error.txt"
                 return await msg.reply(f"`{match}`", file=out_file)
         return await eor(msg, o_cpp)
@@ -203,7 +230,7 @@ async def doie(e):
     if m[1] != "":
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
     if len(o_cpp) > 3000:
-        with io.BytesIO(str.encode(o_cpp)) as out_file:
+        with BytesIO(str.encode(o_cpp)) as out_file:
             out_file.name = "eval.txt"
             await msg.reply(f"`{match}`", file=out_file)
     else:

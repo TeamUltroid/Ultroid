@@ -322,12 +322,9 @@ async def _(e):
             except BaseException:
                 pass
     ungban(userid)
-    try:
-        await e.client(UnblockRequest(int(userid)))
-    except BaseException:
-        pass
+    await e.client(UnblockRequest(int(userid)))
     await xx.edit(
-        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} common chats.\nRemoved from gbanwatch.`",
+        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
 
 
@@ -340,20 +337,20 @@ async def _(e):
         try:
             reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
-            reason = ""
+            pass
     elif e.pattern_match.group(1):
         usr = e.text.split(" ", maxsplit=2)[1]
         userid = await get_user_id(usr)
         try:
             reason = e.text.split(" ", maxsplit=2)[2]
         except IndexError:
-            reason = ""
+            pass
     elif e.is_private:
         userid = e.chat_id
         try:
             reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
-            reason = ""
+            pass
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
     try:
@@ -380,11 +377,8 @@ async def _(e):
             except BaseException:
                 pass
     gban(userid, reason)
-    try:
-        await e.client(BlockRequest(int(userid)))
-    except BaseException:
-        pass
-    gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} common chats and added to gbanwatch!`"
+    await e.client(BlockRequest(int(userid)))
+    gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
     if reason:
         gb_msg += f"\n**Reason** - {reason}"
     await xx.edit(gb_msg)
@@ -652,11 +646,10 @@ async def ungblacker(event):
 
 
 async def gblacker(event, type_):
-    chat = (await event.get_chat()).id
     try:
         chat = int(event.text.split(" ", 1)[1])
     except IndexError:
-        pass
+        chat = event.chat_id
     try:
         chat_id = (await ultroid_bot.get_entity(chat)).id
     except Exception as e:

@@ -17,9 +17,18 @@
     List all sudo users.
 """
 from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
-from pyUltroid.misc import OWNER_SUDOS
+from pyUltroid.misc import sudoers
 
-from . import Redis, eor, get_display_name, get_user_id, udB, ultroid_bot, ultroid_cmd
+from . import (
+    Redis,
+    eor,
+    get_display_name,
+    get_string,
+    get_user_id,
+    udB,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
@@ -35,27 +44,27 @@ async def _(ult):
         try:
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
-            name = ""
+            name = None
     elif ult.is_private:
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
 
-    if id == ultroid_bot.me.id:
+    if id == ultroid_bot.uid:
         mmm = get_string("sudo_2")
     elif is_sudo(id):
-        if name != "":
+        if name:
             mmm = f"[{name}](tg://user?id={id}) `is already a SUDO User ...`"
         else:
             mmm = f"`{id} is already a SUDO User...`"
     elif add_sudo(id):
         udB.set("SUDO", "True")
-        if name != "":
+        if name:
             mmm = f"**Added [{name}](tg://user?id={id}) as SUDO User**"
         else:
             mmm = f"**Added **`{id}`** as SUDO User**"
-        OWNER_SUDOS.append(id)
+        sudoers().append(id)
     else:
         mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
     await eor(ult, mmm, time=5)
@@ -73,23 +82,23 @@ async def _(ult):
         try:
             name = (await ult.client.get_entity(int(id))).first_name
         except BaseException:
-            name = ""
+            name = None
     elif ult.is_private:
         id = ult.chat_id
         name = get_display_name(ult.chat)
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
     if not is_sudo(id):
-        if name != "":
+        if name:
             mmm = f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
         else:
             mmm = f"`{id} wasn't a SUDO User...`"
     elif del_sudo(id):
-        if name != "":
+        if name:
             mmm = f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
         else:
             mmm = f"**Removed **`{id}`** from SUDO User(s)**"
-        OWNER_SUDOS.remove(id)
+        sudoers().remove(id)
     else:
         mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
     await eor(ult, mmm, time=5)

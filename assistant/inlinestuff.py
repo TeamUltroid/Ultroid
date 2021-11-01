@@ -10,7 +10,6 @@ from datetime import datetime
 from random import choice
 from re import compile as re_compile
 
-import requests
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import async_searcher, dloader, get_ofox
@@ -43,7 +42,6 @@ api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").
 
 @in_pattern("ofox", owner=True)
 async def _(e):
-    match = None
     try:
         match = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -210,16 +208,15 @@ async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        await e.answer(
+        return await e.answer(
             [], switch_pm="Mod Apps Search. Enter app name!", switch_pm_param="start"
         )
     page = 1
     start = (page - 1) * 3 + 1
     da = choice([api1, api2, api3])
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
-    data = requests.get(url).json()
+    data = await async_searcher(url, re_json=True)
     search_items = data.get("items")
-    search(quer)
     modss = []
     for a in search_items:
         title = a.get("title")
@@ -411,3 +408,54 @@ async def piston_run(event):
         buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
+
+
+FDROID_ = {}
+
+
+@in_pattern("fdroid", owner=True)
+async def do_magic(event):
+    try:
+        match = event.text.split(" ", maxsplit=1)[1].lower()
+    except IndexError:
+        return await event.answer(
+            [], switch_pm="Enter Query to Search", switch_pm_param="start"
+        )
+    if FDROID_.get(match):
+        return await event.answer(
+            FDROID_[match], switch_pm=f"• Results for {match}", switch_pm_param="start"
+        )
+    link = "https://search.f-droid.org/?q=" + match.replace(" ", "+")
+    content = await async_searcher(link, re_content=True)
+    BSC = bs(content, "html.parser", from_encoding="utf-8")
+    ress = []
+    for dat in BSC.find_all("a", "package-header")[:10]:
+        image = dat.find("img", "package-icon")["src"]
+        title = dat.find("h4", "package-name").text.strip()
+        desc = dat.find("span", "package-summary").text.strip()
+        text = f"• **Name :** `{title}`\n\n"
+        text += f"• **Description :** `{desc}`\n"
+        text += f"• **License :** `{dat.find('span', 'package-license').text.strip()}`"
+        imga = wb(image, 0, "image/jpeg", [])
+        ress.append(
+            await event.builder.article(
+                title=title,
+                type="photo",
+                description=desc,
+                text=text,
+                content=imga,
+                thumb=imga,
+                include_media=True,
+                buttons=[
+                    Button.inline(
+                        "• Download •", "fd" + dat["href"].split("packages/")[-1]
+                    ),
+                    Button.switch_inline("• Share •", query=event.text),
+                ],
+            )
+        )
+    msg = "No Results Found"
+    if ress:
+        msg = f"Showing {len(ress)} Results!"
+    FDROID_.update({match: ress})
+    await event.answer(ress, switch_pm=msg, switch_pm_param="start")

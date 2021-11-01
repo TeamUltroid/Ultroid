@@ -63,7 +63,7 @@ async def daudtoid(e):
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, get_string("spcltool_1"))
     xxx = await eor(e, get_string("com_1"))
-    dl = r.file.name
+    dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(
         "resources/downloads/" + dl,
@@ -85,10 +85,10 @@ async def adaudroid(e):
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith("video"):
         return await eod(e, get_string("spcltool_3"))
-    if not File or os.path.exists(File[0]):
-        return await e.edit("`First reply an audio with .aw`")
+    if not (File and os.path.exists(File[0])):
+        return await e.edit(f"`First reply an audio with {HNDLR}addaudio`")
     xxx = await eor(e, get_string("com_1"))
-    dl = r.file.name
+    dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(
         "resources/downloads/" + dl,
@@ -141,7 +141,7 @@ async def hbd(event):
         return await eor(event, get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
-        nam = await event.client.get_entity(kk.from_id)
+        nam = await kk.get_sender()
         name = nam.first_name
     else:
         name = ultroid_bot.me.first_name

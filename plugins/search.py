@@ -129,7 +129,7 @@ async def goimg(event):
             "format": "jpg",
             "output_directory": "./resources/downloads/",
         }
-        pth = await gi.download(args)
+        pth = gi.download(args)
         ok = pth[0][query]
     except BaseException:
         return await nn.edit(get_string("autopic_2").format(query))

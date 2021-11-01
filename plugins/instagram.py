@@ -30,11 +30,28 @@
 """
 
 import os
+from re import compile
 
+from pyUltroid.functions.helper import numerize
 from pyUltroid.functions.misc import create_instagram_client
-from telethon.tl.types import InputWebDocument
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    InputWebDocument,
+    MessageMediaWebPage,
+    WebPage,
+)
 
-from . import LOGS, eor, get_string, in_pattern, types, udB, ultroid_cmd
+from . import (
+    LOGS,
+    Button,
+    asst,
+    callback,
+    eor,
+    get_string,
+    in_pattern,
+    udB,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -76,8 +93,8 @@ async def insta_dl(e):
         except Exception as B:
             LOGS.exception(B)
             return await eor(tt, str(B))
-    if isinstance(e.media, types.MessageMediaWebPage) and isinstance(
-        e.media.webpage, types.WebPage
+    if isinstance(e.media, MessageMediaWebPage) and isinstance(
+        e.media.webpage, WebPage
     ):
         photo = e.media.webpage.photo or e.media.webpage.document
         if not photo:
@@ -114,15 +131,15 @@ async def soon_(e):
     msg = f"• **Full Name** : __{data.full_name}__"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
-    msg += f"\n• **Posts Count** : {data.media_count}"
-    msg += f"\n• **Followers** : {data.follower_count}"
-    msg += f"\n• **Following** : {data.following_count}"
+    msg += f"\n• **Posts Count** : {numerize(data.media_count)}"
+    msg += f"\n• **Followers** : {numerize(data.follower_count)}"
+    msg += f"\n• **Following** : {numerize(data.following_count)}"
     msg += f"\n• **Category** : {data.category_name}"
     await e.reply(
         msg,
         file=photo,
         force_document=True,
-        attributes=[types.DocumentAttributeFilename("InstaUltroid.jpg")],
+        attributes=[DocumentAttributeFilename("InstaUltroid.jpg")],
     )
     await ew.delete()
 
@@ -137,9 +154,9 @@ async def insta_karbon(event):
     if not (replied and (replied.photo or replied.video)):
         return await eor(event, "`Reply to Photo Or Video...`")
     caption = (
-        event.pattern_match.group(2)
-        or replied.message
-        or "Telegram To Instagram Upload\nBy Ultroid.."
+        event.pattern_match.group(2) + "\n\n• By #Ultroid"
+        or replied.message + "\n\n• By #Ultroid"
+        or "Telegram To Instagram Upload\nBy #Ultroid.."
     )
     dle = await replied.download_media()
     title = None
@@ -160,13 +177,51 @@ async def insta_karbon(event):
             uri = method(dle, caption=caption, title=title)
         else:
             uri = method(dle, caption=caption)
-        await msg.edit(
-            f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
-            link_preview=False,
-        )
+        if not event.client._bot:
+            que = await event.client.inline_query(
+                asst.me.username, f"instp-{uri.code}_{uri.pk}"
+            )
+            await que[0].click(event.chat_id, reply_to=replied.id)
+        else:
+            await msg.edit(
+                f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+                buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
+                link_preview=False,
+            )
     except Exception as er:
         LOGS.exception(er)
         await msg.edit(str(er))
+
+
+@in_pattern("instp-(.*)", owner=True)
+async def instapl(event):
+    match = event.pattern_match.group(1).split("_")
+    uri = "https://instagram.com/p/" + match[0]
+    await event.answer(
+        [
+            await event.builder.article(
+                title="Instagram Post",
+                text="**Uploaded on Instagram**",
+                buttons=[
+                    Button.url("•View•", uri),
+                    Button.inline("•Delete•", "instd" + match[1]),
+                ],
+            )
+        ]
+    )
+
+
+@callback(compile("instd(.*)"), owner=True)
+async def dele_post(event):
+    CL = await create_instagram_client(event)
+    if not CL:
+        return await event.answer("Fill Instagram Credentials", alert=True)
+    await event.answer("• Deleting...")
+    try:
+        CL.delete_media(int(event.data_match.group(1).decode("utf-8")))
+    except Exception as er:
+        return await event.answer(str(er))
+    await event.edit("**• Deleted!**")
 
 
 @in_pattern(pattern="instatm", owner=True)

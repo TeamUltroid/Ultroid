@@ -5,20 +5,125 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+"""
+• `{i}akinator` | `/akinator`
+   Start akinator game from Userbot/Assistant
+
+• `/startgame`
+   Open Portal for Games
+"""
 
 import asyncio
 import operator
 import re
 import uuid
 from html import unescape
-from random import shuffle
+from random import choice, shuffle
 
+import akinator
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
+from pyUltroid.misc import owner_and_sudos
+from pyUltroid.misc._decorators import ultroid_cmd
+from telethon.errors.rpcerrorlist import (
+    BotMethodInvalidError,
+    ChatSendStickersForbiddenError,
+)
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from . import *
+
+# -------------------------- Akinator ----------------------- #
+
+games = {}
+aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
+
+
+@ultroid_cmd(
+    pattern="akinator", type=["official", "assistant"], from_users=owner_and_sudos()
+)
+async def doit(e):
+    sta = akinator.Akinator()
+    games.update({e.chat_id: {e.id: sta}})
+    try:
+        m = await e.client.inline_query(asst.me.username, f"aki_{e.chat_id}_{e.id}")
+        await m[0].click(e.chat_id)
+    except BotMethodInvalidError:
+        return await asst.send_file(
+            e.chat_id,
+            aki_photo,
+            buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
+        )
+    if e.out:
+        await e.delete()
+
+
+@callback(re.compile("aki_?(.*)"), owner=True)
+async def doai(e):
+    adt = e.pattern_match.group(1).decode("utf-8")
+    dt = adt.split("_")
+    ch = int(dt[0])
+    mid = int(dt[1])
+    await e.edit(get_string("com_1"))
+    try:
+        qu = games[ch][mid].start_game(child_mode=True)
+        # child mode should be promoted
+    except KeyError:
+        return await e.answer(get_string("aki_1"), alert=True)
+    bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
+    cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
+
+    bts = [bts, cts]
+    # ignored Back Button since it makes the Pagination looks Bad
+    await e.edit("Q. " + qu, buttons=bts)
+
+
+@callback(re.compile("aka_?(.*)"), owner=True)
+async def okah(e):
+    mk = e.pattern_match.group(1).decode("utf-8").split("_")
+    ch = int(mk[0])
+    mid = int(mk[1])
+    ans = mk[2]
+    try:
+        gm = games[ch][mid]
+    except KeyError:
+        await e.answer(get_string("aki_3"))
+        return
+    text = gm.answer(ans)
+    if gm.progression >= 80:
+        gm.win()
+        gs = gm.first_guess
+        text = "It's " + gs["name"] + "\n " + gs["description"]
+        return await e.edit(text, file=gs["absolute_picture_path"])
+    bts = [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]]
+    cts = [
+        Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]
+    ]
+
+    bts = [bts, cts]
+    await e.edit(text, buttons=bts)
+
+
+@in_pattern(re.compile("aki_?(.*)"), owner=True)
+async def eiagx(e):
+    bts = Button.inline(get_string("aki_2"), data=e.text)
+    ci = types.InputWebDocument(aki_photo, 0, "image/jpeg", [])
+    ans = [
+        await e.builder.article(
+            "Akinator",
+            type="photo",
+            content=ci,
+            text="Akinator",
+            thumb=ci,
+            buttons=bts,
+            include_media=True,
+        )
+    ]
+    await e.answer(ans)
+
+
+# ----------------------- Main Command ------------------- #
 
 
 @asst_cmd(pattern="startgame", owner=True)
@@ -30,10 +135,19 @@ async def magic(event):
     await event.reply("Choose The Game 🎮", buttons=buttons)
 
 
+# -------------------------- Trivia ----------------------- #
+
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
 POLLS = {}
+CONGO_STICKER = [
+    "CAADAgADSgIAAladvQrJasZoYBh68AI",
+    "CAADAgADXhIAAuyZKUl879mlR_dkOwI",
+    "CAADAgADpQAD9wLID-xfZCDwOI5LAg",
+    "CAADAgADjAADECECEFZM-SrKO9GgAg",
+    "CAADAgADSwIAAj-VzArAzNCDiGWAHAI",
+]
 
 
 @callback("delit")
@@ -109,8 +223,7 @@ async def choose_cata(event):
             return
         TRIVIA_CHATS.update({chat: {}})
         for copper, q in enumerate(qs):
-            if TRIVIA_CHATS[chat].get("cancel"):
-                await event.respond("Cancelled!")
+            if TRIVIA_CHATS[chat].get("cancel") is not None:
                 break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
@@ -142,8 +255,14 @@ async def choose_cata(event):
                 "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
             )
         else:
+            try:
+                await event.respond(file=choice(CONGO_STICKER))
+            except ChatSendStickersForbiddenError:
+                pass
             LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
             TRC = TRIVIA_CHATS[chat]
+            if "cancel" in TRC.keys():
+                del TRC["cancel"]
             for userid, user_score in dict(
                 sorted(TRC.items(), key=operator.itemgetter(1), reverse=True)
             ).items():
@@ -151,8 +270,9 @@ async def choose_cata(event):
                 LBD += f"••• {user} - {user_score}\n"
             await event.respond(LBD)
         del TRIVIA_CHATS[chat]
-        for key in POLLS.keys():
-            if key["chat"] == chat:
+        list_ = list(POLLS.copy().keys())
+        for key in list_:
+            if POLLS[key]["chat"] == chat:
                 del POLLS[key]
         return
     await event.edit(text, buttons=buttons)
@@ -178,3 +298,4 @@ async def pollish(eve):
 async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
     chat.update({"cancel": True})
+    await event.respond("Cancelled!")

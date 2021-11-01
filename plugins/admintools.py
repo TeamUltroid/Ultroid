@@ -166,7 +166,7 @@ async def uunban(ult):
     except UserIdInvalidError:
         await xx.edit(get_string("adm_1"))
     sender = inline_mention(await ult.get_sender())
-    text = get_string("unban_3").format(user, sender, ult.chat.title)
+    text = get_string("unban_3").format(inline_mention(user), sender, ult.chat.title)
     if reason:
         text += get_string("ban_5").format(reason)
     await xx.edit(text)

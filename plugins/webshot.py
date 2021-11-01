@@ -24,7 +24,7 @@ async def webss(event):
     xurl = event.pattern_match.group(1)
     if not xurl:
         return await eor(xx, get_string("wbs_1"), time=5)
-    elif not is_url_ok(xurl):
+    if not is_url_ok(xurl):
         return await eor(xx, get_string("wbs_2"), time=5)
     shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
     pic = await shot.create_pic_async(url=xurl)

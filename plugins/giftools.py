@@ -13,6 +13,9 @@
 •`{i}bwgif`
   Make Gif black and white
 
+•`{i}rvgif`
+  Reverse a gif
+
 •`{i}vtog`
   Reply To Video , It will Create Gif
   Video to Gif
@@ -68,6 +71,20 @@ async def igif(e):
         await xx.delete()
     except Exception as er:
         LOGS.info(er)
+
+
+@ultroid_cmd(pattern="rvgif$")
+async def reverse_gif(event):
+    a = await event.get_reply_message()
+    if not (a and a.media) and "video" not in mediainfo(a.media):
+        return await eor(e, "`Reply To Video only`", time=5)
+    msg = await eor(event, get_string("com_1"))
+    file = await a.download_media()
+    await bash(f'ffmpeg -i "{file}" -vf reverse -af areverse reversed.mp4 -y')
+    await event.respond("- **Reversed Video/GIF**", file="reversed.mp4")
+    await msg.delete()
+    os.remove(file)
+    os.remove("reversed.mp4")
 
 
 @ultroid_cmd(pattern="gif ?(.*)")

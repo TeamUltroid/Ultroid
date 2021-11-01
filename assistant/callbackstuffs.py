@@ -5,17 +5,26 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import asyncio
 import re
 import sys
+import time
 from asyncio.exceptions import TimeoutError as AsyncTimeOut
 from os import execl, remove
 from random import choice
 
+from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.gDrive import GDriveManager
-from pyUltroid.functions.tools import Carbon, get_paste, telegraph_client
+from pyUltroid.functions.helper import fast_download, progress, uploader
+from pyUltroid.functions.tools import (
+    Carbon,
+    async_searcher,
+    get_paste,
+    telegraph_client,
+)
 from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
-from telethon import events
+from telethon import Button, events
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
 
@@ -140,7 +149,7 @@ async def changes(okk):
         img = await Carbon(
             file_name="changelog",
             code=tl_chnglog,
-            background=choice(ATRA_COL),
+            backgroundColor=choice(ATRA_COL),
             language="md",
         )
         return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
@@ -193,18 +202,12 @@ async def _(e):
 async def _(e):
     if not e.is_private:
         return
-    if not udB.get("GDRIVE_CLIENT_ID"):
-        return await e.edit(
-            "Client ID and Secret is Empty.\nFill it First.",
-            buttons=get_back_button("gdrive"),
-        )
     url = GDrive._create_token_file()
+    await e.edit("Go to the below link and send the code!")
     async with asst.conversation(e.sender_id) as conv:
-        await conv.send_message(
-            url + "\nGo to the above link and send me the code you get."
-        )
+        await conv.send_message(url)
         code = await conv.get_response()
-        if GDrive._create_token_file(code=code.message):
+        if GDrive._create_token_file(code=code.text):
             await conv.send_message(
                 "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`",
                 buttons=Button.inline("Main Menu", data="setter"),
@@ -223,8 +226,7 @@ async def _(e):
         + "1. Open Google Drive App.\n"
         + "2. Create Folder.\n"
         + "3. Make that folder public.\n"
-        + "4. Copy link of that folder.\n"
-        + "5. Send all characters which is after id= .",
+        + "4. Send link of that folder."
     )
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
@@ -236,54 +238,18 @@ async def _(e):
         )
 
 
-@callback("clientsec", owner=True)
-async def _(e):
-    if not e.is_private:
-        return
-    await e.edit("Send your CLIENT SECRET")
-    async with asst.conversation(e.sender_id) as conv:
-        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
-        repl = await reply
-        udB.set("GDRIVE_CLIENT_SECRET", repl.text)
-        await repl.reply(
-            "Success!\nNow You Can Authorise or add FOLDER ID.",
-            buttons=get_back_button("gdrive"),
-        )
-
-
-@callback("clientid", owner=True)
-async def _(e):
-    if not e.is_private:
-        return
-    await e.edit("Send your CLIENT ID ending with .com")
-    async with asst.conversation(e.sender_id) as conv:
-        reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
-        repl = await reply
-        if not repl.text.endswith(".com"):
-            return await repl.reply("`Wrong CLIENT ID`")
-        udB.set("GDRIVE_CLIENT_ID", repl.text)
-        await repl.reply(
-            "Success now set CLIENT SECRET",
-            buttons=get_back_button("gdrive"),
-        )
-
-
 @callback("gdrive", owner=True)
 async def _(e):
     if not e.is_private:
         return
     await e.edit(
-        "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your CLIENT ID and CLIENT SECRET",
+        "Click Authorise and send the code.\n\nYou can use your own CLIENT ID and SECRET by [this](https://t.me/UltroidUpdates/36)",
         buttons=[
             [
-                Button.inline("Cʟɪᴇɴᴛ Iᴅ", data="clientid"),
-                Button.inline("Cʟɪᴇɴᴛ Sᴇᴄʀᴇᴛ", data="clientsec"),
+                Button.inline("Folder ID", data="folderid"),
+                Button.inline("Authorise", data="authorise"),
             ],
-            [
-                Button.inline("Fᴏʟᴅᴇʀ Iᴅ", data="folderid"),
-                Button.inline("Aᴜᴛʜᴏʀɪsᴇ", data="authorise"),
-            ],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Back", data="otvars")],
         ],
         link_preview=False,
     )
@@ -1323,3 +1289,53 @@ async def media(event):
             f"{name} has been set.",
             buttons=get_back_button("setter"),
         )
+
+
+FD_MEDIA = {}
+
+
+@callback(re.compile("fd(.*)"), owner=True)
+async def fdroid_dler(event):
+    uri = event.data_match.group(1).decode("utf-8")
+    if FD_MEDIA.get(uri):
+        return await event.edit(file=FD_MEDIA[uri])
+    await event.answer("• Starting Download •", alert=True)
+    URL = f"https://f-droid.org/packages/{uri}"
+    conte = await async_searcher(URL, re_content=True)
+    BSC = bs(conte, "html.parser", from_encoding="utf-8")
+    dl_ = BSC.find("p", "package-version-download").find("a")["href"]
+    title = BSC.find("h3", "package-name").text.strip()
+    s_time = time.time()
+    file = await fast_download(
+        dl_,
+        filename=title + ".apk",
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(
+                d,
+                t,
+                event,
+                s_time,
+                "Downloading...",
+            )
+        ),
+    )
+    tt = time.time()
+    file = await uploader(file, file, tt, event, "Uploading...")
+    buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
+    try:
+        msg = await event.edit(f"**• {title} •**", file=file, buttons=buttons)
+    except Exception as er:
+        LOGS.exception(er)
+        try:
+            msg = await event.client.edit_message(
+                await event.get_input_chat(),
+                event.message_id,
+                f"**• {title} •**",
+                buttons=buttons,
+                file=file,
+            )
+        except Exception as er:
+            LOGS.exception(er)
+            return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
+    if msg:
+        FD_MEDIA.update({uri: msg.media})
