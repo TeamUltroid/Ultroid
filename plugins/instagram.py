@@ -130,7 +130,7 @@ async def soon_(e):
     photo = data.profile_pic_url
     unam = "https://instagram.com/" + data.username
     msg = f"• **Full Name** : __{data.full_name}__"
-    if hasattr(data, "biography"):
+    if hasattr(data, "biography") and data.biography:
         msg += f"\n• **Bio** : `{data.biography}`"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
