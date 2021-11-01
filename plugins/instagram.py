@@ -40,7 +40,7 @@ from telethon.tl.types import (
     WebPage,
 )
 
-from . import LOGS, eor, get_string, in_pattern, udB, ultroid_cmd
+from . import LOGS, eor, get_string, in_pattern, udB, ultroid_cmd, Button, callback
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
@@ -192,7 +192,7 @@ async def instapl(event):
                 title="Instagram Post",
                 text="**Uploaded on Instagram**",
                 buttons=[
-                    Button.url(" •View•", uri),
+                    Button.url("•View•", uri),
                     Button.inline("•Delete•", "instd" + match[1]),
                 ],
             )
