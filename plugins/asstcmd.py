@@ -86,9 +86,12 @@ async def lscmd(e):
     return await eor(e, get_string("asstcmd_5"))
 
 
-@asst_cmd(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds()))
+@asst_cmd(func=lambda x: list_cmds() and x.text.startswith("/") and x.text[1:] in list(list_cmds()))
 async def ascmds(e):
-    xx = (e.text.replace("/", "")).lower().split()[0]
+    try:
+        xx = (e.text.replace("/", "")).lower().split()[0]
+    except IndexError:
+        return
     if cmd_reply(xx):
         msg, media, bt = cmd_reply(xx)
         if bt:
