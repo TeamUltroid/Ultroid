@@ -83,8 +83,8 @@ async def on_new_mssg(event):
     func=lambda e: e.is_private and e.is_reply,
 )
 async def on_out_mssg(event):
-    x = await event.get_reply_message()
-    to_user = get_who(x.id)
+    x = event.reply_to_msg_id
+    to_user = get_who(x)
     if event.text.startswith("/who"):
         try:
             k = await asst.get_entity(to_user)
