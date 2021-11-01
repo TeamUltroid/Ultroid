@@ -220,7 +220,7 @@ async def dele_post(event):
     try:
         CL.media_delete(int(event.data_match.group(1).decode("utf-8")))
     except Exception as er:
-        return await event.edit("ERROR: "+str(er))
+        return await event.edit("ERROR: " + str(er))
     await event.edit("**• Deleted!**")
 
 
