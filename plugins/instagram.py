@@ -218,9 +218,9 @@ async def dele_post(event):
         return await event.answer("Fill Instagram Credentials", alert=True)
     await event.answer("• Deleting...")
     try:
-        CL.delete_media(int(event.data_match.group(1).decode("utf-8")))
+        CL.media_delete(int(event.data_match.group(1).decode("utf-8")))
     except Exception as er:
-        return await event.answer(str(er))
+        return await event.edit("ERROR: "+str(er))
     await event.edit("**• Deleted!**")
 
 
