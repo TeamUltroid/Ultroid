@@ -128,7 +128,10 @@ async def dmote(ult):
     type=["official", "manager"],
 )
 async def bban(ult):
-    user, reason = await get_uinfo(ult)
+    something = await get_uinfo(ult)
+    if not something:
+        return
+    user, reason = something
     if not user:
         return await eod(ult, get_string("ban_1"))
     if user.id in DEVLIST:
@@ -156,7 +159,10 @@ async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
         return
-    user, reason = await get_uinfo(ult)
+    something = await get_uinfo(ult)
+    if not something:
+        return
+    user, reason = something
     if not user:
         return await xx.edit(get_string("unban_1"))
     try:
@@ -182,7 +188,10 @@ async def kck(ult):
         return
     ml = ult.text.split(" ", maxsplit=1)[0]
     xx = await eor(ult, get_string("com_1"))
-    user, reason = await get_uinfo(ult)
+    something = await get_uinfo(ult)
+    if not something:
+        return
+    user, reason = something
     if not user:
         return await xx.edit(get_string("adm_1"))
     if user.id in DEVLIST:
