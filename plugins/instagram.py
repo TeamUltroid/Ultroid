@@ -34,13 +34,13 @@ from re import compile
 
 from pyUltroid.functions.helper import numerize
 from pyUltroid.functions.misc import create_instagram_client
+from telethon.errors.rpcerrorlist import ChatSendInlineForbiddenError
 from telethon.tl.types import (
     DocumentAttributeFilename,
     InputWebDocument,
     MessageMediaWebPage,
     WebPage,
 )
-from telethon.errors.rpcerrorlist import ChatSendInlineForbiddenError
 
 from . import (
     LOGS,
@@ -185,7 +185,7 @@ async def insta_karbon(event):
     if not event.client._bot:
         try:
             que = await event.client.inline_query(
-            asst.me.username, f"instp-{uri.code}_{uri.pk}"
+                asst.me.username, f"instp-{uri.code}_{uri.pk}"
             )
             await que[0].click(event.chat_id, reply_to=replied.id)
             await msg.delete()
@@ -194,12 +194,10 @@ async def insta_karbon(event):
         except Exception as er:
             return await msg.edit(str(er))
     await msg.edit(
-                f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
-                buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
-                link_preview=False,
-       
+        f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+        buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
+        link_preview=False,
     )
-    
 
 
 @in_pattern("instp-(.*)", owner=True)
