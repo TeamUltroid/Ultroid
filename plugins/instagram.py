@@ -183,7 +183,14 @@ async def insta_karbon(event):
 async def instapl(event):
     match = event.pattern_match.group(1).split("_")
     uri = "https://instagram.com/p/" + match[0]
-    await event.answer([await event.builder.article(title="Instagram Post", text="**Uploaded on Instagram**",buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])]])
+    await event.answer(
+        [
+            await event.builder.article(
+                title="Instagram Post", 
+                text="**Uploaded on Instagram**",
+                buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])]
+        ]
+    )
 
 @callback("instd(.*)", owner=True)
 async def dele_post(event):
