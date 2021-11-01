@@ -166,13 +166,24 @@ async def insta_karbon(event):
             uri = method(dle, caption=caption, title=title)
         else:
             uri = method(dle, caption=caption)
-        await msg.edit(
+        if not event.client._bot:
+            que = await event.client.inline_query(asst.me.username, f"instp-{uri.code}_{uri.pk}")
+            await que[0].click(event.chat_id]
+        else:
+            await msg.edit(
             f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
+            buttons=Button.inline("•Delete•", f"instd{uri.pk}"),
             link_preview=False,
-        )
+            )
     except Exception as er:
         LOGS.exception(er)
         await msg.edit(str(er))
+
+@in_pattern("instp-(.*)", owner=True)
+async def instapl(event):
+    match = event.pattern_match.group(1).split("_")
+    uri = "https://instagram.com/p/" + match[0]
+    await event.answer([await event.builder.article(title="Instagram Post", text="**Uploaded on Instagram**",buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])]])
 
 
 @in_pattern(pattern="instatm", owner=True)
