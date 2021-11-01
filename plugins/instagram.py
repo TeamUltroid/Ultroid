@@ -131,7 +131,8 @@ async def soon_(e):
     unam = "https://instagram.com/" + data.username
     msg = f"• **Full Name** : __{data.full_name}__"
     if hasattr(data, "biography"):
-        msg += f"\n• **Bio** : `{data.biography.replace('\n', '\n'+' '*4)}`"
+        bio_ = data.biography.replace("\n", "\n"+" "*4)
+        msg += f"\n• **Bio** : `{bio_}`"
     msg += f"\n• **UserName** : [@{data.username}]({unam})"
     msg += f"\n• **Verified** : {data.is_verified}"
     msg += f"\n• **Posts Count** : {numerize(data.media_count)}"
