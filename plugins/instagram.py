@@ -168,7 +168,7 @@ async def insta_karbon(event):
             uri = method(dle, caption=caption)
         if not event.client._bot:
             que = await event.client.inline_query(asst.me.username, f"instp-{uri.code}_{uri.pk}")
-            await que[0].click(event.chat_id]
+            await que[0].click(event.chat_id)
         else:
             await msg.edit(
             f"__Uploaded To Instagram!__\n~ https://instagram.com/p/{uri.code}",
@@ -184,6 +184,17 @@ async def instapl(event):
     match = event.pattern_match.group(1).split("_")
     uri = "https://instagram.com/p/" + match[0]
     await event.answer([await event.builder.article(title="Instagram Post", text="**Uploaded on Instagram**",buttons=[Button.url(" •View•", uri), Button.inline("•Delete•","instd"+match[1])]])
+
+@callback("instd(.*)", owner=True)
+async def dele_post(event):
+    CL = await create_instagram_client()
+    if not CL:
+        return await event.answer("Fill Instagram Credentials", alert=True)
+    try:
+        CL.delete_media(int(event.pattern_match.group(1)))
+    except Exception as er:
+        return await event.answer(str(er))
+    await event.edit("**• Deleted!**")
 
 
 @in_pattern(pattern="instatm", owner=True)
