@@ -40,7 +40,7 @@ from telethon.tl.types import (
     WebPage,
 )
 
-from . import LOGS, eor, get_string, in_pattern, udB, ultroid_cmd, Button, callback
+from . import LOGS, Button, callback, eor, get_string, in_pattern, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="instadl ?(.*)")
