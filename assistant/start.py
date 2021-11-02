@@ -124,7 +124,7 @@ async def ultroid(event):
 
 @callback("itkkstyo", owner=True)
 async def ekekdhdb(e):
-    text = f"When New Visitor will visit your Assistant Bot. You will get this log message!\n\nTo Disable : {HNDLR}setredis OFF_START_LOG True"
+    text = f"When New Visitor will visit your Assistant Bot. You will get this log message!\n\nTo Disable : {HNDLR}setdb OFF_START_LOG True"
     await e.answer(text, alert=True)
 
 

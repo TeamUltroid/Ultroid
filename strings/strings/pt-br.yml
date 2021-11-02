@@ -21,7 +21,7 @@ autopic_3: "Tenho uma coleção `{}` relacionado à sua pesquisa !\nIniciando Au
 # inline
 inline_1: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Menu De Ajuda {}.\n\nPʟᴜɢɪɴs ~ {}**"
 inline_2: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Mᴇɴᴜ Dᴇ Ajuda {}.\n\nExtensões ~ {}**"
-inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Mᴇɴᴜ Dᴇ Ajuda {}.\n\nExtensões ~ {}\n\nDefina **`.setredis Extensões para True`** e REINICIE PARA OBTER EXTENSÕES.**"
+inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Mᴇɴᴜ Dᴇ Ajuda {}.\n\nExtensões ~ {}\n\nDefina **`.setdb Extensões para True`** e REINICIE PARA OBTER EXTENSÕES.**"
 inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nExtensões ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
 inline_5: "**O Menu Foi Fechado**"
 
