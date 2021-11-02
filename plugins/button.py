@@ -56,4 +56,5 @@ async def butt(event):
     text, buttons = get_msg_button(text)
     if buttons:
         buttons = create_tl_btn(buttons)
-    return await something(event, text, None, buttons)
+    await something(event, text, None, buttons)
+    await event.delete()
