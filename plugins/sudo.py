@@ -18,6 +18,7 @@
 """
 from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 from pyUltroid.misc import sudoers
+
 from . import (
     Redis,
     eor,
