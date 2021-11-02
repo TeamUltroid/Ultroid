@@ -36,37 +36,34 @@ async def _(ult):
     inputs = ult.pattern_match.group(1)
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
-        sender = await replied_to.get_sender()
         id = replied_to.sender_id
-        name = get_display_name(sender)
+        name = await replied_to.get_sender()
     elif inputs:
         id = await get_user_id(inputs)
         try:
-            name = (await ult.client.get_entity(int(id))).first_name
+            name = await ult.client.get_entity(int(id))
         except BaseException:
             name = None
     elif ult.is_private:
         id = ult.chat_id
-        name = get_display_name(ult.chat)
+        name = await ult.get_chat()
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
+
+    if name:
+        name = inline_mention(name)
+    else:
+        name = f"`{id}`"
 
     if id == ultroid_bot.uid:
         mmm = get_string("sudo_2")
     elif is_sudo(id):
-        if name:
-            mmm = f"[{name}](tg://user?id={id}) `is already a SUDO User ...`"
-        else:
-            mmm = f"`{id} is already a SUDO User...`"
+        mmm = f"{name} `is already a SUDO User ...`"
     elif add_sudo(id):
         udB.set("SUDO", "True")
-        if name:
-            mmm = f"**Added [{name}](tg://user?id={id}) as SUDO User**"
-        else:
-            mmm = f"**Added **`{id}`** as SUDO User**"
-        sudoers().append(id)
+        mmm = f"**Added {name} as SUDO User**"
     else:
-        mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
+        return
     await eor(ult, mmm, time=5)
 
 
@@ -76,31 +73,28 @@ async def _(ult):
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender_id
-        name = get_display_name(replied_to.sender)
+        name = await replied_to.get_sender()
     elif inputs:
         id = await get_user_id(inputs)
         try:
-            name = (await ult.client.get_entity(int(id))).first_name
+            name = await ult.client.get_entity(int(id))
         except BaseException:
             name = None
     elif ult.is_private:
         id = ult.chat_id
-        name = get_display_name(ult.chat)
+        name = await ult.get_chat()
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
-    if not is_sudo(id):
-        if name:
-            mmm = f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
-        else:
-            mmm = f"`{id} wasn't a SUDO User...`"
-    elif del_sudo(id):
-        if name:
-            mmm = f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
-        else:
-            mmm = f"**Removed **`{id}`** from SUDO User(s)**"
-        sudoers().remove(id)
+    if name:
+        name = inline_mention(name)
     else:
-        mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
+        name = f"`{id}`"
+    if not is_sudo(id):
+        mmm = f"{name} `wasn't a SUDO User ...`"
+    elif del_sudo(id):
+        mmm = f"**Removed {name} from SUDO User(s)**"
+    else:
+        return
     await eor(ult, mmm, time=5)
 
 
