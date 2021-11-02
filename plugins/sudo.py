@@ -17,7 +17,7 @@
     List all sudo users.
 """
 from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
-
+from pyUltroid.misc import sudoers
 from . import (
     Redis,
     eor,
@@ -60,6 +60,7 @@ async def _(ult):
         mmm = f"{name} `is already a SUDO User ...`"
     elif add_sudo(id):
         udB.set("SUDO", "True")
+        sudoers().append(id)
         mmm = f"**Added {name} as SUDO User**"
     else:
         return
@@ -91,6 +92,7 @@ async def _(ult):
     if not is_sudo(id):
         mmm = f"{name} `wasn't a SUDO User ...`"
     elif del_sudo(id):
+        sudoers().remove(id)
         mmm = f"**Removed {name} from SUDO User(s)**"
     else:
         return
