@@ -212,7 +212,9 @@ async def hbd(event):
     elif month == "11":
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     json = await async_searcher(
-        f"https://aztro.sameerkumar.website/?sign={sign}&day=today", post=True, re_json=True
+        f"https://aztro.sameerkumar.website/?sign={sign}&day=today",
+        post=True,
+        re_json=True,
     )
     dd = json.get("current_date")
     ds = json.get("description")
