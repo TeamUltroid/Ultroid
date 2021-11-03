@@ -312,8 +312,8 @@ async def quott_(event):
             try:
                 match = spli_[1]
             except IndexError:
-                pass
-            replied_to = await reply.get_reply_message()
+                match = None
+            replied_to = await reply_.get_reply_message()
     user = None
     if match and (match.startswith("@") or match.isdigit()):
         match = match.split(maxsplit=1)
@@ -324,6 +324,8 @@ async def quott_(event):
             pass
         if len(match) == 2:
             match = match[1]
+        else:
+            match = None
     try:
         file = await create_quotly(reply_, bg=match, reply=replied_to, sender=user)
     except Exception as er:
