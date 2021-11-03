@@ -308,7 +308,9 @@ async def quott_(event):
     replied_to = None
     if match:
         spli_ = match.split(maxsplit=1)
-        if spli_[0] in ["r", "reply"]:
+        if spli_[0] in ["r", "reply"] or spli_[0].isdigit():
+            if spli_[0].isdigit() and not event.client._bot:
+                reply_ = await event.client.get_messages(event.chat_id, min_id=event.reply_to_msg_id, limit=int(spli_[0]))
             try:
                 match = spli_[1]
             except IndexError:
