@@ -315,11 +315,12 @@ async def quott_(event):
                 reply_ = await event.client.get_messages(
                     event.chat_id, min_id=event.reply_to_msg_id, limit=int(spli_[0])
                 )
+            else:
+                replied_to = await reply_.get_reply_message()
             try:
                 match = spli_[1]
             except IndexError:
                 match = None
-            replied_to = await reply_.get_reply_message()
     user = None
     if match and (match.startswith("@") or match.isdigit()):
         match = match.split(maxsplit=1)
