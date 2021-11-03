@@ -37,8 +37,8 @@ from shutil import rmtree
 import pytz
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.misc import create_quotly
 from pyUltroid.functions.tools import metadata
+from pyUltroid.functions.misc import create_quotly
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
@@ -299,12 +299,12 @@ async def wall(event):
 
 @ultroid_cmd(pattern="quotly ?(.*)")
 async def quott_(event):
-    event.pattern_match.group(1)
+    match = event.pattern_match.group(1)
     if not event.is_reply:
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))
     reply = await event.get_reply_message()
-    file = await create_quotly(reply)
+    file = await create_quotly(reply, bg=match)
     await event.reply("Quotly by Ultroid", file=file)
     os.remove(file)
     await msg.delete()
