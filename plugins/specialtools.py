@@ -335,6 +335,7 @@ async def quott_(event):
             user = await event.client.get_entity(match_)
         except ValueError:
             pass
+        LOGS.info(match)
         if len(match) == 2:
             match = match[1]
         else:
