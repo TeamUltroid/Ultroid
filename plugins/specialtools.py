@@ -305,16 +305,23 @@ async def quott_(event):
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))
     reply = await event.get_reply_message()
+    spli_ = match.split(maxsplit=1)
+    replied_to = None
+    if spli_[0] in ["r", "reply"]:
+        match = match[1]
+        replied_to = await reply.get_reply_message()
     user = None
-    if match.startswith("@") or match.isdigit():
+    match = match.split(maxsplit=1)
+    if match[0].startswith("@") or match[0].isdigit():
         match = await get_user_id(match, client=event.client)
         try:
             user = await event.client.get_entity(match)
-            match = None
         except ValueError:
-            pass
+            match = None
+        if len(match) == 2:
+            match = match[1]
     try:
-        file = await create_quotly(reply, bg=match, sender=user)
+        file = await create_quotly(reply, bg=match, reply=replied_to, sender=user)
     except Exception as er:
         return await msg.edit(str(er))
     await event.reply("Quotly by Ultroid", file=file)
