@@ -305,10 +305,11 @@ async def quott_(event):
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))
     reply = await event.get_reply_message()
+    user = None
     if match.startswith("@") or match.isdigit():
-        match = await get_user_id(match)
+        match = await get_user_id(match, client=event.client)
         try:
-            await event.client.get_entity(match)
+            user = await event.client.get_entity(match)
             match = None
         except ValueError:
             pass
@@ -316,6 +317,7 @@ async def quott_(event):
         file = await create_quotly(
             reply,
             bg=match,
+            sender=user
         )
     except Exception as er:
         return await msg.edit(str(er))
