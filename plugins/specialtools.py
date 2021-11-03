@@ -11,6 +11,8 @@
     Send secret message..
 
 • `{i}quotly <color-optional>`
+• `{i}quotly @username`
+• `{i}quotly r <color-optional>`
     Create quotes..
 
 • `{i}sticker <query>`
@@ -54,6 +56,7 @@ from . import (
     ultroid_cmd,
     uploader,
 )
+from .carbon import all_col
 
 File = []
 
@@ -333,6 +336,8 @@ async def quott_(event):
             match = match[1]
         else:
             match = None
+    if match == "random":
+        match = choice(all_col)
     try:
         file = await create_quotly(reply_, bg=match, reply=replied_to, sender=user)
     except Exception as er:
