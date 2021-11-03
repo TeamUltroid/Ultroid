@@ -44,7 +44,7 @@ from telethon.errors import YouBlockedUserError
 from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
-
+from pyUltroid.functions.misc import create_quotly
 from . import (
     KANGING_STR,
     LOGS,
@@ -225,10 +225,7 @@ async def hehe(args):
         is_anim = True
         photo = 1
     elif message.message:
-        carbon = Carbon(
-            base_url="https://carbonara.vercel.app/api/cook", code=message.message
-        )
-        photo = await carbon.memorize("carbon_kang")
+        photo = await create_quotly(message)
     else:
         return await xx.edit(get_string("com_4"))
     if not udB.get("language") or udB.get("language") == "en":
