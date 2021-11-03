@@ -307,12 +307,12 @@ async def quott_(event):
     reply = await event.get_reply_message()
     spli_ = match.split(maxsplit=1)
     replied_to = None
-    if spli_[0] in ["r", "reply"]:
+    if spli_ and  spli_[0] in ["r", "reply"]:
         match = match[1]
         replied_to = await reply.get_reply_message()
     user = None
     match = match.split(maxsplit=1)
-    if match[0].startswith("@") or match[0].isdigit():
+    if match and match[0].startswith("@") or match[0].isdigit():
         match = await get_user_id(match, client=event.client)
         try:
             user = await event.client.get_entity(match)
