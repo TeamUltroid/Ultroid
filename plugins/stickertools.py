@@ -38,13 +38,13 @@ from os import remove
 import cv2
 import numpy as np
 import requests
-from carbonnow import Carbon
 from PIL import Image, ImageDraw
+from pyUltroid.functions.misc import create_quotly
 from telethon.errors import YouBlockedUserError
 from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
-from pyUltroid.functions.misc import create_quotly
+
 from . import (
     KANGING_STR,
     LOGS,
