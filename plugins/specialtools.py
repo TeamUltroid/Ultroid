@@ -305,22 +305,23 @@ async def quott_(event):
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))
     reply = await event.get_reply_message()
-    spli_ = match.split(maxsplit=1)
     replied_to = None
-    if spli_ and spli_[0] in ["r", "reply"]:
-        try:
-            match = match[1]
-        except IndexError:
-            pass
-        replied_to = await reply.get_reply_message()
+    if match:
+        spli_ = match.split(maxsplit=1)
+        if spli_[0] in ["r", "reply"]:
+            try:
+                match = spli_[1]
+            except IndexError:
+                pass
+            replied_to = await reply.get_reply_message()
     user = None
-    match = match.split()
-    if match and match[0].startswith("@") or match[0].isdigit():
-        match = await get_user_id(match, client=event.client)
+    if match and (match.startswith("@") or match.isdigit()):
+        match = match.split(maxsplit=1)
+        match_ = await get_user_id(match[0], client=event.client)
         try:
-            user = await event.client.get_entity(match)
+            user = await event.client.get_entity(match_)
         except ValueError:
-            match = None
+            pass
         if len(match) == 2:
             match = match[1]
     try:
