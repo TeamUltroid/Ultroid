@@ -304,7 +304,7 @@ async def quott_(event):
     if not event.is_reply:
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))
-    reply = await event.get_reply_message()
+    reply_ = await event.get_reply_message()
     replied_to = None
     if match:
         spli_ = match.split(maxsplit=1)
@@ -325,7 +325,7 @@ async def quott_(event):
         if len(match) == 2:
             match = match[1]
     try:
-        file = await create_quotly(reply, bg=match, reply=replied_to, sender=user)
+        file = await create_quotly(reply_, bg=match, reply=replied_to, sender=user)
     except Exception as er:
         return await msg.edit(str(er))
     await event.reply("Quotly by Ultroid", file=file)
