@@ -307,7 +307,7 @@ async def quott_(event):
     reply = await event.get_reply_message()
     spli_ = match.split(maxsplit=1)
     replied_to = None
-    if spli_ and  spli_[0] in ["r", "reply"]:
+    if spli_ and spli_[0] in ["r", "reply"]:
         match = match[1]
         replied_to = await reply.get_reply_message()
     user = None
