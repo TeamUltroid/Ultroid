@@ -314,11 +314,7 @@ async def quott_(event):
         except ValueError:
             pass
     try:
-        file = await create_quotly(
-            reply,
-            bg=match,
-            sender=user
-        )
+        file = await create_quotly(reply, bg=match, sender=user)
     except Exception as er:
         return await msg.edit(str(er))
     await event.reply("Quotly by Ultroid", file=file)
