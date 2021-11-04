@@ -260,6 +260,7 @@ async def _(e):
                 same_peer=True,
             ),
         ],
+        [Button.switch_inline("Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True)],
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
