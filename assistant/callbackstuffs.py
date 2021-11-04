@@ -1305,6 +1305,8 @@ async def fdroid_dler(event):
     BSC = bs(conte, "html.parser", from_encoding="utf-8")
     dl_ = BSC.find("p", "package-version-download").find("a")["href"]
     title = BSC.find("h3", "package-name").text.strip()
+    thumb = BSC.find("img", "package-icon")["src"]
+    thumb = await fast_download(thumb, file_name=uri+".png")
     s_time = time.time()
     file = await fast_download(
         dl_,
@@ -1323,19 +1325,22 @@ async def fdroid_dler(event):
     file = await uploader(file, file, tt, event, "Uploading...")
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
-        msg = await event.edit(f"**• {title} •**", file=file, buttons=buttons)
+        msg = await event.edit(f"**• [{title}]({URL}) •**", file=file, thumb=thumb, buttons=buttons)
     except Exception as er:
         LOGS.exception(er)
         try:
             msg = await event.client.edit_message(
                 await event.get_input_chat(),
                 event.message_id,
-                f"**• {title} •**",
+                f"**• [{title}]({URL}) •**",
                 buttons=buttons,
+                thumb=thumb,
                 file=file,
             )
         except Exception as er:
+            os.remove(thumb)
             LOGS.exception(er)
             return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
-    if msg:
+    if msg and hasattr(msg, "media"):
         FD_MEDIA.update({uri: msg.media})
+    os.remove(thumb)
