@@ -1306,7 +1306,7 @@ async def fdroid_dler(event):
     dl_ = BSC.find("p", "package-version-download").find("a")["href"]
     title = BSC.find("h3", "package-name").text.strip()
     thumb = BSC.find("img", "package-icon")["src"]
-    thumb = await fast_download(thumb, file_name=uri + ".png")
+    thumb = await fast_download(thumb, filename=uri + ".png")
     s_time = time.time()
     file = await fast_download(
         dl_,
