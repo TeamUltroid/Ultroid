@@ -55,6 +55,7 @@ from . import (
     ultroid_bot,
     ultroid_cmd,
     uploader,
+    LOGS
 )
 from .carbon import all_col
 
