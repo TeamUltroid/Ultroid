@@ -44,6 +44,7 @@ from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
+    LOGS,
     async_searcher,
     bash,
     downloader,
@@ -55,7 +56,6 @@ from . import (
     ultroid_bot,
     ultroid_cmd,
     uploader,
-    LOGS
 )
 from .carbon import all_col
 
