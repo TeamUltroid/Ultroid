@@ -1306,7 +1306,7 @@ async def fdroid_dler(event):
     dl_ = BSC.find("p", "package-version-download").find("a")["href"]
     title = BSC.find("h3", "package-name").text.strip()
     thumb = BSC.find("img", "package-icon")["src"]
-    thumb = await fast_download(thumb, file_name=uri+".png")
+    thumb = await fast_download(thumb, file_name=uri + ".png")
     s_time = time.time()
     file = await fast_download(
         dl_,
@@ -1325,7 +1325,9 @@ async def fdroid_dler(event):
     file = await uploader(file, file, tt, event, "Uploading...")
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
-        msg = await event.edit(f"**• [{title}]({URL}) •**", file=file, thumb=thumb, buttons=buttons)
+        msg = await event.edit(
+            f"**• [{title}]({URL}) •**", file=file, thumb=thumb, buttons=buttons
+        )
     except Exception as er:
         LOGS.exception(er)
         try:
