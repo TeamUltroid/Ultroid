@@ -341,6 +341,8 @@ async def quott_(event):
             match = match[1]
         else:
             match = None
+    elif match:
+        match = match[0]
     if match == "random":
         match = choice(all_col)
     try:
