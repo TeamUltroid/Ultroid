@@ -13,6 +13,7 @@
 • `{i}quotly <color-optional>`
 • `{i}quotly @username`
 • `{i}quotly r <color-optional>`
+• `{i}quotly count` : `multiple quotes`
     Create quotes..
 
 • `{i}sticker <query>`
@@ -44,7 +45,6 @@ from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
-    LOGS,
     async_searcher,
     bash,
     downloader,
@@ -312,7 +312,7 @@ async def quott_(event):
     replied_to = None
     if match:
         spli_ = match.split(maxsplit=1)
-        if spli_[0] in ["r", "reply"] or (
+        if (spli_[0] in ["r", "reply"]) or (
             spli_[0].isdigit() and int(spli_[0]) in range(1, 21)
         ):
             if spli_[0].isdigit() and not event.client._bot:
@@ -329,14 +329,14 @@ async def quott_(event):
             except IndexError:
                 match = None
     user = None
-    if match and (match.startswith("@") or match.isdigit()):
+    if match:
         match = match.split(maxsplit=1)
+    if match and (match[0].startswith("@") or match[0].isdigit()):
         match_ = await get_user_id(match[0], client=event.client)
         try:
             user = await event.client.get_entity(match_)
         except ValueError:
             pass
-        LOGS.info(match)
         if len(match) == 2:
             match = match[1]
         else:
