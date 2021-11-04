@@ -37,7 +37,7 @@ from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
     x = await eor(event, get_string("bd_1"))
-    new =  0
+    new = 0
     if msgg == "all":
         await x.edit(get_string("bd_2"))
         chats = [
