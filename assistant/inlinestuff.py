@@ -431,6 +431,8 @@ async def do_magic(event):
     ress = []
     for dat in BSC.find_all("a", "package-header")[:10]:
         image = dat.find("img", "package-icon")["src"]
+        if image.endswith("/"):
+            image = "https://telegra.ph/file/a8dd4a92c5a53a89d0eff.jpg"
         title = dat.find("h4", "package-name").text.strip()
         desc = dat.find("span", "package-summary").text.strip()
         text = f"• **Name :** `{title}`\n\n"
