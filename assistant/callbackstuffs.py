@@ -1300,6 +1300,7 @@ async def fdroid_dler(event):
     if FD_MEDIA.get(uri):
         return await event.edit(file=FD_MEDIA[uri])
     await event.answer("• Starting Download •", alert=True)
+    await event.edit("• Downloading.. •")
     URL = f"https://f-droid.org/packages/{uri}"
     conte = await async_searcher(URL, re_content=True)
     BSC = bs(conte, "html.parser", from_encoding="utf-8")
@@ -1346,3 +1347,4 @@ async def fdroid_dler(event):
     if msg and hasattr(msg, "media"):
         FD_MEDIA.update({uri: msg.media})
     os.remove(thumb)
+    os.remove(file)
