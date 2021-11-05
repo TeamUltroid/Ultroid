@@ -253,7 +253,7 @@ async def hehe(args):
         file = io.BytesIO()
 
         if not is_anim:
-            image = await resize_photo(photo)
+            image = resize_photo(photo)
             file.name = "sticker.png"
             image.save(file, "PNG")
         else:
