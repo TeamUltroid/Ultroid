@@ -397,8 +397,8 @@ async def piston_run(event):
         json={"language": lang, "version": version, "files": [{"content": code}]},
         re_json=True,
     )
-    return LOGS.info(output)
-    # ["run"]["output"] or get_string("instu_4")
+    LOGS.info(output)
+    output = output["run"]["output"] or get_string("instu_4")
     if len(output) > 3000:
         output = output[:3000] + "..."
     result = await event.builder.article(
