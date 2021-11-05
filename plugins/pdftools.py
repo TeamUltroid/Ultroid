@@ -247,7 +247,7 @@ async def savepdf(event):
         image = cv2.imread(ultt)
         original_image = image.copy()
         ratio = image.shape[0] / 500.0
-        _h, _v = image.shape[:2]
+        h_, _v = image.shape[:2]
         m_ = 500 / float(h_)
         image = cv2.resize(image, (int(_v * m_), 500), interpolation=cv2.INTER_AREA)
         image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
@@ -282,14 +282,14 @@ async def savepdf(event):
         cv2.imwrite("o.png", ok)
         image1 = PIL.Image.open("o.png")
         im1 = image1.convert("RGB")
-        a = dani_ck("pdf/scan.pdf")
+        a = check_filename("pdf/scan.pdf")
         im1.save(a)
         await xx.edit(
             f"Done, Now Reply Another Image/pdf if completed then use {HNDLR}pdsend to merge nd send all as pdf",
         )
         os.remove("o.png")
     elif ultt.endswith(".pdf"):
-        a = dani_ck("pdf/scan.pdf")
+        a = check_filename("pdf/scan.pdf")
         await event.client.download_media(ok, a)
         await eor(
             event,
