@@ -314,12 +314,12 @@ async def sendpdf(event):
     ok = f"{msg}.pdf" if msg else "My PDF File.pdf"
     merger = PdfFileMerger()
     afl = glob.glob("pdf/*")
-    ok = [*sorted(afl)]
-    for item in ok:
+    ok_ = [*sorted(afl)]
+    for item in ok_:
         if item.endswith("pdf"):
             merger.append(item)
     merger.write(ok)
-    await event.client.send_file(event.chat_id, ok, reply_to=event.reply_to_msg_id)
-    os.remove(ok)
+    await event.client.send_file(event.chat_id, ok_, reply_to=event.reply_to_msg_id)
+    os.remove(ok_)
     shutil.rmtree("pdf/")
     os.makedirs("pdf/")
