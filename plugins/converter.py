@@ -86,7 +86,11 @@ async def imak(event):
             file = image.name
         else:
             file = await event.client.download_media(reply.media)
-    os.rename(file, inp)
+    if os.path.exists(inp):
+        os.remove(inp)
+    await bash(f'''ffmpeg -i "{file}" "{inp}" -y''')
+    if not os.path.exists(inp):
+        os.rename(file, inp)
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
