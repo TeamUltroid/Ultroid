@@ -37,7 +37,7 @@ from pyUltroid.functions.tools import four_point_transform
 from skimage.filters import threshold_local
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
-from . import *
+from . import ultroid_cmd, downloader, eor, get_string, HNDLR, check_filename
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")
