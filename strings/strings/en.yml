@@ -389,6 +389,7 @@ spcltool_9: "Found Nothing"
 sudo_1: "`Reply to a msg or add it's id/username.`"
 sudo_2: "You cant add yourself as Sudo User..."
 sudo_3: "`No SUDO User was assigned ...`"
+sudo_4: "`Bots can't be added as Sudo Users.`"
 
 # unsplash
 unspl_1: "No Results Found !"
