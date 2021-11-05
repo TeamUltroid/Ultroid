@@ -247,7 +247,9 @@ async def savepdf(event):
         image = cv2.imread(ultt)
         original_image = image.copy()
         ratio = image.shape[0] / 500.0
-        image = imutils.resize(image, height=500)
+        _h, _v = image.shape[:2]
+        m_ = 500 / float(h_)
+        image = cv2.resize(image, (int(_v * m_), 500), interpolation=cv2.INTER_AREA)
         image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
         image_y = np.zeros(image_yuv.shape[0:2], np.uint8)
         image_y[:, :] = image_yuv[:, :, 0]
