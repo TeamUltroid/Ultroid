@@ -49,7 +49,8 @@ async def _(ult):
         name = await ult.get_chat()
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
-
+    if name and (name.bot or name.verified):
+        return await eor(ult, get_string("sudo_4"))
     if name:
         name = inline_mention(name)
     else:
