@@ -91,6 +91,8 @@ async def imak(event):
     await bash(f"""ffmpeg -i "{file}" "{inp}" -y""")
     if not os.path.exists(inp):
         os.rename(file, inp)
+    elif not os.path.getsize(inp):
+         os.rename(file, inp)
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
