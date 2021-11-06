@@ -20,6 +20,7 @@ from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 from pyUltroid.misc import sudoers
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
+
 from . import (
     Redis,
     eor,
@@ -43,7 +44,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = await ult.client.get_entity(int(id))
-            id_ = get_peer_id(name)
+            get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
@@ -82,7 +83,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = await ult.client.get_entity(int(id))
-            id_ = get_peer_id(name)
+            get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
