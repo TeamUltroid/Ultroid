@@ -20,7 +20,6 @@ from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 from pyUltroid.misc import sudoers
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
-
 from . import (
     Redis,
     eor,
@@ -44,7 +43,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = await ult.client.get_entity(int(id))
-            get_peer_id(name)
+            id = get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
@@ -83,7 +82,7 @@ async def _(ult):
         id = await get_user_id(inputs)
         try:
             name = await ult.client.get_entity(int(id))
-            get_peer_id(name)
+            id = get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
@@ -116,11 +115,11 @@ async def _(ult):
     msg = ""
     for i in sumos:
         try:
-            name = (await ult.client.get_entity(int(i))).first_name
+            name = await ult.client.get_entity(int(i))
         except BaseException:
-            name = ""
-        if name != "":
-            msg += f"• [{name}](tg://user?id={i}) ( `{i}` )\n"
+            name = None
+        if name:
+            msg += f"• {inline_mention(name)} ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
     m = udB.get("SUDO") or "False"
