@@ -18,7 +18,7 @@
 """
 from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 from pyUltroid.misc import sudoers
-
+from telethon.tl.types import User
 from . import (
     Redis,
     eor,
@@ -49,7 +49,7 @@ async def _(ult):
         name = await ult.get_chat()
     else:
         return await eor(ult, get_string("sudo_1"), time=5)
-    if name and (name.bot or name.verified):
+    if name and isinstance(name, User) and (name.bot or name.verified):
         return await eor(ult, get_string("sudo_4"))
     if name:
         name = inline_mention(name)
