@@ -44,12 +44,12 @@ async def mean(event):
     if defi["synonyms"]:
         text += (
             f"\n\n• **{get_string('wrd_5')} :**"
-            + "".join(f" {a}," for a in defi["synonyms"])[:-1]
+            + "".join(f" {a}," for a in defi["synonyms"])[:-1][:10]
         )
     if defi["antonyms"]:
         text += (
             f"\n\n**{get_string('wrd_6')} :**"
-            + "".join(f" {a}," for a in defi["antonyms"])[:-1]
+            + "".join(f" {a}," for a in defi["antonyms"])[:-1][:10]
         )
     if len(text) > 4096:
         with io.BytesIO(str.encode(text)) as fle:
