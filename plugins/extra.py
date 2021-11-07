@@ -82,7 +82,7 @@ async def editer(edit):
             pass
     else:
         i = 1
-        async for message in edit.client.iter_messages(chat, ultroid_bot.uid):
+        async for message in edit.client.iter_messages(chat, from_user="me", limit=2):
             if i == 2:
                 await message.edit(string)
                 await edit.delete()
