@@ -19,6 +19,9 @@
 • `{i}fgame <time/in secs>`
     `Show Fake Game Playing Action in current chat.`
 
+• `{i}fsticker <time/in secs>`
+    `Show Fake sticker choosing Action in current chat.`
+
 • `{i}flocation <time/in secs>`
     `Show Fake location Action in current chat.`
 
@@ -43,7 +46,7 @@ from . import asyncio, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
+    pattern="f(typing|audio|contact|document|game|location|sticker|photo|round|video) ?(.*)"
 )
 async def _(e):
     act = e.pattern_match.group(1)
