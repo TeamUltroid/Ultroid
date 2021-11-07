@@ -184,17 +184,17 @@ async def download(event):
                         attributes = [
                             DocumentAttributeAudio(
                                 duration=duration,
-                                title=title.split(".")[0],
+                                title=".".join(t for t in title.split(".")[:-1]),
                                 performer=artist,
                             )
                         ]
                     else:
-                        attributes = None
+                        attributes = []
                     try:
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{kk}`",
+                            caption=f"`{title}`",
                             attributes=attributes,
                             supports_streaming=True,
                             thumb="resources/extras/ultroid.jpg",
@@ -203,14 +203,14 @@ async def download(event):
                         await event.client.send_file(
                             event.chat_id,
                             res,
-                            caption=f"`{kk}`",
+                            caption=f"`{title}`",
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
                     await event.client.send_file(
                         event.chat_id,
                         res,
-                        caption=f"`{kk}`",
+                        caption=f"`{title}`",
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
