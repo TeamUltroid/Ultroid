@@ -7,14 +7,14 @@
 """
 ✘ Commands Available -
 
-•`qrcode <text/reply to text>`
-   Makes qrcode of text
+• `{i}qrcode <text/reply to text>`
+   `Makes qrcode of text`
 
-•`addqr <reply image> <text>`
-   Makes qr of text and add it to image.
+• `{i}addqr <reply image> <text>`
+   `Makes qr of text and add it to image.`
 
-•`qrdecode <reply to qrcode>`
-   It decodes the qrcode.
+• `{i}qrdecode <reply to qrcode>`
+   `It decodes the qrcode.`
 """
 import os
 
