@@ -345,6 +345,9 @@ grt_5: "`Welcome Note Deleted`"
 grt_6: "`No goodbye was set!`"
 grt_7: "`Reply to message which u want to set as goodbye`"
 
+# glitch
+glitch_1: "`Glitching...`"
+
 # mediainfo
 mdi_1: "More Explained Info"
 
