@@ -44,6 +44,7 @@ UTILITIES = """
 • /info (reply/username/id) : get detailed info of user.
 • /id : get chat/user id.
 • /tr : Translate Languages..
+• /quotly : Create Quotes.
 
 • /paste (reply file/text) : paste content on Spaceb.in
 • /meaning (text) : Get Meaning of that Word.
