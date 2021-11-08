@@ -54,8 +54,12 @@ from . import ultroid_cmd, uploader
 async def _(event):
     if len(event.text) > 3 and event.text[3] != " ":
         return
-    input = event.text[4:6]
-    txt = event.text[7:]
+    txt = None
+    input = event.text.split(maxsplit=1)
+    if len(input) > 1:
+        txt = input[1]
+    if input:
+        input = input[0]
     if txt:
         text = txt
         lan = input or "en"
