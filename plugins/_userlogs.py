@@ -112,7 +112,7 @@ if udB.get("TAG_LOG") and not udB.get("OFF_REPLY2REPLY"):
 async def _(e):
     wah = e.pattern_match.group(1).decode("UTF-8")
     y = await ultroid_bot.get_entity(int(wah))
-    who = f"[{get_display_name(y)}](tg://user?id={y.id})"
+    who = inline_mention(y)
     x = await e.reply(f"Mention By user : {who}")
     await asyncio.sleep(6)
     await x.delete()
@@ -137,7 +137,7 @@ async def when_asst_added_to_chat(event):
     )
     await asst.send_message(
         int(udB.get("LOG_CHANNEL")),
-        f"#ADD_LOG\n\n[{tmp.first_name}](tg://user?id={tmp.id}) added [{user.first_name}](tg://user?id={user.id}) to {chat}.",
+        f"#ADD_LOG\n\n[{inline_mention(tmp)}) added [{inline_mention(user)}) to {chat}.",
         buttons=buttons,
     )
 
@@ -162,7 +162,7 @@ async def when_ultd_added_to_chat(event):
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
     elif event.user_joined:
-        text = f"#JOIN_LOG\n\n[{user.first_name}](tg://user?id={user.id}) just joined {chat}."
+        text = f"#JOIN_LOG\n\n[{inline_mention(user)}) just joined {chat}."
     else:
         return
     await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
