@@ -137,7 +137,7 @@ async def when_asst_added_to_chat(event):
     )
     await asst.send_message(
         int(udB.get("LOG_CHANNEL")),
-        f"#ADD_LOG\n\n[{inline_mention(tmp)}) added [{inline_mention(user)}) to {chat}.",
+        f"#ADD_LOG\n\n{inline_mention(tmp)} added {inline_mention(user)} to {chat}.",
         buttons=buttons,
     )
 
@@ -162,7 +162,7 @@ async def when_ultd_added_to_chat(event):
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
     elif event.user_joined:
-        text = f"#JOIN_LOG\n\n[{inline_mention(user)}) just joined {chat}."
+        text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     else:
         return
     await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
