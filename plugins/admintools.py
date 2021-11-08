@@ -299,7 +299,10 @@ async def fastpurger(purg):
         ABC = None
     if ABC and purg.text[6] in ["m", "a"]:
         return
-    if not purg._client._bot and ((match) or (purg.is_reply and (purg.is_private or isinstance(purg.chat, types.Chat)))):
+    if not purg._client._bot and (
+        (match)
+        or (purg.is_reply and (purg.is_private or isinstance(purg.chat, types.Chat)))
+    ):
         p = 0
         async for msg in purg.client.iter_messages(
             purg.chat_id,
