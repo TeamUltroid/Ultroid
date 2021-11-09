@@ -460,3 +460,28 @@ async def do_magic(event):
         msg = f"Showing {len(ress)} Results!"
     FDROID_.update({match: ress})
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
+
+@in_pattern("koo", owner=True)
+async def koo_search(ult):
+    """Search Users on koo with API"""
+    try:
+        match = ult.text.split(maxsplit=1)[1].replace(" ", "+")
+    except IndexError:
+        return await ult.answer([], switch_pm="Enter Query to Search..", switch_pm_param="start")
+    res = []
+    req = await async_searcher(f"https://www.kooapp.com/apiV1/search?query={match}&searchType=EXPLORE", re_json=True)
+    for feed in req["feed"]:
+        if feed["uiItemType"] == "search_profile":
+            item = feed["items"][0]
+            img = wb(item["profileImage"], 0, "image/jpeg", [])
+            text = f"**Name :** `{item['name']}`"
+            if feed.get("title"):
+                text += f"\n**Title :** `{item['title']}`"
+            text += f"**Username :** `@{item['userHandle']}`"
+            res.append(await ult.builder.article(title=item["name"], description=item.get("title") or f"@{item['userHandle']}, "type="photo",
+                                                content=img, thumb=img, include_media=True, text=text))
+    if not res:
+        switch = "No Results Found :("
+    else:
+        switch = f"Showing {len(res)} Results!"
+    await ult.answer(res, switch_pm=switch, switch_pm_param="start")
