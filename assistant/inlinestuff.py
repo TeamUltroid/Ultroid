@@ -477,9 +477,15 @@ async def koo_search(ult):
             text = f"**Name :** `{item['name']}`"
             if feed.get("title"):
                 text += f"\n**Title :** `{item['title']}`"
-            text += f"**Username :** `@{item['userHandle']}`"
-            res.append(await ult.builder.article(title=item["name"], description=item.get("title") or f"@{item['userHandle']}", "type="photo",
-                                                content=img, thumb=img, include_media=True, text=text)
+            text += f"\n**Username :** `@{item['userHandle']}`"
+            res.append(await ult.builder.article(title=item["name"],
+                                                 description=item.get("title") or f"@{item['userHandle']}",
+                                                 type="photo",
+                                                 content=img,
+                                                 thumb=img,
+                                                 include_media=True,
+                                                 text=text
+                                                )
                       )
     if not res:
         switch = "No Results Found :("
