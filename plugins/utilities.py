@@ -441,7 +441,7 @@ async def telegraphcmd(event):
         getit = await reply.download_media()
         dar = mediainfo(reply.media)
         if dar == "sticker":
-            file = getit + ".webp"
+            file = getit + ".png"
             Image.open(getit).save(file)
             os.remove(getit)
             getit = file
