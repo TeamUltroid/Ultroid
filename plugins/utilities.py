@@ -68,10 +68,8 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
-from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
-from telethon.utils import get_input_location
 
 from . import (
     HNDLR,
