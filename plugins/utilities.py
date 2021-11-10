@@ -11,9 +11,6 @@
 
 • `{i}date` : Show Calender.
 
-• `{i}chatinfo`
-    Get full info about the group/chat.
-
 • `{i}listreserved`
     List all usernames (channels/groups) you own.
 
@@ -70,9 +67,10 @@ from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
-
+from pil import Image
 from . import (
     HNDLR,
+    bash,
     LOGS,
     Image,
     ReTrieveFile,
@@ -117,19 +115,6 @@ async def date(event):
     k = calendar.month(y, m)
     ultroid = await eor(event, f"`{k}\n\n{d}`")
 
-
-@ultroid_cmd(
-    pattern="chatinfo(?: |$)(.*)",
-)
-async def info(event):
-    ok = await eor(event, get_string("com_1"))
-    try:
-        caption = await fetch_info(event)
-        await ok.edit(caption, parse_mode="html")
-    except Exception as e:
-        LOGS.info(e)
-        await eor(ok, f"`An unexpected error has occurred. {e}`", time=5)
-    return
 
 
 @ultroid_cmd(
@@ -285,7 +270,10 @@ async def _(event):
     else:
         user = event.chat_id
     xx = await eor(event, get_string("com_1"))
-    _ = await event.client.get_entity(user)
+    try:
+        _ = await event.client.get_entity(user)
+    except Exception as er:
+        return await xx.edit(f"**ERROR :** {er}")
     if not isinstance(_, User):
         try:
             capt = await get_chat_info(_, event)
@@ -453,8 +441,15 @@ async def telegraphcmd(event):
         getit = await reply.download_media()
         dar = mediainfo(reply.media)
         if dar == "sticker":
-            os.rename(getit, getit + ".jpg")
-            getit = getit + ".jpg"
+            file = getit + ".webp"
+            Image.open(getit).save(file)
+            os.remove(getit)
+            getit = file
+        elif dar.endswith("animated"):
+            file = getit + ".gif"
+            await bash(f"lottie_convert.py '{getit}' {file}")
+            os.remove(getit)
+            getit = file
         if "document" not in dar:
             try:
                 nn = "https://telegra.ph" + uf(getit)[0]
@@ -618,7 +613,7 @@ async def toothpaste(event):
 @ultroid_cmd(pattern="thumb$")
 async def thumb_dl(event):
     reply = await event.get_reply_message()
-    if not (reply or reply.file):
+    if not (reply and reply.file):
         return await eod(
             event, "`Please reply to a file to download its thumbnail!`", time=5
         )
@@ -626,5 +621,6 @@ async def thumb_dl(event):
         return await eod(event, "`Replied file has no thumbnail.`")
     await eor(event, get_string("com_1"))
     x = await event.get_reply_message()
-    m = await event.client.download_media(x, thumb=-1)
+    m = await x.download_media(thumb=-1)
     await event.reply(file=m)
+    os.remove(m)
