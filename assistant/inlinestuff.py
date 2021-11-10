@@ -498,7 +498,9 @@ async def koo_search(ult):
                     thumb=img,
                     include_media=True,
                     text=text,
-                    buttons=Button.url("View", "https://kooapp.com/profile/"+item["userHandle"])
+                    buttons=Button.url(
+                        "View", "https://kooapp.com/profile/" + item["userHandle"]
+                    ),
                 )
             )
     if not res:
