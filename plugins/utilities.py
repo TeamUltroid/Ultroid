@@ -293,9 +293,9 @@ async def _(event):
             capt = await get_chat_info(_, event)
             await eor(xx, capt)
         except Exception as er:
-            await eor(event, "ERROR ON CHATINFO\n"+str(er))
+            await eor(event, "ERROR ON CHATINFO\n" + str(er))
         return
-    try:   
+    try:
         full_user = await event.client(GetFullUserRequest(user))
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
