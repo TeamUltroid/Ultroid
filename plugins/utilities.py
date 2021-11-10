@@ -53,7 +53,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from pil import Image
+from PIL import Image
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
