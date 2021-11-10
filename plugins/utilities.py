@@ -291,42 +291,31 @@ async def _(event):
     elif event.is_private:
         user = event.chat_id
     else:
-        return await eor(event, "Please reply to a user or give its username/id")
+        user = "me"
     xx = await eor(event, get_string("com_1"))
     try:
-        replied_user = await event.client(GetFullUserRequest(user))
+        await event.client.get_entity(user)
+        full_user = await event.client(GetFullUserRequest(user))
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
-    replied_user_profile_photos = await event.client(
-        GetUserPhotosRequest(
-            user_id=replied_user.user.id,
-            offset=42,
-            max_id=0,
-            limit=80,
-        ),
-    )
-    replied_user_profile_photos_count = "NaN"
-    try:
-        replied_user_profile_photos_count = replied_user_profile_photos.count
-    except AttributeError:
-        pass
-    user_id = replied_user.user.id
-    first_name = html.escape(replied_user.user.first_name)
+    user = full_user.user
+    user_photos = (await event.client.get_profile_photos(user.id, limit=0)) or "NaN"
+    user_id = user.id
+    first_name = html.escape(user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
-    last_name = replied_user.user.last_name
+    last_name = user.last_name
     last_name = (
         last_name.replace("\u2060", "") if last_name else ("Last Name not found")
     )
-    user_bio = replied_user.about
+    user_bio = full_user.about
     if user_bio is not None:
-        user_bio = html.escape(replied_user.about)
-    common_chats = replied_user.common_chats_count
-    try:
-        dc_id, location = get_input_location(replied_user.profile_photo)
-    except Exception as e:
+        user_bio = html.escape(full_user.about)
+    common_chats = full_user.common_chats_count
+    if user.photo:
+        dc_id = user.photo.dc_id
+    else:
         dc_id = "Need a Profile Picture to check this"
-        str(e)
     caption = """<b>Exᴛʀᴀᴄᴛᴇᴅ Dᴀᴛᴀʙᴀsᴇ Fʀᴏᴍ Tᴇʟᴇɢʀᴀᴍ's Dᴀᴛᴀʙᴀsᴇ<b>
 <b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{}</code>
 <b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={}'>Click Here</a>
@@ -346,10 +335,10 @@ async def _(event):
         last_name,
         user_bio,
         dc_id,
-        replied_user_profile_photos_count,
-        replied_user.user.restricted,
-        replied_user.user.verified,
-        replied_user.user.bot,
+        user_photos,
+        user.restricted,
+        user.verified,
+        user.bot,
         common_chats,
     )
     chk = is_gbanned(user_id)
