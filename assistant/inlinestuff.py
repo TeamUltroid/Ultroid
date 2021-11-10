@@ -480,7 +480,7 @@ async def koo_search(ult):
         if feed["uiItemType"] == "search_profile":
             item = feed["items"][0]
             profileImage = item["profileImageBaseUrl"] if item.get("profileImageBaseUrl") else "https://telegra.ph/file/dc28e69bd7ea2c0f25329.jpg"
-            img = wb(profileImage", 0, "image/jpeg", [])
+            img = wb(profileImage, 0, "image/jpeg", [])
             text = f"**Name :** `{item['name']}`"
             if feed.get("title"):
                 text += f"\n**Title :** `{item['title']}`"
