@@ -82,7 +82,7 @@ from . import (
     check_filename,
     eod,
     eor,
-    fetch_info,
+    get_chat_info,
     get_paste,
     get_string,
     get_user_id,
@@ -287,8 +287,15 @@ async def _(event):
     else:
         user = event.sender_id
     xx = await eor(event, get_string("com_1"))
-    try:
-        await event.client.get_entity(user)
+    _ = await event.client.get_entity(user)
+    if not isinstance(_, types.User):
+        try:
+            capt = await get_chat_info(_, event)
+            await eor(xx, capt)
+        except Exception as er:
+            await eor(event, "ERROR ON CHATINFO\n"+str(er))
+        return
+    try:   
         full_user = await event.client(GetFullUserRequest(user))
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
