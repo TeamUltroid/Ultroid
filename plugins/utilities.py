@@ -350,7 +350,7 @@ async def _(event):
         caption,
         reply_to=event.reply_to_msg_id,
         parse_mode="HTML",
-        file=replied_user.profile_photo,
+        file=full_user.profile_photo,
         force_document=False,
         silent=True,
     )
