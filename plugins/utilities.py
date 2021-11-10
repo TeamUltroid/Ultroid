@@ -289,7 +289,7 @@ async def _(event):
     elif event.is_private:
         user = event.chat_id
     else:
-        user = "me"
+        user = event.sender_id
     xx = await eor(event, get_string("com_1"))
     try:
         await event.client.get_entity(user)
@@ -297,7 +297,7 @@ async def _(event):
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
     user = full_user.user
-    user_photos = (await event.client.get_profile_photos(user.id, limit=0)) or "NaN"
+    user_photos = (await event.client.get_profile_photos(user.id, limit=0)).total or "NaN"
     user_id = user.id
     first_name = html.escape(user.first_name)
     if first_name is not None:
