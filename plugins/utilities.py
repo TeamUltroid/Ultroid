@@ -174,12 +174,8 @@ async def stats(
             if entity.creator:
                 creator_in_channels += 1
 
-        elif (
-            isinstance(entity, Channel)
-            and entity.megagroup
-            or not isinstance(entity, Channel)
-            and not isinstance(entity, User)
-            and isinstance(entity, Chat)
+        elif ((isinstance(entity, Channel) and entity.megagroup) or
+            or (isinstance(entity, Chat))
         ):
             groups += 1
             if entity.creator or entity.admin_rights:
@@ -187,7 +183,7 @@ async def stats(
             if entity.creator:
                 creator_in_groups += 1
 
-        elif not isinstance(entity, Channel) and isinstance(entity, User):
+        elif isinstance(entity, User):
             private_chats += 1
             if entity.bot:
                 bots += 1
