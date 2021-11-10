@@ -559,7 +559,7 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if not udB.get("SUDO"):
+    if udB.get("SUDO") == "False":
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
     else:
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
