@@ -22,7 +22,7 @@
 • `{i}paste`
     Include long text / Reply to text file.
 
-• `{i}info <username/userid>`
+• `{i}info <username/userid/chatid>`
     Reply to someone's msg.
 
 • `{i}invite <username/userid>`
@@ -282,18 +282,16 @@ async def _(event):
     elif event.is_reply:
         rpl = await event.get_reply_message()
         user = rpl.sender_id
-    elif event.is_private:
-        user = event.chat_id
     else:
-        user = event.sender_id
+        user = event.chat_id
     xx = await eor(event, get_string("com_1"))
     _ = await event.client.get_entity(user)
     if not isinstance(_, User):
         try:
             capt = await get_chat_info(_, event)
-            await eor(xx, capt)
+            await eor(xx, capt, parse_mode="html")
         except Exception as er:
-            await eor(event, "ERROR ON CHATINFO\n" + str(er))
+            await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
         return
     try:
         full_user = await event.client(GetFullUserRequest(user))
