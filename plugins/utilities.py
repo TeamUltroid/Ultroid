@@ -66,6 +66,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
+from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
@@ -84,7 +85,7 @@ from . import (
     eod,
     eor,
     fetch_info,
-    get_full_user,
+    get_user_id,
     get_paste,
     get_string,
     inline_mention,
@@ -278,11 +279,24 @@ async def _(event):
     type=["official", "manager"],
 )
 async def _(event):
+    match = event.pattern_match.group(1)
+    if match:
+        try:
+            user = await get_user_id(match)
+        except Exception as er:
+            return await eor(event, str(er))
+    elif event.is_reply:
+        rpl = await event.get_reply_message()
+        user = rpl.sender_id
+    elif event.is_private:
+        user = event.chat_id
+    else:
+        return await eor(event, "Please reply to a user or give its username/id")
     xx = await eor(event, get_string("com_1"))
-    replied_user, error_i_a = await get_full_user(event)
-    if replied_user is None:
-        await xx.edit("Please reply to a user.\nError - " + str(error_i_a))
-        return False
+    try:
+        replied_user = await event.client(GetFullUserRequest(user))
+    except Exception as er:
+        return await xx.edit(f"ERROR : {er}")
     replied_user_profile_photos = await event.client(
         GetUserPhotosRequest(
             user_id=replied_user.user.id,
