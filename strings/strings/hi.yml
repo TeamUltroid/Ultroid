@@ -176,7 +176,20 @@ pmperm_2: "आप मेरे मास्टर के पीएम पर स
 pmperm_3: "किसी के संदेश का जवाब दें या इस आदेश को private chat में आज़माएं।"
 
 # stickertools
+
+sts_1: "`You haven't written any article, Waifu is going away.`"
+sts_2: "`Reply to an Animated Sticker...`"
+sts_3: "**Please select from {} **"
+sts_4: "`Reply to Non Animated Sticker.`"
+sts_5: "**Pack Kanged Successfully**.\n**Kanged Pack:** [link]({})"
+sts_6: "`कोई मैसेज या मीडिया को रिप्लाई करें...`"
+sts_7: "`Sticker added in a Different Pack !\nThis Pack is Newly created!\nYour pack can be found` [here](t.me/addstickers/{})"
+sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`"
+sts_9:  "`Ooo Animated Sticker 👀...`"
+sts_10: "`Reply to any media...`"
+sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`इमोजी` : {}\n`स्टीकर पैक` [here](t.me/addstickers/{})"
+sts_13: "`Switching to Pack {} due to insufficient space`"
 
 # updater
 upd_1: "`अपडेट खोजा जा रहा है, कृपया प्रतीक्षा करें....`"
