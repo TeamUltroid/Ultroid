@@ -276,7 +276,7 @@ async def _(e):
             text.append("📄 " + str(file))
         elif str(file).endswith((".apk", ".xapk")):
             apk.append("📲 " + str(file))
-        elif str(file).endswith(".exe", ".iso"):
+        elif str(file).endswith((".exe", ".iso")):
             exe.append("⚙ " + str(file))
         elif str(file).endswith((".zip", ".rar")):
             zip_.append("🗜 " + str(file))
