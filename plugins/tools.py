@@ -46,7 +46,7 @@ from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, bash, downloader, eor, get_string, get_user_id
-from . import humanbytes as hb
+from . import humanbytes as hb, inline_mention, get_user_id
 from . import ultroid_cmd, uploader
 
 
@@ -127,16 +127,14 @@ async def _(event):
 
 @ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
 async def _(ult):
-    mentions = "**Bots in this Chat**: \n"
+    mentions = "• **Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
-    to_write_chat = await ult.get_input_chat()
-    chat = None
     if not input_str:
-        chat = to_write_chat
+        chat = ult.chat_id
     else:
-        mentions = f"**Bots in **{input_str}: \n"
+        mentions = f"• **Bots in **{input_str}: \n"
         try:
-            chat = await ult.client.get_entity(input_str)
+            chat = await get_user_id(input_str)
         except Exception as e:
             return await eor(ult, str(e))
     try:
@@ -145,17 +143,9 @@ async def _(ult):
             filter=ChannelParticipantsBots,
         ):
             if isinstance(x.participant, ChannelParticipantAdmin):
-                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
-                    x.first_name,
-                    x.id,
-                    x.id,
-                )
+                mentions += f"\n⚜️ {inline_mention(x)} `{x.id}`"
             else:
-                mentions += "\n [{}](tg://user?id={}) `{}`".format(
-                    x.first_name,
-                    x.id,
-                    x.id,
-                )
+                mentions += f"\n• {inline_mention(x)} `{x.id}`"
     except Exception as e:
         mentions += " " + str(e) + "\n"
     await eor(ult, mentions)
@@ -177,7 +167,7 @@ async def _(ult):
 )
 async def _(e):
     a = await e.get_reply_message()
-    if a is None:
+    if not a:
         return await eor(e, "Reply to a gif or audio")
     if a.document and a.document.mime_type == "audio/mpeg":
         z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
@@ -280,13 +270,13 @@ async def _(e):
             vdos.append("🎥 " + str(file))
         elif str(file).endswith((".mp3", ".ogg", ".m4a", ".opus")):
             audios.append("🔊 " + str(file))
-        elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp")):
+        elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp", ".ico")):
             pics.append("🖼 " + str(file))
         elif str(file).endswith((".txt", ".text", ".log")):
             text.append("📄 " + str(file))
         elif str(file).endswith((".apk", ".xapk")):
             apk.append("📲 " + str(file))
-        elif str(file).endswith(".exe"):
+        elif str(file).endswith(".exe", ".iso"):
             exe.append("⚙ " + str(file))
         elif str(file).endswith((".zip", ".rar")):
             zip_.append("🗜 " + str(file))
