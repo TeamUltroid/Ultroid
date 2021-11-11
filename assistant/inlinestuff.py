@@ -472,11 +472,23 @@ async def koo_search(ult):
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
         )
     res = []
+    key_count = None
+    if " | " in match:
+        match = match.split(" | ", maxsplit=1)
+        try:
+            key_count = int(match[1])
+        except ValueError:
+            pass
+        match = match[0]
     req = await async_searcher(
         f"https://www.kooapp.com/apiV1/search?query={match}&searchType=EXPLORE",
         re_json=True,
     )
-    for feed in req["feed"]:
+    if key_count:
+        se_ = [req["feed"][key_count-1]]
+    else:
+        se_ = req["feed"]
+    for feed in se_:
         if feed["uiItemType"] == "search_profile":
             item = feed["items"][0]
             profileImage = (
