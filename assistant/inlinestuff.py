@@ -472,6 +472,7 @@ async def koo_search(ult):
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
         )
     res = []
+    se_ = None
     key_count = None
     if " | " in match:
         match = match.split(" | ", maxsplit=1)
@@ -486,8 +487,11 @@ async def koo_search(ult):
         re_json=True,
     )
     if key_count:
-        se_ = [req["feed"][key_count - 1]]
-    else:
+        try:
+            se_ = [req["feed"][key_count - 1]]
+        except KeyError:
+            pass
+    if not se_:
         se_ = req["feed"]
     for feed in se_:
         if feed["uiItemType"] == "search_profile":
