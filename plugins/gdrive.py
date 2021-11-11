@@ -65,7 +65,7 @@ async def gdown(event):
     fullsudo=True,
 )
 async def files(event):
-    files = GDrive._list_files()
+    files = GDrive._list_files
     eve = await eor(event, get_string("com_1"))
     msg = f"{len(files.keys())} files found in gdrive.\n\n"
     if files:
