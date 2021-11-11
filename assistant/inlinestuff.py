@@ -485,7 +485,7 @@ async def koo_search(ult):
         re_json=True,
     )
     if key_count:
-        se_ = [req["feed"][key_count-1]]
+        se_ = [req["feed"][key_count - 1]]
     else:
         se_ = req["feed"]
     for feed in se_:
