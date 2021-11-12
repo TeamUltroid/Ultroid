@@ -181,11 +181,11 @@ async def stats(
     except AttributeError:
         ct = 0
     try:
-        sp = await ultroid_bot(GetAllStickersRequest(0))
+        sp = await event.client(GetAllStickersRequest(0))
         sp_count = len(sp.sets)
     except BaseException:
         sp_count = 0
-    full_name = inline_mention(await ultroid_bot.get_me())
+    full_name = inline_mention(await event.client.get_me())
     response = f"🔸 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
     response += f"**  •• **`Users: {private_chats - bots}` \n"
