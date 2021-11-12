@@ -136,7 +136,7 @@ async def _(event):
 )
 async def stats(
     event: NewMessage.Event,
-) -> None:
+):
     ok = await eor(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
