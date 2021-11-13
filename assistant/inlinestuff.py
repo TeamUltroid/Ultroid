@@ -12,7 +12,7 @@ from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import async_searcher, dloader, get_ofox
+from pyUltroid.functions.tools import async_searcher, get_ofox
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -142,7 +142,7 @@ async def _(e):
     file = data.split("//")[1]
     file_name = file.split("/")[-1]
     await e.edit(f"Uploading `{file_name}` on {host}")
-    await dloader(e, host, file)
+#    await dloader(e, host, file)
 
 
 @in_pattern("repo", owner=True)
