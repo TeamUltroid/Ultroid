@@ -41,17 +41,16 @@ from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
 from google_trans_new import google_translator
+from htmlwebshot import WebShot
 from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
-from htmlwebshot import WebShot
-
 from . import HNDLR, bash, downloader, eor, get_string, get_user_id
-from . import humanbytes as hb, is_url_ok
-from . import inline_mention, ultroid_cmd, uploader
+from . import humanbytes as hb
+from . import inline_mention, is_url_ok, ultroid_cmd, uploader
 
 
 @ultroid_cmd(pattern="tr", type=["official", "manager"])
