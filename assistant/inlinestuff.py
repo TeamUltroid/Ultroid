@@ -518,9 +518,14 @@ async def koo_search(ult):
                     thumb=img,
                     include_media=True,
                     text=text,
-                    buttons=[Button.url(
-                        "View", "https://kooapp.com/profile/" + item["userHandle"]
-                    ), Button.switch_inline("• Share •", query=event.text + f" | {count}")],
+                    buttons=[
+                        Button.url(
+                            "View", "https://kooapp.com/profile/" + item["userHandle"]
+                        ),
+                        Button.switch_inline(
+                            "• Share •", query=event.text + f" | {count}"
+                        ),
+                    ],
                 )
             )
     if not res:
