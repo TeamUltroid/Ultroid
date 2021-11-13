@@ -523,7 +523,7 @@ async def koo_search(ult):
                             "View", "https://kooapp.com/profile/" + item["userHandle"]
                         ),
                         Button.switch_inline(
-                            "• Share •", query=event.text + f" | {count}"
+                            "• Share •", query=ult.text + f" | {count}"
                         ),
                     ],
                 )
