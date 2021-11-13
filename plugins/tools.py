@@ -30,6 +30,8 @@
 • `{i}tr <dest lang code> <(reply to) a message>`
     Get translated message.
 
+• `{i}webshot <url>`
+    Get a screenshot of the webpage.
 """
 import glob
 import io
@@ -45,8 +47,10 @@ from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
+from htmlwebshot import WebShot
+
 from . import HNDLR, bash, downloader, eor, get_string, get_user_id
-from . import humanbytes as hb
+from . import humanbytes as hb, is_url_ok
 from . import inline_mention, ultroid_cmd, uploader
 
 
@@ -401,3 +405,23 @@ async def lastname(steal):
             )
     except AsyncTimeout:
         await lol.edit("Error: @SangMataInfo_bot is not responding!.")
+
+
+@ultroid_cmd(pattern="webshot ?(.*)")
+async def webss(event):
+    xx = await eor(event, get_string("com_1"))
+    xurl = event.pattern_match.group(1)
+    if not xurl:
+        return await eor(xx, get_string("wbs_1"), time=5)
+    if not is_url_ok(xurl):
+        return await eor(xx, get_string("wbs_2"), time=5)
+    shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
+    pic = await shot.create_pic_async(url=xurl)
+    await xx.reply(
+        get_string("wbs_3").format(xurl),
+        file=pic,
+        link_preview=False,
+        force_document=True,
+    )
+    os.remove(pic)
+    await xx.delete()
