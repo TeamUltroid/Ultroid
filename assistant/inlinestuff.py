@@ -466,17 +466,34 @@ async def do_magic(event):
 async def koo_search(ult):
     """Search Users on koo with API"""
     try:
-        match = ult.text.split(maxsplit=1)[1].replace(" ", "+")
+        match = ult.text.split(maxsplit=1)[1]
     except IndexError:
         return await ult.answer(
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
         )
     res = []
+    se_ = None
+    key_count = None
+    if " | " in match:
+        match = match.split(" | ", maxsplit=1)
+        try:
+            key_count = int(match[1])
+        except ValueError:
+            pass
+        match = match[0]
+    match = match.replace(" ", "+")
     req = await async_searcher(
         f"https://www.kooapp.com/apiV1/search?query={match}&searchType=EXPLORE",
         re_json=True,
     )
-    for feed in req["feed"]:
+    if key_count:
+        try:
+            se_ = [req["feed"][key_count - 1]]
+        except KeyError:
+            pass
+    if not se_:
+        se_ = req["feed"]
+    for feed in se_:
         if feed["uiItemType"] == "search_profile":
             item = feed["items"][0]
             profileImage = (

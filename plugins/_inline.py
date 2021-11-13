@@ -263,7 +263,10 @@ async def _(e):
         [
             Button.switch_inline(
                 "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
-            )
+            ),
+            Button.switch_inline(
+                "Kᴏᴏ Sᴇᴀʀᴄʜ", query="koo @__kumar__amit", same_peer=True
+            ),
         ],
         [
             Button.inline(

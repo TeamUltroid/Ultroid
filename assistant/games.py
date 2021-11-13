@@ -41,7 +41,7 @@ aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
 
 
 @ultroid_cmd(
-    pattern="akinator", type=["official", "assistant"], from_users=owner_and_sudos()
+    pattern="akinator", type=["official", "assistant"], from_users=owner_and_sudos
 )
 async def doit(e):
     sta = akinator.Akinator()

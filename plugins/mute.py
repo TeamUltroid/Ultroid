@@ -50,32 +50,27 @@ async def startmute(event):
     private = bool(event.is_private)
     if input:
         if input.isdigit():
-            try:
-                userid = input
-            except ValueError as x:
-                return await xx.edit(str(x))
-        else:
+            input = int(input)
+        try:
             userid = (await event.client.get_entity(input)).id
+        except Exception as x:
+            return await xx.edit(str(x))
     elif event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
     elif private:
         userid = event.chat_id
     else:
         return await eor(xx, "`Reply to a user or add their userid.`", time=5)
-    chat_id = event.chat_id
     chat = await event.get_chat()
     if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
         if chat.admin_rights.delete_messages is not True:
             return await eor(xx, "`No proper admin rights...`", time=5)
     elif "creator" not in vars(chat) and not private:
         return await eor(xx, "`No proper admin rights...`", time=5)
-    if is_muted(chat_id, userid):
+    if is_muted(chat.id, userid):
         return await eor(xx, "`This user is already muted in this chat.`", time=5)
-    try:
-        mute(chat_id, userid)
-        await eor(xx, "`Successfully muted...`", time=3)
-    except Exception as e:
-        await eor(xx, "Error: " + f"`{e}`", time=5)
+    mute(chat.id, userid)
+    await eor(xx, "`Successfully muted...`", time=3)
 
 
 @ultroid_cmd(
@@ -88,12 +83,11 @@ async def endmute(event):
     private = bool(event.is_private)
     if input:
         if input.isdigit():
-            try:
-                userid = input
-            except ValueError as x:
-                return await xx.edit(str(x))
-        else:
+            input = int(input)
+        try:
             userid = (await event.client.get_entity(input)).id
+        except Exception as x:
+            return await xx.edit(str(x))
     elif event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
     elif private:
@@ -103,11 +97,8 @@ async def endmute(event):
     chat_id = event.chat_id
     if not is_muted(chat_id, userid):
         return await eor(xx, "`This user is not muted in this chat.`", time=3)
-    try:
-        unmute(chat_id, userid)
-        await eor(xx, "`Successfully unmuted...`", time=3)
-    except Exception as e:
-        await eor(xx, "Error: " + f"`{e}`", time=5)
+    unmute(chat_id, userid)
+    await eor(xx, "`Successfully unmuted...`", time=3)
 
 
 @ultroid_cmd(
@@ -201,14 +192,12 @@ async def _(e):
         name = (await e.client.get_entity(userid)).first_name
     elif input:
         if input.isdigit():
-            try:
-                userid = input
-                name = (await e.client.get_entity(userid)).first_name
-            except ValueError as x:
-                return await xx.edit(str(x))
-        else:
+            input = int(input)
+        try:
             userid = (await e.client.get_entity(input)).id
             name = (await e.client.get_entity(userid)).first_name
+        except Exception as x:
+            return await xx.edit(str(x))
     else:
         return await eor(xx, get_string("tban_1"), time=3)
     if userid == ultroid_bot.uid:
