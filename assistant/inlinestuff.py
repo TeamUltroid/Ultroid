@@ -495,8 +495,9 @@ async def koo_search(ult):
             pass
     if not se_:
         se_ = req["feed"]
-    for feed in se_:
+    for count, feed in enumerate(se_):
         if feed["uiItemType"] == "search_profile":
+            count += 1
             item = feed["items"][0]
             profileImage = (
                 item["profileImageBaseUrl"]
@@ -517,9 +518,9 @@ async def koo_search(ult):
                     thumb=img,
                     include_media=True,
                     text=text,
-                    buttons=Button.url(
+                    buttons=[Button.url(
                         "View", "https://kooapp.com/profile/" + item["userHandle"]
-                    ),
+                    ), Button.switch_inline("• Share •", query=event.text + f" | {count}")],
                 )
             )
     if not res:
