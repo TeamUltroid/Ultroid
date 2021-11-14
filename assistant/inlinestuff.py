@@ -12,7 +12,7 @@ from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import async_searcher, dloader, get_ofox
+from pyUltroid.functions.tools import async_searcher, get_ofox
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -142,7 +142,9 @@ async def _(e):
     file = data.split("//")[1]
     file_name = file.split("/")[-1]
     await e.edit(f"Uploading `{file_name}` on {host}")
-    await dloader(e, host, file)
+
+
+#    await dloader(e, host, file)
 
 
 @in_pattern("repo", owner=True)
@@ -462,14 +464,22 @@ async def do_magic(event):
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
 
 
+_koo_ = {}
+
+
 @in_pattern("koo", owner=True)
 async def koo_search(ult):
     """Search Users on koo with API"""
     try:
-        match = ult.text.split(maxsplit=1)[1]
+        match = ult.text.split(maxsplit=1)[1].lower()
+        match_ = match
     except IndexError:
         return await ult.answer(
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
+        )
+    if _koo_.get(match):
+        return await ult.answer(
+            _koo_[match], switch_pm="• Koo Search •", switch_pm_param="start"
         )
     res = []
     se_ = None
@@ -493,19 +503,29 @@ async def koo_search(ult):
             pass
     if not se_:
         se_ = req["feed"]
-    for feed in se_:
+    for count, feed in enumerate(se_[:10]):
         if feed["uiItemType"] == "search_profile":
+            count += 1
             item = feed["items"][0]
             profileImage = (
                 item["profileImageBaseUrl"]
                 if item.get("profileImageBaseUrl")
                 else "https://telegra.ph/file/dc28e69bd7ea2c0f25329.jpg"
             )
+            extra = await async_searcher(
+                "https://www.kooapp.com/apiV1/users/handle/" + item["userHandle"],
+                re_json=True,
+            )
             img = wb(profileImage, 0, "image/jpeg", [])
-            text = f"**Name :** `{item['name']}`"
-            if feed.get("title"):
-                text += f"\n**Title :** `{item['title']}`"
-            text += f"\n**Username :** `@{item['userHandle']}`"
+            text = f"‣ **Name :** `{item['name']}`"
+            if extra.get("title"):
+                text += f"\n‣ **Title :** `{extra['title']}`"
+            text += f"\n‣ **Username :** `@{item['userHandle']}`"
+            if extra.get("description"):
+                text += f"\n‣ **Description :** `{extra['description']}`"
+            text += f"\n‣ **Followers :** `{extra['followerCount']}`    ‣ **Following :** {extra['followingCount']}"
+            if extra.get("socialProfile") and extra["socialProfile"].get("website"):
+                text += f"\n‣ **Website :** {extra['socialProfile']['website']}"
             res.append(
                 await ult.builder.article(
                     title=item["name"],
@@ -515,13 +535,20 @@ async def koo_search(ult):
                     thumb=img,
                     include_media=True,
                     text=text,
-                    buttons=Button.url(
-                        "View", "https://kooapp.com/profile/" + item["userHandle"]
-                    ),
+                    buttons=[
+                        Button.url(
+                            "View", "https://kooapp.com/profile/" + item["userHandle"]
+                        ),
+                        Button.switch_inline(
+                            "• Share •",
+                            query=ult.text if key_count else ult.text + f" | {count}",
+                        ),
+                    ],
                 )
             )
     if not res:
         switch = "No Results Found :("
     else:
+        _koo_.update({match_: res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
