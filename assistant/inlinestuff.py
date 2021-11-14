@@ -466,6 +466,7 @@ async def do_magic(event):
 
 _koo_ = {}
 
+
 @in_pattern("koo", owner=True)
 async def koo_search(ult):
     """Search Users on koo with API"""
@@ -477,7 +478,9 @@ async def koo_search(ult):
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
         )
     if _koo_.get(match):
-        return await ult.answer(_koo_[match], switch_pm="• Koo Search •", switch_pm_param="start")
+        return await ult.answer(
+            _koo_[match], switch_pm="• Koo Search •", switch_pm_param="start"
+        )
     res = []
     se_ = None
     key_count = None
@@ -545,6 +548,6 @@ async def koo_search(ult):
     if not res:
         switch = "No Results Found :("
     else:
-        _koo_.update({match_:res})
+        _koo_.update({match_: res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
