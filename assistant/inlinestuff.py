@@ -523,7 +523,7 @@ async def koo_search(ult):
             text += f"\n‣ **Username :** `@{item['userHandle']}`"
             if extra.get("description"):
                 text += f"\n‣ **Description :** `{extra['description']}`"
-            text += f"\n‣ **Followers :** `{extra['followerCount']}`    ❀ **Following :** {extra['followingCount']}"
+            text += f"\n‣ **Followers :** `{extra['followerCount']}`    ‣ **Following :** {extra['followingCount']}"
             if extra.get("socialProfile") and extra["socialProfile"].get("website"):
                 text += f"\n‣ **Website :** {extra['socialProfile']['website']}"
             res.append(
