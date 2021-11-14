@@ -517,15 +517,15 @@ async def koo_search(ult):
                 re_json=True,
             )
             img = wb(profileImage, 0, "image/jpeg", [])
-            text = f"**Name :** `{item['name']}`"
+            text = f"‣ **Name :** `{item['name']}`"
             if extra.get("title"):
-                text += f"\n**Title :** `{extra['title']}`"
-            text += f"\n**Username :** `@{item['userHandle']}`"
+                text += f"\n‣ **Title :** `{extra['title']}`"
+            text += f"\n‣ **Username :** `@{item['userHandle']}`"
             if extra.get("description"):
-                text += f"\n**Description :** `{extra['description']}`"
-            text += f"\n**Followers :** `{extra['followerCount']}`    ||    **Following :** {extra['followingCount']}"
+                text += f"\n‣ **Description :** `{extra['description']}`"
+            text += f"\n‣ **Followers :** `{extra['followerCount']}`    ❀ **Following :** {extra['followingCount']}"
             if extra.get("socialProfile") and extra["socialProfile"].get("website"):
-                text += f"\n**Website :** {extra['socialProfile']['website']}"
+                text += f"\n‣ **Website :** {extra['socialProfile']['website']}"
             res.append(
                 await ult.builder.article(
                     title=item["name"],
@@ -540,7 +540,7 @@ async def koo_search(ult):
                             "View", "https://kooapp.com/profile/" + item["userHandle"]
                         ),
                         Button.switch_inline(
-                            "• Share •", query=ult.text + f" | {count}"
+                            "• Share •", query=ult.text if key_count else ult.text + f" | {count}"
                         ),
                     ],
                 )
