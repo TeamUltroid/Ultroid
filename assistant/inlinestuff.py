@@ -464,15 +464,20 @@ async def do_magic(event):
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
 
 
+_koo_ = {}
+
 @in_pattern("koo", owner=True)
 async def koo_search(ult):
     """Search Users on koo with API"""
     try:
-        match = ult.text.split(maxsplit=1)[1]
+        match = ult.text.split(maxsplit=1)[1].lower()
+        match_ = match
     except IndexError:
         return await ult.answer(
             [], switch_pm="Enter Query to Search..", switch_pm_param="start"
         )
+    if _koo_.get(match):
+        return await ult.answer(_koo_[match], switch_pm="• Koo Search •", switch_pm_param="start")
     res = []
     se_ = None
     key_count = None
@@ -495,7 +500,7 @@ async def koo_search(ult):
             pass
     if not se_:
         se_ = req["feed"]
-    for count, feed in enumerate(se_):
+    for count, feed in enumerate(se_[:10]):
         if feed["uiItemType"] == "search_profile":
             count += 1
             item = feed["items"][0]
@@ -515,8 +520,7 @@ async def koo_search(ult):
             text += f"\n**Username :** `@{item['userHandle']}`"
             if extra.get("description"):
                 text += f"\n**Description :** `{extra['description']}`"
-            text += f"\n**Followers :** `{extra['followerCount']}`"
-            text += f"\n**Following :** `{extra['followingCount']}`"
+            text += f"\n**Followers :** `{extra['followerCount']}`|| **Following :** {extra['followingCount']}"
             if extra["socialProfile"].get("website"):
                 text += f"\n**Website :** {extra['socialProfile']['website']}"
             res.append(
@@ -541,5 +545,6 @@ async def koo_search(ult):
     if not res:
         switch = "No Results Found :("
     else:
+        _koo_.update({match_:res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
