@@ -167,10 +167,9 @@ async def when_ultd_added_to_chat(event):
         return
     await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
 
-_client = {
-    "bot":asst,
-    "user":ultroid_bot
-}
+
+_client = {"bot": asst, "user": ultroid_bot}
+
 
 @callback(
     re.compile(
