@@ -109,11 +109,7 @@ async def _(event):
     if (
         any(
             item in cmd
-            for item in [
-                "_ignore_eval",
-                "DeleteAccountRequest",
-                "functions.account.DeleteAccountRequest",
-            ]
+            for item in KEEP_SAFE().All
         )
         and event.sender_id != ultroid_bot.uid
     ):
