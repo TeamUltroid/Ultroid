@@ -42,7 +42,7 @@ async def all_messages_catcher(e):
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    if hasattr(x, "username") and x.username:
+    if getattr(x, "username", None):
         who_l = f"https://t.me/{x.username}"
         buttons.append([Button.url(who_n, who_l)])
     else:
@@ -125,7 +125,7 @@ async def when_asst_added_to_chat(event):
         return
     user = await event.get_user()
     chat = await event.get_chat()
-    if hasattr(chat, "username") and chat.username:
+    if getattr(chat, "username", None):
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
@@ -151,7 +151,7 @@ async def when_ultd_added_to_chat(event):
     chat = await event.get_chat()
     if not (user and user.is_self):
         return
-    if hasattr(chat, "username") and chat.username:
+    if getattr(chat, "username", None):
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
@@ -167,6 +167,10 @@ async def when_ultd_added_to_chat(event):
         return
     await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
 
+_client = {
+    "bot":asst,
+    "user":ultroid_bot
+}
 
 @callback(
     re.compile(
@@ -177,11 +181,9 @@ async def when_ultd_added_to_chat(event):
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
     ch_id, client = cht.split("|")
-    if client == "bot":
-        client = asst
-    elif client == "user":
-        client = ultroid_bot
-    else:
+    try:
+        client = _client[client]
+    except KeyError:
         return
     name = (await client.get_entity(int(ch_id))).title
     await client.delete_dialog(int(ch_id))
