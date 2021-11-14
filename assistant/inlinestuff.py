@@ -504,7 +504,10 @@ async def koo_search(ult):
                 if item.get("profileImageBaseUrl")
                 else "https://telegra.ph/file/dc28e69bd7ea2c0f25329.jpg"
             )
-            extra = await async_searcher("https://www.kooapp.com/apiV1/users/handle/"+item["userHandle"], re_json=True)
+            extra = await async_searcher(
+                "https://www.kooapp.com/apiV1/users/handle/" + item["userHandle"],
+                re_json=True,
+            )
             img = wb(profileImage, 0, "image/jpeg", [])
             text = f"**Name :** `{item['name']}`"
             if extra.get("title"):
