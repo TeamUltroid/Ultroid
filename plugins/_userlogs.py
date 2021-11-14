@@ -120,6 +120,7 @@ async def _(e):
 
 # log for assistant/user joins/add
 
+
 @asst.on(events.ChatAction(func=lambda x: x.user_added))
 @ultroid_bot.on(events.ChatAction(func=lambda x: x.user_added or x.user_joined))
 async def when(event):
