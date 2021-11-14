@@ -107,10 +107,7 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     if (
-        any(
-            item in cmd
-            for item in KEEP_SAFE().All
-        )
+        any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
     ):
         if event.sender_id in _ignore_eval:
