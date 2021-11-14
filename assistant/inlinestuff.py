@@ -524,7 +524,7 @@ async def koo_search(ult):
             if extra.get("description"):
                 text += f"\n**Description :** `{extra['description']}`"
             text += f"\n**Followers :** `{extra['followerCount']}`|| **Following :** {extra['followingCount']}"
-            if extra["socialProfile"].get("website"):
+            if extra.get("socialProfile", {}).get("website"):
                 text += f"\n**Website :** {extra['socialProfile']['website']}"
             res.append(
                 await ult.builder.article(
