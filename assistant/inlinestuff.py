@@ -504,11 +504,18 @@ async def koo_search(ult):
                 if item.get("profileImageBaseUrl")
                 else "https://telegra.ph/file/dc28e69bd7ea2c0f25329.jpg"
             )
+            extra = await async_searcher("https://www.kooapp.com/apiV1/users/handle/"+item["userHandle"], re_json=True)
             img = wb(profileImage, 0, "image/jpeg", [])
             text = f"**Name :** `{item['name']}`"
-            if feed.get("title"):
-                text += f"\n**Title :** `{item['title']}`"
+            if extra.get("title"):
+                text += f"\n**Title :** `{extra['title']}`"
             text += f"\n**Username :** `@{item['userHandle']}`"
+            if extra.get("description"):
+                text += f"\n**Description :** `{extra['description']}`"
+            text += f"\n**Followers :** `{extra['followerCount']}`"
+            text += f"\n**Following :** `{extra['followingCount']}`"
+            if extra["socialProfile"].get("website"):
+                text += f"\n**Website :** {extra['socialProfile']['website']}"
             res.append(
                 await ult.builder.article(
                     title=item["name"],
