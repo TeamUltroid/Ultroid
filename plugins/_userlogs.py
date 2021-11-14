@@ -118,35 +118,11 @@ async def _(e):
     await x.delete()
 
 
-# log for assistant
-@asst.on(events.ChatAction)
-async def when_asst_added_to_chat(event):
-    if not event.user_added:
-        return
-    user = await event.get_user()
-    chat = await event.get_chat()
-    if getattr(chat, "username", None):
-        chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
-    else:
-        chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
-    if not (user and user.is_self):
-        return
-    tmp = event.added_by
-    buttons = Button.inline(
-        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|bot"
-    )
-    await asst.send_message(
-        int(udB.get("LOG_CHANNEL")),
-        f"#ADD_LOG\n\n{inline_mention(tmp)} added {inline_mention(user)} to {chat}.",
-        buttons=buttons,
-    )
+# log for assistant/user joins/add
 
-
-# log for user's new joins
-
-
-@ultroid_bot.on(events.ChatAction)
-async def when_ultd_added_to_chat(event):
+@asst.on(events.ChatAction(func=lambda x: x.user_added))
+@ultroid_bot.on(events.ChatAction(func=lambda x: x.user_added or x.user_joined))
+async def when(event):
     user = await event.get_user()
     chat = await event.get_chat()
     if not (user and user.is_self):
@@ -155,16 +131,15 @@ async def when_ultd_added_to_chat(event):
         chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
     else:
         chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
+    key = "bot" if event.client._bot else "user"
     buttons = Button.inline(
-        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|user"
+        get_string("userlogs_3"), data=f"leave_ch_{event.chat_id}|{key}"
     )
     if event.user_added:
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
-    elif event.user_joined:
-        text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     else:
-        return
+        text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
 
 
