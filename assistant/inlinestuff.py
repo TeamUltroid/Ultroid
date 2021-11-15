@@ -565,3 +565,27 @@ async def twitter_search(event):
         return await event.answer(
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
+    try:
+       return await event.answer(_ult_cache["twitter"][match], switch_pm="• Twitter Search •", switch_pm_param="start")
+    except KeyError:
+       pass
+   headers = {"Authorization":"bearer "+ choice(_bearer_collected)}
+   res = await async_searcher(f"https://api.twitter.com/1.1/users/search.json?q={match}", headers=headers, re_json=True)
+   reso = []
+   for user in res:
+       thumb = wb(user["profile_image_url_https"], 0, "image/jpeg", [])
+       text = f"[\xad]({user['profile_image_url_https']})• **Name :** `{user['name']}`\n"
+       text+=f"• **Description :** `{user['description']}`\n"
+       text +=f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
+       text +=f"• **Link :** [Click Here](https://twitter.com/{user['screen_name']})"
+       reso.append(await event.builder.article(title=user["name"], description=user["description"],
+           url= "https://twitter.com/" + user["screen_name"], text=text, thumb=thumb, link_preview=True))
+    if not reso:
+        swi_ = "No User Found :("
+    else:
+        swi_ = f"🐦 Showing {len(reso)} Results!"
+    await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
+    if _ult_cache.get("twitter"):
+        _ult_cache["twitter"].update({match:reso})
+    else:
+        _ult_cache.update({"twitter":{match:reso}})
