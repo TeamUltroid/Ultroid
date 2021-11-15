@@ -27,7 +27,7 @@
     Get The List of People having vc access.
 """
 
-from pyUltroid.dB.vc_group import get_chats, rem_vcauth, add_vcauth
+from pyUltroid.dB.vc_group import get_chats, rem_vcauth
 from pyUltroid.dB.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 
 from . import *
@@ -41,10 +41,14 @@ async def auth_group(event):
     except IndexError:
         admins = False
     chat = event.chat_id
-    cha, adm = check_vcauth(chat)
+    key = udB.get_key("VC_AUTH_GROUPS") or {}
+    cha, adm = None
+    if key.get(chat):
+        cha, adm = key[chat], key[chat]["admins"]
     if cha and adm == admins:
         return await event.reply(get_string('vcbot_19'))
-    add_vcauth(chat, admins=admins)
+    key.update({chat:{"admins":admins}})
+    udB.set_key("VC_AUTH_GROUPS", key)
     kem = "Admins" if admins else "All"
     await eor(
         event,
