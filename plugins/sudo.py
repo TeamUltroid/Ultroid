@@ -64,7 +64,7 @@ async def _(ult):
     elif is_sudo(id):
         mmm = f"{name} `is already a SUDO User ...`"
     elif add_sudo(id):
-        udB.set("SUDO", "True")
+        udB.set_key("SUDO", "True")
         sudoers().append(id)
         mmm = f"**Added {name} as SUDO User**"
     else:

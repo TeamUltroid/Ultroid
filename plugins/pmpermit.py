@@ -396,10 +396,10 @@ if sett == "True":
     async def _(e):
         x = e.pattern_match.group(1)
         if x == "start":
-            udB.set("MOVE_ARCHIVE", "True")
+            udB.set_key("MOVE_ARCHIVE", "True")
             await eor(e, "Now I will move new Unapproved DM's to archive", time=5)
         elif x == "stop":
-            udB.set("MOVE_ARCHIVE", "False")
+            udB.set_key("MOVE_ARCHIVE", "False")
             await eor(e, "Now I won't move new Unapproved DM's to archive", time=5)
         elif x == "clear":
             try:

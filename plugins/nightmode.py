@@ -46,7 +46,7 @@ async def set_time(e):
         if len(ok) != 4:
             return await eor(e, get_string("nightm_1"))
         tm = [int(x) for x in ok]
-        udB.set("NIGHT_TIME", str(tm))
+        udB.set_key("NIGHT_TIME", str(tm))
         await eor(e, get_string("nightm_2"))
     except BaseException:
         await eor(e, get_string("nightm_1"))

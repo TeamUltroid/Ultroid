@@ -231,7 +231,7 @@ async def _(e):
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
-        udB.set("GDRIVE_FOLDER_ID", repl.text)
+        udB.set_key("GDRIVE_FOLDER_ID", repl.text)
         await repl.reply(
             "Success Now You Can Authorise.",
             buttons=get_back_button("gdrive"),
@@ -306,7 +306,7 @@ async def rhwhe(e):
         udB.delete("DUAL_MODE")
         key = "Off"
     else:
-        udB.set("DUAL_MODE", "True")
+        udB.set_key("DUAL_MODE", "True")
         key = "On"
     Msg = "Dual Mode : " + key
     await e.edit(Msg, buttons=get_back_button("otvars"))
@@ -550,7 +550,7 @@ async def eddon(event):
 
 @callback("edof", owner=True)
 async def eddof(event):
-    udB.set("ADDONS", "False")
+    udB.set_key("ADDONS", "False")
     await event.edit(
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart",
         buttons=get_back_button("eaddon"),
@@ -859,7 +859,7 @@ async def name(event):
 @callback(re.compile(b"wrns_(.*)"), owner=True)
 async def set_wrns(event):
     value = int(event.data_match.group(1).decode("UTF-8"))
-    dn = udB.set("PMWARNS", value)
+    dn = udB.set_key("PMWARNS", value)
     if dn:
         await event.edit(
             f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
@@ -1075,7 +1075,7 @@ async def hhh(e):
             return await conv.send_message(
                 "Terminated!", buttons=get_back_button("chatbot")
             )
-        udB.set("STARTMEDIA", msg.file.id)
+        udB.set_key("STARTMEDIA", msg.file.id)
         await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 
@@ -1107,7 +1107,7 @@ async def hhh(e):
             return await conv.send_message(
                 "Terminated!", buttons=get_back_button("chatbot")
             )
-        udB.set("BOT_INFO_START", msg.text)
+        udB.set_key("BOT_INFO_START", msg.text)
         await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 
@@ -1144,7 +1144,7 @@ async def heheh(event):
                 err += f"**{chat}** : {er}\n"
         if err:
             return await conv.send_message(err)
-        udB.set("PMBOT_FSUB", str(Ll))
+        udB.set_key("PMBOT_FSUB", str(Ll))
         await conv.send_message(
             "Done!\nRestart Your Bot.", buttons=get_back_button("chatbot")
         )
