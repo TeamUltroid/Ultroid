@@ -221,6 +221,7 @@ clan_1: "Added Clean Action Setting For this Chat"
 clan_2: "Removed Clean Action Setting For this Chat"
 clan_3: "`Invalid ID`"
 clan_4: "`No Chat Added`"
+clan_5: "Clean Actions are already enabled in this Chat."
 
 # converter
 cvt_1: "`Reply to any media/Document.`"
