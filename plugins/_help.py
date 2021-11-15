@@ -80,7 +80,7 @@ async def _help(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            if udB.get("MANAGER") and udB.get("DUAL_HNDLR") == "/":
+            if udB.get_key("MANAGER") and udB.get_key("DUAL_HNDLR") == "/":
                 _main_help_menu[2:3] = [[Button.inline("• Manager Help •", "mngbtn")]]
             return await ult.reply(
                 get_string("inline_4").format(

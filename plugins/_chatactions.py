@@ -42,7 +42,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             await ult.respond(file=sticker)
     # force subscribe
     if (
-        udB.get("FORCESUB")
+        udB.get_key("FORCESUB")
         and ((ult.user_joined or ult.user_added))
         and get_forcesetting(ult.chat_id)
     ):
@@ -178,7 +178,7 @@ async def uname_change(e):
 
 
 async def uname_stuff(id, uname, name):
-    if udB.get("USERNAME_LOG") == "True":
+    if udB.get_key("USERNAME_LOG") == "True":
         old_ = udB.get_key("USERNAME_DB") or {}
         old = old_.get(id)
         # Ignore Name Logs

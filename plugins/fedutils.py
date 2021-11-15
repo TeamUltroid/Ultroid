@@ -56,8 +56,8 @@ async def _(event):
     if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
-    if udB.get("FBAN_GROUP_ID"):
-        chat = int(udB.get("FBAN_GROUP_ID"))
+    if udB.get_key("FBAN_GROUP_ID"):
+        chat = int(udB.get_key("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
     fedList = []
@@ -123,13 +123,13 @@ async def _(event):
     except BaseException:
         return await msg.edit(get_string("sf_11"))
     await asyncio.sleep(3)
-    if udB.get("EXCLUDE_FED"):
-        excludeFed = udB.get("EXCLUDE_FED").split(" ")
+    if udB.get_key("EXCLUDE_FED"):
+        excludeFed = udB.get_key("EXCLUDE_FED").split(" ")
         for num, item in enumerate(excludeFed):
             excludeFed[num] = item.strip()
     exCount = 0
     for fed in fedList:
-        if udB.get("EXCLUDE_FED") and fed in excludeFed:
+        if udB.get_key("EXCLUDE_FED") and fed in excludeFed:
             await ultroid_bot.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
@@ -191,8 +191,8 @@ async def _(event):
                 REASON = " #TBMassUnBanned "
             except BaseException:
                 return await msg.edit(get_string("sf_2"))
-    if udB.get("FBAN_GROUP_ID"):
-        chat = int(udB.get("FBAN_GROUP_ID"))
+    if udB.get_key("FBAN_GROUP_ID"):
+        chat = int(udB.get_key("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
     if not fedList:
@@ -257,13 +257,13 @@ async def _(event):
     except BaseException:
         return await msg.edit(get_string("sf_11"))
     await asyncio.sleep(3)
-    if udB.get("EXCLUDE_FED"):
-        excludeFed = udB.get("EXCLUDE_FED").split(" ")
+    if udB.get_key("EXCLUDE_FED"):
+        excludeFed = udB.get_key("EXCLUDE_FED").split(" ")
         for n, m in enumerate(excludeFed):
             excludeFed[n] = excludeFed[n].strip()
     exCount = 0
     for fed in fedList:
-        if udB.get("EXCLUDE_FED") and fed in excludeFed:
+        if udB.get_key("EXCLUDE_FED") and fed in excludeFed:
             await event.client.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue

@@ -32,10 +32,10 @@ async def all_messages_catcher(e):
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
         return
-    if not udB.get("TAG_LOG"):
+    if not udB.get_key("TAG_LOG"):
         return
     try:
-        NEEDTOLOG = int(udB.get("TAG_LOG"))
+        NEEDTOLOG = int(udB.get_key("TAG_LOG"))
     except Exception:
         return LOGS.info(get_string("userlogs_1"))
     y = e.chat
@@ -73,7 +73,7 @@ async def all_messages_catcher(e):
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
             await asst.send_message(
-                int(udB.get("LOG_CHANNEL")), get_string("userlogs_1")
+                int(udB.get_key("LOG_CHANNEL")), get_string("userlogs_1")
             )
             CACHE_SPAM.update({NEEDTOLOG: True})
     except ChatWriteForbiddenError:
@@ -91,7 +91,7 @@ async def all_messages_catcher(e):
         LOGS.info(str(er))
 
 
-if udB.get("TAG_LOG") and not udB.get("OFF_REPLY2REPLY"):
+if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(

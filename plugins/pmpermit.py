@@ -162,10 +162,10 @@ async def permitpm(event):
     if user.bot or user.is_self or user.verified or is_logger(user.id):
         return
     if Redis("PMLOG") == "True":
-        pl = udB.get("PMLOGGROUP")
+        pl = udB.get_key("PMLOGGROUP")
         if pl:
             return await event.forward_to(int(pl))
-        await event.forward_to(int(udB.get("LOG_CHANNEL")))
+        await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
 
 
 if sett == "True":
@@ -196,13 +196,13 @@ if sett == "True":
         name = get_display_name(e.chat)
         try:
             await asst.edit_message(
-                int(udB.get("LOG_CHANNEL")),
+                int(udB.get_key("LOG_CHANNEL")),
                 _not_approved[miss.id],
                 f"#AutoApproved : **OutGoing Message.**\nUser : **[{miss.first_name}](tg://user?id={miss.id})** [`{miss.id}`]",
             )
         except KeyError:
             await asst.send_message(
-                int(udB.get("LOG_CHANNEL")),
+                int(udB.get_key("LOG_CHANNEL")),
                 f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id}) [`{miss.id}`]",
             )
 
@@ -237,7 +237,7 @@ if sett == "True":
             try:
                 wrn = COUNT_PM[user.id] + 1
                 await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
                     f"Incoming PM from **{mention}** [`{user.id}`] with **{wrn}/{WARNS}** warning!",
                     buttons=[
@@ -247,7 +247,7 @@ if sett == "True":
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"Incoming PM from **{mention}** [`{user.id}`] with **1/{WARNS}** warning!",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
@@ -376,7 +376,7 @@ if sett == "True":
                     del LASTMSG[user.id]
                 except KeyError:
                     await asst.send_message(
-                        int(udB.get("LOG_CHANNEL")),
+                        int(udB.get_key("LOG_CHANNEL")),
                         "PMPermit is messed! Pls restart the bot!!",
                     )
                     return LOGS.info("COUNT_PM is messed.")
@@ -385,7 +385,7 @@ if sett == "True":
                 name = await ultroid_bot.get_entity(user.id)
                 name0 = str(name.first_name)
                 await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
                     f"**[{name0}](tg://user?id={user.id})** [`{user.id}`] was Blocked for spamming.",
                 )
@@ -436,7 +436,7 @@ if sett == "True":
             )
             try:
                 await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
                     f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
                     buttons=[
@@ -446,7 +446,7 @@ if sett == "True":
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
@@ -478,7 +478,7 @@ if sett == "True":
             )
             try:
                 await asst.edit_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
                     f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) [{user.id}] `was disapproved to PM you.`",
                     buttons=[
@@ -488,7 +488,7 @@ if sett == "True":
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) [`{user.id}`] `was disapproved to PM you.`",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
@@ -527,7 +527,7 @@ async def blockpm(block):
         pass
     try:
         await asst.edit_message(
-            int(udB.get("LOG_CHANNEL")),
+            int(udB.get_key("LOG_CHANNEL")),
             _not_approved[user],
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **blocked**.",
             buttons=[
@@ -536,7 +536,7 @@ async def blockpm(block):
         )
     except KeyError:
         _not_approved[user] = await asst.send_message(
-            int(udB.get("LOG_CHANNEL")),
+            int(udB.get_key("LOG_CHANNEL")),
             f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **blocked**.",
             buttons=[
                 Button.inline("UnBlock", data=f"unblock_{user}"),
@@ -581,7 +581,7 @@ async def unblockpm(unblock):
         return await eor(unblock, f"ERROR - {et}", time=5)
     try:
         await asst.edit_message(
-            int(udB.get("LOG_CHANNEL")),
+            int(udB.get_key("LOG_CHANNEL")),
             _not_approved[user],
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **unblocked**.",
             buttons=[
@@ -590,7 +590,7 @@ async def unblockpm(unblock):
         )
     except KeyError:
         _not_approved[user] = await asst.send_message(
-            int(udB.get("LOG_CHANNEL")),
+            int(udB.get_key("LOG_CHANNEL")),
             f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),

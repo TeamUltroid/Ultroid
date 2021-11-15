@@ -238,7 +238,7 @@ async def dele_post(event):
 
 @in_pattern(pattern="instatm", owner=True)
 async def bhoot_ayaa(event):
-    if not udB.get("INSTA_SET"):
+    if not udB.get_key("INSTA_SET"):
         return await event.answer(
             [], switch_pm="Fill Instagram Credentials First.", switch_pm_param="start"
         )

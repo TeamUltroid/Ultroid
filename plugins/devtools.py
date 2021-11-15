@@ -114,7 +114,7 @@ async def _(event):
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
             )
-        warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
+        warning = await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
         await warning.reply(
             f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
         )

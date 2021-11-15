@@ -67,7 +67,7 @@ def html_mention(event, sender_id=None, full_name=None):
 
 
 def VC_AUTHS():
-    _vcsudos = udB["VC_SUDOS"].split() if udB.get("VC_SUDOS") else ""
+    _vcsudos = udB["VC_SUDOS"].split() if udB.get_key("VC_SUDOS") else ""
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
@@ -213,7 +213,7 @@ class Player:
 def vc_asst(dec, **kwargs):
     def ult(func):
         kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
-        handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
+        handler = udB["VC_HNDLR"] if udB.get_key("VC_HNDLR") else HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         kwargs["from_users"] = VC_AUTHS
         vc_auth = kwargs.get("vc_auth", True)

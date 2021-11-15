@@ -73,7 +73,7 @@ async def broadcast_adder(event):
         await event.delete()
         return
     chat_id = event.chat_id
-    if int(chat_id) == int(udB.get("LOG_CHANNEL")):
+    if int(chat_id) == int(udB.get_key("LOG_CHANNEL")):
         return
     if not is_channel_added(chat_id):
         xx = add_channel(chat_id)
@@ -177,7 +177,7 @@ async def forw(event):
         except Exception:
             try:
                 await ultroid_bot.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"Error in sending at {channel}.",
                 )
             except Exception as Em:
@@ -189,7 +189,7 @@ async def forw(event):
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
         await ultroid_bot.send_message(
-            int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
+            int(udB.get_key("LOG_CHANNEL")), f"{error_count} Errors"
         )
 
 
@@ -222,7 +222,7 @@ async def sending(event):
                 except Exception as error:
 
                     await ultroid_bot.send_message(
-                        int(udB.get("LOG_CHANNEL")),
+                        int(udB.get_key("LOG_CHANNEL")),
                         f"Error in sending at {channel}.\n\n{error}",
                     )
                     error_count += 1
@@ -232,6 +232,6 @@ async def sending(event):
             await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 await ultroid_bot.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"{error_count} Errors",
                 )

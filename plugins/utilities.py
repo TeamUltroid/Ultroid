@@ -386,7 +386,7 @@ async def _(ult):
     pattern=r"rmbg$",
 )
 async def rmbg(event):
-    RMBG_API = udB.get("RMBG_API")
+    RMBG_API = udB.get_key("RMBG_API")
     if not RMBG_API:
         return await eor(
             event,

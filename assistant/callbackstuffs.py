@@ -302,7 +302,7 @@ async def euwhe(event):
 
 @callback("dmof", owner=True)
 async def rhwhe(e):
-    if udB.get("DUAL_MODE"):
+    if udB.get_key("DUAL_MODE"):
         udB.delete("DUAL_MODE")
         key = "Off"
     else:
@@ -318,7 +318,7 @@ async def hndlrr(event):
     pru = event.sender_id
     var = "DUAL_HNDLR"
     name = "Dual Handler"
-    CH = udB.get(var) or "/"
+    CH = udB.get_key(var) or "/"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
             f"Send The Symbol Which u want as Handler/Trigger to use your Assistant bot\nUr Current Handler is [ `{CH}` ]\n\n use /cancel to cancel.",
@@ -482,7 +482,7 @@ async def hndlrr(event):
 
 @callback("taglog", owner=True)
 async def tagloggrr(e):
-    if not udB.get("TAG_LOG"):
+    if not udB.get_key("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
     else:
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
@@ -525,7 +525,7 @@ async def taglogerr(event):
 
 @callback("eaddon", owner=True)
 async def pmset(event):
-    if not udB.get("ADDONS"):
+    if not udB.get_key("ADDONS"):
         BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
     else:
         BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")]
@@ -559,7 +559,7 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if udB.get("SUDO") == "False":
+    if udB.get_key("SUDO") == "False":
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
     else:
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
@@ -969,7 +969,7 @@ async def apof(event):
 
 @callback("pml", owner=True)
 async def alvcs(event):
-    if not udB.get("PMLOG"):
+    if not udB.get_key("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
     else:
         BT = [Button.inline("PMLOGGER OFF", data="pmlogof")]

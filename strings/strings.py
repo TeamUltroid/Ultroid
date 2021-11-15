@@ -5,7 +5,7 @@ from google_trans_new import google_translator
 from pyUltroid import udB
 from yaml import safe_load
 
-language = [udB.get("language") or "en"]
+language = [udB.get_key("language") or "en"]
 languages = {}
 
 Trs = google_translator()

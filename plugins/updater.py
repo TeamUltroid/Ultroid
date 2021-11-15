@@ -50,7 +50,7 @@ async def _(e):
             os.execl(sys.executable, "python3", "-m", "pyUltroid")
             return
         x = await asst.send_file(
-            int(udB.get("LOG_CHANNEL")),
+            int(udB.get_key("LOG_CHANNEL")),
             ULTPIC,
             caption="• **Update Available** •",
             force_document=False,
@@ -74,7 +74,7 @@ async def _(e):
 async def updava(event):
     await event.delete()
     await asst.send_file(
-        int(udB.get("LOG_CHANNEL")),
+        int(udB.get_key("LOG_CHANNEL")),
         ULTPIC,
         caption="• **Update Available** •",
         force_document=False,

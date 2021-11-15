@@ -30,8 +30,8 @@ Redis = udB.get
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.uid
 
-LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
+LOG_CHANNEL = int(udB.get_key("LOG_CHANNEL"))
+INLINE_PIC = udB.get_key("INLINE_PIC") or choice(ULTROID_IMAGES)
 if INLINE_PIC == "False":
     INLINE_PIC = None
 Telegraph = telegraph_client()

@@ -37,7 +37,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="listclean$")
 async def _(e):
-    k = udB.get("CLEANCHAT")
+    k = udB.get_key("CLEANCHAT")
     if k:
         k = k.split(" ")
         o = ""

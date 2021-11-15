@@ -88,7 +88,7 @@ async def _(e):
     except no_admin:
         return await eor(xx, get_string("chats_2"), time=10)
     await e.client.send_message(
-        int(udB.get("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
+        int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
 
