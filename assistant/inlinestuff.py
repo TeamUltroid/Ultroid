@@ -587,7 +587,7 @@ async def twitter_search(event):
             url = user["profile_banner_url"]
             text = f"[\xad]({url})• **Name :** `{user['name']}`\n"
         else:
-            text =f"• **Name :** `{user['name']}`\n"
+            text = f"• **Name :** `{user['name']}`\n"
         text += f"• **Description :** `{user['description']}`\n"
         text += f"• **Username :** `@{user['screen_name']}`\n"
         text += f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
@@ -599,7 +599,7 @@ async def twitter_search(event):
                 description=user["description"],
                 url=pro_,
                 text=text,
-                thumb=thumb
+                thumb=thumb,
             )
         )
     if not reso:
