@@ -101,7 +101,7 @@ async def _(ult):
         key = udB.get_key("SUDOS")
         key.remove(id)
         udB.set_key("SUDOS", key)
-        mmm = f"**Removed {name} from SUDO User(s)**")
+        mmm = f"**Removed {name} from SUDO User(s)**"
     await eor(ult, mmm, time=5)
 
 
