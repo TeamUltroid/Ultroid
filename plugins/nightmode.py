@@ -119,7 +119,7 @@ async def close_grp():
     chats = night_grps()
     h1, m1, h2, m2 = 0, 0, 7, 0
     if udB.get_key("NIGHT_TIME"):
-        h1, m1, h2, m2 = eval(udB["NIGHT_TIME"])
+        h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
     for chat in chats:
         try:
             await ultroid_bot(
@@ -142,7 +142,7 @@ if night_grps():
     try:
         h1, m1, h2, m2 = 0, 0, 7, 0
         if udB.get_key("NIGHT_TIME"):
-            h1, m1, h2, m2 = eval(udB["NIGHT_TIME"])
+            h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
         sch = AsyncIOScheduler()
         sch.add_job(close_grp, trigger="cron", hour=h1, minute=m1)
         sch.add_job(open_grp, trigger="cron", hour=h2, minute=m2)
