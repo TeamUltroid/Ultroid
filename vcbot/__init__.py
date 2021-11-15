@@ -52,7 +52,7 @@ from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 from strings import get_string
 
 asstUserName = asst.me.username
-LOG_CHANNEL = int(udB["LOG_CHANNEL"])
+LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 ACTIVE_CALLS, VC_QUEUE = [], {}
 MSGID_CACHE, VIDEO_ON = {}, {}
 CLIENTS = {}
@@ -67,7 +67,7 @@ def html_mention(event, sender_id=None, full_name=None):
 
 
 def VC_AUTHS():
-    _vcsudos = udB["VC_SUDOS"].split() if udB.get_key("VC_SUDOS") else ""
+    _vcsudos = udB.get_key("VC_SUDOS").split() if udB.get_key("VC_SUDOS") else ""
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
