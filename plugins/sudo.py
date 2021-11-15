@@ -22,7 +22,6 @@ from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
 from . import (
-    Redis,
     eor,
     get_string,
     get_user_id,
