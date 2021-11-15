@@ -582,25 +582,24 @@ async def twitter_search(event):
     )
     reso = []
     for user in res:
-        thumb = None
+        thumb = wb(user["profile_image_url_https"], 0, "image/jpeg", [])
         if user.get("profile_banner_url"):
-            thumb = wb(user["profile_banner_url"], 0, "image/jpeg", [])
-        text = f"• **Name :** `{user['name']}`\n"
+            url = user["profile_banner_url"]
+            text = f"[\xad]({url})• **Name :** `{user['name']}`\n"
+        else:
+            text =f"• **Name :** `{user['name']}`\n"
         text += f"• **Description :** `{user['description']}`\n"
         text += f"• **Username :** `@{user['screen_name']}`\n"
         text += f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
         pro_ = "https://twitter.com/" + user["screen_name"]
+        text += f"• **Link :** [Click Here]({pro_})"
         reso.append(
             await event.builder.article(
                 title=user["name"],
-                type="photo",
                 description=user["description"],
                 url=pro_,
                 text=text,
-                include_media=bool(thumb),
-                thumb=thumb,
-                content=thumb,
-                buttons=Button.url("• View •", url=pro_),
+                thumb=thumb
             )
         )
     if not reso:
