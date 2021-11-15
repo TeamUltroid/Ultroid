@@ -593,11 +593,13 @@ async def twitter_search(event):
         reso.append(
             await event.builder.article(
                 title=user["name"],
+                type="photo",
                 description=user["description"],
                 url=pro_,
                 text=text,
                 include_media=bool(thumb),
                 thumb=thumb,
+                content=thumb,
                 buttons=Button.url("• View •", url=pro_),
             )
         )
