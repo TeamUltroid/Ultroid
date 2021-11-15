@@ -124,7 +124,7 @@ async def dd(event):
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_SOURCE")
+        udB.del_key("CH_SOURCE")
         await x.edit(get_string("cha_4"))
         return
     try:
@@ -202,7 +202,7 @@ async def dd(event):
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_DESTINATION")
+        udB.del_key("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
     try:

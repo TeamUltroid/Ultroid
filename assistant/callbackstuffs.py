@@ -303,7 +303,7 @@ async def euwhe(event):
 @callback("dmof", owner=True)
 async def rhwhe(e):
     if udB.get_key("DUAL_MODE"):
-        udB.delete("DUAL_MODE")
+        udB.del_key("DUAL_MODE")
         key = "Off"
     else:
         udB.set_key("DUAL_MODE", "True")
@@ -494,7 +494,7 @@ async def tagloggrr(e):
 
 @callback("deltag", owner=True)
 async def _(e):
-    udB.delete("TAG_LOG")
+    udB.del_key("TAG_LOG")
     await e.answer("Done!!! Tag Logger has been turned Off")
 
 
@@ -745,7 +745,7 @@ async def media(event):
 @callback("delmed", owner=True)
 async def dell(event):
     try:
-        udB.delete("ALIVE_PIC")
+        udB.del_key("ALIVE_PIC")
         return await event.edit(
             get_string("clst_5"), buttons=get_back_button("alvcstm")
         )
@@ -921,7 +921,7 @@ async def media(event):
 @callback("delpmmed", owner=True)
 async def dell(event):
     try:
-        udB.delete("PMPIC")
+        udB.del_key("PMPIC")
         return await event.edit(get_string("clst_5"), buttons=get_back_button("pmcstm"))
     except BaseException:
         return await event.edit(
@@ -955,7 +955,7 @@ async def apon(event):
 @callback("apof", owner=True)
 async def apof(event):
     try:
-        udB.delete("AUTOAPPROVE")
+        udB.del_key("AUTOAPPROVE")
         return await event.edit(
             "Done! AUTOAPPROVE Stopped!!",
             buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
@@ -1021,7 +1021,7 @@ async def pmlog(event):
 @callback("pmlogof", owner=True)
 async def pmlogof(event):
     try:
-        udB.delete("PMLOG")
+        udB.del_key("PMLOG")
         return await event.edit(
             "Done! PMLOGGER Stopped!!",
             buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
@@ -1129,7 +1129,7 @@ async def heheh(event):
         if not msg.text or msg.text.startswith("/"):
             timyork = "Cancelled!"
             if msg.text == "/clear":
-                udB.delete("PMBOT_FSUB")
+                udB.del_key("PMBOT_FSUB")
                 timyork = "Done! Force Subscribe Stopped\nRestart your Bot!"
             return await conv.send_message(
                 "Cancelled!", buttons=get_back_button("chatbot")

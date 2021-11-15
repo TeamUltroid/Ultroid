@@ -98,7 +98,7 @@ async def broadcast_remover(event):
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("BROADCAST")
+        udB.del_key("BROADCAST")
         await x.edit("Database cleared.")
         return
     if is_channel_added(chat_id):
