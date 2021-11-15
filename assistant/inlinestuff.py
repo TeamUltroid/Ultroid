@@ -29,16 +29,11 @@ ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
-api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
-    "ascii"
-)
-api2 = base64.b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn").decode(
-    "ascii"
-)
-api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").decode(
-    "ascii"
-)
-
+apis = [
+        "QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV",
+        "QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn", 
+        "QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR",
+       ]
 
 @in_pattern("ofox", owner=True)
 async def _(e):
@@ -215,7 +210,7 @@ async def _(e):
         )
     page = 1
     start = (page - 1) * 3 + 1
-    da = choice([api1, api2, api3])
+    da = base64.b64decode(choice(apis)).decode("ascii")
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = await async_searcher(url, re_json=True)
     search_items = data.get("items")
