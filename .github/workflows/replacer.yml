@@ -10,8 +10,8 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "udB.get("
-          replace: "udB.get_key("
+          find: "udB.set("
+          replace: "udB.set_key("
           regex: false
           exclude: .github/**
       - uses: stefanzweifel/git-auto-commit-action@v4
