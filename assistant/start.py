@@ -85,7 +85,7 @@ async def ultroid(event):
             if event.sender.username:
                 buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
             await event.client.send_message(
-                int(udB["LOG_CHANNEL"]), msg, buttons=buttons
+                udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
             )
     if not is_fullsudo(event.sender_id):
         ok = ""
