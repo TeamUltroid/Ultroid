@@ -15,3 +15,4 @@ jobs:
         with:
           branch: dev
           title: "Jaamdu"
+          token: {{ secrets.GH_TOKEN }}
