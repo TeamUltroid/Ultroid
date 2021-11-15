@@ -131,10 +131,10 @@ async def delete_pm_warn_msgs(chat: int):
 async def _(e):
     if not e.is_private:
         return await eor(e, "`Use me in Private.`", time=3)
-    if not is_logger(str(e.chat_id)):
+    if not is_logger(e.chat_id):
         return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
-    nolog_user(str(e.chat_id))
+    nolog_user(e.chat_id)
     return await eor(e, "`Now I Will log msgs from here.`", time=3)
 
 
@@ -144,10 +144,10 @@ async def _(e):
 async def _(e):
     if not e.is_private:
         return await eor(e, "`Use me in Private.`", time=3)
-    if is_logger(str(e.chat_id)):
+    if is_logger(e.chat_id):
         return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
-    log_user(str(e.chat_id))
+    log_user(e.chat_id)
     return await eor(e, "`Now I Won't log msgs from here.`", time=3)
 
 
