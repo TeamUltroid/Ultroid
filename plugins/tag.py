@@ -35,7 +35,7 @@ from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 
-from . import ultroid_cmd, inline_mention, eor
+from . import eor, inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(

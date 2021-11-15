@@ -95,7 +95,9 @@ if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(
-            outgoing=True, chats=[int(udB.get_key("TAG_LOG"))], func=lambda e: e.reply_to
+            outgoing=True,
+            chats=[int(udB.get_key("TAG_LOG"))],
+            func=lambda e: e.reply_to,
         )
     )
     async def idk(e):
