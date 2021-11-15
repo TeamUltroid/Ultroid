@@ -9,9 +9,8 @@ from datetime import datetime
 
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
-from pyUltroid.dB.sudos import is_fullsudo
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.misc import owner_and_sudos, SUDO_M
+from pyUltroid.misc import SUDO_M, owner_and_sudos
 from telethon import Button, events
 from telethon.utils import get_display_name
 
@@ -87,7 +86,7 @@ async def ultroid(event):
             await event.client.send_message(
                 udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
             )
-    if not event.sender_id in SUDO_M.fullsudos:
+    if event.sender_id not in SUDO_M.fullsudos:
         ok = ""
         u = await event.client.get_entity(event.chat_id)
         if not udB.get_key("STARTMSG"):
