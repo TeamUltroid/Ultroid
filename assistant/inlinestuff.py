@@ -598,7 +598,7 @@ async def twitter_search(event):
                 text=text,
                 include_media=bool(thumb),
                 thumb=thumb,
-                buttons=Button.url("• View •", url=pro_)
+                buttons=Button.url("• View •", url=pro_),
             )
         )
     if not reso:
