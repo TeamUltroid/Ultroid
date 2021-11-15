@@ -67,7 +67,7 @@ async def checknsfw(e):
                 files={
                     "image": open(pic, "rb"),
                 },
-                headers={"api-key": udB["DEEP_API"]},
+                headers={"api-key": udB.get_key("DEEP_API")},
             )
             k = float((r.json()["output"]["nsfw_score"]))
             score = int(k * 100)
