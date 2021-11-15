@@ -95,7 +95,7 @@ if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(
-            outgoing=True, chats=[int(udB["TAG_LOG"])], func=lambda e: e.reply_to
+            outgoing=True, chats=[int(udB.get_key("TAG_LOG"))], func=lambda e: e.reply_to
         )
     )
     async def idk(e):
@@ -141,7 +141,7 @@ async def when(event):
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
     else:
         text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
-    await asst.send_message(int(udB["LOG_CHANNEL"]), text, buttons=buttons)
+    await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
 
 
 _client = {"bot": asst, "user": ultroid_bot}
