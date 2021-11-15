@@ -13,7 +13,7 @@ jobs:
           find: "udB.get("
           replace: "udB.get_key("
           regex: false
-          exclude: .github/
+          exclude: .github/**
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Replacer'
