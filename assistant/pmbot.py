@@ -29,7 +29,11 @@ CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
-@asst_cmd(load=AST_PLUGINS, incoming=True, func=lambda e: e.is_private and not is_blacklisted(e.sender_id))
+@asst_cmd(
+    load=AST_PLUGINS,
+    incoming=True,
+    func=lambda e: e.is_private and not is_blacklisted(e.sender_id),
+)
 async def on_new_mssg(event):
     who = event.sender_id
     # doesn't reply to that user anymore
