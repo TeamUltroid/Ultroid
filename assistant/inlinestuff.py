@@ -17,6 +17,7 @@ from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
 from . import *
+from . import _ult_cache
 
 SUP_BUTTONS = [
     [
