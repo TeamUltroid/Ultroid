@@ -213,7 +213,7 @@ class Player:
 def vc_asst(dec, **kwargs):
     def ult(func):
         kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
-        handler = udB["VC_HNDLR"] if udB.get_key("VC_HNDLR") else HNDLR
+        handler = udB.get_key("VC_HNDLR") or HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         kwargs["from_users"] = VC_AUTHS
         vc_auth = kwargs.get("vc_auth", True)
