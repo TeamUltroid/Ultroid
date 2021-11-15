@@ -580,12 +580,12 @@ async def twitter_search(event):
        text +=f"• **Link :** [Click Here](https://twitter.com/{user['screen_name']})"
        reso.append(await event.builder.article(title=user["name"], description=user["description"],
            url= "https://twitter.com/" + user["screen_name"], text=text, thumb=thumb, link_preview=True))
-    if not reso:
-        swi_ = "No User Found :("
-    else:
-        swi_ = f"🐦 Showing {len(reso)} Results!"
-    await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
-    if _ult_cache.get("twitter"):
-        _ult_cache["twitter"].update({match:reso})
-    else:
-        _ult_cache.update({"twitter":{match:reso}})
+   if not reso:
+       swi_ = "No User Found :("
+   else:
+       swi_ = f"🐦 Showing {len(reso)} Results!"
+   await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
+   if _ult_cache.get("twitter"):
+       _ult_cache["twitter"].update({match:reso})
+   else:
+       _ult_cache.update({"twitter":{match:reso}})
