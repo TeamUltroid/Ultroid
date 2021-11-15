@@ -8,13 +8,18 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "udB.get("
+          find: "udB.get\("
           replace: "udB.get_key("
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: dev
+          title: "Jaamdu"
+"""      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Replacer'
           commit_options: '--no-verify'
           repository: .
           commit_user_name: buddhhu
           commit_user_email: 48654350+buddhhu@users.noreply.github.com
-          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>
+          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>"""
