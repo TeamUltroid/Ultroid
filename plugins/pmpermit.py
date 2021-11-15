@@ -63,7 +63,7 @@ COUNT_PM = {}
 LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
-PMPIC = Redis("PMPIC") or None
+PMPIC = Redis("PMPIC")
 UND = get_string("pmperm_1")
 
 if not Redis("PM_TEXT"):
@@ -99,7 +99,7 @@ PMCMDS = [
 _not_approved = {}
 _to_delete = {}
 
-sett = Redis("PMSETTING") or "False"
+sett = Redis("PMSETTING")
 
 my_bot = asst.me.username
 
@@ -161,14 +161,14 @@ async def permitpm(event):
     user = await event.get_sender()
     if user.bot or user.is_self or user.verified or is_logger(user.id):
         return
-    if Redis("PMLOG") == "True":
+    if Redis("PMLOG"):
         pl = udB.get_key("PMLOGGROUP")
         if pl:
             return await event.forward_to(int(pl))
         await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
 
 
-if sett == "True":
+if sett:
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -222,7 +222,7 @@ if sett == "True":
         if user.id in DEVLIST:
             return
         if not is_approved(user.id) and event.text != UND:
-            if Redis("MOVE_ARCHIVE") == "True":
+            if Redis("MOVE_ARCHIVE"):
                 try:
                     await ultroid_bot.edit_folder(user.id, folder=1)
                 except BaseException as er:
