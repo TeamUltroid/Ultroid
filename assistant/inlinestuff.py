@@ -578,8 +578,12 @@ async def twitter_search(event):
        text+=f"• **Description :** `{user['description']}`\n"
        text +=f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
        text +=f"• **Link :** [Click Here](https://twitter.com/{user['screen_name']})"
-       reso.append(await event.builder.article(title=user["name"], description=user["description"],
-           url= "https://twitter.com/" + user["screen_name"], text=text, thumb=thumb, link_preview=True))
+       reso.append(await event.builder.article(
+                       title=user["name"], description=user["description"],
+                       url= "https://twitter.com/" + user["screen_name"],
+                       text=text, thumb=thumb,
+                       link_preview=True)
+       )
    if not reso:
        swi_ = "No User Found :("
    else:
