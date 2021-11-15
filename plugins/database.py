@@ -32,7 +32,7 @@ async def _(ult):
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
         data = ult.pattern_match.group(1).split(delim, maxsplit=1)
-        udB.set(data[0], data[1])
+        udB.set_key(data[0], data[1])
         redisdata = Redis(data[0])
         await eor(
             ult,
@@ -49,7 +49,7 @@ async def _(ult):
 async def _(ult):
     try:
         key = ult.pattern_match.group(1)
-        k = udB.delete(key)
+        k = udB.del_key(key)
         if k == 0:
             return await eor(ult, "`No Such Key.`")
         await eor(ult, f"`Successfully deleted key {key}`")
