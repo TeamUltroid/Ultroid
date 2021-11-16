@@ -40,15 +40,14 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate&template=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate)
 
 ## Deploy Locally
-- [UltroidCli](https://github.com/BLUE-DEVIL1134/UltroidCli)
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
-- [Latest Method](#local-deploy---latest-method)
+- [Latest UltroidCli](#local-deploy---latest-method)
 
 
 ### Local Deploy - Latest Method
 This is the latest and most fastest method currently.<br>
-First, go to [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
+First, go to [UltroidCli](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
 Then, do as it's given in the `README.md` to add the executable to your system path.
 
 Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information.
