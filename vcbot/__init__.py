@@ -38,7 +38,6 @@ from pyUltroid.functions.admins import admin_check
 from pyUltroid.functions.tools import is_url_ok
 from pyUltroid.functions.ytdl import get_videos_link
 from pyUltroid.functions.info import get_user_id
-from pyUltroid.dB.vc_group import check_vcauth, get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import in_pattern
 from pyUltroid.misc._wrappers import eod, eor
@@ -217,20 +216,20 @@ def vc_asst(dec, **kwargs):
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         kwargs["from_users"] = VC_AUTHS
         vc_auth = kwargs.get("vc_auth", True)
-
+        key = udB.get_key("VC_AUTH_GROUPS") or {}
         if "vc_auth" in kwargs:
             del kwargs["vc_auth"]
 
         async def vc_handler(e):
-            VCAUTH = list(get_vc().keys())
+            VCAUTH = list(key.keys())
             if not (
                 (e.out)
                 or (e.sender_id in VC_AUTHS())
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
-            elif vc_auth:
-                cha, adm = check_vcauth(e.chat_id)
+            elif vc_auth and key.get(e.chat_id):
+                cha, adm = key.get(e.chat_id), key[e.chat_id]["admins"]
                 if adm and not (await admin_check(e)):
                     return
             try:
