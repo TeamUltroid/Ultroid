@@ -11,7 +11,7 @@ import time
 from random import choice
 
 from pyUltroid import *
-from pyUltroid.dB import ULTROID_IMAGES, DEVLIST
+from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
