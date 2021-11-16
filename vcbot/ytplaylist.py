@@ -37,7 +37,7 @@ async def live_stream(e):
     if not is_url_ok(song):
         return await eor(xx, '`Only Youtube Playlist please.`')
     await xx.edit(get_string('vcbot_7'))
-    file, thumb, title, link, duration = await dl_playlist(chat, html_mention(e), song)
+    file, thumb, title, link, duration = await dl_playlist(chat, inline_mention(e), song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
@@ -53,7 +53,7 @@ async def live_stream(e):
         await xx.delete()
         await ultSongs.group_call.start_audio(file)
     else:
-        from_user = html_mention(e)
+        from_user = inline_mention(e)
         add_to_queue(chat, file, title, link, thumb, from_user, duration)
         return await eor(
             xx,
