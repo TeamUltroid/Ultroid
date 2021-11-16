@@ -20,7 +20,8 @@ import os
 from htmlwebshot import WebShot
 from PIL import Image, ImageDraw, ImageFont
 
-from . import eod, eor, get_string, text_set, ultroid_cmd, async_searcher
+from . import async_searcher, eod, eor, get_string, text_set, ultroid_cmd
+
 
 @ultroid_cmd(pattern="gethtml ?(.*)")
 async def ghtml(e):
@@ -30,8 +31,8 @@ async def ghtml(e):
     else:
         return await eod(e, "`Either reply to any file or give any text`")
     k = await async_searcher(link)
-    with open ("file.html", "w+") as f:
-       f.write(k)
+    with open("file.html", "w+") as f:
+        f.write(k)
     await e.reply(file="file.html")
 
 
