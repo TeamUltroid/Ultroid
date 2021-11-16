@@ -9,7 +9,6 @@ import asyncio
 
 from pyUltroid.dB import stickers
 from pyUltroid.dB.chatBot_db import chatbot_stats
-from pyUltroid.dB.clean_db import is_clean_added
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
@@ -27,7 +26,8 @@ from ._inline import something
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions
-    if is_clean_added(ult.chat_id):
+    key = udB.get_key("CLEANCHAT") or {}
+    if key.get(ult.chat_id):
         try:
             await ult.delete()
         except BaseException:
