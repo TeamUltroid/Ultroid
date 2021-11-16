@@ -63,30 +63,23 @@ COUNT_PM = {}
 LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
-PMPIC = Redis("PMPIC")
+PMPIC = udB.get_key("PMPIC")
+LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 UND = get_string("pmperm_1")
+UNS = get_string("pmperm_2")
+NO_REPLY = get_string("pmperm_3")
 
-if not Redis("PM_TEXT"):
-    UNAPPROVED_MSG = (
+UNAPPROVED_MSG = (
         "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
-    )
-else:
+)
+if udB.get_key("PM_TEXT"):
     UNAPPROVED_MSG = (
         "**PMSecurity of {ON}!**\n\n"
-        + Redis("PM_TEXT")
+        + udB.get_key("PM_TEXT")
         + "\n\nYou have {warn}/{twarn} warnings!"
     )
-
-UNS = get_string("pmperm_2")
 # 1
-if Redis("PMWARNS"):
-    try:
-        WARNS = int(Redis("PMWARNS"))
-    except BaseException:
-        WARNS = 4
-else:
-    WARNS = 4
-NO_REPLY = get_string("pmperm_3")
+WARNS = udB.get_key("PMWARNS") or 4
 PMCMDS = [
     f"{HNDLR}a",
     f"{HNDLR}approve",
@@ -98,8 +91,6 @@ PMCMDS = [
 
 _not_approved = {}
 _to_delete = {}
-
-sett = Redis("PMSETTING")
 
 my_bot = asst.me.username
 
@@ -125,86 +116,77 @@ async def delete_pm_warn_msgs(chat: int):
 # =================================================================
 
 
-@ultroid_cmd(
-    pattern="logpm$",
-)
-async def _(e):
-    if not e.is_private:
-        return await eor(e, "`Use me in Private.`", time=3)
-    if not is_logger(e.chat_id):
-        return await eor(e, "`Wasn't logging msgs from here.`", time=3)
+if udB.get_key("PMLOG"):
+    @ultroid_cmd(
+        pattern="logpm$",
+    )
+    async def _(e):
+        if not e.is_private:
+            return await eor(e, "`Use me in Private.`", time=3)
+        if not is_logger(e.chat_id):
+            return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
-    nolog_user(e.chat_id)
-    return await eor(e, "`Now I Will log msgs from here.`", time=3)
-
-
-@ultroid_cmd(
-    pattern="nologpm$",
-)
-async def _(e):
-    if not e.is_private:
-        return await eor(e, "`Use me in Private.`", time=3)
-    if is_logger(e.chat_id):
-        return await eor(e, "`Wasn't logging msgs from here.`", time=3)
-
-    log_user(e.chat_id)
-    return await eor(e, "`Now I Won't log msgs from here.`", time=3)
+        nolog_user(e.chat_id)
+        return await eor(e, "`Now I Will log msgs from here.`", time=3)
 
 
-@ultroid_bot.on(
-    events.NewMessage(
-        incoming=True,
-        func=lambda e: e.is_private,
-    ),
-)
-async def permitpm(event):
-    user = await event.get_sender()
-    if user.bot or user.is_self or user.verified or is_logger(user.id):
-        return
-    if Redis("PMLOG"):
-        pl = udB.get_key("PMLOGGROUP")
-        if pl:
-            return await event.forward_to(int(pl))
-        await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
+    @ultroid_cmd(
+        pattern="nologpm$",
+    )
+    async def _(e):
+        if not e.is_private:
+            return await eor(e, "`Use me in Private.`", time=3)
+        if is_logger(e.chat_id):
+            return await eor(e, "`Wasn't logging msgs from here.`", time=3)
 
+        log_user(e.chat_id)
+        return await eor(e, "`Now I Won't log msgs from here.`", time=3)
 
-if sett:
 
     @ultroid_bot.on(
         events.NewMessage(
-            outgoing=True,
-            func=lambda e: e.is_private and e.out,
+            incoming=True,
+            func=lambda e: e.is_private,
         ),
     )
-    async def autoappr(e):
-        miss = await e.get_chat()
-        if miss.bot or miss.is_self or miss.verified or Redis("AUTOAPPROVE") != "True":
+    async def permitpm(event):
+        user = await event.get_sender()
+        if user.bot or user.is_self or user.verified or is_logger(user.id):
             return
-        if miss.id in DEVLIST:
-            return
-        # do not approve if outgoing is a command.
-        if e.text.startswith(HNDLR):
-            return
-        if is_approved(miss.id):
-            return
-        approve_user(miss.id)
-        await delete_pm_warn_msgs(miss.id)
-        try:
-            await ultroid_bot.edit_folder(miss.id, folder=0)
-        except BaseException:
-            pass
-        name = get_display_name(e.chat)
-        try:
-            await asst.edit_message(
-                int(udB.get_key("LOG_CHANNEL")),
-                _not_approved[miss.id],
-                f"#AutoApproved : **OutGoing Message.**\nUser : **[{miss.first_name}](tg://user?id={miss.id})** [`{miss.id}`]",
-            )
-        except KeyError:
-            await asst.send_message(
-                int(udB.get_key("LOG_CHANNEL")),
-                f"#AutoApproved\n**OutGoing Message.**\nUser - [{name}](tg://user?id={miss.id}) [`{miss.id}`]",
-            )
+        await event.forward_to(udB.get_key("PMLOGGROUP") or LOG_CHANNEL)
+
+
+if udB.get_key("PMSETTING"):
+    if udB.get_key("AUTOAPPROVE"):
+        @ultroid_bot.on(
+            events.NewMessage(
+                outgoing=True,
+                func=lambda e: e.is_private and e.out and not e.text.startswith(HNDLR),
+            ),
+        )
+        async def autoappr(e):
+            miss = await e.get_chat()
+            if miss.bot or miss.is_self or miss.verified or miss.id in DEVLIST:
+                return
+            if is_approved(miss.id):
+                return
+            approve_user(miss.id)
+            await delete_pm_warn_msgs(miss.id)
+            try:
+                await ultroid_bot.edit_folder(miss.id, folder=0)
+            except BaseException:
+                pass
+            try:
+                await asst.edit_message(
+                    LOG_CHANNEL,
+                    _not_approved[miss.id],
+                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
+                )
+            except KeyError:
+                await asst.send_message(
+                    LOG_CHANNEL,
+                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
+                )
 
     @ultroid_bot.on(
         events.NewMessage(
