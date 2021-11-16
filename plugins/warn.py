@@ -31,7 +31,7 @@ from . import eor, inline_mention, udB, ultroid_cmd
 
 @ultroid_cmd(
     pattern="warn ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -105,7 +105,7 @@ async def warn(e):
 
 @ultroid_cmd(
     pattern="resetwarn ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -131,7 +131,7 @@ async def rwarn(e):
 
 @ultroid_cmd(
     pattern="warns ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -162,7 +162,7 @@ async def twarns(e):
         await eor(e, "`No Warnings`")
 
 
-@ultroid_cmd(pattern="setwarn ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="setwarn ?(.*)", manager=True)
 async def warnset(e):
     ok = e.pattern_match.group(1)
     if not ok:

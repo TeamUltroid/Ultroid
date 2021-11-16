@@ -53,7 +53,7 @@ from . import humanbytes as hb
 from . import inline_mention, is_url_ok, ultroid_cmd, uploader
 
 
-@ultroid_cmd(pattern="tr", type=["official", "manager"])
+@ultroid_cmd(pattern="tr", manager=True)
 async def _(event):
     if len(event.text) > 3 and event.text[3] != " ":
         return
@@ -86,7 +86,7 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="id ?(.*)",
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(event):
     if event.reply_to_msg_id:
@@ -128,7 +128,7 @@ async def _(event):
         )
 
 
-@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, manager=True)
 async def _(ult):
     mentions = "• **Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)

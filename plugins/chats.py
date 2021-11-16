@@ -95,7 +95,7 @@ async def _(e):
 @ultroid_cmd(
     pattern="getlink$",
     groups_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(e):
     reply = await e.get_reply_message()
@@ -192,7 +192,7 @@ async def _(e):
     pattern="setgpic ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(ult):
     if not ult.is_reply:
@@ -226,7 +226,7 @@ async def _(ult):
     pattern="delgpic ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(ult):
     match = ult.pattern_match.group(1)

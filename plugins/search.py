@@ -88,7 +88,7 @@ async def gitsearch(event):
 
 @ultroid_cmd(
     pattern="google ?(.*)",
-    type=["official", "manager"],
+    manager=True,
 )
 async def google(event):
     inp = event.pattern_match.group(1)

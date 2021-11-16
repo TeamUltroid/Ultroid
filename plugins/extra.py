@@ -41,7 +41,7 @@ async def newmsg(event):
 
 @ultroid_cmd(
     pattern="del$",
-    type=["official", "manager"],
+    manager=True,
 )
 async def delete_it(delme):
     msg_src = await delme.get_reply_message()
