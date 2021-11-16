@@ -36,7 +36,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(id)s.m4a",
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -66,7 +66,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(id)s.m4a",
         }
         try:
             query = event.text.split(" ", 1)[1]
