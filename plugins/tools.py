@@ -235,7 +235,7 @@ async def _(e):
         await z.delete()
         os.remove(c)
     else:
-        await eor(e, "**Reply to a gif or audio file only**")
+        await eor(e, "**Reply to a gif or video file only**")
 
 
 @ultroid_cmd(
