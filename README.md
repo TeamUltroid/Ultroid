@@ -37,9 +37,7 @@
 ## Deploy to Heroku
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FNew-dev0%2FArchived&template=https%3A%2F%2Fgithub.com%2FNew-dev0%2FArchived)
-
-You are deploying with our the latest project [`UltroidCli`](https://github.com/BLUE-DEVIL1134/UltroidCli) to heroku, please visit [`Here`](https://github.com/BLUE-DEVIL1134/UltroidCliTemplate) for more reference.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate&template=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate)
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
