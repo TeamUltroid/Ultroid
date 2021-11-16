@@ -69,9 +69,7 @@ UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 NO_REPLY = get_string("pmperm_3")
 
-UNAPPROVED_MSG = (
-        "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
-)
+UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
 if udB.get_key("PM_TEXT"):
     UNAPPROVED_MSG = (
         "**PMSecurity of {ON}!**\n\n"
@@ -117,6 +115,7 @@ async def delete_pm_warn_msgs(chat: int):
 
 
 if udB.get_key("PMLOG"):
+
     @ultroid_cmd(
         pattern="logpm$",
     )
@@ -129,7 +128,6 @@ if udB.get_key("PMLOG"):
         nolog_user(e.chat_id)
         return await eor(e, "`Now I Will log msgs from here.`", time=3)
 
-
     @ultroid_cmd(
         pattern="nologpm$",
     )
@@ -141,7 +139,6 @@ if udB.get_key("PMLOG"):
 
         log_user(e.chat_id)
         return await eor(e, "`Now I Won't log msgs from here.`", time=3)
-
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -158,6 +155,7 @@ if udB.get_key("PMLOG"):
 
 if udB.get_key("PMSETTING"):
     if udB.get_key("AUTOAPPROVE"):
+
         @ultroid_bot.on(
             events.NewMessage(
                 outgoing=True,
