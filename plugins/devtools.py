@@ -104,7 +104,7 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-    if (
+    if event.sender_id not in DEVLIST and (
         any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
     ):
