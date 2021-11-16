@@ -57,14 +57,6 @@ MSGID_CACHE, VIDEO_ON = {}, {}
 CLIENTS = {}
 
 
-def html_mention(event, sender_id=None, full_name=None):
-    if not full_name:
-        full_name = get_display_name(event.sender)
-    if not sender_id:
-        sender_id = event.sender_id
-    return "<a href={}>{}</a>".format(f"tg://user?id={sender_id}", full_name)
-
-
 def VC_AUTHS():
     _vcsudos = udB.get_key("VC_SUDOS").split() if udB.get_key("VC_SUDOS") else ""
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
