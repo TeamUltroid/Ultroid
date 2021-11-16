@@ -97,8 +97,6 @@ _ignore_eval = []
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
-    if len(event.text) > 5 and event.text[5] != " ":
-        return
     xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
