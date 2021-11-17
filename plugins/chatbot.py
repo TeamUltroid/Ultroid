@@ -50,7 +50,7 @@ async def rem_chatBot(event):
 
 @ultroid_cmd(pattern="listai")
 async def lister(event):
-    key = udB.get("CHATBOT_USERS") or {}
+    key = udB.get_key("CHATBOT_USERS") or {}
     users = key.get(event.chat_id, [])
     if not users:
         return await eor(event, get_string("chab_2"), time=5)
