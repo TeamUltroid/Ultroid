@@ -95,6 +95,4 @@ async def chat_bot_fn(event, type_):
             if chat in key and not key[chat]:
                 del key[chat]
     udB.set("CHATBOT_USERS", str(key))
-    await eor(
-        event, f"**ChatBot:**\n{type_}ed {inline_mention(user_)}"
-    )
+    await eor(event, f"**ChatBot:**\n{type_}ed {inline_mention(user_)}")
