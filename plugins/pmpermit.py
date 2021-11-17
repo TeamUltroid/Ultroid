@@ -525,60 +525,56 @@ async def blockpm(block):
 
 
 @ultroid_cmd(pattern="unblock ?(.*)")
-async def unblockpm(unblock):
-    match = unblock.pattern_match.group(1)
-    if unblock.is_reply:
-        reply = await unblock.get_reply_message()
-        user = reply.sender_id
-    elif match:
-        user = await get_user_id(match) if match != "all" else None
-    else:
-        return await eor(unblock, NO_REPLY, time=5)
+async def unblockpm(event):
+    match = event.pattern_match.group(1) or await event.get_reply_message()
+    if not match:
+        return await eor(event, NO_REPLY +"`Or give it's username/id`", time=5)
     if match == "all":
-        msg = await eor(unblock, get_string("com_1"))
-        u_s = await unblock.client(GetBlockedRequest(0, 0))
+        msg = await eor(event, get_string("com_1"))
+        u_s = await event.client(GetBlockedRequest(0, 0))
         count = len(u_s.users)
         if not count:
             return await eor(msg, "__You have not blocked Anyone...__")
         for user in u_s.users:
-            await asyncio.sleep(1.5)
-            await unblock.client(UnblockRequest(user.id))
+            await asyncio.sleep(1)
+            await event.client(UnblockRequest(user.id))
         # GetBlockedRequest return 20 users at most.
         if count < 20:
             return await eor(msg, f"__Unblocked {count} Users!__")
         while u_s.users:
-            u_s = await unblock.client(GetBlockedRequest(0, 0))
+            u_s = await event.client(GetBlockedRequest(0, 0))
             for user in u_s.users:
-                await asyncio.sleep(1.5)
-                await unblock.client(UnblockRequest(user.id))
+                await asyncio.sleep(3)
+                await event.client(UnblockRequest(user.id))
             count += len(u_s.users)
         return await eor(msg, f"__Unblocked {count} users.__")
+    user = await get_user_id(match)
     try:
-        await unblock.client(UnblockRequest(user))
-        aname = await unblock.client.get_entity(user)
-        await eor(unblock, f"`{aname.first_name} has been UnBlocked!`")
+        await event.client(UnblockRequest(user))
+        aname = await event.client.get_entity(user)
+        await eor(event, f"{inline_mention(aname)} [`user`] `has been UnBlocked!`")
     except Exception as et:
-        return await eor(unblock, f"ERROR - {et}", time=5)
+        return await eor(event, f"ERROR - {et}")
     try:
         await asst.edit_message(
-            int(udB.get_key("LOG_CHANNEL")),
+            udB.get_key("LOG_CHANNEL"),
             _not_approved[user],
-            f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **unblocked**.",
+            f"#UNBLOCKED\n\n{inline_mention(aname)} [`{user}`] has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
             ],
         )
     except KeyError:
         _not_approved[user] = await asst.send_message(
-            int(udB.get_key("LOG_CHANNEL")),
-            f"#UNBLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **unblocked**.",
+            udB.get_key("LOG_CHANNEL"),
+            f"#UNBLOCKED\n\n{inline_mention(aname)} [`{user}`] has been **unblocked**.",
             buttons=[
                 Button.inline("Block", data=f"block_{user}"),
             ],
         )
 
 
-@ultroid_cmd(pattern="listapproved")
+@ultroid_cmd(pattern="listapproved$", owner=True)
 async def list_approved(event):
     xx = await eor(event, get_string("com_1"))
     all = get_approved()
@@ -587,7 +583,7 @@ async def list_approved(event):
     users = []
     for i in all:
         try:
-            name = (await ultroid_bot.get_entity(i)).first_name
+            name = get_display_name(await ultroid_bot.get_entity(i))
         except BaseException:
             name = ""
         users.append([name.strip(), str(i)])
