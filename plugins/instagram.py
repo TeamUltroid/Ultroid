@@ -30,6 +30,7 @@
 """
 
 import os
+from datetime import datetime as dt
 from re import compile
 
 from pyUltroid.functions.helper import numerize
@@ -41,7 +42,7 @@ from telethon.tl.types import (
     MessageMediaWebPage,
     WebPage,
 )
-from datetime import datetime as dt
+
 from . import (
     LOGS,
     Button,
@@ -50,9 +51,9 @@ from . import (
     eor,
     get_string,
     in_pattern,
+    time_formatter,
     udB,
     ultroid_cmd,
-    time_formatter
 )
 
 
@@ -89,7 +90,10 @@ async def insta_dl(e):
                 LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
             tm = time_formatter((dt.now() - start).microseconds)
-            await e.reply(f"**• Uploaded Successfully\n• Link :** {text}\n**• Time Taken :** `{tm}`", file=media)
+            await e.reply(
+                f"**• Uploaded Successfully\n• Link :** {text}\n**• Time Taken :** `{tm}`",
+                file=media,
+            )
             await tt.delete()
             if not isinstance(media, list):
                 os.remove(media)
