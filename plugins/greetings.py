@@ -57,7 +57,7 @@ Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{u
 async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    btn = format_btn(r.buttons) if r.buttons else None
+    btn = format_btn(r.buttons) if (r and r.buttons) else None
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
