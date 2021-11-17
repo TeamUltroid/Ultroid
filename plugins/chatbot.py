@@ -66,14 +66,14 @@ async def lister(event):
 
 async def chat_bot_fn(event, type_):
     if event.reply_to:
-        user = (await event.get_reply_message()).sender
+        user_ = (await event.get_reply_message()).sender
     else:
         temp = event.text.split(maxsplit=1)
         try:
-            user = await event.client.get_entity(temp[1])
+            user_ = await event.client.get_entity(temp[1])
         except BaseException:
             if event.is_private:
-                user = event.chat
+                user_ = event.chat
             else:
                 return await eod(
                     event,
@@ -81,7 +81,7 @@ async def chat_bot_fn(event, type_):
                 )
     key = udB.get_key("CHATBOT_USERS") or {}
     chat = event.chat_id
-    user = user.id
+    user = user_.id
     if type_ == "add":
         if key and key.get(chat):
             if user.id not in key[chat]:
@@ -94,7 +94,7 @@ async def chat_bot_fn(event, type_):
                 key[chat].remove(user)
             if chat in key and not key[chat]:
                 del key[chat]
-    udB.set_key("CHATBOT_USERS", key)
+    udB.set("CHATBOT_USERS", str(key))
     await eor(
-        event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})"
+        event, f"**ChatBot:**\n{type_}ed {inline_mention(user_)}"
     )
