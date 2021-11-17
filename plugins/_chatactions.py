@@ -159,7 +159,8 @@ async def chatBot_replies(e):
     sender = await e.get_sender()
     if not isinstance(sender, types.User):
         return
-    if e.text and chatbot_stats(e.chat_id, e.sender_id):
+    key = udB.get_key("CHATBOT_USERS") or {}
+    if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
         if msg:
             await e.reply(msg)
