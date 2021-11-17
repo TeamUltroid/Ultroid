@@ -79,7 +79,7 @@ async def chat_bot_fn(event, type_):
                     event,
                     get_string("chab_1"),
                 )
-    key = udB.get_key("CHATBOT_USERS")
+    key = udB.get_key("CHATBOT_USERS") or {}
     chat = event.chat_id
     user = user.id
     if type_ == "add":
