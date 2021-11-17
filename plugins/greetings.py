@@ -58,6 +58,10 @@ async def setwel(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
     btn = format_btn(r.buttons) if (r and r.buttons) else None
+    try:
+        text = event.text.split(maxsplit=1)[1]
+    except IndexError:
+        text = r.text if r else None
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -84,10 +88,9 @@ async def setwel(event):
         else:
             add_welcome(event.chat_id, None, m, btn)
         await eor(x, get_string("grt_1"))
-    elif r and r.text:
-        txt = r.text
+    elif text:
         if not btn:
-            txt, btn = get_msg_button(r.text)
+            txt, btn = get_msg_button(text)
         add_welcome(event.chat_id, txt, None, btn)
         await eor(x, get_string("grt_1"))
     else:
@@ -107,8 +110,7 @@ async def listwel(event):
     wel = get_welcome(event.chat_id)
     if not wel:
         return await eor(event, get_string("grt_4"), time=5)
-    msgg = wel["welcome"]
-    med = wel["media"]
+    msgg, med = wel["welcome"], wel["media"]
     if wel.get("button"):
         btn = create_tl_btn(wel["button"])
         return await something(event, msgg, med, btn)
@@ -120,7 +122,11 @@ async def listwel(event):
 async def setgb(event):
     x = await eor(event, get_string("com_1"))
     r = await event.get_reply_message()
-    btn = format_btn(r.buttons) if r.buttons else None
+    btn = format_btn(r.buttons) if (r and r.buttons) else None
+    try:
+        text = event.text.split(maxsplit=1)[1]
+    except IndexError:
+        text = r.text if r else None
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -147,10 +153,9 @@ async def setgb(event):
         else:
             add_goodbye(event.chat_id, None, m, btn)
         await eor(x, "`Goodbye note saved`")
-    elif r and r.text:
-        txt = r.text
+    elif text:
         if not btn:
-            txt, btn = get_msg_button(r.text)
+            txt, btn = get_msg_button(text)
         add_goodbye(event.chat_id, txt, None, btn)
         await eor(x, "`Goodbye note saved`")
     else:
