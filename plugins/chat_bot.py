@@ -20,7 +20,6 @@
    List the currently AI added users.
 """
 
-from pyUltroid.dB.chatBot_db import add_chatbot, get_all_added, rem_chatbot
 from pyUltroid.functions.tools import get_chatbot_reply
 
 from . import eod, eor, get_string, inline_mention, ultroid_cmd
@@ -80,10 +79,22 @@ async def chat_bot_fn(event, type_):
                     event,
                     get_string("chab_1"),
                 )
+    key = udB.get_key("CHATBOT_USERS")
+    chat = event.chat_id
+    user = user.id
     if type_ == "add":
-        add_chatbot(event.chat_id, user.id)
-    if type_ == "remov":
-        rem_chatbot(event.chat_id, user.id)
+        if key and key.get(chat):
+            if user.id not in key[chat]:
+                key[chat].append(user)
+        else:
+            key.update({chat:[user]})
+    elif type_ == "remov":
+        if key.get(chat):
+            if user.id in key[chat]:
+                key[chat].remove(user)
+            if chat in key and not key[chat]:
+                del key[chat]
+    udB.set_key("CHATBOT_USERS", key)
     await eor(
         event, f"**ChatBot:**\n{type_}ed [{user.first_name}](tg://user?id={user.id})"
     )
