@@ -8,7 +8,6 @@
 import asyncio
 
 from pyUltroid.dB import stickers
-from pyUltroid.dB.chatBot_db import chatbot_stats
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
