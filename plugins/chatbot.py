@@ -50,7 +50,8 @@ async def rem_chatBot(event):
 
 @ultroid_cmd(pattern="listai")
 async def lister(event):
-    users = get_all_added(event.chat_id)
+    key = udB.get("CHATBOT_USERS") or {}
+    users = key.get(event.chat_id, [])
     if not users:
         return await eor(event, get_string("chab_2"), time=5)
     msg = "**Total List Of AI Enabled Users In This Chat :**\n\n"
@@ -83,14 +84,14 @@ async def chat_bot_fn(event, type_):
     chat = event.chat_id
     user = user_.id
     if type_ == "add":
-        if key and key.get(chat):
-            if user.id not in key[chat]:
+        if key.get(chat):
+            if user not in key[chat]:
                 key[chat].append(user)
         else:
             key.update({chat: [user]})
     elif type_ == "remov":
         if key.get(chat):
-            if user.id in key[chat]:
+            if user in key[chat]:
                 key[chat].remove(user)
             if chat in key and not key[chat]:
                 del key[chat]
