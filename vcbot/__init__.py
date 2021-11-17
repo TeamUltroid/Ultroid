@@ -58,7 +58,7 @@ CLIENTS = {}
 
 
 def VC_AUTHS():
-    _vcsudos = udB.get_key("VC_SUDOS").split() if udB.get_key("VC_SUDOS") else ""
+    _vcsudos = udB.get_key("VC_SUDOS") or []
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
