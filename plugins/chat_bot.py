@@ -87,7 +87,7 @@ async def chat_bot_fn(event, type_):
             if user.id not in key[chat]:
                 key[chat].append(user)
         else:
-            key.update({chat:[user]})
+            key.update({chat: [user]})
     elif type_ == "remov":
         if key.get(chat):
             if user.id in key[chat]:
