@@ -1,42 +1,43 @@
-name: Malaysia
-natively: Bahasa Malaysia
+name: Malay
+natively: Bahasa Melayu
 
 authors:
   - yuno74
+  - DarkBeamerYT
 
 # commons
-com_1: "`memproses...`"
-com_2: "`mencari...`"
+com_1: "`Memproses...`"
+com_2: "`Mencari...`"
 # help
 help_1: "`{}` bukan plugin yang sah!"
 help_2: "Bot tidak bertindak balas terhadap pertanyaan sebaris.\nDicadangkan untuk menggunakan `{}restart`"
-help_3: "`Sila hidupkan mod sebaris untuk bot anda dari` @Botfather."
+help_3: "`Sila hidupkan mod sebaris untuk bot anda dari` @BotFather."
 
 # autopic
-autopic_1: "Beri saya Teks .."
+autopic_1: "Beri kan saya teks .."
 autopic_2: "Tiada keputusan dijumpai `{}`"
-autopic_3: "Mendapat Koleksi `{}` yang berkaitan dengan carian anda! \nMulai Autopic!"
+autopic_3: "Mendapat koleksi `{}` yang berkaitan dengan carian anda! \nMulai Autopic!"
 
 # inline
-inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+inline_1: "[Sᴜᴘᴘᴏʀᴛ Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n
+**Mᴇɴᴜ Bᴀɴᴛᴜᴀɴ Uɴᴛᴜᴋ {}.\n\n
 Pʟᴜɢɪɴs ~ {}**"
-inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+inline_2: "[Sᴜᴘᴘᴏʀᴛ Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n
+**Mᴇɴᴜ Bᴀɴᴛᴜᴀɴ Uɴᴛᴜᴋ {}.\n\n
 Aᴅᴅᴏɴs ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
-**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\n
+inline_3: "[Sᴜᴘᴘᴏʀᴛ Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n
+**Mᴇɴᴜ Bᴀɴᴛᴜᴀɴ Uɴᴛᴜᴋ {}.\n\n
 Aᴅᴅᴏɴs ~ {}\n\n
-Buat **`.setredis ADDONS kepada True`** dan memulakan semula untuk dapatkan addon.**"
-inline_4: "** Bᴏᴛ kepada {}\n\nMᴇɴᴜ Utama\n\nPʟᴜɢɪɴ ~ {}\nAᴅᴅᴏɴ ~ {}\nJumlah Perintah ~ {}**"
-inline_5: "**Mᴇɴᴜ Telah ditutup**"
+Buat **`.setdb ADDONS kepada True`** dan memulakan semula untuk dapatkan addon.**"
+inline_4: "** Bᴏᴛ ᴋᴇᴘᴀᴅᴀ {}\n\nMᴇɴᴜ Uᴛᴀᴍᴀ\n\nPʟᴜɢɪɴ ~ {}\nAᴅᴅᴏɴ ~ {}\nJumlah Perintah ~ {}**"
+inline_5: "**Mᴇɴᴜ Tᴇʟᴀʜ Dɪᴛᴜᴛᴜᴘ**"
 
 # tagnotif
 tagnot_1: "{} telah tag Anda di {}\n\n```{}```\n\n[📨 Mesej 📨]({})"
 tagnot_2: "{} telah tag Anda di {}\n\n [📨 Mesej 📨]({})"
 
 # whisper
-wspr_1: "@{} mesej rahsia untuk Anda.\nPadam mesej Anda selepas dibaca.\natau mesej seterusnya tidak akan dikemaskini"
+wspr_1: "@{} mesej rahsia untuk Anda.\nPadam mesej anda selepas dibaca.\natau mesej seterusnya tidak akan dikemaskini"
 wspr_2: "Mesej dipadam"
 
 # afk
@@ -82,7 +83,7 @@ usage: "**⚙️ Penggunaan Dyno ⚙️**:\n\n
 **CPU**: `{}%`\n
 **RAM**: `{}%`\n
 **Storan**: `{}%`"
-shutdown: "Selamat tinggal {}.\n`mematikan bot...`"
+shutdown: "Selamat tinggal {}.\n`Mematikan bot...`"
 
 # broadcast
 bd_1: "`Ditambah ke db...`"
@@ -121,11 +122,11 @@ core_7: "Modul sepertinya tiada"
 core_8: "Tiada modul bernama {}.py"
 core_9: "`Bagi nama plugin yang Anda ingin matikan`"
 core_10: "**Dimatikan** `{}` **Telah berjaya.**"
-core_11: "**Anda tidak boleh mematikan Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴ**"
-core_12: "**Tiada Pʟᴜɢɪɴ bernama** `{}`"
+core_11: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bᴏʟᴇʜ Mᴇᴍᴀᴛɪᴋᴀɴ Pʟᴜɢɪɴ Yᴀɴɢ Sᴀʜ**"
+core_12: "**Tɪᴀᴅᴀ Pʟᴜɢɪɴ Yᴀɴɢ Bᴇʀɴᴀᴍᴀ** `{}`"
 core_13: "`Beri nama plugin yang ingin anda nyahpasang`"
 core_14: "**menyahpasang** `{}` **Telah berjaya.**"
-core_15: "**Anda tidak boleh nyahpasang Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_15: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bᴏʟᴇʜ Nʏᴀʜᴘᴀsᴀɴɢ Kᴀɴ Pʟᴜɢɪɴ Yᴀɴɢ Sᴀʜ**"
 core_16: "`Bagi nama plugin yang anda ingin hidupkan`"
 core_17: "**Berjaya di hidupkan** `{}`"
 core_18: "**Tidak boleh hidupkan** `{}` **kerana kesalahan berikut.**\n`{}`"
@@ -135,28 +136,28 @@ sf_1: "Memulakan Mass-FedBan..."
 sf_2: "`Tiada user yang ditetapkan!`"
 sf_3: "Anda tidak boleh ban dev saya, noob!!"
 sf_4: "`Sepertinya rose tidak bertindak balas, atau plugin tidak berfungsi`"
-sf_5: "Anda hanya boleh menggunakan perintah Fed 5 minit sekali"
+sf_5: "Anda hanya boleh menggunakan perintah fed 5 minit sekali"
 sf_6: "Cuba lagi 5 minit kemudian."
 sf_7: "Tidak dapat kumpul FedAdminList. Mencuba semula ({}/3)..."
-sf_8: "Ralat"
+sf_8: "Error"
 sf_9: "Tidak dapat kumpul FedAdminList."
 sf_10: "FBaning dalam {} feds."
 sf_11: "ID Kumpulan FBan yang dinyatakan tidak betul."
 sf_12: "{} Dikecualikan."
-sf_13: "Ralat semasa membuang fail FedAdmin.\n{}"
+sf_13: "Error semasa membuang fail FedAdmin.\n{}"
 sf_14: "SuperFBan Selesai. \nJumlah Feds - {}. \nTidak termasuk - {}. \n {} Fed terjejas.\n#TB"
 sf_15: "Memulakan Mass-UnFedBan..."
 sf_16: "SuperUnFBan Selesai. \nJumlah Feds - {}. \nTidak termasuk - {}. \n {} Fed terjejas.\n#TB"
 sf_17: "`Beri saya id seseorang, atau balas mesej seseorang untuk memeriksa fedstatnya.`"
 sf_18: "Senarai feds {} telah dilarang masuk. \n\nDikumpulkan menggunakan Ultroid."
-sf_19: "**Ralat**\n `Buka sekatan` @MissRose_Bot `and try again!"
+sf_19: "**Error**\n `Buka sekatan` @MissRose_Bot `dan cuba lagi!"
 sf_20: "`Mengambil maklumat...`"
 sf_21: "\n\nFedInfo diekstrak oleh Ultroid"
 
 # gdrive
 gdrive_1: "`Anda telah memberi kebenaran kepada Google Drive`"
 gdrive_2: "Pergi [Sini](https://console.developers.google.com/flows/enableapi?apiid=drive) dan dapatkan anda punya `GDRIVE_CLIENT_ID` beserta `GDRIVE_CLIENT_SECRET`\n\n
-hantar anda punya GDRIVE_CLIENT_ID beserta GDRIVE_CLIENT_SECRET mengikut ini.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` dipisahkan dengan ruang."
+hantar anda punya `GDRIVE_CLIENT_ID` beserta `GDRIVE_CLIENT_SECRET` mengikut ini.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` dipisahkan dengan ruang."
 gdrive_3: "`Salah Client Id`"
 gdrive_4: "`Ada yang tidak kena! Hantar`/auth` lagi sekali.\nJika sama hubungi `@TheUltroid"
 gdrive_5: "`Berjaya!\nAnda sudah bersedia untuk menggunakan Google Drive dengan Ultroid Userbot.`"
@@ -165,7 +166,7 @@ gdrive_7: "**Fail berjaya dimuat naik ke G-Drive :**\n\n[{}]({})"
 
 # pmpermit
 pmperm_1: "Tunggu saya balas atau anda akan disekat dan dilaporkan sebagai spam!!"
-pmperm_2: "Anda telah menghantar spam kepada mesej Master saya, dan saya tidak menyukainya. \nAnda telah Disekat dan dilaporkan sebagai SPAM, sehingga diberitahu kemudian."
+pmperm_2: "Anda telah menghantar spam kepada tuan saya, dan saya tidak menyukainya. \nAnda telah disekat dan dilaporkan sebagai SPAM, sehingga diberitahu kemudian."
 pmperm_3: "Balas mesej seseorang atau cuba perintah ini secara peribadi."
 
 # updater

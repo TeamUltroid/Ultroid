@@ -37,17 +37,17 @@
 ## Deploy to Heroku
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FNew-dev0%2FArchived&template=https%3A%2F%2Fgithub.com%2FNew-dev0%2FArchived)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate&template=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate)
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
-- [Latest Method](#local-deploy---latest-method)
+- [Latest UltroidCli](#local-deploy---latest-method)
 
 
 ### Local Deploy - Latest Method
 This is the latest and most fastest method currently.<br>
-First, go to [This Project](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
+First, go to [UltroidCli](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the latest release from the Github Releases.<br>
 Then, do as it's given in the `README.md` to add the executable to your system path.
 
 Further, take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) to get more information.
@@ -111,4 +111,3 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
 * [MarshalX](https://github.com/MarshalX) for [PyTgCalls.](https://github.com/MarshalX/tgcalls)
-
