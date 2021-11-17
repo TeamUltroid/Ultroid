@@ -528,7 +528,7 @@ async def blockpm(block):
 async def unblockpm(event):
     match = event.pattern_match.group(1) or await event.get_reply_message()
     if not match:
-        return await eor(event, NO_REPLY +"`Or give it's username/id`", time=5)
+        return await eor(event, NO_REPLY + "`Or give it's username/id`", time=5)
     if match == "all":
         msg = await eor(event, get_string("com_1"))
         u_s = await event.client(GetBlockedRequest(0, 0))
