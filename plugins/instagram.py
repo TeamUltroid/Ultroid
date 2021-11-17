@@ -41,7 +41,7 @@ from telethon.tl.types import (
     MessageMediaWebPage,
     WebPage,
 )
-
+from datetime import datetime as dt
 from . import (
     LOGS,
     Button,
@@ -52,6 +52,7 @@ from . import (
     in_pattern,
     udB,
     ultroid_cmd,
+    time_formatter
 )
 
 
@@ -66,7 +67,7 @@ async def insta_dl(e):
         text = replied.message
     else:
         return await eor(tt, "Provide a Link to Download...")
-
+    start = dt.now()
     CL = await create_instagram_client(e)
     if CL:
         try:
@@ -87,7 +88,8 @@ async def insta_dl(e):
             else:
                 LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
-            await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
+            tm = time_formatter((dt.now() - start).microseconds)
+            await e.reply(f"**• Uploaded Successfully\n• Link :** {text}\n**• Time Taken :** `{tm}`", file=media)
             await tt.delete()
             if not isinstance(media, list):
                 os.remove(media)
