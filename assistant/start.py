@@ -78,7 +78,7 @@ async def ultroid(event):
     if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
         add_user(event.sender_id)
         kak_uiw = udB.get_key("OFF_START_LOG")
-        if not kak_uiw or kak_uiw != "True":
+        if not kak_uiw or kak_uiw != True:
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
             buttons = [[Button.inline("Info", "itkkstyo")]]
             if event.sender.username:
@@ -90,7 +90,7 @@ async def ultroid(event):
         ok = ""
         u = await event.client.get_entity(event.chat_id)
         if not udB.get_key("STARTMSG"):
-            if udB.get_key("PMBOT") == "True":
+            if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
             await event.reply(
                 f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
