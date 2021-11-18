@@ -50,7 +50,7 @@ async def doit(e):
         m = await e.client.inline_query(asst.me.username, f"aki_{e.chat_id}_{e.id}")
         await m[0].click(e.chat_id)
     except Exception as er:
-        return await eor(e, f"**ERROR :** `{er}`"
+        return await eor(e, f"**ERROR :** `{er}`")
     if e.out:
         await e.delete()
 
