@@ -32,11 +32,3 @@ async def remp(e):
     rem_profan(e.chat_id)
     await eor(e, get_string("prof_2"), time=10)
 
-
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def checkprofan(e):
-    chat = e.chat_id
-    if is_profan(chat) and e.text:
-        x, y = detector(e.text)
-        if y:
-            await e.delete()
