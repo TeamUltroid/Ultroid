@@ -18,6 +18,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
+
 try:
     from ProfanityDetector import detector
 except ImportError:
