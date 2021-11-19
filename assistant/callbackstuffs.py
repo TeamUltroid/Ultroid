@@ -145,6 +145,8 @@ async def changes(okk):
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     try:
+        if len(tl_chnglog) > 700:
+            tl_chnglog = tl_chnglog[:700]+ "..."
         await okk.edit("• Writing Changelogs 📝 •")
         img = await Carbon(
             file_name="changelog",
