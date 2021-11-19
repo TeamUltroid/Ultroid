@@ -15,10 +15,9 @@
 
 """
 
-from ProfanityDetector import detector
-from pyUltroid.dB.nsfw_db import is_profan, profan_chat, rem_profan
+from pyUltroid.dB.nsfw_db import profan_chat, rem_profan
 
-from . import eor, events, get_string, ultroid_bot, ultroid_cmd
+from . import eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)
@@ -31,4 +30,3 @@ async def addp(e):
 async def remp(e):
     rem_profan(e.chat_id)
     await eor(e, get_string("prof_2"), time=10)
-
