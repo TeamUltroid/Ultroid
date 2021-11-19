@@ -17,7 +17,7 @@
     List all sudo users.
 """
 
-from pyUltroid.misc import sudoers
+from pyUltroid.misc import sudoers, SUDO_M
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
@@ -64,6 +64,7 @@ async def _(ult):
         mmm = f"{name} `is already a SUDO User ...`"
     else:
         udB.set_key("SUDO", "True")
+        SUDO_M.add_sudo(id)
         key = udB.get_key("SUDOS")
         key.append(id)
         udB.set_key("SUDOS", key)
@@ -97,6 +98,7 @@ async def _(ult):
     if id not in sudoers():
         mmm = f"{name} `wasn't a SUDO User ...`"
     else:
+        SUDO_M.remove_sudo(id)
         key = udB.get_key("SUDOS")
         key.remove(id)
         udB.set_key("SUDOS", key)
