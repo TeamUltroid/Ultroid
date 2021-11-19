@@ -88,9 +88,9 @@ async def alive(event):
     pattern="alive$",
 )
 async def lol(ult):
-    pic = udB.get("ALIVE_PIC")
+    pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
+    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -134,9 +134,9 @@ async def is_on(ult):
         except Exception as er:
             LOGS.info(er)
         return
-    pic = udB.get("ALIVE_PIC")
+    pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
+    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
@@ -229,9 +229,9 @@ async def _(event):
 
 @in_pattern("alive", owner=True)
 async def inline_alive(ult):
-    pic = udB.get("ALIVE_PIC")
+    pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get("ALIVE_TEXT") or get_string("bot_1")
+    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")

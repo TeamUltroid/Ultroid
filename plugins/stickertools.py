@@ -228,7 +228,7 @@ async def hehe(args):
         photo = await create_quotly(message)
     else:
         return await xx.edit(get_string("com_4"))
-    if not udB.get("language") or udB.get("language") == "en":
+    if not udB.get_key("language") or udB.get_key("language") == "en":
         ra = random.choice(KANGING_STR)
     else:
         ra = get_string("sts_11")

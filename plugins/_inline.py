@@ -28,7 +28,7 @@ from ._help import _main_help_menu
 TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
-add_ons = udB.get("ADDONS")
+add_ons = udB.get_key("ADDONS")
 if add_ons == "True" or add_ons is None:
     zhelps = get_string("inline_2")
 else:
@@ -262,11 +262,16 @@ async def _(e):
         ],
         [
             Button.switch_inline(
-                "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
+                "Tᴡɪᴛᴛᴇʀ Usᴇʀ", query="twitter theultroid", same_peer=True
             ),
             Button.switch_inline(
                 "Kᴏᴏ Sᴇᴀʀᴄʜ", query="koo @__kumar__amit", same_peer=True
             ),
+        ],
+        [
+            Button.switch_inline(
+                "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
+            )
         ],
         [
             Button.inline(
@@ -558,7 +563,7 @@ async def on_plug_in_callback_query_handler(event):
 def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
     number_of_cols = 2
-    emoji = udB.get("EMOJI_IN_HELP")
+    emoji = udB.get_key("EMOJI_IN_HELP")
     multi = emoji or "✘"
     global upage
     upage = page_number

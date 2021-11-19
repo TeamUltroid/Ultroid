@@ -11,7 +11,7 @@ import time
 from random import choice
 
 from pyUltroid import *
-from pyUltroid.dB import ULTROID_IMAGES
+from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
@@ -25,13 +25,13 @@ from telethon.tl import functions, types
 
 from strings import get_string
 
-Redis = udB.get
+Redis = udB.get_key
 
 OWNER_NAME = ultroid_bot.me.first_name
 OWNER_ID = ultroid_bot.uid
 
-LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
+LOG_CHANNEL = int(udB.get_key("LOG_CHANNEL"))
+INLINE_PIC = udB.get_key("INLINE_PIC") or choice(ULTROID_IMAGES)
 if INLINE_PIC == "False":
     INLINE_PIC = None
 Telegraph = telegraph_client()

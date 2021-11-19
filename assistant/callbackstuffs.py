@@ -231,7 +231,7 @@ async def _(e):
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
-        udB.set("GDRIVE_FOLDER_ID", repl.text)
+        udB.set_key("GDRIVE_FOLDER_ID", repl.text)
         await repl.reply(
             "Success Now You Can Authorise.",
             buttons=get_back_button("gdrive"),
@@ -302,11 +302,11 @@ async def euwhe(event):
 
 @callback("dmof", owner=True)
 async def rhwhe(e):
-    if udB.get("DUAL_MODE"):
-        udB.delete("DUAL_MODE")
+    if udB.get_key("DUAL_MODE"):
+        udB.del_key("DUAL_MODE")
         key = "Off"
     else:
-        udB.set("DUAL_MODE", "True")
+        udB.set_key("DUAL_MODE", "True")
         key = "On"
     Msg = "Dual Mode : " + key
     await e.edit(Msg, buttons=get_back_button("otvars"))
@@ -318,7 +318,7 @@ async def hndlrr(event):
     pru = event.sender_id
     var = "DUAL_HNDLR"
     name = "Dual Handler"
-    CH = udB.get(var) or "/"
+    CH = udB.get_key(var) or "/"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
             f"Send The Symbol Which u want as Handler/Trigger to use your Assistant bot\nUr Current Handler is [ `{CH}` ]\n\n use /cancel to cancel.",
@@ -482,7 +482,7 @@ async def hndlrr(event):
 
 @callback("taglog", owner=True)
 async def tagloggrr(e):
-    if not udB.get("TAG_LOG"):
+    if not udB.get_key("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
     else:
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
@@ -494,7 +494,7 @@ async def tagloggrr(e):
 
 @callback("deltag", owner=True)
 async def _(e):
-    udB.delete("TAG_LOG")
+    udB.del_key("TAG_LOG")
     await e.answer("Done!!! Tag Logger has been turned Off")
 
 
@@ -525,7 +525,7 @@ async def taglogerr(event):
 
 @callback("eaddon", owner=True)
 async def pmset(event):
-    if not udB.get("ADDONS"):
+    if not udB.get_key("ADDONS"):
         BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
     else:
         BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")]
@@ -550,7 +550,7 @@ async def eddon(event):
 
 @callback("edof", owner=True)
 async def eddof(event):
-    udB.set("ADDONS", "False")
+    udB.set_key("ADDONS", "False")
     await event.edit(
         "Done! ADDONS has been turned off!! After Setting All Things Do Restart",
         buttons=get_back_button("eaddon"),
@@ -559,7 +559,7 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if udB.get("SUDO") == "False":
+    if udB.get_key("SUDO") == "False":
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
     else:
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
@@ -745,7 +745,7 @@ async def media(event):
 @callback("delmed", owner=True)
 async def dell(event):
     try:
-        udB.delete("ALIVE_PIC")
+        udB.del_key("ALIVE_PIC")
         return await event.edit(
             get_string("clst_5"), buttons=get_back_button("alvcstm")
         )
@@ -859,7 +859,7 @@ async def name(event):
 @callback(re.compile(b"wrns_(.*)"), owner=True)
 async def set_wrns(event):
     value = int(event.data_match.group(1).decode("UTF-8"))
-    dn = udB.set("PMWARNS", value)
+    dn = udB.set_key("PMWARNS", value)
     if dn:
         await event.edit(
             f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
@@ -921,7 +921,7 @@ async def media(event):
 @callback("delpmmed", owner=True)
 async def dell(event):
     try:
-        udB.delete("PMPIC")
+        udB.del_key("PMPIC")
         return await event.edit(get_string("clst_5"), buttons=get_back_button("pmcstm"))
     except BaseException:
         return await event.edit(
@@ -955,7 +955,7 @@ async def apon(event):
 @callback("apof", owner=True)
 async def apof(event):
     try:
-        udB.delete("AUTOAPPROVE")
+        udB.del_key("AUTOAPPROVE")
         return await event.edit(
             "Done! AUTOAPPROVE Stopped!!",
             buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
@@ -969,7 +969,7 @@ async def apof(event):
 
 @callback("pml", owner=True)
 async def alvcs(event):
-    if not udB.get("PMLOG"):
+    if not udB.get_key("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
     else:
         BT = [Button.inline("PMLOGGER OFF", data="pmlogof")]
@@ -1021,7 +1021,7 @@ async def pmlog(event):
 @callback("pmlogof", owner=True)
 async def pmlogof(event):
     try:
-        udB.delete("PMLOG")
+        udB.del_key("PMLOG")
         return await event.edit(
             "Done! PMLOGGER Stopped!!",
             buttons=[[Button.inline("« Bᴀᴄᴋ", data="pml")]],
@@ -1075,7 +1075,7 @@ async def hhh(e):
             return await conv.send_message(
                 "Terminated!", buttons=get_back_button("chatbot")
             )
-        udB.set("STARTMEDIA", msg.file.id)
+        udB.set_key("STARTMEDIA", msg.file.id)
         await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 
@@ -1107,7 +1107,7 @@ async def hhh(e):
             return await conv.send_message(
                 "Terminated!", buttons=get_back_button("chatbot")
             )
-        udB.set("BOT_INFO_START", msg.text)
+        udB.set_key("BOT_INFO_START", msg.text)
         await conv.send_message("Done!", buttons=get_back_button("chatbot"))
 
 
@@ -1129,7 +1129,7 @@ async def heheh(event):
         if not msg.text or msg.text.startswith("/"):
             timyork = "Cancelled!"
             if msg.text == "/clear":
-                udB.delete("PMBOT_FSUB")
+                udB.del_key("PMBOT_FSUB")
                 timyork = "Done! Force Subscribe Stopped\nRestart your Bot!"
             return await conv.send_message(
                 "Cancelled!", buttons=get_back_button("chatbot")
@@ -1144,7 +1144,7 @@ async def heheh(event):
                 err += f"**{chat}** : {er}\n"
         if err:
             return await conv.send_message(err)
-        udB.set("PMBOT_FSUB", str(Ll))
+        udB.set_key("PMBOT_FSUB", str(Ll))
         await conv.send_message(
             "Done!\nRestart Your Bot.", buttons=get_back_button("chatbot")
         )

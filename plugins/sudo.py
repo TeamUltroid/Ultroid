@@ -16,13 +16,12 @@
 • `{i}listsudo`
     List all sudo users.
 """
-from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
+
 from pyUltroid.misc import sudoers
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
 from . import (
-    Redis,
     eor,
     get_string,
     get_user_id,
@@ -61,14 +60,14 @@ async def _(ult):
 
     if id == ultroid_bot.uid:
         mmm = get_string("sudo_2")
-    elif is_sudo(id):
+    elif id in sudoers():
         mmm = f"{name} `is already a SUDO User ...`"
-    elif add_sudo(id):
-        udB.set("SUDO", "True")
-        sudoers().append(id)
-        mmm = f"**Added {name} as SUDO User**"
     else:
-        return
+        udB.set_key("SUDO", "True")
+        key = udB.get_key("SUDOS")
+        key.append(id)
+        udB.set_key("SUDOS", key)
+        mmm = f"**Added {name} as SUDO User**"
     await eor(ult, mmm, time=5)
 
 
@@ -95,13 +94,13 @@ async def _(ult):
         name = inline_mention(name)
     else:
         name = f"`{id}`"
-    if not is_sudo(id):
+    if id not in sudoers():
         mmm = f"{name} `wasn't a SUDO User ...`"
-    elif del_sudo(id):
-        sudoers().remove(id)
-        mmm = f"**Removed {name} from SUDO User(s)**"
     else:
-        return
+        key = udB.get_key("SUDOS")
+        key.remove(id)
+        udB.set_key("SUDOS", key)
+        mmm = f"**Removed {name} from SUDO User(s)**"
     await eor(ult, mmm, time=5)
 
 
@@ -109,12 +108,11 @@ async def _(ult):
     pattern="listsudo$",
 )
 async def _(ult):
-    sudos = Redis("SUDOS")
-    if sudos == "" or sudos is None:
+    sudos = sudoers()
+    if not sudos:
         return await eor(ult, get_string("sudo_3"), time=5)
-    sumos = sudos.split(" ")
     msg = ""
-    for i in sumos:
+    for i in sudos:
         try:
             name = await ult.client.get_entity(int(i))
         except BaseException:
@@ -123,8 +121,8 @@ async def _(ult):
             msg += f"• {inline_mention(name)} ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    m = udB.get("SUDO") or "False"
-    if m == "False":
+    m = udB.get_key("SUDO") or True
+    if not m:
         m = "[False](https://telegra.ph/Ultroid-04-06)"
     return await eor(
         ult, f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False

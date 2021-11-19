@@ -56,7 +56,7 @@ from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
 @ultroid_bot.on(events.NewMessage())
 async def _(e):
-    if udB.get("AUTOPOST") != "True":
+    if udB.get_key("AUTOPOST") != "True":
         return
     x = get_source_channels()
     th = await e.get_chat()
@@ -67,7 +67,7 @@ async def _(e):
         try:
             await ultroid_bot.send_message(int(ys), e.message)
         except Exception as ex:
-            await asst.send_message(int(udB["LOG_CHANNEL"]), str(ex))
+            await asst.send_message(int(udB.get_key("LOG_CHANNEL")), str(ex))
 
 
 @ultroid_cmd(pattern="shift (.*)")
@@ -124,7 +124,7 @@ async def dd(event):
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_SOURCE")
+        udB.del_key("CH_SOURCE")
         await x.edit(get_string("cha_4"))
         return
     try:
@@ -202,7 +202,7 @@ async def dd(event):
     x = await eor(event, get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_DESTINATION")
+        udB.del_key("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
     try:

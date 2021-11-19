@@ -206,7 +206,7 @@ async def stats(
     await ok.edit(response)
 
 
-@ultroid_cmd(pattern="paste( (.*)|$)", type=["official", "manager"])
+@ultroid_cmd(pattern="paste( (.*)|$)", manager=True)
 async def _(event):
     xx = await eor(event, "` 《 Pasting... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
@@ -255,7 +255,7 @@ async def _(event):
 
 @ultroid_cmd(
     pattern="info ?(.*)",
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(event):
     match = event.pattern_match.group(1)
@@ -386,7 +386,7 @@ async def _(ult):
     pattern=r"rmbg$",
 )
 async def rmbg(event):
-    RMBG_API = udB.get("RMBG_API")
+    RMBG_API = udB.get_key("RMBG_API")
     if not RMBG_API:
         return await eor(
             event,
@@ -491,7 +491,7 @@ async def _(event):
         await eor(event, f"```{the_real_message}```")
 
 
-@ultroid_cmd(pattern="suggest", type=["official", "manager"])
+@ultroid_cmd(pattern="suggest", manager=True)
 async def sugg(event):
     sll = event.text.split(" ", maxsplit=1)
     try:

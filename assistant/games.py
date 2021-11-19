@@ -23,12 +23,8 @@ from random import choice, shuffle
 import akinator
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
-from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._decorators import ultroid_cmd
-from telethon.errors.rpcerrorlist import (
-    BotMethodInvalidError,
-    ChatSendStickersForbiddenError,
-)
+from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
@@ -40,23 +36,26 @@ games = {}
 aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
 
 
-@ultroid_cmd(
-    pattern="akinator", type=["official", "assistant"], from_users=owner_and_sudos
-)
+@ultroid_cmd(pattern="akinator")
 async def doit(e):
     sta = akinator.Akinator()
     games.update({e.chat_id: {e.id: sta}})
     try:
         m = await e.client.inline_query(asst.me.username, f"aki_{e.chat_id}_{e.id}")
         await m[0].click(e.chat_id)
-    except BotMethodInvalidError:
-        return await asst.send_file(
-            e.chat_id,
-            aki_photo,
-            buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
-        )
+    except Exception as er:
+        return await eor(e, f"**ERROR :** `{er}`")
     if e.out:
         await e.delete()
+
+
+@asst_cmd(pattern="akinator", owner=True)
+async def do_magic(e):
+    await asst.send_file(
+        e.chat_id,
+        aki_photo,
+        buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
+    )
 
 
 @callback(re.compile("aki_?(.*)"), owner=True)

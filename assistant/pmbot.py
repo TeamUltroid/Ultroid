@@ -29,11 +29,13 @@ CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
-@asst_cmd(load=AST_PLUGINS, incoming=True, func=lambda e: e.is_private)
+@asst_cmd(
+    load=AST_PLUGINS,
+    incoming=True,
+    func=lambda e: e.is_private and not is_blacklisted(e.sender_id),
+)
 async def on_new_mssg(event):
     who = event.sender_id
-    if is_blacklisted(who):
-        return
     # doesn't reply to that user anymore
     if event.text.startswith("/") or who == OWNER_ID:
         return

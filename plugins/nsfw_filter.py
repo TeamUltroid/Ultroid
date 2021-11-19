@@ -25,7 +25,7 @@ from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
 async def addnsfw(e):
-    if not udB.get("DEEP_API"):
+    if not udB.get_key("DEEP_API"):
         return await eor(
             e, f"Get Api from deepai.org and Add It `{HNDLR}setredis DEEP_API your-api`"
         )
@@ -49,7 +49,7 @@ NWARN = {}
 async def checknsfw(e):
     chat = e.chat_id
     action = is_nsfw(chat)
-    if action and udB.get("DEEP_API") and e.media:
+    if action and udB.get_key("DEEP_API") and e.media:
         pic, name, nsfw = "", "", 0
         try:
             pic = await e.download_media(thumb=-1)
@@ -67,7 +67,7 @@ async def checknsfw(e):
                 files={
                     "image": open(pic, "rb"),
                 },
-                headers={"api-key": udB["DEEP_API"]},
+                headers={"api-key": udB.get_key("DEEP_API")},
             )
             k = float((r.json()["output"]["nsfw_score"]))
             score = int(k * 100)

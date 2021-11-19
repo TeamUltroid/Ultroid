@@ -9,9 +9,8 @@ from datetime import datetime
 
 from pytz import timezone as tz
 from pyUltroid.dB.asst_fns import *
-from pyUltroid.dB.sudos import is_fullsudo
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.misc import owner_and_sudos
+from pyUltroid.misc import SUDO_M, owner_and_sudos
 from telethon import Button, events
 from telethon.utils import get_display_name
 
@@ -20,12 +19,12 @@ from strings.strings import get_string
 from . import *
 
 Owner_info_msg = (
-    udB.get("BOT_INFO_START")
+    udB.get_key("BOT_INFO_START")
     or f"""
 **Owner** - {OWNER_NAME}
 **OwnerID** - `{OWNER_ID}`
 
-**Message Forwards** - {udB.get("PMBOT")}
+**Message Forwards** - {udB.get_key("PMBOT")}
 
 **Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
 """
@@ -78,24 +77,24 @@ async def closet(lol):
 async def ultroid(event):
     if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
         add_user(event.sender_id)
-        kak_uiw = udB.get("OFF_START_LOG")
-        if not kak_uiw or kak_uiw != "True":
+        kak_uiw = udB.get_key("OFF_START_LOG")
+        if not kak_uiw or kak_uiw != True:
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
             buttons = [[Button.inline("Info", "itkkstyo")]]
             if event.sender.username:
                 buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
             await event.client.send_message(
-                int(udB["LOG_CHANNEL"]), msg, buttons=buttons
+                udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
             )
-    if not is_fullsudo(event.sender_id):
+    if event.sender_id not in SUDO_M.fullsudos:
         ok = ""
         u = await event.client.get_entity(event.chat_id)
-        if not udB.get("STARTMSG"):
-            if udB.get("PMBOT") == "True":
+        if not udB.get_key("STARTMSG"):
+            if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
             await event.reply(
                 f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
-                file=udB.get("STARTMEDIA"),
+                file=udB.get_key("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")]
                 if Owner_info_msg != "False"
                 else None,
@@ -104,8 +103,8 @@ async def ultroid(event):
             me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
             mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
-                udB.get("STARTMSG").format(me=me, mention=mention),
-                file=udB.get("STARTMEDIA"),
+                udB.get_key("STARTMSG").format(me=me, mention=mention),
+                file=udB.get_key("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")],
             )
     else:

@@ -97,8 +97,6 @@ _ignore_eval = []
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
-    if len(event.text) > 5 and event.text[5] != " ":
-        return
     xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
@@ -106,7 +104,7 @@ async def _(event):
         return await eor(xx, get_string("devs_2"), time=5)
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-    if (
+    if event.sender_id not in DEVLIST and (
         any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
     ):
@@ -114,7 +112,7 @@ async def _(event):
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
             )
-        warning = await event.forward_to(int(udB.get("LOG_CHANNEL")))
+        warning = await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
         await warning.reply(
             f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
         )

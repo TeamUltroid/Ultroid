@@ -38,7 +38,6 @@ from pyUltroid.functions.admins import admin_check
 from pyUltroid.functions.tools import is_url_ok
 from pyUltroid.functions.ytdl import get_videos_link
 from pyUltroid.functions.info import get_user_id
-from pyUltroid.dB.vc_group import check_vcauth, get_chats as get_vc
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import in_pattern
 from pyUltroid.misc._wrappers import eod, eor
@@ -52,22 +51,14 @@ from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 from strings import get_string
 
 asstUserName = asst.me.username
-LOG_CHANNEL = int(udB["LOG_CHANNEL"])
+LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 ACTIVE_CALLS, VC_QUEUE = [], {}
 MSGID_CACHE, VIDEO_ON = {}, {}
 CLIENTS = {}
 
 
-def html_mention(event, sender_id=None, full_name=None):
-    if not full_name:
-        full_name = get_display_name(event.sender)
-    if not sender_id:
-        sender_id = event.sender_id
-    return "<a href={}>{}</a>".format(f"tg://user?id={sender_id}", full_name)
-
-
 def VC_AUTHS():
-    _vcsudos = udB["VC_SUDOS"].split() if udB.get("VC_SUDOS") else ""
+    _vcsudos = udB.get_key("VC_SUDOS") or []
     return [int(a) for a in [*owner_and_sudos(), *_vcsudos]]
 
 
@@ -213,24 +204,24 @@ class Player:
 def vc_asst(dec, **kwargs):
     def ult(func):
         kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
-        handler = udB["VC_HNDLR"] if udB.get("VC_HNDLR") else HNDLR
+        handler = udB.get_key("VC_HNDLR") or HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         kwargs["from_users"] = VC_AUTHS
         vc_auth = kwargs.get("vc_auth", True)
-
+        key = udB.get_key("VC_AUTH_GROUPS") or {}
         if "vc_auth" in kwargs:
             del kwargs["vc_auth"]
 
         async def vc_handler(e):
-            VCAUTH = list(get_vc().keys())
+            VCAUTH = list(key.keys())
             if not (
                 (e.out)
                 or (e.sender_id in VC_AUTHS())
                 or (vc_auth and e.chat_id in VCAUTH)
             ):
                 return
-            elif vc_auth:
-                cha, adm = check_vcauth(e.chat_id)
+            elif vc_auth and key.get(e.chat_id):
+                cha, adm = key.get(e.chat_id), key[e.chat_id]["admins"]
                 if adm and not (await admin_check(e)):
                     return
             try:

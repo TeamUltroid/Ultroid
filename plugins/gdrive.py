@@ -65,6 +65,8 @@ async def gdown(event):
     fullsudo=True,
 )
 async def files(event):
+    if not os.path.exists(GDrive.token_file):
+        return await eor(event, get_string("gdrive_6").format(asst.me.username))
     files = GDrive._list_files
     eve = await eor(event, get_string("com_1"))
     msg = f"{len(files.keys())} files found in gdrive.\n\n"
@@ -100,9 +102,9 @@ async def files(event):
     fullsudo=True,
 )
 async def _(event):
-    mone = await eor(event, get_string("com_1"))
     if not os.path.exists(GDrive.token_file):
-        return await eod(mone, get_string("gdrive_6").format(asst.me.username))
+        return await eor(event, get_string("gdrive_6").format(asst.me.username))
+    mone = await eor(event, get_string("com_1"))
     input_str = event.pattern_match.group(1)
     filename = None
     start = time.time()
@@ -201,6 +203,8 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
+    if not os.path.exists(GDrive.token_file):
+        return await eor(event, get_string("gdrive_6").format(asst.me.username))
     if GDrive.folder_id:
         await eod(
             event,
@@ -209,4 +213,4 @@ async def _(event):
             + GDrive.folder_id,
         )
     else:
-        await eod(event, "Set GDRIVE_FOLDER_ID with value of your folder id")
+        await eod(event, "Set FOLDERID from your Assistant bot's Settings ")

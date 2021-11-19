@@ -1,5 +1,8 @@
 name: PyLint
-on: push
+on:
+  push:
+    paths:
+    - "**.py"
 jobs:
   PEP8:
     runs-on: ubuntu-latest

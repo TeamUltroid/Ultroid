@@ -17,6 +17,7 @@ from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
 from . import *
+from . import _ult_cache
 
 SUP_BUTTONS = [
     [
@@ -29,15 +30,11 @@ ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
 ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
 
-api1 = base64.b64decode("QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV").decode(
-    "ascii"
-)
-api2 = base64.b64decode("QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn").decode(
-    "ascii"
-)
-api3 = base64.b64decode("QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR").decode(
-    "ascii"
-)
+apis = [
+    "QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV",
+    "QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn",
+    "QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR",
+]
 
 
 @in_pattern("ofox", owner=True)
@@ -215,7 +212,7 @@ async def _(e):
         )
     page = 1
     start = (page - 1) * 3 + 1
-    da = choice([api1, api2, api3])
+    da = base64.b64decode(choice(apis)).decode("ascii")
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = await async_searcher(url, re_json=True)
     search_items = data.get("items")
@@ -552,3 +549,66 @@ async def koo_search(ult):
         _koo_.update({match_: res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
+
+
+# Thanks to OpenSource
+_bearer_collected = [
+    "AAAAAAAAAAAAAAAAAAAAALIKKgEAAAAA1DRuS%2BI7ZRKiagD6KHYmreaXomo%3DP5Vaje4UTtEkODg0fX7nCh5laSrchhtLxeyEqxXpv0w9ZKspLD",
+    "AAAAAAAAAAAAAAAAAAAAAL5iUAEAAAAAmo6FYRjqdKlI3cNziIm%2BHUQB9Xs%3DS31pj0mxARMTOk2g9dvQ1yP9wknvY4FPBPUlE00smJcncw4dPR",
+    "AAAAAAAAAAAAAAAAAAAAAN6sVgEAAAAAMMjMMWrwgGyv7YQOWN%2FSAsO5SGM%3Dg8MG9Jq93Rlllaok6eht7HvRCruN4Vpzp4NaVsZaaHHWSTzKI8",
+]
+
+
+@in_pattern("twitter", owner=True)
+async def twitter_search(event):
+    try:
+        match = event.text.split(maxsplit=1)[1].lower()
+    except IndexError:
+        return await event.answer(
+            [], switch_pm="Enter Query to Search", switch_pm_param="start"
+        )
+    try:
+        return await event.answer(
+            _ult_cache["twitter"][match],
+            switch_pm="• Twitter Search •",
+            switch_pm_param="start",
+        )
+    except KeyError:
+        pass
+    headers = {"Authorization": "bearer " + choice(_bearer_collected)}
+    res = await async_searcher(
+        f"https://api.twitter.com/1.1/users/search.json?q={match}",
+        headers=headers,
+        re_json=True,
+    )
+    reso = []
+    for user in res:
+        thumb = wb(user["profile_image_url_https"], 0, "image/jpeg", [])
+        if user.get("profile_banner_url"):
+            url = user["profile_banner_url"]
+            text = f"[\xad]({url})• **Name :** `{user['name']}`\n"
+        else:
+            text = f"• **Name :** `{user['name']}`\n"
+        text += f"• **Description :** `{user['description']}`\n"
+        text += f"• **Username :** `@{user['screen_name']}`\n"
+        text += f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
+        pro_ = "https://twitter.com/" + user["screen_name"]
+        text += f"• **Link :** [Click Here]({pro_})"
+        reso.append(
+            await event.builder.article(
+                title=user["name"],
+                description=user["description"],
+                url=pro_,
+                text=text,
+                thumb=thumb,
+            )
+        )
+    if not reso:
+        swi_ = "No User Found :("
+    else:
+        swi_ = f"🐦 Showing {len(reso)} Results!"
+    await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
+    if _ult_cache.get("twitter"):
+        _ult_cache["twitter"].update({match: reso})
+    else:
+        _ult_cache.update({"twitter": {match: reso}})

@@ -67,7 +67,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, type=["official", "manager"])
+@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, manager=True)
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -96,7 +96,7 @@ async def prmte(ult):
 @ultroid_cmd(
     pattern="demote ?(.*)",
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -125,7 +125,7 @@ async def dmote(ult):
 @ultroid_cmd(
     pattern="ban ?(.*)",
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def bban(ult):
     something = await get_uinfo(ult)
@@ -153,7 +153,7 @@ async def bban(ult):
 @ultroid_cmd(
     pattern="unban ?(.*)",
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -181,7 +181,7 @@ async def uunban(ult):
 @ultroid_cmd(
     pattern="kick ?(.*)",
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def kck(ult):
     if "kickme" in ult.text:
@@ -213,7 +213,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="tban ?(.*)", manager=True)
 async def tkicki(e):
     huh = e.text.split(" ")
     try:
@@ -248,7 +248,7 @@ async def tkicki(e):
         return await eor(e, str(m))
 
 
-@ultroid_cmd(pattern="pin$", type=["official", "manager"])
+@ultroid_cmd(pattern="pin$", manager=True)
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -268,7 +268,7 @@ async def pin(msg):
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
-    type=["official", "manager"],
+    manager=True,
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -289,7 +289,7 @@ async def unp(ult):
 
 @ultroid_cmd(
     pattern="purge ?(.*)",
-    type=["official", "manager"],
+    manager=True,
 )
 async def fastpurger(purg):
     match = purg.pattern_match.group(1)
@@ -391,7 +391,7 @@ async def _(e):
         return await eor(e, str(er), time=5)
 
 
-@ultroid_cmd(pattern="pinned", type=["official", "manager"], groups_only=True)
+@ultroid_cmd(pattern="pinned", manager=True, groups_only=True)
 async def djshsh(event):
     chat = await event.get_chat()
     if isinstance(chat, types.Chat):

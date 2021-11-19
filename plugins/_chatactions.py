@@ -8,8 +8,6 @@
 import asyncio
 
 from pyUltroid.dB import stickers
-from pyUltroid.dB.chatBot_db import chatbot_stats
-from pyUltroid.dB.clean_db import is_clean_added
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
@@ -27,7 +25,8 @@ from ._inline import something
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions
-    if is_clean_added(ult.chat_id):
+    key = udB.get_key("CLEANCHAT") or {}
+    if key.get(ult.chat_id):
         try:
             await ult.delete()
         except BaseException:
@@ -42,7 +41,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             await ult.respond(file=sticker)
     # force subscribe
     if (
-        udB.get("FORCESUB")
+        udB.get_key("FORCESUB")
         and ((ult.user_joined or ult.user_added))
         and get_forcesetting(ult.chat_id)
     ):
@@ -159,7 +158,8 @@ async def chatBot_replies(e):
     sender = await e.get_sender()
     if not isinstance(sender, types.User):
         return
-    if e.text and chatbot_stats(e.chat_id, e.sender_id):
+    key = udB.get_key("CHATBOT_USERS") or {}
+    if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
         if msg:
             await e.reply(msg)
@@ -178,7 +178,7 @@ async def uname_change(e):
 
 
 async def uname_stuff(id, uname, name):
-    if udB.get("USERNAME_LOG") == "True":
+    if udB.get_key("USERNAME_LOG") == "True":
         old_ = udB.get_key("USERNAME_DB") or {}
         old = old_.get(id)
         # Ignore Name Logs

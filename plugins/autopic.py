@@ -35,12 +35,12 @@ async def autopic(e):
     if not clls:
         return await eor(e, get_string("autopic_2").format(search), time=5)
     await eor(e, get_string("autopic_3").format(search))
-    udB.set("AUTOPIC", "True")
-    ST = udB.get("SLEEP_TIME")
+    udB.set_key("AUTOPIC", "True")
+    ST = udB.get_key("SLEEP_TIME")
     SLEEP_TIME = int(ST) if ST else 1221
     while True:
         for lie in clls:
-            if udB.get("AUTOPIC") != "True":
+            if udB.get_key("AUTOPIC") != "True":
                 return
             kar = await download_file(lie, "autopic.png")
             file = await e.client.upload_file(kar)
@@ -52,8 +52,8 @@ async def autopic(e):
 
 @ultroid_cmd(pattern="stoppic$")
 async def stoppo(ult):
-    gt = udB.get("AUTOPIC")
+    gt = udB.get_key("AUTOPIC")
     if gt != "True":
         return await eor(ult, get_string("autopic_4"), time=5)
-    udB.set("AUTOPIC", "None")
+    udB.set_key("AUTOPIC", "None")
     await eor(ult, get_string("autopic_5"), time=5)

@@ -1,0 +1,24 @@
+name: Replacer
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  Replace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: 'type=["official", "manager"]'
+          replace: "manager=True"
+          regex: false
+          exclude: .github/**
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Replacer'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: buddhhu
+          commit_user_email: 48654350+buddhhu@users.noreply.github.com
+          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>

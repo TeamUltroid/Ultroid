@@ -20,7 +20,20 @@ import os
 from htmlwebshot import WebShot
 from PIL import Image, ImageDraw, ImageFont
 
-from . import eod, eor, get_string, text_set, ultroid_cmd
+from . import async_searcher, eod, eor, get_string, text_set, ultroid_cmd
+
+
+@ultroid_cmd(pattern="gethtml ?(.*)")
+async def ghtml(e):
+    txt = e.pattern_match.group(1)
+    if txt:
+        link = e.text.split(maxsplit=1)[1]
+    else:
+        return await eod(e, "`Either reply to any file or give any text`")
+    k = await async_searcher(link)
+    with open("file.html", "w+") as f:
+        f.write(k)
+    await e.reply(file="file.html")
 
 
 @ultroid_cmd(pattern="image ?(.*)")
@@ -40,10 +53,7 @@ async def f2i(e):
     shot = WebShot(quality=85)
     css = "body {background: white;} p {color: red;}"
     pic = await shot.create_pic_async(html=html, css=css)
-    try:
-        await e.reply(file=pic)
-    except BaseException:
-        await e.reply(file=pic, force_document=True)
+    await e.reply(file=pic, force_document=True)
     os.remove(pic)
     if os.path.exists(html):
         os.remove(html)

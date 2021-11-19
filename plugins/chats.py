@@ -88,14 +88,14 @@ async def _(e):
     except no_admin:
         return await eor(xx, get_string("chats_2"), time=10)
     await e.client.send_message(
-        int(udB.get("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
+        int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
 
 @ultroid_cmd(
     pattern="getlink$",
     groups_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(e):
     reply = await e.get_reply_message()
@@ -192,7 +192,7 @@ async def _(e):
     pattern="setgpic ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(ult):
     if not ult.is_reply:
@@ -226,7 +226,7 @@ async def _(ult):
     pattern="delgpic ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def _(ult):
     match = ult.pattern_match.group(1)

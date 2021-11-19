@@ -31,7 +31,7 @@ from . import eor, inline_mention, udB, ultroid_cmd
 
 @ultroid_cmd(
     pattern="warn ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -60,7 +60,7 @@ async def warn(e):
     count, r = warns(e.chat_id, user)
     r = reason if not r else r + "|$|" + reason
     try:
-        x = udB.get("SETWARN")
+        x = udB.get_key("SETWARN")
         number, action = int(x.split()[0]), x.split()[1]
     except BaseException:
         number, action = 3, "kick"
@@ -105,7 +105,7 @@ async def warn(e):
 
 @ultroid_cmd(
     pattern="resetwarn ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -131,7 +131,7 @@ async def rwarn(e):
 
 @ultroid_cmd(
     pattern="warns ?(.*)",
-    type=["official", "manager"],
+    manager=True,
     groups_only=True,
     admins_only=True,
 )
@@ -162,7 +162,7 @@ async def twarns(e):
         await eor(e, "`No Warnings`")
 
 
-@ultroid_cmd(pattern="setwarn ?(.*)", type=["official", "manager"])
+@ultroid_cmd(pattern="setwarn ?(.*)", manager=True)
 async def warnset(e):
     ok = e.pattern_match.group(1)
     if not ok:
@@ -174,7 +174,7 @@ async def warnset(e):
             return await eor(e, get_string("schdl_2"), time=5)
         if ("ban" or "kick" or "mute") not in action:
             return await eor(e, "`Only mute / ban / kick option suported`", time=5)
-        udB.set("SETWARN", f"{number} {action}")
+        udB.set_key("SETWARN", f"{number} {action}")
         await eor(e, f"Done Your Warn Count is now {number} and Action is {action}")
     else:
         await eor(e, get_string("schdl_2"), time=5)

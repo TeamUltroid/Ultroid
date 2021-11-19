@@ -24,9 +24,9 @@ from . import HNDLR, Redis, eor, get_string, udB, ultroid_bot, ultroid_cmd
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
-        udB.set("AUTOCORRECT", "True")
+        udB.set_key("AUTOCORRECT", "True")
         return await eor(e, get_string("act_1"), time=5)
-    udB.delete("AUTOCORRECT")
+    udB.del_key("AUTOCORRECT")
     await eor(e, get_string("act_2"), time=5)
 
 

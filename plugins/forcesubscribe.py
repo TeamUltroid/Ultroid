@@ -129,7 +129,7 @@ async def diesoon(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def cacheahs(ult):
-    if not udB.get("FORCESUB"):
+    if not udB.get_key("FORCESUB"):
         return
 
     user = await ult.get_sender()

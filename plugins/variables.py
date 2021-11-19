@@ -40,7 +40,7 @@ async def get_var(event):
     if opt == "var":
         c = 0
         # try redis
-        val = udB.get(varname)
+        val = udB.get_key(varname)
         if val is not None:
             c += 1
             await x.edit(
@@ -60,7 +60,7 @@ async def get_var(event):
     elif opt == "type":
         c = 0
         # try redis
-        val = udB.get(varname)
+        val = udB.get_key(varname)
         if val is not None:
             c += 1
             await x.edit(f"**Variable** - `{varname}`\n**Type**: Redis Key.")
@@ -74,7 +74,7 @@ async def get_var(event):
             await eor(x, "Such a var doesn't exist!", time=5)
 
     elif opt == "db":
-        val = udB.get(varname)
+        val = udB.get_key(varname)
         if val is not None:
             await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
         else:

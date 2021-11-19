@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pyUltroid import *
+from pyUltroid import _ult_cache
 from pyUltroid.functions.helper import *
 from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
@@ -22,7 +23,7 @@ AST_PLUGINS = {}
 
 async def setit(event, name, value):
     try:
-        udB.set(name, value)
+        udB.set_key(name, value)
     except BaseException:
         return await event.edit("`Something Went Wrong`")
 

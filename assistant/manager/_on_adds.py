@@ -15,7 +15,7 @@ async def dueha(e):
     user = await e.get_user()
     if not user.is_self:
         return
-    sm = udB.get("ON_MNGR_ADD")
+    sm = udB.get_key("ON_MNGR_ADD")
     if sm == "OFF":
         return
     if not sm:

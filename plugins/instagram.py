@@ -30,6 +30,7 @@
 """
 
 import os
+from datetime import datetime as dt
 from re import compile
 
 from pyUltroid.functions.helper import numerize
@@ -50,6 +51,7 @@ from . import (
     eor,
     get_string,
     in_pattern,
+    time_formatter,
     udB,
     ultroid_cmd,
 )
@@ -66,7 +68,7 @@ async def insta_dl(e):
         text = replied.message
     else:
         return await eor(tt, "Provide a Link to Download...")
-
+    start = dt.now()
     CL = await create_instagram_client(e)
     if CL:
         try:
@@ -87,7 +89,11 @@ async def insta_dl(e):
             else:
                 LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
-            await e.reply(f"**Uploaded Successfully\nLink :** {text}", file=media)
+            tm = time_formatter((dt.now() - start).microseconds)
+            await e.reply(
+                f"**• Uploaded Successfully\n• Link :** {text}\n**• Time Taken :** `{tm}`",
+                file=media,
+            )
             await tt.delete()
             if not isinstance(media, list):
                 os.remove(media)
@@ -238,7 +244,7 @@ async def dele_post(event):
 
 @in_pattern(pattern="instatm", owner=True)
 async def bhoot_ayaa(event):
-    if not udB.get("INSTA_SET"):
+    if not udB.get_key("INSTA_SET"):
         return await event.answer(
             [], switch_pm="Fill Instagram Credentials First.", switch_pm_param="start"
         )

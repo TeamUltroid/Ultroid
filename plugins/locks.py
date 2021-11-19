@@ -24,7 +24,7 @@ from . import eor, ultroid_cmd
     pattern="lock ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def lockho(e):
     mat = e.pattern_match.group(1)
@@ -41,7 +41,7 @@ async def lockho(e):
     pattern="unlock ?(.*)",
     groups_only=True,
     admins_only=True,
-    type=["official", "manager"],
+    manager=True,
 )
 async def unlckho(e):
     mat = e.pattern_match.group(1)
