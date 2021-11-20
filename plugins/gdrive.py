@@ -107,7 +107,7 @@ async def _(event):
         return await eod(event, get_string("gdrive_6").format(asst.me.username))
     input_file = event.pattern_match.group(1) or await event.get_reply_message()
     if not input_file:
-        return await eod(event, get_string("gdrive_1"))
+        return await eod(event, "`Reply to file or give its location.`"))
     mone = await eor(event, get_string("com_1"))
     if isinstance(input_file, Message):
         location = "resources/downloads"
@@ -131,10 +131,10 @@ async def _(event):
         except Exception as e:
             return await eor(mone, str(e), time=10)
         await mone.edit(
-            f"Downloaded to `{filename}` in {time_formatter(downloaded_in)}",
+            f"Downloaded to `{filename}` in {time_formatter(downloaded_in*1000)}",
         )
     else:
-        filename = input_str.strip()
+        filename = input_file.strip()
         if not os.path.exists(filename):
             return await eod(
                 mone,
