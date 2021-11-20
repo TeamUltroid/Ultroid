@@ -5,7 +5,6 @@ services:
     repo: https://github.com/TeamUltroid/Ultroid
     branch: dev
     plan: free
-    healthCheckPath: /
     envVars:
       - key: SESSION
         value: ""
