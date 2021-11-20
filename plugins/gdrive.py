@@ -126,7 +126,7 @@ async def _(event):
             filename = filename.name
         except AttributeError:
             start_time = time.time()
-            filename = await event.client.download_media(location, reply_message.media)
+            filename = await event.client.download_media(location, input_file.media)
             downloaded_in = time.time() - start_time
         except Exception as e:
             return await eor(mone, str(e), time=10)
