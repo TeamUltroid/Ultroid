@@ -1,0 +1,7 @@
+services:
+  - type: worker
+    name: Ultroid Userbot
+    env: docker
+    repo: https://github.com/TeamUltroid/Ultroid
+    branch: dev
+    
