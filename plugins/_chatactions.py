@@ -11,6 +11,7 @@ from pyUltroid.dB import stickers
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
+from pyUltroid.dB.nsfw_db import is_profan
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import create_tl_btn, get_chatbot_reply
 from telethon import events
@@ -18,6 +19,10 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
+try:
+    from ProfanityDetector import detector
+except ImportError:
+    detector = None
 from . import LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
 from ._inline import something
 
@@ -170,6 +175,10 @@ async def chatBot_replies(e):
     elif e.is_private and not sender.bot:
         if chat.username:
             await uname_stuff(e.sender_id, chat.username, chat.first_name)
+    if detector and is_profan(e.chat_id) and e.text:
+        x, y = detector(e.text)
+        if y:
+            await e.delete()
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))

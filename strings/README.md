@@ -6,7 +6,7 @@
 | en | English [English] | 393 | 0 |
 | it | Italian [italiano] | 114 | 279 |
 | tr | Turkish [Türk] | 115 | 278 |
-| hi | Hindi [हिंदी] | 126 | 267 |
+
 | cn | Chinese [简体中文] | 115 | 278 |
 | ar | Arabic [العربية] | 115 | 278 |
 | gu | Gujarati [ગુજરાતી] | 115 | 278 |
