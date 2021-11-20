@@ -39,6 +39,8 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate&template=https://github.com/BLUE-DEVIL1134/UltroidCliTemplate)
 
+<a href="https://dashboard.balena-cloud.com/deploy"><img src="https://www.balena.io/deploy.png" width="200"></a>
+
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
