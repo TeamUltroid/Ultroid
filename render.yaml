@@ -4,4 +4,4 @@ services:
     env: docker
     repo: https://github.com/TeamUltroid/Ultroid
     branch: dev
-    
+    plan: free
