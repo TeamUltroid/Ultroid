@@ -180,7 +180,6 @@ async def uunban(ult):
 
 @ultroid_cmd(
     pattern="kick ?(.*)",
-    admins_only=True,
     manager=True,
 )
 async def kck(ult):
