@@ -33,6 +33,7 @@ import time
 
 from pyUltroid.functions.gDrive import GDriveManager
 from pyUltroid.functions.helper import time_formatter
+from telethon.tl.types import Message
 
 from . import asst, downloader, eod, eor, get_string, ultroid_cmd
 
@@ -103,32 +104,38 @@ async def files(event):
 )
 async def _(event):
     if not os.path.exists(GDrive.token_file):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username))
+        return await eod(event, get_string("gdrive_6").format(asst.me.username))
+    input_file = event.pattern_match.group(1) or await event.get_reply_message()
+    if not input_file:
+        return await eod(event, get_string("gdrive_1"))
     mone = await eor(event, get_string("com_1"))
-    input_str = event.pattern_match.group(1)
-    filename = None
-    start = time.time()
-    if event.reply_to_msg_id and not input_str:
-        reply_message = await event.get_reply_message()
+    if isinstance(input_file, Message):
+        location = "resources/downloads"
+        filename = input_file.file.name
+        if not filename:
+            filename = round(start_time)
+        filename = location + "/" + filename
         try:
-            downloaded_file_name = await downloader(
-                "resources/downloads/" + reply_message.file.name,
-                reply_message.media.document,
-                mone,
-                start,
-                get_string("com_5"),
+            filename, downloaded_in = await event.client.fast_downloader(
+                file=input_file.media.document,
+                filename=filename,
+                show_progress=True,
+                event=mone,
+                message=get_string("com_5"),
             )
-            filename = downloaded_file_name.name
-        except TypeError:
+            filename = filename.name
+        except AttributeError:
+            start_time = time.time()
             filename = await event.client.download_media(
-                "resources/downloads", reply_message.media
+                location, reply_message.media
             )
+            downloaded_in = time.time() - start_time
         except Exception as e:
             return await eor(mone, str(e), time=10)
         await mone.edit(
-            f"Downloaded to `{filename}` in {time_formatter(time.time() - start)}",
+            f"Downloaded to `{filename}` in {time_formatter(downloaded_in)}",
         )
-    elif input_str:
+    else:
         filename = input_str.strip()
         if not os.path.exists(filename):
             return await eod(
