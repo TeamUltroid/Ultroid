@@ -1,0 +1,12 @@
+name: Ultroid
+type: sw.application
+description: Multifeatured Telegram Userbot
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: 'https://github.com/TeamUltroid/Ultroid'
+logo:
+    type: blob.asset
+    data:
+      url: 'https://github.com/TeamUltroid/Ultroid/raw/main/resources/extras/ultroid.jpg'
