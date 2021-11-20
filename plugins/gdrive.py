@@ -35,7 +35,7 @@ from pyUltroid.functions.gDrive import GDriveManager
 from pyUltroid.functions.helper import time_formatter
 from telethon.tl.types import Message
 
-from . import asst, downloader, eod, eor, get_string, ultroid_cmd
+from . import asst, eod, eor, get_string, ultroid_cmd
 
 GDrive = GDriveManager()
 
@@ -126,9 +126,7 @@ async def _(event):
             filename = filename.name
         except AttributeError:
             start_time = time.time()
-            filename = await event.client.download_media(
-                location, reply_message.media
-            )
+            filename = await event.client.download_media(location, reply_message.media)
             downloaded_in = time.time() - start_time
         except Exception as e:
             return await eor(mone, str(e), time=10)
