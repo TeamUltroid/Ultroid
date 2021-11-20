@@ -107,7 +107,7 @@ async def _(event):
         return await eod(event, get_string("gdrive_6").format(asst.me.username))
     input_file = event.pattern_match.group(1) or await event.get_reply_message()
     if not input_file:
-        return await eod(event, "`Reply to file or give its location.`"))
+        return await eod(event, "`Reply to file or give its location.`")
     mone = await eor(event, get_string("com_1"))
     if isinstance(input_file, Message):
         location = "resources/downloads"
