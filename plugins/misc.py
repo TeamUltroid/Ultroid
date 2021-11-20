@@ -122,6 +122,8 @@ async def mobs(e):
         ty = fp.findNext()
         out += f"- **{ty.text}** - `{ty.findNext().text}`\n"
     out += "_"
+    if file == []:
+        file = None
     await e.reply(out, file=imu)
     await bt.delete()
 
