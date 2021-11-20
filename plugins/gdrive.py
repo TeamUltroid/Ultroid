@@ -113,7 +113,7 @@ async def _(event):
         location = "resources/downloads"
         filename = input_file.file.name
         if not filename:
-            filename = round(time.time())
+            filename = str(round(time.time()))
         filename = location + "/" + filename
         try:
             filename, downloaded_in = await event.client.fast_downloader(
