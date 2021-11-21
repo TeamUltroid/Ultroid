@@ -16,36 +16,35 @@
 
 • `{i}listgban` : List all GBanned users.
 
-• `{i}gmute <reply user/ username>`
-• `{i}ungmute`
+• `{i}gmute` | `{i}ungmute` <reply user/ username>`
     Mute/UnMute Globally.
 
-• `{i}gkick <reply user/ username>`
+• `{i}gkick <reply user/username>`
     Globally Kick User.
 
-• `{i}gcast <Message> or <reply>`
-    Globally Send that msg in all grps.
+• `{i}gcast <text/reply>`
+    Globally Send msg in all grps.
 
-• `{i}gadmincast <Message> or <reply>`
-    Globally broadcast for chat, where you are admin.
+• `{i}gadmincast <text/reply>`
+    Globally broadcast in your admin chats.
 
 • `{i}gucast <Message> or <reply>`
-    Globally Send that msg in all Users in pm.
+    Globally send msg in all user in your pm.
 
-• `{i} gblacklist <chat id/username/nothing (for current chat)`
-   Add chat to blacklist and not send global broadcasts.
+• `{i}gblacklist <chat id/username/nothing (for current chat)`
+   Add chat to blacklist and ignores global broadcast.
 
-• `{i} ungblacklist <chat id/username/nothing (for current chat)`
+• `{i}ungblacklist <chat id/username/nothing (for current chat)`
    Remove the chat from blacklist.
 
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
-    globally promote user where you are admin.
+    globally promote user where you are admin
+.
     - Set whether To promote only in groups/channels/all.
-    Like. `gpromote group boss` ~ promotes user in all groups.
-    Or. `gpromote @username all sar` ~ promotes the user in all group & channel.
+    `Eg-``gpromote group boss` ~ promotes user in all grps.
+        `gpromote @username all sar` ~ promote the user in all group & channel
 
-•`{i}gdemote`
-    Same function as gpromote.
+•`{i}gdemote` - `demote user globally`
 """
 import os
 
