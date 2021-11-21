@@ -37,11 +37,6 @@ _main_help_menu = [
 
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
-    if not have_brain:
-        return await eor(
-            ult,
-            "Sorry, this Feature is Brain Restricted\nIf you believe you have something called Brain, please fill `True` in `I_HAVE_BRAIN` Var in redis or at Heroku!\nHope that's not a misunderstanding",
-        )
     plug = ult.pattern_match.group(1)
     if plug:
         try:
