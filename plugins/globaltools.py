@@ -19,31 +19,21 @@
 • `{i}gmute` | `{i}ungmute` <reply user/ username>`
     Mute/UnMute Globally.
 
-• `{i}gkick <reply user/username>`
-    Globally Kick User.
+• `{i}gkick <reply/username>` `Globally Kick User`
+• `{i}gcast <text/reply>` `Globally Send msg in all grps`
 
-• `{i}gcast <text/reply>`
-    Globally Send msg in all grps.
-
-• `{i}gadmincast <text/reply>`
-    Globally broadcast in your admin chats.
-
-• `{i}gucast <Message> or <reply>`
-    Globally send msg in all user in your pm.
+• `{i}gadmincast <text/reply>` `Globally broadcast in your admin chats`
+• `{i}gucast <text/reply>` `Globally send msg in all pm users`
 
 • `{i}gblacklist <chat id/username/nothing (for current chat)`
    Add chat to blacklist and ignores global broadcast.
-
-• `{i}ungblacklist <chat id/username/nothing (for current chat)`
-   Remove the chat from blacklist.
+• `{i}ungblacklist` `Remove the chat from blacklist.`
 
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin
-.
     - Set whether To promote only in groups/channels/all.
     `Eg-``gpromote group boss` ~ promotes user in all grps.
         `gpromote @username all sar` ~ promote the user in all group & channel
-
 •`{i}gdemote` - `demote user globally`
 """
 import os
