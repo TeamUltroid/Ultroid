@@ -14,8 +14,7 @@
 • `{i}gstat <reply to user/userid/username>`
    Check if user is GBanned.
 
-• `{i}listgban`
-   List all GBanned users.
+• `{i}listgban` : List all GBanned users.
 
 • `{i}gmute <reply user/ username>`
 • `{i}ungmute`
@@ -28,22 +27,22 @@
     Globally Send that msg in all grps.
 
 • `{i}gadmincast <Message> or <reply>`
-    Globally Send that msg in grps where you are admin.
+    Globally broadcast for chat, where you are admin.
 
 • `{i}gucast <Message> or <reply>`
-    Globally Send that msg in all Ur Chat Users.
+    Globally Send that msg in all Users in pm.
 
 • `{i} gblacklist <chat id/username/nothing (for current chat)`
-   Add chat to blacklist and not send global broadcasts there.
+   Add chat to blacklist and not send global broadcasts.
 
 • `{i} ungblacklist <chat id/username/nothing (for current chat)`
-   Remove the chat from blacklist adn continue sending global broadcasts there.
+   Remove the chat from blacklist.
 
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin.
-    You can also set where To promote only groups or only channels or in all.
-    Like. `gpromote group boss` ~ it promote repied user in all groups.
-    Or. `gpromote @username all sar` ~ it promote the users in all group and channel.
+    - Set whether To promote only in groups/channels/all.
+    Like. `gpromote group boss` ~ promotes user in all groups.
+    Or. `gpromote @username all sar` ~ promotes the user in all group & channel.
 
 •`{i}gdemote`
     Same function as gpromote.
