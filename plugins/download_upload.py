@@ -197,14 +197,14 @@ async def download(event):
                             caption=f"`{title}`",
                             attributes=attributes,
                             supports_streaming=True,
-                            thumb="resources/extras/ultroid.jpg",
+                            thumb="resources/extras/ost.jpg",
                         )
                     except BaseException:
                         await event.client.send_file(
                             event.chat_id,
                             res,
                             caption=f"`{title}`",
-                            thumb="resources/extras/ultroid.jpg",
+                            thumb="resources/extras/ost.jpg",
                         )
                 else:
                     await event.client.send_file(
@@ -212,7 +212,7 @@ async def download(event):
                         res,
                         caption=f"`{title}`",
                         force_document=True,
-                        thumb="resources/extras/ultroid.jpg",
+                        thumb="resources/extras/ost.jpg",
                     )
             except Exception as ve:
                 return await eor(xx, str(ve))
@@ -253,7 +253,7 @@ async def download(event):
                         caption=f"`{title}`",
                         attributes=attributes,
                         supports_streaming=True,
-                        thumb="resources/extras/ultroid.jpg",
+                        thumb="resources/extras/ost.jpg",
                     )
                 except BaseException:
                     await event.client.send_file(
@@ -261,7 +261,7 @@ async def download(event):
                         res,
                         caption=f"`{title}`",
                         force_document=True,
-                        thumb="resources/extras/ultroid.jpg",
+                        thumb="resources/extras/ost.jpg",
                     )
             else:
                 await event.client.send_file(
@@ -269,7 +269,7 @@ async def download(event):
                     res,
                     caption=f"`{title}`",
                     force_document=True,
-                    thumb="resources/extras/ultroid.jpg",
+                    thumb="resources/extras/ost.jpg",
                 )
         except Exception as ve:
             return await eor(xx, str(ve))
