@@ -122,6 +122,7 @@ async def _(e):
 
 # log for assistant/user joins/add
 
+
 async def when_added_or_joined(event):
     user = await event.get_user()
     chat = await event.get_chat()
@@ -142,8 +143,13 @@ async def when_added_or_joined(event):
         text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
 
-asst.add_event_handler(when_added_or_joined, events.ChatAction(func=lambda x: x.user_added))
-ultroid_bot.add_event_handler(when_added_or_joined, events.ChatAction(func=lambda x: x.user_added or user.joined))
+
+asst.add_event_handler(
+    when_added_or_joined, events.ChatAction(func=lambda x: x.user_added)
+)
+ultroid_bot.add_event_handler(
+    when_added_or_joined, events.ChatAction(func=lambda x: x.user_added or user.joined)
+)
 
 _client = {"bot": asst, "user": ultroid_bot}
 
