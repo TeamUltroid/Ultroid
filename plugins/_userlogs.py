@@ -148,7 +148,8 @@ asst.add_event_handler(
     when_added_or_joined, events.ChatAction(func=lambda x: x.user_added)
 )
 ultroid_bot.add_event_handler(
-    when_added_or_joined, events.ChatAction(func=lambda x: x.user_added or x.user_joined)
+    when_added_or_joined,
+    events.ChatAction(func=lambda x: x.user_added or x.user_joined),
 )
 
 _client = {"bot": asst, "user": ultroid_bot}
