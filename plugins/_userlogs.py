@@ -96,7 +96,7 @@ if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
     @ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
-            chats=[int(udB.get_key("TAG_LOG"))],
+            chats=[udB.get_key("TAG_LOG")],
             func=lambda e: e.reply_to,
         )
     )
@@ -122,10 +122,7 @@ async def _(e):
 
 # log for assistant/user joins/add
 
-
-@asst.on(events.ChatAction(func=lambda x: x.user_added))
-@ultroid_bot.on(events.ChatAction(func=lambda x: x.user_added or x.user_joined))
-async def when(event):
+async def when_added_or_joined(event):
     user = await event.get_user()
     chat = await event.get_chat()
     if not (user and user.is_self):
@@ -145,6 +142,8 @@ async def when(event):
         text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
 
+asst.add_event_handler(when_added_or_joined, events.ChatAction(func=lambda x: x.user_added))
+ultroid_bot.add_event_handler(when_added_or_joined, events.ChatAction(func=lambda x: x.user_added or user.joined))
 
 _client = {"bot": asst, "user": ultroid_bot}
 
