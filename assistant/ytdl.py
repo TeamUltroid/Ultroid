@@ -18,7 +18,7 @@ from pyUltroid.functions.helper import (
     time_formatter,
     uploader,
 )
-from pyUltroid.functions.ytdl import dler, get_buttons, get_data
+from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
@@ -117,7 +117,7 @@ async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
     _lets_split = _e.split("_", maxsplit=1)
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
-    _data = get_data(_lets_split[0], _ytdl_data)
+    _data = get_formats(_lets_split[0], _ytdl_data)
     _buttons = get_buttons(
         "ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data
     )
