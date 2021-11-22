@@ -1,7 +1,6 @@
 # Optional Requirements, which are too required for full functioning.
 
 # ------------------------------------------------------ #
-aiohttp==3.7.4.post0
 akinator.py
 apscheduler
 bs4
