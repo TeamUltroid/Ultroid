@@ -25,11 +25,10 @@
 import os
 from datetime import datetime
 
+import cfscrape
 from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
-from requests import get
-import cfscrape
 
 from . import (
     async_searcher,
