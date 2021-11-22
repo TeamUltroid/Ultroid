@@ -29,6 +29,7 @@ from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
 from requests import get
+import cfscrape
 
 from . import (
     async_searcher,
@@ -77,8 +78,10 @@ async def diela(e):
 )
 async def pinterest(e):
     m = e.pattern_match.group(1)
-    get_link = get(gib_link(m)).text
-    hehe = bs(get_link, "html.parser")
+    if not m:
+        return await eod(e, "`Give pin link`")
+    scrape = cfscrape.create_scraper()
+    hehe = bs(scrape.get(gib_link(m)).text, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
     if len(hulu) < 1:
         await eor(e, "`Wrong link or private pin.`", time=5)
