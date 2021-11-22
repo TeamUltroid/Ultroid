@@ -156,6 +156,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
+@ultroid_bot.on(events.MessageEdited(incoming=True))
 async def chatBot_replies(e):
     sender = await e.get_sender()
     if not isinstance(sender, types.User):
