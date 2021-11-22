@@ -18,7 +18,7 @@
 """
 from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 
-from . import Redis, eor, get_display_name, get_user_id, udB, ultroid_bot, ultroid_cmd
+from . import Redis, eor, get_string, get_display_name, get_user_id, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
