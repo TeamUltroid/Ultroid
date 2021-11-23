@@ -297,7 +297,7 @@ async def _(e):
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     try:
-        name = (await e.client.get_entity(userid)).first_name
+        name = get_display_name(await e.client.get_entity(userid))
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -514,7 +514,7 @@ async def _(e):
         userid = (await e.get_chat()).id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
-    name = (await e.client.get_entity(userid)).first_name
+    name = await e.client.get_entity(userid)
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gmute myself.`", time=3)
@@ -530,7 +530,7 @@ async def _(e):
             except BaseException:
                 pass
     gmute(userid)
-    await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Gmuted` {inline_mention(name)} `in {chats} chats.`")
 
 
 @ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
@@ -556,7 +556,7 @@ async def _(e):
             except BaseException:
                 pass
     ungmute(userid)
-    await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Ungmuted` {inline_mention(name)} `in {chats} chats.`")
 
 
 @ultroid_cmd(
@@ -570,7 +570,7 @@ async def list_gengbanned(event):
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
-            name = (await ultroid_bot.get_entity(int(i))).first_name
+            name = get_display_name(await ultroid_bot.get_entity(int(i)))
         except BaseException:
             name = i
         msg += f"<strong>User</strong>: <a href=tg://user?id={i}>{name}</a>\n"
