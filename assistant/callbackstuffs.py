@@ -100,7 +100,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "pmcstm": {
+    "cbs_pmcstm": {
         "text": "Customise your PMPERMIT Settings -",
         "buttons": [
             [
@@ -850,12 +850,12 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("pmcstm"),
+                buttons=get_back_button("cbs_pmcstm"),
             )
         if len(themssg) > 4090:
             return await conv.send_message(
                 "Message too long!\nGive a shorter message please!!",
-                buttons=get_back_button("pmcstm"),
+                buttons=get_back_button("cbs_pmcstm"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -863,7 +863,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -872,7 +872,7 @@ async def name(event):
     m = range(1, 10)
     tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
     lst = list(zip(tultd[::3], tultd[1::3], tultd[2::3]))
-    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")])
+    lst.append([Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")])
     await event.edit(
         "Select the number of warnings for a user before getting blocked in PMs.",
         buttons=lst,
@@ -886,12 +886,12 @@ async def set_wrns(event):
     if dn:
         await event.edit(
             f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
     else:
         await event.edit(
             f"Something went wrong, please check your {HNDLR}logs!",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -911,7 +911,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("pmcstm"),
+                    buttons=get_back_button("cbs_pmcstm"),
                 )
         except BaseException:
             pass
@@ -932,12 +932,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("pmcstm"),
+                    buttons=get_back_button("cbs_pmcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -945,7 +945,7 @@ async def media(event):
 async def dell(event):
     try:
         udB.del_key("PMPIC")
-        return await event.edit(get_string("clst_5"), buttons=get_back_button("pmcstm"))
+        return await event.edit(get_string("clst_5"), buttons=get_back_button("cbs_pmcstm"))
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
@@ -989,7 +989,7 @@ async def alvcs(event):
         buttons=[
             BT,
             [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "pmlgg")],
-            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     )
 
