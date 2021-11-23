@@ -5,6 +5,7 @@ akinator.py
 apscheduler
 bs4
 cairosvg
+cfscrape
 deta
 enhancer==0.1.9
 gingerit
