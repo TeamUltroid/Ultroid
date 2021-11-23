@@ -24,6 +24,7 @@ lottie==0.6.9
 multiprocess==0.70.12.2
 numpy==1.21.2
 nest_asyncio
+oauth2client
 opencv-python-headless
 pillow>=7.0.0
 psutil==5.8.0
