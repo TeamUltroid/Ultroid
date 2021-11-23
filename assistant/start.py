@@ -33,7 +33,7 @@ Owner_info_msg = (
 _settings = [
     [
         Button.inline("API Kᴇʏs", data="apiset"),
-        Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
     ],
     [
         Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),

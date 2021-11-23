@@ -136,7 +136,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "chatbot": {
+    "cbs_chatbot": {
         "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         "buttons": [
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
@@ -1071,10 +1071,10 @@ async def hhh(e):
         msg = await conv.get_response()
         if not msg.media or msg.text.startswith("/"):
             return await conv.send_message(
-                "Terminated!", buttons=get_back_button("chatbot")
+                "Terminated!", buttons=get_back_button("cbs_chatbot")
             )
         udB.set_key("STARTMEDIA", msg.file.id)
-        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
+        await conv.send_message("Done!", buttons=get_back_button("cbs_chatbot"))
 
 
 @callback("botinfe", owner=True)
@@ -1086,10 +1086,10 @@ async def hhh(e):
         msg = await conv.get_response()
         if msg.media or msg.text.startswith("/"):
             return await conv.send_message(
-                "Terminated!", buttons=get_back_button("chatbot")
+                "Terminated!", buttons=get_back_button("cbs_chatbot")
             )
         udB.set_key("BOT_INFO_START", msg.text)
-        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
+        await conv.send_message("Done!", buttons=get_back_button("cbs_chatbot"))
 
 
 @callback("pmfs", owner=True)
@@ -1113,7 +1113,7 @@ async def heheh(event):
                 udB.del_key("PMBOT_FSUB")
                 timyork = "Done! Force Subscribe Stopped\nRestart your Bot!"
             return await conv.send_message(
-                "Cancelled!", buttons=get_back_button("chatbot")
+                "Cancelled!", buttons=get_back_button("cbs_chatbot")
             )
         for chat in msg.message.split("\n"):
             if chat.startswith("-") or chat.isdigit():
@@ -1127,7 +1127,7 @@ async def heheh(event):
             return await conv.send_message(err)
         udB.set_key("PMBOT_FSUB", str(Ll))
         await conv.send_message(
-            "Done!\nRestart Your Bot.", buttons=get_back_button("chatbot")
+            "Done!\nRestart Your Bot.", buttons=get_back_button("cbs_chatbot")
         )
 
 
@@ -1147,7 +1147,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("chatbot"),
+                buttons=get_back_button("cbs_chatbot"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -1155,7 +1155,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("chatbot"),
+            buttons=get_back_button("cbs_chatbot"),
         )
 
 
@@ -1171,7 +1171,7 @@ async def chon(event):
             event.client.add_event_handler(i, events.NewMessage(**e))
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
 
 
@@ -1184,7 +1184,7 @@ async def chon(event):
             event.client.remove_event_handler(i)
     await event.edit(
         "Done! Chat People Via This Bot Stopped.",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
 
 
