@@ -10,8 +10,8 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: '"sfban"'
-          replace: '"cbs_sfban"'
+          find: '"apauto"'
+          replace: '"cbs_apauto"'
           regex: false
           exclude: .github/**
       - uses: stefanzweifel/git-auto-commit-action@v4
