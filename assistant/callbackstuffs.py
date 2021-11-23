@@ -83,7 +83,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     },
-    "apauto": {
+    "cbs_apauto": {
         "text": "This'll auto approve on outgoing messages",
         "buttons": [
             [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
@@ -959,7 +959,7 @@ async def apon(event):
     await setit(event, var, "True")
     await event.edit(
         "Done!! AUTOAPPROVE  Started!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_apauto")]],
     )
 
 
@@ -969,7 +969,7 @@ async def apof(event):
         udB.del_key("AUTOAPPROVE")
         return await event.edit(
             "Done! AUTOAPPROVE Stopped!!",
-            buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+            buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_apauto")]],
         )
     except BaseException:
         return await event.edit(
