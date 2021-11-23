@@ -53,7 +53,7 @@ _buttons = {
         "buttons": [
             [
                 Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
-                Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban"),
+                Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
             ],
             [
                 Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
@@ -75,7 +75,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "sfban": {
+    "cbs_sfban": {
         "text": "SuperFban Settings:",
         "buttons": [
             [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
@@ -691,12 +691,12 @@ async def sfgrp(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("sfban"),
+                buttons=get_back_button("cbs_sfban"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("sfban"),
+            buttons=get_back_button("cbs_sfban"),
         )
 
 
@@ -717,12 +717,12 @@ async def sfexf(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("sfban"),
+                buttons=get_back_button("cbs_sfban"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("sfban"),
+            buttons=get_back_button("cbs_sfban"),
         )
 
 
