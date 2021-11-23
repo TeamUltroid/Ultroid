@@ -155,7 +155,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "cbs_oofdm": {
+    "oofdm": {
         "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
         "buttons": [
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
