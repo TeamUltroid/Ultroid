@@ -16,7 +16,7 @@ def _check(z):
 
 
 for z in range(5):
-    n = z + 1
+    n = str(z + 1)
     if z == 0:
         z = ""
     fine, out = _check(str(z))
