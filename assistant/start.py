@@ -41,7 +41,7 @@ _settings = [
     ],
     [
         Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
-        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb"),
+        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
     ],
     [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
 ]

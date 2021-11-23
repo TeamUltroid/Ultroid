@@ -148,7 +148,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "vcb": {
+    "cbs_vcb": {
         "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         "buttons": [
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
@@ -1204,7 +1204,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("vcb"),
+                buttons=get_back_button("cbs_vcb"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -1212,7 +1212,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("vcb"),
+            buttons=get_back_button("cbs_vcb"),
         )
 
 
