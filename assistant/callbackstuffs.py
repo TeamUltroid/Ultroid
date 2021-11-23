@@ -945,7 +945,9 @@ async def media(event):
 async def dell(event):
     try:
         udB.del_key("PMPIC")
-        return await event.edit(get_string("clst_5"), buttons=get_back_button("cbs_pmcstm"))
+        return await event.edit(
+            get_string("clst_5"), buttons=get_back_button("cbs_pmcstm")
+        )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
