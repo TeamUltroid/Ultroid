@@ -65,8 +65,7 @@ async def _(ult):
     else:
         udB.set_key("SUDO", "True")
         SUDO_M.add_sudo(id)
-        key = udB.get_key("SUDOS")
-        key.append(id)
+        key = sudoers()
         udB.set_key("SUDOS", key)
         mmm = f"**Added {name} as SUDO User**"
     await eor(ult, mmm, time=5)
@@ -99,8 +98,7 @@ async def _(ult):
         mmm = f"{name} `wasn't a SUDO User ...`"
     else:
         SUDO_M.remove_sudo(id)
-        key = udB.get_key("SUDOS")
-        key.remove(id)
+        key = sudoers()
         udB.set_key("SUDOS", key)
         mmm = f"**Removed {name} from SUDO User(s)**"
     await eor(ult, mmm, time=5)
