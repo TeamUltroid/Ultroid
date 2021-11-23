@@ -91,7 +91,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "alvcstm": {
+    "cbs_alvcstm": {
         "text": f"Customise your {HNDLR}alive. Choose from the below options -",
         "buttons": [
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
@@ -742,7 +742,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("alvcstm"),
+                buttons=get_back_button("cbs_alvcstm"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -750,7 +750,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 
@@ -770,7 +770,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("alvcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         except BaseException:
             pass
@@ -791,12 +791,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("alvcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 
@@ -805,12 +805,12 @@ async def dell(event):
     try:
         udB.del_key("ALIVE_PIC")
         return await event.edit(
-            get_string("clst_5"), buttons=get_back_button("alvcstm")
+            get_string("clst_5"), buttons=get_back_button("cbs_alvcstm")
         )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 

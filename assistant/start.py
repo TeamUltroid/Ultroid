@@ -36,7 +36,7 @@ _settings = [
         Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
     ],
     [
-        Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
+        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
         Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
     ],
     [
