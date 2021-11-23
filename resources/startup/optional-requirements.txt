@@ -38,5 +38,5 @@ telegraph
 tgcrypto
 youtube-search-python==1.4.7
 youtube_dl==2021.6.6
-deta
+
 # -------------------------------------------------------#
