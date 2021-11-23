@@ -16,4 +16,9 @@ echo "
 
 "
 
-python3 -m pyUltroid
+if [ $API_ID1 ]
+then
+   python3 main.py
+else
+   python3 -m pyUltroid
+fi
