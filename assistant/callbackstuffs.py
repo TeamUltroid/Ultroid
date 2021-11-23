@@ -48,7 +48,7 @@ def text_to_url(event):
 # --------------------------------------------------------------------#
 
 _buttons = {
-    "otvars": {
+    "cbs_otvars": {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
@@ -412,18 +412,18 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -506,23 +506,23 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
             await conv.send_message(
                 "This cannot be used as handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -543,23 +543,23 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
             await conv.send_message(
                 "This cannot be used as handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -571,7 +571,7 @@ async def tagloggrr(e):
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
     await e.edit(
         "Choose Options",
-        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="otvars")]],
+        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")]],
     )
 
 
@@ -616,7 +616,7 @@ async def pmset(event):
         "ADDONS~ Extra Plugins:",
         buttons=[
             BT,
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     )
 
@@ -650,7 +650,7 @@ async def pmset(event):
         f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
         buttons=[
             BT,
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     )
 

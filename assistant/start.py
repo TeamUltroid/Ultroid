@@ -40,7 +40,7 @@ _settings = [
         Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
     ],
     [
-        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars"),
+        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
         Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb"),
     ],
     [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
