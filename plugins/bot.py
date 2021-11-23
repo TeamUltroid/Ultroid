@@ -214,11 +214,14 @@ async def shutdownbot(ult):
 )
 async def _(event):
     opt = event.pattern_match.group(1)
+    file = "ultroid.log"
+    if len(sys.argv) > 1:
+        file = f"ultroid{sys.argv[-1]}.log"
     if opt == "heroku":
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
         event = await eor(event, get_string("com_1"))
-        code = open("ultroid.log", "r").read()[-2500:]
+        code = open(file, "r").read()[-2500:]
         file = await Carbon(
             file_name="ultroid-logs",
             code=code,
@@ -226,7 +229,7 @@ async def _(event):
         )
         await event.reply("**Ultroid Logs.**", file=file)
     else:
-        await def_logs(event)
+        await def_logs(event, file)
     await event.delete()
 
 
