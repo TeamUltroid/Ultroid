@@ -48,7 +48,7 @@ def text_to_url(event):
 # --------------------------------------------------------------------#
 
 _buttons = {
-    "cbs_otvars": {
+    "otvars": {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
@@ -75,7 +75,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "cbs_sfban": {
+    "sfban": {
         "text": "SuperFban Settings:",
         "buttons": [
             [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
@@ -83,7 +83,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     },
-    "cbs_apauto": {
+    "apauto": {
         "text": "This'll auto approve on outgoing messages",
         "buttons": [
             [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
@@ -91,7 +91,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "cbs_alvcstm": {
+    "alvcstm": {
         "text": f"Customise your {HNDLR}alive. Choose from the below options -",
         "buttons": [
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
@@ -100,7 +100,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "cbs_pmcstm": {
+    "pmcstm": {
         "text": "Customise your PMPERMIT Settings -",
         "buttons": [
             [
@@ -119,7 +119,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")],
         ],
     },
-    "cbs_pmtype": {
+    "pmtype": {
         "text": "Select the type of PMPermit needed.",
         "buttons": [
             [Button.inline("Inline", data="inpm_in")],
@@ -127,7 +127,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "cbs_ppmset": {
+    "ppmset": {
         "text": "PMPermit Settings:",
         "buttons": [
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
@@ -136,7 +136,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "cbs_chatbot": {
+    "chatbot": {
         "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         "buttons": [
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
@@ -148,7 +148,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "cbs_vcb": {
+    "vcb": {
         "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         "buttons": [
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
