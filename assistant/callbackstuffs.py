@@ -141,7 +141,7 @@ _buttons = {"otvars":{
                     "buttons":[
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
         [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")]}
+        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")]]}
             
            }
 
