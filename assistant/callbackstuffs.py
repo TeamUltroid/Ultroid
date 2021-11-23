@@ -71,7 +71,7 @@ _buttons = {
                 Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
                 Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
             ],
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "cbs_oofdm")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
@@ -155,7 +155,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
-    "oofdm": {
+    "cbs_oofdm": {
         "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
         "buttons": [
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
