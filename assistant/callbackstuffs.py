@@ -47,8 +47,10 @@ def text_to_url(event):
 
 # --------------------------------------------------------------------#
 
-_buttons = {"otvars":{
-    "text":"Other Variables to set for @TheUltroid:", "buttons":[
+_buttons = {
+    "otvars": {
+        "text": "Other Variables to set for @TheUltroid:",
+        "buttons": [
             [
                 Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
                 Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban"),
@@ -71,29 +73,36 @@ _buttons = {"otvars":{
             ],
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ]
-                     
-},
-            "sfban":{"text":"SuperFban Settings:", "buttons":[
+        ],
+    },
+    "sfban": {
+        "text": "SuperFban Settings:",
+        "buttons": [
             [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
             [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
-        ]},
-            "apauto":{"text":"This'll auto approve on outgoing messages",
-        "buttons":[
+        ],
+    },
+    "apauto": {
+        "text": "This'll auto approve on outgoing messages",
+        "buttons": [
             [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
             [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ OFF", data="apof")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
-        ]},
-            "alvcstm":{"text":f"Customise your {HNDLR}alive. Choose from the below options -",
-        "buttons":[
+        ],
+    },
+    "alvcstm": {
+        "text": f"Customise your {HNDLR}alive. Choose from the below options -",
+        "buttons": [
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
             [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
             [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ]},
-            "pmcstm":{"text":"Customise your PMPERMIT Settings -",
-        "buttons":[
+        ],
+    },
+    "pmcstm": {
+        "text": "Customise your PMPERMIT Settings -",
+        "buttons": [
             [
                 Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
                 Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed"),
@@ -108,22 +117,28 @@ _buttons = {"otvars":{
             ],
             [Button.inline("PMPermit Type", data="pmtype")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")],
-        ]},
-            "pmtype":{"text":"Select the type of PMPermit needed.",
-        "buttons":[
+        ],
+    },
+    "pmtype": {
+        "text": "Select the type of PMPermit needed.",
+        "buttons": [
             [Button.inline("Inline", data="inpm_in")],
             [Button.inline("Normal", data="inpm_no")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
-        ]},
-            "ppmset":{"text":"PMPermit Settings:",
-        "buttons":[
+        ],
+    },
+    "ppmset": {
+        "text": "PMPermit Settings:",
+        "buttons": [
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
             [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="cbs_pmcstm")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ]},
-            "chatbot":{"text":"From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
-        "buttons":[
+        ],
+    },
+    "chatbot": {
+        "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
+        "buttons": [
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
             [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
             [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
@@ -131,19 +146,24 @@ _buttons = {"otvars":{
             [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ]},
-            "vcb":{"text":"From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
-        "buttons":[
+        ],
+    },
+    "vcb": {
+        "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
+        "buttons": [
             [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ]},
-            "oofdm":{"text":"About [Dual Mode](https://t.me/UltroidUpdates/18)",
-                    "buttons":[
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")]]}
-            
-           }
+        ],
+    },
+    "oofdm": {
+        "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
+        "buttons": [
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
+        ],
+    },
+}
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -306,7 +326,6 @@ async def _edit_to(event):
     await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
 
 
-
 @callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
@@ -362,6 +381,7 @@ async def _(e):
         ],
         link_preview=False,
     )
+
 
 @callback("dmof", owner=True)
 async def rhwhe(e):
@@ -654,6 +674,7 @@ async def eddof(event):
         buttons=get_back_button("sudo"),
     )
 
+
 @callback("sfgrp", owner=True)
 async def sfgrp(event):
     await event.delete()
@@ -932,7 +953,6 @@ async def dell(event):
         )
 
 
-
 @callback("apon", owner=True)
 async def apon(event):
     var = "AUTOAPPROVE"
@@ -1022,7 +1042,6 @@ async def pmlogof(event):
             get_string("clst_4"),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
-
 
 
 @callback("pmon", owner=True)
