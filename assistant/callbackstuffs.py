@@ -115,11 +115,11 @@ _buttons = {
                 Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
                 Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
             ],
-            [Button.inline("PMPermit Type", data="pmtype")],
+            [Button.inline("PMPermit Type", data="cbs_pmtype")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")],
         ],
     },
-    "pmtype": {
+    "cbs_pmtype": {
         "text": "Select the type of PMPermit needed.",
         "buttons": [
             [Button.inline("Inline", data="inpm_in")],
@@ -820,7 +820,7 @@ async def inl_on(event):
     await setit(event, var, "True")
     await event.edit(
         "Done!! PMPermit type has been set to inline!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_pmtype")]],
     )
 
 
@@ -830,7 +830,7 @@ async def inl_on(event):
     await setit(event, var, "False")
     await event.edit(
         "Done!! PMPermit type has been set to normal!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_pmtype")]],
     )
 
 
