@@ -16,8 +16,6 @@ git+https://github.com/1danish-00/google_trans_new.git
 git+https://github.com/deta/deta-python.git
 gitpython==3.1.23
 google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib
 html-telegraph-poster==0.4.0
 htmlwebshot==0.1.2
 lottie==0.6.9
