@@ -127,7 +127,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "ppmset": {
+    "cbs_ppmset": {
         "text": "PMPermit Settings:",
         "buttons": [
             [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
@@ -1050,7 +1050,7 @@ async def pmonn(event):
     await setit(event, var, "True")
     await event.edit(
         "Done! PMPermit has been turned on!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")]],
     )
 
 
@@ -1060,7 +1060,7 @@ async def pmofff(event):
     await setit(event, var, "False")
     await event.edit(
         "Done! PMPermit has been turned off!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")]],
     )
 
 

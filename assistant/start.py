@@ -37,7 +37,7 @@ _settings = [
     ],
     [
         Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
-        Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
     ],
     [
         Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
