@@ -24,7 +24,10 @@ import akinator
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
 from pyUltroid.misc._decorators import ultroid_cmd
-from telethon.errors.rpcerrorlist import ChatSendStickersForbiddenError, BotMethodInvalidError
+from telethon.errors.rpcerrorlist import (
+    BotMethodInvalidError,
+    ChatSendStickersForbiddenError,
+)
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
@@ -45,18 +48,20 @@ async def akina(e):
         await m[0].click(e.chat_id)
     except BotMethodInvalidError:
         await asst.send_file(
-        e.chat_id,
-        aki_photo,
-        buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
+            e.chat_id,
+            aki_photo,
+            buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
         )
     except Exception as er:
         return await eor(e, f"**ERROR :** `{er}`")
     if e.out:
         await e.delete()
 
+
 @asst_cmd(pattern="akinator", owner=True)
 async def _akokk(e):
     await akina(e)
+
 
 @callback(re.compile("aki_?(.*)"), owner=True)
 async def doai(e):
