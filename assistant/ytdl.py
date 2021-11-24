@@ -162,11 +162,7 @@ async def _(event):
         )
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
-        c_time = time.time()
-        file = await uploader(
-            f"{title}.mp3", f"{title}.mp3", c_time, event, "Uploading " + title + "..."
-        )
+        file, _ = await event.client(f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event)
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
