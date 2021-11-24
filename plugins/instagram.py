@@ -30,7 +30,6 @@
 """
 
 import os
-from datetime import datetime as dt
 from re import compile
 
 from pyUltroid.functions.helper import numerize
@@ -51,7 +50,6 @@ from . import (
     eor,
     get_string,
     in_pattern,
-    time_formatter,
     udB,
     ultroid_cmd,
 )
