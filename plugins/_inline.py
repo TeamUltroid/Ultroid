@@ -649,12 +649,12 @@ def page_num(index, key):
             [
                 Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
-                    data=f"{prefix}_prev({num-1})",
+                    data=f"uh_{key}_{num-1}",
                 ),
                 Button.inline("« Bᴀᴄᴋ »", data="open"),
                 Button.inline(
                     "Nᴇxᴛ »",
-                    data=f"{prefix}_next({num+1})",
+                    data=f"uh_{key}_{num+1}",
                 ),
             ]
         )
