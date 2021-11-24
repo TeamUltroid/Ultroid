@@ -150,10 +150,9 @@ async def setting(event):
 _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")}
 
 
-@callback(re.compile("uh_(.?)_(.?)"))
+@callback(re.compile("uh_(.*)"))
 async def help_func(ult):
-    ult.data_match.group(1).decode("utf-8")
-    count = ult.data_match.group(2).decode("utf-8")
+    key, count = ult.data_match.group(1).decode("utf-8").split("_")[1:]
     if not count:
         count = 0
     else:
