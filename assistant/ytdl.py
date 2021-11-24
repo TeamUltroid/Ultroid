@@ -157,14 +157,11 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        await download_file(
+        thumb = await download_file(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
-        thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        file, _ = await event.client(
-            f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event
-        )
+        file, _ = await event.client.fast_uploader(f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event)
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
