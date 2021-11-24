@@ -118,9 +118,7 @@ async def _(e):
     _lets_split = _e.split(":")
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
     _data = get_formats(_lets_split[0], _lets_split[1], _ytdl_data)
-    _buttons = get_buttons(
-        "ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data
-    )
+    _buttons = get_buttons(_data)
     _text = "`Select Your Format.`"
     if not _buttons:
         _text = "`Error downloading from YouTube.\nTry Restarting your bot.`"
