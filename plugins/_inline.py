@@ -360,10 +360,11 @@ async def on_plug_in_callback_query_handler(event):
     )
     await event.edit(buttons=buttons, link_preview=False)
 
+
 """
 @callback(
     data=re.compile(
-        rb"addon_prev\((.+?)\)",
+        rb"addon_prev\\((.+?)\\)",
     ),
     owner=True,
 )
@@ -403,6 +404,8 @@ async def backr(event):
     )
 
 """
+
+
 @callback(data="open", owner=True)
 async def opner(event):
     z = []
