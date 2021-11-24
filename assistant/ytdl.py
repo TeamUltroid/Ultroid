@@ -86,8 +86,8 @@ async def _(event):
                 parse_mode="html",
                 buttons=[
                     [
-                        Button.inline("Audio", data=f"ytdl_audio_{ids}"),
-                        Button.inline("Video", data=f"ytdl_video_{ids}"),
+                        Button.inline("Audio", data=f"ytdl:audio:{ids}"),
+                        Button.inline("Video", data=f"ytdl:video:{ids}"),
                     ],
                     [
                         Button.switch_inline(
@@ -109,15 +109,15 @@ async def _(event):
 
 @callback(
     re.compile(
-        "ytdl_(.*)",
+        "ytdl:(.*)",
     ),
     owner=True,
 )
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
-    _lets_split = _e.split("_", maxsplit=1)
+    _lets_split = _e.split(":")
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
-    _data = get_formats(_lets_split[0], _ytdl_data)
+    _data = get_formats(_lets_split[0], _lets_split[1], _ytdl_data)
     _buttons = get_buttons(
         "ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data
     )
