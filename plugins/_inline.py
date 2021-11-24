@@ -14,6 +14,7 @@ from os import remove
 from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
+ftom pyUltroid.functions.misc import split_list
 from pyUltroid.misc import CMD_HELP
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
@@ -389,8 +390,6 @@ async def backr(event):
 @callback(data="open", owner=True)
 async def opner(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -602,9 +601,40 @@ def page_num(page_number, loaded_plugins, prefix, type_):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
+        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"
+),)]
     return pairs
 
+
+def ultroid_help(index, loaded, prefix, typ):
+    rows = 5
+    cols = 2
+    emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
+    btts = []
+    List = [Button.inline(
+            f"{emoji} {x} {emoji}",
+            data=f"{typ}_plugin_{x}")
+            for x in sorted(loaded)]
+    all_ = split_list(List, cols)
+    new_ = split_list(all_, rows)
+    try:
+        new_ = new_[index]
+    except IndexError:
+        new_ = new_[0] if new_ else []
+   num = index or len(List)
+   if len(new_[-1]) < cols:
+       new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
+   else:
+       new_.append([Button.inline(
+                    "« Pʀᴇᴠɪᴏᴜs",
+                    data=f"{prefix}_prev({num-1})",
+                ),
+                Button.inline("« Bᴀᴄᴋ »", data="open"),
+                Button.inline(
+                    "Nᴇxᴛ »",
+                    data=f"{prefix}_next({num+1})",
+                )])
+   return new_
 
 # --------------------------------------------------------------------------------- #
 
