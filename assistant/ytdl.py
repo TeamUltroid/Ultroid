@@ -6,18 +6,9 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import os
 import re
-import time
 
-from pyUltroid.functions.helper import (
-    bash,
-    download_file,
-    fast_download,
-    numerize,
-    time_formatter,
-    uploader,
-)
+from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
@@ -161,7 +152,9 @@ async def _(event):
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
         duration = ytdl_data["duration"]
-        file, _ = await event.client.fast_uploader(ytdl_data['id']+"."+ext, show_progress=True, event=event)
+        file, _ = await event.client.fast_uploader(
+            ytdl_data["id"] + "." + ext, show_progress=True, event=event
+        )
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
@@ -194,7 +187,9 @@ async def _(event):
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
-            ytdl_data["id"]+"."+ext, show_progress=True, event=event,
+            ytdl_data["id"] + "." + ext,
+            show_progress=True,
+            event=event,
         )
         attributes = [
             DocumentAttributeVideo(
