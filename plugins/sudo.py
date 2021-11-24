@@ -17,7 +17,7 @@
     List all sudo users.
 """
 
-from pyUltroid.misc import SUDO_M, sudoers
+from pyUltroid.misc import sudoers
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
