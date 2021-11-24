@@ -30,7 +30,7 @@ helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
 
-if add_ons != False:
+if add_ons:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
