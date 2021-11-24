@@ -8,7 +8,6 @@
 import re
 import time
 from datetime import datetime
-from math import ceil
 from os import remove
 
 from git import Repo
@@ -556,6 +555,7 @@ async def on_plug_in_callback_query_handler(event):
         halps = get_string("inline_7").format(plugin_name)
         await event.edit(halps, buttons=buttons)
 
+
 """
 def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
@@ -604,6 +604,7 @@ def page_num(page_number, loaded_plugins, prefix, type_):
         ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
     return pairs
 """
+
 
 def page_num(index, loaded, prefix, typ):
     rows = 5
