@@ -163,15 +163,15 @@ _buttons = {
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
         ],
     },
-    "apiset":{
-        "text":get_string("ast_1"),
-        "buttons":[
+    "apiset": {
+        "text": get_string("ast_1"),
+        "buttons": [
             [Button.inline("Remove.bg API", data="rmbg")],
             [Button.inline("DEEP API", data="dapi")],
             [Button.inline("OCR API", data="oapi")],
             [Button.inline("« Back", data="setter")],
         ],
-    }
+    },
 }
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
