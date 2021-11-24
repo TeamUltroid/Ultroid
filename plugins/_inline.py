@@ -158,10 +158,12 @@ async def help_func(ult):
     else:
         count = int(count)
     buttons = page_num(count, key)
-    text = _strings.get(key, "")
-    await ult.edit(text, file=INLINE_PIC, buttons=buttons)
+    text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
+    await ult.edit(text, file=INLINE_PIC, buttons=buttons, link_preview=False)
 
-
+@callback(re.compile())
+async def uptd_plugin(event):
+     pass
 """
 @callback(data="vc_helper", owner=True)
 async def on_vc_callback_query_handler(event):
@@ -305,18 +307,6 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
 
 
-@callback(data="frrr", owner=True)
-async def addon(event):
-    if ADDONS:
-        halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
-        buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
-        await event.edit(halp, buttons=buttons, link_preview=False)
-    else:
-        await event.answer(
-            f"• Tʏᴘᴇ {HNDLR}setredis ADDONS True\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
-            cache_time=0,
-            alert=True,
-        )
 
 
 @callback(
