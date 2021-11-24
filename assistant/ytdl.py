@@ -154,7 +154,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
-            filename=title+"."+ext,
+            filename=title + "." + ext,
             show_progress=True,
             event=event,
             to_delete=True,
@@ -192,7 +192,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
             vid_id + ".mkv",
-            filename=title+".mkv",
+            filename=title + ".mkv",
             show_progress=True,
             event=event,
             to_delete=True,
@@ -218,7 +218,9 @@ async def _(event):
             thumb=thumb,
         )
     except FilePart0MissingError:
-        file = await event.client.send_file(udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb)
+        file = await event.client.send_file(
+            udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb
+        )
         await event.edit(
             text,
             file=file.media,
