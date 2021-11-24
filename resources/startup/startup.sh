@@ -16,9 +16,4 @@ echo "
 
 "
 
-if [ $API_ID1 ]
-then
-   python3 main.py
-else
-   python3 -m pyUltroid
-fi
+if [ $API_ID1 ] ; then python3 main.py ; else python3 -m pyUltroid ; fi
