@@ -153,7 +153,7 @@ async def _(event):
         )
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
-            vid_id + "." + ext, show_progress=True, event=event, to_delete=True
+            vid_id + "." + ext, filename=title, show_progress=True, event=event, to_delete=True
         )
         attributes = [
             DocumentAttributeAudio(
@@ -188,6 +188,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
             vid_id + ".mkv",
+            filename=title,
             show_progress=True,
             event=event,
             to_delete=True,
