@@ -163,7 +163,7 @@ _buttons = {
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
         ],
     },
-    "cbs_apiset": {
+    "apiset": {
         "text": get_string("ast_1"),
         "buttons": [
             [Button.inline("Remove.bg API", data="rmbg")],
