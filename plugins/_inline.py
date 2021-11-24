@@ -601,8 +601,7 @@ def page_num(page_number, loaded_plugins, prefix, type_):
     else:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"
-),)]
+        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
     return pairs
 
 
@@ -610,11 +609,10 @@ def ultroid_help(index, loaded, prefix, typ):
     rows = 5
     cols = 2
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
-    btts = []
-    List = [Button.inline(
-            f"{emoji} {x} {emoji}",
-            data=f"{typ}_plugin_{x}")
-            for x in sorted(loaded)]
+    List = [
+        Button.inline(f"{emoji} {x} {emoji}", data=f"{typ}_plugin_{x}")
+        for x in sorted(loaded)
+    ]
     all_ = split_list(List, cols)
     new_ = split_list(all_, rows)
     try:
@@ -625,7 +623,9 @@ def ultroid_help(index, loaded, prefix, typ):
     if len(new_[-1]) < cols:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
-        new_.append([Button.inline(
+        new_.append(
+            [
+                Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
                     data=f"{prefix}_prev({num-1})",
                 ),
@@ -633,10 +633,14 @@ def ultroid_help(index, loaded, prefix, typ):
                 Button.inline(
                     "Nᴇxᴛ »",
                     data=f"{prefix}_next({num+1})",
-                )])
+                ),
+            ]
+        )
     return new_
 
+
 # --------------------------------------------------------------------------------- #
+
 
 STUFF = {}
 
