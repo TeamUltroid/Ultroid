@@ -149,11 +149,11 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=vid_id+".jpg"
         )
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
-            ytdl_data["id"] + "." + ext, show_progress=True, event=event
+            vid_id + "." + ext, show_progress=True, event=event, to_delete=True
         )
         attributes = [
             DocumentAttributeAudio(
@@ -182,14 +182,15 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
+            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=vid_id+".jpg"
         )
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
-            ytdl_data["id"] + "." + ext,
+            vid_id + "." + ext,
             show_progress=True,
             event=event,
+            to_delete=True,
         )
         attributes = [
             DocumentAttributeVideo(
@@ -210,4 +211,4 @@ async def _(event):
         attributes=attributes,
         thumb=thumb,
     )
-    await bash(f'rm "{title}"*')
+    await bash(f'rm {vid_id}.jpg')
