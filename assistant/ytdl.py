@@ -129,14 +129,14 @@ async def _(e):
 
 @callback(
     re.compile(
-        "ytdownload_(.*)",
+        "ytdownload:(.*)",
     ),
     owner=True,
 )
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
-    lets_split = url.split("_", maxsplit=1)
-    vid_id = lets_split[1].split(":")[0]
+    lets_split = url.split(":")
+    vid_id = lets_split[2]
     link = _yt_base_url + vid_id
     format = url.split(":")[1]
     if lets_split[0] == "audio":
