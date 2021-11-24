@@ -187,7 +187,7 @@ async def _(event):
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
-            vid_id + "." + ext,
+            vid_id + ".mkv",
             show_progress=True,
             event=event,
             to_delete=True,
