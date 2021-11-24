@@ -157,7 +157,7 @@ async def help_func(ult):
         count = 0
     else:
         count = int(count)
-    buttons = page_num(count, HELP.get(key, []))
+    buttons = page_num(count, key)
     text = _strings.get(key, "")
     await ult.edit(text, file=INLINE_PIC, buttons=buttons)
 
@@ -360,7 +360,7 @@ async def on_plug_in_callback_query_handler(event):
     )
     await event.edit(buttons=buttons, link_preview=False)
 
-
+"""
 @callback(
     data=re.compile(
         rb"addon_prev\((.+?)\)",
@@ -402,7 +402,7 @@ async def backr(event):
         link_preview=False,
     )
 
-
+"""
 @callback(data="open", owner=True)
 async def opner(event):
     z = []
@@ -623,12 +623,13 @@ def page_num(page_number, loaded_plugins, prefix, type_):
 """
 
 
-def page_num(index, loaded, prefix, typ):
+def page_num(index, key):
     rows = 5
     cols = 2
+    loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     List = [
-        Button.inline(f"{emoji} {x} {emoji}", data=f"{typ}_plugin_{x}")
+        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}")
         for x in sorted(loaded)
     ]
     all_ = split_list(List, cols)
