@@ -157,13 +157,11 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        thumb = await download_file(
+        thumb = await fast_download(
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
         duration = ytdl_data["duration"]
-        file, _ = await event.client.fast_uploader(
-            f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event
-        )
+        file, _ = await event.client.fast_uploader(ytdl_data['id']+"."+ext, show_progress=True, event=event)
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
@@ -195,18 +193,8 @@ async def _(event):
         )
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
-        try:
-            os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
-        except FileNotFoundError:
-            try:
-                os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
-            except FileNotFoundError:
-                os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
-        except Exception as ex:
-            return await event.edit(str(ex))
-        c_time = time.time()
-        file = await uploader(
-            f"{title}.mp4", f"{title}.mp4", c_time, event, "Uploading " + title + "..."
+        file, _ = await event.client.fast_uploader(
+            ytdl_data["id"]+"."+ext, show_progress=True, event=event,
         )
         attributes = [
             DocumentAttributeVideo(
