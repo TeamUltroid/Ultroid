@@ -621,11 +621,11 @@ def ultroid_help(index, loaded, prefix, typ):
         new_ = new_[index]
     except IndexError:
         new_ = new_[0] if new_ else []
-   num = index or len(List)
-   if len(new_[-1]) < cols:
-       new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
-   else:
-       new_.append([Button.inline(
+    num = index or len(List)
+    if len(new_[-1]) < cols:
+        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
+    else:
+        new_.append([Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
                     data=f"{prefix}_prev({num-1})",
                 ),
@@ -634,7 +634,7 @@ def ultroid_help(index, loaded, prefix, typ):
                     "Nᴇxᴛ »",
                     data=f"{prefix}_next({num+1})",
                 )])
-   return new_
+    return new_
 
 # --------------------------------------------------------------------------------- #
 
