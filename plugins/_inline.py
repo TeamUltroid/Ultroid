@@ -396,8 +396,8 @@ async def opner(event):
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
+            len(HELP.get("Official", [])),
+            len(HELP.get("ADDONS", [])),
             len(z),
         ),
         buttons=_main_help_menu,
@@ -556,7 +556,7 @@ async def on_plug_in_callback_query_handler(event):
         halps = get_string("inline_7").format(plugin_name)
         await event.edit(halps, buttons=buttons)
 
-
+"""
 def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
     number_of_cols = 2
@@ -603,9 +603,9 @@ def page_num(page_number, loaded_plugins, prefix, type_):
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
         ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
     return pairs
+"""
 
-
-def ultroid_help(index, loaded, prefix, typ):
+def page_num(index, loaded, prefix, typ):
     rows = 5
     cols = 2
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
