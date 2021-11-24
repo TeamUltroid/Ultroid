@@ -161,9 +161,12 @@ async def help_func(ult):
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(text, file=INLINE_PIC, buttons=buttons, link_preview=False)
 
+
 @callback(re.compile())
 async def uptd_plugin(event):
-     pass
+    pass
+
+
 """
 @callback(data="vc_helper", owner=True)
 async def on_vc_callback_query_handler(event):
@@ -305,8 +308,6 @@ async def on_plug_in_callback_query_handler(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
     buttons = page_num(0, HELP["Official"].keys(), "helpme", "def")
     await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
-
-
 
 
 @callback(
