@@ -83,7 +83,7 @@ async def inline_handler(event):
     text = get_string("inline_4").format(
         OWNER_NAME,
         len(HELP.get("Official", [])),
-        len(HELP.get("Addons",[])),
+        len(HELP.get("Addons", [])),
         len(z),
     )
     if INLINE_PIC:
