@@ -161,7 +161,9 @@ async def _(event):
             f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
         )
         duration = ytdl_data["duration"]
-        file, _ = await event.client.fast_uploader(f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event)
+        file, _ = await event.client.fast_uploader(
+            f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event
+        )
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
