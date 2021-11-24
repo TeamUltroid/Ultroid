@@ -29,12 +29,14 @@ TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
-if add_ons == "True" or add_ons is None:
+
+if add_ons != False:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
 
-
+PLUGINS = HELP.get("Official", [])
+ADDONS = HELP.get("Addons", [])
 upage = 0
 # ============================================#
 
@@ -75,8 +77,6 @@ async def inline_alive(o):
 @in_pattern("ultd", owner=True)
 async def inline_handler(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -121,8 +121,6 @@ async def _(event):
 @callback("ownr", owner=True)
 async def setting(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
@@ -292,7 +290,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(data="frrr", owner=True)
 async def addon(event):
-    if HELP.get("Addons"):
+    if ADDONS:
         halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
         buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
         await event.edit(halp, buttons=buttons, link_preview=False)
