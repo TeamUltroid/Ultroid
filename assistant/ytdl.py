@@ -162,7 +162,9 @@ async def _(event):
         )
         thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        file, _ = await event.client(f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event)
+        file, _ = await event.client(
+            f"{ytdl_data['id']}.{ext}", filename=title, show_progress=True, event=event
+        )
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
