@@ -154,7 +154,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
-            filename=title + "." + ext,
+            filename=title+"."+ext,
             show_progress=True,
             event=event,
             to_delete=True,
@@ -192,7 +192,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
             vid_id + ".mkv",
-            filename=title + ".mkv",
+            filename=title+".mkv",
             show_progress=True,
             event=event,
             to_delete=True,
@@ -209,11 +209,22 @@ async def _(event):
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
     text += f"**Views:** `{views}`\n"
     text += f"**Artist:** `{artist}`\n\n"
-    await event.edit(
-        text,
-        file=file,
-        buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
-        attributes=attributes,
-        thumb=thumb,
-    )
+    try:
+        await event.edit(
+            text,
+            file=file,
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            attributes=attributes,
+            thumb=thumb,
+        )
+    except FilePart0MissingError:
+        file = await event.client.send_file(udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb)
+        await event.edit(
+            text,
+            file=file.media,
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            attributes=attributes,
+            thumb=thumb,
+        )
+        await file.delete()
     await bash(f"rm {vid_id}.jpg")
