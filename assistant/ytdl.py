@@ -136,7 +136,8 @@ async def _(event):
     lets_split = url.split(":")
     vid_id = lets_split[2]
     link = _yt_base_url + vid_id
-    format = url.split(":")[1]
+    format = lets_split[1]
+    ext = lets_split[3]
     if lets_split[0] == "audio":
         opts = {
             "format": str(format),
@@ -144,8 +145,7 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp3",
-            "quiet": True,
+            "outtmpl": "%(id)s." + ext,
             "logtostderr": False,
         }
         ytdl_data = await dler(event, link, opts, True)
@@ -181,9 +181,8 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(id)s." + ext,
             "logtostderr": False,
-            "quiet": True,
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
