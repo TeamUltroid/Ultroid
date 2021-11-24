@@ -127,8 +127,8 @@ async def setting(event):
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
+            len(HELP.get("Official",[])),
+            len(HELP.get("Addons", [])),
             len(z),
         ),
         file=INLINE_PIC,
@@ -146,7 +146,21 @@ async def setting(event):
         ],
     )
 
+_strings = {"Official":helps, "Addons":zhelps, "VCBot":get_string("inline_6")}
 
+@callback(re.compile("uh_(.?)_(.?)"))
+async def help_func(ult):
+    key_ = ult.data_match.group(1).decode("utf-8")
+    count = ult.data_match.group(2).decode("utf-8")
+    if not count:
+        count = 0
+    else:
+        count = int(count)
+    buttons = page_num(count, HELP.get(key, []))
+    text = _strings.get(key, "")
+    await ult.edit(text, file=INLINE_PIC, buttons=buttons)
+
+"""
 @callback(data="vc_helper", owner=True)
 async def on_vc_callback_query_handler(event):
     xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
@@ -155,7 +169,7 @@ async def on_vc_callback_query_handler(event):
     except (ZeroDivisionError, KeyError):
         return await event.answer("Vc not Active.")
     await event.edit(xhelps, file=INLINE_PIC, buttons=buttons, link_preview=False)
-
+"""
 
 @callback(data="doupdate", owner=True)
 async def _(event):
