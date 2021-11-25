@@ -179,8 +179,6 @@ async def uptd_plugin(event):
                 help_ += "\n"
     if not help_:
         help_ = f"{file} has no Detailed Help!"
-    else:
-        help_ = hel_p + help_
     help_ += "\n© Join @TeamUltroid"
     buttons = []
     if INLINE_PIC:
