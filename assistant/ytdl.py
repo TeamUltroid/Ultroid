@@ -59,8 +59,8 @@ async def _(event):
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>Duration:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>Views:- </strong> <code>{views}</code>\n"
+        text += f"<strong>⏳:-</strong> <code>{duration}</code>\n"
+        text += f"<strong>👀:- </strong> <code>{views}</code>\n"
         text += f"<strong>Publisher:- </strong> <code>{publisher}</code>\n"
         text += f"<strong>Published:- </strong> <code>{published_on}</code>\n"
         text += f"<strong>Description:- </strong> <code>{description}</code>"
@@ -219,8 +219,8 @@ async def _(event):
             ),
         ]
     text = f"**Title:** `{title}`\n"
-    text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
-    text += f"**Artist:** `{artist}`\n"
+    text += f"**⏳:** `{time_formatter(int(duration)*1000)}`\n"
+    text += f"**🎤:** `{artist}`\n"
     text += f"👀 `{views}`\n"
     text += f"👍: `{likes}`\n"
     text += f"👎: `{dislikes}`\n"
