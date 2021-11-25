@@ -192,7 +192,7 @@ async def send(eve):
         key = "plugins"
     else:
         key = key.lower()
-    plugin = f"{key}/{file}.py"
+    plugin = f"{key}/{name}.py"
     buttons = [
         [
             Button.inline(
