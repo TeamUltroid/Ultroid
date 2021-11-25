@@ -150,9 +150,11 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=vid_id + ".jpg"
+            ytdl_data["thumbnail"], filename=vid_id + ".jpg"
         )
+        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(ytdl_data["dislike_count"])
         duration = ytdl_data["duration"]
+        description = ytdl_data["description"] if len(ytdl_data["description"]) < 250 else ytdl_data["description"][:250]
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
             filename=title + "." + ext,
@@ -187,8 +189,10 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=vid_id + ".jpg"
+            ytdl_data["thumbnail"], filename=vid_id + ".jpg"
         )
+        description = ytdl_data["description"] if len(ytdl_data["description"]) < 250 else ytdl_data["description"][:250]
+        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(ytdl_data["dislike_count"])
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
@@ -208,8 +212,11 @@ async def _(event):
         ]
     text = f"**Title:** `{title}`\n"
     text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
+    text += f"**Artist:** `{artist}`\n"
     text += f"**Views:** `{views}`\n"
-    text += f"**Artist:** `{artist}`\n\n"
+    text += f"👍: `{likes}`\n"
+    text += f"👎: `{dislikes}`\n"
+    text += f"**Description:** `{description}`\n"
     try:
         await event.edit(
             text,
