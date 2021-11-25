@@ -190,7 +190,7 @@ async def uptd_plugin(event):
             [
                 Button.inline(
                     "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                    data=f"sndplug_{key}_{file}",
                 )
             ]
         )
