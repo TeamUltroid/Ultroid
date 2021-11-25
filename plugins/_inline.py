@@ -167,7 +167,7 @@ async def uptd_plugin(event):
     key, file = event.data_match.group(1).decode("utf-8").split("_")
     key_ = HELP.get(key, [])
     hel_p = f"Plugin Name - `{file}`\n"
-    help_ = None
+    help_ = ""
     try:
         for i in key_[file]:
             help_ += i
