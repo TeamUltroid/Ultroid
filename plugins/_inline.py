@@ -29,7 +29,7 @@ helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
 
-if add_ons:
+if add_ons != False:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
@@ -407,7 +407,7 @@ async def opner(event):
         get_string("inline_4").format(
             OWNER_NAME,
             len(HELP.get("Official", [])),
-            len(HELP.get("ADDONS", [])),
+            len(HELP.get("Addons", [])),
             len(z),
         ),
         buttons=_main_help_menu,
