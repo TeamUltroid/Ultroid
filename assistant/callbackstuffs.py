@@ -184,21 +184,15 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
     owner=True,
 )
 async def send(eve):
-    name = (eve.data_match.group(1)).decode("UTF-8")
+    key, name = (eve.data_match.group(1)).decode("UTF-8").split("_")
     thumb = "resources/extras/inline.jpg"
     await eve.answer("■ Sending ■")
-    if name.startswith("def"):
-        plug_name = name.replace("def_plugin_", "")
-        plugin = f"plugins/{plug_name}.py"
-        data = "back"
-    elif name.startswith("add"):
-        plug_name = name.replace("add_plugin_", "")
-        plugin = f"addons/{plug_name}.py"
-        data = "buck"
+    data = f"uh_{key}_"
+    if key == "Official":
+        key = "plugins"
     else:
-        plug_name = name.replace("vc_plugin_", "")
-        plugin = f"vcbot/{plug_name}.py"
-        data = "vc_helper"
+        key = key.lower()
+    plugin = f"{key}/{file}.py"
     buttons = [
         [
             Button.inline(
