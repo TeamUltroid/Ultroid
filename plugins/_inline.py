@@ -152,6 +152,10 @@ _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")
 @callback(re.compile("uh_(.*)"))
 async def help_func(ult):
     key, count = ult.data_match.group(1).decode("utf-8").split("_")
+    if key == "VCBot" and HELP.get("VCBot") is None:
+        return await ult.answer("Voice Call is not Active!", alert=True)
+    elif key == "Addons" and HELP.get("Addons") is None:
+        return await ult.answer(f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True)
     if not count:
         count = 0
     else:
