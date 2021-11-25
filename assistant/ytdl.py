@@ -150,7 +150,7 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
         thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
-        likes, dislikes = numerize(ytdl_data.get("like_count",0)), numerize(
+        likes, dislikes = numerize(ytdl_data.get("like_count", 0)), numerize(
             ytdl_data.get("dislike_count", 0)
         )
         duration = ytdl_data["duration"]
@@ -198,7 +198,7 @@ async def _(event):
             if len(ytdl_data["description"]) < 250
             else ytdl_data["description"][:250]
         )
-        likes, dislikes = numerize(ytdl_data.get("like_count",0)), numerize(
+        likes, dislikes = numerize(ytdl_data.get("like_count", 0)), numerize(
             ytdl_data.get("dislike_count", 0)
         )
         hi, wi = ytdl_data["height"], ytdl_data["width"]
