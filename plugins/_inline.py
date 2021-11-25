@@ -395,7 +395,6 @@ async def backr(event):
     )
 
 """
-"""
 
 @callback(data="open", owner=True)
 async def opner(event):
@@ -422,7 +421,7 @@ async def on_plug_in_callback_query_handler(event):
         buttons=Button.inline("Oᴘᴇɴ Aɢᴀɪɴ", data="open"),
     )
 
-
+"""
 @callback(
     data=re.compile(
         b"def_plugin_(.*)",
