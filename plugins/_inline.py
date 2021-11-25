@@ -14,7 +14,6 @@ from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
 from pyUltroid.functions.misc import split_list
-from pyUltroid.misc import CMD_HELP
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
@@ -158,7 +157,9 @@ async def help_func(ult):
     else:
         count = int(count)
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
-    await ult.edit(text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False)
+    await ult.edit(
+        text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False
+    )
 
 
 @callback(re.compile())
@@ -301,6 +302,7 @@ async def _(e):
     ]
     await e.edit(buttons=button, link_preview=False)
 
+
 """
 @callback(data="hrrrr", owner=True)
 async def on_plug_in_callback_query_handler(event):
@@ -311,7 +313,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     data=re.compile(
-        rb"helpme_next\((.+?)\)",
+        rb"helpme_next\\((.+?)\\)",
     ),
     owner=True,
 )
@@ -325,7 +327,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     data=re.compile(
-        rb"helpme_prev\((.+?)\)",
+        rb"helpme_prev\\((.+?)\\)",
     ),
     owner=True,
 )
@@ -339,7 +341,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(
     data=re.compile(
-        rb"addon_next\((.+?)\)",
+        rb"addon_next\\((.+?)\\)",
     ),
     owner=True,
 )
