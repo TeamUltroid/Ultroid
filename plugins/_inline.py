@@ -631,7 +631,6 @@ def page_num(index, key):
         new_ = new_[index]
     except IndexError:
         new_ = new_[0] if new_ else []
-    num = index or len(List)
     if len(new_[-1]) < cols:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
@@ -639,12 +638,12 @@ def page_num(index, key):
             [
                 Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
-                    data=f"uh_{key}_{num-1}",
+                    data=f"uh_{key}_{index-1}",
                 ),
                 Button.inline("« Bᴀᴄᴋ »", data="open"),
                 Button.inline(
                     "Nᴇxᴛ »",
-                    data=f"uh_{key}_{num+1}",
+                    data=f"uh_{key}_{index+1}",
                 ),
             ]
         )
