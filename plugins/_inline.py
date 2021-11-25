@@ -174,7 +174,7 @@ async def uptd_plugin(event):
     except BaseException:
         if file in LIST:
             help_ = get_string("help_11").format(file)
-            for d in LIST[plugin_name]:
+            for d in LIST[file]:
                 help_ += HNDLR + d
                 help_ += "\n"
     if not help_:
