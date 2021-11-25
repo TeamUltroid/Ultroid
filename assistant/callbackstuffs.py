@@ -1286,9 +1286,9 @@ async def fdroid_dler(event):
     thumb = BSC.find("img", "package-icon")["src"]
     if thumb.startswith("/"):
         thumb = "https://f-droid.org" + thumb
-    thumb = await fast_download(thumb, filename=uri + ".png")
+    thumb, _ = await fast_download(thumb, filename=uri + ".png")
     s_time = time.time()
-    file = await fast_download(
+    file, _ = await fast_download(
         dl_,
         filename=title + ".apk",
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
