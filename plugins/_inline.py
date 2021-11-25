@@ -77,7 +77,7 @@ async def inline_alive(o):
 async def inline_handler(event):
     z = []
     for x in LIST.values():
-        z.extend(y)
+        z.extend(x)
     text = get_string("inline_4").format(
         OWNER_NAME,
         len(HELP.get("Official", [])),
@@ -335,8 +335,7 @@ async def _(e):
 async def opner(event):
     z = []
     for x in LIST.values():
-        for y in x:
-            z.append(y)
+        z.extend(x)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
