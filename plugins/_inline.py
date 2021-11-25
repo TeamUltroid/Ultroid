@@ -162,7 +162,7 @@ async def help_func(ult):
     )
 
 
-@callback(re.compile())
+#@callback(re.compile())
 async def uptd_plugin(event):
     pass
 
