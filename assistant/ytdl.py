@@ -149,12 +149,16 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        thumb = await fast_download(
-            ytdl_data["thumbnail"], filename=vid_id + ".jpg"
+        thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(
+            ytdl_data["dislike_count"]
         )
-        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(ytdl_data["dislike_count"])
         duration = ytdl_data["duration"]
-        description = ytdl_data["description"] if len(ytdl_data["description"]) < 250 else ytdl_data["description"][:250]
+        description = (
+            ytdl_data["description"]
+            if len(ytdl_data["description"]) < 250
+            else ytdl_data["description"][:250]
+        )
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
             filename=title + "." + ext,
@@ -188,11 +192,15 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        thumb = await fast_download(
-            ytdl_data["thumbnail"], filename=vid_id + ".jpg"
+        thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        description = (
+            ytdl_data["description"]
+            if len(ytdl_data["description"]) < 250
+            else ytdl_data["description"][:250]
         )
-        description = ytdl_data["description"] if len(ytdl_data["description"]) < 250 else ytdl_data["description"][:250]
-        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(ytdl_data["dislike_count"])
+        likes, dislikes = numerize(ytdl_data["like_count"]), numerize(
+            ytdl_data["dislike_count"]
+        )
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
         file, _ = await event.client.fast_uploader(
