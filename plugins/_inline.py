@@ -120,7 +120,7 @@ async def _(event):
 async def setting(event):
     z = []
     for x in LIST.values():
-        z.extend(y)
+        z.extend(x)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
