@@ -157,9 +157,8 @@ async def help_func(ult):
         count = 0
     else:
         count = int(count)
-    buttons = page_num(count, key)
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
-    await ult.edit(text, file=INLINE_PIC, buttons=buttons, link_preview=False)
+    await ult.edit(text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False)
 
 
 @callback(re.compile())
@@ -302,7 +301,7 @@ async def _(e):
     ]
     await e.edit(buttons=button, link_preview=False)
 
-
+"""
 @callback(data="hrrrr", owner=True)
 async def on_plug_in_callback_query_handler(event):
     xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
@@ -352,7 +351,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons, link_preview=False)
 
 
-"""
+
 @callback(
     data=re.compile(
         rb"addon_prev\\((.+?)\\)",
@@ -365,7 +364,6 @@ async def on_plug_in_callback_query_handler(event):
         current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add"
     )
     await event.edit(buttons=buttons, link_preview=False)
-
 
 @callback(data="back", owner=True)
 async def backr(event):
@@ -395,7 +393,7 @@ async def backr(event):
     )
 
 """
-
+"""
 
 @callback(data="open", owner=True)
 async def opner(event):
@@ -567,7 +565,6 @@ async def on_plug_in_callback_query_handler(event):
         await event.edit(halps, buttons=buttons)
 
 
-"""
 def page_num(page_number, loaded_plugins, prefix, type_):
     number_of_rows = 5
     number_of_cols = 2
