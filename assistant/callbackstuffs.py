@@ -47,6 +47,132 @@ def text_to_url(event):
 
 # --------------------------------------------------------------------#
 
+_buttons = {
+    "otvars": {
+        "text": "Other Variables to set for @TheUltroid:",
+        "buttons": [
+            [
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
+                Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
+            ],
+            [
+                Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
+                Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
+            ],
+            [
+                Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
+                Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
+            ],
+            [
+                Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
+                Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
+            ],
+            [
+                Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
+                Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
+            ],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "cbs_oofdm")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    },
+    "sfban": {
+        "text": "SuperFban Settings:",
+        "buttons": [
+            [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
+            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
+        ],
+    },
+    "apauto": {
+        "text": "This'll auto approve on outgoing messages",
+        "buttons": [
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
+            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ OFF", data="apof")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
+        ],
+    },
+    "alvcstm": {
+        "text": f"Customise your {HNDLR}alive. Choose from the below options -",
+        "buttons": [
+            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
+            [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
+            [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    },
+    "pmcstm": {
+        "text": "Customise your PMPERMIT Settings -",
+        "buttons": [
+            [
+                Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
+                Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed"),
+            ],
+            [
+                Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="cbs_apauto"),
+                Button.inline("PMLOGGER", data="pml"),
+            ],
+            [
+                Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
+                Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
+            ],
+            [Button.inline("PMPermit Type", data="cbs_pmtype")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")],
+        ],
+    },
+    "pmtype": {
+        "text": "Select the type of PMPermit needed.",
+        "buttons": [
+            [Button.inline("Inline", data="inpm_in")],
+            [Button.inline("Normal", data="inpm_no")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
+        ],
+    },
+    "ppmset": {
+        "text": "PMPermit Settings:",
+        "buttons": [
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
+            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
+            [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="cbs_pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    },
+    "chatbot": {
+        "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
+        "buttons": [
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
+            [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
+            [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    },
+    "vcb": {
+        "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
+        "buttons": [
+            [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
+            [Button.inline("« Bᴀᴄᴋ", data="setter")],
+        ],
+    },
+    "oofdm": {
+        "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
+        "buttons": [
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
+        ],
+    },
+    "apiset": {
+        "text": get_string("ast_1"),
+        "buttons": [
+            [Button.inline("Remove.bg API", data="rmbg")],
+            [Button.inline("DEEP API", data="dapi")],
+            [Button.inline("OCR API", data="oapi")],
+            [Button.inline("« Back", data="setter")],
+        ],
+    },
+}
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -200,6 +326,15 @@ async def _(e):
     )
 
 
+@callback(re.compile("cbs_(.*)"), owner=True)
+async def _edit_to(event):
+    match = event.data_match.group(1).decode("utf-8")
+    data = _buttons.get(match)
+    if not data:
+        return
+    await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
+
+
 @callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
@@ -251,53 +386,8 @@ async def _(e):
                 Button.inline("Folder ID", data="folderid"),
                 Button.inline("Authorise", data="authorise"),
             ],
-            [Button.inline("« Back", data="otvars")],
+            [Button.inline("« Back", data="cbs_otvars")],
         ],
-        link_preview=False,
-    )
-
-
-@callback("otvars", owner=True)
-async def otvaar(event):
-    await event.edit(
-        "Other Variables to set for @TheUltroid:",
-        buttons=[
-            [
-                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
-                Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="sfban"),
-            ],
-            [
-                Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ", data="sudo"),
-                Button.inline("Hᴀɴᴅʟᴇʀ", data="hhndlr"),
-            ],
-            [
-                Button.inline("Exᴛʀᴀ Pʟᴜɢɪɴs", data="plg"),
-                Button.inline("Aᴅᴅᴏɴs", data="eaddon"),
-            ],
-            [
-                Button.inline("Eᴍᴏᴊɪ ɪɴ Hᴇʟᴘ", data="emoj"),
-                Button.inline("Sᴇᴛ ɢDʀɪᴠᴇ", data="gdrive"),
-            ],
-            [
-                Button.inline("Iɴʟɪɴᴇ Pɪᴄ", data="inli_pic"),
-                Button.inline("Sᴜᴅᴏ HNDLR", data="shndlr"),
-            ],
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ", "oofdm")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ],
-    )
-
-
-@callback("oofdm", owner=True)
-async def euwhe(event):
-    BT = [
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
-        [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
-    ]
-    await event.edit(
-        "About [Dual Mode](https://t.me/UltroidUpdates/18)",
-        buttons=BT,
         link_preview=False,
     )
 
@@ -311,7 +401,7 @@ async def rhwhe(e):
         udB.set_key("DUAL_MODE", "True")
         key = "On"
     Msg = "Dual Mode : " + key
-    await e.edit(Msg, buttons=get_back_button("otvars"))
+    await e.edit(Msg, buttons=get_back_button("cbs_otvars"))
 
 
 @callback("dmhn", owner=True)
@@ -331,18 +421,18 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -360,18 +450,18 @@ async def emoji(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
             await conv.send_message(
                 "Incorrect Emoji",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}\n",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -391,12 +481,12 @@ async def pluginch(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", HNDLR)):
             await conv.send_message(
                 "Incorrect channel",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
@@ -405,7 +495,7 @@ async def pluginch(event):
                     name,
                     themssg,
                 ),
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -425,23 +515,23 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
             await conv.send_message(
                 "This cannot be used as handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -462,23 +552,23 @@ async def hndlrr(event):
         if themssg == "/cancel":
             await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif len(themssg) > 1:
             await conv.send_message(
                 "Incorrect Handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         elif themssg.startswith(("/", "#", "@")):
             await conv.send_message(
                 "This cannot be used as handler",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
         else:
             await setit(event, var, themssg)
             await conv.send_message(
                 f"{name} changed to {themssg}",
-                buttons=get_back_button("otvars"),
+                buttons=get_back_button("cbs_otvars"),
             )
 
 
@@ -490,7 +580,7 @@ async def tagloggrr(e):
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
     await e.edit(
         "Choose Options",
-        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="otvars")]],
+        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")]],
     )
 
 
@@ -535,7 +625,7 @@ async def pmset(event):
         "ADDONS~ Extra Plugins:",
         buttons=[
             BT,
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     )
 
@@ -569,7 +659,7 @@ async def pmset(event):
         f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
         buttons=[
             BT,
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     )
 
@@ -594,18 +684,6 @@ async def eddof(event):
     )
 
 
-@callback("sfban", owner=True)
-async def sfban(event):
-    await event.edit(
-        "SuperFban Settings:",
-        buttons=[
-            [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
-            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
-            [Button.inline("« Bᴀᴄᴋ", data="otvars")],
-        ],
-    )
-
-
 @callback("sfgrp", owner=True)
 async def sfgrp(event):
     await event.delete()
@@ -622,12 +700,12 @@ async def sfgrp(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("sfban"),
+                buttons=get_back_button("cbs_sfban"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("sfban"),
+            buttons=get_back_button("cbs_sfban"),
         )
 
 
@@ -648,26 +726,13 @@ async def sfexf(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("sfban"),
+                buttons=get_back_button("cbs_sfban"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("sfban"),
+            buttons=get_back_button("cbs_sfban"),
         )
-
-
-@callback("alvcstm", owner=True)
-async def alvcs(event):
-    await event.edit(
-        f"Customise your {HNDLR}alive. Choose from the below options -",
-        buttons=[
-            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
-            [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
-            [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ],
-    )
 
 
 @callback("alvtx", owner=True)
@@ -686,7 +751,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("alvcstm"),
+                buttons=get_back_button("cbs_alvcstm"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -694,7 +759,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 
@@ -714,7 +779,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("alvcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         except BaseException:
             pass
@@ -735,12 +800,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("alvcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 
@@ -749,48 +814,13 @@ async def dell(event):
     try:
         udB.del_key("ALIVE_PIC")
         return await event.edit(
-            get_string("clst_5"), buttons=get_back_button("alvcstm")
+            get_string("clst_5"), buttons=get_back_button("cbs_alvcstm")
         )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
-            buttons=get_back_button("alvcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
-
-
-@callback("pmcstm", owner=True)
-async def alvcs(event):
-    await event.edit(
-        "Customise your PMPERMIT Settings -",
-        buttons=[
-            [
-                Button.inline("Pᴍ Tᴇxᴛ", data="pmtxt"),
-                Button.inline("Pᴍ Mᴇᴅɪᴀ", data="pmmed"),
-            ],
-            [
-                Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ", data="apauto"),
-                Button.inline("PMLOGGER", data="pml"),
-            ],
-            [
-                Button.inline("Sᴇᴛ Wᴀʀɴs", data="swarn"),
-                Button.inline("Dᴇʟᴇᴛᴇ Pᴍ Mᴇᴅɪᴀ", data="delpmmed"),
-            ],
-            [Button.inline("PMPermit Type", data="pmtype")],
-            [Button.inline("« Bᴀᴄᴋ", data="ppmset")],
-        ],
-    )
-
-
-@callback("pmtype", owner=True)
-async def pmtyp(event):
-    await event.edit(
-        "Select the type of PMPermit needed.",
-        buttons=[
-            [Button.inline("Inline", data="inpm_in")],
-            [Button.inline("Normal", data="inpm_no")],
-            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
-        ],
-    )
 
 
 @callback("inpm_in", owner=True)
@@ -799,7 +829,7 @@ async def inl_on(event):
     await setit(event, var, "True")
     await event.edit(
         "Done!! PMPermit type has been set to inline!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_pmtype")]],
     )
 
 
@@ -809,7 +839,7 @@ async def inl_on(event):
     await setit(event, var, "False")
     await event.edit(
         "Done!! PMPermit type has been set to normal!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="pmtype")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_pmtype")]],
     )
 
 
@@ -829,12 +859,12 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("pmcstm"),
+                buttons=get_back_button("cbs_pmcstm"),
             )
         if len(themssg) > 4090:
             return await conv.send_message(
                 "Message too long!\nGive a shorter message please!!",
-                buttons=get_back_button("pmcstm"),
+                buttons=get_back_button("cbs_pmcstm"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -842,7 +872,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -851,7 +881,7 @@ async def name(event):
     m = range(1, 10)
     tultd = [Button.inline(f"{x}", data=f"wrns_{x}") for x in m]
     lst = list(zip(tultd[::3], tultd[1::3], tultd[2::3]))
-    lst.append([Button.inline("« Bᴀᴄᴋ", data="pmcstm")])
+    lst.append([Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")])
     await event.edit(
         "Select the number of warnings for a user before getting blocked in PMs.",
         buttons=lst,
@@ -865,12 +895,12 @@ async def set_wrns(event):
     if dn:
         await event.edit(
             f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
     else:
         await event.edit(
             f"Something went wrong, please check your {HNDLR}logs!",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -890,7 +920,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("pmcstm"),
+                    buttons=get_back_button("cbs_pmcstm"),
                 )
         except BaseException:
             pass
@@ -911,12 +941,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("pmcstm"),
+                    buttons=get_back_button("cbs_pmcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("pmcstm"),
+            buttons=get_back_button("cbs_pmcstm"),
         )
 
 
@@ -924,24 +954,14 @@ async def media(event):
 async def dell(event):
     try:
         udB.del_key("PMPIC")
-        return await event.edit(get_string("clst_5"), buttons=get_back_button("pmcstm"))
+        return await event.edit(
+            get_string("clst_5"), buttons=get_back_button("cbs_pmcstm")
+        )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
             buttons=[[Button.inline("« Sᴇᴛᴛɪɴɢs", data="setter")]],
         )
-
-
-@callback("apauto", owner=True)
-async def apauto(event):
-    await event.edit(
-        "This'll auto approve on outgoing messages",
-        buttons=[
-            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ ON", data="apon")],
-            [Button.inline("Aᴜᴛᴏ Aᴘᴘʀᴏᴠᴇ OFF", data="apof")],
-            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
-        ],
-    )
 
 
 @callback("apon", owner=True)
@@ -950,7 +970,7 @@ async def apon(event):
     await setit(event, var, "True")
     await event.edit(
         "Done!! AUTOAPPROVE  Started!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_apauto")]],
     )
 
 
@@ -960,7 +980,7 @@ async def apof(event):
         udB.del_key("AUTOAPPROVE")
         return await event.edit(
             "Done! AUTOAPPROVE Stopped!!",
-            buttons=[[Button.inline("« Bᴀᴄᴋ", data="apauto")]],
+            buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_apauto")]],
         )
     except BaseException:
         return await event.edit(
@@ -980,7 +1000,7 @@ async def alvcs(event):
         buttons=[
             BT,
             [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "pmlgg")],
-            [Button.inline("« Bᴀᴄᴋ", data="pmcstm")],
+            [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     )
 
@@ -1035,26 +1055,13 @@ async def pmlogof(event):
         )
 
 
-@callback("ppmset", owner=True)
-async def pmset(event):
-    await event.edit(
-        "PMPermit Settings:",
-        buttons=[
-            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oɴ", data="pmon")],
-            [Button.inline("Tᴜʀɴ PMPᴇʀᴍɪᴛ Oғғ", data="pmoff")],
-            [Button.inline("Cᴜsᴛᴏᴍɪᴢᴇ PMPᴇʀᴍɪᴛ", data="pmcstm")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ],
-    )
-
-
 @callback("pmon", owner=True)
 async def pmonn(event):
     var = "PMSETTING"
     await setit(event, var, "True")
     await event.edit(
         "Done! PMPermit has been turned on!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")]],
     )
 
 
@@ -1064,7 +1071,7 @@ async def pmofff(event):
     await setit(event, var, "False")
     await event.edit(
         "Done! PMPermit has been turned off!!",
-        buttons=[[Button.inline("« Bᴀᴄᴋ", data="ppmset")]],
+        buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_ppmset")]],
     )
 
 
@@ -1075,27 +1082,10 @@ async def hhh(e):
         msg = await conv.get_response()
         if not msg.media or msg.text.startswith("/"):
             return await conv.send_message(
-                "Terminated!", buttons=get_back_button("chatbot")
+                "Terminated!", buttons=get_back_button("cbs_chatbot")
             )
         udB.set_key("STARTMEDIA", msg.file.id)
-        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
-
-
-@callback("chatbot", owner=True)
-async def chbot(event):
-    await event.edit(
-        "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
-        buttons=[
-            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
-            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
-            [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
-            [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ],
-        link_preview=False,
-    )
+        await conv.send_message("Done!", buttons=get_back_button("cbs_chatbot"))
 
 
 @callback("botinfe", owner=True)
@@ -1107,10 +1097,10 @@ async def hhh(e):
         msg = await conv.get_response()
         if msg.media or msg.text.startswith("/"):
             return await conv.send_message(
-                "Terminated!", buttons=get_back_button("chatbot")
+                "Terminated!", buttons=get_back_button("cbs_chatbot")
             )
         udB.set_key("BOT_INFO_START", msg.text)
-        await conv.send_message("Done!", buttons=get_back_button("chatbot"))
+        await conv.send_message("Done!", buttons=get_back_button("cbs_chatbot"))
 
 
 @callback("pmfs", owner=True)
@@ -1134,7 +1124,7 @@ async def heheh(event):
                 udB.del_key("PMBOT_FSUB")
                 timyork = "Done! Force Subscribe Stopped\nRestart your Bot!"
             return await conv.send_message(
-                "Cancelled!", buttons=get_back_button("chatbot")
+                "Cancelled!", buttons=get_back_button("cbs_chatbot")
             )
         for chat in msg.message.split("\n"):
             if chat.startswith("-") or chat.isdigit():
@@ -1148,7 +1138,7 @@ async def heheh(event):
             return await conv.send_message(err)
         udB.set_key("PMBOT_FSUB", str(Ll))
         await conv.send_message(
-            "Done!\nRestart Your Bot.", buttons=get_back_button("chatbot")
+            "Done!\nRestart Your Bot.", buttons=get_back_button("cbs_chatbot")
         )
 
 
@@ -1168,7 +1158,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("chatbot"),
+                buttons=get_back_button("cbs_chatbot"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -1176,7 +1166,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("chatbot"),
+            buttons=get_back_button("cbs_chatbot"),
         )
 
 
@@ -1192,7 +1182,7 @@ async def chon(event):
             event.client.add_event_handler(i, events.NewMessage(**e))
     await event.edit(
         "Done! Now u Can Chat With People Via This Bot",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
 
 
@@ -1205,19 +1195,7 @@ async def chon(event):
             event.client.remove_event_handler(i)
     await event.edit(
         "Done! Chat People Via This Bot Stopped.",
-        buttons=[Button.inline("« Bᴀᴄᴋ", data="chatbot")],
-    )
-
-
-@callback("vcb", owner=True)
-async def vcb(event):
-    await event.edit(
-        "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
-        buttons=[
-            [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
-            [Button.inline("« Bᴀᴄᴋ", data="setter")],
-        ],
-        link_preview=False,
+        buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
 
 
@@ -1237,7 +1215,7 @@ async def name(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("vcb"),
+                buttons=get_back_button("cbs_vcb"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
@@ -1245,7 +1223,7 @@ async def name(event):
                 name,
                 themssg,
             ),
-            buttons=get_back_button("vcb"),
+            buttons=get_back_button("cbs_vcb"),
         )
 
 

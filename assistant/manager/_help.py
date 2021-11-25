@@ -109,8 +109,7 @@ async def helpish(event):
         udB.get_key("DUAL_MODE") and (udB.get_key("DUAL_HNDLR") == "/")
     ):
         return
-    BTTS = get_buttons()
-    await event.reply(START, buttons=BTTS)
+    await event.reply(START, buttons=get_buttons())
 
 
 @callback("mngbtn", owner=True)

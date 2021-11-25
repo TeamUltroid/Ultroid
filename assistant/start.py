@@ -32,16 +32,16 @@ Owner_info_msg = (
 
 _settings = [
     [
-        Button.inline("API Kᴇʏs", data="apiset"),
-        Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+        Button.inline("API Kᴇʏs", data="cbs_apiset"),
+        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
     ],
     [
-        Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-        Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
     ],
     [
-        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars"),
-        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb"),
+        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
+        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
     ],
     [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
 ]

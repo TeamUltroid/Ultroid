@@ -8,13 +8,12 @@
 import re
 import time
 from datetime import datetime
-from math import ceil
 from os import remove
 
 from git import Repo
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
-from pyUltroid.misc import CMD_HELP
+from pyUltroid.functions.misc import split_list
 from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
@@ -29,12 +28,14 @@ TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
-if add_ons == "True" or add_ons is None:
+
+if add_ons is not False:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
 
-
+PLUGINS = HELP.get("Official", [])
+ADDONS = HELP.get("Addons", [])
 upage = 0
 # ============================================#
 
@@ -75,15 +76,12 @@ async def inline_alive(o):
 @in_pattern("ultd", owner=True)
 async def inline_handler(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
-        for y in x:
-            z.append(y)
+        z.extend(y)
     text = get_string("inline_4").format(
         OWNER_NAME,
-        len(PLUGINS),
-        len(ADDONS),
+        len(HELP.get("Official", [])),
+        len(HELP.get("Addons", [])),
         len(z),
     )
     if INLINE_PIC:
@@ -121,16 +119,13 @@ async def _(event):
 @callback("ownr", owner=True)
 async def setting(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
-        for y in x:
-            z.append(y)
+        z.extend(y)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
+            len(HELP.get("Official", [])),
+            len(HELP.get("Addons", [])),
             len(z),
         ),
         file=INLINE_PIC,
@@ -149,14 +144,67 @@ async def setting(event):
     )
 
 
-@callback(data="vc_helper", owner=True)
-async def on_vc_callback_query_handler(event):
-    xhelps = get_string("inline_6").format(OWNER_NAME, len(HELP["VCBot"]))
+_strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")}
+
+
+@callback(re.compile("uh_(.*)"))
+async def help_func(ult):
+    key, count = ult.data_match.group(1).decode("utf-8").split("_")
+    if key == "VCBot" and HELP.get("VCBot") is None:
+        return await ult.answer("Voice Call is not Active!", alert=True)
+    elif key == "Addons" and HELP.get("Addons") is None:
+        return await ult.answer(
+            f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True
+        )
+    if not count:
+        count = 0
+    else:
+        count = int(count)
+    text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
+    await ult.edit(
+        text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False
+    )
+
+
+@callback(re.compile("uplugin_(.*)"))
+async def uptd_plugin(event):
+    key, file = event.data_match.group(1).decode("utf-8").split("_")
+    key_ = HELP.get(key, [])
+    hel_p = f"Plugin Name - `{file}`\n"
+    help_ = ""
     try:
-        buttons = page_num(0, HELP["VCBot"].keys(), "vchelp", "vc")
-    except (ZeroDivisionError, KeyError):
-        return await event.answer("Vc not Active.")
-    await event.edit(xhelps, file=INLINE_PIC, buttons=buttons, link_preview=False)
+        for i in key_[file]:
+            help_ += i
+    except BaseException:
+        if file in LIST:
+            help_ = get_string("help_11").format(file)
+            for d in LIST[file]:
+                help_ += HNDLR + d
+                help_ += "\n"
+    if not help_:
+        help_ = f"{file} has no Detailed Help!"
+    help_ += "\n© Join @TeamUltroid"
+    buttons = []
+    if INLINE_PIC:
+        buttons.append(
+            [
+                Button.inline(
+                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                )
+            ]
+        )
+    buttons.append(
+        [
+            Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_"),
+        ]
+    )
+    try:
+        await event.edit(help_, buttons=buttons)
+    except Exception as er:
+        LOGS.exception(er)
+        help = f"Do `{HNDLR}help {key}` to get list of commands."
+        await event.edit(help, buttons=buttons)
 
 
 @callback(data="doupdate", owner=True)
@@ -164,7 +212,7 @@ async def _(event):
     if not updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
     if not INLINE_PIC:
-        return await event.answer(f"Do {HNDLR}update")
+        return await event.answer(f"Do '{HNDLR}update'")
     repo = Repo.init()
     ac_br = repo.active_branch
     changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
@@ -283,124 +331,17 @@ async def _(e):
     await e.edit(buttons=button, link_preview=False)
 
 
-@callback(data="hrrrr", owner=True)
-async def on_plug_in_callback_query_handler(event):
-    xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
-    buttons = page_num(0, HELP["Official"].keys(), "helpme", "def")
-    await event.edit(f"{xhelps}", buttons=buttons, link_preview=False)
-
-
-@callback(data="frrr", owner=True)
-async def addon(event):
-    if HELP.get("Addons"):
-        halp = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
-        buttons = page_num(0, HELP["Addons"].keys(), "addon", "add")
-        await event.edit(halp, buttons=buttons, link_preview=False)
-    else:
-        await event.answer(
-            f"• Tʏᴘᴇ {HNDLR}setredis ADDONS True\n Tᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs ᴘʟᴜɢɪɴs",
-            cache_time=0,
-            alert=True,
-        )
-
-
-@callback(
-    data=re.compile(
-        rb"helpme_next\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, HELP["Official"].keys(), "helpme", "def"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(
-    data=re.compile(
-        rb"helpme_prev\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["Official"].keys()), "helpme", "def"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(
-    data=re.compile(
-        rb"addon_next\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number + 1, list(HELP["Addons"].keys()), "addon", "add"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(
-    data=re.compile(
-        rb"addon_prev\((.+?)\)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-    buttons = page_num(
-        current_page_number - 1, list(HELP["Addons"].keys()), "addon", "add"
-    )
-    await event.edit(buttons=buttons, link_preview=False)
-
-
-@callback(data="back", owner=True)
-async def backr(event):
-    xhelps = helps.format(OWNER_NAME, len(HELP["Official"]))
-    current_page_number = int(upage)
-    buttons = page_num(
-        current_page_number, list(HELP["Official"].keys()), "helpme", "def"
-    )
-    await event.edit(
-        xhelps,
-        file=INLINE_PIC,
-        buttons=buttons,
-        link_preview=False,
-    )
-
-
-@callback(data="buck", owner=True)
-async def backr(event):
-    xhelps = zhelps.format(OWNER_NAME, len(HELP["Addons"]))
-    current_page_number = int(upage)
-    buttons = page_num(current_page_number, list(HELP["Addons"].keys()), "addon", "add")
-    await event.edit(
-        xhelps,
-        file=INLINE_PIC,
-        buttons=buttons,
-        link_preview=False,
-    )
-
-
 @callback(data="open", owner=True)
 async def opner(event):
     z = []
-    PLUGINS = HELP["Official"] if "Official" in HELP.keys() else []
-    ADDONS = HELP["Addons"] if "Addons" in HELP.keys() else []
     for x in LIST.values():
         for y in x:
             z.append(y)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
-            len(PLUGINS),
-            len(ADDONS),
+            len(HELP.get("Official", [])),
+            len(HELP.get("Addons", [])),
             len(z),
         ),
         buttons=_main_help_menu,
@@ -416,199 +357,42 @@ async def on_plug_in_callback_query_handler(event):
     )
 
 
-@callback(
-    data=re.compile(
-        b"def_plugin_(.*)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    plugin_name = event.data_match.group(1).decode("UTF-8")
-    help_string = f"Plugin Name - `{plugin_name}`\n"
-    try:
-        for i in HELP["Official"][plugin_name]:
-            help_string += i
-    except BaseException:
-        pass
-    if help_string == "":
-        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
-    else:
-        reply_pop_up_alert = help_string
-    reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = []
-    if INLINE_PIC:
-        buttons.append(
-            [
-                Button.inline(
-                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=f"sndplug_{(event.data).decode('UTF-8')}",
-                )
-            ]
-        )
-    buttons.append(
-        [
-            Button.inline("« Bᴀᴄᴋ", data="back"),
-        ]
-    )
-    try:
-        await event.edit(
-            reply_pop_up_alert,
-            buttons=buttons,
-        )
-    except BaseException:
-        await event.edit(get_string("inline_7").format(plugin_name), buttons=buttons)
-
-
-@callback(
-    data=re.compile(
-        b"vc_plugin_(.*)",
-    ),
-    owner=True,
-)
-async def on_vc_plg_callback_query_handler(event):
-    plugin_name = event.data_match.group(1).decode("UTF-8")
-    help_string = f"Plugin Name - `{plugin_name}`\n"
-    try:
-        for i in HELP["VCBot"][plugin_name]:
-            help_string += i
-    except BaseException:
-        pass
-    if help_string == "**Commands Available:**\n\n":
-        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
-    else:
-        reply_pop_up_alert = help_string
-    reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = []
-    if INLINE_PIC:
-        buttons.append(
-            [
-                Button.inline(
-                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=f"sndplug_{(event.data).decode('UTF-8')}",
-                )
-            ]
-        )
-    buttons.append(
-        [
-            Button.inline("« Bᴀᴄᴋ", data="vc_helper"),
-        ]
-    )
-    try:
-        await event.edit(
-            reply_pop_up_alert,
-            buttons=buttons,
-        )
-    except BaseException:
-        halps = f"Do .help {plugin_name} to get the list of commands."
-        await event.edit(halps, buttons=buttons)
-
-
-@callback(
-    data=re.compile(
-        b"add_plugin_(.*)",
-    ),
-    owner=True,
-)
-async def on_plug_in_callback_query_handler(event):
-    plugin_name = event.data_match.group(1).decode("UTF-8")
-    help_string = ""
-    try:
-        for i in HELP["Addons"][plugin_name]:
-            help_string += i
-    except BaseException:
-        try:
-            for u in CMD_HELP[plugin_name]:
-                help_string = get_string("help_11").format(plugin_name)
-                help_string += str(CMD_HELP[plugin_name])
-        except BaseException:
-            try:
-                if plugin_name in LIST:
-                    help_string = get_string("help_11").format(plugin_name)
-                    for d in LIST[plugin_name]:
-                        help_string += HNDLR + d
-                        help_string += "\n"
-            except BaseException:
-                pass
-    if help_string == "":
-        reply_pop_up_alert = f"{plugin_name} has no detailed help..."
-    else:
-        reply_pop_up_alert = help_string
-    reply_pop_up_alert += "\n© @TeamUltroid"
-    buttons = []
-    if INLINE_PIC:
-        buttons.append(
-            [
-                Button.inline(
-                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=f"sndplug_{(event.data).decode('UTF-8')}",
-                )
-            ]
-        )
-    buttons.append(
-        [
-            Button.inline("« Bᴀᴄᴋ", data="buck"),
-        ]
-    )
-    try:
-        await event.edit(
-            reply_pop_up_alert,
-            buttons=buttons,
-        )
-    except BaseException as e:
-        LOGS.exception(e)
-        halps = get_string("inline_7").format(plugin_name)
-        await event.edit(halps, buttons=buttons)
-
-
-def page_num(page_number, loaded_plugins, prefix, type_):
-    number_of_rows = 5
-    number_of_cols = 2
-    emoji = udB.get_key("EMOJI_IN_HELP")
-    multi = emoji or "✘"
-    global upage
-    upage = page_number
-    helpable_plugins = [p for p in loaded_plugins]
-    helpable_plugins = sorted(helpable_plugins)
-    modules = [
-        Button.inline(
-            "{} {} {}".format(
-                multi,
-                x,
-                multi,
-            ),
-            data=f"{type_}_plugin_{x}",
-        )
-        for x in helpable_plugins
+def page_num(index, key):
+    rows = 5
+    cols = 2
+    loaded = HELP.get(key, [])
+    emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
+    List = [
+        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}")
+        for x in sorted(loaded)
     ]
-    pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols]))
-    if len(modules) % number_of_cols == 1:
-        pairs.append((modules[-1],))
-    max_num_pages = ceil(len(pairs) / number_of_rows)
-    modulo_page = page_number % max_num_pages
-    if len(pairs) > number_of_rows:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
-            (
+    all_ = split_list(List, cols)
+    new_ = split_list(all_, rows)
+    try:
+        new_ = new_[index]
+    except IndexError:
+        new_ = new_[0] if new_ else []
+    if len(new_[-1]) < cols:
+        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
+    else:
+        new_.append(
+            [
                 Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
-                    data=f"{prefix}_prev({modulo_page})",
+                    data=f"uh_{key}_{index-1}",
                 ),
                 Button.inline("« Bᴀᴄᴋ »", data="open"),
                 Button.inline(
                     "Nᴇxᴛ »",
-                    data=f"{prefix}_next({modulo_page})",
+                    data=f"uh_{key}_{index+1}",
                 ),
-            ),
-        ]
-    else:
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [(Button.inline("« Bᴀᴄᴋ »", data="open"),)]
-    return pairs
+            ]
+        )
+    return new_
 
 
 # --------------------------------------------------------------------------------- #
+
 
 STUFF = {}
 
@@ -620,9 +404,9 @@ async def ibuild(e):
     if not (n and n.isdigit()):
         return
     ok = STUFF.get(int(n))
-    txt = ok.get("msg") or None
-    pic = ok.get("media") or None
-    btn = ok.get("button") or None
+    txt = ok.get("msg")
+    pic = ok.get("media")
+    btn = ok.get("button")
     if not (pic or txt):
         txt = "Hey!"
     if pic:

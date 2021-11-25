@@ -30,7 +30,6 @@
 """
 
 import os
-from datetime import datetime as dt
 from re import compile
 
 from pyUltroid.functions.helper import numerize
@@ -51,7 +50,6 @@ from . import (
     eor,
     get_string,
     in_pattern,
-    time_formatter,
     udB,
     ultroid_cmd,
 )
@@ -68,7 +66,6 @@ async def insta_dl(e):
         text = replied.message
     else:
         return await eor(tt, "Provide a Link to Download...")
-    start = dt.now()
     CL = await create_instagram_client(e)
     if CL:
         try:
@@ -89,9 +86,8 @@ async def insta_dl(e):
             else:
                 LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
-            tm = time_formatter((dt.now() - start).microseconds)
             await e.reply(
-                f"**• Uploaded Successfully\n• Link :** {text}\n**• Time Taken :** `{tm}`",
+                f"**• Uploaded Successfully\n• Link :** {text}\n",
                 file=media,
             )
             await tt.delete()

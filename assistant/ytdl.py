@@ -6,20 +6,12 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-import os
 import re
-import time
 
-from pyUltroid.functions.helper import (
-    bash,
-    download_file,
-    fast_download,
-    numerize,
-    time_formatter,
-    uploader,
-)
+from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
+from telethon.errors import FilePart0MissingError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
@@ -67,8 +59,8 @@ async def _(event):
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>Duration:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>Views:- </strong> <code>{views}</code>\n"
+        text += f"<strong>⏳:-</strong> <code>{duration}</code>\n"
+        text += f"<strong>👀:- </strong> <code>{views}</code>\n"
         text += f"<strong>Publisher:- </strong> <code>{publisher}</code>\n"
         text += f"<strong>Published:- </strong> <code>{published_on}</code>\n"
         text += f"<strong>Description:- </strong> <code>{description}</code>"
@@ -86,8 +78,8 @@ async def _(event):
                 parse_mode="html",
                 buttons=[
                     [
-                        Button.inline("Audio", data=f"ytdl_audio_{ids}"),
-                        Button.inline("Video", data=f"ytdl_video_{ids}"),
+                        Button.inline("Audio", data=f"ytdl:audio:{ids}"),
+                        Button.inline("Video", data=f"ytdl:video:{ids}"),
                     ],
                     [
                         Button.switch_inline(
@@ -109,18 +101,16 @@ async def _(event):
 
 @callback(
     re.compile(
-        "ytdl_(.*)",
+        "ytdl:(.*)",
     ),
     owner=True,
 )
 async def _(e):
     _e = e.pattern_match.group(1).decode("UTF-8")
-    _lets_split = _e.split("_", maxsplit=1)
+    _lets_split = _e.split(":")
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
-    _data = get_formats(_lets_split[0], _ytdl_data)
-    _buttons = get_buttons(
-        "ytdownload_" + _lets_split[0] + "_" + _lets_split[1] + ":", _data
-    )
+    _data = get_formats(_lets_split[0], _lets_split[1], _ytdl_data)
+    _buttons = get_buttons(_data)
     _text = "`Select Your Format.`"
     if not _buttons:
         _text = "`Error downloading from YouTube.\nTry Restarting your bot.`"
@@ -129,16 +119,17 @@ async def _(e):
 
 @callback(
     re.compile(
-        "ytdownload_(.*)",
+        "ytdownload:(.*)",
     ),
     owner=True,
 )
 async def _(event):
     url = event.pattern_match.group(1).decode("UTF-8")
-    lets_split = url.split("_", maxsplit=1)
-    vid_id = lets_split[1].split(":")[0]
+    lets_split = url.split(":")
+    vid_id = lets_split[2]
     link = _yt_base_url + vid_id
-    format = url.split(":")[1]
+    format = lets_split[1]
+    ext = lets_split[3]
     if lets_split[0] == "audio":
         opts = {
             "format": str(format),
@@ -146,8 +137,7 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp3",
-            "quiet": True,
+            "outtmpl": "%(id)s." + ext,
             "logtostderr": False,
         }
         ytdl_data = await dler(event, link, opts, True)
@@ -159,15 +149,22 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        await download_file(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", f"{title}.jpg"
+        thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        likes, dislikes = numerize(ytdl_data.get("like_count", 0)), numerize(
+            ytdl_data.get("dislike_count", 0)
         )
-        thumb = f"{title}.jpg"
         duration = ytdl_data["duration"]
-        os.rename(f"{ytdl_data['id']}.mp3", f"{title}.mp3")
-        c_time = time.time()
-        file = await uploader(
-            f"{title}.mp3", f"{title}.mp3", c_time, event, "Uploading " + title + "..."
+        description = (
+            ytdl_data["description"]
+            if len(ytdl_data["description"]) < 100
+            else ytdl_data["description"][:100]
+        )
+        file, _ = await event.client.fast_uploader(
+            vid_id + "." + ext,
+            filename=title + "." + ext,
+            show_progress=True,
+            event=event,
+            to_delete=True,
         )
         attributes = [
             DocumentAttributeAudio(
@@ -183,9 +180,8 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(id)s." + ext,
             "logtostderr": False,
-            "quiet": True,
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
@@ -196,23 +192,23 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data["view_count"])
-        thumb = await fast_download(
-            f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg", filename=f"{title}.jpg"
+        thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        description = (
+            ytdl_data["description"]
+            if len(ytdl_data["description"]) < 100
+            else ytdl_data["description"][:100]
+        )
+        likes, dislikes = numerize(ytdl_data.get("like_count", 0)), numerize(
+            ytdl_data.get("dislike_count", 0)
         )
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
-        try:
-            os.rename(f"{ytdl_data['id']}.mp4", f"{title}.mp4")
-        except FileNotFoundError:
-            try:
-                os.rename(f"{ytdl_data['id']}.mkv", f"{title}.mp4")
-            except FileNotFoundError:
-                os.rename(f"{ytdl_data['id']}.mp4.webm", f"{title}.mp4")
-        except Exception as ex:
-            return await event.edit(str(ex))
-        c_time = time.time()
-        file = await uploader(
-            f"{title}.mp4", f"{title}.mp4", c_time, event, "Uploading " + title + "..."
+        file, _ = await event.client.fast_uploader(
+            vid_id + ".mkv",
+            filename=title + ".mkv",
+            show_progress=True,
+            event=event,
+            to_delete=True,
         )
         attributes = [
             DocumentAttributeVideo(
@@ -223,14 +219,30 @@ async def _(event):
             ),
         ]
     text = f"**Title:** `{title}`\n"
-    text += f"**Duration:** `{time_formatter(int(duration)*1000)}`\n"
-    text += f"**Views:** `{views}`\n"
-    text += f"**Artist:** `{artist}`\n\n"
-    await event.edit(
-        text,
-        file=file,
-        buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
-        attributes=attributes,
-        thumb=thumb,
-    )
-    await bash(f'rm "{title}"*')
+    text += f"**⏳:** `{time_formatter(int(duration)*1000)}`\n"
+    text += f"**🎤:** `{artist}`\n"
+    text += f"👀 `{views}`\n"
+    text += f"👍: `{likes}`\n"
+    text += f"👎: `{dislikes}`\n"
+    text += f"**Description:** `{description}`\n"
+    try:
+        await event.edit(
+            text,
+            file=file,
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            attributes=attributes,
+            thumb=thumb,
+        )
+    except FilePart0MissingError:
+        file = await event.client.send_file(
+            udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb
+        )
+        await event.edit(
+            text,
+            file=file.media,
+            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            attributes=attributes,
+            thumb=thumb,
+        )
+        await file.delete()
+    await bash(f"rm {vid_id}.jpg")

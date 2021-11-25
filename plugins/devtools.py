@@ -52,14 +52,12 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, get_string("devs_1"), time=10)
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+        return await eor(event, get_string("devs_1"), time=10)
+    xx = await eor(event, get_string("com_1"))
+    reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     if stderr:
@@ -97,13 +95,12 @@ _ignore_eval = []
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(xx, get_string("devs_2"), time=5)
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+        return await eor(event, get_string("devs_2"), time=5)
+    xx = await eor(event, get_string("com_1"))
+    reply_to_id = event.reply_to_msg_id or event.id
     if event.sender_id not in DEVLIST and (
         any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
@@ -125,7 +122,6 @@ async def _(event):
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
-    reply_to_id = event.message.id
     try:
         await aexec(cmd, event)
     except Exception:
