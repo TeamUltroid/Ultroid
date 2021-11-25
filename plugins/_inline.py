@@ -29,7 +29,7 @@ helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
 
-if add_ons:
+if add_ons is not False:
     zhelps = get_string("inline_2")
 else:
     zhelps = get_string("inline_3")
@@ -162,10 +162,48 @@ async def help_func(ult):
     )
 
 
-# @callback(re.compile())
+@callback(re.compile("uplugin_(.*)"))
 async def uptd_plugin(event):
-    pass
-
+    key, file = event.data_match.group(1).decode("utf-8").split("_")
+    key_ = HELP.get(key, [])
+    hel_p = f"Plugin Name - `{file}`\n"
+    help_ = None
+    try:
+        for i in key_[file]:
+            help_ += i
+    except KeyError:
+        if file in LIST:
+            help_ = get_string("help_11").format(file)
+            for d in LIST[plugin_name]:
+                help_ += HNDLR + d
+                help_ += "\n"
+    if not help_:
+        help_ = f"{file} has no Detailed Help!"
+    else:
+        help_ = hel_p + help_
+    help_ += "Join @TeamUltroid"
+    buttons = []
+    if INLINE_PIC:
+        buttons.append(
+            [
+                Button.inline(
+                    "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
+                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                )
+            ]
+        )
+    buttons.append(
+        [
+            Button.inline("« Bᴀᴄᴋ", data="uh_{key}_"),
+        ]
+    try:
+        await event.edit(help_, buttons=buttons)
+    except Exception as er:
+        LOGS.exception(er)
+        help = f"Do `{HNDLR}help {key}` to get list of commands."
+        await event.edit(help, buttons=buttons)
+             
+        
 
 """
 @callback(data="vc_helper", owner=True)
