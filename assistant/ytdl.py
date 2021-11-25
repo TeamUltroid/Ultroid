@@ -156,8 +156,8 @@ async def _(event):
         duration = ytdl_data["duration"]
         description = (
             ytdl_data["description"]
-            if len(ytdl_data["description"]) < 250
-            else ytdl_data["description"][:250]
+            if len(ytdl_data["description"]) < 100
+            else ytdl_data["description"][:100]
         )
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
@@ -195,8 +195,8 @@ async def _(event):
         thumb = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
         description = (
             ytdl_data["description"]
-            if len(ytdl_data["description"]) < 250
-            else ytdl_data["description"][:250]
+            if len(ytdl_data["description"]) < 100
+            else ytdl_data["description"][:100]
         )
         likes, dislikes = numerize(ytdl_data.get("like_count", 0)), numerize(
             ytdl_data.get("dislike_count", 0)
