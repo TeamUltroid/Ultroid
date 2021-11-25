@@ -156,6 +156,8 @@ async def help_func(ult):
         return await ult.answer(
             f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True
         )
+    if "|" in count:
+        _, count = count.split("|")
     if not count:
         count = 0
     else:
@@ -169,6 +171,9 @@ async def help_func(ult):
 @callback(re.compile("uplugin_(.*)"))
 async def uptd_plugin(event):
     key, file = event.data_match.group(1).decode("utf-8").split("_")
+    index = None
+    if "|" in file:
+        file, index = file.split("|")
     key_ = HELP.get(key, [])
     hel_p = f"Plugin Name - `{file}`\n"
     help_ = ""
@@ -194,9 +199,12 @@ async def uptd_plugin(event):
                 )
             ]
         )
+    data = f'uh_{key}_'
+    if index is not None:
+        data += f"|{index}"
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_"),
+            Button.inline("« Bᴀᴄᴋ", data=data),
         ]
     )
     try:
@@ -362,7 +370,7 @@ def page_num(index, key):
     loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     List = [
-        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}")
+        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}|{index}")
         for x in sorted(loaded)
     ]
     all_ = split_list(List, cols)
