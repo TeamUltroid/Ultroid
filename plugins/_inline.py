@@ -199,7 +199,7 @@ async def uptd_plugin(event):
                 )
             ]
         )
-    data = f'uh_{key}_'
+    data = f"uh_{key}_"
     if index is not None:
         data += f"|{index}"
     buttons.append(
