@@ -77,8 +77,7 @@ async def inline_alive(o):
 async def inline_handler(event):
     z = []
     for x in LIST.values():
-        for y in x:
-            z.append(y)
+        z.extend(y)
     text = get_string("inline_4").format(
         OWNER_NAME,
         len(HELP.get("Official", [])),
@@ -121,8 +120,7 @@ async def _(event):
 async def setting(event):
     z = []
     for x in LIST.values():
-        for y in x:
-            z.append(y)
+        z.extend(y)
     await event.edit(
         get_string("inline_4").format(
             OWNER_NAME,
@@ -406,9 +404,9 @@ async def ibuild(e):
     if not (n and n.isdigit()):
         return
     ok = STUFF.get(int(n))
-    txt = ok.get("msg") or None
-    pic = ok.get("media") or None
-    btn = ok.get("button") or None
+    txt = ok.get("msg")
+    pic = ok.get("media")
+    btn = ok.get("button")
     if not (pic or txt):
         txt = "Hey!"
     if pic:
