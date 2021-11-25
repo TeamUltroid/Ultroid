@@ -311,7 +311,10 @@ async def _(e):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    data = "back" if ok.startswith("plugins") else "buck"
+    key = "Official"
+    if ok.startswith("addons"):
+        key = "Addons"
+    data = f"uh_{key}_"
     await e.edit(
         f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
         buttons=Button.inline("« Bᴀᴄᴋ", data=data),
