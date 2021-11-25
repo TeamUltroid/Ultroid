@@ -195,15 +195,15 @@ async def uptd_plugin(event):
     buttons.append(
         [
             Button.inline("« Bᴀᴄᴋ", data="uh_{key}_"),
-        ])
+        ]
+    )
     try:
         await event.edit(help_, buttons=buttons)
     except Exception as er:
         LOGS.exception(er)
         help = f"Do `{HNDLR}help {key}` to get list of commands."
         await event.edit(help, buttons=buttons)
-             
-        
+
 
 """
 @callback(data="vc_helper", owner=True)
