@@ -204,6 +204,7 @@ async def uptd_plugin(event):
         help = f"Do `{HNDLR}help {key}` to get list of commands."
         await event.edit(help, buttons=buttons)
 
+
 """
 @callback(data="vc_helper", owner=True)
 async def on_vc_callback_query_handler(event):
