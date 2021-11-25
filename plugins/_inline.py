@@ -171,7 +171,7 @@ async def uptd_plugin(event):
     try:
         for i in key_[file]:
             help_ += i
-    except KeyError:
+    except BaseException:
         if file in LIST:
             help_ = get_string("help_11").format(file)
             for d in LIST[plugin_name]:
