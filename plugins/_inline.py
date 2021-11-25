@@ -181,7 +181,7 @@ async def uptd_plugin(event):
         help_ = f"{file} has no Detailed Help!"
     else:
         help_ = hel_p + help_
-    help_ += "Join @TeamUltroid"
+    help_ += "\n© Join @TeamUltroid"
     buttons = []
     if INLINE_PIC:
         buttons.append(
@@ -194,7 +194,7 @@ async def uptd_plugin(event):
         )
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data="uh_{key}_"),
+            Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_"),
         ]
     )
     try:
@@ -203,7 +203,6 @@ async def uptd_plugin(event):
         LOGS.exception(er)
         help = f"Do `{HNDLR}help {key}` to get list of commands."
         await event.edit(help, buttons=buttons)
-
 
 """
 @callback(data="vc_helper", owner=True)
