@@ -41,12 +41,7 @@ async def all_messages_catcher(e):
     y = e.chat
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
-    buttons = [[Button.url(where_n, where_l)]]
-    if getattr(x, "username", None):
-        who_l = f"https://t.me/{x.username}"
-        buttons.append([Button.url(who_n, who_l)])
-    else:
-        buttons.append([Button.inline(who_n, data=f"who{x.id}")])
+    buttons = [[Button.url(where_n, where_l)], [Button.mention(who_n, await e.client.get_entity(x.id))]]
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         tag_add(sent.id, e.chat_id, e.id)
@@ -108,16 +103,6 @@ if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
                 await ultroid_bot.send_message(chat, e.message, reply_to=msg)
             except BaseException:
                 pass
-
-
-@callback(re.compile("who(.*)"))
-async def _(e):
-    wah = e.pattern_match.group(1).decode("UTF-8")
-    y = await ultroid_bot.get_entity(int(wah))
-    who = inline_mention(y)
-    x = await e.reply(f"Mention By user : {who}")
-    await asyncio.sleep(6)
-    await x.delete()
 
 
 # log for assistant/user joins/add
