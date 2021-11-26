@@ -237,6 +237,7 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Block PM", data=f"block_{user.id}"),
                     ],
                 )
+                wrn = 1
             except MessageNotModifiedError:
                 wrn = 1
             if user.id in LASTMSG:
