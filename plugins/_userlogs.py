@@ -43,7 +43,7 @@ async def all_messages_catcher(e):
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
     if isinstance(x, types.User):
-        buttons.append([Button.mention(who_n, await e.client.get_entity(x.id))])
+        buttons.append([Button.mention(who_n, await e.client.get_input_entity(x.id))])
     elif getattr(x, "username"):
         buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
