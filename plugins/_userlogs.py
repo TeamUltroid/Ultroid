@@ -41,7 +41,10 @@ async def all_messages_catcher(e):
     y = e.chat
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
-    buttons = [[Button.url(where_n, where_l)], [Button.mention(who_n, await e.client.get_entity(x.id))]]
+    buttons = [
+        [Button.url(where_n, where_l)],
+        [Button.mention(who_n, await e.client.get_entity(x.id))],
+    ]
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         tag_add(sent.id, e.chat_id, e.id)
