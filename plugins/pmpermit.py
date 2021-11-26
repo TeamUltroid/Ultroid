@@ -52,6 +52,7 @@ from telethon.tl.functions.contacts import (
     GetBlockedRequest,
     UnblockRequest,
 )
+from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
 
@@ -185,6 +186,8 @@ if udB.get_key("PMSETTING"):
                     LOG_CHANNEL,
                     f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
                 )
+            except MessageNotModifiedError:
+                pass
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -234,6 +237,8 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Block PM", data=f"block_{user.id}"),
                     ],
                 )
+            except MessageNotModifiedError:
+                pass
                 wrn = 1
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
@@ -433,6 +438,8 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                 )
+            except MessageNotModifiedError:
+                pass
         else:
             await eor(apprvpm, "`User may already be approved.`", time=5)
 
@@ -475,6 +482,8 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                 )
+            except MessageNotModifiedError:
+                pass
         else:
             await eod(
                 e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!"
@@ -522,6 +531,8 @@ async def blockpm(block):
                 Button.inline("UnBlock", data=f"unblock_{user}"),
             ],
         )
+    except MessageNotModifiedError:
+                pass
 
 
 @ultroid_cmd(pattern="unblock ?(.*)")
@@ -572,6 +583,8 @@ async def unblockpm(event):
                 Button.inline("Block", data=f"block_{user}"),
             ],
         )
+    except MessageNotModifiedError:
+                pass
 
 
 @ultroid_cmd(pattern="listapproved$", owner=True)
