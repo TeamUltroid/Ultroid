@@ -47,12 +47,12 @@ from pyUltroid.dB.logusers_db import *
 from pyUltroid.dB.pmpermit_db import *
 from tabulate import tabulate
 from telethon import events
+from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.contacts import (
     BlockRequest,
     GetBlockedRequest,
     UnblockRequest,
 )
-from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
 
@@ -238,7 +238,6 @@ if udB.get_key("PMSETTING"):
                     ],
                 )
             except MessageNotModifiedError:
-                pass
                 wrn = 1
             if user.id in LASTMSG:
                 prevmsg = LASTMSG[user.id]
@@ -532,7 +531,7 @@ async def blockpm(block):
             ],
         )
     except MessageNotModifiedError:
-                pass
+        pass
 
 
 @ultroid_cmd(pattern="unblock ?(.*)")
@@ -584,7 +583,7 @@ async def unblockpm(event):
             ],
         )
     except MessageNotModifiedError:
-                pass
+        pass
 
 
 @ultroid_cmd(pattern="listapproved$", owner=True)
