@@ -223,7 +223,7 @@ async def _(event):
         return await event.answer(f"Do '{HNDLR}update'")
     repo = Repo.init()
     ac_br = repo.active_branch
-    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + "\n\n" + get_string("inline_8")
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
