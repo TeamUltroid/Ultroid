@@ -85,8 +85,8 @@ async def pinterest(e):
     if len(hulu) < 1:
         await eor(e, "`Wrong link or private pin.`", time=5)
     elif len(hulu) > 1:
-        video = await fast_download(hulu[0]["href"])
-        thumb = await fast_download(hulu[1]["href"])
+        video, _ = await fast_download(hulu[0]["href"])
+        thumb, _ = await fast_download(hulu[1]["href"])
         await e.delete()
         await e.client.send_file(e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}")
         [os.remove(file) for file in [video, thumb]]

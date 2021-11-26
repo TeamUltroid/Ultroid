@@ -46,7 +46,7 @@ async def _(e):
         await xx.edit(get_string("upd_7"))
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
         return
-    m = updater()
+    m = await updater()
     branch = (Repo.init()).active_branch
     if m:
         x = await asst.send_file(

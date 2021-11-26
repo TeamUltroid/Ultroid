@@ -184,21 +184,15 @@ TOKEN_FILE = "resources/auths/auth_token.txt"
     owner=True,
 )
 async def send(eve):
-    name = (eve.data_match.group(1)).decode("UTF-8")
+    key, name = (eve.data_match.group(1)).decode("UTF-8").split("_")
     thumb = "resources/extras/inline.jpg"
     await eve.answer("■ Sending ■")
-    if name.startswith("def"):
-        plug_name = name.replace("def_plugin_", "")
-        plugin = f"plugins/{plug_name}.py"
-        data = "back"
-    elif name.startswith("add"):
-        plug_name = name.replace("add_plugin_", "")
-        plugin = f"addons/{plug_name}.py"
-        data = "buck"
+    data = f"uh_{key}_"
+    if key == "Official":
+        key = "plugins"
     else:
-        plug_name = name.replace("vc_plugin_", "")
-        plugin = f"vcbot/{plug_name}.py"
-        data = "vc_helper"
+        key = key.lower()
+    plugin = f"{key}/{name}.py"
     buttons = [
         [
             Button.inline(
@@ -268,7 +262,7 @@ async def changes(okk):
     repo = Repo.init()
     ac_br = repo.active_branch
     button = (Button.inline("Update Now", data="updatenow"),)
-    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     try:
         if len(tl_chnglog) > 700:
@@ -317,7 +311,10 @@ async def _(e):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    data = "back" if ok.startswith("plugins") else "buck"
+    key = "Official"
+    if ok.startswith("addons"):
+        key = "Addons"
+    data = f"uh_{key}_"
     await e.edit(
         f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
         buttons=Button.inline("« Bᴀᴄᴋ", data=data),
@@ -1289,9 +1286,9 @@ async def fdroid_dler(event):
     thumb = BSC.find("img", "package-icon")["src"]
     if thumb.startswith("/"):
         thumb = "https://f-droid.org" + thumb
-    thumb = await fast_download(thumb, filename=uri + ".png")
+    thumb, _ = await fast_download(thumb, filename=uri + ".png")
     s_time = time.time()
-    file = await fast_download(
+    file, _ = await fast_download(
         dl_,
         filename=title + ".apk",
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(

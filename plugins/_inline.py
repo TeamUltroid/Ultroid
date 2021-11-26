@@ -156,6 +156,8 @@ async def help_func(ult):
         return await ult.answer(
             f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True
         )
+    if "|" in count:
+        _, count = count.split("|")
     if not count:
         count = 0
     else:
@@ -169,6 +171,9 @@ async def help_func(ult):
 @callback(re.compile("uplugin_(.*)"))
 async def uptd_plugin(event):
     key, file = event.data_match.group(1).decode("utf-8").split("_")
+    index = None
+    if "|" in file:
+        file, index = file.split("|")
     key_ = HELP.get(key, [])
     hel_p = f"Plugin Name - `{file}`\n"
     help_ = ""
@@ -190,13 +195,16 @@ async def uptd_plugin(event):
             [
                 Button.inline(
                     "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=f"sndplug_{(event.data).decode('UTF-8')}",
+                    data=f"sndplug_{key}_{file}",
                 )
             ]
         )
+    data = f"uh_{key}_"
+    if index is not None:
+        data += f"|{index}"
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_"),
+            Button.inline("« Bᴀᴄᴋ", data=data),
         ]
     )
     try:
@@ -215,7 +223,7 @@ async def _(event):
         return await event.answer(f"Do '{HNDLR}update'")
     repo = Repo.init()
     ac_br = repo.active_branch
-    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     changelog_str = changelog + "\n\n" + get_string("inline_8")
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
@@ -362,7 +370,7 @@ def page_num(index, key):
     loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     List = [
-        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}")
+        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}|{index}")
         for x in sorted(loaded)
     ]
     all_ = split_list(List, cols)
