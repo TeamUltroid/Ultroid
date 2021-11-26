@@ -262,7 +262,7 @@ async def changes(okk):
     repo = Repo.init()
     ac_br = repo.active_branch
     button = (Button.inline("Update Now", data="updatenow"),)
-    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     cli = "\n\nClick the below button to update!"
     try:
         if len(tl_chnglog) > 700:
