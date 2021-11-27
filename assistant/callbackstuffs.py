@@ -193,7 +193,7 @@ async def send(eve):
     else:
         key = key.lower()
     plugin = f"{key}/{name}.py"
-    _ = f"pasta-{plugin}
+    _ = f"pasta-{plugin}"
     index = None
     if "|" in name:
         name, index = name.split("|")
