@@ -30,7 +30,15 @@ from pyUltroid.dB.mute_db import is_muted, mute, unmute
 from pyUltroid.functions.admins import ban_time
 from telethon import events
 
-from . import eod, eor, get_string, get_user_id, ultroid_bot, ultroid_cmd
+from . import (
+    eod,
+    eor,
+    get_string,
+    get_user_id,
+    inline_mention,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
@@ -195,7 +203,7 @@ async def _(e):
             input = int(input)
         try:
             userid = (await e.client.get_entity(input)).id
-            name = (await e.client.get_entity(userid)).first_name
+            name = inline_mention(await e.client.get_entity(userid))
         except Exception as x:
             return await xx.edit(str(x))
     else:
@@ -211,7 +219,7 @@ async def _(e):
         )
         await eod(
             xx,
-            f"`Successfully Muted` [{name}](tg://user?id={userid}) `in {chat.title}`",
+            f"`Successfully Muted` {name} `in {chat.title}`",
         )
     except BaseException as m:
         await eor(xx, f"`{m}`", time=5)
