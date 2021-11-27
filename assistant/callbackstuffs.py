@@ -321,7 +321,7 @@ async def _(e):
     else:
         key = "Official"
     await e.edit(
-        " ",
+        None,
         buttons=[
             [Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)],
             [Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_")],
