@@ -69,20 +69,20 @@ async def insta_dl(e):
     CL = await create_instagram_client(e)
     if CL:
         try:
-            mpk = CL.media_pk_from_url(text)
-            media = CL.media_info(mpk)
+            mpk = await CL.media_pk_from_url(text)
+            media = await CL.media_info(mpk)
             if media.media_type == 1:  # photo
-                media = CL.photo_download(mpk)
+                media = await CL.photo_download(mpk)
             elif media.media_type == 2 and media.product_type == "feed":  # video:
-                media = CL.video_download(mpk)
+                media =await CL.video_download(mpk)
             elif media.media_type == 2 and media.product_type == "igtv":  # igtv:
-                media = CL.igtv_download(mpk)
+                media = await CL.igtv_download(mpk)
             elif (
                 media.media_type == 2 and media.product_type == "clips"
             ):  # clips/reels:
-                media = CL.clip_download(mpk)
+                media = await CL.clip_download(mpk)
             elif media.media_type == 8:  # Album:
-                media = CL.album_download(mpk)
+                media = await CL.album_download(mpk)
             else:
                 LOGS.info(f"UnPredictable Media Type : {mpk}")
                 return
@@ -125,13 +125,13 @@ async def soon_(e):
     ew = await eor(e, get_string("com_1"))
     if match:
         try:
-            iid = cl.user_id_from_username(match)
-            data = cl.user_info(iid)
+            iid = await cl.user_id_from_username(match)
+            data = await cl.user_info(iid)
         except Exception as g:
             return await eor(ew, f"**ERROR** : `{g}`")
     else:
-        data = cl.account_info()
-        data = cl.user_info(data.pk)
+        data = await cl.account_info()
+        data = await cl.user_info(data.pk)
     photo = data.profile_pic_url
     unam = "https://instagram.com/" + data.username
     msg = f"• **Full Name** : __{data.full_name}__"
@@ -182,9 +182,9 @@ async def insta_karbon(event):
         return await eor(msg, "`Use In Proper Format...`")
     try:
         if title:
-            uri = method(dle, caption=caption, title=title)
+            uri = await method(dle, caption=caption, title=title)
         else:
-            uri = method(dle, caption=caption)
+            uri = await method(dle, caption=caption)
         os.remove(dle)
     except Exception as er:
         LOGS.exception(er)
