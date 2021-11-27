@@ -193,11 +193,18 @@ async def send(eve):
     else:
         key = key.lower()
     plugin = f"{key}/{name}.py"
+    _ = f"pasta-{plugin}
+    index = None
+    if "|" in name:
+        name, index = name.split("|")
+    if index is not None:
+        data += f"|{index}"
+        _ += f"|{index}"
     buttons = [
         [
             Button.inline(
                 "« Pᴀsᴛᴇ »",
-                data=f"pasta-{plugin}",
+                data=_,
             )
         ],
         [
@@ -308,6 +315,9 @@ async def changes(okk):
 )
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
+    index = None
+    if "|" in ok:
+        ok, index = ok.split("|")
     with open(ok, "r") as hmm:
         _, key = await get_paste(hmm.read())
     link = "https://spaceb.in/" + key
@@ -320,11 +330,14 @@ async def _(e):
         key = "VCBot"
     else:
         key = "Official"
+    data = f"uh_{key}_"
+    if index is not None:
+        data+= f"|{index}"
     await e.edit(
         None,
         buttons=[
             [Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)],
-            [Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_")],
+            [Button.inline("« Bᴀᴄᴋ", data=data)],
         ],
     )
 
