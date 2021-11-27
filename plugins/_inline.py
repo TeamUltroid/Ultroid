@@ -225,7 +225,9 @@ async def _(event):
     if not INLINE_PIC:
         return await event.answer(f"Do '{HNDLR}update'")
     repo = Repo.init()
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{repo.active_branch}")
+    changelog, tl_chnglog = await gen_chlog(
+        repo, f"HEAD..upstream/{repo.active_branch}"
+    )
     changelog_str = changelog + "\n\n" + get_string("inline_8")
     if len(changelog_str) > 1024:
         await event.edit(get_string("upd_4"))
