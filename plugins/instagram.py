@@ -74,7 +74,7 @@ async def insta_dl(e):
             if media.media_type == 1:  # photo
                 media = await CL.photo_download(mpk)
             elif media.media_type == 2 and media.product_type == "feed":  # video:
-                media =await CL.video_download(mpk)
+                media = await CL.video_download(mpk)
             elif media.media_type == 2 and media.product_type == "igtv":  # igtv:
                 media = await CL.igtv_download(mpk)
             elif (
