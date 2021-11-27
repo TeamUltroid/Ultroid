@@ -188,23 +188,33 @@ async def send(eve):
     thumb = "resources/extras/inline.jpg"
     await eve.answer("■ Sending ■")
     data = f"uh_{key}_"
+    index = None
+    if "|" in name:
+        name, index = name.split("|")
     if key == "Official":
         key = "plugins"
     else:
         key = key.lower()
     plugin = f"{key}/{name}.py"
+    _ = f"pasta-{plugin}"
+    if index is not None:
+        data += f"|{index}"
+        _ += f"|{index}"
     buttons = [
         [
             Button.inline(
                 "« Pᴀsᴛᴇ »",
-                data=f"pasta-{plugin}",
+                data=_,
             )
         ],
         [
             Button.inline("« Bᴀᴄᴋ", data=data),
         ],
     ]
-    await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
+    try:
+        await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
+    except Exception as er:
+        await eve.answer(str(er), alert=True)
 
 
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
@@ -260,9 +270,10 @@ async def update(eve):
 async def changes(okk):
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
-    ac_br = repo.active_branch
     button = (Button.inline("Update Now", data="updatenow"),)
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(
+        repo, f"HEAD..upstream/{repo.active_branch}"
+    )
     cli = "\n\nClick the below button to update!"
     try:
         if len(tl_chnglog) > 700:
@@ -305,21 +316,30 @@ async def changes(okk):
 )
 async def _(e):
     ok = (e.data_match.group(1)).decode("UTF-8")
+    index = None
+    if "|" in ok:
+        ok, index = ok.split("|")
     with open(ok, "r") as hmm:
         _, key = await get_paste(hmm.read())
     link = "https://spaceb.in/" + key
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    key = "Official"
     if ok.startswith("addons"):
         key = "Addons"
+    elif ok.startswith("vcbot"):
+        key = "VCBot"
+    else:
+        key = "Official"
     data = f"uh_{key}_"
+    if index is not None:
+        data += f"|{index}"
     await e.edit(
-        f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
-        buttons=Button.inline("« Bᴀᴄᴋ", data=data),
-        link_preview=False,
-        parse_mode="html",
+        "",
+        buttons=[
+            [Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)],
+            [Button.inline("« Bᴀᴄᴋ", data=data)],
+        ],
     )
 
 
