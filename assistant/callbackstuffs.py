@@ -188,15 +188,15 @@ async def send(eve):
     thumb = "resources/extras/inline.jpg"
     await eve.answer("■ Sending ■")
     data = f"uh_{key}_"
+    index = None
+    if "|" in name:
+        name, index = name.split("|")
     if key == "Official":
         key = "plugins"
     else:
         key = key.lower()
     plugin = f"{key}/{name}.py"
     _ = f"pasta-{plugin}"
-    index = None
-    if "|" in name:
-        name, index = name.split("|")
     if index is not None:
         data += f"|{index}"
         _ += f"|{index}"
