@@ -332,7 +332,7 @@ async def _(e):
         key = "Official"
     data = f"uh_{key}_"
     if index is not None:
-        data+= f"|{index}"
+        data += f"|{index}"
     await e.edit(
         None,
         buttons=[
