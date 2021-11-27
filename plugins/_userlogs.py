@@ -42,11 +42,12 @@ async def all_messages_catcher(e):
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    if getattr(x, "username", None):
-        who_l = f"https://t.me/{x.username}"
-        buttons.append([Button.url(who_n, who_l)])
+    if isinstance(x, types.User):
+        buttons.append([Button.mention(who_n, await e.client.get_input_entity(x.id))])
+    elif getattr(x, "username"):
+        buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
-        buttons.append([Button.inline(who_n, data=f"who{x.id}")])
+        buttons.append([Button.inline(who_n, "do_nothing")])
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         tag_add(sent.id, e.chat_id, e.id)
@@ -110,16 +111,6 @@ if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
                 pass
 
 
-@callback(re.compile("who(.*)"))
-async def _(e):
-    wah = e.pattern_match.group(1).decode("UTF-8")
-    y = await ultroid_bot.get_entity(int(wah))
-    who = inline_mention(y)
-    x = await e.reply(f"Mention By user : {who}")
-    await asyncio.sleep(6)
-    await x.delete()
-
-
 # log for assistant/user joins/add
 
 
@@ -171,3 +162,8 @@ async def leave_ch_at(event):
     name = (await client.get_entity(int(ch_id))).title
     await client.delete_dialog(int(ch_id))
     await event.edit(get_string("userlogs_5").format(name))
+
+
+@callback("do_nothing")
+async def _(event):
+    await event.answer()

@@ -45,10 +45,7 @@ from pyUltroid.dB import DEVLIST
 from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import (
-    DeleteUserHistoryRequest,
-    GetFullChannelRequest,
-)
+from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 
@@ -382,9 +379,10 @@ async def _(e):
             get_string("purgeall_1"),
         )
 
-    name = (await e.get_reply_message()).sender
+    msg = await e.get_reply_message()
+    name = msg.sender
     try:
-        await e.client(DeleteUserHistoryRequest(e.chat_id, name.id))
+        await e.client.delete_messages(e.chat_id, from_user=msg.sender_id)
         await eor(e, get_string("purgeall_2").format(name.first_name), time=5)
     except Exception as er:
         return await eor(e, str(er), time=5)
