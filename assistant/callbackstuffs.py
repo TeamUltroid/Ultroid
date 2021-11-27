@@ -204,8 +204,10 @@ async def send(eve):
             Button.inline("« Bᴀᴄᴋ", data=data),
         ],
     ]
-    await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
-
+    try:
+        await eve.edit(file=plugin, thumb=thumb, buttons=buttons)
+    except Exception as er:
+        await eve.answer(str(er), alert=True)
 
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 
@@ -311,15 +313,15 @@ async def _(e):
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
-    key = "Official"
     if ok.startswith("addons"):
         key = "Addons"
-    data = f"uh_{key}_"
+    elif ok.startswith("vcbot"):
+        key = "VCBot"
+    else:
+        key = "Official"
     await e.edit(
-        f"<strong>Pasted\n👉 <a href={link}>[Link]</a>\n👉 <a href={raw}>[Raw Link]</a></strong>",
-        buttons=Button.inline("« Bᴀᴄᴋ", data=data),
-        link_preview=False,
-        parse_mode="html",
+        " ",
+        buttons=[[Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)], [Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_")]],
     )
 
 
