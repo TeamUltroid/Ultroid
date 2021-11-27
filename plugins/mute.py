@@ -30,7 +30,16 @@ from pyUltroid.dB.mute_db import is_muted, mute, unmute
 from pyUltroid.functions.admins import ban_time
 from telethon import events
 
-from . import eod, eor, get_string, get_user_id, ultroid_bot, ultroid_cmd, inline_mention
+from . import (
+    eod,
+    eor,
+    get_string,
+    get_user_id,
+    inline_mention,
+    ultroid_bot,
+    ultroid_cmd,
+)
+
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def watcher(event):
