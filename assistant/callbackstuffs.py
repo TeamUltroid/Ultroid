@@ -209,6 +209,7 @@ async def send(eve):
     except Exception as er:
         await eve.answer(str(er), alert=True)
 
+
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 
 
@@ -321,7 +322,10 @@ async def _(e):
         key = "Official"
     await e.edit(
         " ",
-        buttons=[[Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)], [Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_")]],
+        buttons=[
+            [Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)],
+            [Button.inline("« Bᴀᴄᴋ", data=f"uh_{key}_")],
+        ],
     )
 
 
