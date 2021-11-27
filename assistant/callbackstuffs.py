@@ -270,9 +270,8 @@ async def update(eve):
 async def changes(okk):
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
-    ac_br = repo.active_branch
     button = (Button.inline("Update Now", data="updatenow"),)
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{repo.active_branch}")
     cli = "\n\nClick the below button to update!"
     try:
         if len(tl_chnglog) > 700:
@@ -334,7 +333,7 @@ async def _(e):
     if index is not None:
         data += f"|{index}"
     await e.edit(
-        None,
+        "",
         buttons=[
             [Button.url("Lɪɴᴋ", link), Button.url("Rᴀᴡ", raw)],
             [Button.inline("« Bᴀᴄᴋ", data=data)],
