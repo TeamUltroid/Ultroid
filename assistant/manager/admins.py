@@ -46,3 +46,4 @@ async def callback_(event):
         return await event.answer("You are not an Admin!", alert=True)
     _ult_cache["admin_callback"].update({data: (event.sender_id, perm)})
     await event.answer("Verification Done!")
+    await event.delete()
