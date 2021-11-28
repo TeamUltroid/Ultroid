@@ -10,7 +10,7 @@ deta
 enhancer==0.2.1
 gingerit
 git+https://github.com/buddhhu/img2html.git
-https://github.com/New-dev0/instagrapi/archive/ASYNC.zip
+git+https://github.com/New-dev0/instagrapi.git
 git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
 git+https://github.com/deta/deta-python.git
