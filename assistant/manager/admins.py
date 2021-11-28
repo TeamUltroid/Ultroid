@@ -7,6 +7,7 @@
 
 from . import *
 from pyUltroid import _ult_cache
+from telethon.errors.rpcerrorlist import UserNotParticipantError
 
 @ultroid_cmd(pattern="d(kick|ban)", manager=True)
 async def dowj(e):
