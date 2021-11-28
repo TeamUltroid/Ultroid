@@ -190,9 +190,9 @@ async def _(e):
 
 @ultroid_cmd(
     pattern="setgpic ?(.*)",
-    groups_only=True,
     admins_only=True,
     manager=True,
+    require="change_info"
 )
 async def _(ult):
     if not ult.is_reply:
@@ -224,9 +224,9 @@ async def _(ult):
 
 @ultroid_cmd(
     pattern="delgpic ?(.*)",
-    groups_only=True,
     admins_only=True,
     manager=True,
+    require="change_info"
 )
 async def _(ult):
     match = ult.pattern_match.group(1)
@@ -243,7 +243,9 @@ async def _(ult):
 
 @ultroid_cmd(
     pattern="unbanall$",
-    groups_only=True,
+    manager=True,
+    admins_only=True,
+    require="ban_users"
 )
 async def _(event):
     xx = await eor(event, "Searching Participant Lists.")
