@@ -282,7 +282,7 @@ async def _(event):
             await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
         return
     try:
-        full_user = await event.client(GetFullUserRequest(user))
+        full_user = (await event.client(GetFullUserRequest(user))).full_user
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
     user = full_user.user
