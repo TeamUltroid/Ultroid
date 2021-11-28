@@ -35,7 +35,7 @@ async def dowj(e):
 @callback(re.compile("cc_(.*)"), func=_ult_cache.get("admin_callback"))
 async def callback_(event):
     data = event.data_match.group(1).decode("utf-8")
-    if not _ult_cache.get("admin_callback", {}).get(data):
+    if data in _ult_cache.get("admin_callback", {}):
         return
     try:
         perm = await event.client.get_permissions(event.chat_id, event.sender_id)
