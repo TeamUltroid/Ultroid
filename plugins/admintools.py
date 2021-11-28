@@ -64,7 +64,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, manager=True)
+@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins")
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -94,6 +94,7 @@ async def prmte(ult):
     pattern="demote ?(.*)",
     admins_only=True,
     manager=True,
+    require="add_admins"
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -123,6 +124,7 @@ async def dmote(ult):
     pattern="ban ?(.*)",
     admins_only=True,
     manager=True,
+    require="ban_users",
 )
 async def bban(ult):
     something = await get_uinfo(ult)
@@ -151,6 +153,7 @@ async def bban(ult):
     pattern="unban ?(.*)",
     admins_only=True,
     manager=True,
+    require="ban_users"
 )
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -178,6 +181,7 @@ async def uunban(ult):
 @ultroid_cmd(
     pattern="kick ?(.*)",
     manager=True,
+    require="ban_users",
 )
 async def kck(ult):
     if "kickme" in ult.text:
@@ -209,7 +213,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban ?(.*)", manager=True)
+@ultroid_cmd(pattern="tban ?(.*)", manager=True, require="ban_users")
 async def tkicki(e):
     huh = e.text.split(" ")
     try:
@@ -244,7 +248,7 @@ async def tkicki(e):
         return await eor(e, str(m))
 
 
-@ultroid_cmd(pattern="pin$", manager=True)
+@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -265,6 +269,7 @@ async def pin(msg):
 @ultroid_cmd(
     pattern="unpin($| (.*))",
     manager=True,
+    require="pin_messages",
 )
 async def unp(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -286,6 +291,7 @@ async def unp(ult):
 @ultroid_cmd(
     pattern="purge ?(.*)",
     manager=True,
+    require="delete_messages"
 )
 async def fastpurger(purg):
     match = purg.pattern_match.group(1)
