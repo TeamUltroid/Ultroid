@@ -64,7 +64,9 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins")
+@ultroid_cmd(
+    pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins"
+)
 async def prmte(ult):
     xx = await eor(ult, get_string("com_1"))
     await ult.get_chat()
@@ -91,10 +93,7 @@ async def prmte(ult):
 
 
 @ultroid_cmd(
-    pattern="demote ?(.*)",
-    admins_only=True,
-    manager=True,
-    require="add_admins"
+    pattern="demote ?(.*)", admins_only=True, manager=True, require="add_admins"
 )
 async def dmote(ult):
     xx = await eor(ult, get_string("com_1"))
@@ -149,12 +148,7 @@ async def bban(ult):
     await eod(ult, text)
 
 
-@ultroid_cmd(
-    pattern="unban ?(.*)",
-    admins_only=True,
-    manager=True,
-    require="ban_users"
-)
+@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, manager=True, require="ban_users")
 async def uunban(ult):
     xx = await eor(ult, get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
@@ -288,11 +282,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(
-    pattern="purge ?(.*)",
-    manager=True,
-    require="delete_messages"
-)
+@ultroid_cmd(pattern="purge ?(.*)", manager=True, require="delete_messages")
 async def fastpurger(purg):
     match = purg.pattern_match.group(1)
     try:
