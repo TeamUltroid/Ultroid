@@ -41,5 +41,6 @@ async def callback_(event):
     except UserNotParticipantError:
         return await event.answer("Join the Group First!", alert=True)
     if not perm.is_admin:
-        return
+        return await event.answer("You are not an Admin!", alert=True)
     _ult_cache["admin_callback"].update({data: (event.sender_id, perm)})
+    await event.answer("Verification Done!")
