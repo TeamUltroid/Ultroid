@@ -190,7 +190,7 @@ async def kck(ult):
         return await xx.edit(get_string("adm_1"))
     if user.id in DEVLIST:
         return await xx.edit(get_string("kick_2"))
-    if user.is_self:
+    if getattr(user, "is_self", False):
         return await xx.edit(get_string("kick_3"))
     try:
         await ult.client.kick_participant(ult.chat_id, user.id)
