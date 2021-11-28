@@ -21,34 +21,22 @@ from . import eor, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="lock ?(.*)",
-    groups_only=True,
+    pattern="(un|)lock ?(.*)",
     admins_only=True,
     manager=True,
 )
-async def lockho(e):
-    mat = e.pattern_match.group(1)
+async def un_lock(e):
+    mat = e.pattern_match.group(2)
     if not mat:
         return await eor(e, "`Give some Proper Input..`", time=5)
-    ml = lock_unlock(mat)
+    lock = e.pattern_match.group(1) == ""
+    ml = lock_unlock(mat, lock)
     if not ml:
         return await eor(e, "`Incorrect Input`", time=5)
-    await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
-    await eor(e, f"Locked - `{mat}` ! ")
+    msg = "Locked" if lock else "Unlocked"
+    try:
+        await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
+    except Exception as er:
+        return await eor(e, str(er))
+    await eor(e, f"**{msg}** - `{mat}` ! ")
 
-
-@ultroid_cmd(
-    pattern="unlock ?(.*)",
-    groups_only=True,
-    admins_only=True,
-    manager=True,
-)
-async def unlckho(e):
-    mat = e.pattern_match.group(1)
-    if not mat:
-        return await eor(e, "`Give some Proper Input..`", time=5)
-    ml = lock_unlock(mat, lock=False)
-    if not ml:
-        return await eor(e, "`Incorrect Input`", time=5)
-    await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
-    await eor(e, f"Unlocked - `{mat}` ! ")
