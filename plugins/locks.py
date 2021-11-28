@@ -24,6 +24,7 @@ from . import eor, ultroid_cmd
     pattern="(un|)lock ?(.*)",
     admins_only=True,
     manager=True,
+    require="change_info"
 )
 async def un_lock(e):
     mat = e.pattern_match.group(2)
