@@ -201,7 +201,7 @@ async def _(event):
         duration = ytdl_data["duration"]
         filepath = vid_id + ".mkv"
         if not os.path.exists(filepath):
-            filepath = filepath + ".mkv.webm"
+            filepath = filepath + ".webm"
         file, _ = await event.client.fast_uploader(
             filepath,
             filename=title + ".mkv",
