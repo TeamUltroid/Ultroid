@@ -199,8 +199,11 @@ async def _(event):
         likes = numerize(ytdl_data["like_count"])
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
+        filepath = vid_id + "." + ext
+        if not os.path.exists(filepath):
+            filepath = filepath + ".webm"
         file, _ = await event.client.fast_uploader(
-            vid_id + ".mkv",
+            filepath,
             filename=title + ".mkv",
             show_progress=True,
             event=event,
@@ -215,29 +218,16 @@ async def _(event):
             ),
         ]
     text = f"**Title:** `{title}`\n"
-    text += f"**Description:** `{description}`\n"
-    text += f"**⏳:** `{time_formatter(int(duration)*1000)}`\n"
-    text += f"**🎤:** `{artist}`\n"
-    text += f"👀 `{views}`\n"
-    text += f"👍: `{likes}`\n"
-    try:
-        await event.edit(
+    text += f"**Description:** `{description}`\n\n"
+    text += f"`⏳:` `{time_formatter(int(duration)*1000)}`\n"
+    text += f"`🎤:` `{artist}`\n"
+    text += f"`👀`: `{views}`\n"
+    text += f"`👍`: `{likes}`\n"
+    await event.edit(
             text,
             file=file,
             buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
             attributes=attributes,
             thumb=thumb,
-        )
-    except FilePart0MissingError:
-        file = await event.client.send_file(
-            udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb
-        )
-        await event.edit(
-            text,
-            file=file.media,
-            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
-            attributes=attributes,
-            thumb=thumb,
-        )
-        await file.delete()
+    )
     await bash(f"rm {vid_id}.jpg")
