@@ -11,7 +11,6 @@ import re
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
-from telethon.errors import FilePart0MissingError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
@@ -224,10 +223,10 @@ async def _(event):
     text += f"`👀`: `{views}`\n"
     text += f"`👍`: `{likes}`\n"
     await event.edit(
-            text,
-            file=file,
-            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
-            attributes=attributes,
-            thumb=thumb,
+        text,
+        file=file,
+        buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+        attributes=attributes,
+        thumb=thumb,
     )
     await bash(f"rm {vid_id}.jpg")
