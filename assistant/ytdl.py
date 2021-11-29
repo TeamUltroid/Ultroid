@@ -199,9 +199,9 @@ async def _(event):
         likes = numerize(ytdl_data["like_count"])
         hi, wi = ytdl_data["height"], ytdl_data["width"]
         duration = ytdl_data["duration"]
-        filepath = vid_id + "." + ext
+        filepath = vid_id + ".mkv"
         if not os.path.exists(filepath):
-            filepath = filepath + ".webm"
+            filepath = filepath + ".mkv.webm"
         file, _ = await event.client.fast_uploader(
             filepath,
             filename=title + ".mkv",
