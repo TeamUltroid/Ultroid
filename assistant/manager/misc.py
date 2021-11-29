@@ -33,6 +33,9 @@ async def oqha(e):
         reply_to = e.reply_to_msg_id
     else:
         return await eor(e, "What to Echo?", time=5)
+    try:
+        await e.delete()
+    except: pass
     await e.client.send_message(e.chat_id, text, reply_to=reply_to)
 
 
