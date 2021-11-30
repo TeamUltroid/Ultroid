@@ -593,7 +593,7 @@ async def twitter_search(event):
         text += f"• **Username :** `@{user['screen_name']}`\n"
         text += f"• **Followers :** `{user['followers_count']}`    • **Following :** `{user['friends_count']}`\n"
         pro_ = "https://twitter.com/" + user["screen_name"]
-        text += f"• **Link :** [Click Here]({pro_})"
+        text += f"• **Link :** [Click Here]({pro_})\n_"
         reso.append(
             await event.builder.article(
                 title=user["name"],
