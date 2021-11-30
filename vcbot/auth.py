@@ -41,7 +41,7 @@ async def auth_group(event):
         admins = False
     chat = event.chat_id
     key = udB.get_key("VC_AUTH_GROUPS") or {}
-    cha, adm = None
+    cha, adm = None, None
     if key.get(chat):
         cha, adm = key[chat], key[chat]["admins"]
     if cha and adm == admins:

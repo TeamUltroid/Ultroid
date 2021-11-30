@@ -12,19 +12,6 @@ from . import *
 # main menu for api setting
 
 
-@callback("apiset", owner=True)
-async def apiset(event: events.CallbackQuery):
-    await event.edit(
-        get_string("ast_1"),
-        buttons=[
-            [Button.inline("Remove.bg API", data="rmbg")],
-            [Button.inline("DEEP API", data="dapi")],
-            [Button.inline("OCR API", data="oapi")],
-            [Button.inline("« Back", data="setter")],
-        ],
-    )
-
-
 @callback("rmbg", owner=True)
 async def rmbgapi(event: events.CallbackQuery):
     await event.delete()
@@ -39,12 +26,12 @@ async def rmbgapi(event: events.CallbackQuery):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("apiset"),
+                buttons=get_back_button("cbs_apiset"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("apiset"),
+            buttons=get_back_button("cbs_apiset"),
         )
 
 
@@ -62,12 +49,12 @@ async def rmbgapi(event: events.CallbackQuery):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("apiset"),
+                buttons=get_back_button("cbs_apiset"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("apiset"),
+            buttons=get_back_button("cbs_apiset"),
         )
 
 
@@ -85,10 +72,10 @@ async def rmbgapi(event: events.CallbackQuery):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("apiset"),
+                buttons=get_back_button("cbs_apiset"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} changed to {themssg}",
-            buttons=get_back_button("apiset"),
+            buttons=get_back_button("cbs_apiset"),
         )

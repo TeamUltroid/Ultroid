@@ -61,7 +61,7 @@ async def down(event):
         filename = None
     s_time = time.time()
     try:
-        filename = await fast_download(
+        filename, d = await fast_download(
             link,
             filename,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -76,7 +76,7 @@ async def down(event):
         )
     except InvalidURL:
         return await eor(msg, "`Invalid URL provided :(`", time=5)
-    await eor(msg, f"`{filename} `downloaded.")
+    await eor(msg, f"`{filename}` `downloaded in {time_formatter(d*1000)}.`")
 
 
 @ultroid_cmd(

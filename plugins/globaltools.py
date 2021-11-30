@@ -14,39 +14,27 @@
 • `{i}gstat <reply to user/userid/username>`
    Check if user is GBanned.
 
-• `{i}listgban`
-   List all GBanned users.
+• `{i}listgban` : List all GBanned users.
 
-• `{i}gmute <reply user/ username>`
-• `{i}ungmute`
+• `{i}gmute` | `{i}ungmute` <reply user/ username>`
     Mute/UnMute Globally.
 
-• `{i}gkick <reply user/ username>`
-    Globally Kick User.
+• `{i}gkick <reply/username>` `Globally Kick User`
+• `{i}gcast <text/reply>` `Globally Send msg in all grps`
 
-• `{i}gcast <Message> or <reply>`
-    Globally Send that msg in all grps.
+• `{i}gadmincast <text/reply>` `Globally broadcast in your admin chats`
+• `{i}gucast <text/reply>` `Globally send msg in all pm users`
 
-• `{i}gadmincast <Message> or <reply>`
-    Globally Send that msg in grps where you are admin.
-
-• `{i}gucast <Message> or <reply>`
-    Globally Send that msg in all Ur Chat Users.
-
-• `{i} gblacklist <chat id/username/nothing (for current chat)`
-   Add chat to blacklist and not send global broadcasts there.
-
-• `{i} ungblacklist <chat id/username/nothing (for current chat)`
-   Remove the chat from blacklist adn continue sending global broadcasts there.
+• `{i}gblacklist <chat id/username/nothing (for current chat)`
+   Add chat to blacklist and ignores global broadcast.
+• `{i}ungblacklist` `Remove the chat from blacklist.`
 
 •`{i}gpromote <reply to user> <channel/group/all> <rank>`
-    globally promote user where you are admin.
-    You can also set where To promote only groups or only channels or in all.
-    Like. `gpromote group boss` ~ it promote repied user in all groups.
-    Or. `gpromote @username all sar` ~ it promote the users in all group and channel.
-
-•`{i}gdemote`
-    Same function as gpromote.
+    globally promote user where you are admin
+    - Set whether To promote only in groups/channels/all.
+    `Eg-``gpromote group boss` ~ promotes user in all grps.
+        `gpromote @username all sar` ~ promote the user in all group & channel
+•`{i}gdemote` - `demote user globally`
 """
 import os
 
@@ -309,7 +297,7 @@ async def _(e):
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
     try:
-        name = (await e.client.get_entity(userid)).first_name
+        name = get_display_name(await e.client.get_entity(userid))
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -526,7 +514,7 @@ async def _(e):
         userid = (await e.get_chat()).id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
-    name = (await e.client.get_entity(userid)).first_name
+    name = await e.client.get_entity(userid)
     chats = 0
     if userid == ultroid_bot.uid:
         return await eor(xx, "`I can't gmute myself.`", time=3)
@@ -542,7 +530,7 @@ async def _(e):
             except BaseException:
                 pass
     gmute(userid)
-    await xx.edit(f"`Gmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Gmuted` {inline_mention(name)} `in {chats} chats.`")
 
 
 @ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
@@ -568,7 +556,7 @@ async def _(e):
             except BaseException:
                 pass
     ungmute(userid)
-    await xx.edit(f"`Ungmuted` [{name}](tg://user?id={userid}) `in {chats} chats.`")
+    await xx.edit(f"`Ungmuted` {inline_mention(name)} `in {chats} chats.`")
 
 
 @ultroid_cmd(
@@ -582,7 +570,7 @@ async def list_gengbanned(event):
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
-            name = (await ultroid_bot.get_entity(int(i))).first_name
+            name = get_display_name(await ultroid_bot.get_entity(int(i)))
         except BaseException:
             name = i
         msg += f"<strong>User</strong>: <a href=tg://user?id={i}>{name}</a>\n"
@@ -635,12 +623,12 @@ async def gstat_(e):
     await xx.edit(msg)
 
 
-@ultroid_cmd(pattern="gblacklist")
+@ultroid_cmd(pattern="gblacklist$")
 async def blacklist_(event):
     await gblacker(event, "add")
 
 
-@ultroid_cmd(pattern="ungblacklist")
+@ultroid_cmd(pattern="ungblacklist$")
 async def ungblacker(event):
     await gblacker(event, "remove")
 

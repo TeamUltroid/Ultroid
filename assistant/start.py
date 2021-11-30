@@ -32,16 +32,16 @@ Owner_info_msg = (
 
 _settings = [
     [
-        Button.inline("API Kᴇʏs", data="apiset"),
-        Button.inline("Pᴍ Bᴏᴛ", data="chatbot"),
+        Button.inline("API Kᴇʏs", data="cbs_apiset"),
+        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
     ],
     [
-        Button.inline("Aʟɪᴠᴇ", data="alvcstm"),
-        Button.inline("PᴍPᴇʀᴍɪᴛ", data="ppmset"),
+        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
     ],
     [
-        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="otvars"),
-        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="vcb"),
+        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
+        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
     ],
     [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
 ]
@@ -82,7 +82,13 @@ async def ultroid(event):
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
             buttons = [[Button.inline("Info", "itkkstyo")]]
             if event.sender.username:
-                buttons[0].append(Button.url("User", "t.me/" + event.sender.username))
+                buttons.append(
+                    [
+                        Button.mention(
+                            "User", await event.client.get_input_entity(event.sender_id)
+                        )
+                    ]
+                )
             await event.client.send_message(
                 udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
             )
