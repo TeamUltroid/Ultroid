@@ -220,7 +220,7 @@ async def tkicki(e):
         if e.reply_to_msg_id:
             inputt = (await e.get_reply_message()).sender_id
         else:
-            return await eor(e, "`Give username/id or reply to someone's message!`")
+            return await eor(e, get_string("tban_1"))
     userid = await get_user_id(inputt)
     try:
         user = await e.client.get_entity(userid)
