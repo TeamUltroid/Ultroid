@@ -385,7 +385,10 @@ async def _(e):
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
-        udB.set_key("GDRIVE_FOLDER_ID", repl.text)
+        id = repl.text
+        if id.startswith("https"):
+            id = id.split("?id=")[-1]
+        udB.set_key("GDRIVE_FOLDER_ID", id)
         await repl.reply(
             "Success Now You Can Authorise.",
             buttons=get_back_button("gdrive"),
