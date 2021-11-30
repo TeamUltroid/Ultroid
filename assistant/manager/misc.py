@@ -35,8 +35,8 @@ async def oqha(e):
         return await eor(e, "What to Echo?", time=5)
     try:
         await e.delete()
-    except BaseException:
-        pass
+    except BaseException as ex:
+        LOGS.error(ex)
     await e.client.send_message(e.chat_id, text, reply_to=reply_to)
 
 
