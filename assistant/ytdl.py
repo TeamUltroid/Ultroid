@@ -16,7 +16,7 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
-from . import callback, in_pattern, udB
+from . import callback, in_pattern, udB, asst
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -233,6 +233,6 @@ async def _(event):
         thumb=thumb,
         )
     except MediaEmptyError:
-        file = await asst.send_message(udB.get_key("LOG_CHANNEL", text, file=file, buttons=button, attributes=attributes, thumb=thumb)
+        file = await asst.send_message(udB.get_key("LOG_CHANNEL"), text, file=file, buttons=button, attributes=attributes, thumb=thumb)
         await event.edit(text, file=file.media, buttons=button)
     await bash(f"rm {vid_id}.jpg")
