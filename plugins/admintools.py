@@ -215,27 +215,25 @@ async def tkicki(e):
     except IndexError:
         return await eor(e, get_string("adm_3"), time=15)
     try:
-        inputt = huh[2]
+            inputt = huh[2]
     except IndexError:
-        pass
-    chat = await e.get_chat()
-    if e.is_reply:
-        replied = await e.get_reply_message()
-        userid = replied.sender_id
-        fn = (await e.get_sender()).first_name
-    elif inputt:
-        userid = await get_user_id(inputt)
-        fn = (await e.client.get_entity(userid)).first_name
-    else:
-        return await eor(e, get_string("tban_1"), time=3)
+            if e.reply_to_msg_id:
+                inputt = (await e.get_reply_message()).sender_id
+            else:
+                return await eor(e, "`Give username/id or reply to someone's message!`")
+    userid = await get_user_id(inputt)
+    try:
+        user = await e.client.get_entity(userid)
+    except Exception as ex:
+        return await eor(d, f"`{str(ex)}`")
     try:
         bun = await ban_time(e, tme)
         await e.client.edit_permissions(
-            e.chat_id, userid, until_date=bun, view_messages=False
+            e.chat_id, user.id, until_date=bun, view_messages=False
         )
         await eod(
             e,
-            get_string("tban_2").format(fn, chat.title, tme),
+            get_string("tban_2").format(inline_mention(user), e.chat.title, tme),
             time=15,
         )
     except Exception as m:
