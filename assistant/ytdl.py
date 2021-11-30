@@ -14,6 +14,7 @@ from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
+from telethon.errors.rpcerrorlist import MediaEmptyError
 from youtubesearchpython import VideosSearch
 
 from . import asst, callback, in_pattern, udB
