@@ -215,12 +215,12 @@ async def tkicki(e):
     except IndexError:
         return await eor(e, get_string("adm_3"), time=15)
     try:
-            inputt = huh[2]
+        inputt = huh[2]
     except IndexError:
-            if e.reply_to_msg_id:
-                inputt = (await e.get_reply_message()).sender_id
-            else:
-                return await eor(e, "`Give username/id or reply to someone's message!`")
+        if e.reply_to_msg_id:
+            inputt = (await e.get_reply_message()).sender_id
+        else:
+            return await eor(e, "`Give username/id or reply to someone's message!`")
     userid = await get_user_id(inputt)
     try:
         user = await e.client.get_entity(userid)
