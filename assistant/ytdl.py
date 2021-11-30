@@ -12,9 +12,9 @@ import re
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
+from telethon.errors.rpcerrorlist import MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from telethon.errors.rpcerrorlist import MediaEmptyError
 from youtubesearchpython import VideosSearch
 
 from . import asst, callback, in_pattern, udB
