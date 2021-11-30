@@ -6,7 +6,6 @@ apscheduler
 bs4
 cairosvg
 cfscrape
-deta
 enhancer==0.2.1
 gingerit
 git+https://github.com/1danish-00/google_trans_new.git
