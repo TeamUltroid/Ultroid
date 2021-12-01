@@ -47,7 +47,7 @@ async def all_messages_catcher(e):
     elif getattr(x, "username"):
         buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
-        buttons.append([Button.inline(who_n, "do_nothing")])
+        buttons.append([Button.url(who_n, where_l)])
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         tag_add(sent.id, e.chat_id, e.id)
