@@ -44,7 +44,7 @@ async def butt(event):
             os.remove(dl)
             media = "https://telegra.ph" + variable[0]
         else:
-            pack_bot_file_id(wt.media)
+            media = pack_bot_file_id(wt.media)
     if not text:
         text = event.text.split(maxsplit=1)
         if not text:
@@ -56,5 +56,5 @@ async def butt(event):
     text, buttons = get_msg_button(text)
     if buttons:
         buttons = create_tl_btn(buttons)
-    await something(event, text, None, buttons)
+    await something(event, text, media, buttons)
     await event.delete()
