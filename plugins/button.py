@@ -44,7 +44,7 @@ async def butt(event):
             os.remove(dl)
             media = "https://telegra.ph" + variable[0]
         else:
-            media = pack_bot_file_id(wt.media)
+            pack_bot_file_id(wt.media)
     if not text:
         text = event.text.split(maxsplit=1)
         if not text:
