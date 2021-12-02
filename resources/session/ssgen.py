@@ -25,7 +25,7 @@ def spinner():
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
-
+    import telethon
 
 def clear_screen():
     # https://www.tutorialspoint.com/how-to-clear-screen-in-python#:~:text=In%20Python%20sometimes%20we%20have,screen%20by%20pressing%20Control%20%2B%20l%20.
@@ -54,7 +54,7 @@ def telethon_session():
         spinner()
 
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
-    except BaseException:
+    except ImportError:
         print("Installing Telethon...")
         os.system("pip install -U telethon")
 
@@ -74,13 +74,13 @@ def telethon_session():
     # logging in
     try:
         with TelegramClient(StringSession(), API_ID, API_HASH) as ultroid:
-            print("Generating a user session for Ultroid...")
+            print("Generating a string session for •ULTROID•")
             ult = ultroid.send_message(
                 "me",
                 f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
             )
             print(
-                "Your SESSION has been generated. Check your telegram saved messages!"
+                "Your SESSION has been generated. Check your Telegram saved messages!"
             )
             exit(0)
     except ApiIdInvalidError:
@@ -100,8 +100,8 @@ def main():
     clear_screen()
     print(a)
     telethon_session()
-    x = input("Run again? (y/n")
-    if x == "y":
+    x = input("Run again? (y/n)")
+    if x.lower() in ["y", "yes"]:
         main()
     else:
         exit(0)
