@@ -285,7 +285,7 @@ async def _(event):
         full_user = (await event.client(GetFullUserRequest(user))).full_user
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
-    user = full_user.user
+    user = _
     user_photos = (
         await event.client.get_profile_photos(user.id, limit=0)
     ).total or "NaN"
