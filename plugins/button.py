@@ -32,7 +32,7 @@ async def butt(event):
             text = wt.text
         if wt.media:
             wut = mediainfo(wt.media)
-        if wut.startswith(("pic", "gif")):
+        if wut and wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
             variable = uf(dl)
             media = "https://telegra.ph" + variable[0]
@@ -44,10 +44,10 @@ async def butt(event):
             os.remove(dl)
             media = "https://telegra.ph" + variable[0]
         else:
-            pack_bot_file_id(wt.media)
+            media = pack_bot_file_id(wt.media)
     if not text:
         text = event.text.split(maxsplit=1)
-        if len(text) <= 1:
+        if not text:
             return await eor(
                 event,
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
