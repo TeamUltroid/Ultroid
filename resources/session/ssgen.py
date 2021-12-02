@@ -65,7 +65,7 @@ def telethon_session():
 
     # the imports
 
-    from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError
+    from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError, UserIsBotError
     from telethon.sessions import StringSession
     from telethon.sync import TelegramClient
 
@@ -75,14 +75,19 @@ def telethon_session():
     try:
         with TelegramClient(StringSession(), API_ID, API_HASH) as ultroid:
             print("Generating a string session for •ULTROID•")
-            ult = ultroid.send_message(
+            try:
+                ult = ultroid.send_message(
                 "me",
                 f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
-            )
-            print(
+                )
+                print(
                 "Your SESSION has been generated. Check your Telegram saved messages!"
-            )
-            exit(0)
+                )
+                return
+           except UserIsBotError:
+               print("You are trying to Generate Session for your Bot's Account?")
+               print("Here is That!\n{ultroid.session.save()}\n\n")
+               print("NOTE: You can't use that as User Session..")
     except ApiIdInvalidError:
         print(
             "Your API ID/API HASH combination is invalid. Kindly recheck.\nQuitting..."
@@ -94,7 +99,10 @@ def telethon_session():
     except PhoneNumberInvalidError:
         print("The phone number is invalid!\nQuitting...")
         exit(0)
-
+    except Exception as er:
+       print("Unexpected Error Occurred while Creating Session")
+       print(er)
+       print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
 
 def main():
     clear_screen()
