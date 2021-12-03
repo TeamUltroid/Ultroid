@@ -48,6 +48,7 @@ from . import (
     ATRA_COL,
     LOGS,
     OWNER_NAME,
+    ULTROID_IMAGES,
     Button,
     Carbon,
     Telegraph,
@@ -69,7 +70,6 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
-    ULTROID_IMAGES
 )
 
 ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
