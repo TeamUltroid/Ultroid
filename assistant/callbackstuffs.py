@@ -188,8 +188,8 @@ _convo = {
         "back": "cbs_apiset",
     },
     "oapi": {
-        var: "OCR_API",
-        name: "Ocr Api Key",
+        "var": "OCR_API",
+        "name": "Ocr Api Key",
         "text": "Get Your OCR api from ocr.space and send that Here.",
         "back": "cbs_apiset",
     },
