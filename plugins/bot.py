@@ -165,10 +165,8 @@ async def is_on(ult):
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
-    if event.out:
-        await event.delete()
     start = time.time()
-    x = await event.respond("Pong !")
+    x = await eor(event, "Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
