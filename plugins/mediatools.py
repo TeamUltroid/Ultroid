@@ -63,7 +63,7 @@ async def mi(e):
         urll = make_html_telegraph("Mediainfo", "Ultroid", out)
     except Exception as er:
         LOGS.exception(er)
-        return await ee.edit("**ERROR :** `{er}`")
+        return await ee.edit(f"**ERROR :** `{er}`")
     await ee.edit(
         f"**[{xx}]({url})**\n\n[{get_string('mdi_1')}]({urll})", link_preview=False
     )
