@@ -52,7 +52,7 @@ _buttons = {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
-                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="abs_taglog"),
                 Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
             ],
             [
@@ -79,7 +79,7 @@ _buttons = {
         "text": "SuperFban Settings:",
         "buttons": [
             [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
-            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
+            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="abs_sfexf")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     },
@@ -91,10 +91,10 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "alvcstm": {
+    "alabs_vcstm": {
         "text": f"Customise your {HNDLR}alive. Choose from the below options -",
         "buttons": [
-            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
+            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="abs_alvtx")],
             [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
             [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
@@ -151,7 +151,7 @@ _buttons = {
     "vcb": {
         "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         "buttons": [
-            [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
+            [Button.inline("VC Sᴇssɪᴏɴ", data="abs_vcs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
@@ -166,58 +166,58 @@ _buttons = {
     "apiset": {
         "text": get_string("ast_1"),
         "buttons": [
-            [Button.inline("Remove.bg API", data="rmbg")],
-            [Button.inline("DEEP API", data="dapi")],
-            [Button.inline("OCR API", data="oapi")],
+            [Button.inline("Remove.bg API", data="abs_rmbg")],
+            [Button.inline("DEEP API", data="abs_dapi")],
+            [Button.inline("OCR API", data="abs_oapi")],
             [Button.inline("« Back", data="setter")],
         ],
     },
 }
 
 _convo = {
-    "rmbg": {
+    "abs_rmbg": {
         "var": "RMBG_API",
         "name": "Remove.bg API Key",
         "text": get_string("ast_2"),
         "back": "cbs_apiset",
     },
-    "dapi": {
+    "abs_dapi": {
         "var": "DEEP_AI",
         "name": "Deep AI Api Key",
         "text": "Get Your Deep Api from deepai.org and send here.",
         "back": "cbs_apiset",
     },
-    "oapi": {
+    "abs_oapi": {
         "var": "OCR_API",
         "name": "Ocr Api Key",
         "text": "Get Your OCR api from ocr.space and send that Here.",
         "back": "cbs_apiset",
     },
-    "pmlgg": {
+    "abs_pmlgg": {
         "var": "PMLOGGROUP",
         "name": "Pm Log Group",
         "text": "Send chat id of chat which you want to save as Pm log Group.",
         "back": "pml",
     },
-    "vcs": {
+    "abs_vcs": {
         "var": "VC_SESSION",
         "name": "Vc Session",
         "text": "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
         "back": "cbs_vcb",
     },
-    "taglog": {
+    "abs_taglog": {
         "var": "TAG_LOG",
         "name": "Tag Log Group",
         "text": f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
-        "back": "taglog",
+        "back": "abs_taglog",
     },
-    "alvtx": {
+    "abs_alvtx": {
         "var": "ALIVE_TEXT",
         "name": "Alive Text",
         "text": "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
-        "back": "cbs_alvcstm",
+        "back": "cbs_alabs_vcstm",
     },
-    "sfexf": {
+    "abs_sfexf": {
         "var": "EXCLUDE_FED",
         "name": "Excluded Fed",
         "text": "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.",
@@ -405,7 +405,7 @@ async def _edit_to(event):
 
 
 @callback(re.compile("abs_(.*)"), owner=True)
-async def rmbgapi(event: events.CallbackQuery):
+async def abs_rmbgapi(event: events.CallbackQuery):
     match = event.data_match.group(1).decode("utf-8")
     if not _convo.get(match):
         return
@@ -670,8 +670,8 @@ async def hndlrr(event):
             )
 
 
-@callback("taglog", owner=True)
-async def tagloggrr(e):
+@callback("abs_taglog", owner=True)
+async def abs_tagloggrr(e):
     if not udB.get_key("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
     else:
@@ -798,7 +798,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("cbs_alvcstm"),
+                    buttons=get_back_button("cbs_alabs_vcstm"),
                 )
         except BaseException:
             pass
@@ -819,12 +819,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("cbs_alvcstm"),
+                    buttons=get_back_button("cbs_alabs_vcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("cbs_alvcstm"),
+            buttons=get_back_button("cbs_alabs_vcstm"),
         )
 
 
@@ -833,12 +833,12 @@ async def dell(event):
     try:
         udB.del_key("ALIVE_PIC")
         return await event.edit(
-            get_string("clst_5"), buttons=get_back_button("cbs_alvcstm")
+            get_string("clst_5"), buttons=get_back_button("cbs_alabs_vcstm")
         )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
-            buttons=get_back_button("cbs_alvcstm"),
+            buttons=get_back_button("cbs_alabs_vcstm"),
         )
 
 
@@ -1009,7 +1009,7 @@ async def apof(event):
 
 
 @callback("pml", owner=True)
-async def alvcs(event):
+async def alabs_vcs(event):
     if not udB.get_key("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
     else:
@@ -1018,7 +1018,7 @@ async def alvcs(event):
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
             BT,
-            [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "pmlgg")],
+            [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "abs_pmlgg")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     )
