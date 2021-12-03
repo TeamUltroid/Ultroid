@@ -24,7 +24,7 @@
 • `{i}invite <username/userid>`
     Add user to the chat.
 
-• `{i}abs_rmbg <reply to pic>`
+• `{i}rmbg <reply to pic>`
     Remove background from that picture.
 
 • `{i}telegraph <reply to media/text>`
@@ -382,7 +382,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern=r"abs_rmbg$",
+    pattern=r"rmbg$",
 )
 async def abs_rmbg(event):
     RMBG_API = udB.get_key("RMBG_API")
@@ -393,7 +393,7 @@ async def abs_rmbg(event):
         )
     if not event.reply_to_msg_id:
         return await eod(
-            event, f"Use `{HNDLR}abs_rmbg` as reply to a pic to remove its background."
+            event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
         )
     reply = await event.get_reply_message()
     dl = await event.client.download_media(reply.media)
@@ -412,7 +412,7 @@ async def abs_rmbg(event):
     zz = Image.open(out)
     if zz.mode != "RGB":
         zz.convert("RGB")
-    wbn = check_filename("ult-abs_rmbg.webp")
+    wbn = check_filename("ult-rmbg.webp")
     zz.save(wbn, "webp")
     await event.client.send_file(
         event.chat_id,
