@@ -49,6 +49,7 @@ from . import (
     LOGS,
     OWNER_NAME,
     ULTROID_IMAGES,
+    INLINE_PIC,
     Button,
     Carbon,
     Telegraph,
