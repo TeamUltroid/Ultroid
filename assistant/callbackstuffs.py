@@ -375,7 +375,6 @@ async def rmbgapi(event: events.CallbackQuery):
         )
 
 
-
 @callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
