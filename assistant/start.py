@@ -168,7 +168,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), response.message)
+                await asst.send_message(int(i), response)
                 success += 1
             except BaseException:
                 fail += 1
