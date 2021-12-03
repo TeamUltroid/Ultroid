@@ -66,7 +66,10 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
+    ULTROID_IMAGES
 )
+
+ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
 
 # Will move to strings
 alive_txt = """
@@ -286,3 +289,50 @@ async def inline_alive(ult):
         await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
     ]
     await ult.answer(result)
+
+
+@ultroid_cmd(pattern="update ?(.*)")
+async def _(e):
+    xx = await eor(e, get_string("upd_1"))
+    if e.pattern_match.group(1) and (
+        "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1)
+    ):
+        await bash("git pull -f && pip3 install -r requirements.txt")
+        call_back()
+        await xx.edit(get_string("upd_7"))
+        os.execl(sys.executable, "python3", "-m", "pyUltroid")
+        return
+    m = await updater()
+    branch = (Repo.init()).active_branch
+    if m:
+        x = await asst.send_file(
+            udB.get_key("LOG_CHANNEL"),
+            ULTPIC,
+            caption="• **Update Available** •",
+            force_document=False,
+            buttons=Button.inline("Changelogs", data="changes"),
+        )
+        Link = x.message_link
+        await xx.edit(
+            f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
+            parse_mode="html",
+            link_preview=False,
+        )
+    else:
+        await xx.edit(
+            f'<code>Your BOT is </code><strong>up-to-date</strong><code> with </code><strong><a href="https://github.com/TeamUltroid/Ultroid/tree/{branch}">[{branch}]</a></strong>',
+            parse_mode="html",
+            link_preview=False,
+        )
+
+
+@callback("updtavail", owner=True)
+async def updava(event):
+    await event.delete()
+    await asst.send_file(
+        udB.get_key("LOG_CHANNEL"),
+        ULTPIC,
+        caption="• **Update Available** •",
+        force_document=False,
+        buttons=Button.inline("Changelogs", data="changes"),
+    )
