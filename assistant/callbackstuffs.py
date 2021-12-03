@@ -174,6 +174,14 @@ _buttons = {
     },
 }
 
+_convo = {"rmbg":{"var":"RMBG_API","name":"Remove.bg API Key", "text":get_string("ast_2"), "back":"cbs_apiset"},
+    "dapi":{"var":"DEEP_AI","name":"Deep AI Api Key","text":"Get Your Deep Api from deepai.org and send here.", "back":"cbs_apiset"},
+    "oapi":{var:"OCR_API",name:"Ocr Api Key", "text":"Get Your OCR api from ocr.space and send that Here.", "back":"cbs_apiset"},
+    "pmlgg":{"var":"PMLOGGROUP", "name":"Pm Log Group", "text": "Send chat id of chat which you want to save as Pm log Group.", "back":"pml"}
+    "vcs":{"var":"VC_SESSION","name":"Vc Session","text":"**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.", "back":"cbs_vcb"}
+}
+
+
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
 
@@ -352,26 +360,29 @@ async def _edit_to(event):
     await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
 
 
-@callback("rmbg", owner=True)
+@callback(re.compile("abs_(.*)"), owner=True)
 async def rmbgapi(event: events.CallbackQuery):
+    match = event.data_match.group(1).decode("utf-8")
+    if not _convo.get(match):
+        return
     await event.delete()
+    get_ = _convo[match]
     pru = event.sender_id
-    var = "RMBG_API"
-    name = "Remove.bg API Key"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(get_string("ast_2"))
-        response = conv.wait_event(events.NewMessage(chats=pru))
+    back = get_["back"]
+    async with event.client.conversation(event.sender_id) as conv:
+        await conv.send_message(get_["text"])
+        response = conv.wait_event(events.NewMessage(chats=event.sender_id))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
-                buttons=get_back_button("cbs_apiset"),
+                buttons=get_back_button(back),
             )
-        await setit(event, var, themssg)
+        await setit(event, get_["var"], themssg)
         await conv.send_message(
-            f"{name} changed to {themssg}",
-            buttons=get_back_button("cbs_apiset"),
+            f"{get_['name']} changed to `{themssg}`",
+            buttons=get_back_button(back),
         )
 
 
@@ -1048,31 +1059,6 @@ async def alvcs(event):
     )
 
 
-@callback("pmlgg", owner=True)
-async def disus(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "PMLOGGROUP"
-    name = "Pm Logger Group"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            f"Send The Chat Id of group Which u want as your {name}\n\n use /cancel to cancel.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("pml"),
-            )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"{name} changed to `{themssg}`",
-                buttons=get_back_button("pml"),
-            )
-
 
 @callback("pmlog", owner=True)
 async def pmlog(event):
@@ -1240,34 +1226,6 @@ async def chon(event):
         "Done! Chat People Via This Bot Stopped.",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
-
-
-@callback("vcs", owner=True)
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "VC_SESSION"
-    name = "VC SESSION"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("cbs_vcb"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                name,
-                themssg,
-            ),
-            buttons=get_back_button("cbs_vcb"),
-        )
 
 
 @callback("inli_pic", owner=True)
