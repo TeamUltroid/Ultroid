@@ -91,7 +91,11 @@ async def all_messages_catcher(e):
     except Exception as er:
         LOGS.info(str(er))
 
-ultroid_bot.add_event_handler(all_messages_catcher, events.MessageEdited(incoming=True, func=lambda y: y.mentioned))
+
+ultroid_bot.add_event_handler(
+    all_messages_catcher,
+    events.MessageEdited(incoming=True, func=lambda y: y.mentioned),
+)
 
 if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
 
