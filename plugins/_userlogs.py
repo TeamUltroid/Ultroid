@@ -28,6 +28,12 @@ CACHE_SPAM = {}
         func=lambda e: (e.mentioned),
     ),
 )
+@ultroid_bot.on(
+    events.MessageEdited(
+        incoming=True,
+        func=lambda e: (e.mentioned),
+    ),
+)
 async def all_messages_catcher(e):
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
