@@ -175,49 +175,49 @@ _buttons = {
 }
 
 _convo = {
-    "abs_rmbg": {
+    "rmbg": {
         "var": "RMBG_API",
         "name": "Remove.bg API Key",
         "text": get_string("ast_2"),
         "back": "cbs_apiset",
     },
-    "abs_dapi": {
+    "dapi": {
         "var": "DEEP_AI",
         "name": "Deep AI Api Key",
         "text": "Get Your Deep Api from deepai.org and send here.",
         "back": "cbs_apiset",
     },
-    "abs_oapi": {
+    "oapi": {
         "var": "OCR_API",
         "name": "Ocr Api Key",
         "text": "Get Your OCR api from ocr.space and send that Here.",
         "back": "cbs_apiset",
     },
-    "abs_pmlgg": {
+    "pmlgg": {
         "var": "PMLOGGROUP",
         "name": "Pm Log Group",
         "text": "Send chat id of chat which you want to save as Pm log Group.",
         "back": "pml",
     },
-    "abs_vcs": {
+    "vcs": {
         "var": "VC_SESSION",
         "name": "Vc Session",
         "text": "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
         "back": "cbs_vcb",
     },
-    "abs_taglog": {
+    "settag": {
         "var": "TAG_LOG",
         "name": "Tag Log Group",
         "text": f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
-        "back": "abs_taglog",
+        "back": "taglog",
     },
-    "abs_alvtx": {
+    "alvtx": {
         "var": "ALIVE_TEXT",
         "name": "Alive Text",
         "text": "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
-        "back": "cbs_alabs_vcstm",
+        "back": "cbs_alvcstm",
     },
-    "abs_sfexf": {
+    "sfexf": {
         "var": "EXCLUDE_FED",
         "name": "Excluded Fed",
         "text": "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.",
@@ -405,7 +405,7 @@ async def _edit_to(event):
 
 
 @callback(re.compile("abs_(.*)"), owner=True)
-async def abs_rmbgapi(event: events.CallbackQuery):
+async def convo_handler(event: events.CallbackQuery):
     match = event.data_match.group(1).decode("utf-8")
     if not _convo.get(match):
         return
@@ -670,8 +670,8 @@ async def hndlrr(event):
             )
 
 
-@callback("abs_taglog", owner=True)
-async def abs_tagloggrr(e):
+@callback("taglog", owner=True)
+async def tagloggrr(e):
     if not udB.get_key("TAG_LOG"):
         BUTTON = [Button.inline("SET TAG LOG", data="settag")]
     else:
@@ -798,7 +798,7 @@ async def media(event):
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
-                    buttons=get_back_button("cbs_alabs_vcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         except BaseException:
             pass
@@ -819,12 +819,12 @@ async def media(event):
             except BaseException:
                 return await conv.send_message(
                     "Terminated.",
-                    buttons=get_back_button("cbs_alabs_vcstm"),
+                    buttons=get_back_button("cbs_alvcstm"),
                 )
         await setit(event, var, url)
         await conv.send_message(
             f"{name} has been set.",
-            buttons=get_back_button("cbs_alabs_vcstm"),
+            buttons=get_back_button("cbs_alvcstm"),
         )
 
 
@@ -1009,7 +1009,7 @@ async def apof(event):
 
 
 @callback("pml", owner=True)
-async def alabs_vcs(event):
+async def l_vcs(event):
     if not udB.get_key("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
     else:
