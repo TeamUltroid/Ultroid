@@ -16,8 +16,7 @@
 
 • `{i}stats` : See your profile stats.
 
-• `{i}paste`
-    Include long text / Reply to text file.
+• `{i}paste` - `Include long text / Reply to text file.`
 
 • `{i}info <username/userid/chatid>`
     Reply to someone's msg.
