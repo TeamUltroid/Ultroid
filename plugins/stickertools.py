@@ -27,7 +27,6 @@
 
 • `{i}waifu <text>`
     p text on random stickers.
-
 """
 import io
 import os
