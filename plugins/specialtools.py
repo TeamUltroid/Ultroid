@@ -302,7 +302,7 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="quotly ?(.*)", manager=True)
+@ultroid_cmd(pattern="(q|quotly) ?(.*)", manager=True, allow_pm=True)
 async def quott_(event):
     match = event.pattern_match.group(1)
     if not event.is_reply:
