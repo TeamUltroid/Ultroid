@@ -13,6 +13,9 @@
 • `{i}ping`
     Check Ultroid's response time.
 
+• `{i}update`
+    See changelogs if any update is available.
+
 • `{i}cmds`
     View all plugin names.
 
