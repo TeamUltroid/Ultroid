@@ -43,7 +43,11 @@ async def all_messages_catcher(e):
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
     if isinstance(x, types.User) and x.username:
-        buttons.append([Button.mention(who_n, await e.client.get_input_entity(x.id))])
+        try:
+            buttons.append([Button.mention(who_n, await asst.get_input_entity(x.username))])
+        except Exception as er:
+            LOGS.exception(er)
+            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     elif getattr(x, "username"):
         buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
