@@ -71,7 +71,7 @@ from . import (
     udB,
     ultroid_cmd,
     ultroid_version,
-    updater
+    updater,
 )
 
 ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
