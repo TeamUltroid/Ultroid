@@ -174,14 +174,55 @@ _buttons = {
     },
 }
 
-_convo = {"rmbg":{"var":"RMBG_API","name":"Remove.bg API Key", "text":get_string("ast_2"), "back":"cbs_apiset"},
-    "dapi":{"var":"DEEP_AI","name":"Deep AI Api Key","text":"Get Your Deep Api from deepai.org and send here.", "back":"cbs_apiset"},
-    "oapi":{var:"OCR_API",name:"Ocr Api Key", "text":"Get Your OCR api from ocr.space and send that Here.", "back":"cbs_apiset"},
-    "pmlgg":{"var":"PMLOGGROUP", "name":"Pm Log Group", "text": "Send chat id of chat which you want to save as Pm log Group.", "back":"pml"},
-    "vcs":{"var":"VC_SESSION","name":"Vc Session","text":"**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.", "back":"cbs_vcb"},
-    "taglog":{"var":"TAG_LOG","name":"Tag Log Group","text":f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.","back":"taglog"},
-    "alvtx":{"var":"ALIVE_TEXT", "name":"Alive Text", "text":"**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.","back":"cbs_alvcstm"},
-    "sfexf":{"var":"EXCLUDE_FED","name":"Excluded Fed", "text":"Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.","back":"cbs_sfban"}
+_convo = {
+    "rmbg": {
+        "var": "RMBG_API",
+        "name": "Remove.bg API Key",
+        "text": get_string("ast_2"),
+        "back": "cbs_apiset",
+    },
+    "dapi": {
+        "var": "DEEP_AI",
+        "name": "Deep AI Api Key",
+        "text": "Get Your Deep Api from deepai.org and send here.",
+        "back": "cbs_apiset",
+    },
+    "oapi": {
+        var: "OCR_API",
+        name: "Ocr Api Key",
+        "text": "Get Your OCR api from ocr.space and send that Here.",
+        "back": "cbs_apiset",
+    },
+    "pmlgg": {
+        "var": "PMLOGGROUP",
+        "name": "Pm Log Group",
+        "text": "Send chat id of chat which you want to save as Pm log Group.",
+        "back": "pml",
+    },
+    "vcs": {
+        "var": "VC_SESSION",
+        "name": "Vc Session",
+        "text": "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
+        "back": "cbs_vcb",
+    },
+    "taglog": {
+        "var": "TAG_LOG",
+        "name": "Tag Log Group",
+        "text": f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
+        "back": "taglog",
+    },
+    "alvtx": {
+        "var": "ALIVE_TEXT",
+        "name": "Alive Text",
+        "text": "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
+        "back": "cbs_alvcstm",
+    },
+    "sfexf": {
+        "var": "EXCLUDE_FED",
+        "name": "Excluded Fed",
+        "text": "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.",
+        "back": "cbs_sfban",
+    },
 }
 
 
@@ -370,7 +411,7 @@ async def rmbgapi(event: events.CallbackQuery):
         return
     await event.delete()
     get_ = _convo[match]
-    pru = event.sender_id
+    event.sender_id
     back = get_["back"]
     async with event.client.conversation(event.sender_id) as conv:
         await conv.send_message(get_["text"])
@@ -645,7 +686,6 @@ async def tagloggrr(e):
 async def _(e):
     udB.del_key("TAG_LOG")
     await e.answer("Done!!! Tag Logger has been turned Off")
-
 
 
 @callback("eaddon", owner=True)
@@ -982,7 +1022,6 @@ async def alvcs(event):
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     )
-
 
 
 @callback("pmlog", owner=True)
