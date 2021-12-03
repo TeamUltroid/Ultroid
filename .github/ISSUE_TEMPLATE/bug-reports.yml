@@ -37,6 +37,21 @@ body:
         - 0.0.8 (or lesser)
     validations:
       required: true
+  - type: dropdown
+    id: hosted
+    attributes:
+      label: Hosted On
+      description: You Hosted Ultroid In Which Platform?
+      options:
+        - Vps
+        - Heroku
+        - Railway
+        - Quovry
+        - Termux
+        - Other
+        - Didn't Deployed Yet
+    validations:
+      required: true
   - type: textarea
     id: logs
     attributes:
