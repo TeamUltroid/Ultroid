@@ -30,8 +30,11 @@ body:
       label: Version
       description: What version of Ultroid are you running?
       options:
-        - 0.0.8 (or later)
-        - 0.0.7 (or lesser)
+        - 0.3
+        - 0.2
+        - 0.1
+        - 0.0.9
+        - 0.0.8 (or lesser)
     validations:
       required: true
   - type: textarea
