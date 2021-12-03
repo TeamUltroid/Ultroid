@@ -28,12 +28,6 @@ CACHE_SPAM = {}
         func=lambda e: (e.mentioned),
     ),
 )
-@ultroid_bot.on(
-    events.MessageEdited(
-        incoming=True,
-        func=lambda e: (e.mentioned),
-    ),
-)
 async def all_messages_catcher(e):
     x = await e.get_sender()
     if isinstance(x, types.User) and (x.bot or x.verified):
@@ -97,8 +91,9 @@ async def all_messages_catcher(e):
     except Exception as er:
         LOGS.info(str(er))
 
+ultroid_bot.add_event_handler(all_messages_catcher, events.MessageEdited(incoming=True, func=lambda y: y.mentioned))
 
-if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
+if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(
