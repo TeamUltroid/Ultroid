@@ -228,6 +228,9 @@ async def _(event):
             backgroundColor=choice(ATRA_COL),
         )
         await event.reply("**Ultroid Logs.**", file=file)
+    elif opt == "open":
+        file = open("ultroid.log", "r").read()[-4000:]
+        return await eor(event, f"`{file}`")
     else:
         await def_logs(event, file)
     await event.delete()
