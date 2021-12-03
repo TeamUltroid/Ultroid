@@ -25,6 +25,7 @@ def spinner():
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
+    import telethon
 
 
 def clear_screen():
@@ -54,7 +55,7 @@ def telethon_session():
         spinner()
 
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
-    except BaseException:
+    except ImportError:
         print("Installing Telethon...")
         os.system("pip install -U telethon")
 
@@ -82,26 +83,23 @@ def telethon_session():
             print(
                 "Your SESSION has been generated. Check your telegram saved messages!"
             )
-            exit(0)
     except ApiIdInvalidError:
         print(
             "Your API ID/API HASH combination is invalid. Kindly recheck.\nQuitting..."
         )
-        exit(0)
     except ValueError:
         print("API HASH must not be empty!\nQuitting...")
-        exit(0)
     except PhoneNumberInvalidError:
         print("The phone number is invalid!\nQuitting...")
-        exit(0)
-
+    except Exception as er:
+        print(er)
 
 def main():
     clear_screen()
     print(a)
     telethon_session()
-    x = input("Run again? (y/n")
-    if x == "y":
+    x = input("Run again? (y/n)")
+    if x.lower() == "y":
         main()
     else:
         exit(0)
