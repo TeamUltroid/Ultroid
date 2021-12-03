@@ -158,9 +158,10 @@ _buttons = {
     "oofdm": {
         "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
         "buttons": [
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
+            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof"),
+             Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
+            [Button.inline("« Back", data="cbs_otvars")],
         ],
     },
     "apiset": {
