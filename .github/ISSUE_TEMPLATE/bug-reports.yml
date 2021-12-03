@@ -2,11 +2,6 @@ name: Bug Report
 description: File a bug report
 title: "[BUG REPORT]"
 labels: [bug]
-assignees:
-  - xditya
-  - New-dev0
-  - buddhhu
-  - 1Danish-00
 body:
   - type: markdown
     attributes:
@@ -35,8 +30,25 @@ body:
       label: Version
       description: What version of Ultroid are you running?
       options:
-        - 0.0.8 (or later)
-        - 0.0.7 (or lesser)
+        - 0.2
+        - 0.1
+        - 0.0.9
+        - 0.0.8 (or lesser)
+    validations:
+      required: true
+  - type: dropdown
+    id: hosted
+    attributes:
+      label: Hosted On
+      description: You Hosted Ultroid In Which Platform?
+      options:
+        - Vps
+        - Heroku
+        - Railway
+        - Qovery
+        - Termux
+        - Other
+        - Didn't Deployed Yet
     validations:
       required: true
   - type: textarea

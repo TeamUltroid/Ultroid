@@ -57,9 +57,13 @@ async def mi(e):
         naam = await r.download_media()
     out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
     if er:
-        LOGS.info(er)
+        LOGS.exception(er)
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
-    urll = make_html_telegraph("Mediainfo", "Ultroid", out)
+    try:
+        urll = make_html_telegraph("Mediainfo", "Ultroid", out)
+    except Exception as er:
+        LOGS.exception(er)
+        return await ee.edit(f"**ERROR :** `{er}`")
     await ee.edit(
         f"**[{xx}]({url})**\n\n[{get_string('mdi_1')}]({urll})", link_preview=False
     )
