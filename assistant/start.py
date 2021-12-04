@@ -143,7 +143,7 @@ async def ultroid(event):
 
 @callback("stat", owner=True)
 async def botstat(event):
-    ok = len(get_all_users())
+    ok = len(get_all_users("BOT_USERS"))
     msg = """Ultroid Assistant - Stats
 Total Users - {}""".format(
         ok,
@@ -153,7 +153,7 @@ Total Users - {}""".format(
 
 @callback("bcast", owner=True)
 async def bdcast(event):
-    ok = get_all_users()
+    ok = get_all_users("BOT_USERS")
     await event.edit(f"• Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
@@ -168,7 +168,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), response.message)
+                await asst.send_message(int(i), response)
                 success += 1
             except BaseException:
                 fail += 1

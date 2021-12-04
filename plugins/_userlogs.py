@@ -43,11 +43,17 @@ async def all_messages_catcher(e):
     where_l = e.message_link
     buttons = [[Button.url(where_n, where_l)]]
     if isinstance(x, types.User) and x.username:
-        buttons.append([Button.mention(who_n, await e.client.get_input_entity(x.id))])
+        try:
+            buttons.append(
+                [Button.mention(who_n, await asst.get_input_entity(x.username))]
+            )
+        except Exception as er:
+            LOGS.exception(er)
+            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     elif getattr(x, "username"):
         buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
-        buttons.append([Button.inline(who_n, "do_nothing")])
+        buttons.append([Button.url(who_n, where_l)])
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         tag_add(sent.id, e.chat_id, e.id)
@@ -92,7 +98,7 @@ async def all_messages_catcher(e):
         LOGS.info(str(er))
 
 
-if udB.get_key("TAG_LOG") and not udB.get_key("OFF_REPLY2REPLY"):
+if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
 
     @ultroid_bot.on(
         events.NewMessage(

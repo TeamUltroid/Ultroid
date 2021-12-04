@@ -15,7 +15,6 @@
 
 •`{i}listecho <reply to anyone>`
    To Get list.
-
 """
 
 from pyUltroid.dB.echo_db import add_echo, check_echo, list_echo, rem_echo

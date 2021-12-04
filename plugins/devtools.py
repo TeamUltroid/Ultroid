@@ -130,15 +130,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = ""
-    if exc:
-        evaluation = exc
-    elif stderr:
-        evaluation = stderr
-    elif stdout:
-        evaluation = stdout
-    else:
-        evaluation = get_string("instu_4")
+    evaluation = exc or stderr or stdout or get_string("instu_4")
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,

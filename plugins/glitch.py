@@ -10,7 +10,6 @@
 
 •`{i}glitch <replt to media>`
     gives a glitchy gif.
-
 """
 import os
 

@@ -26,8 +26,7 @@
     To extract round sticker.
 
 • `{i}waifu <text>`
-    p text on random stickers.
-
+    paste text on random stickers.
 """
 import io
 import os
