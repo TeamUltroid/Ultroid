@@ -19,7 +19,6 @@
 
 • `{i}download <DDL> (| filename)`
     Download using DDL. Will autogenerate filename if not given.
-
 """
 import asyncio
 import glob
