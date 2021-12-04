@@ -323,7 +323,7 @@ async def update(eve):
 
 @callback(re.compile("changes(.*)"), owner=True)
 async def changes(okk):
-    match = event.data_match.group(1).decode("utf-8")
+    match = okk.data_match.group(1).decode("utf-8")
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
     button = [[Button.inline("Update Now", data="updatenow")]]
