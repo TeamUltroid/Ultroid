@@ -322,9 +322,9 @@ async def update(eve):
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@callback("changes(.*)", owner=True)
+@callback(re.compile("changes(.*)"), owner=True)
 async def changes(okk):
-    match = event.pattern_match.group(1)
+    match = event.data_match.group(1).decode("utf-8")
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
     button = [[Button.inline("Update Now", data="updatenow")]]
