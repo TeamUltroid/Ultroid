@@ -25,7 +25,7 @@ def spinner():
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
             sleep(0.1)
-    import telethon
+
 
 def clear_screen():
     # https://www.tutorialspoint.com/how-to-clear-screen-in-python#:~:text=In%20Python%20sometimes%20we%20have,screen%20by%20pressing%20Control%20%2B%20l%20.
@@ -65,7 +65,11 @@ def telethon_session():
 
     # the imports
 
-    from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError, UserIsBotError
+    from telethon.errors.rpcerrorlist import (
+        ApiIdInvalidError,
+        PhoneNumberInvalidError,
+        UserIsBotError,
+    )
     from telethon.sessions import StringSession
     from telethon.sync import TelegramClient
 
@@ -77,11 +81,11 @@ def telethon_session():
             print("Generating a string session for •ULTROID•")
             try:
                 ult = ultroid.send_message(
-                "me",
-                f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
+                    "me",
+                    f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
                 )
                 print(
-                "Your SESSION has been generated. Check your Telegram saved messages!"
+                    "Your SESSION has been generated. Check your Telegram saved messages!"
                 )
                 return
             except UserIsBotError:
@@ -103,6 +107,7 @@ def telethon_session():
         print("Unexpected Error Occurred while Creating Session")
         print(er)
         print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
+
 
 def main():
     clear_screen()
