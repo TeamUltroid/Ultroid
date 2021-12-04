@@ -335,15 +335,17 @@ async def changes(okk):
         try:
             if len(tl_chnglog) > 700:
                 tl_chnglog = tl_chnglog[:700] + "..."
-                button.append([Button.inline("View Complete","changesall")])
+                button.append([Button.inline("View Complete", "changesall")])
             await okk.edit("• Writing Changelogs 📝 •")
             img = await Carbon(
-            file_name="changelog",
-            code=tl_chnglog,
-            backgroundColor=choice(ATRA_COL),
-            language="md",
+                file_name="changelog",
+                code=tl_chnglog,
+                backgroundColor=choice(ATRA_COL),
+                language="md",
             )
-            return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
+            return await okk.edit(
+                f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
+            )
         except Exception as er:
             LOGS.exception(er)
     changelog_str = changelog + cli
