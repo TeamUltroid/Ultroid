@@ -35,6 +35,6 @@ scikit-image==0.18.2
 tabulate==0.8.9
 telegraph
 tgcrypto
-youtube-search-python==1.4.7
+youtube-search-python>=1.4.9
 
 # -------------------------------------------------------#
