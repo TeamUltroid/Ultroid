@@ -84,10 +84,10 @@ def telethon_session():
                 "Your SESSION has been generated. Check your Telegram saved messages!"
                 )
                 return
-           except UserIsBotError:
-               print("You are trying to Generate Session for your Bot's Account?")
-               print("Here is That!\n{ultroid.session.save()}\n\n")
-               print("NOTE: You can't use that as User Session..")
+            except UserIsBotError:
+                print("You are trying to Generate Session for your Bot's Account?")
+                print("Here is That!\n{ultroid.session.save()}\n\n")
+                print("NOTE: You can't use that as User Session..")
     except ApiIdInvalidError:
         print(
             "Your API ID/API HASH combination is invalid. Kindly recheck.\nQuitting..."
@@ -100,9 +100,9 @@ def telethon_session():
         print("The phone number is invalid!\nQuitting...")
         exit(0)
     except Exception as er:
-       print("Unexpected Error Occurred while Creating Session")
-       print(er)
-       print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
+        print("Unexpected Error Occurred while Creating Session")
+        print(er)
+        print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
 
 def main():
     clear_screen()
