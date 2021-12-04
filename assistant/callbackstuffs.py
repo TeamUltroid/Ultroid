@@ -321,28 +321,31 @@ async def update(eve):
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@callback("changes", owner=True)
+@callback("changes(.*)", owner=True)
 async def changes(okk):
+    match = event.pattern_match.group(1)
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
-    button = (Button.inline("Update Now", data="updatenow"),)
+    button = [[Button.inline("Update Now", data="updatenow")]]
     changelog, tl_chnglog = await gen_chlog(
         repo, f"HEAD..upstream/{repo.active_branch}"
     )
     cli = "\n\nClick the below button to update!"
-    try:
-        if len(tl_chnglog) > 700:
-            tl_chnglog = tl_chnglog[:700] + "..."
-        await okk.edit("• Writing Changelogs 📝 •")
-        img = await Carbon(
+    if not match:
+        try:
+            if len(tl_chnglog) > 700:
+                tl_chnglog = tl_chnglog[:700] + "..."
+                button.append([Button.inline("View Complete","changesall")])
+            await okk.edit("• Writing Changelogs 📝 •")
+            img = await Carbon(
             file_name="changelog",
             code=tl_chnglog,
             backgroundColor=choice(ATRA_COL),
             language="md",
-        )
-        return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
-    except Exception as er:
-        LOGS.exception(er)
+            )
+            return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
+        except Exception as er:
+            LOGS.exception(er)
     changelog_str = changelog + cli
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
@@ -352,7 +355,7 @@ async def changes(okk):
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
-            buttons=Button.inline("Update Now", data="updatenow"),
+            buttons=button,
         )
         remove("ultroid_updates.txt")
         return
