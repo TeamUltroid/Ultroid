@@ -1,4 +1,4 @@
-# Optional Requirements, which are too required for full functioning.
+# Required only while Local Deploy
 # ------------------------------------------------------ #
 
 akinator.py
