@@ -41,7 +41,7 @@ def text_to_url(event):
     """function to get media url (with|without) Webpage"""
     if isinstance(event.media, MessageMediaWebPage):
         webpage = event.media.webpage
-        if webpage and webpage.type in ["photo"]:
+        if not isinstance(webpage, types.WebPageEmpty) and webpage.type in ["photo"]:
             return webpage.display_url
     return event.text
 
