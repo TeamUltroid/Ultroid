@@ -36,7 +36,7 @@ async def _(ult):
         redisdata = Redis(data[0])
         await eor(
             ult,
-            "DB Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
+            "**DB Key Value Pair Updated\nKey :** `{}`\n**Value :** `{}`".format(
                 data[0],
                 redisdata,
             ),
@@ -66,7 +66,7 @@ async def _(ult):
             udB.rename(data[0], data[1])
             await eor(
                 ult,
-                "DB Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
+                "**DB Key Rename Successful\nOld Key :** `{}`\n**New Key :** `{}`".format(
                     data[0],
                     data[1],
                 ),
