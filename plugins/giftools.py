@@ -48,7 +48,7 @@ async def igif(e):
         cmd = f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y'
     try:
         await bash(cmd)
-        await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
+        await e.client.send_file(e.chat_id, "ult.gif", supports_streaming=True)
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
