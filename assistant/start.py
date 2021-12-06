@@ -15,7 +15,6 @@ from telethon import Button, events
 from telethon.utils import get_display_name
 
 from strings.strings import get_string
-
 from . import *
 
 Owner_info_msg = (
@@ -75,6 +74,7 @@ async def closet(lol):
 
 @asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
+    args = event.pattern_match.group(1)
     if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
         add_user(event.sender_id)
         kak_uiw = udB.get_key("OFF_START_LOG")
@@ -115,11 +115,14 @@ async def ultroid(event):
             )
     else:
         name = get_display_name(event.sender)
-        if event.pattern_match.group(1) == "set":
+        if args == "set":
             await event.reply(
                 "Choose from the below options -",
                 buttons=_settings,
             )
+        elif args and args[len(args) - 1] == "=":
+            hash = args
+            await get_stored_file(event, hash)
         else:
             await event.reply(
                 get_string("ast_3").format(name),

@@ -25,7 +25,10 @@ from traceback import format_exc
 
 from pytgcalls import GroupCallFactory
 from pytgcalls.exceptions import GroupCallNotFoundError
-from telethon.errors.rpcerrorlist import ParticipantJoinMissingError, ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import (
+    ParticipantJoinMissingError,
+    ChatSendMediaForbiddenError,
+)
 from pyUltroid import HNDLR, LOGS, asst, udB, vcClient
 from pyUltroid.functions.helper import (
     bash,
@@ -143,22 +146,22 @@ class Player:
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
             text = "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
-                    pos, link, title, dur, from_user
+                pos, link, title, dur, from_user
             )
             try:
                 xx = await vcClient.send_message(
-                self._current_chat,
-                "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
-                    pos, link, title, dur, from_user
-                ),
-                file=thumb,
-                link_preview=False,
-                parse_mode="html",
+                    self._current_chat,
+                    "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
+                        pos, link, title, dur, from_user
+                    ),
+                    file=thumb,
+                    link_preview=False,
+                    parse_mode="html",
                 )
             except ChatSendMediaForbiddenError:
                 xx = await vcClient.send_message(
-                self._current_chat,text, link_preview=False,
-                parse_mode="html")
+                    self._current_chat, text, link_preview=False, parse_mode="html"
+                )
             MSGID_CACHE.update({chat_id: xx})
             VC_QUEUE[chat_id].pop(pos)
             if not VC_QUEUE[chat_id]:
@@ -203,7 +206,9 @@ class Player:
 
 def vc_asst(dec, **kwargs):
     def ult(func):
-        kwargs["func"] = lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
+        kwargs["func"] = (
+            lambda e: not e.is_private and not e.via_bot_id and not e.fwd_from
+        )
         handler = udB.get_key("VC_HNDLR") or HNDLR
         kwargs["pattern"] = re.compile(f"\\{handler}" + dec)
         vc_auth = kwargs.get("vc_auth", True)
@@ -389,7 +394,9 @@ async def file_download(event, reply, fast_download=True):
         dl = dl.name
     else:
         dl = await reply.download_media()
-    duration = time_formatter(reply.file.duration * 1000) if reply.file.duration else "🤷‍♂️"
+    duration = (
+        time_formatter(reply.file.duration * 1000) if reply.file.duration else "🤷‍♂️"
+    )
     if reply.document.thumbs:
         thumb = await reply.download_media("vcbot/downloads/", thumb=-1)
     return dl, thumb, title, reply.message_link, duration

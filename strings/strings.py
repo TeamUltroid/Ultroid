@@ -30,7 +30,7 @@ def get_string(key: str) -> Any:
             if languages.get(lang):
                 languages[lang][key] = tr
             else:
-                languages.update({lang:{key:tr}})
+                languages.update({lang: {key: tr}})
             return tr
         except KeyError:
             return f"Warning: could not load any string with the key `{key}`"

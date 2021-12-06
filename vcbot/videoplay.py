@@ -49,10 +49,8 @@ async def video_c(event):
         else:
             song = input
     if not (reply or song):
-        return await eor(
-            xx, get_string('vcbot_15'), time=5
-        )
-    await eor(xx, get_string('vcbot_20'))
+        return await eor(xx, get_string("vcbot_15"), time=5)
+    await eor(xx, get_string("vcbot_20"))
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
         song, thumb, title, link, duration = await file_download(xx, reply)
     else:
@@ -75,13 +73,13 @@ async def video_c(event):
     if not (await ultSongs.vc_joiner()):
         return
     text = "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-            title, link, duration, chat, from_user
+        title, link, duration, chat, from_user
     )
     try:
         await xx.reply(
-        text,
-        file=thumb,
-        link_preview=False,
+            text,
+            file=thumb,
+            link_preview=False,
         )
     except ChatSendMediaForbiddenError:
         await xx.reply(text, link_preview=False)

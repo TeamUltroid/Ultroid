@@ -61,7 +61,7 @@ async def play_music_(event):
         return await eor(
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
-    await eor(xx, get_string('vcbot_20'), parse_mode="md")
+    await eor(xx, get_string("vcbot_20"), parse_mode="md")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:
@@ -73,14 +73,14 @@ async def play_music_(event):
             return
         await ultSongs.group_call.start_audio(song)
         text = "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
-                link, song_name, duration, chat, from_user
+            link, song_name, duration, chat, from_user
         )
         try:
             await xx.reply(
-            text,
-            file=thumb,
-            link_preview=False,
-            parse_mode="html",
+                text,
+                file=thumb,
+                link_preview=False,
+                parse_mode="html",
             )
             await xx.delete()
         except ChatSendMediaForbiddenError:
@@ -144,18 +144,17 @@ async def play_music_(event):
                 return
             await ultSongs.group_call.start_audio(song)
             text = "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
-                    link, song_name, duration, chat, from_user
+                link, song_name, duration, chat, from_user
             )
             try:
                 await msg.reply(
-                text,
-                file=thumb,
-                link_preview=False,
-                parse_mode="html",
+                    text,
+                    file=thumb,
+                    link_preview=False,
+                    parse_mode="html",
                 )
             except ChatSendMediaForbiddenError:
-                await msg.reply(text, link_preview=False,
-                    parse_mode="html")
+                await msg.reply(text, link_preview=False, parse_mode="html")
             if thumb and os.path.exists(thumb):
                 os.remove(thumb)
         else:
@@ -188,9 +187,7 @@ async def radio_mirchi(e):
     if not is_url_ok(song):
         return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
-    if not ultSongs.group_call.is_connected and not (
-        await ultSongs.vc_joiner()
-    ):
+    if not ultSongs.group_call.is_connected and not (await ultSongs.vc_joiner()):
         return
     await ultSongs.group_call.start_audio(song)
     await xx.reply(
@@ -225,9 +222,7 @@ async def live_stream(e):
         return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
     file, thumb, title, link, duration = await download(song)
     ultSongs = Player(chat, e)
-    if not ultSongs.group_call.is_connected and not (
-        await ultSongs.vc_joiner()
-    ):
+    if not ultSongs.group_call.is_connected and not (await ultSongs.vc_joiner()):
         return
     from_user = inline_mention(e.sender)
     await xx.reply(
