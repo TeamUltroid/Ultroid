@@ -28,6 +28,7 @@ from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import User
+from telethon.utils import get_peer_id
 
 from . import (
     LOGS,
@@ -58,11 +59,9 @@ async def addfor(e):
         except BaseException:
             return await eor(e, get_string("fsub_2"), time=5)
     try:
-        match = (await e.client.get_entity(ch)).id
+        match = get_peer_id(await e.client.get_entity(ch))
     except BaseException:
         return await eor(e, get_string("fsub_2"), time=5)
-    if not str(match).startswith("-100"):
-        match = int("-100" + str(match))
     add_forcesub(e.chat_id, match)
     await eor(e, "Added ForceSub in This Chat !")
 
