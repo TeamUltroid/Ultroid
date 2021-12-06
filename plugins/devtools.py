@@ -100,11 +100,13 @@ _ignore_eval = []
 
 
 def _parse_eval(value):
+    if value is None:
+        return
     if hasattr(value, "stringify"):
         return value.stringify()
     elif isinstance(value, dict):
         return json_parser(value, indent=1)
-    return value
+    return str(value)
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
