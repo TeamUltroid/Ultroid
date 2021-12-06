@@ -16,11 +16,9 @@
 """
 
 import os
-
-from pyUltroid.dB.filestore_db import list_all_stored_msgs
 from pyUltroid.functions.tools import get_file_link
 
-from . import asst, eor, ultroid_cmd
+from . import asst, eor, ultroid_cmd, udB
 
 
 @ultroid_cmd(pattern="store")
@@ -40,12 +38,12 @@ async def filestoreplg(event):
 
 @ultroid_cmd("liststored$")
 async def liststored(event):
-    get = list_all_stored_msgs()
+    get = udB.get_key("FILE_STORE") or {}
     if not get:
         await eor(event, "**No files stored!**", time=5)
         return
     msg = "**Stored files:**\n"
-    for c, i in enumerate(get):
+    for c, i in enumerate(list(get.keys())):
         c += 1
         msg += f"`{c}`. https://t.me/{asst.me.username}?start={i}\n"
     if len(msg) > 4095:
