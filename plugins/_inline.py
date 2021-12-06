@@ -378,13 +378,13 @@ def page_num(index, key):
         for x in sorted(loaded)
     ]
     all_ = split_list(List, cols)
-    new_ = split_list(all_, rows)
+    fl_ = split_list(all_, rows)
     try:
-        new_ = new_[index]
+        new_ = fl_[index]
     except IndexError:
-        new_ = new_[0] if new_ else []
+        new_ = fl_[0] if fl_ else []
     try:
-        new_[index + 1]
+        fl_[index + 1]
         new_.append(
             [
                 Button.inline(
