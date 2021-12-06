@@ -72,6 +72,7 @@ async def an(e):
     await eor(e, get_string("notes_2").format(wrd))
     ultroid_bot.add_handler(notes, events.NewMessage())
 
+
 @ultroid_cmd(pattern="remnote ?(.*)", admins_only=True)
 async def rn(e):
     wrd = (e.pattern_match.group(1)).lower()
@@ -104,6 +105,7 @@ async def notes(e):
                 btn = create_tl_btn(k["button"])
                 return await something(e, msg, media, btn)
             await e.reply(msg, file=media)
+
 
 if udB.get_key("NOTE"):
     ultroid_bot.add_handler(notes, events.NewMessage())
