@@ -61,16 +61,16 @@ async def an(e):
             txt = wt.text
             if not btn:
                 txt, btn = get_msg_button(wt.text)
-            add_note(int(chat), wrd, txt, m, btn)
+            add_note(chat, wrd, txt, m, btn)
         else:
-            add_note(int(chat), wrd, None, m, btn)
+            add_note(chat, wrd, None, m, btn)
     else:
         txt = wt.text
         if not btn:
             txt, btn = get_msg_button(wt.text)
-        add_note(int(chat), wrd, txt, None, btn)
+        add_note(chat, wrd, txt, None, btn)
     await eor(e, get_string("notes_2").format(wrd))
-
+    ultroid_bot.add_handler(notes, events.NewMessage())
 
 @ultroid_cmd(pattern="remnote ?(.*)", admins_only=True)
 async def rn(e):
@@ -93,7 +93,6 @@ async def lsnote(e):
     await eor(e, get_string("notes_5"))
 
 
-@ultroid_bot.on(events.NewMessage())
 async def notes(e):
     xx = [z.replace("#", "") for z in e.text.lower().split() if z.startswith("#")]
     for word in xx:
@@ -105,3 +104,6 @@ async def notes(e):
                 btn = create_tl_btn(k["button"])
                 return await something(e, msg, media, btn)
             await e.reply(msg, file=media)
+
+if udB.get_key("NOTE"):
+    ultroid_bot.add_handler(notes, events.NewMessage())
