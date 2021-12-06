@@ -149,10 +149,10 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
-        likes = numerize(ytdl_data["like_count"])
-        duration = ytdl_data["duration"]
+        likes = numerize(ytdl_data.get("like_count")) or 0
+        duration = ytdl_data.get("duration") or 0
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
@@ -190,16 +190,16 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
             else ytdl_data["description"][:100]
         )
-        likes = numerize(ytdl_data["like_count"])
-        hi, wi = ytdl_data["height"], ytdl_data["width"]
-        duration = ytdl_data["duration"]
+        likes = numerize(ytdl_data.get("like_count")) or 0
+        hi, wi = ytdl_data.get("height") or 720, ytdl_data.get("width") or 1280
+        duration = ytdl_data.get("duration") or 0
         filepath = vid_id + ".mkv"
         if not os.path.exists(filepath):
             filepath = filepath + ".webm"
