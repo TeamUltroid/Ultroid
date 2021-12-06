@@ -117,7 +117,7 @@ async def _(event):
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
             )
-        warning = await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
+        warning = await event.forward_to(udB.get_key("LOG_CHANNEL"))
         await warning.reply(
             f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
         )
@@ -138,7 +138,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = exc or stderr or stdout or (value.stringify() if (value and hasattr(value, "stringify"))) else value or get_string("instu_4")
+    evaluation = exc or stderr or stdout or (value.stringify() if (value and hasattr(value, "stringify")) else value) or get_string("instu_4")
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
