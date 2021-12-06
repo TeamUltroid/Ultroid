@@ -41,19 +41,17 @@ async def filestoreplg(event):
 @ultroid_cmd("liststored$")
 async def liststored(event):
     get = list_all_stored_msgs()
-    if len(get) == 0:
+    if not get:
         await eor(event, "**No files stored!**", time=5)
         return
     msg = "**Stored files:**\n"
-    c = 1
-    for i in get:
+    for c, i in enumerate(get):
+        c+=1
         msg += f"`{c}`. https://t.me/{asst.me.username}?start={i}\n"
-        c += 1
     if len(msg) > 4095:
         with open("liststored.txt", "w") as f:
             f.write(msg.replace("**", "").replace("`", ""))
         await event.reply("**List of files stored.:**", file="liststored.txt")
         os.remove("liststored.txt")
         return
-    else:
-        await eor(event, msg, link_preview=False)
+    await eor(event, msg, link_preview=False)
