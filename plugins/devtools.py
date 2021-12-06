@@ -117,10 +117,10 @@ async def _(event):
         return await eor(event, get_string("devs_2"), time=5)
     if black:
         try:
-             cmd = black.format_str(cmd, mode=black.Mode())
+            cmd = black.format_str(cmd, mode=black.Mode())
         except BaseException:
-             # Consider it as Code Error, and move on to be shown ahead.
-             pass
+            # Consider it as Code Error, and move on to be shown ahead.
+            pass
     xx = await eor(event, get_string("com_1"))
     reply_to_id = event.reply_to_msg_id or event.id
     if event.sender_id not in DEVLIST and (
