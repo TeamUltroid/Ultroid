@@ -46,7 +46,7 @@ async def liststored(event):
         return
     msg = "**Stored files:**\n"
     for c, i in enumerate(get):
-        c+=1
+        c += 1
         msg += f"`{c}`. https://t.me/{asst.me.username}?start={i}\n"
     if len(msg) > 4095:
         with open("liststored.txt", "w") as f:
