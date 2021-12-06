@@ -302,7 +302,7 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="(q|quotly) ?(.*)", manager=True, allow_pm=True)
+@ultroid_cmd(pattern="q(|uotly) ?(.*)", manager=True, allow_pm=True)
 async def quott_(event):
     if event.raw_text.startswith("qbot"):
         return
