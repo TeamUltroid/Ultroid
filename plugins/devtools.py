@@ -93,7 +93,7 @@ async def _(event):
         await xx.edit(OUT)
 
 
-p, pp = print, pprint  # ignore: pylint
+pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
 _ignore_eval = []
@@ -168,6 +168,12 @@ async def _(event):
     else:
         await xx.edit(final_output)
 
+def _stringified(text, *args, **kwargs):
+    if hasattr(text, "stringify"):
+        text = text.stringify()
+    # is to_dict is also Good option to format?
+    print(text, *args, **kwargs)
+
 
 async def aexec(code, event):
     exec(
@@ -177,6 +183,7 @@ async def aexec(code, event):
                 + "\n reply = await event.get_reply_message()"
             )
             + "\n chat = event.chat_id"
+            + "\n print = p = _stringified")
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
