@@ -33,6 +33,12 @@ from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
 
+# Used for Formatting Eval Code, if installed
+try:
+    import black
+except ImportError:
+    black = None
+
 from . import *
 
 
@@ -99,6 +105,8 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eor(event, get_string("devs_2"), time=5)
+    if black:
+        cmd = black.format_str(cmd, mode=black.Mode())
     xx = await eor(event, get_string("com_1"))
     reply_to_id = event.reply_to_msg_id or event.id
     if event.sender_id not in DEVLIST and (
@@ -162,7 +170,7 @@ async def aexec(code, event):
                 ("async def __aexec(e, client): " + "\n message = event = e")
                 + "\n reply = await event.get_reply_message()"
             )
-            + "\n chat = (await event.get_chat()).id"
+            + "\n chat = event.chat_id"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
