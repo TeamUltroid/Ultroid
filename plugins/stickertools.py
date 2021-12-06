@@ -28,7 +28,6 @@
 import io
 import os
 import random
-import re
 from os import remove
 
 import cv2
