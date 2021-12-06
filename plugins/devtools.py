@@ -131,7 +131,7 @@ async def _(event):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        value=await aexec(cmd, event)
+        value = await aexec(cmd, event)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
