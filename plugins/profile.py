@@ -112,13 +112,12 @@ async def remove_profilepic(delpfp):
 async def gpoto(e):
     ult = e.pattern_match.group(1)
     a = await eor(e, get_string("com_1"))
-    if ult:
-        pass
-    elif e.is_reply:
-        gs = await e.get_reply_message()
-        ult = gs.sender_id
-    else:
-        ult = e.chat_id
+    if not ult:
+        if e.is_reply:
+            gs = await e.get_reply_message()
+            ult = gs.sender_id
+        else:
+            ult = e.chat_id
     okla = await e.client.download_profile_photo(ult)
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
