@@ -168,6 +168,7 @@ async def _(event):
     else:
         await xx.edit(final_output)
 
+
 def _stringified(text, *args, **kwargs):
     if hasattr(text, "stringify"):
         text = text.stringify()
