@@ -383,7 +383,9 @@ def page_num(index, key):
         new_ = new_[index]
     except IndexError:
         new_ = new_[0] if new_ else []
-    new_.append(
+    try:
+        new_[index+1]
+        new_.append(
         [
             Button.inline(
                 "« Pʀᴇᴠɪᴏᴜs",
@@ -395,7 +397,9 @@ def page_num(index, key):
                 data=f"uh_{key}_{index+1}",
             ),
         ]
-    )
+        )
+    except IndexError:
+        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     return new_
 
 
