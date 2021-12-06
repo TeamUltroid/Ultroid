@@ -106,6 +106,7 @@ def _parse_eval(value):
         return value.stringify()
     elif isinstance(value, dict):
         return json_parser(value, indent=1)
+    # is to_dict is also Good option to format?
     return str(value)
 
 
@@ -178,9 +179,7 @@ async def _(event):
 
 
 def _stringified(text, *args, **kwargs):
-    if hasattr(text, "stringify"):
-        text = text.stringify()
-    # is to_dict is also Good option to format?
+    text = _parse_eval(text)
     print(text, *args, **kwargs)
 
 
