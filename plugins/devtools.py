@@ -98,12 +98,14 @@ bot = ultroid = ultroid_bot
 
 _ignore_eval = []
 
+
 def _parse_eval(value):
     if hasattr(value, "stringify"):
         return value.stringify()
     elif isinstance(value, dict):
         return json_parser(value, indent=1)
     return value
+
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
@@ -144,13 +146,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = (
-        exc
-        or stderr
-        or stdout
-        or _parse_eval(value)
-        or get_string("instu_4")
-    )
+    evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
