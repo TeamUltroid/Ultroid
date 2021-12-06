@@ -26,7 +26,7 @@ from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
 
-from . import eor, udB, events, get_string, mediainfo, ultroid_bot, ultroid_cmd
+from . import eor, events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
@@ -68,6 +68,7 @@ async def af(e):
     await eor(e, get_string("flr_4").format(wrd))
     ultroid_bot.add_handler(filter_func, events.NewMessage())
 
+
 @ultroid_cmd(pattern="remfilter ?(.*)")
 async def rf(e):
     wrd = (e.pattern_match.group(1)).lower()
@@ -105,6 +106,7 @@ async def filter_func(e):
                         btn = create_tl_btn(k["button"])
                         return await something(e, msg, media, btn)
                     await e.reply(msg, file=media)
+
 
 if udB.get_key("FILTERS"):
     ultroid_bot.add_handler(filter_func, events.NewMessage())
