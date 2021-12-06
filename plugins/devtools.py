@@ -131,14 +131,14 @@ async def _(event):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        await aexec(cmd, event)
+        value=await aexec(cmd, event)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = exc or stderr or stdout or get_string("instu_4")
+    evaluation = exc or stderr or stdout or value or get_string("instu_4")
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
