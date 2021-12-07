@@ -32,7 +32,8 @@ async def filestoreplg(event):
     link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
     await eor(
         event,
-        "**File has been stored!**\n\n**Shareable link:** {}".format(link_to_file), link_preview=False
+        "**File has been stored!**\n\n**Shareable link:** {}".format(link_to_file),
+        link_preview=False,
     )
 
 
