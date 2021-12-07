@@ -110,7 +110,10 @@ def _parse_eval(value):
         except TypeError:
             pass
     elif isinstance(value, dict):
-        return json_parser(value, indent=1)
+        try:
+            return json_parser(value, indent=1)
+        except BaseException:
+            pass
     # is to_dict is also Good option to format?
     return str(value)
 
