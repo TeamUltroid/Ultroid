@@ -167,8 +167,8 @@ async def _(event):
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
         if exc:
-            msg = f"• <b>EVAL ERROR\nCHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
-            msg += f"\n\n∆ <b>Code:</b>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
+            msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
+            msg += f"\n\n∆ <b>CODE:</b>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
             log_chat = udB.get_key("LOG_CHANNEL")
             if len(msg) > 4000:
                 with BytesIO(msg.encode()) as out_file:
