@@ -7,8 +7,8 @@
 """
 ✘ Commands Available -
 
-• `{i}dm <username/id> <reply/type>`
-    Direct Message the User.
+• `{i}send <username/id> <reply/type>`
+    send message to User/Chat.
 
 • `{i}fwdreply <reply to msg>`
     Reply to someone's msg by forwarding it in private.
@@ -23,10 +23,8 @@
 from . import HNDLR, eod, eor, get_string, get_user_id, ultroid_cmd
 
 
-@ultroid_cmd(pattern="dm", fullsudo=True)
+@ultroid_cmd(pattern="send", fullsudo=True)
 async def dm(e):
-    if len(e.text) > 3 and e.text[3] != " ":  # weird fix
-        return
     if len(e.text.split()) <= 1:
         return await eor(e, get_string("dm_1"), time=5)
     chat = e.text.split()[1]
@@ -34,15 +32,18 @@ async def dm(e):
         chat_id = await get_user_id(chat)
     except Exception as ex:
         return await eor(e, f"`{ex}`", time=5)
-    if e.reply_to:
-        msg = await e.get_reply_message()
-    elif len(e.text.split()) > 2:
+    if len(e.text.split()) > 2:
         msg = e.text.split(maxsplit=2)[2]
+    elif e.reply_to:
+        msg = await e.get_reply_message()
     else:
         return await eor(e, get_string("dm_2"), time=5)
     try:
-        await e.client.send_message(chat_id, msg)
-        await eor(e, get_string("dm_3"), time=5)
+        _ = await e.client.send_message(chat_id, msg)
+        n_, time = get_string("dm_3"), None
+        if not _.is_private:
+            n_ = f"[{n_}]({_.message_link})"
+        await eor(e, n_, time=time)
     except Exception as m:
         await eor(e, get_string("dm_4").format(m, HNDLR), time=5)
 
