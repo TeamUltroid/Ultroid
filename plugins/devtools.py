@@ -170,7 +170,9 @@ async def _(event):
             if len(msg) > 4000:
                 with BytesIO(msg.encode()) as out_file:
                     out_file.name = "Eval-Error.txt"
-                return await event.client.send_message(log_chat, f"`{cmd}`", file=out_file)
+                return await event.client.send_message(
+                    log_chat, f"`{cmd}`", file=out_file
+                )
             await event.client.send_message(log_chat, msg)
         return
     final_output = (
@@ -178,7 +180,7 @@ async def _(event):
             cmd,
             evaluation,
         )
-     )
+    )
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
         with BytesIO(str.encode(ultd)) as out_file:
