@@ -5,7 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-
 ✘ Commands Available -
 
 • `{i}store <reply_to_message>`
@@ -33,7 +32,7 @@ async def filestoreplg(event):
     link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
     await eor(
         event,
-        "**File has been stored!**\n\n**Shareable link:** {}".format(link_to_file),
+        "**File has been stored!**\n\n**Shareable link:** {}".format(link_to_file), link_preview=False
     )
 
 
