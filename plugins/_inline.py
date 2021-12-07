@@ -147,7 +147,7 @@ async def setting(event):
 _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")}
 
 
-@callback(re.compile("uh_(.*)"))
+@callback(re.compile("uh_(.*)"), owner=True)
 async def help_func(ult):
     key, count = ult.data_match.group(1).decode("utf-8").split("_")
     if key == "VCBot" and HELP.get("VCBot") is None:
@@ -168,7 +168,7 @@ async def help_func(ult):
     )
 
 
-@callback(re.compile("uplugin_(.*)"))
+@callback(re.compile("uplugin_(.*)"), owner=True)
 async def uptd_plugin(event):
     key, file = event.data_match.group(1).decode("utf-8").split("_")
     index = None
