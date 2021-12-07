@@ -116,6 +116,14 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eor(event, get_string("devs_2"), time=5)
+    silent = False
+    if cmd.split()[0] in ["-s", "--silent"]:
+        try:
+            cmd = cmd.split(maxsplit=1)[1]
+        except IndexError:
+            return await eor(event, "->> Wrong Format <<-")
+        await event.delete()
+        silent = True
     if black:
         try:
             cmd = black.format_str(cmd, mode=black.Mode())
@@ -154,12 +162,24 @@ async def _(event):
     sys.stdout = old_stdout
     sys.stderr = old_stderr
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
-    final_output = (
+    if silent:
+        if stderr:
+            msg = f"• **EVAL ERROR**\n**Chat :** {inline_mention(event.chat)} [`{event.chat_id}`]"
+            msg += f"\n\n∆ **Code**:\n`{cmd}`\n\n∆ **ERROR**:/n{stderr}"
+            log_chat = udB.get_key("LOG_CHANNEL")
+            if len(msg) > 4000:
+                with BytesIO(msg.encode()) as out_file:
+                    out_file.name = "Eval-Error.txt"
+                    await event.client.send_message(log_chat, f"`{cmd}`", file=out_file)
+            else:
+                await event.client.send_message(log_chat, msg)
+        return
+   final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
             evaluation,
         )
-    )
+     )
     if len(final_output) > 4096:
         ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
         with BytesIO(str.encode(ultd)) as out_file:
@@ -173,7 +193,7 @@ async def _(event):
                 caption=f"```{cmd}```" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
-            await xx.delete()
+        await xx.delete()
     else:
         await xx.edit(final_output)
 
