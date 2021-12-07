@@ -32,7 +32,7 @@ import traceback
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
-
+from telethon.utils import get_display_name
 # Used for Formatting Eval Code, if installed
 try:
     import black
@@ -165,8 +165,8 @@ async def _(event):
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
         if exc:
-            msg = f"• **EVAL ERROR**\n**Chat :** {inline_mention(event.chat)} [`{event.chat_id}`]"
-            msg += f"\n\n∆ **Code**:\n`{cmd}`\n\n∆ **ERROR**:/n{exc}"
+            msg = f"• **EVAL ERROR**\n**Chat :** `{get_display_name(event.chat)}` [`{event.chat_id}`]"
+            msg += f"\n\n∆ **Code**:\n`{cmd}`\n\n∆ **ERROR**:\n`{exc}`"
             log_chat = udB.get_key("LOG_CHANNEL")
             if len(msg) > 4000:
                 with BytesIO(msg.encode()) as out_file:
