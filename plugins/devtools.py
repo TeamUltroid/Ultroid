@@ -105,7 +105,10 @@ def _parse_eval(value):
     if value is None:
         return
     if hasattr(value, "stringify"):
-        return value.stringify()
+        try:
+            return value.stringify()
+        except TypeError:
+            pass
     elif isinstance(value, dict):
         return json_parser(value, indent=1)
     # is to_dict is also Good option to format?
