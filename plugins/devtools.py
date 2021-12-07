@@ -135,7 +135,7 @@ async def _(event):
             # Consider it as Code Error, and move on to be shown ahead.
             pass
     reply_to_id = event.reply_to_msg_id or event.id
-    if event.sender_id not in DEVLIST and (
+    if (
         any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
     ):
