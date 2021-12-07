@@ -420,7 +420,6 @@ async def convo_handler(event: events.CallbackQuery):
         return
     await event.delete()
     get_ = _convo[match]
-    event.sender_id
     back = get_["back"]
     async with event.client.conversation(event.sender_id) as conv:
         await conv.send_message(get_["text"])
