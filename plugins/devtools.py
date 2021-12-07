@@ -168,7 +168,7 @@ async def _(event):
     if silent:
         if exc:
             msg = f"• <b>EVAL ERROR\nCHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
-            msg += f"\n\n∆ <bold>Code:</bold>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
+            msg += f"\n\n∆ <b>Code:</b>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
             log_chat = udB.get_key("LOG_CHANNEL")
             if len(msg) > 4000:
                 with BytesIO(msg.encode()) as out_file:
@@ -176,7 +176,7 @@ async def _(event):
                 return await event.client.send_message(
                     log_chat, f"`{cmd}`", file=out_file
                 )
-            await event.client.send_message(log_chat, msg)
+            await event.client.send_message(log_chat, msg, parse_mode="html")
         return
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
