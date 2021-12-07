@@ -124,13 +124,14 @@ async def _(event):
             return await eor(event, "->> Wrong Format <<-")
         await event.delete()
         silent = True
+    else:
+        xx = await eor(event, get_string("com_1"))
     if black:
         try:
             cmd = black.format_str(cmd, mode=black.Mode())
         except BaseException:
             # Consider it as Code Error, and move on to be shown ahead.
             pass
-    xx = await eor(event, get_string("com_1"))
     reply_to_id = event.reply_to_msg_id or event.id
     if event.sender_id not in DEVLIST and (
         any(item in cmd for item in KEEP_SAFE().All)
@@ -163,9 +164,9 @@ async def _(event):
     sys.stderr = old_stderr
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
-        if stderr:
+        if exc:
             msg = f"• **EVAL ERROR**\n**Chat :** {inline_mention(event.chat)} [`{event.chat_id}`]"
-            msg += f"\n\n∆ **Code**:\n`{cmd}`\n\n∆ **ERROR**:/n{stderr}"
+            msg += f"\n\n∆ **Code**:\n`{cmd}`\n\n∆ **ERROR**:/n{exc}"
             log_chat = udB.get_key("LOG_CHANNEL")
             if len(msg) > 4000:
                 with BytesIO(msg.encode()) as out_file:
