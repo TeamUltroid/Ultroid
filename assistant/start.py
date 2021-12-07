@@ -121,9 +121,8 @@ async def ultroid(event):
                 "Choose from the below options -",
                 buttons=_settings,
             )
-        elif args and args[len(args) - 1] == "=":
-            hash = args
-            await get_stored_file(event, hash)
+        elif args:
+            await get_stored_file(event, args)
         else:
             await event.reply(
                 get_string("ast_3").format(name),
