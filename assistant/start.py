@@ -97,8 +97,10 @@ async def ultroid(event):
         ok = ""
         u = await event.client.get_entity(event.chat_id)
         if args != "set":
-            try: await get_stored_file(event, args)
-            except: await event.reply("Hurrr")
+            try:
+                await get_stored_file(event, args)
+            except BaseException:
+                await event.reply("Hurrr")
         if not udB.get_key("STARTMSG"):
             if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
