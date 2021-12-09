@@ -265,7 +265,7 @@ devs_3: "`Give Some C++ Code..`"
 # dm
 dm_1: "`Give Chat username or id where to send.`"
 dm_2: "`Give text to send or reply to msg`"
-dm_3: "`⚜️Message Delivered!⚜️`"
+dm_3: "⚜️ Message Delivered! ⚜️"
 dm_4: "Error : {}\nRead Usage : `{}help dm`"
 dm_5: "`Check in Private.`"
 dm_6: "`No message found to deliver :(`"
