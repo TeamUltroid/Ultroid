@@ -3,6 +3,7 @@ natively: Azərbaycan
 
 authors:
   - Cahildi
+
 # commons
 com_1: "`Hazırlanır...`"
 com_2: "`Axtarılır...`"
@@ -485,7 +486,7 @@ instu_3: "Axtarış üçün söz yazın"
 instu_4: "Uğurlu"
 
 # callbackstuffs
-clst_1: "'Qurma prosesi, onun tamamlanmasını gözləyin.""
+clst_1: "'Qurma prosesi, onun tamamlanmasını gözləyin."
 clst_2: "`Güncəlləmə uğurla bitdi!\nRestartlanır, biraz gözləyin...`"
 clst_3: "■ Log hazırlanır..."
 clst_4: "Gözlənilməz xəta baş verdi..."
