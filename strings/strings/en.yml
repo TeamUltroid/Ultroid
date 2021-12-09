@@ -111,7 +111,7 @@ asstcmd_5: "No commands found"
 asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
 
 # autocorrect
-act_1: "AUTOCORRECT Feature On"
+act_1: "AUTOCORRECT Feature ON"
 act_2: "AUTOCORRECT Feature Off"
 
 # autopic
