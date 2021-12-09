@@ -20,9 +20,9 @@ jobs:
       - name: Install Stuff
         run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt install wget -y && pip install pyyaml requests
       - name: dl stuff
-        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/fd071b9a61fbfa7ca70774295486e630ed606fd5/stringzer.py
+        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/ea831cf89ada2eab2939b4ff558a173e08a28f2e/stringzer.py
       - name: do stuff
-        run: python stringizer.py && rm stringizer.py && wget -O https://gist.githubusercontent.com/New-dev0/838fd1c51ca341723d6ab118c699d9f7/raw/09e028ebc74f29916144134ba43cfa385d3b5b3f/reMainString.py run.py && python run.py && rm run.py
+        run: python stringizer.py && rm stringizer.py && wget -O run.py https://gist.githubusercontent.com/New-dev0/838fd1c51ca341723d6ab118c699d9f7/raw/09e028ebc74f29916144134ba43cfa385d3b5b3f/reMainString.py && python run.py && rm run.py
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Strings: auto count'
