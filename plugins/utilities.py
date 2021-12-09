@@ -461,7 +461,7 @@ async def telegraphcmd(event):
             content = ab.read()
         os.remove(getit)
     makeit = Telegraph.create_page(title=match, content=[content])
-    await eor(event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})")
+    await eor(event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False)
 
 
 @ultroid_cmd(pattern="json$")
