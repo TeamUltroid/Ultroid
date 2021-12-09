@@ -16,6 +16,7 @@ com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
 com_5: "Downloading..."
 com_6: "Uploading..."
+com_7: "`Something Went Wrong.`"
 
 # chatactions
 can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
@@ -35,7 +36,8 @@ help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
 help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
-
+help_12: "Voice Call is not Active!"
+help_13: "Do '{}setdb ADDONS True' to Load Official Addons"
 
 # userlogs
 userlogs_1: "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It"
@@ -68,6 +70,7 @@ kick_3: "`I Cant kick him ever...`"
 kick_4: "{} **was kicked by** {} **in** `{}`"
 pin_1: "`Reply to a message to pin it!`"
 pinned_1: "No Pinned Message Found!"
+pinned_2: "Pinned Message in Current chat is [here]({})."
 unpin_1: "Either reply to a message, or, use `{}unpin all`"
 listpin_1: "There is no message pinned in this group!"
 purge_1: "`Reply to a message to purge from.`"
@@ -266,7 +269,7 @@ devs_3: "`Give Some C++ Code..`"
 dm_1: "`Give Chat username or id where to send.`"
 dm_2: "`Give text to send or reply to msg`"
 dm_3: "⚜️ Message Delivered! ⚜️"
-dm_4: "Error : {}\nRead Usage : `{}help dm`"
+dm_4: "Error : {}\nRead Usage : `{}help other`"
 dm_5: "`Check in Private.`"
 dm_6: "`No message found to deliver :(`"
 
@@ -416,6 +419,14 @@ udl_5: "`You forgot to give link :(`"
 udl_6: "`This Directory is Empty.`"
 udl_7: "`You can't do that!`"
 
+# vctools
+vct_1: "`Voice Chat Started...`"
+vct_2: "**Successfully Changed VC Title to** `{}`"
+vct_3: "`Inviting Members to Voice Chat...`"
+vct_4: "`Voice Chat Stopped...`"
+vct_5: "`Invited {} users`"
+vct_6: "No input Found!"
+
 # words
 wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
 wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
@@ -459,7 +470,7 @@ whs_3: "Failed to Identify song :("
 whs_4: "**Song Recognised!**\nName: __{}__"
 
 # webupload
-wbl_1:  "`Provide a File Name pls..`"
+wbl_1: "`Provide a File Name pls..`"
 
 # writer
 writer_1: "`Give Some Text Too`"
@@ -484,6 +495,11 @@ zip_1: "Reply to any media/Document."
 zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
 zip_3: "`Reply to zip file only`"
 
+# file share
+fsh_1: "**List of files stored.:**"
+fsh_2: "**File has been stored!**\n\n**Shareable link:** {}"
+fsh_3: "`Reply to a message to make a shareable link!`"
+fsh_4: "**No files stored!**"
 # ------------------------- assistant --------------------------#
 
 ast_1: "Choose which API you want to set."
