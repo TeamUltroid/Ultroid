@@ -108,7 +108,7 @@ async def gen_sample(e):
         )
         await xxx.delete()
     else:
-        await eor(e, "`Reply To Video File Only`", time=5)
+        await eor(e, get_string("videotools_8"), time=5)
 
 
 @ultroid_cmd(pattern="vshots ?(.*)")
@@ -227,4 +227,4 @@ async def gen_sample(e):
         )
         await xxx.delete()
     else:
-        await eor(e, "`Reply To Video File Only`", time=5)
+        await eor(e, get_string("audiotools_8"), time=5)
