@@ -54,7 +54,7 @@ def telethon_session():
         spinner()
 
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
-    except BaseException:
+    except ImportError:
         print("Installing Telethon...")
         os.system("pip install -U telethon")
 
@@ -65,7 +65,11 @@ def telethon_session():
 
     # the imports
 
-    from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError
+    from telethon.errors.rpcerrorlist import (
+        ApiIdInvalidError,
+        PhoneNumberInvalidError,
+        UserIsBotError,
+    )
     from telethon.sessions import StringSession
     from telethon.sync import TelegramClient
 
@@ -74,15 +78,20 @@ def telethon_session():
     # logging in
     try:
         with TelegramClient(StringSession(), API_ID, API_HASH) as ultroid:
-            print("Generating a user session for Ultroid...")
-            ult = ultroid.send_message(
-                "me",
-                f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
-            )
-            print(
-                "Your SESSION has been generated. Check your telegram saved messages!"
-            )
-            exit(0)
+            print("Generating a string session for •ULTROID•")
+            try:
+                ult = ultroid.send_message(
+                    "me",
+                    f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
+                )
+                print(
+                    "Your SESSION has been generated. Check your Telegram saved messages!"
+                )
+                return
+            except UserIsBotError:
+                print("You are trying to Generate Session for your Bot's Account?")
+                print("Here is That!\n{ultroid.session.save()}\n\n")
+                print("NOTE: You can't use that as User Session..")
     except ApiIdInvalidError:
         print(
             "Your API ID/API HASH combination is invalid. Kindly recheck.\nQuitting..."
@@ -94,14 +103,18 @@ def telethon_session():
     except PhoneNumberInvalidError:
         print("The phone number is invalid!\nQuitting...")
         exit(0)
+    except Exception as er:
+        print("Unexpected Error Occurred while Creating Session")
+        print(er)
+        print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
 
 
 def main():
     clear_screen()
     print(a)
     telethon_session()
-    x = input("Run again? (y/n")
-    if x == "y":
+    x = input("Run again? (y/n)")
+    if x.lower() in ["y", "yes"]:
         main()
     else:
         exit(0)

@@ -33,11 +33,13 @@ async def live_stream(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     if not (re.search("youtu", song) and re.search("playlist\\?list", song)):
-        return await eor(xx, get_string('vcbot_8'))
+        return await eor(xx, get_string("vcbot_8"))
     if not is_url_ok(song):
-        return await eor(xx, '`Only Youtube Playlist please.`')
-    await xx.edit(get_string('vcbot_7'))
-    file, thumb, title, link, duration = await dl_playlist(chat, inline_mention(e), song)
+        return await eor(xx, "`Only Youtube Playlist please.`")
+    await xx.edit(get_string("vcbot_7"))
+    file, thumb, title, link, duration = await dl_playlist(
+        chat, inline_mention(e), song
+    )
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):

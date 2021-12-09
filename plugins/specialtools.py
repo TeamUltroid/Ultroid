@@ -302,9 +302,11 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="quotly ?(.*)", manager=True)
+@ultroid_cmd(pattern="q(uotly|) ?(.*)", manager=True, allow_pm=True)
 async def quott_(event):
-    match = event.pattern_match.group(1)
+    if event.raw_text[1:].startswith("qbot"):
+        return
+    match = event.pattern_match.group(2)
     if not event.is_reply:
         return await eor(event, "`Reply to Message..`")
     msg = await eor(event, get_string("com_1"))

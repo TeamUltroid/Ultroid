@@ -75,25 +75,32 @@ async def closet(lol):
 
 @asst_cmd(pattern="start ?(.*)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
+    args = event.pattern_match.group(1)
     if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
         add_user(event.sender_id)
         kak_uiw = udB.get_key("OFF_START_LOG")
         if not kak_uiw or kak_uiw != True:
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
-            buttons = [
-                [Button.inline("Info", "itkkstyo")],
-                [
-                    Button.mention(
-                        "User", await event.client.get_input_entity(event.sender_id)
-                    )
-                ],
-            ]
+            buttons = [[Button.inline("Info", "itkkstyo")]]
+            if event.sender.username:
+                buttons.append(
+                    [
+                        Button.mention(
+                            "User", await event.client.get_input_entity(event.sender_id)
+                        )
+                    ]
+                )
             await event.client.send_message(
                 udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
             )
     if event.sender_id not in SUDO_M.fullsudos:
         ok = ""
         u = await event.client.get_entity(event.chat_id)
+        if args and args != "set":
+            try:
+                return await get_stored_file(event, args)
+            except BaseException:
+                return await event.reply("Hurrr")
         if not udB.get_key("STARTMSG"):
             if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
@@ -114,11 +121,13 @@ async def ultroid(event):
             )
     else:
         name = get_display_name(event.sender)
-        if event.pattern_match.group(1) == "set":
+        if args == "set":
             await event.reply(
                 "Choose from the below options -",
                 buttons=_settings,
             )
+        elif args:
+            await get_stored_file(event, args)
         else:
             await event.reply(
                 get_string("ast_3").format(name),
@@ -142,7 +151,7 @@ async def ultroid(event):
 
 @callback("stat", owner=True)
 async def botstat(event):
-    ok = len(get_all_users())
+    ok = len(get_all_users("BOT_USERS"))
     msg = """Ultroid Assistant - Stats
 Total Users - {}""".format(
         ok,
@@ -152,7 +161,7 @@ Total Users - {}""".format(
 
 @callback("bcast", owner=True)
 async def bdcast(event):
-    ok = get_all_users()
+    ok = get_all_users("BOT_USERS")
     await event.edit(f"• Broadcast to {len(ok)} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
@@ -167,7 +176,7 @@ async def bdcast(event):
         start = datetime.now()
         for i in ok:
             try:
-                await asst.send_message(int(i), response.message)
+                await asst.send_message(int(i), response)
                 success += 1
             except BaseException:
                 fail += 1

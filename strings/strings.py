@@ -2,7 +2,7 @@ from os import listdir, path
 from typing import Any, Dict, List, Union
 
 from google_trans_new import google_translator
-from pyUltroid import udB
+from pyUltroid import udB, LOGS
 from yaml import safe_load
 
 language = [udB.get_key("language") or "en"]
@@ -15,9 +15,13 @@ strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
 for file in listdir(strings_folder):
     if file.endswith(".yml"):
         code = file[:-4]
-        languages[code] = safe_load(
+        try:
+            languages[code] = safe_load(
             open(path.join(strings_folder, file), encoding="UTF-8"),
-        )
+            )
+        except Exception as er:
+            LOGS.info(f"Error in {file[:-4]} language file")
+            LOGS.exception(er)
 
 
 def get_string(key: str) -> Any:
@@ -30,7 +34,7 @@ def get_string(key: str) -> Any:
             if languages.get(lang):
                 languages[lang][key] = tr
             else:
-                languages.update({lang:{key:tr}})
+                languages.update({lang: {key: tr}})
             return tr
         except KeyError:
             return f"Warning: could not load any string with the key `{key}`"

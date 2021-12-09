@@ -14,7 +14,7 @@ from pyUltroid.dB import DEVLIST
 from . import *
 
 
-@ultroid_cmd(pattern="decide", manager=True)
+@asst_cmd(pattern="decide")
 async def dheh(e):
     text = ["Yes", "NoU", "Maybe", "IDK"]
     text = random.choice(text)
@@ -22,7 +22,7 @@ async def dheh(e):
     await e.client.send_message(e.chat_id, text, reply_to=ri)
 
 
-@ultroid_cmd(pattern="echo ?(.*)", manager=True)
+@asst_cmd(pattern="echo ?(.*)")
 async def oqha(e):
     match = e.pattern_match.group(1)
     if match:
@@ -33,10 +33,14 @@ async def oqha(e):
         reply_to = e.reply_to_msg_id
     else:
         return await eor(e, "What to Echo?", time=5)
+    try:
+        await e.delete()
+    except BaseException as ex:
+        LOGS.error(ex)
     await e.client.send_message(e.chat_id, text, reply_to=reply_to)
 
 
-@ultroid_cmd(pattern="kickme$", manager=True, allow_all=True)
+@asst_cmd(pattern="kickme$")
 async def doit(e):
     if e.sender_id in DEVLIST:
         return await eod(e, "`I will Not Kick You, my Developer..`")
@@ -47,7 +51,7 @@ async def doit(e):
     await eor(e, "Yes, You are right, get out.", time=5)
 
 
-@ultroid_cmd(pattern="joke$", manager=True)
+@asst_cmd(pattern="joke$")
 async def do_joke(e):
     e = await e.get_reply_message() if e.is_reply else e
     link = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single"

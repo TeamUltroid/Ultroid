@@ -33,6 +33,14 @@ from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
 
+from telethon.utils import get_display_name
+
+# Used for Formatting Eval Code, if installed
+try:
+    import black
+except ImportError:
+    black = None
+
 from . import *
 
 
@@ -87,10 +95,27 @@ async def _(event):
         await xx.edit(OUT)
 
 
-p, pp = print, pprint  # ignore: pylint
+pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
 _ignore_eval = []
+
+
+def _parse_eval(value):
+    if value is None:
+        return
+    if hasattr(value, "stringify"):
+        try:
+            return value.stringify()
+        except TypeError:
+            pass
+    elif isinstance(value, dict):
+        try:
+            return json_parser(value, indent=1)
+        except BaseException:
+            pass
+    # is to_dict is also Good option to format?
+    return str(value)
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -99,9 +124,24 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await eor(event, get_string("devs_2"), time=5)
-    xx = await eor(event, get_string("com_1"))
+    silent = False
+    if cmd.split()[0] in ["-s", "--silent"]:
+        try:
+            cmd = cmd.split(maxsplit=1)[1]
+        except IndexError:
+            return await eor(event, "->> Wrong Format <<-")
+        await event.delete()
+        silent = True
+    else:
+        xx = await eor(event, get_string("com_1"))
+    if black:
+        try:
+            cmd = black.format_str(cmd, mode=black.Mode())
+        except BaseException:
+            # Consider it as Code Error, and move on to be shown ahead.
+            pass
     reply_to_id = event.reply_to_msg_id or event.id
-    if event.sender_id not in DEVLIST and (
+    if (
         any(item in cmd for item in KEEP_SAFE().All)
         and event.sender_id != ultroid_bot.uid
     ):
@@ -109,7 +149,7 @@ async def _(event):
             return await xx.edit(
                 "`You cannot use this command now. Contact owner of this bot!`"
             )
-        warning = await event.forward_to(int(udB.get_key("LOG_CHANNEL")))
+        warning = await event.forward_to(udB.get_key("LOG_CHANNEL"))
         await warning.reply(
             f"Malicious Activities suspected by {inline_mention(await event.get_sender())}"
         )
@@ -123,22 +163,27 @@ async def _(event):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        await aexec(cmd, event)
+        value = await aexec(cmd, event)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = ""
-    if exc:
-        evaluation = exc
-    elif stderr:
-        evaluation = stderr
-    elif stdout:
-        evaluation = stdout
-    else:
-        evaluation = get_string("instu_4")
+    evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
+    if silent:
+        if exc:
+            msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
+            msg += f"\n\n∆ <b>CODE:</b>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
+            log_chat = udB.get_key("LOG_CHANNEL")
+            if len(msg) > 4000:
+                with BytesIO(msg.encode()) as out_file:
+                    out_file.name = "Eval-Error.txt"
+                return await event.client.send_message(
+                    log_chat, f"`{cmd}`", file=out_file
+                )
+            await event.client.send_message(log_chat, msg, parse_mode="html")
+        return
     final_output = (
         "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
@@ -158,9 +203,14 @@ async def _(event):
                 caption=f"```{cmd}```" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
-            await xx.delete()
+        await xx.delete()
     else:
         await xx.edit(final_output)
+
+
+def _stringified(text, *args, **kwargs):
+    text = _parse_eval(text)
+    print(text, *args, **kwargs)
 
 
 async def aexec(code, event):
@@ -170,7 +220,8 @@ async def aexec(code, event):
                 ("async def __aexec(e, client): " + "\n message = event = e")
                 + "\n reply = await event.get_reply_message()"
             )
-            + "\n chat = (await event.get_chat()).id"
+            + "\n chat = event.chat_id"
+            + "\n print = p = _stringified"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )

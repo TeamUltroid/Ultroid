@@ -16,8 +16,7 @@
 
 • `{i}stats` : See your profile stats.
 
-• `{i}paste`
-    Include long text / Reply to text file.
+• `{i}paste` - `Include long text / Reply to text file.`
 
 • `{i}info <username/userid/chatid>`
     Reply to someone's msg.
@@ -282,10 +281,10 @@ async def _(event):
             await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
         return
     try:
-        full_user = await event.client(GetFullUserRequest(user))
+        full_user = (await event.client(GetFullUserRequest(user))).full_user
     except Exception as er:
         return await xx.edit(f"ERROR : {er}")
-    user = full_user.user
+    user = _
     user_photos = (
         await event.client.get_profile_photos(user.id, limit=0)
     ).total or "NaN"
@@ -385,7 +384,7 @@ async def _(ult):
 @ultroid_cmd(
     pattern=r"rmbg$",
 )
-async def rmbg(event):
+async def abs_rmbg(event):
     RMBG_API = udB.get_key("RMBG_API")
     if not RMBG_API:
         return await eor(
@@ -462,7 +461,9 @@ async def telegraphcmd(event):
             content = ab.read()
         os.remove(getit)
     makeit = Telegraph.create_page(title=match, content=[content])
-    await eor(event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})")
+    await eor(
+        event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False
+    )
 
 
 @ultroid_cmd(pattern="json$")

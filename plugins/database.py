@@ -32,11 +32,14 @@ async def _(ult):
     try:
         delim = " " if re.search("[|]", ult.pattern_match.group(1)) is None else " | "
         data = ult.pattern_match.group(1).split(delim, maxsplit=1)
+        if data[0] in ["--extend", "-e"]:
+            data = data[1].split(maxsplit=1)
+            data[1] = udB.get_key(data[0]) + " " + data[1]
         udB.set_key(data[0], data[1])
         redisdata = Redis(data[0])
         await eor(
             ult,
-            "DB Key Value Pair Updated\nKey : `{}`\nValue : `{}`".format(
+            "**DB Key Value Pair Updated\nKey :** `{}`\n**Value :** `{}`".format(
                 data[0],
                 redisdata,
             ),
@@ -66,7 +69,7 @@ async def _(ult):
             udB.rename(data[0], data[1])
             await eor(
                 ult,
-                "DB Key Rename Successful\nOld Key : `{}`\nNew Key : `{}`".format(
+                "**DB Key Rename Successful\nOld Key :** `{}`\n**New Key :** `{}`".format(
                     data[0],
                     data[1],
                 ),

@@ -8,6 +8,7 @@
 from pyUltroid import *
 from pyUltroid import _ult_cache
 from pyUltroid.functions.helper import *
+from pyUltroid.functions.tools import get_stored_file
 from pyUltroid.misc import owner_and_sudos
 from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
 from telethon import Button, custom

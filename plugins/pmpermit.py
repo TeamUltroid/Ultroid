@@ -196,9 +196,7 @@ if udB.get_key("PMSETTING"):
         ),
     )
     async def permitpm(event):
-        inline_pm = False
-        if Redis("INLINE_PM") and Redis("INLINE_PM") == "True":
-            inline_pm = not inline_pm
+        inline_pm = Redis("INLINE_PM") or False
         user = await event.get_sender()
         if user.bot or user.is_self or user.verified:
             return
@@ -537,7 +535,7 @@ async def blockpm(block):
 
 @ultroid_cmd(pattern="unblock ?(.*)")
 async def unblockpm(event):
-    match = event.pattern_match.group(1) or await event.get_reply_message()
+    match = event.pattern_match.group(1) or (await event.get_reply_message()).sender_id
     if not match:
         return await eor(event, NO_REPLY + "`Or give it's username/id`", time=5)
     if match == "all":
@@ -616,7 +614,7 @@ async def list_approved(event):
     re.compile(
         b"approve_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid],
 )
 async def apr_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -659,7 +657,7 @@ async def apr_in(event):
     re.compile(
         b"disapprove_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid],
 )
 async def disapr_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -695,7 +693,7 @@ async def disapr_in(event):
     re.compile(
         b"block_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid],
 )
 async def blck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -717,7 +715,7 @@ async def blck_in(event):
     re.compile(
         b"unblock_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid],
 )
 async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
@@ -813,7 +811,7 @@ async def in_pm_ans(event):
     await event.answer(res, switch_pm="• Ultroid •", switch_pm_param="start")
 
 
-@callback(re.compile("admin_only(.*)"), owner=True)
+@callback(re.compile("admin_only(.*)"), from_users=[ultroid_bot.uid])
 async def _admin_tools(event):
     chat = int(event.pattern_match.group(1))
     await event.edit(

@@ -61,7 +61,7 @@ async def leaver(event):
         del CLIENTS[chat]
     if VIDEO_ON.get(chat):
         del VIDEO_ON[chat]
-    await eor(event, get_string('vcbot_1'))
+    await eor(event, get_string("vcbot_1"))
 
 
 @vc_asst("rejoin")
@@ -80,14 +80,14 @@ async def rejoiner(event):
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
-        return await eor(event, get_string('vcbot_6'))
-    await eor(event, get_string('vcbot_5'))
+        return await eor(event, get_string("vcbot_6"))
+    await eor(event, get_string("vcbot_5"))
 
 
 @vc_asst("volume")
 async def volume_setter(event):
     if len(event.text.split()) <= 1:
-        return await eor(event, get_string('vcbot_4'))
+        return await eor(event, get_string("vcbot_4"))
     inp = event.text.split()
     if inp[1].startswith("@"):
         chat = inp[1]
@@ -113,4 +113,4 @@ async def volume_setter(event):
             vol = 200
         elif vol < 1:
             vol = 1
-        return await eor(event, get_string('vcbot_3').format(vol))
+        return await eor(event, get_string("vcbot_3").format(vol))

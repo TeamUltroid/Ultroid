@@ -26,7 +26,7 @@ from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
 
-from . import eor, events, get_string, mediainfo, ultroid_bot, ultroid_cmd
+from . import eor, events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
@@ -57,15 +57,16 @@ async def af(e):
             txt = wt.text
             if not btn:
                 txt, btn = get_msg_button(wt.text)
-            add_filter(int(chat), wrd, txt, m, btn)
+            add_filter(chat, wrd, txt, m, btn)
         else:
-            add_filter(int(chat), wrd, None, m, btn)
+            add_filter(chat, wrd, None, m, btn)
     else:
         txt = wt.text
         if not btn:
             txt, btn = get_msg_button(wt.text)
-        add_filter(int(chat), wrd, txt, None, btn)
+        add_filter(chat, wrd, txt, None, btn)
     await eor(e, get_string("flr_4").format(wrd))
+    ultroid_bot.add_handler(filter_func, events.NewMessage())
 
 
 @ultroid_cmd(pattern="remfilter ?(.*)")
@@ -83,13 +84,11 @@ async def lsnote(e):
     x = list_filter(e.chat_id)
     if x:
         sd = "Filters Found In This Chats Are\n\n"
-        await eor(e, sd + x)
-    else:
-        await eor(e, get_string("flr_6"))
+        return await eor(e, sd + x)
+    await eor(e, get_string("flr_6"))
 
 
-@ultroid_bot.on(events.NewMessage())
-async def fl(e):
+async def filter_func(e):
     if isinstance(e.sender, User) and e.sender.bot:
         return
     xx = (e.text).lower()
@@ -107,3 +106,7 @@ async def fl(e):
                         btn = create_tl_btn(k["button"])
                         return await something(e, msg, media, btn)
                     await e.reply(msg, file=media)
+
+
+if udB.get_key("FILTERS"):
+    ultroid_bot.add_handler(filter_func, events.NewMessage())

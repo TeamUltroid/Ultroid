@@ -24,7 +24,7 @@ from ._help import _main_help_menu
 
 # ================================================#
 
-TLINK = INLINE_PIC or "https://telegra.ph/file/d9c9bc13647fa1d96e764.jpg"
+TLINK = INLINE_PIC or "https://telegra.ph/file/74d6259983e0642923fdb.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
@@ -55,7 +55,7 @@ SUP_BUTTONS = [
 async def inline_alive(o):
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
-        "https://telegra.ph/file/55dd0f381c70e72557cb1.jpg", 0, "image/jpg", []
+        "https://telegra.ph/file/acd4f5d61369f74c5e7a7.jpg", 0, "image/jpg", []
     )
     RES = [
         await o.builder.article(
@@ -147,7 +147,7 @@ async def setting(event):
 _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")}
 
 
-@callback(re.compile("uh_(.*)"))
+@callback(re.compile("uh_(.*)"), owner=True)
 async def help_func(ult):
     key, count = ult.data_match.group(1).decode("utf-8").split("_")
     if key == "VCBot" and HELP.get("VCBot") is None:
@@ -168,7 +168,7 @@ async def help_func(ult):
     )
 
 
-@callback(re.compile("uplugin_(.*)"))
+@callback(re.compile("uplugin_(.*)"), owner=True)
 async def uptd_plugin(event):
     key, file = event.data_match.group(1).decode("utf-8").split("_")
     index = None
@@ -378,14 +378,13 @@ def page_num(index, key):
         for x in sorted(loaded)
     ]
     all_ = split_list(List, cols)
-    new_ = split_list(all_, rows)
+    fl_ = split_list(all_, rows)
     try:
-        new_ = new_[index]
+        new_ = fl_[index]
     except IndexError:
-        new_ = new_[0] if new_ else []
-    if len(new_[-1]) < cols:
-        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
-    else:
+        new_ = fl_[0] if fl_ else []
+    try:
+        fl_[index + 1]
         new_.append(
             [
                 Button.inline(
@@ -399,6 +398,8 @@ def page_num(index, key):
                 ),
             ]
         )
+    except IndexError:
+        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     return new_
 
 

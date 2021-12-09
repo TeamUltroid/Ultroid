@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+
 import asyncio
 import re
 import sys
@@ -40,7 +41,7 @@ def text_to_url(event):
     """function to get media url (with|without) Webpage"""
     if isinstance(event.media, MessageMediaWebPage):
         webpage = event.media.webpage
-        if webpage and webpage.type in ["photo"]:
+        if not isinstance(webpage, types.WebPageEmpty) and webpage.type in ["photo"]:
             return webpage.display_url
     return event.text
 
@@ -52,7 +53,7 @@ _buttons = {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
-                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="abs_taglog"),
                 Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
             ],
             [
@@ -79,7 +80,7 @@ _buttons = {
         "text": "SuperFban Settings:",
         "buttons": [
             [Button.inline("FBᴀɴ Gʀᴏᴜᴘ", data="sfgrp")],
-            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="sfexf")],
+            [Button.inline("Exᴄʟᴜᴅᴇ Fᴇᴅs", data="abs_sfexf")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")],
         ],
     },
@@ -91,10 +92,10 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "alvcstm": {
+    "alabs_vcstm": {
         "text": f"Customise your {HNDLR}alive. Choose from the below options -",
         "buttons": [
-            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="alvtx")],
+            [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="abs_alvtx")],
             [Button.inline("Aʟɪᴠᴇ ᴍᴇᴅɪᴀ", data="alvmed")],
             [Button.inline("Dᴇʟᴇᴛᴇ Aʟɪᴠᴇ Mᴇᴅɪᴀ", data="delmed")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
@@ -151,28 +152,83 @@ _buttons = {
     "vcb": {
         "text": "From This Feature U can play songs in group voice chat\n\n[moreinfo](https://t.me/UltroidUpdates/4)",
         "buttons": [
-            [Button.inline("VC Sᴇssɪᴏɴ", data="vcs")],
+            [Button.inline("VC Sᴇssɪᴏɴ", data="abs_vcs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
         ],
     },
     "oofdm": {
         "text": "About [Dual Mode](https://t.me/UltroidUpdates/18)",
         "buttons": [
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof")],
-            [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof")],
+            [
+                Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oɴ", "dmof"),
+                Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Oғғ", "dmof"),
+            ],
             [Button.inline("Dᴜᴀʟ Mᴏᴅᴇ Hɴᴅʟʀ", "dmhn")],
+            [Button.inline("« Back", data="cbs_otvars")],
         ],
     },
     "apiset": {
         "text": get_string("ast_1"),
         "buttons": [
-            [Button.inline("Remove.bg API", data="rmbg")],
-            [Button.inline("DEEP API", data="dapi")],
-            [Button.inline("OCR API", data="oapi")],
+            [Button.inline("Remove.bg API", data="abs_rmbg")],
+            [Button.inline("DEEP API", data="abs_dapi")],
+            [Button.inline("OCR API", data="abs_oapi")],
             [Button.inline("« Back", data="setter")],
         ],
     },
 }
+
+_convo = {
+    "rmbg": {
+        "var": "RMBG_API",
+        "name": "Remove.bg API Key",
+        "text": get_string("ast_2"),
+        "back": "cbs_apiset",
+    },
+    "dapi": {
+        "var": "DEEP_AI",
+        "name": "Deep AI Api Key",
+        "text": "Get Your Deep Api from deepai.org and send here.",
+        "back": "cbs_apiset",
+    },
+    "oapi": {
+        "var": "OCR_API",
+        "name": "Ocr Api Key",
+        "text": "Get Your OCR api from ocr.space and send that Here.",
+        "back": "cbs_apiset",
+    },
+    "pmlgg": {
+        "var": "PMLOGGROUP",
+        "name": "Pm Log Group",
+        "text": "Send chat id of chat which you want to save as Pm log Group.",
+        "back": "pml",
+    },
+    "vcs": {
+        "var": "VC_SESSION",
+        "name": "Vc Session",
+        "text": "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
+        "back": "cbs_vcb",
+    },
+    "settag": {
+        "var": "TAG_LOG",
+        "name": "Tag Log Group",
+        "text": f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
+        "back": "taglog",
+    },
+    "alvtx": {
+        "var": "ALIVE_TEXT",
+        "name": "Alive Text",
+        "text": "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
+        "back": "cbs_alvcstm",
+    },
+    "sfexf": {
+        "var": "EXCLUDE_FED",
+        "name": "Excluded Fed",
+        "text": "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back.",
+        "back": "cbs_sfban",
+    },
+}
+
 
 TOKEN_FILE = "resources/auths/auth_token.txt"
 
@@ -266,28 +322,33 @@ async def update(eve):
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@callback("changes", owner=True)
+@callback(re.compile("changes(.*)"), owner=True)
 async def changes(okk):
+    match = okk.data_match.group(1).decode("utf-8")
     await okk.answer(get_string("clst_3"))
     repo = Repo.init()
-    button = (Button.inline("Update Now", data="updatenow"),)
+    button = [[Button.inline("Update Now", data="updatenow")]]
     changelog, tl_chnglog = await gen_chlog(
         repo, f"HEAD..upstream/{repo.active_branch}"
     )
     cli = "\n\nClick the below button to update!"
-    try:
-        if len(tl_chnglog) > 700:
-            tl_chnglog = tl_chnglog[:700] + "..."
-        await okk.edit("• Writing Changelogs 📝 •")
-        img = await Carbon(
-            file_name="changelog",
-            code=tl_chnglog,
-            backgroundColor=choice(ATRA_COL),
-            language="md",
-        )
-        return await okk.edit(f"**• Ultroid Userbot •**{cli}", file=img, buttons=button)
-    except Exception as er:
-        LOGS.exception(er)
+    if not match:
+        try:
+            if len(tl_chnglog) > 700:
+                tl_chnglog = tl_chnglog[:700] + "..."
+                button.append([Button.inline("View Complete", "changesall")])
+            await okk.edit("• Writing Changelogs 📝 •")
+            img = await Carbon(
+                file_name="changelog",
+                code=tl_chnglog,
+                backgroundColor=choice(ATRA_COL),
+                language="md",
+            )
+            return await okk.edit(
+                f"**• Ultroid Userbot •**{cli}", file=img, buttons=button
+            )
+        except Exception as er:
+            LOGS.exception(er)
     changelog_str = changelog + cli
     if len(changelog_str) > 1024:
         await okk.edit(get_string("upd_4"))
@@ -297,7 +358,7 @@ async def changes(okk):
         await okk.edit(
             get_string("upd_5"),
             file="ultroid_updates.txt",
-            buttons=Button.inline("Update Now", data="updatenow"),
+            buttons=button,
         )
         remove("ultroid_updates.txt")
         return
@@ -352,6 +413,31 @@ async def _edit_to(event):
     await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
 
 
+@callback(re.compile("abs_(.*)"), owner=True)
+async def convo_handler(event: events.CallbackQuery):
+    match = event.data_match.group(1).decode("utf-8")
+    if not _convo.get(match):
+        return
+    await event.delete()
+    get_ = _convo[match]
+    back = get_["back"]
+    async with event.client.conversation(event.sender_id) as conv:
+        await conv.send_message(get_["text"])
+        response = conv.wait_event(events.NewMessage(chats=event.sender_id))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button(back),
+            )
+        await setit(event, get_["var"], themssg)
+        await conv.send_message(
+            f"{get_['name']} changed to `{themssg}`",
+            buttons=get_back_button(back),
+        )
+
+
 @callback("authorise", owner=True)
 async def _(e):
     if not e.is_private:
@@ -385,7 +471,10 @@ async def _(e):
     async with asst.conversation(e.sender_id) as conv:
         reply = conv.wait_event(events.NewMessage(from_users=e.sender_id))
         repl = await reply
-        udB.set_key("GDRIVE_FOLDER_ID", repl.text)
+        id = repl.text
+        if id.startswith("https"):
+            id = id.split("?id=")[-1]
+        udB.set_key("GDRIVE_FOLDER_ID", id)
         await repl.reply(
             "Success Now You Can Authorise.",
             buttons=get_back_button("gdrive"),
@@ -607,31 +696,6 @@ async def _(e):
     await e.answer("Done!!! Tag Logger has been turned Off")
 
 
-@callback("settag", owner=True)
-async def taglogerr(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "TAG_LOG"
-    name = "Tag Log Group"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            f"Make a group, add your assistant and make it admin.\nGet the `{HNDLR}id` of that group and send it here for tag logs.\n\nUse /cancel to cancel.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("taglog"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            f"{name} changed to {themssg}",
-            buttons=get_back_button("taglog"),
-        )
-
-
 @callback("eaddon", owner=True)
 async def pmset(event):
     if not udB.get_key("ADDONS"):
@@ -726,60 +790,6 @@ async def sfgrp(event):
         )
 
 
-@callback("sfexf", owner=True)
-async def sfexf(event):
-    await event.delete()
-    name = "Excluded Feds"
-    var = "EXCLUDE_FED"
-    pru = event.sender_id
-    async with asst.conversation(pru) as conv:
-        await conv.send_message(
-            "Send the Fed IDs you want to exclude in the ban. Split by a space.\neg`id1 id2 id3`\nSet is as `None` if you dont want any.\nUse /cancel to go back."
-        )
-
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("cbs_sfban"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            f"{name} changed to {themssg}",
-            buttons=get_back_button("cbs_sfban"),
-        )
-
-
-@callback("alvtx", owner=True)
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "ALIVE_TEXT"
-    name = "Alive Text"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**Alive Text**\nEnter the new alive text.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("cbs_alvcstm"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                name,
-                themssg,
-            ),
-            buttons=get_back_button("cbs_alvcstm"),
-        )
-
-
 @callback("alvmed", owner=True)
 async def media(event):
     await event.delete()
@@ -831,12 +841,12 @@ async def dell(event):
     try:
         udB.del_key("ALIVE_PIC")
         return await event.edit(
-            get_string("clst_5"), buttons=get_back_button("cbs_alvcstm")
+            get_string("clst_5"), buttons=get_back_button("cbs_alabs_vcstm")
         )
     except BaseException:
         return await event.edit(
             get_string("clst_4"),
-            buttons=get_back_button("cbs_alvcstm"),
+            buttons=get_back_button("cbs_alabs_vcstm"),
         )
 
 
@@ -1007,7 +1017,7 @@ async def apof(event):
 
 
 @callback("pml", owner=True)
-async def alvcs(event):
+async def l_vcs(event):
     if not udB.get_key("PMLOG"):
         BT = [Button.inline("PMLOGGER ON", data="pmlog")]
     else:
@@ -1016,36 +1026,10 @@ async def alvcs(event):
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
             BT,
-            [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "pmlgg")],
+            [Button.inline("PᴍLᴏɢɢᴇʀ Gʀᴏᴜᴘ", "abs_pmlgg")],
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     )
-
-
-@callback("pmlgg", owner=True)
-async def disus(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "PMLOGGROUP"
-    name = "Pm Logger Group"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            f"Send The Chat Id of group Which u want as your {name}\n\n use /cancel to cancel.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("pml"),
-            )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"{name} changed to `{themssg}`",
-                buttons=get_back_button("pml"),
-            )
 
 
 @callback("pmlog", owner=True)
@@ -1214,34 +1198,6 @@ async def chon(event):
         "Done! Chat People Via This Bot Stopped.",
         buttons=[Button.inline("« Bᴀᴄᴋ", data="cbs_chatbot")],
     )
-
-
-@callback("vcs", owner=True)
-async def name(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "VC_SESSION"
-    name = "VC SESSION"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**Vc session**\nEnter the New session u generated for vc bot.\n\nUse /cancel to terminate the operation.",
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("cbs_vcb"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                name,
-                themssg,
-            ),
-            buttons=get_back_button("cbs_vcb"),
-        )
 
 
 @callback("inli_pic", owner=True)

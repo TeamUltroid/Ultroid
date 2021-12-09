@@ -6,17 +6,18 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
+import os
 import re
 
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
-from telethon.errors import FilePart0MissingError
+from telethon.errors.rpcerrorlist import MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
 
-from . import callback, in_pattern
+from . import asst, callback, in_pattern, udB
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -148,10 +149,10 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
-        likes = numerize(ytdl_data["like_count"])
-        duration = ytdl_data["duration"]
+        likes = numerize(ytdl_data.get("like_count")) or 0
+        duration = ytdl_data.get("duration") or 0
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
@@ -189,18 +190,21 @@ async def _(event):
             artist = ytdl_data["creator"]
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
-        views = numerize(ytdl_data["view_count"])
+        views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
             else ytdl_data["description"][:100]
         )
-        likes = numerize(ytdl_data["like_count"])
-        hi, wi = ytdl_data["height"], ytdl_data["width"]
-        duration = ytdl_data["duration"]
+        likes = numerize(ytdl_data.get("like_count")) or 0
+        hi, wi = ytdl_data.get("height") or 720, ytdl_data.get("width") or 1280
+        duration = ytdl_data.get("duration") or 0
+        filepath = vid_id + ".mkv"
+        if not os.path.exists(filepath):
+            filepath = filepath + ".webm"
         file, _ = await event.client.fast_uploader(
-            vid_id + ".mkv",
+            filepath,
             filename=title + ".mkv",
             show_progress=True,
             event=event,
@@ -215,29 +219,28 @@ async def _(event):
             ),
         ]
     text = f"**Title:** `{title}`\n"
-    text += f"**Description:** `{description}`\n"
-    text += f"**⏳:** `{time_formatter(int(duration)*1000)}`\n"
-    text += f"**🎤:** `{artist}`\n"
-    text += f"👀 `{views}`\n"
-    text += f"👍: `{likes}`\n"
+    text += f"**Description:** `{description}`\n\n"
+    text += f"`⏳ Duration:` `{time_formatter(int(duration)*1000)}`\n"
+    text += f"`🎤 Artist:` `{artist}`\n"
+    text += f"`👀 Views`: `{views}`\n"
+    text += f"`👍 Likes`: `{likes}`\n"
+    button = buttons = Button.switch_inline("Search More", query="yt ", same_peer=True)
     try:
         await event.edit(
             text,
             file=file,
-            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            buttons=button,
             attributes=attributes,
             thumb=thumb,
         )
-    except FilePart0MissingError:
-        file = await event.client.send_file(
-            udB.get_key("LOG_CHANNEL"), file, attributes=attributes, thumb=thumb
-        )
-        await event.edit(
+    except MediaEmptyError:
+        file = await asst.send_message(
+            udB.get_key("LOG_CHANNEL"),
             text,
-            file=file.media,
-            buttons=Button.switch_inline("Search More", query="yt ", same_peer=True),
+            file=file,
+            buttons=button,
             attributes=attributes,
             thumb=thumb,
         )
-        await file.delete()
+        await event.edit(text, file=file.media, buttons=button)
     await bash(f"rm {vid_id}.jpg")
