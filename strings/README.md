@@ -6,7 +6,7 @@
 | en | English [English] | 407 | 0 |
 | pt-br | Portuguese [Português] | 114 | 293 |
 | ml | Malayalam [മലയാളം] | 115 | 292 |
-| hi | Hindi [हिंदी] | 136 | 271 |
+| hi | Hindi [हिंदी] | 406 | 1 |
 | ru | Russian [Русский] | 382 | 25 |
 | bn | bengoli [বাংলা] | 115 | 292 |
 | fa | Persian [Farsi] | 114 | 293 |
