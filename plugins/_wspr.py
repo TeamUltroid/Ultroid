@@ -105,18 +105,17 @@ async def _(e):
         user = logi.users[0]
         mention = inline_mention(user)
         x = user.status
-        logi.about
         if isinstance(x, on):
             status = "Online"
-        if isinstance(x, off):
+        elif isinstance(x, off):
             status = "Offline"
-        if isinstance(x, rec):
+        elif isinstance(x, rec):
             status = "Last Seen Recently"
-        if isinstance(x, lm):
+        elif isinstance(x, lm):
             status = "Last seen months ago"
-        if isinstance(x, lw):
+        elif isinstance(x, lw):
             status = "Last seen weeks ago"
-        if isinstance(x, mt):
+        else:
             status = "Can't Tell"
         text = f"**Name:**    `{user.first_name}`\n"
         text += f"**Id:**    `{user.id}`\n"
@@ -127,7 +126,7 @@ async def _(e):
             text += f"**Mention:**    `{mention}`\n"
             url = f"tg://user?id={user.id}"
         text += f"**Status:**    `{status}`\n"
-        text += f"**About:**    `{logi.bio}`"
+        text += f"**About:**    `{logi.full_user.about}`"
         button = [
             Button.url("Private", url=url),
             Button.switch_inline(
