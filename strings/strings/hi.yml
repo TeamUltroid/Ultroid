@@ -350,7 +350,7 @@ flr_5: "Done : Filter `{}` Removed."
 flr_6: "No Filters Found Here"
 
 # fontgen
-fgn_1: "**Available Fonts**\n\n"
+fgn_1: "**उपलब्ध फ़ॉन्ट्स**\n\n"
 
 # force subscribe
 fsub_1: "Give Channel where you want User to Join !"
