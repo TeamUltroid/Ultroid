@@ -102,11 +102,9 @@ async def _(e):
         if query.isdigit():
             query = int(query)
         logi = await ultroid_bot(gu(id=query))
-        name = logi.user.first_name
-        ids = logi.user.id
-        username = logi.user.username
-        mention = f"[{name}](tg://user?id={ids})"
-        x = logi.user.status
+        user = logi.users[0]
+        mention = inline_mention(user)
+        x = user.status
         bio = logi.about
         if isinstance(x, on):
             status = "Online"
@@ -120,16 +118,16 @@ async def _(e):
             status = "Last seen weeks ago"
         if isinstance(x, mt):
             status = "Can't Tell"
-        text = f"**Name:**    `{name}`\n"
-        text += f"**Id:**    `{ids}`\n"
-        if username:
-            text += f"**Username:**    `{username}`\n"
-            url = f"https://t.me/{username}"
+        text = f"**Name:**    `{user.first_name}`\n"
+        text += f"**Id:**    `{user.id}`\n"
+        if user.username:
+            text += f"**Username:**    `{user.username}`\n"
+            url = f"https://t.me/{user.username}"
         else:
             text += f"**Mention:**    `{mention}`\n"
-            url = f"tg://user?id={ids}"
+            url = f"tg://user?id={user.id}"
         text += f"**Status:**    `{status}`\n"
-        text += f"**About:**    `{bio}`"
+        text += f"**About:**    `{logi.bio}`"
         button = [
             Button.url("Private", url=url),
             Button.switch_inline(
@@ -139,7 +137,7 @@ async def _(e):
             ),
         ]
         sur = e.builder.article(
-            title=f"{name}",
+            title=user.first_name,
             description=desc,
             text=text,
             buttons=button,
@@ -150,7 +148,8 @@ async def _(e):
             description="You Didn't Type Username or id.",
             text="You Didn't Type Username or id.",
         )
-    except BaseException:
+    except BaseException as er:
+        LOGS.exception(er)
         name = get_string("wspr_4").format(query)
         sur = e.builder.article(
             title=name,
