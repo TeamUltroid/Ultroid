@@ -25,7 +25,7 @@ from . import eor, get_string, udB, ultroid_cmd
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)
 async def _(e):
-    key = self.get_key("CLEANCHAT") or []
+    key = udB.get_key("CLEANCHAT") or []
     if e.chat_id in key:
         return await eod(e, get_string("clan_5"))
     key.append(e.chat_id)
