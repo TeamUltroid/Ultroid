@@ -397,7 +397,6 @@ def page_num(index, key):
     if not pre and not next:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
-        fl_[index + 1]
         new_.append(
             [
                 Button.inline(
