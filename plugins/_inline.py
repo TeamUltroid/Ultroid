@@ -384,7 +384,7 @@ def page_num(index, key):
     except IndexError:
         new_ = fl_[0] if fl_ else []
         index = 0
-    if len(new_) == 1:
+    if index == 0 and len(fl_) == 1:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
         new_.append(
