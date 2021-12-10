@@ -5,10 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import re
-
-from pyUltroid import _ult_cache
-from telethon.errors.rpcerrorlist import UserNotParticipantError
 
 from . import *
 
