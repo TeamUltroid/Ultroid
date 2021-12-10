@@ -383,7 +383,20 @@ def page_num(index, key):
         new_ = fl_[index]
     except IndexError:
         new_ = fl_[0] if fl_ else []
+    pre, next = None, None
     try:
+        fl_[index+1]
+        next = True
+    except IndexError:
+        pass
+    try:
+        fl_[index-1]
+        pre = True
+    except IndexError:
+        pasa
+    if not pre and not next:
+        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
+    else:
         fl_[index + 1]
         new_.append(
             [
@@ -398,8 +411,6 @@ def page_num(index, key):
                 ),
             ]
         )
-    except IndexError:
-        new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     return new_
 
 
