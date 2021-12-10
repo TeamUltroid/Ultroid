@@ -7,7 +7,7 @@
 """
 ✘ Commands Available -
 
-`{i}write <text or reply to text>`
+• `{i}write <text or reply to text>`
    It will write on a paper.
 
 • `{i}image <text or reply to html or any doc file>`
