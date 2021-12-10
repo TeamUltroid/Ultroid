@@ -105,7 +105,7 @@ async def _(e):
         user = logi.users[0]
         mention = inline_mention(user)
         x = user.status
-        bio = logi.about
+        logi.about
         if isinstance(x, on):
             status = "Online"
         if isinstance(x, off):
