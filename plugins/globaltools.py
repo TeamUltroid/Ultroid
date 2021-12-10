@@ -658,15 +658,15 @@ async def ungblacker(event):
 
 async def gblacker(event, type_):
     try:
-        chat = int(event.text.split(" ", 1)[1])
+        chat_id = int(event.text.split(maxsplit=1)[1])
+        try:
+            chat_id = (await event.client.get_entity(chat_id)).id
+        except Exception as e:
+            return await eor(event, "**ERROR**\n`{}`".format(str(e)))
     except IndexError:
-        chat = event.chat_id
-    try:
-        chat_id = (await ultroid_bot.get_entity(chat)).id
-    except Exception as e:
-        return await eor(event, "**ERROR**\n`{}`".format(str(e)))
+        chat_id = event.chat_id
     if type_ == "add":
         add_gblacklist(chat_id)
     elif type_ == "remove":
         rem_gblacklist(chat_id)
-    await eor(event, "Global Broadcasts: \n{}ed {}".format(type_, chat))
+    await eor(event, "Global Broadcasts: \n{}ed {}".format(type_, chat_id))
