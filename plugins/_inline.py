@@ -385,12 +385,12 @@ def page_num(index, key):
         new_ = fl_[0] if fl_ else []
     pre, next = None, None
     try:
-        fl_[index+1]
+        fl_[index + 1]
         next = True
     except IndexError:
         pass
     try:
-        fl_[index-1]
+        fl_[index - 1]
         pre = True
     except IndexError:
         pasa
