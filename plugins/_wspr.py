@@ -12,7 +12,6 @@ from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
 from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
 from telethon.errors.rpcerrorlist import MessageNotModifiedError as np
 from telethon.tl.functions.users import GetFullUserRequest as gu
-from telethon.tl.types import UserStatusEmpty as mt
 from telethon.tl.types import UserStatusLastMonth as lm
 from telethon.tl.types import UserStatusLastWeek as lw
 from telethon.tl.types import UserStatusOffline as off
