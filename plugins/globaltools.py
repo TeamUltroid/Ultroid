@@ -36,7 +36,8 @@
         `gpromote @username all sar` ~ promote the user in all group & channel
 •`{i}gdemote` - `demote user globally`
 """
-import os, asyncio
+import asyncio
+import os
 
 from pyUltroid.dB import DEVLIST
 from pyUltroid.dB.gban_mute_db import (
@@ -54,10 +55,10 @@ from pyUltroid.dB.gcast_blacklist_db import (
     rem_gblacklist,
 )
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights
-from telethon.errors.rpcerrorlist import FloodWaitError
 
 from . import (
     HNDLR,
@@ -423,26 +424,26 @@ async def gcast(event):
                         )
                     done += 1
                 except FloodWaitError as fw:
-                    await asyncio.sleep(fw.seconds+10)
+                    await asyncio.sleep(fw.seconds + 10)
                     try:
                         if btn:
                             bt = create_tl_btn(btn)
                             await something(
-                            event,
-                            msg,
-                            reply.media if reply else None,
-                            bt,
-                            chat=chat,
-                            reply=False,
+                                event,
+                                msg,
+                                reply.media if reply else None,
+                                bt,
+                                chat=chat,
+                                reply=False,
                             )
                         else:
                             await event.client.send_message(
-                            chat, msg, file=reply.media if reply else None
+                                chat, msg, file=reply.media if reply else None
                             )
                         done += 1
                     except Exception as er:
                         err += f"• {er}\n"
-                        er+=1
+                        er += 1
                 except BaseException as h:
                     err += "• " + str(h) + "\n"
                     er += 1
