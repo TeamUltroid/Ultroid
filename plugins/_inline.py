@@ -393,7 +393,7 @@ def page_num(index, key):
         fl_[index - 1]
         pre = True
     except IndexError:
-        pasa
+        pass
     if not pre and not next:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
