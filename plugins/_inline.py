@@ -383,6 +383,7 @@ def page_num(index, key):
         new_ = fl_[index]
     except IndexError:
         new_ = fl_[0] if fl_ else []
+        index = 0
     pre, next = None, None
     try:
         fl_[index + 1]
