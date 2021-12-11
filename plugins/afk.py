@@ -60,6 +60,10 @@ async def set_afk(event):
                 return await eor(event, get_string("com_4"), time=5)
     await eor(event, "`Done`", time=2)
     add_afk(text, media_type, media)
+    ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
+    ultroid_bot.add_handler(
+       on_afk, events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+    )
     msg1, msg2 = None, None
     if text and media:
         if "sticker" in media_type:
@@ -90,11 +94,10 @@ async def set_afk(event):
     await asst.send_message(LOG_CHANNEL, msg1.text)
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
 async def remove_afk(event):
     if (
         event.is_private
-        and Redis("PMSETTING") == "True"
+        and udB.get_key("PMSETTING")
         and not is_approved(event.chat_id)
     ):
         return
@@ -115,14 +118,10 @@ async def remove_afk(event):
         await asyncio.sleep(10)
         await off.delete()
 
-
-@ultroid_bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
-)
 async def on_afk(event):
     if (
         event.is_private
-        and Redis("PMSETTING") == "True"
+        and Redis("PMSETTING")
         and not is_approved(event.chat_id)
     ):
         return
@@ -163,3 +162,10 @@ async def on_afk(event):
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)
+
+
+if udB.get_key("AFK_DB"):
+    ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
+    ultroid_bot.add_handler(
+       on_afk, events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+    )
