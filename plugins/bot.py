@@ -85,6 +85,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
+in_alive = "{}\n\n🌀 **Ultroid Version ->** {}\n🌀 **PyUltroid ->** {}\n🌀 **Python ->** {}\n🌀 **Uptime ->** {}\n🌀 **Branch ->** [ {} ]\n\n• **Join @TheUltroid**"
 
 @callback("alive")
 async def alive(event):
@@ -214,16 +215,17 @@ async def inline_alive(ult):
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
+    als = in_alive.format(
         header,
         OWNER_NAME,
         ultroid_version,
         UltVer,
         uptime,
         pyver(),
-        __version__,
         kk,
     )
+    if _e := udB.get_key("ALIVE_EMOJI"):
+        als = als.replace("🌀", _e)
     buttons = [
         [
             Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
