@@ -93,9 +93,13 @@ async def alive(event):
 
 
 @ultroid_cmd(
-    pattern="alive$",
+    pattern="alive ?(.*)",
 )
 async def lol(ult):
+    match = ult.pattern_match.group(1)
+    if not ult.client._bot and match in ["inline", "i"]:
+        res = await ult.client.inline_query(asst.me.username, "alive")
+        return await res[0].click(ult.chat_id)
     pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
@@ -128,47 +132,6 @@ async def lol(ult):
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, link_preview=False)
-
-
-@ultroid_cmd(
-    pattern="ialive$",
-)
-async def is_on(ult):
-    if not ult.client._bot:
-        await ult.delete()
-        try:
-            res = await ult.client.inline_query(asst.me.username, "alive")
-            await res[0].click(ult.chat_id)
-        except Exception as er:
-            LOGS.info(er)
-        return
-    pic = udB.get_key("ALIVE_PIC")
-    uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
-    y = Repo().active_branch
-    xx = Repo().remotes[0].config_reader.get("url")
-    rep = xx.replace(".git", f"/tree/{y}")
-    kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
-        header,
-        OWNER_NAME,
-        ultroid_version,
-        UltVer,
-        uptime,
-        pyver(),
-        __version__,
-        kk,
-    )
-    buttons = [
-        [Button.inline(get_string("bot_2"), "alive")],
-        [
-            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-        ],
-    ]
-    await ult.client.send_message(
-        ult.chat_id, als, file=pic, buttons=buttons, link_preview=False
-    )
 
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
