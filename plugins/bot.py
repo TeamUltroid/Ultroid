@@ -91,7 +91,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
-in_alive = "{}\n\n🌀 **Ultroid Version ->** {}\n🌀 **PyUltroid ->** {}\n🌀 **Python ->** {}\n🌀 **Uptime ->** {}\n🌀 **Branch ->** [ {} ]\n\n• **Join @TheUltroid**"
+in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b> [{}]\n\n• <b>Join @TheUltroid</b>"
 
 
 @callback("alive")
@@ -121,6 +121,8 @@ async def lol(ult):
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
     if inline:
+        kk = f"<a href={rep}>{y}</a>"
+        parse = "html"
         als = in_alive.format(
             header,
             ultroid_version,
@@ -132,6 +134,7 @@ async def lol(ult):
         if _e := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("🌀", _e)
     else:
+        parse = "md"
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
@@ -143,21 +146,21 @@ async def lol(ult):
             kk,
         )
     if pic is None:
-        await eor(ult, als, link_preview=False, buttons=buttons)
+        await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
     else:
         try:
-            await ult.reply(als, file=pic, link_preview=False, buttons=buttons)
+            await ult.reply(als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons)
             await ult.delete()
         except ChatSendMediaForbiddenError:
-            await eor(ult, als, link_preview=False, buttons=buttons)
+            await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
         except BaseException as er:
             LOGS.exception(er)
             try:
                 await ult.reply(file)
-                await ult.reply(als, buttons=buttons, link_preview=False)
+                await ult.reply(als, parse_mode=parse, buttons=buttons, link_preview=False)
             except BaseException as er:
                 LOGS.exception(er)
-                return await eor(ult, als, link_preview=False, buttons=buttons)
+                return await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
             await ult.delete()
 
 
@@ -240,7 +243,7 @@ async def inline_alive(ult):
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f" `[{y}]({rep})` "
+    kk = f"<a href={y}>{rep}</a>"
     als = in_alive.format(
         header,
         ultroid_version,
@@ -255,7 +258,7 @@ async def inline_alive(ult):
     if pic:
         try:
             if ".jpg" in pic:
-                results = [await builder.photo(pic, text=als, buttons=buttons)]
+                results = [await builder.photo(pic, text=als, parse_mode="html", buttons=buttons)]
             else:
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
@@ -268,6 +271,7 @@ async def inline_alive(ult):
                         pic,
                         title="Inline Alive",
                         description="@TheUltroid",
+                        parse_mode="html",
                         buttons=buttons,
                     )
                 ]
@@ -275,7 +279,7 @@ async def inline_alive(ult):
         except BaseException as er:
             LOGS.info(er)
     result = [
-        await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
+        await builder.article("Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons)
     ]
     await ult.answer(result)
 
