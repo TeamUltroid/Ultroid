@@ -149,7 +149,9 @@ async def lol(ult):
         await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
     else:
         try:
-            await ult.reply(als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons)
+            await ult.reply(
+                als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons
+            )
             await ult.delete()
         except ChatSendMediaForbiddenError:
             await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
@@ -157,10 +159,14 @@ async def lol(ult):
             LOGS.exception(er)
             try:
                 await ult.reply(file)
-                await ult.reply(als, parse_mode=parse, buttons=buttons, link_preview=False)
+                await ult.reply(
+                    als, parse_mode=parse, buttons=buttons, link_preview=False
+                )
             except BaseException as er:
                 LOGS.exception(er)
-                return await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
+                return await eor(
+                    ult, als, parse_mode=parse, link_preview=False, buttons=buttons
+                )
             await ult.delete()
 
 
@@ -258,7 +264,11 @@ async def inline_alive(ult):
     if pic:
         try:
             if ".jpg" in pic:
-                results = [await builder.photo(pic, text=als, parse_mode="html", buttons=buttons)]
+                results = [
+                    await builder.photo(
+                        pic, text=als, parse_mode="html", buttons=buttons
+                    )
+                ]
             else:
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
@@ -279,7 +289,9 @@ async def inline_alive(ult):
         except BaseException as er:
             LOGS.info(er)
     result = [
-        await builder.article("Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons)
+        await builder.article(
+            "Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons
+        )
     ]
     await ult.answer(result)
 
