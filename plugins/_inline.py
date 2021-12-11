@@ -369,8 +369,8 @@ async def on_plug_in_callback_query_handler(event):
 
 
 def page_num(index, key):
-    rows = 5
-    cols = 2
+    rows = udB.get_key("HELP_ROWS") or 5
+    cols = udB.get_key("HELP_COLUMNS") or 2
     loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     List = [
