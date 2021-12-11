@@ -13,7 +13,8 @@
 """
 
 import string
-from . import HNDLR, eor, get_string, udB, ultroid_bot, ultroid_cmd # ignore: pylint
+
+from . import HNDLR, eor, get_string, udB, ultroid_bot, ultroid_cmd  # ignore: pylint
 
 try:
     from gingerit.gingerit import GingerIt
@@ -22,11 +23,14 @@ except ImportError:
 from google_trans_new import google_translator
 from telethon import events
 
+
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
         udB.set_key("AUTOCORRECT", "True")
-        ultroid_bot.add_handler(gramme, events.NewMessage(outgoing=True, func=lambda x: x.text))
+        ultroid_bot.add_handler(
+            gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
+        )
         return await eor(e, get_string("act_1"), time=5)
     udB.del_key("AUTOCORRECT")
     await eor(e, get_string("act_2"), time=5)
@@ -49,6 +53,8 @@ async def gramme(event):
     except BaseException:
         pass
 
+
 if udB.get_key("AUTOCORRECT"):
-    ultroid_bot.add_handler(gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
-)
+    ultroid_bot.add_handler(
+        gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
+    )
