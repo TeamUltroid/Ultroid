@@ -249,7 +249,7 @@ async def inline_alive(ult):
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f"<a href={y}>{rep}</a>"
+    kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
         header,
         ultroid_version,
