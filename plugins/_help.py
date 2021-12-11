@@ -85,7 +85,7 @@ async def _help(ult):
             return await ult.reply(
                 get_string("inline_4").format(
                     OWNER_NAME,
-                    len(HELP["Official"]) - 5,
+                    len(HELP["Official"]),
                     len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
