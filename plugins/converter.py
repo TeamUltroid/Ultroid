@@ -175,14 +175,16 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="open$",
+    pattern="open ?(.*)",
 )
 async def _(event):
     a = await event.get_reply_message()
-    if not (a and a.media):
+    b = event.pattern_match.group(1)
+    if not ((a and a.media) or (b and os.path.exists(b))):
         return await eor(event, get_string("cvt_7"), time=5)
     xx = await eor(event, get_string("com_1"))
-    b = await a.download_media()
+    if not match:
+        b = await a.download_media()
     try:
         with open(b) as c:
             d = c.read()
@@ -195,4 +197,5 @@ async def _(event):
         await xx.edit(
             f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
         )
-    os.remove(b)
+    if not match:
+        os.remove(b)
