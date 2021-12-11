@@ -52,7 +52,13 @@ async def _(ult):
 async def _(ult):
     try:
         key = ult.pattern_match.group(1)
-        k = udB.del_key(key)
+        _ = key.split(maxsplit=1)
+        if _[0] == "-m":
+            for key in _[1].split():
+                k = udB.del_key(key)
+            key = _[1]
+        else:
+            k = udB.del_key(key)
         if k == 0:
             return await eor(ult, "`No Such Key.`")
         await eor(ult, f"`Successfully deleted key {key}`")
