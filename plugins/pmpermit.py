@@ -180,13 +180,13 @@ if udB.get_key("PMSETTING"):
                     LOG_CHANNEL,
                     _not_approved[miss.id],
                     f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except KeyError:
                 await asst.send_message(
                     LOG_CHANNEL,
                     f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except MessageNotModifiedError:
                 pass
