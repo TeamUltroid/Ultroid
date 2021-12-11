@@ -78,5 +78,6 @@ async def blacklist(e):
                     except BaseException:
                         break
 
+
 if udB.get_key("BLACKLIST_DB"):
     ultroid_bot.add_handler(blacklist, events.NewMessage(incoming=True))
