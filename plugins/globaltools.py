@@ -93,6 +93,7 @@ _gdemote_rights = ChatAdminRights(
     pin_messages=False,
 )
 
+_dialogs = {}
 
 @ultroid_cmd(pattern="gpromote ?(.*)", fullsudo=True)
 async def _(e):
@@ -304,7 +305,12 @@ async def _(e):
         userid = int(userid)
         name = str(userid)
     chats = 0
-    async for ggban in e.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await e.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for ggban in dialog:
         if ggban.is_group or ggban.is_channel:
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=True)
@@ -359,7 +365,12 @@ async def _(e):
             "`User is already gbanned and added to gbanwatch.`",
             time=4,
         )
-    async for ggban in e.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await e.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for ggban in dialog:
         if ggban.is_group or ggban.is_channel:
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=False)
@@ -396,7 +407,12 @@ async def gcast(event):
     er = 0
     done = 0
     err = ""
-    async for x in event.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await event.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for x in dialog:
         if x.is_group:
             chat = x.entity.id
             if (
@@ -474,7 +490,12 @@ async def gucast(event):
     kk = await eor(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
-    async for x in event.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await event.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for x in dialog:
         if x.is_user and not x.entity.bot:
             chat = x.id
             if not is_gblacklisted(chat):
@@ -516,7 +537,12 @@ async def gkick(e):
         return await eor(xx, "`I can't gkick myself.`", time=3)
     if userid in DEVLIST:
         return await eor(xx, "`I can't gkick my Developers.`", time=3)
-    async for gkick in e.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await e.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for gkick in dialog:
         if gkick.is_group or gkick.is_channel:
             try:
                 await e.client.kick_participant(gkick.id, userid)
@@ -545,7 +571,12 @@ async def _(e):
         return await eor(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
         return await eor(xx, "`User is already gmuted.`", time=4)
-    async for onmute in e.client.iter_dialogs():
+   if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await e.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for onmute in dialog:
         if onmute.is_group:
             try:
                 await e.client.edit_permissions(onmute.id, userid, send_messages=False)
@@ -571,7 +602,12 @@ async def _(e):
     chats = 0
     if not is_gmuted(userid):
         return await eor(xx, "`User is not gmuted.`", time=3)
-    async for hurr in e.client.iter_dialogs():
+    if _dialogs:
+        dialog = _dialogs["_"]
+    else:
+        dialog = await e.client.get_dialogs()
+        _dialogs.update({"_":dialog})
+    for hurr in dialog:
         if hurr.is_group:
             try:
                 await e.client.edit_permissions(hurr.id, userid, send_messages=True)
