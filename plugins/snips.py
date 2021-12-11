@@ -69,7 +69,7 @@ async def an(e):
             txt, btn = get_msg_button(wt.text)
         add_snip(wrd, txt, None, btn)
     await eor(e, f"Done : snip `${wrd}` Saved.")
-
+    ultroid_bot.add_handler(add_snips, events.NewMessage(incoming=True))
 
 @ultroid_cmd(pattern="remsnip ?(.*)")
 async def rs(e):
@@ -92,8 +92,7 @@ async def lsnote(e):
         await eor(e, "No Snips Found Here")
 
 
-@ultroid_bot.on(events.NewMessage())
-async def notes(e):
+async def add_snips(e):
     if not e.out and str(e.sender_id) not in sudoers():
         return
     xx = [z.replace("$", "") for z in e.text.lower().split() if z.startswith("$")]
@@ -114,3 +113,6 @@ async def notes(e):
                     btn = create_tl_btn(k["button"])
                     return await something(e, msg, media, btn, reply=None)
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
+
+if udB.get_key("SNIP"):
+    ultroid_bot.add_handler(add_snips, events.NewMessage(incoming=True))
