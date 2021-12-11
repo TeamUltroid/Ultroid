@@ -64,7 +64,7 @@ async def addfor(e):
         return await eor(e, get_string("fsub_2"), time=5)
     add_forcesub(e.chat_id, match)
     await eor(e, "Added ForceSub in This Chat !")
-
+    ultroid_bot.add_handler(force_sub, events.NewMessage(incoming=True))
 
 @ultroid_cmd(pattern="remfsub$")
 async def remor(e):
@@ -126,8 +126,7 @@ async def diesoon(e):
     await e.edit(get_string("fsub_8"))
 
 
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def cacheahs(ult):
+async def force_sub(ult):
     if not udB.get_key("FORCESUB"):
         return
 
@@ -161,3 +160,7 @@ async def cacheahs(ult):
         LOGS.info(e)
     res = await ultroid_bot.inline_query(asst.me.username, f"fsub {user.id}_{joinchat}")
     await res[0].click(ult.chat_id, reply_to=ult.id)
+
+
+if udB.get_key("FORCESUB"):
+    ultroid_bot.add_handler(force_sub, events.NewMessage(incoming=True))
