@@ -95,6 +95,7 @@ _gdemote_rights = ChatAdminRights(
 
 _dialogs = {}
 
+
 @ultroid_cmd(pattern="gpromote ?(.*)", fullsudo=True)
 async def _(e):
     x = e.pattern_match.group(1)
@@ -309,7 +310,7 @@ async def _(e):
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for ggban in dialog:
         if ggban.is_group or ggban.is_channel:
             try:
@@ -369,7 +370,7 @@ async def _(e):
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for ggban in dialog:
         if ggban.is_group or ggban.is_channel:
             try:
@@ -411,7 +412,7 @@ async def gcast(event):
         dialog = _dialogs["_"]
     else:
         dialog = await event.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for x in dialog:
         if x.is_group:
             chat = x.entity.id
@@ -494,7 +495,7 @@ async def gucast(event):
         dialog = _dialogs["_"]
     else:
         dialog = await event.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for x in dialog:
         if x.is_user and not x.entity.bot:
             chat = x.id
@@ -541,7 +542,7 @@ async def gkick(e):
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for gkick in dialog:
         if gkick.is_group or gkick.is_channel:
             try:
@@ -575,7 +576,7 @@ async def _(e):
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for onmute in dialog:
         if onmute.is_group:
             try:
@@ -606,7 +607,7 @@ async def _(e):
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_":dialog})
+        _dialogs.update({"_": dialog})
     for hurr in dialog:
         if hurr.is_group:
             try:
