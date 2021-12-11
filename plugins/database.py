@@ -34,7 +34,7 @@ async def _(ult):
         data = ult.pattern_match.group(1).split(delim, maxsplit=1)
         if data[0] in ["--extend", "-e"]:
             data = data[1].split(maxsplit=1)
-            data[1] = udB.get_key(data[0]) + " " + data[1]
+            data[1] = str(udB.get_key(data[0])) + " " + data[1]
         udB.set_key(data[0], data[1])
         redisdata = Redis(data[0])
         await eor(
