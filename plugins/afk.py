@@ -30,9 +30,9 @@ from . import (
     eor,
     get_string,
     mediainfo,
+    udB,
     ultroid_bot,
     ultroid_cmd,
-    udB
 )
 
 old_afk_msg = []
