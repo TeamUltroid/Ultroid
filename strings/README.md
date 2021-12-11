@@ -12,7 +12,6 @@
 | fa | Persian [Farsi] | 114 | 293 |
 | tr | Turkish [Türk] | 115 | 292 |
 | od | Odia [ଓଡିଆ] | 115 | 292 |
-| fr | French [français] | 3 | 404 |
 | cn | Chinese [简体中文] | 115 | 292 |
 | ka | Kannada [ಕನ್ನಡ] | 115 | 292 |
 | gu | Gujarati [ગુજરાતી] | 115 | 292 |
