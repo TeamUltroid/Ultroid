@@ -61,29 +61,15 @@ async def _(e):
     await eor(e, get_string("dm_5"), time=5)
 
 
-@ultroid_cmd(pattern="save$")
+@ultroid_cmd(pattern="(f|)save$")
 async def saf(e):
     x = await e.get_reply_message()
     if not x:
         return await eod(
             e, "Reply to Any Message to save it to ur saved messages", time=5
         )
-    if e.out:
-        await e.client.send_message("me", x)
+    if e.pattern_match.group(1) == "f":
+        await x.forward_to(e.sender_id)
     else:
         await e.client.send_message(e.sender_id, x)
-    await eor(e, "Message saved to Your Pm/Saved Messages.", time=5)
-
-
-@ultroid_cmd(pattern="fsave$")
-async def saf(e):
-    x = await e.get_reply_message()
-    if not x:
-        return await eod(
-            e, "Reply to Any Message to save it to ur saved messages", time=5
-        )
-    if e.out:
-        await x.forward_to("me")
-    else:
-        await x.forward_to(e.sender_id)
     await eor(e, "Message saved to Your Pm/Saved Messages.", time=5)
