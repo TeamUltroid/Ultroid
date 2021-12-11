@@ -23,7 +23,7 @@ from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import asst_cmd, eor, get_string, mediainfo, ultroid_cmd
+from . import eor, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addcmd ?(.*)")
@@ -63,7 +63,12 @@ async def ac(e):
         if not btn:
             txt, btn = get_msg_button(wt.text)
         add_cmd(wrd, txt, None, btn)
-    asst.add_handler(astcmds, events.NewMessage(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())))
+    asst.add_handler(
+        astcmds,
+        events.NewMessage(
+            func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())
+        ),
+    )
     await eor(e, get_string("asstcmd_4").format(wrd))
 
 
@@ -95,5 +100,11 @@ async def astcmds(e):
             bt = create_tl_btn(bt)
         await e.reply(msg, file=media, buttons=bt)
 
+
 if udB.get_key("ASST_CMDS"):
-    asst.add_handler(astcmds, events.NewMessage(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())))
+    asst.add_handler(
+        astcmds,
+        events.NewMessage(
+            func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())
+        ),
+    )
