@@ -571,7 +571,7 @@ async def _(e):
         return await eor(xx, "`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
         return await eor(xx, "`User is already gmuted.`", time=4)
-   if _dialogs:
+    if _dialogs:
         dialog = _dialogs["_"]
     else:
         dialog = await e.client.get_dialogs()
