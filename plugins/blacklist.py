@@ -40,6 +40,7 @@ async def af(e):
     heh = wrd.split(" ")
     for z in heh:
         add_blacklist(int(chat), z.lower())
+    ultroid_bot.add_handler(blacklist, events.NewMessage(incoming=True))
     await eor(e, get_string("blk_2").format(wrd))
 
 
@@ -65,8 +66,7 @@ async def lsnote(e):
     await eor(e, get_string("blk_6"))
 
 
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def bl(e):
+async def blacklist(e):
     x = get_blacklist(e.chat_id)
     if x:
         for z in e.text.lower().split():
@@ -77,3 +77,6 @@ async def bl(e):
                         break
                     except BaseException:
                         break
+
+if udB.get_key("BLACKLIST_DB"):
+    ultroid_bot.add_handler(blacklist, events.NewMessage(incoming=True))
