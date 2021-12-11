@@ -71,6 +71,7 @@ async def an(e):
     await eor(e, f"Done : snip `${wrd}` Saved.")
     ultroid_bot.add_handler(add_snips, events.NewMessage(incoming=True))
 
+
 @ultroid_cmd(pattern="remsnip ?(.*)")
 async def rs(e):
     wrd = (e.pattern_match.group(1)).lower()
@@ -113,6 +114,7 @@ async def add_snips(e):
                     btn = create_tl_btn(k["button"])
                     return await something(e, msg, media, btn, reply=None)
                 await ultroid_bot.send_message(e.chat_id, msg, file=media)
+
 
 if udB.get_key("SNIP"):
     ultroid_bot.add_handler(add_snips, events.NewMessage(incoming=True))
