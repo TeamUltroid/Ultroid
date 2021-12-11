@@ -27,7 +27,7 @@ from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticip
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import User
+from telethon.tl.types import User,Channel
 from telethon.utils import get_peer_id
 
 from . import (
@@ -65,7 +65,6 @@ async def addfor(e):
     add_forcesub(e.chat_id, match)
     await eor(e, "Added ForceSub in This Chat !")
     ultroid_bot.add_handler(force_sub, events.NewMessage(incoming=True))
-
 
 @ultroid_cmd(pattern="remfsub$")
 async def remor(e):
@@ -153,6 +152,11 @@ async def force_sub(ult):
         return
     except UserNotParticipantError:
         pass
+    if isinstance(user, Channel):
+        try:
+            await ultroid_bot.edit_permissions(ult.chat_id, user.id, view_messages=False)
+        except BaseException as er:
+            LOGS.exception(er)
     try:
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
     except ChatAdminRequiredError:
