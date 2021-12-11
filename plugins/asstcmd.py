@@ -63,6 +63,7 @@ async def ac(e):
         if not btn:
             txt, btn = get_msg_button(wt.text)
         add_cmd(wrd, txt, None, btn)
+    asst.add_handler(astcmds, events.NewMessage(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())))
     await eor(e, get_string("asstcmd_4").format(wrd))
 
 
@@ -86,11 +87,13 @@ async def lscmd(e):
     return await eor(e, get_string("asstcmd_5"))
 
 
-@asst_cmd(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds()))
-async def ascmds(e):
+async def astcmds(e):
     xx = (e.text.replace("/", "")).lower().split()[0]
     if cmd_reply(xx):
         msg, media, bt = cmd_reply(xx)
         if bt:
             bt = create_tl_btn(bt)
         await e.reply(msg, file=media, buttons=bt)
+
+if udB.get_key("ASST_CMDS"):
+    asst.add_handler(astcmds, events.NewMessage(func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())))
