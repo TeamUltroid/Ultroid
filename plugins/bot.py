@@ -76,10 +76,10 @@ from . import (
 
 ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
 buttons = [
-        [
-            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-        ]
+    [
+        Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
+    ]
 ]
 
 # Will move to strings
@@ -122,25 +122,25 @@ async def lol(ult):
     kk = f" `[{y}]({rep})` "
     if inline:
         als = in_alive.format(
-        header,
-        ultroid_version,
-        UltVer,
-        pyver(),
-        uptime,
-        kk,
+            header,
+            ultroid_version,
+            UltVer,
+            pyver(),
+            uptime,
+            kk,
         )
         if _e := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("🌀", _e)
     else:
         als = (get_string("alive_1")).format(
-        header,
-        OWNER_NAME,
-        ultroid_version,
-        UltVer,
-        uptime,
-        pyver(),
-        __version__,
-        kk,
+            header,
+            OWNER_NAME,
+            ultroid_version,
+            UltVer,
+            uptime,
+            pyver(),
+            __version__,
+            kk,
         )
     if pic is None:
         await eor(ult, als, link_preview=False, buttons=buttons)
@@ -159,7 +159,7 @@ async def lol(ult):
                 LOGS.exception(er)
                 return await eor(ult, als, link_preview=False, buttons=buttons)
             await ult.delete()
-      
+
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
