@@ -62,7 +62,10 @@ async def set_afk(event):
     add_afk(text, media_type, media)
     ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
     ultroid_bot.add_handler(
-       on_afk, events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+        on_afk,
+        events.NewMessage(
+            incoming=True, func=lambda e: bool(e.mentioned or e.is_private)
+        ),
     )
     msg1, msg2 = None, None
     if text and media:
@@ -95,11 +98,7 @@ async def set_afk(event):
 
 
 async def remove_afk(event):
-    if (
-        event.is_private
-        and udB.get_key("PMSETTING")
-        and not is_approved(event.chat_id)
-    ):
+    if event.is_private and udB.get_key("PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
         return
@@ -118,12 +117,9 @@ async def remove_afk(event):
         await asyncio.sleep(10)
         await off.delete()
 
+
 async def on_afk(event):
-    if (
-        event.is_private
-        and Redis("PMSETTING")
-        and not is_approved(event.chat_id)
-    ):
+    if event.is_private and Redis("PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
         return
@@ -167,5 +163,8 @@ async def on_afk(event):
 if udB.get_key("AFK_DB"):
     ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
     ultroid_bot.add_handler(
-       on_afk, events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+        on_afk,
+        events.NewMessage(
+            incoming=True, func=lambda e: bool(e.mentioned or e.is_private)
+        ),
     )
