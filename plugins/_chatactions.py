@@ -86,7 +86,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             user = await ult.get_user()
             chat = await ult.get_chat()
             title = chat.title or "this chat"
-            count = chat.participants_count or (await ult.client.get_participants(chat, limit=0)).total
+            count = (
+                chat.participants_count
+                or (await ult.client.get_participants(chat, limit=0)).total
+            )
             mention = inline_mention(user)
             name = user.first_name
             fullname = get_display_name(user)
@@ -123,7 +126,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         user = await ult.get_user()
         chat = await ult.get_chat()
         title = chat.title or "this chat"
-        count = chat.participants_count or (await ult.client.get_participants(chat, limit=0)).total
+        count = (
+            chat.participants_count
+            or (await ult.client.get_participants(chat, limit=0)).total
+        )
         mention = inline_mention(user)
         name = user.first_name
         fullname = get_display_name(user)
