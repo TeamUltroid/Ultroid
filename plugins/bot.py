@@ -87,6 +87,7 @@ The Ultroid Userbot
 
 in_alive = "{}\n\n🌀 **Ultroid Version ->** {}\n🌀 **PyUltroid ->** {}\n🌀 **Python ->** {}\n🌀 **Uptime ->** {}\n🌀 **Branch ->** [ {} ]\n\n• **Join @TheUltroid**"
 
+
 @callback("alive")
 async def alive(event):
     text = alive_txt.format(ultroid_version, UltVer, __version__)
