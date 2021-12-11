@@ -66,6 +66,7 @@ async def addfor(e):
     await eor(e, "Added ForceSub in This Chat !")
     ultroid_bot.add_handler(force_sub, events.NewMessage(incoming=True))
 
+
 @ultroid_cmd(pattern="remfsub$")
 async def remor(e):
     res = rem_forcesub(e.chat_id)
