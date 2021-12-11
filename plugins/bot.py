@@ -7,7 +7,7 @@
 """
 ✘ Commands Available
 
-• `{i}alive` | `{i}ialive`
+• `{i}alive` | `{i}alive inline`
     Check if your bot is working.
 
 • `{i}ping`
@@ -75,6 +75,12 @@ from . import (
 )
 
 ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
+buttons = [
+        [
+            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
+        ]
+]
 
 # Will move to strings
 alive_txt = """
@@ -99,9 +105,14 @@ async def alive(event):
 )
 async def lol(ult):
     match = ult.pattern_match.group(1)
+    inline = None
     if not ult.client._bot and match in ["inline", "i"]:
-        res = await ult.client.inline_query(asst.me.username, "alive")
-        return await res[0].click(ult.chat_id)
+        try:
+            res = await ult.client.inline_query(asst.me.username, "alive")
+            return await res[0].click(ult.chat_id)
+        except BaseException as er:
+            LOGS.exception(er)
+            inline = True
     pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
@@ -109,7 +120,19 @@ async def lol(ult):
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
+    if inline:
+        als = in_alive.format(
+        header,
+        ultroid_version,
+        UltVer,
+        pyver(),
+        uptime,
+        kk,
+        )
+        if _e := udB.get_key("ALIVE_EMOJI"):
+            als = als.replace("🌀", _e)
+    else:
+        als = (get_string("alive_1")).format(
         header,
         OWNER_NAME,
         ultroid_version,
@@ -118,23 +141,25 @@ async def lol(ult):
         pyver(),
         __version__,
         kk,
-    )
+        )
     if pic is None:
-        await eor(ult, als)
-    elif "telegra" in pic:
-        try:
-            await ult.reply(als, file=pic, link_preview=False)
-            await ult.delete()
-        except ChatSendMediaForbiddenError:
-            await eor(ult, als, link_preview=False)
+        await eor(ult, als, link_preview=False, buttons=buttons)
     else:
         try:
-            await ult.reply(file=pic)
-            await ult.reply(als, link_preview=False)
+            await ult.reply(als, file=pic, link_preview=False, buttons=buttons)
             await ult.delete()
         except ChatSendMediaForbiddenError:
-            await eor(ult, als, link_preview=False)
-
+            await eor(ult, als, link_preview=False, buttons=buttons)
+        except BaseException as er:
+            LOGS.exception(er)
+            try:
+                await ult.reply(file)
+                await ult.reply(als, buttons=buttons, link_preview=False)
+            except BaseException as er:
+                LOGS.exception(er)
+                return await eor(ult, als, link_preview=False, buttons=buttons)
+            await ult.delete()
+      
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
@@ -218,21 +243,14 @@ async def inline_alive(ult):
     kk = f" `[{y}]({rep})` "
     als = in_alive.format(
         header,
-        OWNER_NAME,
         ultroid_version,
         UltVer,
-        uptime,
         pyver(),
+        uptime,
         kk,
     )
     if _e := udB.get_key("ALIVE_EMOJI"):
         als = als.replace("🌀", _e)
-    buttons = [
-        [
-            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-        ]
-    ]
     builder = ult.builder
     if pic:
         try:
