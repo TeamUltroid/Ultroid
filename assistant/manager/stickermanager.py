@@ -1,7 +1,5 @@
-from io import BytesIO
 from PIL import Image
 from pyUltroid.functions.misc import create_quotly
-from pyUltroid.functions.tools import resize_photo
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import CreateStickerSetRequest
 from telethon.tl.types import InputPeerSelf
@@ -37,7 +35,9 @@ async def kang_cmd(ult):
         return await ult.eor("`Reply to sticker or text to add it in your pack...`")
     if dl:
         upl = await ult.client.upload_file(dl)
-        file = get_input_document(await ult.client(UploadMediaRequest(InputPeerSelf(), upl)))
+        file = get_input_document(
+            await ult.client(UploadMediaRequest(InputPeerSelf(), upl))
+        )
     get_ = udB.get_key("STICKERS") or {}
     sender = await ult.get_sender()
     if not get_.get(ult.sender_id):
