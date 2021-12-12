@@ -14,8 +14,8 @@ from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import async_searcher, get_ofox, saavn_search
 from telethon import Button
-from telethon.tl.types import InputWebDocument as wb
 from telethon.tl.types import DocumentAttributeAudio as Audio
+from telethon.tl.types import InputWebDocument as wb
 
 from . import *
 from . import _ult_cache
@@ -654,7 +654,18 @@ async def savn_s(event):
                     "Search Again 🔍", query="saavn", same_peer=True
                 ),
                 thumb=thumb,
-                content=wb(song["media_url"], 0, "audio/mp4", [Audio(title=song["song"], duration=song["duration"], performer=song["primary_artists"])]),
+                content=wb(
+                    song["media_url"],
+                    0,
+                    "audio/mp4",
+                    [
+                        Audio(
+                            title=song["song"],
+                            duration=song["duration"],
+                            performer=song["primary_artists"],
+                        )
+                    ],
+                ),
             )
         )
     await event.answer(res, switch_pm=swi, switch_pm_param="start")
