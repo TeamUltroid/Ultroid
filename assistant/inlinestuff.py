@@ -649,7 +649,7 @@ async def savn_s(event):
                 type="audio",
                 text=text,
                 include_media=True,
-                buttons=Button.swicth_inline(
+                buttons=Button.switch_inline(
                     "Search Again 🔍", query="saavn", same_peer=True
                 ),
                 thumb=thumb,
