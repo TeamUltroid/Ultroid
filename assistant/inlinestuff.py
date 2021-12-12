@@ -661,7 +661,7 @@ async def savn_s(event):
                     [
                         Audio(
                             title=song["song"],
-                            duration=song["duration"],
+                            duration=int(song["duration"]),
                             performer=song["primary_artists"],
                         )
                     ],
