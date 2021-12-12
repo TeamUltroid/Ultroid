@@ -153,7 +153,11 @@ async def lol(ult):
     if pic:
         try:
             await ult.reply(
-                als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons if inline else None
+                als,
+                file=pic,
+                parse_mode=parse,
+                link_preview=False,
+                buttons=buttons if inline else None,
             )
             return await ult.delete()
         except ChatSendMediaForbiddenError:
@@ -163,13 +167,21 @@ async def lol(ult):
             try:
                 await ult.reply(file)
                 await ult.reply(
-                    als, parse_mode=parse, buttons=buttons if inline else None, link_preview=False
+                    als,
+                    parse_mode=parse,
+                    buttons=buttons if inline else None,
+                    link_preview=False,
                 )
                 return await ult.delete()
             except BaseException as er:
                 LOGS.exception(er)
-    await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons if inline else None)
-
+    await eor(
+        ult,
+        als,
+        parse_mode=parse,
+        link_preview=False,
+        buttons=buttons if inline else None,
+    )
 
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
