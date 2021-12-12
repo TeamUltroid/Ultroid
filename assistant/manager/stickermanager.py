@@ -83,7 +83,7 @@ async def kang_cmd(ult):
         sn = f"ult{ult.sender_id}_{ult.id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
         if animated:
-            sn += "_anim
+            sn += "_anim"
             title += " (Animated)"
         sn += f"_by_{asst.me.username}"
         try:
