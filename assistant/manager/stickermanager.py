@@ -1,11 +1,14 @@
 from io import BytesIO
-from pyUltroid.functions.tools import resize_photo
+
 from pyUltroid.functions.misc import create_quotly
-from . import asst_cmd, udB
-from telethon.utils import get_input_document, get_display_name
+from pyUltroid.functions.tools import resize_photo
 from telethon.tl.functions.messages import UploadMediaRequest
-from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.functions.stickers import CreateStickerSetRequest
+from telethon.tl.types import InputStickerSetItem as SetItem
+from telethon.utils import get_display_name
+
+from . import asst_cmd, udB
+
 
 @asst_cmd(
     pattern="kang",
@@ -43,16 +46,25 @@ async def kang_cmd(ult):
         title = f"{get_display_name(sender)}'s Kang Pack"
         type_ = "static"
         if animated:
-          type_ = "anim"
-          sn += "_anim"
-          title += " (Animated)"
+            type_ = "anim"
+            sn += "_anim"
+            title += " (Animated)"
         sn += f"_by_{asst.me.username}"
         try:
-            pack = await ult.client(CreateStickerSetRequest(user_id=sender.id, title=title, short_name=sn, stickers=[SetItem(file, emoji=emoji)], animated=animated))
+            pack = await ult.client(
+                CreateStickerSetRequest(
+                    user_id=sender.id,
+                    title=title,
+                    short_name=sn,
+                    stickers=[SetItem(file, emoji=emoji)],
+                    animated=animated,
+                )
+            )
         except Exception as er:
             return await ult.eor(str(er))
         sn = pack.set.short_name
-        get_.update({ult.sender_id:{type_:[]}})
+        get_.update({ult.sender_id: {type_: []}})
         udB.set_key("STICKERS", get_)
-        return await ult.reply(f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})")
-    
+        return await ult.reply(
+            f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
+        )
