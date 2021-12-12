@@ -150,29 +150,26 @@ async def lol(ult):
             __version__,
             kk,
         )
-    if pic is None:
-        await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
-    else:
+    if pic:
         try:
             await ult.reply(
-                als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons
+                als, file=pic, parse_mode=parse, link_preview=False, buttons=buttons if inline else None
             )
-            await ult.delete()
+            return await ult.delete()
         except ChatSendMediaForbiddenError:
-            await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons)
+            pass
         except BaseException as er:
             LOGS.exception(er)
             try:
                 await ult.reply(file)
                 await ult.reply(
-                    als, parse_mode=parse, buttons=buttons, link_preview=False
+                    als, parse_mode=parse, buttons=buttons if inline else None, link_preview=False
                 )
+                return await ult.delete()
             except BaseException as er:
                 LOGS.exception(er)
-                return await eor(
-                    ult, als, parse_mode=parse, link_preview=False, buttons=buttons
-                )
-            await ult.delete()
+    await eor(ult, als, parse_mode=parse, link_preview=False, buttons=buttons if inline else None)
+
 
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
