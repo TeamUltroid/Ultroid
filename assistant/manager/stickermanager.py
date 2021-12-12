@@ -3,11 +3,11 @@ from pyUltroid.functions.misc import create_quotly
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import AddStickerToSetRequest as AddSticker
 from telethon.tl.functions.stickers import CreateStickerSetRequest
-from telethon.tl.types import InputPeerSelf
+from telethon.tl.types import InputPeerSelf, User
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName
 from telethon.utils import get_display_name, get_input_document
-
+from telethon import errors
 from . import LOGS, asst, asst_cmd, udB
 
 
@@ -15,6 +15,9 @@ from . import LOGS, asst, asst_cmd, udB
     pattern="kang",
 )
 async def kang_cmd(ult):
+    sender = await ult.get_sender()
+    if not isinstance(sender, User):
+        return
     if not ult.is_reply:
         return await ult.eor("`Reply to a sticker/photo..`", time=5)
     reply = await ult.get_reply_message()
@@ -41,7 +44,6 @@ async def kang_cmd(ult):
             await ult.client(UploadMediaRequest(InputPeerSelf(), upl))
         )
     get_ = udB.get_key("STICKERS") or {}
-    sender = await ult.get_sender()
     type_ = "static" if not animated else "anim"
     if not get_.get(ult.sender_id) or not get_.get(ult.sender_id, {}).get(type_):
         sn = f"ult_{ult.sender_id}"
@@ -76,6 +78,30 @@ async def kang_cmd(ult):
     try:
         await asst(
             AddSticker(InputStickerSetShortName(name), SetItem(file, emoji=emoji))
+        )
+    except errors.StickerpackStickersTooMuchError:
+        sn = f"ult{ult.sender_id}_{ult.id}"
+        title = f"{get_display_name(sender)}'s Kang Pack"
+        if animated:
+            sn += "_anim
+            title += " (Animated)"
+        sn += f"_by_{asst.me.username}"
+        try:
+            pack = await ult.client(
+                CreateStickerSetRequest(
+                    user_id=sender.id,
+                    title=title,
+                    short_name=sn,
+                    stickers=[SetItem(file, emoji=emoji)],
+                    animated=animated,
+                )
+            )
+        except Exception as er:
+            return await ult.eor(str(er))
+        get_[utl.sender_id][type_].append(pack.set.short_name)
+        udB.set_key("STICKERS", get_)
+        return await ult.reply(
+            f"**Created New Kang Pack!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
         )
     except Exception as er:
         LOGS.exception(er)
