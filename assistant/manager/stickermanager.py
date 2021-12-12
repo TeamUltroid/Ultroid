@@ -1,12 +1,12 @@
 from io import BytesIO
-
+from PIL import Image
 from pyUltroid.functions.misc import create_quotly
 from pyUltroid.functions.tools import resize_photo
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import CreateStickerSetRequest
 from telethon.tl.types import InputPeerSelf
 from telethon.tl.types import InputStickerSetItem as SetItem
-from telethon.utils import get_display_name
+from telethon.utils import get_display_name, get_input_document
 
 from . import asst, asst_cmd, udB
 
@@ -21,25 +21,23 @@ async def kang_cmd(ult):
     animated, dl = None, None
     emoji = "🏵"
     if reply.sticker:
-        file = reply.sticker
+        file = get_input_document(reply.sticker)
         emoji = reply.file.emoji
         if reply.file.name.endswith(".tgs"):
             animated = True
             dl = await reply.download_media()
     elif reply.photo:
-        dl = BytesIO()
-        await reply.download_media(dl)
-        image = resize_photo(dl)
-        dl.name = "sticker.png"
-        image.save(dl, "PNG")
-        dl = "sticker.png"
+        file = await reply.download_media()
+        name = "sticker.webp"
+        image = Image.open(file)
+        image.save(name, "WEBP")
     elif reply.text:
         dl = await create_quotly(reply)
     else:
         return await ult.eor("`Reply to sticker or text to add it in your pack...`")
     if dl:
         upl = await ult.client.upload_file(dl)
-        file = await ult.client(UploadMediaRequest(InputPeerSelf(), upl))
+        file = get_input_document(await ult.client(UploadMediaRequest(InputPeerSelf(), upl)))
     get_ = udB.get_key("STICKERS") or {}
     sender = await ult.get_sender()
     if not get_.get(ult.sender_id):
