@@ -9,6 +9,7 @@ from PIL import Image
 from pyUltroid.functions.misc import create_quotly
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
+from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import AddStickerToSetRequest as AddSticker
 from telethon.tl.functions.stickers import CreateStickerSetRequest
@@ -16,7 +17,7 @@ from telethon.tl.types import InputPeerSelf
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName, User
 from telethon.utils import get_display_name, get_input_document
-from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
+
 from . import LOGS, asst, asst_cmd, udB
 
 
