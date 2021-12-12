@@ -41,7 +41,7 @@ from random import choice
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
-from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError, BotMethodInvalidError
 from telethon.utils import resolve_bot_file_id
 
 from . import (
@@ -106,13 +106,15 @@ async def alive(event):
 async def lol(ult):
     match = ult.pattern_match.group(1)
     inline = None
-    if not ult.client._bot and match in ["inline", "i"]:
+    if match in ["inline", "i"]:
         try:
             res = await ult.client.inline_query(asst.me.username, "alive")
             return await res[0].click(ult.chat_id)
+        except BotMethodInvalidError:
+            pass
         except BaseException as er:
             LOGS.exception(er)
-            inline = True
+        inline = True
     pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
