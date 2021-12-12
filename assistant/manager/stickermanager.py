@@ -1,6 +1,7 @@
 from PIL import Image
 from pyUltroid.functions.misc import create_quotly
 from telethon import errors
+from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import AddStickerToSetRequest as AddSticker
 from telethon.tl.functions.stickers import CreateStickerSetRequest
@@ -8,7 +9,7 @@ from telethon.tl.types import InputPeerSelf
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName, User
 from telethon.utils import get_display_name, get_input_document
-
+from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
 from . import LOGS, asst, asst_cmd, udB
 
 
@@ -31,9 +32,9 @@ async def kang_cmd(ult):
             animated = True
             dl = await reply.download_media()
     elif reply.photo:
-        file = await reply.download_media()
+        dl = await reply.download_media()
         name = "sticker.webp"
-        image = Image.open(file)
+        image = Image.open(dl)
         image.save(name, "WEBP")
     elif reply.text:
         dl = await create_quotly(reply)
@@ -54,6 +55,11 @@ async def kang_cmd(ult):
             sn += "_anim"
             title += " (Animated)"
         sn += f"_by_{asst.me.username}"
+        try:
+            await asst(GetSticker(InputStickerSetShortName(sn)))
+            sn = sn.replace(str(ult.sender_id), f"{ult.sender_id}_{ult.id}")
+        except StickersetInvalidError:
+            pass
         try:
             pack = await ult.client(
                 CreateStickerSetRequest(
@@ -76,6 +82,10 @@ async def kang_cmd(ult):
             f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
         )
     name = get_[ult.sender_id][type_][-1]
+    try:
+        await asst(GetSticker(InputStickerSetShortName(name)))
+    except StickersetInvalidError:
+        get_[ult.sender_id][type_].remove(name)
     try:
         await asst(
             AddSticker(InputStickerSetShortName(name), SetItem(file, emoji=emoji))
