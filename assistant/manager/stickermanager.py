@@ -3,9 +3,9 @@ from pyUltroid.functions.misc import create_quotly
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import CreateStickerSetRequest
 from telethon.tl.types import InputPeerSelf
-from telethon.tl.types import InputStickerSetItem as SetItem
+from telethon.tl.types import InputStickerSetItem as SetItem, InputStickerSetShortName
 from telethon.utils import get_display_name, get_input_document
-
+from telethon.tl.functions.stickers import AddStickerToSetRequest as AddSticker
 from . import asst, asst_cmd, udB
 
 
@@ -40,10 +40,10 @@ async def kang_cmd(ult):
         )
     get_ = udB.get_key("STICKERS") or {}
     sender = await ult.get_sender()
-    if not get_.get(ult.sender_id):
+    type_ = "static" if not animated else "anim"
+    if not get_.get(ult.sender_id) or not get_.get(ult.sender_id, {}).get(type_):
         sn = f"ult_{ult.sender_id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
-        type_ = "static"
         if animated:
             type_ = "anim"
             sn += "_anim"
@@ -62,8 +62,21 @@ async def kang_cmd(ult):
         except Exception as er:
             return await ult.eor(str(er))
         sn = pack.set.short_name
-        get_.update({ult.sender_id: {type_: []}})
+        if not get_.get(ult.sender_id):
+            get_.update({ult.sender_id: {type_: [sn]}})
+        else:
+            get_[ult.sender_id].update({type_:[sn]})
         udB.set_key("STICKERS", get_)
         return await ult.reply(
             f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
         )
+    name = get_[ult.sender_id][type_][-1]
+    try:
+        await asst(AddSticker(
+            InputStickerSetShortName(name), [SetItem(file, emoji=emoji)]
+            )
+        )
+    except Exception as er:
+        LOGS.exception(er)
+        return await ult.reply(str(er))
+    await ult.reply(f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{sn})")
