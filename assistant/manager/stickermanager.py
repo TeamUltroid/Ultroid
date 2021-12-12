@@ -8,7 +8,7 @@ from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName
 from telethon.utils import get_display_name, get_input_document
 
-from . import asst, asst_cmd, udB
+from . import asst, asst_cmd, udB, LOGS
 
 
 @asst_cmd(
@@ -75,7 +75,7 @@ async def kang_cmd(ult):
     name = get_[ult.sender_id][type_][-1]
     try:
         await asst(
-            AddSticker(InputStickerSetShortName(name), [SetItem(file, emoji=emoji)])
+            AddSticker(InputStickerSetShortName(name), SetItem(file, emoji=emoji))
         )
     except Exception as er:
         LOGS.exception(er)
