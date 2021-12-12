@@ -4,7 +4,8 @@ from pyUltroid.functions.misc import create_quotly
 from pyUltroid.functions.tools import resize_photo
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.tl.functions.stickers import CreateStickerSetRequest
-from telethon.tl.types import InputStickerSetItem as SetItem, InputPeerSelf
+from telethon.tl.types import InputPeerSelf
+from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.utils import get_display_name
 
 from . import asst, asst_cmd, udB
