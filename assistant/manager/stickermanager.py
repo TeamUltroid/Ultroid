@@ -150,6 +150,6 @@ async def do_magic(ult):
             if ul.get("anim") and _ in ul["anim"]:
                 ul["anim"].remove(_)
             else:
-                ul]"static"].remove(_)
+                ul["static"].remove(_)
     udB.set_key("STICKERS", ko)
     await ult.reply(msg)
