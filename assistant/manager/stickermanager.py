@@ -7,7 +7,7 @@ from telethon.tl.functions.stickers import CreateStickerSetRequest
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.utils import get_display_name
 
-from . import asst_cmd, udB, asst
+from . import asst, asst_cmd, udB
 
 
 @asst_cmd(
