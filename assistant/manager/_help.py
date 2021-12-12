@@ -76,6 +76,10 @@ MISC = """
 
 • /joke : Get Random Jokes.
 • /decide : Decide Something..
+
+**✘ Stickertools ✘**
+• /kang : add sticker to your pack.
+• /listpack : get all of yours pack..
 """
 
 STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc": MISC}
