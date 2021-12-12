@@ -128,3 +128,28 @@ async def kang_cmd(ult):
     await ult.reply(
         f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{name})"
     )
+
+
+@asst_cmd(pattern="listpack")
+async def do_magic(ult):
+    ko = udB.get_key("STICKERS") or {}
+    if not ko.get(ult.sender_id):
+        return await ult.reply("No Sticker Pack Found!")
+    al_ = []
+    ul = ko[ult.sender_id]
+    if ul.get("static"):
+        al_.extend(ul["static"])
+    if ul.get("anim"):
+        al_.extend(ul["anim"])
+    msg = "• **Stickers Owned by You!**\n\n"
+    for _ in al_:
+        try:
+            pack = await ult.client(GetSticker(InputStickerSetShortName(_), hash=0))
+            msg += f"• [{pack.set.title}](https://t.me/addstickers/{_})\n"
+        except StickerSetInvalidError:
+            if ul.get("anim") and _ in ul["anim"]:
+                ul["anim"].remove(_)
+            else:
+                ul]"static"].remove(_)
+    udB.set_key("STICKERS", ko)
+    await ult.reply(msg)
