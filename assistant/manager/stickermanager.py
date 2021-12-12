@@ -80,7 +80,7 @@ async def kang_cmd(ult):
         await asst(
             AddSticker(InputStickerSetShortName(name), SetItem(file, emoji=emoji))
         )
-    except errors.StickerpackStickersTooMuchError:
+    except (errors.StickerpackStickersTooMuchError, errors.StickersTooMuchError):
         sn = f"ult{ult.sender_id}_{ult.id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
         if animated:
