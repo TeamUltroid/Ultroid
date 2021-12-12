@@ -12,7 +12,7 @@ from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import async_searcher, saavn_search, get_ofox
+from pyUltroid.functions.tools import async_searcher, get_ofox, saavn_search
 from telethon import Button
 from telethon.tl.types import InputWebDocument as wb
 
@@ -613,16 +613,24 @@ async def twitter_search(event):
     else:
         _ult_cache.update({"twitter": {match: reso}})
 
+
 _savn_cache = {}
+
 
 @in_pattern("saavn", owner=True)
 async def savn_s(event):
     try:
-        query = event.text.split(maxsplit=1)[1].lower() 
+        query = event.text.split(maxsplit=1)[1].lower()
     except IndexError:
-        return await event.answer([], switch_pm="Enter Query to search 🔍", switch_pm_param="start")
+        return await event.answer(
+            [], switch_pm="Enter Query to search 🔍", switch_pm_param="start"
+        )
     if query in _savn_cache:
-        return await event.answer(_savn_cache[query], switch_pm=f"Showing Results for {query}", switch_pm_param="start")
+        return await event.answer(
+            _savn_cache[query],
+            switch_pm=f"Showing Results for {query}",
+            switch_pm_param="start",
+        )
     results = await saavn_search(query)
     swi = "🎵 Saavn Search"
     if not results:
@@ -635,6 +643,18 @@ async def savn_s(event):
         text += f"\n• **Lang :** {song['language']}"
         text += f"\n• **Artist :** {song['primary_artists']}"
         text += f"\n• **Release Date :** {song['release_date']}"
-        res.append(await event.builder.article(title=song["song"], type="audio", text=text, include_media=True, buttons=Button.swicth_inline("Search Again 🔍", query="saavn", same_peer=True), thumb=thumb, content=wb(song["media_url"], 0, "audio/mp4", [])))
+        res.append(
+            await event.builder.article(
+                title=song["song"],
+                type="audio",
+                text=text,
+                include_media=True,
+                buttons=Button.swicth_inline(
+                    "Search Again 🔍", query="saavn", same_peer=True
+                ),
+                thumb=thumb,
+                content=wb(song["media_url"], 0, "audio/mp4", []),
+            )
+        )
     await event.answer(res, switch_pm=swi, switch_pm_param="start")
-    _savn_cache.update({query:res})
+    _savn_cache.update({query: res})
