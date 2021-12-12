@@ -8,7 +8,7 @@ from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName
 from telethon.utils import get_display_name, get_input_document
 
-from . import asst, asst_cmd, udB, LOGS
+from . import LOGS, asst, asst_cmd, udB
 
 
 @asst_cmd(
