@@ -64,7 +64,7 @@ async def kang_cmd(ult):
             title += " (Animated)"
         sn += f"_by_{asst.me.username}"
         try:
-            await asst(GetSticker(InputStickerSetShortName(sn)))
+            await asst(GetSticker(InputStickerSetShortName(sn), hash=0))
             sn = sn.replace(str(ult.sender_id), f"{ult.sender_id}_{ult.id}")
         except StickersetInvalidError:
             pass
@@ -91,7 +91,7 @@ async def kang_cmd(ult):
         )
     name = get_[ult.sender_id][type_][-1]
     try:
-        await asst(GetSticker(InputStickerSetShortName(name)))
+        await asst(GetSticker(InputStickerSetShortName(name), hash=0))
     except StickersetInvalidError:
         get_[ult.sender_id][type_].remove(name)
     try:
