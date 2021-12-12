@@ -41,7 +41,10 @@ from random import choice
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
-from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError, BotMethodInvalidError
+from telethon.errors.rpcerrorlist import (
+    BotMethodInvalidError,
+    ChatSendMediaForbiddenError,
+)
 from telethon.utils import resolve_bot_file_id
 
 from . import (
