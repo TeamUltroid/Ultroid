@@ -99,7 +99,7 @@ async def kang_cmd(ult):
             )
         except Exception as er:
             return await ult.eor(str(er))
-        get_[utl.sender_id][type_].append(pack.set.short_name)
+        get_[ult.sender_id][type_].append(pack.set.short_name)
         udB.set_key("STICKERS", get_)
         return await ult.reply(
             f"**Created New Kang Pack!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
