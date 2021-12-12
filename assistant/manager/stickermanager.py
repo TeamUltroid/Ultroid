@@ -81,5 +81,5 @@ async def kang_cmd(ult):
         LOGS.exception(er)
         return await ult.reply(str(er))
     await ult.reply(
-        f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
+        f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{name})"
     )
