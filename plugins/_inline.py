@@ -153,9 +153,7 @@ async def help_func(ult):
     if key == "VCBot" and HELP.get("VCBot") is None:
         return await ult.answer(get_string("help_12"), alert=True)
     elif key == "Addons" and HELP.get("Addons") is None:
-        return await ult.answer(
-            get_string("help_13"), alert=True
-        )
+        return await ult.answer(get_string("help_13"), alert=True)
     if "|" in count:
         _, count = count.split("|")
     if not count:
