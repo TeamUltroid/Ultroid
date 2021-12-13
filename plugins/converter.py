@@ -183,8 +183,10 @@ async def _(event):
     if not ((a and a.media) or (b and os.path.exists(b))):
         return await eor(event, get_string("cvt_7"), time=5)
     xx = await eor(event, get_string("com_1"))
+    rem = None
     if not b:
         b = await a.download_media()
+        rem = True
     try:
         with open(b) as c:
             d = c.read()
@@ -197,5 +199,5 @@ async def _(event):
         await xx.edit(
             f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
         )
-    if not match:
+    if rem:
         os.remove(b)
