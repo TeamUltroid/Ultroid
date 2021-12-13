@@ -398,7 +398,7 @@ async def djshsh(event):
     msg = await event.client.get_messages(chat.id, ids=msg_id)
     if msg:
         await eor(
-            event, f"Pinned Message in Current chat is [here]({msg.message_link})."
+            event, get_string("pinned_2").format(msg.message_link)
         )
 
 
