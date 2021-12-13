@@ -24,7 +24,7 @@
 
 import re
 
-from . import Redis, eor, udB, ultroid_cmd
+from . import Redis, eor, udB, ultroid_cmd, get_string
 
 
 @ultroid_cmd(pattern="setdb ?(.*)", fullsudo=True)
@@ -45,7 +45,7 @@ async def _(ult):
             ),
         )
     except BaseException:
-        await eor(ult, "`Something Went Wrong`")
+        await eor(ult, get_string("com_7"))
 
 
 @ultroid_cmd(pattern="deldb ?(.*)", fullsudo=True)
@@ -63,7 +63,7 @@ async def _(ult):
             return await eor(ult, "`No Such Key.`")
         await eor(ult, f"`Successfully deleted key {key}`")
     except BaseException:
-        await eor(ult, "`Something Went Wrong`")
+        await eor(ult, get_string("com_7"))
 
 
 @ultroid_cmd(pattern="rendb ?(.*)", fullsudo=True)
@@ -81,6 +81,6 @@ async def _(ult):
                 ),
             )
         except BaseException:
-            await eor(ult, "Something went wrong ...")
+            await eor(ult, get_string("com_7"))
     else:
         await eor(ult, "Key not found")
