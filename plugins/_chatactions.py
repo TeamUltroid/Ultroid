@@ -30,8 +30,8 @@ from ._inline import something
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions
-    key = udB.get_key("CLEANCHAT") or {}
-    if key.get(ult.chat_id):
+    key = udB.get_key("CLEANCHAT") or []
+    if ult.chat_id in key:
         try:
             await ult.delete()
         except BaseException:
