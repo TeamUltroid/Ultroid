@@ -183,7 +183,7 @@ async def _(event):
     if not ((a and a.media) or (b and os.path.exists(b))):
         return await eor(event, get_string("cvt_7"), time=5)
     xx = await eor(event, get_string("com_1"))
-    if not match:
+    if not b:
         b = await a.download_media()
     try:
         with open(b) as c:
