@@ -28,7 +28,7 @@ from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
-from . import eor, ultroid_cmd
+from . import eor, ultroid_cmd, get_string
 
 
 async def get_call(event):
@@ -50,7 +50,7 @@ def user_list(l, n):
 async def _(e):
     try:
         await e.client(stopvc(await get_call(e)))
-        await eor(e, "`Voice Chat Stopped...`")
+        await eor(e, get_string("vct_4"))
     except Exception as ex:
         await eor(e, f"`{ex}`")
 
@@ -60,7 +60,7 @@ async def _(e):
     groups_only=True,
 )
 async def _(e):
-    ok = await eor(e, "`Inviting Members to Voice Chat...`")
+    ok = await eor(e, get_string("vct_3"))
     users = []
     z = 0
     async for x in e.client.iter_participants(e.chat_id):
@@ -73,7 +73,7 @@ async def _(e):
             z += 6
         except BaseException:
             pass
-    await ok.edit(f"`Invited {z} users`")
+    await ok.edit(get_string("vct_5").format(z))
 
 
 @ultroid_cmd(
@@ -84,7 +84,7 @@ async def _(e):
 async def _(e):
     try:
         await e.client(startvc(e.chat_id))
-        await eor(e, "`Voice Chat Started...`")
+        await eor(e, get_string("vct_1"))
     except Exception as ex:
         await eor(e, f"`{ex}`")
 
@@ -97,9 +97,9 @@ async def _(e):
 async def _(e):
     title = e.pattern_match.group(1)
     if not title:
-        return await eor(e, "No input Found!", time=5)
+        return await eor(e, get_string("vct_6"), time=5)
     try:
         await e.client(settitle(call=await get_call(e), title=title.strip()))
-        await eor(e, "**Successfully Changed VC Title to** `{title}`")
+        await eor(e, get_string("vct_2").format(title))
     except Exception as ex:
         await eor(e, f"`{ex}`")
