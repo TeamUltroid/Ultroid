@@ -151,10 +151,10 @@ _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")
 async def help_func(ult):
     key, count = ult.data_match.group(1).decode("utf-8").split("_")
     if key == "VCBot" and HELP.get("VCBot") is None:
-        return await ult.answer("Voice Call is not Active!", alert=True)
+        return await ult.answer(get_string("help_12"), alert=True)
     elif key == "Addons" and HELP.get("Addons") is None:
         return await ult.answer(
-            f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True
+            get_string("help_13"), alert=True
         )
     if "|" in count:
         _, count = count.split("|")
@@ -223,7 +223,7 @@ async def _(event):
     if not updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
     if not INLINE_PIC:
-        return await event.answer(f"Do '{HNDLR}update'")
+        return await event.answer(f"Do '{HNDLR}update' to update..")
     repo = Repo.init()
     changelog, tl_chnglog = await gen_chlog(
         repo, f"HEAD..upstream/{repo.active_branch}"
