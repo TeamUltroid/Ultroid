@@ -24,7 +24,7 @@
 
 import re
 
-from . import Redis, eor, udB, ultroid_cmd, get_string
+from . import Redis, eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="setdb ?(.*)", fullsudo=True)
