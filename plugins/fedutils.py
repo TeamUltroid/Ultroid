@@ -52,7 +52,8 @@ async def _(event):
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit(get_string("sf_22"))
-
+    else:
+        return await msg.edit("`Reply to a message or give some input...`")
     if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
