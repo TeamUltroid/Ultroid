@@ -12,7 +12,7 @@ import re
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
-from telethon.errors.rpcerrorlist import MediaEmptyError
+from telethon.errors.rpcerrorlist import MediaEmptyError, FilePartLengthInvalidError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
@@ -233,7 +233,7 @@ async def _(event):
             attributes=attributes,
             thumb=thumb,
         )
-    except MediaEmptyError:
+    except (FilePartLengthInvalidError, MediaEmptyError):
         file = await asst.send_message(
             udB.get_key("LOG_CHANNEL"),
             text,
