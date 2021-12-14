@@ -58,8 +58,8 @@ from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
-from telethon.tl.types import ChatAdminRights
-
+from telethon.tl.types import ChatAdminRights, User
+from telethon.utils import get_display_name
 from . import (
     HNDLR,
     LOGS,
@@ -300,8 +300,10 @@ async def _(e):
         userid = e.chat_id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
+    peer = None
     try:
-        name = get_display_name(await e.client.get_entity(userid))
+        peer = await e.client.get_entity(userid)
+        name = get_display_name(peer)
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -319,7 +321,8 @@ async def _(e):
             except BaseException:
                 pass
     ungban(userid)
-    await e.client(UnblockRequest(int(userid)))
+    if isinstance(peer, User):
+        await e.client(UnblockRequest(int(userid)))
     await xx.edit(
         f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
     )
@@ -350,8 +353,10 @@ async def _(e):
             pass
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
+    user = None
     try:
-        name = (await e.client.get_entity(userid)).first_name
+        user = await e.client.get_entity(userid)
+        name = get_display_name(user)
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -379,7 +384,8 @@ async def _(e):
             except BaseException:
                 pass
     gban(userid, reason)
-    await e.client(BlockRequest(int(userid)))
+    if isinstance(user, User):
+        await e.client(BlockRequest(int(userid)))
     gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
     if reason:
         gb_msg += f"\n**Reason** - {reason}"
