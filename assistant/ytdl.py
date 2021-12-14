@@ -12,7 +12,7 @@ import re
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
-from telethon.errors.rpcerrorlist import MediaEmptyError, FilePartLengthInvalidError
+from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 from youtubesearchpython import VideosSearch
