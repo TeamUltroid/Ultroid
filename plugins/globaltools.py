@@ -73,6 +73,7 @@ from . import (
     get_user_id,
     ultroid_bot,
     ultroid_cmd,
+    inline_mention
 )
 from ._inline import something
 
