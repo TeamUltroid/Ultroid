@@ -641,7 +641,7 @@ async def list_gengbanned(event):
             name = await ultroid_bot.get_entity(int(i))
         except BaseException:
             name = i
-        msg += f"<strong>User</strong>: {inline_mention(name, html=True)}</a>\n"
+        msg += f"<strong>User</strong>: {inline_mention(name, html=True)}\n"
         reason = users[i]
         msg += f"<strong>Reason</strong>: {reason}\n\n" if reason is not None else "\n"
     gbanned_users = f"<strong>List of users GBanned by {OWNER_NAME}</strong>:\n\n{msg}"
