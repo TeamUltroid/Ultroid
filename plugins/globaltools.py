@@ -71,9 +71,9 @@ from . import (
     eor,
     get_string,
     get_user_id,
+    inline_mention,
     ultroid_bot,
     ultroid_cmd,
-    inline_mention
 )
 from ._inline import something
 
