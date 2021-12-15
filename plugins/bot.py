@@ -161,13 +161,16 @@ async def lol(ult):
                 link_preview=False,
                 buttons=buttons if inline else None,
             )
-            return await ult.delete()
+            try:
+                await ult.delete()
+            except BaseException:
+                pass
         except ChatSendMediaForbiddenError:
             pass
         except BaseException as er:
             LOGS.exception(er)
             try:
-                await ult.reply(file)
+                await ult.reply(file=pic)
                 await ult.reply(
                     als,
                     parse_mode=parse,
