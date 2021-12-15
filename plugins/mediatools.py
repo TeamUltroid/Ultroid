@@ -116,4 +116,4 @@ async def rotate_(ult):
             ult.chat_id, file=file, video_note=bool(reply.video_note), reply_to=reply.id
         )
     os.remove(media)
-    await ult.try_delete()
+    await msg.try_delete()
