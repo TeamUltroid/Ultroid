@@ -55,7 +55,7 @@ from pyUltroid.dB.gcast_blacklist_db import (
     rem_gblacklist,
 )
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
-from telethon.errors.rpcerrorlist import FloodWaitError
+from telethon.errors.rpcerrorlist import FloodWaitError, ChatAdminRequiredError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights, User
@@ -329,8 +329,18 @@ async def _(e):
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=True)
                 chats += 1
-            except BaseException:
+            except FloodWaitError as fw:
+                LOGS.info(f"[FLOOD_WAIT_ERROR] : on Ungban\nSleeping for {fw.seconds+10}")
+                await asyncio.sleep(fw.seconds+10)
+                try:
+                    await e.client.edit_permissions(ggban.id, userid, view_messages=True)
+                    chats += 1
+                except BaseException as er:
+                    LOGS.exception(er)
+            except ChatAdminRequiredError:
                 pass
+            except BaseException as er:
+                LOGS.exception(er)
     ungban(userid)
     if isinstance(peer, User):
         await e.client(UnblockRequest(int(userid)))
@@ -392,8 +402,18 @@ async def _(e):
             try:
                 await e.client.edit_permissions(ggban.id, userid, view_messages=False)
                 chats += 1
-            except BaseException:
+            except FloodWaitError as fw:
+                LOGS.info(f"[FLOOD_WAIT_ERROR] : on GBAN Command\nSleeping for {fw.seconds+10}")
+                await asyncio.sleep(fw.seconds+10)
+                try:
+                    await e.client.edit_permissions(ggban.id, userid, view_messages=False)
+                    chats += 1
+                except BaseException as er:
+                    LOGS.exception(er)
+            except ChatAdminRequiredError:
                 pass
+            except BaseException as er:
+                LOGS.exception(er)
     gban(userid, reason)
     if isinstance(user, User):
         await e.client(BlockRequest(int(userid)))
