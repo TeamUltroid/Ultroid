@@ -35,7 +35,7 @@ async def join_(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat, event)
@@ -52,7 +52,7 @@ async def leaver(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -61,7 +61,7 @@ async def leaver(event):
         del CLIENTS[chat]
     if VIDEO_ON.get(chat):
         del VIDEO_ON[chat]
-    await eor(event, get_string("vcbot_1"))
+    await event.eor(get_string("vcbot_1"))
 
 
 @vc_asst("rejoin")
@@ -73,21 +73,21 @@ async def rejoiner(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
-        return await eor(event, get_string("vcbot_6"))
-    await eor(event, get_string("vcbot_5"))
+        return await event.eor(get_string("vcbot_6"))
+    await event.eor(get_string("vcbot_5"))
 
 
 @vc_asst("volume")
 async def volume_setter(event):
     if len(event.text.split()) <= 1:
-        return await eor(event, get_string("vcbot_4"))
+        return await event.eor(get_string("vcbot_4"))
     inp = event.text.split()
     if inp[1].startswith("@"):
         chat = inp[1]
@@ -95,14 +95,14 @@ async def volume_setter(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     elif inp[1].startswith("-"):
         chat = int(inp[1])
         vol = int(inp[2])
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     elif inp[1].isdigit() and len(inp) == 2:
         vol = int(inp[1])
         chat = event.chat_id
@@ -113,4 +113,4 @@ async def volume_setter(event):
             vol = 200
         elif vol < 1:
             vol = 1
-        return await eor(event, get_string("vcbot_3").format(vol))
+        return await event.eor(get_string("vcbot_3").format(vol))

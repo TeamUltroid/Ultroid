@@ -36,7 +36,7 @@ from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 )
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
-    x = await eor(event, get_string("bd_1"))
+    x = await event.eor(get_string("bd_1"))
     new = 0
     if msgg == "all":
         await x.edit(get_string("bd_2"))
@@ -95,7 +95,7 @@ async def broadcast_adder(event):
 )
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
         udB.del_key("BROADCAST")
@@ -121,7 +121,7 @@ async def broadcast_remover(event):
     pattern="listchannels$",
 )
 async def list_all(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_channels()
     num = get_no_channels()
     if num == 0:
@@ -156,10 +156,10 @@ async def list_all(event):
 )
 async def forw(event):
     if not event.is_reply:
-        return await eor(event, get_string("ex_1"))
+        return await event.eor(get_string("ex_1"))
     ultroid_bot = event.client
     channels = get_channels()
-    x = await eor(event, "Sending...")
+    x = await event.eor("Sending...")
     if get_no_channels() == 0:
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
@@ -198,7 +198,7 @@ async def forw(event):
     allow_sudo=False,
 )
 async def sending(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if not event.is_reply:
         return await x.edit(get_string("ex_1"))
     channels = get_channels()

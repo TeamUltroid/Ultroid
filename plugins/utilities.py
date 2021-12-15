@@ -114,7 +114,7 @@ async def date(event):
     y = dt.now().year
     d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
-    ultroid = await eor(event, f"`{k}\n\n{d}`")
+    ultroid = await event.eor(f"`{k}\n\n{d}`")
 
 
 @ultroid_cmd(
@@ -124,11 +124,11 @@ async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
     r = result.chats
     if not r:
-        return await eor(event, "`No username Reserved`")
+        return await event.eor("`No username Reserved`")
     output_str = "".join(
         f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in r
     )
-    await eor(event, output_str)
+    await event.eor(output_str)
 
 
 @ultroid_cmd(
@@ -137,7 +137,7 @@ async def _(event):
 async def stats(
     event: NewMessage.Event,
 ):
-    ok = await eor(event, "`Collecting stats...`")
+    ok = await event.eor("`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
     bots = 0
@@ -208,7 +208,7 @@ async def stats(
 
 @ultroid_cmd(pattern="paste( (.*)|$)", manager=True, allow_all=True)
 async def _(event):
-    xx = await eor(event, "` 《 Pasting... 》 `")
+    xx = await event.eor("` 《 Pasting... 》 `")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     if not (input_str or event.is_reply):
         return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
@@ -263,13 +263,13 @@ async def _(event):
         try:
             user = await get_user_id(match)
         except Exception as er:
-            return await eor(event, str(er))
+            return await event.eor(str(er))
     elif event.is_reply:
         rpl = await event.get_reply_message()
         user = rpl.sender_id
     else:
         user = event.chat_id
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     try:
         _ = await event.client.get_entity(user)
     except Exception as er:
@@ -282,7 +282,7 @@ async def _(event):
                 capt += "\n•<b> Is Gbanned:</b> <code>True</code>"
             await eor(xx, capt, parse_mode="html")
         except Exception as er:
-            await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
+            await event.eor("**ERROR ON CHATINFO**\n" + str(er))
         return
     try:
         full_user = (await event.client(GetFullUserRequest(user))).full_user
@@ -403,8 +403,8 @@ async def abs_rmbg(event):
     dl = await event.client.download_media(reply.media)
     if not dl.endswith(("webp", "jpg", "png", "jpeg")):
         os.remove(dl)
-        return await eor(event, get_string("com_4"))
-    xx = await eor(event, "`Sending to remove.bg`")
+        return await event.eor(get_string("com_4"))
+    xx = await event.eor("`Sending to remove.bg`")
     dn, out = await ReTrieveFile(dl)
     os.remove(dl)
     if not dn:
@@ -437,7 +437,7 @@ async def telegraphcmd(event):
     match = event.pattern_match.group(1) or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
-        return await eor(event, "`Reply to Message.`")
+        return await event.eor("`Reply to Message.`")
     if not reply.media and reply.message:
         content = reply.message
     else:
@@ -460,7 +460,7 @@ async def telegraphcmd(event):
             except Exception as e:
                 amsg = f"Error : {e}"
             os.remove(getit)
-            return await eor(event, amsg)
+            return await event.eor(amsg)
         with open(getit) as ab:
             content = ab.read()
         os.remove(getit)
@@ -493,7 +493,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await eor(event, f"```{the_real_message}```")
+        await event.eor(f"```{the_real_message}```")
 
 
 @ultroid_cmd(pattern="suggest", manager=True)
@@ -576,7 +576,7 @@ async def ipinfo(event):
     except BaseException:
         err = det["error"]["title"]
         msg = det["error"]["message"]
-        await eor(event, f"ERROR:\n{err}\n{msg}", time=5)
+        await event.eor(f"ERROR:\n{err}\n{msg}", time=5)
 
 
 @ultroid_cmd(
@@ -585,9 +585,9 @@ async def ipinfo(event):
 async def copp(event):
     msg = await event.get_reply_message()
     if not msg:
-        return await eor(event, f"Use `{HNDLR}cpy` as reply to a message!", time=5)
+        return await event.eor(f"Use `{HNDLR}cpy` as reply to a message!", time=5)
     _copied_msg["CLIPBOARD"] = msg
-    await eor(event, f"Copied. Use `{HNDLR}pst` to paste!", time=10)
+    await event.eor(f"Copied. Use `{HNDLR}pst` to paste!", time=10)
 
 
 @asst_cmd(pattern="pst$")
@@ -611,7 +611,7 @@ async def toothpaste(event):
             f"Nothing was copied! Use `{HNDLR}cpy` as reply to a message first!",
         )
     except Exception as ex:
-        return await eor(event, str(ex), time=5)
+        return await event.eor(str(ex), time=5)
     await event.delete()
 
 
@@ -624,7 +624,7 @@ async def thumb_dl(event):
         )
     if not reply.file.media.thumbs:
         return await eod(event, "`Replied file has no thumbnail.`")
-    await eor(event, get_string("com_1"))
+    await event.eor(get_string("com_1"))
     x = await event.get_reply_message()
     m = await x.download_media(thumb=-1)
     await event.reply(file=m)

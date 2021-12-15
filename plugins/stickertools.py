@@ -59,10 +59,10 @@ from . import (
     pattern="convert ?(.*)",
 )
 async def uconverter(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
     if not (a and a.media and "animated" in mediainfo(a.media)):
-        return await eor(event, get_string("sts_2"))
+        return await event.eor(get_string("sts_2"))
     input_ = event.pattern_match.group(1)
     b = await a.download_media("resources/downloads/")
     if "gif" in input_:
@@ -341,7 +341,7 @@ async def hehe(args):
 )
 async def ultdround(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("sts_10"))
         return
@@ -384,9 +384,9 @@ async def ultdround(event):
 async def ultdestroy(event):
     ult = await event.get_reply_message()
     if not (ult and ult.media and "animated" in mediainfo(ult.media)):
-        return await eor(event, get_string("sts_2"))
+        return await event.eor(get_string("sts_2"))
     await event.client.download_media(ult, "ultroid.tgs")
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     await bash("lottie_convert.py ultroid.tgs json.json")
     with open("json.json") as json:
         jsn = json.read()
@@ -423,9 +423,9 @@ async def ultdestroy(event):
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("sts_10"))
+        await event.eor(get_string("sts_10"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):

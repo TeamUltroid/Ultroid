@@ -51,7 +51,7 @@ async def gdown(event):
     filename = None
     if " | " in match:
         filename = match.split(" | ")[1].strip()
-    eve = await eor(event, get_string("com_1"))
+    eve = await event.eor(get_string("com_1"))
     _start = time.time()
     status, response = await GDrive._download_file(eve, match, filename)
     if not status:
@@ -67,9 +67,9 @@ async def gdown(event):
 )
 async def files(event):
     if not os.path.exists(GDrive.token_file):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username))
+        return await event.eor(get_string("gdrive_6").format(asst.me.username))
     files = GDrive._list_files
-    eve = await eor(event, get_string("com_1"))
+    eve = await event.eor(get_string("com_1"))
     msg = f"{len(files.keys())} files found in gdrive.\n\n"
     if files:
         for _ in files:
@@ -108,7 +108,7 @@ async def _(event):
     input_file = event.pattern_match.group(1) or await event.get_reply_message()
     if not input_file:
         return await eod(event, "`Reply to file or give its location.`")
-    mone = await eor(event, get_string("com_1"))
+    mone = await event.eor(get_string("com_1"))
     if isinstance(input_file, Message):
         location = "resources/downloads"
         filename = input_file.file.name
@@ -161,10 +161,10 @@ async def _(event):
 )
 async def sch(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username), time=5)
+        return await event.eor(get_string("gdrive_6").format(asst.me.username), time=5)
     http = authorize(TOKEN_FILE, None)
     input_str = event.pattern_match.group(1).strip()
-    a = await eor(event, f"Searching for {input_str} in G-Drive.")
+    a = await event.eor(f"Searching for {input_str} in G-Drive.")
     if Redis("GDRIVE_FOLDER_ID") is not None:
         query = "'{}' in parents and (title contains '{}')".format(
             Redis("GDRIVE_FOLDER_ID"),
@@ -185,13 +185,13 @@ async def sch(event):
 )
 async def _(event):
     if not os.path.exists(TOKEN_FILE):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username), time=5)
+        return await event.eor(get_string("gdrive_6").format(asst.me.username), time=5)
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(input_str):
-        return await eor(event, f"Directory {input_str} does not seem to exist", time=5)
+        return await event.eor(f"Directory {input_str} does not seem to exist", time=5)
 
     http = authorize(TOKEN_FILE, None)
-    a = await eor(event, f"Uploading `{input_str}` to G-Drive...")
+    a = await event.eor(f"Uploading `{input_str}` to G-Drive...")
     dir_id = await create_directory(
         http,
         os.path.basename(os.path.abspath(input_str)),
@@ -209,7 +209,7 @@ async def _(event):
 )
 async def _(event):
     if not os.path.exists(GDrive.token_file):
-        return await eor(event, get_string("gdrive_6").format(asst.me.username))
+        return await event.eor(get_string("gdrive_6").format(asst.me.username))
     if GDrive.folder_id:
         await eod(
             event,

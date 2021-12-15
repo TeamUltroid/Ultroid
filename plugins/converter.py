@@ -67,11 +67,11 @@ async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        return await eor(event, get_string("cvt_1"))
+        return await event.eor(get_string("cvt_1"))
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, get_string("cvt_2"))
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_2"))
+    xx = await event.eor(get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
@@ -111,9 +111,9 @@ async def imak(event):
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
     file = "ult.png"
     if image.endswith((".webp", ".png")):
@@ -137,9 +137,9 @@ async def imak(event):
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
@@ -161,8 +161,8 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not (input_str and event.is_reply):
-        return await eor(event, get_string("cvt_1"), time=5)
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_1"), time=5)
+    xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
     if not a.message:
         return await xx.edit(get_string("ex_1"))
@@ -181,8 +181,8 @@ async def _(event):
     a = await event.get_reply_message()
     b = event.pattern_match.group(1)
     if not ((a and a.media) or (b and os.path.exists(b))):
-        return await eor(event, get_string("cvt_7"), time=5)
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_7"), time=5)
+    xx = await event.eor(get_string("com_1"))
     rem = None
     if not b:
         b = await a.download_media()

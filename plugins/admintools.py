@@ -394,17 +394,17 @@ async def djshsh(event):
         return
     msg_id = FChat.full_chat.pinned_msg_id
     if not msg_id:
-        return await eor(event, get_string("pinned_1"))
+        return await event.eor(get_string("pinned_1"))
     msg = await event.client.get_messages(chat.id, ids=msg_id)
     if msg:
-        await eor(event, get_string("pinned_2").format(msg.message_link))
+        await event.eor(get_string("pinned_2").format(msg.message_link))
 
 
 @ultroid_cmd(
     pattern="listpinned$",
 )
 async def get_all_pinned(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
     chat_name = (await event.get_chat()).title
     a = ""

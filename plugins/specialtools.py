@@ -147,7 +147,7 @@ async def adaudroid(e):
 )
 async def hbd(event):
     if not event.pattern_match.group(1):
-        return await eor(event, get_string("spcltool_6"))
+        return await event.eor(get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
         nam = await kk.get_sender()
@@ -168,7 +168,7 @@ async def hbd(event):
     try:
         jn = dt.strptime(paida, "%d/%m/%Y")
     except BaseException:
-        return await eor(event, get_string("spcltool_6"))
+        return await event.eor(get_string("spcltool_6"))
     jnm = zn.localize(jn)
     zinda = abhi - jnm
     barsh = (zinda.total_seconds()) / (365.242 * 24 * 3600)
@@ -262,8 +262,8 @@ Zodiac -: {sign}
 async def _(event):
     x = event.pattern_match.group(1)
     if not x:
-        return await eor(event, "`Give something to search`")
-    uu = await eor(event, get_string("com_1"))
+        return await event.eor("`Give something to search`")
+    uu = await event.eor(get_string("com_1"))
     z = bs(
         await async_searcher("https://combot.org/telegram/stickers?q=" + x),
         "html.parser",
@@ -285,8 +285,8 @@ async def _(event):
 async def wall(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, "`Give me something to search..`")
-    nn = await eor(event, get_string("com_1"))
+        return await event.eor("`Give me something to search..`")
+    nn = await event.eor(get_string("com_1"))
     query = f"hd {inp}"
     gi = googleimagesdownload()
     args = {
@@ -308,8 +308,8 @@ async def quott_(event):
         return
     match = event.pattern_match.group(2)
     if not event.is_reply:
-        return await eor(event, "`Reply to Message..`")
-    msg = await eor(event, get_string("com_1"))
+        return await event.eor("`Reply to Message..`")
+    msg = await event.eor(get_string("com_1"))
     reply_ = await event.get_reply_message()
     replied_to = None
     if match:

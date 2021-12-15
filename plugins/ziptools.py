@@ -43,9 +43,9 @@ async def zipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, get_string("zip_1"))
+        await event.eor(get_string("zip_1"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
@@ -80,9 +80,9 @@ async def unzipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, get_string("zip_1"))
+        await event.eor(get_string("zip_1"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if reply.media:
         if not hasattr(reply.media, "document"):
             return await xx.edit(get_string("zip_3"))
@@ -117,9 +117,9 @@ async def azipp(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        await eor(event, get_string("zip_1"))
+        await event.eor(get_string("zip_1"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if not os.path.isdir("zip"):
         os.mkdir("zip")
     if reply.media:
@@ -143,8 +143,8 @@ async def azipp(event):
 @ultroid_cmd(pattern="dozip ?(.*)")
 async def do_zip(event):
     if not os.path.isdir("zip"):
-        return await eor(event, get_string("zip_2").format(HNDLR))
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("zip_2").format(HNDLR))
+    xx = await event.eor(get_string("com_1"))
     if event.pattern_match.group(1):
         await bash(
             f"zip -r --password {event.pattern_match.group(1)} ultroid.zip zip/*"

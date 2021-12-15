@@ -50,9 +50,9 @@ async def pdfseimg(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
     if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = "hehe.pdf"
@@ -115,9 +115,9 @@ async def pdfsetxt(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = ok.file.name
@@ -176,14 +176,14 @@ async def pdfsetxt(event):
 async def imgscan(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
     ultt = await ok.download_media()
     if not ultt.endswith(("png", "jpg", "jpeg", "webp")):
-        await eor(event, "`Reply to a Image only...`")
+        await event.eor("`Reply to a Image only...`")
         os.remove(ultt)
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = cv2.imread(ultt)
     original_image = image.copy()
     ratio = image.shape[0] / 500.0
@@ -243,7 +243,7 @@ async def savepdf(event):
         return
     ultt = await ok.download_media()
     if ultt.endswith(("png", "jpg", "jpeg", "webp")):
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
         image = cv2.imread(ultt)
         original_image = image.copy()
         ratio = image.shape[0] / 500.0
@@ -296,7 +296,7 @@ async def savepdf(event):
             f"Done, Now Reply Another Image/pdf if completed then use {HNDLR}pdsend to merge nd send all as pdf",
         )
     else:
-        await eor(event, "`Reply to a Image/pdf only...`")
+        await event.eor("`Reply to a Image/pdf only...`")
     os.remove(ultt)
 
 

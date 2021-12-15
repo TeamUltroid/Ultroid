@@ -539,9 +539,9 @@ async def blockpm(block):
 async def unblockpm(event):
     match = event.pattern_match.group(1) or (await event.get_reply_message()).sender_id
     if not match:
-        return await eor(event, NO_REPLY + "`Or give it's username/id`", time=5)
+        return await event.eor(NO_REPLY + "`Or give it's username/id`", time=5)
     if match == "all":
-        msg = await eor(event, get_string("com_1"))
+        msg = await event.eor(get_string("com_1"))
         u_s = await event.client(GetBlockedRequest(0, 0))
         count = len(u_s.users)
         if not count:
@@ -563,9 +563,9 @@ async def unblockpm(event):
     try:
         await event.client(UnblockRequest(user))
         aname = await event.client.get_entity(user)
-        await eor(event, f"{inline_mention(aname)} [`user`] `has been UnBlocked!`")
+        await event.eor(f"{inline_mention(aname)} [`user`] `has been UnBlocked!`")
     except Exception as et:
-        return await eor(event, f"ERROR - {et}")
+        return await event.eor(f"ERROR - {et}")
     try:
         await asst.edit_message(
             udB.get_key("LOG_CHANNEL"),
@@ -589,7 +589,7 @@ async def unblockpm(event):
 
 @ultroid_cmd(pattern="listapproved$", owner=True)
 async def list_approved(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     all = get_approved()
     if not all:
         return await eor(xx, "`You haven't approved anyone yet!`", time=5)

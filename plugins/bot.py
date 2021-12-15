@@ -189,7 +189,7 @@ async def lol(ult):
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
     start = time.time()
-    x = await eor(event, "Pong !")
+    x = await event.eor("Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
@@ -241,7 +241,7 @@ async def _(event):
     if opt == "heroku":
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
-        event = await eor(event, get_string("com_1"))
+        event = await event.eor(get_string("com_1"))
         code = open(file, "r").read()[-2500:]
         file = await Carbon(
             file_name="ultroid-logs",
@@ -251,7 +251,7 @@ async def _(event):
         await event.reply("**Ultroid Logs.**", file=file)
     elif opt == "open":
         file = open("ultroid.log", "r").read()[-4000:]
-        return await eor(event, f"`{file}`")
+        return await event.eor(f"`{file}`")
     else:
         await def_logs(event, file)
     await event.try_delete()

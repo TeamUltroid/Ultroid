@@ -36,7 +36,7 @@ bot = "@MissRose_bot"
     pattern="superfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, get_string("sf_1"))
+    msg = await event.eor(get_string("sf_1"))
     inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         FBAN = (await event.get_reply_message()).sender_id
@@ -151,7 +151,7 @@ async def _(event):
     pattern="superunfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, get_string("sf_15"))
+    msg = await event.eor(get_string("sf_15"))
     fedList = []
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -285,7 +285,7 @@ async def _(event):
     pattern="fstat ?(.*)",
 )
 async def _(event):
-    ok = await eor(event, "`Checking...`")
+    ok = await event.eor("`Checking...`")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         sysarg = str(previous_message.sender_id)

@@ -51,7 +51,7 @@ from . import (
 async def gitsearch(event):
     usrname = event.pattern_match.group(1)
     if not usrname:
-        return await eor(event, get_string("srch_1"))
+        return await event.eor(get_string("srch_1"))
     url = f"https://api.github.com/users/{usrname}"
     ult = await async_searcher(url, re_json=True)
     try:
@@ -68,7 +68,7 @@ async def gitsearch(event):
         ufollowers = ult["followers"]
         ufollowing = ult["following"]
     except BaseException:
-        return await eor(event, get_string("srch_2"))
+        return await event.eor(get_string("srch_2"))
     fullusr = f"""
 **[GITHUB]({ulink})**
 **Name** - {uacc}
@@ -94,7 +94,7 @@ async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
         return await eod(event, get_string("autopic_1"))
-    x = await eor(event, get_string("com_2"))
+    x = await event.eor(get_string("com_2"))
     gs = await google_search(inp)
     if not gs:
         return await eod(x, get_string("autopic_2").format(inp))
@@ -112,8 +112,8 @@ async def google(event):
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
-        return await eor(event, get_string("autopic_1"))
-    nn = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("autopic_1"))
+    nn = await event.eor(get_string("com_1"))
     lmt = 5
     if ";" in query:
         try:
@@ -142,8 +142,8 @@ async def goimg(event):
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await eor(event, "`Reply to an Image`")
-    ult = await eor(event, get_string("com_1"))
+        return await event.eor("`Reply to an Image`")
+    ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
     img = Image.open(dl)
     x, y = img.size

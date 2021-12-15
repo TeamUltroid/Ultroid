@@ -63,8 +63,8 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(event, get_string("devs_1"), time=10)
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("devs_1"), time=10)
+    xx = await event.eor(get_string("com_1"))
     reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
@@ -123,17 +123,17 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(event, get_string("devs_2"), time=5)
+        return await event.eor(get_string("devs_2"), time=5)
     silent = False
     if cmd.split()[0] in ["-s", "--silent"]:
         try:
             cmd = cmd.split(maxsplit=1)[1]
         except IndexError:
-            return await eor(event, "->> Wrong Format <<-")
+            return await event.eor("->> Wrong Format <<-")
         await event.delete()
         silent = True
     else:
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
     if black:
         try:
             cmd = black.format_str(cmd, mode=black.Mode())

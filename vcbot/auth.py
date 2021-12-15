@@ -62,13 +62,13 @@ async def auth_group(event):
     key = udB.get_key("VC_AUTH_GROUPS") or {}
     gc = key.get(chat)
     if not gc:
-        return await eor(event, get_string("vcbot_16"))
+        return await event.eor(get_string("vcbot_16"))
     del key[chat]
     if key:
         udB.set_key("VC_AUTH_GROUPS", key)
     else:
         udB.del_key("VC_AUTH_GROUPS")
-    await eor(event, get_string("vcbot_10"))
+    await event.eor(get_string("vcbot_10"))
 
 
 @vc_asst("listauth", from_users=owner_and_sudos(), vc_auth=False)

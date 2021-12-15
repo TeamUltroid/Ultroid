@@ -35,7 +35,7 @@ async def im_lonely_chat_with_me(event):
         except IndexError:
             return await eod(event, get_string("tban_1"), time=10)
     reply_ = await get_chatbot_reply(message=message)
-    await eor(event, reply_)
+    await event.eor(reply_)
 
 
 @ultroid_cmd(pattern="addai")
@@ -53,7 +53,7 @@ async def lister(event):
     key = udB.get_key("CHATBOT_USERS") or {}
     users = key.get(event.chat_id, [])
     if not users:
-        return await eor(event, get_string("chab_2"), time=5)
+        return await event.eor(get_string("chab_2"), time=5)
     msg = "**Total List Of AI Enabled Users In This Chat :**\n\n"
     for i in users:
         try:
@@ -62,7 +62,7 @@ async def lister(event):
         except BaseException:
             user = f"`{i}`"
         msg += "• {}\n".format(user)
-    await eor(event, msg, link_preview=False)
+    await event.eor(msg, link_preview=False)
 
 
 async def chat_bot_fn(event, type_):
@@ -96,4 +96,4 @@ async def chat_bot_fn(event, type_):
             if chat in key and not key[chat]:
                 del key[chat]
     udB.set_key("CHATBOT_USERS", str(key))
-    await eor(event, f"**ChatBot:**\n{type_}ed {inline_mention(user_)}")
+    await event.eor(f"**ChatBot:**\n{type_}ed {inline_mention(user_)}")

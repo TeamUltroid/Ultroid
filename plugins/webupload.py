@@ -23,7 +23,7 @@ from . import HNDLR, asst, downloader, eor, get_string, ultroid_cmd
     pattern="webupload",
 )
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     vv = event.text.split(" ", maxsplit=1)
     try:
         file_name = vv[1]

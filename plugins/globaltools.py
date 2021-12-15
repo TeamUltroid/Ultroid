@@ -421,7 +421,7 @@ async def gcast(event):
             event, "`Give some text to Globally Broadcast or reply a message..`"
         )
 
-    kk = await eor(event, "`Globally Broadcasting Msg...`")
+    kk = await event.eor("`Globally Broadcasting Msg...`")
     er = 0
     done = 0
     err = ""
@@ -505,7 +505,7 @@ async def gucast(event):
         return await eor(
             event, "`Give some text to Globally Broadcast or reply a message..`"
         )
-    kk = await eor(event, "`Globally Broadcasting Msg...`")
+    kk = await event.eor("`Globally Broadcasting Msg...`")
     er = 0
     done = 0
     if _dialogs:
@@ -641,7 +641,7 @@ async def _(e):
 )
 async def list_gengbanned(event):
     users = list_gbanned()
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     msg = ""
     if not users:
         return await x.edit("`You haven't GBanned anyone!`")
@@ -716,11 +716,11 @@ async def gblacker(event, type_):
         try:
             chat_id = (await event.client.get_entity(chat_id)).id
         except Exception as e:
-            return await eor(event, "**ERROR**\n`{}`".format(str(e)))
+            return await event.eor("**ERROR**\n`{}`".format(str(e)))
     except IndexError:
         chat_id = event.chat_id
     if type_ == "add":
         add_gblacklist(chat_id)
     elif type_ == "remove":
         rem_gblacklist(chat_id)
-    await eor(event, "Global Broadcasts: \n{}ed {}".format(type_, chat_id))
+    await event.eor("Global Broadcasts: \n{}ed {}".format(type_, chat_id))

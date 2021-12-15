@@ -35,12 +35,12 @@ async def mute(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_is_mute(True)
-    await eor(event, get_string("vcbot_12"))
+    await event.eor(get_string("vcbot_12"))
 
 
 @vc_asst("unmutevc")
@@ -52,12 +52,12 @@ async def unmute(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_is_mute(False)
-    await eor(event, "`UnMuted playback in this chat.`")
+    await event.eor("`UnMuted playback in this chat.`")
 
 
 @vc_asst("pausevc")
@@ -69,12 +69,12 @@ async def pauser(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_pause(True)
-    await eor(event, get_string("vcbot_14"))
+    await event.eor(get_string("vcbot_14"))
 
 
 @vc_asst("resumevc")
@@ -86,12 +86,12 @@ async def resumer(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     await ultSongs.group_call.set_pause(False)
-    await eor(event, get_string("vcbot_13"))
+    await event.eor(get_string("vcbot_13"))
 
 
 @vc_asst("replay")
@@ -103,9 +103,9 @@ async def replayer(event):
         try:
             chat = int("-100" + str((await vcClient.get_entity(chat)).id))
         except Exception as e:
-            return await eor(event, "**ERROR:**\n{}".format(str(e)))
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     ultSongs.group_call.restart_playout()
-    await eor(event, "`Re-playing the current song.`")
+    await event.eor("`Re-playing the current song.`")

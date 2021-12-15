@@ -53,7 +53,7 @@ async def watcher(event):
     pattern="dmute ?(.*)",
 )
 async def startmute(event):
-    xx = await eor(event, "`Muting...`")
+    xx = await event.eor("`Muting...`")
     input = event.pattern_match.group(1)
     private = bool(event.is_private)
     if input:
@@ -86,7 +86,7 @@ async def startmute(event):
     manager=True,
 )
 async def endmute(event):
-    xx = await eor(event, "`Unmuting...`")
+    xx = await event.eor("`Unmuting...`")
     input = event.pattern_match.group(1)
     private = bool(event.is_private)
     if input:

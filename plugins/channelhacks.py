@@ -121,7 +121,7 @@ async def source(e):
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
         udB.del_key("CH_SOURCE")
@@ -147,7 +147,7 @@ async def dd(event):
 
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
@@ -199,7 +199,7 @@ async def destination(e):
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
         udB.del_key("CH_DESTINATION")
@@ -226,7 +226,7 @@ async def dd(event):
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     ultroid_bot = event.client
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_destinations()
     num = get_no_destinations()
     if not num:

@@ -34,7 +34,7 @@ from . import (
 
 @ultroid_cmd(pattern="logo ?(.*)")
 async def logo_gen(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     name = event.pattern_match.group(1)
     if not name:
         await eor(xx, "`Give a name too!`", time=5)

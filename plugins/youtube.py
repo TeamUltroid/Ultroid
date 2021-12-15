@@ -29,7 +29,7 @@ from . import eor, get_string, requests, ultroid_cmd
 )
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd = {
             "format": "bestaudio",

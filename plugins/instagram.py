@@ -156,12 +156,12 @@ async def soon_(e):
 async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:
-        return await eor(event, "`Please Fill Instagram Credentials to Use This...`")
-    msg = await eor(event, get_string("com_1"))
+        return await event.eor("`Please Fill Instagram Credentials to Use This...`")
+    msg = await event.eor(get_string("com_1"))
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
     if not (replied and (replied.photo or replied.video)):
-        return await eor(event, "`Reply to Photo Or Video...`")
+        return await event.eor("`Reply to Photo Or Video...`")
     caption = (
         event.pattern_match.group(2) + "\n\n• By #Ultroid"
         or replied.message + "\n\n• By #Ultroid"

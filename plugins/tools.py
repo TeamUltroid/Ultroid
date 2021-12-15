@@ -79,9 +79,9 @@ async def _(event):
         tt = translator.translate(text, lang_tgt=lan)
         fr = translator.detect(text)
         output_str = f"**TRANSLATED** from {fr} to {lan}\n{tt}"
-        await eor(event, output_str)
+        await event.eor(output_str)
     except Exception as exc:
-        await eor(event, str(exc), time=5)
+        await event.eor(str(exc), time=5)
 
 
 @ultroid_cmd(
@@ -408,7 +408,7 @@ async def lastname(steal):
 
 @ultroid_cmd(pattern="webshot ?(.*)")
 async def webss(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     xurl = event.pattern_match.group(1)
     if not xurl:
         return await eor(xx, get_string("wbs_1"), time=5)

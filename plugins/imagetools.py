@@ -113,8 +113,8 @@ async def sketch(e):
 async def _(event):
     reply = await event.get_reply_message()
     if not reply.media:
-        return await eor(event, "`Reply To a Black nd White Image`")
-    xx = await eor(event, "`Coloring image 🎨🖌️...`")
+        return await event.eor("`Reply To a Black nd White Image`")
+    xx = await event.eor("`Coloring image 🎨🖌️...`")
     image = await reply.download_media()
     img = cv2.VideoCapture(image)
     ret, frame = img.read()
@@ -145,11 +145,11 @@ async def _(event):
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        xx = await eor(event, get_string("sts_9"))
+        xx = await event.eor(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -161,7 +161,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -187,11 +187,11 @@ async def ultd(event):
 async def ultd(event):
     ureply = await event.get_reply_message()
     if not (ureply and (ureply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
-        xx = await eor(event, get_string("sts_9"))
+        xx = await event.eor(get_string("sts_9"))
         cmd = ["lottie_convert.py", ultt, "ult.png"]
         file = "ult.png"
         process = await asyncio.create_subprocess_exec(
@@ -203,7 +203,7 @@ async def ultd(event):
         stderr.decode().strip()
         stdout.decode().strip()
     else:
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
@@ -228,7 +228,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -271,7 +271,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -315,7 +315,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -360,7 +360,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -407,7 +407,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -467,7 +467,7 @@ async def ultd(event):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -532,7 +532,7 @@ async def sampl(ult):
 )
 async def ultd(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, "`...`")
+    xx = await event.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return
@@ -584,7 +584,7 @@ async def ultd(event):
 async def ok(event):
     hm = await event.get_reply_message()
     if not (hm and (hm.photo or hm.sticker)):
-        return await eor(event, "`Reply to Sticker or Photo..`")
+        return await event.eor("`Reply to Sticker or Photo..`")
     col = event.pattern_match.group(1)
     wh = 20
     if not col:
@@ -597,7 +597,7 @@ async def ok(event):
                 col = col_[0]
             col = [int(col) for col in col.split(",")[:2]]
         except ValueError:
-            return await eor(event, "`Not a Valid Input...`")
+            return await event.eor("`Not a Valid Input...`")
     okla = await hm.download_media()
     img1 = cv2.imread(okla)
     constant = cv2.copyMakeBorder(img1, wh, wh, wh, wh, cv2.BORDER_CONSTANT, value=col)
@@ -612,13 +612,13 @@ async def ok(event):
 async def pixelator(event):
     reply_message = await event.get_reply_message()
     if not (reply_message and reply_message.photo):
-        return await eor(event, "`Reply to a photo`")
+        return await event.eor("`Reply to a photo`")
     hw = 50
     try:
         hw = int(event.pattern_match.group(1))
     except (ValueError, TypeError):
         pass
-    msg = await eor(event, get_string("com_1"))
+    msg = await event.eor(get_string("com_1"))
     image = await reply_message.download_media()
     input_ = cv2.imread(image)
     height, width = input_.shape[:2]

@@ -30,7 +30,7 @@ from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
 async def play_music_(event):
     if "playfrom" in event.text.split()[0]:
         return  # For PlayFrom Conflict
-    xx = await eor(event, get_string("com_1"), parse_mode="md")
+    xx = await event.eor(get_string("com_1"), parse_mode="md")
     chat = event.chat_id
     from_user = inline_mention(event, html=True)
     reply, song = None, None
@@ -46,7 +46,7 @@ async def play_music_(event):
             except IndexError:
                 pass
             except Exception as e:
-                return await eor(event, str(e))
+                return await event.eor(str(e))
         elif tiny_input.startswith("-"):
             chat = int(
                 "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
@@ -104,7 +104,7 @@ async def play_music_(event):
 
 @vc_asst("playfrom")
 async def play_music_(event):
-    msg = await eor(event, get_string("com_1"))
+    msg = await event.eor(get_string("com_1"))
     chat = event.chat_id
     limit = 10
     from_user = inline_mention(event, html=True)

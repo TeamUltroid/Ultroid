@@ -49,7 +49,7 @@ from . import (
 )
 async def down(event):
     matched = event.pattern_match.group(1)
-    msg = await eor(event, get_string("udl_4"))
+    msg = await event.eor(get_string("udl_4"))
     if not matched:
         return await eor(msg, get_string("udl_5"), time=5)
     try:
@@ -83,8 +83,8 @@ async def down(event):
 )
 async def download(event):
     if not event.reply_to_msg_id:
-        return await eor(event, get_string("cvt_3"))
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_3"))
+    xx = await event.eor(get_string("com_1"))
     s = dt.now()
     k = time.time()
     if event.reply_to_msg_id:
@@ -137,7 +137,7 @@ async def download(event):
 async def download(event):
     if event.text[1:].startswith("ultroid"):
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     hmm = event.pattern_match.group(1)
     try:
         kk = hmm.split(" | stream")[0]

@@ -237,7 +237,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="unbanall$", manager=True, admins_only=True, require="ban_users")
 async def _(event):
-    xx = await eor(event, "Searching Participant Lists.")
+    xx = await event.eor("Searching Participant Lists.")
     p = 0
     title = (await event.get_chat()).title
     async for i in event.client.iter_participants(
@@ -260,7 +260,7 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     input_str = event.pattern_match.group(1)
     p, a, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):

@@ -21,7 +21,7 @@ from . import *
 
 @vc_asst("videoplay")
 async def video_c(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     chat = event.chat_id
     from_user = inline_mention(event.sender)
     reply, song = None, None
@@ -37,7 +37,7 @@ async def video_c(event):
             except IndexError:
                 pass
             except Exception as e:
-                return await eor(event, str(e))
+                return await event.eor(str(e))
         elif tiny_input.startswith("-"):
             chat = int(
                 "-100" + str(await get_user_id(int(tiny_input), client=vcClient))

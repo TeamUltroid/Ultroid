@@ -58,8 +58,8 @@ async def set_afk(event):
             elif "sticker" or "audio" in media_type:
                 media = reply.file.id
             else:
-                return await eor(event, get_string("com_4"), time=5)
-    await eor(event, "`Done`", time=2)
+                return await event.eor(get_string("com_4"), time=5)
+    await event.eor("`Done`", time=2)
     add_afk(text, media_type, media)
     ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
     ultroid_bot.add_handler(
