@@ -161,10 +161,7 @@ async def lol(ult):
                 link_preview=False,
                 buttons=buttons if inline else None,
             )
-            try:
-                await ult.delete()
-            except BaseException:
-                pass
+            await ult.try_delete()
         except ChatSendMediaForbiddenError:
             pass
         except BaseException as er:
@@ -177,7 +174,7 @@ async def lol(ult):
                     buttons=buttons if inline else None,
                     link_preview=False,
                 )
-                return await ult.delete()
+                return await ult.try_delete()
             except BaseException as er:
                 LOGS.exception(er)
     await eor(
@@ -257,7 +254,7 @@ async def _(event):
         return await eor(event, f"`{file}`")
     else:
         await def_logs(event, file)
-    await event.delete()
+    await event.try_delete()
 
 
 @in_pattern("alive", owner=True)
