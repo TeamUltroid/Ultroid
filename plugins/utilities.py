@@ -63,6 +63,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
+from telethon.utils import get_peer_id
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -275,7 +276,10 @@ async def _(event):
         return await xx.edit(f"**ERROR :** {er}")
     if not isinstance(_, User):
         try:
+            peer = get_peer_id(_)
             capt = await get_chat_info(_, event)
+            if is_gbanned(peer):
+                capt += "\n\n•<b> Is Gbanned:</b> <code>True</code>"
             await eor(xx, capt, parse_mode="html")
         except Exception as er:
             await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
