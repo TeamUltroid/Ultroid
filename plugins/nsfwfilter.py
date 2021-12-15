@@ -33,13 +33,13 @@ async def addnsfw(e):
     if not action or ("ban" or "kick" or "mute") not in action:
         action = "mute"
     nsfw_chat(e.chat_id, action)
-    await eor(e, "Added This Chat To Nsfw Filter")
+    await e.eor("Added This Chat To Nsfw Filter")
 
 
 @ultroid_cmd(pattern="remnsfw", admins_only=True)
 async def remnsfw(e):
     rem_nsfw(e.chat_id)
-    await eor(e, "Removed This Chat from Nsfw Filter.")
+    await e.eor("Removed This Chat from Nsfw Filter.")
 
 
 NWARN = {}

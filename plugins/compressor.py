@@ -64,7 +64,7 @@ async def _(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_string("audiotools_5"))
+        xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -182,4 +182,4 @@ async def _(e):
             os.remove(out)
             os.remove(progress)
     else:
-        await eor(e, get_string("audiotools_8"), time=5)
+        await e.eor(get_string("audiotools_8"), time=5)

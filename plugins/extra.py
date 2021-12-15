@@ -63,7 +63,7 @@ async def copy(e):
     if reply:
         await reply.reply(reply)
         return await e.delete()
-    await eor(e, get_string("ex_1"), time=5)
+    await e.eor(get_string("ex_1"), time=5)
 
 
 @ultroid_cmd(

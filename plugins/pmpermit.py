@@ -122,24 +122,24 @@ if udB.get_key("PMLOG"):
     )
     async def _(e):
         if not e.is_private:
-            return await eor(e, "`Use me in Private.`", time=3)
+            return await e.eor("`Use me in Private.`", time=3)
         if not is_logger(e.chat_id):
-            return await eor(e, "`Wasn't logging msgs from here.`", time=3)
+            return await e.eor("`Wasn't logging msgs from here.`", time=3)
 
         nolog_user(e.chat_id)
-        return await eor(e, "`Now I Will log msgs from here.`", time=3)
+        return await e.eor("`Now I Will log msgs from here.`", time=3)
 
     @ultroid_cmd(
         pattern="nologpm$",
     )
     async def _(e):
         if not e.is_private:
-            return await eor(e, "`Use me in Private.`", time=3)
+            return await e.eor("`Use me in Private.`", time=3)
         if is_logger(e.chat_id):
-            return await eor(e, "`Wasn't logging msgs from here.`", time=3)
+            return await e.eor("`Wasn't logging msgs from here.`", time=3)
 
         log_user(e.chat_id)
-        return await eor(e, "`Now I Won't log msgs from here.`", time=3)
+        return await e.eor("`Now I Won't log msgs from here.`", time=3)
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -382,16 +382,16 @@ if udB.get_key("PMSETTING"):
         x = e.pattern_match.group(1)
         if x == "start":
             udB.set_key("MOVE_ARCHIVE", "True")
-            await eor(e, "Now I will move new Unapproved DM's to archive", time=5)
+            await e.eor("Now I will move new Unapproved DM's to archive", time=5)
         elif x == "stop":
             udB.set_key("MOVE_ARCHIVE", "False")
-            await eor(e, "Now I won't move new Unapproved DM's to archive", time=5)
+            await e.eor("Now I won't move new Unapproved DM's to archive", time=5)
         elif x == "clear":
             try:
                 await e.client.edit_folder(unpack=1)
-                await eor(e, "Unarchived all chats", time=5)
+                await e.eor("Unarchived all chats", time=5)
             except Exception as mm:
-                await eor(e, str(mm), time=5)
+                await e.eor(str(mm), time=5)
 
     @ultroid_cmd(
         pattern="(a|approve)(?: |$)",

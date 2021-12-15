@@ -101,10 +101,10 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, get_string("schdl_2"), time=5)
+        return await e.eor(get_string("schdl_2"), time=5)
     user = await e.get_reply_message()
     if user:
-        ev = await eor(e, "`Promoting Replied User Globally`")
+        ev = await e.eor("`Promoting Replied User Globally`")
         ok = e.text.split()
         key = "all"
         if len(ok) > 1 and (("group" in ok[1]) or ("channel" in ok[1])):
@@ -171,8 +171,8 @@ async def _(e):
         try:
             name = await e.client.get_entity(user)
         except BaseException:
-            return await eor(e, f"`No User Found Regarding {user}`", time=5)
-        ev = await eor(e, f"`Promoting {name.first_name} globally.`")
+            return await e.eor(f"`No User Found Regarding {user}`", time=5)
+        ev = await e.eor(f"`Promoting {name.first_name} globally.`")
         key = "all"
         if len(k) > 2 and (("group" in k[2]) or ("channel" in k[2])):
             key = k[2]
@@ -209,11 +209,11 @@ async def _(e):
     x = e.pattern_match.group(1)
     ultroid_bot = e.client
     if not x:
-        return await eor(e, get_string("schdl_2"), time=5)
+        return await e.eor(get_string("schdl_2"), time=5)
     user = await e.get_reply_message()
     if user:
         user.id = user.peer_id.user_id if e.is_private else user.from_id.user_id
-        ev = await eor(e, "`Demoting Replied User Globally`")
+        ev = await e.eor("`Demoting Replied User Globally`")
         ok = e.text.split()
         key = "all"
         if len(ok) > 1 and (("group" in ok[1]) or ("channel" in ok[1])):
@@ -256,8 +256,8 @@ async def _(e):
         try:
             name = await ultroid_bot.get_entity(user)
         except BaseException:
-            return await eor(e, f"`No User Found Regarding {user}`", time=5)
-        ev = await eor(e, f"`Demoting {name.first_name} globally.`")
+            return await e.eor(f"`No User Found Regarding {user}`", time=5)
+        ev = await e.eor(f"`Demoting {name.first_name} globally.`")
         key = "all"
         if len(k) > 2 and (("group" in k[2]) or ("channel" in k[2])):
             key = k[2]
@@ -291,7 +291,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="ungban ?(.*)", fullsudo=True)
 async def _(e):
-    xx = await eor(e, "`UnGbanning...`")
+    xx = await e.eor("`UnGbanning...`")
     match = e.pattern_match.group(1)
     peer = None
     if match:
@@ -341,7 +341,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="gban ?(.*)", fullsudo=True)
 async def _(e):
-    xx = await eor(e, "`Gbanning...`")
+    xx = await e.eor("`Gbanning...`")
     reason = ""
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
@@ -540,7 +540,7 @@ async def gucast(event):
 
 @ultroid_cmd(pattern="gkick ?(.*)", fullsudo=True)
 async def gkick(e):
-    xx = await eor(e, "`Gkicking...`")
+    xx = await e.eor("`Gkicking...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
@@ -572,7 +572,7 @@ async def gkick(e):
 
 @ultroid_cmd(pattern="gmute ?(.*)", fullsudo=True)
 async def _(e):
-    xx = await eor(e, "`Gmuting...`")
+    xx = await e.eor("`Gmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
@@ -607,7 +607,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
 async def _(e):
-    xx = await eor(e, "`UnGmuting...`")
+    xx = await e.eor("`UnGmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
@@ -676,7 +676,7 @@ async def list_gengbanned(event):
     pattern="gstat ?(.*)",
 )
 async def gstat_(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     if e.is_private:
         userid = (await e.get_chat()).id
     elif e.reply_to_msg_id:

@@ -75,7 +75,7 @@ async def auth_group(event):
 async def listVc(e):
     chats = udB.get_key("VC_AUTH_GROUPS")
     if not chats:
-        return await eor(e, get_string("vcbot_18"))
+        return await e.eor(get_string("vcbot_18"))
     text = "• <strong>Vc Auth Chats •</strong>\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
@@ -84,12 +84,12 @@ async def listVc(e):
         except ValueError:
             title = "No Info"
         text += f"∆ <strong>{title}</strong> [ <code>{on}</code> ] : <code>{st}</code>"
-    await eor(e, text, parse_mode="html")
+    await e.eor(text, parse_mode="html")
 
 
 @vc_asst("listvcaccess$", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, get_string("vcbot_11"))
+    xx = await e.eor(get_string("vcbot_11"))
     mm = get_vcsudos()
     pp = f"<strong>{len(mm)} Voice Chat Bot Approved Users</strong>\n"
     if len(mm) > 0:
@@ -104,7 +104,7 @@ async def _(e):
 
 @vc_asst("rmvcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, "`Disapproving to access Voice Chat features...`")
+    xx = await e.eor("`Disapproving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
@@ -136,7 +136,7 @@ async def _(e):
 
 @vc_asst("vcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, "`Approving to access Voice Chat features...`")
+    xx = await e.eor("`Approving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id

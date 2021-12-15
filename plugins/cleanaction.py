@@ -30,7 +30,7 @@ async def _(e):
         return await eod(e, get_string("clan_5"))
     key.append(e.chat_id)
     udB.set_key("CLEANCHAT", key)
-    await eor(e, get_string("clan_1"), time=5)
+    await e.eor(get_string("clan_1"), time=5)
 
 
 @ultroid_cmd(pattern="remclean$")
@@ -39,7 +39,7 @@ async def _(e):
     if e.chat_id in key:
         key.remove(e.chat_id)
         udB.set_key("CLEANCHAT", key)
-    await eor(e, get_string("clan_2"), time=5)
+    await e.eor(get_string("clan_2"), time=5)
 
 
 @ultroid_cmd(pattern="listclean$")
@@ -53,6 +53,6 @@ async def _(e):
             except BaseException:
                 title = get_string("clan_3")
             o += f"{x} {title}\n"
-        await eor(e, o)
+        await e.eor(o)
     else:
-        await eor(e, get_string("clan_4"), time=5)
+        await e.eor(get_string("clan_4"), time=5)

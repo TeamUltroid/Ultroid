@@ -73,7 +73,7 @@ from . import Redis, download_file, eor, get_string, requests, udB, ultroid_cmd
 )
 async def sketch(e):
     ureply = await e.get_reply_message()
-    xx = await eor(e, "`...`")
+    xx = await e.eor("`...`")
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("cvt_3"))
         return

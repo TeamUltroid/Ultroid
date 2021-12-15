@@ -111,7 +111,7 @@ async def remove_profilepic(delpfp):
 @ultroid_cmd(pattern="poto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e, get_string("com_1"))
+    a = await e.eor(get_string("com_1"))
     if not ult:
         if e.is_reply:
             gs = await e.get_reply_message()

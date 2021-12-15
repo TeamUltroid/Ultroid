@@ -23,10 +23,10 @@ from . import eor, get_string, ultroid_cmd
 @ultroid_cmd(pattern="addprofanity$", admins_only=True)
 async def addp(e):
     profan_chat(e.chat_id, "mute")
-    await eor(e, get_string("prof_1"), time=10)
+    await e.eor(get_string("prof_1"), time=10)
 
 
 @ultroid_cmd(pattern="remprofanity", admins_only=True)
 async def remp(e):
     rem_profan(e.chat_id)
-    await eor(e, get_string("prof_2"), time=10)
+    await e.eor(get_string("prof_2"), time=10)

@@ -35,13 +35,13 @@ async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not (wrd):
-        return await eor(e, get_string("blk_1"), time=5)
+        return await e.eor(get_string("blk_1"), time=5)
     wrd = e.text[11:]
     heh = wrd.split(" ")
     for z in heh:
         add_blacklist(int(chat), z.lower())
     ultroid_bot.add_handler(blacklist, events.NewMessage(incoming=True))
-    await eor(e, get_string("blk_2").format(wrd))
+    await e.eor(get_string("blk_2").format(wrd))
 
 
 @ultroid_cmd(pattern="remblacklist ?(.*)", admins_only=True)
@@ -49,12 +49,12 @@ async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
     if not wrd:
-        return await eor(e, get_string("blk_3"), time=5)
+        return await e.eor(get_string("blk_3"), time=5)
     wrd = e.text[14:]
     heh = wrd.split(" ")
     for z in heh:
         rem_blacklist(int(chat), z.lower())
-    await eor(e, get_string("blk_4").format(wrd))
+    await e.eor(get_string("blk_4").format(wrd))
 
 
 @ultroid_cmd(pattern="listblacklist$", admins_only=True)
@@ -62,8 +62,8 @@ async def lsnote(e):
     x = list_blacklist(e.chat_id)
     if x:
         sd = get_string("blk_5")
-        return await eor(e, sd + x)
-    await eor(e, get_string("blk_6"))
+        return await e.eor(sd + x)
+    await e.eor(get_string("blk_6"))
 
 
 async def blacklist(e):

@@ -214,14 +214,14 @@ async def tkicki(e):
     try:
         tme = huh[1]
     except IndexError:
-        return await eor(e, get_string("adm_3"), time=15)
+        return await e.eor(get_string("adm_3"), time=15)
     try:
         inputt = huh[2]
     except IndexError:
         if e.reply_to_msg_id:
             inputt = (await e.get_reply_message()).sender_id
     if not inputt:
-        return await eor(e, get_string("tban_1"))
+        return await e.eor(get_string("tban_1"))
     userid = await get_user_id(inputt)
     try:
         user = await e.client.get_entity(userid)
@@ -238,7 +238,7 @@ async def tkicki(e):
             time=15,
         )
     except Exception as m:
-        return await eor(e, str(m))
+        return await e.eor(str(m))
 
 
 @ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
@@ -378,9 +378,9 @@ async def _(e):
     name = msg.sender
     try:
         await e.client.delete_messages(e.chat_id, from_user=msg.sender_id)
-        await eor(e, get_string("purgeall_2").format(name.first_name), time=5)
+        await e.eor(get_string("purgeall_2").format(name.first_name), time=5)
     except Exception as er:
-        return await eor(e, str(er), time=5)
+        return await e.eor(str(er), time=5)
 
 
 @ultroid_cmd(pattern="pinned", manager=True, groups_only=True)

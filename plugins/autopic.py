@@ -29,12 +29,12 @@ async def autopic(e):
         udB.del_key("AUTOPIC")
         return await e.eor(get_string("autopic_5"))
     if not search:
-        return await eor(e, get_string("autopic_1"), time=5)
-    e = await eor(e, get_string("com_1"))
+        return await e.eor(get_string("autopic_1"), time=5)
+    e = await e.eor(get_string("com_1"))
     clls = await unsplashsearch(search, limit=50)
     if not clls:
-        return await eor(e, get_string("autopic_2").format(search), time=5)
-    await eor(e, get_string("autopic_3").format(search))
+        return await e.eor(get_string("autopic_2").format(search), time=5)
+    await e.eor(get_string("autopic_3").format(search))
     udB.set_key("AUTOPIC", "True")
     SLEEP_TIME = udB.get_key("SLEEP_TIME") or 1221
     while True:

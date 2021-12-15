@@ -19,7 +19,7 @@ async def dowj(e):
     if replied:
         user = replied.sender_id
     else:
-        return await eor(e, "Reply to a message...")
+        return await e.eor("Reply to a message...")
     try:
         await replied.delete()
         if e.pattern_match.group(1) == "kick":
@@ -28,9 +28,9 @@ async def dowj(e):
         else:
             await e.client.edit_permissions(e.chat_id, user, view_messages=False)
             te = "Banned"
-        await eor(e, f"{te} Successfully!")
+        await e.eor(f"{te} Successfully!")
     except Exception as E:
-        await eor(e, str(E))
+        await e.eor(str(E))
 
 
 @callback(re.compile("cc_(.*)"), func=_ult_cache.get("admin_callback"))

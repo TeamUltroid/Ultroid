@@ -30,11 +30,11 @@ from . import (
 async def mi(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eor(e, get_string("cvt_3"), time=5)
+        return await e.eor(get_string("cvt_3"), time=5)
     xx = mediainfo(r.media)
     murl = r.media.stringify()
     url = await make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
-    ee = await eor(e, f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
+    ee = await e.eor(f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     taime = time.time()
     if hasattr(r.media, "document"):
         file = r.media.document

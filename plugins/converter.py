@@ -51,13 +51,13 @@ async def _(e):
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
     else:
-        return await eor(e, "`Reply to Photo or media with thumb...`")
+        return await e.eor("`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
     udB.set_key("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
-    await eor(e, get_string("cvt_6").format(nn), link_preview=False)
+    await e.eor(get_string("cvt_6").format(nn), link_preview=False)
 
 
 @ultroid_cmd(

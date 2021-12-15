@@ -170,7 +170,7 @@ async def play_music_(event):
 
 @vc_asst("radio")
 async def radio_mirchi(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     if len(e.text.split()) <= 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
@@ -199,7 +199,7 @@ async def radio_mirchi(e):
 
 @vc_asst("(live|ytlive)")
 async def live_stream(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     if not len(e.text.split()) > 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()

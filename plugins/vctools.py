@@ -50,9 +50,9 @@ def user_list(l, n):
 async def _(e):
     try:
         await e.client(stopvc(await get_call(e)))
-        await eor(e, get_string("vct_4"))
+        await e.eor(get_string("vct_4"))
     except Exception as ex:
-        await eor(e, f"`{ex}`")
+        await e.eor(f"`{ex}`")
 
 
 @ultroid_cmd(
@@ -60,7 +60,7 @@ async def _(e):
     groups_only=True,
 )
 async def _(e):
-    ok = await eor(e, get_string("vct_3"))
+    ok = await e.eor(get_string("vct_3"))
     users = []
     z = 0
     async for x in e.client.iter_participants(e.chat_id):
@@ -84,9 +84,9 @@ async def _(e):
 async def _(e):
     try:
         await e.client(startvc(e.chat_id))
-        await eor(e, get_string("vct_1"))
+        await e.eor(get_string("vct_1"))
     except Exception as ex:
-        await eor(e, f"`{ex}`")
+        await e.eor(f"`{ex}`")
 
 
 @ultroid_cmd(
@@ -97,9 +97,9 @@ async def _(e):
 async def _(e):
     title = e.pattern_match.group(1)
     if not title:
-        return await eor(e, get_string("vct_6"), time=5)
+        return await e.eor(get_string("vct_6"), time=5)
     try:
         await e.client(settitle(call=await get_call(e), title=title.strip()))
-        await eor(e, get_string("vct_2").format(title))
+        await e.eor(get_string("vct_2").format(title))
     except Exception as ex:
-        await eor(e, f"`{ex}`")
+        await e.eor(f"`{ex}`")

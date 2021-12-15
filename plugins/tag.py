@@ -73,4 +73,4 @@ async def _(e):
             xx += f"\n{inline_mention(bb)}"
         if "bot" in okk and bb.bot:
             xx += f"\n{inline_mention(bb)}"
-    await eor(e, xx)
+    await e.eor(xx)

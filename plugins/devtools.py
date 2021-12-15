@@ -48,7 +48,7 @@ from . import *
     pattern="sysinfo$",
 )
 async def _(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
@@ -243,8 +243,8 @@ async def doie(e):
     try:
         match = match[1]
     except IndexError:
-        return await eor(e, get_string("devs_3"))
-    msg = await eor(e, get_string("com_1"))
+        return await e.eor(get_string("devs_3"))
+    msg = await e.eor(get_string("com_1"))
     if "main(" not in match:
         new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))
         match = DUMMY_CPP.replace("!code", new_m)

@@ -18,7 +18,7 @@ from . import *
 
 @vc_asst("ytplaylist")
 async def live_stream(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     if len(e.text.split()) <= 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()

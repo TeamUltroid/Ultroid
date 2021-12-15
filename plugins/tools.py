@@ -171,9 +171,9 @@ async def _(ult):
 async def _(e):
     a = await e.get_reply_message()
     if not a:
-        return await eor(e, "Reply to a gif or audio")
+        return await e.eor("Reply to a gif or audio")
     if a.document and a.document.mime_type == "audio/mpeg":
-        z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
+        z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         toime = time.time()
         try:
             bbbb = await a.download_media(thumb=-1)
@@ -220,7 +220,7 @@ async def _(e):
         await bash("rm resources/downloads/*")
         await bash("rm circle.mp4 comp.mp3 img.png")
     elif a.document and a.document.mime_type == "video/mp4":
-        z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
+        z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
         await e.client.send_file(
             e.chat_id,
@@ -232,7 +232,7 @@ async def _(e):
         await z.delete()
         os.remove(c)
     else:
-        await eor(e, "**Reply to a gif or video file only**")
+        await e.eor("**Reply to a gif or video file only**")
 
 
 @ultroid_cmd(
@@ -248,7 +248,7 @@ async def _(e):
         files = files + "/*"
     files = glob.glob(files)
     if not files:
-        return await eor(e, "`Directory Empty or Incorrect.`", time=5)
+        return await e.eor("`Directory Empty or Incorrect.`", time=5)
     pyfiles = []
     jsons = []
     vdos = []
@@ -348,7 +348,7 @@ async def _(e):
         ttol = "0 B"
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     try:
-        await eor(e, text)
+        await e.eor(text)
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"

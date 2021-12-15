@@ -53,7 +53,7 @@ async def akina(e):
             buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
         )
     except Exception as er:
-        return await eor(e, f"**ERROR :** `{er}`")
+        return await e.eor(f"**ERROR :** `{er}`")
     if e.out:
         await e.delete()
 

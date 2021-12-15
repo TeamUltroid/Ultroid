@@ -31,9 +31,9 @@ async def acc(e):
         ultroid_bot.add_handler(
             gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
         )
-        return await eor(e, get_string("act_1"), time=5)
+        return await e.eor(get_string("act_1"), time=5)
     udB.del_key("AUTOCORRECT")
-    await eor(e, get_string("act_2"), time=5)
+    await e.eor(get_string("act_2"), time=5)
 
 
 async def gramme(event):

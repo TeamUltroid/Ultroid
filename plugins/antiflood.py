@@ -105,9 +105,9 @@ async def unmuting(e):
 async def setflood(e):
     input_ = e.pattern_match.group(1)
     if not input_:
-        return await eor(e, "`What?`", time=5)
+        return await e.eor("`What?`", time=5)
     if not input_.isdigit():
-        return await eor(e, get_string("com_3"), time=5)
+        return await e.eor(get_string("com_3"), time=5)
     m = set_flood(e.chat_id, input_)
     if m:
         return await eod(e, get_string("antiflood_4").format(input_))
@@ -124,8 +124,8 @@ async def remove_flood(e):
     except BaseException:
         pass
     if hmm:
-        return await eor(e, get_string("antiflood_1"), time=5)
-    await eor(e, get_string("antiflood_2"), time=5)
+        return await e.eor(get_string("antiflood_1"), time=5)
+    await e.eor(get_string("antiflood_2"), time=5)
 
 
 @ultroid_cmd(
@@ -135,5 +135,5 @@ async def remove_flood(e):
 async def getflood(e):
     ok = get_flood_limit(e.chat_id)
     if ok:
-        return await eor(e, get_string("antiflood_5").format(ok), time=5)
-    await eor(e, get_string("antiflood_2"), time=5)
+        return await e.eor(get_string("antiflood_5").format(ok), time=5)
+    await e.eor(get_string("antiflood_2"), time=5)

@@ -51,20 +51,20 @@ CACHE = {}
 async def addfor(e):
     match = e.pattern_match.group(1)
     if not match:
-        return await eor(e, get_string("fsub_1"), time=5)
+        return await e.eor(get_string("fsub_1"), time=5)
     if match.startswith("@"):
         ch = match
     else:
         try:
             ch = int(match)
         except BaseException:
-            return await eor(e, get_string("fsub_2"), time=5)
+            return await e.eor(get_string("fsub_2"), time=5)
     try:
         match = get_peer_id(await e.client.get_entity(ch))
     except BaseException:
-        return await eor(e, get_string("fsub_2"), time=5)
+        return await e.eor(get_string("fsub_2"), time=5)
     add_forcesub(e.chat_id, match)
-    await eor(e, "Added ForceSub in This Chat !")
+    await e.eor("Added ForceSub in This Chat !")
     ultroid_bot.add_handler(force_sub, events.NewMessage(incoming=True))
 
 
@@ -72,17 +72,17 @@ async def addfor(e):
 async def remor(e):
     res = rem_forcesub(e.chat_id)
     if not res:
-        return await eor(e, get_string("fsub_3"), time=5)
-    await eor(e, "Removed ForceSub...")
+        return await e.eor(get_string("fsub_3"), time=5)
+    await e.eor("Removed ForceSub...")
 
 
 @ultroid_cmd(pattern="checkfsub$")
 async def getfsr(e):
     res = get_forcesetting(e.chat_id)
     if not res:
-        return await eor(e, "ForceSub is Not Active In This Chat !", time=5)
+        return await e.eor("ForceSub is Not Active In This Chat !", time=5)
     cha = await e.client.get_entity(int(res))
-    await eor(e, f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
+    await e.eor(f"**ForceSub Status** : `Active`\n- **{cha.title}** `({res})`")
 
 
 @in_pattern("fsub ?(.*)", owner=True)

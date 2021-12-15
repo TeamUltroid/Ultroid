@@ -115,7 +115,7 @@ async def endmute(event):
     manager=True,
 )
 async def _(e):
-    xx = await eor(e, "`Muting...`")
+    xx = await e.eor("`Muting...`")
     huh = e.text.split(" ")
     try:
         tme = huh[1]
@@ -159,7 +159,7 @@ async def _(e):
     manager=True,
 )
 async def _(e):
-    xx = await eor(e, "`Unmuting...`")
+    xx = await e.eor("`Unmuting...`")
     input = e.pattern_match.group(1)
     chat = await e.get_chat()
     if e.reply_to_msg_id:
@@ -192,7 +192,7 @@ async def _(e):
     manager=True,
 )
 async def _(e):
-    xx = await eor(e, "`Muting...`")
+    xx = await e.eor("`Muting...`")
     input = e.pattern_match.group(1)
     chat = await e.get_chat()
     if e.reply_to_msg_id:

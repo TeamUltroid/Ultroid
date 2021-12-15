@@ -31,7 +31,7 @@ async def ac(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
-        return await eor(e, get_string("asstcmd_1"), time=5)
+        return await e.eor(get_string("asstcmd_1"), time=5)
     if "/" in wrd:
         wrd = wrd.replace("/", "")
     btn = format_btn(wt.buttons) if wt.buttons else None
@@ -44,7 +44,7 @@ async def ac(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(e, get_string("com_4"), time=5)
+                return await e.eor(get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
@@ -69,17 +69,17 @@ async def ac(e):
             func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())
         ),
     )
-    await eor(e, get_string("asstcmd_4").format(wrd))
+    await e.eor(get_string("asstcmd_4").format(wrd))
 
 
 @ultroid_cmd(pattern="remcmd ?(.*)")
 async def rc(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:
-        return await eor(e, get_string("asstcmd_2"), time=5)
+        return await e.eor(get_string("asstcmd_2"), time=5)
     wrd = wrd.replace("/", "")
     rem_cmd(wrd)
-    await eor(e, get_string("asstcmd_3").format(wrd))
+    await e.eor(get_string("asstcmd_3").format(wrd))
 
 
 @ultroid_cmd(pattern="listcmd$")
@@ -88,8 +88,8 @@ async def lscmd(e):
         ok = get_string("asstcmd_6")
         for x in list_cmds():
             ok += "/" + x + "\n"
-        return await eor(e, ok)
-    return await eor(e, get_string("asstcmd_5"))
+        return await e.eor(ok)
+    return await e.eor(get_string("asstcmd_5"))
 
 
 async def astcmds(e):

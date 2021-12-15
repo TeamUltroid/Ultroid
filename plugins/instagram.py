@@ -59,7 +59,7 @@ from . import (
 async def insta_dl(e):
     match = e.pattern_match.group(1)
     replied = await e.get_reply_message()
-    tt = await eor(e, get_string("com_1"))
+    tt = await e.eor(get_string("com_1"))
     if match:
         text = match
     elif e.is_reply and "insta" in replied.message:
@@ -122,7 +122,7 @@ async def soon_(e):
     if not cl:
         return
     match = e.pattern_match.group(1)
-    ew = await eor(e, get_string("com_1"))
+    ew = await e.eor(get_string("com_1"))
     if match:
         try:
             iid = cl.user_id_from_username(match)

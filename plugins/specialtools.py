@@ -71,7 +71,7 @@ async def daudtoid(e):
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, get_string("spcltool_1"))
-    xxx = await eor(e, get_string("com_1"))
+    xxx = await e.eor(get_string("com_1"))
     dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(
@@ -96,7 +96,7 @@ async def adaudroid(e):
         return await eod(e, get_string("spcltool_3"))
     if not (File and os.path.exists(File[0])):
         return await e.edit(f"`First reply an audio with {HNDLR}addaudio`")
-    xxx = await eor(e, get_string("com_1"))
+    xxx = await e.eor(get_string("com_1"))
     dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(

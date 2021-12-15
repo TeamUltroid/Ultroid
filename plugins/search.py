@@ -191,9 +191,9 @@ async def reverse(event):
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
-        return await eor(e, "`Give me Something to Search", time=5)
+        return await e.eor("`Give me Something to Search", time=5)
     hmm = time.time()
-    lol = await eor(e, f"`Searching {song} on Saavn...`")
+    lol = await e.eor(f"`Searching {song} on Saavn...`")
     song, duration, performer, thumb = await saavn_dl(song)
     if not song:
         return await eod(lol, get_string("srch_3"))
