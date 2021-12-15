@@ -38,10 +38,10 @@ from . import (
     events,
     get_string,
     in_pattern,
+    inline_mention,
     udB,
     ultroid_bot,
     ultroid_cmd,
-    inline_mention
 )
 
 CACHE = {}
