@@ -279,7 +279,7 @@ async def _(event):
             peer = get_peer_id(_)
             capt = await get_chat_info(_, event)
             if is_gbanned(peer):
-                capt += "\n\n•<b> Is Gbanned:</b> <code>True</code>"
+                capt += "\n•<b> Is Gbanned:</b> <code>True</code>"
             await eor(xx, capt, parse_mode="html")
         except Exception as er:
             await eor(event, "**ERROR ON CHATINFO**\n" + str(er))
