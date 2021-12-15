@@ -94,8 +94,7 @@ async def pack_kangish(_):
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
         functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash),
-            hash=0
+            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
         )
     )
     stiks = []
