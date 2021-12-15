@@ -21,9 +21,7 @@
 """
 import asyncio
 
-from telethon.events import NewMessage as NewMsg
-
-from . import HNDLR, eor, get_string, ultroid_bot, ultroid_cmd
+from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -38,8 +36,7 @@ async def delete_it(delme):
         await msg_src.delete()
         await delme.delete()
     except Exception as e:
-        await delme.eor(f"Couldn't delete the message.\n\n**ERROR:**\n`{e}`", time=5
-        )
+        await delme.eor(f"Couldn't delete the message.\n\n**ERROR:**\n`{e}`", time=5)
 
 
 @ultroid_cmd(
@@ -86,7 +83,9 @@ async def _(e):
         try:
             msg = (await e.client.get_messages(e.chat_id, limit=1, max_id=e.id))[0]
         except IndexError:
-            return await e.eor("`You have previously sent no message to reply again...`", time=5)
+            return await e.eor(
+                "`You have previously sent no message to reply again...`", time=5
+            )
         except BaseException as er:
             return await e.eor(f"**ERROR:** `{er}`")
         await asyncio.wait(
