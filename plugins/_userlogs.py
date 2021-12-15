@@ -156,7 +156,7 @@ _client = {"bot": asst, "user": ultroid_bot}
     re.compile(
         "leave_ch_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid]
 )
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
