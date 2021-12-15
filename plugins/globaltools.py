@@ -294,18 +294,29 @@ async def _(e):
 @ultroid_cmd(pattern="ungban ?(.*)", fullsudo=True)
 async def _(e):
     xx = await eor(e, "`UnGbanning...`")
-    if e.reply_to_msg_id:
+    match = e.pattern_match.group(1)
+    peer = None
+    if match:
+        try:
+            userid = int(match)
+        except ValueError:
+            userid = match
+        try:
+            peer = await e.client.get_entity(match)
+        except (ValueError, Exception) as er:
+            return await xx.edit(f"Failed to get User...\nError: {er}")
+    elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await get_user_id(e.pattern_match.group(1))
     elif e.is_private:
         userid = e.chat_id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
-    peer = None
+    if is_gbanned(userid):
+        return await xx.edit("`User/Channel is already Gbanned...`")
     try:
-        peer = await e.client.get_entity(userid)
-        name = get_display_name(peer)
+        if not peer:
+            peer = await e.client.get_entity(userid)
+        name = inline_mention(peer)
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -326,7 +337,7 @@ async def _(e):
     if isinstance(peer, User):
         await e.client(UnblockRequest(int(userid)))
     await xx.edit(
-        f"`Ungbanned` [{name}](tg://user?id={userid}) `in {chats} chats.\nRemoved from gbanwatch.`",
+        f"`Ungbaned` {name} in {chats} chats.\nRemoved from gbanwatch.`",
     )
 
 
@@ -358,7 +369,7 @@ async def _(e):
     user = None
     try:
         user = await e.client.get_entity(userid)
-        name = get_display_name(user)
+        name = inline_mention(user)
     except BaseException:
         userid = int(userid)
         name = str(userid)
@@ -388,7 +399,7 @@ async def _(e):
     gban(userid, reason)
     if isinstance(user, User):
         await e.client(BlockRequest(int(userid)))
-    gb_msg = f"**#Gbanned** [{name}](tg://user?id={userid}) `in {chats} chats and added to gbanwatch!`"
+    gb_msg = f"**#Gbanned** {name} `in {chats} chats and added to gbanwatch!`"
     if reason:
         gb_msg += f"\n**Reason** - {reason}"
     await xx.edit(gb_msg)
@@ -638,7 +649,7 @@ async def list_gengbanned(event):
         return await x.edit("`You haven't GBanned anyone!`")
     for i in users:
         try:
-            name = await ultroid_bot.get_entity(int(i))
+            name = await event.client.get_entity(int(i))
         except BaseException:
             name = i
         msg += f"<strong>User</strong>: {inline_mention(name, html=True)}\n"
@@ -655,7 +666,7 @@ async def list_gengbanned(event):
             )
         await x.reply(
             file="gbanned.txt",
-            message=f"List of users GBanned by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+            message=f"List of users GBanned by {inline_mention(ultroid_bot.me)}",
         )
         os.remove("gbanned.txt")
         await x.delete()
