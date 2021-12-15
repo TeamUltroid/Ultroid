@@ -309,8 +309,8 @@ async def _(e):
         userid = e.chat_id
     else:
         return await eor(xx, "`Reply to some msg or add their id.`", time=5)
-    if is_gbanned(userid):
-        return await xx.edit("`User/Channel is already Gbanned...`")
+    if not is_gbanned(userid):
+        return await xx.edit("`User/Channel is not Gbanned...`")
     try:
         if not peer:
             peer = await e.client.get_entity(userid)
@@ -373,10 +373,10 @@ async def _(e):
         name = str(userid)
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eor(xx, "`I can't gban myself.`", time=3)
-    if userid in DEVLIST:
-        return await eor(xx, "`I can't gban my Developers.`", time=3)
-    if is_gbanned(userid):
+        return await xx.edit("`I can't gban myself.`", time=3)
+    elif userid in DEVLIST:
+        return await xx.edit("`I can't gban my Developers.`", time=3)
+    elif is_gbanned(userid):
         return await eod(
             xx,
             "`User is already gbanned and added to gbanwatch.`",
@@ -399,7 +399,7 @@ async def _(e):
         await e.client(BlockRequest(int(userid)))
     gb_msg = f"**#Gbanned** {name} `in {chats} chats and added to gbanwatch!`"
     if reason:
-        gb_msg += f"\n**Reason** - {reason}"
+        gb_msg += f"\n**Reason** : {reason}"
     await xx.edit(gb_msg)
 
 
@@ -548,7 +548,7 @@ async def gkick(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
+        return await xx.edit("`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
