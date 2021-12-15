@@ -13,7 +13,9 @@
 import os
 import time
 from datetime import datetime as dt
+
 from pyUltroid.functions.misc import rotate_image
+
 from . import (
     LOGS,
     bash,
@@ -22,8 +24,8 @@ from . import (
     make_html_telegraph,
     mediainfo,
     ultroid_cmd,
-    bash
 )
+
 try:
     import cv2
 except ImportError:
@@ -89,20 +91,23 @@ async def rotate_(ult):
         return await ult.eor("`Please provide a valid angle to rotate media..`")
     reply = await ult.get_reply_message()
     msg = await ult.eor(get_string("com_1"))
-    if (reply.photo or reply.sticker):
+    if reply.photo or reply.sticker:
         media = await reply.download_media()
-        img = cv2.imread(photo)
+        cv2.imread(photo)
         new_ = rotate_image(media, match)
         file = "ult.png"
         cv2.imwrite(file, new_)
     elif reply.video:
         media = await reply.download_media()
-        file = media +".mp4"
-        await bash(f'ffmpeg -i "{media}" -c copy -metadata:s:v:0 rotate={match} "{file}" -y') 
+        file = media + ".mp4"
+        await bash(
+            f'ffmpeg -i "{media}" -c copy -metadata:s:v:0 rotate={match} "{file}" -y'
+        )
     else:
         return await msg.edit("`Unsupported Media..\nReply to Photo/Video`")
     if os.path.exists(file):
-        await ult.client.send_file(ult.chat_id, file=file,
-            video_note=bool(reply.video_note), reply_to=reply.id)
+        await ult.client.send_file(
+            ult.chat_id, file=file, video_note=bool(reply.video_note), reply_to=reply.id
+        )
     os.remove(media)
     await ult.try_delete()
