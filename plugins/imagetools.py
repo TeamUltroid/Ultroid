@@ -521,10 +521,10 @@ async def sampl(ult):
             except MessageDeleteForbiddenError:
                 await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
         except ChatSendMediaForbiddenError:
-            await eor(ult, "Umm! Sending Media is disabled here!")
+            await ult.eor("Umm! Sending Media is disabled here!")
 
     else:
-        await eor(ult, "Wrong Color Name/Hex Code specified!")
+        await ult.eor("Wrong Color Name/Hex Code specified!")
 
 
 @ultroid_cmd(

@@ -36,7 +36,7 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 @ultroid_cmd(pattern="setbio ?(.*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "...")
+    ok = await ult.eor("...")
     set = ult.pattern_match.group(1)
     try:
         await ult.client(UpdateProfileRequest(about=set))
@@ -50,7 +50,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "...")
+    ok = await ult.eor("...")
     names = ult.pattern_match.group(1)
     first_name = names
     last_name = ""
@@ -74,9 +74,9 @@ async def _(ult):
 @ultroid_cmd(pattern="setpic$", fullsudo=True)
 async def _(ult):
     if not ult.is_reply:
-        return await eor(ult, "`Reply to a Media..`", time=5)
+        return await ult.eor("`Reply to a Media..`", time=5)
     reply_message = await ult.get_reply_message()
-    ok = await eor(ult, get_string("com_1"))
+    ok = await ult.eor(get_string("com_1"))
     replfile = await reply_message.download_media()
     file = await ult.client.upload_file(replfile)
     try:

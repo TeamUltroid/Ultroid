@@ -46,19 +46,19 @@ async def _help(ult):
                 for i in HELP["Official"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             elif HELP.get("Addons") and plug in HELP["Addons"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["Addons"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             elif HELP.get("VCBot") and plug in HELP["VCBot"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["VCBot"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             else:
                 try:
                     x = get_string("help_11").format(plug)
@@ -66,12 +66,12 @@ async def _help(ult):
                         x += HNDLR + d
                         x += "\n"
                     x += "\n© @TeamUltroid"
-                    await eor(ult, x)
+                    await ult.eor(x)
                 except BaseException:
-                    await eor(ult, get_string("help_1").format(plug), time=5)
+                    await ult.eor(get_string("help_1").format(plug), time=5)
         except BaseException as er:
             LOGS.exception(er)
-            await eor(ult, "Error 🤔 occured.")
+            await ult.eor("Error 🤔 occured.")
     else:
         try:
             results = await ult.client.inline_query(asst.me.username, "ultd")
@@ -99,6 +99,6 @@ async def _help(ult):
                 get_string("help_2").format(HNDLR),
             )
         except BotInlineDisabledError:
-            return await eor(ult, get_string("help_3"))
+            return await ult.eor(get_string("help_3"))
         await results[0].click(chat.id, reply_to=ult.reply_to_msg_id, hide_via=True)
         await ult.delete()

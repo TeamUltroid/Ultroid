@@ -68,7 +68,7 @@ from . import (
     pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins"
 )
 async def prmte(ult):
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     await ult.get_chat()
     user, rank = await get_uinfo(ult)
     rank = rank or "Admin"
@@ -96,7 +96,7 @@ async def prmte(ult):
     pattern="demote ?(.*)", admins_only=True, manager=True, require="add_admins"
 )
 async def dmote(ult):
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     await ult.get_chat()
     user, rank = await get_uinfo(ult)
     if not rank:
@@ -150,7 +150,7 @@ async def bban(ult):
 
 @ultroid_cmd(pattern="unban ?(.*)", admins_only=True, manager=True, require="ban_users")
 async def uunban(ult):
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
         return
     something = await get_uinfo(ult)
@@ -181,7 +181,7 @@ async def kck(ult):
     if "kickme" in ult.text:
         return
     ml = ult.text.split(" ", maxsplit=1)[0]
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     something = await get_uinfo(ult)
     if not something:
         return
@@ -265,7 +265,7 @@ async def pin(msg):
     require="pin_messages",
 )
 async def unp(ult):
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     ch = (ult.pattern_match.group(1)).strip()
     msg = None
     if ult.is_reply:
@@ -438,7 +438,7 @@ async def get_all_pinned(event):
 async def autodelte(ult):
     match = ult.pattern_match.group(1)
     if not match or match not in ["24h", "7d", "1m", "off"]:
-        return await eor(ult, "`Please Use in Proper Format..`", time=5)
+        return await ult.eor("`Please Use in Proper Format..`", time=5)
     if match == "24h":
         tt = 3600 * 24
     elif match == "7d":
@@ -453,4 +453,4 @@ async def autodelte(ult):
         return await eor(
             ult, f"Auto Delete Setting is Already same to `{match}`", time=5
         )
-    await eor(ult, f"Auto Delete Status Changed to `{match}` !")
+    await ult.eor(f"Auto Delete Status Changed to `{match}` !")

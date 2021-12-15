@@ -193,29 +193,29 @@ async def _(e):
 )
 async def _(ult):
     if not ult.is_reply:
-        return await eor(ult, "`Reply to a Media..`", time=5)
+        return await ult.eor("`Reply to a Media..`", time=5)
     match = ult.pattern_match.group(1)
     if not ult.client._bot and match:
         try:
             chat = await get_user_id(match)
         except Exception as ok:
-            return await eor(ult, str(ok))
+            return await ult.eor(str(ok))
     else:
         chat = ult.chat_id
     reply_message = await ult.get_reply_message()
     if reply_message.media:
         replfile = await reply_message.download_media()
     else:
-        return await eor(ult, "Reply to a Photo or Video..")
+        return await ult.eor("Reply to a Photo or Video..")
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
         if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
         await ult.client(EditPhotoRequest(chat, file))
-        await eor(ult, "`Group Photo has Successfully Changed !`", time=5)
+        await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
-        await eor(ult, "Error occured.\n`{}`".format(str(ex)), time=5)
+        await ult.eor("Error occured.\n`{}`".format(str(ex)), time=5)
     os.remove(replfile)
 
 
@@ -232,7 +232,7 @@ async def _(ult):
         text = "`Removed Chat Photo..`"
     except Exception as E:
         text = str(E)
-    return await eor(ult, text, time=5)
+    return await ult.eor(text, time=5)
 
 
 @ultroid_cmd(pattern="unbanall$", manager=True, admins_only=True, require="ban_users")

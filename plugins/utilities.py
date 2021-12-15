@@ -102,7 +102,7 @@ _copied_msg = {}
 @ultroid_cmd(pattern="kickme$", fullsudo=True)
 async def leave(ult):
     me = asst.me if ult.client._bot else ultroid_bot.me
-    await eor(ult, f"`{me.first_name} has left this group, bye!!.`")
+    await ult.eor(f"`{me.first_name} has left this group, bye!!.`")
     await ult.client(LeaveChannelRequest(ult.chat_id))
 
 
@@ -356,7 +356,7 @@ async def _(event):
     groups_only=True,
 )
 async def _(ult):
-    xx = await eor(ult, get_string("com_1"))
+    xx = await ult.eor(get_string("com_1"))
     to_add_users = ult.pattern_match.group(1)
     if not ult.is_channel and ult.is_group:
         for user_id in to_add_users.split(" "):

@@ -50,9 +50,9 @@ async def _(ult):
         id = ult.chat_id
         name = await ult.get_chat()
     else:
-        return await eor(ult, get_string("sudo_1"), time=5)
+        return await ult.eor(get_string("sudo_1"), time=5)
     if name and isinstance(name, User) and (name.bot or name.verified):
-        return await eor(ult, get_string("sudo_4"))
+        return await ult.eor(get_string("sudo_4"))
     if name:
         name = inline_mention(name)
     else:
@@ -68,7 +68,7 @@ async def _(ult):
         key.append(id)
         udB.set_key("SUDOS", key)
         mmm = f"**Added {name} as SUDO User**"
-    await eor(ult, mmm, time=5)
+    await ult.eor(mmm, time=5)
 
 
 @ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
@@ -89,7 +89,7 @@ async def _(ult):
         id = ult.chat_id
         name = await ult.get_chat()
     else:
-        return await eor(ult, get_string("sudo_1"), time=5)
+        return await ult.eor(get_string("sudo_1"), time=5)
     if name:
         name = inline_mention(name)
     else:
@@ -101,7 +101,7 @@ async def _(ult):
         key.remove(id)
         udB.set_key("SUDOS", key)
         mmm = f"**Removed {name} from SUDO User(s)**"
-    await eor(ult, mmm, time=5)
+    await ult.eor(mmm, time=5)
 
 
 @ultroid_cmd(
@@ -110,7 +110,7 @@ async def _(ult):
 async def _(ult):
     sudos = sudoers()
     if not sudos:
-        return await eor(ult, get_string("sudo_3"), time=5)
+        return await ult.eor(get_string("sudo_3"), time=5)
     msg = ""
     for i in sudos:
         try:

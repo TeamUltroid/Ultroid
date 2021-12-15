@@ -139,7 +139,7 @@ async def _(ult):
         try:
             chat = await get_user_id(input_str)
         except Exception as e:
-            return await eor(ult, str(e))
+            return await ult.eor(str(e))
     try:
         async for x in ult.client.iter_participants(
             chat,
@@ -151,7 +151,7 @@ async def _(ult):
                 mentions += f"\n• {inline_mention(x)} `{x.id}`"
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await eor(ult, mentions)
+    await ult.eor(mentions)
 
 
 @ultroid_cmd(
@@ -161,8 +161,8 @@ async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(ult, "`Input some link`", time=5)
-    await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
+        return await ult.eor("`Input some link`", time=5)
+    await ult.eor("[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
 @ultroid_cmd(

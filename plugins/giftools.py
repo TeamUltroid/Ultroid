@@ -81,8 +81,8 @@ async def gifs(ult):
         except IndexError:
             pass
     if not get:
-        return await eor(ult, f"`{HNDLR}gif <query>`")
-    m = await eor(ult, get_string("com_2"))
+        return await ult.eor(f"`{HNDLR}gif <query>`")
+    m = await ult.eor(get_string("com_2"))
     gifs = await ult.client.inline_query("gif", get)
     if not n:
         await gifs[xx].click(

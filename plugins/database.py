@@ -45,7 +45,7 @@ async def _(ult):
             ),
         )
     except BaseException:
-        await eor(ult, get_string("com_7"))
+        await ult.eor(get_string("com_7"))
 
 
 @ultroid_cmd(pattern="deldb ?(.*)", fullsudo=True)
@@ -60,10 +60,10 @@ async def _(ult):
         else:
             k = udB.del_key(key)
         if k == 0:
-            return await eor(ult, "`No Such Key.`")
-        await eor(ult, f"`Successfully deleted key {key}`")
+            return await ult.eor("`No Such Key.`")
+        await ult.eor(f"`Successfully deleted key {key}`")
     except BaseException:
-        await eor(ult, get_string("com_7"))
+        await ult.eor(get_string("com_7"))
 
 
 @ultroid_cmd(pattern="rendb ?(.*)", fullsudo=True)
@@ -81,6 +81,6 @@ async def _(ult):
                 ),
             )
         except BaseException:
-            await eor(ult, get_string("com_7"))
+            await ult.eor(get_string("com_7"))
     else:
-        await eor(ult, "Key not found")
+        await ult.eor("Key not found")
