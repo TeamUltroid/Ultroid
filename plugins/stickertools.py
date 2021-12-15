@@ -36,7 +36,6 @@ import requests
 from PIL import Image, ImageDraw
 from pyUltroid.functions.misc import create_quotly
 from telethon.errors import YouBlockedUserError
-from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
 
