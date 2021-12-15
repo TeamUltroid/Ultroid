@@ -9,6 +9,9 @@
 
 • `{i}mediainfo <reply to media>`
    To get info about it.
+
+• `{i}rotate <degree/angle> <reply to media>`
+   Rotate any video/photo/media..
 """
 import os
 import time
@@ -93,7 +96,7 @@ async def rotate_(ult):
     msg = await ult.eor(get_string("com_1"))
     if reply.photo or reply.sticker:
         media = await reply.download_media()
-        cv2.imread(photo)
+        cv2.imread(media)
         new_ = rotate_image(media, match)
         file = "ult.png"
         cv2.imwrite(file, new_)
