@@ -94,10 +94,13 @@ async def rotate_(ult):
         return await ult.eor("`Please provide a valid angle to rotate media..`")
     reply = await ult.get_reply_message()
     msg = await ult.eor(get_string("com_1"))
-    if reply.photo or reply.sticker:
-        media = await reply.download_media()
-        cv2.imread(media)
-        new_ = rotate_image(media, match)
+    photo = None
+    if reply.game:
+        photo = reply.game.photo
+    if photo or reply.photo or reply.sticker:
+        media = await ult.client.download_media(photo or reply)
+        img = cv2.imread(media)
+        new_ = rotate_image(img, match)
         file = "ult.png"
         cv2.imwrite(file, new_)
     elif reply.video:
