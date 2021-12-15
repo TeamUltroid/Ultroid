@@ -83,12 +83,10 @@ async def ultroid(event):
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
             buttons = [[Button.inline("Info", "itkkstyo")]]
             if event.sender.username:
-                buttons.append(
-                    [
-                        Button.mention(
-                            "User", await event.client.get_input_entity(event.sender_id)
-                        )
-                    ]
+                buttons[0].append(
+                    Button.mention(
+                        "User", await event.client.get_input_entity(event.sender_id)
+                    )
                 )
             await event.client.send_message(
                 udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
