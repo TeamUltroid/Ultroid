@@ -107,14 +107,12 @@ async def pack_kangish(_):
             )
         )
     try:
-        short_name = (
-            "ultroid_" + (await _.client(SuggestShortNameRequest(_packname))).short_name
-        )
+        short_name = "ult_" + pack_name.replace(" ", "_") + str(_.id)
         _r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
-                short_name=f"u{short_name}_by_{asst.me.username}",
+                short_name=f"{short_name}_by_{asst.me.username}",
                 stickers=stiks,
             )
         )
