@@ -41,6 +41,7 @@ from . import (
     udB,
     ultroid_bot,
     ultroid_cmd,
+    inline_mention
 )
 
 CACHE = {}
@@ -90,7 +91,7 @@ async def fcall(e):
     spli = match.split("_")
     user = await ultroid_bot.get_entity(int(spli[0]))
     cl = await ultroid_bot.get_entity(int(spli[1]))
-    text = f"Hi [{user.first_name}](tg://user?id={user.id}), You Need to Join"
+    text = f"Hi [{inline_mention(user)}), You Need to Join"
     text += f" {cl.title} in order to Chat in this Group."
     if not cl.username:
         el = (await ultroid_bot(ExportChatInviteRequest(cl))).link
@@ -158,6 +159,7 @@ async def force_sub(ult):
             await ultroid_bot.edit_permissions(
                 ult.chat_id, user.id, view_messages=False
             )
+            return
         except BaseException as er:
             LOGS.exception(er)
     try:
