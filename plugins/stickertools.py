@@ -106,7 +106,7 @@ async def pack_kangish(_):
             )
         )
     try:
-        short_name = "ult_" + pack_name.replace(" ", "_") + str(_.id)
+        short_name = "ult_" + _packname.replace(" ", "_") + str(_.id)
         _r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
