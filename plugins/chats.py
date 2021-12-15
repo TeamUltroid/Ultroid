@@ -84,9 +84,9 @@ async def _(e):
     try:
         await e.client(DeleteChannelRequest(chat))
     except TypeError:
-        return await eor(xx, get_string("chats_1"), time=10)
+        return await xx.eor(get_string("chats_1"), time=10)
     except no_admin:
-        return await eor(xx, get_string("chats_2"), time=10)
+        return await xx.eor(get_string("chats_2"), time=10)
     await e.client.send_message(
         int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
@@ -250,7 +250,7 @@ async def _(event):
             p += 1
         except BaseException:
             pass
-    await eor(xx, f"{title}: {p} unbanned", time=5)
+    await xx.eor(f"{title}: {p} unbanned", time=5)
 
 
 @ultroid_cmd(
@@ -359,4 +359,4 @@ async def _(event):
     required_string += f"  `{HNDLR}rmusers recently`  **••**  `{r}`\n"
     required_string += f"  `{HNDLR}rmusers bot`  **••**  `{b}`\n"
     required_string += f"  `{HNDLR}rmusers none`  **••**  `{n}`"
-    await eor(xx, required_string)
+    await xx.eor(required_string)

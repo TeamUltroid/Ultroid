@@ -592,7 +592,7 @@ async def list_approved(event):
     xx = await event.eor(get_string("com_1"))
     all = get_approved()
     if not all:
-        return await eor(xx, "`You haven't approved anyone yet!`", time=5)
+        return await xx.eor("`You haven't approved anyone yet!`", time=5)
     users = []
     for i in all:
         try:

@@ -28,10 +28,10 @@ async def _(event):
     try:
         file_name = vv[1]
     except IndexError:
-        return await eor(xx, get_string("wbl_1"))
+        return await xx.eor(get_string("wbl_1"))
     bb = await event.get_reply_message()
     if not (bb and bb.media):
-        return await eor(xx, get_string("cvt_3"))
+        return await xx.eor(get_string("cvt_3"))
     ccc = time.time()
     try:
         naam = await downloader(

@@ -138,7 +138,7 @@ async def hehe(args):
     is_anim = False
     emoji = None
     if not message:
-        return await eor(xx, get_string("sts_6"))
+        return await xx.eor(get_string("sts_6"))
     if message.photo:
         photo = io.BytesIO()
         photo = await ultroid_bot.download_media(message.photo, photo)

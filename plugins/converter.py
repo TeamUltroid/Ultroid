@@ -191,7 +191,7 @@ async def _(event):
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eor(xx, get_string("cvt_8"), time=5)
+        return await xx.eor(get_string("cvt_8"), time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:

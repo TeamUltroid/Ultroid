@@ -308,7 +308,7 @@ async def _(e):
     elif e.is_private:
         userid = e.chat_id
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", time=5)
     if not is_gbanned(userid):
         return await xx.edit("`User/Channel is not Gbanned...`")
     try:
@@ -363,7 +363,7 @@ async def _(e):
         except IndexError:
             pass
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", tome=5, time=5)
     user = None
     try:
         user = await e.client.get_entity(userid)
@@ -552,9 +552,9 @@ async def gkick(e):
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eor(xx, "`I can't gkick myself.`", time=3)
+        return await xx.eor("`I can't gkick myself.`", time=3)
     if userid in DEVLIST:
-        return await eor(xx, "`I can't gkick my Developers.`", time=3)
+        return await xx.eor("`I can't gkick my Developers.`", time=3)
     if _dialogs:
         dialog = _dialogs["_"]
     else:
@@ -580,15 +580,15 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", tome=5, time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", tome=5, time=5)
     name = await e.client.get_entity(userid)
     chats = 0
     if userid == ultroid_bot.uid:
-        return await eor(xx, "`I can't gmute myself.`", time=3)
+        return await xx.eor("`I can't gmute myself.`", time=3)
     if userid in DEVLIST:
-        return await eor(xx, "`I can't gmute my Developers.`", time=3)
+        return await xx.eor("`I can't gmute my Developers.`", time=3)
     if is_gmuted(userid):
-        return await eor(xx, "`User is already gmuted.`", time=4)
+        return await xx.eor("`User is already gmuted.`", time=4)
     if _dialogs:
         dialog = _dialogs["_"]
     else:
@@ -615,11 +615,11 @@ async def _(e):
     elif e.is_private:
         userid = (await e.get_chat()).id
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     chats = 0
     if not is_gmuted(userid):
-        return await eor(xx, "`User is not gmuted.`", time=3)
+        return await xx.eor("`User is not gmuted.`", time=3)
     if _dialogs:
         dialog = _dialogs["_"]
     else:
@@ -685,9 +685,9 @@ async def gstat_(e):
         try:
             userid = await get_user_id(e.pattern_match.group(1))
         except Exception as err:
-            return await eor(xx, f"{err}", time=10)
+            return await xx.eor(f"{err}", time=10)
     else:
-        return await eor(xx, "`Reply to some msg or add their id.`", time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
     msg = "**" + name + " is "
     is_banned = is_gbanned(userid)

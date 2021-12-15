@@ -90,7 +90,7 @@ async def download(event):
     if event.reply_to_msg_id:
         ok = await event.get_reply_message()
         if not ok.media:
-            return await eor(xx, get_string("udl_1"), time=5)
+            return await xx.eor(get_string("udl_1"), time=5)
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
@@ -128,7 +128,7 @@ async def download(event):
             )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
-    await eor(xx, get_string("udl_2").format(file_name, t))
+    await xx.eor(get_string("udl_2").format(file_name, t))
 
 
 @ultroid_cmd(
@@ -151,12 +151,12 @@ async def download(event):
     tt = time.time()
     ko = kk
     if not kk:
-        return await eor(xx, get_string("udl_3"), time=5)
+        return await xx.eor(get_string("udl_3"), time=5)
     if kk == ".env" or ".session" in kk:
         return await eod(xx, get_string("udl_7"), time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
-            return await eor(xx, get_string("udl_6"), time=5)
+            return await xx.eor(get_string("udl_6"), time=5)
         ok = glob.glob(f"{kk}/*")
         kk = [*sorted(ok)]
         for kk in kk:
@@ -214,7 +214,7 @@ async def download(event):
                         thumb="resources/extras/ultroid.jpg",
                     )
             except Exception as ve:
-                return await eor(xx, str(ve))
+                return await xx.eor(str(ve))
     else:
         try:
             try:
@@ -271,7 +271,7 @@ async def download(event):
                     thumb="resources/extras/ultroid.jpg",
                 )
         except Exception as ve:
-            return await eor(xx, str(ve))
+            return await xx.eor(str(ve))
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     if os.path.isdir(ko):
@@ -287,4 +287,4 @@ async def download(event):
             f"Uploaded `{ko}` Folder, Total - `{c}` files of `{humanbytes(size)}` in `{t}`",
         )
     else:
-        await eor(xx, f"Uploaded `{ko}` in `{t}`")
+        await xx.eor(f"Uploaded `{ko}` in `{t}`")

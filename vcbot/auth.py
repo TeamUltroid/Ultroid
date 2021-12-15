@@ -114,9 +114,9 @@ async def _(e):
             userid = await get_user_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eor(xx, f"`{str(ex)}`", time=5)
+            return await xx.eor(f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, get_string("vcbot_17"), time=3)
+        return await xx.eor(get_string("vcbot_17"), time=3)
     if not is_vcsudo(userid):
         return await eod(
             xx,
@@ -131,7 +131,7 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eor(xx, f"`{ex}`", time=5)
+        return await xx.eor(f"`{ex}`", time=5)
 
 
 @vc_asst("vcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
@@ -146,9 +146,9 @@ async def _(e):
             userid = await get_user_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eor(xx, f"`{str(ex)}`", time=5)
+            return await xx.eor(f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, get_string("vcbot_17"), time=3)
+        return await xx.eor(get_string("vcbot_17"), time=3)
     if is_vcsudo(userid):
         return await eod(
             xx,
@@ -163,4 +163,4 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eor(xx, f"`{ex}`", time=5)
+        return await xx.eor(f"`{ex}`", time=5)

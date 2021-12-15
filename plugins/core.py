@@ -117,10 +117,10 @@ async def get_the_addons_lol(event):
     xx = await event.eor(get_string("com_1"))
     fool = get_string("gas_1")
     if thelink is None:
-        return await eor(xx, fool, time=10)
+        return await xx.eor(fool, time=10)
     split_thelink = thelink.split("/")
     if "raw" not in thelink:
-        return await eor(xx, fool, time=10)
+        return await xx.eor(fool, time=10)
     name_of_it = split_thelink[(len(split_thelink) - 1)]
     plug = requests.get(thelink).text
     fil = f"addons/{name_of_it}"
@@ -131,7 +131,7 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eor(xx, get_string("core_17").format(shortname), time=15)
+        await xx.eor(get_string("core_17").format(shortname), time=15)
     except Exception as e:
         await eod(
             xx,

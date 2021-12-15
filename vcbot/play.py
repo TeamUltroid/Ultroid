@@ -61,7 +61,7 @@ async def play_music_(event):
         return await eor(
             xx, "Please specify a song name or reply to a audio file !", time=5
         )
-    await eor(xx, get_string("vcbot_20"), parse_mode="md")
+    await xx.eor(get_string("vcbot_20"), parse_mode="md")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
         song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:
@@ -84,7 +84,7 @@ async def play_music_(event):
             )
             await xx.delete()
         except ChatSendMediaForbiddenError:
-            await eor(xx, text, link_preview=False)
+            await xx.eor(text, link_preview=False)
         if thumb and os.path.exists(thumb):
             os.remove(thumb)
     else:
@@ -172,7 +172,7 @@ async def play_music_(event):
 async def radio_mirchi(e):
     xx = await eor(e, get_string("com_1"))
     if len(e.text.split()) <= 1:
-        return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
+        return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
         chat = int(input[1])
@@ -185,7 +185,7 @@ async def radio_mirchi(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     if not is_url_ok(song):
-        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
+        return await xx.eor(f"`{song}`\n\nNot a playable link.🥱")
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected and not (await ultSongs.vc_joiner()):
         return
@@ -201,7 +201,7 @@ async def radio_mirchi(e):
 async def live_stream(e):
     xx = await eor(e, get_string("com_1"))
     if not len(e.text.split()) > 1:
-        return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
+        return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
         chat = int(input[1])
@@ -214,12 +214,12 @@ async def live_stream(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     if not is_url_ok(song):
-        return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
+        return await xx.eor(f"`{song}`\n\nNot a playable link.🥱")
     is_live_vid = False
     if re.search("youtu", song):
         is_live_vid = (await bash(f'youtube-dl -j "{song}" | jq ".is_live"'))[0]
     if is_live_vid != "true":
-        return await eor(xx, f"Only Live Youtube Urls supported!\n{song}")
+        return await xx.eor(f"Only Live Youtube Urls supported!\n{song}")
     file, thumb, title, link, duration = await download(song)
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected and not (await ultSongs.vc_joiner()):

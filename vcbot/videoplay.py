@@ -49,14 +49,14 @@ async def video_c(event):
         else:
             song = input
     if not (reply or song):
-        return await eor(xx, get_string("vcbot_15"), time=5)
-    await eor(xx, get_string("vcbot_20"))
+        return await xx.eor(get_string("vcbot_15"), time=5)
+    await xx.eor(get_string("vcbot_20"))
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
         song, thumb, title, link, duration = await file_download(xx, reply)
     else:
         is_link = is_url_ok(song)
         if is_link is False:
-            return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
+            return await xx.eor(f"`{song}`\n\nNot a playable link.🥱")
         if is_link is None:
             song, thumb, title, link, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):

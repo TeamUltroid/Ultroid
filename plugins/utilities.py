@@ -236,7 +236,7 @@ async def _(event):
             message = previous_message.message
     done, key = await get_paste(message)
     if not done:
-        return await eor(xx, key)
+        return await xx.eor(key)
     link = "https://spaceb.in/" + key
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     reply_text = (
@@ -244,7 +244,7 @@ async def _(event):
     )
     try:
         if event.client._bot:
-            return await eor(xx, reply_text)
+            return await xx.eor(reply_text)
         ok = await event.client.inline_query(asst.me.username, "pasta-" + key)
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
@@ -280,7 +280,7 @@ async def _(event):
             capt = await get_chat_info(_, event)
             if is_gbanned(peer):
                 capt += "\n•<b> Is Gbanned:</b> <code>True</code>"
-            await eor(xx, capt, parse_mode="html")
+            await xx.eor(capt, parse_mode="html")
         except Exception as er:
             await event.eor("**ERROR ON CHATINFO**\n" + str(er))
         return
