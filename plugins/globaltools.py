@@ -59,13 +59,11 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights, User
-from telethon.utils import get_display_name
 
 from . import (
     HNDLR,
     LOGS,
     NOSPAM_CHAT,
-    OWNER_ID,
     OWNER_NAME,
     eod,
     eor,
