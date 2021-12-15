@@ -17,7 +17,6 @@ from . import (
     HNDLR,
     LOGS,
     bash,
-    eor,
     get_all_files,
     get_string,
     humanbytes,

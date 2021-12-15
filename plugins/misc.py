@@ -32,7 +32,6 @@ from img2html.converter import Img2HTMLConverter
 
 from . import (
     async_searcher,
-    eor,
     fast_download,
     get_random_user_data,
     get_string,

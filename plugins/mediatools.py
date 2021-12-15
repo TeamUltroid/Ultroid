@@ -18,7 +18,6 @@ from . import (
     LOGS,
     bash,
     downloader,
-    eor,
     get_string,
     make_html_telegraph,
     mediainfo,

@@ -34,7 +34,6 @@ from . import (
     LOGS,
     asst,
     callback,
-    eor,
     events,
     get_string,
     in_pattern,

@@ -27,7 +27,6 @@ from . import (
     NOSPAM_CHAT,
     Redis,
     asst,
-    eor,
     get_string,
     mediainfo,
     udB,

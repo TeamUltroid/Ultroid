@@ -59,7 +59,6 @@ from telethon.tl.types import (
 from . import (
     HNDLR,
     asst,
-    eor,
     get_string,
     get_user_id,
     mediainfo,

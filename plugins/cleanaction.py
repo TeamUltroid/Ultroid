@@ -20,7 +20,7 @@
 
 from telethon.utils import get_display_name
 
-from . import eor, get_string, udB, ultroid_cmd
+from . import get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)

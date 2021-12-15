@@ -49,7 +49,6 @@ from . import (
     bash,
     downloader,
     eod,
-    eor,
     get_string,
     get_user_id,
     mediainfo,

@@ -31,7 +31,6 @@ from telethon.tl.types import DocumentAttributeVideo
 from . import (
     bash,
     downloader,
-    eor,
     get_string,
     humanbytes,
     math,

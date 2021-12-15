@@ -16,7 +16,7 @@ from datetime import timedelta
 
 from pyUltroid.functions.admins import ban_time
 
-from . import eor, get_string, ultroid_cmd
+from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="schedule ?(.*)", fullsudo=True)

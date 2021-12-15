@@ -20,7 +20,7 @@
 from pyUltroid.dB.echo_db import add_echo, check_echo, list_echo, rem_echo
 from telethon.utils import get_display_name
 
-from . import LOGS, eor, events, ultroid_bot, ultroid_cmd
+from . import LOGS, events, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addecho ?(.*)")

@@ -36,7 +36,7 @@ except ImportError:
 from PIL import Image
 from telegraph import upload_file as uf
 
-from . import bash, downloader, eor, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
 

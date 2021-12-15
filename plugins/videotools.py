@@ -30,7 +30,6 @@ from . import (
     downloader,
     duration_s,
     eod,
-    eor,
     genss,
     get_string,
     humanbytes,

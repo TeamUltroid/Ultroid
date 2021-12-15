@@ -21,7 +21,7 @@
 """
 from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
-from . import eor, get_string, requests, ultroid_cmd
+from . import get_string, requests, ultroid_cmd
 
 
 @ultroid_cmd(

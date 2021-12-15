@@ -30,7 +30,6 @@ from . import (
     asyncio,
     bash,
     downloader,
-    eor,
     get_all_files,
     get_string,
     ultroid_cmd,
