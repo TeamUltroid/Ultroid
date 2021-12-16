@@ -512,6 +512,14 @@ instu_2: "Recent Searches.."
 instu_3: "Enter Query to Search"
 instu_4: "Success"
 
+# games
+games_1: "Choose The Game 🎮"
+games_2: "Choose Category!"
+games_3: "Choose Difficulty Level"
+games_4: "Choose Number of Questions.."
+games_5: "Choose Time Interval..."
+games_6: "**• Starting Quiz in 5 secs.** \n**• Level :** {}\n**• Qs :** {}"
+
 # callbackstuffs
 clst_1: "`Userbot dyno build in progress, please wait for it to complete.`"
 clst_2: "`Successfully Updated!\nRestarting, please wait...`"
