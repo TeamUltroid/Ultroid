@@ -11,56 +11,31 @@
     Upload files on another server.
 """
 
-import time
-
-from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
-from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-
+import time, os
+from pyUltroid.functions.tools import _webupload_cache
 from . import HNDLR, asst, downloader, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="webupload",
+    pattern="webupload ?(.*)",
 )
 async def _(event):
     xx = await event.eor(get_string("com_1"))
-    vv = event.text.split(" ", maxsplit=1)
-    try:
-        file_name = vv[1]
-    except IndexError:
-        return await xx.eor(get_string("wbl_1"))
-    bb = await event.get_reply_message()
-    if not (bb and bb.media):
-        return await xx.eor(get_string("cvt_3"))
-    ccc = time.time()
-    try:
-        naam = await downloader(
-            bb.file.name,
-            bb.media.document,
-            xx,
-            ccc,
-            "Downloading " + bb.file.name + "...",
-        )
-        file_name = naam.name
-    except BaseException:
-        file_name = await event.client.download_media(bb)
-    try:
-        results = await event.client.inline_query(
-            asst.me.username,
-            f"fl2lnk {file_name}",
-        )
-    except rep:
-        return await eor(
-            xx,
-            get_string("help_2").format(
-                HNDLR,
-            ),
-        )
-    except dis:
-        return await eor(
-            xx,
-            get_string("help_3"),
-        )
-    await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
+    match = event.pattern_match.group(1)
+    if match:
+        if not os.path.exists(match):
+            return await xx.eor("`File doesn't exist.`")
+        _webupload_cache[event.chat_id][event.id] = match
+    elif event.reply_to_msg_id:
+        reply = await event.get_reply_message()
+        if reply.photo:
+            file = await event.client.download_media("resources/downloads/")
+            _webupload_cache[event.chat_id][event.id] = file
+        else:
+            file, _ = await event.client.fast_downloader(reply.document, reply.file.name, show_progress=True, event=xx)
+            _webupload_cache[event.chat_id][event.id] = file.name
+    else:
+        return await xx.eor("`Reply to file or give file path...`")
+    results = await event.client.inline_query(asst.me.username,f"fl2lnk {event.chat_id}:{event.id}")
+    await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id)
     await xx.delete()
-    await event.delete()
