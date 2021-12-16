@@ -77,7 +77,7 @@ async def play_music_(event):
         )
         try:
             await xx.reply(
-                text,
+                text[:1024],
                 file=thumb,
                 link_preview=False,
                 parse_mode="html",
@@ -95,9 +95,7 @@ async def play_music_(event):
         ):
             song = None
         add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
-        return await eor(
-            xx,
-            f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+        return await xx.eor(f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
             parse_mode="html",
         )
 
