@@ -140,10 +140,14 @@ _buttons = {
     "chatbot": {
         "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         "buttons": [
-            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot"),
-             Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel"),
-            Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
+            [
+                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot"),
+                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot"),
+            ],
+            [
+                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel"),
+                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew"),
+            ],
             [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
