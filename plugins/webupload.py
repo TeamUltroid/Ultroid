@@ -24,6 +24,8 @@ from . import asst, get_string, ultroid_cmd
 async def _(event):
     xx = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1)
+    if event.chat_id not in _webupload_cache:
+        _webupload_cache.update({event.chat_id: {}})
     if match:
         if not os.path.exists(match):
             return await xx.eor("`File doesn't exist.`")
