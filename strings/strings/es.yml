@@ -146,8 +146,8 @@ udl_3: "`Da una ruta específica al archivo`"
 
 #words
 wrd_1: "**Palabra** - `{}`\n\n**Significados** - __{}__\n"
-wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** - __{}__\n"
-wrd_3: "**Palabra** - `{}`\n\n**Antonimos** - __{}__\n"
+wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** - \n"
+wrd_3: "**Palabra** - `{}`\n\n**Antonimos** - \n"
 #---------------------------------------------------#
 
 #assisant
