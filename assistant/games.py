@@ -136,7 +136,11 @@ async def magic(event):
         [Button.inline("Trivia Quiz", "trzia")],
         [Button.inline("Cancel ❌", "delit")],
     ]
-    await event.reply(get_string("games_1"), file=" https://telegra.ph/file/8f5f05dc948ee35c431e3.jpg", buttons=buttons)
+    await event.reply(
+        get_string("games_1"),
+        file=" https://telegra.ph/file/8f5f05dc948ee35c431e3.jpg",
+        buttons=buttons,
+    )
 
 
 # -------------------------- Trivia ----------------------- #
@@ -208,9 +212,7 @@ async def choose_cata(event):
     elif match[0] == "s":
         chat = event.chat_id
         cat, le, nu, in_ = match[2:].split("_")
-        msg = await event.edit(
-            get_string("games_6").format(le, nu)
-        )
+        msg = await event.edit(get_string("games_6").format(le, nu))
         for i in reversed(range(5)):
             msg = await msg.edit(buttons=Button.inline(f"{i} ⏰", f"ctdown{i}"))
             await asyncio.sleep(1)
