@@ -32,7 +32,7 @@ async def play_music_(event):
         return  # For PlayFrom Conflict
     xx = await event.eor(get_string("com_1"), parse_mode="md")
     chat = event.chat_id
-    from_user = inline_mention(event, html=True)
+    from_user = inline_mention(event.sender, html=True)
     reply, song = None, None
     if event.reply_to:
         reply = await event.get_reply_message()
@@ -77,7 +77,7 @@ async def play_music_(event):
         )
         try:
             await xx.reply(
-                text[:1024],
+                text,
                 file=thumb,
                 link_preview=False,
                 parse_mode="html",
