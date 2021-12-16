@@ -11,9 +11,11 @@
     Upload files on another server.
 """
 
-import time, os
+import os
+
 from pyUltroid.functions.tools import _webupload_cache
-from . import HNDLR, asst, downloader, eor, get_string, ultroid_cmd
+
+from . import asst, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -32,10 +34,14 @@ async def _(event):
             file = await event.client.download_media("resources/downloads/")
             _webupload_cache[event.chat_id][event.id] = file
         else:
-            file, _ = await event.client.fast_downloader(reply.document, reply.file.name, show_progress=True, event=xx)
+            file, _ = await event.client.fast_downloader(
+                reply.document, reply.file.name, show_progress=True, event=xx
+            )
             _webupload_cache[event.chat_id][event.id] = file.name
     else:
         return await xx.eor("`Reply to file or give file path...`")
-    results = await event.client.inline_query(asst.me.username,f"fl2lnk {event.chat_id}:{event.id}")
+    results = await event.client.inline_query(
+        asst.me.username, f"fl2lnk {event.chat_id}:{event.id}"
+    )
     await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id)
     await xx.delete()
