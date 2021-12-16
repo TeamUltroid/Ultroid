@@ -136,7 +136,7 @@ async def magic(event):
         [Button.inline("Trivia Quiz", "trzia")],
         [Button.inline("Cancel ❌", "delit")],
     ]
-    await event.reply("Choose The Game 🎮", buttons=buttons)
+    await event.reply(get_string("games_1"), file=" https://telegra.ph/file/8f5f05dc948ee35c431e3.jpg", buttons=buttons)
 
 
 # -------------------------- Trivia ----------------------- #
@@ -189,27 +189,27 @@ async def choose_cata(event):
                 buttons.append((btt[-1],))
             buttons.append([Button.inline("Cancel ❌", "delit")])
             TR_BTS.update({"category": buttons})
-        text = "Choose Category!"
+        text = get_string("games_2")
     elif match[0] == "d":
         cat = match[1:]
         buttons = [[Button.inline(i, f"trziac{cat}_{i}") for i in DIFI_KEYS]]
         buttons.append(get_back_button("trzia"))
-        text = "Choose Difficulty Level"
+        text = get_string("games_3")
     elif match[0] == "c":
         m = match[1:]
         buttons = [[Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
-        text = "Choose Number of Questions.."
+        text = get_string("games_4")
     elif match[0] == "t":
         m_ = match[1:]
         buttons = [
             [Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]
         ]
-        text = "Choose Time Interval..."
+        text = get_string("games_5")
     elif match[0] == "s":
         chat = event.chat_id
         cat, le, nu, in_ = match[2:].split("_")
         msg = await event.edit(
-            f"**• Starting Quiz in 5secs.** \n**• Level :** {le}\n**• Qs :** {nu}"
+            get_string("games_6").format(le, nu)
         )
         for i in reversed(range(5)):
             msg = await msg.edit(buttons=Button.inline(f"{i} ⏰", f"ctdown{i}"))
