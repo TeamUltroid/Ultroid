@@ -10,7 +10,7 @@
 | gu | Gujarati [ગુજરાતી] | 111 | 302 |
 | az | Azerbaijan [Azərbaycan] | 382 | 31 |
 | mr | Marathi [मराठी] | 114 | 299 |
-| hi | Hindi [हिंदी] | 136 | 277 |
+| hi | Hindi [हिंदी] | 158 | 255 |
 | fa | Persian [Farsi] | 114 | 299 |
 | my | Malay [Bahasa Melayu] | 114 | 299 |
 | ml | Malayalam [മലയാളം] | 114 | 299 |
