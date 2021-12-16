@@ -137,7 +137,10 @@ async def when_added_or_joined(event):
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
     else:
-        text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
+        if event.from_request:
+            text = f"#APPROVAL_LOG\n\n{inline_mention(user)} just got Chat Join Approval to {chat}."
+        else:
+            text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
 
 
