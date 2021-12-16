@@ -12,7 +12,13 @@ from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import async_searcher, get_ofox, saavn_search, _webupload_cache, webuploader
+from pyUltroid.functions.tools import (
+    _webupload_cache,
+    async_searcher,
+    get_ofox,
+    saavn_search,
+    webuploader,
+)
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio as Audio
 from telethon.tl.types import InputWebDocument as wb
@@ -101,7 +107,7 @@ async def _(e):
     chat_id, msg_id = match.split(":")
     filename = _webupload[int(chat_id)][int(msg_id)]
     if "/" in filename:
-        filename = filename.split('/')[-1]
+        filename = filename.split("/")[-1]
     __cache = f"{chat_id}:{msg_id}"
     buttons = [
         [
@@ -144,7 +150,7 @@ async def _(e):
     chat_id, msg_id = data.split("//")[1].split(":")
     filename = _webupload_cache[int(chat_id)][int(msg_id)]
     if "/" in filename:
-        filename = filename.split('/')[-1]
+        filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
     link = await webuploader(chat_id, msg_id, host)
     await e.edit(f"Uploaded [{filename}]({link)] on {host}.")
