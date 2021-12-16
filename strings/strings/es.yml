@@ -145,9 +145,9 @@ udl_2: "Descarga exitosa..\npara\n`{}`\nen `{}`"
 udl_3: "`Da una ruta específica al archivo`"
 
 #words
-wrd_1: "**Palabra** - `{}`\n\n**Significados** -\n"
-wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** -\n"
-wrd_3: "**Palabra** - `{}`\n\n**Antonimos** -\n"
+wrd_1: "**Palabra** - `{}`\n\n**Significados** - __{}__\n"
+wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** - __{}__\n"
+wrd_3: "**Palabra** - `{}`\n\n**Antonimos** - __{}__\n"
 #---------------------------------------------------#
 
 #assisant
