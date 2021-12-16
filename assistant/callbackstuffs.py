@@ -140,14 +140,10 @@ _buttons = {
     "chatbot": {
         "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         "buttons": [
-            [
-                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot"),
-                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot"),
-            ],
-            [
-                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel"),
-                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew"),
-            ],
+            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot"),
+             Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
+            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel"),
+            Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
             [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
@@ -1282,11 +1278,11 @@ async def fdroid_dler(event):
         ),
     )
     tt = time.time()
-    file = await uploader(file, file, tt, event, "Uploading...")
+    n_file = await uploader(file, file, tt, event, "Uploading...")
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
         msg = await event.edit(
-            f"**• [{title}]({URL}) •**", file=file, thumb=thumb, buttons=buttons
+            f"**• [{title}]({URL}) •**", file=n_file, thumb=thumb, buttons=buttons
         )
     except Exception as er:
         LOGS.exception(er)
@@ -1297,10 +1293,11 @@ async def fdroid_dler(event):
                 f"**• [{title}]({URL}) •**",
                 buttons=buttons,
                 thumb=thumb,
-                file=file,
+                file=n_file,
             )
         except Exception as er:
             os.remove(thumb)
+            os.remove(file)
             LOGS.exception(er)
             return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
     if msg and hasattr(msg, "media"):
