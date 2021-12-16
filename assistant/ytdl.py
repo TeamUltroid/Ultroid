@@ -8,6 +8,7 @@
 
 import os
 import re
+from PIL import Image
 
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
@@ -192,6 +193,7 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        Image.open(thumb).save(thumb, "JPEG")
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
