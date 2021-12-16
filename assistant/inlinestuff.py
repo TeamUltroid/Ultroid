@@ -105,7 +105,7 @@ async def _(e):
 async def _(e):
     match = e.pattern_match.group(1)
     chat_id, msg_id = match.split(":")
-    filename = _webupload[int(chat_id)][int(msg_id)]
+    filename = _webupload_cache[chat_id][msg_id]
     if "/" in filename:
         filename = filename.split("/")[-1]
     __cache = f"{chat_id}:{msg_id}"
@@ -148,7 +148,7 @@ async def _(e):
     data = t[2:]
     host = data.split("//")[0]
     chat_id, msg_id = data.split("//")[1].split(":")
-    filename = _webupload_cache[int(chat_id)][int(msg_id)]
+    filename = _webupload_cache[chat_id][msg_id]
     if "/" in filename:
         filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
