@@ -12,7 +12,7 @@ from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import async_searcher, get_ofox, saavn_search
+from pyUltroid.functions.tools import async_searcher, get_ofox, saavn_search, _webupload_cache, webuploader
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio as Audio
 from telethon.tl.types import InputWebDocument as wb
@@ -97,27 +97,31 @@ async def _(e):
 
 @in_pattern("fl2lnk ?(.*)", owner=True)
 async def _(e):
-    file_path = e.pattern_match.group(1)
-    file_name = file_path.split("/")[-1]
-    bitton = [
+    match = e.pattern_match.group(1)
+    chat_id, msg_id = match.split(":")
+    filename = _webupload[int(chat_id)][int(msg_id)]
+    if "/" in filename:
+        filename = filename.split('/')[-1]
+    __cache = f"{chat_id}:{msg_id}"
+    buttons = [
         [
-            Button.inline("anonfiles", data=f"flanonfiles//{file_path}"),
-            Button.inline("transfer", data=f"fltransfer//{file_path}"),
+            Button.inline("anonfiles", data=f"flanonfiles//{__cache}"),
+            Button.inline("transfer", data=f"fltransfer//{__cache}"),
         ],
         [
-            Button.inline("bayfiles", data=f"flbayfiles//{file_path}"),
-            Button.inline("x0", data=f"flx0//{file_path}"),
+            Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
+            Button.inline("x0", data=f"flx0//{__cache}"),
         ],
         [
-            Button.inline("file.io", data=f"flfile.io//{file_path}"),
-            Button.inline("siasky", data=f"flsiasky//{file_path}"),
+            Button.inline("file.io", data=f"flfile.io//{__cache}"),
+            Button.inline("siasky", data=f"flsiasky//{__cache}"),
         ],
     ]
     try:
         lnk = e.builder.article(
-            title="fl2lnk",
-            text=f"**File:**\n{file_name}",
-            buttons=bitton,
+            title=f"Upload {filename}",
+            text=f"**File:**\n{filename}",
+            buttons=buttons,
         )
     except BaseException:
         lnk = e.builder.article(
@@ -137,12 +141,13 @@ async def _(e):
     t = (e.data).decode("UTF-8")
     data = t[2:]
     host = data.split("//")[0]
-    file = data.split("//")[1]
-    file_name = file.split("/")[-1]
-    await e.edit(f"Uploading `{file_name}` on {host}")
-
-
-#    await dloader(e, host, file)
+    chat_id, msg_id = data.split("//")[1].split(":")
+    filename = _webupload_cache[int(chat_id)][int(msg_id)]
+    if "/" in filename:
+        filename = filename.split('/')[-1]
+    await e.edit(f"Uploading `{filename}` on {host}")
+    link = await webuploader(chat_id, msg_id, host)
+    await e.edit(f"Uploaded [{filename}]({link)] on {host}.")
 
 
 @in_pattern("repo", owner=True)
