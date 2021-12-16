@@ -25,7 +25,7 @@ async def _(event):
     xx = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1)
     if event.chat_id not in _webupload_cache:
-        _webupload_cache.update({event.chat_id: {}})
+        _webupload_cache.update({int(event.chat_id): {}})
     if match:
         if not os.path.exists(match):
             return await xx.eor("`File doesn't exist.`")
@@ -34,12 +34,12 @@ async def _(event):
         reply = await event.get_reply_message()
         if reply.photo:
             file = await event.client.download_media("resources/downloads/")
-            _webupload_cache[event.chat_id][event.id] = file
+            _webupload_cache[int(event.chat_id)][int(event.id)] = file
         else:
             file, _ = await event.client.fast_downloader(
                 reply.document, reply.file.name, show_progress=True, event=xx
             )
-            _webupload_cache[event.chat_id][event.id] = file.name
+            _webupload_cache[int(event.chat_id)][int(event.id)] = file.name
     else:
         return await xx.eor("`Reply to file or give file path...`")
     results = await event.client.inline_query(
