@@ -106,7 +106,7 @@ async def ultroid(event):
                 f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
                 file=udB.get_key("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")]
-                if Owner_info_msg != "False"
+                if Owner_info_msg
                 else None,
             )
         else:
