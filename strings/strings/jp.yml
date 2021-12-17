@@ -88,7 +88,6 @@ antiflood_5: "`このチャットのフラッド制限は{}です。` "
 ascii_1: "`Reply to image.`"
 ascii_2: "`Converting to html...`"
 
-
 ＃audiotools
 audiotools_1: "オーディオまたはビデオに返信.."
 audiotools_2: "ダウンロードに成功し、音声に変換中"
