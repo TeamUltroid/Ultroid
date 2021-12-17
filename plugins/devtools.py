@@ -114,6 +114,8 @@ def _parse_eval(value):
             return json_parser(value, indent=1)
         except BaseException:
             pass
+    elif value and isinstance(value, list):
+        value = [_parse_eval(_) for _ in value]
     # is to_dict is also Good option to format?
     return str(value)
 
