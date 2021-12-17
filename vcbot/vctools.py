@@ -30,10 +30,8 @@ from . import *
 async def mute(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
@@ -47,10 +45,8 @@ async def mute(event):
 async def unmute(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
@@ -64,10 +60,8 @@ async def unmute(event):
 async def pauser(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
@@ -81,10 +75,8 @@ async def pauser(event):
 async def resumer(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
@@ -98,10 +90,8 @@ async def resumer(event):
 async def replayer(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
