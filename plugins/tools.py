@@ -50,7 +50,7 @@ from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, bash, downloader, eor, get_string, get_user_id
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, ultroid_cmd, uploader, mediainfo
+from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd, uploader
 
 
 @ultroid_cmd(pattern="tr", manager=True)
@@ -219,7 +219,7 @@ async def _(e):
         await z.delete()
         await bash("rm resources/downloads/*")
         await bash("rm circle.mp4 comp.mp3 img.png")
-    elif mediainfo(a.media) in ["gif","video"]:
+    elif mediainfo(a.media) in ["gif", "video"]:
         z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
         await e.client.send_file(
