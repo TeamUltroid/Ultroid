@@ -6,7 +6,7 @@
 | en | English [English] | 414 | 0 |
 | ru | Russian [Русский] | 382 | 32 |
 | id | Indonesia [Indonesia] | 389 | 25 |
-| ar | Arabic [العربية] | 114 | 300 |
+| ar | Arabic [العربية] | 170 | 244 |
 | gu | Gujarati [ગુજરાતી] | 111 | 303 |
 | az | Azerbaijan [Azərbaycan] | 382 | 32 |
 | mr | Marathi [मराठी] | 114 | 300 |
