@@ -50,7 +50,7 @@ from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, bash, downloader, eor, get_string, get_user_id
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, ultroid_cmd, uploader
+from . import inline_mention, is_url_ok, ultroid_cmd, uploader, mediainfo
 
 
 @ultroid_cmd(pattern="tr", manager=True)
@@ -170,9 +170,9 @@ async def _(ult):
 )
 async def _(e):
     a = await e.get_reply_message()
-    if not a:
+    if not (a and a.media):
         return await e.eor("Reply to a gif or audio")
-    if a.document and a.document.mime_type == "audio/mpeg":
+    if "audio" in mediainfo(a.media):
         z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         toime = time.time()
         try:
@@ -219,7 +219,7 @@ async def _(e):
         await z.delete()
         await bash("rm resources/downloads/*")
         await bash("rm circle.mp4 comp.mp3 img.png")
-    elif a.document and a.document.mime_type == "video/mp4":
+    elif mediainfo(a.media) in ["gif","video"]:
         z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
         await e.client.send_file(
@@ -232,7 +232,7 @@ async def _(e):
         await z.delete()
         os.remove(c)
     else:
-        await e.eor("**Reply to a gif or video file only**")
+        await e.eor("**Reply to a gif/video or audio file only**")
 
 
 @ultroid_cmd(
