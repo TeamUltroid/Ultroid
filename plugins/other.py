@@ -31,7 +31,7 @@ async def dm(e):
         return await e.eor(get_string("dm_1"), time=5)
     chat = e.text.split()[1]
     try:
-        chat_id = await get_user_id(chat)
+        chat_id = await e.client.parse_id(chat)
     except Exception as ex:
         return await e.eor(f"`{ex}`", time=5)
     if len(e.text.split()) > 2:
