@@ -497,7 +497,10 @@ async def blockpm(block):
         reply = await block.get_reply_message()
         user = reply.sender_id
     elif match:
-        user = await get_user_id(match)
+        try:
+            user = await block.client.parse_id(match)
+        except Exception as er:
+            return await block.eor(str(er))
     elif block.is_private:
         user = block.chat_id
     else:
@@ -559,7 +562,10 @@ async def unblockpm(event):
                 await event.client(UnblockRequest(user.id))
             count += len(u_s.users)
         return await eor(msg, f"__Unblocked {count} users.__")
-    user = await get_user_id(match)
+    try:
+        user = await event.client.parse_id(match)
+    except Exception as er:
+        return await event.eor(str(er))
     try:
         await event.client(UnblockRequest(user))
         aname = await event.client.get_entity(user)
