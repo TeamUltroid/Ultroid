@@ -39,22 +39,18 @@ async def play_music_(event):
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
         tiny_input = input.split()[0]
-        if tiny_input.startswith("@"):
+        if tiny_input[0] in ["@","-"]:
             try:
-                chat = int("-100" + str(await get_user_id(tiny_input, client=vcClient)))
+                chat = await event.client.parse_id(tiny_input)
+            except Exception as er:
+                LOGS.exception(er)
+                return await xx.edit(str(er))
+            try:
                 song = input.split(maxsplit=1)[1]
             except IndexError:
                 pass
             except Exception as e:
                 return await event.eor(str(e))
-        elif tiny_input.startswith("-"):
-            chat = int(
-                "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
-            )
-            try:
-                song = input.split(maxsplit=1)[1]
-            except BaseException:
-                pass
         else:
             song = input
     if not (reply or song):
@@ -198,12 +194,8 @@ async def live_stream(e):
     if not len(e.text.split()) > 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
-    if input[1].startswith("-"):
-        chat = int(input[1])
-        song = e.text.split(maxsplit=2)[2]
-    elif input[1].startswith("@"):
-        cid_moosa = (await vcClient.get_entity(input[1])).id
-        chat = int("-100" + str(cid_moosa))
+    if input[1][0] in ["@", "-"]:
+        chat = await e.client.parse_id(input[1])
         song = e.text.split(maxsplit=2)[2]
     else:
         song = e.text.split(maxsplit=1)[1]
