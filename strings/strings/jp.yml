@@ -1,5 +1,5 @@
 name: Japanese
-natively: Japan
+natively: 日本
 
 authors:
   - Achu biju (AmiFutami)
@@ -324,13 +324,12 @@ ex_1: "`メッセージに返信..` "
 
 ＃ gdrive
 gdrive_1: "「 `Googleドライブで既に承認済みです` "
-gdrive_2: "[ここ]（https://console.developers.google.com/flows/enableapi?apiid=drive）にアクセスして、` GDRIVE_CLIENT_ID`と `GDRIVE_CLIENT_SECRET`を取得します\n \n
-GDRIVE_CLIENT_IDとGDRIVE_CLIENT_SECRETをこのように送信します。\n`GDRIVE_CLIENT_IDGDRIVE_CLIENT_SECRET`をスペースで区切って送信します。 "
+gdrive_2: "[ここ]（https://console.developers.google.com/flows/enableapi?apiid=drive）にアクセスして、` GDRIVE_CLIENT_ID`と `GDRIVE_CLIENT_SECRET`を取得します\n\nGDRIVE_CLIENT_IDとGDRIVE_CLIENT_SECRETをこのように送信します。\n`GDRIVE_CLIENT_IDGDRIVE_CLIENT_SECRET`をスペースで区切って送信します。 "
 gdrive_3: "`間違ったクライアントID` "
 gdrive_4: "`問題が発生しました。`/ auth`をもう一度送信してください。\n同じことが発生した場合は、 `@ TheUltroi​​dに連絡してください。"
 gdrive_5: "`成功！\nUltroi​​dUserbotでGoogleドライブを使用する準備が整いました。` "
 gdrive_6: "` `{}`に移動して `` / auth.`を送信します。 "
-gdrive_7: **ファイルをG-Driveに正常にアップロードしました: ** \n \n [{}]（{}）
+gdrive_7: "**ファイルをG-Driveに正常にアップロードしました: ** \n \n [{}]（{}）"
 
 # get addons
 gas_1: "「生のリンクを提供してください！」"
