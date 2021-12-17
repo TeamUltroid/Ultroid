@@ -15,6 +15,7 @@
 | my | Malay [Bahasa Melayu] | 114 | 300 |
 | ml | Malayalam [മലയാളം] | 114 | 300 |
 | si | sinhala [සිංහල] | 114 | 300 |
+| jp | Japanese [日本] | 396 | 18 |
 | es | Spanish [Español] | 114 | 300 |
 | bn | bengoli [বাংলা] | 114 | 300 |
 | pt-br | Portuguese [Português] | 114 | 300 |
