@@ -48,7 +48,7 @@ from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from telethon.tl.types import DocumentAttributeVideo as video
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, bash, downloader, eor, get_string, get_user_id
+from . import HNDLR, bash, downloader, eor, get_string
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd, uploader
 
@@ -89,6 +89,7 @@ async def _(event):
     manager=True,
 )
 async def _(event):
+    match = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         await event.get_input_chat()
         r_msg = await event.get_reply_message()
@@ -104,24 +105,24 @@ async def _(event):
                 ),
             )
         else:
-            await eor(
-                event,
+            await event.eor(
                 "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id), str(r_msg.sender_id), str(r_msg.id)
                 ),
             )
-    elif event.pattern_match.group(1):
-        ids = await get_user_id(event.pattern_match.group(1))
-        await eor(
-            event,
+    elif match:
+        try:
+            ids = await event.client.parse_id(match)
+        except Exception as er:
+            return await event.eor(str(er))
+        await event.eor(
             "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
                 str(event.chat_id),
                 str(ids),
             ),
         )
     else:
-        await eor(
-            event,
+        await event.eor(
             "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(
                 str(event.chat_id), str(event.id)
             ),
@@ -137,7 +138,7 @@ async def _(ult):
     else:
         mentions = f"• **Bots in **{input_str}: \n"
         try:
-            chat = await get_user_id(input_str)
+            chat = await ult.client.parse_id(input_str)
         except Exception as e:
             return await ult.eor(str(e))
     try:
@@ -364,15 +365,18 @@ async def _(e):
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
     if not steal.is_reply and not mat:
-        return await eor(steal, "`Use this command with reply or give Username/id...`")
+        return await steal.eor("`Use this command with reply or give Username/id...`")
     if mat:
-        user_id = await get_user_id(mat)
+        try:
+            user_id = await steal.client.parse_id(mat)
+        except ValueError:
+            user_id = mat
     message = await steal.get_reply_message()
     if message:
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    lol = await eor(steal, get_string("com_1"))
+    lol = await steal.eor(get_string("com_1"))
     try:
         async with steal.client.conversation(chat) as conv:
             try:
