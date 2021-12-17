@@ -219,7 +219,7 @@ async def _(e):
         await z.delete()
         await bash("rm resources/downloads/*")
         await bash("rm circle.mp4 comp.mp3 img.png")
-    elif mediainfo(a.media) in ["gif", "video"]:
+    elif mediainfo(a.media) == "gif" or mediainfo(a.media).startswith("video"):
         z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         c = await a.download_media("resources/downloads/")
         await e.client.send_file(
