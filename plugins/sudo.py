@@ -19,17 +19,8 @@
 
 from pyUltroid.misc import sudoers
 from telethon.tl.types import User
-from telethon.utils import get_peer_id
 
-from . import (
-    eor,
-    get_string,
-    get_user_id,
-    inline_mention,
-    udB,
-    ultroid_bot,
-    ultroid_cmd,
-)
+from . import eor, get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
@@ -44,9 +35,9 @@ async def _(ult):
             id = await ult.client.parse_id(inputs)
         except ValueError:
             try:
-               id = int(inputs)
+                id = int(inputs)
             except ValueError:
-               id = inputs
+                id = inputs
         try:
             name = await ult.client.get_entity(int(id))
         except BaseException:
@@ -88,9 +79,9 @@ async def _(ult):
             id = await ult.client.parse_id(inputs)
         except ValueError:
             try:
-               id = int(inputs)
+                id = int(inputs)
             except ValueError:
-               id = inputs
+                id = inputs
         try:
             name = await ult.client.get_entity(int(id))
         except BaseException:
