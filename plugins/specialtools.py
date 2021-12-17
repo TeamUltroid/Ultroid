@@ -334,7 +334,7 @@ async def quott_(event):
         match = match.split(maxsplit=1)
     if match and (match[0].startswith("@") or match[0].isdigit()):
         try:
-            match_ = await get_user_id(match[0], client=event.client)
+            match_ = await event.client.parse_id(match[0])
             user = await event.client.get_entity(match_)
         except ValueError:
             pass
