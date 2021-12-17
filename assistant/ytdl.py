@@ -9,16 +9,23 @@
 import os
 import re
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from youtubesearchpython import VideosSearch
+from . import asst, callback, in_pattern, udB, LOGS
+try:
+    from youtubesearchpython import VideosSearch
+except ImportError:
+    LOGS.info("'youtubesearchpython' not installed!")
+    VideosSearch = None
 
-from . import asst, callback, in_pattern, udB
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
