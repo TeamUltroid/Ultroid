@@ -50,7 +50,6 @@ from . import (
     downloader,
     eod,
     get_string,
-    get_user_id,
     mediainfo,
     ultroid_bot,
     ultroid_cmd,
