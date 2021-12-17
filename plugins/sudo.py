@@ -40,10 +40,15 @@ async def _(ult):
         id = replied_to.sender_id
         name = await replied_to.get_sender()
     elif inputs:
-        id = await get_user_id(inputs)
+        try:
+            id = await ult.client.parse_id(inputs)
+        except ValueError:
+            try:
+               id = int(inputs)
+            except ValueError:
+               id = inputs
         try:
             name = await ult.client.get_entity(int(id))
-            id = get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
@@ -79,10 +84,15 @@ async def _(ult):
         id = replied_to.sender_id
         name = await replied_to.get_sender()
     elif inputs:
-        id = await get_user_id(inputs)
+        try:
+            id = await ult.client.parse_id(inputs)
+        except ValueError:
+            try:
+               id = int(inputs)
+            except ValueError:
+               id = inputs
         try:
             name = await ult.client.get_entity(int(id))
-            id = get_peer_id(name)
         except BaseException:
             name = None
     elif ult.is_private:
