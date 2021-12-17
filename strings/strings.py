@@ -30,7 +30,10 @@ def get_string(key: str) -> Any:
         return languages[lang][key]
     except KeyError:
         try:
-            tr = Trs.translate(languages["en"][key], lang_tgt=lang).replace("\ N","\n")
+            en_ = languages["en"][key]
+            tr = Trs.translate(en_, lang_tgt=lang).replace("\ N","\n")
+            if en_.count("{}") != tr.count("{}"):
+                tr = en_
             if languages.get(lang):
                 languages[lang][key] = tr
             else:
