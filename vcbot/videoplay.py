@@ -30,18 +30,12 @@ async def video_c(event):
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
         tiny_input = input.split()[0]
-        if tiny_input.startswith("@"):
+        if tiny_input[0] in ["@","-"]:
             try:
-                chat = int("-100" + str(await get_user_id(tiny_input, client=vcClient)))
-                song = input.split(maxsplit=1)[1]
-            except IndexError:
-                pass
-            except Exception as e:
-                return await event.eor(str(e))
-        elif tiny_input.startswith("-"):
-            chat = int(
-                "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
-            )
+               chat = await event.client.parse_id(tiny_input)
+            except Exception as er:
+               LOGS.exception(er)
+               return await xx.edit(str(er))
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:
