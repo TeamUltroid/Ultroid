@@ -88,7 +88,7 @@ antiflood_5: "`このチャットのフラッド制限は{}です。` "
 ascii_1: "`Reply to image.`"
 ascii_2: "`Converting to html...`"
 
-＃audiotools
+＃ audiotools
 audiotools_1: "オーディオまたはビデオに返信.."
 audiotools_2: "ダウンロードに成功し、音声に変換中"
 audiotools_3: "`トリミングするフォーマットで時間を与える `"
@@ -100,7 +100,7 @@ audiotools_8: "ビデオファイルに返信..`"
 audiotools_9: "`オーディオが見つかりません... `"
 audiotools_10: "`ビデオから抽出されたオーディオ... `"
 
-＃asstcmd
+＃ asstcmd
 asstcmd_1: "`このコマンドを返信と単語とともに使用して、コマンドを使用します。` "
 asstcmd_2: "`削除したいコマンドを教えてください。` "
 asstcmd_3: "完了コマンド:\n`{}`が削除されました。"
@@ -201,7 +201,7 @@ carbon_1: "[{}]（tg: // user？id = {}）によって炭化された"
 carbon_2: "`メッセージまたは読み取り可能なファイルへの返信..` "
 carbon_3: "`カスタムカラーを使用してカーボンを作成... `"
 
-＃chat_bot
+＃ chat_bot
 chab_1: "「ユーザーに返信するか、ユーザーのID /ユーザー名を教えてAIチャットボットを追加してください！」"
 chab_2: "「 `ユーザーにAIが追加されていません。`」"
 chab_3: "**このチャットのAI対応ユーザーの全リスト: ** \n \n"
@@ -230,11 +230,11 @@ cvt_6: "[This]（{}）をカスタムサムネイルとして追加"
 cvt_7: "`読み取り可能なファイルに返信する `"
 cvt_8: "`読み取り可能なファイルではありません。` "
 
-＃eventsofday
+＃ eventsofday
 eod_1: "🎊**今日のイベント** \n \n"
 eod_2: "•** {} / 2021のイベント** \n \n"
 
-＃core
+＃ core
 core_1: "モジュールが見つかりました"
 core_2: "{}。pyは.pasteを使用してnekoとrawに貼り付けます。"
 core_3: "「もう一度検索..？」"
@@ -254,12 +254,12 @@ core_16: "`ロードしたいプラグインの名前を付けてください `"
 core_17: "**SᴜᴄᴄᴇssғᴜʟʟʏLᴏᴀᴅᴇᴅ**` {} `"
 core_18: "**ロードできませんでした**` {} `**次のエラーのため** \n` {}` "
 
-＃devtools
+＃ devtools
 devs_1: "`コマンドが指定されていません `"
 devs_2: "` Pythonコマンドを入力してください `"
 devs_3: "` Give Some C ++ Code..` "
 
-＃dm
+＃ dm
 dm_1: "`チャットのユーザー名またはIDを送信先に指定してください。` "
 dm_2: "` msgに送信または返信するテキストを送信 `"
 dm_3: "`⚜️メッセージが配信されました！⚜️` "
@@ -273,7 +273,7 @@ echo_1: "**ユーザー向けにアクティブ化されたエコー: ** \n \n"
 # fake action
 fka_1: "「{}秒間偽のアクションを開始します。」"
 
-＃fedutils
+＃ fedutils
 sf_1: "「Mass-FedBanを開始しています...」"
 sf_2: "`ユーザーが指定されていません！ `"
 sf_3: "「私の開発者を禁止することはできません!!」"
@@ -322,7 +322,7 @@ fsub_8: "「ご参加いただきありがとうございます！」"
 # extra
 ex_1: "`メッセージに返信..` "
 
-＃gdrive
+＃ gdrive
 gdrive_1: "「 `Googleドライブで既に承認済みです` "
 gdrive_2: "[ここ]（https://console.developers.google.com/flows/enableapi?apiid=drive）にアクセスして、` GDRIVE_CLIENT_ID`と `GDRIVE_CLIENT_SECRET`を取得します\n \n
 GDRIVE_CLIENT_IDとGDRIVE_CLIENT_SECRETをこのように送信します。\n`GDRIVE_CLIENT_IDGDRIVE_CLIENT_SECRET`をスペースで区切って送信します。 "
@@ -344,7 +344,7 @@ grt_5:  "`ウェルカムノートが削除されました `"
 grt_6: "`さようならが設定されていません！ `"
 grt_7: "`さようならとして設定したいメッセージに返信 `"
 
-＃mediainfo
+＃ mediainfo
 mdi_1:  "「詳細情報」"
 
 # greetings
@@ -354,7 +354,7 @@ nightm_3: "「完了、現在のチャットをナイトモードに追加」"
 nightm_4: "完了、ナイトモードから現在のチャットを削除"
 nightm_5: "「何かがおかしい」"
 
-＃pmpermit
+＃ pmpermit
 pmperm_1: "「私が応答するのを待ってください。そうしないと、ブロックされてスパムとして報告されます!!」"
 pmperm_2: "「ええ、スパムを送信しないように言ったのです！\n今のところ、あなたはブロックされ、報告されています。」"
 pmperm_3: "誰かのメッセージに返信するか、このコマンドを非公開で試してください。"
@@ -373,7 +373,7 @@ snip_1: "「切り取りとして設定する単語を入力してメッセー�
 snip_2: "「削除する単語を教えてください...」"
 snip_3: "「ここにスニップが見つかりません。」"
 
-＃specialtools
+＃ specialtools
 spcltool_1: "「オーディオまたはビデオに返信」"
 spcltool_2: "`完了..このオーディオを追加したいビデオに返信してください `"
 spcltool_3: "動画に返信"
@@ -384,7 +384,7 @@ spcltool_7: "`HappyBirthdayToU🎉🎊` "
 spcltool_8: "「検索するものを提供してください。」"
 spcltool_9: "「何も見つかりませんでした」"
 
-＃sudo
+＃ sudo
 sudo_1: "`メッセージに返信するか、ID /ユーザー名を追加してください。` "
 sudo_2: 「Sudoユーザーとして自分を追加することはできません...」
 sudo_3: "` SUDOユーザーが割り当てられていません... `"
