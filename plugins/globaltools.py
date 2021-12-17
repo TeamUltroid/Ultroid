@@ -398,6 +398,7 @@ async def _(e):
         dialog = e.client._dialogs
     else:
         dialog = await e.client.get_dialogs()
+        e.client._dialogs.extend(dialog)
     for ggban in dialog:
         if ggban.is_group or ggban.is_channel:
             try:
@@ -454,6 +455,7 @@ async def gcast(event):
         dialog = event.client._dialogs
     else:
         dialog = await event.client.get_dialogs()
+        event.client._dialogs.extend(dialog)
     for x in dialog:
         if x.is_group:
             chat = x.entity.id
@@ -536,6 +538,7 @@ async def gucast(event):
         dialog = event.client._dialogs
     else:
         dialog = await event.client.get_dialogs()
+        event.client._dialogs.extend(dialog)
     for x in dialog:
         if x.is_user and not x.entity.bot:
             chat = x.id
@@ -582,6 +585,7 @@ async def gkick(e):
         dialog = e.client._dialogs
     else:
         dialog = await e.client.get_dialogs()
+        e.client._dialogs.extend(dialog)
     for gkick in dialog:
         if gkick.is_group or gkick.is_channel:
             try:
@@ -615,6 +619,7 @@ async def _(e):
         dialog = e.client._dialogs
     else:
         dialog = await e.client.get_dialogs()
+        e.client._dialogs.extend(dialog)
     for onmute in dialog:
         if onmute.is_group:
             try:
@@ -645,7 +650,7 @@ async def _(e):
         dialog = e.client._dialogs
     else:
         dialog = await e.client.get_dialogs()
-        _dialogs.update({"_": dialog})
+        e.client._dialogs.extend(dialog)
     for hurr in dialog:
         if hurr.is_group:
             try:
