@@ -116,7 +116,7 @@ async def _(e):
         ],
         [
             Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
-            Button.inline("x0", data=f"flx0//{__cache}"),
+            Button.inline("x0.at", data=f"flx0.at//{__cache}"),
         ],
         [
             Button.inline("file.io", data=f"flfile.io//{__cache}"),
@@ -153,7 +153,7 @@ async def _(e):
         filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
     link = await webuploader(chat_id, msg_id, host)
-    await e.edit(f"Uploaded [{filename}]({link}) on {host}.")
+    await e.edit(f"Uploaded [{filename}]({link.strip().replace("\n","")}) on {host}.")
 
 
 @in_pattern("repo", owner=True)
