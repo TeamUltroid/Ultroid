@@ -46,13 +46,10 @@ async def watcher(event):
 )
 async def startmute(event):
     xx = await event.eor("`Muting...`")
-    input = event.pattern_match.group(1)
-    private = bool(event.is_private)
-    if input:
-        if input.isdigit():
-            input = int(input)
+    input_ = event.pattern_match.group(1)
+    if input_:
         try:
-            userid = (await event.client.get_entity(input)).id
+            userid = await event.client.parse_id(input_)
         except Exception as x:
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
@@ -65,7 +62,7 @@ async def startmute(event):
     if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
         if chat.admin_rights.delete_messages is not True:
             return await xx.eor("`No proper admin rights...`", time=5)
-    elif "creator" not in vars(chat) and not private:
+    elif "creator" not in vars(chat) and not event.is_private:
         return await xx.eor("`No proper admin rights...`", time=5)
     if is_muted(chat.id, userid):
         return await xx.eor("`This user is already muted in this chat.`", time=5)
@@ -80,12 +77,10 @@ async def startmute(event):
 async def endmute(event):
     xx = await event.eor("`Unmuting...`")
     input = event.pattern_match.group(1)
-    private = bool(event.is_private)
+    private = event.is_private
     if input:
-        if input.isdigit():
-            input = int(input)
         try:
-            userid = (await event.client.get_entity(input)).id
+            userid = await event.client.parse_id(input_)
         except Exception as x:
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
@@ -119,10 +114,11 @@ async def _(e):
         pass
     chat = await e.get_chat()
     if e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(userid)).first_name
+        reply = await e.get_reply_message()
+        userid = reply.sender_id
+        name = (await reply.get_sender()).first_name
     elif input:
-        userid = await get_user_id(input, client=e.client)
+        userid = await e.client.parse_id(input)
         name = (await e.client.get_entity(userid)).first_name
     else:
         return await xx.eor(get_string("tban_1"), time=3)
@@ -155,10 +151,11 @@ async def _(e):
     input = e.pattern_match.group(1)
     chat = await e.get_chat()
     if e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(userid)).first_name
+        reply = await e.get_reply_message()
+        userid = reply.sender_id
+        name = (await reply.get_sender()).first_name
     elif input:
-        userid = await get_user_id(input, client=e.client)
+        userid = await e.client.parse_id(input)
         name = (await e.client.get_entity(userid)).first_name
     else:
         return await xx.eor(get_string("tban_1"), time=3)
@@ -191,10 +188,8 @@ async def _(e):
         userid = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(userid)).first_name
     elif input:
-        if input.isdigit():
-            input = int(input)
         try:
-            userid = (await e.client.get_entity(input)).id
+            userid = await e.client.parse_id(input)
             name = inline_mention(await e.client.get_entity(userid))
         except Exception as x:
             return await xx.edit(str(x))
