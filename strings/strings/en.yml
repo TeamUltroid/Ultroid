@@ -560,3 +560,6 @@ vcbot_19: "Already Authed This Chat!"
 vcbot_20: "`Downloading and converting...`"
 vcbot_21: "• Nothing in queue!"
 vcbot_22: "`Cleaned All Queues In Chat`"
+
+
+test: '\u2022'
