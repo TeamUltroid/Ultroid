@@ -261,7 +261,7 @@ async def _(event):
     match = event.pattern_match.group(1)
     if match:
         try:
-            user = await get_user_id(match)
+            user = await get_user_id(match, client=event.client)
         except Exception as er:
             return await event.eor(str(er))
     elif event.is_reply:
