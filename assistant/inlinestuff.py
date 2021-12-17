@@ -152,7 +152,7 @@ async def _(e):
     if "/" in filename:
         filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
-    link = (await webuploader(chat_id, msg_id, host)).strip().replace('\n','')
+    link = (await webuploader(chat_id, msg_id, host)).strip().replace("\n", "")
     await e.edit(f"Uploaded [{filename}]({link}) on {host}.")
 
 
