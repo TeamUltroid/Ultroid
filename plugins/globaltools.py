@@ -68,7 +68,6 @@ from . import (
     eod,
     eor,
     get_string,
-    get_user_id,
     inline_mention,
     ultroid_bot,
     ultroid_cmd,
