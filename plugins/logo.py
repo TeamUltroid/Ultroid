@@ -34,11 +34,8 @@ async def logo_gen(event):
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
-            if hasattr(temp.media, "document"):
-                if "font" in temp.file.mime_type:
-                    font_ = await temp.download_media()
-                elif (".ttf" in temp.file.name) or (".otf" in temp.file.name):
-                    font_ = await temp.download_media()
+            if hasattr(temp.media, "document") and (("font" in temp.file.mime_type) or (".ttf" in temp.file.name) or (".otf" in temp.file.name)):
+                font_ = await temp.download_media("resources/fonts/")
             elif "pic" in mediainfo(temp.media):
                 bg_ = await temp.download_media()
     if not bg_:
@@ -98,5 +95,3 @@ async def logo_gen(event):
         await xx.delete()
     if os.path.exists(bg_):
         os.remove(bg_)
-    if os.path.exists(font_) and not font_.startswith("resources/fonts"):
-        os.remove(font_)
