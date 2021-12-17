@@ -363,7 +363,10 @@ async def _(e):
             pass
     elif e.pattern_match.group(1):
         usr = e.text.split(" ", maxsplit=2)[1]
-        userid = await get_user_id(usr)
+        try:
+            userid = await e.client.parse_id(usr)
+        except ValueError:
+            userid = usr
         try:
             reason = e.text.split(" ", maxsplit=2)[2]
         except IndexError:
@@ -570,9 +573,9 @@ async def gkick(e):
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
-        userid = await get_user_id(e.pattern_match.group(1))
+        userid = await e.client.parse_id(e.pattern_match.group(1))
     elif e.is_private:
-        userid = (await e.get_chat()).id
+        userid = e.chat_id
     else:
         return await xx.edit("`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
@@ -602,9 +605,9 @@ async def _(e):
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
-        userid = await get_user_id(e.pattern_match.group(1))
+        userid = await e.client.parse_id(e.pattern_match.group(1))
     elif e.is_private:
-        userid = (await e.get_chat()).id
+        userid = e.chat_id
     else:
         return await xx.eor("`Reply to some msg or add their id.`", tome=5, time=5)
     name = await e.client.get_entity(userid)
@@ -637,9 +640,9 @@ async def _(e):
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
-        userid = await get_user_id(e.pattern_match.group(1))
+        userid = await e.client.parse_id(e.pattern_match.group(1))
     elif e.is_private:
-        userid = (await e.get_chat()).id
+        userid = e.chat_id
     else:
         return await xx.eor("`Reply to some msg or add their id.`", time=5)
     name = (await e.client.get_entity(userid)).first_name
@@ -709,7 +712,7 @@ async def gstat_(e):
         userid = (await e.get_reply_message()).sender_id
     elif e.pattern_match.group(1):
         try:
-            userid = await get_user_id(e.pattern_match.group(1))
+            userid = await e.client.parse_id(e.pattern_match.group(1))
         except Exception as err:
             return await xx.eor(f"{err}", time=10)
     else:
