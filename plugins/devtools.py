@@ -115,7 +115,7 @@ def _parse_eval(value):
         except BaseException:
             pass
     elif value and isinstance(value, list):
-        value = [_parse_eval(_) for _ in value]
+        value = "[\n".join(_parse_eval(_) for _ in value) + "\n]"
     # is to_dict is also Good option to format?
     return str(value)
 
