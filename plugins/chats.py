@@ -57,10 +57,10 @@ from telethon.tl.types import (
 )
 
 from . import (
+    LOGS,
     HNDLR,
     asst,
     get_string,
-    get_user_id,
     mediainfo,
     os,
     types,
@@ -77,7 +77,7 @@ async def _(e):
     xx = await e.eor(get_string("com_1"))
     try:
         match = e.text.split(" ", maxsplit=1)[1]
-        chat = "-100" + str(await get_user_id(match))
+        chat = await e.client.parse_id(match)
     except IndexError:
         chat = e.chat_id
     try:
@@ -196,7 +196,7 @@ async def _(ult):
     match = ult.pattern_match.group(1)
     if not ult.client._bot and match:
         try:
-            chat = await get_user_id(match)
+            chat = await ult.client.parse_id(match)
         except Exception as ok:
             return await ult.eor(str(ok))
     else:
@@ -247,8 +247,10 @@ async def _(event):
         try:
             await event.client.edit_permissions(event.chat_id, i, view_messages=True)
             p += 1
-        except BaseException:
+        except no_admin:
             pass
+        except BaseException as er:
+            LOGS.exception(er)
     await xx.eor(f"{title}: {p} unbanned", time=5)
 
 
