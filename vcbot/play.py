@@ -115,10 +115,8 @@ async def play_music_(event):
         try:
             limit = input.split(";")
             input = limit[0].strip()
-            if input.startswith("-") or input.isdigit():
-                input = int(input)
             limit = int(limit[1].strip()) if limit[1].strip().isdigit() else 10
-            input = await get_user_id(input)
+            input = await event.client.parse_id(input)
         except (IndexError, ValueError):
             pass
     try:
@@ -172,12 +170,11 @@ async def radio_mirchi(e):
     if len(e.text.split()) <= 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
-    if input[1].startswith("-"):
-        chat = int(input[1])
-        song = e.text.split(maxsplit=2)[2]
-    elif input[1].startswith("@"):
-        cid = (await vcClient.get_entity(input[1])).id
-        chat = int(f"-100{cid}")
+    if input[1][0] in ["-", "@"]:
+        try:
+            chat = await e.client.parse_id(input[1])
+        except Exception as er:
+            return await xx.edit(str(er))
         song = e.text.split(maxsplit=2)[2]
     else:
         song = e.text.split(maxsplit=1)[1]
