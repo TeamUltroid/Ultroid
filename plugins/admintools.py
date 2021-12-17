@@ -222,7 +222,7 @@ async def tkicki(e):
             inputt = (await e.get_reply_message()).sender_id
     if not inputt:
         return await e.eor(get_string("tban_1"))
-    userid = await get_user_id(inputt)
+    userid = await e.client.parse_id(inputt)
     try:
         user = await e.client.get_entity(userid)
     except Exception as ex:
