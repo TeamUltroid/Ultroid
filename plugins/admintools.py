@@ -56,7 +56,6 @@ from . import (
     eor,
     get_string,
     get_uinfo,
-    get_user_id,
     inline_mention,
     types,
     ultroid_bot,
