@@ -153,7 +153,7 @@ async def _(e):
         filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
     link = await webuploader(chat_id, msg_id, host)
-    await e.edit(f"Uploaded [{filename}]({link.strip().replace("\n","")}) on {host}.")
+    await e.edit(f"Uploaded [{filename}]({link.strip().replace('\n','')}) on {host}.")
 
 
 @in_pattern("repo", owner=True)
