@@ -43,12 +43,12 @@ async def _(event):
         if inputt:
             REASON = inputt
     elif inputt:
-        REASON = "#TBMassBanned"
+        REASON = "#ULTMassBanned"
         arg = event.text.split()
         if len(arg) == 2:
-            FBAN = await get_user_id(arg[1])
+            FBAN = await event.client.parse_id(arg[1])
         elif len(arg) > 2:
-            FBAN = await get_user_id(arg[1])
+            FBAN = await event.client.parse_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit(get_string("sf_22"))
@@ -143,7 +143,7 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
-        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#TB",
+        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#Ultroid",
     )
 
 
@@ -189,7 +189,7 @@ async def _(event):
         else:
             try:
                 FBAN = arg[1]
-                REASON = " #TBMassUnBanned "
+                REASON = " #ULTMassUnBanned "
             except BaseException:
                 return await msg.edit(get_string("sf_2"))
     if udB.get_key("FBAN_GROUP_ID"):
