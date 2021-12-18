@@ -135,13 +135,29 @@ if udB.get_key("TAG_LOG"):
             MSG = await asst.get_messages(udB.get_key("TAG_LOG"), ids=d_["id"])
         except Exception as er:
             return LOGS.exception(er)
+        y, x = event.chat, event.sender
+        where_n, who_n = get_display_name(y), get_display_name(x)
+        where_l = event.message_link
+        buttons = [[Button.url(where_n, where_l)]]
+        if isinstance(x, types.User) and x.username:
+            try:
+                buttons.append(
+                    [Button.mention(who_n, await asst.get_input_entity(x.username))]
+                )
+            except Exception as er:
+                LOGS.exception(er)
+                buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+        elif getattr(x, "username"):
+            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+        else:
+            buttons.append([Button.url(who_n, where_l)])
         TEXT = MSG.text
         if msg:
             TEXT += "\n\n- > **Later Edited to !**"
         strf = event.edit_date.strftime("%H:%M:%S")
         TEXT += f"\n- > `{strf}`: {event.text}"
         try:
-            await MSG.edit(TEXT)
+            await MSG.edit(TEXT, buttons=buttons)
         except (MessageTooLongError, MediaCaptionTooLongError):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
