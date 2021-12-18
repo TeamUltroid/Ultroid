@@ -76,14 +76,13 @@ async def chat_bot_fn(event, type_):
             user = await event.client.get_entity(temp[1])
             user_id = user.id
         except BaseException:
-            if event.is_private:
-                user_id = event.chat_id
-                user = await event.get_chat()
-            else:
+            if not event.is_private:
                 return await eod(
                     event,
                     get_string("chab_1"),
                 )
+            user_id = event.chat_id
+            user = await event.get_chat()
     if type_ == "add":
         add_chatbot(event.chat_id, user_id)
     if type_ == "remov":

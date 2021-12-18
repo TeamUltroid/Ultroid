@@ -521,10 +521,7 @@ async def sugg(event):
             ),
         )
     except Exception as e:
-        return await eod(
-            event,
-            f"`Oops, you can't send polls here!\n\n{str(e)}`",
-        )
+        return await eod(event, f"`Oops, you can't send polls here!\n\n{e}`")
     await event.delete()
 
 

@@ -566,7 +566,7 @@ def page_num(page_number, loaded_plugins, prefix, type_):
     multi = emoji or "✘"
     global upage
     upage = page_number
-    helpable_plugins = [p for p in loaded_plugins]
+    helpable_plugins = list(loaded_plugins)
     helpable_plugins = sorted(helpable_plugins)
     modules = [
         Button.inline(

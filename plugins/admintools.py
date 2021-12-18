@@ -304,8 +304,9 @@ async def fastpurger(purg):
         return await eor(purg, get_string("purge_1"), time=10)
     try:
         await purg.client.delete_messages(
-            purg.chat_id, [a for a in range(purg.reply_to_msg_id, purg.id + 1)]
+            purg.chat_id, list(range(purg.reply_to_msg_id, purg.id + 1))
         )
+
     except Exception as er:
         LOGS.info(er)
     await purg.respond(
@@ -411,7 +412,7 @@ async def get_all_pinned(event):
         event.chat_id, filter=InputMessagesFilterPinned
     ):
         if i.message:
-            t = " ".join(i.message.split()[0:4])
+            t = " ".join(i.message.split()[:4])
             txt = "{}....".format(t)
         else:
             txt = "Go to message."

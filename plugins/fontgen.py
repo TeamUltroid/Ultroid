@@ -35,16 +35,14 @@ async def _(e):
         for x in fonts:
             m += f"• `{x}`\n"
         return await eor(e, m, time=5)
-    if not input and not reply:
-        return await eor(e, help)
-    if input and not reply:
+    if not reply:
         try:
             _ = input.split(":", maxsplit=1)
             font = _[0][:-1]
             text = _[1]
         except IndexError:
             return await eod(e, help)
-    elif reply and not input:
+    elif not input:
         return await eod(e, "`Give font dude :/`")
     else:
         font = input

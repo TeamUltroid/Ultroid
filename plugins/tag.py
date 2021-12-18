@@ -51,7 +51,7 @@ async def _(e):
     rece = 0
     xx = f"{lll}" if lll else ""
     lili = await e.client.get_participants(e.chat_id, limit=99)
-    for users, bb in enumerate(lili):
+    for bb in lili:
         x = bb.status
         y = bb.participant
         if isinstance(x, onn):
