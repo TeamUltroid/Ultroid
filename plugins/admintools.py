@@ -225,7 +225,7 @@ async def tkicki(e):
     try:
         user = await e.client.get_entity(userid)
     except Exception as ex:
-        return await eor(d, f'`{ex}`')
+        return await eor(d, f"`{ex}`")
     try:
         bun = await ban_time(e, tme)
         await e.client.edit_permissions(
