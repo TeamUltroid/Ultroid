@@ -86,5 +86,3 @@ ATRA_COL = [
     "Moccasin",
     "PowderBlue",
 ]
-
-get_user_id = None  # %tmp%
