@@ -143,7 +143,7 @@ async def _(e):
         name = (await e.client.get_entity(userid)).first_name
     elif input:
         try:
-            userid = await get_user_id(input)
+            userid = await e.client.parse_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
             return await xx.eor(f"`{str(ex)}`", time=5)
