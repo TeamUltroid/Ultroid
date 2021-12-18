@@ -95,26 +95,24 @@ async def all_messages_catcher(e):
             await asst.send_message(LOG_CHANNEL, MSG)
             CACHE_SPAM.update({NEEDTOLOG: True})
     except Exception as er:
-        LOGS.info(str(er))
+        LOGS.exception(er)
 
 
-if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
-
-    @ultroid_bot.on(
+@ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
             chats=[udB.get_key("TAG_LOG")],
             func=lambda e: e.reply_to,
-        )
     )
-    async def idk(e):
-        id = e.reply_to_msg_id
-        chat, msg = who_tag(id)
-        if chat and msg:
-            try:
-                await ultroid_bot.send_message(chat, e.message, reply_to=msg)
-            except BaseException:
-                pass
+)
+async def idk(e):
+    id = e.reply_to_msg_id
+    chat, msg = who_tag(id)
+    if chat and msg:
+        try:
+            await ultroid_bot.send_message(chat, e.message, reply_to=msg)
+        except BaseException as er:
+            LOGS.exception(er)
 
 
 # log for assistant/user joins/add
