@@ -27,7 +27,7 @@ import os
 from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import get_string, get_user_id, udB, ultroid_bot, ultroid_cmd
+from . import get_string, udB, ultroid_bot, ultroid_cmd
 
 bot = "@MissRose_bot"
 
