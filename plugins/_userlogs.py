@@ -14,6 +14,8 @@ from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     PeerIdInvalidError,
     UserNotParticipantError,
+    MessageTooLongError,
+    MediaCaptionTooLongError
 )
 from telethon.utils import get_display_name
 
@@ -140,7 +142,7 @@ if udB.get_key("TAG_LOG"):
         TEXT += f"\n- > `{strf}`: {event.text}"
         try:
             await MSG.edit(TEXT)
-        except MessageTooLongError:
+        except (MessageTooLongError, MediaCaptionTooLongError):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
             LOGS.exception(er)
