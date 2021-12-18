@@ -145,7 +145,6 @@ if udB.get_key("TAG_LOG"):
         except Exception as er:
             LOGS.exception(er)
 
-
     @ultroid_bot.on(
         events.NewMessage(
             outgoing=True,
