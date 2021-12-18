@@ -60,18 +60,18 @@ async def all_messages_catcher(e):
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         if TAG_EDITS.get(e.chat_id):
-            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "first": True}})
+            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
         else:
-            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "first": True}}})
+            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
         tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
             if TAG_EDITS.get(e.chat_id):
-                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "first": True}})
+                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
             else:
-                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "first": True}}})
+                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
@@ -83,13 +83,9 @@ async def all_messages_catcher(e):
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
                     if TAG_EDITS.get(e.chat_id):
-                        TAG_EDITS[e.chat_id].update(
-                            {e.id: {"id": sent.id, "first": True}}
-                        )
+                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
                     else:
-                        TAG_EDITS.update(
-                            {e.chat_id: {e.id: {"id": sent.id, "first": True}}}
-                        )
+                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
                     return os.remove(media)
                 except Exception as er:
                     LOGS.exception(er)
@@ -128,9 +124,13 @@ if udB.get_key("TAG_LOG"):
             return
         d_ = d_[event.id]
         msg = None
-        if d_.get("first"):
-            d_.pop("first")
+        if d_.get("count"):
+            d_["count"] += 1
+        else:
             msg = True
+            d_.update({"count": 1})
+        if d_["count"] > 10:
+            return  # some limit to take edits
         try:
             MSG = await asst.get_messages(udB.get_key("TAG_LOG"), ids=d_["id"])
         except Exception as er:
@@ -153,9 +153,9 @@ if udB.get_key("TAG_LOG"):
             buttons.append([Button.url(who_n, where_l)])
         TEXT = MSG.text
         if msg:
-            TEXT += "\n\n- > **Later Edited to !**"
+            TEXT += "\n\n>> **Later Edited to !**"
         strf = event.edit_date.strftime("%H:%M:%S")
-        TEXT += f"\n- > `{strf}`: {event.text}"
+        TEXT += f"\n-> `{strf}` : {event.text}"
         try:
             await MSG.edit(TEXT, buttons=buttons)
         except (MessageTooLongError, MediaCaptionTooLongError):
