@@ -114,10 +114,10 @@ async def all_messages_catcher(e):
 if udB.get_key("TAG_LOG"):
 
     @ultroid_bot.on(
-        events.MessageEdited(func=lambda x: x.mentioned and x.chat_id in TAKE_EDITS)
+        events.MessageEdited(func=lambda x: x.mentioned and x.chat_id in TAG_EDITS)
     )
     async def upd_edits(event):
-        d_ = TAKE_EDITS[event.chat_id]
+        d_ = TAG_EDITS[event.chat_id]
         if not d_.get(event.id):
             return
         d_ = d_[event.id]
@@ -141,26 +141,26 @@ if udB.get_key("TAG_LOG"):
         try:
             await MSG.edit(TEXT)
         except MessageTooLongError:
-            del TAKE_EDITS[event.chat_id][event.id]
+            del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
             LOGS.exception(er)
 
 
-@ultroid_bot.on(
-    events.NewMessage(
-        outgoing=True,
-        chats=[udB.get_key("TAG_LOG")],
-        func=lambda e: e.reply_to,
+    @ultroid_bot.on(
+        events.NewMessage(
+            outgoing=True,
+            chats=[udB.get_key("TAG_LOG")],
+            func=lambda e: e.reply_to,
+        )
     )
-)
-async def idk(e):
-    id = e.reply_to_msg_id
-    chat, msg = who_tag(id)
-    if chat and msg:
-        try:
-            await ultroid_bot.send_message(chat, e.message, reply_to=msg)
-        except BaseException as er:
-            LOGS.exception(er)
+    async def idk(e):
+        id = e.reply_to_msg_id
+        chat, msg = who_tag(id)
+        if chat and msg:
+            try:
+                await ultroid_bot.send_message(chat, e.message, reply_to=msg)
+            except BaseException as er:
+                LOGS.exception(er)
 
 
 # log for assistant/user joins/add
