@@ -11,11 +11,11 @@ import re
 from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
+    MediaCaptionTooLongError,
     MediaEmptyError,
+    MessageTooLongError,
     PeerIdInvalidError,
     UserNotParticipantError,
-    MessageTooLongError,
-    MediaCaptionTooLongError
 )
 from telethon.utils import get_display_name
 
