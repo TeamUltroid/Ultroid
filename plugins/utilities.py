@@ -84,7 +84,6 @@ from . import (
     get_chat_info,
     get_paste,
     get_string,
-    get_user_id,
     inline_mention,
     mediainfo,
     udB,
