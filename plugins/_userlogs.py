@@ -20,6 +20,7 @@ from telethon.utils import get_display_name
 from . import *
 
 CACHE_SPAM = {}
+TAG_EDITS = {}
 
 
 @ultroid_bot.on(
@@ -56,31 +57,43 @@ async def all_messages_catcher(e):
         buttons.append([Button.url(who_n, where_l)])
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
+        if TAG_EDITS.get(e.chat_id):
+            TAG_EDITS[e.chat_id].update({e.id: {"id":sent.id}})
+        else:
+            TAG_EDITS.update({e.chat_id:{e.id:{"id":sent.id}}})
         tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
+            if TAG_EDITS.get(e.chat_id):
+                TAG_EDITS[e.chat_id].update({e.id: {"id":sent.id}})
+            else:
+                TAG_EDITS.update({e.chat_id:{e.id:{"id":sent.id}}})
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
-                LOGS.info(me)
+                LOGS.exception(me)
             if e.photo or e.sticker or e.gif:
                 try:
                     media = await e.download_media()
-                    await asst.send_message(
+                    sent = await asst.send_message(
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
+                    if TAG_EDITS.get(e.chat_id):
+                        TAG_EDITS[e.chat_id].update({e.id: {"id":sent.id}})
+                    else:
+                        TAG_EDITS.update({e.chat_id:{e.id:{"id":sent.id}}})
                     return os.remove(media)
                 except Exception as er:
-                    LOGS.info(er)
+                    LOGS.exception(er)
             await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
     except (PeerIdInvalidError, ValueError):
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
             await asst.send_message(
-                int(udB.get_key("LOG_CHANNEL")), get_string("userlogs_1")
+                udB.get_key("LOG_CHANNEL"), get_string("userlogs_1")
             )
             CACHE_SPAM.update({NEEDTOLOG: True})
     except ChatWriteForbiddenError:
@@ -97,12 +110,44 @@ async def all_messages_catcher(e):
     except Exception as er:
         LOGS.exception(er)
 
+if udB.get_key("TAG_LOG"):
+    @ultroid_bot.on(events.MessageEdited(func=lamdba x: x.mentioned and x.chat_id in TAKE_EDITS))
+    async def upd_edits(event):
+        d_ = TAKE_EDITS[event.chat_id]
+        if not d_.get(event.id):
+            return
+        d_ = d_[event.id]
+        msg = None
+        if d_.get("count"):
+            d_["count"]+=1
+        else:
+            msg = True
+            d_.update({"count":1})
+        if d_["count"] > 10:
+            return # some limit to take edits
+        try:
+            MSG = await asst.get_messages(udB.get_key("TAG_LOG"), ids=d_["id"])
+        except Exception as er:
+            return LOGS.exception(er)
+        TEXT = MSG.text
+        if msg:
+            TEXT += "\n\n- > **Later Edited to !**"
+        strf = event.edit_date.strftime("%H:%M:%S")
+        TEXT += f"\n- > `{strf}`: {event.text}"
+        try:
+            await MSG.edit(TEXT)
+        except MessageTooLongError as er:
+            del TAKE_EDITS[event.chat_id][event.id]
+        except Exception as er:
+            LOGS.exception(er)
+
+
 
 @ultroid_bot.on(
-    events.NewMessage(
-        outgoing=True,
-        chats=[udB.get_key("TAG_LOG")],
-        func=lambda e: e.reply_to,
+        events.NewMessage(
+            outgoing=True,
+            chats=[udB.get_key("TAG_LOG")],
+            func=lambda e: e.reply_to,
     )
 )
 async def idk(e):
