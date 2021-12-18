@@ -37,7 +37,6 @@ from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
     x = await event.eor(get_string("bd_1"))
-    new = 0
     if msgg == "all":
         await x.edit(get_string("bd_2"))
         chats = [
@@ -45,6 +44,7 @@ async def broadcast_adder(event):
             for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
+        new = 0
         for i in chats:
             try:
                 if (

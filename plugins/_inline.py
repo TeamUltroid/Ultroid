@@ -156,10 +156,7 @@ async def help_func(ult):
         return await ult.answer(get_string("help_13"), alert=True)
     if "|" in count:
         _, count = count.split("|")
-    if not count:
-        count = 0
-    else:
-        count = int(count)
+    count = 0 if not count else int(count)
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(
         text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False

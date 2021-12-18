@@ -466,9 +466,7 @@ async def do_magic(event):
                 ],
             )
         )
-    msg = "No Results Found"
-    if ress:
-        msg = f"Showing {len(ress)} Results!"
+    msg = f"Showing {len(ress)} Results!" if ress else "No Results Found"
     FDROID_.update({match: ress})
     await event.answer(ress, switch_pm=msg, switch_pm_param="start")
 
@@ -615,10 +613,7 @@ async def twitter_search(event):
                 thumb=thumb,
             )
         )
-    if not reso:
-        swi_ = "No User Found :("
-    else:
-        swi_ = f"🐦 Showing {len(reso)} Results!"
+    swi_ = "No User Found :(" if not reso else f"🐦 Showing {len(reso)} Results!"
     await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
     if _ult_cache.get("twitter"):
         _ult_cache["twitter"].update({match: reso})
@@ -644,9 +639,7 @@ async def savn_s(event):
             switch_pm_param="start",
         )
     results = await saavn_search(query)
-    swi = "🎵 Saavn Search"
-    if not results:
-        swi = "No Results Found!"
+    swi = "No Results Found!" if not results else "🎵 Saavn Search"
     res = []
     for song in results:
         thumb = wb(song["image"], 0, "image/jpeg", [])

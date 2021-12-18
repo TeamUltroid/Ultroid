@@ -331,18 +331,16 @@ async def quott_(event):
     user = None
     if match:
         match = match.split(maxsplit=1)
-    if match and (match[0].startswith("@") or match[0].isdigit()):
-        try:
-            match_ = await event.client.parse_id(match[0])
-            user = await event.client.get_entity(match_)
-        except ValueError:
-            pass
-        if len(match) == 2:
-            match = match[1]
+    if match:
+        if match[0].startswith("@") or match[0].isdigit():
+            try:
+                match_ = await event.client.parse_id(match[0])
+                user = await event.client.get_entity(match_)
+            except ValueError:
+                pass
+            match = match[1] if len(match) == 2 else None
         else:
-            match = None
-    elif match:
-        match = match[0]
+            match = match[0]
     if match == "random":
         match = choice(all_col)
     try:

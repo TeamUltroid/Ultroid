@@ -191,7 +191,7 @@ async def radio_mirchi(e):
 @vc_asst("(live|ytlive)")
 async def live_stream(e):
     xx = await e.eor(get_string("com_1"))
-    if not len(e.text.split()) > 1:
+    if len(e.text.split()) <= 1:
         return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1][0] in ["@", "-"]:

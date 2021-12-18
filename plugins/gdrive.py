@@ -48,9 +48,7 @@ async def gdown(event):
     match = event.pattern_match.group(1)
     if not match:
         return await eod(event, "`Give file id or Gdrive link to download from!`")
-    filename = None
-    if " | " in match:
-        filename = match.split(" | ")[1].strip()
+    filename = match.split(" | ")[1].strip() if " | " in match else None
     eve = await event.eor(get_string("com_1"))
     _start = time.time()
     status, response = await GDrive._download_file(eve, match, filename)
