@@ -99,10 +99,10 @@ async def all_messages_catcher(e):
 
 
 @ultroid_bot.on(
-        events.NewMessage(
-            outgoing=True,
-            chats=[udB.get_key("TAG_LOG")],
-            func=lambda e: e.reply_to,
+    events.NewMessage(
+        outgoing=True,
+        chats=[udB.get_key("TAG_LOG")],
+        func=lambda e: e.reply_to,
     )
 )
 async def idk(e):
