@@ -183,10 +183,11 @@ async def download(event):
                         attributes = [
                             DocumentAttributeAudio(
                                 duration=duration,
-                                title=".".join(t for t in title.split(".")[:-1]),
+                                title=".".join(title.split(".")[:-1]),
                                 performer=artist,
                             )
                         ]
+
                     else:
                         attributes = []
                     try:

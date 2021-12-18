@@ -251,10 +251,7 @@ async def send(eve):
     index = None
     if "|" in name:
         name, index = name.split("|")
-    if key == "Official":
-        key = "plugins"
-    else:
-        key = key.lower()
+    key = "plugins" if key == "Official" else key.lower()
     plugin = f"{key}/{name}.py"
     _ = f"pasta-{plugin}"
     if index is not None:

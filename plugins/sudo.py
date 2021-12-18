@@ -49,11 +49,7 @@ async def _(ult):
         return await ult.eor(get_string("sudo_1"), time=5)
     if name and isinstance(name, User) and (name.bot or name.verified):
         return await ult.eor(get_string("sudo_4"))
-    if name:
-        name = inline_mention(name)
-    else:
-        name = f"`{id}`"
-
+    name = inline_mention(name) if name else f"`{id}`"
     if id == ultroid_bot.uid:
         mmm = get_string("sudo_2")
     elif id in sudoers():
@@ -91,10 +87,7 @@ async def _(ult):
         name = await ult.get_chat()
     else:
         return await ult.eor(get_string("sudo_1"), time=5)
-    if name:
-        name = inline_mention(name)
-    else:
-        name = f"`{id}`"
+    name = inline_mention(name) if name else f"`{id}`"
     if id not in sudoers():
         mmm = f"{name} `wasn't a SUDO User ...`"
     else:

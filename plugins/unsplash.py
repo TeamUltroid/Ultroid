@@ -29,9 +29,7 @@ async def searchunsl(ult):
     res = await unsplashsearch(match, limit=num)
     if not res:
         return await ult.eor(get_string("unspl_1"), time=5)
-    CL = []
-    for e, rp in enumerate(res):
-        CL.append(download_file(rp, f"{match}-{e}.png"))
+    CL = [download_file(rp, f"{match}-{e}.png") for e, rp in enumerate(res)]
     imgs = [z for z in (await asyncio.gather(*CL)) if z]
     await ult.client.send_file(
         ult.chat_id, imgs, caption=f"Uploaded {len(imgs)} Images!"

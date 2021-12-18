@@ -57,10 +57,8 @@ from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd, uploader
 async def _(event):
     if len(event.text) > 3 and event.text[3] != " ":
         return
-    txt = None
     input = event.text[4:].split(maxsplit=1)
-    if len(input) > 1:
-        txt = input[1]
+    txt = input[1] if len(input) > 1 else None
     if input:
         input = input[0]
     if txt:

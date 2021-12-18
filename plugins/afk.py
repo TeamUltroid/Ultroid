@@ -54,10 +54,8 @@ async def set_afk(event):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
                 media = f"https://telegra.ph{iurl[0]}"
-            elif "sticker" or "audio" in media_type:
-                media = reply.file.id
             else:
-                return await event.eor(get_string("com_4"), time=5)
+                media = reply.file.id
     await event.eor("`Done`", time=2)
     add_afk(text, media_type, media)
     ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))

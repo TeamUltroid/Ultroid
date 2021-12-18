@@ -289,7 +289,7 @@ async def choose_cata(event):
     Raw(UpdateMessagePollVote, func=lambda x: TRIVIA_CHATS and POLLS.get(x.poll_id))
 )
 async def pollish(eve):
-    if not POLLS.get(eve.poll_id)["chat"] in TRIVIA_CHATS.keys():
+    if POLLS.get(eve.poll_id)["chat"] not in TRIVIA_CHATS.keys():
         return
     if POLLS[eve.poll_id]["answer"] != eve.options[0]:
         return
