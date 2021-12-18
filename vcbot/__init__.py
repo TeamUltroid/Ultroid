@@ -40,7 +40,6 @@ from pyUltroid.functions.helper import (
 from pyUltroid.functions.admins import admin_check
 from pyUltroid.functions.tools import is_url_ok
 from pyUltroid.functions.ytdl import get_videos_link
-from pyUltroid.functions.info import get_user_id
 from pyUltroid.misc import owner_and_sudos, sudoers
 from pyUltroid.misc._assistant import in_pattern
 from pyUltroid.misc._wrappers import eod, eor
@@ -48,7 +47,12 @@ from pyUltroid.version import __version__ as UltVer
 from telethon import events
 from telethon.tl import functions, types
 from telethon.utils import get_display_name
-from youtube_dl import YoutubeDL
+try:
+    from youtube_dl import YoutubeDL
+except ImportError:
+    YoutubeDL = None
+    LOGS.info("'YoutubeDL' not found!")
+
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
 from strings import get_string
