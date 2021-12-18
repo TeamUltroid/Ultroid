@@ -185,7 +185,7 @@ async def stats(
         sp_count = len(sp.sets)
     except BaseException:
         sp_count = 0
-    full_name = inline_mention(await event.client.get_me())
+    full_name = inline_mention(event.client.me)
     response = f"🔸 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
     response += f"**  •• **`Users: {private_chats - bots}` \n"
@@ -261,7 +261,7 @@ async def _(event):
     match = event.pattern_match.group(1)
     if match:
         try:
-            user = await get_user_id(match, client=event.client)
+            user = await event.client.parse_id(match)
         except Exception as er:
             return await event.eor(str(er))
     elif event.is_reply:
@@ -364,7 +364,7 @@ async def _(ult):
                 await ult.client(
                     AddChatUserRequest(
                         chat_id=ult.chat_id,
-                        user_id=user_id,
+                        user_id=await ult.client.parse_id(user_id),
                         fwd_limit=1000000,
                     ),
                 )
@@ -377,7 +377,7 @@ async def _(ult):
                 await ult.client(
                     InviteToChannelRequest(
                         channel=ult.chat_id,
-                        users=[user_id],
+                        users=[await ult.client.parse_id(user_id)],
                     ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
