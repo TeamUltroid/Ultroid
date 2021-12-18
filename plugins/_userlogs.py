@@ -153,9 +153,11 @@ if udB.get_key("TAG_LOG"):
             buttons.append([Button.url(who_n, where_l)])
         TEXT = MSG.text
         if msg:
-            TEXT += "\n\n>> **Later Edited to !**"
+            TEXT += "\n\n🖋 **Later Edited to !**"
         strf = event.edit_date.strftime("%H:%M:%S")
-        TEXT += f"\n-> `{strf}` : {event.text}"
+        TEXT += f"\n• `{strf}` : {event.text}"
+        if d_["count"] == 10:
+            TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
             await MSG.edit(TEXT, buttons=buttons)
         except (MessageTooLongError, MediaCaptionTooLongError):
