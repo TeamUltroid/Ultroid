@@ -194,7 +194,9 @@ if udB.get_key("PMSETTING"):
     @ultroid_bot.on(
         events.NewMessage(
             incoming=True,
-            func=lambda e: e.is_private and e.sender_id not in DEVLIST and not (e.out or e.sender.bot or e.sender.is_self or e.sender.verified),
+            func=lambda e: e.is_private
+            and e.sender_id not in DEVLIST
+            and not (e.out or e.sender.bot or e.sender.is_self or e.sender.verified),
         ),
     )
     async def permitpm(event):
@@ -412,7 +414,7 @@ if udB.get_key("PMSETTING"):
             await eod(
                 apprvpm,
                 f"<b>{inline_mention(user, html=True)}</b> <code>approved to PM!</code>",
-                parse_mode="html"
+                parse_mode="html",
             )
             try:
                 await asst.edit_message(
@@ -423,7 +425,7 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
@@ -433,7 +435,7 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except MessageNotModifiedError:
                 pass
@@ -458,7 +460,9 @@ if udB.get_key("PMSETTING"):
         if is_approved(user.id):
             disapprove_user(user.id)
             await eod(
-                e, f"<b>{inline_mention(user, html=True)}</b> <code>Disapproved to PM!</code>", parse_mode="html"
+                e,
+                f"<b>{inline_mention(user, html=True)}</b> <code>Disapproved to PM!</code>",
+                parse_mode="html",
             )
             try:
                 await asst.edit_message(
@@ -469,7 +473,7 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
@@ -479,13 +483,15 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
-                    parse_mode="html"
+                    parse_mode="html",
                 )
             except MessageNotModifiedError:
                 pass
         else:
             await eod(
-                e, f"<b>{inline_mention(user)}</b> <code>was never approved!</code>", parse_mode="html"
+                e,
+                f"<b>{inline_mention(user)}</b> <code>was never approved!</code>",
+                parse_mode="html",
             )
 
 
