@@ -740,7 +740,7 @@ async def unblck_in(event):
     except BaseException:
         pass
     try:
-        user_name = await ultroid_bot.get_entity(uid)
+        await ultroid_bot.get_entity(uid)
     except BaseException:
         return await event.delete()
     await event.edit(
