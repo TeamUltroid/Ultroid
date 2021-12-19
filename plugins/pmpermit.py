@@ -711,8 +711,10 @@ async def disapr_in(event):
 )
 async def blck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
-    try: await ultroid_bot(BlockRequest(uid))
-    except: pass
+    try:
+        await ultroid_bot(BlockRequest(uid))
+    except:
+        pass
     try:
         user = await ultroid_bot.get_entity(uid)
     except BaseException:
@@ -733,18 +735,20 @@ async def blck_in(event):
 )
 async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
-    await ultroid_bot(UnblockRequest(uid))
+    try:
+        await ultroid_bot(UnblockRequest(uid))
+    except:
+        pass
     try:
         user_name = await ultroid_bot.get_entity(uid)
     except BaseException:
         return await event.delete()
     await event.edit(
         f"#UNBLOCKED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was unblocked!</code>",
-        buttons=[
-            Button.inline("Block", data=f"block_{uid}"),
-        ],
+        buttons=Button.inline("Block", data=f"block_{uid}"),
+        parse_mode="html"
     )
-    await event.answer("Unbocked.", alert=True)
+    await event.answer("Unblocked.", alert=True)
 
 
 @callback("deletedissht")
