@@ -31,7 +31,7 @@ jobs:
           black --fast assistant/*.py
           black assistant/manager/*.py
           isort plugins/*.py
-          black plugins/*.py
+          black --fast plugins/*.py
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
