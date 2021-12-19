@@ -194,16 +194,12 @@ if udB.get_key("PMSETTING"):
     @ultroid_bot.on(
         events.NewMessage(
             incoming=True,
-            func=lambda e: e.is_private and not e.out,
+            func=lambda e: e.is_private and e.sender_id not in DEVLIST and not (e.out or e.sender.bot or e.sender.is_self or e.sender.verified),
         ),
     )
     async def permitpm(event):
         inline_pm = Redis("INLINE_PM") or False
-        user = await event.get_sender()
-        if user.bot or user.is_self or user.verified:
-            return
-        if user.id in DEVLIST:
-            return
+        user = event.sender
         if not is_approved(user.id) and event.text != UND:
             if Redis("MOVE_ARCHIVE"):
                 try:
@@ -215,7 +211,7 @@ if udB.get_key("PMSETTING"):
             name = user.first_name
             fullname = get_display_name(user)
             username = f"@{user.username}"
-            mention = f"[{get_display_name(user)}](tg://user?id={user.id})"
+            mention = inline_mention(user)
             count = len(get_approved())
             try:
                 wrn = COUNT_PM[user.id] + 1
@@ -367,12 +363,10 @@ if udB.get_key("PMSETTING"):
                     return LOGS.info("COUNT_PM is messed.")
                 await ultroid_bot(BlockRequest(user.id))
                 await ultroid_bot(ReportSpamRequest(peer=user.id))
-                name = await ultroid_bot.get_entity(user.id)
-                name0 = str(name.first_name)
                 await asst.edit_message(
                     int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
-                    f"**[{name0}](tg://user?id={user.id})** [`{user.id}`] was Blocked for spamming.",
+                    f"**{mention}** [`{user.id}`] was Blocked for spamming.",
                 )
 
     @ultroid_cmd(
@@ -417,26 +411,29 @@ if udB.get_key("PMSETTING"):
                 pass
             await eod(
                 apprvpm,
-                f"[{user.first_name}](tg://user?id={user.id}) `approved to PM!`",
+                f"<b>{inline_mention(user, html=True)}</b> <code>approved to PM!</code>",
+                parse_mode="html"
             )
             try:
                 await asst.edit_message(
                     int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
-                    f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
+                    f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
+                    parse_mode="html"
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
                     int(udB.get_key("LOG_CHANNEL")),
-                    f"#APPROVED\n\n`User: `[{user.first_name}](tg://user?id={user.id}) [`{user.id}`]",
+                    f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
+                    parse_mode="html"
                 )
             except MessageNotModifiedError:
                 pass
@@ -461,32 +458,34 @@ if udB.get_key("PMSETTING"):
         if is_approved(user.id):
             disapprove_user(user.id)
             await eod(
-                e, f"[{user.first_name}](tg://user?id={user.id}) `Disapproved to PM!`"
+                e, f"<b>{inline_mention(user, html=True)}</b> <code>Disapproved to PM!</code>", parse_mode="html"
             )
             try:
                 await asst.edit_message(
                     int(udB.get_key("LOG_CHANNEL")),
                     _not_approved[user.id],
-                    f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) [{user.id}] `was disapproved to PM you.`",
+                    f"#DISAPPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was disapproved to PM you.</code>",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
+                    parse_mode="html"
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
                     int(udB.get_key("LOG_CHANNEL")),
-                    f"#DISAPPROVED\n\n[{user.first_name}](tg://user?id={user.id}) [`{user.id}`] `was disapproved to PM you.`",
+                    f"#DISAPPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was disapproved to PM you.</code>",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
+                    parse_mode="html"
                 )
             except MessageNotModifiedError:
                 pass
         else:
             await eod(
-                e, f"[{user.first_name}](tg://user?id={user.id}) was never approved!"
+                e, f"<b>{inline_mention(user)}</b> <code>was never approved!</code>", parse_mode="html"
             )
 
 
@@ -494,8 +493,7 @@ if udB.get_key("PMSETTING"):
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.reply_to_msg_id:
-        reply = await block.get_reply_message()
-        user = reply.sender_id
+        user = (await block.get_reply_message()).sender_id
     elif match:
         try:
             user = await block.client.parse_id(match)
