@@ -96,7 +96,7 @@ async def ultroid(event):
         me = inline_mention(ultroid_bot.me)
         mention = inline_mention(event.sender)
         if args and args != "set":
-                 await get_stored_file(event, args)
+            await get_stored_file(event, args)
         if not udB.get_key("STARTMSG"):
             if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
