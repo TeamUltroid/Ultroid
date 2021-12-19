@@ -93,25 +93,21 @@ async def ultroid(event):
             )
     if event.sender_id not in SUDO_M.fullsudos:
         ok = ""
-        u = await event.client.get_entity(event.chat_id)
+        me = inline_mention(ultroid_bot.me)
+        mention = inline_mention(event.sender)
         if args and args != "set":
-            try:
-                return await get_stored_file(event, args)
-            except BaseException:
-                return await event.reply("Hurrr")
+                 await get_stored_file(event, args)
         if not udB.get_key("STARTMSG"):
             if udB.get_key("PMBOT"):
                 ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
             await event.reply(
-                f"Hey there [{get_display_name(u)}](tg://user?id={u.id}), this is Ultroid Assistant of [{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})!\n\n{ok}",
+                f"Hey there {mention}, this is Ultroid Assistant of {me}!\n\n{ok}",
                 file=udB.get_key("STARTMEDIA"),
                 buttons=[Button.inline("Info.", data="ownerinfo")]
                 if Owner_info_msg
                 else None,
             )
         else:
-            me = f"[{ultroid_bot.me.first_name}](tg://user?id={ultroid_bot.uid})"
-            mention = f"[{get_display_name(u)}](tg://user?id={u.id})"
             await event.reply(
                 udB.get_key("STARTMSG").format(me=me, mention=mention),
                 file=udB.get_key("STARTMEDIA"),
