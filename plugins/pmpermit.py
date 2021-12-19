@@ -490,7 +490,7 @@ if udB.get_key("PMSETTING"):
         else:
             await eod(
                 e,
-                f"<b>{inline_mention(user)}</b> <code>was never approved!</code>",
+                f"<b>{inline_mention(user), html=True}</b> <code>was never approved!</code>",
                 parse_mode="html",
             )
 
@@ -639,20 +639,21 @@ async def apr_in(event):
         except BaseException:
             pass
         try:
-            user_name = (await ultroid_bot.get_entity(uid)).first_name
+            user = await ultroid_bot.get_entity(uid)
         except BaseException:
-            user_name = ""
+            return await event.delete()
         await event.edit(
-            f"#APPROVED\n\n[{user_name}](tg://user?id={uid}) [`{uid}`] `approved to PM!`",
+            f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
             buttons=[
                 [
                     Button.inline("Disapprove PM", data=f"disapprove_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
             ],
+            parse_mode="html"
         )
         await delete_pm_warn_msgs(uid)
-        await event.answer("Approved.")
+        await event.answer("Approved.", alert=True)
     else:
         await event.edit(
             "`User may already be approved.`",
@@ -676,19 +677,20 @@ async def disapr_in(event):
     if is_approved(uid):
         disapprove_user(uid)
         try:
-            user_name = (await ultroid_bot.get_entity(uid)).first_name
+            user = await ultroid_bot.get_entity(uid)
         except BaseException:
-            user_name = ""
+            return await event.delete()
         await event.edit(
-            f"#DISAPPROVED\n\n**[{user_name}](tg://user?id={uid})** [`{uid}`] `disapproved from PMs!`",
+            f"#DISAPPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was disapproved to PM you!</code>",
             buttons=[
                 [
                     Button.inline("Approve PM", data=f"approve_{uid}"),
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
             ],
+            parse_mode="html"
         )
-        await event.answer("DisApproved.")
+        await event.answer("Disapproved.", alert=True)
     else:
         await event.edit(
             "`User was never approved!`",
@@ -709,18 +711,18 @@ async def disapr_in(event):
 )
 async def blck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
-    await ultroid_bot(BlockRequest(uid))
+    try: await ultroid_bot(BlockRequest(uid))
+    except: pass
     try:
-        user_name = (await ultroid_bot.get_entity(uid)).first_name
+        user = await ultroid_bot.get_entity(uid)
     except BaseException:
-        user_name = ""
-    await event.answer("Blocked.")
+        return await event.delete()
     await event.edit(
-        f"#BLOCKED\n\n[{user_name}](tg://user?id={uid}) [`{uid}`] has been **blocked!**",
-        buttons=[
-            Button.inline("UnBlock", data=f"unblock_{uid}"),
-        ],
+        f"BLOCKED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was blocked!</code>",
+        buttons=Button.inline("UnBlock", data=f"unblock_{uid}"),
+        parse_mode="html"
     )
+    await event.answer("Blocked.", alert=True)
 
 
 @callback(
@@ -733,16 +735,16 @@ async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
     await ultroid_bot(UnblockRequest(uid))
     try:
-        user_name = (await ultroid_bot.get_entity(uid)).first_name
+        user_name = await ultroid_bot.get_entity(uid)
     except BaseException:
-        user_name = ""
-    await event.answer("UnBlocked.")
+        return await event.delete()
     await event.edit(
-        f"#UNBLOCKED\n\n[{user_name}](tg://user?id={uid}) has been **unblocked!**",
+        f"#UNBLOCKED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was unblocked!</code>",
         buttons=[
             Button.inline("Block", data=f"block_{uid}"),
         ],
     )
+    await event.answer("Unbocked.", alert=True)
 
 
 @callback("deletedissht")
