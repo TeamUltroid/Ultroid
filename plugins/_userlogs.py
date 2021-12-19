@@ -155,7 +155,10 @@ if udB.get_key("TAG_LOG"):
         if msg:
             TEXT += "\n\n🖋 **Later Edited to !**"
         strf = event.edit_date.strftime("%H:%M:%S")
-        TEXT += f"\n• `{strf}` : {event.text}"
+        if "\n" not in event.TEXT:
+            TEXT += f"\n\n• `{strf}` : {event.text}"
+        else:
+            TEXT += f"\n\n• `{strf}` :\n-> {event.text}"
         if d_["count"] == 10:
             TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
