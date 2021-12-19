@@ -650,7 +650,7 @@ async def apr_in(event):
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
             ],
-            parse_mode="html"
+            parse_mode="html",
         )
         await delete_pm_warn_msgs(uid)
         await event.answer("Approved.", alert=True)
@@ -688,7 +688,7 @@ async def disapr_in(event):
                     Button.inline("Block", data=f"block_{uid}"),
                 ],
             ],
-            parse_mode="html"
+            parse_mode="html",
         )
         await event.answer("Disapproved.", alert=True)
     else:
@@ -713,7 +713,7 @@ async def blck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
     try:
         await ultroid_bot(BlockRequest(uid))
-    except:
+    except BaseException:
         pass
     try:
         user = await ultroid_bot.get_entity(uid)
@@ -722,7 +722,7 @@ async def blck_in(event):
     await event.edit(
         f"BLOCKED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was blocked!</code>",
         buttons=Button.inline("UnBlock", data=f"unblock_{uid}"),
-        parse_mode="html"
+        parse_mode="html",
     )
     await event.answer("Blocked.", alert=True)
 
@@ -737,7 +737,7 @@ async def unblck_in(event):
     uid = int(event.data_match.group(1).decode("UTF-8"))
     try:
         await ultroid_bot(UnblockRequest(uid))
-    except:
+    except BaseException:
         pass
     try:
         user_name = await ultroid_bot.get_entity(uid)
@@ -746,7 +746,7 @@ async def unblck_in(event):
     await event.edit(
         f"#UNBLOCKED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was unblocked!</code>",
         buttons=Button.inline("Block", data=f"block_{uid}"),
-        parse_mode="html"
+        parse_mode="html",
     )
     await event.answer("Unblocked.", alert=True)
 
