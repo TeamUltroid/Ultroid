@@ -490,7 +490,7 @@ if udB.get_key("PMSETTING"):
         else:
             await eod(
                 e,
-                f"<b>{inline_mention(user), html=True}</b> <code>was never approved!</code>",
+                f"<b>{inline_mention(user, html=True)}</b> <code>was never approved!</code>",
                 parse_mode="html",
             )
 
