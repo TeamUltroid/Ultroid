@@ -27,7 +27,7 @@ from strings import get_string
 
 Redis = udB.get_key
 
-OWNER_NAME = ultroid_bot.me.first_name
+OWNER_NAME = ultroid_bot.full_name
 OWNER_ID = ultroid_bot.uid
 
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
