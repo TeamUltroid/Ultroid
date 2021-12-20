@@ -32,7 +32,7 @@ from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 
-from . import async_searcher, eod, eor, get_string, ultroid_cmd
+from . import async_searcher, eod, eor, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(
