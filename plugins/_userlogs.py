@@ -17,8 +17,9 @@ from telethon.errors.rpcerrorlist import (
     PeerIdInvalidError,
     UserNotParticipantError,
 )
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
 from telethon.utils import get_display_name
-from telethon.tl.types import MessageEntityMentionName, MessageEntityMention
+
 from . import *
 
 CACHE_SPAM = {}
@@ -43,7 +44,7 @@ async def all_messages_catcher(e):
         return LOGS.info(get_string("userlogs_1"))
     y = e.chat
     where_n, who_n = get_display_name(y), get_display_name(x)
-    where_l = e.message_link
+    e.message_link
     buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
@@ -103,9 +104,7 @@ async def all_messages_catcher(e):
 
 if udB.get_key("TAG_LOG"):
 
-    @ultroid_bot.on(
-        events.MessageEdited()
-    )
+    @ultroid_bot.on(events.MessageEdited())
     async def upd_edits(event):
         if not (event.mentioned and event.chat_id in TAG_EDITS):
             entities = event.get_entities_text()
@@ -122,7 +121,11 @@ if udB.get_key("TAG_LOG"):
                 if is_self:
                     text = f"**#Edited & #Mentioned**\n\n{event.text}"
                     try:
-                        sent = await asst.send_message(udB.get_key("TAG_LOG"), text, buttons=await parse_buttons(event))
+                        sent = await asst.send_message(
+                            udB.get_key("TAG_LOG"),
+                            text,
+                            buttons=await parse_buttons(event),
+                        )
                     except Exception as er:
                         return LOGS.exception(er)
                 if TAG_EDITS.get(event.chat_id):
