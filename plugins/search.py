@@ -192,25 +192,9 @@ async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
-    hmm = time.time()
-    lol = await e.eor(f"`Searching {song} on Saavn...`")
-    song, duration, performer, thumb = await saavn_dl(song)
-    if not song:
-        return await eod(lol, get_string("srch_3"))
-    title = song.split(".")[0]
-    okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
-    await e.reply(
-        file=okk,
-        message=f"`{title}`\n`From Saavn`",
-        attributes=[
-            DocumentAttributeAudio(
-                duration=int(duration),
-                title=title,
-                performer=performer,
-            )
-        ],
-        supports_streaming=True,
-        thumb=thumb,
-    )
-    await lol.delete()
-    [os.remove(x) for x in [song, thumb]]
+    try:
+        _song = (await ultroid_bot.inline_query(asst.me.username, "saavn "+song))[0]
+    except IndexError:
+        return await e.eor(f"`{song} not found on Saavn...`")
+    await e.reply(_song.result.send_message.message, file=_song.document, formatting_entities=_song.result.send_message.entities)
+    await e.delete() 
