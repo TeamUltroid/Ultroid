@@ -42,9 +42,6 @@ async def all_messages_catcher(e):
         NEEDTOLOG = int(udB.get_key("TAG_LOG"))
     except Exception:
         return LOGS.info(get_string("userlogs_1"))
-    y = e.chat
-    where_n, who_n = get_display_name(y), get_display_name(x)
-    e.message_link
     buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
