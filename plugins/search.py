@@ -23,10 +23,11 @@
 • `{i}reverse`
     Reply an Image or sticker to find its sauce.
 """
+import asyncio
 import os
 from shutil import rmtree
 
-import requests, asyncio
+import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
