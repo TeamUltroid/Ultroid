@@ -7,7 +7,7 @@
 """
 ✘ Commands Available
 
-• `{i}ugdrive <reply/file name>`
+• `{i}gdul <reply/file name>`
     Reply to file to upload on Google Drive.
     Add file name to upload on Google Drive.
 
@@ -20,10 +20,10 @@
 • `{i}udir <directory name>`
     Upload a directory on Google Drive.
 
-• `{i}listgdrive`
+• `{i}gdlist`
     List all GDrive files.
 
-• `{i}gfolder`
+• `{i}gdfolder`
     Link to your Google Drive Folder.
     If added then all files will be uploaded in this folder.
 """
@@ -60,7 +60,7 @@ async def gdown(event):
 
 
 @ultroid_cmd(
-    pattern="listgdrive$",
+    pattern="gdlist$",
     fullsudo=True,
 )
 async def files(event):
@@ -98,7 +98,7 @@ async def files(event):
 
 
 @ultroid_cmd(
-    pattern="ugdrive ?(.*)",
+    pattern="gdul ?(.*)",
     fullsudo=True,
 )
 async def _(event):
@@ -222,7 +222,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="gfolder$",
+    pattern="gdfolder$",
     fullsudo=True,
 )
 async def _(event):
