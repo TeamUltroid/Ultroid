@@ -103,7 +103,12 @@ if udB.get_key("TAG_LOG"):
 
     @ultroid_bot.on(events.MessageEdited(func=lambda x: not x.out))
     async def upd_edits(event):
+        x = event.sender
+        if isinstance(x, types.User) and (x.bot or x.verified):
+            return
         if event.chat_id not in TAG_EDITS:
+            if event.sender_id == udB.get_key("TAG_LOG"):
+                return
             entities = event.get_entities_text()
             if entities:
                 is_self = False
