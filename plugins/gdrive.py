@@ -66,8 +66,8 @@ async def gdown(event):
 async def files(event):
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
-    files = GDrive._list_files
     eve = await event.eor(get_string("com_1"))
+    files = GDrive._list_files
     msg = ""
     if files:
         msg += f"{len(files.keys())} files found in gdrive.\n\n"
@@ -158,6 +158,8 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
+    if not os.path.exists(GDrive.token_file):
+        return await event.eor(get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await event.eor("`Give filename to search on GDrive...`")
