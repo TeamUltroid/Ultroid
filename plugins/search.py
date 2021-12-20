@@ -182,13 +182,14 @@ async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
+    eve = await e.eor(f"`Searching for {song} on Saavn...`")
     try:
         _song = (await ultroid_bot.inline_query(asst.me.username, "saavn " + song))[0]
     except IndexError:
-        return await e.eor(f"`{song} not found on Saavn...`")
+        return await eve.eor(f"`{song} not found on Saavn...`")
     await e.reply(
         _song.result.send_message.message,
         file=_song.document,
         formatting_entities=_song.result.send_message.entities,
     )
-    await e.delete()
+    await eve.delete()
