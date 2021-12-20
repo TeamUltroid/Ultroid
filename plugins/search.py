@@ -26,7 +26,7 @@
 import os
 from shutil import rmtree
 
-import requests
+import requests, asyncio
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
@@ -187,6 +187,7 @@ async def siesace(e):
         _song = (await ultroid_bot.inline_query(asst.me.username, "saavn " + song))[0]
     except IndexError:
         return await eve.eor(f"`{song} not found on Saavn...`")
+    await asyncio.sleep(4.2)
     await e.reply(
         _song.result.send_message.message,
         file=_song.document,
