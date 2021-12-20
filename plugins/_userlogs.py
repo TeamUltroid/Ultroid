@@ -125,11 +125,10 @@ if udB.get_key("TAG_LOG"):
                         )
                     except Exception as er:
                         return LOGS.exception(er)
-                if TAG_EDITS.get(event.chat_id):
-                    TAG_EDITS[event.chat_id].update({event.id: {"id": sent.id}})
-                else:
-                    TAG_EDITS.update({event.chat_id: {event.id: {"id": sent.id}}})
-
+                    if TAG_EDITS.get(event.chat_id):
+                        TAG_EDITS[event.chat_id].update({event.id: {"id": sent.id}})
+                    else:
+                        TAG_EDITS.update({event.chat_id: {event.id: {"id": sent.id}}})
             return
         d_ = TAG_EDITS[event.chat_id]
         if not d_.get(event.id):
