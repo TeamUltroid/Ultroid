@@ -161,7 +161,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await event.eor("`Give filename to search on GDrive...`")
-    await event.eor(f"`Searching for {input_str} in G-Drive...`")
+    eve = await event.eor(f"`Searching for {input_str} in G-Drive...`")
     files = GDrive.search(input_str)
     msg = ""
     if files:
@@ -173,7 +173,7 @@ async def _(event):
     else:
         msg += f"`No files with title {input_str}`"
     if len(msg) < 4096:
-        await event.eor(msg, link_preview=False)
+        await eve.eor(msg, link_preview=False)
     else:
         with open("drive-files.txt", "w") as f:
             f.write(
@@ -182,7 +182,7 @@ async def _(event):
                 .replace(")\n", "\n\n")
             )
         try:
-            await event.delete()
+            await eve.delete()
         except BaseException:
             pass
         await event.client.send_file(
