@@ -14,7 +14,7 @@
 • `{i}gdown <file id/link> | <filename>`
     Download from Gdrive link or file id.
 
-• `{i}drivesearch <file name>`
+• `{i}gdsearch <file name>`
     Search file name on Google Drive and get link.
 
 • `{i}udir <directory name>`
@@ -154,27 +154,17 @@ async def _(event):
 
 """
 @ultroid_cmd(
-    pattern="drivesearch ?(.*)",
+    pattern="gdsearch ?(.*)",
     fullsudo=True,
 )
-async def sch(event):
-    if not os.path.exists(TOKEN_FILE):
-        return await event.eor(get_string("gdrive_6").format(asst.me.username), time=5)
-    http = authorize(TOKEN_FILE, None)
-    input_str = event.pattern_match.group(1).strip()
-    a = await event.eor(f"Searching for {input_str} in G-Drive.")
-    if Redis("GDRIVE_FOLDER_ID") is not None:
-        query = "'{}' in parents and (title contains '{}')".format(
-            Redis("GDRIVE_FOLDER_ID"),
-            input_str,
-        )
-    else:
-        query = f"title contains '{input_str}'"
-    try:
-        msg = await gsearch(http, query, input_str)
-        return await a.edit(str(msg))
-    except Exception as ex:
-        return await a.edit(str(ex))
+async def _(event):
+    input_str = event.pattern_match.group(1)
+    if not input_str:
+        return await event.eor("`Give filename to search on GDrive...`")
+    await event.eor(f"`Searching for {input_str} in G-Drive...`")
+    files = GDrive.search(input_str)
+    if files:
+        Todo #
 
 
 @ultroid_cmd(
