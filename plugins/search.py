@@ -203,5 +203,6 @@ async def siesace(e):
             file=_song.document,
             formatting_entities=_song.result.send_message.entities,
         )
+        _song = await asst.get_messages(int(udB.get_key("LOG_CHANNEL")), ids=_song.id)
         await e.reply(_song)
     await eve.delete()
