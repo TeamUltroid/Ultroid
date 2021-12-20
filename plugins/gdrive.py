@@ -17,9 +17,6 @@
 • `{i}gdsearch <file name>`
     Search file name on Google Drive and get link.
 
-• `{i}udir <directory name>`
-    Upload a directory on Google Drive.
-
 • `{i}gdlist`
     List all GDrive files.
 
@@ -130,7 +127,7 @@ async def _(event):
         except Exception as e:
             return await eor(mone, str(e), time=10)
         await mone.edit(
-            f"Downloaded to `{filename}` in {time_formatter(downloaded_in*1000)}",
+            f"`Downloaded to ``{filename}`` in {time_formatter(downloaded_in*1000)}.`",
         )
     else:
         filename = input_file.strip()
