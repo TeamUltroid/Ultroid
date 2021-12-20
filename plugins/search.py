@@ -30,6 +30,7 @@ from shutil import rmtree
 import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
+from telethon.errors import MediaEmptyError
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 
@@ -189,9 +190,18 @@ async def siesace(e):
     except IndexError:
         return await eve.eor(f"`{song} not found on Saavn...`")
     await asyncio.sleep(4.2)
-    await e.reply(
-        _song.result.send_message.message,
-        file=_song.document,
-        formatting_entities=_song.result.send_message.entities,
-    )
+    try:
+        await e.reply(
+            _song.result.send_message.message,
+            file=_song.document,
+            formatting_entities=_song.result.send_message.entities,
+        )
+    except MediaEmptyError:
+        _song = await ultroid_bot.send_message(
+            int(udB.get_key("LOG_CHANNEL")),
+            _song.result.send_message.message,
+            file=_song.document,
+            formatting_entities=_song.result.send_message.entities,
+        )
+        await e.reply(_song)
     await eve.delete()
