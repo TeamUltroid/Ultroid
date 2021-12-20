@@ -68,8 +68,9 @@ async def files(event):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     files = GDrive._list_files
     eve = await event.eor(get_string("com_1"))
-    msg = f"{len(files.keys())} files found in gdrive.\n\n"
+    msg = ""
     if files:
+        msg += f"{len(files.keys())} files found in gdrive.\n\n"
         for _ in files:
             msg += f"> [{files[_]}]({_})\n"
     else:
@@ -91,7 +92,7 @@ async def files(event):
             event.chat_id,
             "drive-files.txt",
             thumb="resources/extras/ultroid.jpg",
-            reply_to=eve,
+            reply_to=event,
         )
         os.remove("drive-files.txt")
 
@@ -152,7 +153,6 @@ async def _(event):
         await mone.edit(f"Exception occurred while uploading to gDrive {e}")
 
 
-"""
 @ultroid_cmd(
     pattern="gdsearch ?(.*)",
     fullsudo=True,
@@ -163,10 +163,36 @@ async def _(event):
         return await event.eor("`Give filename to search on GDrive...`")
     await event.eor(f"`Searching for {input_str} in G-Drive...`")
     files = GDrive.search(input_str)
+    msg = ""
     if files:
-        Todo #
+        msg += f"{len(files.keys())} files with {input_str} in title found in GDrive.\n\n"
+        for _ in files:
+            msg += f"> [{files[_]}]({_})\n"
+    else:
+        msg += f"`No files with title {input_str}`"
+    if len(msg) < 4096:
+        await event.eor(msg, link_preview=False)
+    else:
+        with open("drive-files.txt", "w") as f:
+            f.write(
+                msg.replace("[", "File Name: ")
+                .replace("](", "\n» Link: ")
+                .replace(")\n", "\n\n")
+            )
+        try:
+            await event.delete()
+        except BaseException:
+            pass
+        await event.client.send_file(
+            event.chat_id,
+            f"{input_str}.txt",
+            thumb="resources/extras/ultroid.jpg",
+            reply_to=event,
+        )
+        os.remove(f"{input_str}.txt")
 
 
+"""
 @ultroid_cmd(
     pattern="udir ?(.*)",
     fullsudo=True,
