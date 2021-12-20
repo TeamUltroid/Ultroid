@@ -165,7 +165,9 @@ async def _(event):
     files = GDrive.search(input_str)
     msg = ""
     if files:
-        msg += f"{len(files.keys())} files with {input_str} in title found in GDrive.\n\n"
+        msg += (
+            f"{len(files.keys())} files with {input_str} in title found in GDrive.\n\n"
+        )
         for _ in files:
             msg += f"> [{files[_]}]({_})\n"
     else:
