@@ -18,7 +18,7 @@ from telethon.errors.rpcerrorlist import (
     UserNotParticipantError,
 )
 from telethon.utils import get_display_name
-
+from telethon.tl.types import MessageEntityMentionName, MessageEntityMention
 from . import *
 
 CACHE_SPAM = {}
@@ -44,19 +44,7 @@ async def all_messages_catcher(e):
     y = e.chat
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = e.message_link
-    buttons = [[Button.url(where_n, where_l)]]
-    if isinstance(x, types.User) and x.username:
-        try:
-            buttons.append(
-                [Button.mention(who_n, await asst.get_input_entity(x.username))]
-            )
-        except Exception as er:
-            LOGS.exception(er)
-            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-    elif getattr(x, "username"):
-        buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-    else:
-        buttons.append([Button.url(who_n, where_l)])
+    buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         if TAG_EDITS.get(e.chat_id):
@@ -116,9 +104,33 @@ async def all_messages_catcher(e):
 if udB.get_key("TAG_LOG"):
 
     @ultroid_bot.on(
-        events.MessageEdited(func=lambda x: x.mentioned and x.chat_id in TAG_EDITS)
+        events.MessageEdited()
     )
     async def upd_edits(event):
+        if not (event.mentioned and event.chat_id in TAG_EDITS):
+            entities = event.get_entities_text()
+            if entities:
+                is_self = False
+                username = event.client.me.username
+                if username:
+                    username = username.lower()
+                for ent, text in entities:
+                    if isinstance(ent, MessageEntityMention):
+                        is_self = text[1:].lower() == username
+                    elif isinstance(ent, MessageEntityMentionName):
+                        is_self = ent.user_id == event.client.uid
+                if is_self:
+                    text = f"**#Edited & #Mentioned**\n\n{event.text}"
+                    try:
+                        sent = await asst.send_message(udB.get_key("TAG_LOG"), text, buttons=await parse_buttons(event))
+                    except Exception as er:
+                        return LOGS.exception(er)
+                if TAG_EDITS.get(event.chat_id):
+                    TAG_EDITS[event.chat_id].update({event.id: {"id": sent.id}})
+                else:
+                    TAG_EDITS.update({event.chat_id: {event.id: {"id": sent.id}}})
+
+            return
         d_ = TAG_EDITS[event.chat_id]
         if not d_.get(event.id):
             return
@@ -135,22 +147,6 @@ if udB.get_key("TAG_LOG"):
             MSG = await asst.get_messages(udB.get_key("TAG_LOG"), ids=d_["id"])
         except Exception as er:
             return LOGS.exception(er)
-        y, x = event.chat, event.sender
-        where_n, who_n = get_display_name(y), get_display_name(x)
-        where_l = event.message_link
-        buttons = [[Button.url(where_n, where_l)]]
-        if isinstance(x, types.User) and x.username:
-            try:
-                buttons.append(
-                    [Button.mention(who_n, await asst.get_input_entity(x.username))]
-                )
-            except Exception as er:
-                LOGS.exception(er)
-                buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-        elif getattr(x, "username"):
-            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-        else:
-            buttons.append([Button.url(who_n, where_l)])
         TEXT = MSG.text
         if msg:
             TEXT += "\n\n🖋 **Later Edited to !**"
@@ -162,7 +158,7 @@ if udB.get_key("TAG_LOG"):
         if d_["count"] == 10:
             TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
-            await MSG.edit(TEXT, buttons=buttons)
+            await MSG.edit(TEXT, buttons=await parse_buttons(event))
         except (MessageTooLongError, MediaCaptionTooLongError):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
@@ -243,3 +239,23 @@ async def leave_ch_at(event):
 @callback("do_nothing")
 async def _(event):
     await event.answer()
+
+
+async def parse_buttons(event):
+    y, x = event.chat, event.sender
+    where_n, who_n = get_display_name(y), get_display_name(x)
+    where_l = event.message_link
+    buttons = [[Button.url(where_n, where_l)]]
+    if isinstance(x, types.User) and x.username:
+        try:
+            buttons.append(
+                [Button.mention(who_n, await asst.get_input_entity(x.username))]
+            )
+        except Exception as er:
+            LOGS.exception(er)
+            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+    elif getattr(x, "username"):
+        buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+    else:
+        buttons.append([Button.url(who_n, where_l)])
+    return buttons
