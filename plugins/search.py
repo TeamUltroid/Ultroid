@@ -31,18 +31,8 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
-from telethon.tl.types import DocumentAttributeAudio
 
-from . import (
-    async_searcher,
-    eod,
-    eor,
-    get_string,
-    saavn_dl,
-    time,
-    ultroid_cmd,
-    uploader,
-)
+from . import async_searcher, eod, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -193,8 +183,12 @@ async def siesace(e):
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
     try:
-        _song = (await ultroid_bot.inline_query(asst.me.username, "saavn "+song))[0]
+        _song = (await ultroid_bot.inline_query(asst.me.username, "saavn " + song))[0]
     except IndexError:
         return await e.eor(f"`{song} not found on Saavn...`")
-    await e.reply(_song.result.send_message.message, file=_song.document, formatting_entities=_song.result.send_message.entities)
-    await e.delete() 
+    await e.reply(
+        _song.result.send_message.message,
+        file=_song.document,
+        formatting_entities=_song.result.send_message.entities,
+    )
+    await e.delete()
