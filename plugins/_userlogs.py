@@ -101,9 +101,9 @@ async def all_messages_catcher(e):
 
 if udB.get_key("TAG_LOG"):
 
-    @ultroid_bot.on(events.MessageEdited())
+    @ultroid_bot.on(events.MessageEdited(func=lambda x: not x.out))
     async def upd_edits(event):
-        if not (event.mentioned and event.chat_id in TAG_EDITS):
+        if not event.chat_id in TAG_EDITS:
             entities = event.get_entities_text()
             if entities:
                 is_self = False
