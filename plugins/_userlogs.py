@@ -119,7 +119,7 @@ if udB.get_key("TAG_LOG"):
                     if isinstance(ent, MessageEntityMention):
                         is_self = text[1:].lower() == username
                     elif isinstance(ent, MessageEntityMentionName):
-                        is_self = ent.user_id == event.client.uid
+                        is_self = ent.user_id == event.client.me.id
                 if is_self:
                     text = f"**#Edited & #Mentioned**\n\n{event.text}"
                     try:
