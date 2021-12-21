@@ -23,6 +23,7 @@
 • `{i}reverse`
     Reply an Image or sticker to find its sauce.
 """
+import asyncio
 import os
 from shutil import rmtree
 
@@ -190,8 +191,8 @@ async def siesace(e):
         return await eve.eor(f"`{song} not found on Saavn...`")
     _song = await _song.click(int(udB.get_key("LOG_CHANNEL")))
     try:
-        await e.client.send_file(_song, reply_to=e.reply_to_msg_id)
+        await e.client.send_file(e.chat_id, _song, reply_to=e.reply_to_msg_id)
     except MediaEmptyError:
         _song = await asst.get_messages(int(udB.get_key("LOG_CHANNEL")), ids=_song.id)
-        await e.client.send_file(_song, reply_to=e.reply_to_msg_id)
+        await e.client.send_file(e.chat_id, _song, reply_to=e.reply_to_msg_id)
     await eve.delete()
