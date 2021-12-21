@@ -23,7 +23,6 @@
 • `{i}reverse`
     Reply an Image or sticker to find its sauce.
 """
-import asyncio
 import os
 from shutil import rmtree
 
@@ -32,7 +31,6 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
-from telethon.errors import MediaEmptyError
 
 from . import asst, async_searcher, eod, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
