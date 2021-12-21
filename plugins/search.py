@@ -23,7 +23,6 @@
 • `{i}reverse`
     Reply an Image or sticker to find its sauce.
 """
-import asyncio
 import os
 from shutil import rmtree
 
