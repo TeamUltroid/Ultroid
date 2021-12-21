@@ -4,7 +4,7 @@
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
 | en | English [English] | 413 | 0 |
-| ru | Russian [Русский] | 382 | 31 |
+| ru | Russian [Русский] | 413 | NULL |
 | id | Indonesia [Indonesia] | 389 | 24 |
 | ar | Arabic [العربية] | 170 | 243 |
 | gu | Gujarati [ગુજરાતી] | 111 | 302 |
