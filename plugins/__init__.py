@@ -10,7 +10,6 @@ import os
 import time
 from random import choice
 
-
 from pyUltroid import *
 from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.functions.helper import *
