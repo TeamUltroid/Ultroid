@@ -189,20 +189,6 @@ async def siesace(e):
         _song = (await ultroid_bot.inline_query(asst.me.username, "saavn " + song))[0]
     except IndexError:
         return await eve.eor(f"`{song} not found on Saavn...`")
-    await asyncio.sleep(4.2)
-    try:
-        await e.reply(
-            _song.result.send_message.message,
-            file=_song.document,
-            formatting_entities=_song.result.send_message.entities,
-        )
-    except MediaEmptyError:
-        _song = await ultroid_bot.send_message(
-            int(udB.get_key("LOG_CHANNEL")),
-            _song.result.send_message.message,
-            file=_song.document,
-            formatting_entities=_song.result.send_message.entities,
-        )
-        _song = await asst.get_messages(int(udB.get_key("LOG_CHANNEL")), ids=_song.id)
-        await e.reply(_song)
+    _song = await _song.click(int(udB.get_key("LOG_CHANNEL")))
+    await e.reply(_song)
     await eve.delete()
