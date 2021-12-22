@@ -30,7 +30,8 @@ import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.misc import google_search, saavn_search
+from pyUltroid.functions.misc import google_search
+from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
 
 from . import async_searcher, eod, eor, fast_download, get_string, ultroid_cmd
