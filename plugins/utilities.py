@@ -44,6 +44,9 @@
    Paste the copied message, with formatting.
 
 • `{i}thumb <reply file>` : Download the thumbnail of the replied file.
+
+• `{i}ncode <file>`
+   Use - Paste the contents of file and send as pic.
 """
 import calendar
 import html
@@ -63,6 +66,9 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
+import pygments
+from pygments.formatters import ImageFormatter
+from pygments.lexers import Python3Lexer
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -625,3 +631,38 @@ async def thumb_dl(event):
     m = await x.download_media(thumb=-1)
     await event.reply(file=m)
     os.remove(m)
+
+
+@ultroid_cmd(pattern="ncode$")
+async def coder_print(event):
+    if not event.reply_to_msg_id:
+        return await eod(event, "`Reply to a file or message!`", time=5)
+    msg = await event.get_reply_message()
+    if msg.document:
+        a = await event.client.download_media(
+            await event.get_reply_message(), "ncode.png"
+        )
+        with open(a, "r") as s:
+            c = s.read()
+    else:
+        a = None
+        c = msg.text
+    pygments.highlight(
+        f"{c}",
+        Python3Lexer(),
+        ImageFormatter(line_numbers=True),
+        "result.png",
+    )
+    res = await event.client.send_message(
+        event.chat_id,
+        "**Pasting this code on my page...**",
+        reply_to=event.reply_to_msg_id,
+    )
+    await event.client.send_file(
+        event.chat_id, "result.png", force_document=True, reply_to=event.reply_to_msg_id
+    )
+    await res.delete()
+    await event.delete()
+    if a:
+        os.remove(a)
+    os.remove("result.png")
