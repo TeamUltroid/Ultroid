@@ -187,7 +187,7 @@ async def _(e):
         audio, _ = await e.client.fast_downloader(reply.document, reply.file.name)
         await msg.edit("`Creating video note...`")
         await bash(
-            f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:a copy circle.mp4'
+            f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:v libx265 -c:a copy circle.mp4'
         )
         await msg.edit("`Uploading...`")
         file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
