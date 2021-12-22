@@ -52,7 +52,13 @@ async def butt(event):
                 event,
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
             )
-        text = text[1]
+        try:
+            text = text[1]
+        except IndexError:
+            return await eor(
+                event,
+                f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
+            )
     text, buttons = get_msg_button(text)
     if buttons:
         buttons = create_tl_btn(buttons)
