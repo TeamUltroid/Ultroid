@@ -73,7 +73,6 @@ async def logo_gen(event):
         bg_,
         name,
         font_,
-        fill=(255, 255, 255),
         fill="white",
         stroke_width=strke,
         stroke_fill="black",
