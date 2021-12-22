@@ -39,7 +39,7 @@ async def play_music_(event):
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
         tiny_input = input.split()[0]
-        if tiny_input[0] in ["@","-"]:
+        if tiny_input[0] in ["@", "-"]:
             try:
                 chat = await event.client.parse_id(tiny_input)
             except Exception as er:
@@ -91,7 +91,8 @@ async def play_music_(event):
         ):
             song = None
         add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
-        return await xx.eor(f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
+        return await xx.eor(
+            f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
             parse_mode="html",
         )
 
