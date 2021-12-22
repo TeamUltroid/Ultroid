@@ -199,7 +199,7 @@ async def siesace(e):
         return await eve.eor("`Something went wrong.`")
     song, _ = await fast_download(url, filename=title + ".m4a")
     thumb, _ = await fast_download(img, filename=title + ".jpg")
-    song, _ = await e.client.fast_uploader(song)
+    song, _ = await e.client.fast_uploader(song, to_delete=True)
     await e.reply(
         file=song,
         message=f"`{title}`\n`From Saavn`",
@@ -214,4 +214,4 @@ async def siesace(e):
         thumb=thumb,
     )
     await eve.delete()
-    [os.remove(x) for x in [song, thumb]]
+    os.remove(thumb)
