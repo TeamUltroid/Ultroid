@@ -111,7 +111,9 @@ async def ultroid(event):
             await event.reply(
                 udB.get_key("STARTMSG").format(me=me, mention=mention),
                 file=udB.get_key("STARTMEDIA"),
-                buttons=[Button.inline("Info.", data="ownerinfo")] if Owner_info_msg else None,
+                buttons=[Button.inline("Info.", data="ownerinfo")]
+                if Owner_info_msg
+                else None,
             )
     else:
         name = get_display_name(event.sender)
