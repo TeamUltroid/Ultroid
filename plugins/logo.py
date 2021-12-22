@@ -69,7 +69,15 @@ async def logo_gen(event):
     else:
         fnt_size = 130
         strke = 20
-    make_logo(bg_, name, font_, fill=(255, 255, 255), fill="white", stroke_width=strke, stroke_fill="black")
+    make_logo(
+        bg_,
+        name,
+        font_,
+        fill=(255, 255, 255),
+        fill="white",
+        stroke_width=strke,
+        stroke_fill="black",
+    )
     """img = Image.open(bg_)
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(font_, fnt_size)
