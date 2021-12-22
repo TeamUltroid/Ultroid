@@ -17,7 +17,6 @@ import glob
 import os
 import random
 
-from PIL import Image, ImageDraw, ImageFont
 from pyUltroid.functions.misc import unsplashsearch
 from pyUltroid.functions.tools import make_logo
 from telethon.tl.types import InputMessagesFilterPhotos
@@ -61,13 +60,10 @@ async def logo_gen(event):
         fpath_ = glob.glob("resources/fonts/*")
         font_ = random.choice(fpath_)
     if len(name) <= 8:
-        fnt_size = 150
         strke = 10
     elif len(name) >= 9:
-        fnt_size = 50
         strke = 5
     else:
-        fnt_size = 130
         strke = 20
     make_logo(
         bg_,
