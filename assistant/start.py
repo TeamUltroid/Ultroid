@@ -28,7 +28,7 @@ if Owner_info_msg is None:
 
 **Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
 """
-)
+
 
 _settings = [
     [
