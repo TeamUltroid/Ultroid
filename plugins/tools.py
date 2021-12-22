@@ -36,7 +36,6 @@
 import glob
 import io
 import os
-import time
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
@@ -44,13 +43,16 @@ from google_trans_new import google_translator
 from htmlwebshot import WebShot
 from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
-from telethon.tl.types import DocumentAttributeVideo
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantsBots,
+    DocumentAttributeVideo,
+)
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, bash, downloader, eor, get_string
+from . import HNDLR, bash, eor, get_string
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd, uploader
+from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr", manager=True)
@@ -196,7 +198,11 @@ async def _(e):
             file,
             thumb=thumb,
             reply_to=reply,
-            attributes=[DocumentAttributeVideo(duration=duration, w=512, h=512, round_message=True)],
+            attributes=[
+                DocumentAttributeVideo(
+                    duration=duration, w=512, h=512, round_message=True
+                )
+            ],
         )
         await msg.delete()
         [os.remove(k) for k in [audio, thumb]]
