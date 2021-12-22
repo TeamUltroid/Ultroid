@@ -47,16 +47,10 @@ async def butt(event):
             media = pack_bot_file_id(wt.media)
     if not text:
         text = event.text.split(maxsplit=1)
-        if not text:
-            return await eor(
-                event,
-                f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
-            )
         try:
             text = text[1]
         except IndexError:
-            return await eor(
-                event,
+            return await event.eor(
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
             )
     text, buttons = get_msg_button(text)
