@@ -199,7 +199,10 @@ async def _(e):
             reply_to=reply,
             attributes=[
                 DocumentAttributeVideo(
-                    duration=data["duration"] if data["duration"] < 60 else 60, w=512, h=512, round_message=True
+                    duration=data["duration"] if data["duration"] < 60 else 60,
+                    w=512,
+                    h=512,
+                    round_message=True,
                 )
             ],
         )
