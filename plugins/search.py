@@ -185,16 +185,17 @@ async def siesace(e):
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
     eve = await e.eor(f"`Searching for {song} on Saavn...`")
-    data = await saavn_search(song)
-    if not data:
-        return await eve.eor(f"`{song} not found on Saavn.`", time=5)
+    try:
+        data = (await saavn_search(song))[0]
+    except IndexError:
+        return await eve.eor(f"`{song} not found on saavn.`")
     try:
         title = data["song"]
         url = data["media_url"]
         img = data["image"]
         duration = data["duration"]
         performer = data["primary_artists"]
-    except BaseException:
+    except KeyError:
         return await eve.eor("`Something went wrong.`")
     song, _ = await fast_download(url, filename=title + ".m4a")
     thumb, _ = await fast_download(img, filename=title + ".jpg")
