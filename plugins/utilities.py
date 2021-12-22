@@ -55,7 +55,10 @@ import os
 import time
 from datetime import datetime as dt
 
+import pygments
 from PIL import Image
+from pygments.formatters import ImageFormatter
+from pygments.lexers import Python3Lexer
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
@@ -66,9 +69,6 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
-import pygments
-from pygments.formatters import ImageFormatter
-from pygments.lexers import Python3Lexer
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
