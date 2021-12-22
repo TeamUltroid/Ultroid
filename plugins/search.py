@@ -31,10 +31,9 @@ from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search, saavn_search
-from telethon.errors import MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import asst, fast_download, async_searcher, eod, eor, get_string, udB, ultroid_bot, ultroid_cmd
+from . import async_searcher, eod, eor, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
