@@ -45,7 +45,7 @@ from htmlwebshot import WebShot
 from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
-from telethon.tl.types import DocumentAttributeVideo as video
+from telethon.tl.types import DocumentAttributeVideo
 from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, bash, downloader, eor, get_string
@@ -168,70 +168,52 @@ async def _(ult):
     pattern="circle$",
 )
 async def _(e):
-    a = await e.get_reply_message()
-    if not (a and a.media):
-        return await e.eor("Reply to a gif or audio")
-    if "audio" in mediainfo(a.media):
-        z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
-        toime = time.time()
+    reply = await e.get_reply_message()
+    if not (reply and reply.media):
+        return await e.eor("`Reply to a gif or audio file only.`")
+    if "audio" in mediainfo(reply.media):
+        msg = await e.eor("`Downloading...`")
         try:
-            bbbb = await a.download_media(thumb=-1)
-            im = cv2.imread(bbbb)
-            dsize = (320, 320)
-            output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
-            cv2.imwrite("img.png", output)
-            thumb = "img.png"
-            os.remove(bbbb)
+            bbbb = await reply.download_media(thumb=-1)
         except TypeError:
             bbbb = "resources/extras/ultroid.jpg"
-            im = cv2.imread(bbbb)
-            dsize = (320, 320)
-            output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
-            cv2.imwrite("img.png", output)
-            thumb = "img.png"
-        c = await downloader(
-            "resources/downloads/" + a.file.name,
-            a.media.document,
-            z,
-            toime,
-            "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...",
-        )
-        await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
+        im = cv2.imread(bbbb)
+        dsize = (512, 512)
+        output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
+        cv2.imwrite("img.jpg", output)
+        thumb = "img.jpg"
+        audio, _ = await e.client.fast_downloader(reply.document, reply.file.name)
+        await msg.edit("`Creating video note...`")
         await bash(
-            f'ffmpeg -i "{c.name}" -preset ultrafast -acodec libmp3lame -ac 2 -ab 144 -ar 44100 comp.mp3'
+            f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:a copy circle.mp4'
         )
-        await bash(
-            f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4'
-        )
-        taime = time.time()
-        foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
+        await msg.edit("`Uploading...`")
+        file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         data = await metadata("circle.mp4")
-        duration = data["duration"]
-        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
+        duration = data["duration"] if data["duration"] < 60 else 60
         await e.client.send_file(
             e.chat_id,
-            foile,
+            file,
             thumb=thumb,
-            reply_to=a,
-            attributes=attributes,
+            reply_to=reply,
+            attributes=[DocumentAttributeVideo(duration=duration, w=512, h=512, round_message=True)],
         )
-        await z.delete()
-        await bash("rm resources/downloads/*")
-        await bash("rm circle.mp4 comp.mp3 img.png")
-    elif mediainfo(a.media) == "gif" or mediainfo(a.media).startswith("video"):
-        z = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
-        c = await a.download_media("resources/downloads/")
+        await msg.delete()
+        [os.remove(k) for k in [audio, thumb]]
+    elif mediainfo(reply.media) == "gif" or mediainfo(reply.media).startswith("video"):
+        msg = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
+        file = await reply.download_media("resources/downloads/")
         await e.client.send_file(
             e.chat_id,
-            c,
+            file,
             video_note=True,
             thumb="resources/extras/ultroid.jpg",
-            reply_to=a,
+            reply_to=reply,
         )
-        await z.delete()
-        os.remove(c)
+        await msg.delete()
+        os.remove(file)
     else:
-        await e.eor("**Reply to a gif/video or audio file only**")
+        await e.eor("`Reply to a gif or audio file only.`")
 
 
 @ultroid_cmd(
