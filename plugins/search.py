@@ -30,10 +30,11 @@ import requests
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.misc import google_search
+from pyUltroid.functions.misc import google_search, saavn_search
 from telethon.errors import MediaEmptyError
+from telethon.tl.types import DocumentAttributeAudio
 
-from . import asst, async_searcher, eod, eor, get_string, udB, ultroid_bot, ultroid_cmd
+from . import asst, fast_download, async_searcher, eod, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -184,18 +185,32 @@ async def siesace(e):
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
     eve = await e.eor(f"`Searching for {song} on Saavn...`")
+    data = await saavn_search(song)
+    if not data:
+        return await eve.eor(f"`{song} not found on Saavn.`", time=5)
     try:
-        _song = (await ultroid_bot.inline_query(asst.me.username, "saavn " + song))[0]
-    except IndexError:
-        return await eve.eor(f"`{song} not found on Saavn...`")
-    _song = await _song.click(int(udB.get_key("LOG_CHANNEL")))
-    try:
-        await e.client.send_file(
-            e.chat_id, _song, caption=_song.text, reply_to=e.reply_to_msg_id or e
-        )
-    except MediaEmptyError:
-        _song = await asst.get_messages(int(udB.get_key("LOG_CHANNEL")), ids=_song.id)
-        await e.client.send_file(
-            e.chat_id, _song, caption=_song.text, reply_to=e.reply_to_msg_id or e
-        )
+        title = data["song"]
+        url = data["media_url"]
+        img = data["image"]
+        duration = data["duration"]
+        performer = data["primary_artists"]
+    except BaseException:
+        return await eve.eor("`Something went wrong.`")
+    song, _ = await fast_download(url, filename=title + ".m4a")
+    thumb, _ = await fast_download(img, filename=title + ".jpg")
+    song, _ = await e.client.fast_uploader(song)
+    await e.reply(
+        file=song,
+        message=f"`{title}`\n`From Saavn`",
+        attributes=[
+            DocumentAttributeAudio(
+                duration=int(duration),
+                title=title,
+                performer=performer,
+            )
+        ],
+        supports_streaming=True,
+        thumb=thumb,
+    )
     await eve.delete()
+    [os.remove(x) for x in [song, thumb]]
