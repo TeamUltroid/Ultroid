@@ -32,10 +32,13 @@ async def kang_cmd(ult):
         return await ult.eor("`Reply to a sticker/photo..`", time=5)
     reply = await ult.get_reply_message()
     animated, dl = None, None
-    emoji = "🏵"
+    try:
+        emoji = ult.text.split(maxsplit=1)[1]
+    except IndexError:
+        emoji = None
     if reply.sticker:
         file = get_input_document(reply.sticker)
-        emoji = reply.file.emoji
+        emoji = emoji or reply.file.emoji
         if reply.file.name.endswith(".tgs"):
             animated = True
             dl = await reply.download_media()
@@ -48,6 +51,8 @@ async def kang_cmd(ult):
         dl = await create_quotly(reply)
     else:
         return await ult.eor("`Reply to sticker or text to add it in your pack...`")
+    if not emoji:
+        emoji = "🏵"
     if dl:
         upl = await ult.client.upload_file(dl)
         file = get_input_document(
