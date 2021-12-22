@@ -192,7 +192,6 @@ async def _(e):
         await msg.edit("`Uploading...`")
         file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         data = await metadata("circle.mp4")
-        duration = data["duration"] if data["duration"] < 60 else 60
         await e.client.send_file(
             e.chat_id,
             file,
@@ -200,12 +199,12 @@ async def _(e):
             reply_to=reply,
             attributes=[
                 DocumentAttributeVideo(
-                    duration=duration, w=512, h=512, round_message=True
+                    duration=data["duration"] if data["duration"] < 60 else 60, w=512, h=512, round_message=True
                 )
             ],
         )
         await msg.delete()
-        [os.remove(k) for k in [audio, thumb]]
+        [os.remove(k) for k in [audio.name, thumb]]
     elif mediainfo(reply.media) == "gif" or mediainfo(reply.media).startswith("video"):
         msg = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         file = await reply.download_media("resources/downloads/")
