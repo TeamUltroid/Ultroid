@@ -18,9 +18,9 @@ from strings.strings import get_string
 
 from . import *
 
-Owner_info_msg = (
-    udB.get_key("BOT_INFO_START")
-    or f"""
+Owner_info_msg = udB.get_key("BOT_INFO_START")
+if Owner_info_msg is None:
+    Owner_info_msg = f"""
 **Owner** - {OWNER_NAME}
 **OwnerID** - `{OWNER_ID}`
 
@@ -111,7 +111,7 @@ async def ultroid(event):
             await event.reply(
                 udB.get_key("STARTMSG").format(me=me, mention=mention),
                 file=udB.get_key("STARTMEDIA"),
-                buttons=[Button.inline("Info.", data="ownerinfo")],
+                buttons=[Button.inline("Info.", data="ownerinfo")] if Owner_info_msg else None,
             )
     else:
         name = get_display_name(event.sender)
