@@ -428,10 +428,10 @@ async def ibuild(e):
                     ext = None
                 if ext in ["img", "jpg", "png"]:
                     _type = "photo"
-                     mime_type = "image/jpg"
+                    mime_type = "image/jpg"
                 elif ext in ["mp4", "mkv", "gif"]:
-                     mime_type = "video/mp4"
-                     _type = "gif"
+                    mime_type = "video/mp4"
+                    _type = "gif"
                 else:
                     try:
                         if "telethon.tl.types" in str(type(pic)):
@@ -440,14 +440,14 @@ async def ibuild(e):
                         pass
             if _pic:
                 results = [
-                        await builder.document(
-                            _pic,
-                            title="Ultroid Op",
-                            text=txt,
-                            description="@TheUltroid",
-                            buttons=btn,
-                            link_preview=False,
-                        )
+                    await builder.document(
+                        _pic,
+                        title="Ultroid Op",
+                        text=txt,
+                        description="@TheUltroid",
+                        buttons=btn,
+                        link_preview=False,
+                    )
                 ]
             else:
                 _type = "article"
