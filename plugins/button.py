@@ -45,11 +45,10 @@ async def butt(event):
             media = "https://telegra.ph" + variable[0]
         else:
             media = pack_bot_file_id(wt.media)
-    if not text:
-        text = event.text.split(maxsplit=1)
-        try:
-            text = text[1]
-        except IndexError:
+    try:
+        text = event.text.split(maxsplit=1)[1]
+    except IndexError:
+        if  not text:
             return await event.eor(
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
             )
