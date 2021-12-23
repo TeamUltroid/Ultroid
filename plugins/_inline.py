@@ -419,39 +419,40 @@ async def ibuild(e):
     if pic:
         try:
             include_media = True
-            mime_type, _pic = None, resolve_bot_file_id(pic)
+            mime_type, _pic = None, None
             cont, results = None, None
-            if not _pic:
-                try:
-                    ext = str(pic).split(".")[-1].lower()
-                except BaseException:
-                    ext = None
-                if ext in ["img", "jpg", "png"]:
-                    _type = "photo"
-                    mime_type = "image/jpg"
-                elif ext in ["mp4", "mkv", "gif"]:
-                    mime_type = "video/mp4"
-                    _type = "gif"
-                else:
-                    try:
-                        if "telethon.tl.types" in str(type(pic)):
-                            _pic = pic
-                    except BaseException:
-                        pass
-            if _pic:
-                results = [
-                    await builder.document(
-                        _pic,
-                        title="Ultroid Op",
-                        text=txt,
-                        description="@TheUltroid",
-                        buttons=btn,
-                        link_preview=False,
-                    )
-                ]
+            try:
+                ext = str(pic).split(".")[-1].lower()
+            except BaseException:
+                ext = None
+            if ext in ["img", "jpg", "png"]:
+                _type = "photo"
+                mime_type = "image/jpg"
+            elif ext in ["mp4", "mkv", "gif"]:
+                mime_type = "video/mp4"
+                _type = "gif"
             else:
-                _type = "article"
-                include_media = False
+                try:
+                    if "telethon.tl.types" in str(type(pic)):
+                        _pic = pic
+                    else:
+                        _pic = resolve_bot_file_id(pic)
+                except BaseException:
+                    pass
+                if _pic:
+                    results = [
+                        await builder.document(
+                            _pic,
+                            title="Ultroid Op",
+                            text=txt,
+                            description="@TheUltroid",
+                            buttons=btn,
+                            link_preview=False,
+                        )
+                    ]
+                else:
+                    _type = "article"
+                    include_media = False
             if not results:
                 if include_media:
                     cont = InputWebDocument(pic, 0, mime_type, [])
