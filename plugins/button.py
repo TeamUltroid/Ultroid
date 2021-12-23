@@ -16,6 +16,7 @@ Format:- `{i}button Hey There! @UseUltroid 😎.
 """
 
 from pyUltroid.functions.tools import create_tl_btn, get_msg_button
+from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
 from . import *
@@ -29,21 +30,21 @@ async def butt(event):
         wt = await event.get_reply_message()
         if wt.text:
             text = wt.text
-        #        if wt.media:
-        #            wut = mediainfo(wt.media)
-        #        if wut and wut.startswith(("pic", "gif")):
-        #            dl = await wt.download_media()
-        #            variable = uf(dl)
-        #            media = "https://telegra.ph" + variable[0]
-        #        elif wut == "video":
-        #            if wt.media.document.size > 8 * 1000 * 1000:
-        #                return await event.eor(get_string("com_4"), time=5)
-        #            dl = await wt.download_media()
-        #            variable = uf(dl)
-        #            os.remove(dl)
-        #            media = "https://telegra.ph" + variable[0]
-        #        else:
-        media = pack_bot_file_id(wt.media)
+        if wt.media:
+            wut = mediainfo(wt.media)
+        if wut and wut.startswith(("pic", "gif")):
+            dl = await wt.download_media()
+            variable = uf(dl)
+            media = "https://telegra.ph" + variable[0]
+        elif wut == "video":
+            if wt.media.document.size > 8 * 1000 * 1000:
+                return await event.eor(get_string("com_4"), time=5)
+            dl = await wt.download_media()
+            variable = uf(dl)
+            os.remove(dl)
+            media = "https://telegra.ph" + variable[0]
+        else:
+            media = pack_bot_file_id(wt.media)
     try:
         text = event.text.split(maxsplit=1)[1]
     except IndexError:
