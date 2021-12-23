@@ -23,7 +23,7 @@ from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
-from . import get_string, mediainfo, ultroid_cmd, asst
+from . import asst, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addcmd ?(.*)")
