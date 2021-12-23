@@ -432,15 +432,9 @@ async def ibuild(e):
                 mime_type = "video/mp4"
                 _type = "gif"
             else:
-                try:
-                    if "telethon.tl.types" in str(type(pic)):
-                        _pic = pic
-                    else:
-                        _pic = resolve_bot_file_id(pic)
-                except BaseException:
-                    pass
-                if _pic:
-                    results = [
+                _pic = resolve_bot_file_id(pic)
+            if _pic:
+                results = [
                         await builder.document(
                             _pic,
                             title="Ultroid Op",
@@ -448,11 +442,11 @@ async def ibuild(e):
                             description="@TheUltroid",
                             buttons=btn,
                             link_preview=False,
-                        )
-                    ]
-                else:
-                    _type = "article"
-                    include_media = False
+                    )
+                ]
+            else:
+                _type = "article"
+                include_media = False
             if not results:
                 if include_media:
                     cont = InputWebDocument(pic, 0, mime_type, [])
