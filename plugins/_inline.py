@@ -422,7 +422,7 @@ async def ibuild(e):
             mime_type, _pic = None, None
             cont, results = None, None
             try:
-                ext = str(pic).split(".")[-1].lower()
+                ext = pic.split(".")[-1].lower()
             except BaseException:
                 ext = None
             if ext in ["img", "jpg", "png"]:
