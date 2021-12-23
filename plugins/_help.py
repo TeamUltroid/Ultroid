@@ -14,7 +14,7 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.custom import Button
 
-from . import LOGS, get_string, HNDLR, asst, udB, OWNER_NAME, INLINE_PIC, ultroid_cmd
+from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
 
 _main_help_menu = [
     [

@@ -56,6 +56,7 @@ import time
 from datetime import datetime as dt
 
 import pygments
+
 try:
     from PIL import Image
 except ImportError:

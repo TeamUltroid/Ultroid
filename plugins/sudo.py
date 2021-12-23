@@ -20,7 +20,7 @@
 from pyUltroid.misc import sudoers
 from telethon.tl.types import User
 
-from . import eor, get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
+from . import get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
@@ -118,4 +118,6 @@ async def _(ult):
     m = udB.get_key("SUDO") or True
     if not m:
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await ult.eor(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False)
+    return await ult.eor(
+        f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
+    )

@@ -27,7 +27,9 @@
 """
 import os
 import time
+
 from . import LOGS
+
 try:
     import cv2
 except ImportError:

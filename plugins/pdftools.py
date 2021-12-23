@@ -31,6 +31,7 @@ import time
 
 import cv2
 import numpy as np
+
 try:
     from PIL import Image
 except ImportError:

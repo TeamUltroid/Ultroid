@@ -54,10 +54,13 @@
 """
 import asyncio
 import os
-from . import LOGS
+
 import aiohttp
 import cv2
 import numpy as np
+
+from . import LOGS
+
 try:
     from PIL import Image
 except ImportError:

@@ -28,6 +28,7 @@ from shutil import rmtree
 
 import requests
 from bs4 import BeautifulSoup as bs
+
 try:
     from PIL import Image
 except ImportError:
@@ -37,7 +38,7 @@ from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import async_searcher, eod, eor, fast_download, get_string, ultroid_cmd
+from . import async_searcher, eod, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(

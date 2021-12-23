@@ -44,7 +44,6 @@ from . import (
     LOGS,
     asst,
     bash,
-    eor,
     functions,
     get_string,
     mediainfo,
