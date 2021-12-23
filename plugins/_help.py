@@ -14,7 +14,7 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.custom import Button
 
-from . import *
+from . import LOGS, get_string, HNDLR, asst, udB, OWNER_NAME, INLINE_PIC, ultroid_cmd
 
 _main_help_menu = [
     [
@@ -94,8 +94,7 @@ async def _help(ult):
                 buttons=_main_help_menu,
             )
         except BotResponseTimeoutError:
-            return await eor(
-                ult,
+            return await ult.eor(
                 get_string("help_2").format(HNDLR),
             )
         except BotInlineDisabledError:

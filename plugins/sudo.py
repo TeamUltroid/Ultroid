@@ -118,6 +118,4 @@ async def _(ult):
     m = udB.get_key("SUDO") or True
     if not m:
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await eor(
-        ult, f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
-    )
+    return await ult.eor(f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False)

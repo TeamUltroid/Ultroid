@@ -56,7 +56,10 @@ import time
 from datetime import datetime as dt
 
 import pygments
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 from pygments.formatters import ImageFormatter
 from pygments.lexers import Python3Lexer
 from pyUltroid.dB.gban_mute_db import is_gbanned

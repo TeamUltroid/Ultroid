@@ -54,11 +54,15 @@
 """
 import asyncio
 import os
-
+from . import LOGS
 import aiohttp
 import cv2
 import numpy as np
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+    LOGS.info(f"{__file__}: PIL  not Installed.")
 from telegraph import upload_file as upf
 from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,

@@ -70,12 +70,18 @@ def start():
         f = open(".env", "w")
         f.write(all_done)
     else:
-        print("Oh, let's redo these then -_-")
+        print("Oh, let's redo these then.")
         start()
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
     os.system("pip3 install -r --no-cache-dir resources/startup/requirements.txt")
+    ask = input("Enter 'yes/y' to Install other requirements, required for local deployment.")
+    if ask in ["yes", "y"]:
+        print("Started Installing...")
+        os.system("pip3 install -r --no-cache-dir resources/startup/optional-requirements.txt")
+    else:
+        print("Skipped!")
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")

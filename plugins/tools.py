@@ -95,8 +95,7 @@ async def _(event):
         r_msg = await event.get_reply_message()
         if r_msg.media:
             bot_api_file_id = pack_bot_file_id(r_msg.media)
-            await eor(
-                event,
+            await event.eor(
                 "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id),
                     str(r_msg.sender_id),

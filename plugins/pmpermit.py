@@ -440,7 +440,7 @@ if udB.get_key("PMSETTING"):
             except MessageNotModifiedError:
                 pass
         else:
-            await eor(apprvpm, "`User may already be approved.`", time=5)
+            await apprvpm.eor("`User may already be approved.`", time=5)
 
     @ultroid_cmd(
         pattern="(da|disapprove)(?: |$)",
@@ -516,7 +516,7 @@ async def blockpm(block):
         )
     await block.client(BlockRequest(user))
     aname = await block.client.get_entity(user)
-    await eor(block, f"`{aname.first_name} has been blocked!`")
+    await block.eor(f"`{aname.first_name} has been blocked!`")
     try:
         disapprove_user(user)
     except AttributeError:

@@ -8,17 +8,14 @@
 import re
 
 from telethon import Button
-from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
-from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-from telethon.errors.rpcerrorlist import MessageNotModifiedError as np
+from telethon.errors.rpcerrorlist import BotInlineDisabledError
+from telethon.errors.rpcerrorlist import BotResponseTimeoutError
+from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.functions.users import GetFullUserRequest as gu
-from telethon.tl.types import UserStatusLastMonth as lm
-from telethon.tl.types import UserStatusLastWeek as lw
-from telethon.tl.types import UserStatusOffline as off
-from telethon.tl.types import UserStatusOnline as on
-from telethon.tl.types import UserStatusRecently as rec
+from telethon.tl import types
 
-from . import *
+
+from . import LOGS, HNDLR, ultroid_cmd, ultroid_bot, get_string, in_pattern, asst, callback, inline_mention
 
 buddhhu = {}
 
@@ -37,12 +34,11 @@ async def _(e):
     if put:
         try:
             results = await e.client.inline_query(asst.me.username, f"msg {put}")
-        except rep:
-            return await eor(
-                e,
+        except BotResponseTimeoutError:
+            return await e.eor(
                 get_string("help_2").format(HNDLR),
             )
-        except dis:
+        except BotInlineDisabledError:
             return await e.eor(get_string("help_3"))
         await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
         return await e.delete()
@@ -104,15 +100,15 @@ async def _(e):
         user = logi.users[0]
         mention = inline_mention(user)
         x = user.status
-        if isinstance(x, on):
+        if isinstance(x, types.UserStatusOnline):
             status = "Online"
-        elif isinstance(x, off):
+        elif isinstance(x, types.UserStatusOffline):
             status = "Offline"
-        elif isinstance(x, rec):
+        elif isinstance(x, types.UserStatusRecently):
             status = "Last Seen Recently"
-        elif isinstance(x, lm):
+        elif isinstance(x, types.UserStatusLastMonth):
             status = "Last seen months ago"
-        elif isinstance(x, lw):
+        elif isinstance(x, types.UserStatusLastWeek):
             status = "Last seen weeks ago"
         else:
             status = "Can't Tell"
@@ -181,7 +177,7 @@ async def _(e):
             buddhhu.pop(ids)
             try:
                 await e.edit(get_string("wspr_2"))
-            except np:
+            except MessageNotModifiedError:
                 pass
         else:
             await e.answer(get_string("wspr_5"), alert=True)

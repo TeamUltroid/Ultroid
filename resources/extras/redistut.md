@@ -13,4 +13,4 @@
 ## Process For Getting DB Credentials:-   
 - Wait 5 mins after DB creation.   
 - Then There Would Be 2 Things Named "Endpoint" and "Access Control & Security".   
-- Copy Both Of Them and Paste Endpoint url in `REDIS_URI` and "Access ...Secrutity" in `REDIS_PASSWORD`.   
+- Copy Both Of Them and Paste Endpoint url in `REDIS_URI` and "Access ...Security" in `REDIS_PASSWORD`.   

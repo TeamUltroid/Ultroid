@@ -84,7 +84,7 @@ async def uconverter(event):
 async def pack_kangish(_):
     _e = await _.get_reply_message()
     if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
-        return await eor(_, get_string("sts_4"))
+        return await _.eor(get_string("sts_4"))
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
@@ -117,9 +117,8 @@ async def pack_kangish(_):
         )
     except BaseException as er:
         LOGS.exception(er)
-        return await eor(_, str(er))
-    await eor(
-        _,
+        return await _.eor(str(er))
+    await _.eor(
         get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
@@ -129,7 +128,7 @@ async def pack_kangish(_):
 )
 async def hehe(args):
     ultroid_bot = args.client
-    xx = await eor(args, get_string("com_1"))
+    xx = await args.eor(get_string("com_1"))
     user = ultroid_bot.me
     if not user.username:
         user.username = user.first_name

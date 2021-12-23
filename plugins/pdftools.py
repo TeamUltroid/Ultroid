@@ -31,7 +31,11 @@ import time
 
 import cv2
 import numpy as np
-import PIL
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+    LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from pyUltroid.functions.tools import four_point_transform
 from skimage.filters import threshold_local
@@ -219,7 +223,7 @@ async def imgscan(event):
     if len(simplified_cnt) != 4:
         ok = cv2.detailEnhance(original_image, sigma_s=10, sigma_r=0.15)
     cv2.imwrite("o.png", ok)
-    image1 = PIL.Image.open("o.png")
+    image1 = Image.open("o.png")
     im1 = image1.convert("RGB")
     scann = f"Scanned {ultt.split('.')[0]}.pdf"
     im1.save(scann)
@@ -280,7 +284,7 @@ async def savepdf(event):
         if len(simplified_cnt) != 4:
             ok = cv2.detailEnhance(original_image, sigma_s=10, sigma_r=0.15)
         cv2.imwrite("o.png", ok)
-        image1 = PIL.Image.open("o.png")
+        image1 = Image.open("o.png")
         im1 = image1.convert("RGB")
         a = check_filename("pdf/scan.pdf")
         im1.save(a)

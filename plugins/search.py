@@ -28,7 +28,10 @@ from shutil import rmtree
 
 import requests
 from bs4 import BeautifulSoup as bs
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
@@ -97,7 +100,7 @@ async def google(event):
         des = res["description"]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    await eor(x, omk, link_preview=False)
+    await x.eor(omk, link_preview=False)
 
 
 @ultroid_cmd(pattern="img ?(.*)")

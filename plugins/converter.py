@@ -27,13 +27,18 @@
 """
 import os
 import time
-
+from . import LOGS
 try:
     import cv2
 except ImportError:
     cv2 = None
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    LOGS.info(f"{__file__}: PIL  not Installed.")
+    Image = None
+
 from telegraph import upload_file as uf
 
 from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
