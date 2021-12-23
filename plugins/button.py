@@ -48,7 +48,7 @@ async def butt(event):
     try:
         text = event.text.split(maxsplit=1)[1]
     except IndexError:
-        if  not text:
+        if not text:
             return await event.eor(
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
             )
