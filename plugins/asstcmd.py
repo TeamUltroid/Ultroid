@@ -21,7 +21,7 @@ import os
 from pyUltroid.dB.asstcmd_db import *
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
-from telethon.utils import pack_bot_file_id
+from telethon import events, utils
 
 from . import asst, get_string, mediainfo, ultroid_cmd
 
@@ -50,7 +50,7 @@ async def ac(e):
             os.remove(dl)
             m = "https://telegra.ph" + variable[0]
         else:
-            m = pack_bot_file_id(wt.media)
+            m = utils.pack_bot_file_id(wt.media)
         if wt.text:
             txt = wt.text
             if not btn:
