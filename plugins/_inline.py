@@ -435,13 +435,13 @@ async def ibuild(e):
                 _pic = resolve_bot_file_id(pic)
             if _pic:
                 results = [
-                        await builder.document(
-                            _pic,
-                            title="Ultroid Op",
-                            text=txt,
-                            description="@TheUltroid",
-                            buttons=btn,
-                            link_preview=False,
+                    await builder.document(
+                        _pic,
+                        title="Ultroid Op",
+                        text=txt,
+                        description="@TheUltroid",
+                        buttons=btn,
+                        link_preview=False,
                     )
                 ]
             else:
