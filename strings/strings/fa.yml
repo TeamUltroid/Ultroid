@@ -2,20 +2,122 @@ name: Persian
 natively: Farsi
 
 authors:
-  - rez4ie
+  - asghar
 
 # commons
 com_1: "`یکم صبر کن...`"
 com_2: "`دارم میگردم...`"
+com_3: "`ورودی نامعتبر`"
+com_4: "`رسانه پشتیبانی نشده..`"
+com_5: "در حل دانلود..."
+com_6: "در حال آپلود..."
+com_7: "`یچیزی مشکل داره.`"
+
+# chatactions
+can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
+can_2: "∆ #UsernameUpdate\n\n@{} یوزرنیمشو عوض کرد به @{}"
+can_3: "∆ #UsernameUpdate\n\n{} یوزرنیمشو حذف کرد. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}' یوزرنیم جدید --> @{}"
+
 # help
 help_1: "`{}` اصن همچین دستوری ندارم من"
 help_2: "ربات جواب نداد \n دستور `{}restart` رو بفرست."
 help_3: "`لطفا حالت inline mode را برای ربات دستیارت از طریق ` @Botfather روشنش کن."
+help_4: "• پلاگین ها"
+help_5: "افزونه ها •"
+help_6: "••ویس چت"
+help_7: "پلاگین های inline••"
+help_8: "⚙️ ابزار مالک"
+help_9: "تنظیمات ⚙️"
+help_10: "••بستن••"
+help_11: "اسم پلاگین-{}\n\n✘ کامند های موجود -\n\n"
+help_12: "تماس صوتی فعال نیست!"
+help_13: "بنویس '{}setdb ADDONS True' برای لود کردن افزونه های رسمی"
+
+# userlogs
+userlogs_1: "آیدی ای که به تگ لاگر دادی غلطه , لطفا درستش کن"
+userlogs_2: "منو به گپ تگ لاگر اضافه کن تا بهت گزارش بدم."
+userlogs_3: "ترک گپ"
+userlogs_4: "ربات کمکی شما نمی تواند در چت تگ لوگ پیام ارسال کند.."
+userlogs_5: "لفت `{}`"
+
+# admintools
+adm_1: "`من نمیتونم بفهمم این کیه!`"
+adm_2: "`هوم.. حدس میزنم من اینجا هیچ دسترسی ندارم!`"
+adm_3: "`بهم یه زمان هم بده..`"
+pro_1: "`روی یک نفر برای ارتقاش ریپلای کن!`"
+pro_2:  "{} `الان ادمینه توی {} با اسم {}.`"
+de_1: "`روی یک نفر برای عزل کردنش ریپلای کن!`"
+de_2: "{} `دیگه ادمین نیست توی {}`"
+ban_1: "`روی یه نفر ریپلای کن یا یه یوزرنیم بده تا بنش کنم!`"
+ban_2: " `خیخ,من نمیتونم برنامه نویسم رو بن کنم 😂`"
+ban_3: "`من دسترسی بن کردن کسی رو ندارم.`"
+ban_4: "{} **بن شد توسط** {} **توی** `{}`"
+ban_5: "\n**دلیل**: `{}`"
+tban_1: "`به یه نفر ریپلای کن یا آیدیشو بده`"
+tban_2: "`با موفقیت بن شد` {} `توی {} برای {}`"
+unban_1: "`به یه نفر ریپلای کن یا آیدیشو بده تا از بن درش بیارم!`"
+unban_2: "`دسترسی آنبن رو ندارم.`"
+unban_3: "{} **آنبن شد توسط** {} **توی** `{}`"
+kick_1: "`من دسترسی اخراج کسی رو ندارم.`"
+kick_2: " `خیخ, من نمیتونم برنامه نویسم رو اخراج کنم`😂"
+kick_3: "`من هرگز نمیتونم اون رو اخراج کنم...`"
+kick_4: "{} **اخراج شد توسط** {} **توی** `{}`"
+pin_1: "`به یه پیام ریپلای کن تا پینش کنم`"
+pinned_1: "پیام پین شده ای یافت نشد..."
+pinned_2: "پیام پین شده این گروه  [اینجاس]({})."
+unpin_1: "یا به یک پیام ریپلای کن, یا, بزن `{}unpin all`"
+listpin_1: "پیامی توی این گروه پین نشده..."
+purge_1: "`به یه پیام ریپلای کن تا پاکش کنم`"
+purgeall_1: "`به پیام یه نفر ریپلای کن تا پیاماشو پاک کنم`"
+purgeall_2: "تمام پیام های این فرد با موفقیت پاک شد {}"
+
+# akinator
+aki_1: "بازی تموم شد...."
+aki_2: "شروع بازی"
+aki_3: "تایم اوت !"
+
+# antiflood
+antiflood_1: "`تنظیمات آنتی فلود غیر فعال`"
+antiflood_2: "`محدودیت فلود رئوی این گروه اعمال نشده`"
+antiflood_3: "`تو به حالت سکوت در اومدی.`"
+antiflood_4: "`تنظیمات آنتی فلود با موفقیت تغییر یافت به {} توی این چت.`"
+antiflood_5: "`محدودیت فلود توی این چت اینجوریه {}.`"
+
+# ascii
+ascii_1: "`به یه عکس ریپلای کن`"
+ascii_2: "`در حال تبدیل به html...`"
+
+# audiotools
+audiotools_1: "به یه صدا یا ویدیو ریپلای کن.."
+audiotools_2: "با موفقیت دانلود شد, در حال تبدیل به ویس"
+audiotools_3: "`بهم یه زمان بده برای برش دادن`"
+audiotools_4: "`داده اشتباه`"
+audiotools_5: "`تلاش برای دانلود...`"
+audiotools_6: "`مدت زمان برای اصلاح اشتباه`"
+audiotools_7: "صدا کوتاه شد از `{}` به `{}`"
+audiotools_8: "به یه ویدیو ریپلای کن..`"
+audiotools_9: "`صدایی یافت نشد...`"
+audiotools_10: "`صدا از ویدیو استخراج شد...`"
+
+# asstcmd
+asstcmd_1: "`از این دستور با ریپلای و کلمه برای استفاده از دستور استفاده کنید.`"
+asstcmd_2: "`به من کامندی که میخوای حذف کنی رو بده`"
+asstcmd_3: "تموم کامند: `/{}` حذف شد."
+asstcmd_4: "تموم کامند : `/{}` ذخیره شد."
+asstcmd_5: "کامندی یافت نشد"
+asstcmd_6: "**کل کامند های ربات**\n\n"
+
+# autocorrect
+act_1: "ویژگی تصحیح خودکار روشن"
+act_2: "ویژگی تصحیح خودکار خاموش"
 
 # autopic
-autopic_1: "یه متن بهم بده تا جستجو کنم اسکل"
+autopic_1: "یه متن بهم بده تا جستجو کنم"
 autopic_2: "چیزی برای `{}` پیدا نکردم"
 autopic_3: "یافتم `{}`!\nاز الان ببعد عکس پروفایلت اتوماتیکه... !"
+autopic_4: "پروفایل خودکار در حال استفاده نیست !!"
+autopic_5: "پروفایل خودکار خاموش!"
 
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
@@ -27,9 +129,13 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n
 **منوی کمکی برای {}.\n\n
 افزونه های کمکی ~ {}\n\n
-دستور **`.setredis ADDONS True`** رو برای فعال کردن افزونه های کمکی بفرست.**"
+دستور **`.setdb ADDONS True`** رو برای فعال کردن افزونه های کمکی بفرست.**"
 inline_4: "** ربات {}\n\nفهرست اصلی\n\nافزونه ها ~ {}\nافزونه های کمکی ~ {}\nتمام دستورات ~ {}**"
 inline_5: "**فهرستو بستی**"
+inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
+inline_7: "Do .help {} to get the list of commands."
+inline_8: "Click the below button to update!"
+inline_9: "You Are Already On Latest Version"
 
 # tagnotif
 tagnot_1: "{} شما در {}\n\n```{}``` تگ شدید\n\n[📨 Message 📨]({})"
@@ -37,7 +143,10 @@ tagnot_2: "{} شما در {} تگ شدید\n\n [📨 Message 📨]({})"
 
 # whisper
 wspr_1: "@{} پیام مخفی برای شما.\nاین پیام را بعد از خواندن پاک کنید.\nدر غیر اینصورت پیام بعدی بروزرسانی نخواهد شد."
-wspr_2: "پیام"
+wspr_2: "پیام پاک شد"
+wspr_3: "یه ایدی یا یوزرنیم بهم بده"
+wspr_4: "یوزر {} یافت نشد\nSearch دوباره"
+wspr_5: "تو نمیتونی این کارو انجام بدی"
 
 # afk
 afk_1: "`الان انلاینم\n\n
@@ -55,6 +164,11 @@ afk_5: "`من آفلاین شدم :D`\n\n
 afk_6: "دارم آفلاین میشم"
 
 # bot
+bot_1: "هی من زنده ام"
+bot_2: "آمار"
+bot_3: "مخزن"
+bot_4: "پشتیبانی"
+bot_5: "• `راه اندازی مجدد...`"
 alive_1: "**ربات کمکی آلتروید...**\n\n
 **{}**\n\n
 ┏━━━━━━━━━━━━━━━━━━━━━\n
@@ -66,23 +180,19 @@ alive_1: "**ربات کمکی آلتروید...**\n\n
 ┣ **ورژن تله تون** - `{}`\n
 ┣ **شاخه** - `{}`\n
 ┗━━━━━━━━━━━━━━━━━━━━━"
-تاریخچه: "**Heroku** تاریخچه ربات.\n [اینجا] هم پیستش کردم({})!"
-پینگ: "**پونگ !!** `{}میلی ثانیه`\n**مدت بیداری ربات** - `{}`"
-استفاده: "**⚙️ استفاده از سیستم ⚙️**:\n\n
--> **استفاده سیستم برای** `{}`:\n
-  •  **{}ساعت**  **{}دقیقه** |** `[{}%]`\n
--> **مقدار زمان باقیمانده برای سیستم در این ماه**:\n
-  •  **{}ساعت**  **{}دقیقه |** `[{}%]`\n\n
-**فضای کلی هارد دیسک**: `{}`\n
-**استفاده شده**: `{}`\n
-**آزاد**: `{}`\n\n
-**📊 استفاده داده 📊\n
-**آپلود**: `{}`\n
-**دانلود**: `{}`\n\n
-**پردازنده**: `{}%`\n
-**حافضه موقت**: `{}%`\n
-**هارد دیسک**: `{}%`"
-shutdown: "خدافظ {}.\n`در حال خاموش شدن...`"
+logs: "**Heroku** تاریخچه ربات.\n [اینجا] هم پیستش کردم({})!"
+ping: "**پونگ !!** `{}ms`\n**زمان بیداری** - `{}`"
+usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**کل فضا**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 استفاده داده 📊**\n**آپلود**: `{}`\n**دانلود**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+usage_simple: "**کل فضا**: `{}`\n**استفاده شده**: `{}`\n**خالی**: `{}`\n\n**📊 استفاده داده 📊**\n**آپلود**: `{}`\n**دانلود**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+shutdown: "خداحافظ {}.\n`در حال خاموش شدن...`"
+
+# blacklist
+blk_1: "`یه کلمه برای افزودن به لیست سیاه بده..`"
+blk_2: "تموم : `{}` رفت تو لیست سیاه."
+blk_3: "`یه کلمه برای حذف از لیست سیاه بده..`"
+blk_4: "تموم : `{}` از لیست سیاه حذف شد."
+blk_5: "لیست سیاه این چت هست :\n\n"
+blk_6: "لیست سیاه اینجا خالیه"
 
 # broadcast
 bd_1: "`دارم به دیتابیس اضافش میکنم...`"
@@ -91,34 +201,73 @@ bd_3: "**و تمام.**\nچت هایی که هنوز تو دیتابیس بود�
 bd_4: "کانال اضافه شد!"
 bd_5: "`به دیتابیس اضافه شد!`"
 bd_6: "`این کانال همین الانشم ذخیره شده!`"
+bd_7: "از دیتابیس حذف شد"
+bd_8: "`در حال حذف`"
+bd_9: "این کانال همین الانشم حذف شده"
+
+
+# calculator
+calc_1: "• ماشین حساب اینلاین آلتروید •"
+calc_2: "دوباره ماشین حسابو باز کن"
+
+# channel hacks
+cha_1: "کانالی که دادی نامعتبره"
+cha_2: "منبع با موفقیت افزوده شد"
+cha_3: "کانال منبع قبلا اضافه شده"
+cha_4: "دیتابیس منبع پاکسازی شذ."
+cha_5: "منبع از دیتابیس پاک شد"
+cha_6: "کانال منبع همین الانشم حدف شده."
+cha_7: "کانال مقصد در دیتابیس:"
+cha_8: "کانال های منبع در دیتابیس:"
 
 # carbon
 carbon_1: "صبر کن..."
 carbon_2: "تبدیل به کد شده توسط [{}](tg://user?id={})"
+carbon_3: "`یه رنگ دلخواه برای کاربون کردن بده بهم`"
+
+# chat_bot
+chab_1: "Reply to a user or give me his id/username to add an AI ChatBot!"
+chab_2: "`No user has AI added.`"
+chab_3: "**Total List Of AI Enabled Users In This Chat :**\n\n"
 
 # chats
-chats_1: "`صبر کن...`"
-chats_2: "`نمیتونم این چت رو پاک کنم`"
-chats_3: "`من که مدیر نیستم`"
-chats_4: "#حذف شد\n{} رو حذف کردم"
-chats_5: "گروه [{}]({}) ساخته شد رئیس!"
-chats_6: "به ما @TeamUltroid بپیوندید"
+chats_1: "`نمیتونم این چت رو پاک کنم`"
+chats_2: "`من که مدیر نیستم`"
+chats_3: "#حذف شد\n{} رو حذف کردم"
+chats_4: "گروه [{}]({}) ساخته شد رئیس!"
+chats_5: "به ما @TeamUltroid بپیوندید"
+chats_6: "Your {} Group/Channel Has been made Boss!"
+
+# clean action
+clan_1: "Added Clean Action Setting For this Chat"
+clan_2: "Removed Clean Action Setting For this Chat"
+clan_3: "`آیدی`"
+clan_4: "`No Chat Added`"
+clan_5: "Clean Actions are already enabled in this Chat."
 
 # converter
 cvt_1: "به یه عکس/ویدیو/گیف یا سند ریپلای کن."
 cvt_2: "اسم و پسوند فایلو بهم بده"
-cvt_3: "`صبر کن...`"
-cvt_4: "به یه رسانه(عکس/ویدیو/گیف) ریپلای کن"
+cvt_3: "به یه رسانه(عکس/ویدیو/گیف) ریپلای کن"
+cvt_4: "`به یه عکس یا فایل با تامنیل ریپلای کن`"
+cvt_5: "`فایل ریپلای شده تامنیل نداره`"
+cvt_6: "اضافه کردم [این]({}) به عنوان تامنیل سفارشی"
+cvt_7: "`به یه فایل قابل خوندن ریپلای کن`"
+cvt_8: "`فایل غیر قابل خوندن.`"
+
+# eventsofday
+eod_1: "🎊 **اتفاقات امروز**\n\n"
+eod_2: "• **اتفاقات برای {}/2021**\n\n"
 
 # core
 core_1: "ماژول یافت شد"
 core_2: "{}.py از دستور .paste استفاده کن تا توی neko و raw پیستش کنم.."
 core_3: "دوباره بگردم..؟"
-core_4: "ماژول {} وجود نداره"
+core_4: "ماژول {} پیدا شد"
 core_5: "{}.py از دستور .paste استفاده کن تا توی neko و raw پیستش کنم.."
 core_6: "ماژول {}.py رو پیدا نکردم"
 core_7: "همچین ماژولی ندارم"
-core_8: "هیچ ماژولی با این اسم نیست\n {}.py"
+core_8: "هیچ ماژولی با این اسم نیست {}.py"
 core_9: "`اسم افزونه یی که میخوای از حافظم بکشم بیرونو بگو`"
 core_10: "**افزونه** `{}` **رو انداختم بیرون.**"
 core_11: "**نمیتونم افزونه های رسمی رباتو بندازم بیرون**"
@@ -130,10 +279,29 @@ core_16: "`اسم افزونه یی که میخوای بارگذاری بشه ر
 core_17: "`{}` **بارگذاری شد**"
 core_18: "**نمیشه** `{}` *رو بارگذاری کرد* **بخاطر خطای زیر.**\n`{}`"
 
+# devtools
+devs_1: "`No cmd given`"
+devs_2: "`Give some python cmd`"
+devs_3: "`Give Some C++ Code..`"
+
+# dm
+dm_1: "`Give Chat username or id where to send.`"
+dm_2: "`Give text to send or reply to msg`"
+dm_3: "⚜️ Message Delivered! ⚜️"
+dm_4: "Error : {}\nRead Usage : `{}help other`"
+dm_5: "`Check in Private.`"
+dm_6: "`No message found to deliver :(`"
+
+# echo
+echo_1: "**Activated Echo For Users:**\n\n"
+
+# fake action
+fka_1: "Starting Fake Action For {} sec."
+
 # fedutils
 sf_1: "در حال بن فدرالی"
 sf_2: "`کاربرو مشخص کن`"
-sf_3: "تو نمیتونی ایشونو بن کنی شاسکول خفه شو!"
+sf_3: "تو نمیتونی ایشونو بن کنی "
 sf_4: "`یا رز جواب نمیده یا افزونه خراب شده`"
 sf_5: "از دستورات فدرالی فقط هر 5 دقیقه یکبار میتونی استفاده کنی"
 sf_6: "5 دقیقه صبر کن"
@@ -152,6 +320,32 @@ sf_18: "لیست فدرال هایی که {} توش بن شده.\n\nبا است�
 sf_19: "**خاطا**\n @MissRose_Bot `رو آنبلاک کن` `بعد دوباره تلاش کن!"
 sf_20: "`در حال استخراج معلومات...`"
 sf_21: "\n\nمعلومات فدرالی استخراج شده توسط آلتروید"
+sf_22: "فردی تعیین نشده"
+sf_23: "**ارور**\n `آنبلاک کن` @MissRose_Bot `و دوباره امتحان کن!"
+
+# filter
+flr_1: "`Use this command word to set as filter and reply...`"
+flr_2: "Filters Found In This Chats Are\n\n"
+flr_3: "`Give the filter to remove..`"
+flr_4: "Done : Filter `{}` Saved."
+flr_5: "Done : Filter `{}` Removed."
+flr_6: "No Filters Found Here"
+
+# fontgen
+fgn_1: "**Available Fonts**\n\n"
+
+# force subscribe
+fsub_1: "Give Channel where you want User to Join !"
+fsub_2: "Give Correct Channel Username or id"
+fsub_3: "ForceSub was not Active in this Chat !"
+fsub_4: "Join Channel"
+fsub_5: "Unmute Me"
+fsub_6: "Please Join That Channel !\nThen Click This Button !"
+fsub_7: "This Message is Not for You"
+fsub_8: "Thanks For Joining ! "
+
+# extra
+ex_1: "`Reply to message..`"
 
 # gdrive
 gdrive_1: "`تو همین الانشم تایید کردی گوگل درایوتو`"
@@ -163,10 +357,69 @@ gdrive_5: "`هورا!\nالان میتونی از دستورات مربوط به
 gdrive_6: "`برو به `{}` و دستور ``/auth رو بفرست.`"
 gdrive_7: "**فایل با موفقیت به گوگل درایو آپلود شد :**\n\n[{}]({})"
 
+# get addons
+gas_1: "Please provide a raw link!"
+
+# greetings
+grt_1: "`Welcome note saved`"
+grt_2: "Please use this in a group and not PMs!"
+grt_3: "`Reply to message which u want to set as welcome`"
+grt_4: "`No welcome was set!`"
+grt_5: "`Welcome Note Deleted`"
+grt_6: "`No goodbye was set!`"
+grt_7: "`Reply to message which u want to set as goodbye`"
+
+# glitch
+glitch_1: "`Glitching...`"
+
+# mediainfo
+mdi_1: "More Explained Info"
+
+# nightmode
+nightm_1: "Give Time in correct format"
+nightm_2: "Setted time successfully"
+nightm_3: "Done, Added Current Chat To Night Mode"
+nightm_4: "Done, Removed Current Chat from Night Mode"
+nightm_5: "Something Went Wrong"
+
 # pmpermit
 pmperm_1: "لطفا صبر کن تا بهت جواب بدم وگرنه به عنوان هرزنامه ریپورت میشی!!"
 pmperm_2: "تو داشتی تو پی ویم اسپم میکردی منم خوشم نمیاد.\nبلاک و ریپورتت کردم."
 pmperm_3: "یا به پیام یکی ریپلای کن یا این دستورو تو پی وی یکی بفرست"
+
+# schedule_msg
+schdl_1: "`Scheduled msg Succesfully`"
+schdl_2: "`Incorrect Format`"
+
+# searches
+srch_1: "`Search for whom? Give me a user name!!`"
+srch_2: "`No such user found...`"
+srch_3: "`Song not found...`"
+
+# snip
+snip_1: "Give word to set as snip and reply to a message."
+snip_2: "Give the word to remove..."
+snip_3: "No Snips Found Here."
+
+# specialtools
+spcltool_1: "Reply To Audio or video"
+spcltool_2: "`Done.. Now reply to video In which u want to add this Audio`"
+spcltool_3: "Reply To video"
+spcltool_4: "`First reply an audio with .raw`"
+spcltool_5: "Downloaded Successfully, Now Adding Your Audio to video"
+spcltool_6: "`Put input in dd/mm/yyyy format`"
+spcltool_7: "`Happy Birthday To U🎉🎊`"
+spcltool_8: "Give something to search.."
+spcltool_9: "Found Nothing"
+
+# sudo
+sudo_1: "`Reply to a msg or add it's id/username.`"
+sudo_2: "You cant add yourself as Sudo User..."
+sudo_3: "`No SUDO User was assigned ...`"
+sudo_4: "`Bots can't be added as Sudo Users.`"
+
+# unsplash
+unspl_1: "No Results Found !"
 
 # updater
 upd_1: "`صبر کن...`"
@@ -174,23 +427,156 @@ upd_2: "`اوه شت، بروزرسانی متوقف شد بدلایل مختل�
 upd_3: "**بروز رسانی جدید در دسترسه [[{}]]({}/درخت/{}):\n\nتغییرات ورژن جدید**\n\n{}"
 upd_4: "`لیست تغییرات خیلی بزرگه خودت فایلو ببین`"
 upd_5: "دکمه زیر رو برای بروزرسانی بزن"
-upd_6: "دکمه زیر رو برای بروزرسانی بزن"
 upd_7: "\n`رباتت`  **کاملا بروز شد**  `با`  **[[{}]]({}/درخت/{})**\n"
+upd_7: "`Fast Soft Updating...`"
 
 # upload download
 udl_1: "`به فایل یا رسانه یی که میخوای دانلود کنم ریپلای کن`"
 udl_2: "با موفقیت دانلودش کردم\nآدرس » \n`{}`\nزمان در بر گرفته » `{}`"
 udl_3: "`مسیر فایلو بم بده`"
+udl_4: "`Trying to download...`"
+udl_5: "`You forgot to give link :(`"
+udl_6: "`This Directory is Empty.`"
+udl_7: "`You can't do that!`"
+
+# vctools
+vct_1: "`Voice Chat Started...`"
+vct_2: "**Successfully Changed VC Title to** `{}`"
+vct_3: "`Inviting Members to Voice Chat...`"
+vct_4: "`Voice Chat Stopped...`"
+vct_5: "`Invited {} users`"
+vct_6: "No input Found!"
 
 # words
-wrd_1: "**کلمه** - `{}`\n\n**معنی** - \n"
+wrd_1: "**کلمه** - `{}`\n\n**معنی** - __{}__\n"
 wrd_2: "**کلمه** - `{}`\n\n**مترادف** - \n"
-wrd_3: "**کلمه** - `{}`\n\n**متضاد** - \n"
+wrd_3: "**کلمه** - `{}`\n\n**متضاد** -\n"
+wrd_4: "`Give a Word to Find Its Meaning..`"
+wrd_5: "Synonyms"
+wrd_6: "Antonyms"
+wrd_7: "No synonym found!!\n\n`{}`"
+wrd_8: "No Antonyms found!!\n\n`{}`"
 
-# ---------------------------------------------------#
+# profanitY
+prof_1: "`Added This Chat for Profanity Filtering!`"
+prof_2: "`Removed This Chat from Profanity Filtering!`"
 
-# assisant
+# notes
+notes_1: "`Use this Command with Reply and word to use a note.`"
+notes_2: "Done Note : `#{}` saved."
+notes_3: "`Give me the note handler which you want to remove.`"
+notes_4: "Notes Found In This Chats Are\n\n"
+notes_5: "No Notes Found Here"
+
+# stickertools
+sts_1: "`You haven't written any article, Waifu is going away.`"
+sts_2: "`Reply to an Animated Sticker...`"
+sts_3: "**Please select from {} **"
+sts_4: "`Reply to Non Animated Sticker.`"
+sts_5: "**Pack Kanged Successfully**.\n**Kanged Pack:** [link]({})"
+sts_6: "`Reply to message/media...`"
+sts_7: "`Sticker added in a Different Pack !\nThis Pack is Newly created!\nYour pack can be found` [here](t.me/addstickers/{})"
+sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`"
+sts_9:  "`Ooo Animated Sticker 👀...`"
+sts_10: "`Reply to any media...`"
+sts_11: "Kanging this Sticker..."
+sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
+sts_13: "`Switching to Pack {} due to insufficient space`"
+
+# whichsong
+whs_1: "<• Reply to Audio File •>"
+whs_2: "`Trying to identify the song....`"
+whs_3: "Failed to Identify song :("
+whs_4: "**Song Recognised!**\nName: __{}__"
+
+# webupload
+wbl_1: "`Provide a File Name pls..`"
+
+# writer
+writer_1: "`Give Some Text Too`"
+
+# webshot
+wbs_1: "`Give a URL please!`"
+wbs_2: "Invalid URL!"
+wbs_3: "**WebShot Generated**\n**URL**: {}"
+
+# youtube
+youtube_1: "Give me a (youtube) URL to download audio from!"
+youtube_2: "`Give A Direct Audio Link To Download`"
+youtube_3: "Give me a (youtube) URL to download video from!"
+youtube_4: "`Give A Direct Video Link To Download`"
+youtube_5: "Give me a (youtube) search query to download audio from!"
+youtube_6: "`Downloading audio song...`"
+youtube_7: "Give me a (youtube) search query to download video from!"
+youtube_8: "`Downloading video song...`"
+
+# ziptools
+zip_1: "Reply to any media/Document."
+zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
+zip_3: "`Reply to zip file only`"
+
+# file share
+fsh_1: "**List of files stored.:**"
+fsh_2: "**File has been stored!**\n\n**Shareable link:** {}"
+fsh_3: "`Reply to a message to make a shareable link!`"
+fsh_4: "**No files stored!**"
+# ------------------------- assistant --------------------------#
+
 ast_1: "رابط برنامه نویسی که مد نظرته رو انتخاب کن"
 ast_2: "**رابط کاربری remove.bg**\nرابط برنامه نویسی که از remove.bg دریافت کردی رو بفرست.\n\nاز دستور /cancel برای لغو کردن استافاده کن"
 ast_3: "سلام {}. از طریق گزینه ها گشت و گذار کن"
 
+# inlinestuff
+instu_1: "App search. Enter app name!"
+instu_2: "Recent Searches.."
+instu_3: "Enter Query to Search"
+instu_4: "Success"
+
+# games
+games_1: "Choose The Game 🎮"
+games_2: "Choose Category!"
+games_3: "Choose Difficulty Level"
+games_4: "Choose Number of Questions.."
+games_5: "Choose Time Interval..."
+games_6: "**• Starting Quiz in 5 secs.** \n**• Level :** {}\n**• Qs :** {}"
+
+# callbackstuffs
+clst_1: "`Userbot dyno build in progress, please wait for it to complete.`"
+clst_2: "`Successfully Updated!\nRestarting, please wait...`"
+clst_3: "■ Generating Changelogs..."
+clst_4: "Something went wrong..."
+clst_5: "Done!"
+
+# pmbot
+pmbot_1: "**You need to join below chat(s) in order to chat with my master!\n\n**"
+pmbot_2: "Please reply to someone to ban him."
+pmbot_3: "User is already banned!"
+pmbot_4: "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**"
+pmbot_5: "Please reply to someone to Unban him."
+pmbot_6: "User was never banned!"
+pmbot_7: "`Congrats! You have been unbanned.`"
+
+# -------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Left the voice chat.`"
+vcbot_2: "**ERROR:**\n{}"
+vcbot_3: "• Volume Changed to `{}%` •"
+vcbot_4: "`Please specify a volume from 1 to 200!`"
+vcbot_5: "`Re-joining this voice chat.`"
+vcbot_6: "You haven't connected to a voice chat!"
+vcbot_7: "`Keep patience... It'll take some time.`"
+vcbot_8: "Give only youtube playlist"
+vcbot_9: "Are You Kidding Me?\nWhat to Play?"
+vcbot_10: "Removed Chat from Vc AUTH Groups!"
+vcbot_11: "`Getting Voice Chat Bot Users List...`"
+vcbot_12: "`Muted playback in this chat.`"
+vcbot_13: "`Resumed playback in this chat.`"
+vcbot_14: "`Paused playback in this chat.`"
+vcbot_15: "Please specify a song name or reply to a video file !"
+vcbot_16: "Chat is Not in Vc Auth list..."
+vcbot_17: "`Reply to user's msg or add it's id/username...`"
+vcbot_18: "• Vc Auth List is Empty.."
+vcbot_19: "Already Authed This Chat!"
+vcbot_20: "`Downloading and converting...`"
+vcbot_21: "• Nothing in queue!"
+vcbot_22: "`Cleaned All Queues In Chat`"
