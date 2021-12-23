@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import random
-from PIL import Image
+
 from pyUltroid.functions.misc import create_quotly
 from pyUltroid.functions.tools import rotate_photo
 from telethon import errors
