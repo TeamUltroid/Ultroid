@@ -179,13 +179,13 @@ if udB.get_key("PMSETTING"):
                 await asst.edit_message(
                     LOG_CHANNEL,
                     _not_approved[miss.id],
-                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
+                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
                     parse_mode="html",
                 )
             except KeyError:
                 await asst.send_message(
                     LOG_CHANNEL,
-                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss)}</b> [<code>{miss.id}</code>]",
+                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
                     parse_mode="html",
                 )
             except MessageNotModifiedError:
