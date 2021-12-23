@@ -5,8 +5,10 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import random
 from PIL import Image
 from pyUltroid.functions.misc import create_quotly
+from pyUltroid.functions.tools import rotate_photo
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
@@ -31,6 +33,10 @@ async def kang_cmd(ult):
     if not ult.is_reply:
         return await ult.eor("`Reply to a sticker/photo..`", time=5)
     reply = await ult.get_reply_message()
+    if sender.username:
+        pre = sender.username[:4]
+    else:
+        pre = random.random_string(length=3)
     animated, dl = None, None
     try:
         emoji = ult.text.split(maxsplit=1)[1]
@@ -45,7 +51,7 @@ async def kang_cmd(ult):
     elif reply.photo:
         dl = await reply.download_media()
         name = "sticker.webp"
-        image = Image.open(dl)
+        image = rotate_photo(dl)
         image.save(name, "WEBP")
     elif reply.text:
         dl = await create_quotly(reply)
@@ -61,7 +67,7 @@ async def kang_cmd(ult):
     get_ = udB.get_key("STICKERS") or {}
     type_ = "static" if not animated else "anim"
     if not get_.get(ult.sender_id) or not get_.get(ult.sender_id, {}).get(type_):
-        sn = f"ult_{ult.sender_id}"
+        sn = f"{pre}_{ult.sender_id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
         if animated:
             type_ = "anim"
@@ -104,7 +110,7 @@ async def kang_cmd(ult):
             AddSticker(InputStickerSetShortName(name), SetItem(file, emoji=emoji))
         )
     except (errors.StickerpackStickersTooMuchError, errors.StickersTooMuchError):
-        sn = f"ult{ult.sender_id}_{ult.id}"
+        sn = f"{pre}{ult.sender_id}_{ult.id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
         if animated:
             sn += "_anim"
