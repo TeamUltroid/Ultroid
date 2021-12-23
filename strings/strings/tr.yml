@@ -155,4 +155,3 @@ wrd_3: "**Kelime** - `{}`\n\n**Zıt anlamlısı** - \n"
 ast_1: "Hangi API'yi ayarlamak istediğinizi seçin."
 ast_2: "**remove.bg API'si**\nAPI anahtarınızı remove.bg'den alın ve bana gönderin.\n\nİşlemi sonlandırmak için /cancel komutunu kullanın."
 ast_3: "Selam {}. Lütfen seçeneklere göz atın."
-
