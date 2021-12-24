@@ -10,10 +10,10 @@
 • `{i}wspr <username>`
     Send secret message..
 
-• `{i}quotly <color-optional>`
-• `{i}quotly @username`
-• `{i}quotly r <color-optional>`
-• `{i}quotly count` : `multiple quotes`
+• `{i}q <color-optional>`
+• `{i}q @username`
+• `{i}q r <color-optional>`
+• `{i}q count` : `multiple quotes`
     Create quotes..
 
 • `{i}sticker <query>`
@@ -300,7 +300,7 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="q(uotly|) ?(.*)", manager=True, allow_pm=True)
+@ultroid_cmd(pattern="q ?(.*)", manager=True, allow_pm=True)
 async def quott_(event):
     if len(event.text[1:]) > 1 and event.text[2] != " ":
         return
