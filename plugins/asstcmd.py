@@ -57,7 +57,7 @@ async def ac(e):
                 txt, btn = get_msg_button(wt.text)
             add_cmd(wrd, txt, m, btn)
         else:
-            add_cmd(wrd, None, m)
+            add_cmd(wrd, None, m, btn)
     else:
         txt = wt.text
         if not btn:
