@@ -77,7 +77,7 @@ async def diela(e):
 async def pinterest(e):
     m = e.pattern_match.group(1)
     if not m:
-        return await eod(e, "`Give pin link`")
+        return await e.eor("`Give pinterest link.`", time=3)
     scrape = cfscrape.create_scraper()
     hehe = bs(scrape.get(gib_link(m)).text, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
