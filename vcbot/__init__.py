@@ -79,7 +79,8 @@ class Player:
             self.group_call = CLIENTS[chat]
         else:
             _client = GroupCallFactory(
-                vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
+                vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON,
+                enable_logs_to_console=True, path_to_log_file="VCBot.log"
             )
             self.group_call = _client.get_group_call()
             CLIENTS.update({chat: self.group_call})
@@ -92,6 +93,7 @@ class Player:
                 )
             )
         except Exception as e:
+            LOGS.exception(e)
             return False, e
         return True, None
 
@@ -112,11 +114,13 @@ class Player:
                 self.group_call.on_network_status_changed(self.on_network_changed)
                 self.group_call.on_playout_ended(self.playout_ended_handler)
                 await self.group_call.join(self._chat)
-            except GroupCallNotFoundError:
+            except GroupCallNotFoundError as er:
+                LOGS.info(er)
                 dn, err = await self.make_vc_active()
                 if err:
                     return False, err
             except Exception as e:
+                LOGS.exception(e)
                 return False, e
         return True, None
 
@@ -180,7 +184,8 @@ class Player:
                 f"• Successfully Left Vc : <code>{chat_id}</code> •",
                 parse_mode="html",
             )
-        except Exception:
+        except Exception as er:
+            LOGS.exception(er)
             await vcClient.send_message(
                 self._current_chat,
                 f"<strong>ERROR:</strong> <code>{format_exc()}</code>",
