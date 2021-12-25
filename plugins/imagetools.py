@@ -72,7 +72,7 @@ from telethon.errors.rpcerrorlist import (
     MessageDeleteForbiddenError,
 )
 
-from . import Redis, download_file, get_string, requests, udB, ultroid_cmd
+from . import Redis, async_searcher, download_file, get_string, requests, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -119,8 +119,8 @@ async def sketch(e):
 @ultroid_cmd(pattern="color$")
 async def _(event):
     reply = await event.get_reply_message()
-    if not reply.media:
-        return await event.eor("`Reply To a Black nd White Image`")
+    if not (reply and reply.media):
+        return await event.eor("`Reply To a Black and White Image`")
     xx = await event.eor("`Coloring image 🎨🖌️...`")
     image = await reply.download_media()
     img = cv2.VideoCapture(image)
@@ -564,15 +564,14 @@ async def ultd(event):
         file = "ult.png"
     got = upf(file)
     lnk = f"https://telegra.ph{got[0]}"
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(
-            f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}"
-        ) as out:
-            r = await out.json()
+    r = await async_searcher(
+        f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}",
+        re_json=True
+    )
     ms = r.get("message")
     if not r["success"]:
         return await xx.edit(ms)
-    await download_file(ms["message"], "ult.png")
+    await download_file(ms, "ult.png")
     img = Image.open("ult.png").convert("RGB")
     img.save("ult.webp", "webp")
     await event.client.send_file(
