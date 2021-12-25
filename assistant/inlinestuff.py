@@ -387,6 +387,7 @@ async def piston_run(event):
         result = await event.builder.article(
             title="Bad Query",
             description="Usage: [Language] [code]",
+            thumb=wb("https://telegra.ph/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []),
             text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
@@ -399,6 +400,7 @@ async def piston_run(event):
         result = await event.builder.article(
             title="Unsupported Language",
             description="Usage: [Language] [code]",
+            thumb=wb("https://telegra.ph/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []),
             text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
         )
         return await event.answer([result])
