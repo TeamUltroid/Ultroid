@@ -325,7 +325,7 @@ async def quott_(event):
                     )
                 else:
                     reply_ = []
-                    for msg in range(reply_.id, reply_.id+int(spli_[0])+1):
+                    for msg in range(reply_.id, reply_.id + int(spli_[0]) + 1):
                         msh = await event.client.get_messages(event.chat_id, ids=msg)
                         if msh:
                             reply_.append(msh)
