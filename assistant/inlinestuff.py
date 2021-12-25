@@ -415,6 +415,7 @@ async def piston_run(event):
         title="Result",
         description=output,
         text=f"• **Language:**\n`{lang}`\n\n• **Code:**\n`{code}`\n\n• **Result:**\n`{output}`",
+        thumb=wb("https://telegra.ph/file/871ee4a481f58117dccc4.jpg", 0, "image/jpeg", []),
         buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
     )
     await event.answer([result], switch_pm="• Piston •", switch_pm_param="start")
