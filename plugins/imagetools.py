@@ -55,7 +55,6 @@
 import asyncio
 import os
 
-import aiohttp
 import cv2
 import numpy as np
 
@@ -72,7 +71,15 @@ from telethon.errors.rpcerrorlist import (
     MessageDeleteForbiddenError,
 )
 
-from . import Redis, async_searcher, download_file, get_string, requests, udB, ultroid_cmd
+from . import (
+    Redis,
+    async_searcher,
+    download_file,
+    get_string,
+    requests,
+    udB,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(
@@ -565,8 +572,7 @@ async def ultd(event):
     got = upf(file)
     lnk = f"https://telegra.ph{got[0]}"
     r = await async_searcher(
-        f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}",
-        re_json=True
+        f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}", re_json=True
     )
     ms = r.get("message")
     if not r["success"]:
