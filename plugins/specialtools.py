@@ -304,7 +304,7 @@ async def wall(event):
 async def quott_(event):
     if len(event.text[1:]) > 1 and event.text[2] != " ":
         return
-    match = event.pattern_match.group(2)
+    match = event.pattern_match.group(1)
     if not event.is_reply:
         return await event.eor("`Reply to Message..`")
     msg = await event.eor(get_string("com_1"))
@@ -315,13 +315,20 @@ async def quott_(event):
         if (spli_[0] in ["r", "reply"]) or (
             spli_[0].isdigit() and int(spli_[0]) in range(1, 21)
         ):
-            if spli_[0].isdigit() and not event.client._bot:
-                reply_ = await event.client.get_messages(
-                    event.chat_id,
-                    min_id=event.reply_to_msg_id - 1,
-                    reverse=True,
-                    limit=int(spli_[0]),
-                )
+            if spli_[0].isdigit():
+                if not event.client.bot:
+                    reply_ = await event.client.get_messages(
+                        event.chat_id,
+                        min_id=event.reply_to_msg_id - 1,
+                        reverse=True,
+                        limit=int(spli_[0]),
+                    )
+                else:
+                    reply_ = []
+                    for msg in range(reply_.id, reply_.id+int(spli_[0])+1):
+                        msh = await event.client.get_messages(event.chat_id, ids=msg)
+                        if msh:
+                            reply_.append(msh)
             else:
                 replied_to = await reply_.get_reply_message()
             try:
