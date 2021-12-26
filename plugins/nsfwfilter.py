@@ -20,7 +20,7 @@ import requests
 from ProfanityDetector import detector
 from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 
-from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd, LOGS
+from . import HNDLR, LOGS, eor, events, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
@@ -44,6 +44,7 @@ async def remnsfw(e):
 
 
 NWARN = {}
+
 
 async def nsfw_check(e):
     chat = e.chat_id
@@ -135,6 +136,7 @@ async def nsfw_check(e):
                     chat,
                     f"**NSFW Warn 1/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
                 )
+
 
 if udB.get_key("NSFW"):
     ultroid_bot.add_handler(nsfw_check, events.NewMessage(incoming=True))
