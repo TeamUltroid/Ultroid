@@ -20,7 +20,7 @@ import requests
 from ProfanityDetector import detector
 from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 
-from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd
+from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
@@ -33,6 +33,7 @@ async def addnsfw(e):
     if not action or ("ban" or "kick" or "mute") not in action:
         action = "mute"
     nsfw_chat(e.chat_id, action)
+    ultroid_bot.add_handler(nsfw_check, events.NewMessage(incoming=True))
     await e.eor("Added This Chat To Nsfw Filter")
 
 
@@ -44,9 +45,7 @@ async def remnsfw(e):
 
 NWARN = {}
 
-
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def checknsfw(e):
+async def nsfw_check(e):
     chat = e.chat_id
     action = is_nsfw(chat)
     if action and udB.get_key("DEEP_API") and e.media:
@@ -69,7 +68,12 @@ async def checknsfw(e):
                 },
                 headers={"api-key": udB.get_key("DEEP_API")},
             )
-            k = float((r.json()["output"]["nsfw_score"]))
+            try:
+                k = float((r.json()["output"]["nsfw_score"]))
+            except KeyError as er:
+                LOGS.exception(er)
+                LOGS.info(r.json())
+                return
             score = int(k * 100)
             if score > 45:
                 nsfw += 1
@@ -131,3 +135,6 @@ async def checknsfw(e):
                     chat,
                     f"**NSFW Warn 1/3** To [{e.sender.first_name}](tg://user?id={e.sender_id})\nDon't Send NSFW stuffs Here Or You will Be Get {action}",
                 )
+
+if udB.get_key("NSFW"):
+    ultroid_bot.add_handler(nsfw_check, events.NewMessage(incoming=True))
