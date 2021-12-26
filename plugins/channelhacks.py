@@ -32,7 +32,7 @@
       Show List of Ur channels
 
    'you can set many channels in database'
-   'For activating auto-post use `{i}setredis AUTOPOST True` '
+   'For activating auto-post use `{i}setdb AUTOPOST True` '
 """
 
 import asyncio
