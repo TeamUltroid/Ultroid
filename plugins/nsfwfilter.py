@@ -27,7 +27,7 @@ from . import HNDLR, eor, events, udB, ultroid_bot, ultroid_cmd
 async def addnsfw(e):
     if not udB.get_key("DEEP_API"):
         return await eor(
-            e, f"Get Api from deepai.org and Add It `{HNDLR}setredis DEEP_API your-api`"
+            e, f"Get Api from deepai.org and Add It `{HNDLR}setdb DEEP_API your-api`"
         )
     action = e.pattern_match.group(1)
     if not action or ("ban" or "kick" or "mute") not in action:
