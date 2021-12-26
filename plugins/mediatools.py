@@ -12,6 +12,7 @@
 
 • `{i}rotate <degree/angle> <reply to media>`
    Rotate any video/photo/media..
+   Note : for video it should be angle of 90's
 """
 import os
 import time
