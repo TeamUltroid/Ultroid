@@ -173,8 +173,8 @@ async def chatBot_replies(e):
     if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
         if msg:
-            if sleep := udB.get_key("CHATBOT_SLEEP"):
-                await asyncio.sleep(sleep)
+            sleep = udB.get_key("CHATBOT_SLEEP") or 1.5
+            await asyncio.sleep(sleep)
             await e.reply(msg)
     chat = await e.get_chat()
     if e.is_group and not sender.bot:
