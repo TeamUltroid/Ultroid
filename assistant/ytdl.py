@@ -20,7 +20,7 @@ from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyE
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 
-from . import LOGS, asst, callback, in_pattern, udB
+from . import LOGS, asst, callback, in_pattern, udB, LOGS
 
 try:
     from youtubesearchpython import VideosSearch
@@ -168,7 +168,7 @@ async def _(event):
             if len(ytdl_data["description"]) < 100
             else ytdl_data["description"][:100]
         )
-        description = description if description != "" else "None"
+        description = description or "None"
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
             filename=title + "." + ext,
@@ -203,7 +203,11 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
-        Image.open(thumb).save(thumb, "JPEG")
+        try:
+            Image.open(thumb).save(thumb, "JPEG")
+        except Exception as er:
+            LOGS.exception(er)
+            thumb = None
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
