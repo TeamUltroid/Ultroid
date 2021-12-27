@@ -53,6 +53,9 @@ async def _(ult):
     try:
         key = ult.pattern_match.group(1)
         _ = key.split(maxsplit=1)
+    except IndexError:
+        return await ult.eor("Give me a key name to delete!", time=5)
+    try:
         if _[0] == "-m":
             for key in _[1].split():
                 k = udB.del_key(key)
