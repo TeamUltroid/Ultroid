@@ -24,7 +24,7 @@ import io
 from pyUltroid.functions.misc import get_synonyms_or_antonyms
 from pyUltroid.functions.tools import async_searcher
 
-from . import eor, get_string, ultroid_cmd
+from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="meaning ?(.*)", manager=True)
