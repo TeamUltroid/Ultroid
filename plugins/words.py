@@ -134,7 +134,6 @@ async def _(event):
         out = out["list"][0]
     except IndexError:
         return await event.eor(get_string("autopic_2").format(word))
-    await eor(
-        event,
+    await event.eor(
         get_string("wrd_1").format(out["word"], out["definition"], out["example"]),
     )
