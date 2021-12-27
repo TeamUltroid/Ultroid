@@ -436,8 +436,8 @@ async def magic(event):
         post=True,
         re_json=True,
     )
-    response = data.get("payload", {}).get("response")
-    if not response["status"]:
+    response = data.get("payload", {}).get("response", {})
+    if not response.get("status"):
         return await event.eor("**ERRROR :** `{}`".format(response["message"]))
     await event.eor(
         f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : https://tiny.ultroid.tech/{data['payload']['id']}"
