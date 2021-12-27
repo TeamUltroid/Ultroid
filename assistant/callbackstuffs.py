@@ -681,13 +681,12 @@ async def hndlrr(event):
 
 @callback("taglog", owner=True)
 async def tagloggrr(e):
-    if not udB.get_key("TAG_LOG"):
-        BUTTON = [Button.inline("SET TAG LOG", data="abs_settag")]
-    else:
-        BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
+    BUTTON = [[Button.inline("SET TAG LOG", data="abs_settag")],
+             [Button.inline("DELETE TAG LOG", data="deltag")],
+             get_back_button("cbs_otvars")]
     await e.edit(
         "Choose Options",
-        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")]],
+        buttons=BUTTON,
     )
 
 
