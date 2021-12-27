@@ -53,8 +53,8 @@ from telethon.tl.types import (
 )
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, bash, eor, get_string
-from . import humanbytes as hb, async_searcher
+from . import HNDLR, async_searcher, bash, eor, get_string
+from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
@@ -432,11 +432,13 @@ async def magic(event):
     url = match[0]
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
-         data={"id": id_, "link": url}, post=True,
-         re_json=True
+        data={"id": id_, "link": url},
+        post=True,
+        re_json=True,
     )
     response = data.get("payload", {}).get("response")
     if not response["status"]:
         return await event.eor("**ERRROR :** `{}`".format(response["message"]))
-    await event.eor(f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : https://tiny.ultroid.tech/{data['payload']['id']}")
-    
+    await event.eor(
+        f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : https://tiny.ultroid.tech/{data['payload']['id']}"
+    )
