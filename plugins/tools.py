@@ -33,7 +33,7 @@
 • `{i}webshot <url>`
     Get a screenshot of the webpage.
 
-• `{i}tiny <url> <id-optional>`
+• `{i}shorturl <url> <id-optional>`
     shorten any url...
 """
 import glob
@@ -420,7 +420,7 @@ async def webss(event):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="tiny")
+@ultroid_cmd(pattern="shorturl")
 async def magic(event):
     try:
         match = event.text.split(maxsplit=1)[1].strip()
