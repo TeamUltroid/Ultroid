@@ -250,6 +250,9 @@ async def parse_buttons(event):
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = event.message_link
     buttons = [[Button.url(where_n, where_l)]]
+    replied = await event.get_reply_message()
+    if replied and replied.sender_id == ultroid_bot.uid:
+        buttons.append([Button.url("Replied to", replied.message_link)])
     if isinstance(x, types.User) and x.username:
         try:
             buttons.append(
