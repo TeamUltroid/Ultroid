@@ -32,6 +32,9 @@
 
 • `{i}webshot <url>`
     Get a screenshot of the webpage.
+
+• `{i}tiny <url> <id-optional>`
+    shorten any url...
 """
 import glob
 import io
@@ -51,7 +54,7 @@ from telethon.tl.types import (
 from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, bash, eor, get_string
-from . import humanbytes as hb
+from . import humanbytes as hb, async_searcher
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
@@ -415,3 +418,25 @@ async def webss(event):
     )
     os.remove(pic)
     await xx.delete()
+
+
+@ultroid_cmd(pattern="tiny")
+async def magic(event):
+    try:
+        match = event.text.split(maxsplit=1)[1].strip()
+    except IndexError:
+        return await event.eor("`Provide url to turn into tiny...`")
+    match, id_ = match.split(), None
+    if len(match) > 1:
+        id_ = match[1]
+    url = match[0]
+    data = await async_searcher(
+        "https://tiny.ultroid.tech/api/new",
+         data={"id": id_, "link": url}, post=True,
+         re_json=True
+    )
+    response = data.get("payload", {}).get("response")
+    if not response["status"]:
+        return await event.eor("**ERRROR :** `{}`".format(response["message"]))
+    await event.eor(f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : https://tiny.ultroid.tech/{data['payload']['id']}")
+    
