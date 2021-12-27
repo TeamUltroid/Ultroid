@@ -156,9 +156,9 @@ if udB.get_key("TAG_LOG"):
             TEXT += "\n\n🖋 **Later Edited to !**"
         strf = event.edit_date.strftime("%H:%M:%S")
         if "\n" not in event.text:
-            TEXT += f"\n\n• `{strf}` : {event.text}"
+            TEXT += f"\n• `{strf}` : {event.text}"
         else:
-            TEXT += f"\n\n• `{strf}` :\n-> {event.text}"
+            TEXT += f"\n• `{strf}` :\n-> {event.text}"
         if d_["count"] == 10:
             TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
@@ -250,9 +250,6 @@ async def parse_buttons(event):
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = event.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    replied = await event.get_reply_message()
-    if replied and replied.sender_id == ultroid_bot.uid:
-        buttons.append([Button.url("Replied to", replied.message_link)])
     if isinstance(x, types.User) and x.username:
         try:
             buttons.append(
@@ -265,4 +262,7 @@ async def parse_buttons(event):
         buttons.append([Button.url(who_n, f"t.me/{x.username}")])
     else:
         buttons.append([Button.url(who_n, where_l)])
+    replied = await event.get_reply_message()
+    if replied and replied.sender_id == ultroid_bot.uid:
+        buttons.append([Button.url("Replied to", replied.message_link)])
     return buttons
