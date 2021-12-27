@@ -70,11 +70,11 @@ async def _(event):
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>⏳:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>👀:- </strong> <code>{views}</code>\n"
-        text += f"<strong>Publisher:- </strong> <code>{publisher}</code>\n"
-        text += f"<strong>Published:- </strong> <code>{published_on}</code>\n"
-        text += f"<strong>Description:- </strong> <code>{description}</code>"
+        text += f"<strong>⏳ Duration:-</strong> <code>{duration}</code>\n"
+        text += f"<strong>👀 Views:- </strong> <code>{views}</code>\n"
+        text += f"<strong>🎙️ Publisher:- </strong> <code>{publisher}</code>\n"
+        text += f"<strong>🗓️ Published on:- </strong> <code>{published_on}</code>\n"
+        text += f"<strong>📝 Description:- </strong> <code>{description}</code>"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         results.append(
@@ -168,6 +168,7 @@ async def _(event):
             if len(ytdl_data["description"]) < 100
             else ytdl_data["description"][:100]
         )
+        description = description if description != "" else "None"
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
             filename=title + "." + ext,
@@ -229,8 +230,8 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    text = f"**Title:** `{title}`\n"
-    text += f"**Description:** `{description}`\n\n"
+    text = f"**Title:** `{title}`\n\n"
+    text += f"`📝 Description:` `{description}`\n\n"
     text += f"`⏳ Duration:` `{time_formatter(int(duration)*1000)}`\n"
     text += f"`🎤 Artist:` `{artist}`\n"
     text += f"`👀 Views`: `{views}`\n"
