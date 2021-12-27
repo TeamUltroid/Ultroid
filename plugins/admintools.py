@@ -255,7 +255,7 @@ async def pin(msg):
         return await eor(msg, get_string("adm_2"))
     except Exception as e:
         return await eor(msg, f"**ERROR:**`{e}`")
-    await eor(msg, text)
+    await eor(msg, text, link_preview=False)
 
 
 @ultroid_cmd(
