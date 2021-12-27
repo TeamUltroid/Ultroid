@@ -132,6 +132,8 @@ async def _(event):
             return await event.eor("->> Wrong Format <<-")
         await event.delete()
         silent = True
+    elif cmd.split()[0] in ["-n", "-noedit"]:
+        xx = await event.reply(get_string("com_1"))
     else:
         xx = await event.eor(get_string("com_1"))
     if black:
