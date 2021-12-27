@@ -35,7 +35,7 @@ from telethon.tl.types import UserStatusOffline as off
 from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 
-from . import eor, inline_mention, ultroid_cmd
+from . import inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -50,7 +50,7 @@ async def _(e):
     rece = 0
     xx = f"{lll}" if lll else ""
     lili = await e.client.get_participants(e.chat_id, limit=99)
-    for users, bb in enumerate(lili):
+    for bb in lili:
         x = bb.status
         y = bb.participant
         if isinstance(x, onn):
@@ -73,4 +73,4 @@ async def _(e):
             xx += f"\n{inline_mention(bb)}"
         if "bot" in okk and bb.bot:
             xx += f"\n{inline_mention(bb)}"
-    await eor(e, xx)
+    await e.eor(xx)

@@ -24,18 +24,18 @@ import io
 from pyUltroid.functions.misc import get_synonyms_or_antonyms
 from pyUltroid.functions.tools import async_searcher
 
-from . import eor, get_string, ultroid_cmd
+from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="meaning ?(.*)", manager=True)
 async def mean(event):
     wrd = event.pattern_match.group(1)
     if not wrd:
-        return await eor(event, get_string("wrd_4"))
+        return await event.eor(get_string("wrd_4"))
     url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
     out = await async_searcher(url, re_json=True)
     try:
-        return await eor(event, f'**{out["title"]}**')
+        return await event.eor(f'**{out["title"]}**')
     except (KeyError, TypeError):
         pass
     defi = out[0]["meanings"][0]["definitions"][0]
@@ -61,7 +61,7 @@ async def mean(event):
             )
             await event.delete()
     else:
-        await eor(event, text)
+        await event.eor(text)
 
 
 @ultroid_cmd(
@@ -87,9 +87,9 @@ async def mean(event):
                 )
                 await event.delete()
         else:
-            await eor(event, x)
+            await event.eor(x)
     except Exception as e:
-        await eor(event, get_string("wrd_7").format(e))
+        await event.eor(get_string("wrd_7").format(e))
 
 
 @ultroid_cmd(
@@ -117,24 +117,23 @@ async def mean(event):
                 )
                 await event.delete()
         else:
-            await eor(event, x)
+            await event.eor(x)
     except Exception as e:
-        await eor(event, get_string("wrd_8").format(e))
+        await event.eor(get_string("wrd_8").format(e))
 
 
 @ultroid_cmd(pattern="ud (.*)")
 async def _(event):
     word = event.pattern_match.group(1)
     if not word:
-        return await eor(event, get_string("autopic_1"))
+        return await event.eor(get_string("autopic_1"))
     out = await async_searcher(
         "http://api.urbandictionary.com/v0/define", params={"term": word}, re_json=True
     )
     try:
         out = out["list"][0]
     except IndexError:
-        return await eor(event, get_string("autopic_2").format(word))
-    await eor(
-        event,
+        return await event.eor(get_string("autopic_2").format(word))
+    await event.eor(
         get_string("wrd_1").format(out["word"], out["definition"], out["example"]),
     )

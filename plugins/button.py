@@ -38,21 +38,20 @@ async def butt(event):
             media = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(event, get_string("com_4"), time=5)
+                return await event.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
             media = "https://telegra.ph" + variable[0]
         else:
             media = pack_bot_file_id(wt.media)
-    if not text:
-        text = event.text.split(maxsplit=1)
+    try:
+        text = event.text.split(maxsplit=1)[1]
+    except IndexError:
         if not text:
-            return await eor(
-                event,
+            return await event.eor(
                 f"**Please give some text in correct format.**\n\n`{HNDLR}help button`",
             )
-        text = text[1]
     text, buttons = get_msg_button(text)
     if buttons:
         buttons = create_tl_btn(buttons)

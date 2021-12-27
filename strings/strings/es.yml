@@ -12,7 +12,6 @@ com_2: "`Buscando...`"
 help_1: "`{}` No es un complemento válido!"
 help_2: "`El bot no respondió a la consulta en línea.\nConsidere usar {}restart`"
 help_3: "`Por favor active el modo en línea para su bot desde` @Botfather."
-help_4: "Oye,\nEstás en modo bot.\nLos usuarios del modo bot no pueden obtener ayuda directamente ...\nEn su lugar, copie, pegue lo siguiente en el chat y haga clic en la ventana emergente\n\n `@{} ultd`"
 
 #autopic
 autopic_1: "Oye, dame un mensaje de texto .."
@@ -146,13 +145,12 @@ udl_2: "Descarga exitosa..\npara\n`{}`\nen `{}`"
 udl_3: "`Da una ruta específica al archivo`"
 
 #words
-wrd_1: "**Palabra** - `{}`\n\n**Significados** -\n"
-wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** -\n"
-wrd_3: "**Palabra** - `{}`\n\n**Antonimos** -\n"
+wrd_1: "**Palabra** - `{}`\n\n**Significados** - __{}__\n"
+wrd_2: "**Palabra** - `{}`\n\n**Sinonimos** - \n"
+wrd_3: "**Palabra** - `{}`\n\n**Antonimos** - \n"
 #---------------------------------------------------#
 
 #assisant
 ast_1: "Elija qué API desea configurar."
 ast_2: "**remove.bg API**\nIngrese su clave API de remove.bg.\nUsa /cancel para terminar la operación."
 ast_3: "Hola {}. Porfavor navegue por las opciones"
-

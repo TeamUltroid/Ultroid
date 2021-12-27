@@ -7,11 +7,11 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`සොයමින්...`"
+
 # help
 help_1: "`{}` වලංගු plugin එකක් නෙමෙයි!"
 help_2: "bot inline query එක්ට ප්‍රතිචාර නොදක්වයි.\n`{}restart` කරල නැවත සලකා බලන්න"
 help_3: "`@Botfather `එකෙන් Oot ට inline mode on කරන්න."
-help_4: "Hey, \nඔයා ඉන්නෙ Bot mode එකේ. \nBot Mode Users ලට Help Directly ගන්න බෑ... \nමේ කෝඩ් එක Chat එකේ Copy Paste කරල Pop Up එක  Click කරන්න \n\n `@{} ultd`"
 
 # autopic
 autopic_1: "මට මොනාහරි text එකක් දෙන්න .."

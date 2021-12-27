@@ -36,7 +36,6 @@
 import glob
 import io
 import os
-import time
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
@@ -44,23 +43,24 @@ from google_trans_new import google_translator
 from htmlwebshot import WebShot
 from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
-from telethon.tl.types import DocumentAttributeVideo as video
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantsBots,
+    DocumentAttributeVideo,
+)
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, bash, downloader, eor, get_string, get_user_id
+from . import HNDLR, bash, eor, get_string
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, ultroid_cmd, uploader
+from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr", manager=True)
 async def _(event):
     if len(event.text) > 3 and event.text[3] != " ":
         return
-    txt = None
     input = event.text[4:].split(maxsplit=1)
-    if len(input) > 1:
-        txt = input[1]
+    txt = input[1] if len(input) > 1 else None
     if input:
         input = input[0]
     if txt:
@@ -79,9 +79,9 @@ async def _(event):
         tt = translator.translate(text, lang_tgt=lan)
         fr = translator.detect(text)
         output_str = f"**TRANSLATED** from {fr} to {lan}\n{tt}"
-        await eor(event, output_str)
+        await event.eor(output_str)
     except Exception as exc:
-        await eor(event, str(exc), time=5)
+        await event.eor(str(exc), time=5)
 
 
 @ultroid_cmd(
@@ -89,13 +89,13 @@ async def _(event):
     manager=True,
 )
 async def _(event):
+    match = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         await event.get_input_chat()
         r_msg = await event.get_reply_message()
         if r_msg.media:
             bot_api_file_id = pack_bot_file_id(r_msg.media)
-            await eor(
-                event,
+            await event.eor(
                 "**Current Chat ID:**  `{}`\n**From User ID:**  `{}`\n**Bot API File ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id),
                     str(r_msg.sender_id),
@@ -104,24 +104,24 @@ async def _(event):
                 ),
             )
         else:
-            await eor(
-                event,
+            await event.eor(
                 "**Chat ID:**  `{}`\n**User ID:**  `{}`\n**Msg ID:**  `{}`".format(
                     str(event.chat_id), str(r_msg.sender_id), str(r_msg.id)
                 ),
             )
-    elif event.pattern_match.group(1):
-        ids = await get_user_id(event.pattern_match.group(1))
-        await eor(
-            event,
+    elif match:
+        try:
+            ids = await event.client.parse_id(match)
+        except Exception as er:
+            return await event.eor(str(er))
+        await event.eor(
             "**Chat ID:**  `{}`\n**User ID:**  `{}`".format(
                 str(event.chat_id),
                 str(ids),
             ),
         )
     else:
-        await eor(
-            event,
+        await event.eor(
             "**Current Chat ID:**  `{}`\n**Msg ID:**  `{}`".format(
                 str(event.chat_id), str(event.id)
             ),
@@ -137,9 +137,9 @@ async def _(ult):
     else:
         mentions = f"• **Bots in **{input_str}: \n"
         try:
-            chat = await get_user_id(input_str)
+            chat = await ult.client.parse_id(input_str)
         except Exception as e:
-            return await eor(ult, str(e))
+            return await ult.eor(str(e))
     try:
         async for x in ult.client.iter_participants(
             chat,
@@ -151,7 +151,7 @@ async def _(ult):
                 mentions += f"\n• {inline_mention(x)} `{x.id}`"
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await eor(ult, mentions)
+    await ult.eor(mentions)
 
 
 @ultroid_cmd(
@@ -161,78 +161,66 @@ async def _(ult):
     try:
         input = ult.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(ult, "`Input some link`", time=5)
-    await eor(ult, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
+        return await ult.eor("`Input some link`", time=5)
+    await ult.eor("[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
 
 
 @ultroid_cmd(
     pattern="circle$",
 )
 async def _(e):
-    a = await e.get_reply_message()
-    if not a:
-        return await eor(e, "Reply to a gif or audio")
-    if a.document and a.document.mime_type == "audio/mpeg":
-        z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
-        toime = time.time()
+    reply = await e.get_reply_message()
+    if not (reply and reply.media):
+        return await e.eor("`Reply to a gif or audio file only.`")
+    if "audio" in mediainfo(reply.media):
+        msg = await e.eor("`Downloading...`")
         try:
-            bbbb = await a.download_media(thumb=-1)
-            im = cv2.imread(bbbb)
-            dsize = (320, 320)
-            output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
-            cv2.imwrite("img.png", output)
-            thumb = "img.png"
-            os.remove(bbbb)
+            bbbb = await reply.download_media(thumb=-1)
         except TypeError:
             bbbb = "resources/extras/ultroid.jpg"
-            im = cv2.imread(bbbb)
-            dsize = (320, 320)
-            output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
-            cv2.imwrite("img.png", output)
-            thumb = "img.png"
-        c = await downloader(
-            "resources/downloads/" + a.file.name,
-            a.media.document,
-            z,
-            toime,
-            "Dᴏᴡɴʟᴏᴀᴅɪɴɢ...",
-        )
-        await z.edit("**Dᴏᴡɴʟᴏᴀᴅᴇᴅ...\nNᴏᴡ Cᴏɴᴠᴇʀᴛɪɴɢ...**")
+        im = cv2.imread(bbbb)
+        dsize = (512, 512)
+        output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
+        cv2.imwrite("img.jpg", output)
+        thumb = "img.jpg"
+        audio, _ = await e.client.fast_downloader(reply.document, reply.file.name)
+        await msg.edit("`Creating video note...`")
         await bash(
-            f'ffmpeg -i "{c.name}" -preset ultrafast -acodec libmp3lame -ac 2 -ab 144 -ar 44100 comp.mp3'
+            f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:a libmp3lame -ab 64 circle.mp4 -y'
         )
-        await bash(
-            f'ffmpeg -y -i "{thumb}" -i comp.mp3 -preset ultrafast -c:a copy circle.mp4'
-        )
-        taime = time.time()
-        foile = await uploader("circle.mp4", "circle.mp4", taime, z, "Uᴘʟᴏᴀᴅɪɴɢ...")
+        await msg.edit("`Uploading...`")
+        file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         data = await metadata("circle.mp4")
-        duration = data["duration"]
-        attributes = [video(duration=duration, w=320, h=320, round_message=True)]
         await e.client.send_file(
             e.chat_id,
-            foile,
+            file,
             thumb=thumb,
-            reply_to=a,
-            attributes=attributes,
+            reply_to=reply,
+            attributes=[
+                DocumentAttributeVideo(
+                    duration=data["duration"] if data["duration"] < 60 else 60,
+                    w=512,
+                    h=512,
+                    round_message=True,
+                )
+            ],
         )
-        await z.delete()
-        await bash("rm resources/downloads/*")
-        await bash("rm circle.mp4 comp.mp3 img.png")
-    elif a.document and a.document.mime_type == "video/mp4":
-        z = await eor(e, "**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
-        c = await a.download_media("resources/downloads/")
+        await msg.delete()
+        [os.remove(k) for k in [audio.name, thumb]]
+    elif mediainfo(reply.media) == "gif" or mediainfo(reply.media).startswith("video"):
+        msg = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
+        file = await reply.download_media("resources/downloads/")
         await e.client.send_file(
             e.chat_id,
-            c,
+            file,
             video_note=True,
             thumb="resources/extras/ultroid.jpg",
-            reply_to=a,
+            reply_to=reply,
         )
-        await z.delete()
-        os.remove(c)
+        await msg.delete()
+        os.remove(file)
     else:
-        await eor(e, "**Reply to a gif or video file only**")
+        await e.eor("`Reply to a gif or audio file only.`")
 
 
 @ultroid_cmd(
@@ -248,7 +236,7 @@ async def _(e):
         files = files + "/*"
     files = glob.glob(files)
     if not files:
-        return await eor(e, "`Directory Empty or Incorrect.`", time=5)
+        return await e.eor("`Directory Empty or Incorrect.`", time=5)
     pyfiles = []
     jsons = []
     vdos = []
@@ -348,7 +336,7 @@ async def _(e):
         ttol = "0 B"
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     try:
-        await eor(e, text)
+        await e.eor(text)
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"
@@ -364,15 +352,18 @@ async def _(e):
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
     if not steal.is_reply and not mat:
-        return await eor(steal, "`Use this command with reply or give Username/id...`")
+        return await steal.eor("`Use this command with reply or give Username/id...`")
     if mat:
-        user_id = await get_user_id(mat)
+        try:
+            user_id = await steal.client.parse_id(mat)
+        except ValueError:
+            user_id = mat
     message = await steal.get_reply_message()
     if message:
         user_id = message.sender.id
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
-    lol = await eor(steal, get_string("com_1"))
+    lol = await steal.eor(get_string("com_1"))
     try:
         async with steal.client.conversation(chat) as conv:
             try:
@@ -408,12 +399,12 @@ async def lastname(steal):
 
 @ultroid_cmd(pattern="webshot ?(.*)")
 async def webss(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     xurl = event.pattern_match.group(1)
     if not xurl:
-        return await eor(xx, get_string("wbs_1"), time=5)
+        return await xx.eor(get_string("wbs_1"), time=5)
     if not is_url_ok(xurl):
-        return await eor(xx, get_string("wbs_2"), time=5)
+        return await xx.eor(get_string("wbs_2"), time=5)
     shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
     pic = await shot.create_pic_async(url=xurl)
     await xx.reply(

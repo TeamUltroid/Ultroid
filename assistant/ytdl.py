@@ -9,15 +9,25 @@
 import os
 import re
 
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
-from telethon.errors.rpcerrorlist import MediaEmptyError
+from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from youtubesearchpython import VideosSearch
 
-from . import asst, callback, in_pattern, udB
+from . import LOGS, asst, callback, in_pattern, udB
+
+try:
+    from youtubesearchpython import VideosSearch
+except ImportError:
+    LOGS.info("'youtubesearchpython' not installed!")
+    VideosSearch = None
+
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -60,11 +70,11 @@ async def _(event):
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>⏳:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>👀:- </strong> <code>{views}</code>\n"
-        text += f"<strong>Publisher:- </strong> <code>{publisher}</code>\n"
-        text += f"<strong>Published:- </strong> <code>{published_on}</code>\n"
-        text += f"<strong>Description:- </strong> <code>{description}</code>"
+        text += f"<strong>⏳ Duration:-</strong> <code>{duration}</code>\n"
+        text += f"<strong>👀 Views:- </strong> <code>{views}</code>\n"
+        text += f"<strong>🎙️ Publisher:- </strong> <code>{publisher}</code>\n"
+        text += f"<strong>🗓️ Published on:- </strong> <code>{published_on}</code>\n"
+        text += f"<strong>📝 Description:- </strong> <code>{description}</code>"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         results.append(
@@ -158,6 +168,7 @@ async def _(event):
             if len(ytdl_data["description"]) < 100
             else ytdl_data["description"][:100]
         )
+        description = description or "None"
         file, _ = await event.client.fast_uploader(
             vid_id + "." + ext,
             filename=title + "." + ext,
@@ -192,6 +203,11 @@ async def _(event):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
         thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        try:
+            Image.open(thumb).save(thumb, "JPEG")
+        except Exception as er:
+            LOGS.exception(er)
+            thumb = None
         description = (
             ytdl_data["description"]
             if len(ytdl_data["description"]) < 100
@@ -218,8 +234,8 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    text = f"**Title:** `{title}`\n"
-    text += f"**Description:** `{description}`\n\n"
+    text = f"**Title:** `{title}`\n\n"
+    text += f"`📝 Description:` `{description}`\n\n"
     text += f"`⏳ Duration:` `{time_formatter(int(duration)*1000)}`\n"
     text += f"`🎤 Artist:` `{artist}`\n"
     text += f"`👀 Views`: `{views}`\n"
@@ -233,7 +249,7 @@ async def _(event):
             attributes=attributes,
             thumb=thumb,
         )
-    except MediaEmptyError:
+    except (FilePartLengthInvalidError, MediaEmptyError):
         file = await asst.send_message(
             udB.get_key("LOG_CHANNEL"),
             text,

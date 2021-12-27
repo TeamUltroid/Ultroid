@@ -36,7 +36,6 @@ import requests
 from PIL import Image, ImageDraw
 from pyUltroid.functions.misc import create_quotly
 from telethon.errors import YouBlockedUserError
-from telethon.tl.functions.stickers import SuggestShortNameRequest
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
 
@@ -45,7 +44,6 @@ from . import (
     LOGS,
     asst,
     bash,
-    eor,
     functions,
     get_string,
     mediainfo,
@@ -60,10 +58,10 @@ from . import (
     pattern="convert ?(.*)",
 )
 async def uconverter(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
     if not (a and a.media and "animated" in mediainfo(a.media)):
-        return await eor(event, get_string("sts_2"))
+        return await event.eor(get_string("sts_2"))
     input_ = event.pattern_match.group(1)
     b = await a.download_media("resources/downloads/")
     if "gif" in input_:
@@ -85,7 +83,7 @@ async def uconverter(event):
 async def pack_kangish(_):
     _e = await _.get_reply_message()
     if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
-        return await eor(_, get_string("sts_4"))
+        return await _.eor(get_string("sts_4"))
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
@@ -94,7 +92,7 @@ async def pack_kangish(_):
     _hash = _e.media.document.attributes[1].stickerset.access_hash
     _get_stiks = await _.client(
         functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash)
+            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
         )
     )
     stiks = []
@@ -107,20 +105,19 @@ async def pack_kangish(_):
             )
         )
     try:
-        short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
+        short_name = "ult_" + _packname.replace(" ", "_") + str(_.id)
         _r_e_s = await asst(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
-                short_name=f"u{short_name}_by_{asst.me.username}",
+                short_name=f"{short_name}_by_{asst.me.username}",
                 stickers=stiks,
             )
         )
     except BaseException as er:
         LOGS.exception(er)
-        return await eor(_, str(er))
-    await eor(
-        _,
+        return await _.eor(str(er))
+    await _.eor(
         get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
@@ -130,7 +127,7 @@ async def pack_kangish(_):
 )
 async def hehe(args):
     ultroid_bot = args.client
-    xx = await eor(args, get_string("com_1"))
+    xx = await args.eor(get_string("com_1"))
     user = ultroid_bot.me
     if not user.username:
         user.username = user.first_name
@@ -139,7 +136,7 @@ async def hehe(args):
     is_anim = False
     emoji = None
     if not message:
-        return await eor(xx, get_string("sts_6"))
+        return await xx.eor(get_string("sts_6"))
     if message.photo:
         photo = io.BytesIO()
         photo = await ultroid_bot.download_media(message.photo, photo)
@@ -224,9 +221,7 @@ async def hehe(args):
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                t = "120"
-                if is_anim:
-                    t = "50"
+                t = "50" if is_anim else "120"
                 while t in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
@@ -342,7 +337,7 @@ async def hehe(args):
 )
 async def ultdround(event):
     ureply = await event.get_reply_message()
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if not (ureply and (ureply.media)):
         await xx.edit(get_string("sts_10"))
         return
@@ -385,9 +380,9 @@ async def ultdround(event):
 async def ultdestroy(event):
     ult = await event.get_reply_message()
     if not (ult and ult.media and "animated" in mediainfo(ult.media)):
-        return await eor(event, get_string("sts_2"))
+        return await event.eor(get_string("sts_2"))
     await event.client.download_media(ult, "ultroid.tgs")
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     await bash("lottie_convert.py ultroid.tgs json.json")
     with open("json.json") as json:
         jsn = json.read()
@@ -424,9 +419,9 @@ async def ultdestroy(event):
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("sts_10"))
+        await event.eor(get_string("sts_10"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):

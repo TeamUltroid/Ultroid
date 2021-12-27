@@ -31,7 +31,7 @@ async def get_var(event):
         opt = event.text.split(" ", maxsplit=2)[1]
     else:
         return
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if opt != "keys":
         try:
             varname = event.text.split(" ", maxsplit=2)[2]

@@ -12,7 +12,6 @@
 
 • `{i}image <text or reply to html or any doc file>`
    Write a image from html or any text.
-
 """
 
 import os
@@ -20,7 +19,7 @@ import os
 from htmlwebshot import WebShot
 from PIL import Image, ImageDraw, ImageFont
 
-from . import async_searcher, eod, eor, get_string, text_set, ultroid_cmd
+from . import async_searcher, eod, get_string, text_set, ultroid_cmd
 
 
 @ultroid_cmd(pattern="gethtml ?(.*)")
@@ -68,7 +67,7 @@ async def writer(e):
         text = e.text.split(maxsplit=1)[1]
     else:
         return await eod(e, get_string("writer_1"))
-    k = await eor(e, get_string("com_1"))
+    k = await e.eor(get_string("com_1"))
     img = Image.open("resources/extras/template.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("resources/fonts/assfont.ttf", 30)

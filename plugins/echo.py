@@ -20,7 +20,7 @@
 from pyUltroid.dB.echo_db import add_echo, check_echo, list_echo, rem_echo
 from telethon.utils import get_display_name
 
-from . import LOGS, eor, events, ultroid_bot, ultroid_cmd
+from . import LOGS, events, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addecho ?(.*)")
@@ -37,13 +37,13 @@ async def echo(e):
             else:
                 user = int(user)
         except BaseException:
-            return await eor(e, "Reply To A user.", time=5)
+            return await e.eor("Reply To A user.", time=5)
     if check_echo(e.chat_id, user):
-        return await eor(e, "Echo already activated for this user.", time=5)
+        return await e.eor("Echo already activated for this user.", time=5)
     add_echo(e.chat_id, user)
     ok = await e.client.get_entity(user)
     user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
-    await eor(e, f"Activated Echo For {user}.")
+    await e.eor(f"Activated Echo For {user}.")
 
 
 @ultroid_cmd(pattern="remecho ?(.*)")
@@ -60,13 +60,13 @@ async def rm(e):
             else:
                 user = int(user)
         except BaseException:
-            return await eor(e, "Reply To A User.", time=5)
+            return await e.eor("Reply To A User.", time=5)
     if check_echo(e.chat_id, user):
         rem_echo(e.chat_id, user)
         ok = await e.client.get_entity(user)
         user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
-        return await eor(e, f"Deactivated Echo For {user}.")
-    await eor(e, "Echo not activated for this user")
+        return await e.eor(f"Deactivated Echo For {user}.")
+    await e.eor("Echo not activated for this user")
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
@@ -88,6 +88,6 @@ async def lstecho(e):
             ok = await e.client.get_entity(int(x))
             kk = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
             user += "•" + kk + "\n"
-        await eor(e, user)
+        await e.eor(user)
     else:
-        await eor(e, "`List is Empty, For echo`", time=5)
+        await e.eor("`List is Empty, For echo`", time=5)

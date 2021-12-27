@@ -44,7 +44,7 @@ UTILITIES = """
 • /info (reply/username/id) : get detailed info of user.
 • /id : get chat/user id.
 • /tr : Translate Languages..
-• /quotly : Create Quotes.
+• /q : Create Quotes.
 
 • /paste (reply file/text) : paste content on Spaceb.in
 • /meaning (text) : Get Meaning of that Word.
@@ -76,6 +76,10 @@ MISC = """
 
 • /joke : Get Random Jokes.
 • /decide : Decide Something..
+
+**✘ Stickertools ✘**
+• /kang : add sticker to your pack.
+• /listpack : get all of yours pack..
 """
 
 STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc": MISC}

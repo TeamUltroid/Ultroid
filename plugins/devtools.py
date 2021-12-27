@@ -48,7 +48,7 @@ from . import *
     pattern="sysinfo$",
 )
 async def _(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
@@ -63,8 +63,8 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(event, get_string("devs_1"), time=10)
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("devs_1"), time=10)
+    xx = await event.eor(get_string("com_1"))
     reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
@@ -123,17 +123,23 @@ async def _(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await eor(event, get_string("devs_2"), time=5)
+        return await event.eor(get_string("devs_2"), time=5)
     silent = False
     if cmd.split()[0] in ["-s", "--silent"]:
         try:
             cmd = cmd.split(maxsplit=1)[1]
         except IndexError:
-            return await eor(event, "->> Wrong Format <<-")
+            return await event.eor("->> Wrong Format <<-")
         await event.delete()
         silent = True
+    elif cmd.split()[0] in ["-n", "-noedit"]:
+        try:
+            cmd = cmd.split(maxsplit=1)[1]
+        except IndexError:
+            return await event.eor("->> Wrong Format <<-")
+        xx = await event.reply(get_string("com_1"))
     else:
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
     if black:
         try:
             cmd = black.format_str(cmd, mode=black.Mode())
@@ -141,9 +147,8 @@ async def _(event):
             # Consider it as Code Error, and move on to be shown ahead.
             pass
     reply_to_id = event.reply_to_msg_id or event.id
-    if (
-        any(item in cmd for item in KEEP_SAFE().All)
-        and event.sender_id != ultroid_bot.uid
+    if any(item in cmd for item in KEEP_SAFE().All) and (
+        not (event.out or event.sender_id == ultroid_bot.uid)
     ):
         if event.sender_id in _ignore_eval:
             return await xx.edit(
@@ -244,8 +249,8 @@ async def doie(e):
     try:
         match = match[1]
     except IndexError:
-        return await eor(e, get_string("devs_3"))
-    msg = await eor(e, get_string("com_1"))
+        return await e.eor(get_string("devs_3"))
+    msg = await e.eor(get_string("com_1"))
     if "main(" not in match:
         new_m = "".join(" " * 4 + i + "\n" for i in match.split("\n"))
         match = DUMMY_CPP.replace("!code", new_m)

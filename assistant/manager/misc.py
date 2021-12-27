@@ -32,7 +32,7 @@ async def oqha(e):
         text = (await e.get_reply_message()).text
         reply_to = e.reply_to_msg_id
     else:
-        return await eor(e, "What to Echo?", time=5)
+        return await e.eor("What to Echo?", time=5)
     try:
         await e.delete()
     except BaseException as ex:
@@ -47,8 +47,8 @@ async def doit(e):
     try:
         await e.client.kick_participant(e.chat_id, e.sender_id)
     except Exception as Fe:
-        return await eor(e, str(Fe), time=5)
-    await eor(e, "Yes, You are right, get out.", time=5)
+        return await e.eor(str(Fe), time=5)
+    await e.eor("Yes, You are right, get out.", time=5)
 
 
 @asst_cmd(pattern="joke$")

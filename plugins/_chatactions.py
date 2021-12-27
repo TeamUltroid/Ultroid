@@ -30,8 +30,8 @@ from ._inline import something
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions
-    key = udB.get_key("CLEANCHAT") or {}
-    if key.get(ult.chat_id):
+    key = udB.get_key("CLEANCHAT") or []
+    if ult.chat_id in key:
         try:
             await ult.delete()
         except BaseException:
@@ -86,7 +86,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             user = await ult.get_user()
             chat = await ult.get_chat()
             title = chat.title or "this chat"
-            count = (await ult.client.get_participants(chat, limit=0)).total
+            count = (
+                chat.participants_count
+                or (await ult.client.get_participants(chat, limit=0)).total
+            )
             mention = inline_mention(user)
             name = user.first_name
             fullname = get_display_name(user)
@@ -123,7 +126,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         user = await ult.get_user()
         chat = await ult.get_chat()
         title = chat.title or "this chat"
-        count = (await ult.client.get_participants(chat, limit=0)).total
+        count = (
+            chat.participants_count
+            or (await ult.client.get_participants(chat, limit=0)).total
+        )
         mention = inline_mention(user)
         name = user.first_name
         fullname = get_display_name(user)
@@ -167,6 +173,8 @@ async def chatBot_replies(e):
     if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
         if msg:
+            sleep = udB.get_key("CHATBOT_SLEEP") or 1.5
+            await asyncio.sleep(sleep)
             await e.reply(msg)
     chat = await e.get_chat()
     if e.is_group and not sender.bot:

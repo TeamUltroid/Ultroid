@@ -31,7 +31,12 @@ import time
 
 import cv2
 import numpy as np
-import PIL
+
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+    LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from pyUltroid.functions.tools import four_point_transform
 from skimage.filters import threshold_local
@@ -50,9 +55,9 @@ async def pdfseimg(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
     if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = "hehe.pdf"
@@ -115,9 +120,9 @@ async def pdfsetxt(event):
     ok = await event.get_reply_message()
     msg = event.pattern_match.group(1)
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     file = ok.media.document
     k = time.time()
     filename = ok.file.name
@@ -176,14 +181,14 @@ async def pdfsetxt(event):
 async def imgscan(event):
     ok = await event.get_reply_message()
     if not (ok and (ok.media)):
-        await eor(event, "`Reply The pdf u Want to Download..`")
+        await event.eor("`Reply The pdf u Want to Download..`")
         return
     ultt = await ok.download_media()
     if not ultt.endswith(("png", "jpg", "jpeg", "webp")):
-        await eor(event, "`Reply to a Image only...`")
+        await event.eor("`Reply to a Image only...`")
         os.remove(ultt)
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = cv2.imread(ultt)
     original_image = image.copy()
     ratio = image.shape[0] / 500.0
@@ -192,7 +197,7 @@ async def imgscan(event):
     dmes = (int(wid * ra), 500)
     image = cv2.resize(image, dmes, interpolation=cv2.INTER_AREA)
     image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
-    image_y = np.zeros(image_yuv.shape[0:2], np.uint8)
+    image_y = np.zeros(image_yuv.shape[:2], np.uint8)
     image_y[:, :] = image_yuv[:, :, 0]
     image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
     edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
@@ -219,7 +224,7 @@ async def imgscan(event):
     if len(simplified_cnt) != 4:
         ok = cv2.detailEnhance(original_image, sigma_s=10, sigma_r=0.15)
     cv2.imwrite("o.png", ok)
-    image1 = PIL.Image.open("o.png")
+    image1 = Image.open("o.png")
     im1 = image1.convert("RGB")
     scann = f"Scanned {ultt.split('.')[0]}.pdf"
     im1.save(scann)
@@ -243,7 +248,7 @@ async def savepdf(event):
         return
     ultt = await ok.download_media()
     if ultt.endswith(("png", "jpg", "jpeg", "webp")):
-        xx = await eor(event, get_string("com_1"))
+        xx = await event.eor(get_string("com_1"))
         image = cv2.imread(ultt)
         original_image = image.copy()
         ratio = image.shape[0] / 500.0
@@ -251,7 +256,7 @@ async def savepdf(event):
         m_ = 500 / float(h_)
         image = cv2.resize(image, (int(_v * m_), 500), interpolation=cv2.INTER_AREA)
         image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
-        image_y = np.zeros(image_yuv.shape[0:2], np.uint8)
+        image_y = np.zeros(image_yuv.shape[:2], np.uint8)
         image_y[:, :] = image_yuv[:, :, 0]
         image_blurred = cv2.GaussianBlur(image_y, (3, 3), 0)
         edges = cv2.Canny(image_blurred, 50, 200, apertureSize=3)
@@ -280,7 +285,7 @@ async def savepdf(event):
         if len(simplified_cnt) != 4:
             ok = cv2.detailEnhance(original_image, sigma_s=10, sigma_r=0.15)
         cv2.imwrite("o.png", ok)
-        image1 = PIL.Image.open("o.png")
+        image1 = Image.open("o.png")
         im1 = image1.convert("RGB")
         a = check_filename("pdf/scan.pdf")
         im1.save(a)
@@ -296,7 +301,7 @@ async def savepdf(event):
             f"Done, Now Reply Another Image/pdf if completed then use {HNDLR}pdsend to merge nd send all as pdf",
         )
     else:
-        await eor(event, "`Reply to a Image/pdf only...`")
+        await event.eor("`Reply to a Image/pdf only...`")
     os.remove(ultt)
 
 

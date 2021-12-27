@@ -9,7 +9,7 @@
 import os
 from time import sleep
 
-a = r"""
+ULTROID = r"""
   _    _ _ _             _     _
  | |  | | | |           (_)   | |
  | |  | | | |_ _ __ ___  _  __| |
@@ -53,15 +53,15 @@ def telethon_session():
     try:
         spinner()
 
-        x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
+        text = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except ImportError:
         print("Installing Telethon...")
-        os.system("pip install -U telethon")
+        os.system("pip uninstall telethon -y && pip install -U telethon")
 
-        x = "\bDone. Installed and imported Telethon."
+        text = "\bDone. Installed and imported Telethon."
     clear_screen()
-    print(a)
-    print(x)
+    print(ULTROID)
+    print(text)
 
     # the imports
 
@@ -111,7 +111,7 @@ def telethon_session():
 
 def main():
     clear_screen()
-    print(a)
+    print(ULTROID)
     telethon_session()
     x = input("Run again? (y/n)")
     if x.lower() in ["y", "yes"]:

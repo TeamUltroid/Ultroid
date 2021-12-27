@@ -151,17 +151,12 @@ _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")
 async def help_func(ult):
     key, count = ult.data_match.group(1).decode("utf-8").split("_")
     if key == "VCBot" and HELP.get("VCBot") is None:
-        return await ult.answer("Voice Call is not Active!", alert=True)
+        return await ult.answer(get_string("help_12"), alert=True)
     elif key == "Addons" and HELP.get("Addons") is None:
-        return await ult.answer(
-            f"Do '{HNDLR}setdb ADDONS True' to Load Official Addons", alert=True
-        )
+        return await ult.answer(get_string("help_13").format(HNDLR), alert=True)
     if "|" in count:
         _, count = count.split("|")
-    if not count:
-        count = 0
-    else:
-        count = int(count)
+    count = 0 if not count else int(count)
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(
         text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False
@@ -223,7 +218,7 @@ async def _(event):
     if not updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
     if not INLINE_PIC:
-        return await event.answer(f"Do '{HNDLR}update'")
+        return await event.answer(f"Do '{HNDLR}update' to update..")
     repo = Repo.init()
     changelog, tl_chnglog = await gen_chlog(
         repo, f"HEAD..upstream/{repo.active_branch}"
@@ -369,8 +364,8 @@ async def on_plug_in_callback_query_handler(event):
 
 
 def page_num(index, key):
-    rows = 5
-    cols = 2
+    rows = udB.get_key("HELP_ROWS") or 5
+    cols = udB.get_key("HELP_COLUMNS") or 2
     loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     List = [
@@ -498,4 +493,4 @@ async def something(e, msg, media, button, reply=True, chat=None):
         )
 
     except Exception as er:
-        LOGS.info(er)
+        LOGS.exception(er)

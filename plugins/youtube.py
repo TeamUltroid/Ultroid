@@ -21,7 +21,7 @@
 """
 from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
-from . import eor, get_string, requests, ultroid_cmd
+from . import get_string, requests, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -29,7 +29,7 @@ from . import eor, get_string, requests, ultroid_cmd
 )
 async def download_from_youtube_(event):
     opt = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd = {
             "format": "bestaudio",
@@ -40,11 +40,11 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, get_string("youtube_1"))
+            return await xx.eor(get_string("youtube_1"))
         try:
             requests.get(url)
         except BaseException:
-            return await eor(xx, get_string("youtube_2"))
+            return await xx.eor(get_string("youtube_2"))
     elif opt == "v":
         ytd = {
             "format": "best",
@@ -55,11 +55,11 @@ async def download_from_youtube_(event):
         }
         url = event.pattern_match.group(2)
         if not url:
-            return await eor(xx, get_string("youtube_3"))
+            return await xx.eor(get_string("youtube_3"))
         try:
             requests.get(url)
         except BaseException:
-            return await eor(xx, get_string("youtube_4"))
+            return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
         ytd = {
             "format": "bestaudio",
@@ -71,9 +71,9 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await eor(xx, get_string("youtube_5"))
+            return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query)
-        await eor(xx, get_string("youtube_6"))
+        await xx.eor(get_string("youtube_6"))
     elif opt == "sv":
         ytd = {
             "format": "best",
@@ -85,9 +85,9 @@ async def download_from_youtube_(event):
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
-            return await eor(xx, get_string("youtube_7"))
+            return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query)
-        await eor(xx, get_string("youtube_8"))
+        await xx.eor(get_string("youtube_8"))
     else:
         return
     await download_yt(xx, url, ytd)

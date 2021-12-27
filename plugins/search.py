@@ -28,21 +28,17 @@ from shutil import rmtree
 
 import requests
 from bs4 import BeautifulSoup as bs
-from PIL import Image
+
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
+from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import (
-    async_searcher,
-    eod,
-    eor,
-    get_string,
-    saavn_dl,
-    time,
-    ultroid_cmd,
-    uploader,
-)
+from . import async_searcher, eod, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -51,7 +47,7 @@ from . import (
 async def gitsearch(event):
     usrname = event.pattern_match.group(1)
     if not usrname:
-        return await eor(event, get_string("srch_1"))
+        return await event.eor(get_string("srch_1"))
     url = f"https://api.github.com/users/{usrname}"
     ult = await async_searcher(url, re_json=True)
     try:
@@ -68,7 +64,7 @@ async def gitsearch(event):
         ufollowers = ult["followers"]
         ufollowing = ult["following"]
     except BaseException:
-        return await eor(event, get_string("srch_2"))
+        return await event.eor(get_string("srch_2"))
     fullusr = f"""
 **[GITHUB]({ulink})**
 **Name** - {uacc}
@@ -94,7 +90,7 @@ async def google(event):
     inp = event.pattern_match.group(1)
     if not inp:
         return await eod(event, get_string("autopic_1"))
-    x = await eor(event, get_string("com_2"))
+    x = await event.eor(get_string("com_2"))
     gs = await google_search(inp)
     if not gs:
         return await eod(x, get_string("autopic_2").format(inp))
@@ -105,15 +101,15 @@ async def google(event):
         des = res["description"]
         out += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     omk = f"**Google Search Query:**\n`{inp}`\n\n**Results:**\n{out}"
-    await eor(x, omk, link_preview=False)
+    await x.eor(omk, link_preview=False)
 
 
 @ultroid_cmd(pattern="img ?(.*)")
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
-        return await eor(event, get_string("autopic_1"))
-    nn = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("autopic_1"))
+    nn = await event.eor(get_string("com_1"))
     lmt = 5
     if ";" in query:
         try:
@@ -142,8 +138,8 @@ async def goimg(event):
 async def reverse(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await eor(event, "`Reply to an Image`")
-    ult = await eor(event, get_string("com_1"))
+        return await event.eor("`Reply to an Image`")
+    ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
     img = Image.open(dl)
     x, y = img.size
@@ -191,16 +187,25 @@ async def reverse(event):
 async def siesace(e):
     song = e.pattern_match.group(1)
     if not song:
-        return await eor(e, "`Give me Something to Search", time=5)
-    hmm = time.time()
-    lol = await eor(e, f"`Searching {song} on Saavn...`")
-    song, duration, performer, thumb = await saavn_dl(song)
-    if not song:
-        return await eod(lol, get_string("srch_3"))
-    title = song.split(".")[0]
-    okk = await uploader(song, song, hmm, lol, "Uploading " + title + "...")
+        return await e.eor("`Give me Something to Search", time=5)
+    eve = await e.eor(f"`Searching for {song} on Saavn...`")
+    try:
+        data = (await saavn_search(song))[0]
+    except IndexError:
+        return await eve.eor(f"`{song} not found on saavn.`")
+    try:
+        title = data["song"]
+        url = data["media_url"]
+        img = data["image"]
+        duration = data["duration"]
+        performer = data["primary_artists"]
+    except KeyError:
+        return await eve.eor("`Something went wrong.`")
+    song, _ = await fast_download(url, filename=title + ".m4a")
+    thumb, _ = await fast_download(img, filename=title + ".jpg")
+    song, _ = await e.client.fast_uploader(song, to_delete=True)
     await e.reply(
-        file=okk,
+        file=song,
         message=f"`{title}`\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
@@ -212,5 +217,5 @@ async def siesace(e):
         supports_streaming=True,
         thumb=thumb,
     )
-    await lol.delete()
-    [os.remove(x) for x in [song, thumb]]
+    await eve.delete()
+    os.remove(thumb)

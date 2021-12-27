@@ -18,21 +18,21 @@ import os
 
 from pyUltroid.functions.tools import get_file_link
 
-from . import asst, eor, udB, ultroid_cmd
+from . import asst, eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="store")
 async def filestoreplg(event):
     msg = await event.get_reply_message()
     if msg is None:
-        await eor(event, "`Reply to a message to make a shareable link!`", time=10)
+        await event.eor(get_string("fsh_3"), time=10)
         return
     # allow storing both messages and media.
     filehash = await get_file_link(msg)
     link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
     await eor(
         event,
-        "**File has been stored!**\n\n**Shareable link:** {}".format(link_to_file),
+        get_string("fsh_2").format(link_to_file),
         link_preview=False,
     )
 
@@ -41,7 +41,7 @@ async def filestoreplg(event):
 async def liststored(event):
     get = udB.get_key("FILE_STORE") or {}
     if not get:
-        await eor(event, "**No files stored!**", time=5)
+        await event.eor(get_string("fsh_4"), time=5)
         return
     msg = "**Stored files:**\n"
     for c, i in enumerate(list(get.keys())):
@@ -50,7 +50,7 @@ async def liststored(event):
     if len(msg) > 4095:
         with open("liststored.txt", "w") as f:
             f.write(msg.replace("**", "").replace("`", ""))
-        await event.reply("**List of files stored.:**", file="liststored.txt")
+        await event.reply(get_string("fsh_1"), file="liststored.txt")
         os.remove("liststored.txt")
         return
-    await eor(event, msg, link_preview=False)
+    await event.eor(msg, link_preview=False)

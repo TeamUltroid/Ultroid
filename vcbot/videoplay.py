@@ -21,7 +21,7 @@ from . import *
 
 @vc_asst("videoplay")
 async def video_c(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     chat = event.chat_id
     from_user = inline_mention(event.sender)
     reply, song = None, None
@@ -30,18 +30,12 @@ async def video_c(event):
     if len(event.text.split()) > 1:
         input = event.text.split(maxsplit=1)[1]
         tiny_input = input.split()[0]
-        if tiny_input.startswith("@"):
+        if tiny_input[0] in ["@", "-"]:
             try:
-                chat = int("-100" + str(await get_user_id(tiny_input, client=vcClient)))
-                song = input.split(maxsplit=1)[1]
-            except IndexError:
-                pass
-            except Exception as e:
-                return await eor(event, str(e))
-        elif tiny_input.startswith("-"):
-            chat = int(
-                "-100" + str(await get_user_id(int(tiny_input), client=vcClient))
-            )
+                chat = await event.client.parse_id(tiny_input)
+            except Exception as er:
+                LOGS.exception(er)
+                return await xx.edit(str(er))
             try:
                 song = input.split(maxsplit=1)[1]
             except BaseException:
@@ -49,14 +43,14 @@ async def video_c(event):
         else:
             song = input
     if not (reply or song):
-        return await eor(xx, get_string("vcbot_15"), time=5)
-    await eor(xx, get_string("vcbot_20"))
+        return await xx.eor(get_string("vcbot_15"), time=5)
+    await xx.eor(get_string("vcbot_20"))
     if reply and reply.media and mediainfo(reply.media).startswith("video"):
         song, thumb, title, link, duration = await file_download(xx, reply)
     else:
         is_link = is_url_ok(song)
         if is_link is False:
-            return await eor(xx, f"`{song}`\n\nNot a playable link.🥱")
+            return await xx.eor(f"`{song}`\n\nNot a playable link.🥱")
         if is_link is None:
             song, thumb, title, link, duration = await vid_download(song)
         elif re.search("youtube", song) or re.search("youtu", song):

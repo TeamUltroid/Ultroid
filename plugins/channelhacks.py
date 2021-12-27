@@ -32,7 +32,7 @@
       Show List of Ur channels
 
    'you can set many channels in database'
-   'For activating auto-post use `{i}setredis AUTOPOST True` '
+   'For activating auto-post use `{i}setdb AUTOPOST True` '
 """
 
 import asyncio
@@ -73,7 +73,7 @@ async def _(e):
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
-    z = await eor(e, get_string("com_1"))
+    z = await e.eor(get_string("com_1"))
     a, b = x.split("|")
     try:
         c = int(a)
@@ -113,15 +113,15 @@ async def source(e):
             return
     if not is_source_channel_added(y):
         add_source_channel(y)
-        await eor(e, get_string("cha_2"))
+        await e.eor(get_string("cha_2"))
     elif is_source_channel_added(y):
-        await eor(e, get_string("cha_3"))
+        await e.eor(get_string("cha_3"))
 
 
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
         udB.del_key("CH_SOURCE")
@@ -147,7 +147,7 @@ async def dd(event):
 
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
@@ -191,15 +191,15 @@ async def destination(e):
             return
     if not is_destination_added(y):
         add_destination(y)
-        await eor(e, "Destination added succesfully")
+        await e.eor("Destination added succesfully")
     elif is_destination_added(y):
-        await eor(e, "Destination channel already added")
+        await e.eor("Destination channel already added")
 
 
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
         udB.del_key("CH_DESTINATION")
@@ -226,7 +226,7 @@ async def dd(event):
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     ultroid_bot = event.client
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_destinations()
     num = get_no_destinations()
     if not num:

@@ -17,7 +17,7 @@
 from pyUltroid.functions.admins import lock_unlock
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 
-from . import eor, ultroid_cmd
+from . import ultroid_cmd
 
 
 @ultroid_cmd(
@@ -26,14 +26,14 @@ from . import eor, ultroid_cmd
 async def un_lock(e):
     mat = e.pattern_match.group(2)
     if not mat:
-        return await eor(e, "`Give some Proper Input..`", time=5)
+        return await e.eor("`Give some Proper Input..`", time=5)
     lock = e.pattern_match.group(1) == ""
     ml = lock_unlock(mat, lock)
     if not ml:
-        return await eor(e, "`Incorrect Input`", time=5)
+        return await e.eor("`Incorrect Input`", time=5)
     msg = "Locked" if lock else "Unlocked"
     try:
         await e.client(EditChatDefaultBannedRightsRequest(e.chat_id, ml))
     except Exception as er:
-        return await eor(e, str(er))
-    await eor(e, f"**{msg}** - `{mat}` ! ")
+        return await e.eor(str(er))
+    await e.eor(f"**{msg}** - `{mat}` ! ")

@@ -53,7 +53,7 @@ _buttons = {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
-                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="abs_taglog"),
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
                 Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
             ],
             [
@@ -140,10 +140,14 @@ _buttons = {
     "chatbot": {
         "text": "From This Feature U can chat with ppls Via ur Assistant Bot.\n[More info](https://t.me/UltroidUpdates/2)",
         "buttons": [
-            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot")],
-            [Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel")],
-            [Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew")],
+            [
+                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oɴ", data="onchbot"),
+                Button.inline("Cʜᴀᴛ Bᴏᴛ  Oғғ", data="ofchbot"),
+            ],
+            [
+                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ", data="bwel"),
+                Button.inline("Bᴏᴛ Wᴇʟᴄᴏᴍᴇ Mᴇᴅɪᴀ", data="botmew"),
+            ],
             [Button.inline("Bᴏᴛ Iɴғᴏ Tᴇxᴛ", data="botinfe")],
             [Button.inline("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪʙᴇ", data="pmfs")],
             [Button.inline("« Bᴀᴄᴋ", data="setter")],
@@ -247,10 +251,7 @@ async def send(eve):
     index = None
     if "|" in name:
         name, index = name.split("|")
-    if key == "Official":
-        key = "plugins"
-    else:
-        key = key.lower()
+    key = "plugins" if key == "Official" else key.lower()
     plugin = f"{key}/{name}.py"
     _ = f"pasta-{plugin}"
     if index is not None:
@@ -680,13 +681,14 @@ async def hndlrr(event):
 
 @callback("taglog", owner=True)
 async def tagloggrr(e):
-    if not udB.get_key("TAG_LOG"):
-        BUTTON = [Button.inline("SET TAG LOG", data="settag")]
-    else:
-        BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
+    BUTTON = [
+        [Button.inline("SET TAG LOG", data="abs_settag")],
+        [Button.inline("DELETE TAG LOG", data="deltag")],
+        get_back_button("cbs_otvars"),
+    ]
     await e.edit(
         "Choose Options",
-        buttons=[BUTTON, [Button.inline("« Bᴀᴄᴋ", data="cbs_otvars")]],
+        buttons=BUTTON,
     )
 
 
@@ -732,7 +734,7 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if udB.get_key("SUDO") == "False":
+    if not udB.get_key("SUDO"):
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
     else:
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
@@ -1278,11 +1280,11 @@ async def fdroid_dler(event):
         ),
     )
     tt = time.time()
-    file = await uploader(file, file, tt, event, "Uploading...")
+    n_file = await uploader(file, file, tt, event, "Uploading...")
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
         msg = await event.edit(
-            f"**• [{title}]({URL}) •**", file=file, thumb=thumb, buttons=buttons
+            f"**• [{title}]({URL}) •**", file=n_file, thumb=thumb, buttons=buttons
         )
     except Exception as er:
         LOGS.exception(er)
@@ -1293,10 +1295,11 @@ async def fdroid_dler(event):
                 f"**• [{title}]({URL}) •**",
                 buttons=buttons,
                 thumb=thumb,
-                file=file,
+                file=n_file,
             )
         except Exception as er:
             os.remove(thumb)
+            os.remove(file)
             LOGS.exception(er)
             return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
     if msg and hasattr(msg, "media"):

@@ -11,15 +11,19 @@ import re
 from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChatWriteForbiddenError,
+    MediaCaptionTooLongError,
     MediaEmptyError,
+    MessageTooLongError,
     PeerIdInvalidError,
     UserNotParticipantError,
 )
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
 from telethon.utils import get_display_name
 
 from . import *
 
 CACHE_SPAM = {}
+TAG_EDITS = {}
 
 
 @ultroid_bot.on(
@@ -38,49 +42,46 @@ async def all_messages_catcher(e):
         NEEDTOLOG = int(udB.get_key("TAG_LOG"))
     except Exception:
         return LOGS.info(get_string("userlogs_1"))
-    y = e.chat
-    where_n, who_n = get_display_name(y), get_display_name(x)
-    where_l = e.message_link
-    buttons = [[Button.url(where_n, where_l)]]
-    if isinstance(x, types.User) and x.username:
-        try:
-            buttons.append(
-                [Button.mention(who_n, await asst.get_input_entity(x.username))]
-            )
-        except Exception as er:
-            LOGS.exception(er)
-            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-    elif getattr(x, "username"):
-        buttons.append([Button.url(who_n, f"t.me/{x.username}")])
-    else:
-        buttons.append([Button.url(who_n, where_l)])
+    buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
+        if TAG_EDITS.get(e.chat_id):
+            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+        else:
+            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
         tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
+            if TAG_EDITS.get(e.chat_id):
+                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+            else:
+                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
-                LOGS.info(me)
+                LOGS.exception(me)
             if e.photo or e.sticker or e.gif:
                 try:
                     media = await e.download_media()
-                    await asst.send_message(
+                    sent = await asst.send_message(
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
+                    if TAG_EDITS.get(e.chat_id):
+                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+                    else:
+                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
                     return os.remove(media)
                 except Exception as er:
-                    LOGS.info(er)
+                    LOGS.exception(er)
             await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
     except (PeerIdInvalidError, ValueError):
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
             await asst.send_message(
-                int(udB.get_key("LOG_CHANNEL")), get_string("userlogs_1")
+                udB.get_key("LOG_CHANNEL"), get_string("userlogs_1")
             )
             CACHE_SPAM.update({NEEDTOLOG: True})
     except ChatWriteForbiddenError:
@@ -95,10 +96,77 @@ async def all_messages_catcher(e):
             await asst.send_message(LOG_CHANNEL, MSG)
             CACHE_SPAM.update({NEEDTOLOG: True})
     except Exception as er:
-        LOGS.info(str(er))
+        LOGS.exception(er)
 
 
-if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
+if udB.get_key("TAG_LOG"):
+
+    @ultroid_bot.on(events.MessageEdited(func=lambda x: not x.out))
+    async def upd_edits(event):
+        x = event.sender
+        if isinstance(x, types.User) and (x.bot or x.verified):
+            return
+        if event.chat_id not in TAG_EDITS:
+            if event.sender_id == udB.get_key("TAG_LOG"):
+                return
+            entities = event.get_entities_text()
+            if entities:
+                is_self = False
+                username = event.client.me.username
+                if username:
+                    username = username.lower()
+                for ent, text in entities:
+                    if isinstance(ent, MessageEntityMention):
+                        is_self = text[1:].lower() == username
+                    elif isinstance(ent, MessageEntityMentionName):
+                        is_self = ent.user_id == event.client.me.id
+                if is_self:
+                    text = f"**#Edited & #Mentioned**\n\n{event.text}"
+                    try:
+                        sent = await asst.send_message(
+                            udB.get_key("TAG_LOG"),
+                            text,
+                            buttons=await parse_buttons(event),
+                        )
+                    except Exception as er:
+                        return LOGS.exception(er)
+                    if TAG_EDITS.get(event.chat_id):
+                        TAG_EDITS[event.chat_id].update({event.id: {"id": sent.id}})
+                    else:
+                        TAG_EDITS.update({event.chat_id: {event.id: {"id": sent.id}}})
+            return
+        d_ = TAG_EDITS[event.chat_id]
+        if not d_.get(event.id):
+            return
+        d_ = d_[event.id]
+        msg = None
+        if d_.get("count"):
+            d_["count"] += 1
+        else:
+            msg = True
+            d_.update({"count": 1})
+        if d_["count"] > 10:
+            return  # some limit to take edits
+        try:
+            MSG = await asst.get_messages(udB.get_key("TAG_LOG"), ids=d_["id"])
+        except Exception as er:
+            return LOGS.exception(er)
+        TEXT = MSG.text
+        if msg:
+            TEXT += "\n\n🖋 **Later Edited to !**"
+        strf = event.edit_date.strftime("%H:%M:%S")
+        if "\n" not in event.text:
+            TEXT += f"\n• `{strf}` : {event.text}"
+        else:
+            TEXT += f"\n• `{strf}` :\n-> {event.text}"
+        if d_["count"] == 10:
+            TEXT += "\n\n• __Only the first 10 Edits are shown.__"
+        try:
+            await MSG.edit(TEXT, buttons=await parse_buttons(event))
+        except (MessageTooLongError, MediaCaptionTooLongError):
+            del TAG_EDITS[event.chat_id][event.id]
+        except Exception as er:
+            LOGS.exception(er)
 
     @ultroid_bot.on(
         events.NewMessage(
@@ -113,8 +181,8 @@ if udB.get_key("TAG_LOG") and udB.get_key("TAG_REPLY2REPLY"):
         if chat and msg:
             try:
                 await ultroid_bot.send_message(chat, e.message, reply_to=msg)
-            except BaseException:
-                pass
+            except BaseException as er:
+                LOGS.exception(er)
 
 
 # log for assistant/user joins/add
@@ -136,6 +204,8 @@ async def when_added_or_joined(event):
     if event.user_added:
         tmp = event.added_by
         text = f"#ADD_LOG\n\n{inline_mention(tmp)} just added {inline_mention(user)} to {chat}."
+    elif event.from_request:
+        text = f"#APPROVAL_LOG\n\n{inline_mention(user)} just got Chat Join Approval to {chat}."
     else:
         text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
     await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
@@ -156,7 +226,7 @@ _client = {"bot": asst, "user": ultroid_bot}
     re.compile(
         "leave_ch_(.*)",
     ),
-    owner=True,
+    from_users=[ultroid_bot.uid],
 )
 async def leave_ch_at(event):
     cht = event.data_match.group(1).decode("UTF-8")
@@ -173,3 +243,26 @@ async def leave_ch_at(event):
 @callback("do_nothing")
 async def _(event):
     await event.answer()
+
+
+async def parse_buttons(event):
+    y, x = event.chat, event.sender
+    where_n, who_n = get_display_name(y), get_display_name(x)
+    where_l = event.message_link
+    buttons = [[Button.url(where_n, where_l)]]
+    if isinstance(x, types.User) and x.username:
+        try:
+            buttons.append(
+                [Button.mention(who_n, await asst.get_input_entity(x.username))]
+            )
+        except Exception as er:
+            LOGS.exception(er)
+            buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+    elif getattr(x, "username"):
+        buttons.append([Button.url(who_n, f"t.me/{x.username}")])
+    else:
+        buttons.append([Button.url(who_n, where_l)])
+    replied = await event.get_reply_message()
+    if replied and replied.sender_id == ultroid_bot.uid:
+        buttons.append([Button.url("Replied to", replied.message_link)])
+    return buttons

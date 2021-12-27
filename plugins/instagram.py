@@ -59,7 +59,7 @@ from . import (
 async def insta_dl(e):
     match = e.pattern_match.group(1)
     replied = await e.get_reply_message()
-    tt = await eor(e, get_string("com_1"))
+    tt = await e.eor(get_string("com_1"))
     if match:
         text = match
     elif e.is_reply and "insta" in replied.message:
@@ -122,7 +122,7 @@ async def soon_(e):
     if not cl:
         return
     match = e.pattern_match.group(1)
-    ew = await eor(e, get_string("com_1"))
+    ew = await e.eor(get_string("com_1"))
     if match:
         try:
             iid = cl.user_id_from_username(match)
@@ -156,12 +156,12 @@ async def soon_(e):
 async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:
-        return await eor(event, "`Please Fill Instagram Credentials to Use This...`")
-    msg = await eor(event, get_string("com_1"))
+        return await event.eor("`Please Fill Instagram Credentials to Use This...`")
+    msg = await event.eor(get_string("com_1"))
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1)
     if not (replied and (replied.photo or replied.video)):
-        return await eor(event, "`Reply to Photo Or Video...`")
+        return await event.eor("`Reply to Photo Or Video...`")
     caption = (
         event.pattern_match.group(2) + "\n\n• By #Ultroid"
         or replied.message + "\n\n• By #Ultroid"

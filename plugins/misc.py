@@ -32,7 +32,6 @@ from img2html.converter import Img2HTMLConverter
 
 from . import (
     async_searcher,
-    eor,
     fast_download,
     get_random_user_data,
     get_string,
@@ -53,7 +52,7 @@ def gib_link(link):
 @ultroid_cmd(pattern="eod ?(.*)")
 async def diela(e):
     match = e.pattern_match.group(1)
-    m = await eor(e, get_string("com_1"))
+    m = await e.eor(get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
     if match:
@@ -78,12 +77,12 @@ async def diela(e):
 async def pinterest(e):
     m = e.pattern_match.group(1)
     if not m:
-        return await eod(e, "`Give pin link`")
+        return await e.eor("`Give pinterest link.`", time=3)
     scrape = cfscrape.create_scraper()
     hehe = bs(scrape.get(gib_link(m)).text, "html.parser")
     hulu = hehe.find_all("a", {"class": "download_button"})
     if len(hulu) < 1:
-        await eor(e, "`Wrong link or private pin.`", time=5)
+        await e.eor("`Wrong link or private pin.`", time=5)
     elif len(hulu) > 1:
         video, _ = await fast_download(hulu[0]["href"])
         thumb, _ = await fast_download(hulu[1]["href"])
@@ -99,15 +98,15 @@ async def pinterest(e):
 async def mobs(e):
     mat = e.pattern_match.group(1)
     if not mat:
-        await eor(e, "Please Give a Mobile Name to look for.")
+        await e.eor("Please Give a Mobile Name to look for.")
     query = mat.replace(" ", "%20")
     jwala = f"https://gadgets.ndtv.com/search?searchtext={query}"
     c = await async_searcher(jwala)
     b = bs(c, "html.parser", from_encoding="utf-8")
     co = b.find_all("div", "rvw-imgbox")
     if not co:
-        return await eor(e, "No Results Found!")
-    bt = await eor(e, get_string("com_1"))
+        return await e.eor("No Results Found!")
+    bt = await e.eor(get_string("com_1"))
     out = "**📱 Mobile / Gadgets Search**\n\n"
     li = co[0].find("a")
     imu, title = None, li.find("img")["title"]
@@ -132,7 +131,7 @@ async def mobs(e):
 
 @ultroid_cmd(pattern="randomuser")
 async def _gen_data(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     msg, pic = await get_random_user_data()
     await event.reply(file=pic, message=msg)
     await x.delete()
@@ -143,8 +142,8 @@ async def _gen_data(event):
 )
 async def _(e):
     if not e.reply_to_msg_id:
-        return await eor(e, get_string("ascii_1"))
-    m = await eor(e, get_string("ascii_2"))
+        return await e.eor(get_string("ascii_1"))
+    m = await e.eor(get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
     char = "■" if not e.pattern_match.group(1) else e.pattern_match.group(1)
     converter = Img2HTMLConverter(char=char)

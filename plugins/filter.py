@@ -26,7 +26,7 @@ from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
 
-from . import eor, events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
+from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
@@ -36,7 +36,7 @@ async def af(e):
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
-        return await eor(e, get_string("flr_1"))
+        return await e.eor(get_string("flr_1"))
     btn = format_btn(wt.buttons) if wt.buttons else None
     if wt and wt.media:
         wut = mediainfo(wt.media)
@@ -46,7 +46,7 @@ async def af(e):
             m = "https://telegra.ph" + variable[0]
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
-                return await eor(e, get_string("com_4"), time=5)
+                return await e.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
@@ -65,7 +65,7 @@ async def af(e):
         if not btn:
             txt, btn = get_msg_button(wt.text)
         add_filter(chat, wrd, txt, None, btn)
-    await eor(e, get_string("flr_4").format(wrd))
+    await e.eor(get_string("flr_4").format(wrd))
     ultroid_bot.add_handler(filter_func, events.NewMessage())
 
 
@@ -74,9 +74,9 @@ async def rf(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id
     if not wrd:
-        return await eor(e, get_string("flr_3"))
+        return await e.eor(get_string("flr_3"))
     rem_filter(int(chat), wrd)
-    await eor(e, get_string("flr_5").format(wrd))
+    await e.eor(get_string("flr_5").format(wrd))
 
 
 @ultroid_cmd(pattern="listfilter$")
@@ -84,8 +84,8 @@ async def lsnote(e):
     x = list_filter(e.chat_id)
     if x:
         sd = "Filters Found In This Chats Are\n\n"
-        return await eor(e, sd + x)
-    await eor(e, get_string("flr_6"))
+        return await e.eor(sd + x)
+    await e.eor(get_string("flr_6"))
 
 
 async def filter_func(e):

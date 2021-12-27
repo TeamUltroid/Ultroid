@@ -10,10 +10,10 @@
 • `{i}wspr <username>`
     Send secret message..
 
-• `{i}quotly <color-optional>`
-• `{i}quotly @username`
-• `{i}quotly r <color-optional>`
-• `{i}quotly count` : `multiple quotes`
+• `{i}q <color-optional>`
+• `{i}q @username`
+• `{i}q r <color-optional>`
+• `{i}q count` : `multiple quotes`
     Create quotes..
 
 • `{i}sticker <query>`
@@ -49,9 +49,7 @@ from . import (
     bash,
     downloader,
     eod,
-    eor,
     get_string,
-    get_user_id,
     mediainfo,
     ultroid_bot,
     ultroid_cmd,
@@ -71,7 +69,7 @@ async def daudtoid(e):
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, get_string("spcltool_1"))
-    xxx = await eor(e, get_string("com_1"))
+    xxx = await e.eor(get_string("com_1"))
     dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(
@@ -96,7 +94,7 @@ async def adaudroid(e):
         return await eod(e, get_string("spcltool_3"))
     if not (File and os.path.exists(File[0])):
         return await e.edit(f"`First reply an audio with {HNDLR}addaudio`")
-    xxx = await eor(e, get_string("com_1"))
+    xxx = await e.eor(get_string("com_1"))
     dl = r.file.name or "input.mp4"
     c_time = time.time()
     file = await downloader(
@@ -147,7 +145,7 @@ async def adaudroid(e):
 )
 async def hbd(event):
     if not event.pattern_match.group(1):
-        return await eor(event, get_string("spcltool_6"))
+        return await event.eor(get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
         nam = await kk.get_sender()
@@ -168,7 +166,7 @@ async def hbd(event):
     try:
         jn = dt.strptime(paida, "%d/%m/%Y")
     except BaseException:
-        return await eor(event, get_string("spcltool_6"))
+        return await event.eor(get_string("spcltool_6"))
     jnm = zn.localize(jn)
     zinda = abhi - jnm
     barsh = (zinda.total_seconds()) / (365.242 * 24 * 3600)
@@ -262,8 +260,8 @@ Zodiac -: {sign}
 async def _(event):
     x = event.pattern_match.group(1)
     if not x:
-        return await eor(event, "`Give something to search`")
-    uu = await eor(event, get_string("com_1"))
+        return await event.eor("`Give something to search`")
+    uu = await event.eor(get_string("com_1"))
     z = bs(
         await async_searcher("https://combot.org/telegram/stickers?q=" + x),
         "html.parser",
@@ -285,8 +283,8 @@ async def _(event):
 async def wall(event):
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, "`Give me something to search..`")
-    nn = await eor(event, get_string("com_1"))
+        return await event.eor("`Give me something to search..`")
+    nn = await event.eor(get_string("com_1"))
     query = f"hd {inp}"
     gi = googleimagesdownload()
     args = {
@@ -302,14 +300,14 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="q(uotly|) ?(.*)", manager=True, allow_pm=True)
+@ultroid_cmd(pattern="q ?(.*)", manager=True, allow_pm=True)
 async def quott_(event):
-    if event.raw_text[1:].startswith("qbot"):
+    if len(event.text[1:]) > 1 and event.text[2] != " ":
         return
-    match = event.pattern_match.group(2)
+    match = event.pattern_match.group(1)
     if not event.is_reply:
-        return await eor(event, "`Reply to Message..`")
-    msg = await eor(event, get_string("com_1"))
+        return await event.eor("`Reply to Message..`")
+    msg = await event.eor(get_string("com_1"))
     reply_ = await event.get_reply_message()
     replied_to = None
     if match:
@@ -317,13 +315,21 @@ async def quott_(event):
         if (spli_[0] in ["r", "reply"]) or (
             spli_[0].isdigit() and int(spli_[0]) in range(1, 21)
         ):
-            if spli_[0].isdigit() and not event.client._bot:
-                reply_ = await event.client.get_messages(
-                    event.chat_id,
-                    min_id=event.reply_to_msg_id - 1,
-                    reverse=True,
-                    limit=int(spli_[0]),
-                )
+            if spli_[0].isdigit():
+                if not event.client._bot:
+                    reply_ = await event.client.get_messages(
+                        event.chat_id,
+                        min_id=event.reply_to_msg_id - 1,
+                        reverse=True,
+                        limit=int(spli_[0]),
+                    )
+                else:
+                    id_ = reply_.id
+                    reply_ = []
+                    for msg_ in range(id_, id_ + int(spli_[0]) + 1):
+                        msh = await event.client.get_messages(event.chat_id, ids=msg_)
+                        if msh:
+                            reply_.append(msh)
             else:
                 replied_to = await reply_.get_reply_message()
             try:
@@ -333,18 +339,16 @@ async def quott_(event):
     user = None
     if match:
         match = match.split(maxsplit=1)
-    if match and (match[0].startswith("@") or match[0].isdigit()):
-        try:
-            match_ = await get_user_id(match[0], client=event.client)
-            user = await event.client.get_entity(match_)
-        except ValueError:
-            pass
-        if len(match) == 2:
-            match = match[1]
+    if match:
+        if match[0].startswith("@") or match[0].isdigit():
+            try:
+                match_ = await event.client.parse_id(match[0])
+                user = await event.client.get_entity(match_)
+            except ValueError:
+                pass
+            match = match[1] if len(match) == 2 else None
         else:
-            match = None
-    elif match:
-        match = match[0]
+            match = match[0]
     if match == "random":
         match = choice(all_col)
     try:

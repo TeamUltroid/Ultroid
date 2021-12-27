@@ -50,7 +50,7 @@ async def repify(e):
         pass
     except Exception as er:
         LOGS.info("Error while repo command : " + str(er))
-    await eor(e, REPOMSG)
+    await e.eor(REPOMSG)
 
 
 @ultroid_cmd(pattern="ultroid$")

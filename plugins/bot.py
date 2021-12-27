@@ -7,7 +7,7 @@
 """
 ✘ Commands Available
 
-• `{i}alive` | `{i}ialive`
+• `{i}alive` | `{i}alive inline`
     Check if your bot is working.
 
 • `{i}ping`
@@ -41,7 +41,10 @@ from random import choice
 from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
-from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import (
+    BotMethodInvalidError,
+    ChatSendMediaForbiddenError,
+)
 from telethon.utils import resolve_bot_file_id
 
 from . import (
@@ -75,6 +78,12 @@ from . import (
 )
 
 ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
+buttons = [
+    [
+        Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
+    ]
+]
 
 # Will move to strings
 alive_txt = """
@@ -85,6 +94,8 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
+in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b> [ {} ]\n\n• <b>Join @TheUltroid</b>"
+
 
 @callback("alive")
 async def alive(event):
@@ -93,55 +104,20 @@ async def alive(event):
 
 
 @ultroid_cmd(
-    pattern="alive$",
+    pattern="alive ?(.*)",
 )
 async def lol(ult):
-    pic = udB.get_key("ALIVE_PIC")
-    uptime = time_formatter((time.time() - start_time) * 1000)
-    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
-    y = Repo().active_branch
-    xx = Repo().remotes[0].config_reader.get("url")
-    rep = xx.replace(".git", f"/tree/{y}")
-    kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
-        header,
-        OWNER_NAME,
-        ultroid_version,
-        UltVer,
-        uptime,
-        pyver(),
-        __version__,
-        kk,
-    )
-    if pic is None:
-        await eor(ult, als)
-    elif "telegra" in pic:
-        try:
-            await ult.reply(als, file=pic, link_preview=False)
-            await ult.delete()
-        except ChatSendMediaForbiddenError:
-            await eor(ult, als, link_preview=False)
-    else:
-        try:
-            await ult.reply(file=pic)
-            await ult.reply(als, link_preview=False)
-            await ult.delete()
-        except ChatSendMediaForbiddenError:
-            await eor(ult, als, link_preview=False)
-
-
-@ultroid_cmd(
-    pattern="ialive$",
-)
-async def is_on(ult):
-    if not ult.client._bot:
-        await ult.delete()
+    match = ult.pattern_match.group(1)
+    inline = None
+    if match in ["inline", "i"]:
         try:
             res = await ult.client.inline_query(asst.me.username, "alive")
-            await res[0].click(ult.chat_id)
-        except Exception as er:
-            LOGS.info(er)
-        return
+            return await res[0].click(ult.chat_id)
+        except BotMethodInvalidError:
+            pass
+        except BaseException as er:
+            LOGS.exception(er)
+        inline = True
     pic = udB.get_key("ALIVE_PIC")
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
@@ -149,32 +125,71 @@ async def is_on(ult):
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
-        header,
-        OWNER_NAME,
-        ultroid_version,
-        UltVer,
-        uptime,
-        pyver(),
-        __version__,
-        kk,
-    )
-    buttons = [
-        [Button.inline(get_string("bot_2"), "alive")],
-        [
-            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-        ],
-    ]
-    await ult.client.send_message(
-        ult.chat_id, als, file=pic, buttons=buttons, link_preview=False
+    if inline:
+        kk = f"<a href={rep}>{y}</a>"
+        parse = "html"
+        als = in_alive.format(
+            header,
+            ultroid_version,
+            UltVer,
+            pyver(),
+            uptime,
+            kk,
+        )
+        if _e := udB.get_key("ALIVE_EMOJI"):
+            als = als.replace("🌀", _e)
+    else:
+        parse = "md"
+        als = (get_string("alive_1")).format(
+            header,
+            OWNER_NAME,
+            ultroid_version,
+            UltVer,
+            uptime,
+            pyver(),
+            __version__,
+            kk,
+        )
+        if a := udB.get_key("ALIVE_EMOJI"):
+            als = als.replace("✵", a)
+    if pic:
+        try:
+            await ult.reply(
+                als,
+                file=pic,
+                parse_mode=parse,
+                link_preview=False,
+                buttons=buttons if inline else None,
+            )
+            await ult.try_delete()
+        except ChatSendMediaForbiddenError:
+            pass
+        except BaseException as er:
+            LOGS.exception(er)
+            try:
+                await ult.reply(file=pic)
+                await ult.reply(
+                    als,
+                    parse_mode=parse,
+                    buttons=buttons if inline else None,
+                    link_preview=False,
+                )
+                return await ult.try_delete()
+            except BaseException as er:
+                LOGS.exception(er)
+    await eor(
+        ult,
+        als,
+        parse_mode=parse,
+        link_preview=False,
+        buttons=buttons if inline else None,
     )
 
 
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
     start = time.time()
-    x = await eor(event, "Pong !")
+    x = await event.eor("Pong !")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
@@ -195,7 +210,7 @@ heroku_api = Var.HEROKU_API
     fullsudo=True,
 )
 async def restartbt(ult):
-    ok = await eor(ult, get_string("bot_5"))
+    ok = await ult.eor(get_string("bot_5"))
     call_back()
     if heroku_api:
         return await restart(ok)
@@ -220,13 +235,11 @@ async def shutdownbot(ult):
 )
 async def _(event):
     opt = event.pattern_match.group(1)
-    file = "ultroid.log"
-    if len(sys.argv) > 1:
-        file = f"ultroid{sys.argv[-1]}.log"
+    file = f"ultroid{sys.argv[-1]}.log" if len(sys.argv) > 1 else "ultroid.log"
     if opt == "heroku":
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
-        event = await eor(event, get_string("com_1"))
+        event = await event.eor(get_string("com_1"))
         code = open(file, "r").read()[-2500:]
         file = await Carbon(
             file_name="ultroid-logs",
@@ -236,10 +249,10 @@ async def _(event):
         await event.reply("**Ultroid Logs.**", file=file)
     elif opt == "open":
         file = open("ultroid.log", "r").read()[-4000:]
-        return await eor(event, f"`{file}`")
+        return await event.eor(f"`{file}`")
     else:
         await def_logs(event, file)
-    await event.delete()
+    await event.try_delete()
 
 
 @in_pattern("alive", owner=True)
@@ -250,28 +263,26 @@ async def inline_alive(ult):
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f" `[{y}]({rep})` "
-    als = (get_string("alive_1")).format(
+    kk = f"<a href={rep}>{y}</a>"
+    als = in_alive.format(
         header,
-        OWNER_NAME,
         ultroid_version,
         UltVer,
-        uptime,
         pyver(),
-        __version__,
+        uptime,
         kk,
     )
-    buttons = [
-        [
-            Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-            Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
-        ]
-    ]
+    if _e := udB.get_key("ALIVE_EMOJI"):
+        als = als.replace("🌀", _e)
     builder = ult.builder
     if pic:
         try:
             if ".jpg" in pic:
-                results = [await builder.photo(pic, text=als, buttons=buttons)]
+                results = [
+                    await builder.photo(
+                        pic, text=als, parse_mode="html", buttons=buttons
+                    )
+                ]
             else:
                 _pic = resolve_bot_file_id(pic)
                 if _pic:
@@ -284,6 +295,7 @@ async def inline_alive(ult):
                         pic,
                         title="Inline Alive",
                         description="@TheUltroid",
+                        parse_mode="html",
                         buttons=buttons,
                     )
                 ]
@@ -291,14 +303,16 @@ async def inline_alive(ult):
         except BaseException as er:
             LOGS.info(er)
     result = [
-        await builder.article("Alive", text=als, link_preview=False, buttons=buttons)
+        await builder.article(
+            "Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons
+        )
     ]
     await ult.answer(result)
 
 
 @ultroid_cmd(pattern="update ?(.*)")
 async def _(e):
-    xx = await eor(e, get_string("upd_1"))
+    xx = await e.eor(get_string("upd_1"))
     if e.pattern_match.group(1) and (
         "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1)
     ):

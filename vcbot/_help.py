@@ -16,7 +16,7 @@ async def helper(event):
     try:
         await res[0].click(event.chat_id)
     except Exception as e:
-        await eor(event, e)
+        await event.eor(e)
 
 
 @in_pattern("vchelp")

@@ -31,7 +31,6 @@ help_9: "Parametrlər ⚙️"
 help_10: "••Bağla••"
 help_11: "Plugin adı-{}\n\n✘ Əmrlər bunlardır-\n\n"
 
-
 # userlogs
 userlogs_1: "Tag Logger-da Ayarladığınız Söhbət İd-si Səhvdir, Xaiş olunur yenidən cəhd edin"
 userlogs_2: "Tag logger aktivləşdirmək üçün məni Tag Logger Chat-a əlavə edin"
@@ -44,7 +43,7 @@ adm_1: "`Mən onun kim olduğunu başa düşə bilmədim!`"
 adm_2: "`Hmm.. Deyəsən, mənim burada heç bir hüququm yoxdur!`"
 adm_3: "`Bir də vaxt verin..`"
 pro_1: "`Userin mesajını yanıtlayın!`"
-pro_2:  "{} `indi {} adminidir. Yönətici tağı {}.`"
+pro_2: "{} `indi {} adminidir. Yönətici tağı {}.`"
 de_1: "`Vəzifəni almaq üçün bir mesajı yanıtlayı !`"
 de_2: "{} `is no longer an admin in {}`"
 ban_1: "`Reply to a user or give username to ban him!`"
@@ -119,7 +118,7 @@ autopic_5: "AUTOPIC dayandırıldı!"
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nPluginlər ~ {}**"
 inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setredis ADDONS True`** edin sonra restart atın.**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setdb ADDONS True`** edin sonra restart atın.**"
 inline_4: "** Bot: {}\n\nMenu\n\nPluginlər~ {}\nƏlavələr ~ {}\nBütün əmrlər~ {}**"
 inline_5: "**Menu bağlandı**"
 inline_6: "**{} üçün Səsli Çat Yardım Menyu**\n**Mümkün əmrlər:** `{}`\n\n@TeamUltroid"
@@ -177,7 +176,6 @@ bd_6: "`Kanal onsuzda databaseyə əlavə olunub!`"
 bd_7: "Database silindi"
 bd_8: "`Silinir...`"
 bd_9: "Kanal onsuzda databasedən silinib. "
-
 
 # calculator
 calc_1: "• Ultroid hesablama •"
@@ -320,8 +318,7 @@ ex_1: "`Mesajı yanıtlayın..`"
 
 # gdrive
 gdrive_1: "`You have already authorised with Google Drive`"
-gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
-Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
 gdrive_3: "`Wrong Client Id`"
 gdrive_4: "`Something went wrong! Send `/auth` again.\nIf the same happens, contact `@TheUltroid"
 gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
@@ -435,7 +432,7 @@ sts_5: "**Paketə əlavə olundu**.\n**Paket linki:** [burada]({})"
 sts_6: "`Mesaja və ya medianı yanıtla...`"
 sts_7: "`Sticker yeni paketə əlavə olundu !\nYeni paket yaradıldı!\nYeni paketin` [burada](t.me/addstickers/{})"
 sts_8: "`Paketə əlavə edə bilmədim,` @Stickers `botuna paketə Stickeri özünüz əlavə edin.`"
-sts_9:  "`Ooo hərəkətli sticker👀...`"
+sts_9: "`Ooo hərəkətli sticker👀...`"
 sts_10: "`Medianı yanıtlayın...`"
 sts_11: "Sticker paketə əlavə olunur..."
 sts_12: "`Oğurladıç!`\n`Emoji` : {}\n`Sticker Paketi` [burada](t.me/addstickers/{})"
@@ -448,7 +445,7 @@ whs_3: "Musiqini tapa bilmədim :("
 whs_4: "**Musiqini tapdım!**\nBaşlıq: __{}__"
 
 # webupload
-wbl_1:  "`Mənə fayl adı ver..`"
+wbl_1: "`Mənə fayl adı ver..`"
 
 # writer
 writer_1: "`Mənə mətn ver`"

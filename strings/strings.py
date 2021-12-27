@@ -17,7 +17,7 @@ for file in listdir(strings_folder):
         code = file[:-4]
         try:
             languages[code] = safe_load(
-            open(path.join(strings_folder, file), encoding="UTF-8"),
+                open(path.join(strings_folder, file), encoding="UTF-8"),
             )
         except Exception as er:
             LOGS.info(f"Error in {file[:-4]} language file")
@@ -30,7 +30,10 @@ def get_string(key: str) -> Any:
         return languages[lang][key]
     except KeyError:
         try:
-            tr = Trs.translate(languages["en"][key], lang_tgt=lang)
+            en_ = languages["en"][key]
+            tr = Trs.translate(en_, lang_tgt=lang).replace("\ N", "\n")
+            if en_.count("{}") != tr.count("{}"):
+                tr = en_
             if languages.get(lang):
                 languages[lang][key] = tr
             else:
