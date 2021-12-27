@@ -20,7 +20,7 @@ from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyE
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
 
-from . import LOGS, asst, callback, in_pattern, udB, LOGS
+from . import LOGS, asst, callback, in_pattern, udB
 
 try:
     from youtubesearchpython import VideosSearch
