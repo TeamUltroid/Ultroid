@@ -53,7 +53,7 @@ _buttons = {
         "text": "Other Variables to set for @TheUltroid:",
         "buttons": [
             [
-                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="abs_taglog"),
+                Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
                 Button.inline("SᴜᴘᴇʀFʙᴀɴ", data="cbs_sfban"),
             ],
             [
@@ -682,7 +682,7 @@ async def hndlrr(event):
 @callback("taglog", owner=True)
 async def tagloggrr(e):
     if not udB.get_key("TAG_LOG"):
-        BUTTON = [Button.inline("SET TAG LOG", data="settag")]
+        BUTTON = [Button.inline("SET TAG LOG", data="abs_settag")]
     else:
         BUTTON = [Button.inline("DELETE TAG LOG", data="deltag")]
     await e.edit(
@@ -733,7 +733,7 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if udB.get_key("SUDO") == "False":
+    if not udB.get_key("SUDO"):
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
     else:
         BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
