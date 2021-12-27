@@ -12,7 +12,6 @@
 
 • `{i}image <text or reply to html or any doc file>`
    Write a image from html or any text.
-
 """
 
 import os
