@@ -35,7 +35,7 @@ import numpy as np
 import requests
 from PIL import Image, ImageDraw
 from pyUltroid.functions.misc import create_quotly
-from telethon.errors import YouBlockedUserError, PeerIdInvalidError
+from telethon.errors import PeerIdInvalidError, YouBlockedUserError
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
 
@@ -46,12 +46,12 @@ from . import (
     bash,
     functions,
     get_string,
+    inline_mention,
     mediainfo,
     resize_photo,
     types,
     udB,
     ultroid_cmd,
-    inline_mention
 )
 
 
@@ -116,7 +116,9 @@ async def pack_kangish(_):
             )
         )
     except PeerIdInvalidError:
-        return await _.eor(f"Hey {inline_mention(_.sender)} send `/start` to @{asst.me.username} and later try this command again..")
+        return await _.eor(
+            f"Hey {inline_mention(_.sender)} send `/start` to @{asst.me.username} and later try this command again.."
+        )
     except BaseException as er:
         LOGS.exception(er)
         return await _.eor(str(er))
