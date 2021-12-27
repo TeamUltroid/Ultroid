@@ -28,7 +28,7 @@ from . import Button, Redis, asst, callback, eod, get_string, ultroid_bot, ultro
 
 _check_flood = {}
 
-if Redis("ANTIFLOOD") is not (None or ""):
+if Redis("ANTIFLOOD"):
 
     @ultroid_bot.on(
         NewMsg(
@@ -46,7 +46,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if await admin_check(event) or event.sender.bot:
+        if await admin_check(event, silent=True) or event.sender.bot:
             return
         if event.sender_id in DEVLIST:
             return
