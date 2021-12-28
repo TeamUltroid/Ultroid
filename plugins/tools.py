@@ -54,7 +54,7 @@ from telethon.tl.types import (
 from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, async_searcher, bash, eor, get_string
-from . import humanbytes as hb
+from . import humanbytes as hb, LOGS
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
@@ -438,6 +438,7 @@ async def magic(event):
         post=True,
         re_json=True,
     )
+    LOGS.info(data)
     response = data.get("payload", {}).get("response", {})
     if not response.get("status"):
         return await event.eor("**ERRROR :** `{}`".format(response["message"]))
