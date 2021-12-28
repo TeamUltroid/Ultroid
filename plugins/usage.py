@@ -148,7 +148,7 @@ def heroku_usage():
 
 def redis_usage():
     x = 30 * 1024 * 1024
-    z = sum(udB.memory_usage(n) for n in udB.keys())
+    z = udB.usage
     a = humanbytes(z) + "/" + humanbytes(x)
     b = str(round(z / x * 100, 3)) + "%"
     return f"**REDIS**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
