@@ -53,7 +53,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, LOGS, async_searcher, bash, eor, get_string
+from . import HNDLR, async_searcher, bash, eor, get_string
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
