@@ -264,5 +264,9 @@ async def parse_buttons(event):
         buttons.append([Button.url(who_n, where_l)])
     replied = await event.get_reply_message()
     if replied and replied.out:
-        buttons.append([Button.url("Replied to", replied.message_link)])
+        button = Button.url("Replied to", replied.message_link)
+        if len(who_n) > 7:
+            buttons.append([button])
+        else:
+            buttons[-1].append(button)
     return buttons
