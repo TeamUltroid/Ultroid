@@ -263,6 +263,6 @@ async def parse_buttons(event):
     else:
         buttons.append([Button.url(who_n, where_l)])
     replied = await event.get_reply_message()
-    if replied and replied.sender_id == ultroid_bot.uid:
+    if replied and replied.out:
         buttons.append([Button.url("Replied to", replied.message_link)])
     return buttons
