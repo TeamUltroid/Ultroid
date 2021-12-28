@@ -18,5 +18,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 # changing workdir
 WORKDIR /root/TeamUltroid/
 
+RUN pip3 show enhancer
+
 # start the bot
 CMD ["bash", "resources/startup/startup.sh"]
