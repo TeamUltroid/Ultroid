@@ -297,7 +297,7 @@ async def _(e):
         except ValueError:
             userid = match
         try:
-            peer = await e.client.get_entity(match)
+            userid = (await e.client.get_entity(userid)).id
         except (ValueError, Exception) as er:
             return await xx.edit(f"Failed to get User...\nError: {er}")
     elif e.reply_to_msg_id:
@@ -354,13 +354,7 @@ async def _(e):
 async def _(e):
     xx = await e.eor("`Gbanning...`")
     reason = ""
-    if e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        try:
-            reason = e.text.split(" ", maxsplit=1)[1]
-        except IndexError:
-            pass
-    elif e.pattern_match.group(1):
+    if e.pattern_match.group(1):
         usr = e.text.split(" ", maxsplit=2)[1]
         try:
             userid = await e.client.parse_id(usr)
@@ -368,6 +362,12 @@ async def _(e):
             userid = usr
         try:
             reason = e.text.split(" ", maxsplit=2)[2]
+        except IndexError:
+            pass
+    elif e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+        try:
+            reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
             pass
     elif e.is_private:
