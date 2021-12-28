@@ -429,7 +429,7 @@ async def magic(event):
     match, id_ = match.split(), None
     data = {"link": url}
     if len(match) > 1:
-        data.update({"id":match[1]})
+        data.update({"id": match[1]})
     url = match[0]
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
