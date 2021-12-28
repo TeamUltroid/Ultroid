@@ -427,10 +427,11 @@ async def magic(event):
     except IndexError:
         return await event.eor("`Provide url to turn into tiny...`")
     match, id_ = match.split(), None
-    data = {"link": url}
+    data = {}
     if len(match) > 1:
         data.update({"id": match[1]})
     url = match[0]
+    data.update({"link":url})
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
         data=data,
