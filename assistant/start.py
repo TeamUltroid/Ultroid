@@ -63,8 +63,8 @@ _start = [
 
 @callback("ownerinfo")
 async def own(event):
-    msg = Owner_info_msg.format(mention=event.sender.mention,
-        me=inline_mention(ultroid_bot.me)
+    msg = Owner_info_msg.format(
+        mention=event.sender.mention, me=inline_mention(ultroid_bot.me)
     )
     if custom_info:
         msg += "\n\n• Powered by **@TheUltroid**"
