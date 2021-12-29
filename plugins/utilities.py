@@ -286,10 +286,13 @@ async def _(event):
     if not isinstance(_, User):
         try:
             peer = get_peer_id(_)
-            capt = await get_chat_info(_, event)
+            photo, capt = await get_chat_info(_, event)
             if is_gbanned(peer):
                 capt += "\n•<b> Is Gbanned:</b> <code>True</code>"
-            await xx.eor(capt, parse_mode="html")
+            if not photo:
+                return await xx.eor(capt, parse_mode="html")
+            await event.client.send_message(event.chat_id, capt, file=photo)
+            await xx.delete()
         except Exception as er:
             await event.eor("**ERROR ON CHATINFO**\n" + str(er))
         return
