@@ -157,7 +157,7 @@ async def download(event):
         return await eod(xx, get_string("udl_7"), time=5)
     if not os.path.exists(kk):
         try:
-            await event.client.send_file(
+            return await event.client.send_file(
                 event.chat_id, file=kk, reply_to=event.reply_to_msg_id
             )
         except Exception as er:
@@ -204,15 +204,18 @@ async def download(event):
                             event.chat_id,
                             res,
                             caption=f"`{title}`",
+                            reply_to=event.reply_to_msg_id,
                             attributes=attributes,
                             supports_streaming=True,
                             thumb="resources/extras/ultroid.jpg",
                         )
-                    except BaseException:
+                    except BaseException as er:
+                        LOGS.exception(er)
                         await event.client.send_file(
                             event.chat_id,
                             res,
                             caption=f"`{title}`",
+                            reply_to=event.reply_to_msg_id,
                             thumb="resources/extras/ultroid.jpg",
                         )
                 else:
@@ -220,6 +223,7 @@ async def download(event):
                         event.chat_id,
                         res,
                         caption=f"`{title}`",
+                        reply_to=event.reply_to_msg_id,
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
@@ -261,14 +265,17 @@ async def download(event):
                         res,
                         caption=f"`{title}`",
                         attributes=attributes,
+                        reply_to=event.reply_to_msg_id,
                         supports_streaming=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
-                except BaseException:
+                except BaseException as er:
+                    LOGS.exception(er)
                     await event.client.send_file(
                         event.chat_id,
                         res,
                         caption=f"`{title}`",
+                        reply_to=event.reply_to_msg_id,
                         force_document=True,
                         thumb="resources/extras/ultroid.jpg",
                     )
@@ -277,6 +284,7 @@ async def download(event):
                     event.chat_id,
                     res,
                     caption=f"`{title}`",
+                    reply_to=event.reply_to_msg_id,
                     force_document=True,
                     thumb="resources/extras/ultroid.jpg",
                 )
