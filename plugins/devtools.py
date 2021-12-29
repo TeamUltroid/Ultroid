@@ -208,9 +208,8 @@ async def _(event):
                 caption=f"```{cmd}```" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
-        await xx.delete()
-    else:
-        await xx.edit(final_output)
+        return await xx.delete()
+    await xx.edit(final_output)
 
 
 def _stringified(text, *args, **kwargs):
@@ -225,6 +224,7 @@ async def aexec(code, event):
                 ("async def __aexec(e, client): " + "\n message = event = e")
                 + "\n reply = await event.get_reply_message()"
             )
+            + "\n PRINT = print"
             + "\n chat = event.chat_id"
             + "\n print = p = _stringified"
         )
