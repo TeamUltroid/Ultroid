@@ -32,6 +32,7 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from . import (
+    LOGS,
     downloader,
     eor,
     fast_download,
@@ -41,7 +42,6 @@ from . import (
     time_formatter,
     ultroid_cmd,
     uploader,
-    LOGS
 )
 
 
@@ -157,7 +157,9 @@ async def download(event):
         return await eod(xx, get_string("udl_7"), time=5)
     if not os.path.exists(kk):
         try:
-            await event.client.send_file(event.chat_id, file=kk, reply_to=event.reply_to_msg_id)
+            await event.client.send_file(
+                event.chat_id, file=kk, reply_to=event.reply_to_msg_id
+            )
         except Exception as er:
             LOGS.exception(er)
             return await xx.eor("File doesn't exists or path is incorrect!", time=5)
