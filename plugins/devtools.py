@@ -224,7 +224,6 @@ async def aexec(code, event):
                 ("async def __aexec(e, client): " + "\n message = event = e")
                 + "\n reply = await event.get_reply_message()"
             )
-            + "\n PRINT = print"
             + "\n chat = event.chat_id"
             + "\n print = p = _stringified"
         )
