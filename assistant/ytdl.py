@@ -33,6 +33,7 @@ ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 BACK_BUTTON = {}
 
+
 @in_pattern("yt", owner=True)
 async def _(event):
     try:
@@ -78,24 +79,24 @@ async def _(event):
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         buttons = [
-                    [
-                        Button.inline("Audio", data=f"ytdl:audio:{ids}"),
-                        Button.inline("Video", data=f"ytdl:video:{ids}"),
-                    ],
-                    [
-                        Button.switch_inline(
-                            "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
-                            query="yt ",
-                            same_peer=True,
-                        ),
-                        Button.switch_inline(
-                            "Sʜᴀʀᴇ",
-                            query=f"yt {string}",
-                            same_peer=False,
-                        ),
-                    ],
+            [
+                Button.inline("Audio", data=f"ytdl:audio:{ids}"),
+                Button.inline("Video", data=f"ytdl:video:{ids}"),
+            ],
+            [
+                Button.switch_inline(
+                    "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                    query="yt ",
+                    same_peer=True,
+                ),
+                Button.switch_inline(
+                    "Sʜᴀʀᴇ",
+                    query=f"yt {string}",
+                    same_peer=False,
+                ),
+            ],
         ]
-        BACK_BUTTON.update({ids:{"text":text, "buttons":buttons}})
+        BACK_BUTTON.update({ids: {"text": text, "buttons": buttons}})
         results.append(
             await event.builder.article(
                 type="photo",
@@ -106,7 +107,7 @@ async def _(event):
                 text=text,
                 include_media=True,
                 parse_mode="html",
-                buttons=buttons
+                buttons=buttons,
             ),
         )
     await event.answer(results[:50])
