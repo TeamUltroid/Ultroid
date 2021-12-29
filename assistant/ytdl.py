@@ -148,14 +148,13 @@ async def _(event):
     ext = lets_split[3]
     if lets_split[0] == "audio":
         opts = {
-            "format": str(format),
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
             "outtmpl": "%(id)s." + "mp3",
             "logtostderr": False,
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3"}],
+            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": format}],
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
@@ -176,8 +175,8 @@ async def _(event):
         )
         description = description or "None"
         file, _ = await event.client.fast_uploader(
-            vid_id + "." + ext,
-            filename=title + "." + ext,
+            vid_id + ".mp3",
+            filename=title + ".mp3",
             show_progress=True,
             event=event,
             to_delete=True,
