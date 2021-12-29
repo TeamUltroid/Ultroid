@@ -36,7 +36,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "postprocessors":[{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}]
+            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}],
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -51,7 +51,9 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "postprocessors":[{"key": "FFmpegVideoConvertor", "preferredformat": "mp4"}]
+            "postprocessors": [
+                {"key": "FFmpegVideoConvertor", "preferredformat": "mp4"}
+            ],
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -66,7 +68,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "postprocessors":[{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}]
+            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}],
         }
         try:
             query = event.text.split(" ", 1)[1]
@@ -80,7 +82,9 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "postprocessors":[{"key": "FFmpegVideoConvertor", "preferredformat": "mp4"}]
+            "postprocessors": [
+                {"key": "FFmpegVideoConvertor", "preferredformat": "mp4"}
+            ],
         }
         try:
             query = event.text.split(" ", 1)[1]
