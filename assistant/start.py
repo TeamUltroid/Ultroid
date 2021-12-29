@@ -19,7 +19,9 @@ from strings.strings import get_string
 from . import *
 
 Owner_info_msg = udB.get_key("BOT_INFO_START")
+custom_info = True
 if Owner_info_msg is None:
+    custom_info = False
     Owner_info_msg = f"""
 **Owner** - {OWNER_NAME}
 **OwnerID** - `{OWNER_ID}`
@@ -61,8 +63,13 @@ _start = [
 
 @callback("ownerinfo")
 async def own(event):
+    msg = Owner_info_msg.format(mention=event.sender.mention,
+        me=inline_mention(ultroid_bot.me)
+    )
+    if custom_info:
+        msg += "\n\n• Powered by **@TheUltroid**"
     await event.edit(
-        Owner_info_msg,
+        msg,
         buttons=[Button.inline("Close", data="closeit")],
         link_preview=False,
     )
