@@ -31,7 +31,7 @@ except ImportError:
 
 ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
-
+BACK_BUTTON = {}
 
 @in_pattern("yt", owner=True)
 async def _(event):
@@ -77,17 +77,7 @@ async def _(event):
         text += f"<strong>📝 Description:- </strong> <code>{description}</code>"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
-        results.append(
-            await event.builder.article(
-                type="photo",
-                title=title,
-                description=desc,
-                thumb=file,
-                content=file,
-                text=text,
-                include_media=True,
-                parse_mode="html",
-                buttons=[
+        buttons = [
                     [
                         Button.inline("Audio", data=f"ytdl:audio:{ids}"),
                         Button.inline("Video", data=f"ytdl:video:{ids}"),
@@ -104,7 +94,19 @@ async def _(event):
                             same_peer=False,
                         ),
                     ],
-                ],
+        ]
+        BACK_BUTTON.update({ids:{"text":text, "buttons":buttons}})
+        results.append(
+            await event.builder.article(
+                type="photo",
+                title=title,
+                description=desc,
+                thumb=file,
+                content=file,
+                text=text,
+                include_media=True,
+                parse_mode="html",
+                buttons=buttons
             ),
         )
     await event.answer(results[:50])
@@ -240,7 +242,7 @@ async def _(event):
     text += f"`🎤 Artist:` `{artist}`\n"
     text += f"`👀 Views`: `{views}`\n"
     text += f"`👍 Likes`: `{likes}`\n"
-    button = buttons = Button.switch_inline("Search More", query="yt ", same_peer=True)
+    button = Button.switch_inline("Search More", query="yt ", same_peer=True)
     try:
         await event.edit(
             text,
@@ -260,3 +262,11 @@ async def _(event):
         )
         await event.edit(text, file=file.media, buttons=button)
     await bash(f"rm {vid_id}.jpg")
+
+
+@callback(re.compile("ytdl_back:(.*)"), owner=True)
+async def ytdl_back(event):
+    id_ = event.data_match.group(1).decode("utf-8")
+    if not BACK_BUTTON.get(id_):
+        return await event.answer("Query Expired! Search again 🔍")
+    await event.edit(**BACK_BUTTON[id_])
