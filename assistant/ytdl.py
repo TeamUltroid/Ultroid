@@ -154,7 +154,13 @@ async def _(event):
             "geo_bypass": True,
             "outtmpl": "%(id)s." + "mp3",
             "logtostderr": False,
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": format}],
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": format,
+                }
+            ],
         }
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
