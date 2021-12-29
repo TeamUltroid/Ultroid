@@ -153,7 +153,7 @@ def db_usage():
         total = 20
     elif udB.name == "Mongo":
         total = 512
-    total = total*(2**20)
+    total = total * (2 ** 20)
     used = udB.usage
     a = humanbytes(used) + "/" + humanbytes(total)
     b = str(round((used / total) * 100, 2)) + "%"
