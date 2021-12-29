@@ -157,9 +157,11 @@ async def download(event):
         return await eod(xx, get_string("udl_7"), time=5)
     if not os.path.exists(kk):
         try:
-            return await event.client.send_file(
+            await event.client.send_file(
                 event.chat_id, file=kk, reply_to=event.reply_to_msg_id
             )
+            await xx.try_delete()
+            return
         except Exception as er:
             LOGS.exception(er)
             return await xx.eor("File doesn't exists or path is incorrect!", time=5)
