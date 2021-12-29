@@ -41,6 +41,7 @@ from . import (
     time_formatter,
     ultroid_cmd,
     uploader,
+    LOGS
 )
 
 
@@ -74,8 +75,8 @@ async def down(event):
             ),
         )
     except InvalidURL:
-        return await eor(msg, "`Invalid URL provided :(`", time=5)
-    await eor(msg, f"`{filename}` `downloaded in {time_formatter(d*1000)}.`")
+        return await msg.eor("`Invalid URL provided :(`", time=5)
+    await msg.eor(f"`{filename}` `downloaded in {time_formatter(d*1000)}.`")
 
 
 @ultroid_cmd(
@@ -154,6 +155,12 @@ async def download(event):
         return await xx.eor(get_string("udl_3"), time=5)
     if kk == ".env" or ".session" in kk:
         return await eod(xx, get_string("udl_7"), time=5)
+    if not os.path.exists(kk):
+        try:
+            await event.client.send_file(event.chat_id, file=kk, reply_to=event.reply_to_msg_id)
+        except Exception as er:
+            LOGS.exception(er)
+            return await xx.eor("File doesn't exists or path is incorrect!", time=5)
     if os.path.isdir(kk):
         if not os.listdir(kk):
             return await xx.eor(get_string("udl_6"), time=5)
