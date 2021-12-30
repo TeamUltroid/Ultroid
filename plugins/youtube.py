@@ -36,7 +36,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.m4a",
+            "outtmpl": "%(id)s",
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
@@ -73,7 +73,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s.m4a",
+            "outtmpl": "%(id)s",
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
