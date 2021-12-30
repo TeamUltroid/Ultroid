@@ -23,6 +23,7 @@ from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
 from . import get_string, requests, ultroid_cmd
 
+_codecs = 
 
 @ultroid_cmd(
     pattern="yt(a|v|sa|sv) ?(.*)",
@@ -36,7 +37,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s",
+            "outtmpl": "%(id)s.m4a",
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
@@ -73,7 +74,7 @@ async def download_from_youtube_(event):
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": "%(id)s",
+            "outtmpl": "%(id)s.m4a",
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
