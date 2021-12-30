@@ -148,7 +148,7 @@ async def _(event):
     try:
         ext = lets_split[3]
     except IndexError:
-        ext = ".mp3"
+        ext = "mp3"
     if lets_split[0] == "audio":
         opts = {
             "addmetadata": True,
