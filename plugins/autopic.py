@@ -38,7 +38,7 @@ async def autopic(e):
         "output_directory": "./resources/downloads/",
     }
     try:
-        pth = gi.download(args)
+        pth = await gi.download(args)
         ok = pth[0][search]
     except Exception as er:
         LOGS.exception(er)
@@ -66,16 +66,20 @@ if search := udB.get_key("AUTOPIC"):
         "format": "jpg",
         "output_directory": "./resources/downloads/",
     }
-    try:
-        pth = gi.download(args)
-        ok = pth[0][search]
-    except Exception as er:
-        LOGS.exception(er)
+    images = []
     sleep = udB.get_key("SLEEP_TIME") or 1221
 
     async def autopic_func():
         if udB.get_key("AUTOPIC") != search:
             return
+        if not images:
+            try:
+                pth = await gi.download(args)
+                ok = pth[0][search]
+                images.extend(ok)
+            except Exception as er:
+                LOGS.exception(er)
+                return
         img = random.choice(ok)
         file = await e.client.upload_file(img)
         await e.client(UploadProfilePhotoRequest(file))
