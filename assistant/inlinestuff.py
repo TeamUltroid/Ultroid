@@ -698,7 +698,7 @@ async def karbo_micro(ult):
         )
     try:
         return await ult.answer(
-            MICRO[match], swicth_pm="Microsoft Search", switch_pm_param="start"
+            MICRO[match], switch_pm="Microsoft Search", switch_pm_param="start"
         )
     except KeyError:
         pass
@@ -709,7 +709,7 @@ async def karbo_micro(ult):
     BSC = bs(sear, "html.parser", from_encoding="utf-8")
     gear = BSC.find_all("div", "m-channel-placement-item")
     res = []
-    for oil in gear[:10]:
+    for oil in gear[:7]:
         img = oil.find("img", "lazyload")
         url = "https://www.microsoft.com" + oil.find("a")["href"]
         title = img["title"]
