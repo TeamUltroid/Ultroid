@@ -16,10 +16,10 @@ import asyncio
 import os
 from random import shuffle
 
-from pyUltroid.functions.misc import unsplashsearch
+from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
-from . import download_file, get_string, udB, ultroid_cmd
+from . import download_file, get_string, udB, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -31,19 +31,58 @@ async def autopic(e):
     if not search:
         return await e.eor(get_string("autopic_1"), time=5)
     e = await e.eor(get_string("com_1"))
-    clls = await unsplashsearch(search, limit=50)
-    if not clls:
+    gi = googleimagesdownload()
+    args = {
+        "keywords": search,
+        "limit": 50,
+        "format": "jpg",
+         "output_directory": "./resources/downloads/",
+    }
+    try:
+        pth = gi.download(args)
+        ok = pth[0][search]
+    except Exception as er:
+        LOGS.exception(er)
+        return await e.eor(str(er))
+    if not ok:
         return await e.eor(get_string("autopic_2").format(search), time=5)
     await e.eor(get_string("autopic_3").format(search))
-    udB.set_key("AUTOPIC", "True")
+    udB.set_key("AUTOPIC", search)
     SLEEP_TIME = udB.get_key("SLEEP_TIME") or 1221
     while True:
-        for lie in clls:
-            if udB.get_key("AUTOPIC") is not True:
+        for lie in ok:
+            if udB.get_key("AUTOPIC") != search:
                 return
-            kar = await download_file(lie, "autopic.png")
-            file = await e.client.upload_file(kar)
+            file = await e.client.upload_file(lie)
             await e.client(UploadProfilePhotoRequest(file))
-            os.remove(kar)
             await asyncio.sleep(SLEEP_TIME)
         shuffle(clls)
+
+
+if search := udB.get_key("AUTOPIC"):
+    gi = googleimagesdownload()
+    args = {
+        "keywords": search,
+        "limit": 50,
+        "format": "jpg",
+         "output_directory": "./resources/downloads/",
+    }
+    try:
+        pth = gi.download(args)
+        ok = pth[0][search]
+    except Exception as er:
+        LOGS.exception(er)
+    sleep = udB.get_key("SLEEP_TIME") or 1221
+
+    async def autopic_func():
+        if udB.get_key("AUTOPIC") != search:
+            return
+        img = random.choice(ok)
+        file = await e.client.upload_file(img)
+        await e.client(UploadProfilePhotoRequest(file))
+        shuffle(ok)
+    
+    from apscheduler.schedulers.asyncio import AsyncIOScheduler
+    schedule = AsyncIOScheduler()
+    schedule.add_job(autopic_func, "interval", seconds=sleep)
+        
