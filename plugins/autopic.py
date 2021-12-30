@@ -12,9 +12,11 @@
 
 • `{i}autopic` : stop autopic if active.
 """
-import asyncio, os
-from random import shuffle
+import asyncio
+import os
 from glob import glob
+from random import shuffle
+
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
