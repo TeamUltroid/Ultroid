@@ -709,7 +709,7 @@ async def karbo_micro(ult):
     BSC = bs(sear, "html.parser", from_encoding="utf-8")
     gear = BSC.find_all("div", "m-channel-placement-item")
     res = []
-    for oil in gear[:7]:
+    for oil in gear[:5]:
         img = oil.find("img", "lazyload")
         url = "https://www.microsoft.com" + oil.find("a")["href"]
         title = img["title"]
@@ -746,5 +746,5 @@ async def karbo_micro(ult):
         swi = "No Results Found :("
     else:
         swi = f"Showing {len(res)} Results!"
-    MICRO.update({match: res})
     await ult.answer(res, switch_pm=swi, switch_pm_param="start")
+    MICRO.update({match: res})
