@@ -715,20 +715,29 @@ async def karbo_micro(ult):
         title = img["title"]
         cash = oil.find("span", itemprop="price")["content"]
         med = wb(img["data-src"], 0, "image/jpeg", [])
+        EXTRA = await async_searcher(url, re_content=True)
+        by_ = EXTRA.find("div", "buybox-metadata").text.strip()
+        des = EXTRA.find("p", itemprop="description").text.strip.split("\n")[0] + "..."
+        text = f"**Title :** {title}\n**-> By :** {by_}"
+        text += f"\n\n**Description:**\n__{des}__"
+        text += f"\n\nBy **@TeamUltroid**"
         res.append(
             await ult.builder.article(
                 title=title,
                 description=cash,
                 url=url,
-                text=title,
+                text=text,
                 include_media=True,
                 type="photo",
                 content=med,
                 thumb=med,
+                buttons=[Button.switch_inline("Search Again 🔍", query="microsoft", same_peer=True),
+                        Button.url("Check", url)]
             )
         )
     if not res:
         swi = "No Results Found :("
     else:
         swi = f"Showing {len(res)} Results!"
+    MICRO.update({match:res})
     await ult.answer(res, switch_pm=swi, switch_pm_param="start")
