@@ -14,7 +14,6 @@ import os
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.misc import owner_and_sudos
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetFullChannelRequest
