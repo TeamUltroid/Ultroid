@@ -731,13 +731,17 @@ async def karbo_micro(ult):
                 type="photo",
                 content=med,
                 thumb=med,
-                buttons=[Button.switch_inline("Search Again 🔍", query="microsoft", same_peer=True),
-                        Button.url("Check", url)]
+                buttons=[
+                    Button.switch_inline(
+                        "Search Again 🔍", query="microsoft", same_peer=True
+                    ),
+                    Button.url("Check", url),
+                ],
             )
         )
     if not res:
         swi = "No Results Found :("
     else:
         swi = f"Showing {len(res)} Results!"
-    MICRO.update({match:res})
+    MICRO.update({match: res})
     await ult.answer(res, switch_pm=swi, switch_pm_param="start")
