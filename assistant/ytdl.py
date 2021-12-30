@@ -184,7 +184,7 @@ async def _(event):
         )
         description = description or "None"
         file, _ = await event.client.fast_uploader(
-            vid_id + f".{ext}"*2,
+            vid_id + f".{ext}" * 2,
             filename=title + "." + ext,
             show_progress=True,
             event=event,
