@@ -28,23 +28,24 @@ from . import get_string, requests, ultroid_cmd
     pattern="yt(a|v|sa|sv) ?(.*)",
 )
 async def download_from_youtube_(event):
+    ytd = {
+        "prefer_ffmpeg": True,
+        "addmetadata": True,
+        "geo-bypass": True,
+        "nocheckcertificate": True,
+    }
     opt = event.pattern_match.group(1)
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
-        ytd = {
-            "prefer_ffmpeg": True,
-            "addmetadata": True,
-            "geo-bypass": True,
-            "nocheckcertificate": True,
-            "outtmpl": "%(id)s.m4a",
-            "postprocessors": [
-                {
+        ytd["outtmpl"] = "%(id)s.m4a"
+        ytd["postprocessors"] = [
+            {
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "m4a",
                     "preferredquality": "128",
-                }
-            ],
-        }
+            },
+             {"key": "FFmpegMetadata"}
+        ]
         url = event.pattern_match.group(2)
         if not url:
             return await xx.eor(get_string("youtube_1"))
@@ -53,13 +54,9 @@ async def download_from_youtube_(event):
         except BaseException:
             return await xx.eor(get_string("youtube_2"))
     elif opt == "v":
-        ytd = {
-            "format": "best",
-            "addmetadata": True,
-            "geo-bypass": True,
-            "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp4",
-        }
+        ytd["format"] = "best"
+        ytd["outtmpl"] = "%(id)s.mp4"
+        ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
         url = event.pattern_match.group(2)
         if not url:
             return await xx.eor(get_string("youtube_3"))
@@ -68,20 +65,15 @@ async def download_from_youtube_(event):
         except BaseException:
             return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
-        ytd = {
-            "prefer_ffmpeg": True,
-            "addmetadata": True,
-            "geo-bypass": True,
-            "nocheckcertificate": True,
-            "outtmpl": "%(id)s.m4a",
-            "postprocessors": [
-                {
+        ytd["outtmpl"] = "%(id)s.m4a"
+        ytd["postprocessors"] = [
+            {
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "m4a",
                     "preferredquality": "128",
-                }
-            ],
-        }
+            },
+             {"key": "FFmpegMetadata"}
+        ]
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
@@ -89,13 +81,9 @@ async def download_from_youtube_(event):
         url = get_yt_link(query)
         await xx.eor(get_string("youtube_6"))
     elif opt == "sv":
-        ytd = {
-            "format": "best",
-            "addmetadata": True,
-            "geo-bypass": True,
-            "nocheckcertificate": True,
-            "outtmpl": "%(id)s.mp4",
-        }
+        ytd["format"] = "best"
+        ytd["outtmpl"] = "%(id)s.mp4"
+        ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
