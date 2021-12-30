@@ -718,7 +718,9 @@ async def karbo_micro(ult):
         EXTRA = await async_searcher(url, re_content=True)
         EXTRA = bs(EXTRA, "html.parser", from_encoding="utf-8")
         by_ = EXTRA.find("div", "buybox-metadata").text.strip()
-        des = EXTRA.find("p", itemprop="description").text.strip().split("\n")[0] + "..."
+        des = (
+            EXTRA.find("p", itemprop="description").text.strip().split("\n")[0] + "..."
+        )
         text = f"**Title :** {title}\n**-> By :** {by_}"
         text += f"\n\n**Description:**\n__{des}__"
         text += f"\n\nBy **@TeamUltroid**"
