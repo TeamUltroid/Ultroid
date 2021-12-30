@@ -20,7 +20,7 @@ import requests
 from ProfanityDetector import detector
 from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 
-from . import HNDLR, LOGS, eor, events, udB, ultroid_bot, ultroid_cmd
+from . import HNDLR, LOGS, eor, events, udB, ultroid_bot, ultroid_cmd, async_searcher
 
 
 @ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
@@ -62,18 +62,20 @@ async def nsfw_check(e):
             if y:
                 nsfw += 1
         if pic and not nsfw:
-            r = requests.post(
+            r = await async_searcher(
                 "https://api.deepai.org/api/nsfw-detector",
                 files={
                     "image": open(pic, "rb"),
                 },
+                post=True,
+                re_json=True,
                 headers={"api-key": udB.get_key("DEEP_API")},
             )
             try:
-                k = float((r.json()["output"]["nsfw_score"]))
+                k = float((r["output"]["nsfw_score"]))
             except KeyError as er:
                 LOGS.exception(er)
-                LOGS.info(r.json())
+                LOGS.info(r)
                 return
             score = int(k * 100)
             if score > 45:
