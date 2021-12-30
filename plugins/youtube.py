@@ -40,11 +40,11 @@ async def download_from_youtube_(event):
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "m4a",
-                    "preferredquality": "128",
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "m4a",
+                "preferredquality": "128",
             },
-             {"key": "FFmpegMetadata"}
+            {"key": "FFmpegMetadata"},
         ]
         url = event.pattern_match.group(2)
         if not url:
@@ -68,11 +68,11 @@ async def download_from_youtube_(event):
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "m4a",
-                    "preferredquality": "128",
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "m4a",
+                "preferredquality": "128",
             },
-             {"key": "FFmpegMetadata"}
+            {"key": "FFmpegMetadata"},
         ]
         try:
             query = event.text.split(" ", 1)[1]
