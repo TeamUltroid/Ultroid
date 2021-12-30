@@ -32,12 +32,12 @@ async def download_from_youtube_(event):
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd = {
-            "format": "bestaudio",
+            "prefer_ffmpeg": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
             "outtmpl": "%(id)s.m4a",
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}],
+            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a", "preferredquality": "128"}],
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -63,12 +63,12 @@ async def download_from_youtube_(event):
             return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
         ytd = {
-            "format": "bestaudio",
+            "prefer_ffmpeg": True,
             "addmetadata": True,
             "geo-bypass": True,
             "nocheckcertificate": True,
             "outtmpl": "%(id)s.m4a",
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a"}],
+            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a", "preferredquality": "128"}],
         }
         try:
             query = event.text.split(" ", 1)[1]
