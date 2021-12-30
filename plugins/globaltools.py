@@ -387,9 +387,9 @@ async def _(e):
         name = str(userid)
     chats = 0
     if userid == ultroid_bot.uid:
-        return await xx.edit("`I can't gban myself.`", time=3)
+        return await xx.eor("`I can't gban myself.`", time=3)
     elif userid in DEVLIST:
-        return await xx.edit("`I can't gban my Developers.`", time=3)
+        return await xx.eor("`I can't gban my Developers.`", time=3)
     elif is_gbanned(userid):
         return await eod(
             xx,
