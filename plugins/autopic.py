@@ -13,13 +13,12 @@
 • `{i}autopic` : stop autopic if active.
 """
 import asyncio
-import os
 from random import shuffle
 
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
-from . import download_file, get_string, udB, ultroid_cmd, LOGS
+from . import LOGS, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -36,7 +35,7 @@ async def autopic(e):
         "keywords": search,
         "limit": 50,
         "format": "jpg",
-         "output_directory": "./resources/downloads/",
+        "output_directory": "./resources/downloads/",
     }
     try:
         pth = gi.download(args)
@@ -65,7 +64,7 @@ if search := udB.get_key("AUTOPIC"):
         "keywords": search,
         "limit": 50,
         "format": "jpg",
-         "output_directory": "./resources/downloads/",
+        "output_directory": "./resources/downloads/",
     }
     try:
         pth = gi.download(args)
@@ -81,8 +80,8 @@ if search := udB.get_key("AUTOPIC"):
         file = await e.client.upload_file(img)
         await e.client(UploadProfilePhotoRequest(file))
         shuffle(ok)
-    
+
     from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
     schedule = AsyncIOScheduler()
     schedule.add_job(autopic_func, "interval", seconds=sleep)
-        
