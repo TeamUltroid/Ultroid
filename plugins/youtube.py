@@ -37,7 +37,13 @@ async def download_from_youtube_(event):
             "geo-bypass": True,
             "nocheckcertificate": True,
             "outtmpl": "%(id)s.m4a",
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a", "preferredquality": "128"}],
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "m4a",
+                    "preferredquality": "128",
+                }
+            ],
         }
         url = event.pattern_match.group(2)
         if not url:
@@ -68,7 +74,13 @@ async def download_from_youtube_(event):
             "geo-bypass": True,
             "nocheckcertificate": True,
             "outtmpl": "%(id)s.m4a",
-            "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "m4a", "preferredquality": "128"}],
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "m4a",
+                    "preferredquality": "128",
+                }
+            ],
         }
         try:
             query = event.text.split(" ", 1)[1]
