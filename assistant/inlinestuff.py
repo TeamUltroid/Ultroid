@@ -684,20 +684,28 @@ async def savn_s(event):
     await event.answer(res, switch_pm=swi, switch_pm_param="start")
     _savn_cache.update({query: res})
 
+
 MICRO = {}
+
 
 @in_pattern("microsoft", owner=True)
 async def karbo_micro(ult):
     try:
         match = ult.text.split(maxsplit=1)[1].lower()
     except IndexError:
-        return await ult.answer([], switch_pm="Enter Query to search 🔍", switch_pm_param="start")
+        return await ult.answer(
+            [], switch_pm="Enter Query to search 🔍", switch_pm_param="start"
+        )
     try:
-        return await ult.answer(MICRO[match], swicth_pm="Microsoft Search", switch_pm_param="start")
+        return await ult.answer(
+            MICRO[match], swicth_pm="Microsoft Search", switch_pm_param="start"
+        )
     except KeyError:
         pass
     new_ = match.replace(" ", "%20")
-    sear = await async_searcher(f"https://www.microsoft.com/en-gb/search/shop/Apps?q={new_}", re_content=True)
+    sear = await async_searcher(
+        f"https://www.microsoft.com/en-gb/search/shop/Apps?q={new_}", re_content=True
+    )
     BSC = bs(sear, "html.parser", from_encoding="utf-8")
     gear = BSC.find_all("div", "m-channel-placement-item")
     res = []
@@ -707,15 +715,18 @@ async def karbo_micro(ult):
         title = img["title"]
         cash = oil.find("span", itemprop="price")["content"]
         med = wb(img["data-src"], 0, "image/jepg", [])
-        res.append(await ult.builder.article(title=title,
-                                            description=cash,
-                                            url=url,
-                                            text=title,
-                                            include_media=True,
-                                            type="photo",
-                                            content=med,
-                                            thumb=med)
-                  )
+        res.append(
+            await ult.builder.article(
+                title=title,
+                description=cash,
+                url=url,
+                text=title,
+                include_media=True,
+                type="photo",
+                content=med,
+                thumb=med,
+            )
+        )
     if not res:
         swi = "No Results Found :("
     else:
