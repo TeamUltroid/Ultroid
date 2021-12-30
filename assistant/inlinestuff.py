@@ -714,7 +714,7 @@ async def karbo_micro(ult):
         url = "https://www.microsoft.com" + oil.find("a")["href"]
         title = img["title"]
         cash = oil.find("span", itemprop="price")["content"]
-        med = wb(img["data-src"], 0, "image/jepg", [])
+        med = wb(img["data-src"], 0, "image/jpeg", [])
         res.append(
             await ult.builder.article(
                 title=title,
