@@ -13,8 +13,8 @@
 • `{i}autopic` : stop autopic if active.
 """
 import asyncio
-import random
 import os
+import random
 from glob import glob
 from random import shuffle
 
