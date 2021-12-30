@@ -716,6 +716,7 @@ async def karbo_micro(ult):
         cash = oil.find("span", itemprop="price")["content"]
         med = wb(img["data-src"], 0, "image/jpeg", [])
         EXTRA = await async_searcher(url, re_content=True)
+        EXTRA = bs(EXTRA, "html.parser", from_encoding="utf-8")
         by_ = EXTRA.find("div", "buybox-metadata").text.strip()
         des = EXTRA.find("p", itemprop="description").text.strip.split("\n")[0] + "..."
         text = f"**Title :** {title}\n**-> By :** {by_}"
