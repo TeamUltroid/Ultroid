@@ -23,7 +23,6 @@ from pyUltroid.functions.ytdl import download_yt, get_yt_link
 
 from . import get_string, requests, ultroid_cmd
 
-_codecs = 
 
 @ultroid_cmd(
     pattern="yt(a|v|sa|sv) ?(.*)",
