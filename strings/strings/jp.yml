@@ -85,8 +85,8 @@ antiflood_4: "`このチャットでAntiflood設定を{}に正常に更新しま
 antiflood_5: "`このチャットのフラッド制限は{}です。` "
 
 # ascii
-ascii_1: "`Reply to image.`"
-ascii_2: "`Converting to html...`"
+ascii_1: "`画像に返信.`"
+ascii_2: "`html に変換...`"
 
 # audiotools
 audiotools_1: "オーディオまたはビデオに返信.."
@@ -109,8 +109,8 @@ asstcmd_5: "「コマンドが見つかりません」"
 asstcmd_6: "**すべてのアシスタントCMDS **\n\n"
 
 # autocorrect
-act_1: "AUTOCORRECT Feature On"
-act_2: "AUTOCORRECT Feature Off"
+act_1: "AUTOCORRECT 特徴 オン"
+act_2: "AUTOCORRECT 特徴 オフ"
 
 # autopic
 autopic_1: "`検索するものを提供... `"
@@ -131,30 +131,30 @@ inline_8: "Click the below button to update!"
 inline_9: "You Are Already On Latest Version"
 
 # tagnotif
-tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
-tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
+tagnot_1: "{} でタグ付け {}\n\n```{}```\n\n[📨 Message 📨]({})"
+tagnot_2: "{} でタグ付け {}\n\n [📨 Message 📨]({})"
 
 # whisper
-wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
-wspr_2: "Message deleted"
-wspr_3: "Add some id or username too"
-wspr_4: "User {} Not Found\nSearch Again"
-wspr_5: "You Can't do this"
+wspr_1: "@{} 秘密のメッセージ.\n読んだ後、あなたのmsgを削除します.\nまたは、次のメッセージは更新されません."
+wspr_2: "メッセージが削除されました"
+wspr_3: "IDまたはユーザー名も追加"
+wspr_4: "利用者 {} 見つかりません\nもう一度検索n"
+wspr_5: "こんなことできませんよ"
 
 # afk
-afk_1: "**No Longer Afk**\n\nWas away for ~ `{}`"
-afk_2: "#AFK\nSet AFK mode to False.\nWas AFK since ~ `{}`"
-afk_3: "**I'm currently AFK.**\nLast seen `{}` ago.\n\n**Reason:** `{}`"
-afk_4: "**I'm currently AFK.**\n\nLast seen `{}` ago."
-afk_5: "**I'm Going AFK.**\n\n**Reason:** `{}`"
-afk_6: "**I'm Going AFK.**"
+afk_1: "**もう違います Afk**\n\nのために離れていた ~ `{}`"
+afk_2: "#AFK\nAFK モードを False に設定する.\nそれ以来AFKでした ~ `{}`"
+afk_3: "**私は 現在は AFK.**\nLast seen `{}` ago.\n\n**Reason:** `{}`"
+afk_4: "**私は 現在は AFK.**\n\nLast seen `{}` ago."
+afk_5: "**私はm ゆき AFK.**\n\n**Reason:** `{}`"
+afk_6: "**私は ゆき AFK.**"
 
 # bot
-bot_1: "Hey,  I am alive."
-bot_2: "Stats"
+bot_1: "ねえ,  私は生きている."
+bot_2: "統計"
 bot_3: "Repo"
 bot_4: "Support"
-bot_5: "• `Restarting...`"
+bot_5: "• `再起動...`"
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
