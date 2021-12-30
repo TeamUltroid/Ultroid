@@ -145,19 +145,22 @@ async def _(event):
     vid_id = lets_split[2]
     link = _yt_base_url + vid_id
     format = lets_split[1]
-    ext = lets_split[3]
+    try:
+        ext = lets_split[3]
+    except IndexError:
+        ext = ".mp3"
     if lets_split[0] == "audio":
         opts = {
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s." + "mp3",
+            "outtmpl": "%(id)s." + ext,
             "logtostderr": False,
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
+                    "preferredcodec": ext,
                     "preferredquality": format,
                 }
             ],
@@ -181,8 +184,8 @@ async def _(event):
         )
         description = description or "None"
         file, _ = await event.client.fast_uploader(
-            vid_id + ".mp3",
-            filename=title + ".mp3",
+            vid_id + "." + ext,
+            filename=title + "." + ext,
             show_progress=True,
             event=event,
             to_delete=True,
