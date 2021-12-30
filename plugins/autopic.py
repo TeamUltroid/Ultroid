@@ -12,9 +12,9 @@
 
 • `{i}autopic` : stop autopic if active.
 """
-import asyncio
+import asyncio, os
 from random import shuffle
-
+from glob import glob
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
@@ -67,6 +67,8 @@ if search := udB.get_key("AUTOPIC"):
         "output_directory": "./resources/downloads/",
     }
     images = []
+    if os.path.exists(f"./resources/downloads/{search}"):
+        images = glob(f"resources/downloads/{search}/*")
     sleep = udB.get_key("SLEEP_TIME") or 1221
 
     async def autopic_func():
