@@ -80,7 +80,7 @@ class Player:
         else:
             _client = GroupCallFactory(
                 vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON,
-                enable_logs_to_console=True, path_to_log_file="VCBot.log"
+                path_to_log_file="VCBot.log"
             )
             self.group_call = _client.get_group_call()
             CLIENTS.update({chat: self.group_call})
