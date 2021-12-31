@@ -22,10 +22,8 @@ from . import *
 async def lstqueue(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
@@ -40,10 +38,8 @@ async def lstqueue(event):
 async def clean_queue(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
