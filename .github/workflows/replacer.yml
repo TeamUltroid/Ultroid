@@ -10,7 +10,7 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: '( (.*)|$)'
+          find: '?(.*)'
           replace: ' ?(.*)'
           regex: false
           exclude: .github/**
