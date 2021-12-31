@@ -21,7 +21,7 @@ from random import shuffle
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
-from . import LOGS, get_string, udB, ultroid_cmd
+from . import LOGS, get_string, udB, ultroid_cmd, ultroid_bot
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
@@ -88,8 +88,8 @@ if search := udB.get_key("AUTOPIC"):
         else:
             ok = images
         img = random.choice(ok)
-        file = await e.client.upload_file(img)
-        await e.client(UploadProfilePhotoRequest(file))
+        file = await ultroid_bot.upload_file(img)
+        await ultroid_bot(UploadProfilePhotoRequest(file))
         shuffle(ok)
 
     from apscheduler.schedulers.asyncio import AsyncIOScheduler
