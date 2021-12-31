@@ -217,10 +217,11 @@ async def stats(
 
 @ultroid_cmd(pattern="paste( (.*)|$)", manager=True, allow_all=True)
 async def _(event):
+    try:
+        input_str = event.text.split(maxsplit=1)[1]
+    except IndexError:
+        input_str = None
     xx = await event.eor("` 《 Pasting... 》 `")
-    input_str = "".join(event.text.split(maxsplit=1)[1:])
-    if not (input_str or event.is_reply):
-        return await xx.edit("`Reply to a Message/Document or Give me Some Text !`")
     downloaded_file_name = None
     if input_str:
         message = input_str
@@ -232,17 +233,15 @@ async def _(event):
                 "./resources/downloads",
             )
             m_list = None
-            with open(downloaded_file_name, "rb") as fd:
-                m_list = fd.readlines()
-            message = ""
-            try:
-                for m in m_list:
-                    message += m.decode("UTF-8")
-            except BaseException:
-                message = "`Include long text / Reply to text file`"
+            with open(downloaded_file_name, "r") as fd:
+                message = fd.read()
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
+    else:
+        message = None
+    if not message:
+        return await xx.eor("`Reply to a Message/Document or Give me Some Text !`", time=5)
     done, key = await get_paste(message)
     if not done:
         return await xx.eor(key)
