@@ -11,7 +11,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: '( (.*)|$)'
-          replace: '?(.*)'
+          replace: ' ?(.*)'
           regex: false
           exclude: .github/**
       - uses: stefanzweifel/git-auto-commit-action@v4
