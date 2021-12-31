@@ -157,7 +157,7 @@ async def _(event):
                         f"Exception occurred while uploading to gDrive {e}"
                     )
         return await mone.edit(
-            "`Uploaded `[{filename}](https://drive.google.com/folderview?id={folder_id})` with {c} files.`"
+            f"`Uploaded `[{filename}](https://drive.google.com/folderview?id={folder_id})` with {c} files.`"
         )
     try:
         g_drive_link = await GDrive._upload_file(
