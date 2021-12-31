@@ -19,6 +19,9 @@
 
 • `{i}volume <number>`
    Put number between 1 to 100
+
+• `{i}skip`
+   Skip the current song and play the next in queue, if any.
 """
 
 from pytgcalls.exceptions import NotConnectedError
@@ -101,3 +104,17 @@ async def volume_setter(event):
         elif vol < 1:
             vol = 1
         return await event.eor(get_string("vcbot_3").format(vol))
+
+
+@vc_asst("skip")
+async def skipper(event):
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        try:
+            chat = await event.client.parse_id(chat)
+        except Exception as e:
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat, event)
+    await ultSongs.play_from_queue()
