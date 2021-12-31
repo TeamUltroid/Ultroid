@@ -85,6 +85,8 @@ if search := udB.get_key("AUTOPIC"):
             except Exception as er:
                 LOGS.exception(er)
                 return
+        else:
+            ok = images
         img = random.choice(ok)
         file = await e.client.upload_file(img)
         await e.client(UploadProfilePhotoRequest(file))
