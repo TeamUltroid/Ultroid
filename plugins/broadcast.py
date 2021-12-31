@@ -31,7 +31,7 @@ from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="addch( (.*)|$)",
+    pattern="addch?(.*)",
     allow_sudo=False,
 )
 async def broadcast_adder(event):
@@ -90,7 +90,7 @@ async def broadcast_adder(event):
 
 
 @ultroid_cmd(
-    pattern="remch( (.*)|$)",
+    pattern="remch?(.*)",
     allow_sudo=False,
 )
 async def broadcast_remover(event):
@@ -194,7 +194,7 @@ async def forw(event):
 
 
 @ultroid_cmd(
-    pattern="broadcast( (.*)|$)",
+    pattern="broadcast?(.*)",
     allow_sudo=False,
 )
 async def sending(event):

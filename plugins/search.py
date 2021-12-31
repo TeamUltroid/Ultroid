@@ -83,7 +83,7 @@ async def gitsearch(event):
 
 
 @ultroid_cmd(
-    pattern="google( (.*)|$)",
+    pattern="google?(.*)",
     manager=True,
 )
 async def google(event):
@@ -104,7 +104,7 @@ async def google(event):
     await x.eor(omk, link_preview=False)
 
 
-@ultroid_cmd(pattern="img( (.*)|$)")
+@ultroid_cmd(pattern="img?(.*)")
 async def goimg(event):
     query = event.pattern_match.group(1)
     if not query:
@@ -182,7 +182,7 @@ async def reverse(event):
 
 
 @ultroid_cmd(
-    pattern="saavn( (.*)|$)",
+    pattern="saavn?(.*)",
 )
 async def siesace(e):
     song = e.pattern_match.group(1)

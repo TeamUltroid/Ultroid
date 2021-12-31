@@ -56,7 +56,7 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="convert( (.*)|$)",
+    pattern="convert?(.*)",
 )
 async def uconverter(event):
     xx = await event.eor(get_string("com_1"))

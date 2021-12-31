@@ -31,7 +31,7 @@ from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
-@ultroid_cmd(pattern="addsnip( (.*)|$)")
+@ultroid_cmd(pattern="addsnip?(.*)")
 async def an(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
@@ -72,7 +72,7 @@ async def an(e):
     ultroid_bot.add_handler(add_snips, events.NewMessage())
 
 
-@ultroid_cmd(pattern="remsnip( (.*)|$)")
+@ultroid_cmd(pattern="remsnip?(.*)")
 async def rs(e):
     wrd = (e.pattern_match.group(1)).lower()
     if not wrd:

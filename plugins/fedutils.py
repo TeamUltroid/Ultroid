@@ -33,7 +33,7 @@ bot = "@MissRose_bot"
 
 
 @ultroid_cmd(
-    pattern="superfban( (.*)|$)",
+    pattern="superfban?(.*)",
 )
 async def _(event):
     msg = await event.eor(get_string("sf_1"))
@@ -148,7 +148,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="superunfban( (.*)|$)",
+    pattern="superunfban?(.*)",
 )
 async def _(event):
     msg = await event.eor(get_string("sf_15"))
@@ -282,7 +282,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="fstat( (.*)|$)",
+    pattern="fstat?(.*)",
 )
 async def _(event):
     ok = await event.eor("`Checking...`")
@@ -330,7 +330,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="fedinfo( (.*)|$)",
+    pattern="fedinfo?(.*)",
 )
 async def _(event):
     ok = await event.edit(get_string("sf_20"))

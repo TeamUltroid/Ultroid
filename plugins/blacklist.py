@@ -30,7 +30,7 @@ from pyUltroid.dB.blacklist_db import (
 from . import events, get_string, udB, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="blacklist( (.*)|$)", admins_only=True)
+@ultroid_cmd(pattern="blacklist?(.*)", admins_only=True)
 async def af(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
@@ -44,7 +44,7 @@ async def af(e):
     await e.eor(get_string("blk_2").format(wrd))
 
 
-@ultroid_cmd(pattern="remblacklist( (.*)|$)", admins_only=True)
+@ultroid_cmd(pattern="remblacklist?(.*)", admins_only=True)
 async def rf(e):
     wrd = e.pattern_match.group(1)
     chat = e.chat_id
