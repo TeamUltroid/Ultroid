@@ -49,7 +49,7 @@ def gib_link(link):
     return _base + f"https%3A%2F%2Fpin.it%2F{link}"
 
 
-@ultroid_cmd(pattern="eod?(.*)")
+@ultroid_cmd(pattern="eod ?(.*)")
 async def diela(e):
     match = e.pattern_match.group(1)
     m = await e.eor(get_string("com_1"))
@@ -72,7 +72,7 @@ async def diela(e):
 
 
 @ultroid_cmd(
-    pattern="pntrst?(.*)",
+    pattern="pntrst ?(.*)",
 )
 async def pinterest(e):
     m = e.pattern_match.group(1)
@@ -94,7 +94,7 @@ async def pinterest(e):
         await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
 
 
-@ultroid_cmd(pattern="gadget?(.*)")
+@ultroid_cmd(pattern="gadget ?(.*)")
 async def mobs(e):
     mat = e.pattern_match.group(1)
     if not mat:
@@ -138,7 +138,7 @@ async def _gen_data(event):
 
 
 @ultroid_cmd(
-    pattern="ascii?(.*)",
+    pattern="ascii ?(.*)",
 )
 async def _(e):
     if not e.reply_to_msg_id:

@@ -19,7 +19,7 @@ from pyUltroid.functions.admins import ban_time
 from . import get_string, ultroid_cmd
 
 
-@ultroid_cmd(pattern="schedule?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="schedule ?(.*)", fullsudo=True)
 async def _(e):
     x = e.pattern_match.group(1)
     xx = await e.get_reply_message()

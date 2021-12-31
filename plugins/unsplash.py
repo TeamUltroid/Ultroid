@@ -16,7 +16,7 @@ from pyUltroid.functions.misc import unsplashsearch
 from . import asyncio, download_file, get_string, os, ultroid_cmd
 
 
-@ultroid_cmd(pattern="unsplash?(.*)")
+@ultroid_cmd(pattern="unsplash ?(.*)")
 async def searchunsl(ult):
     match = ult.pattern_match.group(1)
     if not match:

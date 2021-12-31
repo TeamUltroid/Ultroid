@@ -19,7 +19,7 @@ from . import asst, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="webupload?(.*)",
+    pattern="webupload ?(.*)",
 )
 async def _(event):
     xx = await event.eor(get_string("com_1"))

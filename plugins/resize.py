@@ -35,7 +35,7 @@ async def size(e):
     os.remove(img)
 
 
-@ultroid_cmd(pattern="resize?(.*)")
+@ultroid_cmd(pattern="resize ?(.*)")
 async def size(e):
     r = await e.get_reply_message()
     if not (r and r.media):

@@ -70,7 +70,7 @@ async def reverse_gif(event):
     os.remove("reversed.mp4")
 
 
-@ultroid_cmd(pattern="gif?(.*)")
+@ultroid_cmd(pattern="gif ?(.*)")
 async def gifs(ult):
     get = ult.pattern_match.group(1)
     xx = random.randint(0, 5)

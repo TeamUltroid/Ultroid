@@ -495,7 +495,7 @@ if udB.get_key("PMSETTING"):
             )
 
 
-@ultroid_cmd(pattern="block?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="block ?(.*)", fullsudo=True)
 async def blockpm(block):
     match = block.pattern_match.group(1)
     if block.reply_to_msg_id:
@@ -542,7 +542,7 @@ async def blockpm(block):
         pass
 
 
-@ultroid_cmd(pattern="unblock?(.*)")
+@ultroid_cmd(pattern="unblock ?(.*)")
 async def unblockpm(event):
     match = event.pattern_match.group(1) or (await event.get_reply_message()).sender_id
     if not match:

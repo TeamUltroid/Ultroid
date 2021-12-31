@@ -118,7 +118,7 @@ async def source(e):
         await e.eor(get_string("cha_3"))
 
 
-@ultroid_cmd(pattern="dsource?(.*)")
+@ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
     x = await event.eor(get_string("com_1"))
@@ -196,7 +196,7 @@ async def destination(e):
         await e.eor("Destination channel already added")
 
 
-@ultroid_cmd(pattern="ddest?(.*)")
+@ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
     x = await event.eor(get_string("com_1"))

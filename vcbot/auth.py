@@ -102,7 +102,7 @@ async def _(e):
     await xx.edit(pp, parse_mode="html")
 
 
-@vc_asst("rmvcaccess?(.*)", from_users=owner_and_sudos(), vc_auth=False)
+@vc_asst("rmvcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await e.eor("`Disapproving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
@@ -134,7 +134,7 @@ async def _(e):
         return await xx.edit(f"`{ex}`", time=5)
 
 
-@vc_asst("vcaccess?(.*)", from_users=owner_and_sudos(), vc_auth=False)
+@vc_asst("vcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
     xx = await e.eor("`Approving to access Voice Chat features...`")
     input = e.pattern_match.group(1)

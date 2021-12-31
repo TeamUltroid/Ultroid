@@ -101,7 +101,7 @@ async def _(e):
         )
 
 
-@in_pattern("fl2lnk?(.*)", owner=True)
+@in_pattern("fl2lnk ?(.*)", owner=True)
 async def _(e):
     match = e.pattern_match.group(1)
     chat_id, msg_id = match.split(":")

@@ -27,7 +27,7 @@ from telethon.tl.types import MessageMediaPhoto as photu
 from . import get_string, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="qrcode?(.*)")
+@ultroid_cmd(pattern="qrcode ?(.*)")
 async def cd(e):
     reply = await e.get_reply_message()
     msg = e.pattern_match.group(1)
@@ -56,7 +56,7 @@ async def cd(e):
     os.remove(img)
 
 
-@ultroid_cmd(pattern="addqr?(.*)")
+@ultroid_cmd(pattern="addqr ?(.*)")
 async def qrwater(e):
     msg = e.pattern_match.group(1)
     r = await e.get_reply_message()
