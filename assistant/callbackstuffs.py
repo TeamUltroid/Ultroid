@@ -477,7 +477,7 @@ async def _(e):
             id = id.split("?id=")[-1]
         udB.set_key("GDRIVE_FOLDER_ID", id)
         await repl.reply(
-            "Success Now You Can Authorise.",
+            "`Success.`",
             buttons=get_back_button("gdrive"),
         )
 
@@ -487,7 +487,7 @@ async def _(e):
     if not e.is_private:
         return
     await e.edit(
-        "Click Authorise and send the code.\n\nYou can use your own CLIENT ID and SECRET by [this](https://t.me/UltroidUpdates/36)",
+        "Click Authorise and send the code.\n\nYou can use your own CLIENT ID and SECRET by [this](https://t.me/UltroidUpdates/37)",
         buttons=[
             [
                 Button.inline("Folder ID", data="folderid"),
