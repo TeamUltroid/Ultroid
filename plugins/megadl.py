@@ -27,7 +27,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="megadl ?(.*)")
+@ultroid_cmd(pattern="megadl  ?(.*)")
 async def _(e):
     link = e.pattern_match.group(1)
     if os.path.isdir("mega"):

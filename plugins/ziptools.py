@@ -37,7 +37,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="zip ?(.*)")
+@ultroid_cmd(pattern="zip  ?(.*)")
 async def zipp(event):
     reply = await event.get_reply_message()
     t = time.time()
@@ -139,7 +139,7 @@ async def azipp(event):
     )
 
 
-@ultroid_cmd(pattern="dozip ?(.*)")
+@ultroid_cmd(pattern="dozip  ?(.*)")
 async def do_zip(event):
     if not os.path.isdir("zip"):
         return await event.eor(get_string("zip_2").format(HNDLR))

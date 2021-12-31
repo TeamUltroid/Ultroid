@@ -202,7 +202,7 @@ async def crbn(event):
 
 
 @ultroid_cmd(
-    pattern="ccarbon ?(.*)",
+    pattern="ccarbon  ?(.*)",
 )
 async def crbn(event):
     match = event.pattern_match.group(1)

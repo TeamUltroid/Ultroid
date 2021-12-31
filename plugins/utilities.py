@@ -215,7 +215,7 @@ async def stats(
     await ok.edit(response)
 
 
-@ultroid_cmd(pattern="paste ?(.*)", manager=True, allow_all=True)
+@ultroid_cmd(pattern="paste  ?(.*)", manager=True, allow_all=True)
 async def _(event):
     try:
         input_str = event.text.split(maxsplit=1)[1]
@@ -263,7 +263,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="info ?(.*)",
+    pattern="info  ?(.*)",
     manager=True,
 )
 async def _(event):
@@ -366,7 +366,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="invite ?(.*)",
+    pattern="invite  ?(.*)",
     groups_only=True,
 )
 async def _(ult):
@@ -450,7 +450,7 @@ async def abs_rmbg(event):
 
 
 @ultroid_cmd(
-    pattern="telegraph ?(.*)",
+    pattern="telegraph  ?(.*)",
 )
 async def telegraphcmd(event):
     match = event.pattern_match.group(1) or "Ultroid"
@@ -515,7 +515,7 @@ async def _(event):
         await event.eor(f"```{the_real_message}```")
 
 
-@ultroid_cmd(pattern="suggest ?(.*)", manager=True)
+@ultroid_cmd(pattern="suggest  ?(.*)", manager=True)
 async def sugg(event):
     sll = event.text.split(maxsplit=1)
     try:
@@ -547,7 +547,7 @@ async def sugg(event):
     await event.delete()
 
 
-@ultroid_cmd(pattern="ipinfo ?(.*)")
+@ultroid_cmd(pattern="ipinfo  ?(.*)")
 async def ipinfo(event):
     ip = event.text.split()
     ipaddr = ""

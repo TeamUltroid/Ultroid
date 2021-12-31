@@ -27,7 +27,7 @@ from pyUltroid.functions.tools import async_searcher
 from . import get_string, ultroid_cmd
 
 
-@ultroid_cmd(pattern="meaning ?(.*)", manager=True)
+@ultroid_cmd(pattern="meaning  ?(.*)", manager=True)
 async def mean(event):
     wrd = event.pattern_match.group(1)
     if not wrd:

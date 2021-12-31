@@ -42,7 +42,7 @@ async def watcher(event):
 
 
 @ultroid_cmd(
-    pattern="dmute ?(.*)",
+    pattern="dmute  ?(.*)",
 )
 async def startmute(event):
     xx = await event.eor("`Muting...`")
@@ -71,7 +71,7 @@ async def startmute(event):
 
 
 @ultroid_cmd(
-    pattern="undmute ?(.*)",
+    pattern="undmute  ?(.*)",
     manager=True,
 )
 async def endmute(event):
@@ -142,7 +142,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="unmute ?(.*)",
+    pattern="unmute  ?(.*)",
     groups_only=True,
     manager=True,
 )
@@ -176,7 +176,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="mute ?(.*)",
+    pattern="mute  ?(.*)",
     groups_only=True,
     manager=True,
 )
