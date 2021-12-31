@@ -146,7 +146,7 @@ async def _(event):
             )
         folder_id = GDrive.create_directory(filename)
         c = 0
-        for files in os.listdir(files):
+        for files in files:
             file = filename + "/" + files
             if not os.path.isdir(file):
                 try:
