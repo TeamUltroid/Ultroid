@@ -63,7 +63,7 @@ async def _akokk(e):
     await akina(e)
 
 
-@callback(re.compile("aki_?(.*)"), owner=True)
+@callback(re.compile("aki_(.*)"), owner=True)
 async def doai(e):
     adt = e.pattern_match.group(1).decode("utf-8")
     dt = adt.split("_")
@@ -83,7 +83,7 @@ async def doai(e):
     await e.edit("Q. " + qu, buttons=bts)
 
 
-@callback(re.compile("aka_ ?(.*)"), owner=True)
+@callback(re.compile("aka_(.*)"), owner=True)
 async def okah(e):
     mk = e.pattern_match.group(1).decode("utf-8").split("_")
     ch = int(mk[0])
