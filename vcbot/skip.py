@@ -19,10 +19,8 @@ from . import *
 async def skipper(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
             return await event.eor("**ERROR:**\n{}".format(str(e)))
     else:
