@@ -237,7 +237,7 @@ cvt_8: "`Not A Readable File.`"
 
 # eventsofday
 eod_1: "🎊 **Events of the Day**\n\n"
-eod_2: "• **Events for {}/2021**\n\n"
+eod_2: "• **Events for {}/2021-2022**\n\n"
 
 # core
 core_1: "Module Found"

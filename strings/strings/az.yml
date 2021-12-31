@@ -226,7 +226,7 @@ cvt_7: "Oxunan bir fayla cavab verin"
 cvt_8: "Oxunan bir fayl deyil."
 # eventsofday
 eod_1: "🎊 **Günün Hadisələri**\n\n"
-eod_2: "• **Günün hadisələri {}/2021**\n\n"
+eod_2: "• **Günün hadisələri {}/2021-2022**\n\n"
 
 # core
 core_1: "Module Found"

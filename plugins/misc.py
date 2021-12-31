@@ -58,11 +58,11 @@ async def diela(e):
     if match:
         date = match.split("/")[0]
         month = match.split("/")[1]
-        li += "/days/2021/" + month + "/" + date
+        li += "/days/2021-2022/" + month + "/" + date
         te = get_string("eod_2").format(match)
     else:
         da = datetime.today().strftime("%F").split("-")
-        li += "/days/2021/" + da[1] + "/" + da[2]
+        li += "/days/2021-2022/" + da[1] + "/" + da[2]
     ct = requests.get(li).content
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
