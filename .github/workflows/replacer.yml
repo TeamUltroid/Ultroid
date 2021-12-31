@@ -11,7 +11,7 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: '2021'
+          find: '2021-2022-2022'
           replace: '2021-2022'
           regex: false
           exclude: .github/**
