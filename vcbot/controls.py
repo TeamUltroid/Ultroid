@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -19,6 +19,9 @@
 
 • `{i}volume <number>`
    Put number between 1 to 100
+
+• `{i}skip`
+   Skip the current song and play the next in queue, if any.
 """
 
 from pytgcalls.exceptions import NotConnectedError
@@ -30,12 +33,10 @@ from . import *
 async def join_(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat, event)
@@ -47,12 +48,10 @@ async def join_(event):
 async def leaver(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -61,48 +60,39 @@ async def leaver(event):
         del CLIENTS[chat]
     if VIDEO_ON.get(chat):
         del VIDEO_ON[chat]
-    await eor(event, get_string('vcbot_1'))
+    await event.eor(get_string("vcbot_1"))
 
 
 @vc_asst("rejoin")
 async def rejoiner(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
-        if not chat.startswith("@"):
-            chat = int(chat)
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
     try:
         await ultSongs.group_call.reconnect()
     except NotConnectedError:
-        return await eor(event, get_string('vcbot_6'))
-    await eor(event, get_string('vcbot_5'))
+        return await event.eor(get_string("vcbot_6"))
+    await event.eor(get_string("vcbot_5"))
 
 
 @vc_asst("volume")
 async def volume_setter(event):
     if len(event.text.split()) <= 1:
-        return await eor(event, get_string('vcbot_4'))
+        return await event.eor(get_string("vcbot_4"))
     inp = event.text.split()
-    if inp[1].startswith("@"):
+    if inp[1].startswith(("@","-")):
         chat = inp[1]
         vol = int(inp[2])
         try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
+            chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
-    elif inp[1].startswith("-"):
-        chat = int(inp[1])
-        vol = int(inp[2])
-        try:
-            chat = int("-100" + str((await vcClient.get_entity(chat)).id))
-        except Exception as e:
-            return await eor(event, get_string("vcbot_2").format(str(e)))
+            return await event.eor(get_string("vcbot_2").format(str(e)))
     elif inp[1].isdigit() and len(inp) == 2:
         vol = int(inp[1])
         chat = event.chat_id
@@ -113,4 +103,18 @@ async def volume_setter(event):
             vol = 200
         elif vol < 1:
             vol = 1
-        return await eor(event, get_string('vcbot_3').format(vol))
+        return await event.eor(get_string("vcbot_3").format(vol))
+
+
+@vc_asst("skip")
+async def skipper(event):
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        try:
+            chat = await event.client.parse_id(chat)
+        except Exception as e:
+            return await event.eor("**ERROR:**\n{}".format(str(e)))
+    else:
+        chat = event.chat_id
+    ultSongs = Player(chat, event)
+    await ultSongs.play_from_queue()

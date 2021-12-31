@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -32,7 +32,7 @@ async def settt(event):
     lang = event.data_match.group(1).decode("UTF-8")
     languages = get_languages()
     language[0] = lang
-    udB.delete("language") if lang == "en" else udB.set("language", lang)
+    udB.del_key("language") if lang == "en" else udB.set_key("language", lang)
     await event.edit(
         f"Your language has been set to {languages[lang]['natively']} [{lang}].",
         buttons=get_back_button("lang"),

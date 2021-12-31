@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -13,8 +13,8 @@
 • `{i}usage heroku`
    Get heroku stats.
 
-• `{i}usage redis`
-   Get redis usage.
+• `{i}usage db`
+   Get database storage usage.
 """
 
 import math
@@ -44,14 +44,14 @@ except BaseException:
 
 @ultroid_cmd(pattern="usage")
 async def usage_finder(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     try:
         opt = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await x.edit(simple_usage())
 
-    if opt == "redis":
-        await x.edit(redis_usage())
+    if opt == "db":
+        await x.edit(db_usage())
     elif opt == "heroku":
         is_hk, hk = heroku_usage()
         await x.edit(hk)
@@ -146,16 +146,22 @@ def heroku_usage():
     )
 
 
-def redis_usage():
-    x = 30 * 1024 * 1024
-    z = sum(udB.memory_usage(n) for n in udB.keys())
-    a = humanbytes(z) + "/" + humanbytes(x)
-    b = str(round(z / x * 100, 3)) + "%"
-    return f"**REDIS**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
+def db_usage():
+    if udB.name == "Redis":
+        total = 30
+    elif udB.name == "SQL":
+        total = 20
+    elif udB.name == "Mongo":
+        total = 512
+    total = total * (2 ** 20)
+    used = udB.usage
+    a = humanbytes(used) + "/" + humanbytes(total)
+    b = str(round((used / total) * 100, 2)) + "%"
+    return f"**{udB.name}**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
 
 
 def get_full_usage():
     is_hk, hk = heroku_usage()
     her = "" if is_hk is False else hk
-    rd = redis_usage()
+    rd = db_usage()
     return her + "\n\n" + rd

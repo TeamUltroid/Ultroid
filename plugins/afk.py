@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -27,9 +27,9 @@ from . import (
     NOSPAM_CHAT,
     Redis,
     asst,
-    eor,
     get_string,
     mediainfo,
+    udB,
     ultroid_bot,
     ultroid_cmd,
 )
@@ -39,9 +39,7 @@ old_afk_msg = []
 
 @ultroid_cmd(pattern="afk ?(.*)", fullsudo=True)
 async def set_afk(event):
-    if event.client._bot:
-        await eor(event, "Master, I am a Bot, I cant go AFK..")
-    elif is_afk():
+    if event.client._bot or is_afk():
         return
     text, media, media_type = None, None, None
     if event.pattern_match.group(1):
@@ -56,12 +54,17 @@ async def set_afk(event):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
                 media = f"https://telegra.ph{iurl[0]}"
-            elif "sticker" or "audio" in media_type:
-                media = reply.file.id
             else:
-                return await eor(event, get_string("com_4"), time=5)
-    await eor(event, "`Done`", time=2)
+                media = reply.file.id
+    await event.eor("`Done`", time=2)
     add_afk(text, media_type, media)
+    ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
+    ultroid_bot.add_handler(
+        on_afk,
+        events.NewMessage(
+            incoming=True, func=lambda e: bool(e.mentioned or e.is_private)
+        ),
+    )
     msg1, msg2 = None, None
     if text and media:
         if "sticker" in media_type:
@@ -92,15 +95,12 @@ async def set_afk(event):
     await asst.send_message(LOG_CHANNEL, msg1.text)
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True))
 async def remove_afk(event):
-    if (
-        event.is_private
-        and Redis("PMSETTING") == "True"
-        and not is_approved(event.chat_id)
-    ):
+    if event.is_private and udB.get_key("PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
+        return
+    elif event.chat_id in NOSPAM_CHAT:
         return
     if is_afk():
         _, _, _, afk_time = is_afk()
@@ -116,15 +116,8 @@ async def remove_afk(event):
         await off.delete()
 
 
-@ultroid_bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
-)
 async def on_afk(event):
-    if (
-        event.is_private
-        and Redis("PMSETTING") == "True"
-        and not is_approved(event.chat_id)
-    ):
+    if event.is_private and Redis("PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
         return
@@ -163,3 +156,13 @@ async def on_afk(event):
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)
+
+
+if udB.get_key("AFK_DB"):
+    ultroid_bot.add_handler(remove_afk, events.NewMessage(outgoing=True))
+    ultroid_bot.add_handler(
+        on_afk,
+        events.NewMessage(
+            incoming=True, func=lambda e: bool(e.mentioned or e.is_private)
+        ),
+    )

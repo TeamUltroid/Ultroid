@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -24,21 +24,11 @@ from pyUltroid.dB.antiflood_db import get_flood, get_flood_limit, rem_flood, set
 from pyUltroid.functions.admins import admin_check
 from telethon.events import NewMessage as NewMsg
 
-from . import (
-    Button,
-    Redis,
-    asst,
-    callback,
-    eod,
-    eor,
-    get_string,
-    ultroid_bot,
-    ultroid_cmd,
-)
+from . import Button, Redis, asst, callback, eod, get_string, ultroid_bot, ultroid_cmd
 
 _check_flood = {}
 
-if Redis("ANTIFLOOD") is not (None or ""):
+if Redis("ANTIFLOOD"):
 
     @ultroid_bot.on(
         NewMsg(
@@ -49,14 +39,14 @@ if Redis("ANTIFLOOD") is not (None or ""):
         count = 1
         chat = (await event.get_chat()).title
         if event.chat_id in _check_flood.keys():
-            if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
+            if event.sender_id == list(_check_flood[event.chat_id].keys())[0]:
                 count = _check_flood[event.chat_id][event.sender_id]
                 _check_flood[event.chat_id] = {event.sender_id: count + 1}
             else:
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if await admin_check(event) or event.sender.bot:
+        if await admin_check(event, silent=True) or event.sender.bot:
             return
         if event.sender_id in DEVLIST:
             return
@@ -105,9 +95,9 @@ async def unmuting(e):
 async def setflood(e):
     input_ = e.pattern_match.group(1)
     if not input_:
-        return await eor(e, "`What?`", time=5)
+        return await e.eor("`What?`", time=5)
     if not input_.isdigit():
-        return await eor(e, get_string("com_3"), time=5)
+        return await e.eor(get_string("com_3"), time=5)
     m = set_flood(e.chat_id, input_)
     if m:
         return await eod(e, get_string("antiflood_4").format(input_))
@@ -124,8 +114,8 @@ async def remove_flood(e):
     except BaseException:
         pass
     if hmm:
-        return await eor(e, get_string("antiflood_1"), time=5)
-    await eor(e, get_string("antiflood_2"), time=5)
+        return await e.eor(get_string("antiflood_1"), time=5)
+    await e.eor(get_string("antiflood_2"), time=5)
 
 
 @ultroid_cmd(
@@ -135,5 +125,5 @@ async def remove_flood(e):
 async def getflood(e):
     ok = get_flood_limit(e.chat_id)
     if ok:
-        return await eor(e, get_string("antiflood_5").format(ok), time=5)
-    await eor(e, get_string("antiflood_2"), time=5)
+        return await e.eor(get_string("antiflood_5").format(ok), time=5)
+    await e.eor(get_string("antiflood_2"), time=5)

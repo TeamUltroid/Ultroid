@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -18,6 +18,9 @@
 
 • `{i}fgame <time/in secs>`
     `Show Fake Game Playing Action in current chat.`
+
+• `{i}fsticker <time/in secs>`
+    `Show Fake sticker choosing Action in current chat.`
 
 • `{i}flocation <time/in secs>`
     `Show Fake location Action in current chat.`
@@ -39,11 +42,11 @@ import time
 
 from pyUltroid.functions.admins import ban_time
 
-from . import asyncio, eor, get_string, ultroid_cmd
+from . import asyncio, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)"
+    pattern="f(typing|audio|contact|document|game|location|sticker|photo|round|video) ?(.*)"
 )
 async def _(e):
     act = e.pattern_match.group(1)
@@ -56,6 +59,6 @@ async def _(e):
         t = math.ceil((await ban_time(e, t)) - time.time())
     else:
         t = 60
-    await eor(e, get_string("fka_1").format(str(t)), time=5)
+    await e.eor(get_string("fka_1").format(str(t)), time=5)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)

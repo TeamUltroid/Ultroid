@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -11,7 +11,7 @@ import time
 from random import choice
 
 from pyUltroid import *
-from pyUltroid.dB import ULTROID_IMAGES
+from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
@@ -25,15 +25,20 @@ from telethon.tl import functions, types
 
 from strings import get_string
 
-Redis = udB.get
-client = bot = ultroid_bot
+Redis = udB.get_key
 
-OWNER_NAME = ultroid_bot.me.first_name
-OWNER_ID = ultroid_bot.me.id
-LOG_CHANNEL = int(udB.get("LOG_CHANNEL"))
-INLINE_PIC = udB.get("INLINE_PIC") or choice(ULTROID_IMAGES)
-if INLINE_PIC == "False":
+OWNER_NAME = ultroid_bot.full_name
+OWNER_ID = ultroid_bot.uid
+
+LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
+
+INLINE_PIC = udB.get_key("INLINE_PIC")
+
+if INLINE_PIC is None:
+    INLINE_PIC = choice(ULTROID_IMAGES)
+elif INLINE_PIC == False:
     INLINE_PIC = None
+
 Telegraph = telegraph_client()
 
 List = []

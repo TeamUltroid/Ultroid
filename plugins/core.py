@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -32,7 +32,7 @@ import os
 
 from pyUltroid.startup.loader import load_addons
 
-from . import eod, eor, get_string, requests, safeinstall, ultroid_cmd, un_plug
+from . import eod, get_string, requests, safeinstall, ultroid_cmd, un_plug
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)
@@ -46,7 +46,7 @@ async def install(event):
 async def unload(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_string("core_9"))
+        await event.eor(get_string("core_9"))
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
@@ -54,13 +54,13 @@ async def unload(event):
     if zym in lsd:
         try:
             un_plug(shortname)
-            await eor(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
+            await event.eor(f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
         except Exception as ex:
-            return await eor(event, str(ex))
+            return await event.eor(str(ex))
     elif zym in lst:
-        return await eor(event, get_string("core_11"), time=3)
+        return await event.eor(get_string("core_11"), time=3)
     else:
-        return await eor(event, f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
+        return await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
 
 
 @ultroid_cmd(
@@ -69,7 +69,7 @@ async def unload(event):
 async def uninstall(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_string("core_13"))
+        await event.eor(get_string("core_13"))
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
@@ -77,14 +77,14 @@ async def uninstall(event):
     if zym in lsd:
         try:
             un_plug(shortname)
-            await eor(event, f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
+            await event.eor(f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
             os.remove(f"addons/{shortname}.py")
         except Exception as ex:
-            return await eor(event, str(ex))
+            return await event.eor(str(ex))
     elif zym in lst:
-        return await eor(event, get_string("core_15"), time=3)
+        return await event.eor(get_string("core_15"), time=3)
     else:
-        return await eor(event, f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
+        return await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
 
 
 @ultroid_cmd(
@@ -94,7 +94,7 @@ async def uninstall(event):
 async def load(event):
     shortname = event.pattern_match.group(1)
     if not shortname:
-        await eor(event, get_string("core_16"))
+        await event.eor(get_string("core_16"))
         return
     try:
         try:
@@ -102,7 +102,7 @@ async def load(event):
         except BaseException:
             pass
         load_addons(shortname)
-        await eor(event, get_string("core_17").format(shortname), time=3)
+        await event.eor(get_string("core_17").format(shortname), time=3)
     except Exception as e:
         await eod(
             event,
@@ -114,13 +114,13 @@ async def load(event):
 @ultroid_cmd(pattern="getaddons ?(.*)", fullsudo=True)
 async def get_the_addons_lol(event):
     thelink = event.pattern_match.group(1)
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     fool = get_string("gas_1")
     if thelink is None:
-        return await eor(xx, fool, time=10)
+        return await xx.eor(fool, time=10)
     split_thelink = thelink.split("/")
     if "raw" not in thelink:
-        return await eor(xx, fool, time=10)
+        return await xx.eor(fool, time=10)
     name_of_it = split_thelink[(len(split_thelink) - 1)]
     plug = requests.get(thelink).text
     fil = f"addons/{name_of_it}"
@@ -131,7 +131,7 @@ async def get_the_addons_lol(event):
     shortname = name_of_it.split(".")[0]
     try:
         load_addons(shortname)
-        await eor(xx, get_string("core_17").format(shortname), time=15)
+        await xx.eor(get_string("core_17").format(shortname), time=15)
     except Exception as e:
         await eod(
             xx,

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -45,7 +45,7 @@ lst.append([Button.inline("=", data="calc=")])
 
 @ultroid_cmd(pattern="calc")
 async def icalc(e):
-    udB.delete("calc")
+    udB.del_key("calc")
     if e.client._bot:
         return await e.reply(get_string("calc_1"), buttons=lst)
     results = await e.client.inline_query(asst.me.username, "calc")

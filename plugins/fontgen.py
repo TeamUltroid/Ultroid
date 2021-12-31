@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -13,7 +13,7 @@
 """
 
 
-from . import HNDLR, eod, eor, ultroid_cmd
+from . import HNDLR, eod, ultroid_cmd
 
 fonts = ["small caps", "monospace", "double stroke", "script royal"]
 _default = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -34,23 +34,21 @@ async def _(e):
         m = "**Available Fonts**\n\n"
         for x in fonts:
             m += f"• `{x}`\n"
-        return await eor(e, m, time=5)
-    if not input and not reply:
-        return await eor(e, help)
-    if input and not reply:
+        return await e.eor(m, time=5)
+    if not reply:
         try:
             _ = input.split(":", maxsplit=1)
             font = _[0][:-1]
             text = _[1]
         except IndexError:
             return await eod(e, help)
-    elif reply and not input:
+    elif not input:
         return await eod(e, "`Give font dude :/`")
     else:
         font = input
         text = reply.message
     if font not in fonts:
-        return await eor(e, f"`{font} not in font list`.", time=5)
+        return await e.eor(f"`{font} not in font list`.", time=5)
     if font == "small caps":
         msg = gen_font(text, _small_caps)
     elif font == "monospace":
@@ -59,7 +57,7 @@ async def _(e):
         msg = gen_font(text, _double_stroke)
     elif font == "script royal":
         msg = gen_font(text, _script_royal)
-    await eor(e, msg)
+    await e.eor(msg)
 
 
 def gen_font(text, new_font):

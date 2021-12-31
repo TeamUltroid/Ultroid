@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -18,9 +18,7 @@
 """
 import random
 
-from carbonnow import Carbon
-
-from . import eor, get_string, inline_mention, os, ultroid_cmd
+from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
 
 all_col = [
     "Black",
@@ -178,9 +176,9 @@ all_col = [
     pattern="(rc|c)arbon",
 )
 async def crbn(event):
-    xxxx = await eor(event, get_string("com_1"))
+    xxxx = await event.eor(get_string("com_1"))
     te = event.text
-    col = random.choice(all_col) if te[1] == "r" else None
+    col = random.choice(all_col) if te[1] == "r" else "White"
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
@@ -195,10 +193,7 @@ async def crbn(event):
             code = event.text.split(" ", maxsplit=1)[1]
         except IndexError:
             return await eor(xxxx, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=col
-    )
-    xx = await carbon.memorize("ultroid_carbon")
+    xx = await Carbon(code=code, file_name="ultroid_carbon", backgroundColor=col)
     await xxxx.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",
@@ -212,8 +207,8 @@ async def crbn(event):
 async def crbn(event):
     match = event.pattern_match.group(1)
     if not match:
-        return await eor(event, get_string("carbon_3"))
-    msg = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("carbon_3"))
+    msg = await event.eor(get_string("com_1"))
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
@@ -230,13 +225,7 @@ async def crbn(event):
             match = match[0]
         except IndexError:
             return await eor(msg, get_string("carbon_2"))
-    carbon = Carbon(
-        base_url="https://carbonara.vercel.app/api/cook", code=code, background=match
-    )
-    try:
-        xx = await carbon.memorize("ultroid_carbon")
-    except Exception as er:
-        return await msg.edit(str(er))
+    xx = await Carbon(code=code, backgroundColor=match)
     await msg.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",

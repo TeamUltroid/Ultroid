@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -9,10 +9,11 @@
 
 # --------------------------------------- Imports -------------------------------------------- #
 
+import os
+
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.misc import owner_and_sudos
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -22,16 +23,18 @@ from telethon.utils import get_display_name
 
 from . import *
 
-FSUB = udB.get_redis("PMBOT_FSUB")
+FSUB = udB.get_key("PMBOT_FSUB")
 CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
-@asst_cmd(load=AST_PLUGINS, incoming=True, func=lambda e: e.is_private)
+@asst_cmd(
+    load=AST_PLUGINS,
+    incoming=True,
+    func=lambda e: e.is_private and not is_blacklisted(e.sender_id),
+)
 async def on_new_mssg(event):
     who = event.sender_id
-    if is_blacklisted(who):
-        return
     # doesn't reply to that user anymore
     if event.text.startswith("/") or who == OWNER_ID:
         return
@@ -43,7 +46,7 @@ async def on_new_mssg(event):
                 await event.client.get_permissions(chat, event.sender_id)
             except UserNotParticipantError:
                 if not MSG:
-                    MSG += "**You need to Join Below Chat(s) in order to Chat to my Master!\n\n**"
+                    MSG += get_string("pmbot_1")
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
@@ -81,16 +84,21 @@ async def on_new_mssg(event):
     func=lambda e: e.is_private and e.is_reply,
 )
 async def on_out_mssg(event):
-    x = await event.get_reply_message()
-    to_user = get_who(x.id)
+    x = event.reply_to_msg_id
+    to_user = get_who(x)
     if event.text.startswith("/who"):
         try:
             k = await asst.get_entity(to_user)
-            return await event.reply(
-                f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}"
+            photu = await event.client.download_profile_photo(k.id)
+            await event.reply(
+                f"• **Name :** {get_display_name(k)}\n• **ID :** `{k.id}`\n• **Link :** {inline_mention(k)}",
+                file=photu,
             )
-        except BaseException:
+            if photu:
+                os.remove(photu)
             return
+        except BaseException as er:
+            return await event.reply("**ERROR : **" + str(er))
     elif event.text.startswith("/"):
         return
     if to_user:
@@ -103,42 +111,37 @@ async def on_out_mssg(event):
 @asst_cmd(
     pattern="ban",
     load=AST_PLUGINS,
-    from_users=owner_and_sudos(castint=True),
+    from_users=[OWNER_ID],
     func=lambda x: x.is_private,
 )
 async def banhammer(event):
-    x = await event.get_reply_message()
-    if not x:
-        return await event.reply("Please reply to someone to ban him.")
-    target = get_who(x.id)
+    if not event.is_reply:
+        return await event.reply(get_string("pmbot_2"))
+    target = get_who(event.reply_to_msg_id)
     if is_blacklisted(target):
-        return await event.reply("User is already banned!")
+        return await event.reply(get_string("pmbot_3"))
 
     blacklist_user(target)
     await event.reply(f"#BAN\nUser : {target}")
-    await asst.send_message(
-        target,
-        "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**",
-    )
+    await asst.send_message(target, get_string("pmbot_4"))
 
 
 @asst_cmd(
     pattern="unban",
     load=AST_PLUGINS,
-    from_users=owner_and_sudos(castint=True),
+    from_users=[OWNER_ID],
     func=lambda x: x.is_private,
 )
 async def unbanhammer(event):
-    x = await event.get_reply_message()
-    if not x:
-        return await event.reply("Please reply to someone to Unban him.")
-    target = get_who(x.id)
+    if not event.is_reply:
+        return await event.reply(get_string("pmbot_5"))
+    target = get_who(event.reply_to_msg_id)
     if not is_blacklisted(target):
-        return await event.reply("User was never banned!")
+        return await event.reply(get_string("pmbot_6"))
 
     rem_blacklist(target)
     await event.reply(f"#UNBAN\nUser : {target}")
-    await asst.send_message(target, "`Congrats! You have been unbanned.`")
+    await asst.send_message(target, get_string("pmbot_7"))
 
 
 # --------------------------------------- END -------------------------------------------- #

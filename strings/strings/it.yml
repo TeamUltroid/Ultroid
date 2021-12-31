@@ -7,11 +7,11 @@ authors:
 # commons
 com_1: "`In lavorazione...`"
 com_2: "`Ricerca in corso ...`"
+
 # help
 help_1: "`{}` Non è un plugin valido!"
 help_2: "Il bot non ha risposto alla query in linea.\nConsidera l'utilizzo `{}restart`"
 help_3: "`Attiva la modalità inline per il tuo bot da @ Botfather."
-help_4: "Hey, \nSei in modalità Bot. \nGli utenti in modalità Bot non possono ottenere aiuto direttamente...\nInvece, copia e incolla quanto segue nella chat e fai clic sul popup\n\n `@{} ultd`"
 
 # autopic
 autopic_1: "Heya dammi un messaggio..."
@@ -97,10 +97,9 @@ carbon_2: "Carbonised by [{}](tg://user?id={})"
 # chats
 chats_1: "`In lavorazione...`"
 chats_2: "`Impossibile eliminare questa chat`"
-chats_3: "`Non sono un admin`"
-chats_4: "#Deleted\nDeleted {}"
-chats_5: "Il tuo [{}]({}) Gruppo fatto capo!"
-chats_6: "Entra in @TeamUltroid"
+chats_3: "#Deleted\nDeleted {}"
+chats_4: "Il tuo [{}]({}) Gruppo fatto capo!"
+chats_5: "Entra in @TeamUltroid"
 
 # converter
 cvt_1: "Rispondi a qualsiasi media / documento."

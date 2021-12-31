@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -18,9 +18,9 @@ from . import *
 
 @vc_asst("ytplaylist")
 async def live_stream(e):
-    xx = await eor(e, get_string("com_1"))
+    xx = await e.eor(get_string("com_1"))
     if len(e.text.split()) <= 1:
-        return await eor(xx, "Are You Kidding Me?\nWhat to Play?")
+        return await xx.eor("Are You Kidding Me?\nWhat to Play?")
     input = e.text.split()
     if input[1].startswith("-"):
         chat = int(input[1])
@@ -33,11 +33,13 @@ async def live_stream(e):
         song = e.text.split(maxsplit=1)[1]
         chat = e.chat_id
     if not (re.search("youtu", song) and re.search("playlist\\?list", song)):
-        return await eor(xx, get_string('vcbot_8'))
+        return await xx.eor(get_string("vcbot_8"))
     if not is_url_ok(song):
-        return await eor(xx, '`Only Youtube Playlist please.`')
-    await xx.edit(get_string('vcbot_7'))
-    file, thumb, title, link, duration = await dl_playlist(chat, html_mention(e), song)
+        return await xx.eor("`Only Youtube Playlist please.`")
+    await xx.edit(get_string("vcbot_7"))
+    file, thumb, title, link, duration = await dl_playlist(
+        chat, inline_mention(e), song
+    )
     ultSongs = Player(chat, e)
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
@@ -53,7 +55,7 @@ async def live_stream(e):
         await xx.delete()
         await ultSongs.group_call.start_audio(file)
     else:
-        from_user = html_mention(e)
+        from_user = inline_mention(e)
         add_to_queue(chat, file, title, link, thumb, from_user, duration)
         return await eor(
             xx,

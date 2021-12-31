@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -44,6 +44,7 @@ UTILITIES = """
 • /info (reply/username/id) : get detailed info of user.
 • /id : get chat/user id.
 • /tr : Translate Languages..
+• /q : Create Quotes.
 
 • /paste (reply file/text) : paste content on Spaceb.in
 • /meaning (text) : Get Meaning of that Word.
@@ -75,11 +76,15 @@ MISC = """
 
 • /joke : Get Random Jokes.
 • /decide : Decide Something..
+
+**✘ Stickertools ✘**
+• /kang : add sticker to your pack.
+• /listpack : get all of yours pack..
 """
 
 STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc": MISC}
 
-MNGE = udB.get("MNGR_EMOJI") or "•"
+MNGE = udB.get_key("MNGR_EMOJI") or "•"
 
 
 def get_buttons():
@@ -105,11 +110,10 @@ async def helpish(event):
             "Contact me in PM for help!", buttons=Button.url("Click me for Help", url)
         )
     if str(event.sender_id) in owner_and_sudos() and (
-        udB.get("DUAL_MODE") and (udB.get("DUAL_HNDLR") == "/")
+        udB.get_key("DUAL_MODE") and (udB.get_key("DUAL_HNDLR") == "/")
     ):
         return
-    BTTS = get_buttons()
-    await event.reply(START, buttons=BTTS)
+    await event.reply(START, buttons=get_buttons())
 
 
 @callback("mngbtn", owner=True)

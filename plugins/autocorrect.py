@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -14,25 +14,30 @@
 
 import string
 
-from gingerit.gingerit import GingerIt
+from . import HNDLR, eor, get_string, udB, ultroid_bot, ultroid_cmd  # ignore: pylint
+
+try:
+    from gingerit.gingerit import GingerIt
+except ImportError:
+    LOGS.info("GingerIt not found")
 from google_trans_new import google_translator
 from telethon import events
-
-from . import HNDLR, Redis, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
     if Redis("AUTOCORRECT") != "True":
-        udB.set("AUTOCORRECT", "True")
-        return await eor(e, get_string("act_1"), time=5)
-    udB.delete("AUTOCORRECT")
-    await eor(e, get_string("act_2"), time=5)
+        udB.set_key("AUTOCORRECT", "True")
+        ultroid_bot.add_handler(
+            gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
+        )
+        return await e.eor(get_string("act_1"), time=5)
+    udB.del_key("AUTOCORRECT")
+    await e.eor(get_string("act_2"), time=5)
 
 
-@ultroid_bot.on(events.NewMessage(outgoing=True, func=lambda x: x.text))
 async def gramme(event):
-    if Redis("AUTOCORRECT") != "True":
+    if not udB.get_key("AUTOCORRECT"):
         return
     t = event.text
     if t[0] == HNDLR or t[0].lower() not in string.ascii_lowercase or t.endswith(".."):
@@ -47,3 +52,9 @@ async def gramme(event):
         await event.edit(res)
     except BaseException:
         pass
+
+
+if udB.get_key("AUTOCORRECT"):
+    ultroid_bot.add_handler(
+        gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
+    )

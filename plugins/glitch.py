@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -10,11 +10,10 @@
 
 •`{i}glitch <replt to media>`
     gives a glitchy gif.
-
 """
 import os
 
-from . import bash, eor, get_string, mediainfo, ultroid_cmd
+from . import bash, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="glitch$")
@@ -27,11 +26,11 @@ async def _(e):
         )
     reply = await e.get_reply_message()
     if not (reply and reply.media):
-        return await eor(e, "Reply to any media")
+        return await e.eor(get_string("cvt_3"))
     wut = mediainfo(reply.media)
     if not wut.startswith(("pic", "sticker")):
-        return await eor(e, get_string("com_4"))
-    xx = await eor(e, "`Glitching...`")
+        return await e.eor(get_string("com_4"))
+    xx = await e.eor(get_string("glitch_1"))
     ok = await e.client.download_media(reply.media)
     cmd = f"glitch_me gif --line_count 200 -f 10 -d 50 '{ok}' ult.gif"
     stdout, stderr = await bash(cmd)

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -8,12 +8,10 @@
 import asyncio
 
 from pyUltroid.dB import stickers
-from pyUltroid.dB.chatBot_db import chatbot_stats
-from pyUltroid.dB.clean_db import is_clean_added
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
-from pyUltroid.dB.username_db import get_username, update_username
+from pyUltroid.dB.nsfw_db import is_profan
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import create_tl_btn, get_chatbot_reply
 from telethon import events
@@ -21,6 +19,10 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
+try:
+    from ProfanityDetector import detector
+except ImportError:
+    detector = None
 from . import LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
 from ._inline import something
 
@@ -28,7 +30,8 @@ from ._inline import something
 @ultroid_bot.on(events.ChatAction())
 async def ChatActionsHandler(ult):  # sourcery no-metrics
     # clean chat actions
-    if is_clean_added(ult.chat_id):
+    key = udB.get_key("CLEANCHAT") or []
+    if ult.chat_id in key:
         try:
             await ult.delete()
         except BaseException:
@@ -43,7 +46,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             await ult.respond(file=sticker)
     # force subscribe
     if (
-        udB.get("FORCESUB")
+        udB.get_key("FORCESUB")
         and ((ult.user_joined or ult.user_added))
         and get_forcesetting(ult.chat_id)
     ):
@@ -83,7 +86,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
             user = await ult.get_user()
             chat = await ult.get_chat()
             title = chat.title or "this chat"
-            count = (await ult.client.get_participants(chat, limit=0)).total
+            count = (
+                chat.participants_count
+                or (await ult.client.get_participants(chat, limit=0)).total
+            )
             mention = inline_mention(user)
             name = user.first_name
             fullname = get_display_name(user)
@@ -120,7 +126,10 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         user = await ult.get_user()
         chat = await ult.get_chat()
         title = chat.title or "this chat"
-        count = (await ult.client.get_participants(chat, limit=0)).total
+        count = (
+            chat.participants_count
+            or (await ult.client.get_participants(chat, limit=0)).total
+        )
         mention = inline_mention(user)
         name = user.first_name
         fullname = get_display_name(user)
@@ -160,9 +169,12 @@ async def chatBot_replies(e):
     sender = await e.get_sender()
     if not isinstance(sender, types.User):
         return
-    if e.text and chatbot_stats(e.chat_id, e.sender_id):
+    key = udB.get_key("CHATBOT_USERS") or {}
+    if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
         if msg:
+            sleep = udB.get_key("CHATBOT_SLEEP") or 1.5
+            await asyncio.sleep(sleep)
             await e.reply(msg)
     chat = await e.get_chat()
     if e.is_group and not sender.bot:
@@ -171,6 +183,10 @@ async def chatBot_replies(e):
     elif e.is_private and not sender.bot:
         if chat.username:
             await uname_stuff(e.sender_id, chat.username, chat.first_name)
+    if detector and is_profan(e.chat_id) and e.text:
+        x, y = detector(e.text)
+        if y:
+            await e.delete()
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
@@ -179,8 +195,9 @@ async def uname_change(e):
 
 
 async def uname_stuff(id, uname, name):
-    if udB.get("USERNAME_LOG") == "True":
-        old = get_username(id)
+    if udB.get_key("USERNAME_LOG") == "True":
+        old_ = udB.get_key("USERNAME_DB") or {}
+        old = old_.get(id)
         # Ignore Name Logs
         if old and old == uname:
             return
@@ -199,4 +216,6 @@ async def uname_stuff(id, uname, name):
                 LOG_CHANNEL,
                 get_string("can_4").format(f"[{name}](tg://user?id={id})", uname),
             )
-        update_username(id, uname)
+
+        old_[id] = uname
+        udB.set_key("USERNAME_DB", str(old_))

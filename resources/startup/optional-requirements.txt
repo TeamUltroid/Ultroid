@@ -1,24 +1,20 @@
-# Optional Requirements, which are too required for full functioning.
-
+# Required only while Local Deploy
 # ------------------------------------------------------ #
-aiohttp==3.7.4.post0
+
 akinator.py
 apscheduler
 bs4
 cairosvg
-enhancer==0.1.8
-gdown
+cfscrape
+enhancer==0.3.1
 gingerit
-git+https://github.com/buddhhu/img2html.git
-git+https://github.com/New-dev0/instagrapi.git
-git+https://github.com/1danish-00/carbon-now-sh-api-wrapper.git
-git+https://github.com/programmingerror/heroku3.py.git
 git+https://github.com/1danish-00/google_trans_new.git
+git+https://github.com/New-dev0/instagrapi.git
+git+https://github.com/buddhhu/img2html.git
+git+https://github.com/programmingerror/heroku3.py.git
+https://github.com/buddhhu/youtube-dl/archive/refs/heads/master.zip
 gitpython==3.1.23
-google-api-python-client==1.7.11
-google-auth-httplib2==0.0.4
-google-auth-oauthlib==0.4.4
-google-auth==1.27.1
+google-api-python-client==2.31.0
 html-telegraph-poster==0.4.0
 htmlwebshot==0.1.2
 lottie==0.6.9
@@ -29,17 +25,17 @@ opencv-python-headless
 pillow>=7.0.0
 profanitydetector
 psutil==5.8.0
+pygments
+pymongo[srv]
 pypdf2==1.26.0
 pytz==2021.1
 pyyaml==5.4.1
 qrcode==7.3
 requests==2.26.0
 scikit-image==0.18.2
-shazamio==0.0.5
 tabulate==0.8.9
 telegraph
 tgcrypto
-youtube-search-python==1.4.7
-youtube_dl==2021.6.6
-
+youtube-search-python>=1.4.9
+pygments
 # -------------------------------------------------------#

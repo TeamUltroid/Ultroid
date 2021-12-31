@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -27,7 +27,6 @@
     Get The List of People having vc access.
 """
 
-from pyUltroid.dB.vc_group import get_chats, rem_vcauth, add_vcauth
 from pyUltroid.dB.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
 
 from . import *
@@ -39,12 +38,16 @@ async def auth_group(event):
         key = event.text.split(" ", maxsplit=1)[1]
         admins = bool("admins" in key)
     except IndexError:
-        admins = True
+        admins = False
     chat = event.chat_id
-    cha, adm = check_vcauth(chat)
+    key = udB.get_key("VC_AUTH_GROUPS") or {}
+    cha, adm = None, None
+    if key.get(chat):
+        cha, adm = key[chat], key[chat]["admins"]
     if cha and adm == admins:
-        return await event.reply(get_string('vcbot_19'))
-    add_vcauth(chat, admins=admins)
+        return await event.reply(get_string("vcbot_19"))
+    key.update({chat: {"admins": admins}})
+    udB.set_key("VC_AUTH_GROUPS", key)
     kem = "Admins" if admins else "All"
     await eor(
         event,
@@ -56,18 +59,23 @@ async def auth_group(event):
 @vc_asst("remauth", from_users=owner_and_sudos(), vc_auth=False)
 async def auth_group(event):
     chat = event.chat_id
-    gc, ad = check_vcauth(chat)
+    key = udB.get_key("VC_AUTH_GROUPS") or {}
+    gc = key.get(chat)
     if not gc:
-        return await eor(event, get_string('vcbot_16'))
-    rem_vcauth(chat)
-    await eor(event, get_string('vcbot_10'))
+        return await event.eor(get_string("vcbot_16"))
+    del key[chat]
+    if key:
+        udB.set_key("VC_AUTH_GROUPS", key)
+    else:
+        udB.del_key("VC_AUTH_GROUPS")
+    await event.eor(get_string("vcbot_10"))
 
 
 @vc_asst("listauth", from_users=owner_and_sudos(), vc_auth=False)
 async def listVc(e):
-    chats = get_chats()
+    chats = udB.get_key("VC_AUTH_GROUPS")
     if not chats:
-        return await eor(e, get_string('vcbot_18'))
+        return await e.eor(get_string("vcbot_18"))
     text = "• <strong>Vc Auth Chats •</strong>\n\n"
     for on in chats.keys():
         st = "Admins" if chats[on]["admins"] else "All"
@@ -76,12 +84,12 @@ async def listVc(e):
         except ValueError:
             title = "No Info"
         text += f"∆ <strong>{title}</strong> [ <code>{on}</code> ] : <code>{st}</code>"
-    await eor(e, text, parse_mode="html")
+    await e.eor(text, parse_mode="html")
 
 
 @vc_asst("listvcaccess$", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, get_string('vcbot_11'))
+    xx = await e.eor(get_string("vcbot_11"))
     mm = get_vcsudos()
     pp = f"<strong>{len(mm)} Voice Chat Bot Approved Users</strong>\n"
     if len(mm) > 0:
@@ -96,19 +104,19 @@ async def _(e):
 
 @vc_asst("rmvcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, "`Disapproving to access Voice Chat features...`")
+    xx = await e.eor("`Disapproving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(userid)).first_name
     elif input:
         try:
-            userid = await get_user_id(input)
+            userid = await e.client.parse_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eor(xx, f"`{str(ex)}`", time=5)
+            return await xx.edit(f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, get_string('vcbot_17'), time=3)
+        return await xx.edit(get_string("vcbot_17"), time=3)
     if not is_vcsudo(userid):
         return await eod(
             xx,
@@ -123,24 +131,24 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eor(xx, f"`{ex}`", time=5)
+        return await xx.edit(f"`{ex}`", time=5)
 
 
 @vc_asst("vcaccess ?(.*)", from_users=owner_and_sudos(), vc_auth=False)
 async def _(e):
-    xx = await eor(e, "`Approving to access Voice Chat features...`")
+    xx = await e.eor("`Approving to access Voice Chat features...`")
     input = e.pattern_match.group(1)
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
         name = (await e.client.get_entity(userid)).first_name
     elif input:
         try:
-            userid = await get_user_id(input)
+            userid = await e.client.parse_id(input)
             name = (await e.client.get_entity(userid)).first_name
         except ValueError as ex:
-            return await eor(xx, f"`{str(ex)}`", time=5)
+            return await xx.eor(f"`{str(ex)}`", time=5)
     else:
-        return await eor(xx, get_string('vcbot_17'), time=3)
+        return await xx.eor(get_string("vcbot_17"), time=3)
     if is_vcsudo(userid):
         return await eod(
             xx,
@@ -155,4 +163,4 @@ async def _(e):
             time=5,
         )
     except Exception as ex:
-        return await eor(xx, f"`{ex}`", time=5)
+        return await xx.eor(f"`{ex}`", time=5)

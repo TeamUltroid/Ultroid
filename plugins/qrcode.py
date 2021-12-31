@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -7,14 +7,14 @@
 """
 ✘ Commands Available -
 
-•`qrcode <text/reply to text>`
-   Makes qrcode of text
+• `{i}qrcode <text/reply to text>`
+   `Makes qrcode of text`
 
-•`addqr <reply image> <text>`
-   Makes qr of text and add it to image.
+• `{i}addqr <reply image> <text>`
+   `Makes qr of text and add it to image.`
 
-•`qrdecode <reply to qrcode>`
-   It decodes the qrcode.
+• `{i}qrdecode <reply to qrcode>`
+   `It decodes the qrcode.`
 """
 import os
 
@@ -24,7 +24,7 @@ from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import eor, get_string, ultroid_bot, ultroid_cmd
+from . import get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="qrcode ?(.*)")
@@ -36,8 +36,8 @@ async def cd(e):
     elif msg:
         msg = msg
     else:
-        return await eor(e, "`Give Some Text or Reply", time=5)
-    kk = await eor(e, get_string("com_1"))
+        return await e.eor("`Give Some Text or Reply", time=5)
+    kk = await e.eor(get_string("com_1"))
     pfp = await e.client.get_profile_photos(ultroid_bot.uid)
     img = "resources/extras/teamultroid.jpg"
     if len(pfp) >= 1:
@@ -61,8 +61,8 @@ async def qrwater(e):
     msg = e.pattern_match.group(1)
     r = await e.get_reply_message()
     if not (msg and r and r.media):
-        return await eor(e, "`Reply Any Media and Give Text`", time=5)
-    kk = await eor(e, get_string("com_1"))
+        return await e.eor("`Reply Any Media and Give Text`", time=5)
+    kk = await e.eor(get_string("com_1"))
     if isinstance(r.media, photu):
         dl = await e.client.download_media(r.media)
     elif isinstance(r.media, doc):
@@ -86,8 +86,8 @@ async def qrwater(e):
 async def decod(e):
     r = await e.get_reply_message()
     if not (r and r.media):
-        return await eor(e, "`Reply to Qrcode Media`", time=5)
-    kk = await eor(e, get_string("com_1"))
+        return await e.eor("`Reply to Qrcode Media`", time=5)
+    kk = await e.eor(get_string("com_1"))
     if isinstance(r.media, photu):
         dl = await r.download_media()
     elif isinstance(r.media, doc):

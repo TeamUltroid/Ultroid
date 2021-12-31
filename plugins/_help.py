@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -14,15 +14,15 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.custom import Button
 
-from . import *
+from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
 
 _main_help_menu = [
     [
-        Button.inline(get_string("help_4"), data="hrrrr"),
-        Button.inline(get_string("help_5"), data="frrr"),
+        Button.inline(get_string("help_4"), data="uh_Official_"),
+        Button.inline(get_string("help_5"), data="uh_Addons_"),
     ],
     [
-        Button.inline(get_string("help_6"), data="vc_helper"),
+        Button.inline(get_string("help_6"), data="uh_VCBot_"),
         Button.inline(get_string("help_7"), data="inlone"),
     ],
     [
@@ -38,6 +38,7 @@ _main_help_menu = [
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
     plug = ult.pattern_match.group(1)
+    chat = await ult.get_chat()
     if plug:
         try:
             if plug in HELP["Official"]:
@@ -45,19 +46,19 @@ async def _help(ult):
                 for i in HELP["Official"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             elif HELP.get("Addons") and plug in HELP["Addons"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["Addons"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             elif HELP.get("VCBot") and plug in HELP["VCBot"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["VCBot"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
-                await eor(ult, output)
+                await ult.eor(output)
             else:
                 try:
                     x = get_string("help_11").format(plug)
@@ -65,12 +66,12 @@ async def _help(ult):
                         x += HNDLR + d
                         x += "\n"
                     x += "\n© @TeamUltroid"
-                    await eor(ult, x)
+                    await ult.eor(x)
                 except BaseException:
-                    await eor(ult, get_string("help_1").format(plug), time=5)
+                    await ult.eor(get_string("help_1").format(plug), time=5)
         except BaseException as er:
             LOGS.exception(er)
-            await eor(ult, "Error 🤔 occured.")
+            await ult.eor("Error 🤔 occured.")
     else:
         try:
             results = await ult.client.inline_query(asst.me.username, "ultd")
@@ -80,12 +81,12 @@ async def _help(ult):
                 for y in x:
                     z.append(y)
             cmd = len(z) + 10
-            if udB.get("MANAGER") and udB.get("DUAL_HNDLR") == "/":
+            if udB.get_key("MANAGER") and udB.get_key("DUAL_HNDLR") == "/":
                 _main_help_menu[2:3] = [[Button.inline("• Manager Help •", "mngbtn")]]
             return await ult.reply(
                 get_string("inline_4").format(
                     OWNER_NAME,
-                    len(HELP["Official"]) - 5,
+                    len(HELP["Official"]),
                     len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
@@ -93,11 +94,10 @@ async def _help(ult):
                 buttons=_main_help_menu,
             )
         except BotResponseTimeoutError:
-            return await eor(
-                ult,
+            return await ult.eor(
                 get_string("help_2").format(HNDLR),
             )
         except BotInlineDisabledError:
-            return await eor(ult, get_string("help_3"))
-        await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
+            return await ult.eor(get_string("help_3"))
+        await results[0].click(chat.id, reply_to=ult.reply_to_msg_id, hide_via=True)
         await ult.delete()

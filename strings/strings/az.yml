@@ -1,6 +1,515 @@
-name: Azerbaijani
-natively: Azərbaycanca
+name: Azerbaijan
+natively: Azərbaycan
 
 authors:
-  - googletrans
+  - Cahildi
 
+# commons
+com_1: "`Hazırlanır...`"
+com_2: "`Axtarılır...`"
+com_3: "`Yalnış daxiletmə`"
+com_4: "`Dəstəklənməyən media..`"
+com_5: "`Yüklənir...`"
+com_6: "`Göndərilir...`"
+
+# chatactions
+can_1: "#GBan_Bildiriş daxil oldu.\n\n**İstifadəçi** : {}\n**Səbəb**: {}\n\n`İstifadəçi qadağan olundu.`"
+can_2: "∆ #UsernameUpdate\n\n@{} istifadəçi adı dəyişildi @{}"
+can_3: "∆ #UsernameUpdate\n\n{} İstifadəçi adı silindu. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{} yeni adı' --> @{}"
+
+# help
+help_1: "`{}` adlı plugin yoxdu!"
+help_2: "Bot inline cavab verə bilmir.\nYoxlayın: `{}restart`"
+help_3: "`Botun inline rejimini açın. Bot:` @Botfather."
+help_4: "• Pluginlər"
+help_5: "• Əlavələr"
+help_6: "••Səsli söhbət"
+help_7: "Inline Pluginlər••"
+help_8: "⚙️ Sahib əmrləri"
+help_9: "Parametrlər ⚙️"
+help_10: "••Bağla••"
+help_11: "Plugin adı-{}\n\n✘ Əmrlər bunlardır-\n\n"
+
+# userlogs
+userlogs_1: "Tag Logger-da Ayarladığınız Söhbət İd-si Səhvdir, Xaiş olunur yenidən cəhd edin"
+userlogs_2: "Tag logger aktivləşdirmək üçün məni Tag Logger Chat-a əlavə edin"
+userlogs_3: "Söhbəti tərk edin"
+userlogs_4: "Asistant tag logger kanalına mesaj gondərə bilmir. Asistanı qrupa salıb admin edin.."
+userlogs_5: "Çıxdı: `{}`"
+
+# admintools
+adm_1: "`Mən onun kim olduğunu başa düşə bilmədim!`"
+adm_2: "`Hmm.. Deyəsən, mənim burada heç bir hüququm yoxdur!`"
+adm_3: "`Bir də vaxt verin..`"
+pro_1: "`Userin mesajını yanıtlayın!`"
+pro_2: "{} `indi {} adminidir. Yönətici tağı {}.`"
+de_1: "`Vəzifəni almaq üçün bir mesajı yanıtlayı !`"
+de_2: "{} `is no longer an admin in {}`"
+ban_1: "`Reply to a user or give username to ban him!`"
+ban_2: " `LoL, I can't Ban my Developer 😂`"
+ban_3: "`I don't have the right to ban a user.`"
+ban_4: "{} **was banned by** {} **in** `{}`"
+ban_5: "\n**Reason**: `{}`"
+tban_1: "`Reply to someone or give its id...`"
+tban_2: "`Successfully Banned` `{}` `in {} for {}`"
+unban_1: "`Reply to a user or give username to unban him!`"
+unban_2: "`I don't have the right to unban a user.`"
+unban_3: "{} **was unbanned by** {} **in** `{}`"
+kick_1: "`I don't have the right to kick a user.`"
+kick_2: " `Lol, I can't Kick my Developer`😂"
+kick_3: "`I Cant kick him ever...`"
+kick_4: "{} **was kicked by** {} **in** `{}`"
+pin_1: "`Reply to a message to pin it!`"
+pinned_1: "No Pinned Message Found!"
+unpin_1: "Either reply to a message, or, use `{}unpin all`"
+listpin_1: "There is no message pinned in this group!"
+purge_1: "`Reply to a message to purge from.`"
+purgeall_1: "`Reply to someone's msg to delete.`"
+purgeall_2: "Successfully Purged All Messages from {}"
+
+# akinator
+aki_1: "Oyun dayandırıldı...."
+aki_2: "Oyuna başlayın"
+aki_3: "Vaxt bitdi dostum!"
+
+# antiflood
+antiflood_1: "`Antiflood ayarı bağlıdı`"
+antiflood_2: "`Bu çatda limit yoxdur.`"
+antiflood_3: "`Artıq susdurulub.`"
+antiflood_4: "`{} qrupu üçün Antiflood ayarı yeniləndiin this chat.`"
+antiflood_5: "`Flood limit bu qrup üçün: {}.`"
+
+# ascii
+ascii_1: "`Bir şəkli yanıtlayın.`"
+ascii_2: "`Şəkil hazırlanır...`"
+
+# audiotools
+audiotools_1: "Bir musiqini cə ya videonu yanıtla.."
+audiotools_2: "Yükləndi. Səsə çevirirəm"
+audiotools_3: "`Give time in format to trim`"
+audiotools_4: "`Incorrect Data`"
+audiotools_5: "`Yükləmə yenidən yoxlanılır...`"
+audiotools_6: "`Wrong trim duration`"
+audiotools_7: "Trimmed Audio From `{}` To `{}`"
+audiotools_8: "Bir videonu yanıtla..`"
+audiotools_9: "`Audio tapılmadı...`"
+audiotools_10: "`Audio videodan çıxardılır...`"
+
+# asstcmd
+asstcmd_1: "`Komandadan istifadə etmək üçün Cavab və söz ilə bu Əmri istifadə edin.`"
+asstcmd_2: "`Silmək istədiyiniz əmri mənə verin.`"
+asstcmd_3: "Uğurludur: `/{}` silindi."
+asstcmd_4: "Uğurludur : `/{}` silindi."
+asstcmd_5: "Əmr tapılmadı və ya yoxdur"
+asstcmd_6: "**Asistanın bütün əmrləri**\n\n"
+
+# autocorrect
+act_1: "AUTOCORRECT aktivdi"
+act_2: "AUTOCORRECT deaktivdir"
+
+# autopic
+autopic_1: "`Axtarmaq üçün bir şey verin...`"
+autopic_2: "Nəticə tapılmadı `{}`"
+autopic_3: "Uğurla `{}` paketi tapıldı !\nAutoPic başlanılır!"
+autopic_4: "AUTOPIC istifadə olunmur !!"
+autopic_5: "AUTOPIC dayandırıldı!"
+
+# inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nPluginlər ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setdb ADDONS True`** edin sonra restart atın.**"
+inline_4: "** Bot: {}\n\nMenu\n\nPluginlər~ {}\nƏlavələr ~ {}\nBütün əmrlər~ {}**"
+inline_5: "**Menu bağlandı**"
+inline_6: "**{} üçün Səsli Çat Yardım Menyu**\n**Mümkün əmrlər:** `{}`\n\n@TeamUltroid"
+inline_7: "Do .help {} to get the list of commands."
+inline_8: "Yeniləmək üçün aşağıdakı düyməni basın!"
+inline_9: "Siz Artıq Ən Son Versiyadasınız"
+
+# tagnotif
+tagnot_1: "{} sizi {} etiketində qeyd etdi\n\n```{}```\n\n[📨 Mesaj 📨]({})"
+tagnot_2: "{} sizi {} etiketində qeyd etdi\n\n [📨 Mesqj 📨]({})"
+
+# whisper
+wspr_1: "@{} sənə gizli mesaj göndərdi.\nSən bu mesaji oxuyandan sonra sil."
+wspr_2: "Mesaj silindi"
+wspr_3: "İstifadəçi ad qeyd edin"
+wspr_4: "İstifadəçi {} tapılmadı\nYenidən axtarın"
+wspr_5: "Siz bunu edə bilməzsiniz"
+
+# afk
+afk_1: "**Artıq Afk deyiləm**\n\n `{}` dəqiqə burdq olmadım"
+afk_2: "#AFK\nAFK rejimini False-ə təyin edin.\n `{}`-dən bəri AFK idi"
+afk_3: "**I'm currently AFK.**\nLast seen `{}` ago.\n\n**Reason:** `{}`"
+afk_4: "**Mən afkyam.**\n\n`{}` vaxt əvvəl burada idim."
+afk_5: "**Afk olundu.**\n\n**Səbəb:** `{}`"
+afk_6: "**Artıq AFKyam.**"
+
+# bot
+bot_1: "Salam, mən aktivəm."
+bot_2: "Stats"
+bot_3: "Repo"
+bot_4: "Support"
+bot_5: "• `Restartlanır...`"
+alive_1: "**Ultroid Userbot aktivdir...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Sahib** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **İşləmə Vaxtı** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Log.\n[Bura]({}) toxun!"
+ping: "**Pong !!** `{}ms`\n**İşləmə vaxtı** - `{}`"
+usage: "**⚙️ Dyno istifadə ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+usage_simple: "**Yaddaş istifadə**: `{}`\n**İstifadə olunmuş**: `{}`\n**Qalan*q*: `{}`\n\n**📊 İnternet trafiki📊**\n**Göndərmə**: `{}`\n**Yükləmə**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+shutdown: "Özünə yaxşı bax {}.\n`Mən səni tərk edirəm. Necəki yalançı sevənlər kimi 🥲...`"
+
+# blacklist
+blk_1: "`Qarasiyahı üçün mənə söz ver..`"
+blk_2: "Uğurlu: `{}` qarasiyahıdadır."
+blk_3: "`Hansı sözü qara siyahidan siləcəm?..`"
+blk_4: "Uğurlu : `{}` qarasiyahıdan silindi."
+blk_5: "Bu qrupda olan Qarasiyahıdakı sözlər :\n\n"
+blk_6: "Qrupda qarasiyahıda söz yoxdu."
+
+# broadcast
+bd_1: "`DB əlavə olunur...`"
+bd_2: "`Bütün admin olduğun yerlər dbya əlavə olunur...`"
+bd_3: "**Uğurlu.**\nSöhbətlərin dbya əlavə olundu: {}\nYeni əlavə olunanlar: {}"
+bd_4: "Kanal əlavə olunsu!"
+bd_5: "`Database əlavə olundu!`"
+bd_6: "`Kanal onsuzda databaseyə əlavə olunub!`"
+bd_7: "Database silindi"
+bd_8: "`Silinir...`"
+bd_9: "Kanal onsuzda databasedən silinib. "
+
+# calculator
+calc_1: "• Ultroid hesablama •"
+calc_2: "Kalkulyatoru yenidən aç"
+
+# channel hacks
+cha_1: "Yanlış kanal verildi"
+cha_2: "Mənbə uğurla əlavə edildi"
+cha_3: "Mənbə kanalı artıq əlavə edildi"
+cha_4: "Mənbə verilənlər bazası təmizləndi."
+cha_5: "Mənbə verilənlər bazasından çıxarıldı"
+cha_6: "Mənbə kanalı artıq verilənlər bazasından çıxarılır"
+cha_7: "Verilənlər bazasında təyinat kanalları:"
+cha_8: "Verilənlər bazasında mənbə kanalları:"
+
+# carbon
+carbon_1: "[{}](tg://user?id={}) tərəfindən karbon edildi"
+carbon_2: "`Bir mesajı və ya faylı yanıtlayın..`"
+carbon_3: "`Karbon yaratmaq üçün xüsusi rəng verin...`"
+
+# chat_bot
+chab_1: "Bir istifadəçiyə cavab verin və ya AI Chatbot əlavə etmək üçün ID / İstifadəçi adını verin!"
+chab_2: "Heç bir istifadəçinin AI əlavə olundu."
+chab_3: "**Bu söhbətdə AI effektiv istifadəçilərinin ümumi siyahısı:\n\n**"
+
+# chats
+chats_1: "`Bu söhbəti silmək`"
+chats_2: "`Mən admin deyiləm`"
+chats_3: "#silindi\nsilindi {}"
+chats_4: "Sizin [{}]({}}) qrupu patron hazırladı!"
+chats_5: "@Teamultroid ə qoşulun"
+chats_6: "{} qrupunuz/kanalınız patron hazırlandı!"
+
+# clean action
+clan_1: "Bu söhbət üçün təmiz hərəkət qəbulu əlavə edildi"
+clan_2: "Bu söhbət üçün təmiz hərəkət qəbulu"
+clan_3: "Yanlış id"
+clan_4: "Çat əlavə olunmur, düzgün istifadə et"
+
+# converter
+cvt_1: "Hər hansı bir mediaya/sənədə cavab verin."
+cvt_2: "Faylın adını və uzadılmasını verin"
+cvt_3: "Mediaya cavab verin .."
+cvt_4: "IMG və ya eskizlə fayla cavab verin."
+cvt_5: "Cavablandırılmış faylın eskizi yoxdur."
+cvt_6: "Xüsusi eskiziniz kimi [bu]({}) əlavə edildi"
+cvt_7: "Oxunan bir fayla cavab verin"
+cvt_8: "Oxunan bir fayl deyil."
+# eventsofday
+eod_1: "🎊 **Günün Hadisələri**\n\n"
+eod_2: "• **Günün hadisələri {}/2021-2022**\n\n"
+
+# core
+core_1: "Module Found"
+core_2: "{}.py use .paste to paste in neko and raw.."
+core_3: "Search Again..?"
+core_4: "Module {} Found"
+core_5: "{}.py use .paste to paste in neko and raw.."
+core_6: "Module {}.py Not Found"
+core_7: "No Such Module"
+core_8: "No Module Named {}.py"
+core_9: "`Give name of plugin which u want to unload`"
+core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_11: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_12: "**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{}`"
+core_13: "`Give name of plugin which u want to uninstall`"
+core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
+core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_16: "`Give name of plugin which u want to load`"
+core_17: "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
+core_18: "**Could not load** `{}` **because of the following error.**\n`{}`"
+
+# devtools
+devs_1: "`Heç bir əmr verilmədi`"
+devs_2: "`Python CMD verin`"
+devs_3: "`C++ kodu verin..`"
+
+# dm
+dm_1: "Çat istifadəçi adını və ya göndəriləcəyinizi haradan göndərin.`"
+dm_2: "`MSG göndərmək və ya cavab vermək üçün mətn verin`"
+dm_3: "`⚜️Message çatdırıldı!⚜️`"
+dm_4: "Xəta : {}\nOxumaq : `{}help dm`"
+dm_5: "`Şəxsini yoxlayın.`"
+dm_6: "`Heçbir mesaj tapılmadı :(`"
+
+# echo
+echo_1: "**İstifadəçilər üçün aktivləşdirilmiş echo:**\n\n"
+
+# fake action
+fka_1: "{} Saniyəyə saxta hərəkətə başlayır."
+
+# fedutils
+sf_1: "Starting a Mass-FedBan..."
+sf_2: "`No user designated!`"
+sf_3: "You can't ban my dev you noob!!"
+sf_4: "`Seems like rose isn't responding, or, the plugin is misbehaving`"
+sf_5: "You can only use fed commands once every 5 minutes"
+sf_6: "Try again after 5 mins."
+sf_7: "Unable to collect FedAdminList. Retrying ({}/3)..."
+sf_8: "Error"
+sf_9: "Unable to collect FedAdminList."
+sf_10: "FBaning in {} feds."
+sf_11: "Specified FBan Group ID is incorrect."
+sf_12: "{} Excluded."
+sf_13: "Error in removing FedAdmin file.\n{}"
+sf_14: "SuperFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_15: "Starting a Mass-UnFedBan..."
+sf_16: "SuperUnFBan Completed.\nTotal Feds - {}.\nExcluded - {}.\n Affected {} feds.\n#TB"
+sf_17: "`Give me someones id, or reply to somones message to check his/her fedstat.`"
+sf_18: "List of feds {} has been banned in.\n\nCollected using Ultroid."
+sf_19: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+sf_20: "`Extracting information...`"
+sf_21: "\n\nFedInfo Extracted by Ultroid"
+sf_22: "No user was designated."
+sf_23: "**Error**\n `Unblock` @MissRose_Bot `and try again!"
+
+# filter
+flr_1: "`Use this command word to set as filter and reply...`"
+flr_2: "Filters Found In This Chats Are\n\n"
+flr_3: "`Give the filter to remove..`"
+flr_4: "Done : Filter `{}` Saved."
+flr_5: "Done : Filter `{}` Removed."
+flr_6: "No Filters Found Here"
+
+# fontgen
+fgn_1: "**Mövcud fontlar**\n\n"
+
+# force subscribe
+fsub_1: "İstifadəçinin qoşulmasını istədiyiniz kanalı verin !"
+fsub_2: "Düzgün Kanal İstifadəçi adını və ya id-ni verin"
+fsub_3: "ForceSub çat üçün aktivdir !"
+fsub_4: "Kanala qoşul"
+fsub_5: "Səsimi aç"
+fsub_6: "Zəhmət olmasa kanala qoşulun !\nSonra düyməyə vurun !"
+fsub_7: "Bu Mesaj Sizin Üçün Deyil"
+fsub_8: "Kanala qatıldığınız üçün təşəkkürlər! "
+
+# extra
+ex_1: "`Mesajı yanıtlayın..`"
+
+# gdrive
+gdrive_1: "`You have already authorised with Google Drive`"
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_3: "`Wrong Client Id`"
+gdrive_4: "`Something went wrong! Send `/auth` again.\nIf the same happens, contact `@TheUltroid"
+gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
+gdrive_6: "`Go to `{}` and send ``/auth.`"
+gdrive_7: "**Successfully uploaded the file to G-Drive :**\n\n[{}]({})"
+
+# get addons
+gas_1: "Please provide a raw link!"
+
+# greetings
+grt_1: "`Xoş gəldin mesajı yadda saxlanıldı`"
+grt_2: "Zəhmət olmasa bu əmri qrupda yoxla!"
+grt_3: "`Xoş gəldin mesajini təyin etmək istədiyiniz mesaja cavab verin`"
+grt_4: "`Xoş gəldin mesaji yoxdur!`"
+grt_5: "`Xoş gəldin qeydi yoxdur.`"
+grt_6: "`Xoş getdin mesaji yoxdur!`"
+grt_7: "`Xoş getdin mesajini təyin etmək istədiyiniz mesaja cavab verin`"
+
+# mediainfo
+mdi_1: "Ətraflı izahlı məlumat"
+
+# nightmode
+nightm_1: "Give Time in correct format"
+nightm_2: "Setted time successfully"
+nightm_3: "Done, Added Current Chat To Night Mode"
+nightm_4: "Done, Removed Current Chat from Night Mode"
+nightm_5: "Something Went Wrong"
+
+# pmpermit
+pmperm_1: "Zəhmət olmasa cavab verməyimi gözləyin, əks halda bloklanacaqsınız və spam olaraq bildiriləcəksiniz!!"
+pmperm_2: "Eyy, mən sənə spam göndərmə dedim!\nHələlik bloklanmısan və şikayət etmisən."
+pmperm_3: "Kiminsə mesajına cavab verin və ya bu əmri şəxsi olaraq sınayın."
+
+# schedule_msg
+schdl_1: "`Planlaşdırılmış mesaj uğurla edildi`."
+schdl_2: "`Format səfdi`"
+
+# searches
+srch_1: "`Mənə istifadəçi adı verin!!`"
+srch_2: "`İstifadəçini tapa bilmədim...`"
+srch_3: "`Musiqini tapa bilmədim...`"
+
+# snip
+snip_1: "Snip etmək üçün bir şeyi yanıtlayıb ad ver."
+snip_2: "Mənə silmək istədiyin sözü ver..."
+snip_3: "Snip yoxdur."
+
+# specialtools
+spcltool_1: "Musiqini və ya videonu yanıtlayın"
+spcltool_2: "`Uğurludur..İndi bu Audionu əlavə etmək istədiyiniz videoya cavab verin `"
+spcltool_3: "Videonu yanıtlayın"
+spcltool_4: "`Faylnı yanıtlayıb .raw yazın`"
+spcltool_5: "Yükləmə uğurludur, İndi musiqi və ya video əlavə et"
+spcltool_6: "`Düzgün istifadə et\nİstifadə: dd/mm/yyyy format`"
+spcltool_7: "`Ad günün mübarək🎉🎊`"
+spcltool_8: "Axtarış üçün mənə nəsə ver.."
+spcltool_9: "Heçnə yoxdur."
+
+# sudo
+sudo_1: "`Reply to a msg or add it's id/username.`"
+sudo_2: "You cant add yourself as Sudo User..."
+sudo_3: "`No SUDO User was assigned ...`"
+
+# unsplash
+unspl_1: "Məlumat tapa bilmədim !"
+
+# updater
+upd_1: "`Checking for updates...`"
+upd_2: "`Oops.. Updater cannot continue due to some problems.`\n\n**LOGTRACE:**\n"
+upd_3: "**New UPDATE available for [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
+upd_4: "`Changelog is too big, view the file to see it.`"
+upd_5: "Click the below button to update."
+upd_6: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_7: "`Fast Soft Updating...`"
+
+# upload download
+udl_1: "`Reply to the file/media you want to download...`"
+udl_2: "Download Successful..\nTo\n`{}`\nin `{}`"
+udl_3: "`Give a specific path to file`"
+udl_4: "`Trying to download...`"
+udl_5: "`You forgot to give link :(`"
+udl_6: "`This Directory is Empty.`"
+
+# words
+wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
+wrd_2: "**Word** - `{}`\n\n**Synonyms** - \n"
+wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
+wrd_4: "`Give a Word to Find Its Meaning..`"
+wrd_5: "Synonyms"
+wrd_6: "Antonyms"
+wrd_7: "No synonym found!!\n\n`{}`"
+wrd_8: "No Antonyms found!!\n\n`{}`"
+
+# profanitY
+prof_1: "`Added This Chat for Profanity Filtering!`"
+prof_2: "`Removed This Chat from Profanity Filtering!`"
+
+# notes
+notes_1: "`Use this Command with Reply and word to use a note.`"
+notes_2: "Done Note : `#{}` saved."
+notes_3: "`Give me the note handler which you want to remove.`"
+notes_4: "Notes Found In This Chats Are\n\n"
+notes_5: "No Notes Found Here"
+
+# stickertools
+sts_1: "`Sən heç bir məqalə yazmamısan, Vayfu gedir.`"
+sts_2: "`Stickeri yanıtlayın...`"
+sts_3: "**Zəhmət olmasa seçin {} **"
+sts_4: "`Sən hərəkətli stickerə yanır atmadın.`"
+sts_5: "**Paketə əlavə olundu**.\n**Paket linki:** [burada]({})"
+sts_6: "`Mesaja və ya medianı yanıtla...`"
+sts_7: "`Sticker yeni paketə əlavə olundu !\nYeni paket yaradıldı!\nYeni paketin` [burada](t.me/addstickers/{})"
+sts_8: "`Paketə əlavə edə bilmədim,` @Stickers `botuna paketə Stickeri özünüz əlavə edin.`"
+sts_9: "`Ooo hərəkətli sticker👀...`"
+sts_10: "`Medianı yanıtlayın...`"
+sts_11: "Sticker paketə əlavə olunur..."
+sts_12: "`Oğurladıç!`\n`Emoji` : {}\n`Sticker Paketi` [burada](t.me/addstickers/{})"
+sts_13: "`Kifayət qədər yer olmadığından Paket {} -ə keçid`"
+
+# whichsong
+whs_1: "<• Faylı yanıtla •>"
+whs_2: "`Musiqini axtarıram....`"
+whs_3: "Musiqini tapa bilmədim :("
+whs_4: "**Musiqini tapdım!**\nBaşlıq: __{}__"
+
+# webupload
+wbl_1: "`Mənə fayl adı ver..`"
+
+# writer
+writer_1: "`Mənə mətn ver`"
+
+# webshot
+wbs_1: "`Mənə link ver!`"
+wbs_2: "Link səfdi!"
+wbs_3: "**WebShot hazırlandı**\n**URL**: {}"
+
+# youtube
+youtube_1: "Mahnı yükləmək linki düzgün verin!"
+youtube_2: "`Musiqi linkini düzgün ver`"
+youtube_3: "Youtubefən yükləmək üçün linki düzgün verin!"
+youtube_4: "`Mənə yükləmək üçün linki füzgün verin`"
+youtube_5: "Mənə axtarış üçün arqument verin!"
+youtube_6: "`Musiqi yüklənir ...`"
+youtube_7: "Mənə axtarış üçün arqument verin!"
+youtube_8: "`Video musiqi yüklənir...`"
+
+# ziptools
+zip_1: "Media və ya fayla yanıt verin."
+zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
+zip_3: "`Yalnız zip faylı yanıtla.`"
+
+# ------------------------- assistant --------------------------#
+
+ast_1: "Api tapa bilmədim."
+ast_2: "**remove.bg API**\nApi key əlavə et\n\n /cancel edərək prosesi dayandır."
+ast_3: "Hey {}. Zəhmət olmasa seçimləri nəzərdən keçirin"
+
+# inlinestuff
+instu_1: "App axtarma. Mənə arqument verin!"
+instu_2: "Son axtarışlar.."
+instu_3: "Axtarış üçün söz yazın"
+instu_4: "Uğurlu"
+
+# callbackstuffs
+clst_1: "'Qurma prosesi, onun tamamlanmasını gözləyin."
+clst_2: "`Güncəlləmə uğurla bitdi!\nRestartlanır, biraz gözləyin...`"
+clst_3: "■ Log hazırlanır..."
+clst_4: "Gözlənilməz xəta baş verdi..."
+clst_5: "Uğurlu!"
+
+# -------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Left the voice chat.`"
+vcbot_2: "**ERROR:**\n{}"
+vcbot_3: "• Volume Changed to `{}%` •"
+vcbot_4: "`Please specify a volume from 1 to 200!`"
+vcbot_5: "`Re-joining this voice chat.`"
+vcbot_6: "You haven't connected to a voice chat!"
+vcbot_7: "`Keep patience... It'll take some time.`"
+vcbot_8: "Give only youtube playlist"
+vcbot_9: "Are You Kidding Me?\nWhat to Play?"
+vcbot_10: "Removed Chat from Vc AUTH Groups!"
+vcbot_11: "`Getting Voice Chat Bot Users List...`"
+vcbot_12: "`Muted playback in this chat.`"
+vcbot_13: "`Resumed playback in this chat.`"
+vcbot_14: "`Paused playback in this chat.`"
+vcbot_15: "Please specify a song name or reply to a video file !"
+vcbot_16: "Chat is Not in Vc Auth list..."
+vcbot_17: "`Reply to user's msg or add it's id/username...`"
+vcbot_18: "• Vc Auth List is Empty.."
+vcbot_19: "Already Authed This Chat!"
+vcbot_20: "`Downloading and converting...`"
+vcbot_21: "• Nothing in queue!"
+vcbot_22: "`Cleaned All Queues In Chat`"

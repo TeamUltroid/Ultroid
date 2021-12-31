@@ -28,9 +28,9 @@ help_5: "• Addons"
 help_6: "••Voice Chat"
 help_7: "Inline Plugins••"
 help_8: "⚙️ Owner Tools"
-help_9: "Pengaturan ⚙️"
+help_9: "Settings ⚙️"
 help_10: "••ᴛᴜᴛᴜᴘ••"
-help_11: "Nama Plugin-{}\n\n✘ Perintah Tersedia -\n\n"
+help_11: "Nama Plugin - {}\n\n✘ Perintah Tersedia -\n\n"
 
 # userlogs
 userlogs_1: "Id Obrolan yang Anda Masukan Di Tag Logger Salah, Harap Perbaiki"
@@ -119,9 +119,10 @@ autopic_5: "AUTOPIC Berhenti!"
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
 inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nᴋᴇᴛɪᴋ `.setredis ADDONS True` ᴅᴀɴ ʀᴇsᴛᴀʀᴛ ᴜɴᴛᴜᴋ ᴍᴇɴᴅᴀᴘᴀᴛᴋᴀɴ ᴀᴅᴅᴏɴs.**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nᴋᴇᴛɪᴋ `.setdb ADDONS True` ᴅᴀɴ ʀᴇsᴛᴀʀᴛ ᴜɴᴛᴜᴋ ᴍᴇɴᴅᴀᴘᴀᴛᴋᴀɴ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Tᴇʟᴀʜ Dɪᴛᴜᴛᴜᴘ**"
+inline_6: "**Menu Bantuan untuk Voice Chat {}**\n**Perintah yang tersedia:** `{}`\n\n@TeamUltroid"
 inline_7: "Ketik `.help {}` untuk mendapatkan daftar perintah."
 inline_8: "Klik tombol di bawah ini untuk memperbarui!"
 inline_9: "Anda Sudah Menggunakan Versi Terbaru"
@@ -150,8 +151,8 @@ bot_1: "Hey, I am alive."
 bot_2: "Stats"
 bot_3: "Repo"
 bot_4: "Support"
-bot_5: "• `Restarting...`"
-alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Pemilik** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+bot_5: "`Restarting...`"
+alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
@@ -227,7 +228,7 @@ cvt_8: "`Bukan File yang Dapat Dibaca.`"
 
 # eventsofday
 eod_1: "🎊 *Acara Hari Ini**\n\n"
-eod_2: "• **Acara untuk {}/2021**\n\n"
+eod_2: "• **Acara untuk {}/2021-2022**\n\n"
 
 # core
 core_1: "`Modul ditemukan`"
@@ -261,6 +262,9 @@ dm_3: "**⚜️Berhasil Mengirim Pesan!⚜️**"
 dm_4: "ERROR: {}\nBaca Cara Menggunakan Ketik `{}help dm`"
 dm_5: "`Silahkan Check di Private.`"
 dm_6: "`Tidak ditemukan pesan untuk dikirim :(`"
+
+# echo
+echo_1: "**Echo Diaktifkan Untuk Pengguna:**\n\n"
 
 # fake action
 fka_1: "Memulai Fake Action Untuk {} detik."
@@ -417,12 +421,6 @@ prof_1: "`Menambahkan Obrolan Ini untuk Penyaringan Kata-kata Tidak Senonoh!`"
 prof_2: "`Menghapus Obrolan Ini dari Pemfilteran Kata-Kata Tidak Senonoh!`"
 
 # notes
-notes_1: "`Use this Command with Reply and word to use a note.`"
-notes_2: "Done Note : `#{}` saved."
-notes_3: "`Give me the note handler which you want to remove.`"
-notes_4: "Notes Found In This Chats Are\n\n"
-notes_5: "No Notes Found Here"
-
 notes_1: "`Gunakan Perintah ini dengan Balasan dan kata untuk menggunakan catatan.`"
 notes_2: "Berhasil Menyimpan Catatan `#{}`"
 notes_3: "`Beri saya handler catatan yang ingin Anda hapus.`"
@@ -483,3 +481,49 @@ ast_1: "Pilih API yang ingin Anda setel."
 ast_2: "**remove.bg API**\nMasukkan API key Anda dari remove.bg.\n\nGunakan /cancel untuk membatalkan."
 ast_3: "Haloo {}. Silakan telusuri opsi"
 
+# inlinestuff
+instu_1: "Pencarian aplikasi. Masukkan nama aplikasi!"
+instu_2: "History Pencarian terkini"
+instu_3: "Masukkan Keyword untuk dicari"
+instu_4: "Berhasil"
+
+# callbackstuffs
+clst_1: "`Build dyno userbot sedang berlangsung, silahkan tunggu sampai selesai.`"
+clst_2: "`Berhasil Diperbarui!\nMulai ulang, harap tunggu...`"
+clst_3: "■ Mengambil Changelogs..."
+clst_4: "Maaf Telah Terjadi ERROR..."
+clst_5: "Selesai!"
+
+# pmbot
+pmbot_1: "**Anda harus bergabung dengan obrolan di bawah ini untuk mengobrol dengan tuan saya!\n\n**"
+pmbot_2: "Tolong balas seseorang untuk dibanned."
+pmbot_3: "Pengguna sudah dibanned!"
+pmbot_4: "`Selamat tinggal! Kamu di blokir.`\n**Pesan yang Anda kirim tidak akan diteruskan.**"
+pmbot_5: "Tolong balas seseorang untuk Unban dia."
+pmbot_6: "Pengguna ini tidak pernah dibanned!"
+pmbot_7: "`Selamat! Anda telah dibatalkan pemblokirannya.`"
+
+# -------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Meninggalkan obrolan suara.`"
+vcbot_2: "**ERROR:**\n{}"
+vcbot_3: "• Mengubah Volume menjadi `{}%` •"
+vcbot_4: "`Harap tentukan volume dari 1 hingga 200!`"
+vcbot_5: "`Bergabung kembali dengan obrolan suara ini.`"
+vcbot_6: "Anda belum terhubung ke obrolan suara!"
+vcbot_7: "`Harap Tunggu... Ini akan memakan waktu.`"
+vcbot_8: "Berikan daftar putar youtube"
+vcbot_9: "Apakah Anda Bercanda?\nApa yang Harus Dimainkan?"
+vcbot_10: "Obrolan Dihapus dari Grup Vc AUTH!"
+vcbot_11: "`Mendapatkan Daftar Pengguna Bot Obrolan Suara...`"
+vcbot_12: "`Pemutaran tanpa suara dalam obrolan ini.`"
+vcbot_13: "`Melanjutkan Pemutaran dalam obrolan ini.`"
+vcbot_14: "`Pemutaran dijeda dalam obrolan ini.`"
+vcbot_15: "Silakan tentukan nama lagu atau balas file video!"
+vcbot_16: "Obrolan Tidak ada dalam daftar Vc Auth..."
+vcbot_17: "`Balas pesan pengguna atau tambahkan id/username...`"
+vcbot_18: "• Daftar Otentikasi Vc Kosong.."
+vcbot_19: "Sudah Mengotentikasi Obrolan Ini!"
+vcbot_20: "`Mengunduh dan mengonversi...`"
+vcbot_21: "• Tidak ada dalam antrian!"
+vcbot_22: "`Grup ini telah dihapus dari antrian!`"

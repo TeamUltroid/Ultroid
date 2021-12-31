@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -18,35 +18,41 @@
 
 """
 
-from pyUltroid.dB.clean_db import add_clean, rem_clean
+from telethon.utils import get_display_name
 
-from . import eor, get_string, udB, ultroid_cmd
+from . import get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)
 async def _(e):
-    add_clean(e.chat_id)
-    await eor(e, get_string("clan_1"), time=5)
+    key = udB.get_key("CLEANCHAT") or []
+    if e.chat_id in key:
+        return await eod(e, get_string("clan_5"))
+    key.append(e.chat_id)
+    udB.set_key("CLEANCHAT", key)
+    await e.eor(get_string("clan_1"), time=5)
 
 
 @ultroid_cmd(pattern="remclean$")
 async def _(e):
-    rem_clean(e.chat_id)
-    await eor(e, get_string("clan_2"), time=5)
+    key = udB.get_key("CLEANCHAT") or []
+    if e.chat_id in key:
+        key.remove(e.chat_id)
+        udB.set_key("CLEANCHAT", key)
+    await e.eor(get_string("clan_2"), time=5)
 
 
 @ultroid_cmd(pattern="listclean$")
 async def _(e):
-    k = udB.get("CLEANCHAT")
+    k = udB.get_key("CLEANCHAT")
     if k:
-        k = k.split(" ")
         o = ""
         for x in k:
             try:
-                title = e.chat.title
+                title = get_display_name(await e.client.get_entity(x))
             except BaseException:
                 title = get_string("clan_3")
-            o += x + " " + title + "\n"
-        await eor(e, o)
+            o += f"{x} {title}\n"
+        await e.eor(o)
     else:
-        await eor(e, get_string("clan_4"), time=5)
+        await e.eor(get_string("clan_4"), time=5)
