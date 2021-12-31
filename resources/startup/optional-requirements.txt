@@ -6,7 +6,7 @@ apscheduler
 bs4
 cairosvg
 cfscrape
-enhancer==0.2.24b0
+enhancer==0.3.1
 gingerit
 git+https://github.com/1danish-00/google_trans_new.git
 git+https://github.com/New-dev0/instagrapi.git
