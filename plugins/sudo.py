@@ -23,7 +23,7 @@ from telethon.tl.types import User
 from . import get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="addsudo  ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
     if ult.reply_to_msg_id:
@@ -63,7 +63,7 @@ async def _(ult):
     await ult.eor(mmm, time=5)
 
 
-@ultroid_cmd(pattern="delsudo  ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
 async def _(ult):
     inputs = ult.pattern_match.group(1)
     if ult.reply_to_msg_id:

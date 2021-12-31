@@ -592,7 +592,7 @@ async def ultd(event):
     os.remove(ultt)
 
 
-@ultroid_cmd(pattern="border  ?(.*)")
+@ultroid_cmd(pattern="border ?(.*)")
 async def ok(event):
     hm = await event.get_reply_message()
     if not (hm and (hm.photo or hm.sticker)):
@@ -620,7 +620,7 @@ async def ok(event):
     await event.delete()
 
 
-@ultroid_cmd(pattern="pixelator  ?(.*)")
+@ultroid_cmd(pattern="pixelator ?(.*)")
 async def pixelator(event):
     reply_message = await event.get_reply_message()
     if not (reply_message and reply_message.photo):

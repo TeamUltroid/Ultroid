@@ -41,7 +41,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="compress  ?(.*)")
+@ultroid_cmd(pattern="compress ?(.*)")
 async def _(e):
     cr = e.pattern_match.group(1)
     crf = 27

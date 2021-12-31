@@ -22,7 +22,7 @@ from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 from . import HNDLR, LOGS, async_searcher, eor, events, udB, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="addnsfw  ?(.*)", admins_only=True)
+@ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
 async def addnsfw(e):
     if not udB.get_key("DEEP_API"):
         return await eor(

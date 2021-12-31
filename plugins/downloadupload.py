@@ -46,7 +46,7 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="download  ?(.*)",
+    pattern="download ?(.*)",
 )
 async def down(event):
     matched = event.pattern_match.group(1)
@@ -80,7 +80,7 @@ async def down(event):
 
 
 @ultroid_cmd(
-    pattern="dl  ?(.*)",
+    pattern="dl ?(.*)",
 )
 async def download(event):
     if not event.reply_to_msg_id:
@@ -133,7 +133,7 @@ async def download(event):
 
 
 @ultroid_cmd(
-    pattern="ul  ?(.*)",
+    pattern="ul ?(.*)",
 )
 async def download(event):
     xx = await event.eor(get_string("com_1"))

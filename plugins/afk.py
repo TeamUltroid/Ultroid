@@ -37,7 +37,7 @@ from . import (
 old_afk_msg = []
 
 
-@ultroid_cmd(pattern="afk  ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="afk ?(.*)", fullsudo=True)
 async def set_afk(event):
     if event.client._bot or is_afk():
         return

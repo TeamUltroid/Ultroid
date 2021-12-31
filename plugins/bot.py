@@ -104,7 +104,7 @@ async def alive(event):
 
 
 @ultroid_cmd(
-    pattern="alive  ?(.*)",
+    pattern="alive ?(.*)",
 )
 async def lol(ult):
     match = ult.pattern_match.group(1)
@@ -230,7 +230,7 @@ async def shutdownbot(ult):
 
 
 @ultroid_cmd(
-    pattern="logs  ?(.*)",
+    pattern="logs ?(.*)",
     chats=[],
 )
 async def _(event):
@@ -310,7 +310,7 @@ async def inline_alive(ult):
     await ult.answer(result)
 
 
-@ultroid_cmd(pattern="update  ?(.*)")
+@ultroid_cmd(pattern="update ?(.*)")
 async def _(e):
     xx = await e.eor(get_string("upd_1"))
     if e.pattern_match.group(1) and (

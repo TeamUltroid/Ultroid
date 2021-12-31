@@ -178,7 +178,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="setgpic  ?(.*)", admins_only=True, manager=True, require="change_info"
+    pattern="setgpic ?(.*)", admins_only=True, manager=True, require="change_info"
 )
 async def _(ult):
     if not ult.is_reply:
@@ -209,7 +209,7 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delgpic  ?(.*)", admins_only=True, manager=True, require="change_info"
+    pattern="delgpic ?(.*)", admins_only=True, manager=True, require="change_info"
 )
 async def _(ult):
     match = ult.pattern_match.group(1)
@@ -245,7 +245,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="rmusers  ?(.*)",
+    pattern="rmusers ?(.*)",
     groups_only=True,
     admins_only=True,
     fullsudo=True,
