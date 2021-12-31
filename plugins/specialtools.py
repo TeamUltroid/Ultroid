@@ -322,7 +322,7 @@ async def quott_(event):
                         limit=int(spli_[0]),
                     )
                 else:
-                    id_ = reply_.id
+                    id_ = reply.id
                     reply_ = []
                     for msg_ in range(id_, id_ + int(spli_[0]) + 1):
                         msh = await event.client.get_messages(event.chat_id, ids=msg_)
