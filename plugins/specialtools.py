@@ -307,7 +307,7 @@ async def quott_(event):
         return await event.eor("`Reply to Message..`")
     msg = await event.eor(get_string("com_1"))
     reply = await event.get_reply_message()
-    replied_to = None
+    replied_to, reply_ = None, None
     if match:
         spli_ = match.split(maxsplit=1)
         if (spli_[0] in ["r", "reply"]) or (
@@ -329,13 +329,14 @@ async def quott_(event):
                         if msh:
                             reply_.append(msh)
             else:
-                reply_ = reply
                 replied_to = await reply_.get_reply_message()
             try:
                 match = spli_[1]
             except IndexError:
                 match = None
     user = None
+    if not reply_:
+        reply_ = reply
     if match:
         match = match.split(maxsplit=1)
     if match:
