@@ -329,7 +329,7 @@ async def quott_(event):
                         if msh:
                             reply_.append(msh)
             else:
-                replied_to = await reply_.get_reply_message()
+                replied_to = await reply.get_reply_message()
             try:
                 match = spli_[1]
             except IndexError:
