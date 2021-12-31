@@ -123,7 +123,7 @@ async def date(event):
     y = dt.now().year
     d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
-    ultroid = await event.eor(f"`{k}\n\n{d}`")
+    await event.eor(f"`{k}\n\n{d}`")
 
 
 @ultroid_cmd(
