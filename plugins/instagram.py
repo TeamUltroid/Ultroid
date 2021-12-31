@@ -55,7 +55,7 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="instadl ?(.*)")
+@ultroid_cmd(pattern="instadl( (.*)|$)")
 async def insta_dl(e):
     match = e.pattern_match.group(1)
     replied = await e.get_reply_message()
@@ -116,7 +116,7 @@ async def insta_dl(e):
     await eor(tt, "Please Fill Instagram Credential to Use this Command...")
 
 
-@ultroid_cmd(pattern="instadata ?(.*)")
+@ultroid_cmd(pattern="instadata( (.*)|$)")
 async def soon_(e):
     cl = await create_instagram_client(e)
     if not cl:
@@ -152,7 +152,7 @@ async def soon_(e):
     await ew.delete()
 
 
-@ultroid_cmd(pattern="(instaul|reels|igtv) ?(.*)")
+@ultroid_cmd(pattern="(instaul|reels|igtv)( (.*)|$)")
 async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:

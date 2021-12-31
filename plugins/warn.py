@@ -30,7 +30,7 @@ from . import eor, get_string, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="warn ?(.*)",
+    pattern="warn( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -104,7 +104,7 @@ async def warn(e):
 
 
 @ultroid_cmd(
-    pattern="resetwarn ?(.*)",
+    pattern="resetwarn( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -130,7 +130,7 @@ async def rwarn(e):
 
 
 @ultroid_cmd(
-    pattern="warns ?(.*)",
+    pattern="warns( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -162,7 +162,7 @@ async def twarns(e):
         await e.eor("`No Warnings`")
 
 
-@ultroid_cmd(pattern="setwarn ?(.*)", manager=True)
+@ultroid_cmd(pattern="setwarn( (.*)|$)", manager=True)
 async def warnset(e):
     ok = e.pattern_match.group(1)
     if not ok:

@@ -68,7 +68,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="rename ?(.*)",
+    pattern="rename( (.*)|$)",
 )
 async def imak(event):
     reply = await event.get_reply_message()
@@ -161,7 +161,7 @@ async def smak(event):
 
 
 @ultroid_cmd(
-    pattern="doc ?(.*)",
+    pattern="doc( (.*)|$)",
 )
 async def _(event):
     input_str = event.pattern_match.group(1)
@@ -180,7 +180,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="open ?(.*)",
+    pattern="open( (.*)|$)",
 )
 async def _(event):
     a = await event.get_reply_message()

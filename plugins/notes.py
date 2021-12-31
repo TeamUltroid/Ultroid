@@ -31,7 +31,7 @@ from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
-@ultroid_cmd(pattern="addnote ?(.*)", admins_only=True)
+@ultroid_cmd(pattern="addnote( (.*)|$)", admins_only=True)
 async def an(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
@@ -73,7 +73,7 @@ async def an(e):
     ultroid_bot.add_handler(notes, events.NewMessage())
 
 
-@ultroid_cmd(pattern="remnote ?(.*)", admins_only=True)
+@ultroid_cmd(pattern="remnote( (.*)|$)", admins_only=True)
 async def rn(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id

@@ -81,7 +81,7 @@ async def mi(e):
     os.remove(naam)
 
 
-@ultroid_cmd(pattern="rotate ?(.*)")
+@ultroid_cmd(pattern="rotate( (.*)|$)")
 async def rotate_(ult):
     match = ult.pattern_match.group(1)
     if not ult.is_reply:

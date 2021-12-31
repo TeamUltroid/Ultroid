@@ -38,7 +38,7 @@ GDrive = GDriveManager()
 
 
 @ultroid_cmd(
-    pattern="gdown ?(.*)",
+    pattern="gdown( (.*)|$)",
     fullsudo=True,
 )
 async def gdown(event):
@@ -95,7 +95,7 @@ async def files(event):
 
 
 @ultroid_cmd(
-    pattern="gdul ?(.*)",
+    pattern="gdul( (.*)|$)",
     fullsudo=True,
 )
 async def _(event):
@@ -151,7 +151,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="gdsearch ?(.*)",
+    pattern="gdsearch( (.*)|$)",
     fullsudo=True,
 )
 async def _(event):
@@ -195,7 +195,7 @@ async def _(event):
 
 """
 @ultroid_cmd(
-    pattern="udir ?(.*)",
+    pattern="udir( (.*)|$)",
     fullsudo=True,
 )
 async def _(event):

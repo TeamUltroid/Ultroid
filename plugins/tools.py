@@ -88,7 +88,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="id ?(.*)",
+    pattern="id( (.*)|$)",
     manager=True,
 )
 async def _(event):
@@ -131,7 +131,7 @@ async def _(event):
         )
 
 
-@ultroid_cmd(pattern="bots ?(.*)", groups_only=True, manager=True)
+@ultroid_cmd(pattern="bots( (.*)|$)", groups_only=True, manager=True)
 async def _(ult):
     mentions = "• **Bots in this Chat**: \n"
     input_str = ult.pattern_match.group(1)
@@ -227,7 +227,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="ls ?(.*)",
+    pattern="ls( (.*)|$)",
 )
 async def _(e):
     files = e.pattern_match.group(1)
@@ -350,7 +350,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="sg ?(.*)",
+    pattern="sg( (.*)|$)",
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1)
@@ -400,7 +400,7 @@ async def lastname(steal):
         await lol.edit("Error: @SangMataInfo_bot is not responding!.")
 
 
-@ultroid_cmd(pattern="webshot ?(.*)")
+@ultroid_cmd(pattern="webshot( (.*)|$)")
 async def webss(event):
     xx = await event.eor(get_string("com_1"))
     xurl = event.pattern_match.group(1)

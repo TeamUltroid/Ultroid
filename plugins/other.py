@@ -50,7 +50,7 @@ async def dm(e):
         await e.eor(get_string("dm_4").format(m, HNDLR), time=5)
 
 
-@ultroid_cmd(pattern="fwdreply ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="fwdreply( (.*)|$)", fullsudo=True)
 async def _(e):
     message = e.pattern_match.group(1)
     if not e.reply_to_msg_id:

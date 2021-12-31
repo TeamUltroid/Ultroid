@@ -64,7 +64,7 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins"
+    pattern="promote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
 )
 async def prmte(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -92,7 +92,7 @@ async def prmte(ult):
 
 
 @ultroid_cmd(
-    pattern="demote ?(.*)", admins_only=True, manager=True, require="add_admins"
+    pattern="demote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
 )
 async def dmote(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -119,7 +119,7 @@ async def dmote(ult):
 
 
 @ultroid_cmd(
-    pattern="ban ?(.*)",
+    pattern="ban( (.*)|$)",
     admins_only=True,
     manager=True,
     require="ban_users",
@@ -147,7 +147,7 @@ async def bban(ult):
     await eod(ult, text)
 
 
-@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users")
 async def uunban(ult):
     xx = await ult.eor(get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
@@ -172,7 +172,7 @@ async def uunban(ult):
 
 
 @ultroid_cmd(
-    pattern="kick ?(.*)",
+    pattern="kick( (.*)|$)",
     manager=True,
     require="ban_users",
 )
@@ -206,7 +206,7 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban ?(.*)", manager=True, require="ban_users")
+@ultroid_cmd(pattern="tban( (.*)|$)", manager=True, require="ban_users")
 async def tkicki(e):
     huh = e.text.split(" ")
     inputt = None
@@ -280,7 +280,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", manager=True, require="delete_messages")
+@ultroid_cmd(pattern="purge( (.*)|$)", manager=True, require="delete_messages")
 async def fastpurger(purg):
     match = purg.pattern_match.group(1)
     try:
@@ -317,7 +317,7 @@ async def fastpurger(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeme ?(.*)",
+    pattern="purgeme( (.*)|$)",
 )
 async def fastpurgerme(purg):
     num = purg.pattern_match.group(1)
@@ -432,7 +432,7 @@ async def get_all_pinned(event):
 
 
 @ultroid_cmd(
-    pattern="autodelete ?(.*)",
+    pattern="autodelete( (.*)|$)",
     admins_only=True,
 )
 async def autodelte(ult):
