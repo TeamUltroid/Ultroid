@@ -136,8 +136,6 @@ async def download(event):
     pattern="ul( (.*)|$)",
 )
 async def download(event):
-    if event.text[1:].startswith("ultroid"):
-        return
     xx = await event.eor(get_string("com_1"))
     hmm = event.pattern_match.group(1)
     try:
