@@ -656,7 +656,7 @@ async def coder_print(event):
         a = None
         c = msg.text
     pygments.highlight(
-        f"{c}",
+        c,
         Python3Lexer(),
         ImageFormatter(line_numbers=True),
         "result.png",
