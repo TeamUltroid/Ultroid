@@ -240,9 +240,7 @@ async def _(event):
     else:
         message = None
     if not message:
-        return await xx.eor(
-            "`Reply to a Message/Document or Give me Some Text !`", time=5
-        )
+        return await xx.eor("`Reply to a Message/Document or Give me Some Text !`", time=5)
     done, key = await get_paste(message)
     if not done:
         return await xx.eor(key)
@@ -263,7 +261,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="info ?(.*)",
+    pattern="info( (.*)|$)",
     manager=True,
 )
 async def _(event):
@@ -366,7 +364,7 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="invite ?(.*)",
+    pattern="invite( (.*)|$)",
     groups_only=True,
 )
 async def _(ult):
@@ -445,7 +443,7 @@ async def abs_rmbg(event):
 
 
 @ultroid_cmd(
-    pattern="telegraph ?(.*)",
+    pattern="telegraph( (.*)|$)",
 )
 async def telegraphcmd(event):
     match = event.pattern_match.group(1) or "Ultroid"
@@ -510,9 +508,9 @@ async def _(event):
         await event.eor(f"```{the_real_message}```")
 
 
-@ultroid_cmd(pattern="suggest", manager=True)
+@ultroid_cmd(pattern="suggest( (.*)|$)", manager=True)
 async def sugg(event):
-    sll = event.text.split(" ", maxsplit=1)
+    sll = event.text.split(maxsplit=1)
     try:
         text = sll[1]
     except IndexError:
@@ -542,9 +540,9 @@ async def sugg(event):
     await event.delete()
 
 
-@ultroid_cmd(pattern="ipinfo ?(.*)")
+@ultroid_cmd(pattern="ipinfo( (.*)|$)")
 async def ipinfo(event):
-    ip = event.text.split(" ")
+    ip = event.text.split()
     ipaddr = ""
     try:
         ipaddr = "/" + ip[1]
