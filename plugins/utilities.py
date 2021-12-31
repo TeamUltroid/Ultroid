@@ -240,7 +240,9 @@ async def _(event):
     else:
         message = None
     if not message:
-        return await xx.eor("`Reply to a Message/Document or Give me Some Text !`", time=5)
+        return await xx.eor(
+            "`Reply to a Message/Document or Give me Some Text !`", time=5
+        )
     done, key = await get_paste(message)
     if not done:
         return await xx.eor(key)
