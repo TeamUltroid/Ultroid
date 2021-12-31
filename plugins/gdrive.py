@@ -141,7 +141,9 @@ async def _(event):
     if os.path.isdir(filename):
         files = os.listdir(filename)
         if not files:
-            return await eod(mone, "`Requested directory is empty. Can't create empty directory.`")
+            return await eod(
+                mone, "`Requested directory is empty. Can't create empty directory.`"
+            )
         folder_id = GDrive.create_directory(filename)
         c = 0
         for files in os.listdir(files):
@@ -151,8 +153,12 @@ async def _(event):
                     await GDrive._upload_file(mone, path=file, folder_id=folder_id)
                     c += 1
                 except Exception as e:
-                    return await mone.edit(f"Exception occurred while uploading to gDrive {e}")
-        return await mone.edit("`Uploaded `[{filename}](https://drive.google.com/folderview?id={folder_id})` with {c} files.`")
+                    return await mone.edit(
+                        f"Exception occurred while uploading to gDrive {e}"
+                    )
+        return await mone.edit(
+            "`Uploaded `[{filename}](https://drive.google.com/folderview?id={folder_id})` with {c} files.`"
+        )
     try:
         g_drive_link = await GDrive._upload_file(
             mone,
