@@ -228,7 +228,7 @@ cvt_8: "`Bukan File yang Dapat Dibaca.`"
 
 # eventsofday
 eod_1: "🎊 *Acara Hari Ini**\n\n"
-eod_2: "• **Acara untuk {}/2021-2022-2022**\n\n"
+eod_2: "• **Acara untuk {}/2021-2022**\n\n"
 
 # core
 core_1: "`Modul ditemukan`"
