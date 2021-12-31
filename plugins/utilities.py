@@ -418,6 +418,11 @@ async def abs_rmbg(event):
     if not dl.endswith(("webp", "jpg", "png", "jpeg")):
         os.remove(dl)
         return await event.eor(get_string("com_4"))
+    if mediainfo(reply.media) == "sticker":
+            file = dl + ".png"
+            Image.open(dl).save(file)
+            os.remove(dl)
+            dl = file
     xx = await event.eor("`Sending to remove.bg`")
     dn, out = await ReTrieveFile(dl)
     os.remove(dl)
