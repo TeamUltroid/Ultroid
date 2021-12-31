@@ -23,8 +23,10 @@
 from . import HNDLR, eod, get_string, ultroid_cmd
 
 
-@ultroid_cmd(pattern="(send|dm) ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="(send|dm)", fullsudo=True)
 async def dm(e):
+    if e.text[1:].startswith("dmute"):
+        return
     if len(e.text.split()) <= 1:
         return await e.eor(get_string("dm_1"), time=5)
     chat = e.text.split()[1]
