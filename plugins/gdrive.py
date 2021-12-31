@@ -137,7 +137,22 @@ async def _(event):
                 "File Not found in local server. Give me a file path :((",
                 time=5,
             )
-
+    folder_id = None
+    if os.path.isdir(filename):
+        files = os.listdir(filename)
+        if not files:
+            return await eod(mone, "`Requested directory is empty. Can't create empty directory.`")
+        folder_id = GDrive.create_directory(filename)
+        c = 0
+        for files in os.listdir(files):
+            file = filename + "/" + files
+            if not os.path.isdir(file):
+                try:
+                    await GDrive._upload_file(mone, path=file, folder_id=folder_id)
+                    c += 1
+                except Exception as e:
+                    return await mone.edit(f"Exception occurred while uploading to gDrive {e}")
+        return await mone.edit("`Uploaded `[{filename}](https://drive.google.com/folderview?id={folder_id})` with {c} files.`")
     try:
         g_drive_link = await GDrive._upload_file(
             mone,
@@ -226,8 +241,7 @@ async def _(event):
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     if GDrive.folder_id:
-        await eod(
-            event,
+        await event.eor(
             "`Here is Your G-Drive Folder link : `\n"
             + "https://drive.google.com/folderview?id="
             + GDrive.folder_id,
