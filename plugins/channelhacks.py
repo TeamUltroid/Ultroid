@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -32,7 +32,7 @@
       Show List of Ur channels
 
    'you can set many channels in database'
-   'For activating auto-post use `{i}setredis AUTOPOST True` '
+   'For activating auto-post use `{i}setdb AUTOPOST True` '
 """
 
 import asyncio
@@ -56,7 +56,7 @@ from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
 @ultroid_bot.on(events.NewMessage())
 async def _(e):
-    if udB.get("AUTOPOST") != "True":
+    if udB.get_key("AUTOPOST") != "True":
         return
     x = get_source_channels()
     th = await e.get_chat()
@@ -67,13 +67,13 @@ async def _(e):
         try:
             await ultroid_bot.send_message(int(ys), e.message)
         except Exception as ex:
-            await asst.send_message(int(udB["LOG_CHANNEL"]), str(ex))
+            await asst.send_message(int(udB.get_key("LOG_CHANNEL")), str(ex))
 
 
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1)
-    z = await eor(e, get_string("com_1"))
+    z = await e.eor(get_string("com_1"))
     a, b = x.split("|")
     try:
         c = int(a)
@@ -113,18 +113,18 @@ async def source(e):
             return
     if not is_source_channel_added(y):
         add_source_channel(y)
-        await eor(e, get_string("cha_2"))
+        await e.eor(get_string("cha_2"))
     elif is_source_channel_added(y):
-        await eor(e, get_string("cha_3"))
+        await e.eor(get_string("cha_3"))
 
 
 @ultroid_cmd(pattern="dsource ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_SOURCE")
+        udB.del_key("CH_SOURCE")
         await x.edit(get_string("cha_4"))
         return
     try:
@@ -147,7 +147,7 @@ async def dd(event):
 
 @ultroid_cmd(pattern="listsource")
 async def list_all(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_source_channels()
     num = get_no_source_channels()
     if num == 0:
@@ -191,18 +191,18 @@ async def destination(e):
             return
     if not is_destination_added(y):
         add_destination(y)
-        await eor(e, "Destination added succesfully")
+        await e.eor("Destination added succesfully")
     elif is_destination_added(y):
-        await eor(e, "Destination channel already added")
+        await e.eor("Destination channel already added")
 
 
 @ultroid_cmd(pattern="ddest ?(.*)")
 async def dd(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("CH_DESTINATION")
+        udB.del_key("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
     try:
@@ -226,7 +226,7 @@ async def dd(event):
 @ultroid_cmd(pattern="listdest")
 async def list_all(event):
     ultroid_bot = event.client
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_destinations()
     num = get_no_destinations()
     if not num:

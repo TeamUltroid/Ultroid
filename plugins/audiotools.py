@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -49,7 +49,7 @@ async def vnc(e):
     r = await e.get_reply_message()
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, get_string("spcltool_1"))
-    xxx = await eor(e, get_string("com_1"))
+    xxx = await e.eor(get_string("com_1"))
     dl = r.file.name
     c_time = time.time()
     file = await downloader(
@@ -89,7 +89,7 @@ async def trim_aud(e):
             name = ""
         if not name:
             name = dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_string("audiotools_5"))
+        xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -144,17 +144,17 @@ async def trim_aud(e):
         )
         await xxx.delete()
     else:
-        await eor(e, get_string("audiotools_1"), time=5)
+        await e.eor(get_string("audiotools_1"), time=5)
 
 
 @ultroid_cmd(pattern="extractaudio$")
 async def ex_aud(e):
     reply = await e.get_reply_message()
     if not (reply and reply.media and mediainfo(reply.media).startswith("video")):
-        return await eor(e, get_string("audiotools_8"))
+        return await e.eor(get_string("audiotools_8"))
     name = reply.file.name or "video.mp4"
     vfile = reply.media.document
-    msg = await eor(e, get_string("com_1"))
+    msg = await e.eor(get_string("com_1"))
     c_time = time.time()
     file = await downloader(
         "resources/downloads/" + name,

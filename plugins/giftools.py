@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -13,6 +13,9 @@
 •`{i}bwgif`
   Make Gif black and white
 
+•`{i}rvgif`
+  Reverse a gif
+
 •`{i}vtog`
   Reply To Video , It will Create Gif
   Video to Gif
@@ -25,22 +28,27 @@ import random
 import time
 from datetime import datetime as dt
 
-from . import HNDLR, LOGS, bash, downloader, eor, get_string, mediainfo, ultroid_cmd
+from . import HNDLR, LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd
 
 
-@ultroid_cmd(pattern="bwgif$")
+@ultroid_cmd(pattern="(bw|invert)gif$")
 async def igif(e):
+    match = e.pattern_match.group(1)
     a = await e.get_reply_message()
     if not (a and a.media):
-        return await eor(e, "`Reply To gif only`", time=5)
+        return await e.eor("`Reply To gif only`", time=5)
     wut = mediainfo(a.media)
     if "gif" not in wut:
-        return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, get_string("com_1"))
+        return await e.eor("`Reply To Gif Only`", time=5)
+    xx = await e.eor(get_string("com_1"))
     z = await a.download_media()
+    if match == "bw":
+        cmd = f'ffmpeg -i "{z}" -vf format=gray ult.gif -y'
+    else:
+        cmd = f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y'
     try:
-        await bash(f'ffmpeg -i "{z}" -vf format=gray ult.gif -y')
-        await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
+        await bash(cmd)
+        await e.client.send_file(e.chat_id, "ult.gif", supports_streaming=True)
         os.remove(z)
         os.remove("ult.gif")
         await xx.delete()
@@ -48,26 +56,18 @@ async def igif(e):
         LOGS.info(er)
 
 
-@ultroid_cmd(pattern="invertgif$")
-async def igif(e):
-    a = await e.get_reply_message()
-    if not (a and a.media):
-        return await eor(e, "`Reply To gif only`", time=5)
-    wut = mediainfo(a.media)
-    if "gif" not in wut:
-        return await eor(e, "`Reply To Gif Only`", time=5)
-    xx = await eor(e, get_string("com_1"))
-    z = await a.download_media()
-    try:
-        await bash(
-            f'ffmpeg -i "{z}" -vf lutyuv="y=negval:u=negval:v=negval" ult.gif -y'
-        )
-        await e.client.send_file(e.chat_id, "ult.gif", support_stream=True)
-        os.remove(z)
-        os.remove("ult.gif")
-        await xx.delete()
-    except Exception as er:
-        LOGS.info(er)
+@ultroid_cmd(pattern="rvgif$")
+async def reverse_gif(event):
+    a = await event.get_reply_message()
+    if not (a and a.media) and "video" not in mediainfo(a.media):
+        return await e.eor("`Reply To Video only`", time=5)
+    msg = await event.eor(get_string("com_1"))
+    file = await a.download_media()
+    await bash(f'ffmpeg -i "{file}" -vf reverse -af areverse reversed.mp4 -y')
+    await event.respond("- **Reversed Video/GIF**", file="reversed.mp4")
+    await msg.delete()
+    os.remove(file)
+    os.remove("reversed.mp4")
 
 
 @ultroid_cmd(pattern="gif ?(.*)")
@@ -81,8 +81,8 @@ async def gifs(ult):
         except IndexError:
             pass
     if not get:
-        return await eor(ult, f"`{HNDLR}gif <query>`")
-    m = await eor(ult, get_string("com_2"))
+        return await ult.eor(f"`{HNDLR}gif <query>`")
+    m = await ult.eor(get_string("com_2"))
     gifs = await ult.client.inline_query("gif", get)
     if not n:
         await gifs[xx].click(
@@ -100,11 +100,11 @@ async def gifs(ult):
 async def vtogif(e):
     a = await e.get_reply_message()
     if not (a and a.media):
-        return await eor(e, "`Reply To video only`", time=5)
+        return await e.eor("`Reply To video only`", time=5)
     wut = mediainfo(a.media)
     if "video" not in wut:
-        return await eor(e, "`Reply To Video Only`", time=5)
-    xx = await eor(e, get_string("com_1"))
+        return await e.eor("`Reply To Video Only`", time=5)
+    xx = await e.eor(get_string("com_1"))
     dur = a.media.document.attributes[0].duration
     tt = time.time()
     if int(dur) < 120:

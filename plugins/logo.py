@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -17,36 +17,29 @@ import glob
 import os
 import random
 
-from PIL import Image, ImageDraw, ImageFont
 from pyUltroid.functions.misc import unsplashsearch
+from pyUltroid.functions.tools import make_logo
 from telethon.tl.types import InputMessagesFilterPhotos
 
-from . import (
-    OWNER_ID,
-    OWNER_NAME,
-    download_file,
-    eor,
-    get_string,
-    mediainfo,
-    ultroid_cmd,
-)
+from . import OWNER_ID, OWNER_NAME, download_file, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="logo ?(.*)")
 async def logo_gen(event):
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     name = event.pattern_match.group(1)
     if not name:
-        await eor(xx, "`Give a name too!`", time=5)
+        await xx.eor("`Give a name too!`", time=5)
     bg_, font_ = None, None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
-            if hasattr(temp.media, "document"):
-                if "font" in temp.file.mime_type:
-                    font_ = await temp.download_media()
-                elif (".ttf" in temp.file.name) or (".otf" in temp.file.name):
-                    font_ = await temp.download_media()
+            if hasattr(temp.media, "document") and (
+                ("font" in temp.file.mime_type)
+                or (".ttf" in temp.file.name)
+                or (".otf" in temp.file.name)
+            ):
+                font_ = await temp.download_media("resources/fonts/")
             elif "pic" in mediainfo(temp.media):
                 bg_ = await temp.download_media()
     if not bg_:
@@ -67,15 +60,20 @@ async def logo_gen(event):
         fpath_ = glob.glob("resources/fonts/*")
         font_ = random.choice(fpath_)
     if len(name) <= 8:
-        fnt_size = 150
         strke = 10
     elif len(name) >= 9:
-        fnt_size = 50
         strke = 5
     else:
-        fnt_size = 130
         strke = 20
-    img = Image.open(bg_)
+    make_logo(
+        bg_,
+        name,
+        font_,
+        fill="white",
+        stroke_width=strke,
+        stroke_fill="black",
+    )
+    """img = Image.open(bg_)
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(font_, fnt_size)
     w, h = draw.textsize(name, font=font)
@@ -91,9 +89,8 @@ async def logo_gen(event):
     y = (image_height - h) / 2
     draw.text(
         (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
-    )
-    flnme = "ultd.png"
-    img.save(flnme, "png")
+    )"""
+    flnme = "Logo.png"
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
         await event.client.send_file(
@@ -106,5 +103,3 @@ async def logo_gen(event):
         await xx.delete()
     if os.path.exists(bg_):
         os.remove(bg_)
-    if os.path.exists(font_) and not font_.startswith("resources/fonts"):
-        os.remove(font_)

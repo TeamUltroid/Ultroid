@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -8,18 +8,25 @@
 import re
 
 from telethon import Button
-from telethon.errors.rpcerrorlist import BotInlineDisabledError as dis
-from telethon.errors.rpcerrorlist import BotResponseTimeoutError as rep
-from telethon.errors.rpcerrorlist import MessageNotModifiedError as np
+from telethon.errors.rpcerrorlist import (
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    MessageNotModifiedError,
+)
+from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest as gu
-from telethon.tl.types import UserStatusEmpty as mt
-from telethon.tl.types import UserStatusLastMonth as lm
-from telethon.tl.types import UserStatusLastWeek as lw
-from telethon.tl.types import UserStatusOffline as off
-from telethon.tl.types import UserStatusOnline as on
-from telethon.tl.types import UserStatusRecently as rec
 
-from . import *
+from . import (
+    HNDLR,
+    LOGS,
+    asst,
+    callback,
+    get_string,
+    in_pattern,
+    inline_mention,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 buddhhu = {}
 
@@ -38,16 +45,15 @@ async def _(e):
     if put:
         try:
             results = await e.client.inline_query(asst.me.username, f"msg {put}")
-        except rep:
-            return await eor(
-                e,
+        except BotResponseTimeoutError:
+            return await e.eor(
                 get_string("help_2").format(HNDLR),
             )
-        except dis:
-            return await eor(e, get_string("help_3"))
+        except BotInlineDisabledError:
+            return await e.eor(get_string("help_3"))
         await results[0].click(e.chat_id, reply_to=e.reply_to_msg_id, hide_via=True)
         return await e.delete()
-    await eor(e, get_string("wspr_3"))
+    await e.eor(get_string("wspr_3"))
 
 
 @in_pattern("wspr", owner=True)
@@ -102,34 +108,31 @@ async def _(e):
         if query.isdigit():
             query = int(query)
         logi = await ultroid_bot(gu(id=query))
-        name = logi.user.first_name
-        ids = logi.user.id
-        username = logi.user.username
-        mention = f"[{name}](tg://user?id={ids})"
-        x = logi.user.status
-        bio = logi.about
-        if isinstance(x, on):
+        user = logi.users[0]
+        mention = inline_mention(user)
+        x = user.status
+        if isinstance(x, types.UserStatusOnline):
             status = "Online"
-        if isinstance(x, off):
+        elif isinstance(x, types.UserStatusOffline):
             status = "Offline"
-        if isinstance(x, rec):
+        elif isinstance(x, types.UserStatusRecently):
             status = "Last Seen Recently"
-        if isinstance(x, lm):
+        elif isinstance(x, types.UserStatusLastMonth):
             status = "Last seen months ago"
-        if isinstance(x, lw):
+        elif isinstance(x, types.UserStatusLastWeek):
             status = "Last seen weeks ago"
-        if isinstance(x, mt):
+        else:
             status = "Can't Tell"
-        text = f"**Name:**    `{name}`\n"
-        text += f"**Id:**    `{ids}`\n"
-        if username:
-            text += f"**Username:**    `{username}`\n"
-            url = f"https://t.me/{username}"
+        text = f"**Name:**    `{user.first_name}`\n"
+        text += f"**Id:**    `{user.id}`\n"
+        if user.username:
+            text += f"**Username:**    `{user.username}`\n"
+            url = f"https://t.me/{user.username}"
         else:
             text += f"**Mention:**    `{mention}`\n"
-            url = f"tg://user?id={ids}"
+            url = f"tg://user?id={user.id}"
         text += f"**Status:**    `{status}`\n"
-        text += f"**About:**    `{bio}`"
+        text += f"**About:**    `{logi.full_user.about}`"
         button = [
             Button.url("Private", url=url),
             Button.switch_inline(
@@ -139,7 +142,7 @@ async def _(e):
             ),
         ]
         sur = e.builder.article(
-            title=f"{name}",
+            title=user.first_name,
             description=desc,
             text=text,
             buttons=button,
@@ -150,7 +153,8 @@ async def _(e):
             description="You Didn't Type Username or id.",
             text="You Didn't Type Username or id.",
         )
-    except BaseException:
+    except BaseException as er:
+        LOGS.exception(er)
         name = get_string("wspr_4").format(query)
         sur = e.builder.article(
             title=name,
@@ -184,7 +188,7 @@ async def _(e):
             buddhhu.pop(ids)
             try:
                 await e.edit(get_string("wspr_2"))
-            except np:
+            except MessageNotModifiedError:
                 pass
         else:
             await e.answer(get_string("wspr_5"), alert=True)

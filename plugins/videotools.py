@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -30,7 +30,6 @@ from . import (
     downloader,
     duration_s,
     eod,
-    eor,
     genss,
     get_string,
     humanbytes,
@@ -58,7 +57,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_string("audiotools_5"))
+        xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -108,7 +107,7 @@ async def gen_sample(e):
         )
         await xxx.delete()
     else:
-        await eor(e, "`Reply To Video File Only`", time=5)
+        await e.eor(get_string("videotools_8"), time=5)
 
 
 @ultroid_cmd(pattern="vshots ?(.*)")
@@ -127,7 +126,7 @@ async def gen_shots(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_string("audiotools_5"))
+        xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -174,7 +173,7 @@ async def gen_sample(e):
             name = ""
         if not name:
             name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await eor(e, get_string("audiotools_5"))
+        xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
             "resources/downloads/" + name,
@@ -227,4 +226,4 @@ async def gen_sample(e):
         )
         await xxx.delete()
     else:
-        await eor(e, "`Reply To Video File Only`", time=5)
+        await e.eor(get_string("audiotools_8"), time=5)

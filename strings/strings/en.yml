@@ -14,8 +14,9 @@ com_1: "`Processing...`"
 com_2: "`Searching...`"
 com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
-com_5: "`Downloading...`"
-com_6: "`Uploading...`"
+com_5: "Downloading..."
+com_6: "Uploading..."
+com_7: "`Something Went Wrong.`"
 
 # chatactions
 can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
@@ -28,14 +29,15 @@ help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
 help_4: "• Plugins"
-help_5: "• Addons"
+help_5: "Addons •"
 help_6: "••Voice Chat"
 help_7: "Inline Plugins••"
 help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
 help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
-
+help_12: "Voice Call is not Active!"
+help_13: "Do '{}setdb ADDONS True' to Load Official Addons"
 
 # userlogs
 userlogs_1: "The Chat Id You Set In Tag Logger Is Wrong , Please Correct It"
@@ -49,7 +51,7 @@ adm_1: "`I couldn't get who he is!`"
 adm_2: "`Hmm.. Guess I have no rights here!`"
 adm_3: "`Provide a Time too..`"
 pro_1: "`Reply to a user to promote him!`"
-pro_2:  "{} `is now an admin in {} with title {}.`"
+pro_2: "{} `is now an admin in {} with title {}.`"
 de_1: "`Reply to a user to demote him!`"
 de_2: "{} `is no longer an admin in {}`"
 ban_1: "`Reply to a user or give username to ban him!`"
@@ -58,7 +60,7 @@ ban_3: "`I don't have the right to ban a user.`"
 ban_4: "{} **was banned by** {} **in** `{}`"
 ban_5: "\n**Reason**: `{}`"
 tban_1: "`Reply to someone or give its id...`"
-tban_2: "`Successfully Banned` `{}` `in {} for {}`"
+tban_2: "`Successfully Banned` {} `in {} for {}`"
 unban_1: "`Reply to a user or give username to unban him!`"
 unban_2: "`I don't have the right to unban a user.`"
 unban_3: "{} **was unbanned by** {} **in** `{}`"
@@ -68,6 +70,7 @@ kick_3: "`I Cant kick him ever...`"
 kick_4: "{} **was kicked by** {} **in** `{}`"
 pin_1: "`Reply to a message to pin it!`"
 pinned_1: "No Pinned Message Found!"
+pinned_2: "Pinned Message in Current chat is [here]({})."
 unpin_1: "Either reply to a message, or, use `{}unpin all`"
 listpin_1: "There is no message pinned in this group!"
 purge_1: "`Reply to a message to purge from.`"
@@ -111,7 +114,7 @@ asstcmd_5: "No commands found"
 asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
 
 # autocorrect
-act_1: "AUTOCORRECT Feature On"
+act_1: "AUTOCORRECT Feature ON"
 act_2: "AUTOCORRECT Feature Off"
 
 # autopic
@@ -124,7 +127,7 @@ autopic_5: "AUTOPIC Stopped!"
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
 inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setredis ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setdb ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
@@ -157,7 +160,7 @@ bot_2: "Stats"
 bot_3: "Repo"
 bot_4: "Support"
 bot_5: "• `Restarting...`"
-alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n✵ **Owner** - `{}`\n✵ **Ultroid** - `{}`\n✵ **Py-Ultroid** - `{}`\n✵ **UpTime** - `{}`\n✵ **Python** - `{}`\n✵ **Telethon** - `{}`\n✵ **Branch** - `{}`"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
@@ -182,7 +185,6 @@ bd_6: "`Channel is already is database!`"
 bd_7: "Removed from database"
 bd_8: "`Removing...`"
 bd_9: "Channel is already removed from database. "
-
 
 # calculator
 calc_1: "• Ultroid Inline Calculator •"
@@ -221,6 +223,7 @@ clan_1: "Added Clean Action Setting For this Chat"
 clan_2: "Removed Clean Action Setting For this Chat"
 clan_3: "`Invalid ID`"
 clan_4: "`No Chat Added`"
+clan_5: "Clean Actions are already enabled in this Chat."
 
 # converter
 cvt_1: "`Reply to any media/Document.`"
@@ -234,7 +237,7 @@ cvt_8: "`Not A Readable File.`"
 
 # eventsofday
 eod_1: "🎊 **Events of the Day**\n\n"
-eod_2: "• **Events for {}/2021**\n\n"
+eod_2: "• **Events for {}/2021-2022**\n\n"
 
 # core
 core_1: "Module Found"
@@ -264,8 +267,8 @@ devs_3: "`Give Some C++ Code..`"
 # dm
 dm_1: "`Give Chat username or id where to send.`"
 dm_2: "`Give text to send or reply to msg`"
-dm_3: "`⚜️Message Delivered!⚜️`"
-dm_4: "Error : {}\nRead Usage : `{}help dm`"
+dm_3: "⚜️ Message Delivered! ⚜️"
+dm_4: "Error : {}\nRead Usage : `{}help other`"
 dm_5: "`Check in Private.`"
 dm_6: "`No message found to deliver :(`"
 
@@ -326,13 +329,12 @@ ex_1: "`Reply to message..`"
 
 # gdrive
 gdrive_1: "`You have already authorised with Google Drive`"
-gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\n
-Send your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
+gdrive_2: "Go [here](https://console.developers.google.com/flows/enableapi?apiid=drive) and get your `GDRIVE_CLIENT_ID` and `GDRIVE_CLIENT_SECRET`\n\nSend your GDRIVE_CLIENT_ID and GDRIVE_CLIENT_SECRET as this.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separated by space."
 gdrive_3: "`Wrong Client Id`"
-gdrive_4: "`Something went wrong! Send `/auth` again.\nIf the same happens, contact `@TheUltroid"
+gdrive_4: "`Something went wrong! Authorise again.\nIf the same happens, contact `@TheUltroid"
 gdrive_5: "`Success!\nYou are all set to use Google Drive with Ultroid Userbot.`"
-gdrive_6: "`Go to `{}` and send ``/auth.`"
-gdrive_7: "**Successfully uploaded the file to G-Drive :**\n\n[{}]({})"
+gdrive_6: "`Go `[here](t.me/{}?start=set)` and setup G-Drive`"
+gdrive_7: "Successfully uploaded [{}]({}) on G-Drive"
 
 # get addons
 gas_1: "Please provide a raw link!"
@@ -345,6 +347,9 @@ grt_4: "`No welcome was set!`"
 grt_5: "`Welcome Note Deleted`"
 grt_6: "`No goodbye was set!`"
 grt_7: "`Reply to message which u want to set as goodbye`"
+
+# glitch
+glitch_1: "`Glitching...`"
 
 # mediainfo
 mdi_1: "More Explained Info"
@@ -390,6 +395,7 @@ spcltool_9: "Found Nothing"
 sudo_1: "`Reply to a msg or add it's id/username.`"
 sudo_2: "You cant add yourself as Sudo User..."
 sudo_3: "`No SUDO User was assigned ...`"
+sudo_4: "`Bots can't be added as Sudo Users.`"
 
 # unsplash
 unspl_1: "No Results Found !"
@@ -410,6 +416,15 @@ udl_3: "`Give a specific path to file`"
 udl_4: "`Trying to download...`"
 udl_5: "`You forgot to give link :(`"
 udl_6: "`This Directory is Empty.`"
+udl_7: "`You can't do that!`"
+
+# vctools
+vct_1: "`Voice Chat Started...`"
+vct_2: "**Successfully Changed VC Title to** `{}`"
+vct_3: "`Inviting Members to Voice Chat...`"
+vct_4: "`Voice Chat Stopped...`"
+vct_5: "`Invited {} users`"
+vct_6: "No input Found!"
 
 # words
 wrd_1: "• **Word :** `{}`\n• **Meaning :** __{}__\n\n• **Example :** __{}__"
@@ -441,7 +456,7 @@ sts_5: "**Pack Kanged Successfully**.\n**Kanged Pack:** [link]({})"
 sts_6: "`Reply to message/media...`"
 sts_7: "`Sticker added in a Different Pack !\nThis Pack is Newly created!\nYour pack can be found` [here](t.me/addstickers/{})"
 sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.`"
-sts_9:  "`Ooo Animated Sticker 👀...`"
+sts_9: "`Ooo Animated Sticker 👀...`"
 sts_10: "`Reply to any media...`"
 sts_11: "Kanging this Sticker..."
 sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
@@ -454,7 +469,7 @@ whs_3: "Failed to Identify song :("
 whs_4: "**Song Recognised!**\nName: __{}__"
 
 # webupload
-wbl_1:  "`Provide a File Name pls..`"
+wbl_1: "`Provide a File Name pls..`"
 
 # writer
 writer_1: "`Give Some Text Too`"
@@ -479,6 +494,11 @@ zip_1: "Reply to any media/Document."
 zip_2: "First add All Files Via `{}addzip` then doZip to zip all files at one."
 zip_3: "`Reply to zip file only`"
 
+# file share
+fsh_1: "**List of files stored.:**"
+fsh_2: "**File has been stored!**\n\n**Shareable link:** {}"
+fsh_3: "`Reply to a message to make a shareable link!`"
+fsh_4: "**No files stored!**"
 # ------------------------- assistant --------------------------#
 
 ast_1: "Choose which API you want to set."
@@ -491,12 +511,29 @@ instu_2: "Recent Searches.."
 instu_3: "Enter Query to Search"
 instu_4: "Success"
 
+# games
+games_1: "Choose The Game 🎮"
+games_2: "Choose Category!"
+games_3: "Choose Difficulty Level"
+games_4: "Choose Number of Questions.."
+games_5: "Choose Time Interval..."
+games_6: "**• Starting Quiz in 5 secs.** \n**• Level :** {}\n**• Qs :** {}"
+
 # callbackstuffs
 clst_1: "`Userbot dyno build in progress, please wait for it to complete.`"
 clst_2: "`Successfully Updated!\nRestarting, please wait...`"
 clst_3: "■ Generating Changelogs..."
 clst_4: "Something went wrong..."
 clst_5: "Done!"
+
+# pmbot
+pmbot_1: "**You need to join below chat(s) in order to chat with my master!\n\n**"
+pmbot_2: "Please reply to someone to ban him."
+pmbot_3: "User is already banned!"
+pmbot_4: "`GoodBye! You have been banned.`\n**Further messages you send will not be forwarded.**"
+pmbot_5: "Please reply to someone to Unban him."
+pmbot_6: "User was never banned!"
+pmbot_7: "`Congrats! You have been unbanned.`"
 
 # -------------------------- VcBot ------------------------------- #
 

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -22,7 +22,7 @@ And Turn On auto at morning
    List NightMode
    To Get All List of Groups where NightMode Active.
 
-• `{i}nmtime <close hour> <close min> <open hour> <open min>
+• `{i}nmtime <close hour> <close min> <open hour> <open min>`
    NightMode Time
    By Default Its close 00:00 , open 07:00
    Use 24hr format
@@ -34,22 +34,22 @@ from pyUltroid.dB.night_db import *
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from . import LOGS, eor, ultroid_bot, ultroid_cmd
+from . import LOGS, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="nmtime ?(.*)")
 async def set_time(e):
     if not e.pattern_match.group(1):
-        return await eor(e, get_string("nightm_1"))
+        return await e.eor(get_string("nightm_1"))
     try:
         ok = e.text.split(maxsplit=1)[1].split()
         if len(ok) != 4:
-            return await eor(e, get_string("nightm_1"))
+            return await e.eor(get_string("nightm_1"))
         tm = [int(x) for x in ok]
-        udB.set("NIGHT_TIME", str(tm))
-        await eor(e, get_string("nightm_2"))
+        udB.set_key("NIGHT_TIME", str(tm))
+        await e.eor(get_string("nightm_2"))
     except BaseException:
-        await eor(e, get_string("nightm_1"))
+        await e.eor(get_string("nightm_1"))
 
 
 @ultroid_cmd(pattern="addnm ?(.*)")
@@ -58,11 +58,11 @@ async def add_grp(e):
     if pat:
         try:
             add_night((await ultroid_bot.get_entity(pat)).id)
-            return await eor(e, f"Done, Added {pat} To Night Mode.")
+            return await e.eor(f"Done, Added {pat} To Night Mode.")
         except BaseException:
-            return await eor(e, get_string("nightm_5"), time=5)
+            return await e.eor(get_string("nightm_5"), time=5)
     add_night(e.chat_id)
-    await eor(e, get_string("nightm_3"))
+    await e.eor(get_string("nightm_3"))
 
 
 @ultroid_cmd(pattern="remnm ?(.*)")
@@ -71,11 +71,11 @@ async def rem_grp(e):
     if pat:
         try:
             rem_night((await ultroid_bot.get_entity(pat)).id)
-            return await eor(e, f"Done, Removed {pat} To Night Mode.")
+            return await e.eor(f"Done, Removed {pat} To Night Mode.")
         except BaseException:
-            return await eor(e, get_string("nightm_5"), time=5)
+            return await e.eor(get_string("nightm_5"), time=5)
     rem_night(e.chat_id)
-    await eor(e, get_string("nightm_4"))
+    await e.eor(get_string("nightm_4"))
 
 
 @ultroid_cmd(pattern="listnm$")
@@ -88,7 +88,7 @@ async def rem_grp(e):
             name += "@" + ok.username if ok.username else ok.title
         except BaseException:
             name += str(x)
-    await eor(e, name)
+    await e.eor(name)
 
 
 async def open_grp():
@@ -118,8 +118,8 @@ async def open_grp():
 async def close_grp():
     chats = night_grps()
     h1, m1, h2, m2 = 0, 0, 7, 0
-    if udB.get("NIGHT_TIME"):
-        h1, m1, h2, m2 = eval(udB["NIGHT_TIME"])
+    if udB.get_key("NIGHT_TIME"):
+        h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
     for chat in chats:
         try:
             await ultroid_bot(
@@ -141,8 +141,8 @@ async def close_grp():
 if night_grps():
     try:
         h1, m1, h2, m2 = 0, 0, 7, 0
-        if udB.get("NIGHT_TIME"):
-            h1, m1, h2, m2 = eval(udB["NIGHT_TIME"])
+        if udB.get_key("NIGHT_TIME"):
+            h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
         sch = AsyncIOScheduler()
         sch.add_job(close_grp, trigger="cron", hour=h1, minute=m1)
         sch.add_job(open_grp, trigger="cron", hour=h2, minute=m2)

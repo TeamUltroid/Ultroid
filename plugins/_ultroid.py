@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -35,7 +35,7 @@ ULTSTRING = """🎇 **Thanks for Deploying Ultroid Userbot!**
 
 @ultroid_cmd(
     pattern="repo$",
-    type=["official", "manager"],
+    manager=True,
 )
 async def repify(e):
     try:
@@ -50,7 +50,7 @@ async def repify(e):
         pass
     except Exception as er:
         LOGS.info("Error while repo command : " + str(er))
-    await eor(e, REPOMSG)
+    await e.eor(REPOMSG)
 
 
 @ultroid_cmd(pattern="ultroid$")

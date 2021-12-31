@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -27,7 +27,7 @@ import os
 from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import eor, get_string, get_user_id, udB, ultroid_bot, ultroid_cmd
+from . import get_string, udB, ultroid_bot, ultroid_cmd
 
 bot = "@MissRose_bot"
 
@@ -36,28 +36,29 @@ bot = "@MissRose_bot"
     pattern="superfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, get_string("sf_1"))
+    msg = await event.eor(get_string("sf_1"))
     inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         FBAN = (await event.get_reply_message()).sender_id
         if inputt:
             REASON = inputt
     elif inputt:
-        REASON = "#TBMassBanned"
+        REASON = "#ULTMassBanned"
         arg = event.text.split()
         if len(arg) == 2:
-            FBAN = await get_user_id(arg[1])
+            FBAN = await event.client.parse_id(arg[1])
         elif len(arg) > 2:
-            FBAN = await get_user_id(arg[1])
+            FBAN = await event.client.parse_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit(get_string("sf_22"))
-
+    else:
+        return await msg.edit("`Reply to a message or give some input...`")
     if FBAN in DEVLIST:
         return await msg.edit("The user is my Dev and cannot be FBanned!")
 
-    if udB.get("FBAN_GROUP_ID"):
-        chat = int(udB.get("FBAN_GROUP_ID"))
+    if udB.get_key("FBAN_GROUP_ID"):
+        chat = int(udB.get_key("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
     fedList = []
@@ -123,13 +124,13 @@ async def _(event):
     except BaseException:
         return await msg.edit(get_string("sf_11"))
     await asyncio.sleep(3)
-    if udB.get("EXCLUDE_FED"):
-        excludeFed = udB.get("EXCLUDE_FED").split(" ")
+    if udB.get_key("EXCLUDE_FED"):
+        excludeFed = udB.get_key("EXCLUDE_FED").split(" ")
         for num, item in enumerate(excludeFed):
             excludeFed[num] = item.strip()
     exCount = 0
     for fed in fedList:
-        if udB.get("EXCLUDE_FED") and fed in excludeFed:
+        if udB.get_key("EXCLUDE_FED") and fed in excludeFed:
             await ultroid_bot.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
@@ -142,7 +143,7 @@ async def _(event):
     except Exception as e:
         print(f"Error in removing FedAdmin file.\n{e}")
     await msg.edit(
-        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#TB",
+        f"SuperFBan Completed.\nTotal Feds - {len(fedList)}.\nExcluded - {exCount}.\nAffected {len(fedList) - exCount} feds.\n#Ultroid",
     )
 
 
@@ -150,7 +151,7 @@ async def _(event):
     pattern="superunfban ?(.*)",
 )
 async def _(event):
-    msg = await eor(event, get_string("sf_15"))
+    msg = await event.eor(get_string("sf_15"))
     fedList = []
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -188,11 +189,11 @@ async def _(event):
         else:
             try:
                 FBAN = arg[1]
-                REASON = " #TBMassUnBanned "
+                REASON = " #ULTMassUnBanned "
             except BaseException:
                 return await msg.edit(get_string("sf_2"))
-    if udB.get("FBAN_GROUP_ID"):
-        chat = int(udB.get("FBAN_GROUP_ID"))
+    if udB.get_key("FBAN_GROUP_ID"):
+        chat = int(udB.get_key("FBAN_GROUP_ID"))
     else:
         chat = await event.get_chat()
     if not fedList:
@@ -257,13 +258,13 @@ async def _(event):
     except BaseException:
         return await msg.edit(get_string("sf_11"))
     await asyncio.sleep(3)
-    if udB.get("EXCLUDE_FED"):
-        excludeFed = udB.get("EXCLUDE_FED").split(" ")
+    if udB.get_key("EXCLUDE_FED"):
+        excludeFed = udB.get_key("EXCLUDE_FED").split(" ")
         for n, m in enumerate(excludeFed):
             excludeFed[n] = excludeFed[n].strip()
     exCount = 0
     for fed in fedList:
-        if udB.get("EXCLUDE_FED") and fed in excludeFed:
+        if udB.get_key("EXCLUDE_FED") and fed in excludeFed:
             await event.client.send_message(chat, f"{fed} Excluded.")
             exCount += 1
             continue
@@ -284,7 +285,7 @@ async def _(event):
     pattern="fstat ?(.*)",
 )
 async def _(event):
-    ok = await eor(event, "`Checking...`")
+    ok = await event.eor("`Checking...`")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         sysarg = str(previous_message.sender_id)

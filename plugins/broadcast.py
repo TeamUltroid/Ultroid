@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -36,8 +36,7 @@ from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 )
 async def broadcast_adder(event):
     msgg = event.pattern_match.group(1)
-    x = await eor(event, get_string("bd_1"))
-    aldone = new = crsh = 0
+    x = await event.eor(get_string("bd_1"))
     if msgg == "all":
         await x.edit(get_string("bd_2"))
         chats = [
@@ -45,6 +44,7 @@ async def broadcast_adder(event):
             for e in await event.client.get_dialogs()
             if (e.is_group or e.is_channel)
         ]
+        new = 0
         for i in chats:
             try:
                 if (
@@ -73,7 +73,7 @@ async def broadcast_adder(event):
         await event.delete()
         return
     chat_id = event.chat_id
-    if int(chat_id) == int(udB.get("LOG_CHANNEL")):
+    if int(chat_id) == int(udB.get_key("LOG_CHANNEL")):
         return
     if not is_channel_added(chat_id):
         xx = add_channel(chat_id)
@@ -95,10 +95,10 @@ async def broadcast_adder(event):
 )
 async def broadcast_remover(event):
     chat_id = event.pattern_match.group(1)
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
-        udB.delete("BROADCAST")
+        udB.del_key("BROADCAST")
         await x.edit("Database cleared.")
         return
     if is_channel_added(chat_id):
@@ -121,7 +121,7 @@ async def broadcast_remover(event):
     pattern="listchannels$",
 )
 async def list_all(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     channels = get_channels()
     num = get_no_channels()
     if num == 0:
@@ -156,10 +156,10 @@ async def list_all(event):
 )
 async def forw(event):
     if not event.is_reply:
-        return await eor(event, get_string("ex_1"))
+        return await event.eor(get_string("ex_1"))
     ultroid_bot = event.client
     channels = get_channels()
-    x = await eor(event, "Sending...")
+    x = await event.eor("Sending...")
     if get_no_channels() == 0:
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
@@ -177,7 +177,7 @@ async def forw(event):
         except Exception:
             try:
                 await ultroid_bot.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"Error in sending at {channel}.",
                 )
             except Exception as Em:
@@ -189,7 +189,7 @@ async def forw(event):
     await x.edit(f"{sent_count} messages sent with {error_count} errors.")
     if error_count > 0:
         await ultroid_bot.send_message(
-            int(udB.get("LOG_CHANNEL")), f"{error_count} Errors"
+            int(udB.get_key("LOG_CHANNEL")), f"{error_count} Errors"
         )
 
 
@@ -198,7 +198,7 @@ async def forw(event):
     allow_sudo=False,
 )
 async def sending(event):
-    x = await eor(event, get_string("com_1"))
+    x = await event.eor(get_string("com_1"))
     if not event.is_reply:
         return await x.edit(get_string("ex_1"))
     channels = get_channels()
@@ -222,7 +222,7 @@ async def sending(event):
                 except Exception as error:
 
                     await ultroid_bot.send_message(
-                        int(udB.get("LOG_CHANNEL")),
+                        int(udB.get_key("LOG_CHANNEL")),
                         f"Error in sending at {channel}.\n\n{error}",
                     )
                     error_count += 1
@@ -232,6 +232,6 @@ async def sending(event):
             await x.edit(f"{sent_count} messages sent with {error_count} errors.")
             if error_count > 0:
                 await ultroid_bot.send_message(
-                    int(udB.get("LOG_CHANNEL")),
+                    int(udB.get_key("LOG_CHANNEL")),
                     f"{error_count} Errors",
                 )

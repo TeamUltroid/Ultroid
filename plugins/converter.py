@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -28,15 +28,22 @@
 import os
 import time
 
+from . import LOGS
+
 try:
     import cv2
 except ImportError:
     cv2 = None
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    LOGS.info(f"{__file__}: PIL  not Installed.")
+    Image = None
+
 from telegraph import upload_file as uf
 
-from . import bash, downloader, eor, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
 
@@ -51,13 +58,13 @@ async def _(e):
     elif r.document and r.document.thumbs:
         dl = await r.download_media(thumb=-1)
     else:
-        return await eor(e, "`Reply to Photo or media with thumb...`")
+        return await e.eor("`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
     nn = "https://telegra.ph" + variable[0]
-    udB.set("CUSTOM_THUMBNAIL", str(nn))
+    udB.set_key("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
-    await eor(e, get_string("cvt_6").format(nn), link_preview=False)
+    await e.eor(get_string("cvt_6").format(nn), link_preview=False)
 
 
 @ultroid_cmd(
@@ -67,11 +74,11 @@ async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
-        return await eor(event, get_string("cvt_1"))
+        return await event.eor(get_string("cvt_1"))
     inp = event.pattern_match.group(1)
     if not inp:
-        return await eor(event, get_string("cvt_2"))
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_2"))
+    xx = await event.eor(get_string("com_1"))
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
@@ -86,7 +93,11 @@ async def imak(event):
             file = image.name
         else:
             file = await event.client.download_media(reply.media)
-    os.rename(file, inp)
+    if os.path.exists(inp):
+        os.remove(inp)
+    await bash(f"""ffmpeg -i "{file}" "{inp}" -y""")
+    if not os.path.exists(inp) or os.path.exists(inp) and not os.path.getsize(inp):
+        os.rename(file, inp)
     k = time.time()
     xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
@@ -105,9 +116,9 @@ async def imak(event):
 async def imak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
     file = "ult.png"
     if image.endswith((".webp", ".png")):
@@ -131,9 +142,9 @@ async def imak(event):
 async def smak(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await eor(event, get_string("cvt_3"))
+        await event.eor(get_string("cvt_3"))
         return
-    xx = await eor(event, get_string("com_1"))
+    xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
     file = "ult.webp"
     if image.endswith((".webp", ".png", ".jpg")):
@@ -155,8 +166,8 @@ async def smak(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not (input_str and event.is_reply):
-        return await eor(event, get_string("cvt_1"), time=5)
-    xx = await eor(event, get_string("com_1"))
+        return await event.eor(get_string("cvt_1"), time=5)
+    xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
     if not a.message:
         return await xx.edit(get_string("ex_1"))
@@ -169,19 +180,23 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="open$",
+    pattern="open ?(.*)",
 )
 async def _(event):
     a = await event.get_reply_message()
-    if not (a and a.media):
-        return await eor(event, get_string("cvt_7"), time=5)
-    xx = await eor(event, get_string("com_1"))
-    b = await a.download_media()
+    b = event.pattern_match.group(1)
+    if not ((a and a.media) or (b and os.path.exists(b))):
+        return await event.eor(get_string("cvt_7"), time=5)
+    xx = await event.eor(get_string("com_1"))
+    rem = None
+    if not b:
+        b = await a.download_media()
+        rem = True
     try:
         with open(b) as c:
             d = c.read()
     except UnicodeDecodeError:
-        return await eor(xx, get_string("cvt_8"), time=5)
+        return await xx.eor(get_string("cvt_8"), time=5)
     try:
         await xx.edit(f"```{d}```")
     except BaseException:
@@ -189,4 +204,5 @@ async def _(event):
         await xx.edit(
             f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
         )
-    os.remove(b)
+    if rem:
+        os.remove(b)

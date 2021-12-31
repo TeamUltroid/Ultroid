@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -16,9 +16,11 @@
 • `{i}listsudo`
     List all sudo users.
 """
-from pyUltroid.dB.sudos import add_sudo, del_sudo, is_sudo
 
-from . import Redis, eor, get_string, get_display_name, get_user_id, udB, ultroid_bot, ultroid_cmd
+from pyUltroid.misc import sudoers
+from telethon.tl.types import User
+
+from . import get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsudo ?(.*)", fullsudo=True)
@@ -26,37 +28,39 @@ async def _(ult):
     inputs = ult.pattern_match.group(1)
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
-        sender = await replied_to.get_sender()
         id = replied_to.sender_id
-        name = get_display_name(sender)
+        name = await replied_to.get_sender()
     elif inputs:
-        id = await get_user_id(inputs)
         try:
-            name = (await ult.client.get_entity(int(id))).first_name
+            id = await ult.client.parse_id(inputs)
+        except ValueError:
+            try:
+                id = int(inputs)
+            except ValueError:
+                id = inputs
+        try:
+            name = await ult.client.get_entity(int(id))
         except BaseException:
-            name = ""
+            name = None
     elif ult.is_private:
         id = ult.chat_id
-        name = get_display_name(ult.chat)
+        name = await ult.get_chat()
     else:
-        return await eor(ult, get_string("sudo_1"), time=5)
-
-    if id == ultroid_bot.me.id:
+        return await ult.eor(get_string("sudo_1"), time=5)
+    if name and isinstance(name, User) and (name.bot or name.verified):
+        return await ult.eor(get_string("sudo_4"))
+    name = inline_mention(name) if name else f"`{id}`"
+    if id == ultroid_bot.uid:
         mmm = get_string("sudo_2")
-    elif is_sudo(id):
-        if name != "":
-            mmm = f"[{name}](tg://user?id={id}) `is already a SUDO User ...`"
-        else:
-            mmm = f"`{id} is already a SUDO User...`"
-    elif add_sudo(id):
-        udB.set("SUDO", "True")
-        if name != "":
-            mmm = f"**Added [{name}](tg://user?id={id}) as SUDO User**"
-        else:
-            mmm = f"**Added **`{id}`** as SUDO User**"
+    elif id in sudoers():
+        mmm = f"{name} `is already a SUDO User ...`"
     else:
-        mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eor(ult, mmm, time=5)
+        udB.set_key("SUDO", "True")
+        key = sudoers()
+        key.append(id)
+        udB.set_key("SUDOS", key)
+        mmm = f"**Added {name} as SUDO User**"
+    await ult.eor(mmm, time=5)
 
 
 @ultroid_cmd(pattern="delsudo ?(.*)", fullsudo=True)
@@ -65,54 +69,55 @@ async def _(ult):
     if ult.reply_to_msg_id:
         replied_to = await ult.get_reply_message()
         id = replied_to.sender_id
-        name = get_display_name(replied_to.sender)
+        name = await replied_to.get_sender()
     elif inputs:
-        id = await get_user_id(inputs)
         try:
-            name = (await ult.client.get_entity(int(id))).first_name
+            id = await ult.client.parse_id(inputs)
+        except ValueError:
+            try:
+                id = int(inputs)
+            except ValueError:
+                id = inputs
+        try:
+            name = await ult.client.get_entity(int(id))
         except BaseException:
-            name = ""
+            name = None
     elif ult.is_private:
         id = ult.chat_id
-        name = get_display_name(ult.chat)
+        name = await ult.get_chat()
     else:
-        return await eor(ult, get_string("sudo_1"), time=5)
-    if not is_sudo(id):
-        if name != "":
-            mmm = f"[{name}](tg://user?id={id}) `wasn't a SUDO User ...`"
-        else:
-            mmm = f"`{id} wasn't a SUDO User...`"
-    elif del_sudo(id):
-        if name != "":
-            mmm = f"**Removed [{name}](tg://user?id={id}) from SUDO User(s)**"
-        else:
-            mmm = f"**Removed **`{id}`** from SUDO User(s)**"
+        return await ult.eor(get_string("sudo_1"), time=5)
+    name = inline_mention(name) if name else f"`{id}`"
+    if id not in sudoers():
+        mmm = f"{name} `wasn't a SUDO User ...`"
     else:
-        mmm = "`SEEMS LIKE THIS FUNCTION CHOOSE TO BREAK ITSELF`"
-    await eor(ult, mmm, time=5)
+        key = sudoers()
+        key.remove(id)
+        udB.set_key("SUDOS", key)
+        mmm = f"**Removed {name} from SUDO User(s)**"
+    await ult.eor(mmm, time=5)
 
 
 @ultroid_cmd(
     pattern="listsudo$",
 )
 async def _(ult):
-    sudos = Redis("SUDOS")
-    if sudos == "" or sudos is None:
-        return await eor(ult, get_string("sudo_3"), time=5)
-    sumos = sudos.split(" ")
+    sudos = sudoers()
+    if not sudos:
+        return await ult.eor(get_string("sudo_3"), time=5)
     msg = ""
-    for i in sumos:
+    for i in sudos:
         try:
-            name = (await ult.client.get_entity(int(i))).first_name
+            name = await ult.client.get_entity(int(i))
         except BaseException:
-            name = ""
-        if name != "":
-            msg += f"• [{name}](tg://user?id={i}) ( `{i}` )\n"
+            name = None
+        if name:
+            msg += f"• {inline_mention(name)} ( `{i}` )\n"
         else:
             msg += f"• `{i}` -> Invalid User\n"
-    m = udB.get("SUDO") or "False"
-    if m == "False":
+    m = udB.get_key("SUDO") or True
+    if not m:
         m = "[False](https://telegra.ph/Ultroid-04-06)"
-    return await eor(
-        ult, f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
+    return await ult.eor(
+        f"**SUDO MODE : {m}\n\nList of SUDO Users :**\n{msg}", link_preview=False
     )

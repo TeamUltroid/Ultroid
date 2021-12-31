@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
+# Copyright (C) 2021-2022 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -36,7 +36,7 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
 @ultroid_cmd(pattern="setbio ?(.*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "...")
+    ok = await ult.eor("...")
     set = ult.pattern_match.group(1)
     try:
         await ult.client(UpdateProfileRequest(about=set))
@@ -50,7 +50,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
-    ok = await eor(ult, "...")
+    ok = await ult.eor("...")
     names = ult.pattern_match.group(1)
     first_name = names
     last_name = ""
@@ -74,9 +74,9 @@ async def _(ult):
 @ultroid_cmd(pattern="setpic$", fullsudo=True)
 async def _(ult):
     if not ult.is_reply:
-        return await eor(ult, "`Reply to a Media..`", time=5)
+        return await ult.eor("`Reply to a Media..`", time=5)
     reply_message = await ult.get_reply_message()
-    ok = await eor(ult, get_string("com_1"))
+    ok = await ult.eor(get_string("com_1"))
     replfile = await reply_message.download_media()
     file = await ult.client.upload_file(replfile)
     try:
@@ -111,14 +111,13 @@ async def remove_profilepic(delpfp):
 @ultroid_cmd(pattern="poto ?(.*)")
 async def gpoto(e):
     ult = e.pattern_match.group(1)
-    a = await eor(e, get_string("com_1"))
-    if ult:
-        pass
-    elif e.is_reply:
-        gs = await e.get_reply_message()
-        ult = gs.sender_id
-    else:
-        ult = e.chat_id
+    a = await e.eor(get_string("com_1"))
+    if not ult:
+        if e.is_reply:
+            gs = await e.get_reply_message()
+            ult = gs.sender_id
+        else:
+            ult = e.chat_id
     okla = await e.client.download_profile_photo(ult)
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
