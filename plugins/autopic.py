@@ -21,7 +21,7 @@ from random import shuffle
 from pyUltroid.functions.google_image import googleimagesdownload
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 
-from . import LOGS, get_string, udB, ultroid_cmd, ultroid_bot
+from . import LOGS, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="autopic ?(.*)")
