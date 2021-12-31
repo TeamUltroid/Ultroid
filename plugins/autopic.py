@@ -94,3 +94,4 @@ if search := udB.get_key("AUTOPIC"):
 
     schedule = AsyncIOScheduler()
     schedule.add_job(autopic_func, "interval", seconds=sleep)
+    schedule.start()
