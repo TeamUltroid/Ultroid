@@ -109,6 +109,8 @@ if udB.get_key("TAG_LOG"):
         if event.chat_id not in TAG_EDITS:
             if event.sender_id == udB.get_key("TAG_LOG"):
                 return
+            if event.is_private:
+                return
             entities = event.get_entities_text()
             if entities:
                 is_self = False
