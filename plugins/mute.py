@@ -30,6 +30,7 @@ from pyUltroid.dB.mute_db import is_muted, mute, unmute
 from pyUltroid.functions.admins import ban_time
 from telethon import events
 from telethon.utils import get_display_name
+
 from . import eod, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
 
@@ -174,12 +175,7 @@ async def _(e):
         await xx.eor(f"`{m}`", time=5)
 
 
-@ultroid_cmd(
-    pattern="mute ?(.*)",
-    admins_only=True,
-    manager=True,
-    require="ban_users"
-)
+@ultroid_cmd(pattern="mute ?(.*)", admins_only=True, manager=True, require="ban_users")
 async def _(e):
     xx = await e.eor("`Muting...`")
     input = e.pattern_match.group(1)
