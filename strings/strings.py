@@ -41,6 +41,9 @@ def get_string(key: str) -> Any:
             return tr
         except KeyError:
             return f"Warning: could not load any string with the key `{key}`"
+        except Exception as er:
+            LOGS.exception(er)
+            return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:
