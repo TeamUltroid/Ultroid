@@ -50,10 +50,12 @@ from pyUltroid.dB.ch_db import (
     rem_source_channel,
 )
 from telethon.errors.rpcerrorlist import FloodWaitError
-from telethon.utils import get_peer_id, get_display_name
-from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd, LOGS
+from telethon.utils import get_display_name, get_peer_id
+
+from . import LOGS, asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
 ERROR = {}
+
 
 async def autopost_func(e):
     if not udB.get_key("AUTOPOST"):
@@ -70,7 +72,7 @@ async def autopost_func(e):
             try:
                 ERROR[str(ex)]
             except KeyError:
-                ERROR.update({str(ex):ex})
+                ERROR.update({str(ex): ex})
                 Error = f"**Error on AUTOPOST**\n\n`{ex}`"
                 await asst.send_message(udB.get_key("LOG_CHANNEL"), Error)
 
@@ -96,7 +98,7 @@ async def _(e):
             await asyncio.sleep(2)
             await e.client.send_message(int(d), msg)
         except FloodWaitError as er:
-            await asyncio.sleep(er.seconds+5)
+            await asyncio.sleep(er.seconds + 5)
             await e.client.send_message(int(d), msg)
         except BaseException as er:
             LOGS.exception(er)
