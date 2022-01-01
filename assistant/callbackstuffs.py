@@ -472,11 +472,12 @@ async def _(e):
     await e.delete()
     async with asst.conversation(e.sender_id, timeout=150) as conv:
         await conv.send_message(msg)
-        id = (await conv.get_response()).text
+        repl = await conv.get_response()
+        id = repl.text
         if id.startswith("https"):
             id = id.split("?id=")[-1]
         udB.set_key("GDRIVE_FOLDER_ID", id)
-        await e.reply(
+        await repl.reply(
             "`Success.`",
             buttons=get_back_button("gdrive"),
         )
