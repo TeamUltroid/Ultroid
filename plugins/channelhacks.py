@@ -49,6 +49,7 @@ from pyUltroid.dB.ch_db import (
     rem_destination,
     rem_source_channel,
 )
+from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.utils import get_peer_id, get_display_name
 from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd, LOGS
 
@@ -105,11 +106,14 @@ async def _(e):
 @ultroid_cmd(pattern="asource (.*)")
 async def source(e):
     x = e.pattern_match.group(1)
-    try:
-        y = await e.client.parse_id(a)
-    except Exception as er:
-        LOGS.exception(er)
-        return
+    if not x:
+        y = e.chat_id
+    else:
+        try:
+            y = await e.client.parse_id(x)
+        except Exception as er:
+            LOGS.exception(er)
+            return
     if not is_source_channel_added(y):
         add_source_channel(y)
         await e.eor(get_string("cha_2"))
@@ -127,11 +131,14 @@ async def dd(event):
         udB.del_key("CH_SOURCE")
         await x.edit(get_string("cha_4"))
         return
-    try:
-        y = await e.client.parse_id(chat_id)
-    except Exception as er:
-        LOGS.exception(er)
-        return
+    if chat_id:
+        try:
+            y = await e.client.parse_id(chat_id)
+        except Exception as er:
+            LOGS.exception(er)
+            return
+    else:
+        y = event.chat_id
     if is_source_channel_added(y):
         rem_source_channel(y)
         await eor(x, get_string("cha_5"), time=3)
@@ -178,11 +185,14 @@ async def list_all(event):
 @ultroid_cmd(pattern="adest (.*)")
 async def destination(e):
     x = e.pattern_match.group(1)
-    try:
-        y = await e.client.parse_id(x)
-    except Exception as er:
-        LOGS.exception(er)
-        return
+    if x:
+        try:
+            y = await e.client.parse_id(x)
+        except Exception as er:
+            LOGS.exception(er)
+            return
+    else:
+        y = e.chat_id
     if not is_destination_added(y):
         add_destination(y)
         await e.eor("Destination added succesfully")
@@ -199,11 +209,14 @@ async def dd(event):
         udB.del_key("CH_DESTINATION")
         await x.edit("Destinations database cleared.")
         return
-    try:
-        y = await e.client.parse_id(chat_id)
-    except Exception as er:
-        LOGS.exception(er)
-        return
+    if chat_id:
+        try:
+            y = await e.client.parse_id(chat_id)
+        except Exception as er:
+            LOGS.exception(er)
+            return
+    else:
+        y = event.chat_id
     if is_destination_added(y):
         rem_destination(y)
         await eor(x, "Destination removed from database")
