@@ -244,11 +244,12 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
+    GDrive = GDriveManager()
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     if GDrive.folder_id:
         await event.eor(
-            "`Here is Your G-Drive Folder link : `\n"
+            "`Your G-Drive Folder link : `\n"
             + "https://drive.google.com/folderview?id="
             + GDrive.folder_id,
         )
