@@ -78,8 +78,7 @@ async def _help(ult):
         except BotMethodInvalidError:
             z = []
             for x in LIST.values():
-                for y in x:
-                    z.append(y)
+                z.extend(x)
             cmd = len(z) + 10
             if udB.get_key("MANAGER") and udB.get_key("DUAL_HNDLR") == "/":
                 _main_help_menu[2:3] = [[Button.inline("• Manager Help •", "mngbtn")]]

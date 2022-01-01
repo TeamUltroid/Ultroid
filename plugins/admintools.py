@@ -179,6 +179,8 @@ async def uunban(ult):
 async def kck(ult):
     if "kickme" in ult.text:
         return
+    if ult.is_private:
+        return await ult.eor("`Use this in Group/Channel.`", time=5)
     ml = ult.text.split(" ", maxsplit=1)[0]
     xx = await ult.eor(get_string("com_1"))
     something = await get_uinfo(ult)
@@ -206,9 +208,9 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban ?(.*)", manager=True, require="ban_users")
+@ultroid_cmd(pattern="tban ?(.*)", admins_only=True, manager=True, require="ban_users")
 async def tkicki(e):
-    huh = e.text.split(" ")
+    huh = e.text.split()
     inputt = None
     try:
         tme = huh[1]
@@ -240,7 +242,7 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
+@ultroid_cmd(pattern="pin$", admins_only=True, manager=True, require="pin_messages")
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -260,6 +262,7 @@ async def pin(msg):
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
+    admins_only=True,
     manager=True,
     require="pin_messages",
 )

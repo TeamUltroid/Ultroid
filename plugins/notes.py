@@ -104,7 +104,9 @@ async def notes(e):
             if k.get("button"):
                 btn = create_tl_btn(k["button"])
                 return await something(e, msg, media, btn)
-            await e.reply(msg, file=media)
+            await e.client.send_message(
+                e.chat_id, msg, file=media, reply_to=e.reply_to_msg_id or e.id
+            )
 
 
 if udB.get_key("NOTE"):

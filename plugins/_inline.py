@@ -215,7 +215,7 @@ async def uptd_plugin(event):
 
 @callback(data="doupdate", owner=True)
 async def _(event):
-    if not updater():
+    if not await updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
     if not INLINE_PIC:
         return await event.answer(f"Do '{HNDLR}update' to update..")

@@ -293,7 +293,7 @@ async def wall(event):
         "format": "jpg",
         "output_directory": "./resources/downloads/",
     }
-    gi.download(args)
+    await gi.download(args)
     xx = choice(os.listdir(os.path.abspath(f"./resources/downloads/{query}/")))
     await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
     rmtree(f"./resources/downloads/{query}/")

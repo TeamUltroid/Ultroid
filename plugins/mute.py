@@ -29,6 +29,7 @@
 from pyUltroid.dB.mute_db import is_muted, mute, unmute
 from pyUltroid.functions.admins import ban_time
 from telethon import events
+from telethon.utils import get_display_name
 
 from . import eod, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
@@ -54,7 +55,7 @@ async def startmute(event):
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
-    elif private:
+    elif event.is_private:
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
@@ -77,7 +78,6 @@ async def startmute(event):
 async def endmute(event):
     xx = await event.eor("`Unmuting...`")
     input = event.pattern_match.group(1)
-    private = event.is_private
     if input:
         try:
             userid = await event.client.parse_id(input_)
@@ -85,7 +85,7 @@ async def endmute(event):
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
-    elif private:
+    elif event.is_private:
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
@@ -103,7 +103,7 @@ async def endmute(event):
 )
 async def _(e):
     xx = await e.eor("`Muting...`")
-    huh = e.text.split(" ")
+    huh = e.text.split()
     try:
         tme = huh[1]
     except IndexError:
@@ -143,7 +143,7 @@ async def _(e):
 
 @ultroid_cmd(
     pattern="unmute ?(.*)",
-    groups_only=True,
+    admins_only=True,
     manager=True,
 )
 async def _(e):
@@ -175,18 +175,14 @@ async def _(e):
         await xx.eor(f"`{m}`", time=5)
 
 
-@ultroid_cmd(
-    pattern="mute ?(.*)",
-    groups_only=True,
-    manager=True,
-)
+@ultroid_cmd(pattern="mute ?(.*)", admins_only=True, manager=True, require="ban_users")
 async def _(e):
     xx = await e.eor("`Muting...`")
     input = e.pattern_match.group(1)
     chat = await e.get_chat()
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-        name = (await e.client.get_entity(userid)).first_name
+        name = get_display_name(await e.client.get_entity(userid))
     elif input:
         try:
             userid = await e.client.parse_id(input)
