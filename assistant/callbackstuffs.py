@@ -476,7 +476,7 @@ async def _(e):
         if id.startswith("https"):
             id = id.split("?id=")[-1]
         udB.set_key("GDRIVE_FOLDER_ID", id)
-        await repl.reply(
+        await e.reply(
             "`Success.`",
             buttons=get_back_button("gdrive"),
         )
