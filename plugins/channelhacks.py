@@ -49,8 +49,8 @@ from pyUltroid.dB.ch_db import (
     rem_destination,
     rem_source_channel,
 )
-from telethon.utils import get_peer_id
-from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
+from telethon.utils import get_peer_id, get_display_name
+from . import asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd, LOGS
 
 ERROR = {}
 
