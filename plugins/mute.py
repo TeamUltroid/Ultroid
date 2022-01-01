@@ -54,7 +54,7 @@ async def startmute(event):
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
-    elif private:
+    elif event.is_private:
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
