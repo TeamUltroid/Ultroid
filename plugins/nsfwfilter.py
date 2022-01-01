@@ -63,7 +63,7 @@ async def nsfw_check(e):
         if pic and not nsfw:
             r = await async_searcher(
                 "https://api.deepai.org/api/nsfw-detector",
-                files={
+                data={
                     "image": open(pic, "rb"),
                 },
                 post=True,
