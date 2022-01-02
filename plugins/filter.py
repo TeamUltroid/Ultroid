@@ -30,7 +30,7 @@ from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
-@ultroid_cmd(pattern="addfilter ?(.*)")
+@ultroid_cmd(pattern="addfilter( (.*)|$)")
 async def af(e):
     wrd = (e.pattern_match.group(1)).lower()
     wt = await e.get_reply_message()
@@ -69,7 +69,7 @@ async def af(e):
     ultroid_bot.add_handler(filter_func, events.NewMessage())
 
 
-@ultroid_cmd(pattern="remfilter ?(.*)")
+@ultroid_cmd(pattern="remfilter( (.*)|$)")
 async def rf(e):
     wrd = (e.pattern_match.group(1)).lower()
     chat = e.chat_id

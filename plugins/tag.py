@@ -39,7 +39,7 @@ from . import inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="tag(on|off|all|bots|rec|admins|owner) ?(.*)",
+    pattern="tag(on|off|all|bots|rec|admins|owner)( (.*)|$)",
     groups_only=True,
 )
 async def _(e):
