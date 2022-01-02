@@ -135,10 +135,10 @@ async def bban(ult):
         return await eod(ult, get_string("ban_2"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
-    except BadRequestError:
-        return await eod(ult, get_string("ban_3"))
     except UserIdInvalidError:
         return await eod(ult, get_string("adm_1"))
+    except BadRequestError:
+        return await eod(ult, get_string("ban_3"))
     senderme = inline_mention(await ult.get_sender())
     userme = inline_mention(user)
     text = get_string("ban_4").format(userme, senderme, ult.chat.title)
@@ -160,10 +160,10 @@ async def uunban(ult):
         return await xx.edit(get_string("unban_1"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=True)
+    except UserIdInvalidError:
+        return await eod(ult, get_string("adm_1"))
     except BadRequestError:
         return await xx.edit(get_string("adm_2"))
-    except UserIdInvalidError:
-        await xx.edit(get_string("adm_1"))
     sender = inline_mention(await ult.get_sender())
     text = get_string("unban_3").format(inline_mention(user), sender, ult.chat.title)
     if reason:
