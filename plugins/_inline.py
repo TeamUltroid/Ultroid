@@ -329,6 +329,11 @@ async def _(e):
             )
         ],
         [
+            Button.switch_inline(
+                "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ", query="saavn", same_peer=True
+            )
+        ],
+        [
             Button.inline(
                 "« Bᴀᴄᴋ",
                 data="open",
