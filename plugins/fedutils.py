@@ -37,7 +37,7 @@ bot = "@MissRose_bot"
 )
 async def _(event):
     msg = await event.eor(get_string("sf_1"))
-    inputt = event.pattern_match.group(1).strip().strip()
+    inputt = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
         FBAN = (await event.get_reply_message()).sender_id
         if inputt:
@@ -290,10 +290,10 @@ async def _(event):
         previous_message = await event.get_reply_message()
         sysarg = str(previous_message.sender_id)
         user = f"[user](tg://user?id={sysarg})"
-        if event.pattern_match.group(1).strip().strip():
-            sysarg += f" {event.pattern_match.group(1).strip().strip()}"
+        if event.pattern_match.group(1).strip():
+            sysarg += f" {event.pattern_match.group(1).strip()}"
     else:
-        sysarg = event.pattern_match.group(1).strip().strip()
+        sysarg = event.pattern_match.group(1).strip()
         user = sysarg
     if sysarg == "":
         await ok.edit(
@@ -334,7 +334,7 @@ async def _(event):
 )
 async def _(event):
     ok = await event.edit(get_string("sf_20"))
-    sysarg = event.pattern_match.group(1).strip().strip()
+    sysarg = event.pattern_match.group(1).strip()
     async with event.client.conversation(bot) as conv:
         try:
             await conv.send_message("/start")

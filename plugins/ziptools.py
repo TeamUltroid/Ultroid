@@ -55,8 +55,8 @@ async def zipp(event):
         else:
             file = await event.download_media(reply)
     inp = file.replace(file.split(".")[-1], "zip")
-    if event.pattern_match.group(1).strip().strip():
-        await bash(f"zip -r --password {event.pattern_match.group(1).strip().strip()} {inp} {file}")
+    if event.pattern_match.group(1).strip():
+        await bash(f"zip -r --password {event.pattern_match.group(1).strip()} {inp} {file}")
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()
@@ -144,9 +144,9 @@ async def do_zip(event):
     if not os.path.isdir("zip"):
         return await event.eor(get_string("zip_2").format(HNDLR))
     xx = await event.eor(get_string("com_1"))
-    if event.pattern_match.group(1).strip().strip():
+    if event.pattern_match.group(1).strip():
         await bash(
-            f"zip -r --password {event.pattern_match.group(1).strip().strip()} ultroid.zip zip/*"
+            f"zip -r --password {event.pattern_match.group(1).strip()} ultroid.zip zip/*"
         )
     else:
         await bash("zip -r ultroid.zip zip/*")

@@ -107,7 +107,7 @@ async def alive(event):
     pattern="alive( (.*)|$)",
 )
 async def lol(ult):
-    match = ult.pattern_match.group(1).strip().strip()
+    match = ult.pattern_match.group(1).strip()
     inline = None
     if match in ["inline", "i"]:
         try:
@@ -234,7 +234,7 @@ async def shutdownbot(ult):
     chats=[],
 )
 async def _(event):
-    opt = event.pattern_match.group(1).strip().strip()
+    opt = event.pattern_match.group(1).strip()
     file = f"ultroid{sys.argv[-1]}.log" if len(sys.argv) > 1 else "ultroid.log"
     if opt == "heroku":
         await heroku_logs(event)
@@ -313,8 +313,8 @@ async def inline_alive(ult):
 @ultroid_cmd(pattern="update( (.*)|$)")
 async def _(e):
     xx = await e.eor(get_string("upd_1"))
-    if e.pattern_match.group(1).strip().strip() and (
-        "fast" in e.pattern_match.group(1).strip().strip() or "soft" in e.pattern_match.group(1).strip().strip()
+    if e.pattern_match.group(1).strip() and (
+        "fast" in e.pattern_match.group(1).strip() or "soft" in e.pattern_match.group(1).strip()
     ):
         await bash("git pull -f && pip3 install -r requirements.txt")
         call_back()

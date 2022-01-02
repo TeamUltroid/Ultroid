@@ -27,7 +27,7 @@ from . import OWNER_ID, OWNER_NAME, download_file, get_string, mediainfo, ultroi
 @ultroid_cmd(pattern="logo( (.*)|$)")
 async def logo_gen(event):
     xx = await event.eor(get_string("com_1"))
-    name = event.pattern_match.group(1).strip().strip()
+    name = event.pattern_match.group(1).strip()
     if not name:
         await xx.eor("`Give a name too!`", time=5)
     bg_, font_ = None, None

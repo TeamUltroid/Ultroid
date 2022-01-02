@@ -22,7 +22,7 @@ async def dowj(e):
         return await e.eor("Reply to a message...")
     try:
         await replied.delete()
-        if e.pattern_match.group(1).strip().strip() == "kick":
+        if e.pattern_match.group(1).strip() == "kick":
             await e.client.kick_participant(e.chat_id, user)
             te = "Kicked"
         else:

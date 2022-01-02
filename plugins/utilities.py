@@ -267,7 +267,7 @@ async def _(event):
     manager=True,
 )
 async def _(event):
-    match = event.pattern_match.group(1).strip().strip()
+    match = event.pattern_match.group(1).strip()
     if match:
         try:
             user = await event.client.parse_id(match)
@@ -371,7 +371,7 @@ async def _(event):
 )
 async def _(ult):
     xx = await ult.eor(get_string("com_1"))
-    to_add_users = ult.pattern_match.group(1).strip().strip()
+    to_add_users = ult.pattern_match.group(1).strip()
     if not ult.is_channel and ult.is_group:
         for user_id in to_add_users.split(" "):
             try:
@@ -453,7 +453,7 @@ async def abs_rmbg(event):
     pattern="telegraph( (.*)|$)",
 )
 async def telegraphcmd(event):
-    match = event.pattern_match.group(1).strip().strip() or "Ultroid"
+    match = event.pattern_match.group(1).strip() or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
         return await event.eor("`Reply to Message.`")

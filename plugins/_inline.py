@@ -407,7 +407,7 @@ STUFF = {}
 
 @in_pattern("stf(.*)", owner=True)
 async def ibuild(e):
-    n = e.pattern_match.group(1).strip().strip()
+    n = e.pattern_match.group(1).strip()
     builder = e.builder
     if not (n and n.isdigit()):
         return

@@ -43,7 +43,7 @@ from . import (
 
 @ultroid_cmd(pattern="compress( (.*)|$)")
 async def _(e):
-    cr = e.pattern_match.group(1).strip().strip()
+    cr = e.pattern_match.group(1).strip()
     crf = 27
     to_stream = False
     if cr:

@@ -49,7 +49,7 @@ from . import (
     pattern="download( (.*)|$)",
 )
 async def down(event):
-    matched = event.pattern_match.group(1).strip().strip()
+    matched = event.pattern_match.group(1).strip()
     msg = await event.eor(get_string("udl_4"))
     if not matched:
         return await eor(msg, get_string("udl_5"), time=5)
@@ -95,7 +95,7 @@ async def download(event):
         if hasattr(ok.media, "document"):
             file = ok.media.document
             mime_type = file.mime_type
-            filename = event.pattern_match.group(1).strip().strip() or ok.file.name
+            filename = event.pattern_match.group(1).strip() or ok.file.name
             if not filename:
                 if "audio" in mime_type:
                     filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
@@ -139,7 +139,7 @@ async def download(event):
     if event.text[1:].startswith("ultroid"):
         return
     xx = await event.eor(get_string("com_1"))
-    hmm = event.pattern_match.group(1).strip().strip()
+    hmm = event.pattern_match.group(1).strip()
     try:
         kk = hmm.split(" | stream")[0]
     except BaseException:

@@ -43,7 +43,7 @@ from . import (
 
 @ultroid_cmd(pattern="sample( (.*)|$)")
 async def gen_sample(e):
-    sec = e.pattern_match.group(1).strip().strip()
+    sec = e.pattern_match.group(1).strip()
     stime = 35
     if sec and sec.isdigit():
         stime = int(sec)
@@ -112,7 +112,7 @@ async def gen_sample(e):
 
 @ultroid_cmd(pattern="vshots( (.*)|$)")
 async def gen_shots(e):
-    ss = e.pattern_match.group(1).strip().strip()
+    ss = e.pattern_match.group(1).strip()
     shot = 5
     if ss and ss.isdigit():
         shot = int(ss)
@@ -157,7 +157,7 @@ async def gen_shots(e):
 
 @ultroid_cmd(pattern="vtrim( (.*)|$)")
 async def gen_sample(e):
-    sec = e.pattern_match.group(1).strip().strip()
+    sec = e.pattern_match.group(1).strip()
     if not sec or "-" not in sec:
         return await eod(e, get_string("audiotools_3"))
     a, b = sec.split("-")

@@ -116,7 +116,7 @@ async def _(e):
     pattern="create (b|g|c)(?: |$)(.*)",
 )
 async def _(e):
-    type_of_group = e.pattern_match.group(1).strip().strip()
+    type_of_group = e.pattern_match.group(1).strip()
     group_name = e.pattern_match.group(2)
     username = None
     if " ; " in group_name:
@@ -183,7 +183,7 @@ async def _(e):
 async def _(ult):
     if not ult.is_reply:
         return await ult.eor("`Reply to a Media..`", time=5)
-    match = ult.pattern_match.group(1).strip().strip()
+    match = ult.pattern_match.group(1).strip()
     if not ult.client._bot and match:
         try:
             chat = await ult.client.parse_id(match)
@@ -212,7 +212,7 @@ async def _(ult):
     pattern="delgpic( (.*)|$)", admins_only=True, manager=True, require="change_info"
 )
 async def _(ult):
-    match = ult.pattern_match.group(1).strip().strip()
+    match = ult.pattern_match.group(1).strip()
     chat = ult.chat_id
     if not ult.client._bot and match:
         chat = match
@@ -252,7 +252,7 @@ async def _(event):
 )
 async def _(event):
     xx = await event.eor(get_string("com_1"))
-    input_str = event.pattern_match.group(1).strip().strip()
+    input_str = event.pattern_match.group(1).strip()
     p, a, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):
         p += 1  # Total Count

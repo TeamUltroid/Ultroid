@@ -33,7 +33,7 @@ from ._inline import something
 
 @ultroid_cmd(pattern="addnote( (.*)|$)", admins_only=True)
 async def an(e):
-    wrd = (e.pattern_match.group(1).strip().strip()).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
@@ -75,7 +75,7 @@ async def an(e):
 
 @ultroid_cmd(pattern="remnote( (.*)|$)", admins_only=True)
 async def rn(e):
-    wrd = (e.pattern_match.group(1).strip().strip()).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     chat = e.chat_id
     if not wrd:
         return await e.eor(get_string("notes_3"), time=5)

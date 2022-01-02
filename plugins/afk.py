@@ -42,7 +42,7 @@ async def set_afk(event):
     if event.client._bot or is_afk():
         return
     text, media, media_type = None, None, None
-    if event.pattern_match.group(1).strip().strip():
+    if event.pattern_match.group(1).strip():
         text = event.text.split(maxsplit=1)[1]
     reply = await event.get_reply_message()
     if reply:
