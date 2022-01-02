@@ -135,7 +135,7 @@ async def dd(event):
         return
     if chat_id:
         try:
-            y = await e.client.parse_id(chat_id)
+            y = await event.client.parse_id(chat_id)
         except Exception as er:
             LOGS.exception(er)
             return
