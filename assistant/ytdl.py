@@ -184,8 +184,11 @@ async def _(event):
             else ytdl_data["description"][:100]
         )
         description = description or "None"
+        filepath = vid_id + f".{ext}"
+        if not os.path.exists(filepath):
+            filepath = filepath + f".{ext}"
         file, _ = await event.client.fast_uploader(
-            vid_id + f".{ext}" * 2,
+            filepath,
             filename=title + "." + ext,
             show_progress=True,
             event=event,
