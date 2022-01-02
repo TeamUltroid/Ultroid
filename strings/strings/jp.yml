@@ -15,9 +15,9 @@ com_7: "`何か 行った 間違い`"
 
 # chatactions
 can_1: "#GBanned_User 参加しました.\n\n**User** : {}\n**Reason**: {}\n\n`ユーザー禁止.`"
-can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
-can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
-can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
+can_2: "∆ #UsernameUpdate\n\n@{} ユーザー名を変更しました に @{}"
+can_3: "∆ #UsernameUpdate\n\n{} 削除されました これは ユーザー名. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}'s 新着 ユーザー名 --> @{}"
 
 # help
 help_1: "{}は有効なプラグインではありません！"
@@ -126,9 +126,9 @@ inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇ�
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
-inline_7: "Do .help {} to get the list of commands."
-inline_8: "Click the below button to update!"
-inline_9: "You Are Already On Latest Version"
+inline_7: "行う .help {} コマンドのリストを取得するには."
+inline_8: "下のボタンをクリックして更新してください!"
+inline_9: "あなたはすでに最新バージョンを使用しています"
 
 # tagnotif
 tagnot_1: "{} でタグ付け {}\n\n```{}```\n\n[📨 Message 📨]({})"
@@ -153,14 +153,14 @@ afk_6: "**私は ゆき AFK.**"
 bot_1: "ねえ,  私は生きている."
 bot_2: "統計"
 bot_3: "Repo"
-bot_4: "Support"
+bot_4: "サポート"
 bot_5: "• `再起動...`"
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 usage_simple: "**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
-shutdown: "GoodBye {}.\n`Shutting down...`"
+shutdown: "さようなら {}.\n`シャットダウン...`"
 
 # blacklist
 blk_1: "`ブラックリストに単語を入れてください..` "
