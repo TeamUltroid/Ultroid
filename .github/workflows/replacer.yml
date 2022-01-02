@@ -11,8 +11,8 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: ' ?(.*)'
-          replace: '( (.*)|$)'
+          find: '.pattern_match.group(1)'
+          replace: '.pattern_match.group(1).strip()'
           regex: false
           exclude: .github/**
       - uses: stefanzweifel/git-auto-commit-action@v4
