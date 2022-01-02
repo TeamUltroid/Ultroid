@@ -3,14 +3,14 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-FROM theteamultroid/ultroid:main
+FROM theteamultroid/ultroid:dev
 
 # set timezone
 ENV TZ=Asia/Kolkata
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     # cloning the repo and installing requirements.
-    && git clone https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/ \
+    && git clone -b dev https://github.com/TeamUltroid/Ultroid.git /root/TeamUltroid/ \
     && pip3 install --no-cache-dir -r root/TeamUltroid/requirements.txt \
     && pip3 install av --no-binary av
 
