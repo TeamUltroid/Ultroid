@@ -41,7 +41,7 @@ async def _(e):
             put = f"@{okk.sender.username}"
         put = okk.sender_id
     else:
-        put = e.pattern_match.group(1)
+        put = e.pattern_match.group(1).strip()
     if put:
         try:
             results = await e.client.inline_query(asst.me.username, f"msg {put}")
@@ -170,7 +170,7 @@ async def _(e):
     ),
 )
 async def _(e):
-    ids = int(e.pattern_match.group(1).decode("UTF-8"))
+    ids = int(e.pattern_match.group(1).strip().decode("UTF-8"))
     if buddhhu.get(ids):
         if e.sender_id in buddhhu[ids]:
             await e.answer(buddhhu[ids][-1], alert=True)
@@ -182,7 +182,7 @@ async def _(e):
 
 @callback(re.compile("del_(.*)"))
 async def _(e):
-    ids = int(e.pattern_match.group(1).decode("UTF-8"))
+    ids = int(e.pattern_match.group(1).strip().decode("UTF-8"))
     if buddhhu.get(ids):
         if e.sender_id in buddhhu[ids]:
             buddhhu.pop(ids)

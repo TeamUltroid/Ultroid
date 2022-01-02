@@ -30,7 +30,7 @@ from . import get_string, ultroid_bot, ultroid_cmd
 @ultroid_cmd(pattern="qrcode( (.*)|$)")
 async def cd(e):
     reply = await e.get_reply_message()
-    msg = e.pattern_match.group(1)
+    msg = e.pattern_match.group(1).strip()
     if reply and reply.text:
         msg = reply.text
     elif msg:
@@ -58,7 +58,7 @@ async def cd(e):
 
 @ultroid_cmd(pattern="addqr( (.*)|$)")
 async def qrwater(e):
-    msg = e.pattern_match.group(1)
+    msg = e.pattern_match.group(1).strip()
     r = await e.get_reply_message()
     if not (msg and r and r.media):
         return await e.eor("`Reply Any Media and Give Text`", time=5)

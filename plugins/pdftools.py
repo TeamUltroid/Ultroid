@@ -53,7 +53,7 @@ if not os.path.isdir("pdf"):
 )
 async def pdfseimg(event):
     ok = await event.get_reply_message()
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
         await event.eor("`Reply The pdf u Want to Download..`")
         return
@@ -118,7 +118,7 @@ async def pdfseimg(event):
 )
 async def pdfsetxt(event):
     ok = await event.get_reply_message()
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
         await event.eor("`Reply The pdf u Want to Download..`")
         return
@@ -315,7 +315,7 @@ async def sendpdf(event):
             "first select pages by replying .pdsave of which u want to make multi page pdf file",
         )
         return
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     ok = f"{msg}.pdf" if msg else "My PDF File.pdf"
     merger = PdfFileMerger()
     afl = glob.glob("pdf/*")

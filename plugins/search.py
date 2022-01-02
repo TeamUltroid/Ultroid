@@ -45,7 +45,7 @@ from . import async_searcher, eod, fast_download, get_string, ultroid_cmd
     pattern="github (.*)",
 )
 async def gitsearch(event):
-    usrname = event.pattern_match.group(1)
+    usrname = event.pattern_match.group(1).strip()
     if not usrname:
         return await event.eor(get_string("srch_1"))
     url = f"https://api.github.com/users/{usrname}"
@@ -87,7 +87,7 @@ async def gitsearch(event):
     manager=True,
 )
 async def google(event):
-    inp = event.pattern_match.group(1)
+    inp = event.pattern_match.group(1).strip()
     if not inp:
         return await eod(event, get_string("autopic_1"))
     x = await event.eor(get_string("com_2"))
@@ -106,7 +106,7 @@ async def google(event):
 
 @ultroid_cmd(pattern="img( (.*)|$)")
 async def goimg(event):
-    query = event.pattern_match.group(1)
+    query = event.pattern_match.group(1).strip()
     if not query:
         return await event.eor(get_string("autopic_1"))
     nn = await event.eor(get_string("com_1"))
@@ -185,7 +185,7 @@ async def reverse(event):
     pattern="saavn( (.*)|$)",
 )
 async def siesace(e):
-    song = e.pattern_match.group(1)
+    song = e.pattern_match.group(1).strip()
     if not song:
         return await e.eor("`Give me Something to Search", time=5)
     eve = await e.eor(f"`Searching for {song} on Saavn...`")

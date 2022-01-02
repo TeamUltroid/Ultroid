@@ -57,7 +57,7 @@ from . import (
 
 @ultroid_cmd(pattern="instadl( (.*)|$)")
 async def insta_dl(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     replied = await e.get_reply_message()
     tt = await e.eor(get_string("com_1"))
     if match:
@@ -121,7 +121,7 @@ async def soon_(e):
     cl = await create_instagram_client(e)
     if not cl:
         return
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     ew = await e.eor(get_string("com_1"))
     if match:
         try:
@@ -159,7 +159,7 @@ async def insta_karbon(event):
         return await event.eor("`Please Fill Instagram Credentials to Use This...`")
     msg = await event.eor(get_string("com_1"))
     replied = await event.get_reply_message()
-    type_ = event.pattern_match.group(1)
+    type_ = event.pattern_match.group(1).strip()
     if not (replied and (replied.photo or replied.video)):
         return await event.eor("`Reply to Photo Or Video...`")
     caption = (
@@ -209,7 +209,7 @@ async def insta_karbon(event):
 
 @in_pattern("instp-(.*)", owner=True)
 async def instapl(event):
-    match = event.pattern_match.group(1).split("_")
+    match = event.pattern_match.group(1).strip().split("_")
     uri = "https://instagram.com/p/" + match[0]
     await event.answer(
         [

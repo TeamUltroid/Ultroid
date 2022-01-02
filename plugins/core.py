@@ -44,7 +44,7 @@ async def install(event):
     pattern=r"unload( (.*)|$)",
 )
 async def unload(event):
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(1).strip()
     if not shortname:
         await event.eor(get_string("core_9"))
         return
@@ -67,7 +67,7 @@ async def unload(event):
     pattern=r"uninstall( (.*)|$)",
 )
 async def uninstall(event):
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(1).strip()
     if not shortname:
         await event.eor(get_string("core_13"))
         return
@@ -92,7 +92,7 @@ async def uninstall(event):
     fullsudo=True,
 )
 async def load(event):
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(1).strip()
     if not shortname:
         await event.eor(get_string("core_16"))
         return
@@ -113,7 +113,7 @@ async def load(event):
 
 @ultroid_cmd(pattern="getaddons( (.*)|$)", fullsudo=True)
 async def get_the_addons_lol(event):
-    thelink = event.pattern_match.group(1)
+    thelink = event.pattern_match.group(1).strip()
     xx = await event.eor(get_string("com_1"))
     fool = get_string("gas_1")
     if thelink is None:

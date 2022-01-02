@@ -63,7 +63,7 @@ async def uconverter(event):
     a = await event.get_reply_message()
     if not (a and a.media and "animated" in mediainfo(a.media)):
         return await event.eor(get_string("sts_2"))
-    input_ = event.pattern_match.group(1)
+    input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
     if "gif" in input_:
         file = "something.gif"

@@ -34,7 +34,7 @@ async def download_from_youtube_(event):
         "geo-bypass": True,
         "nocheckcertificate": True,
     }
-    opt = event.pattern_match.group(1)
+    opt = event.pattern_match.group(1).strip()
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd["outtmpl"] = "%(id)s.m4a"

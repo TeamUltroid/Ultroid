@@ -95,7 +95,7 @@ _gdemote_rights = ChatAdminRights(
 
 @ultroid_cmd(pattern="gpromote( (.*)|$)", fullsudo=True)
 async def _(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     ultroid_bot = e.client
     if not x:
         return await e.eor(get_string("schdl_2"), time=5)
@@ -203,7 +203,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="gdemote( (.*)|$)", fullsudo=True)
 async def _(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     ultroid_bot = e.client
     if not x:
         return await e.eor(get_string("schdl_2"), time=5)
@@ -289,7 +289,7 @@ async def _(e):
 @ultroid_cmd(pattern="ungban( (.*)|$)", fullsudo=True)
 async def _(e):
     xx = await e.eor("`UnGbanning...`")
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     peer = None
     if match:
         try:
@@ -354,7 +354,7 @@ async def _(e):
 async def _(e):
     xx = await e.eor("`Gbanning...`")
     reason = ""
-    if e.pattern_match.group(1):
+    if e.pattern_match.group(1).strip():
         usr = e.text.split(" ", maxsplit=2)[1]
         try:
             userid = await e.client.parse_id(usr)
@@ -519,7 +519,7 @@ async def gcast(event):
 @ultroid_cmd(pattern="gucast( (.*)|$)", fullsudo=True)
 async def gucast(event):
     msg, btn, reply = "", None, None
-    xx = event.pattern_match.group(1)
+    xx = event.pattern_match.group(1).strip()
     if xx:
         msg, btn = get_msg_button(event.text.split(maxsplit=1)[1])
     elif event.is_reply:
@@ -571,8 +571,8 @@ async def gkick(e):
     xx = await e.eor("`Gkicking...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -603,8 +603,8 @@ async def _(e):
     xx = await e.eor("`Gmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -638,8 +638,8 @@ async def _(e):
     xx = await e.eor("`UnGmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -709,9 +709,9 @@ async def gstat_(e):
         userid = (await e.get_chat()).id
     elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
+    elif e.pattern_match.group(1).strip():
         try:
-            userid = await e.client.parse_id(e.pattern_match.group(1))
+            userid = await e.client.parse_id(e.pattern_match.group(1).strip())
         except Exception as err:
             return await xx.eor(f"{err}", time=10)
     else:

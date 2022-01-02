@@ -79,7 +79,7 @@ async def autopost_func(e):
 
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     z = await e.eor(get_string("com_1"))
     a, b = x.split("|")
     try:
@@ -107,7 +107,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="asource (.*)")
 async def source(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     if not x:
         y = e.chat_id
     else:
@@ -126,7 +126,7 @@ async def source(e):
 
 @ultroid_cmd(pattern="dsource( (.*)|$)")
 async def dd(event):
-    chat_id = event.pattern_match.group(1)
+    chat_id = event.pattern_match.group(1).strip()
     x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
@@ -186,7 +186,7 @@ async def list_all(event):
 
 @ultroid_cmd(pattern="adest (.*)")
 async def destination(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     if x:
         try:
             y = await e.client.parse_id(x)
@@ -204,7 +204,7 @@ async def destination(e):
 
 @ultroid_cmd(pattern="ddest( (.*)|$)")
 async def dd(event):
-    chat_id = event.pattern_match.group(1)
+    chat_id = event.pattern_match.group(1).strip()
     x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))

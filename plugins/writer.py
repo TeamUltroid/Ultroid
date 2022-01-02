@@ -24,7 +24,7 @@ from . import async_searcher, eod, get_string, text_set, ultroid_cmd
 
 @ultroid_cmd(pattern="gethtml( (.*)|$)")
 async def ghtml(e):
-    txt = e.pattern_match.group(1)
+    txt = e.pattern_match.group(1).strip()
     if txt:
         link = e.text.split(maxsplit=1)[1]
     else:
@@ -37,7 +37,7 @@ async def ghtml(e):
 
 @ultroid_cmd(pattern="image( (.*)|$)")
 async def f2i(e):
-    txt = e.pattern_match.group(1)
+    txt = e.pattern_match.group(1).strip()
     if txt:
         html = e.text.split(maxsplit=1)[1]
     elif e.reply_to:
@@ -63,7 +63,7 @@ async def writer(e):
     if e.reply_to:
         reply = await e.get_reply_message()
         text = reply.message
-    elif e.pattern_match.group(1):
+    elif e.pattern_match.group(1).strip():
         text = e.text.split(maxsplit=1)[1]
     else:
         return await eod(e, get_string("writer_1"))

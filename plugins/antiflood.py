@@ -93,7 +93,7 @@ async def unmuting(e):
     admins_only=True,
 )
 async def setflood(e):
-    input_ = e.pattern_match.group(1)
+    input_ = e.pattern_match.group(1).strip()
     if not input_:
         return await e.eor("`What?`", time=5)
     if not input_.isdigit():

@@ -75,7 +75,7 @@ async def imak(event):
     t = time.time()
     if not reply:
         return await event.eor(get_string("cvt_1"))
-    inp = event.pattern_match.group(1)
+    inp = event.pattern_match.group(1).strip()
     if not inp:
         return await event.eor(get_string("cvt_2"))
     xx = await event.eor(get_string("com_1"))
@@ -164,7 +164,7 @@ async def smak(event):
     pattern="doc( (.*)|$)",
 )
 async def _(event):
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(1).strip()
     if not (input_str and event.is_reply):
         return await event.eor(get_string("cvt_1"), time=5)
     xx = await event.eor(get_string("com_1"))
@@ -184,7 +184,7 @@ async def _(event):
 )
 async def _(event):
     a = await event.get_reply_message()
-    b = event.pattern_match.group(1)
+    b = event.pattern_match.group(1).strip()
     if not ((a and a.media) or (b and os.path.exists(b))):
         return await event.eor(get_string("cvt_7"), time=5)
     xx = await event.eor(get_string("com_1"))

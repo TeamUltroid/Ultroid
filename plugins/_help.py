@@ -37,7 +37,7 @@ _main_help_menu = [
 
 @ultroid_cmd(pattern="help( (.*)|$)")
 async def _help(ult):
-    plug = ult.pattern_match.group(1)
+    plug = ult.pattern_match.group(1).strip()
     chat = await ult.get_chat()
     if plug:
         try:

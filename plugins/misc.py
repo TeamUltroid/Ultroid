@@ -51,7 +51,7 @@ def gib_link(link):
 
 @ultroid_cmd(pattern="eod( (.*)|$)")
 async def diela(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     m = await e.eor(get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
@@ -75,7 +75,7 @@ async def diela(e):
     pattern="pntrst( (.*)|$)",
 )
 async def pinterest(e):
-    m = e.pattern_match.group(1)
+    m = e.pattern_match.group(1).strip()
     if not m:
         return await e.eor("`Give pinterest link.`", time=3)
     scrape = cfscrape.create_scraper()
@@ -96,7 +96,7 @@ async def pinterest(e):
 
 @ultroid_cmd(pattern="gadget( (.*)|$)")
 async def mobs(e):
-    mat = e.pattern_match.group(1)
+    mat = e.pattern_match.group(1).strip()
     if not mat:
         await e.eor("Please Give a Mobile Name to look for.")
     query = mat.replace(" ", "%20")
@@ -145,7 +145,7 @@ async def _(e):
         return await e.eor(get_string("ascii_1"))
     m = await e.eor(get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
-    char = "■" if not e.pattern_match.group(1) else e.pattern_match.group(1)
+    char = "■" if not e.pattern_match.group(1).strip() else e.pattern_match.group(1).strip()
     converter = Img2HTMLConverter(char=char)
     html = converter.convert(img)
     shot = WebShot(quality=85)
