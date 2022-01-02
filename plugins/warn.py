@@ -42,7 +42,7 @@ async def warn(e):
         return
     if reply:
         user = reply.from_id.user_id
-        reason = e.text[5:] if e.pattern_match.group(1).strip() else "unknown"
+        reason = e.text[5:] if e.pattern_match.group(1).strip().strip() else "unknown"
     else:
         try:
             user = e.text.split()[1]
@@ -164,7 +164,7 @@ async def twarns(e):
 
 @ultroid_cmd(pattern="setwarn( (.*)|$)", manager=True)
 async def warnset(e):
-    ok = e.pattern_match.group(1).strip()
+    ok = e.pattern_match.group(1).strip().strip()
     if not ok:
         return await e.eor("stuff")
     if "|" in ok:

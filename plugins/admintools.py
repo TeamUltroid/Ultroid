@@ -268,7 +268,7 @@ async def pin(msg):
 )
 async def unp(ult):
     xx = await ult.eor(get_string("com_1"))
-    ch = (ult.pattern_match.group(1).strip()).strip()
+    ch = (ult.pattern_match.group(1).strip().strip()).strip()
     msg = None
     if ult.is_reply:
         msg = ult.reply_to_msg_id
@@ -285,7 +285,7 @@ async def unp(ult):
 
 @ultroid_cmd(pattern="purge( (.*)|$)", manager=True, require="delete_messages")
 async def fastpurger(purg):
-    match = purg.pattern_match.group(1).strip()
+    match = purg.pattern_match.group(1).strip().strip()
     try:
         ABC = purg.text[6]
     except IndexError:
@@ -323,7 +323,7 @@ async def fastpurger(purg):
     pattern="purgeme( (.*)|$)",
 )
 async def fastpurgerme(purg):
-    num = purg.pattern_match.group(1).strip()
+    num = purg.pattern_match.group(1).strip().strip()
     if num and not purg.is_reply:
         try:
             nnt = int(num)
@@ -439,7 +439,7 @@ async def get_all_pinned(event):
     admins_only=True,
 )
 async def autodelte(ult):
-    match = ult.pattern_match.group(1).strip()
+    match = ult.pattern_match.group(1).strip().strip()
     if not match or match not in ["24h", "7d", "1m", "off"]:
         return await ult.eor("`Please Use in Proper Format..`", time=5)
     if match == "24h":

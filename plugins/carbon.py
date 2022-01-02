@@ -205,7 +205,7 @@ async def crbn(event):
     pattern="ccarbon( (.*)|$)",
 )
 async def crbn(event):
-    match = event.pattern_match.group(1).strip()
+    match = event.pattern_match.group(1).strip().strip()
     if not match:
         return await event.eor(get_string("carbon_3"))
     msg = await event.eor(get_string("com_1"))

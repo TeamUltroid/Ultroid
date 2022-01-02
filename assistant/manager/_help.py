@@ -130,5 +130,5 @@ async def home_aja(e):
 
 @callback(re.compile("hlp_(.*)"))
 async def do_something(event):
-    match = event.pattern_match.group(1).strip().decode("utf-8")
+    match = event.pattern_match.group(1).strip().strip().decode("utf-8")
     await event.edit(STRINGS[match], buttons=Button.inline("<< Back", "mnghome"))

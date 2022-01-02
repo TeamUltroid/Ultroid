@@ -26,7 +26,7 @@ from . import LOGS, get_string, udB, ultroid_bot, ultroid_cmd
 
 @ultroid_cmd(pattern="autopic( (.*)|$)")
 async def autopic(e):
-    search = e.pattern_match.group(1).strip()
+    search = e.pattern_match.group(1).strip().strip()
     if udB.get_key("AUTOPIC") and not search:
         udB.del_key("AUTOPIC")
         return await e.eor(get_string("autopic_5"))

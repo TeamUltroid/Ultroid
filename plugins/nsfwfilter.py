@@ -28,7 +28,7 @@ async def addnsfw(e):
         return await eor(
             e, f"Get Api from deepai.org and Add It `{HNDLR}setdb DEEP_API your-api`"
         )
-    action = e.pattern_match.group(1).strip()
+    action = e.pattern_match.group(1).strip().strip()
     if not action or ("ban" or "kick" or "mute") not in action:
         action = "mute"
     nsfw_chat(e.chat_id, action)

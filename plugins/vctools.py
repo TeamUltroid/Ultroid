@@ -95,7 +95,7 @@ async def _(e):
     groups_only=True,
 )
 async def _(e):
-    title = e.pattern_match.group(1).strip()
+    title = e.pattern_match.group(1).strip().strip()
     if not title:
         return await e.eor(get_string("vct_6"), time=5)
     try:

@@ -27,7 +27,7 @@ async def un_lock(e):
     mat = e.pattern_match.group(2)
     if not mat:
         return await e.eor("`Give some Proper Input..`", time=5)
-    lock = e.pattern_match.group(1).strip() == ""
+    lock = e.pattern_match.group(1).strip().strip() == ""
     ml = lock_unlock(mat, lock)
     if not ml:
         return await e.eor("`Incorrect Input`", time=5)

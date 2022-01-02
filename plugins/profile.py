@@ -37,7 +37,7 @@ TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 @ultroid_cmd(pattern="setbio( (.*)|$)", fullsudo=True)
 async def _(ult):
     ok = await ult.eor("...")
-    set = ult.pattern_match.group(1).strip()
+    set = ult.pattern_match.group(1).strip().strip()
     try:
         await ult.client(UpdateProfileRequest(about=set))
         await eod(ok, f"Profile bio changed to\n`{set}`")
@@ -51,7 +51,7 @@ async def _(ult):
 @ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
     ok = await ult.eor("...")
-    names = ult.pattern_match.group(1).strip()
+    names = ult.pattern_match.group(1).strip().strip()
     first_name = names
     last_name = ""
     if "//" in names:
@@ -110,7 +110,7 @@ async def remove_profilepic(delpfp):
 
 @ultroid_cmd(pattern="poto( (.*)|$)")
 async def gpoto(e):
-    ult = e.pattern_match.group(1).strip()
+    ult = e.pattern_match.group(1).strip().strip()
     a = await e.eor(get_string("com_1"))
     if not ult:
         if e.is_reply:

@@ -92,7 +92,7 @@ async def _(event):
     manager=True,
 )
 async def _(event):
-    match = event.pattern_match.group(1).strip()
+    match = event.pattern_match.group(1).strip().strip()
     if event.reply_to_msg_id:
         await event.get_input_chat()
         r_msg = await event.get_reply_message()
@@ -134,7 +134,7 @@ async def _(event):
 @ultroid_cmd(pattern="bots( (.*)|$)", groups_only=True, manager=True)
 async def _(ult):
     mentions = "• **Bots in this Chat**: \n"
-    input_str = ult.pattern_match.group(1).strip()
+    input_str = ult.pattern_match.group(1).strip().strip()
     if not input_str:
         chat = ult.chat_id
     else:
@@ -230,7 +230,7 @@ async def _(e):
     pattern="ls( (.*)|$)",
 )
 async def _(e):
-    files = e.pattern_match.group(1).strip()
+    files = e.pattern_match.group(1).strip().strip()
     if not files:
         files = "*"
     elif files.endswith("/"):
@@ -353,7 +353,7 @@ async def _(e):
     pattern="sg( (.*)|$)",
 )
 async def lastname(steal):
-    mat = steal.pattern_match.group(1).strip()
+    mat = steal.pattern_match.group(1).strip().strip()
     if not steal.is_reply and not mat:
         return await steal.eor("`Use this command with reply or give Username/id...`")
     if mat:
@@ -403,7 +403,7 @@ async def lastname(steal):
 @ultroid_cmd(pattern="webshot( (.*)|$)")
 async def webss(event):
     xx = await event.eor(get_string("com_1"))
-    xurl = event.pattern_match.group(1).strip()
+    xurl = event.pattern_match.group(1).strip().strip()
     if not xurl:
         return await xx.eor(get_string("wbs_1"), time=5)
     if not is_url_ok(xurl):

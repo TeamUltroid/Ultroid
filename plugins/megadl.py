@@ -29,7 +29,7 @@ from . import (
 
 @ultroid_cmd(pattern="megadl( (.*)|$)")
 async def _(e):
-    link = e.pattern_match.group(1).strip()
+    link = e.pattern_match.group(1).strip().strip()
     if os.path.isdir("mega"):
         await bash("rm -rf mega")
     os.mkdir("mega")
