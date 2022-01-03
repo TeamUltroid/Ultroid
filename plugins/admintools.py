@@ -147,7 +147,9 @@ async def bban(ult):
     await eod(ult, text)
 
 
-@ultroid_cmd(pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(
+    pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+)
 async def uunban(ult):
     xx = await ult.eor(get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
@@ -208,7 +210,9 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban( (.*)|$)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(
+    pattern="tban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+)
 async def tkicki(e):
     huh = e.text.split()
     inputt = None

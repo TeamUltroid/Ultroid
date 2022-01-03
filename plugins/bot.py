@@ -314,7 +314,8 @@ async def inline_alive(ult):
 async def _(e):
     xx = await e.eor(get_string("upd_1"))
     if e.pattern_match.group(1).strip() and (
-        "fast" in e.pattern_match.group(1).strip() or "soft" in e.pattern_match.group(1).strip()
+        "fast" in e.pattern_match.group(1).strip()
+        or "soft" in e.pattern_match.group(1).strip()
     ):
         await bash("git pull -f && pip3 install -r requirements.txt")
         call_back()

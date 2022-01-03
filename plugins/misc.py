@@ -36,7 +36,6 @@ from . import (
     get_random_user_data,
     get_string,
     re,
-    requests,
     ultroid_cmd,
 )
 
@@ -64,12 +63,12 @@ async def diela(e):
             month = list(calendar.month_name)[int(month)][:3]
         except (KeyError, TypeError):
             month = dt.today().strftime("%b")
-        li += "/days/"+ month + "/" + date
+        li += "/days/" + month + "/" + date
         te = get_string("eod_2").format(match)
-    else: 
+    else:
         da = datetime.today()
         month = da.strftime("%b")
-        li += "/days/" + month+ "/" + da.strftime("%F").split("-")[2]
+        li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
     ct = await async_searcher(li, re_content=True)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
@@ -152,7 +151,11 @@ async def _(e):
         return await e.eor(get_string("ascii_1"))
     m = await e.eor(get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
-    char = "■" if not e.pattern_match.group(1).strip() else e.pattern_match.group(1).strip()
+    char = (
+        "■"
+        if not e.pattern_match.group(1).strip()
+        else e.pattern_match.group(1).strip()
+    )
     converter = Img2HTMLConverter(char=char)
     html = converter.convert(img)
     shot = WebShot(quality=85)

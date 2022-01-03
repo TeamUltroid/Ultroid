@@ -56,7 +56,9 @@ async def zipp(event):
             file = await event.download_media(reply)
     inp = file.replace(file.split(".")[-1], "zip")
     if event.pattern_match.group(1).strip():
-        await bash(f"zip -r --password {event.pattern_match.group(1).strip()} {inp} {file}")
+        await bash(
+            f"zip -r --password {event.pattern_match.group(1).strip()} {inp} {file}"
+        )
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()

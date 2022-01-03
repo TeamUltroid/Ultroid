@@ -544,7 +544,10 @@ async def blockpm(block):
 
 @ultroid_cmd(pattern="unblock( (.*)|$)")
 async def unblockpm(event):
-    match = event.pattern_match.group(1).strip() or (await event.get_reply_message()).sender_id
+    match = (
+        event.pattern_match.group(1).strip()
+        or (await event.get_reply_message()).sender_id
+    )
     if not match:
         return await event.eor(NO_REPLY + "`Or give it's username/id`", time=5)
     if match == "all":
