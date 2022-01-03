@@ -355,13 +355,13 @@ async def _(e):
     xx = await e.eor("`Gbanning...`")
     reason = ""
     if e.pattern_match.group(1).strip():
-        usr = e.text.split(" ", maxsplit=2)[1]
+        usr = e.text.split(maxsplit=2)[1]
         try:
             userid = await e.client.parse_id(usr)
         except ValueError:
             userid = usr
         try:
-            reason = e.text.split(" ", maxsplit=2)[2]
+            reason = e.text.split(maxsplit=2)[2]
         except IndexError:
             pass
     elif e.reply_to_msg_id:
@@ -377,7 +377,7 @@ async def _(e):
         except IndexError:
             pass
     else:
-        return await xx.eor("`Reply to some msg or add their id.`", tome=5, time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", time=5)
     user = None
     try:
         user = await e.client.get_entity(userid)
