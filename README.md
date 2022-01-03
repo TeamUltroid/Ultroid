@@ -40,11 +40,6 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://deploy.ultroid.tech)
 
-## Deploy to Railway
-Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://deploy.ultroid.tech/railway)
-
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)
