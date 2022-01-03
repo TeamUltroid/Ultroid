@@ -400,25 +400,31 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern=r"rmbg$",
+    pattern="rmbg($| (.*))",
 )
 async def abs_rmbg(event):
     RMBG_API = udB.get_key("RMBG_API")
     if not RMBG_API:
-        return await eor(
-            event,
+        return await event.eor(
             "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
         )
-    if not event.reply_to_msg_id:
+    match = event.pattern_match.group(1).strip()
+    reply = await event.get_reply_message()
+    if match and os.path.exists(match):
+        dl = match
+    elif reply and reply.media:
+        if reply.document and reply.document.thumbs:
+            dl = await reply.download_media(thumb=-1)
+        else:
+            dl = await reply.document_media()
+    else:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
         )
-    reply = await event.get_reply_message()
-    dl = await event.client.download_media(reply.media)
-    if not dl.endswith(("webp", "jpg", "png", "jpeg")):
+    if not (dl and dl.endswith(("webp", "jpg", "png", "jpeg"))):
         os.remove(dl)
         return await event.eor(get_string("com_4"))
-    if mediainfo(reply.media) == "sticker":
+    if dl.endswith("webp"):
         file = dl + ".png"
         Image.open(dl).save(file)
         os.remove(dl)
@@ -428,7 +434,7 @@ async def abs_rmbg(event):
     os.remove(dl)
     if not dn:
         dr = out["errors"][0]
-        de = dr["detail"] if dr.get("detail") else ""
+        de = dr.get("detail", "")
         return await xx.edit(
             f"**ERROR ~** `{dr['title']}`,\n`{de}`",
         )
