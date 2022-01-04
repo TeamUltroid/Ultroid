@@ -15,7 +15,7 @@ authors:
  com_6: "در حال آپلود..."
 
  # گفتگو
- can_1: "#GBanned_User Joined.\n\n**کاربر** : {}\n**دلیل**: {}\n\n"کاربر ممنوع شد."
+ can_1: "#GBanned_User Joined.\n\n**کاربر** : {}\n**دلیل**: {}\n\nکاربر ممنوع شد."
  can_2: "∆ #UsernameUpdate\n\n@{} نام کاربری را به @{} تغییر داد"
  can_3: "∆ #UsernameUpdate\n\n{} نام کاربری خود را حذف کرد. (@{})"
  can_4: "∆ #UsernameUpdate\n\n نام کاربری جدید {} --> @{}"
