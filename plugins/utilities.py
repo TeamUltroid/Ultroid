@@ -416,7 +416,7 @@ async def abs_rmbg(event):
         if reply.document and reply.document.thumbs:
             dl = await reply.download_media(thumb=-1)
         else:
-            dl = await reply.document_media()
+            dl = await reply.download_media()
     else:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
