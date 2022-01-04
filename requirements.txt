@@ -3,4 +3,4 @@
 https://github.com/New-dev0/Telethon/archive/Vector.zip
 https://github.com/TeamUltroid/pyUltroid/archive/refs/heads/dev.zip
 # py-Ultroid==2022.1.1.1
-pytgcalls==3.0.0.dev19
+pytgcalls==3.0.0.dev20
