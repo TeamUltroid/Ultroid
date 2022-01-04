@@ -107,27 +107,26 @@ async def _(event):
     mone = await event.eor(get_string("com_1"))
     if isinstance(input_file, Message):
         location = "resources/downloads"
-        filename = input_file.file.name
-        if not filename:
-            filename = str(round(time.time()))
-        filename = location + "/" + filename
-        try:
-            filename, downloaded_in = await event.client.fast_downloader(
-                file=input_file.media.document,
-                filename=filename,
-                show_progress=True,
-                event=mone,
-                message=get_string("com_5"),
-            )
-            filename = filename.name
-        except AttributeError:
-            start_time = time.time()
-            filename = await event.client.download_media(location, input_file.media)
-            downloaded_in = time.time() - start_time
-        except Exception as e:
-            return await eor(mone, str(e), time=10)
+        if input_file.photo:
+            filename = await input_file.download_media(location)
+        else:
+            filename = input_file.file.name
+            if not filename:
+                filename = str(round(time.time()))
+            filename = location + "/" + filename
+            try:
+                filename, downloaded_in = await event.client.fast_downloader(
+                    file=input_file.media.document,
+                    filename=filename,
+                    show_progress=True,
+                    event=mone,
+                    message=get_string("com_5"),
+                )
+                filename = filename.name
+            except Exception as e:
+                return await eor(mone, str(e), time=10)
         await mone.edit(
-            f"`Downloaded to ``{filename}`` in {time_formatter(downloaded_in*1000)}.`",
+            f"`Downloaded to ``{filename}`.`",
         )
     else:
         filename = input_file.strip()
