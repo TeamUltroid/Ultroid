@@ -11,7 +11,7 @@
 | az | Azerbaijan [Azərbaycan] | 382 | 31 |
 | mr | Marathi [मराठी] | 114 | 299 |
 | hi | Hindi [हिंदी] | 410 | 3 |
-| fa | Persian [Farsi] | 413 | NULL |
+| fa | Persian [Farsi] | 391 | 22 |
 | my | Malay [Bahasa Melayu] | 114 | 299 |
 | ml | Malayalam [മലയാളം] | 114 | 299 |
 | si | sinhala [සිංහල] | 114 | 299 |
