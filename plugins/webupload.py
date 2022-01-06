@@ -51,19 +51,19 @@ async def _(event):
         await xx.delete()
 
     else:
-       __cache = f"{event.chat_id}:{event.id}"
-       buttons = [
-        [
-            Button.inline("anonfiles", data=f"flanonfiles//{__cache}"),
-            Button.inline("transfer", data=f"fltransfer//{__cache}"),
-        ],
-        [
-            Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
-            Button.inline("x0.at", data=f"flx0.at//{__cache}"),
-        ],
-        [
-            Button.inline("file.io", data=f"flfile.io//{__cache}"),
-            Button.inline("siasky", data=f"flsiasky//{__cache}"),
-        ],
+        __cache = f"{event.chat_id}:{event.id}"
+        buttons = [
+            [
+                Button.inline("anonfiles", data=f"flanonfiles//{__cache}"),
+                Button.inline("transfer", data=f"fltransfer//{__cache}"),
+            ],
+            [
+                Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
+                Button.inline("x0.at", data=f"flx0.at//{__cache}"),
+            ],
+            [
+                Button.inline("file.io", data=f"flfile.io//{__cache}"),
+                Button.inline("siasky", data=f"flsiasky//{__cache}"),
+            ],
         ]
         await xx.edit("**Choose Server to Upload File...**", buttons=buttons)
