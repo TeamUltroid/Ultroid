@@ -189,14 +189,12 @@ async def _(event):
                 )
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
-    final_output = (
-        "<i>►</i> <b>EVALPy</b>\n<pre>{}</pre> \n\n <i>►</i> <b>OUTPUT</b>: \n<pre>{}</pre> \n".format(
-            cmd,
-            evaluation,
-        )
+    final_output = "<i>►</i> <b>EVALPy</b>\n<pre>{}</pre> \n\n <i>►</i> <b>OUTPUT</b>: \n<pre>{}</pre> \n".format(
+        cmd,
+        evaluation,
     )
     if len(final_output) > 4096:
-        for ele in ["b","i","pre"]:
+        for ele in ["b", "i", "pre"]:
             final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
         with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
