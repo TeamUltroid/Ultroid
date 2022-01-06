@@ -36,7 +36,7 @@ import os
 
 from pyUltroid.startup.loader import Loader, load_addons
 
-from . import eod, get_string, requests, safeinstall, ultroid_cmd, un_plug
+from . import eod, get_string, udB, async_searcher, requests, safeinstall, ultroid_cmd, un_plug
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)
@@ -146,8 +146,8 @@ async def get_the_addons_lol(event):
     split_thelink = thelink.split("/")
     if "raw" not in thelink:
         return await xx.eor(fool, time=10)
-    name_of_it = split_thelink[(len(split_thelink) - 1)]
-    plug = requests.get(thelink).text
+    name_of_it = split_thelink[-1]
+    plug = await async_searcher(thelink)
     fil = f"addons/{name_of_it}"
     await xx.edit("Packing the codes...")
     with open(fil, "w", encoding="utf-8") as uult:
