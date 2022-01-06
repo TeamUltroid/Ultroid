@@ -43,8 +43,27 @@ async def _(event):
             _webupload_cache[int(event.chat_id)][int(event.id)] = file.name
     else:
         return await xx.eor("`Reply to file or give file path...`")
-    results = await event.client.inline_query(
-        asst.me.username, f"fl2lnk {event.chat_id}:{event.id}"
-    )
-    await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id)
-    await xx.delete()
+    if not event.client._bot:
+        results = await event.client.inline_query(
+            asst.me.username, f"fl2lnk {event.chat_id}:{event.id}"
+        )
+        await results[0].click(event.chat_id, reply_to=event.reply_to_msg_id)
+        await xx.delete()
+
+    else:
+       __cache = f"{event.chat_id}:{event.id}"
+       buttons = [
+        [
+            Button.inline("anonfiles", data=f"flanonfiles//{__cache}"),
+            Button.inline("transfer", data=f"fltransfer//{__cache}"),
+        ],
+        [
+            Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
+            Button.inline("x0.at", data=f"flx0.at//{__cache}"),
+        ],
+        [
+            Button.inline("file.io", data=f"flfile.io//{__cache}"),
+            Button.inline("siasky", data=f"flsiasky//{__cache}"),
+        ],
+        ]
+        await xx.edit("**Choose Server to Upload File...**", buttons=buttons)
