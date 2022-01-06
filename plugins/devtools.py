@@ -196,7 +196,7 @@ async def _(event):
     if len(final_output) > 4096:
         for ele in ["b", "i", "pre"]:
             final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
-        with BytesIO(str.encode(ultd)) as out_file:
+        with BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
                 event.chat_id,
