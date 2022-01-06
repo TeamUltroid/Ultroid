@@ -190,13 +190,14 @@ async def _(event):
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
     final_output = (
-        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "<i>►</i> <b>EVALPy</b>\n<pre>{}</pre> \n\n <i>►</i> <b>OUTPUT</b>: \n<pre>{}</pre> \n".format(
             cmd,
             evaluation,
         )
     )
     if len(final_output) > 4096:
-        ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
+        for ele in ["b","i","pre"]:
+            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
         with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
@@ -209,7 +210,7 @@ async def _(event):
                 reply_to=reply_to_id,
             )
         return await xx.delete()
-    await xx.edit(final_output)
+    await xx.edit(final_output, parse_mode="html")
 
 
 def _stringified(text, *args, **kwargs):
