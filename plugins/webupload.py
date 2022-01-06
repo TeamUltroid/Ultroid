@@ -4,6 +4,7 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 
@@ -33,7 +34,7 @@ async def _(event):
     elif event.reply_to_msg_id:
         reply = await event.get_reply_message()
         if reply.photo:
-            file = await event.client.download_media("resources/downloads/")
+            file = await reply.download_media("resources/downloads/")
             _webupload_cache[int(event.chat_id)][int(event.id)] = file
         else:
             file, _ = await event.client.fast_downloader(
