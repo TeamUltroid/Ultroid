@@ -101,9 +101,9 @@ bot = ultroid = ultroid_bot
 _ignore_eval = []
 
 
-def _parse_eval(value):
+def _parse_eval(value=None):
     if value is None:
-        return
+        return ""
     if hasattr(value, "stringify"):
         try:
             return value.stringify()
