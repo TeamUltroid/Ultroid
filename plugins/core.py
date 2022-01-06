@@ -34,7 +34,8 @@
 
 import os
 
-from pyUltroid.startup.loader import load_addons, Loader
+from pyUltroid.startup.loader import Loader, load_addons
+
 from . import eod, get_string, requests, safeinstall, ultroid_cmd, un_plug
 
 
@@ -129,7 +130,9 @@ async def pickup_call(ult):
             return await proc.eor("`VcBot is Already Active!`", time=8)
         Loader(path="vcbot", key="VCBot").load()
     else:
-        return await proc.eor("`Found Nothing to pick!\nSpecify what to pick..`", time=8)
+        return await proc.eor(
+            "`Found Nothing to pick!\nSpecify what to pick..`", time=8
+        )
     await proc.eor(f"`Successfully Activated {match_}`", time=8)
 
 
