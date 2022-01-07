@@ -137,9 +137,10 @@ async def _(event):
     match = event.pattern_match.group(1)
     if match:
         match = match.strip()
-    stream, delete, thumb = False, False, "resources/extras/ultroid.jpg"
+    stream, force_doc, delete, thumb = False, True, False, "resources/extras/ultroid.jpg"
     if "--allow-stream" in match:
         stream = True
+        force_doc = False
     if "--delete" in match:
         delete = True
     if "--no-thumb" in match:
@@ -165,6 +166,7 @@ async def _(event):
                     event.chat_id,
                     file,
                     supports_streaming=stream,
+                    force_document=force_doc,
                     thumb=thumb,
                     caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_)}`",
                     reply_to=event.reply_to_msg_id or event,
@@ -180,6 +182,7 @@ async def _(event):
         event.chat_id,
         file,
         supports_streaming=stream,
+        force_document=force_doc,
         thumb=thumb,
         caption=f"`Uploaded` `{match}` `in {time_formatter(_)}`",
         reply_to=event.reply_to_msg_id or event,
