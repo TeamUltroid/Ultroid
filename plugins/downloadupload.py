@@ -141,16 +141,20 @@ async def _(event):
         if "ultroid" in event.text[:7]:
             return
     msg = await event.eor(get_string("com_1"))
-    file = event.pattern_match.group(1)
-    if file:
-        file = file.strip()
+    match = event.pattern_match.group(1)
+    if match:
+        match = match.strip()
     stream, delete, thumb = False, False, "resources/extras/ultroid.jpg"
-    if "--allow-stream" in file:
-        stream = not stream
-    if "--no-delete" in file:
-        delete = not delete
-    if "--no-thumb" in file:
+    if "--allow-stream" in match:
+        stream = True
+    if "--delete" in match:
+        delete = True
+    if "--no-thumb" in match:
         thumb = None
+    arguments = ["--allow-stream", "--delete", "--no-thumb"]
+    if any(item in match for item in arguments):
+        match = match.replace("--allow-stream", "").replace("--delete", "").replace("--no-thumb","").strip()
+    
 """
 
 
