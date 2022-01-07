@@ -4,6 +4,7 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 """
 ✘ Commands Available -
 
@@ -17,6 +18,7 @@
 • `{i}download <DDL> (| filename)`
     Download using DDL. Will autogenerate filename if not given.
 """
+
 import asyncio
 import glob
 import os
@@ -25,6 +27,7 @@ from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
 from pyUltroid.functions.tools import metadata
+from pyUltroid.functions.helper import time_formatter
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
@@ -129,7 +132,6 @@ async def download(event):
     await xx.eor(get_string("udl_2").format(file_name, t))
 
 
-"""
 @ultroid_cmd(
     pattern="ul( (.*)|$)",
 )
@@ -151,6 +153,21 @@ async def _(event):
     arguments = ["--allow-stream", "--delete", "--no-thumb"]
     if any(item in match for item in arguments):
         match = match.replace("--allow-stream", "").replace("--delete", "").replace("--no-thumb","").strip()
+    if not os.path.exists(match):
+        return await msg.eor("`File doesn't exist or path is incorrect!`")
+    if os.path.isdir(match):
+        c, s = 0, 0
+        for files in sorted(os.listdir(match)):
+            try:
+                file, _ = await event.client.fast_uploader(match+"/"+files, show_progress=True, event=msg, to_delete=delete)
+                await event.client.send_file(chat_id, file, supports_streaming=stream, thumb=thumb, caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_)}`", reply_to=event.reply_to_msg_id or event)
+                s += 1
+            except ValueError:
+                c += 1
+        return await msg.eor(f"`Uploaded {s} files, failed to upload {c}.`")
+    file, _ = await event.client.fast_uploader(match, show_progress=True, event=msg, to_delete=delete)
+    await event.client.send_file(chat_id, file, supports_streaming=stream, thumb=thumb, caption=f"`Uploaded` `{match}` `in {time_formatter(_)}`", reply_to=event.reply_to_msg_id or event)
+    await msg.try_delete()
 
 """
 
@@ -331,3 +348,4 @@ async def download(event):
         )
     else:
         await xx.eor(f"Uploaded `{ko}` in `{t}`")
+"""
