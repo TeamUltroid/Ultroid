@@ -177,7 +177,7 @@ async def _(event):
                     reply_to=event.reply_to_msg_id or event,
                 )
                 s += 1
-            except ValueError:
+            except (ValueError, IsADirectoryError):
                 c += 1
         return await msg.eor(f"`Uploaded {s} files, failed to upload {c}.`")
     file, _ = await event.client.fast_uploader(
