@@ -154,7 +154,7 @@ async def _(event):
     arguments = ["--allow-stream", "--delete", "--no-thumb"]
     if any(item in match for item in arguments):
         match = match.replace("--allow-stream", "").replace("--delete", "").replace("--no-thumb","").strip()
-    
+
 """
 
 
