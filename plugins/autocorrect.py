@@ -13,7 +13,15 @@
 
 import string
 
-from . import HNDLR, eor, get_string, udB, Redis, ultroid_bot, ultroid_cmd  # ignore: pylint
+from . import (
+    HNDLR,
+    Redis,
+    eor,
+    get_string,
+    udB,  # ignore: pylint
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 try:
     from gingerit.gingerit import GingerIt
