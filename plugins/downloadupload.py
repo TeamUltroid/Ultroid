@@ -173,7 +173,7 @@ async def _(event):
                     supports_streaming=stream,
                     force_document=force_doc,
                     thumb=thumb,
-                    caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_)}`",
+                    caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_*1000)}`",
                     reply_to=event.reply_to_msg_id or event,
                 )
                 s += 1
@@ -189,7 +189,7 @@ async def _(event):
         supports_streaming=stream,
         force_document=force_doc,
         thumb=thumb,
-        caption=f"`Uploaded` `{match}` `in {time_formatter(_)}`",
+        caption=f"`Uploaded` `{match}` `in {time_formatter(_*1000)}`",
         reply_to=event.reply_to_msg_id or event,
     )
     await msg.try_delete()
