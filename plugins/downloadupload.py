@@ -132,6 +132,28 @@ async def download(event):
     await xx.eor(get_string("udl_2").format(file_name, t))
 
 
+"""
+@ultroid_cmd(
+    pattern="ul( (.*)|$)",
+)
+async def _(event):
+    if len(event.text) >= 8:
+        if "ultroid" in event.text[:7]:
+            return
+    msg = await event.eor(get_string("com_1"))
+    file = event.pattern_match.group(1)
+    if file:
+        file = file.strip()
+    stream, delete, thumb = False, False, "resources/extras/ultroid.jpg"
+    if "--allow-stream" in file:
+        stream = not stream
+    if "--no-delete" in file:
+        delete = not delete
+    if "--no-thumb" in file:
+        thumb = None
+"""
+
+
 @ultroid_cmd(
     pattern="ul( (.*)|$)",
 )
