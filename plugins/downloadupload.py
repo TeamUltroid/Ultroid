@@ -7,12 +7,9 @@
 """
 ✘ Commands Available -
 
-• `{i}ul <path/to/file>`
-    Upload file to telegram chat.
-    You Can Upload Folders too.
-
 • `{i}ul <path/to/file> (| stream)`
-    Upload files as stream.
+    Upload files on telegram.
+    Use <` | stream`> to upload as stream.
 
 • `{i}dl <filename(optional)>`
     Reply to file to download.
