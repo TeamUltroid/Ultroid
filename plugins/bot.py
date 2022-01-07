@@ -46,7 +46,7 @@ from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,
 )
 from telethon.utils import resolve_bot_file_id
-from random import choice
+
 from . import (
     ATRA_COL,
     INLINE_PIC,
