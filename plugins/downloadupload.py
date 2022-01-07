@@ -162,7 +162,7 @@ async def _(event):
                     match + "/" + files, show_progress=True, event=msg, to_delete=delete
                 )
                 await event.client.send_file(
-                    chat_id,
+                    event.chat_id,
                     file,
                     supports_streaming=stream,
                     thumb=thumb,
@@ -177,7 +177,7 @@ async def _(event):
         match, show_progress=True, event=msg, to_delete=delete
     )
     await event.client.send_file(
-        chat_id,
+        event.chat_id,
         file,
         supports_streaming=stream,
         thumb=thumb,
