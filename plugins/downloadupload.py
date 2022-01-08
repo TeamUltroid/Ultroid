@@ -8,9 +8,12 @@
 """
 ✘ Commands Available -
 
-• `{i}ul <path/to/file> (| stream)`
+• `{i}ul <path/to/file>`
     Upload files on telegram.
-    Use <` | stream`> to upload as stream.
+    Use following arguments before or after filename as per requirement:
+      `--allow-stream` to upload as stream.
+      `--delete` to delete file after uploading.
+      `--no-thumb` to upload without thumbnail.
 
 • `{i}dl <filename(optional)>`
     Reply to file to download.
