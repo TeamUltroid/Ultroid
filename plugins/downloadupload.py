@@ -26,6 +26,7 @@ from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
 from pyUltroid.functions.helper import time_formatter
+from pyUltroid.functions.tools import set_attributes
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from . import (
@@ -163,6 +164,9 @@ async def _(event):
     if os.path.isdir(match):
         c, s = 0, 0
         for files in sorted(os.listdir(match)):
+            attributes = None
+            if stream:
+                attributes = await set_attributes(files)
             try:
                 file, _ = await event.client.fast_uploader(
                     match + "/" + files, show_progress=True, event=msg, to_delete=delete
@@ -173,6 +177,7 @@ async def _(event):
                     supports_streaming=stream,
                     force_document=force_doc,
                     thumb=thumb,
+                    attributes=attributes,
                     caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_*1000)}`",
                     reply_to=event.reply_to_msg_id or event,
                 )
@@ -180,6 +185,9 @@ async def _(event):
             except (ValueError, IsADirectoryError):
                 c += 1
         return await msg.eor(f"`Uploaded {s} files, failed to upload {c}.`")
+    attributes = None
+    if stream:
+        attributes = await set_attributes(match)
     file, _ = await event.client.fast_uploader(
         match, show_progress=True, event=msg, to_delete=delete
     )
@@ -189,6 +197,7 @@ async def _(event):
         supports_streaming=stream,
         force_document=force_doc,
         thumb=thumb,
+        attributes=attributes,
         caption=f"`Uploaded` `{match}` `in {time_formatter(_*1000)}`",
         reply_to=event.reply_to_msg_id or event,
     )
