@@ -68,7 +68,40 @@ async def _help(ult):
                     x += "\n© @TeamUltroid"
                     await ult.eor(x)
                 except BaseException:
-                    await ult.eor(get_string("help_1").format(plug), time=5)
+                    file = None
+                    for file_name in LIST:
+                        value = LIST[file_name]
+                        for j in value:
+                            j = (
+                                j.replace("$", "")
+                                .replace("?(.*)", "")
+                                .replace("(.*)", "")
+                                .replace("(?: |)", "")
+                                .replace("| ", "")
+                                .replace("( |)", "")
+                                .replace("?((.|//)*)", "")
+                                .replace("?P<shortname>\\w+", "")
+                                .replace("(", "")
+                                .replace(")", "")
+                                .replace("?(\\d+)", "")
+                            )
+                            if j.strip() == plug:
+                                file = file_name
+                                break
+                    if not file:
+                        return await ult.eor(get_string("help_1").format(plug), time=5)
+                    output = f"**Command** `{plug}` **found in plugin ** - `{file}`\n"
+                    if file in HELP["Official"]:
+                        for i in HELP["Official"][file]:
+                            output += i
+                    elif HELP.get("Addons") and file in HELP["Addons"]:
+                        for i in HELP["Addons"][file]:
+                            output += i
+                    elif HELP.get("VCBot") and file in HELP["VCBot"]:
+                        for i in HELP["VCBot"][file]:
+                            output += i
+                    output += "\n© @TeamUltroid"
+                    await ult.eor(output)
         except BaseException as er:
             LOGS.exception(er)
             await ult.eor("Error 🤔 occured.")

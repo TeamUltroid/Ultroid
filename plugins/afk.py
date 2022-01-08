@@ -9,9 +9,9 @@
 
 • `{i}afk <optional reason>`
     AFK means away from keyboard,
-    After u active this if Someone tag or msg u then It auto Reply Him/her,
+    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.
 
-    (Note : By Reply To any media U can set media afk too).
+    (Note : Set a media file in afk messages by replying to any media with `{i}afk <reason>`).
 
 """
 
