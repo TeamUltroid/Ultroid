@@ -13,7 +13,13 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
-from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter, humanbytes
+from pyUltroid.functions.helper import (
+    bash,
+    fast_download,
+    humanbytes,
+    numerize,
+    time_formatter,
+)
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
