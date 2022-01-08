@@ -41,7 +41,7 @@ async def warn(e):
     if len(e.text) > 5 and " " not in e.text[5]:
         return
     if reply:
-        user = reply.from_id.user_id
+        user = reply.sender_id
         reason = e.text[5:] if e.pattern_match.group(1).strip() else "unknown"
     else:
         try:
