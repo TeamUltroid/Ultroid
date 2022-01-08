@@ -13,7 +13,7 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
-from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
+from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter, humanbytes
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
@@ -187,6 +187,7 @@ async def _(event):
         filepath = vid_id + f".{ext}"
         if not os.path.exists(filepath):
             filepath = filepath + f".{ext}"
+        size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
             filepath,
             filename=title + "." + ext,
@@ -238,6 +239,7 @@ async def _(event):
         filepath = vid_id + ".mkv"
         if not os.path.exists(filepath):
             filepath = filepath + ".webm"
+        size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
             filepath,
             filename=title + ".mkv",
@@ -253,12 +255,14 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    text = f"**Title:** `{title}`\n\n"
-    text += f"`📝 Description:` `{description}`\n\n"
-    text += f"`⏳ Duration:` `{time_formatter(int(duration)*1000)}`\n"
-    text += f"`🎤 Artist:` `{artist}`\n"
-    text += f"`👀 Views`: `{views}`\n"
-    text += f"`👍 Likes`: `{likes}`\n"
+    description = description if description != "" else "None"
+    text = f"**Title: [{title}]({_yt_base_url}{vid_id})**\n\n"
+    text += f"`📝 Description: {description}\n\n"
+    text += f"⏳ Duration: {time_formatter(int(duration)*1000)}\n"
+    text += f"🎤 Artist: {artist}\n"
+    text += f"👀 Views: {views}\n"
+    text += f"👍 Likes: {likes}\n"
+    text += f"Size: {humanbytes(size)}`"
     button = Button.switch_inline("Search More", query="yt ", same_peer=True)
     try:
         await event.edit(
