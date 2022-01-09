@@ -144,7 +144,8 @@ async def adaudroid(e):
     pattern=r"dob( (.*)|$)",
 )
 async def hbd(event):
-    if not event.pattern_match.group(1).strip():
+    match = event.pattern_match.group(1).strip()
+    if not match:
         return await event.eor(get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
@@ -154,9 +155,7 @@ async def hbd(event):
         name = ultroid_bot.me.first_name
     zn = pytz.timezone("Asia/Kolkata")
     abhi = dt.now(zn)
-    n = event.text
-    q = n[5:]
-    kk = q.split("/")
+    kk = match.split("/")
     p = kk[0]
     r = kk[1]
     s = kk[2]
