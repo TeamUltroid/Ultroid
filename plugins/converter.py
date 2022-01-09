@@ -95,7 +95,7 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     if os.path.exists(inp):
         os.remove(inp)
-    await bash(f"""ffmpeg -i "{file}" "{inp}" -y""")
+    await bash(f'mv """{file}""" """{inp}"""')
     if not os.path.exists(inp) or os.path.exists(inp) and not os.path.getsize(inp):
         os.rename(file, inp)
     k = time.time()
