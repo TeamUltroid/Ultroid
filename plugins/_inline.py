@@ -70,7 +70,7 @@ async def inline_alive(o):
             content=InputWebDocument(TLINK, 0, "image/jpg", []),
         )
     ]
-    await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
+    await o.answer(RES, private=True, cache_time=300, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
 
 
 @in_pattern("ultd", owner=True)
@@ -95,7 +95,7 @@ async def inline_handler(event):
         result = await event.builder.article(
             title="Ultroid Help Menu", text=text, buttons=_main_help_menu
         )
-    await event.answer([result], gallery=True)
+    await event.answer([result], private=True, cache_time=300, gallery=True)
 
 
 @in_pattern("pasta", owner=True)
