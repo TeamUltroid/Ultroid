@@ -70,7 +70,13 @@ async def inline_alive(o):
             content=InputWebDocument(TLINK, 0, "image/jpg", []),
         )
     ]
-    await o.answer(RES, private=True, cache_time=300, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
+    await o.answer(
+        RES,
+        private=True,
+        cache_time=300,
+        switch_pm="👥 ULTROID PORTAL",
+        switch_pm_param="start",
+    )
 
 
 @in_pattern("ultd", owner=True)
