@@ -192,8 +192,8 @@ async def _(e):
             f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:a libmp3lame -ab 64 circle.mp4 -y'
         )
         await msg.edit("`Uploading...`")
-        file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         data = await metadata("circle.mp4")
+        file , _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         await e.client.send_file(
             e.chat_id,
             file,
