@@ -193,7 +193,7 @@ async def _(e):
         )
         await msg.edit("`Uploading...`")
         data = await metadata("circle.mp4")
-        file , _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
+        file, _ = await e.client.fast_uploader("circle.mp4", to_delete=True)
         await e.client.send_file(
             e.chat_id,
             file,
