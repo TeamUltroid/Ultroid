@@ -90,7 +90,7 @@ async def _help(ult):
                                 break
                     if not file:
                         return await ult.eor(get_string("help_1").format(plug), time=5)
-                    output = f"**Command** `{plug}` **found in plugin ** - `{file}`\n"
+                    output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:
                         for i in HELP["Official"][file]:
                             output += i
