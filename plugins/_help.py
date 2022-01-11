@@ -13,6 +13,8 @@ from telethon.errors.rpcerrorlist import (
     BotResponseTimeoutError,
 )
 from telethon.tl.custom import Button
+from pyUltroid.functions.tools import cmd_regex_replace
+from fuzzywuzzy.process import extractOne
 
 from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
 
@@ -69,27 +71,24 @@ async def _help(ult):
                     await ult.eor(x)
                 except BaseException:
                     file = None
+                    compare_strings = []
                     for file_name in LIST:
+                        compare_strings.append(file_name)
                         value = LIST[file_name]
                         for j in value:
-                            j = (
-                                j.replace("$", "")
-                                .replace("?(.*)", "")
-                                .replace("(.*)", "")
-                                .replace("(?: |)", "")
-                                .replace("| ", "")
-                                .replace("( |)", "")
-                                .replace("?((.|//)*)", "")
-                                .replace("?P<shortname>\\w+", "")
-                                .replace("(", "")
-                                .replace(")", "")
-                                .replace("?(\\d+)", "")
-                            )
+                            j = cmd_regex_replace(j)
+                            compare_strings.append(j)
                             if j.strip() == plug:
                                 file = file_name
                                 break
                     if not file:
-                        return await ult.eor(get_string("help_1").format(plug), time=5)
+                        # the enter command/plugin name is not found
+                        best_match = extractOne(plug, compare_strings)
+                        return await ult.eor(
+                            "`{}` is not a valid plugin!\nDid you mean `{}`?".format(
+                                plug, best_match[0]
+                            ),
+                        )
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:
                         for i in HELP["Official"][file]:
