@@ -440,7 +440,7 @@ async def magic(event):
     )
     response = data.get("response", {})
     if not response.get("status"):
-        return await event.eor("**ERRROR :** `{}`".format(response["message"]))
+        return await event.eor("**ERROR :** `{}`".format(response["message"]))
     await event.eor(
         f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : {data['response']['tinyUrl']}"
     )
