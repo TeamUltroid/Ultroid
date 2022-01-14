@@ -211,7 +211,7 @@ async def _(event):
     await xx.edit(final_output, parse_mode="html")
 
 
-def _stringified(text, *args, **kwargs):
+def _stringified(text=None, *args, **kwargs):
     text = _parse_eval(text)
     print(text, *args, **kwargs)
 
