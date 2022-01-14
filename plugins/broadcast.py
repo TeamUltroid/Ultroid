@@ -26,7 +26,7 @@ import asyncio
 import io
 
 from pyUltroid.dB.broadcast_db import *
-
+from telethon.utils import get_display_name
 from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
 
@@ -56,7 +56,7 @@ async def broadcast_adder(event):
                     cid = f"-100{i.id}"
                     add_channel(int(cid))
             except Exception as Ex:
-                LOGS.info(Ex)
+                LOGS.exception(Ex)
         await x.edit(get_string("bd_3").format(get_no_channels(), new))
         return
     if event.reply_to_msg_id:
@@ -73,7 +73,7 @@ async def broadcast_adder(event):
         await event.delete()
         return
     chat_id = event.chat_id
-    if int(chat_id) == int(udB.get_key("LOG_CHANNEL")):
+    if chat_id == udB.get_key("LOG_CHANNEL"):
         return
     if not is_channel_added(chat_id):
         xx = add_channel(chat_id)
@@ -81,12 +81,10 @@ async def broadcast_adder(event):
             await x.edit(get_string("bd_5"))
         else:
             await x.edit(get_string("sf_8"))
-        await asyncio.sleep(3)
-        await event.delete()
-    elif is_channel_added(chat_id):
+    else:
         await x.edit(get_string("bd_6"))
-        await asyncio.sleep(3)
-        await event.delete()
+    await asyncio.sleep(3)
+    await x.delete()
 
 
 @ultroid_cmd(
@@ -94,7 +92,7 @@ async def broadcast_adder(event):
     allow_sudo=False,
 )
 async def broadcast_remover(event):
-    chat_id = event.pattern_match.group(1).strip()
+    chat_id = event.pattern_match.group(1).strip() or event.chat_id
     x = await event.eor(get_string("com_1"))
     if chat_id == "all":
         await x.edit(get_string("bd_8"))
@@ -104,17 +102,10 @@ async def broadcast_remover(event):
     if is_channel_added(chat_id):
         rem_channel(chat_id)
         await x.edit(get_string("bd_7"))
-        await asyncio.sleep(3)
-        await x.delete()
-    elif is_channel_added(event.chat_id):
-        rem_channel(event.chat_id)
-        await x.edit(get_string("bd_7"))
-        await asyncio.sleep(3)
-        await x.delete()
-    elif not is_channel_added(event.chat_id):
+    else:
         await x.edit(get_string("bd_9"))
-        await asyncio.sleep(3)
-        await x.delete()
+    await asyncio.sleep(3)
+    await x.delete()
 
 
 @ultroid_cmd(
@@ -123,18 +114,18 @@ async def broadcast_remover(event):
 async def list_all(event):
     x = await event.eor(get_string("com_1"))
     channels = get_channels()
-    num = get_no_channels()
-    if num == 0:
+    num = len(channels)
+    if not channels:
         return await eor(x, "No chats were added.", time=5)
     msg = "Channels in database:\n"
     for channel in channels:
         name = ""
         try:
-            name = (await event.client.get_entity(int(channel))).title
-        except BaseException:
+            name = get_display_name(await event.client.get_entity(channel))
+        except ValueError:
             name = ""
         msg += f"=> **{name}** [`{channel}`]\n"
-    msg += f"\nTotal {get_no_channels()} channels."
+    msg += f"\nTotal {num} channels."
     if len(msg) > 4096:
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
@@ -160,7 +151,7 @@ async def forw(event):
     ultroid_bot = event.client
     channels = get_channels()
     x = await event.eor("Sending...")
-    if get_no_channels() == 0:
+    if not channels:
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
     sent_count = 0
@@ -169,7 +160,7 @@ async def forw(event):
     error_count = 0
     for channel in channels:
         try:
-            await ultroid_bot.forward_messages(int(channel), previous_message)
+            await ultroid_bot.forward_messages(channel, previous_message)
             sent_count += 1
             await x.edit(
                 f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -202,7 +193,7 @@ async def sending(event):
     if not event.is_reply:
         return await x.edit(get_string("ex_1"))
     channels = get_channels()
-    if get_no_channels() == 0:
+    if not channels:
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     await x.edit("Sending....")
     if event.reply_to_msg_id:
@@ -214,7 +205,7 @@ async def sending(event):
             sent_count = 0
             for channel in channels:
                 try:
-                    await ultroid_bot.send_message(int(channel), previous_message)
+                    await ultroid_bot.send_message(channel, previous_message)
                     sent_count += 1
                     await x.edit(
                         f"Sent : {sent_count}\nError : {error_count}\nTotal : {len(channels)}",
@@ -222,7 +213,7 @@ async def sending(event):
                 except Exception as error:
 
                     await ultroid_bot.send_message(
-                        int(udB.get_key("LOG_CHANNEL")),
+                        udB.get_key("LOG_CHANNEL"),
                         f"Error in sending at {channel}.\n\n{error}",
                     )
                     error_count += 1
