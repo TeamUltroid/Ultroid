@@ -1,3 +1,4 @@
+import sys
 from os import listdir, path
 from typing import Any, Dict, List, Union
 
@@ -9,7 +10,11 @@ except ImportError:
     LOGS.info("'google_trans_new' not installed!")
     Trs = None
 
-from yaml import safe_load
+try:
+    from yaml import safe_load
+except ModuleNotFoundError:
+    LOGS.info("'pyYaml' not installed!\nPlease install it to use Ultroid.")
+    sys.exit()
 
 language = [udB.get_key("language") or "en"]
 languages = {}
