@@ -1,14 +1,18 @@
 from os import listdir, path
 from typing import Any, Dict, List, Union
 
-from google_trans_new import google_translator
 from pyUltroid import udB, LOGS
+try:
+    from google_trans_new import google_translator
+    Trs = google_translator()
+except ImportError:
+    LOGS.info("'google_trans_new' not installed!")
+    Trs = None
+
 from yaml import safe_load
 
 language = [udB.get_key("language") or "en"]
 languages = {}
-
-Trs = google_translator()
 
 strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
 
@@ -31,6 +35,8 @@ def get_string(key: str) -> Any:
     except KeyError:
         try:
             en_ = languages["en"][key]
+            if not Trs;
+                return en_
             tr = Trs.translate(en_, lang_tgt=lang).replace("\ N", "\n")
             if en_.count("{}") != tr.count("{}"):
                 tr = en_
