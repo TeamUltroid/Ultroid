@@ -37,6 +37,7 @@ async def download_from_youtube_(event):
     opt = event.pattern_match.group(1).strip()
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
+        ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
@@ -65,6 +66,7 @@ async def download_from_youtube_(event):
         except BaseException:
             return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
+        ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
