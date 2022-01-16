@@ -52,7 +52,7 @@ def get_api_id_and_hash():
 def telethon_session():
     try:
         spinner()
-
+        import telethon # ignore: pylint
         text = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except ImportError:
         print("Installing Telethon...")
