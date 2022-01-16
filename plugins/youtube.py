@@ -38,7 +38,7 @@ async def download_from_youtube_(event):
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd["format"] = "bestaudio"
-        ytd["outtmpl"] = "%(id)s.mp3"
+        ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
                 "key": "FFmpegExtractAudio",
@@ -67,7 +67,7 @@ async def download_from_youtube_(event):
             return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
         ytd["format"] = "bestaudio"
-        ytd["outtmpl"] = "%(id)s.mp3"
+        ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
                 "key": "FFmpegExtractAudio",
