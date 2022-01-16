@@ -13,9 +13,8 @@ from pyUltroid.functions.helper import inline_mention
 from pyUltroid.misc import SUDO_M, owner_and_sudos
 from telethon import Button, events
 from telethon.utils import get_display_name
-
 from strings.strings import get_string
-
+from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from . import *
 
 Owner_info_msg = udB.get_key("BOT_INFO_START")
@@ -77,7 +76,10 @@ async def own(event):
 
 @callback("closeit")
 async def closet(lol):
-    await lol.delete()
+    try:
+        await lol.delete()
+    except MessageDeleteForbiddenError:
+        await lol.answer("MESSAGE_TOO_OLD", alert=True)
 
 
 @asst_cmd(pattern="start( (.*)|$)", forwards=False, func=lambda x: not x.is_group)
