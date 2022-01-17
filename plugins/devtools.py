@@ -103,7 +103,7 @@ _ignore_eval = []
 
 def _parse_eval(value=None):
     if value is None:
-        return None
+        return ""
     if hasattr(value, "stringify"):
         try:
             return value.stringify()
