@@ -33,9 +33,7 @@ async def cd(e):
     msg = e.pattern_match.group(1).strip()
     if reply and reply.text:
         msg = reply.text
-    elif msg:
-        msg = msg
-    else:
+    elif not msg:
         return await e.eor("`Give Some Text or Reply", time=5)
     kk = await e.eor(get_string("com_1"))
     pfp = await e.client.get_profile_photos(ultroid_bot.uid)
@@ -60,15 +58,13 @@ async def cd(e):
 async def qrwater(e):
     msg = e.pattern_match.group(1).strip()
     r = await e.get_reply_message()
-    if not (msg and r and r.media):
-        return await e.eor("`Reply Any Media and Give Text`", time=5)
-    kk = await e.eor(get_string("com_1"))
     if isinstance(r.media, photu):
         dl = await e.client.download_media(r.media)
     elif isinstance(r.media, doc):
         dl = await e.client.download_media(r, thumb=-1)
     else:
-        return
+        return await e.eor("`Reply Any Media and Give Text`", time=5)
+    kk = await e.eor(get_string("com_1"))
     img_bg = Image.open(dl)
     qr = qrcode.QRCode(box_size=5)
     qr.add_data(msg)
