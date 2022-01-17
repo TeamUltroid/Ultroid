@@ -146,7 +146,7 @@ async def reverse(event):
     ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
     if reply.video:
-        cv2.VideoCapture(dl)
+        img = cv2.VideoCapture(dl)
         ult, roid = img.read()
         os.remove(dl)
         dl = "file.png"
