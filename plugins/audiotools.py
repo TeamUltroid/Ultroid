@@ -65,7 +65,7 @@ async def vnc(e):
     )
     try:
         await e.client.send_message(
-        e.chat_id, file="out.opus", force_document=False, reply_to=r
+            e.chat_id, file="out.opus", force_document=False, reply_to=r
         )
     except Exception as er:
         LOGS.exception(er)
