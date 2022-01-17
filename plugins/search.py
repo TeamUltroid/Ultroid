@@ -33,6 +33,10 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
+try:
+    import cv2
+except ImportError:
+    cv2 = None
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
@@ -141,6 +145,12 @@ async def reverse(event):
         return await event.eor("`Reply to an Image`")
     ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
+    if reply.video:
+        cv2.VideoCapture(dl)
+        ult, roid = img.read()
+        os.remove(dl)
+        dl = "file.png"
+        cv2.imwrite(dl, roid)
     img = Image.open(dl)
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}
