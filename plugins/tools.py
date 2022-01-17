@@ -16,7 +16,7 @@
 • `{i}bots`
     Shows the number of bots in the current chat with their perma-link.
 
-• `{i}hl <a link>`
+• `{i}hl <a link> <text-optional>`
     Embeds the link with a whitespace as message.
 
 • `{i}id`
@@ -158,14 +158,20 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="hl",
+    pattern="hl( (.*)|$)",
 )
 async def _(ult):
-    try:
-        input = ult.text.split(" ", maxsplit=1)[1]
-    except IndexError:
+    input_ = ult.pattern_match.group(1).strip()
+    if not input_:
         return await ult.eor("`Input some link`", time=5)
-    await ult.eor("[ㅤㅤㅤㅤㅤㅤㅤ](" + input + ")", link_preview=False)
+    text = None
+    if len(input_.split()) > 1:
+        spli_ = input_.split()
+        input_ = spli_[0]
+        text = spli_[1]
+    if not text:
+        text = "ㅤㅤㅤㅤㅤㅤㅤ"
+    await ult.eor(f"[{text}](" + input_ + ")", link_preview=False)
 
 
 @ultroid_cmd(
