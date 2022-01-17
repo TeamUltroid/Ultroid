@@ -292,7 +292,7 @@ async def _(event):
             if not photo:
                 return await xx.eor(capt, parse_mode="html")
             await event.client.send_message(
-                event.chat_id, capt, file=photo, parse_mode="html"
+                event.chat_id, capt[:1024], file=photo, parse_mode="html"
             )
             await xx.delete()
         except Exception as er:
