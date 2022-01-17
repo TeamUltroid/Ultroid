@@ -26,7 +26,7 @@ import psutil
 import requests
 from pyUltroid.functions import some_random_headers
 
-from . import Var, eor, get_string, humanbytes, udB, ultroid_cmd
+from . import Var, get_string, humanbytes, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
