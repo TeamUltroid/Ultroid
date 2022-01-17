@@ -102,8 +102,6 @@ _ignore_eval = []
 
 
 def _parse_eval(value=None):
-    if value is None:
-        return ""
     if hasattr(value, "stringify"):
         try:
             return value.stringify()
@@ -115,7 +113,7 @@ def _parse_eval(value=None):
         except BaseException:
             pass
     # is to_dict is also Good option to format?
-    return str(value)
+    return value
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -175,7 +173,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
+    evaluation = exc or stderr or stdout or str(_parse_eval(value)) or get_string("instu_4")
     if silent:
         if exc:
             msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
