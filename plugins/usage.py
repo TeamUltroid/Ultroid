@@ -55,10 +55,8 @@ async def usage_finder(event):
     elif opt == "heroku":
         is_hk, hk = heroku_usage()
         await x.edit(hk)
-    elif opt == "full":
-        await x.edit(get_full_usage())
     else:
-        await eor(x, "`The what?`", time=5)
+        await x.edit(get_full_usage())
 
 
 def simple_usage():
