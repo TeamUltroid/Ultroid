@@ -214,6 +214,8 @@ heroku_api = Var.HEROKU_API
 async def restartbt(ult):
     ok = await ult.eor(get_string("bot_5"))
     call_back()
+    who = "bot" if ult.client._bot else "user"
+    udB.set_key("_RESTART", f"{who}_{ult.chat_id}_{ok.id}")
     if heroku_api:
         return await restart(ok)
     await bash("git pull && pip3 install -r requirements.txt")
