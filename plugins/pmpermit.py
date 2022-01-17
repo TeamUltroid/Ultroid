@@ -155,7 +155,7 @@ if udB.get_key("PMLOG"):
 
 
 if udB.get_key("PMSETTING"):
-    if udB.get_key("AUTOAPPROVE"):
+    if udB.get_key("AUTOAPPROVE") in [True, None]:
 
         @ultroid_bot.on(
             events.NewMessage(
