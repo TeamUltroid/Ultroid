@@ -59,7 +59,7 @@ async def startmute(event):
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
-    await event.get_chat()
+    chat = await event.get_chat()
     if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
         if chat.admin_rights.delete_messages is not True:
             return await xx.eor("`No proper admin rights...`", time=5)
