@@ -11,7 +11,7 @@
 • `{i}ul <path/to/file>`
     Upload files on telegram.
     Use following arguments before or after filename as per requirement:
-      `--allow-stream` to upload as stream.
+      `--stream` to upload as stream.
       `--delete` to delete file after uploading.
       `--no-thumb` to upload without thumbnail.
 
@@ -147,17 +147,17 @@ async def _(event):
         False,
         "resources/extras/ultroid.jpg",
     )
-    if "--allow-stream" in match:
+    if "--stream" in match:
         stream = True
         force_doc = False
     if "--delete" in match:
         delete = True
     if "--no-thumb" in match:
         thumb = None
-    arguments = ["--allow-stream", "--delete", "--no-thumb"]
+    arguments = ["--stream", "--delete", "--no-thumb"]
     if any(item in match for item in arguments):
         match = (
-            match.replace("--allow-stream", "")
+            match.replace("--stream", "")
             .replace("--delete", "")
             .replace("--no-thumb", "")
             .strip()
