@@ -155,7 +155,7 @@ def db_usage():
     used = udB.usage
     a = humanbytes(used) + "/" + humanbytes(total)
     b = str(round((used / total) * 100, 2)) + "%"
-    return f"**{udB.name}**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
+    return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 
 def get_full_usage():
