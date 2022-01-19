@@ -116,7 +116,12 @@ async def diesoon(e):
     if e.sender_id != int(spli[0]):
         return await e.answer(get_string("fsub_7"), alert=True)
     try:
-        await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
+        values = await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
+        left = values.stringify()
+        if 'left' in left :
+            return await e.answer(
+                "Please Join That Channel !\nThen Click This Button !", alert=True
+            )
     except UserNotParticipantError:
         return await e.answer(
             "Please Join That Channel !\nThen Click This Button !", alert=True
