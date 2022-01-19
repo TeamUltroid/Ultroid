@@ -12,10 +12,10 @@ from telethon.events import ChatAction
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
-@ultroid_bot.on(ChatAction(chats=get_dnd_chats()))
-@asst.on(ChatAction(chats=get_dnd_chats()))
+@ultroid_bot.on(ChatAction)
+@asst.on(ChatAction)
 async def _(event):
-    if event.user_joined:
+    if int(event.chat_id) in get_dnd_chats() and event.user_joined:
         for user in event.users:
             try:
                 await event.client.kick_participant(event.chat_id, user)
