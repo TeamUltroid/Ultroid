@@ -101,6 +101,7 @@ bot = ultroid = ultroid_bot
 _ignore_eval = []
 
 
+'''
 def _parse_eval(value=None):
     if hasattr(value, "stringify"):
         try:
@@ -114,6 +115,7 @@ def _parse_eval(value=None):
             pass
     # is to_dict is also Good option to format?
     return value
+'''
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -174,7 +176,7 @@ async def _(event):
     sys.stdout = old_stdout
     sys.stderr = old_stderr
     evaluation = (
-        exc or stderr or stdout or str(_parse_eval(value)) or get_string("instu_4")
+        exc or stderr or stdout or value or get_string("instu_4")
     )
     if silent:
         if exc:
@@ -194,8 +196,8 @@ async def _(event):
         evaluation,
     )
     if len(final_output) > 4096:
-        for ele in ["b", "i", "pre"]:
-            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
+#        for ele in ["b", "i", "pre"]:
+#            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
         with BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
