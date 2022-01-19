@@ -101,7 +101,7 @@ bot = ultroid = ultroid_bot
 _ignore_eval = []
 
 
-'''
+"""
 def _parse_eval(value=None):
     if hasattr(value, "stringify"):
         try:
@@ -115,7 +115,7 @@ def _parse_eval(value=None):
             pass
     # is to_dict is also Good option to format?
     return value
-'''
+"""
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -175,9 +175,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = (
-        exc or stderr or stdout or value or get_string("instu_4")
-    )
+    evaluation = exc or stderr or stdout or value or get_string("instu_4")
     if silent:
         if exc:
             msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
@@ -196,8 +194,8 @@ async def _(event):
         evaluation,
     )
     if len(final_output) > 4096:
-#        for ele in ["b", "i", "pre"]:
-#            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
+        #        for ele in ["b", "i", "pre"]:
+        #            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
         with BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
