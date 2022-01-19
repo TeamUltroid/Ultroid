@@ -27,6 +27,7 @@
     Shows System Info.
 """
 from __future__ import print_function
+
 import sys
 import traceback
 from io import BytesIO, StringIO
