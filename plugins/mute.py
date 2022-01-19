@@ -73,7 +73,6 @@ async def startmute(event):
 
 @ultroid_cmd(
     pattern="undmute( (.*)|$)",
-    manager=True,
 )
 async def endmute(event):
     xx = await event.eor("`Unmuting...`")
