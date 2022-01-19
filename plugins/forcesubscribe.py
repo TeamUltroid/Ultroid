@@ -27,7 +27,12 @@ from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticip
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import Channel, User, ChannelParticipantLeft, ChannelParticipantBanned
+from telethon.tl.types import (
+    Channel,
+    ChannelParticipantBanned,
+    ChannelParticipantLeft,
+    User,
+)
 from telethon.utils import get_peer_id
 
 from . import (
@@ -117,7 +122,9 @@ async def diesoon(e):
         return await e.answer(get_string("fsub_7"), alert=True)
     try:
         values = await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
-        if isinstance(values.participant, ChannelParticipantLeft) or (isinstance(values.participant, ChannelParticipantBanned) and values.left):
+        if isinstance(values.participant, ChannelParticipantLeft) or (
+            isinstance(values.participant, ChannelParticipantBanned) and values.left
+        ):
             raise UserNotParticipantError("")
     except UserNotParticipantError:
         return await e.answer(
