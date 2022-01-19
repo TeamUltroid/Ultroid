@@ -101,7 +101,6 @@ bot = ultroid = ultroid_bot
 _ignore_eval = []
 
 
-"""
 def _parse_eval(value=None):
     if hasattr(value, "stringify"):
         try:
@@ -113,9 +112,7 @@ def _parse_eval(value=None):
             return json_parser(value, indent=1)
         except BaseException:
             pass
-    # is to_dict is also Good option to format?
     return value
-"""
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -211,20 +208,17 @@ async def _(event):
     await xx.edit(final_output, parse_mode="html")
 
 
-def _stringified(text=None, *args, **kwargs):
-    # text = _parse_eval(text)
-    print(text, *args, **kwargs)
-
-
 async def aexec(code, event):
     exec(
         (
-            (
-                ("async def __aexec(e, client): " + "\n message = event = e")
-                + "\n reply = await event.get_reply_message()"
-            )
-            + "\n chat = event.chat_id"
-            + "\n print = p = _stringified"
+         "async def __aexec(e, client): "
+         + "\n def _stringify(text=None, *args, **kwargs):"
+         + "\n  text = _parse_eval(text)"
+         + "\n  print(text, *args, **kwargs)"
+         + "\n message = event = e"
+         + "\n reply = await event.get_reply_message()"
+         + "\n chat = event.chat_id"
+         + "\n p = _stringify"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
