@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, get_dnd_chats, rem_dnd
+from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, get_dnd_chats, del_dnd
 from telethon.events import ChatAction
 
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
@@ -36,5 +36,5 @@ async def _(event):
 async def _(event):
     if not chat_in_dnd(event.chat_id):
         return await event.eor("`Chat is not in do not disturb mode.`")
-    rem_dnd(event.chat_id)
+    del_dnd(event.chat_id)
     await event.eor("`Do not disturb mode deactivated for this chat.`")
