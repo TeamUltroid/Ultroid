@@ -212,7 +212,7 @@ async def _(event):
 
 
 def _stringified(text=None, *args, **kwargs):
-    text = _parse_eval(text)
+    #text = _parse_eval(text)
     print(text, *args, **kwargs)
 
 
