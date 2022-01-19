@@ -34,14 +34,13 @@ from telethon.tl.types import Message
 
 from . import asst, eod, eor, get_string, ultroid_cmd
 
-GDrive = GDriveManager()
-
 
 @ultroid_cmd(
     pattern="gdown( (.*)|$)",
     fullsudo=True,
 )
 async def gdown(event):
+    GDrive = GDriveManager()
     match = event.pattern_match.group(1).strip()
     if not match:
         return await eod(event, "`Give file id or Gdrive link to download from!`")
@@ -61,6 +60,7 @@ async def gdown(event):
     fullsudo=True,
 )
 async def files(event):
+    GDrive = GDriveManager()
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     eve = await event.eor(get_string("com_1"))
@@ -99,6 +99,7 @@ async def files(event):
     fullsudo=True,
 )
 async def _(event):
+    GDrive = GDriveManager()
     if not os.path.exists(GDrive.token_file):
         return await eod(event, get_string("gdrive_6").format(asst.me.username))
     input_file = event.pattern_match.group(1).strip() or await event.get_reply_message()
@@ -175,6 +176,7 @@ async def _(event):
     fullsudo=True,
 )
 async def _(event):
+    GDrive = GDriveManager()
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     input_str = event.pattern_match.group(1).strip()
@@ -213,31 +215,6 @@ async def _(event):
         os.remove(f"{input_str}.txt")
 
 
-"""
-@ultroid_cmd(
-    pattern="udir( (.*)|$)",
-    fullsudo=True,
-)
-async def _(event):
-    if not os.path.exists(TOKEN_FILE):
-        return await event.eor(get_string("gdrive_6").format(asst.me.username), time=5)
-    input_str = event.pattern_match.group(1).strip()
-    if not os.path.isdir(input_str):
-        return await event.eor(f"Directory {input_str} does not seem to exist", time=5)
-
-    http = authorize(TOKEN_FILE, None)
-    a = await event.eor(f"Uploading `{input_str}` to G-Drive...")
-    dir_id = await create_directory(
-        http,
-        os.path.basename(os.path.abspath(input_str)),
-        Redis("GDRIVE_FOLDER_ID"),
-    )
-    await DoTeskWithDir(http, input_str, event, dir_id)
-    dir_link = f"https://drive.google.com/folderview?id={dir_id}"
-    await eor(a, get_string("gdrive_7").format(input_str, dir_link), time=5)
-"""
-
-
 @ultroid_cmd(
     pattern="gdfolder$",
     fullsudo=True,
@@ -249,8 +226,7 @@ async def _(event):
     if GDrive.folder_id:
         await event.eor(
             "`Your G-Drive Folder link : `\n"
-            + "https://drive.google.com/folderview?id="
-            + GDrive.folder_id,
+            + GDrive._create_folder_link(GDrive.folder_id)
         )
     else:
         await eod(event, "Set FOLDERID from your Assistant bot's Settings ")
