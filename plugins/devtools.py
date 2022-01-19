@@ -26,7 +26,7 @@
 • `{i}sysinfo`
     Shows System Info.
 """
-
+from __future__ import print_function
 import sys
 import traceback
 from io import BytesIO, StringIO
@@ -214,7 +214,7 @@ async def aexec(code, event):
             "async def __aexec(e, client): "
             + "\n def _stringify(text=None, *args, **kwargs):"
             + "\n  text = _parse_eval(text)"
-            + "\n  print(text, *args, **kwargs)"
+            + "\n  print_function(text, *args, **kwargs)"
             + "\n message = event = e"
             + "\n reply = await event.get_reply_message()"
             + "\n chat = event.chat_id"
