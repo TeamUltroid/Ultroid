@@ -195,7 +195,8 @@ async def _(event):
     await xx.edit(final_output, parse_mode="html")
 
 
-p = print # ignore: pylint
+p = print  # ignore: pylint
+
 
 async def aexec(code, event):
     exec(
