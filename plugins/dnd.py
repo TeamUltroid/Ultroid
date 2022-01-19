@@ -6,9 +6,10 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from . import ultroid_cmd, ultroid_bot, asst
+from pyUltroid.functions.dnd_db import add_dnd, chat_in_dnd, get_dnd_chats, rem_dnd
 from telethon.events import ChatAction
-from pyUltroid.functions.dnd_db import chat_in_dnd, add_dnd, rem_dnd, get_dnd_chats
+
+from . import asst, ultroid_bot, ultroid_cmd
 
 
 @ultroid_bot.on(ChatAction(chats=get_dnd_chats()))
