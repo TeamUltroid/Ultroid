@@ -130,7 +130,7 @@ async def _(event):
         except BaseException:
             # Consider it as Code Error, and move on to be shown ahead.
             pass
-    reply_to_id = event.reply_to_msg_id or event.id
+    reply_to_id = event.reply_to_msg_id or event
     if any(item in cmd for item in KEEP_SAFE().All) and (
         not (event.out or event.sender_id == ultroid_bot.uid)
     ):
@@ -173,7 +173,7 @@ async def _(event):
                 )
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
-    final_output = "<i>►</i> <b>EVALPy</b>\n<pre>{}</pre> \n\n <i>►</i> <b>OUTPUT</b>: \n<pre>{}</pre> \n".format(
+    final_output = "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
         cmd,
         evaluation,
     )
@@ -192,7 +192,7 @@ async def _(event):
                 reply_to=reply_to_id,
             )
         return await xx.delete()
-    await xx.edit(final_output, parse_mode="html")
+    await xx.edit(final_output)
 
 
 p = print  # ignore: pylint
