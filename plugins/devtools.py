@@ -173,9 +173,11 @@ async def _(event):
                 )
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
-    final_output = "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
-        cmd,
-        evaluation,
+    final_output = (
+        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+            cmd,
+            evaluation,
+        )
     )
     if len(final_output) > 4096:
         #        for ele in ["b", "i", "pre"]:
