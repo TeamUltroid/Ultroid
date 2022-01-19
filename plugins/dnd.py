@@ -9,7 +9,7 @@
 from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, get_dnd_chats, rem_dnd
 from telethon.events import ChatAction
 
-from . import asst, ultroid_bot, ultroid_cmd, LOGS
+from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
 @ultroid_bot.on(ChatAction(chats=get_dnd_chats()))
