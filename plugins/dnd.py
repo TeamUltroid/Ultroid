@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, get_dnd_chats, del_dnd
+from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, del_dnd, get_dnd_chats
 from telethon.events import ChatAction
 
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
