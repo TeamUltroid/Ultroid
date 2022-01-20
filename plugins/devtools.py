@@ -99,6 +99,22 @@ async def _(event):
 pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
+
+def _parse_eval(value=None):
+    if not value:
+        return value
+    if hasattr(value, "stringify"):
+        try:
+            return value.stringify()
+        except TypeError:
+            pass
+    elif isinstance(value, dict):
+        try:
+            return json_parser(value, indent=1)
+        except BaseException:
+            pass
+    return str(value)
+
 _ignore_eval = []
 
 
@@ -159,7 +175,7 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = exc or stderr or stdout or value or get_string("instu_4")
+    evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
         if exc:
             msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
@@ -180,8 +196,7 @@ async def _(event):
         )
     )
     if len(final_output) > 4096:
-        #        for ele in ["b", "i", "pre"]:
-        #            final_output = final_output.replace(f"<{ele}>", "").replace(f"</{ele}>", "")
+        final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
@@ -197,13 +212,17 @@ async def _(event):
     await xx.edit(final_output)
 
 
-p = print  # ignore: pylint
+def _stringify(text=None, *args, **kwargs):
+    if text:
+        text = _parse_eval(text)
+    return print(text, *args, **kwargs)
 
 
 async def aexec(code, event):
     exec(
         (
             "async def __aexec(e, client): "
+            + "\n print = p = _stringify"
             + "\n message = event = e"
             + "\n reply = await event.get_reply_message()"
             + "\n chat = event.chat_id"
