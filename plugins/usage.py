@@ -25,13 +25,12 @@ import heroku3
 import psutil
 import requests
 from pyUltroid.functions import some_random_headers
-from pyUltroid.startup.connections import where_hosted
+from pyUltroid import where_hosted as WHERE_HOSTED
 
 from . import Var, get_string, humanbytes, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
-WHERE_HOSTED = where_hosted()
 
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 try:
