@@ -19,9 +19,9 @@ Do Not Disturb - As it says, activating this in your group will kick new users w
 
 
 from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, del_dnd, get_dnd_chats
-from telethon.events import ChatAction
 
-from . import LOGS, udB, asst, ultroid_bot, ultroid_cmd
+from . import LOGS, asst, udB, ultroid_bot, ultroid_cmd
+
 
 async def dnd_func(event):
     if event.chat_id in get_dnd_chats():
