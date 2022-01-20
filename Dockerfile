@@ -15,7 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && pip3 install av --no-binary av
 
 # Railway's banned dependency
-RUN if [ ! $RAILWAY_GIT_REPO_NAME ]; then pip3 install --no-cache-dir https://github.com/buddhhu/youtube-dl/archive/refs/heads/master.zip; fi
+RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir https://github.com/buddhhu/youtube-dl/archive/refs/heads/master.zip; fi
 
 # changing workdir
 WORKDIR /root/TeamUltroid/
