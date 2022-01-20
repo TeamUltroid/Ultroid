@@ -25,11 +25,14 @@ import heroku3
 import psutil
 import requests
 from pyUltroid.functions import some_random_headers
+from pyUltroid.startup.connections import where_hosted
 
 from . import Var, get_string, humanbytes, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
+WHERE_HOSTED = where_hosted()
+
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 try:
     if heroku_api and app_name:
@@ -83,7 +86,12 @@ def simple_usage():
 
 def heroku_usage():
     if HEROKU_API is None and HEROKU_APP_NAME is None:
-        return False, "You do not use heroku, bruh!"
+        if WHERE_HOSTED == "heroku":
+            return False, "You use heroku but u don't set Heroku api nd heroku app name"
+        elif WHERE_HOSTED in ["railway","qovery","windows","termux"]:
+            return False, f"You Don't use heroku, bruh! , u r using {WHERE_HOSTED}"
+        else:
+            return False, f"You Don't use heroku, bruh! , u r using {WHERE_HOSTED}"
     user_id = Heroku.account().id
     headers = {
         "User-Agent": choice(some_random_headers),
