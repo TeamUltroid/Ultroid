@@ -27,13 +27,14 @@ from . import LOGS, asst, ultroid_bot, ultroid_cmd
 @ultroid_bot.on(ChatAction)
 @asst.on(ChatAction)
 async def _(event):
-    if int(event.chat_id) in get_dnd_chats() and event.user_joined:
-        for user in event.users:
-            try:
-                await event.client.kick_participant(event.chat_id, user)
-            except Exception as ex:
-                LOGS.error("Error in DND:\n" + str(ex))
-        await event.delete()
+    if int(event.chat_id) in get_dnd_chats():
+        if event.user_joined:
+            for user in event.users:
+                try:
+                    await event.client.kick_participant(event.chat_id, user)
+                except Exception as ex:
+                    LOGS.error("Error in DND:\n" + str(ex))
+            await event.delete()
 
 
 @ultroid_cmd(pattern="dnd$", manager=True, admins_only=True, groups_only=True)
