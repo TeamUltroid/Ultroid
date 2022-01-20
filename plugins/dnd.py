@@ -20,14 +20,14 @@ Do Not Disturb - As it says, activating this in your group will kick new users w
 
 from pyUltroid.dB.dnd_db import add_dnd, chat_in_dnd, del_dnd, get_dnd_chats
 
-from . import LOGS, asst, udB, ultroid_bot, ultroid_cmd
+from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
 async def dnd_func(event):
     if event.chat_id in get_dnd_chats():
         for user in event.users:
             try:
-                await event.client.kick_participant(event.chat_id, user)
+                await (await event.client.kick_participant(event.chat_id, user)).delete()
             except Exception as ex:
                 LOGS.error("Error in DND:")
                 LOGS.exception(ex)
@@ -51,6 +51,6 @@ async def _(event):
     await event.eor("`Do not disturb mode deactivated for this chat.`", time=3)
 
 
-if udB.get_key("DND_CHATS"):
+if get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
     asst.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
