@@ -27,7 +27,9 @@ async def dnd_func(event):
     if event.chat_id in get_dnd_chats():
         for user in event.users:
             try:
-                await (await event.client.kick_participant(event.chat_id, user)).delete()
+                await (
+                    await event.client.kick_participant(event.chat_id, user)
+                ).delete()
             except Exception as ex:
                 LOGS.error("Error in DND:")
                 LOGS.exception(ex)
