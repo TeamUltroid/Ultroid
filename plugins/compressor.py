@@ -75,7 +75,9 @@ async def _(e):
         o_size = os.path.getsize(file.name)
         d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
-        file_name = (file.name).split("/")[-1]
+        input_file = (file.name).split("/")[-1]
+        file_name = input_file.split(".")[0] + ".mkv"
+        os.rename(input_file, file_name)
         out = file_name.replace(file_name.split(".")[-1], "compressed.mkv")
         await xxx.edit(
             f"`Downloaded {file.name} of {humanbytes(o_size)} in {diff}.\nNow Compressing...`"
