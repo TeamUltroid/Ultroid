@@ -73,6 +73,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     LeaveChannelRequest,
 )
+from telethon.errors.rpcerrorlist import UserBotError
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -395,6 +396,8 @@ async def _(ult):
                     ),
                 )
                 await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
+            except UserBotError:
+                await xx.edit(f"Bots can only be added as Admins in Channel.\nBetter Use `{HNDLR}promote {user_id}`")
             except Exception as e:
                 await xx.edit(str(e))
 
