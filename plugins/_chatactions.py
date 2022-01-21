@@ -68,7 +68,7 @@ async def ChatActionsHandler(ult):  # sourcery no-metrics
         user = await ult.get_user()
         chat = await ult.get_chat()
         # gbans and @UltroidBans checks
-        if udB.get_key("ULTROID_BANS") != "False":
+        if udB.get_key("ULTROID_BANS") == True:
             try:
                 is_banned = await async_searcher(
                     "https://bans.ultroid.tech/api/status",
