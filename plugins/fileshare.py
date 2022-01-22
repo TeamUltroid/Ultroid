@@ -22,7 +22,7 @@ import os
 from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
 from pyUltroid.functions.tools import get_file_link
 
-from . import asst, eor, get_string, udB, ultroid_cmd
+from . import ultroid_bot, asst, eor, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="store$")
@@ -33,8 +33,7 @@ async def filestoreplg(event):
     # allow storing both messages and media.
     filehash = await get_file_link(msg)
     link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
-    await eor(
-        event,
+    await event.eor(
         get_string("fsh_2").format(link_to_file),
         link_preview=False,
     )
