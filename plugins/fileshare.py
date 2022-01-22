@@ -22,7 +22,7 @@ import os
 from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
 from pyUltroid.functions.tools import get_file_link
 
-from . import ultroid_bot, asst, eor, get_string, udB, ultroid_cmd
+from . import asst, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="store$")
