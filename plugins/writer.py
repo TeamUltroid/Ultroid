@@ -47,7 +47,7 @@ async def f2i(e):
             html = await e.client.download_media(r.media)
         elif r.text:
             html = r.text
-    if not html
+    if not html:
         return await eod(e, "`Either reply to any file or give any text`")
     html = html.replace("\n", "<br>")
     shot = WebShot(quality=85)
