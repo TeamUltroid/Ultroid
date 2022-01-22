@@ -38,6 +38,7 @@ async def ghtml(e):
 @ultroid_cmd(pattern="image( (.*)|$)")
 async def f2i(e):
     txt = e.pattern_match.group(1).strip()
+    html = None
     if txt:
         html = e.text.split(maxsplit=1)[1]
     elif e.reply_to:
@@ -46,7 +47,7 @@ async def f2i(e):
             html = await e.client.download_media(r.media)
         elif r.text:
             html = r.text
-    else:
+    if not html
         return await eod(e, "`Either reply to any file or give any text`")
     html = html.replace("\n", "<br>")
     shot = WebShot(quality=85)
