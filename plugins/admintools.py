@@ -42,6 +42,7 @@
     Delete all msgs of replied user.
 """
 
+import asyncio
 from pyUltroid.dB import DEVLIST
 from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
@@ -288,7 +289,7 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="tpin( (.*)|$", manager=True, require="pin_messages")
+@ultroid_cmd(pattern="tpin( (.*)|$)", admins_only=True, manager=True, require="pin_messages")
 async def pin_message(ult):
     match = ult.pattern_match.group(1).strip()
     if not ult.is_reply:
