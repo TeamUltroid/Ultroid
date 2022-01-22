@@ -305,7 +305,7 @@ async def pin_message(ult):
         return
     msg_id = ult.reply_to_msg_id
     try:
-        msg = await ult.client.pin_message(ult.chat_id, msg_id)
+        await ult.client.pin_message(ult.chat_id, msg_id)
         await msg.eor(f"`pinned for time` `{time}`", time=8)
     except Exception as er:
         return await msg.edit(str(er))
