@@ -20,6 +20,7 @@
 
 • `{i}pin <reply to message>`
     Pin the message in the chat
+• `{i}tpin <time> <temp pin message>`
 • `{i}unpin (all) <reply to message>`
     Unpin the messages in the chat.
 
@@ -285,6 +286,30 @@ async def unp(ult):
     except Exception as e:
         return await xx.edit(f"**ERROR:**`{e}`")
     await xx.edit("`Unpinned!`")
+
+
+@ultroid_cmd(pattern="tpin( (.*)|$", manager=True, require="pin_messages")
+async def pin_message(ult):
+    match = ult.pattern_match.group(1).strip()
+    if not ult.is_reply:
+        return await ult.eor("`Reply to message..`", time=6)
+    if not match:
+        return await ult.eor("`Please provide time..`", time=8)
+    msg = await ult.eor(get_string("com_1"))
+    time = await ban_time(msg, match)
+    if not time:
+        return
+    msg_id = ult.reply_to_msg_id
+    try:
+        msg = await ult.client.pin_message(ult.chat_id, msg_id)
+        await msg.eor(f"`pinned for time` `{time}`", time=8)
+    except Exception as er:
+        return await msg.edit(str(er))
+    await asyncio.sleep(time)
+    try:
+        await ult.client.unpin_message(ult.chat_id, msg_id)
+    except Exception as er:
+        LOGS.exception(er)
 
 
 @ultroid_cmd(pattern="purge( (.*)|$)", manager=True, require="delete_messages")
