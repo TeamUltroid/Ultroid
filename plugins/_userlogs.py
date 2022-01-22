@@ -238,7 +238,6 @@ async def leave_ch_at(event):
         client = _client[client]
     except KeyError:
         return
-    name = (await client.get_entity(int(ch_id))).title
     try:
         await client.delete_dialog(int(ch_id))
     except UserNotParticipantError:
@@ -247,6 +246,10 @@ async def leave_ch_at(event):
         return await event.edit(
             "`[CANT_ACCESS_CHAT]` `Maybe already left or got banned.`"
         )
+    except Exception as er:
+        LOGS.exception(er)
+        return await event.answer(str(er)) 
+    name = (await client.get_entity(int(ch_id))).title
     await event.edit(get_string("userlogs_5").format(name))
 
 
