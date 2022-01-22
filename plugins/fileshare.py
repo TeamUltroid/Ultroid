@@ -16,8 +16,9 @@
 
 import os
 
-from pyUltroid.functions.tools import get_file_link
 from pyUltroid.dB.filestore_db import get_stored_msg, list_all_stored_msgs
+from pyUltroid.functions.tools import get_file_link
+
 from . import asst, eor, get_string, udB, ultroid_cmd
 
 
@@ -44,15 +45,19 @@ async def _(event):
     match = match.split("?start=")
     botusername = match[0].split("/")[-1]
     if botusername != asst.me.username:
-        return await event.eor("`Message/Media of provided link was not stored by this bot.`", time=5)
+        return await event.eor(
+            "`Message/Media of provided link was not stored by this bot.`", time=5
+        )
     msg_id = get_stored_msg(match[1])
     if not msg_id:
-        return await event.eor("`Message/Media of provided link was already deleted.`", time=5)
+        return await event.eor(
+            "`Message/Media of provided link was already deleted.`", time=5
+        )
     del_stored(match[1])
     msg = await asst.get_messages(udB.get_key("LOG_CHANNEL"), ids=int(msg_id))
     await msg.delete()
     await event.eor("__Deleted__")
-    
+
 
 @ultroid_cmd("liststored$")
 async def liststored(event):
