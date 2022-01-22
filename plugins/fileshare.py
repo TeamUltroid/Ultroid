@@ -54,8 +54,8 @@ async def _(event):
             "`Message/Media of provided link was already deleted.`", time=5
         )
     del_stored(match[1])
-    msg = await asst.get_messages(udB.get_key("LOG_CHANNEL"), ids=int(msg_id))
-    await msg.delete()
+    msg = await ultroid_bot.get_messages(udB.get_key("LOG_CHANNEL"), ids=int(msg_id))
+    await ultroid_bot.delete()
     await event.eor("__Deleted__")
 
 
