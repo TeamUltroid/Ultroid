@@ -19,7 +19,7 @@
 
 import os
 
-from pyUltroid.dB.filestore_db import get_stored_msg, list_all_stored_msgs, del_stored
+from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
 from pyUltroid.functions.tools import get_file_link
 
 from . import asst, eor, get_string, udB, ultroid_cmd
