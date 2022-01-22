@@ -10,13 +10,16 @@
 • `{i}store <reply_to_message>`
    Store the replied message/media and generate a shareable link to that file, to be accessed via your assistant bot!
 
+• `{i}delstored <link of stored file>`
+    Delete stored file.
+
 • `{i}liststored`
    Get all stored messages.
 """
 
 import os
 
-from pyUltroid.dB.filestore_db import get_stored_msg, list_all_stored_msgs
+from pyUltroid.dB.filestore_db import get_stored_msg, list_all_stored_msgs, del_stored
 from pyUltroid.functions.tools import get_file_link
 
 from . import asst, eor, get_string, udB, ultroid_cmd
@@ -37,7 +40,7 @@ async def filestoreplg(event):
     )
 
 
-@ultroid_cmd("delstore ?(.*)")
+@ultroid_cmd("delstored ?(.*)")
 async def _(event):
     match = event.pattern_match.group(1)
     if not match:
