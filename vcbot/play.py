@@ -23,14 +23,19 @@
 
 
 from . import *
-from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError, MessageIdInvalidError
 
 
 @vc_asst("play")
 async def play_music_(event):
     if "playfrom" in event.text.split()[0]:
         return  # For PlayFrom Conflict
-    xx = await event.eor(get_string("com_1"), parse_mode="md")
+    try:
+        xx = await event.eor(get_string("com_1"), parse_mode="md")
+    except MessageIdInvalidError:
+        # Changing the way, things work
+        xx = event
+        xx.out = False
     chat = event.chat_id
     from_user = inline_mention(event.sender, html=True)
     reply, song = None, None
