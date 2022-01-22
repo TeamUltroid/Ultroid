@@ -248,7 +248,7 @@ async def leave_ch_at(event):
         )
     except Exception as er:
         LOGS.exception(er)
-        return await event.answer(str(er)) 
+        return await event.answer(str(er))
     name = (await client.get_entity(int(ch_id))).title
     await event.edit(get_string("userlogs_5").format(name))
 
