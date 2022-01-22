@@ -16,6 +16,7 @@ from telethon.errors.rpcerrorlist import (
     MessageTooLongError,
     PeerIdInvalidError,
     UserNotParticipantError,
+    ChannelPrivateError
 )
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
 from telethon.utils import get_display_name
@@ -242,6 +243,8 @@ async def leave_ch_at(event):
         await client.delete_dialog(int(ch_id))
     except UserNotParticipantError:
         pass
+    except ChannelPrivateError:
+        return await event.edit("`[CANT_ACCESS_CHAT]` `Maybe already left or got banned.`")
     await event.edit(get_string("userlogs_5").format(name))
 
 
