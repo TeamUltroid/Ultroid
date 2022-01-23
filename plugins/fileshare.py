@@ -92,7 +92,7 @@ async def file_short(event):
                 continue
             if message.media:
                 res.append(await event.builder.document(title=msg, file=message.id))
-            elif message.text;
+            elif message.text:
                 res.append(await event.builder.article(title=message.text, text=message.text))
     if not res:
         title = "You have no stored file :("
