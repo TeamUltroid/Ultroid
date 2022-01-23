@@ -91,7 +91,7 @@ async def file_short(event):
             if not message:
                 continue
             if message.media:
-                res.append(await event.builder.document(title=msg, file=message.id))
+                res.append(await event.builder.document(title=msg, file=message.media))
             elif message.text:
                 res.append(
                     await event.builder.article(title=message.text, text=message.text)
