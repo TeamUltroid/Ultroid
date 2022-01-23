@@ -22,7 +22,7 @@ import os
 from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
 from pyUltroid.functions.tools import get_file_link
 
-from . import asst, get_string, udB, ultroid_bot, ultroid_cmd
+from . import asst, get_string, udB, ultroid_bot, ultroid_cmd, in_pattern
 
 
 @ultroid_cmd(pattern="store$")
@@ -75,3 +75,28 @@ async def liststored(event):
         os.remove("liststored.txt")
         return
     await event.eor(msg, link_preview=False)
+
+
+@in_pattern("filestore")
+async def file_short(event):
+    all_ =  list_all_stored_msgs()
+    res = []
+    if all_:
+        LOG_CHA = udB.get_key("LOG_CHANNEL")
+        for msg in all_[:50]:
+            m_id = get_stored_msg(msg)
+            if not m_id:
+                continue
+            message = await asst.get_messages(LOG_CHA, ids=m_id)
+            if not message:
+                continue
+            if message.media:
+                res.append(await event.builder.document(title=msg, file=message.id))
+            elif message.text;
+                res.append(await event.builder.article(title=message.text, text=message.text))
+    if not res:
+        title = "You have no stored file :("
+        text = title + "\n\nRead `{HNDLR}help fileshare` to know how to store."
+        return await event.answer([await event.builder.article(title=title, text=text)])
+    await event.answer(res, switch_pm="• File Store •", switch_pm_param="start")
+             
