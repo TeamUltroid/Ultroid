@@ -500,19 +500,29 @@ async def telegraphcmd(event):
     )
 
 
-@ultroid_cmd(pattern="json$")
+@ultroid_cmd(pattern="json( (.*)|$)")
 async def _(event):
     the_real_message = None
     reply_to_id = None
+    match = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        the_real_message = previous_message.stringify()
+        msg = await event.get_reply_message()
         reply_to_id = event.reply_to_msg_id
     else:
-        the_real_message = event.stringify()
+        msg = event
         reply_to_id = event.message.id
-    if len(the_real_message) > 4096:
-        with io.BytesIO(str.encode(the_real_message)) as out_file:
+    if match and hasattr(msg, match):
+        msg = getattr(msg, match)
+        if hasattr(msg, "stringify"):
+            try:
+                msg = msg.stringify()
+            except TypeError:
+                pass
+        msg = str(msg)
+    else:
+        msg = msg.stringify()
+    if len(msg) > 4096:
+        with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "json-ult.txt"
             await event.client.send_file(
                 event.chat_id,
@@ -523,7 +533,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await event.eor(f"```{the_real_message}```")
+        await event.eor(f"```{msg}```")
 
 
 @ultroid_cmd(pattern="suggest( (.*)|$)", manager=True)
