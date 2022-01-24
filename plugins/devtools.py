@@ -69,16 +69,18 @@ async def _(event):
     reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
+    err, out = "", ""
     if stderr:
-        OUT += f"**• ERROR:** \n`{stderr}`\n\n"
+        err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         _o = stdout.split("\n")
         o = "\n".join(_o)
-        OUT += f"**• OUTPUT:**\n`{o}`"
+        out = f"**• OUTPUT:**\n`{o}`"
     if not stderr and not stdout:
-        OUT += "**• OUTPUT:**\n`Success`"
+        out = "**• OUTPUT:**\n`Success`"
+    OUT += err + out
     if len(OUT) > 4096:
-        ultd = f"ERROR:\n\n{stderr}\n\nOUTPUT:\n\n{stdout}"
+        ultd = err + out
         with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
