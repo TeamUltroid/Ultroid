@@ -502,7 +502,6 @@ async def telegraphcmd(event):
 
 @ultroid_cmd(pattern="json( (.*)|$)")
 async def _(event):
-    the_real_message = None
     reply_to_id = None
     match = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
