@@ -78,7 +78,7 @@ async def _(event):
     if not stderr and not stdout:
         OUT += "**• OUTPUT:**\n`Success`"
     if len(OUT) > 4096:
-        ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
+        ultd = f"ERROR:\n\n{stderr}\n\nOUTPUT:\n\n{stdout}"
         with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
