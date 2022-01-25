@@ -78,6 +78,47 @@ async def down(event):
         return await msg.eor("`Invalid URL provided :(`", time=5)
     await msg.eor(f"`{filename}` `downloaded in {time_formatter(d*1000)}.`")
 
+    
+@ultroid_cmd( pattern="uhhh ?(.*)",)
+async def download(event): 
+    #if not event.reply_to_msg_id: 
+       # return await eor(event, "`Reply to a Media Message`") 
+    xx = await eor(event, get_string("com_1")) 
+    s = dt.now() 
+    k = time.time() 
+    if event.reply_to_msg_id: 
+        ok = await event.get_reply_message() 
+        if not ok.media: 
+            return await eor(xx, get_string("udl_1"), time=5) 
+        if hasattr(ok.media, "document"): 
+            file = ok.media.document mime_type = file.mime_type 
+            filename = event.pattern_match.group(1) or ok.file.name 
+            if not filename: 
+                if "audio" in mime_type: 
+                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg" 
+                elif "video" in mime_type: filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4" 
+            try: 
+                result = await downloader( "resources/downloads/" + filename, file, xx, k, "Downloading " + filename + "...", ) 
+            except MessageNotModifiedError as err: 
+                return await xx.edit(str(err)) 
+            file_name = result.name 
+        else: 
+            d = "resources/downloads/" 
+            file_name = await event.client.download_media( 
+                ok, 
+                d, progress_callback=lambda d, t: asyncio.get_event_loop().create_task( 
+                    progress( 
+                        d, 
+                        t, 
+                        xx, 
+                        k, 
+                        ), ), ) 
+            e = dt.now() 
+            t = time_formatter(((e - s).seconds) * 1000) 
+           # if t != "": 
+              #  await eor(xx, get_string("udl_2").format(file_name, t)) 
+              #  else: 
+               #     await eor(xx, f"Downloaded `{file_name}` in `0 second(s)`")
 
 @ultroid_cmd(
     pattern="dl ?(.*)",
