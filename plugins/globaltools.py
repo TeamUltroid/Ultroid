@@ -16,7 +16,7 @@
 
 • `{i}listgban` : List all GBanned users.
 
-• `{i}gmute` | `{i}ungmute` <reply user/ username>`
+• `{i}gmute` | `{i}ungmute` <reply user/ username>
     Mute/UnMute Globally.
 
 • `{i}gkick <reply/username>` `Globally Kick User`
@@ -29,12 +29,12 @@
    Add chat to blacklist and ignores global broadcast.
 • `{i}ungblacklist` `Remove the chat from blacklist.`
 
-•`{i}gpromote <reply to user> <channel/group/all> <rank>`
+• `{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin
     - Set whether To promote only in groups/channels/all.
-    `Eg-``gpromote group boss` ~ promotes user in all grps.
+    Eg- `gpromote group boss` ~ promotes user in all grps.
         `gpromote @username all sar` ~ promote the user in all group & channel
-•`{i}gdemote` - `demote user globally`
+• `{i}gdemote` - `demote user globally`
 """
 import asyncio
 import os
