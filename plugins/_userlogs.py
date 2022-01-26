@@ -239,6 +239,7 @@ async def leave_ch_at(event):
     except KeyError:
         return
     try:
+        name = (await client.get_entity(int(ch_id))).title
         await client.delete_dialog(int(ch_id))
     except UserNotParticipantError:
         pass
@@ -249,7 +250,6 @@ async def leave_ch_at(event):
     except Exception as er:
         LOGS.exception(er)
         return await event.answer(str(er))
-    name = (await client.get_entity(int(ch_id))).title
     await event.edit(get_string("userlogs_5").format(name))
 
 
