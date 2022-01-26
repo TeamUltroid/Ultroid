@@ -49,10 +49,10 @@ from telethon.tl import functions, types
 from telethon.utils import get_display_name
 
 try:
-    from youtube_dl import YoutubeDL
+    from yt_dlp import YoutubeDL
 except ImportError:
     YoutubeDL = None
-    LOGS.info("'YoutubeDL' not found!")
+    LOGS.info("'yt-dlp' not found!")
 
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
