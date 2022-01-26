@@ -32,7 +32,7 @@
 • `{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin
     - Set whether To promote only in groups/channels/all.
-    `Eg- gpromote group boss` ~ promotes user in all grps.
+    `Eg- `gpromote group boss` ~ promotes user in all grps.
         `gpromote @username all sar` ~ promote the user in all group & channel
 • `{i}gdemote` - `demote user globally`
 """
