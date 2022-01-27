@@ -26,7 +26,7 @@ from telethon import events
 
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
-    if Redis("AUTOCORRECT"):
+    if udB.get_key("AUTOCORRECT"):
         udB.set_key("AUTOCORRECT", "True")
         ultroid_bot.add_handler(
             gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
