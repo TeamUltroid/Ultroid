@@ -101,7 +101,7 @@ audiotools_4: "`Incorrect Data`"
 audiotools_5: "`Trying To Download...`"
 audiotools_6: "`Wrong trim duration`"
 audiotools_7: "Trimmed Audio From `{}` To `{}`"
-audiotools_8: "Reply to Video File..`"
+audiotools_8: "`Reply to Video File..`"
 audiotools_9: "`No Audio Found...`"
 audiotools_10: "`Extracted Audio from Video...`"
 
