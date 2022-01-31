@@ -157,6 +157,7 @@ async def _(event):
         ext = "mp3"
     if lets_split[0] == "audio":
         opts = {
+            "format": "bestaudio",
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
