@@ -102,9 +102,7 @@ async def _(event):
                 ),
             ],
         ]
-        BACK_BUTTON.update(
-            {ids: {"text": text, "buttons": buttons}}
-        )
+        BACK_BUTTON.update({ids: {"text": text, "buttons": buttons}})
         results.append(
             await event.builder.article(
                 type="photo",
