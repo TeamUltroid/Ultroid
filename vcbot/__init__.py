@@ -310,13 +310,17 @@ async def get_from_queue(chat_id):
 
 
 async def download(query):
-    search = VideosSearch(query, limit=1).result()
-    data = search["result"][0]
-    link = data["link"]
+    if query.startswith("https://") and not "youtube" in query.lower():
+        thumb, duration = None, "Unknown"
+        title = link = query
+    else:
+        search = VideosSearch(query, limit=1).result()
+        data = search["result"][0]
+        link = data["link"]
+        title = data["title"]
+        duration = data.get("duration") or "♾"
+        thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     dl = await get_stream_link(link)
-    title = data["title"]
-    duration = data.get("duration") or "♾"
-    thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     return dl, thumb, title, link, duration
 
 
