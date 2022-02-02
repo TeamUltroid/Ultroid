@@ -76,12 +76,12 @@ async def _(event):
             else "None"
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
-        text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>⏳ Duration:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>👀 Views:- </strong> <code>{views}</code>\n"
-        text += f"<strong>🎙️ Publisher:- </strong> <code>{publisher}</code>\n"
-        text += f"<strong>🗓️ Published on:- </strong> <code>{published_on}</code>\n"
-        text += f"<strong>📝 Description:- </strong> <code>{description}</code>"
+        text = f"**Title: [{title}]({link})**\n\n"
+        text += f"`Description: {description}\n\n"
+        text += f"「 Duration: {duration} 」\n"
+        text += f"「 Views: {views} 」\n"
+        text += f"「 Publisher: {publisher} 」\n"
+        text += f"「 Published on: {published_on} 」`"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         buttons = [
@@ -103,7 +103,7 @@ async def _(event):
             ],
         ]
         BACK_BUTTON.update(
-            {ids: {"text": text, "buttons": buttons, "parse_mode": "html"}}
+            {ids: {"text": text, "buttons": buttons}}
         )
         results.append(
             await event.builder.article(
@@ -114,7 +114,6 @@ async def _(event):
                 content=file,
                 text=text,
                 include_media=True,
-                parse_mode="html",
                 buttons=buttons,
             ),
         )
@@ -265,11 +264,11 @@ async def _(event):
     description = description if description != "" else "None"
     text = f"**Title: [{title}]({_yt_base_url}{vid_id})**\n\n"
     text += f"`📝 Description: {description}\n\n"
-    text += f"⏳ Duration: {time_formatter(int(duration)*1000)}\n"
-    text += f"🎤 Artist: {artist}\n"
-    text += f"👀 Views: {views}\n"
-    text += f"👍 Likes: {likes}\n"
-    text += f"Size: {humanbytes(size)}`"
+    text += f"「 Duration: {time_formatter(int(duration)*1000)} 」\n"
+    text += f"「 Artist: {artist} 」\n"
+    text += f"「 Views: {views} 」\n"
+    text += f"「 Likes: {likes} 」\n"
+    text += f"「 Size: {humanbytes(size)} 」`"
     button = Button.switch_inline("Search More", query="yt ", same_peer=True)
     try:
         await event.edit(
