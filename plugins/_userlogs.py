@@ -47,18 +47,18 @@ async def all_messages_catcher(e):
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         if TAG_EDITS.get(e.chat_id):
-            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg":e}})
         else:
-            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg":e}}})
         tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
             if TAG_EDITS.get(e.chat_id):
-                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg":e}})
             else:
-                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg":e}}})
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
@@ -70,9 +70,9 @@ async def all_messages_catcher(e):
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
                     if TAG_EDITS.get(e.chat_id):
-                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg":e}})
                     else:
-                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg":e}}})
                     return os.remove(media)
                 except Exception as er:
                     LOGS.exception(er)
@@ -142,6 +142,8 @@ if udB.get_key("TAG_LOG"):
         if not d_.get(event.id):
             return
         d_ = d_[event.id]
+        if d_["msg"].text == event.text:
+            return
         msg = None
         if d_.get("count"):
             d_["count"] += 1
