@@ -67,12 +67,18 @@ async def play_music_(event):
         song, thumb, song_name, link, duration = await file_download(xx, reply)
     else:
         song, thumb, song_name, link, duration = await download(song)
+        if len(link.strip().split()) > 1:
+            link = link.strip().split()
     ultSongs = Player(chat, event)
     song_name = song_name[:30] + "..."
     if not ultSongs.group_call.is_connected:
         if not (await ultSongs.vc_joiner()):
             return
         await ultSongs.group_call.start_audio(song)
+        if isinstance(link, list):
+            for lin in link[1:]:
+                add_to_queue(chat, song, lin, lin, None, from_user, duration)
+            link = song_name = link[0]
         text = "🎸 <strong>Now playing: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👥 <strong>Chat:</strong> <code>{}</code>\n🙋‍♂ <strong>Requested by: {}</strong>".format(
             link, song_name, duration, chat, from_user
         )
@@ -95,6 +101,10 @@ async def play_music_(event):
             and mediainfo(reply.media).startswith(("audio", "video"))
         ):
             song = None
+        if isinstance(link, list):
+            for lin in link[1:]:
+                add_to_queue(chat, song, lin, lin, None, from_user, duration)
+            link = song_name = link[0]
         add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
         return await xx.eor(
             f"▶ Added 🎵 <a href={link}>{song_name}</a> to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
