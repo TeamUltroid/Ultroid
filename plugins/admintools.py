@@ -249,7 +249,7 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(pattern="pin$", admins_only=True, manager=True, require="pin_messages")
+@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
