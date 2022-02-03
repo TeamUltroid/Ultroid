@@ -88,6 +88,7 @@ from . import (
     Telegraph,
     asst,
     async_searcher,
+    json_parser,
     bash,
     check_filename,
     eod,
@@ -132,11 +133,10 @@ async def date(event):
 )
 async def _(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
-    r = result.chats
-    if not r:
+    if not result.chats:
         return await event.eor("`No username Reserved`")
     output_str = "".join(
-        f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in r
+        f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in result.chats
     )
     await event.eor(output_str)
 
@@ -512,14 +512,14 @@ async def _(event):
         reply_to_id = event.message.id
     if match and hasattr(msg, match):
         msg = getattr(msg, match)
-        if hasattr(msg, "stringify"):
+        if hasattr(msg, "to_json"):
             try:
-                msg = msg.stringify()
-            except TypeError:
-                pass
+                msg = json_parser(msg.to_json(), indent=1)
+            except Exception as e:
+                LOGS.exception(e)
         msg = str(msg)
     else:
-        msg = msg.stringify()
+        msg = json_parser(msg.to_json(), indent=1)
     if len(msg) > 4096:
         with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "json-ult.txt"
@@ -532,7 +532,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await event.eor(f"```{msg}```")
+        await event.eor(f"```{msg or None}```")
 
 
 @ultroid_cmd(pattern="suggest( (.*)|$)", manager=True)
