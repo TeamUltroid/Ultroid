@@ -1,6 +1,5 @@
 # Required only while Local Deploy
 # ------------------------------------------------------ #
-
 akinator.py
 apscheduler
 bs4
