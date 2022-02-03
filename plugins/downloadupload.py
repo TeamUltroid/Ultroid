@@ -82,7 +82,7 @@ async def down(event):
 )
 async def download(event):
     if not event.reply_to_msg_id:
-        return await event.eor(get_string("cvt_3"))
+        return await event.eor(get_string("cvt_3"), time=8)
     xx = await event.eor(get_string("com_1"))
     s = dt.now()
     k = time.time()
