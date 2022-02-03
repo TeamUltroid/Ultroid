@@ -88,7 +88,6 @@ from . import (
     Telegraph,
     asst,
     async_searcher,
-    json_parser,
     bash,
     check_filename,
     eod,
@@ -97,6 +96,7 @@ from . import (
     get_paste,
     get_string,
     inline_mention,
+    json_parser,
     mediainfo,
     udB,
     ultroid_bot,
@@ -136,7 +136,8 @@ async def _(event):
     if not result.chats:
         return await event.eor("`No username Reserved`")
     output_str = "".join(
-        f"- {channel_obj.title} @{channel_obj.username} \n" for channel_obj in result.chats
+        f"- {channel_obj.title} @{channel_obj.username} \n"
+        for channel_obj in result.chats
     )
     await event.eor(output_str)
 
