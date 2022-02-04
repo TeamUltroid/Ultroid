@@ -76,8 +76,8 @@ async def startmute(event):
 )
 async def endmute(event):
     xx = await event.eor("`Unmuting...`")
-    input = event.pattern_match.group(1).strip()
-    if input:
+    input_ = event.pattern_match.group(1).strip()
+    if input_:
         try:
             userid = await event.client.parse_id(input_)
         except Exception as x:
