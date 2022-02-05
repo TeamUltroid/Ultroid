@@ -46,9 +46,9 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 - [Ultroid CLI](#Ultroid-CLI)
 
 ### Local Deploy - Easy Method
-- Linux - `bash -c "$(curl -fsSL https://git.io/JY9UM)"`
+- Linux - `wget -O locals.py https://git.io/JY9UM && python3 locals.py`
 - Windows - `cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
-- Termux - `sh -c "$(curl -fsSL https://git.io/JY9UM)"`
+- Termux - `wget -O locals.py https://git.io/JY9UM && python locals.py`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
@@ -66,9 +66,9 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
   - For Linux users:
     `bash sessiongen`
      or
-    `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
+    `wget -O session.py https://git.io/JY9JI && python3 session.py`
   - For Termux users:
-    `sh -c "$(curl -fsSL https://git.io/JqgsR)"`
+    `wget -O session.py https://git.io/JY9JI && python session.py`
   - For Windows Users:
     `cd desktop ; wget https://git.io/JY9JI -o ultroid.py ; python ultroid.py`
 - Fill your details in a `.env` file, as given in [`.env.sample`](https://github.com/TeamUltroid/Ultroid/blob/main/.env.sample).
@@ -94,15 +94,19 @@ Take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) for mo
 ---
 ## Necessary Variables
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
+
+One of the following databases:
 - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
-- `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
+ `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/), tutorial [here.](./resources/extras/redistut.md)
+- `MONGO_URI` - Mongo SRV URL, from [mongodb](https://mongodb.com/atlas)
+- `DATABASE_URL`- SQL URL, from [elephantsql](https://elephantsql.com)
 
 ## Session String
 Different ways to get your `SESSION`:
 * [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
-* Linux : `bash -c "$(curl -fsSL https://git.io/JY9JI)"`
+* Linux : `wget -O session.py https://git.io/JY9JI && python3 session.py`
 * PowerShell : `cd desktop ; wget https://git.io/JY9JI ; python ultroid.py`
-* Termux : `sh -c "$(curl -fsSL https://da.gd/termux-tel)"`
+* Termux : `wget -O session.py https://git.io/JY9JI && python session.py`
 * TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
 
 ---
