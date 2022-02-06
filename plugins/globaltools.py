@@ -338,7 +338,7 @@ async def _(e):
                     chats += 1
                 except BaseException as er:
                     LOGS.exception(er)
-            except ChatAdminRequiredError:
+            except (ChatAdminRequiredError, ValueError):
                 pass
             except BaseException as er:
                 LOGS.exception(er)
@@ -418,7 +418,7 @@ async def _(e):
                     chats += 1
                 except BaseException as er:
                     LOGS.exception(er)
-            except ChatAdminRequiredError:
+            except (ChatAdminRequiredError, ValueError):
                 pass
             except BaseException as er:
                 LOGS.exception(er)
