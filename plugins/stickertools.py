@@ -49,7 +49,6 @@ from . import (
     get_string,
     inline_mention,
     mediainfo,
-    resize_photo,
     types,
     udB,
     ultroid_cmd,
@@ -409,7 +408,7 @@ async def ultdestroy(event):
         .replace("[9]", "[110]")
     )
     open("json.json", "w").write(jsn)
-    file = await TgConverter.animated_sticker("json.json","ultroid.tgs")
+    file = await TgConverter.animated_sticker("json.json", "ultroid.tgs")
     if file:
         await event.client.send_file(
             event.chat_id,
