@@ -167,7 +167,8 @@ if udB.get_key("TAG_LOG"):
         if d_["count"] == 10:
             TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
-            await MSG.edit(TEXT, buttons=await parse_buttons(event))
+            msg = await MSG.edit(TEXT, buttons=await parse_buttons(event))
+            d_["msg"] = msg
         except (MessageTooLongError, MediaCaptionTooLongError):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
