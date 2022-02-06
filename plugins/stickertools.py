@@ -163,7 +163,6 @@ async def hehe(args):
                 await message.download_media("sticker.webm")
             else:
                 await TgConverter.create_webm(await message.download_media())
-            is_video = True
         else:
             xy = await message.download_media()
             y = cv2.VideoCapture(xy)
