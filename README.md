@@ -96,7 +96,7 @@ Take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) for mo
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
 
 One of the following databases:
-- For **Redis** (tutorial [here.](./resources/extras/redistut.md))
+- For **Redis** (tutorial [here](./resources/extras/redistut.md))
   - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/).
   - `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/).
 - For **MONGODB**
