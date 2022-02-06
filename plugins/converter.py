@@ -42,7 +42,7 @@ except ImportError:
     Image = None
 
 from telegraph import upload_file as uf
-
+from pyUltroid.functions.tools import TgConverter
 from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
@@ -125,14 +125,15 @@ async def imak(event):
         c = Image.open(image)
         c.save(file)
     elif image.endswith(".tgs"):
-        await bash(f"lottie_convert.py '{image}' {file}")
+        file = await TgConverter.animated_sticker(image, file)
     else:
         img = cv2.VideoCapture(image)
         ult, roid = img.read()
         cv2.imwrite(file, roid)
-    await event.reply(file=file)
+    if file:
+        await event.reply(file=file)
+        os.remove(file)
     await xx.delete()
-    os.remove(file)
     os.remove(image)
 
 
