@@ -139,7 +139,7 @@ async def hehe(args):
         user.username = user.first_name
     message = await args.get_reply_message()
     photo = None
-    is_anim = False
+    is_anim, is_vid = False, False
     emoji = None
     if not message:
         return await xx.eor(get_string("sts_6"))
@@ -148,7 +148,7 @@ async def hehe(args):
         photo = await ultroid_bot.download_media(message.photo, photo)
     elif message.file and "image" in message.file.mime_type.split("/"):
         photo = io.BytesIO()
-        await ultroid_bot.download_media(message.media.document, photo)
+        await ultroid_bot.download_file(message.media.document, photo)
         if (
             DocumentAttributeFilename(file_name="sticker.webp")
             in message.media.document.attributes
@@ -156,15 +156,10 @@ async def hehe(args):
             emoji = message.media.document.attributes[1].alt
 
     elif message.file and "video" in message.file.mime_type.split("/"):
-        if message.file.duration < 15:
-            attributes = message.document.attributes
-            if DocumentAttributeSticker in attributes:
-                emoji = attributes[1].alt
-                await message.download_media("sticker.webm")
-            else:
-                await TgConverter.create_webm(await message.download_media())
+        xy = await message.download_media()
+        if message.file.duration <= 5:
+            photo = await TgConverter.convert_webm(xy)
         else:
-            xy = await message.download_media()
             y = cv2.VideoCapture(xy)
             heh, lol = y.read()
             cv2.imwrite("ult.webp", lol)
@@ -208,14 +203,18 @@ async def hehe(args):
         cmd = "/newpack"
         file = io.BytesIO()
 
-        if not is_anim:
-            image = TgConverter.resize_photo_sticker(photo)
-            file.name = "sticker.png"
-            image.save(file, "PNG")
-        else:
+        if is_vid:
+            packname += "_vid"
+            packnick += " (Video)"
+            cmd = "/newvideo"
+        elif is_anim:
             packname += "_anim"
             packnick += " (Animated)"
             cmd = "/newanimated"
+        else:
+            image = TgConverter.resize_photo_sticker(photo)
+            file.name = "sticker.png"
+            image.save(file, "PNG")
 
         response = requests.get(f"http://t.me/addstickers/{packname}")
         htmlstr = response.text.split("\n")
@@ -241,6 +240,8 @@ async def hehe(args):
                     packname = f"ult_{user.id}_{pack}"
                     if is_anim:
                         packname += "_anim"
+                    elif is_vid:
+                        packname += "_vid"
                     packnick = f"@{user.username}'s Pack {pack}"
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message(packname)
@@ -256,7 +257,10 @@ async def hehe(args):
                             await conv.send_file("AnimatedSticker.tgs")
                             remove("AnimatedSticker.tgs")
                         else:
-                            file.seek(0)
+                            if is_vid:
+                                file = photo
+                            else:
+                                file.seek(0)
                             await conv.send_file(file, force_document=True)
                         await conv.get_response()
                         await conv.send_message(emoji)
@@ -284,7 +288,10 @@ async def hehe(args):
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
                 else:
-                    file.seek(0)
+                    if is_vid:
+                        file = photo
+                    else:
+                        file.seek(0)
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
@@ -311,7 +318,10 @@ async def hehe(args):
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
                 else:
-                    file.seek(0)
+                    if is_vid:
+                        file = photo
+                    else:
+                        file.seek(0)
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
