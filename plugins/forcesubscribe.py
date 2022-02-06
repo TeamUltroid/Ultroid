@@ -33,7 +33,6 @@ from telethon.tl.types import (
     ChannelParticipantLeft,
     User,
 )
-from telethon.utils import get_peer_id
 
 from . import (
     LOGS,
@@ -56,15 +55,8 @@ async def addfor(e):
     match = e.pattern_match.group(1).strip()
     if not match:
         return await e.eor(get_string("fsub_1"), time=5)
-    if match.startswith("@"):
-        ch = match
-    else:
-        try:
-            ch = int(match)
-        except BaseException:
-            return await e.eor(get_string("fsub_2"), time=5)
     try:
-        match = get_peer_id(await e.client.get_entity(ch))
+        match = await e.client.parse_id(match)
     except BaseException:
         return await e.eor(get_string("fsub_2"), time=5)
     add_forcesub(e.chat_id, match)
