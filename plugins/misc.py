@@ -131,7 +131,7 @@ async def mobs(e):
     out += "_"
     if imu == []:
         imu = None
-    await e.reply(out, file=imu)
+    await e.reply(out, file=imu, link_preview=False)
     await bt.delete()
 
 
