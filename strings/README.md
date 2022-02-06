@@ -4,27 +4,27 @@
 | Code | Language | Translated | Remaining |
 |----|-------|-------|---|
 | en | English [English] | 413 | 0 |
-| tr | Turkish [Türk] | 114 | 299 |
-| cn | Chinese [简体中文] | 114 | 299 |
-| od | Odia [ଓଡିଆ] | 114 | 299 |
-| mr | Marathi [मराठी] | 114 | 299 |
-| bn | bengoli [বাংলা] | 114 | 299 |
-| ta | தமிழ் [தமிழ்] | 114 | 299 |
-| id | Indonesia [Indonesia] | 413 | NULL |
-| ru | Russian [Русский] | 413 | NULL |
-| ml | Malayalam [മലയാളം] | 114 | 299 |
-| jp | Japanese [日本] | 396 | 17 |
-| az | Azerbaijan [Azərbaycan] | 382 | 31 |
-| es | Spanish [Español] | 114 | 299 |
-| it | Italian [italiano] | 113 | 300 |
-| fa | Persian [Farsi] | 391 | 22 |
-| gu | Gujarati [ગુજરાતી] | 111 | 302 |
-| pt-br | Portuguese [Português] | 413 | NULL |
-| si | sinhala [සිංහල] | 114 | 299 |
-| my | Malay [Bahasa Melayu] | 114 | 299 |
-| hi | Hindi [हिंदी] | 410 | 3 |
-| ar | Arabic [العربية] | 252 | 161 |
 | ka | Kannada [ಕನ್ನಡ] | 114 | 299 |
+| bn | bengoli [বাংলা] | 114 | 299 |
+| od | Odia [ଓଡିଆ] | 114 | 299 |
+| ru | Russian [Русский] | 413 | NULL |
+| pt-br | Portuguese [Português] | 413 | NULL |
+| my | Malay [Bahasa Melayu] | 114 | 299 |
+| jp | Japanese [日本] | 416 | -3 |
+| tr | Turkish [Türk] | 114 | 299 |
+| si | sinhala [සිංහල] | 114 | 299 |
+| fa | Persian [Farsi] | 391 | 22 |
+| hi | Hindi [हिंदी] | 410 | 3 |
+| az | Azerbaijan [Azərbaycan] | 382 | 31 |
+| id | Indonesia [Indonesia] | 413 | NULL |
+| cn | Chinese [简体中文] | 114 | 299 |
+| ta | தமிழ் [தமிழ்] | 114 | 299 |
+| mr | Marathi [मराठी] | 114 | 299 |
+| ar | Arabic [العربية] | 252 | 161 |
+| it | Italian [italiano] | 113 | 300 |
+| gu | Gujarati [ગુજરાતી] | 111 | 302 |
+| ml | Malayalam [മലയാളം] | 114 | 299 |
+| es | Spanish [Español] | 114 | 299 |
 
 
 If Strings are not present, Google Translation will be used to Translate them at time of Usage.
