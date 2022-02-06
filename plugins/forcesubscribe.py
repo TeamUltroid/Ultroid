@@ -33,7 +33,6 @@ from telethon.tl.types import (
     ChannelParticipantLeft,
     User,
 )
-from telethon.utils import get_peer_id
 
 from . import (
     LOGS,
