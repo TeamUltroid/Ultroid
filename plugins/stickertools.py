@@ -148,7 +148,7 @@ async def hehe(args):
         photo = await ultroid_bot.download_media(message.photo, photo)
     elif message.file and "image" in message.file.mime_type.split("/"):
         photo = io.BytesIO()
-        await ultroid_bot.download_file(message.media.document, photo)
+        await ultroid_bot.download_media(message.media.document, photo)
         if (
             DocumentAttributeFilename(file_name="sticker.webp")
             in message.media.document.attributes
@@ -156,11 +156,20 @@ async def hehe(args):
             emoji = message.media.document.attributes[1].alt
 
     elif message.file and "video" in message.file.mime_type.split("/"):
-        xy = await message.download_media()
-        y = cv2.VideoCapture(xy)
-        heh, lol = y.read()
-        cv2.imwrite("ult.webp", lol)
-        photo = "ult.webp"
+        if message.file.duration < 15:
+            attributes = message.document.attributes
+            if DocumentAttributeSticker in attributes:
+                emoji = attributes[1].alt
+                await message.download_media("sticker.webm")
+            else:
+                await TgConverter.create_webm(await message.download_media())
+            is_video = True
+        else:
+            xy = await message.download_media()
+            y = cv2.VideoCapture(xy)
+            heh, lol = y.read()
+            cv2.imwrite("ult.webp", lol)
+            photo = "ult.webp"
     elif message.file and "tgsticker" in message.file.mime_type:
         await ultroid_bot.download_file(
             message.media.document,
