@@ -18,7 +18,7 @@ import os
 import random
 
 from pyUltroid.functions.misc import unsplashsearch
-from pyUltroid.functions.tools import make_logo
+from pyUltroid.functions.tools import LogoHelper
 from telethon.tl.types import InputMessagesFilterPhotos
 
 from . import OWNER_ID, OWNER_NAME, download_file, get_string, mediainfo, ultroid_cmd
@@ -65,7 +65,7 @@ async def logo_gen(event):
         strke = 5
     else:
         strke = 20
-    make_logo(
+    LogoHelper.make_logo(
         bg_,
         name,
         font_,
@@ -73,23 +73,6 @@ async def logo_gen(event):
         stroke_width=strke,
         stroke_fill="black",
     )
-    """img = Image.open(bg_)
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(font_, fnt_size)
-    w, h = draw.textsize(name, font=font)
-    h += int(h * 0.21)
-    image_width, image_height = img.size
-    draw.text(
-        ((image_width - w) / 2, (image_height - h) / 2),
-        name,
-        font=font,
-        fill=(255, 255, 255),
-    )
-    x = (image_width - w) / 2
-    y = (image_height - h) / 2
-    draw.text(
-        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
-    )"""
     flnme = "Logo.png"
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
