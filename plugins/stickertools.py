@@ -35,6 +35,7 @@ import numpy as np
 import requests
 from PIL import Image, ImageDraw
 from pyUltroid.functions.misc import create_quotly
+from pyUltroid.functions.tools import TgConverter
 from telethon.errors import PeerIdInvalidError, YouBlockedUserError
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
@@ -73,10 +74,11 @@ async def uconverter(event):
         file = "something.webp"
     else:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
-    await bash(f"lottie_convert.py '{b}' {file}")
-    await event.client.send_file(event.chat_id, file, force_document=False)
+    file = await TgConverter.animated_sticker(b, file)
+    if file:
+        await event.client.send_file(event.chat_id, file, force_document=False)
+        os.remove(file)
     await xx.delete()
-    os.remove(file)
     os.remove(b)
 
 
@@ -200,7 +202,7 @@ async def hehe(args):
         file = io.BytesIO()
 
         if not is_anim:
-            image = resize_photo(photo)
+            image = TgConverter.resize_photo_sticker(photo)
             file.name = "sticker.png"
             image.save(file, "PNG")
         else:
@@ -350,7 +352,7 @@ async def ultdround(event):
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
         file = "ult.png"
-        await bash(f"lottie_convert.py '{ultt}' {file}")
+        await TgConverter.animated_sticker(ultt, file)
     elif ultt.endswith((".gif", ".mp4", ".mkv")):
         await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
@@ -407,13 +409,14 @@ async def ultdestroy(event):
         .replace("[9]", "[110]")
     )
     open("json.json", "w").write(jsn)
-    await bash("lottie_convert.py json.json ultroid.tgs")
-    await event.client.send_file(
-        event.chat_id,
-        file="ultroid.tgs",
-        force_document=False,
-        reply_to=event.reply_to_msg_id,
-    )
+    file = await TgConverter.animated_sticker("json.json","ultroid.tgs")
+    if file:
+        await event.client.send_file(
+            event.chat_id,
+            file="ultroid.tgs",
+            force_document=False,
+            reply_to=event.reply_to_msg_id,
+        )
     await xx.delete()
     os.remove("json.json")
 
@@ -430,13 +433,13 @@ async def ultiny(event):
     ik = await event.client.download_media(reply)
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
-        await event.client.download_media(reply, "ult.tgs")
-        await bash("lottie_convert.py ult.tgs json.json")
+        file = await event.client.download_media(reply)
+        await TgConverter.animated_sticker(file, "json.json")
         with open("json.json") as json:
             jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
-        await bash("lottie_convert.py json.json ult.tgs")
+        await TgConverter.animated_sticker("json.json", "ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
     elif ik.endswith((".gif", ".mp4")):
