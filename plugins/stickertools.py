@@ -158,7 +158,7 @@ async def hehe(args):
     elif message.file and "video" in message.file.mime_type.split("/"):
         xy = await message.download_media()
         if message.file.duration <= 5:
-            photo = await TgConverter.convert_webm(xy)
+            photo = await TgConverter.create_webm(xy)
         else:
             y = cv2.VideoCapture(xy)
             heh, lol = y.read()
