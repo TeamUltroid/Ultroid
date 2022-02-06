@@ -166,6 +166,6 @@ def db_usage():
 
 def get_full_usage():
     is_hk, hk = heroku_usage()
-    her = hk or ""
+    her = hk if is_hk else ""
     rd = db_usage()
     return her + "\n\n" + rd
