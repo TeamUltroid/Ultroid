@@ -57,7 +57,9 @@ async def usage_finder(event):
         is_hk, hk = heroku_usage()
         await x.edit(hk)
     else:
-        await x.edit(get_full_usage())
+        if HOSTED_ON == "heroku":
+            return await x.edit(get_full_usage())
+        await x.edit(f"{db_usage()}\n\n{simple_usage()}")
 
 
 def simple_usage():
@@ -161,11 +163,12 @@ def db_usage():
     used = udB.usage
     a = humanbytes(used) + "/" + humanbytes(total)
     b = str(round((used / total) * 100, 2)) + "%"
-    return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
+    return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: __{b}__"
 
 
 def get_full_usage():
     is_hk, hk = heroku_usage()
     her = hk or ""
     rd = db_usage()
-    return her + "\n\n" + rd
+    sys = simple_usage()
+    return her + "\n\n" + sys + "\n\n" + rd
