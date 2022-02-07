@@ -237,7 +237,7 @@ async def hehe(args):
                 if x.text.startswith("Alright! Now send me the video sticker."):
                     await conv.send_file(photo)
                     x = await conv.get_response()
-                t = "50" (if is_anim or is_vid) else "120"
+                t = "50" if (is_anim or is_vid) else "120"
                 while t in x.message:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
