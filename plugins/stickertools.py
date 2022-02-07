@@ -234,7 +234,7 @@ async def hehe(args):
                 await conv.get_response()
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while ("50" in x.message or "120" in x.message):
+                while "50" in x.message or "120" in x.message:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     if is_anim:
