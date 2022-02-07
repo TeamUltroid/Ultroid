@@ -235,7 +235,7 @@ async def hehe(args):
                 await conv.send_message(packname)
                 x = await conv.get_response()
                 if x.text.startswith("Alright! Now send me the video sticker."):
-                    await conv.send_file(photo)
+                    await conv.send_file(photo, force_document=True)
                     x = await conv.get_response()
                 t = "50" if (is_anim or is_vid) else "120"
                 while t in x.message:
@@ -249,7 +249,7 @@ async def hehe(args):
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    if x.text == "Invalid pack selected.":
+                    if x.text == "Invalid pack selected." or "50" in x.text:
                         await conv.send_message(cmd)
                         await conv.get_response()
                         await conv.send_message(packnick)
