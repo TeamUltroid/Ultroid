@@ -157,7 +157,7 @@ async def hehe(args):
 
     elif message.file and "video" in message.file.mime_type.split("/"):
         xy = await message.download_media()
-        if message.file.duration <= 5:
+        if (message.file.duration or 0) <= 10:
             is_vid = True
             photo = await TgConverter.create_webm(xy)
         else:
@@ -234,8 +234,7 @@ async def hehe(args):
                 await conv.get_response()
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                t = "50" if (is_vid or is_anim) else "120"
-                while t in x.text:
+                while ("50" in x.message or "120" in x.message):
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     if is_anim:
@@ -356,7 +355,7 @@ async def ultdround(event):
         await xx.edit(get_string("sts_9"))
         file = "ult.png"
         await TgConverter.animated_sticker(ultt, file)
-    elif ultt.endswith((".gif", ".mp4", ".mkv")):
+    elif ultt.endswith((".gif", ".webm", ".mp4", ".mkv")):
         await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
@@ -445,7 +444,7 @@ async def ultiny(event):
         await TgConverter.animated_sticker("json.json", "ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
-    elif ik.endswith((".gif", ".mp4")):
+    elif ik.endswith((".gif", ".webm", ".mp4")):
         iik = cv2.VideoCapture(ik)
         dani, busy = iik.read()
         cv2.imwrite("i.png", busy)
