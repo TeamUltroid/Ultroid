@@ -232,7 +232,6 @@ async def hehe(args):
                     await ultroid_bot(functions.contacts.UnblockRequest("stickers"))
                     await conv.send_message("/addsticker")
                 await conv.get_response()
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
                 t = "50" if is_anim else "120"
@@ -250,10 +249,8 @@ async def hehe(args):
                     if x.text == "Invalid pack selected.":
                         await conv.send_message(cmd)
                         await conv.get_response()
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.send_message(packnick)
                         await conv.get_response()
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         if is_anim:
                             await conv.send_file("AnimatedSticker.tgs")
                             remove("AnimatedSticker.tgs")
@@ -265,21 +262,16 @@ async def hehe(args):
                             await conv.send_file(file, force_document=True)
                         await conv.get_response()
                         await conv.send_message(emoji)
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.get_response()
                         await conv.send_message("/publish")
                         if is_anim:
                             await conv.get_response()
                             await conv.send_message(f"<{packnick}>")
                         await conv.get_response()
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.send_message("/skip")
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.get_response()
                         await conv.send_message(packname)
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await conv.get_response()
-                        await ultroid_bot.send_read_acknowledge(conv.chat_id)
                         await xx.edit(
                             get_string("sts_7").format(packname),
                             parse_mode="md",
@@ -301,20 +293,16 @@ async def hehe(args):
                     )
                     return
                 await conv.send_message(emoji)
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.get_response()
                 await conv.send_message("/done")
                 await conv.get_response()
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
         else:
             await xx.edit("`Brewing a new Pack...`")
             async with ultroid_bot.conversation("Stickers") as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packnick)
                 await conv.get_response()
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
@@ -331,7 +319,6 @@ async def hehe(args):
                     )
                     return
                 await conv.send_message(emoji)
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.get_response()
                 await conv.send_message("/publish")
                 if is_anim:
@@ -339,12 +326,9 @@ async def hehe(args):
                     await conv.send_message(f"<{packnick}>")
 
                 await conv.get_response()
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.send_message("/skip")
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.get_response()
                 await conv.send_message(packname)
-                await ultroid_bot.send_read_acknowledge(conv.chat_id)
                 await conv.get_response()
                 await ultroid_bot.send_read_acknowledge(conv.chat_id)
         await xx.edit(
