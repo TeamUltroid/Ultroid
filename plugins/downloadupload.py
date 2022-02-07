@@ -163,6 +163,11 @@ async def _(event):
             .strip()
         )
     if not os.path.exists(match):
+        try:
+            await event.reply(file=match)
+            await event.try_delete()
+        except Exception as er:
+            LOGS.exception(er)
         return await msg.eor("`File doesn't exist or path is incorrect!`")
     if os.path.isdir(match):
         c, s = 0, 0
