@@ -10,7 +10,7 @@
 | ru | Russian [Русский] | 413 | NULL |
 | pt-br | Portuguese [Português] | 413 | NULL |
 | my | Malay [Bahasa Melayu] | 114 | 299 |
-| jp | Japanese [日本] | 416 | -3 |
+| jp | Japanese [日本] | 396 | 17 |
 | tr | Turkish [Türk] | 114 | 299 |
 | si | sinhala [සිංහල] | 114 | 299 |
 | fa | Persian [Farsi] | 391 | 22 |
