@@ -107,7 +107,7 @@ async def trim_aud(e):
         diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.aac")
-        if int(b) > int(genss(file.name)):
+        if int(b) > int(await genss(file.name)):
             os.remove(file.name)
             return await eod(xxx, get_string("audiotools_6"))
         ss, dd = stdr(int(a)), stdr(int(b))
