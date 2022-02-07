@@ -368,7 +368,6 @@ async def ultdround(event):
         file = "ult.png"
         await TgConverter.animated_sticker(ultt, file)
     elif ultt.endswith((".gif", ".webm", ".mp4", ".mkv")):
-        await xx.edit(get_string("com_1"))
         img = cv2.VideoCapture(ultt)
         heh, lol = img.read()
         cv2.imwrite("ult.png", lol)
