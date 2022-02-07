@@ -130,10 +130,10 @@ async def uconverter(event):
     try:
         convert = conv_keys[input_]
     except KeyError:
-        return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
+        return await xx.edit(get_string("sts_3").format("gif/img/sticker/webm"))
     file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
-        await event.client.send_file(event.chat_id, file, force_document=False)
+        await event.client.send_file(event.chat_id, file)
         os.remove(file)
     await xx.delete()
 
