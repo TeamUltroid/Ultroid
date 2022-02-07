@@ -249,7 +249,7 @@ async def hehe(args):
                         packname += "_anim"
                         packnick += " (Animated)"
                     elif is_vid:
-                        packname += " (Video)"
+                        packnick += " (Video)"
                         packname += "_vid"
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message("/addsticker")
