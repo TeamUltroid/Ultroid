@@ -7,6 +7,9 @@
 """
 ✘ Commands Available -
 
+• `{i}convert <gif/img/sticker/webm>`
+    Reply to media to convert it into gif / image / webm / normal sticker.
+
 • `{i}mtoi <reply to media>`
     Media to image conversion
 
@@ -44,7 +47,7 @@ except ImportError:
 from pyUltroid.functions.tools import TgConverter
 from telegraph import upload_file as uf
 
-from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
 
@@ -110,6 +113,29 @@ async def imak(event):
     os.remove(inp)
     await xx.delete()
 
+conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
+
+
+@ultroid_cmd(
+    pattern="convert( (.*)|$)",
+)
+async def uconverter(event):
+    xx = await event.eor(get_string("com_1"))
+    a = await event.get_reply_message()
+    if not a.media:
+        return await xx.edit("`Reply to media...`")
+    input_ = event.pattern_match.group(1).strip()
+    b = await a.download_media("resources/downloads/")
+    try:
+        convert = conv_keys[input_]
+    except KeyError:
+        return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
+    file = await con.convert(b, outname="ultroid", convert_to=convert)
+    if file:
+        await event.client.send_file(event.chat_id, file, force_document=False)
+        os.remove(file)
+    await xx.delete()
+    os.remove(b)
 
 @ultroid_cmd(
     pattern="mtoi$",
