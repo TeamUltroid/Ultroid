@@ -44,7 +44,7 @@ from asyncio.exceptions import TimeoutError as AsyncTimeout
 import cv2
 from google_trans_new import google_translator
 from htmlwebshot import WebShot
-from pyUltroid.functions.tools import metadata, TgConverter
+from pyUltroid.functions.tools import TgConverter, metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -225,15 +225,15 @@ async def _(e):
             file = nfile
         if file:
             await e.client.send_file(
-            e.chat_id,
-            file,
-            video_note=True,
-            thumb="resources/extras/ultroid.jpg",
-            reply_to=reply,
+                e.chat_id,
+                file,
+                video_note=True,
+                thumb="resources/extras/ultroid.jpg",
+                reply_to=reply,
             )
             os.remove(file)
         await msg.delete()
-        
+
     else:
         await e.eor("`Reply to a gif or audio file only.`")
 
