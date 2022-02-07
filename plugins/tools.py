@@ -220,7 +220,7 @@ async def _(e):
         msg = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
         file = await reply.download_media("resources/downloads/")
         if file.endswith(".webm"):
-            nfile = await TgConverter.ffmpeg_convert(file, "file.webm")
+            nfile = await TgConverter.ffmpeg_convert(file, "file.mp4")
             os.remove(file)
             file = nfile
         if file:
