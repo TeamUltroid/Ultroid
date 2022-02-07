@@ -52,9 +52,10 @@ from . import (
     types,
     udB,
     ultroid_cmd,
+    con
 )
 
-
+conv_keys = {"img":"png","sticker":"webp","webm":"webm","gif":"gif"}
 @ultroid_cmd(
     pattern="convert( (.*)|$)",
 )
@@ -65,15 +66,11 @@ async def uconverter(event):
         return await event.eor(get_string("sts_2"))
     input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
-    if "gif" in input_:
-        file = "something.gif"
-    elif "img" in input_:
-        file = "something.png"
-    elif "sticker" in input_:
-        file = "something.webp"
-    else:
+    try:
+        convert = conv_keys[input_]
+    excet KeyError:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
-    file = await TgConverter.animated_sticker(b, file)
+    file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
         await event.client.send_file(event.chat_id, file, force_document=False)
         os.remove(file)
@@ -216,7 +213,7 @@ async def hehe(args):
             packnick += " (Animated)"
             cmd = "/newanimated"
         else:
-            image = TgConverter.resize_photo_sticker(photo)
+            image = con.resize_photo_sticker(photo)
             file.name = "sticker.png"
             image.save(file, "PNG")
 
@@ -362,17 +359,7 @@ async def ultdround(event):
         await xx.edit(get_string("sts_10"))
         return
     ultt = await ureply.download_media()
-    if ultt.endswith(".tgs"):
-        await xx.edit(get_string("sts_9"))
-        file = "ult.png"
-        await TgConverter.animated_sticker(ultt, file)
-    elif ultt.endswith((".gif", ".webm", ".mp4", ".mkv")):
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
-    else:
-        file = ultt
+    file = await con.convert(ultt, convert_to="png", allowed_formats=["jpg","jpeg","png"], outname="round", remove_old=True)
     img = Image.open(file).convert("RGB")
     npImage = np.array(img)
     h, w = img.size
@@ -421,7 +408,7 @@ async def ultdestroy(event):
         .replace("[9]", "[110]")
     )
     open("json.json", "w").write(jsn)
-    file = await TgConverter.animated_sticker("json.json", "ultroid.tgs")
+    file = await con.animated_sticker("json.json", "ultroid.tgs")
     if file:
         await event.client.send_file(
             event.chat_id,
@@ -446,12 +433,12 @@ async def ultiny(event):
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
         file = await event.client.download_media(reply)
-        await TgConverter.animated_sticker(file, "json.json")
+        await con.animated_sticker(file, "json.json")
         with open("json.json") as json:
             jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
-        await TgConverter.animated_sticker("json.json", "ult.tgs")
+        await con.animated_sticker("json.json", "ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
     elif ik.endswith((".gif", ".webm", ".mp4")):
