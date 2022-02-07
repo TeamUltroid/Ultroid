@@ -84,7 +84,7 @@ async def uconverter(event):
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker and _e.file.mime_type in ["image/webp", "video/webm"]):
+    if not (_e and _e.sticker and _e.file.mime_type != "image/webp"):
         return await _.eor(get_string("sts_4"))
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
@@ -135,9 +135,10 @@ async def pack_kangish(_):
 async def hehe(args):
     ultroid_bot = args.client
     xx = await args.eor(get_string("com_1"))
-    username = ultroid_bot.me.username
+    user = ultroid_bot.me
+    username = user.username
     if not username:
-        username = ultroid_bot.me.first_name
+        username = user.first_name
     else:
         username = "@" + username
     message = await args.get_reply_message()
