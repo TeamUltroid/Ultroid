@@ -56,7 +56,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from . import con, HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
+from . import HNDLR, LOGS, asst, con, get_string, mediainfo, os, types, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -197,7 +197,10 @@ async def _(ult):
     else:
         return await ult.eor("Reply to a Photo or Video..")
     replfile = await con.convert(
-            replfile, outname="chatphoto", allowed_formats=["jpg","png","mp4"], remove_old=True
+        replfile,
+        outname="chatphoto",
+        allowed_formats=["jpg", "png", "mp4"],
+        remove_old=True,
     )
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
