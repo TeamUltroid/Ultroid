@@ -52,6 +52,7 @@ from . import (
     ultroid_cmd,
 )
 
+
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
