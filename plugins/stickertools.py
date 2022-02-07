@@ -234,7 +234,11 @@ async def hehe(args):
                 await conv.get_response()
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "50" in x.message or "120" in x.message:
+                if x.text.startswith("Alright! Now send me the video sticker."):
+                    await conv.send_file(photo)
+                    x = await conv.get_response()
+                t = "50" (if is_anim or is_vid) else "120"
+                while t in x.message:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     if is_anim:
@@ -279,11 +283,8 @@ async def hehe(args):
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
-                else:
-                    if is_vid:
-                        file = photo
-                    else:
-                        file.seek(0)
+                elif not is_vid:
+                    file.seek(0)
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
