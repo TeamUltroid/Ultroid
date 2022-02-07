@@ -114,7 +114,7 @@ async def pack_kangish(_):
                 title=_packname,
                 short_name=f"{short_name}_by_{asst.me.username}",
                 stickers=stiks,
-                videos=bool(_e.file.mime_type == "video/webm")
+                videos=bool(_e.file.mime_type == "video/webm"),
             )
         )
     except PeerIdInvalidError:
