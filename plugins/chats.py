@@ -32,7 +32,6 @@
     Remove users specifically.
 """
 
-from pyUltroid.functions.tools import TgConverter
 from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
@@ -57,7 +56,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from . import HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
+from . import con, HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -197,10 +196,9 @@ async def _(ult):
         replfile = await reply_message.download_media()
     else:
         return await ult.eor("Reply to a Photo or Video..")
-    if replfile.endswith(".webm"):
-        replfile = await TgConverter.ffmpeg_convert(
-            replfile, "chatpic.mp4", remove=True
-        )
+    replfile = await con.convert(
+            replfile, outname="chatphoto", allowed_formats=["jpg","png","mp4"], remove_old=True
+    )
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
@@ -210,8 +208,7 @@ async def _(ult):
         await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
         await ult.eor("Error occured.\n`{}`".format(str(ex)), time=5)
-    if os.path.exists(replfile):
-        os.remove(replfile)
+    os.remove(replfile)
 
 
 @ultroid_cmd(
