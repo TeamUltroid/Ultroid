@@ -13,8 +13,8 @@
 • `{i}tiny <reply to media>`
     To create Tiny stickers.
 
-• `{i}convert <gif/img/sticker>`
-    Reply to animated sticker to convert it into gif or image or normal sticker.
+• `{i}convert <gif/img/sticker/webm>`
+    Reply to sticker to convert it into gif or image or webm or normal sticker.
 
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
@@ -64,8 +64,6 @@ conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
 async def uconverter(event):
     xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
-    if not (a and a.media and "animated" in mediainfo(a.media)):
-        return await event.eor(get_string("sts_2"))
     input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
     try:
