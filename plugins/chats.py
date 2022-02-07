@@ -55,7 +55,7 @@ from telethon.tl.types import (
     UserStatusOnline,
     UserStatusRecently,
 )
-
+from pyUltroid.functions.tools import TgConverter
 from . import HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
 
 
