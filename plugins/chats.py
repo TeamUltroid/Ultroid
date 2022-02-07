@@ -32,6 +32,7 @@
     Remove users specifically.
 """
 
+from pyUltroid.functions.tools import TgConverter
 from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
     CreateChannelRequest,
@@ -55,7 +56,7 @@ from telethon.tl.types import (
     UserStatusOnline,
     UserStatusRecently,
 )
-from pyUltroid.functions.tools import TgConverter
+
 from . import HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
 
 
