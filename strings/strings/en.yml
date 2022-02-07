@@ -36,7 +36,7 @@ help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
 help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
-help_12: "Voice Call is not Active!"
+help_12: "Voice Chat Bot is not active! Use .setdb VCBOT True to enable!"
 help_13: "Do '{}setdb ADDONS True' to Load Official Addons"
 
 # userlogs
