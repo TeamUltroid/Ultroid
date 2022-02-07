@@ -68,7 +68,7 @@ async def uconverter(event):
     b = await a.download_media("resources/downloads/")
     try:
         convert = conv_keys[input_]
-    excet KeyError:
+    except KeyError:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
     file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
