@@ -13,9 +13,6 @@
 • `{i}tiny <reply to media>`
     To create Tiny stickers.
 
-• `{i}convert <gif/img/sticker/webm>`
-    Reply to sticker to convert it into gif or image or webm or normal sticker.
-
 • `{i}kang <reply to image/sticker>`
     Kang the sticker (add to your pack).
 
@@ -54,29 +51,6 @@ from . import (
     udB,
     ultroid_cmd,
 )
-
-conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
-
-
-@ultroid_cmd(
-    pattern="convert( (.*)|$)",
-)
-async def uconverter(event):
-    xx = await event.eor(get_string("com_1"))
-    a = await event.get_reply_message()
-    input_ = event.pattern_match.group(1).strip()
-    b = await a.download_media("resources/downloads/")
-    try:
-        convert = conv_keys[input_]
-    except KeyError:
-        return await xx.edit(get_string("sts_3").format("gif/img/sticker"))
-    file = await con.convert(b, outname="ultroid", convert_to=convert)
-    if file:
-        await event.client.send_file(event.chat_id, file, force_document=False)
-        os.remove(file)
-    await xx.delete()
-    os.remove(b)
-
 
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
