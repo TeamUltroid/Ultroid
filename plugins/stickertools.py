@@ -234,7 +234,7 @@ async def hehe(args):
                 await conv.get_response()
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                t = "50" if is_anim else "120"
+                t = "50" if (is_vid or is_anim) else "120"
                 while t in x.text:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
