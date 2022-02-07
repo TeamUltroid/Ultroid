@@ -58,7 +58,7 @@ async def _(event):
         await event.answer([fuk])
         return
     results = []
-    search = VideosSearch(string, limit=10)
+    search = VideosSearch(string, limit=50)
     nub = search.result()
     nibba = nub["result"]
     for v in nibba:
