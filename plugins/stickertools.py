@@ -84,7 +84,7 @@ async def uconverter(event):
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+    if not (_e and _e.sticker and _e.file.mime_type in ["image/webp", "video/webm"]):
         return await _.eor(get_string("sts_4"))
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
@@ -114,6 +114,7 @@ async def pack_kangish(_):
                 title=_packname,
                 short_name=f"{short_name}_by_{asst.me.username}",
                 stickers=stiks,
+                videos=bool(_e.file.mime_type == "video/webm")
             )
         )
     except PeerIdInvalidError:
@@ -134,9 +135,11 @@ async def pack_kangish(_):
 async def hehe(args):
     ultroid_bot = args.client
     xx = await args.eor(get_string("com_1"))
-    user = ultroid_bot.me
-    if not user.username:
-        user.username = user.first_name
+    username = ultroid_bot.me.username
+    if not username:
+        username = ultroid_bot.me.first_name
+    else:
+        username = "@" + username
     message = await args.get_reply_message()
     photo = None
     is_anim, is_vid = False, False
@@ -200,7 +203,7 @@ async def hehe(args):
                 emoji = splat[1]
 
         packname = f"ult_{user.id}_{pack}"
-        packnick = f"@{user.username}'s Pack {pack}"
+        packnick = f"{username}'s Pack {pack}"
         cmd = "/newpack"
         file = io.BytesIO()
 
@@ -241,11 +244,13 @@ async def hehe(args):
                 while t in x.message:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
+                    packnick = f"{username}'s Pack {pack}"
                     if is_anim:
                         packname += "_anim"
+                        packnick += " (Animated)"
                     elif is_vid:
+                        packname += " (Video)"
                         packname += "_vid"
-                    packnick = f"@{user.username}'s Pack {pack}"
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message("/addsticker")
                     await conv.get_response()
