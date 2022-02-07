@@ -45,6 +45,7 @@ from . import (
     LOGS,
     asst,
     bash,
+    con,
     functions,
     get_string,
     inline_mention,
@@ -52,10 +53,11 @@ from . import (
     types,
     udB,
     ultroid_cmd,
-    con
 )
 
-conv_keys = {"img":"png","sticker":"webp","webm":"webm","gif":"gif"}
+conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
+
+
 @ultroid_cmd(
     pattern="convert( (.*)|$)",
 )
@@ -359,7 +361,13 @@ async def ultdround(event):
         await xx.edit(get_string("sts_10"))
         return
     ultt = await ureply.download_media()
-    file = await con.convert(ultt, convert_to="png", allowed_formats=["jpg","jpeg","png"], outname="round", remove_old=True)
+    file = await con.convert(
+        ultt,
+        convert_to="png",
+        allowed_formats=["jpg", "jpeg", "png"],
+        outname="round",
+        remove_old=True,
+    )
     img = Image.open(file).convert("RGB")
     npImage = np.array(img)
     h, w = img.size
