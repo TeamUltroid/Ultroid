@@ -136,7 +136,6 @@ async def uconverter(event):
         await event.client.send_file(event.chat_id, file, force_document=False)
         os.remove(file)
     await xx.delete()
-    os.remove(b)
 
 
 @ultroid_cmd(
