@@ -197,7 +197,9 @@ async def _(ult):
     else:
         return await ult.eor("Reply to a Photo or Video..")
     if replfile.endswith(".webm"):
-        replfile = await TgConverter.ffmpeg_convert(replfile, "chatpic.mp4", remove=True)
+        replfile = await TgConverter.ffmpeg_convert(
+            replfile, "chatpic.mp4", remove=True
+        )
     file = await ult.client.upload_file(replfile)
     mediain = mediainfo(reply_message.media)
     try:
