@@ -249,7 +249,7 @@ async def hehe(args):
                     await xx.edit(get_string("sts_13").format(pack))
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    if x.text == "Invalid pack selected." or "50" in x.text:
+                    if x.text == "Invalid pack selected.":
                         await conv.send_message(cmd)
                         await conv.get_response()
                         await conv.send_message(packnick)
@@ -283,8 +283,11 @@ async def hehe(args):
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
-                elif not is_vid:
-                    file.seek(0)
+                elif "send me an emoji" not in x.message:
+                    if is_vid:
+                        file = photo
+                    else:
+                        file.seek(0)
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
