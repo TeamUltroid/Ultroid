@@ -210,7 +210,8 @@ async def _(ult):
         await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
         await ult.eor("Error occured.\n`{}`".format(str(ex)), time=5)
-    os.remove(replfile)
+    if os.path.exists(replfile):
+        os.remove(replfile)
 
 
 @ultroid_cmd(
