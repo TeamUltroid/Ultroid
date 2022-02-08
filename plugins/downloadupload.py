@@ -33,6 +33,7 @@ from pyUltroid.functions.tools import set_attributes
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from . import (
+    LOGS,
     downloader,
     eor,
     fast_download,
@@ -40,7 +41,6 @@ from . import (
     progress,
     time_formatter,
     ultroid_cmd,
-    LOGS
 )
 
 
