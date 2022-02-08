@@ -25,7 +25,6 @@
 import os
 from datetime import datetime
 
-import cfscrape
 from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
@@ -38,14 +37,6 @@ from . import (
     re,
     ultroid_cmd,
 )
-
-_base = "https://pinterestdownloader.com/download?url="
-
-
-def gib_link(link):
-    if link.startswith("https"):
-        return _base + link.replace(":", "%3A").replace("/", "%2F")
-    return _base + f"https%3A%2F%2Fpin.it%2F{link}"
 
 
 @ultroid_cmd(pattern="eod( (.*)|$)")
@@ -84,20 +75,17 @@ async def pinterest(e):
     m = e.pattern_match.group(1).strip()
     if not m:
         return await e.eor("`Give pinterest link.`", time=3)
-    scrape = cfscrape.create_scraper()
-    hehe = bs(scrape.get(gib_link(m)).text, "html.parser")
-    hulu = hehe.find_all("a", {"class": "download_button"})
-    if len(hulu) < 1:
-        await e.eor("`Wrong link or private pin.`", time=5)
-    elif len(hulu) > 1:
-        video, _ = await fast_download(hulu[0]["href"])
-        thumb, _ = await fast_download(hulu[1]["href"])
-        await e.delete()
-        await e.client.send_file(e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}")
-        [os.remove(file) for file in [video, thumb]]
+    soup = await async_searcher("https://www.expertstool.com/download-pinterest-video/", data={"url": m}, post=True)
+    try:
+        _soup = bs(soup, "html.parser").find("table").tbody.find_all("tr")
+    except:
+         return await e.eor("`Wrong link or private pin.`", time=5)
+    if len(_soup) > 1:
+        file = _soup[1]
     else:
-        await e.delete()
-        await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
+        file = _soup[0]
+    file = file.td.a["href"]
+    await e.client.send_file(e.chat_id, file, caption=f"Pin:- {m}")
 
 
 @ultroid_cmd(pattern="gadget( (.*)|$)")
