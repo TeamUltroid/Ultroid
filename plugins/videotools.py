@@ -75,7 +75,7 @@ async def gen_shots(e):
         file, _ = await e.client.fast_downloader(
             vido.document, show_progress=True, event=msg
         )
-        xxx = await xxx.edit(f"Generating `{shot}` screenshots...")
+        xxx = await msg.edit(f"Generating `{shot}` screenshots...")
         await bash("rm -rf ss && mkdir ss")
         cmd = f'ffmpeg -i "{file.name}" -vf fps=0.009 -vframes {shot} "ss/pic%01d.png"'
         await bash(cmd)
@@ -108,7 +108,7 @@ async def gen_sample(e):
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.mkv")
         if int(b) > int(await genss(file.name)):
             os.remove(file.name)
-            return await eod(xxx, get_string("audiotools_6"))
+            return await eod(msg, get_string("audiotools_6"))
         ss, dd = stdr(int(a)), stdr(int(b))
         xxx = await msg.edit(f"Trimming Video from `{ss}` to `{dd}`...")
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -codec copy -map 0 "{out}" -y'
