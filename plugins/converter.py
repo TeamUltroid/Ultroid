@@ -123,10 +123,12 @@ conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
 async def uconverter(event):
     xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
-    if not a.media:
-        return await xx.edit("`Reply to media...`")
     input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
+    if not b and (a.document and a.document.thumbs):
+        b = await a.download_media(thumb=-1)
+    if not b:
+        return await xx.edit(get_string("cvt_3"))
     try:
         convert = conv_keys[input_]
     except KeyError:
@@ -148,21 +150,11 @@ async def imak(event):
         return
     xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
-    file = "ult.png"
-    if image.endswith((".webp", ".png")):
-        c = Image.open(image)
-        c.save(file)
-    elif image.endswith(".tgs"):
-        file = await TgConverter.animated_sticker(image, file)
-    else:
-        img = cv2.VideoCapture(image)
-        ult, roid = img.read()
-        cv2.imwrite(file, roid)
+    file = await con.convert(image, outname="ult", convert_to="png", remove_old=True)
     if file:
         await event.reply(file=file)
         os.remove(file)
     await xx.delete()
-    os.remove(image)
 
 
 @ultroid_cmd(
@@ -175,18 +167,10 @@ async def smak(event):
         return
     xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
-    file = "ult.webp"
-    if image.endswith((".webp", ".png", ".jpg")):
-        c = Image.open(image)
-        c.save(file)
-    else:
-        img = cv2.VideoCapture(image)
-        ult, roid = img.read()
-        cv2.imwrite(file, roid)
+    file = await con.convert(image, outname="ult" convert_to="webp")
     await event.reply(file=file)
     await xx.delete()
     os.remove(file)
-    os.remove(image)
 
 
 @ultroid_cmd(
