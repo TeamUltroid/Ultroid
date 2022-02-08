@@ -22,7 +22,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import metadata
+from pyUltroid.functions.tools import metadata, set_attributes
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
@@ -44,57 +44,33 @@ from . import (
 @ultroid_cmd(pattern="sample( (.*)|$)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1).strip()
-    stime = 35
+    stime = 30
     if sec and sec.isdigit():
         stime = int(sec)
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
-        if hasattr(vido.media, "document"):
-            vfile = vido.media.document
-            name = vido.file.name
-        else:
-            vfile = vido.media
-            name = ""
-        if not name:
-            name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await e.eor(get_string("audiotools_5"))
-        c_time = time.time()
-        file = await downloader(
-            "resources/downloads/" + name,
-            vfile,
-            xxx,
-            c_time,
-            "Downloading " + name + "...",
+        msg = await event.eor(get_string("com_1"))
+        file, _ = await e.client.fast_downloader(
+            vido.document,
+            show_progress=True,
+            event=msg
         )
-        o_size = os.path.getsize(file.name)
-        d_time = time.time()
-        diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
         out = file_name.replace(file_name.split(".")[-1], "_sample.mkv")
-        xxx = await xxx.edit(
-            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating Sample of `{stime}` seconds..."
+        xxx = await msg.edit(
+            f"Generating Sample of `{stime}` seconds..."
         )
-        ss, dd = duration_s(file.name, stime)
+        ss, dd = await duration_s(file.name, stime)
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -codec copy -map 0 "{out}" -y'
         await bash(cmd)
         os.remove(file.name)
-        f_time = time.time()
-        mmmm = await uploader(
+        attributes = await set_attributes(out)
+        mmmm, _ = await e.client.fast_uploader(
             out,
-            out,
-            f_time,
-            xxx,
-            "Uploading " + out + "...",
+            show_progress=True,
+            event=xxx,
+            to_delete=True
         )
-        data = await metadata(out)
-        width = data["width"]
-        height = data["height"]
-        duration = data["duration"]
-        attributes = [
-            DocumentAttributeVideo(
-                duration=duration, w=width, h=height, supports_streaming=True
-            )
-        ]
         caption = f"A Sample Video Of `{stime}` seconds"
         await e.client.send_file(
             e.chat_id,
@@ -118,28 +94,14 @@ async def gen_shots(e):
         shot = int(ss)
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
-        if hasattr(vido.media, "document"):
-            vfile = vido.media.document
-            name = vido.file.name
-        else:
-            vfile = vido.media
-            name = ""
-        if not name:
-            name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await e.eor(get_string("audiotools_5"))
-        c_time = time.time()
-        file = await downloader(
-            "resources/downloads/" + name,
-            vfile,
-            xxx,
-            c_time,
-            "Downloading " + name + "...",
+        msg = await event.eor(get_string("com_1"))
+        file, _ = await e.client.fast_downloader(
+            vido.document,
+            show_progress=True,
+            event=msg
         )
-        o_size = os.path.getsize(file.name)
-        d_time = time.time()
-        diff = time_formatter((d_time - c_time) * 1000)
         xxx = await xxx.edit(
-            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Generating `{shot}` screenshots..."
+            f"Generating `{shot}` screenshots..."
         )
         await bash("rm -rf ss && mkdir ss")
         cmd = f'ffmpeg -i "{file.name}" -vf fps=0.009 -vframes {shot} "ss/pic%01d.png"'
@@ -165,55 +127,31 @@ async def gen_sample(e):
         return await eod(e, get_string("audiotools_4"))
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
-        if hasattr(vido.media, "document"):
-            vfile = vido.media.document
-            name = vido.file.name
-        else:
-            vfile = vido.media
-            name = ""
-        if not name:
-            name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        xxx = await e.eor(get_string("audiotools_5"))
-        c_time = time.time()
-        file = await downloader(
-            "resources/downloads/" + name,
-            vfile,
-            xxx,
-            c_time,
-            "Downloading " + name + "...",
+        msg = await e.eor(get_string("audiotools_5"))
+        file, _ = await e.client.fast_downloader(
+            vido.document,
+            show_progress=True,
+            event=msg
         )
-        o_size = os.path.getsize(file.name)
-        d_time = time.time()
-        diff = time_formatter((d_time - c_time) * 1000)
         file_name = (file.name).split("/")[-1]
         out = file_name.replace(file_name.split(".")[-1], "_trimmed.mkv")
         if int(b) > int(await genss(file.name)):
             os.remove(file.name)
             return await eod(xxx, get_string("audiotools_6"))
         ss, dd = stdr(int(a)), stdr(int(b))
-        xxx = await xxx.edit(
-            f"Downloaded `{file.name}` of `{humanbytes(o_size)}` in `{diff}`.\n\nNow Trimming Video from `{ss}` to `{dd}`..."
+        xxx = await msg.edit(
+            f"Trimming Video from `{ss}` to `{dd}`..."
         )
         cmd = f'ffmpeg -i "{file.name}" -preset ultrafast -ss {ss} -to {dd} -codec copy -map 0 "{out}" -y'
         await bash(cmd)
         os.remove(file.name)
-        f_time = time.time()
-        mmmm = await uploader(
+        attributes = await set_attributes(out)
+        mmmm, _ = await e.client.fast_uploader(
             out,
-            out,
-            f_time,
-            xxx,
-            "Uploading " + out + "...",
+            show_progress=True,
+            event=msg,
+            to_delete=True
         )
-        data = await metadata(out)
-        width = data["width"]
-        height = data["height"]
-        duration = data["duration"]
-        attributes = [
-            DocumentAttributeVideo(
-                duration=duration, w=width, h=height, supports_streaming=True
-            )
-        ]
         caption = f"Trimmed Video From `{ss}` To `{dd}`"
         await e.client.send_file(
             e.chat_id,
