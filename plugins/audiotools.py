@@ -49,14 +49,8 @@ async def vnc(e):
     if not mediainfo(r.media).startswith(("audio", "video")):
         return await eod(e, get_string("spcltool_1"))
     xxx = await e.eor(get_string("com_1"))
-    dl = r.file.name
-    c_time = time.time()
-    file = await downloader(
-        "resources/downloads/" + dl,
-        r.media.document,
-        xxx,
-        c_time,
-        "Downloading " + dl + "...",
+    file, _ = await e.client.fast_downloader(
+        r.document,
     )
     await xxx.edit(get_string("audiotools_2"))
     await bash(
