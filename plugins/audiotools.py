@@ -23,8 +23,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import metadata, set_attributes
-from telethon.tl.types import DocumentAttributeAudio
+from pyUltroid.functions.tools import set_attributes
 
 from . import (
     bash,
