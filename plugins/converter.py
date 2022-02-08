@@ -141,36 +141,22 @@ async def uconverter(event):
 
 
 @ultroid_cmd(
-    pattern="mtoi$",
+    pattern="mto(i|s)$",
 )
 async def imak(event):
     reply = await event.get_reply_message()
+    match = event.pattern_match.group(1)
     if not (reply and (reply.media)):
         await event.eor(get_string("cvt_3"))
         return
     xx = await event.eor(get_string("com_1"))
     image = await reply.download_media()
-    file = await con.convert(image, outname="ult", convert_to="png", remove_old=True)
+    ext = "png" if match == "i" else "webp"
+    file = await con.convert(image, outname="ult", convert_to=ext)
     if file:
         await event.reply(file=file)
         os.remove(file)
     await xx.delete()
-
-
-@ultroid_cmd(
-    pattern="mtos$",
-)
-async def smak(event):
-    reply = await event.get_reply_message()
-    if not (reply and (reply.media)):
-        await event.eor(get_string("cvt_3"))
-        return
-    xx = await event.eor(get_string("com_1"))
-    image = await reply.download_media()
-    file = await con.convert(image, outname="ult" convert_to="webp")
-    await event.reply(file=file)
-    await xx.delete()
-    os.remove(file)
 
 
 @ultroid_cmd(
