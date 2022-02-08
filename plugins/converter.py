@@ -44,7 +44,6 @@ except ImportError:
     LOGS.info(f"{__file__}: PIL  not Installed.")
     Image = None
 
-from pyUltroid.functions.tools import TgConverter
 from telegraph import upload_file as uf
 
 from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
