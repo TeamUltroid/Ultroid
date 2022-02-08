@@ -15,6 +15,8 @@
 
 • `{i}liststored`
    Get all stored messages.
+
+• Go Inline with your assistant bot with `filestore` to see stored files in inline.
 """
 
 import os
