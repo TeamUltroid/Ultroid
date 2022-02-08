@@ -33,7 +33,7 @@ async def gen_sample(e):
         stime = int(sec)
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
-        msg = await event.eor(get_string("com_1"))
+        msg = await e.eor(get_string("com_1"))
         file, _ = await e.client.fast_downloader(
             vido.document, show_progress=True, event=msg
         )
@@ -71,7 +71,7 @@ async def gen_shots(e):
         shot = int(ss)
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
-        msg = await event.eor(get_string("com_1"))
+        msg = await e.eor(get_string("com_1"))
         file, _ = await e.client.fast_downloader(
             vido.document, show_progress=True, event=msg
         )
