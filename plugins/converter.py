@@ -10,12 +10,6 @@
 • `{i}convert <gif/img/sticker/webm>`
     Reply to media to convert it into gif / image / webm / normal sticker.
 
-• `{i}mtoi <reply to media>`
-    Media to image conversion
-
-• `{i}mtos <reply to media>`
-    Convert media to sticker.
-
 • `{i}doc <filename.ext>`
     Reply to a text msg to save it in a file.
 
@@ -113,7 +107,7 @@ async def imak(event):
     await xx.delete()
 
 
-conv_keys = {"img": "png", "sticker": "webp", "webm": "webm", "gif": "gif"}
+conv_keys = {"img": "png", "sticker": "webp", "webp":"webp","image":"png", "webm": "webm", "gif": "gif"}
 
 
 @ultroid_cmd(
@@ -135,25 +129,6 @@ async def uconverter(event):
     file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
         await event.client.send_file(event.chat_id, file)
-        os.remove(file)
-    await xx.delete()
-
-
-@ultroid_cmd(
-    pattern="mto(i|s)$",
-)
-async def imak(event):
-    reply = await event.get_reply_message()
-    match = event.pattern_match.group(1)
-    if not (reply and (reply.media)):
-        await event.eor(get_string("cvt_3"))
-        return
-    xx = await event.eor(get_string("com_1"))
-    image = await reply.download_media()
-    ext = "png" if match == "i" else "webp"
-    file = await con.convert(image, outname="ult", convert_to=ext)
-    if file:
-        await event.reply(file=file)
         os.remove(file)
     await xx.delete()
 
