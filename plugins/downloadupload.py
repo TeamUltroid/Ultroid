@@ -40,6 +40,7 @@ from . import (
     progress,
     time_formatter,
     ultroid_cmd,
+    LOGS
 )
 
 
