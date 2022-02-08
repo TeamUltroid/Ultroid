@@ -174,7 +174,10 @@ async def _(event):
         for files in sorted(os.listdir(match)):
             attributes = None
             if stream:
-                attributes = await set_attributes(files)
+                try:
+                    attributes = await set_attributes(files)
+                except KeyError as er:
+                    LOGS.exception(er)
             try:
                 file, _ = await event.client.fast_uploader(
                     match + "/" + files, show_progress=True, event=msg, to_delete=delete
@@ -195,7 +198,10 @@ async def _(event):
         return await msg.eor(f"`Uploaded {s} files, failed to upload {c}.`")
     attributes = None
     if stream:
-        attributes = await set_attributes(match)
+        try:
+            attributes = await set_attributes(match)
+        except KeyError as er:
+            LOGS.exception(er)
     file, _ = await event.client.fast_uploader(
         match, show_progress=True, event=msg, to_delete=delete
     )
