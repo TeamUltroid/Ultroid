@@ -29,14 +29,7 @@ from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
 
-from . import (
-    async_searcher,
-    fast_download,
-    get_random_user_data,
-    get_string,
-    re,
-    ultroid_cmd,
-)
+from . import async_searcher, get_random_user_data, get_string, re, ultroid_cmd
 
 
 @ultroid_cmd(pattern="eod( (.*)|$)")
@@ -75,11 +68,15 @@ async def pinterest(e):
     m = e.pattern_match.group(1).strip()
     if not m:
         return await e.eor("`Give pinterest link.`", time=3)
-    soup = await async_searcher("https://www.expertstool.com/download-pinterest-video/", data={"url": m}, post=True)
+    soup = await async_searcher(
+        "https://www.expertstool.com/download-pinterest-video/",
+        data={"url": m},
+        post=True,
+    )
     try:
         _soup = bs(soup, "html.parser").find("table").tbody.find_all("tr")
-    except:
-         return await e.eor("`Wrong link or private pin.`", time=5)
+    except BaseException:
+        return await e.eor("`Wrong link or private pin.`", time=5)
     if len(_soup) > 1:
         file = _soup[1]
     else:
