@@ -15,9 +15,9 @@ com_7: "`何か 行った 間違い`"
 
 # chatactions
 can_1: "#GBanned_User 参加しました.\n\n**User** : {}\n**Reason**: {}\n\n`ユーザー禁止.`"
-can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
-can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
-can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
+can_2: "∆ #UsernameUpdate\n\n@{} ユーザー名を変更しました に @{}"
+can_3: "∆ #UsernameUpdate\n\n{} 削除されました これは ユーザー名. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}'s 新着 ユーザー名 --> @{}"
 
 # help
 help_1: "{}は有効なプラグインではありません！"
@@ -60,9 +60,12 @@ unban_1: "`ユーザーに返信するか、ユーザー名を指定して禁止
 unban_2: "「 `ユーザーの禁止を解除する権利はありません。`」"
 unban_3: "{} **禁止解除された** {} ** in **` {} `"
 kill_1: "「 `私にはユーザーを蹴る権利がありません。`」"
-kick_2: "「 `笑、開発者を蹴ることはできません`😂」"
 kill_3: "「 `私は彼を蹴ることができません...`」"
 kill_4: "{} **キックされた** {} ** in **` {} `"
+kick_1: "`私 しないでください ユーザーを蹴る権利がある.`"
+kick_2: "「 `笑、開発者を蹴ることはできません`😂」"
+kick_3: "`私は彼を蹴ることができません...`"
+kick_4: "{} **によって蹴られた** {} **in** `{}`"
 pin_1: "`メッセージに返信してピン留めしてください！ `"
 pinned_1: "「固定されたメッセージが見つかりません！」"
 pinned_2: "「現在のチャットの固定メッセージは[ここ]（{}）です。"
@@ -126,9 +129,9 @@ inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇ�
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
-inline_7: "Do .help {} to get the list of commands."
-inline_8: "Click the below button to update!"
-inline_9: "You Are Already On Latest Version"
+inline_7: "行う .help {} コマンドのリストを取得するには."
+inline_8: "下のボタンをクリックして更新してください!"
+inline_9: "あなたはすでに最新バージョンを使用しています"
 
 # tagnotif
 tagnot_1: "{} でタグ付け {}\n\n```{}```\n\n[📨 Message 📨]({})"
@@ -153,14 +156,14 @@ afk_6: "**私は ゆき AFK.**"
 bot_1: "ねえ,  私は生きている."
 bot_2: "統計"
 bot_3: "Repo"
-bot_4: "Support"
+bot_4: "サポート"
 bot_5: "• `再起動...`"
 alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 usage: "**⚙️ Dyno Usage ⚙️**:\n\n-> **Dyno usage for** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Dyno hours quota remaining this month**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 usage_simple: "**Total Disk Space**: `{}`\n**Used**: `{}`\n**Free**: `{}`\n\n**📊 Data Usage 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
-shutdown: "GoodBye {}.\n`Shutting down...`"
+shutdown: "さようなら {}.\n`シャットダウン...`"
 
 # blacklist
 blk_1: "`ブラックリストに単語を入れてください..` "
@@ -218,6 +221,7 @@ clan_1: "このチャットにクリーンアクション設定を追加しま�
 clan_2: "このチャットのクリーンアクション設定を削除しました"
 clan_3: "`無効なID` "
 clan_4: "`チャットが追加されていません `"
+clan_5: "クリーンアクションはこのチャットですでに有効になっています."
 
 # converter
 cvt_1: "`任意のメディア/ドキュメントに返信 `"
@@ -231,7 +235,7 @@ cvt_8: "`読み取り可能なファイルではありません。` "
 
 # eventsofday
 eod_1: "🎊**今日のイベント** \n \n"
-eod_2: "•** {} / 2022のイベント** \n \n"
+eod_2: "•** {} / 2021-2022のイベント** \n \n"
 
 # core
 core_1: "モジュールが見つかりました"
@@ -333,6 +337,9 @@ gdrive_7: "**ファイルをG-Driveに正常にアップロードしました: *
 # get addons
 gas_1: "「生のリンクを提供してください！」"
 
+# glitch
+glitch_1: "`グリッチ...`"
+
 # ご挨拶
 grt_1: "`ウェルカムノートが保存されました `"
 grt_2: "「これはPMではなくグループで使用してください！」"
@@ -386,6 +393,7 @@ spcltool_9: "「何も見つかりませんでした」"
 sudo_1: "`メッセージに返信するか、ID /ユーザー名を追加してください。` "
 sudo_2: "「Sudoユーザーとして自分を追加することはできません...」"
 sudo_3: "` SUDOユーザーが割り当てられていません... `"
+sudo_4: "`ボットをSudoユーザーとして追加することはできません.`"
 
 # unsplash
 unspl_1: "「結果が見つかりません！」"
@@ -406,6 +414,7 @@ udl_3: "`ファイルへの特定のパスを指定 `"
 udl_4: "「 `ダウンロードしようとしています...`」"
 udl_5: "`リンクを指定するのを忘れました: （ `"
 udl_6: "`このディレクトリは空です。` "
+udl_7: "`あなたはそれをすることはできません!`"
 
 # words
 wrd_1: "•**単語: **` {} `\n•**意味: ** __ {} __ \n \n•**例: ** __ {} __"
@@ -494,12 +503,29 @@ instu_2: "「最近の検索..」"
 instu_3: "「検索するクエリを入力してください」"
 instu_4: "「成功」"
 
+# games
+games_1: "ゲームを選択 🎮"
+games_2: "Cカテゴリを選択"
+games_3: "難易度を選択"
+games_4: "質問の数を選択してください.."
+games_5: "時間間隔を選択..."
+games_6: "**• クイズを開始する 5 secs.** \n**• Level :** {}\n**• Qs :** {}"
+
 # callbackstuffs
 clst_1: "` Userbot dynoビルドが進行中です、完了するまでお待ちください。` "
 clst_2: "`正常に更新されました！\n再起動します。しばらくお待ちください... `"
 clst_3: "■変更ログを生成しています..."
 clst_4: "「問題が発生しました...」"
 clst_5: "「完了しました！」"
+
+# pmbot
+pmbot_1: "**Y以下のチャットに参加する必要があります) 私の主人とチャットするために!\n\n**"
+pmbot_2: "彼を禁止するために誰かに返信してください."
+pmbot_3: "ユーザーはすでに禁止されています!"
+pmbot_4: "`さようなら! あなたは禁止されました.`\n**それ以上送信したメッセージは転送されません.**"
+pmbot_5: "彼の禁止を解除するために誰かに返信してください."
+pmbot_6: "ユーザーが禁止されることはありません!"
+pmbot_7: "`おめでとうございます！あなたは禁止されていません.`"
 
 # -------------------------- VcBot ------------------------------- #
 
