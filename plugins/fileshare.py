@@ -77,7 +77,7 @@ async def liststored(event):
     await event.eor(msg, link_preview=False)
 
 
-@in_pattern("filestore")
+@in_pattern("filestore", owner=True)
 async def file_short(event):
     all_ = list_all_stored_msgs()
     res = []
