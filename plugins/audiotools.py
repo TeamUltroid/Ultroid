@@ -23,7 +23,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import metadata
+from pyUltroid.functions.tools import metadata, set_attributes
 from telethon.tl.types import DocumentAttributeAudio
 
 from . import (
@@ -125,16 +125,7 @@ async def trim_aud(e):
             xxx,
             "Uploading " + out + "...",
         )
-        data = await metadata(out)
-        artist = data["performer"]
-        duration = data["duration"]
-        attributes = [
-            DocumentAttributeAudio(
-                duration=duration,
-                title=out.split(".")[0],
-                performer=vido.file.performer or artist,
-            )
-        ]
+        attributes = await set_attributes(out)
 
         caption = get_string("audiotools_7").format(ss, dd)
         await e.client.send_file(
@@ -171,18 +162,7 @@ async def ex_aud(e):
     cmd = f"ffmpeg -i {file.name} -vn -acodec copy {out_file}"
     o, err = await bash(cmd)
     os.remove(file.name)
-    data = await metadata(out_file)
-    artist = data["performer"]
-    duration = data["duration"]
-    attributes = [
-        DocumentAttributeAudio(
-            duration=reply.file.duration or duration,
-            title=reply.file.name.split(".")[0]
-            if reply.file.name
-            else "Extracted Audio",
-            performer=reply.file.performer or artist,
-        )
-    ]
+    attributes = await set_attributes(out_file)
 
     f_time = time.time()
     try:
