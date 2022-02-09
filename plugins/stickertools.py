@@ -410,11 +410,10 @@ async def ultiny(event):
         await event.eor(get_string("sts_10"))
         return
     xx = await event.eor(get_string("com_1"))
-    ik = await event.client.download_media(reply)
+    ik = await reply.download_media()
     im1 = Image.open("resources/extras/ultroid_blank.png")
     if ik.endswith(".tgs"):
-        file = await event.client.download_media(reply)
-        await con.animated_sticker(file, "json.json")
+        await con.animated_sticker(ik, "json.json")
         with open("json.json") as json:
             jsn = json.read()
         jsn = jsn.replace("512", "2000")
