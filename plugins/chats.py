@@ -191,14 +191,14 @@ async def _(ult):
             return await ult.eor(str(ok))
     else:
         chat = ult.chat_id
-    reply_message = await ult.get_reply_message()
+    reply = await ult.get_reply_message()
     if reply.photo or reply.sticker or reply.video:
-        replfile = await reply_message.download_media()
+        replfile = await reply.download_media()
     elif reply.document and reply.document.thumbs:
-        replfile = await reply_message.download_media(thumb=-1)
+        replfile = await reply.download_media(thumb=-1)
     else:
         return await ult.eor("Reply to a Photo or Video..")
-    mediain = mediainfo(reply_message.media)
+    mediain = mediainfo(reply.media)
     if "animated" in mediain:
         replfile = await con.convert(replfile, convert_to="mp4")
     else:
