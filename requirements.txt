@@ -1,6 +1,6 @@
 # Important Requirements here.
 
 https://github.com/New-dev0/Telethon/archive/Artifact.zip
-https://github.com/TeamUltroid/py-Ultroid/archive/dev.zip
+https://github.com/TeamUltroid/pyUltroid/archive/dev.zip
 # py-Ultroid==2022.2.9
 pytgcalls==3.0.0.dev21
