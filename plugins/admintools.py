@@ -51,6 +51,7 @@ from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidErro
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
+from telethon.utils import get_display_name
 
 from . import (
     HNDLR,
@@ -442,7 +443,7 @@ async def djshsh(event):
 async def get_all_pinned(event):
     x = await event.eor(get_string("com_1"))
     chat_id = (str(event.chat_id)).replace("-100", "")
-    chat_name = (await event.get_chat()).title
+    chat_name = get_display_name(event.chat)
     a = ""
     c = 1
     async for i in event.client.iter_messages(
