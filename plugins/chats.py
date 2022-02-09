@@ -195,7 +195,7 @@ async def _(ult):
     if reply.photo or reply.sticker or reply.video:
         replfile = await reply_message.download_media()
     elif reply.document and reply.document.thumbs:
-        replfile = await reply.download_media(thumb=-1)
+        replfile = await reply_message.download_media(thumb=-1)
     else:
         return await ult.eor("Reply to a Photo or Video..")
     mediain = mediainfo(reply_message.media)
