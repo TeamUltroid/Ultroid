@@ -58,7 +58,7 @@ async def autopic(e):
             file = await e.client.upload_file(lie)
             await e.client(UploadProfilePhotoRequest(file))
             await asyncio.sleep(SLEEP_TIME)
-        shuffle(clls)
+        shuffle(ok)
 
 
 if search := udB.get_key("AUTOPIC"):

@@ -22,8 +22,9 @@
     Convert replied image into html.
 """
 
+import calendar
 import os
-from datetime import datetime
+from datetime import datetime as dt
 
 from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
@@ -50,7 +51,7 @@ async def diela(e):
         li += "/days/" + month + "/" + date
         te = get_string("eod_2").format(match)
     else:
-        da = datetime.today()
+        da = dt.today()
         month = da.strftime("%b")
         li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
     ct = await async_searcher(li, re_content=True)

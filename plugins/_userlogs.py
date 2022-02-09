@@ -18,10 +18,10 @@ from telethon.errors.rpcerrorlist import (
     PeerIdInvalidError,
     UserNotParticipantError,
 )
-from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
-from . import *
+from . import ultroid_bot, asst, udB, inline_mention, Button, LOGS, get_string, LOG_CHANNEL,  callback, events
 
 CACHE_SPAM = {}
 TAG_EDITS = {}
@@ -35,7 +35,7 @@ TAG_EDITS = {}
 )
 async def all_messages_catcher(e):
     x = await e.get_sender()
-    if isinstance(x, types.User) and (x.bot or x.verified):
+    if isinstance(x, User) and (x.bot or x.verified):
         return
     if not udB.get_key("TAG_LOG"):
         return
@@ -105,7 +105,7 @@ if udB.get_key("TAG_LOG"):
     @ultroid_bot.on(events.MessageEdited(func=lambda x: not x.out))
     async def upd_edits(event):
         x = event.sender
-        if isinstance(x, types.User) and (x.bot or x.verified):
+        if isinstance(x, User) and (x.bot or x.verified):
             return
         if event.chat_id not in TAG_EDITS:
             if event.sender_id == udB.get_key("TAG_LOG"):
@@ -266,7 +266,7 @@ async def parse_buttons(event):
     where_n, who_n = get_display_name(y), get_display_name(x)
     where_l = event.message_link
     buttons = [[Button.url(where_n, where_l)]]
-    if isinstance(x, types.User) and x.username:
+    if isinstance(x, User) and x.username:
         try:
             buttons.append(
                 [Button.mention(who_n, await asst.get_input_entity(x.username))]
