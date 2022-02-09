@@ -192,7 +192,7 @@ async def _(ult):
     else:
         chat = ult.chat_id
     reply_message = await ult.get_reply_message()
-    if (reply.photo or reply.sticker or reply.video):
+    if reply.photo or reply.sticker or reply.video:
         replfile = await reply_message.download_media()
     elif reply.document and reply.document.thumbs:
         replfile = await reply.download_media(thumb=-1)
@@ -203,9 +203,7 @@ async def _(ult):
         replfile = await con.convert(replfile, convert_to="mp4")
     else:
         replfile = await con.convert(
-        replfile,
-        outname="chatphoto",
-        allowed_formats=["jpg", "png", "mp4"]
+            replfile, outname="chatphoto", allowed_formats=["jpg", "png", "mp4"]
         )
     file = await ult.client.upload_file(replfile)
     try:
