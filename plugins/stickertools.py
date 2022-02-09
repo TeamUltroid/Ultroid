@@ -295,12 +295,12 @@ async def hehe(args):
                     else:
                         file.seek(0)
                     await conv.send_file(file, force_document=True)
-                rsp = await conv.get_response()
-                if "Sorry, the file type is invalid." in rsp.text:
-                    await xx.edit(
-                        get_string("sts_8"),
-                    )
-                    return
+                    rsp = await conv.get_response()
+                    if "Sorry, the file type is invalid." in rsp.text:
+                        await xx.edit(
+                            get_string("sts_8"),
+                        )
+                        return
                 await conv.send_message(emoji)
                 await conv.get_response()
                 await conv.send_message("/publish")
