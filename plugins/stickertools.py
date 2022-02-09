@@ -468,7 +468,8 @@ async def ultiny(event):
         back_im.save("o.webp", "WEBP", quality=95)
         file = "o.webp"
         os.remove("k.png")
-    await event.client.send_file(event.chat_id, file, reply_to=event.reply_to_msg_id)
+    if os.path.exists(file):
+        await event.client.send_file(event.chat_id, file, reply_to=event.reply_to_msg_id)
+        os.remove(file)
     await xx.delete()
-    os.remove(file)
     os.remove(ik)
