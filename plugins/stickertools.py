@@ -469,7 +469,9 @@ async def ultiny(event):
         file = "o.webp"
         os.remove("k.png")
     if os.path.exists(file):
-        await event.client.send_file(event.chat_id, file, reply_to=event.reply_to_msg_id)
+        await event.client.send_file(
+            event.chat_id, file, reply_to=event.reply_to_msg_id
+        )
         os.remove(file)
     await xx.delete()
     os.remove(ik)
