@@ -192,18 +192,22 @@ async def _(ult):
     else:
         chat = ult.chat_id
     reply_message = await ult.get_reply_message()
-    if reply_message.media:
+    if (reply.photo or reply.sticker or reply.video):
         replfile = await reply_message.download_media()
+    elif reply.document and reply.document.thumbs:
+        replfile = await reply.download_media(thumb=-1)
     else:
         return await ult.eor("Reply to a Photo or Video..")
-    replfile = await con.convert(
+    mediain = mediainfo(reply_message.media)
+    if "animated" in mediain:
+        replfile = await con.convert(replfile, convert_to="mp4")
+    else:
+        replfile = await con.convert(
         replfile,
         outname="chatphoto",
-        allowed_formats=["jpg", "png", "mp4"],
-        remove_old=True,
-    )
+        allowed_formats=["jpg", "png", "mp4"]
+        )
     file = await ult.client.upload_file(replfile)
-    mediain = mediainfo(reply_message.media)
     try:
         if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
