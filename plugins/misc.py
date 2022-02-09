@@ -6,8 +6,8 @@
 """
 ✘ Commands Available -
 
-• `{i}eod` or `{i}eod <dd/mm>`
-    `Get Event of the Day`
+• `{i}eod`
+    `Get Event of the Today`
 
 • `{i}pntrst <link/id>`
     Download and send pinterest pins
@@ -33,27 +33,14 @@ from img2html.converter import Img2HTMLConverter
 from . import async_searcher, get_random_user_data, get_string, re, ultroid_cmd
 
 
-@ultroid_cmd(pattern="eod( (.*)|$)")
+@ultroid_cmd(pattern="eod$")
 async def diela(e):
-    match = e.pattern_match.group(1).strip()
     m = await e.eor(get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
-    if match:
-        date = match.split("/")[0]
-        month = match.split("/")[1]
-        if month.startswith("0"):
-            month = month[:1]
-        try:
-            month = list(calendar.month_name)[int(month)][:3]
-        except (KeyError, TypeError):
-            month = dt.today().strftime("%b")
-        li += "/days/" + month + "/" + date
-        te = get_string("eod_2").format(match)
-    else:
-        da = dt.today()
-        month = da.strftime("%b")
-        li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
+    da = dt.today()
+    month = da.strftime("%b")
+    li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
     ct = await async_searcher(li, re_content=True)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
