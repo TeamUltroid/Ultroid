@@ -62,4 +62,5 @@ async def useUltroid(rs):
         file="https://telegra.ph/file/54a917cc9dbb94733ea5f.jpg",
         buttons=button,
     )
-    await eor(rs, f"**[Click Here]({msg.message_link})**")
+    if not (rs.chat_id == LOG_CHANNEL and rs.client._bot):
+        await eor(rs, f"**[Click Here]({msg.message_link})**")
