@@ -24,10 +24,10 @@ _script_royal = "𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜�
 
 
 @ultroid_cmd(
-    pattern="font ?(.*)",
+    pattern="font( (.*)|$)",
 )
 async def _(e):
-    input = e.pattern_match.group(1)
+    input = e.pattern_match.group(1).strip()
     reply = await e.get_reply_message()
     help = __doc__.format(i=HNDLR)
     if not input:

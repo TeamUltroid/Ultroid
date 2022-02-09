@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+
 import asyncio
 import os
 import time
@@ -26,7 +27,7 @@ from telethon.tl import functions, types
 from strings import get_string
 
 Redis = udB.get_key
-
+con = TgConverter
 OWNER_NAME = ultroid_bot.full_name
 OWNER_ID = ultroid_bot.uid
 

@@ -522,7 +522,7 @@ async def ultd(event):
 
 @ultroid_cmd(pattern="csample (.*)")
 async def sampl(ult):
-    color = ult.pattern_match.group(1)
+    color = ult.pattern_match.group(1).strip()
     if color:
         img = Image.new("RGB", (200, 100), f"{color}")
         img.save("csample.png")
@@ -592,12 +592,12 @@ async def ultd(event):
     os.remove(ultt)
 
 
-@ultroid_cmd(pattern="border ?(.*)")
+@ultroid_cmd(pattern="border( (.*)|$)")
 async def ok(event):
     hm = await event.get_reply_message()
     if not (hm and (hm.photo or hm.sticker)):
         return await event.eor("`Reply to Sticker or Photo..`")
-    col = event.pattern_match.group(1)
+    col = event.pattern_match.group(1).strip()
     wh = 20
     if not col:
         col = [255, 255, 255]
@@ -620,14 +620,14 @@ async def ok(event):
     await event.delete()
 
 
-@ultroid_cmd(pattern="pixelator ?(.*)")
+@ultroid_cmd(pattern="pixelator( (.*)|$)")
 async def pixelator(event):
     reply_message = await event.get_reply_message()
     if not (reply_message and reply_message.photo):
         return await event.eor("`Reply to a photo`")
     hw = 50
     try:
-        hw = int(event.pattern_match.group(1))
+        hw = int(event.pattern_match.group(1).strip())
     except (ValueError, TypeError):
         pass
     msg = await event.eor(get_string("com_1"))

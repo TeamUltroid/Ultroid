@@ -25,45 +25,35 @@
 import os
 from datetime import datetime
 
-import cfscrape
 from bs4 import BeautifulSoup as bs
 from htmlwebshot import WebShot
 from img2html.converter import Img2HTMLConverter
 
-from . import (
-    async_searcher,
-    fast_download,
-    get_random_user_data,
-    get_string,
-    re,
-    requests,
-    ultroid_cmd,
-)
-
-_base = "https://pinterestdownloader.com/download?url="
+from . import async_searcher, get_random_user_data, get_string, re, ultroid_cmd
 
 
-def gib_link(link):
-    if link.startswith("https"):
-        return _base + link.replace(":", "%3A").replace("/", "%2F")
-    return _base + f"https%3A%2F%2Fpin.it%2F{link}"
-
-
-@ultroid_cmd(pattern="eod ?(.*)")
+@ultroid_cmd(pattern="eod( (.*)|$)")
 async def diela(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     m = await e.eor(get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
     if match:
         date = match.split("/")[0]
         month = match.split("/")[1]
-        li += "/days/2021-2022/" + month + "/" + date
+        if month.startswith("0"):
+            month = month[:1]
+        try:
+            month = list(calendar.month_name)[int(month)][:3]
+        except (KeyError, TypeError):
+            month = dt.today().strftime("%b")
+        li += "/days/" + month + "/" + date
         te = get_string("eod_2").format(match)
     else:
-        da = datetime.today().strftime("%F").split("-")
-        li += "/days/2021-2022/" + da[1] + "/" + da[2]
-    ct = requests.get(li).content
+        da = datetime.today()
+        month = da.strftime("%b")
+        li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
+    ct = await async_searcher(li, re_content=True)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:
@@ -72,31 +62,32 @@ async def diela(e):
 
 
 @ultroid_cmd(
-    pattern="pntrst ?(.*)",
+    pattern="pntrst( (.*)|$)",
 )
 async def pinterest(e):
-    m = e.pattern_match.group(1)
+    m = e.pattern_match.group(1).strip()
     if not m:
         return await e.eor("`Give pinterest link.`", time=3)
-    scrape = cfscrape.create_scraper()
-    hehe = bs(scrape.get(gib_link(m)).text, "html.parser")
-    hulu = hehe.find_all("a", {"class": "download_button"})
-    if len(hulu) < 1:
-        await e.eor("`Wrong link or private pin.`", time=5)
-    elif len(hulu) > 1:
-        video, _ = await fast_download(hulu[0]["href"])
-        thumb, _ = await fast_download(hulu[1]["href"])
-        await e.delete()
-        await e.client.send_file(e.chat_id, video, thumb=thumb, caption=f"Pin:- {m}")
-        [os.remove(file) for file in [video, thumb]]
+    soup = await async_searcher(
+        "https://www.expertstool.com/download-pinterest-video/",
+        data={"url": m},
+        post=True,
+    )
+    try:
+        _soup = bs(soup, "html.parser").find("table").tbody.find_all("tr")
+    except BaseException:
+        return await e.eor("`Wrong link or private pin.`", time=5)
+    if len(_soup) > 1:
+        file = _soup[1]
     else:
-        await e.delete()
-        await e.client.send_file(e.chat_id, hulu[0]["href"], caption=f"Pin:- {m}")
+        file = _soup[0]
+    file = file.td.a["href"]
+    await e.client.send_file(e.chat_id, file, caption=f"Pin:- {m}")
 
 
-@ultroid_cmd(pattern="gadget ?(.*)")
+@ultroid_cmd(pattern="gadget( (.*)|$)")
 async def mobs(e):
-    mat = e.pattern_match.group(1)
+    mat = e.pattern_match.group(1).strip()
     if not mat:
         await e.eor("Please Give a Mobile Name to look for.")
     query = mat.replace(" ", "%20")
@@ -125,7 +116,7 @@ async def mobs(e):
     out += "_"
     if imu == []:
         imu = None
-    await e.reply(out, file=imu)
+    await e.reply(out, file=imu, link_preview=False)
     await bt.delete()
 
 
@@ -138,14 +129,18 @@ async def _gen_data(event):
 
 
 @ultroid_cmd(
-    pattern="ascii ?(.*)",
+    pattern="ascii( (.*)|$)",
 )
 async def _(e):
     if not e.reply_to_msg_id:
         return await e.eor(get_string("ascii_1"))
     m = await e.eor(get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
-    char = "■" if not e.pattern_match.group(1) else e.pattern_match.group(1)
+    char = (
+        "■"
+        if not e.pattern_match.group(1).strip()
+        else e.pattern_match.group(1).strip()
+    )
     converter = Img2HTMLConverter(char=char)
     html = converter.convert(img)
     shot = WebShot(quality=85)

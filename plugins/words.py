@@ -27,9 +27,9 @@ from pyUltroid.functions.tools import async_searcher
 from . import get_string, ultroid_cmd
 
 
-@ultroid_cmd(pattern="meaning ?(.*)", manager=True)
+@ultroid_cmd(pattern="meaning( (.*)|$)", manager=True)
 async def mean(event):
-    wrd = event.pattern_match.group(1)
+    wrd = event.pattern_match.group(1).strip()
     if not wrd:
         return await event.eor(get_string("wrd_4"))
     url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
@@ -124,7 +124,7 @@ async def mean(event):
 
 @ultroid_cmd(pattern="ud (.*)")
 async def _(event):
-    word = event.pattern_match.group(1)
+    word = event.pattern_match.group(1).strip()
     if not word:
         return await event.eor(get_string("autopic_1"))
     out = await async_searcher(

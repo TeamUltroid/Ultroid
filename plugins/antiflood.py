@@ -46,7 +46,7 @@ if Redis("ANTIFLOOD"):
                 _check_flood[event.chat_id] = {event.sender_id: count}
         else:
             _check_flood[event.chat_id] = {event.sender_id: count}
-        if await admin_check(event, silent=True) or event.sender.bot:
+        if await admin_check(event, silent=True) or getattr(event.sender, "bot", None):
             return
         if event.sender_id in DEVLIST:
             return
@@ -93,7 +93,7 @@ async def unmuting(e):
     admins_only=True,
 )
 async def setflood(e):
-    input_ = e.pattern_match.group(1)
+    input_ = e.pattern_match.group(1).strip()
     if not input_:
         return await e.eor("`What?`", time=5)
     if not input_.isdigit():

@@ -36,7 +36,7 @@ help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
 help_11: "Plugin Name-{}\n\n✘ Commands Available -\n\n"
-help_12: "Voice Call is not Active!"
+help_12: "Voice Chat Bot is not active! Use .setdb VCBOT True to enable!"
 help_13: "Do '{}setdb ADDONS True' to Load Official Addons"
 
 # userlogs
@@ -101,7 +101,7 @@ audiotools_4: "`Incorrect Data`"
 audiotools_5: "`Trying To Download...`"
 audiotools_6: "`Wrong trim duration`"
 audiotools_7: "Trimmed Audio From `{}` To `{}`"
-audiotools_8: "Reply to Video File..`"
+audiotools_8: "`Reply to Video File..`"
 audiotools_9: "`No Audio Found...`"
 audiotools_10: "`Extracted Audio from Video...`"
 
@@ -237,7 +237,7 @@ cvt_8: "`Not A Readable File.`"
 
 # eventsofday
 eod_1: "🎊 **Events of the Day**\n\n"
-eod_2: "• **Events for {}/2021-2022**\n\n"
+eod_2: "• **Events for {}/2022**\n\n"
 
 # core
 core_1: "Module Found"

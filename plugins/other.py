@@ -23,10 +23,8 @@
 from . import HNDLR, eod, get_string, ultroid_cmd
 
 
-@ultroid_cmd(pattern="(send|dm)", fullsudo=True)
+@ultroid_cmd(pattern="(send|dm)( (.*)|$)", fullsudo=True)
 async def dm(e):
-    if e.text[1:].startswith("dmute"):
-        return
     if len(e.text.split()) <= 1:
         return await e.eor(get_string("dm_1"), time=5)
     chat = e.text.split()[1]
@@ -50,9 +48,9 @@ async def dm(e):
         await e.eor(get_string("dm_4").format(m, HNDLR), time=5)
 
 
-@ultroid_cmd(pattern="fwdreply ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="fwdreply( (.*)|$)", fullsudo=True)
 async def _(e):
-    message = e.pattern_match.group(1)
+    message = e.pattern_match.group(1).strip()
     if not e.reply_to_msg_id:
         return await e.eor(get_string("ex_1"), time=5)
     if not message:
@@ -70,7 +68,7 @@ async def saf(e):
         return await eod(
             e, "Reply to Any Message to save it to ur saved messages", time=5
         )
-    if e.pattern_match.group(1) == "f":
+    if e.pattern_match.group(1).strip() == "f":
         await x.forward_to(e.sender_id)
     else:
         await e.client.send_message(e.sender_id, x)

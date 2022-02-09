@@ -22,9 +22,9 @@ async def dheh(e):
     await e.client.send_message(e.chat_id, text, reply_to=ri)
 
 
-@asst_cmd(pattern="echo ?(.*)")
+@asst_cmd(pattern="echo( (.*)|$)")
 async def oqha(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     if match:
         text = match
         reply_to = e

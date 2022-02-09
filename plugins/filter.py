@@ -30,9 +30,9 @@ from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
 
 
-@ultroid_cmd(pattern="addfilter ?(.*)")
+@ultroid_cmd(pattern="addfilter( (.*)|$)")
 async def af(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     wt = await e.get_reply_message()
     chat = e.chat_id
     if not (wt and wrd):
@@ -69,9 +69,9 @@ async def af(e):
     ultroid_bot.add_handler(filter_func, events.NewMessage())
 
 
-@ultroid_cmd(pattern="remfilter ?(.*)")
+@ultroid_cmd(pattern="remfilter( (.*)|$)")
 async def rf(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     chat = e.chat_id
     if not wrd:
         return await e.eor(get_string("flr_3"))

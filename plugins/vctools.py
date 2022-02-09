@@ -33,7 +33,7 @@ from . import get_string, ultroid_cmd
 
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
-    xx = await event.client(getvc(mm.full_chat.call))
+    xx = await event.client(getvc(mm.full_chat.call, limit=1))
     return xx.call
 
 
@@ -95,7 +95,7 @@ async def _(e):
     groups_only=True,
 )
 async def _(e):
-    title = e.pattern_match.group(1)
+    title = e.pattern_match.group(1).strip()
     if not title:
         return await e.eor(get_string("vct_6"), time=5)
     try:

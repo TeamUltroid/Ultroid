@@ -24,9 +24,9 @@ from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from . import LOGS, get_string, udB, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="autopic ?(.*)")
+@ultroid_cmd(pattern="autopic( (.*)|$)")
 async def autopic(e):
-    search = e.pattern_match.group(1)
+    search = e.pattern_match.group(1).strip()
     if udB.get_key("AUTOPIC") and not search:
         udB.del_key("AUTOPIC")
         return await e.eor(get_string("autopic_5"))

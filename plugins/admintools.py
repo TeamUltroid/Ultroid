@@ -20,6 +20,7 @@
 
 • `{i}pin <reply to message>`
     Pin the message in the chat
+• `{i}tpin <time> <temp pin message>`
 • `{i}unpin (all) <reply to message>`
     Unpin the messages in the chat.
 
@@ -40,6 +41,8 @@
 • `{i}purgeall`
     Delete all msgs of replied user.
 """
+
+import asyncio
 
 from pyUltroid.dB import DEVLIST
 from pyUltroid.functions.admins import ban_time
@@ -64,7 +67,7 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="promote ?(.*)", admins_only=True, manager=True, require="add_admins"
+    pattern="promote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
 )
 async def prmte(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -92,7 +95,7 @@ async def prmte(ult):
 
 
 @ultroid_cmd(
-    pattern="demote ?(.*)", admins_only=True, manager=True, require="add_admins"
+    pattern="demote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
 )
 async def dmote(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -119,7 +122,7 @@ async def dmote(ult):
 
 
 @ultroid_cmd(
-    pattern="ban ?(.*)",
+    pattern="ban( (.*)|$)",
     admins_only=True,
     manager=True,
     require="ban_users",
@@ -135,10 +138,10 @@ async def bban(ult):
         return await eod(ult, get_string("ban_2"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=False)
-    except BadRequestError:
-        return await eod(ult, get_string("ban_3"))
     except UserIdInvalidError:
         return await eod(ult, get_string("adm_1"))
+    except BadRequestError:
+        return await eod(ult, get_string("ban_3"))
     senderme = inline_mention(await ult.get_sender())
     userme = inline_mention(user)
     text = get_string("ban_4").format(userme, senderme, ult.chat.title)
@@ -147,7 +150,9 @@ async def bban(ult):
     await eod(ult, text)
 
 
-@ultroid_cmd(pattern="unban ?(.*)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(
+    pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+)
 async def uunban(ult):
     xx = await ult.eor(get_string("com_1"))
     if ult.text[1:].startswith("unbanall"):
@@ -160,10 +165,10 @@ async def uunban(ult):
         return await xx.edit(get_string("unban_1"))
     try:
         await ult.client.edit_permissions(ult.chat_id, user.id, view_messages=True)
+    except UserIdInvalidError:
+        return await eod(ult, get_string("adm_1"))
     except BadRequestError:
         return await xx.edit(get_string("adm_2"))
-    except UserIdInvalidError:
-        await xx.edit(get_string("adm_1"))
     sender = inline_mention(await ult.get_sender())
     text = get_string("unban_3").format(inline_mention(user), sender, ult.chat.title)
     if reason:
@@ -172,7 +177,7 @@ async def uunban(ult):
 
 
 @ultroid_cmd(
-    pattern="kick ?(.*)",
+    pattern="kick( (.*)|$)",
     manager=True,
     require="ban_users",
 )
@@ -208,7 +213,9 @@ async def kck(ult):
     await xx.edit(text)
 
 
-@ultroid_cmd(pattern="tban ?(.*)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(
+    pattern="tban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+)
 async def tkicki(e):
     huh = e.text.split()
     inputt = None
@@ -242,7 +249,7 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(pattern="pin$", admins_only=True, manager=True, require="pin_messages")
+@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -268,7 +275,7 @@ async def pin(msg):
 )
 async def unp(ult):
     xx = await ult.eor(get_string("com_1"))
-    ch = (ult.pattern_match.group(1)).strip()
+    ch = (ult.pattern_match.group(1).strip()).strip()
     msg = None
     if ult.is_reply:
         msg = ult.reply_to_msg_id
@@ -283,9 +290,35 @@ async def unp(ult):
     await xx.edit("`Unpinned!`")
 
 
-@ultroid_cmd(pattern="purge ?(.*)", manager=True, require="delete_messages")
+@ultroid_cmd(
+    pattern="tpin( (.*)|$)", admins_only=True, manager=True, require="pin_messages"
+)
+async def pin_message(ult):
+    match = ult.pattern_match.group(1).strip()
+    if not ult.is_reply:
+        return await ult.eor("`Reply to message..`", time=6)
+    if not match:
+        return await ult.eor("`Please provide time..`", time=8)
+    msg = await ult.eor(get_string("com_1"))
+    time = await ban_time(msg, match)
+    if not time:
+        return
+    msg_id = ult.reply_to_msg_id
+    try:
+        await ult.client.pin_message(ult.chat_id, msg_id)
+        await msg.eor(f"`pinned for time` `{time}`", time=8)
+    except Exception as er:
+        return await msg.edit(str(er))
+    await asyncio.sleep(time)
+    try:
+        await ult.client.unpin_message(ult.chat_id, msg_id)
+    except Exception as er:
+        LOGS.exception(er)
+
+
+@ultroid_cmd(pattern="purge( (.*)|$)", manager=True, require="delete_messages")
 async def fastpurger(purg):
-    match = purg.pattern_match.group(1)
+    match = purg.pattern_match.group(1).strip()
     try:
         ABC = purg.text[6]
     except IndexError:
@@ -320,10 +353,10 @@ async def fastpurger(purg):
 
 
 @ultroid_cmd(
-    pattern="purgeme ?(.*)",
+    pattern="purgeme( (.*)|$)",
 )
 async def fastpurgerme(purg):
-    num = purg.pattern_match.group(1)
+    num = purg.pattern_match.group(1).strip()
     if num and not purg.is_reply:
         try:
             nnt = int(num)
@@ -435,11 +468,11 @@ async def get_all_pinned(event):
 
 
 @ultroid_cmd(
-    pattern="autodelete ?(.*)",
+    pattern="autodelete( (.*)|$)",
     admins_only=True,
 )
 async def autodelte(ult):
-    match = ult.pattern_match.group(1)
+    match = ult.pattern_match.group(1).strip()
     if not match or match not in ["24h", "7d", "1m", "off"]:
         return await ult.eor("`Please Use in Proper Format..`", time=5)
     if match == "24h":

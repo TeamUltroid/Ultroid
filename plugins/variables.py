@@ -25,16 +25,16 @@ import os
 from . import eor, get_string, udB, ultroid_cmd
 
 
-@ultroid_cmd(pattern="get", fullsudo=True)
+@ultroid_cmd(pattern="get($| (.*))", fullsudo=True)
 async def get_var(event):
-    if len(event.text) > 4 and " " in event.text[4]:
-        opt = event.text.split(" ", maxsplit=2)[1]
-    else:
-        return
+    try:
+        opt = event.text.split(maxsplit=2)[1]
+    except IndexError:
+        return await event.eor(f"what to get?\nRead `{HNDLR}help variables`")
     x = await event.eor(get_string("com_1"))
     if opt != "keys":
         try:
-            varname = event.text.split(" ", maxsplit=2)[2]
+            varname = event.text.split(maxsplit=2)[2]
         except IndexError:
             return await eor(x, "Such a var doesn't exist!", time=5)
     if opt == "var":

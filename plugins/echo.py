@@ -23,7 +23,7 @@ from telethon.utils import get_display_name
 from . import LOGS, events, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="addecho ?(.*)")
+@ultroid_cmd(pattern="addecho( (.*)|$)")
 async def echo(e):
     r = await e.get_reply_message()
     if r:
@@ -46,7 +46,7 @@ async def echo(e):
     await e.eor(f"Activated Echo For {user}.")
 
 
-@ultroid_cmd(pattern="remecho ?(.*)")
+@ultroid_cmd(pattern="remecho( (.*)|$)")
 async def rm(e):
     r = await e.get_reply_message()
     if r:

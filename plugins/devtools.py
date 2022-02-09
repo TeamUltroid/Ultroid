@@ -26,6 +26,7 @@
 • `{i}sysinfo`
     Shows System Info.
 """
+from __future__ import print_function
 
 import sys
 import traceback
@@ -68,16 +69,18 @@ async def _(event):
     reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
+    err, out = "", ""
     if stderr:
-        OUT += f"**• ERROR:** \n`{stderr}`\n\n"
+        err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         _o = stdout.split("\n")
         o = "\n".join(_o)
-        OUT += f"**• OUTPUT:**\n`{o}`"
+        out = f"**• OUTPUT:**\n`{o}`"
     if not stderr and not stdout:
-        OUT += "**• OUTPUT:**\n`Success`"
+        out = "**• OUTPUT:**\n`Success`"
+    OUT += err + out
     if len(OUT) > 4096:
-        ultd = OUT.replace("`", "").replace("**", "").replace("__", "")
+        ultd = err + out
         with BytesIO(str.encode(ultd)) as out_file:
             out_file.name = "bash.txt"
             await event.client.send_file(
@@ -98,12 +101,10 @@ async def _(event):
 pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
-_ignore_eval = []
 
-
-def _parse_eval(value):
-    if value is None:
-        return
+def _parse_eval(value=None):
+    if not value:
+        return value
     if hasattr(value, "stringify"):
         try:
             return value.stringify()
@@ -114,8 +115,10 @@ def _parse_eval(value):
             return json_parser(value, indent=1)
         except BaseException:
             pass
-    # is to_dict is also Good option to format?
     return str(value)
+
+
+_ignore_eval = []
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
@@ -146,7 +149,7 @@ async def _(event):
         except BaseException:
             # Consider it as Code Error, and move on to be shown ahead.
             pass
-    reply_to_id = event.reply_to_msg_id or event.id
+    reply_to_id = event.reply_to_msg_id or event
     if any(item in cmd for item in KEEP_SAFE().All) and (
         not (event.out or event.sender_id == ultroid_bot.uid)
     ):
@@ -196,8 +199,8 @@ async def _(event):
         )
     )
     if len(final_output) > 4096:
-        ultd = final_output.replace("`", "").replace("**", "").replace("__", "")
-        with BytesIO(str.encode(ultd)) as out_file:
+        final_output = evaluation
+        with BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
                 event.chat_id,
@@ -212,20 +215,20 @@ async def _(event):
     await xx.edit(final_output)
 
 
-def _stringified(text, *args, **kwargs):
-    text = _parse_eval(text)
-    print(text, *args, **kwargs)
+def _stringify(text=None, *args, **kwargs):
+    if text:
+        text = _parse_eval(text)
+    return print(text, *args, **kwargs)
 
 
 async def aexec(code, event):
     exec(
         (
-            (
-                ("async def __aexec(e, client): " + "\n message = event = e")
-                + "\n reply = await event.get_reply_message()"
-            )
+            "async def __aexec(e, client): "
+            + "\n print = p = _stringify"
+            + "\n message = event = e"
+            + "\n reply = await event.get_reply_message()"
             + "\n chat = event.chat_id"
-            + "\n print = p = _stringified"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )

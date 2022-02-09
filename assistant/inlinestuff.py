@@ -124,17 +124,22 @@ async def _(e):
         ],
     ]
     try:
-        lnk = e.builder.article(
-            title=f"Upload {filename}",
-            text=f"**File:**\n{filename}",
-            buttons=buttons,
-        )
-    except BaseException:
-        lnk = e.builder.article(
-            title="fl2lnk",
-            text="File not found",
-        )
-    await e.answer([lnk], switch_pm="File to Link.", switch_pm_param="start")
+        lnk = [
+            await e.builder.article(
+                title=f"Upload {filename}",
+                text=f"**File:**\n{filename}",
+                buttons=buttons,
+            )
+        ]
+    except BaseException as er:
+        LOGS.exception(er)
+        lnk = [
+            await e.builder.article(
+                title="fl2lnk",
+                text="File not found",
+            )
+        ]
+    await e.answer(lnk, switch_pm="File to Link.", switch_pm_param="start")
 
 
 @callback(

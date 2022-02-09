@@ -46,10 +46,10 @@ from . import asyncio, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="f(typing|audio|contact|document|game|location|sticker|photo|round|video) ?(.*)"
+    pattern="f(typing|audio|contact|document|game|location|sticker|photo|round|video)( (.*)|$)"
 )
 async def _(e):
-    act = e.pattern_match.group(1)
+    act = e.pattern_match.group(1).strip()
     t = e.pattern_match.group(2)
     if act in ["audio", "round", "video"]:
         act = "record-" + act

@@ -14,6 +14,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && pip3 install --no-cache-dir -r root/TeamUltroid/requirements.txt \
     && pip3 install av --no-binary av
 
+# Railway's banned dependency
+RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir yt-dlp; fi
+
 # changing workdir
 WORKDIR /root/TeamUltroid/
 

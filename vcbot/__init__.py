@@ -49,10 +49,10 @@ from telethon.tl import functions, types
 from telethon.utils import get_display_name
 
 try:
-    from youtube_dl import YoutubeDL
+    from yt_dlp import YoutubeDL
 except ImportError:
     YoutubeDL = None
-    LOGS.info("'YoutubeDL' not found!")
+    LOGS.info("'yt-dlp' not found!")
 
 from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
 
@@ -80,7 +80,6 @@ class Player:
         else:
             _client = GroupCallFactory(
                 vcClient, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON,
-                path_to_log_file="VCBot.log"
             )
             self.group_call = _client.get_group_call()
             CLIENTS.update({chat: self.group_call})
@@ -311,13 +310,17 @@ async def get_from_queue(chat_id):
 
 
 async def download(query):
-    search = VideosSearch(query, limit=1).result()
-    data = search["result"][0]
-    link = data["link"]
+    if query.startswith("https://") and not "youtube" in query.lower():
+        thumb, duration = None, "Unknown"
+        title = link = query
+    else:
+        search = VideosSearch(query, limit=1).result()
+        data = search["result"][0]
+        link = data["link"]
+        title = data["title"]
+        duration = data.get("duration") or "♾"
+        thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     dl = await get_stream_link(link)
-    title = data["title"]
-    duration = data.get("duration") or "♾"
-    thumb = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
     return dl, thumb, title, link, duration
 
 

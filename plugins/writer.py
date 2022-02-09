@@ -22,9 +22,9 @@ from PIL import Image, ImageDraw, ImageFont
 from . import async_searcher, eod, get_string, text_set, ultroid_cmd
 
 
-@ultroid_cmd(pattern="gethtml ?(.*)")
+@ultroid_cmd(pattern="gethtml( (.*)|$)")
 async def ghtml(e):
-    txt = e.pattern_match.group(1)
+    txt = e.pattern_match.group(1).strip()
     if txt:
         link = e.text.split(maxsplit=1)[1]
     else:
@@ -35,9 +35,10 @@ async def ghtml(e):
     await e.reply(file="file.html")
 
 
-@ultroid_cmd(pattern="image ?(.*)")
+@ultroid_cmd(pattern="image( (.*)|$)")
 async def f2i(e):
-    txt = e.pattern_match.group(1)
+    txt = e.pattern_match.group(1).strip()
+    html = None
     if txt:
         html = e.text.split(maxsplit=1)[1]
     elif e.reply_to:
@@ -46,7 +47,7 @@ async def f2i(e):
             html = await e.client.download_media(r.media)
         elif r.text:
             html = r.text
-    else:
+    if not html:
         return await eod(e, "`Either reply to any file or give any text`")
     html = html.replace("\n", "<br>")
     shot = WebShot(quality=85)
@@ -58,12 +59,12 @@ async def f2i(e):
         os.remove(html)
 
 
-@ultroid_cmd(pattern="write ?(.*)")
+@ultroid_cmd(pattern="write( (.*)|$)")
 async def writer(e):
     if e.reply_to:
         reply = await e.get_reply_message()
         text = reply.message
-    elif e.pattern_match.group(1):
+    elif e.pattern_match.group(1).strip():
         text = e.text.split(maxsplit=1)[1]
     else:
         return await eod(e, get_string("writer_1"))

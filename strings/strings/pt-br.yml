@@ -4,98 +4,277 @@ natively: Português
 authors:
   - R7Droid Revisão PT-BR(YukkiZx)
 
-# commons
+#commons
 com_1: "`Processando...`"
 com_2: "`Procurando...`"
+com_3: "'Entrada inválida'"
+com_4: "`Mídia não suportada. `"
+com_5: "Baixando..."
+com_6: "Carregando..."
+com_7: "`Algo deu errado.`"
 
-# help
+#chatactions
+can_1: "#GBanned_User juntou-se.\n\n**Usuário** {}\n**Razão**: {}\n\n'Usuário banido.'"
+can_2: "∆ #UsernameUpdate\n\n@{} mudou o nome de usuário para @{}"
+can_3: "∆ #UsernameUpdate\n\n{} removeu seu nome de usuário. (@{})"
+can_4: "∆ #UsernameUpdate\n\n{}novo nome de usuário --> @{}"
+
+#help
 help_1: "`{}` não é um plugin válido!"
-help_2: "O bot não respondeu à consulta em linha.\nConsidere `{}reiniciar`"
-help_3: "`Por favor, ative o modo inline para o seu bot em` @Botfather."
+help_2: "`O bot não respondeu à consulta em linha.\nConsidere {}reiniciar`"
+help_3: "`Por favor, ative o modo inline em seu bot através do` @Botfather."
+help_4: "• Plugins"
+help_5: "Addons •"
+help_6: "••Chat de Voz"
+help_7: "Plugins Inline••"
+help_8: "⚙️ Ferramentas do Dono"
+help_9: "Configurações ⚙️"
+help_10: "••Fechar••"
+help_11: "Nome do Plugin-{}\n\n✘ Comandos Disponíveis -\n\n"
+help_12: "Chamada de voz não está ativa!"
+help_13: "Defina '{}setdb ADDONS True' para carregar addons oficiais"
 
-# autopic
-autopic_1: "Ei, dê-me algum texto .."
-autopic_2: "Nenhum resultado encontrado para `{}`"
+#userlogs
+userlogs_1: "O Id do Chat que você definiu no Tag Logger está errado, por favor, corrija-o"
+userlogs_2: "Adicione-me ao Chat para Registrar quando for Mencionado "
+userlogs_3: "Sair do Chat"
+userlogs_4: "Seu Assist Bot pode enviar mensagens no chat de registro de Menções.\nAdicione-o para obter seus registros de Menções.."
+userlogs_5: "Esquerda `{}`"
+
+#admintools
+adm_1: "\"Eu não conseguir encontra-lo!\""
+adm_2: "Hmm. Acho que eu não tenho pemissões aqui!`"
+adm_3: "`Forneça um Horário Também..`"
+pro_1: "'Responda a um usuário para promovê-lo!'"
+pro_2: "{} 'agora é um administrador em {} com o título {}.'"
+de_1: "`Responda a um usuário para rebaixá-lo!`"
+de_2: "{} 'não é mais um administrador em {}'"
+ban_1: "`Responda a um usuário ou forneça o nome de usuário para bani-lo!`"
+ban_2: " 'Opa, eu não posso expulsar o meu desenvolvedor`😂"
+ban_3: "\"Eu não tenho permissão de banir o usuário.\""
+ban_4: "{} **foi banido por** {} **em** '{}'"
+ban_5: "\n**Motivo**: `{}`"
+tban_1: "`Responda a alguém ou dê sua id...`"
+tban_2: "`Banido com sucesso` {} `in {} for {}`"
+unban_1: "`Responda a um usuário ou dê um nome de usuário para desbani-lo!`"
+unban_2: "`Eu não tenho permissão de desbanir o usuário.`"
+unban_3: "{} **foi banido por** {} **em** `{}`"
+kick_1: "`Eu não tenho permissão de expulsar o usuário.`"
+kick_2: " 'Opa, eu não posso expulsar o meu desenvolvedor`😂"
+kick_3: "`Eu não posso expulsa-lo nunca...`"
+kick_4: "{} **foi expulso por ** {} **em** `{}`"
+pin_1: "`Responda a uma mensagem para fixá-la!`"
+pinned_1: "Nenhuma mensagem fixada encontrada!"
+pinned_2: "A mensagem fixada no chat atual está [aqui]({}). "
+unpin_1: "Responda a uma mensagem, ou use `{}unpin all`"
+listpin_1: "Não há nenhuma mensagem fixada neste grupo!"
+purge_1: "`Responda uma mensagem para limpar.`"
+purgeall_1: "`Responda a msg de alguém para excluir.`"
+purgeall_2: "Todas as mensagens foram apagadas com sucesso de {}"
+
+#akinator
+aki_1: "O Jogo foi Encerrado...."
+aki_2: "Iniciar Jogo"
+aki_3: "Tempo Esgotado !"
+
+#antiflood
+antiflood_1: "`Configurações Anti-flood Desativadas`"
+antiflood_2: "`Sem limites de flood neste chat.`"
+antiflood_3: "`Você foi silenciado.`"
+antiflood_4: "'Configurações Anti-flood Atualizadas com Sucesso para {} este chat.`"
+antiflood_5: "`Limite de Flood para este chat é {}.`"
+
+#ascii
+ascii_1: "`Responda à imagem.`"
+ascii_2: "`Convertendo para html...`"
+
+#audiotools
+audiotools_1: "Responda ao áudio ou vídeo.."
+audiotools_2: "Baixado com Sucesso, Agora Convertendo para voz"
+audiotools_3: "`Informe formato de tempo para cortar`"
+audiotools_4: "`Dados incorretos`"
+audiotools_5: "`Tentando Baixar...`"
+audiotools_6: "`Duração errada do recorte`"
+audiotools_7: "Áudio aparado de '{}' para '{}'"
+audiotools_8: "Resposta ao Arquivo de Vídeo..`"
+audiotools_9: "`Nenhum Áudio Encontrado...`"
+audiotools_10: "`Áudio Extraído do Vídeo...`"
+
+#asstcmd
+asstcmd_1: "`Usar palavra como resposta a um comando.`"
+asstcmd_2: "`Informe o comando que deseja remover.`"
+asstcmd_3: "Feito Comando: `/{}` Removido."
+asstcmd_4: "Feito Comando : `/{}` salvo."
+asstcmd_5: "Nenhum comando encontrado"
+asstcmd_6: "**TODOS OS CMDS ASSISTENTES**\n\n"
+
+#autocorrect
+act_1: "Recurso AUTOCORREÇÃO LIGADO"
+act_2: "Recurso AUTOCORREÇÃO DESLIGADO"
+
+#autopic
+autopic_1: "`Dê algo para pesquisar...`"
+autopic_2: "Nenhum resultado para `{}`"
 autopic_3: "Tenho uma coleção `{}` relacionado à sua pesquisa !\nIniciando Autopic !"
+autopic_4: "AUTOPIC não estava em uso !!"
+autopic_5: "AUTOPIC Parou!"
 
-# inline
-inline_1: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Menu De Ajuda {}.\n\nPʟᴜɢɪɴs ~ {}**"
-inline_2: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Mᴇɴᴜ Dᴇ Ajuda {}.\n\nExtensões ~ {}**"
-inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ](t.me/ultroidsupport)\n\n**Mᴇɴᴜ Dᴇ Ajuda {}.\n\nExtensões ~ {}\n\nDefina **`.setdb Extensões para True`** e REINICIE PARA OBTER EXTENSÕES.**"
-inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nExtensões ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
+#inline
+inline_1: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu de Ajuda {}.\n\n Plugins ~ {}**"
+inline_2: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu De ajuda {}.\n\n Addons ~ {}**"
+inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/ultroidsupport)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
+inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
 inline_5: "**O Menu Foi Fechado**"
+inline_6: "**Menu de Ajuda para Chat de Voz {}**\n**Comandos Disponíveis:** `{}`\n\n@TeamUltroid"
+inline_7: "Use .help {} para obter a lista de comandos."
+inline_8: "Clique no botão abaixo para atualizar!"
+inline_9: "Você já está com a Versão mais Recente"
 
-# tagnotif
-tagnot_1: "{} mencionou você em {}\n\n```{}```\n\n[📨 Mensagem 📨]({})"
-tagnot_2: "{} respondeu sua mensagem em {}\n\n [📨 Mensagem 📨]({})"
+#tagnotif
+tagnot_1: "{} marcou você em {}\n\n```{}```\n\n[📨 Mensagem 📨] ({})"
+tagnot_2: "{} mencionou você em {}\n\n[📨 Mensagem 📨] ({})"
 
-# whisper
+#whisper
 wspr_1: "@{} mensagem secreta para você.\nExclua sua mensagem após ler.\nOu a próxima mensagem não será atualizada."
 wspr_2: "Mensagem apagada"
+wspr_3: "Adicione algum id ou nome de usuário também"
+wspr_4: "Usuário {} Não encontrado\nPesquisar novamente"
+wspr_5: "Você não pode fazer isso"
 
-# afk
-afk_1: "`Não estou mais em Afk\n\nEsteve fora por ~ {}`"
-afk_2: "#AFK\nDefina o modo AFK para Falso.\nEstive AFK por `{}`"
-afk_3: "`Atualmente estou AFK.\nVisto pela última vez {} atrás.`\n\n**Reason:** `{}`"
-afk_4: "`Atualmente estou em AFK.\n\nVisto pela última vez {} atrás.`"
-afk_5: "`Ficando em AFK.`\n\n**Reason:** `{}`"
-afk_6: "Estou ficando AFK."
+#afk
+afk_1: "`Não estou mais em Afk\n\n Esteve fora por ~ `{}`"
+afk_2: "#AFK\nDefina o modo AFK como Falso.\nEstive AFK por ~ '{}'"
+afk_3: "Atualmente estou AFK.\n Visto pela última vez  `{}` atrás.`\n\n **Razão:** `{}`"
+afk_4: "**Atualmente estou AFK.**\n\n Visto pela última vez `{}` atrás."
+afk_5: "**Ficando em AFK.**\n\n**Razão:** '{}'"
+afk_6: "**Estou ficando AFK.**"
 
-# bot
-alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Proprietário** - `{}`\n┣ **Versão** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **Em Atividade** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Filial** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+#bot
+bot_1: "Ei, estou vivo."
+bot_2: "Estatísticas"
+bot_3: "Repositório"
+bot_4: "Suporte"
+bot_5: "• `Reiniciando...`"
+alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n✵ **Proprietário** - '{}'\n✵ **Ultroid** - '{}'\n✵ **Py-Ultroid** - '{}'\n✵ **Em Atividade** - '{}'\n✵ **Python** - '{}'\n✵ **Teleton** - '{}'\n✵ **Filial** - '{}'"
 log: "**Heroku** Ultroid Logs.\nColado [aqui]({}) também!"
-ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
-usage: "**⚙️ Uso Dyno ⚙️**:\n\n-> **Dyno usado por** `{}`:\n  •  **{}h**  **{}m** |** `[{}%]`\n-> **Dyno cota de horas restantes neste mês**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Espaço Total em Disco**: `{}`\n**Usado**: `{}`\n**Livre**: `{}`\n\n**📊 Uso de Dados 📊\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISCO**: `{}%`"
+ping: "**Pong!!** `{}ms`\n**Em Atividade** - `{}`"
+usage: "**⚙️ Uso Dyno ⚙️**:\n\n-> **Dyno usado por** `{}`:\n  • **{}h** **{{}m |** '[{}%]'\n-> **Cota de horas Dyno restantes neste mês**:\n  • **{}h** **{{}m |** '[{}%]'\n\n**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
+usage_simple: "**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
 shutdown: "Adeus {}.\n`Desligando...`"
 
-# broadcast
-bd_1: "`Adicionando ao bd...`"
-bd_2: "`Tentando adicionar todos os canais que é Admin ao banco de dados...`"
-bd_3: "**Feito.**\nChats no banco de dados: {}\nAdicionados recentemente: {}"
+#blacklist
+blk_1: "`Informe a palavra da lista negra ...`"
+blk_2: "Feito : `{}` Lista Negra aqui."
+blk_3: "`Informe a palavra para remover da lista negra..`"
+blk_4: "Feito :  `{}` Removido da Lista Negra."
+blk_5: "Lista Negra Encontrada nestes Chat são:\n\n"
+blk_6: "Nenhuma palavra na Lista Negra Encontrada Aqui"
+
+#broadcast
+bd_1: "`Adicionando ao bd..`"
+bd_2: "`Tentando adicionar todos os canais que sou admin ao banco de dados...`"
+bd_3: "**Feito.**\nChats no banco de dados: {}\nAdicionados Recentemente: {}"
 bd_4: "Canais adicionados!"
 bd_5: "`Adicionado ao banco de dados!`"
-bd_6: "`Canal já existe no banco de dados!`"
+bd_6: "`Canal já está no banco de dados!`"
+bd_7: "Removido do banco de dados"
+bd_8: "`Removendo...`"
+bd_9: "O canal já foi removido do banco de dados. "
 
-# carbon
-carbon_1: "Processando"
-carbon_2: "Carbonizado por [{}](tg://user?id={})"
+#calculator
+calc_1: "• Calculadora Inline Ultroid •"
+calc_2: "Abra a Calculadora Novamente"
 
-# chats
-chats_1: "`Processando...`"
-chats_2: "`Não é possível excluir esse chat`"
-chats_3: "`Eu não sou um Admin`"
-chats_4: "#Excluído\nExcluído {}"
-chats_5: "Tornou-se [{}]({}) chefe do Grupo!"
-chats_6: "Junte-se a @TeamUltroid"
+#channel hacks
+cha_1: "Canal inválido informado"
+cha_2: "Origem adicionada com sucesso"
+cha_3: "Canal de origem já foi adicionado"
+cha_4: "Banco de dados de origem limpo."
+cha_5: "Origem removida do banco de dados"
+cha_6: "O canal de origem já foi removido do banco de dados."
+cha_7: "Canais de destino no banco de dados:"
+cha_8: "Canais de origem no banco de dados:"
 
-# converter
-cvt_1: "Responder a qualquer mídia/documento."
+#carbon
+carbon_1: "Carbonizado por [{}](tg://user?id={})"
+carbon_2: "`Responder à mensagem ou arquivo legível..`"
+carbon_3: "`Informe uma Cor Personalizada para Carbonizar...'"
+
+#chat_bot
+chab_1: "Responda a um usuário ou me dê seu id/nome de usuário para adicionar uma IA de ChatBot!"
+chab_2: "`Nenhum usuário adicionou IA.`"
+chab_3: "**Lista Completa de Usuários Habilitados pela IA neste chat :**\n\n"
+
+#chats
+chats_1: "`Não foi possível excluir este chat`"
+chats_2: "`Eu não sou um admin`"
+chats_3: "#Excluído\nExcluído {}"
+chats_4: "Tornou-se [{}]({}) Chefe do Grupo!"
+chats_5: "Junte-se a @TeamUltroid"
+chats_6: "Seu [{}]({}) Grupo/Canal tornou-se Chefe!"
+
+#clean action
+clan_1: "Adicionado Configuração de Limpeza para esse Chat"
+clan_2: "Configuração de Limpeza Removida para este Chat"
+clan_3: "`ID inválido`"
+clan_4: "'Nenhum Chat Adicionado'"
+clan_5: "Ações de Limpeza já estão habilitadas neste Chat."
+
+#converter
+cvt_1: "`Responder a qualquer mídia/documento.`"
 cvt_2: "Dê o nome e a extensão do arquivo"
-cvt_3: "`Processando...`"
-cvt_4: "Responda a qualquer mídia."
+cvt_3: "Responda a qualquer mídia..`"
+cvt_4: "'Responda a imagem ou arquivo com miniatura.'"
+cvt_5: "Arquivo respondido não tem miniatura.`"
+cvt_6: "Adicionado [isso]({}) Como Sua Miniatura Personalizada"
+cvt_7: "'Responda a um arquivo legível'"
+cvt_8: "`Não é um Arquivo legível.`"
 
-# core
+#eventsofday
+eod_1: "🎊 **Eventos do Dia**\n\n"
+eod_2: "• **Eventos para {}/2021**\n\n"
+
+#core
 core_1: "Módulo encontrado"
 core_2: "{}.py use .paste para colar em neko e raw.."
-core_3: "Procurar novamente..?"
-core_4: "Módulo {} Encontrado"
+core_3: "Procurar Denovo..?"
+core_4: "Módulo {} encontrado"
 core_5: "{}.py use .paste para colar em neko e raw.."
-core_6: "Módulo {}.py Não Encontrado"
-core_7: "Módulo Inexistente"
-core_8: "Nenhum Módulo Nomeado {}.py"
-core_9: "`Informe o nome do plugin que você deseja descarregar`"
-core_10: "**Descarregado** `{}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**"
-core_11: "**Você Não Pode Descarregar Plugins Oficiais**"
+core_6: "Módulo {}.py não encontrado"
+core_7: "O Módulo Não Existe"
+core_8: "Nenhum Módulo nomeado {}.py"
+core_9: "`Informe o nome do plugin que você deseja desinstalar`"
+core_10: "**Desinstalado** `{}` **Com sucesso.**"
+core_11: "**Você Não Pode Desinstalar Plugins Oficiais**"
 core_12: "**Nenhum Plugin Nomeado** `{}`"
-core_13: "`Give name of plugin which u want to uninstall`"
-core_14: "**Desinstalado** `{}` **Com Sucesso.**"
+core_13: "`Dê o nome do plugin que você deseja desinstalar`"
+core_14: "**Desinstalado** `{}` **Com sucesso.**"
 core_15: "**Você Não Pode Desinstalar Plugins Oficiais**"
-core_16: "`Dê o nome do plugin que você deseja carregar`"
-core_17: "**Carregado Com Sucesso** `{}`"
-core_18: "**Não foi possível carregar** `{}` **por causa do seguinte erro.**\n`{}`"
+core_16: "`Informe o nome do plugin que você deseja instalar`"
+core_17: "**Instalado Com sucesso** `{}`"
+core_18: "**Não foi possível instalar** `{}` **por causa do seguinte erro.**\n`{}`"
 
-# fedutils
-sf_1: "Iniciando FedBan em massa..."
+#devtools
+devs_1: "`Nenhum cmd informado`"
+devs_2: "`Forneça um pouco de cmd python`"
+devs_3: "`Forneça algum código C++..`"
+
+#dm
+dm_1: "`Forneça o nome de usuário ou id do Chat para onde enviar.`"
+dm_2: "`Forneça texto para enviar ou responder a msg`"
+dm_3: "⚜️ Mensagem Entregue! ⚜️"
+dm_4: "Erro : {}\nLeia o uso: `{}help other`"
+dm_5: "`Verifique no Privado.`"
+dm_6: "`Nenhuma mensagem encontrada para entregar :(`"
+
+#echo
+echo_1: "**Eco Ativado para Usuários: **\n\n"
+
+#fake action
+fka_1: "Iniciando Ação Falsa por {} seg."
+
+#fedutils
+sf_1: "Iniciando um FedBan em massa..."
 sf_2: "`Nenhum usuário designado!`"
 sf_3: "Você não pode banir meu Dev, seu novato!!"
 sf_4: "`Parece que a rose não está respondendo ou o plugin está se comportando mal`"
@@ -108,51 +287,270 @@ sf_10: "FBaning em {} feds."
 sf_11: "O ID do grupo FBan especificado está incorreto."
 sf_12: "{} Excluído."
 sf_13: "Erro ao remover arquivo FedAdmin.\n{}"
-sf_14: "SuperFBan concluído.\nFeds Totais - {}.\nExcluído - {}.\n Afetado {} feds.\n#TB"
+sf_14: "SuperFBan concluído.\nFeds totais - {}.\nExcluído - {}.\n Afetado {} feds.\n#TB"
 sf_15: "Iniciando Desban-Fed em massa..."
-sf_16: "SuperDesban-Fed Concluído.\nTotal Feds - {}.\nExcluído - {}.\n Afetado {} feds.\n#TB"
+sf_16: "SuperDesban-Fed Concluído.\nTotal Feds- {}.\nExcluído - {}.\n Afetado {} feds.\n#TB"
 sf_17: "`Informe a id de usuário, ou responda a mensagem de alguém para verificar seu/sua fedstat.`"
-sf_18: "Lista de feds {} foi banido em.\n\nColetados usando Ultroid."
+sf_18: "Lista de feds {} foi banida em.\n\nColetados usando Ultroid."
 sf_19: "**Erro**\n `Desbloqueie` @MissRose_Bot `e tente novamente!"
 sf_20: "`Extraindo informações...`"
 sf_21: "\n\nFedInfo Extraído por Ultroid"
+sf_22: "Nenhum usuário foi designado."
+sf_23: "**Erro**\n `Desbloqueie` @MissRose_Bot `e tente novamente!"
 
-# gdrive
+#filter
+flr_1: "`Use esta palavra de comando para definir como filtro de resposta..`"
+flr_2: "Filtros Encontrados Nestes Chats São\n\n"
+flr_3: "`Informe o filtro a ser removido..`"
+flr_4: "Feito: Filtro `{}` Salvo."
+flr_5: "Feito: Filtro `{}` Removido."
+flr_6: "Sem Filtros Encontrados Aqui"
+
+#fontgen
+fgn_1: "**Fontes Disponíveis**\n\n"
+
+#force subscribe
+fsub_1: "Informe o Canal que você deseja que o Usuário Ingresse !"
+fsub_2: "Forneça um nome de usuário ou id do canal correto"
+fsub_3: "ForceSub não estava ativo neste chat !"
+fsub_4: "Entrar no Canal"
+fsub_5: "Desmute-me"
+fsub_6: "Por favor, Junte-se a esse canal !\nEm seguida, Clique Neste Botão !"
+fsub_7: "Esta mensagem não é para você"
+fsub_8: "Obrigado por participar! "
+
+#extra
+ex_1: "'Responda à mensagem.. `"
+
+#gdrive
 gdrive_1: "`Você já autorizou com o Google Drive`"
 gdrive_2: "Clique [aqui](https://console.developers.google.com/flows/enableapi?apiid=drive) e pegue o seu `GDRIVE_CLIENT_ID` e `GDRIVE_CLIENT_SECRET`\n\nMande seu GDRIVE_CLIENT_ID e GDRIVE_CLIENT_SECRET com isso.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separado por espaço."
-gdrive_3: "`Id de cliente Errado`"
-gdrive_4: "`Algo deu errado! Envie `/auth` novamente.\nSe acontecer novamente entre em contato`@TheUltroid"
-gdrive_5: "`Successo!\nVocê está pronto para usar o Google Drive com Ultroid Userbot.`"
-gdrive_6: "`Ir para `{}` e envie ``/auth.`"
-gdrive_7: "**O upload do Arquivo No G-Drive foi bem Sucedido :**\n\n[{}]({})"
+gdrive_3: "`Id Errada do Cliente`"
+gdrive_4: "`Algo deu errado! Autorize de novo.\nSe acontecer novamente entre em contato`@TheUltroid"
+gdrive_5: "`Sucesso!\nVocê está pronto para usar o Google Drive com Ultroid Userbot.`"
+gdrive_6: "`Vá `[aqui](t.me/{}?start=set)` e configure G-Drive`"
+gdrive_7: "Enviado com sucesso [{}]({}) no G-Drive"
 
-# pmpermit
+#get addons
+gas_1: "Por favor, forneça um link raw!"
+
+#greetings
+grt_1: "`Nota de Boas-Vindas salva`"
+grt_2: "Por favor, use isso em um grupo e não em PMs!"
+grt_3: "`Responda a mensagem que você deseja definir como msg de Boas-Vindas`"
+grt_4: "`Nenhuma mensagem de Boas Vindas definida!`"
+grt_5: "`Nota de Boas-Vindas excluída`"
+grt_6: "`Nenhum adeus foi definido!`"
+grt_7: "`Responda à mensagem que você deseja definir como adeus`"
+
+#glitch
+glitch_1: "'Falhando...'"
+
+#mediainfo
+mdi_1: "Informações Detalhadas"
+
+#nightmode
+nightm_1: "Informe o Tempo no formato correto"
+nightm_2: "Horário acertado com sucesso"
+nightm_3: "Feito, Adicionado o Chat atual ao Modo Noturno"
+nightm_4: "Feito, Chat atual Removido Do Modo Noturno"
+nightm_5: "Algo deu errado"
+
+#pmpermit
 pmperm_1: "Por favor espere até eu te responder ou você será reportado e bloqueado como spam!!"
-pmperm_2: "Você Esta Spamando O PV Do meu Mestre, o que você quer?\nVocê foi BLOQUEADO e denunciado como SPAM, até novo aviso."
-pmperm_3: "Responda à mensagem de alguém ou use esse comando no privado."
+pmperm_2: "Ei, eu disse para não fazer spam!\nVocê foi bloqueado e reportado, por enquanto."
+pmperm_3: "Responda à mensagem de alguém ou tente este comando no privado."
 
-# updater
-upd_1: "`Verificando Atualizações, por favor aguarde....`"
-upd_2: "`Oops.. O Atualizador não pode Continuar Devido a alguns Problemas.`\n\n**LOGTRACE:**\n"
-upd_3: "**Nova Atualizaçao Disponivel Para [[{}]]({}/tree/{}):\n\nLOGMUDANÇAS**\n\n{}"
-upd_4: "`Logregistro é muito grande, veja o arquivo para checar isso.`"
+#schedule_msg
+schdl_1: "`Msg Agendada com Sucesso`"
+schdl_2: "`Formato Incorreto`"
+
+#searches
+srch_1: "`Procurar por quem? Informe um nome de usuário!!`"
+srch_2: "`Nenhum usuário encontrado...`"
+srch_3: "`Música não encontrada...`"
+
+#snip
+snip_1: "Informe uma palavra para definir como recorte de resposta a uma mensagem."
+snip_2: "Informe a palavra para remover..."
+snip_3: "Nenhum Recorte Encontrado aqui."
+
+#specialtools
+spcltool_1: "Responder a Áudio ou vídeo"
+spcltool_2: "`Feito.. Agora responda ao vídeo no qual você deseja adicionar este Áudio`"
+spcltool_3: "Responder ao vídeo"
+spcltool_4: "`Primeiro responda um áudio com .raw`"
+spcltool_5: "Download Concluído com Sucesso, Agora Adicionando Seu Áudio ao vídeo"
+spcltool_6: "`Coloque a entrada no formato dd/mm/aaaa`"
+spcltool_7: "`Feliz Aniversário para Você🎉🎊`"
+spcltool_8: "Dê algo para pesquisar.."
+spcltool_9: "Nada encontrado"
+
+#sudo
+sudo_1: "`Responda a um msg ou adicione id/nome de usuário.`"
+sudo_2: "Você não pode se adicionar como usuário Sudo ..."
+sudo_3: "`Nenhum usuário sudo foi atribuído ...`"
+sudo_4: "`Bots não podem ser adicionados como Usuários Sudo.`"
+
+#unsplash
+unspl_1: "Não foram encontrados resultados!"
+
+#updater
+upd_1: "`Verificando Atualizações...`"
+upd_2: "`Oops.. O Atualizador não pode Continuar Devido A algum Problema.`\n"
+upd_3: "**Nova Atualização Disponível Para [[{}]]({}/tree/{}):\n\nLOGdeALTERAÇÕES**\n\n{}"
+upd_4: "`LogdeAlterações é Muito grande, veja o arquivo para verificar isso.`"
 upd_5: "Clique no botão abaixo para atualizar."
-upd_6: "Clique no botão abaixo para atualizar."
-upd_7: "\n`Seu Bot está`  **atualizado**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_6: "\n`Seu BOT está`  **atualizado**  `com`  **[[{}]]({}/tree/{})**\n"
+upd_7: "`Atualização Rápida do Software...`"
 
-# upload download
+#upload download
 udl_1: "`Responda ao arquivo/mídia que deseja baixar...`"
-udl_2: "Download Concluído..\nTo\n`{}`\nin `{}`"
+udl_2: "Download bem sucedido..\nPara\n`{}`\nno `{}`"
 udl_3: "`Forneça um caminho específico para o arquivo`"
+udl_4: "`Tentando baixar...`"
+udl_5: "`Você se esqueceu de informar o link :(`"
+udl_6: "`Essa Pasta está vazia.`"
+udl_7: "`Você não pode fazer isso!`"
 
-# words
-wrd_1: "**Palavra** - `{}`\n\n**Significados** - \n"
+#vctools
+vct_1: "`Chat de voz iniciado...`"
+vct_2: "**Título VC alterado com sucesso para** `{}`"
+vct_3: "`Convidando membros para o Chat de Voz...`"
+vct_4: "`Chat de voz interrompido...`"
+vct_5: "`Usuários {} convidados`"
+vct_6: "Nenhuma entrada Encontrada!"
+
+#words
+wrd_1: "• **Palavra :** '{}'\n• **Significado :** __{}__\n\n• **Exemplo :** __{}__"
 wrd_2: "**Palavra** - `{}`\n\n**Sinônimos** - \n"
 wrd_3: "**Palavra** - `{}`\n\n**Antônimos** - \n"
+wrd_4: "`Forneça uma palavra para encontrar seu significado..`"
+wrd_5: "Sinônimos"
+wrd_6: "Antônimos"
+wrd_7: "Nenhum sinônimo encontrado!!\n\n`{}`"
+wrd_8: "Nenhum Antônimo encontrado!!\n\n`{}`"
 
-# ---------------------------------------------------#
+#profanitY
+prof_1: "'Chat Adicionado para filtrar Palavrões!`"
+prof_2: "'Chat Removido da Filtragem de Palavrões!'"
 
-# assisant
-ast_1: "Escolha qual API você deseja utilizar."
-ast_2: "**remove.bg API**\nInsira sua chave API de remove.bg.\n\nUse /cancel para encerrar a operação."
+#notes
+notes_1: "`Use este Comando com resposta e palavra para usar uma nota.`"
+notes_2: "Feito Nota : `#{}` salva."
+notes_3: "`Informe as notas que você deseja remover.`"
+notes_4: "As Notas Encontradas neste Chat são\n\n"
+notes_5: "Nenhuma Nota Encontrada Aqui"
+
+#stickertools
+sts_1: "`Você não escreveu nenhum artigo, Waifu está indo embora.`"
+sts_2: "`Responder a um Adesivo Animado...`"
+sts_3: "**Selecione entre {} **"
+sts_4: "`Responder ao adesivo não animado.`"
+sts_5: "**Pack Kanged com sucesso**.\n**Pack Kanged:** [link]({})"
+sts_6: "`Responder a mensagem/mídia...`"
+sts_7: "'Adesivo Adicionado em um Pacote Diferente !\nEsse Pack foi criado Recentemente!\nSeu pack pode ser encontrado` [aqui](t.me/addstickers/{})"
+sts_8: "`Falha em adicionar adesivo, use` @Stickers `bot para adicionar o adesivo manualmente.`"
+sts_9: "`Ooo Adesivo Animado 👀...`"
+sts_10: "`Responda a qualquer mídia...`"
+sts_11: "Kanging este Adesivo..."
+sts_12: "`Kanged!`\n`Emoji' : {}\n`Pack de Adesivos` [aqui](t.me/addstickers/{})"
+sts_13: "`Mudar para Pack {} devido ao espaço insuficiente`"
+
+#whichsong
+whs_1: "<• Resposta ao Arquivo de Áudio •>"
+whs_2: "`Tentando identificar a música....`"
+whs_3: "Falha ao identificar a música :("
+whs_4: "**Música Reconhecida!**\nNome: __{}__"
+
+#webupload
+wbl_1: "`Forneça um nome de arquivo..`"
+
+#writer
+writer_1: "`Forneça algum texto também`"
+
+#webshot
+wbs_1: "`Forneça um URL, por favor!`"
+wbs_2: "URL inválida!"
+wbs_3: "**WebShot Gerado**\n**URL**: {}"
+
+#youtube
+youtube_1: "Forneça uma URL do (youtube) para baixar o áudio!"
+youtube_2: "`Forneça um Link Direto de Áudio para Baixar`"
+youtube_3: "Forneça uma URL do (youtube) para baixar o vídeo!"
+youtube_4: "`Forneça um Link de vídeo direto para Baixar`"
+youtube_5: "Forneça um termo de pesquisar do (youtube) para baixar o áudio!"
+youtube_6: "`Baixando música do áudio...`"
+youtube_7: "Forneça um termo de pesquisa do (youtube) para baixar o vídeo!"
+youtube_8: "`Baixando música do vídeo...`"
+
+#ziptools
+zip_1: "Responder a qualquer mídia/documento."
+zip_2: "Primeiro adicione todos os arquivos Via `{}addzip` e doZip para compactar todos os arquivos em um."
+zip_3: "`Responder apenas para arquivo zip`"
+
+#file share
+fsh_1: "**Lista de arquivos armazenados.:**"
+fsh_2: "**O arquivo foi armazenado!**\n\n**Link compartilhável:** {}"
+fsh_3: "`Responda a uma mensagem para criar um link compartilhável!`"
+fsh_4: "**Nenhum arquivo armazenado!**"
+#------------------------- assistant --------------------------#
+
+ast_1: "Escolha qual API você deseja definir."
+ast_2: "**remove.bg API**\nInsira sua chave de API de remove.bg.\n\nUse /cancel para encerrar a operação."
 ast_3: "Hey {}. Por favor, navegue pelas opções"
+
+#inlinestuff
+instu_1: "Pesquisa de Apps. Insira o nome do aplicativo!"
+instu_2: "Pesquisas Recentes.."
+instu_3: "Informe Algo para Pesquisar"
+instu_4: "Sucesso"
+
+#games
+games_1: "Escolha o jogo 🎮"
+games_2: "Escolha Categoria!"
+games_3: "Escolha o Nível de Dificuldade"
+games_4: "Escolha o Número de Perguntas.."
+games_5: "Escolha o Intervalo de Tempo..."
+games_6: "**• Teste inicial em 5 segundos.** \n**• Nível :** {}\n**• Qs :** {}"
+
+#callbackstuffs
+clst_1: "`Userbot dyno construção em progresso, por favor, aguarde até que a compilação seja concluída.`"
+clst_2: "'Atualizado com sucesso!\nReiniciando, por favor aguarde...'"
+clst_3: "■ Gerando LogsdeMudanças..."
+clst_4: "Algo deu errado..."
+clst_5: "Feito!"
+
+#pmbot
+pmbot_1: "**Você precisa entrar no chat(s) abaixo para conversar com meu mestre!\n\n**"
+pmbot_2: "Por favor, responda a alguém para bani-lo."
+pmbot_3: "O usuário já está banido!"
+pmbot_4: "\"Adeus! Você foi banido.\n**Outras mensagens que você enviar não serão encaminhadas.**"
+pmbot_5: "Por favor, responda a alguém para Desbani-lo."
+pmbot_6: "O usuário nunca foi banido!"
+pmbot_7: "`Parabéns! Você foi desbanido.`"
+
+#-------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Saiu do chat de voz.`"
+vcbot_2: "**ERRO:**\n{}"
+vcbot_3: "• Volume alterado para `{}%` •"
+vcbot_4: "`Especifique um volume de 1 a 200!`"
+vcbot_5: "`Reingressar no chat de voz.`"
+vcbot_6: "Você não se conectou a um chat de voz!"
+vcbot_7: "`Tenha paciência... Vai levar algum tempo.`"
+vcbot_8: "Forneça apenas playlist do youtube"
+vcbot_9: "Você está Jogando comigo?\nO que deseja jogar?"
+vcbot_10: "Removido Vc AUTH do Chat dos Grupos!"
+vcbot_11: "`Obtendo lista de usuários do Bot do Chat de Voz...`"
+vcbot_12: "`Reprodução silenciada neste chat.`"
+vcbot_13: "`Reprodução retomada neste chat.`"
+vcbot_14: "`Pausou a reprodução nesse chat.`"
+vcbot_15: "Por favor, especifique um nome da música ou responda a um arquivo de vídeo !"
+vcbot_16: "O Chat não está na lista Vc Auth..."
+vcbot_17: "`Responda a um msg ou adicione id/nome de usuário...`"
+vcbot_18: "• A lista Auth Vc está vazia.."
+vcbot_19: "Já Autorizado neste Chat!"
+vcbot_20: "`Baixando e convertendo...`"
+vcbot_21: "• Nada na fila!"
+vcbot_22: "'Todas as Filas do Chat foram Limpas'"

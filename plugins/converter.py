@@ -7,11 +7,8 @@
 """
 ✘ Commands Available -
 
-• `{i}mtoi <reply to media>`
-    Media to image conversion
-
-• `{i}mtos <reply to media>`
-    Convert media to sticker.
+• `{i}convert <gif/img/sticker/webm>`
+    Reply to media to convert it into gif / image / webm / normal sticker.
 
 • `{i}doc <filename.ext>`
     Reply to a text msg to save it in a file.
@@ -43,7 +40,7 @@ except ImportError:
 
 from telegraph import upload_file as uf
 
-from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
 
 opn = []
 
@@ -68,14 +65,14 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="rename ?(.*)",
+    pattern="rename( (.*)|$)",
 )
 async def imak(event):
     reply = await event.get_reply_message()
     t = time.time()
     if not reply:
         return await event.eor(get_string("cvt_1"))
-    inp = event.pattern_match.group(1)
+    inp = event.pattern_match.group(1).strip()
     if not inp:
         return await event.eor(get_string("cvt_2"))
     xx = await event.eor(get_string("com_1"))
@@ -95,7 +92,7 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     if os.path.exists(inp):
         os.remove(inp)
-    await bash(f"""ffmpeg -i "{file}" "{inp}" -y""")
+    await bash(f'mv """{file}""" """{inp}"""')
     if not os.path.exists(inp) or os.path.exists(inp) and not os.path.getsize(inp):
         os.rename(file, inp)
     k = time.time()
@@ -110,61 +107,46 @@ async def imak(event):
     await xx.delete()
 
 
+conv_keys = {
+    "img": "png",
+    "sticker": "webp",
+    "webp": "webp",
+    "image": "png",
+    "webm": "webm",
+    "gif": "gif",
+}
+
+
 @ultroid_cmd(
-    pattern="mtoi$",
+    pattern="convert( (.*)|$)",
 )
-async def imak(event):
-    reply = await event.get_reply_message()
-    if not (reply and (reply.media)):
-        await event.eor(get_string("cvt_3"))
-        return
+async def uconverter(event):
     xx = await event.eor(get_string("com_1"))
-    image = await reply.download_media()
-    file = "ult.png"
-    if image.endswith((".webp", ".png")):
-        c = Image.open(image)
-        c.save(file)
-    elif image.endswith(".tgs"):
-        await bash(f"lottie_convert.py '{image}' {file}")
-    else:
-        img = cv2.VideoCapture(image)
-        ult, roid = img.read()
-        cv2.imwrite(file, roid)
-    await event.reply(file=file)
+    a = await event.get_reply_message()
+    input_ = event.pattern_match.group(1).strip()
+    b = await a.download_media("resources/downloads/")
+    if not b and (a.document and a.document.thumbs):
+        b = await a.download_media(thumb=-1)
+    if not b:
+        return await xx.edit(get_string("cvt_3"))
+    try:
+        convert = conv_keys[input_]
+    except KeyError:
+        return await xx.edit(get_string("sts_3").format("gif/img/sticker/webm"))
+    file = await con.convert(b, outname="ultroid", convert_to=convert)
+    if file:
+        await event.client.send_file(
+            event.chat_id, file, reply_to=event.reply_to_msg_id or event.id
+        )
+        os.remove(file)
     await xx.delete()
-    os.remove(file)
-    os.remove(image)
 
 
 @ultroid_cmd(
-    pattern="mtos$",
-)
-async def smak(event):
-    reply = await event.get_reply_message()
-    if not (reply and (reply.media)):
-        await event.eor(get_string("cvt_3"))
-        return
-    xx = await event.eor(get_string("com_1"))
-    image = await reply.download_media()
-    file = "ult.webp"
-    if image.endswith((".webp", ".png", ".jpg")):
-        c = Image.open(image)
-        c.save(file)
-    else:
-        img = cv2.VideoCapture(image)
-        ult, roid = img.read()
-        cv2.imwrite(file, roid)
-    await event.reply(file=file)
-    await xx.delete()
-    os.remove(file)
-    os.remove(image)
-
-
-@ultroid_cmd(
-    pattern="doc ?(.*)",
+    pattern="doc( (.*)|$)",
 )
 async def _(event):
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(1).strip()
     if not (input_str and event.is_reply):
         return await event.eor(get_string("cvt_1"), time=5)
     xx = await event.eor(get_string("com_1"))
@@ -180,11 +162,11 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="open ?(.*)",
+    pattern="open( (.*)|$)",
 )
 async def _(event):
     a = await event.get_reply_message()
-    b = event.pattern_match.group(1)
+    b = event.pattern_match.group(1).strip()
     if not ((a and a.media) or (b and os.path.exists(b))):
         return await event.eor(get_string("cvt_7"), time=5)
     xx = await event.eor(get_string("com_1"))

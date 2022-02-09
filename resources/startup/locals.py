@@ -75,17 +75,17 @@ def start():
     clear_screen()
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
-    os.system("pip3 install -r --no-cache-dir resources/startup/requirements.txt")
+    os.system("pip3 install --no-cache-dir -r requirements.txt")
     ask = input("Enter 'yes/y' to Install other requirements, required for local deployment.")
-    if ask in ["yes", "y"]:
+    if ask.lower().startswith("y") :
         print("Started Installing...")
-        os.system("pip3 install -r --no-cache-dir resources/startup/optional-requirements.txt")
+        os.system("pip3 install --no-cache-dir -r resources/startup/optional-requirements.txt")
     else:
         print("Skipped!")
     clear_screen()
     print(a)
     print("\nStarting Ultroid...")
-    os.system("python3 -m pyUltroid")
+    os.system("sh startup")
 
 
 def do_input(var):

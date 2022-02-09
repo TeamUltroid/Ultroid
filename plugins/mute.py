@@ -43,11 +43,11 @@ async def watcher(event):
 
 
 @ultroid_cmd(
-    pattern="dmute ?(.*)",
+    pattern="dmute( (.*)|$)",
 )
 async def startmute(event):
     xx = await event.eor("`Muting...`")
-    input_ = event.pattern_match.group(1)
+    input_ = event.pattern_match.group(1).strip()
     if input_:
         try:
             userid = await event.client.parse_id(input_)
@@ -65,20 +65,19 @@ async def startmute(event):
             return await xx.eor("`No proper admin rights...`", time=5)
     elif "creator" not in vars(chat) and not event.is_private:
         return await xx.eor("`No proper admin rights...`", time=5)
-    if is_muted(chat.id, userid):
+    if is_muted(event.chat_id, userid):
         return await xx.eor("`This user is already muted in this chat.`", time=5)
-    mute(chat.id, userid)
+    mute(event.chat_id, userid)
     await xx.eor("`Successfully muted...`", time=3)
 
 
 @ultroid_cmd(
-    pattern="undmute ?(.*)",
-    manager=True,
+    pattern="undmute( (.*)|$)",
 )
 async def endmute(event):
     xx = await event.eor("`Unmuting...`")
-    input = event.pattern_match.group(1)
-    if input:
+    input_ = event.pattern_match.group(1).strip()
+    if input_:
         try:
             userid = await event.client.parse_id(input_)
         except Exception as x:
@@ -142,13 +141,13 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="unmute ?(.*)",
+    pattern="unmute( (.*)|$)",
     admins_only=True,
     manager=True,
 )
 async def _(e):
     xx = await e.eor("`Unmuting...`")
-    input = e.pattern_match.group(1)
+    input = e.pattern_match.group(1).strip()
     chat = await e.get_chat()
     if e.reply_to_msg_id:
         reply = await e.get_reply_message()
@@ -175,10 +174,12 @@ async def _(e):
         await xx.eor(f"`{m}`", time=5)
 
 
-@ultroid_cmd(pattern="mute ?(.*)", admins_only=True, manager=True, require="ban_users")
+@ultroid_cmd(
+    pattern="mute( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+)
 async def _(e):
     xx = await e.eor("`Muting...`")
-    input = e.pattern_match.group(1)
+    input = e.pattern_match.group(1).strip()
     chat = await e.get_chat()
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id

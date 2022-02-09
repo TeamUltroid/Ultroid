@@ -34,14 +34,15 @@ async def download_from_youtube_(event):
         "geo-bypass": True,
         "nocheckcertificate": True,
     }
-    opt = event.pattern_match.group(1)
+    opt = event.pattern_match.group(1).strip()
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
+        ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
                 "key": "FFmpegExtractAudio",
-                "preferredcodec": "m4a",
+                "preferredcodec": "mp3",
                 "preferredquality": "128",
             },
             {"key": "FFmpegMetadata"},
@@ -65,11 +66,12 @@ async def download_from_youtube_(event):
         except BaseException:
             return await xx.eor(get_string("youtube_4"))
     elif opt == "sa":
+        ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
         ytd["postprocessors"] = [
             {
                 "key": "FFmpegExtractAudio",
-                "preferredcodec": "m4a",
+                "preferredcodec": "mp3",
                 "preferredquality": "128",
             },
             {"key": "FFmpegMetadata"},

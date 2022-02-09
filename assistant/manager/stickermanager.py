@@ -8,7 +8,7 @@
 import random
 
 from pyUltroid.functions.misc import create_quotly
-from pyUltroid.functions.tools import resize_photo
+from pyUltroid.functions.tools import TgConverter
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
@@ -51,7 +51,7 @@ async def kang_cmd(ult):
     elif reply.photo:
         dl = await reply.download_media()
         name = "sticker.webp"
-        image = resize_photo(dl)
+        image = TgConverter.resize_photo_sticker(dl)
         image.save(name, "WEBP")
     elif reply.text:
         dl = await create_quotly(reply)

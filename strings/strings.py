@@ -1,14 +1,23 @@
+import sys
 from os import listdir, path
 from typing import Any, Dict, List, Union
 
-from google_trans_new import google_translator
 from pyUltroid import udB, LOGS
-from yaml import safe_load
+try:
+    from google_trans_new import google_translator
+    Trs = google_translator()
+except ImportError:
+    LOGS.info("'google_trans_new' not installed!")
+    Trs = None
+
+try:
+    from yaml import safe_load
+except ModuleNotFoundError:
+    LOGS.info("'pyYaml' not installed!\nPlease install it to use Ultroid.")
+    sys.exit()
 
 language = [udB.get_key("language") or "en"]
 languages = {}
-
-Trs = google_translator()
 
 strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
 
@@ -31,6 +40,8 @@ def get_string(key: str) -> Any:
     except KeyError:
         try:
             en_ = languages["en"][key]
+            if not Trs:
+                return en_
             tr = Trs.translate(en_, lang_tgt=lang).replace("\ N", "\n")
             if en_.count("{}") != tr.count("{}"):
                 tr = en_
@@ -41,9 +52,11 @@ def get_string(key: str) -> Any:
             return tr
         except KeyError:
             return f"Warning: could not load any string with the key `{key}`"
+        except TypeError:
+            pass
         except Exception as er:
             LOGS.exception(er)
-            return languages["en"].get(key) or f"Failed to load language string '{key}'"
+        return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:

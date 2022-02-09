@@ -9,12 +9,12 @@
 
 • `{i}autocorrect`
     To on/off Autocorrect Feature.
-
 """
 
 import string
 
-from . import HNDLR, eor, get_string, udB, ultroid_bot, ultroid_cmd  # ignore: pylint
+from . import udB  # ignore: pylint
+from . import HNDLR, get_string, ultroid_bot, ultroid_cmd
 
 try:
     from gingerit.gingerit import GingerIt
@@ -26,7 +26,7 @@ from telethon import events
 
 @ultroid_cmd(pattern="autocorrect", fullsudo=True)
 async def acc(e):
-    if Redis("AUTOCORRECT") != "True":
+    if udB.get_key("AUTOCORRECT"):
         udB.set_key("AUTOCORRECT", "True")
         ultroid_bot.add_handler(
             gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)

@@ -37,9 +37,9 @@ from telethon.tl.types import ChatBannedRights
 from . import LOGS, get_string, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="nmtime ?(.*)")
+@ultroid_cmd(pattern="nmtime( (.*)|$)")
 async def set_time(e):
-    if not e.pattern_match.group(1):
+    if not e.pattern_match.group(1).strip():
         return await e.eor(get_string("nightm_1"))
     try:
         ok = e.text.split(maxsplit=1)[1].split()
@@ -52,9 +52,9 @@ async def set_time(e):
         await e.eor(get_string("nightm_1"))
 
 
-@ultroid_cmd(pattern="addnm ?(.*)")
+@ultroid_cmd(pattern="addnm( (.*)|$)")
 async def add_grp(e):
-    pat = e.pattern_match.group(1)
+    pat = e.pattern_match.group(1).strip()
     if pat:
         try:
             add_night((await ultroid_bot.get_entity(pat)).id)
@@ -65,9 +65,9 @@ async def add_grp(e):
     await e.eor(get_string("nightm_3"))
 
 
-@ultroid_cmd(pattern="remnm ?(.*)")
+@ultroid_cmd(pattern="remnm( (.*)|$)")
 async def rem_grp(e):
-    pat = e.pattern_match.group(1)
+    pat = e.pattern_match.group(1).strip()
     if pat:
         try:
             rem_night((await ultroid_bot.get_entity(pat)).id)

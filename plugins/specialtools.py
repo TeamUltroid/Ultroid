@@ -141,10 +141,11 @@ async def adaudroid(e):
 
 
 @ultroid_cmd(
-    pattern=r"dob ?(.*)",
+    pattern=r"dob( (.*)|$)",
 )
 async def hbd(event):
-    if not event.pattern_match.group(1):
+    match = event.pattern_match.group(1).strip()
+    if not match:
         return await event.eor(get_string("spcltool_6"))
     if event.reply_to_msg_id:
         kk = await event.get_reply_message()
@@ -154,9 +155,7 @@ async def hbd(event):
         name = ultroid_bot.me.first_name
     zn = pytz.timezone("Asia/Kolkata")
     abhi = dt.now(zn)
-    n = event.text
-    q = n[5:]
-    kk = q.split("/")
+    kk = match.split("/")
     p = kk[0]
     r = kk[1]
     s = kk[2]
@@ -256,9 +255,9 @@ Zodiac -: {sign}
     )
 
 
-@ultroid_cmd(pattern="sticker ?(.*)")
+@ultroid_cmd(pattern="sticker( (.*)|$)")
 async def _(event):
-    x = event.pattern_match.group(1)
+    x = event.pattern_match.group(1).strip()
     if not x:
         return await event.eor("`Give something to search`")
     uu = await event.eor(get_string("com_1"))
@@ -279,9 +278,9 @@ async def _(event):
     await uu.edit(a, parse_mode="html")
 
 
-@ultroid_cmd(pattern="wall ?(.*)")
+@ultroid_cmd(pattern="wall( (.*)|$)")
 async def wall(event):
-    inp = event.pattern_match.group(1)
+    inp = event.pattern_match.group(1).strip()
     if not inp:
         return await event.eor("`Give me something to search..`")
     nn = await event.eor(get_string("com_1"))
@@ -300,9 +299,9 @@ async def wall(event):
     await nn.delete()
 
 
-@ultroid_cmd(pattern="q ?(.*)", manager=True, allow_pm=True)
+@ultroid_cmd(pattern="q( (.*)|$)", manager=True, allow_pm=True)
 async def quott_(event):
-    match = event.pattern_match.group(1)
+    match = event.pattern_match.group(1).strip()
     if not event.is_reply:
         return await event.eor("`Reply to Message..`")
     msg = await event.eor(get_string("com_1"))

@@ -16,7 +16,7 @@
 
 • `{i}listgban` : List all GBanned users.
 
-• `{i}gmute` | `{i}ungmute` <reply user/ username>`
+• `{i}gmute` | `{i}ungmute` <reply user/ username>
     Mute/UnMute Globally.
 
 • `{i}gkick <reply/username>` `Globally Kick User`
@@ -29,12 +29,12 @@
    Add chat to blacklist and ignores global broadcast.
 • `{i}ungblacklist` `Remove the chat from blacklist.`
 
-•`{i}gpromote <reply to user> <channel/group/all> <rank>`
+• `{i}gpromote <reply to user> <channel/group/all> <rank>`
     globally promote user where you are admin
     - Set whether To promote only in groups/channels/all.
-    `Eg-``gpromote group boss` ~ promotes user in all grps.
+    Eg- `gpromote group boss` ~ promotes user in all grps.
         `gpromote @username all sar` ~ promote the user in all group & channel
-•`{i}gdemote` - `demote user globally`
+• `{i}gdemote` - `demote user globally`
 """
 import asyncio
 import os
@@ -93,9 +93,9 @@ _gdemote_rights = ChatAdminRights(
 )
 
 
-@ultroid_cmd(pattern="gpromote ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gpromote( (.*)|$)", fullsudo=True)
 async def _(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     ultroid_bot = e.client
     if not x:
         return await e.eor(get_string("schdl_2"), time=5)
@@ -201,9 +201,9 @@ async def _(e):
         await eor(ev, f"Promoted {name.first_name} in Total : {c} {key} chats.")
 
 
-@ultroid_cmd(pattern="gdemote ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gdemote( (.*)|$)", fullsudo=True)
 async def _(e):
-    x = e.pattern_match.group(1)
+    x = e.pattern_match.group(1).strip()
     ultroid_bot = e.client
     if not x:
         return await e.eor(get_string("schdl_2"), time=5)
@@ -286,10 +286,10 @@ async def _(e):
         await eor(ev, f"Demoted {name.first_name} in Total : {c} {key} chats.")
 
 
-@ultroid_cmd(pattern="ungban ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="ungban( (.*)|$)", fullsudo=True)
 async def _(e):
     xx = await e.eor("`UnGbanning...`")
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     peer = None
     if match:
         try:
@@ -338,7 +338,7 @@ async def _(e):
                     chats += 1
                 except BaseException as er:
                     LOGS.exception(er)
-            except ChatAdminRequiredError:
+            except (ChatAdminRequiredError, ValueError):
                 pass
             except BaseException as er:
                 LOGS.exception(er)
@@ -350,18 +350,18 @@ async def _(e):
     )
 
 
-@ultroid_cmd(pattern="gban ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gban( (.*)|$)", fullsudo=True)
 async def _(e):
     xx = await e.eor("`Gbanning...`")
     reason = ""
-    if e.pattern_match.group(1):
-        usr = e.text.split(" ", maxsplit=2)[1]
+    if e.pattern_match.group(1).strip():
+        usr = e.text.split(maxsplit=2)[1]
         try:
             userid = await e.client.parse_id(usr)
         except ValueError:
             userid = usr
         try:
-            reason = e.text.split(" ", maxsplit=2)[2]
+            reason = e.text.split(maxsplit=2)[2]
         except IndexError:
             pass
     elif e.reply_to_msg_id:
@@ -377,7 +377,7 @@ async def _(e):
         except IndexError:
             pass
     else:
-        return await xx.eor("`Reply to some msg or add their id.`", tome=5, time=5)
+        return await xx.eor("`Reply to some msg or add their id.`", time=5)
     user = None
     try:
         user = await e.client.get_entity(userid)
@@ -418,7 +418,7 @@ async def _(e):
                     chats += 1
                 except BaseException as er:
                     LOGS.exception(er)
-            except ChatAdminRequiredError:
+            except (ChatAdminRequiredError, ValueError):
                 pass
             except BaseException as er:
                 LOGS.exception(er)
@@ -431,7 +431,7 @@ async def _(e):
     await xx.edit(gb_msg)
 
 
-@ultroid_cmd(pattern="g(admin|)cast ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="g(admin|)cast( (.*)|$)", fullsudo=True)
 async def gcast(event):
     text, btn, reply = "", None, None
     xx = event.pattern_match.group(2)
@@ -516,10 +516,10 @@ async def gcast(event):
     await kk.edit(text)
 
 
-@ultroid_cmd(pattern="gucast ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gucast( (.*)|$)", fullsudo=True)
 async def gucast(event):
     msg, btn, reply = "", None, None
-    xx = event.pattern_match.group(1)
+    xx = event.pattern_match.group(1).strip()
     if xx:
         msg, btn = get_msg_button(event.text.split(maxsplit=1)[1])
     elif event.is_reply:
@@ -566,13 +566,13 @@ async def gucast(event):
     await kk.edit(f"Done in {done} chats, error in {er} chat(s)")
 
 
-@ultroid_cmd(pattern="gkick ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gkick( (.*)|$)", fullsudo=True)
 async def gkick(e):
     xx = await e.eor("`Gkicking...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -598,13 +598,13 @@ async def gkick(e):
     await xx.edit(f"`Gkicked` [{name}](tg://user?id={userid}) `in {chats} chats.`")
 
 
-@ultroid_cmd(pattern="gmute ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="gmute( (.*)|$)", fullsudo=True)
 async def _(e):
     xx = await e.eor("`Gmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -633,13 +633,13 @@ async def _(e):
     await xx.edit(f"`Gmuted` {inline_mention(name)} `in {chats} chats.`")
 
 
-@ultroid_cmd(pattern="ungmute ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="ungmute( (.*)|$)", fullsudo=True)
 async def _(e):
     xx = await e.eor("`UnGmuting...`")
     if e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
-        userid = await e.client.parse_id(e.pattern_match.group(1))
+    elif e.pattern_match.group(1).strip():
+        userid = await e.client.parse_id(e.pattern_match.group(1).strip())
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -701,7 +701,7 @@ async def list_gengbanned(event):
 
 
 @ultroid_cmd(
-    pattern="gstat ?(.*)",
+    pattern="gstat( (.*)|$)",
 )
 async def gstat_(e):
     xx = await e.eor(get_string("com_1"))
@@ -709,9 +709,9 @@ async def gstat_(e):
         userid = (await e.get_chat()).id
     elif e.reply_to_msg_id:
         userid = (await e.get_reply_message()).sender_id
-    elif e.pattern_match.group(1):
+    elif e.pattern_match.group(1).strip():
         try:
-            userid = await e.client.parse_id(e.pattern_match.group(1))
+            userid = await e.client.parse_id(e.pattern_match.group(1).strip())
         except Exception as err:
             return await xx.eor(f"{err}", time=10)
     else:

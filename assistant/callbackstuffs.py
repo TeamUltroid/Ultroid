@@ -92,7 +92,7 @@ _buttons = {
             [Button.inline("« Bᴀᴄᴋ", data="cbs_pmcstm")],
         ],
     },
-    "alabs_vcstm": {
+    "alvcstm": {
         "text": f"Customise your {HNDLR}alive. Choose from the below options -",
         "buttons": [
             [Button.inline("Aʟɪᴠᴇ Tᴇxᴛ", data="abs_alvtx")],

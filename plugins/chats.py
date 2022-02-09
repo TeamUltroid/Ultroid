@@ -56,7 +56,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from . import HNDLR, LOGS, asst, get_string, mediainfo, os, types, udB, ultroid_cmd
+from . import HNDLR, LOGS, asst, con, get_string, mediainfo, os, types, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -116,7 +116,7 @@ async def _(e):
     pattern="create (b|g|c)(?: |$)(.*)",
 )
 async def _(e):
-    type_of_group = e.pattern_match.group(1)
+    type_of_group = e.pattern_match.group(1).strip()
     group_name = e.pattern_match.group(2)
     username = None
     if " ; " in group_name:
@@ -178,12 +178,12 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="setgpic ?(.*)", admins_only=True, manager=True, require="change_info"
+    pattern="setgpic( (.*)|$)", admins_only=True, manager=True, require="change_info"
 )
 async def _(ult):
     if not ult.is_reply:
         return await ult.eor("`Reply to a Media..`", time=5)
-    match = ult.pattern_match.group(1)
+    match = ult.pattern_match.group(1).strip()
     if not ult.client._bot and match:
         try:
             chat = await ult.client.parse_id(match)
@@ -191,13 +191,21 @@ async def _(ult):
             return await ult.eor(str(ok))
     else:
         chat = ult.chat_id
-    reply_message = await ult.get_reply_message()
-    if reply_message.media:
-        replfile = await reply_message.download_media()
+    reply = await ult.get_reply_message()
+    if reply.photo or reply.sticker or reply.video:
+        replfile = await reply.download_media()
+    elif reply.document and reply.document.thumbs:
+        replfile = await reply.download_media(thumb=-1)
     else:
         return await ult.eor("Reply to a Photo or Video..")
+    mediain = mediainfo(reply.media)
+    if "animated" in mediain:
+        replfile = await con.convert(replfile, convert_to="mp4")
+    else:
+        replfile = await con.convert(
+            replfile, outname="chatphoto", allowed_formats=["jpg", "png", "mp4"]
+        )
     file = await ult.client.upload_file(replfile)
-    mediain = mediainfo(reply_message.media)
     try:
         if "pic" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
@@ -209,10 +217,10 @@ async def _(ult):
 
 
 @ultroid_cmd(
-    pattern="delgpic ?(.*)", admins_only=True, manager=True, require="change_info"
+    pattern="delgpic( (.*)|$)", admins_only=True, manager=True, require="change_info"
 )
 async def _(ult):
-    match = ult.pattern_match.group(1)
+    match = ult.pattern_match.group(1).strip()
     chat = ult.chat_id
     if not ult.client._bot and match:
         chat = match
@@ -245,14 +253,14 @@ async def _(event):
 
 
 @ultroid_cmd(
-    pattern="rmusers ?(.*)",
+    pattern="rmusers( (.*)|$)",
     groups_only=True,
     admins_only=True,
     fullsudo=True,
 )
 async def _(event):
     xx = await event.eor(get_string("com_1"))
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(1).strip()
     p, a, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     async for i in event.client.iter_participants(event.chat_id):
         p += 1  # Total Count

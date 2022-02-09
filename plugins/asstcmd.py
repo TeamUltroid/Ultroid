@@ -26,9 +26,9 @@ from telethon import events, utils
 from . import asst, get_string, mediainfo, ultroid_cmd
 
 
-@ultroid_cmd(pattern="addcmd ?(.*)")
+@ultroid_cmd(pattern="addcmd( (.*)|$)")
 async def ac(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     wt = await e.get_reply_message()
     if not (wt and wrd):
         return await e.eor(get_string("asstcmd_1"), time=5)
@@ -72,9 +72,9 @@ async def ac(e):
     await e.eor(get_string("asstcmd_4").format(wrd))
 
 
-@ultroid_cmd(pattern="remcmd ?(.*)")
+@ultroid_cmd(pattern="remcmd( (.*)|$)")
 async def rc(e):
-    wrd = (e.pattern_match.group(1)).lower()
+    wrd = (e.pattern_match.group(1).strip()).lower()
     if not wrd:
         return await e.eor(get_string("asstcmd_2"), time=5)
     wrd = wrd.replace("/", "")

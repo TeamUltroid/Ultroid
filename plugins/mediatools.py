@@ -81,9 +81,9 @@ async def mi(e):
     os.remove(naam)
 
 
-@ultroid_cmd(pattern="rotate ?(.*)")
+@ultroid_cmd(pattern="rotate( (.*)|$)")
 async def rotate_(ult):
-    match = ult.pattern_match.group(1)
+    match = ult.pattern_match.group(1).strip()
     if not ult.is_reply:
         return await ult.eor("`Reply to a media...`")
     if match:

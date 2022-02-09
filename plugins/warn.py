@@ -30,7 +30,7 @@ from . import eor, get_string, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="warn ?(.*)",
+    pattern="warn( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -41,8 +41,8 @@ async def warn(e):
     if len(e.text) > 5 and " " not in e.text[5]:
         return
     if reply:
-        user = reply.from_id.user_id
-        reason = e.text[5:] if e.pattern_match.group(1) else "unknown"
+        user = reply.sender_id
+        reason = e.text[5:] if e.pattern_match.group(1).strip() else "unknown"
     else:
         try:
             user = e.text.split()[1]
@@ -104,7 +104,7 @@ async def warn(e):
 
 
 @ultroid_cmd(
-    pattern="resetwarn ?(.*)",
+    pattern="resetwarn( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -130,7 +130,7 @@ async def rwarn(e):
 
 
 @ultroid_cmd(
-    pattern="warns ?(.*)",
+    pattern="warns( (.*)|$)",
     manager=True,
     groups_only=True,
     admins_only=True,
@@ -162,9 +162,9 @@ async def twarns(e):
         await e.eor("`No Warnings`")
 
 
-@ultroid_cmd(pattern="setwarn ?(.*)", manager=True)
+@ultroid_cmd(pattern="setwarn( (.*)|$)", manager=True)
 async def warnset(e):
-    ok = e.pattern_match.group(1)
+    ok = e.pattern_match.group(1).strip()
     if not ok:
         return await e.eor("stuff")
     if "|" in ok:

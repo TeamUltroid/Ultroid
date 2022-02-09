@@ -35,12 +35,12 @@ async def size(e):
     os.remove(img)
 
 
-@ultroid_cmd(pattern="resize ?(.*)")
+@ultroid_cmd(pattern="resize( (.*)|$)")
 async def size(e):
     r = await e.get_reply_message()
     if not (r and r.media):
         return await e.eor(get_string("ascii_1"))
-    sz = e.pattern_match.group(1)
+    sz = e.pattern_match.group(1).strip()
     if not sz:
         return await eor(
             f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ", time=5

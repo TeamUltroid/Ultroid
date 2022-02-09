@@ -10,6 +10,7 @@ import re
 
 from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
+    ChannelPrivateError,
     ChatWriteForbiddenError,
     MediaCaptionTooLongError,
     MediaEmptyError,
@@ -46,18 +47,18 @@ async def all_messages_catcher(e):
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
         if TAG_EDITS.get(e.chat_id):
-            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+            TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg": e}})
         else:
-            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+            TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
         tag_add(sent.id, e.chat_id, e.id)
     except MediaEmptyError:
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
             if TAG_EDITS.get(e.chat_id):
-                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+                TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg": e}})
             else:
-                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
             tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
@@ -69,9 +70,9 @@ async def all_messages_catcher(e):
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
                     if TAG_EDITS.get(e.chat_id):
-                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id}})
+                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg": e}})
                     else:
-                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id}}})
+                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
                     return os.remove(media)
                 except Exception as er:
                     LOGS.exception(er)
@@ -141,6 +142,8 @@ if udB.get_key("TAG_LOG"):
         if not d_.get(event.id):
             return
         d_ = d_[event.id]
+        if d_["msg"].text == event.text:
+            return
         msg = None
         if d_.get("count"):
             d_["count"] += 1
@@ -164,7 +167,8 @@ if udB.get_key("TAG_LOG"):
         if d_["count"] == 10:
             TEXT += "\n\n• __Only the first 10 Edits are shown.__"
         try:
-            await MSG.edit(TEXT, buttons=await parse_buttons(event))
+            msg = await MSG.edit(TEXT, buttons=await parse_buttons(event))
+            d_["msg"] = msg
         except (MessageTooLongError, MediaCaptionTooLongError):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
@@ -237,8 +241,18 @@ async def leave_ch_at(event):
         client = _client[client]
     except KeyError:
         return
-    name = (await client.get_entity(int(ch_id))).title
-    await client.delete_dialog(int(ch_id))
+    try:
+        name = (await client.get_entity(int(ch_id))).title
+        await client.delete_dialog(int(ch_id))
+    except UserNotParticipantError:
+        pass
+    except ChannelPrivateError:
+        return await event.edit(
+            "`[CANT_ACCESS_CHAT]` `Maybe already left or got banned.`"
+        )
+    except Exception as er:
+        LOGS.exception(er)
+        return await event.answer(str(er))
     await event.edit(get_string("userlogs_5").format(name))
 
 

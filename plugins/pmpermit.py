@@ -155,7 +155,7 @@ if udB.get_key("PMLOG"):
 
 
 if udB.get_key("PMSETTING"):
-    if udB.get_key("AUTOAPPROVE"):
+    if udB.get_key("AUTOAPPROVE") in [True, None]:
 
         @ultroid_bot.on(
             events.NewMessage(
@@ -375,7 +375,7 @@ if udB.get_key("PMSETTING"):
         pattern="(start|stop|clear)archive$",
     )
     async def _(e):
-        x = e.pattern_match.group(1)
+        x = e.pattern_match.group(1).strip()
         if x == "start":
             udB.set_key("MOVE_ARCHIVE", "True")
             await e.eor("Now I will move new Unapproved DM's to archive", time=5)
@@ -495,9 +495,9 @@ if udB.get_key("PMSETTING"):
             )
 
 
-@ultroid_cmd(pattern="block ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="block( (.*)|$)", fullsudo=True)
 async def blockpm(block):
-    match = block.pattern_match.group(1)
+    match = block.pattern_match.group(1).strip()
     if block.reply_to_msg_id:
         user = (await block.get_reply_message()).sender_id
     elif match:
@@ -542,9 +542,12 @@ async def blockpm(block):
         pass
 
 
-@ultroid_cmd(pattern="unblock ?(.*)")
+@ultroid_cmd(pattern="unblock( (.*)|$)")
 async def unblockpm(event):
-    match = event.pattern_match.group(1) or (await event.get_reply_message()).sender_id
+    match = (
+        event.pattern_match.group(1).strip()
+        or (await event.get_reply_message()).sender_id
+    )
     if not match:
         return await event.eor(NO_REPLY + "`Or give it's username/id`", time=5)
     if match == "all":
@@ -762,7 +765,7 @@ async def ytfuxist(e):
 
 @in_pattern(re.compile("ip_(.*)"), owner=True)
 async def in_pm_ans(event):
-    from_user = int(event.pattern_match.group(1))
+    from_user = int(event.pattern_match.group(1).strip())
     try:
         warns = U_WARNS[from_user]
     except Exception as e:
@@ -831,7 +834,7 @@ async def in_pm_ans(event):
 
 @callback(re.compile("admin_only(.*)"), from_users=[ultroid_bot.uid])
 async def _admin_tools(event):
-    chat = int(event.pattern_match.group(1))
+    chat = int(event.pattern_match.group(1).strip())
     await event.edit(
         buttons=[
             [
@@ -845,7 +848,7 @@ async def _admin_tools(event):
 
 @callback(re.compile("don_(.*)"))
 async def _mejik(e):
-    data = e.pattern_match.group(1).decode("utf-8").split("/")
+    data = e.pattern_match.group(1).strip().decode("utf-8").split("/")
     text = "👮‍♂ Warn Count : " + data[0]
     text += "\n🤖 Total Warn Count : " + data[1]
     await e.answer(text, alert=True)
@@ -853,7 +856,7 @@ async def _mejik(e):
 
 @callback(re.compile("pmbk_(.*)"))
 async def edt(event):
-    from_user = int(event.pattern_match.group(1))
+    from_user = int(event.pattern_match.group(1).strip())
     try:
         warns = U_WARNS[from_user]
     except Exception as e:

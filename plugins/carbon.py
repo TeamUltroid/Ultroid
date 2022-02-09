@@ -202,10 +202,10 @@ async def crbn(event):
 
 
 @ultroid_cmd(
-    pattern="ccarbon ?(.*)",
+    pattern="ccarbon( (.*)|$)",
 )
 async def crbn(event):
-    match = event.pattern_match.group(1)
+    match = event.pattern_match.group(1).strip()
     if not match:
         return await event.eor(get_string("carbon_3"))
     msg = await event.eor(get_string("com_1"))

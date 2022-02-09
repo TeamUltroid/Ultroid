@@ -49,11 +49,11 @@ if not os.path.isdir("pdf"):
 
 
 @ultroid_cmd(
-    pattern="pdf ?(.*)",
+    pattern="pdf( (.*)|$)",
 )
 async def pdfseimg(event):
     ok = await event.get_reply_message()
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     if not (ok and (ok.document and (ok.document.mime_type == "application/pdf"))):
         await event.eor("`Reply The pdf u Want to Download..`")
         return
@@ -114,11 +114,11 @@ async def pdfseimg(event):
 
 
 @ultroid_cmd(
-    pattern="pdtext ?(.*)",
+    pattern="pdtext( (.*)|$)",
 )
 async def pdfsetxt(event):
     ok = await event.get_reply_message()
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     if not ok and ok.document and ok.document.mime_type == "application/pdf":
         await event.eor("`Reply The pdf u Want to Download..`")
         return
@@ -176,7 +176,7 @@ async def pdfsetxt(event):
 
 
 @ultroid_cmd(
-    pattern="pdscan ?(.*)",
+    pattern="pdscan( (.*)|$)",
 )
 async def imgscan(event):
     ok = await event.get_reply_message()
@@ -236,7 +236,7 @@ async def imgscan(event):
 
 
 @ultroid_cmd(
-    pattern="pdsave ?(.*)",
+    pattern="pdsave( (.*)|$)",
 )
 async def savepdf(event):
     ok = await event.get_reply_message()
@@ -306,7 +306,7 @@ async def savepdf(event):
 
 
 @ultroid_cmd(
-    pattern="pdsend ?(.*)",
+    pattern="pdsend( (.*)|$)",
 )
 async def sendpdf(event):
     if not os.path.exists("pdf/scan.pdf"):
@@ -315,7 +315,7 @@ async def sendpdf(event):
             "first select pages by replying .pdsave of which u want to make multi page pdf file",
         )
         return
-    msg = event.pattern_match.group(1)
+    msg = event.pattern_match.group(1).strip()
     ok = f"{msg}.pdf" if msg else "My PDF File.pdf"
     merger = PdfFileMerger()
     afl = glob.glob("pdf/*")

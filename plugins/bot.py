@@ -104,10 +104,10 @@ async def alive(event):
 
 
 @ultroid_cmd(
-    pattern="alive ?(.*)",
+    pattern="alive( (.*)|$)",
 )
 async def lol(ult):
-    match = ult.pattern_match.group(1)
+    match = ult.pattern_match.group(1).strip()
     inline = None
     if match in ["inline", "i"]:
         try:
@@ -119,6 +119,8 @@ async def lol(ult):
             LOGS.exception(er)
         inline = True
     pic = udB.get_key("ALIVE_PIC")
+    if isinstance(pic, list):
+        pic = choice(pic)
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
@@ -161,7 +163,7 @@ async def lol(ult):
                 link_preview=False,
                 buttons=buttons if inline else None,
             )
-            await ult.try_delete()
+            return await ult.try_delete()
         except ChatSendMediaForbiddenError:
             pass
         except BaseException as er:
@@ -212,6 +214,8 @@ heroku_api = Var.HEROKU_API
 async def restartbt(ult):
     ok = await ult.eor(get_string("bot_5"))
     call_back()
+    who = "bot" if ult.client._bot else "user"
+    udB.set_key("_RESTART", f"{who}_{ult.chat_id}_{ok.id}")
     if heroku_api:
         return await restart(ok)
     await bash("git pull && pip3 install -r requirements.txt")
@@ -230,11 +234,11 @@ async def shutdownbot(ult):
 
 
 @ultroid_cmd(
-    pattern="logs ?(.*)",
+    pattern="logs( (.*)|$)",
     chats=[],
 )
 async def _(event):
-    opt = event.pattern_match.group(1)
+    opt = event.pattern_match.group(1).strip()
     file = f"ultroid{sys.argv[-1]}.log" if len(sys.argv) > 1 else "ultroid.log"
     if opt == "heroku":
         await heroku_logs(event)
@@ -258,6 +262,8 @@ async def _(event):
 @in_pattern("alive", owner=True)
 async def inline_alive(ult):
     pic = udB.get_key("ALIVE_PIC")
+    if isinstance(pic, list):
+        pic = choice(pic)
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
@@ -310,11 +316,12 @@ async def inline_alive(ult):
     await ult.answer(result)
 
 
-@ultroid_cmd(pattern="update ?(.*)")
+@ultroid_cmd(pattern="update( (.*)|$)")
 async def _(e):
     xx = await e.eor(get_string("upd_1"))
-    if e.pattern_match.group(1) and (
-        "fast" in e.pattern_match.group(1) or "soft" in e.pattern_match.group(1)
+    if e.pattern_match.group(1).strip() and (
+        "fast" in e.pattern_match.group(1).strip()
+        or "soft" in e.pattern_match.group(1).strip()
     ):
         await bash("git pull -f && pip3 install -r requirements.txt")
         call_back()

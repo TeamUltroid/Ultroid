@@ -24,12 +24,12 @@ from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="poll ?(.*)",
+    pattern="poll( (.*)|$)",
 )
 async def uri_poll(e):
     if not e.client._bot and e.is_private:
         return await e.eor("`Use this in Group/Channel.`", time=15)
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     if not match:
         return await e.eor("`Give Proper Input...`", time=5)
     if ";" not in match:

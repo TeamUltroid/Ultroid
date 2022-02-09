@@ -70,7 +70,13 @@ async def inline_alive(o):
             content=InputWebDocument(TLINK, 0, "image/jpg", []),
         )
     ]
-    await o.answer(RES, switch_pm="👥 ULTROID PORTAL", switch_pm_param="start")
+    await o.answer(
+        RES,
+        private=True,
+        cache_time=300,
+        switch_pm="👥 ULTROID PORTAL",
+        switch_pm_param="start",
+    )
 
 
 @in_pattern("ultd", owner=True)
@@ -95,7 +101,7 @@ async def inline_handler(event):
         result = await event.builder.article(
             title="Ultroid Help Menu", text=text, buttons=_main_help_menu
         )
-    await event.answer([result], gallery=True)
+    await event.answer([result], private=True, cache_time=300, gallery=True)
 
 
 @in_pattern("pasta", owner=True)
@@ -183,7 +189,7 @@ async def uptd_plugin(event):
                 help_ += "\n"
     if not help_:
         help_ = f"{file} has no Detailed Help!"
-    help_ += "\n© Join @TeamUltroid"
+    help_ += "\n© @TeamUltroid"
     buttons = []
     if INLINE_PIC:
         data = f"sndplug_{key}_{file}"
@@ -328,6 +334,7 @@ async def _(e):
                 "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
             )
         ],
+        [Button.switch_inline("Sᴀᴀᴠɴ sᴇᴀʀᴄʜ", query="saavn", same_peer=True)],
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
@@ -406,7 +413,7 @@ STUFF = {}
 
 @in_pattern("stf(.*)", owner=True)
 async def ibuild(e):
-    n = e.pattern_match.group(1)
+    n = e.pattern_match.group(1).strip()
     builder = e.builder
     if not (n and n.isdigit()):
         return

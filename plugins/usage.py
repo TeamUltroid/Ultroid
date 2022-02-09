@@ -26,10 +26,11 @@ import psutil
 import requests
 from pyUltroid.functions import some_random_headers
 
-from . import Var, eor, get_string, humanbytes, udB, ultroid_cmd
+from . import HOSTED_ON, Var, get_string, humanbytes, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
+
 heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
 try:
     if heroku_api and app_name:
@@ -55,10 +56,8 @@ async def usage_finder(event):
     elif opt == "heroku":
         is_hk, hk = heroku_usage()
         await x.edit(hk)
-    elif opt == "full":
-        await x.edit(get_full_usage())
     else:
-        await eor(x, "`The what?`", time=5)
+        await x.edit(get_full_usage())
 
 
 def simple_usage():
@@ -84,8 +83,13 @@ def simple_usage():
 
 
 def heroku_usage():
-    if HEROKU_API is None and HEROKU_APP_NAME is None:
-        return False, "You do not use heroku, bruh!"
+    if not (HEROKU_API and HEROKU_APP_NAME):
+        if HOSTED_ON == "heroku":
+            return False, "Please fill `HEROKU_API` and `HEROKU_APP_NAME`"
+        return (
+            False,
+            f"`This command is only for Heroku Users, You are using {HOSTED_ON}`",
+        )
     user_id = Heroku.account().id
     headers = {
         "User-Agent": choice(some_random_headers),
@@ -153,15 +157,15 @@ def db_usage():
         total = 20
     elif udB.name == "Mongo":
         total = 512
-    total = total * (2 ** 20)
+    total = total * (2**20)
     used = udB.usage
     a = humanbytes(used) + "/" + humanbytes(total)
     b = str(round((used / total) * 100, 2)) + "%"
-    return f"**{udB.name}**\n\n**Storage Used**: {a}\n**Usage percentage**: {b}"
+    return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 
 def get_full_usage():
     is_hk, hk = heroku_usage()
-    her = "" if is_hk is False else hk
+    her = hk if is_hk else ""
     rd = db_usage()
     return her + "\n\n" + rd

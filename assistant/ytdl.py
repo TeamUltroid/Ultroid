@@ -13,7 +13,13 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
-from pyUltroid.functions.helper import bash, fast_download, numerize, time_formatter
+from pyUltroid.functions.helper import (
+    bash,
+    fast_download,
+    humanbytes,
+    numerize,
+    time_formatter,
+)
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
 from telethon import Button
 from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
@@ -52,7 +58,7 @@ async def _(event):
         await event.answer([fuk])
         return
     results = []
-    search = VideosSearch(string, limit=10)
+    search = VideosSearch(string, limit=50)
     nub = search.result()
     nibba = nub["result"]
     for v in nibba:
@@ -70,12 +76,12 @@ async def _(event):
             else "None"
         )
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
-        text = f"<strong>Title:- <a href={link}>{title}</a></strong>\n"
-        text += f"<strong>⏳ Duration:-</strong> <code>{duration}</code>\n"
-        text += f"<strong>👀 Views:- </strong> <code>{views}</code>\n"
-        text += f"<strong>🎙️ Publisher:- </strong> <code>{publisher}</code>\n"
-        text += f"<strong>🗓️ Published on:- </strong> <code>{published_on}</code>\n"
-        text += f"<strong>📝 Description:- </strong> <code>{description}</code>"
+        text = f"**Title: [{title}]({link})**\n\n"
+        text += f"`Description: {description}\n\n"
+        text += f"「 Duration: {duration} 」\n"
+        text += f"「 Views: {views} 」\n"
+        text += f"「 Publisher: {publisher} 」\n"
+        text += f"「 Published on: {published_on} 」`"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         buttons = [
@@ -96,9 +102,7 @@ async def _(event):
                 ),
             ],
         ]
-        BACK_BUTTON.update(
-            {ids: {"text": text, "buttons": buttons, "parse_mode": "html"}}
-        )
+        BACK_BUTTON.update({ids: {"text": text, "buttons": buttons}})
         results.append(
             await event.builder.article(
                 type="photo",
@@ -108,7 +112,6 @@ async def _(event):
                 content=file,
                 text=text,
                 include_media=True,
-                parse_mode="html",
                 buttons=buttons,
             ),
         )
@@ -122,7 +125,7 @@ async def _(event):
     owner=True,
 )
 async def _(e):
-    _e = e.pattern_match.group(1).decode("UTF-8")
+    _e = e.pattern_match.group(1).strip().decode("UTF-8")
     _lets_split = _e.split(":")
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
     _data = get_formats(_lets_split[0], _lets_split[1], _ytdl_data)
@@ -140,7 +143,7 @@ async def _(e):
     owner=True,
 )
 async def _(event):
-    url = event.pattern_match.group(1).decode("UTF-8")
+    url = event.pattern_match.group(1).strip().decode("UTF-8")
     lets_split = url.split(":")
     vid_id = lets_split[2]
     link = _yt_base_url + vid_id
@@ -151,6 +154,7 @@ async def _(event):
         ext = "mp3"
     if lets_split[0] == "audio":
         opts = {
+            "format": "bestaudio",
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
@@ -184,8 +188,12 @@ async def _(event):
             else ytdl_data["description"][:100]
         )
         description = description or "None"
+        filepath = vid_id + f".{ext}"
+        if not os.path.exists(filepath):
+            filepath = filepath + f".{ext}"
+        size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
-            vid_id + f".{ext}" * 2,
+            filepath,
             filename=title + "." + ext,
             show_progress=True,
             event=event,
@@ -235,6 +243,7 @@ async def _(event):
         filepath = vid_id + ".mkv"
         if not os.path.exists(filepath):
             filepath = filepath + ".webm"
+        size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
             filepath,
             filename=title + ".mkv",
@@ -250,12 +259,14 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    text = f"**Title:** `{title}`\n\n"
-    text += f"`📝 Description:` `{description}`\n\n"
-    text += f"`⏳ Duration:` `{time_formatter(int(duration)*1000)}`\n"
-    text += f"`🎤 Artist:` `{artist}`\n"
-    text += f"`👀 Views`: `{views}`\n"
-    text += f"`👍 Likes`: `{likes}`\n"
+    description = description if description != "" else "None"
+    text = f"**Title: [{title}]({_yt_base_url}{vid_id})**\n\n"
+    text += f"`📝 Description: {description}\n\n"
+    text += f"「 Duration: {time_formatter(int(duration)*1000)} 」\n"
+    text += f"「 Artist: {artist} 」\n"
+    text += f"「 Views: {views} 」\n"
+    text += f"「 Likes: {likes} 」\n"
+    text += f"「 Size: {humanbytes(size)} 」`"
     button = Button.switch_inline("Search More", query="yt ", same_peer=True)
     try:
         await event.edit(

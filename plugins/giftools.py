@@ -33,7 +33,7 @@ from . import HNDLR, LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd
 
 @ultroid_cmd(pattern="(bw|invert)gif$")
 async def igif(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(1).strip()
     a = await e.get_reply_message()
     if not (a and a.media):
         return await e.eor("`Reply To gif only`", time=5)
@@ -70,9 +70,9 @@ async def reverse_gif(event):
     os.remove("reversed.mp4")
 
 
-@ultroid_cmd(pattern="gif ?(.*)")
+@ultroid_cmd(pattern="gif( (.*)|$)")
 async def gifs(ult):
-    get = ult.pattern_match.group(1)
+    get = ult.pattern_match.group(1).strip()
     xx = random.randint(0, 5)
     n = 0
     if ";" in get:

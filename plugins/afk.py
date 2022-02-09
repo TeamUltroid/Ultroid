@@ -9,9 +9,9 @@
 
 • `{i}afk <optional reason>`
     AFK means away from keyboard,
-    After u active this if Someone tag or msg u then It auto Reply Him/her,
+    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.
 
-    (Note : By Reply To any media U can set media afk too).
+    (Note : Set a media file in afk messages by replying to any media with `{i}afk <reason>`).
 
 """
 
@@ -37,12 +37,12 @@ from . import (
 old_afk_msg = []
 
 
-@ultroid_cmd(pattern="afk ?(.*)", fullsudo=True)
+@ultroid_cmd(pattern="afk( (.*)|$)", fullsudo=True)
 async def set_afk(event):
     if event.client._bot or is_afk():
         return
     text, media, media_type = None, None, None
-    if event.pattern_match.group(1):
+    if event.pattern_match.group(1).strip():
         text = event.text.split(maxsplit=1)[1]
     reply = await event.get_reply_message()
     if reply:

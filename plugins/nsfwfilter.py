@@ -22,13 +22,13 @@ from pyUltroid.dB.nsfw_db import is_nsfw, nsfw_chat, rem_nsfw
 from . import HNDLR, LOGS, async_searcher, eor, events, udB, ultroid_bot, ultroid_cmd
 
 
-@ultroid_cmd(pattern="addnsfw ?(.*)", admins_only=True)
+@ultroid_cmd(pattern="addnsfw( (.*)|$)", admins_only=True)
 async def addnsfw(e):
     if not udB.get_key("DEEP_API"):
         return await eor(
             e, f"Get Api from deepai.org and Add It `{HNDLR}setdb DEEP_API your-api`"
         )
-    action = e.pattern_match.group(1)
+    action = e.pattern_match.group(1).strip()
     if not action or ("ban" or "kick" or "mute") not in action:
         action = "mute"
     nsfw_chat(e.chat_id, action)

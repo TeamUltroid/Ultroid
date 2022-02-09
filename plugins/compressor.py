@@ -41,9 +41,9 @@ from . import (
 )
 
 
-@ultroid_cmd(pattern="compress ?(.*)")
+@ultroid_cmd(pattern="compress( (.*)|$)")
 async def _(e):
-    cr = e.pattern_match.group(1)
+    cr = e.pattern_match.group(1).strip()
     crf = 27
     to_stream = False
     if cr:
@@ -88,7 +88,7 @@ async def _(e):
         with open(progress, "w") as fk:
             pass
         proce = await asyncio.create_subprocess_shell(
-            f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} """{out}""" -y',
+            f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} -c:a copy """{out}""" -y',
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
