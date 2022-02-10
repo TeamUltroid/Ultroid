@@ -12,7 +12,6 @@
 
 • `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
     UNLOCK the Used Setting in Used Group.
-
 """
 from pyUltroid.functions.admins import lock_unlock
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
@@ -24,10 +23,10 @@ from . import ultroid_cmd
     pattern="(un|)lock( (.*)|$)", admins_only=True, manager=True, require="change_info"
 )
 async def un_lock(e):
-    mat = e.pattern_match.group(2)
+    mat = e.pattern_match.group(2).strip()
     if not mat:
         return await e.eor("`Give some Proper Input..`", time=5)
-    lock = e.pattern_match.group(1).strip() == ""
+    lock = e.pattern_match.group(1) == ""
     ml = lock_unlock(mat, lock)
     if not ml:
         return await e.eor("`Incorrect Input`", time=5)
