@@ -28,8 +28,15 @@ from ._inline import something
 
 
 @ultroid_bot.on(events.ChatAction())
-async def ChatActionsHandler(ult):  # sourcery no-metrics
-    # clean chat actions
+async def Function(event):
+    try:
+        await DummyHandler(event)
+    except Exception as er:
+        LOGS.exception(er)
+
+
+async def DummyHandler(ult):
+   # clean chat actions
     key = udB.get_key("CLEANCHAT") or []
     if ult.chat_id in key:
         try:
