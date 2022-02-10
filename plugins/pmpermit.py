@@ -353,7 +353,7 @@ if udB.get_key("PMSETTING"):
                 COUNT_PM[user.id] = COUNT_PM[user.id] + 1
             if COUNT_PM[user.id] >= WARNS:
                 await delete_pm_warn_msgs(user.id)
-                await event.respond(UNS)
+                _to_delete[user.id] = await event.respond(UNS)
                 try:
                     del COUNT_PM[user.id]
                     del LASTMSG[user.id]
