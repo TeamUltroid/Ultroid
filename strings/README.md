@@ -20,7 +20,7 @@
 | cn | Chinese [简体中文] | 114 | 299 |
 | ta | தமிழ் [தமிழ்] | 114 | 299 |
 | mr | Marathi [मराठी] | 114 | 299 |
-| ar | Arabic [العربية] | 252 | 161 |
+| ar | Arabic [العربية] | 413 | NULL |
 | it | Italian [italiano] | 113 | 300 |
 | gu | Gujarati [ગુજરાતી] | 111 | 302 |
 | ml | Malayalam [മലയാളം] | 114 | 299 |
