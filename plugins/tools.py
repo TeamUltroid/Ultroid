@@ -192,7 +192,7 @@ async def _(e):
         output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
         cv2.imwrite("img.jpg", output)
         thumb = "img.jpg"
-        audio, _ = await e.client.fast_downloader(reply.document, reply.file.name)
+        audio, _ = await e.client.fast_downloader(reply.document)
         await msg.edit("`Creating video note...`")
         await bash(
             f'ffmpeg -i "{thumb}" -i "{audio.name}" -preset ultrafast -c:a libmp3lame -ab 64 circle.mp4 -y'
@@ -217,7 +217,7 @@ async def _(e):
         await msg.delete()
         [os.remove(k) for k in [audio.name, thumb]]
     elif mediainfo(reply.media) == "gif" or mediainfo(reply.media).startswith("video"):
-        msg = await e.eor("**Cʀᴇᴀᴛɪɴɢ Vɪᴅᴇᴏ Nᴏᴛᴇ**")
+        msg = await e.eor("**Creating video note**")
         file = await reply.download_media("resources/downloads/")
         if file.endswith(".webm"):
             nfile = await TgConverter.ffmpeg_convert(file, "file.mp4")

@@ -170,9 +170,7 @@ upd_1: "`Controllo aggiornamenti, attendere prego....`"
 upd_2: "`Oops.. Il programma di aggiornamento non può continuare a causa di alcuni problemi.`\n\n**LOGTRACE:**\n"
 upd_3: "**Nuovo UPDATE disponibile per [[{}]]({}/tree/{}):\n\nCHANGELOG**\n\n{}"
 upd_4: "`Il log delle modifiche è troppo grande, visualizza il file per vederlo.`"
-upd_5: "Usa `{}update now` per aggiornare."
-upd_6: "{}\n\nUsa `{}update now` per aggiornare."
-upd_7: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
+upd_6: "\n`Your BOT is`  **up-to-date**  `with`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
 udl_1: "`Rispondi al file / supporto che desideri scaricare...`"

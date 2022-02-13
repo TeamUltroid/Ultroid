@@ -135,9 +135,7 @@ upd_1: "`Buscando actualizaciones, por favor espere...`"
 upd_2: "`Vaya... El actualizador no puede continuar debido a algunos problemas.\n\n** LOGTRACE: **\n"
 upd_3: "**Nueva ACTUALIZACIÓN disponible para [[{}]]({}/arból/{}):\n\nCHANGELOG**\n\n{}"
 upd_4: "`El registro de cambios es demasiado grande, vea el archivo para verlo"
-upd_5: "Usa `{}actualizar ahora` para actualizar."
-upd_6: "{}\n\nUsa `{}actualizar ahora` para actualizar."
-upd_7: "\n`Tu BOT está`  **actualizado**  `con`  **[[{}]]({}/arból/{})**\n"
+upd_6: "\n`Tu BOT está`  **actualizado**  `con`  **[[{}]]({}/arból/{})**\n"
 
 #upload download
 udl_1: "`Responde al Archivo/Medio que quieras descargar..`"

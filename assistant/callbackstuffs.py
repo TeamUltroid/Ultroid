@@ -1007,7 +1007,7 @@ async def apon(event):
 @callback("apof", owner=True)
 async def apof(event):
     try:
-        udB.del_key("AUTOAPPROVE")
+        udB.set_key("AUTOAPPROVE", "False")
         return await event.edit(
             "Done! AUTOAPPROVE Stopped!!",
             buttons=[[Button.inline("« Bᴀᴄᴋ", data="cbs_apauto")]],
