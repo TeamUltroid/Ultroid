@@ -174,9 +174,7 @@ upd_1: "`Memeriksa kemas kini, sila tunggu ....`"
 upd_2: "`Oops.. Updater tidak dapat diteruskan kerana terdapat beberapa masalah.`\n\n**LOGTRACE:**\n"
 upd_3: "**Kemaskini baru tersedia untuk [[{}]]({}/tree/{}):\n\nYang Baru**\n\n{}"
 upd_4: "`Changelog terlalu besar, lihat fail untuk melihatnya.`"
-upd_5: "Klik butang di bawah untuk mengemas kini."
-upd_6: "Klik butang di bawah untuk mengemas kini."
-upd_7: "\n`Bot Anda`  **di versi terkini**  `dengan`  **[[{}]]({}/tree/{})**\n"
+upd_6: "\n`Bot Anda`  **di versi terkini**  `dengan`  **[[{}]]({}/tree/{})**\n"
 
 # upload download
 udl_1: "`Balas fail / media yang ingin anda muat turun ...`"

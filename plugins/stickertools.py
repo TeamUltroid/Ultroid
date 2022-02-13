@@ -56,7 +56,7 @@ from . import (
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker and _e.file.mime_type != "image/webp"):
+    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
         return await _.eor(get_string("sts_4"))
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]

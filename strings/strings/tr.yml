@@ -137,9 +137,7 @@ upd_1: "`Güncellemeler kontrol ediliyor, lütfen bekleyin...`"
 upd_2: "`Oops.. Güncelleme bazı sorunlar nedeniyle devam edemiyor.`\n\n**LOG İZLEME:**\n"
 upd_3: "**[[{}]]({}/tree/{} için yeni GÜNCELLEME mevcut):\n\nDEĞİŞİM GÜNLÜĞÜ**\n\n{}"
 upd_4: "`Değişiklik günlüğü çok büyük, dosyayı görmek için görüntüleyin.`"
-upd_5: "Güncellemek için `{}update now` komutunu kullanın."
-upd_6: "{}\n\nGüncellemek için `{}update now` komutunu kullanın."
-upd_7: "\n`BOT'unuz` **[[{}]]({}/tree/{})** `ile` **güncel.**\n"
+upd_6: "\n`BOT'unuz` **[[{}]]({}/tree/{})** `ile` **güncel.**\n"
 
 #upload download
 udl_1: "`İndirmek İstediğiniz Dosyayı/Medyayı Yanıtlayın..`"
