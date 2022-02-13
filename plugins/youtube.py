@@ -7,10 +7,10 @@
 """
 ✘ Commands Available -
 
-• `{i}yta <(youtube) link>`
+• `{i}yta <(youtube/any) link>`
    Download audio from the link.
 
-• `{i}ytv <(youtube) link>`
+• `{i}ytv <(youtube/any) link>`
    Download video  from the link.
 
 • `{i}ytsa <(youtube) search query>`
@@ -81,6 +81,8 @@ async def download_from_youtube_(event):
         except IndexError:
             return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query)
+        if not url:
+            return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_6"))
     elif opt == "sv":
         ytd["format"] = "best"
@@ -91,6 +93,8 @@ async def download_from_youtube_(event):
         except IndexError:
             return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query)
+        if not url:
+            return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_8"))
     else:
         return
