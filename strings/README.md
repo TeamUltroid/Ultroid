@@ -14,12 +14,12 @@
 | tr | Turkish [Türk] | 112 | 301 |
 | si | sinhala [සිංහල] | 112 | 301 |
 | fa | Persian [Farsi] | 391 | 22 |
-| hi | Hindi [हिंदी] | 408 | 5 |
+| hi | Hindi [हिंदी] | 413 | NULL |
 | az | Azerbaijan [Azərbaycan] | 382 | 31 |
 | id | Indonesia [Indonesia] | 413 | NULL |
 | cn | Chinese [简体中文] | 112 | 301 |
 | ta | தமிழ் [தமிழ்] | 112 | 301 |
-| mr | Marathi [मराठी] | 112 | 301 |
+| mr | Marathi [मराठी] | 131 | 282 |
 | ar | Arabic [العربية] | 411 | 2 |
 | it | Italian [italiano] | 111 | 302 |
 | gu | Gujarati [ગુજરાતી] | 109 | 304 |
