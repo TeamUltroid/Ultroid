@@ -208,12 +208,12 @@ async def hehe(args):
                     await conv.send_message("/addsticker")
                 await conv.get_response()
                 await conv.send_message(packname)
-                x = await conv.get_response()
-                if x.text.startswith("Alright! Now send me the video sticker."):
+                x = (await conv.get_response()).message
+                if x.startswith("Alright! Now send me the video sticker."):
                     await conv.send_file(photo, force_document=True)
-                    x = await conv.get_response()
+                    x = (await conv.get_response()).message
                 t = "50" if (is_anim or is_vid) else "120"
-                while t in x.message:
+                while t in x:
                     pack += 1
                     packname = f"ult_{user.id}_{pack}"
                     packnick = f"{username}'s Pack {pack}"
@@ -227,11 +227,11 @@ async def hehe(args):
                     await conv.send_message("/addsticker")
                     await conv.get_response()
                     await conv.send_message(packname)
-                    x = await conv.get_response()
-                    if x.text.startswith("Alright! Now send me the video sticker."):
+                    x = (await conv.get_response()).message
+                    if x.startswith("Alright! Now send me the video sticker."):
                         await conv.send_file(photo, force_document=True)
-                        x = await conv.get_response()
-                    if x.text in ["Invalid pack selected.", "Invalid set selected."]:
+                        x = (await conv.get_response()).message
+                    if x in ["Invalid pack selected.", "Invalid set selected."]:
                         await conv.send_message(cmd)
                         await conv.get_response()
                         await conv.send_message(packnick)
@@ -265,7 +265,7 @@ async def hehe(args):
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
-                elif "send me an emoji" not in x.message:
+                elif "send me an emoji" not in x:
                     if is_vid:
                         file = photo
                     else:
