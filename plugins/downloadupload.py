@@ -25,6 +25,7 @@
 import asyncio
 import os
 import time
+import glob
 from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
@@ -135,9 +136,6 @@ async def download(event):
     pattern="ul( (.*)|$)",
 )
 async def _(event):
-    if len(event.text) >= 8:
-        if "ultroid" in event.text[:7]:
-            return
     msg = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1)
     if match:
@@ -163,57 +161,61 @@ async def _(event):
             .replace("--no-thumb", "")
             .strip()
         )
-    if not os.path.exists(match):
+    if match.endswith("/"):
+        match += "*"
+    results = glob.glob(match)
+    if not results:
         try:
             await event.reply(file=match)
             await event.try_delete()
         except Exception as er:
             LOGS.exception(er)
         return await msg.eor("`File doesn't exist or path is incorrect!`")
-    if os.path.isdir(match):
-        c, s = 0, 0
-        for files in sorted(os.listdir(match)):
-            attributes = None
-            if stream:
+    for result in results:
+        if os.path.isdir(result):
+            c, s = 0, 0
+            for files in sorted(glob.glob(result + "/*")):
+                attributes = None
+                if stream:
+                    try:
+                        attributes = await set_attributes(files)
+                    except KeyError as er:
+                        LOGS.exception(er)
                 try:
-                    attributes = await set_attributes(files)
-                except KeyError as er:
-                    LOGS.exception(er)
+                    file, _ = await event.client.fast_uploader(
+                        files, show_progress=True, event=msg, to_delete=delete
+                    )
+                    await event.client.send_file(
+                        event.chat_id,
+                        file,
+                        supports_streaming=stream,
+                        force_document=force_doc,
+                        thumb=thumb,
+                        attributes=attributes,
+                        caption=f"`Uploaded` `{files}` `in {time_formatter(_*1000)}`",
+                        reply_to=event.reply_to_msg_id or event,
+                        )
+                        s += 1
+                except (ValueError, IsADirectoryError):
+                    c += 1
+            break
+        attributes = None
+        if stream:
             try:
-                file, _ = await event.client.fast_uploader(
-                    match + "/" + files, show_progress=True, event=msg, to_delete=delete
-                )
-                await event.client.send_file(
-                    event.chat_id,
-                    file,
-                    supports_streaming=stream,
-                    force_document=force_doc,
-                    thumb=thumb,
-                    attributes=attributes,
-                    caption=f"`Uploaded` `{match}/{files}` `in {time_formatter(_*1000)}`",
-                    reply_to=event.reply_to_msg_id or event,
-                )
-                s += 1
-            except (ValueError, IsADirectoryError):
-                c += 1
-        return await msg.eor(f"`Uploaded {s} files, failed to upload {c}.`")
-    attributes = None
-    if stream:
-        try:
-            attributes = await set_attributes(match)
-        except KeyError as er:
-            LOGS.exception(er)
-    file, _ = await event.client.fast_uploader(
-        match, show_progress=True, event=msg, to_delete=delete
-    )
-    await event.client.send_file(
-        event.chat_id,
-        file,
+                attributes = await set_attributes(result)
+            except KeyError as er:
+                LOGS.exception(er)
+        file, _ = await event.client.fast_uploader(
+            result, show_progress=True, event=msg, to_delete=delete
+        )
+        await event.client.send_file(
+            event.chat_id,
+            file,
         supports_streaming=stream,
         force_document=force_doc,
         thumb=thumb,
         attributes=attributes,
-        caption=f"`Uploaded` `{match}` `in {time_formatter(_*1000)}`",
+        caption=f"`Uploaded` `{result}` `in {time_formatter(_*1000)}`",
         reply_to=event.reply_to_msg_id or event,
-    )
+        )
     await msg.try_delete()
