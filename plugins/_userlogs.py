@@ -21,7 +21,18 @@ from telethon.errors.rpcerrorlist import (
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
-from . import ultroid_bot, asst, udB, inline_mention, Button, LOGS, get_string, LOG_CHANNEL,  callback, events
+from . import (
+    LOG_CHANNEL,
+    LOGS,
+    Button,
+    asst,
+    callback,
+    events,
+    get_string,
+    inline_mention,
+    udB,
+    ultroid_bot,
+)
 
 CACHE_SPAM = {}
 TAG_EDITS = {}

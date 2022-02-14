@@ -23,9 +23,9 @@
 """
 
 import asyncio
+import glob
 import os
 import time
-import glob
 from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
@@ -194,8 +194,8 @@ async def _(event):
                         attributes=attributes,
                         caption=f"`Uploaded` `{files}` `in {time_formatter(_*1000)}`",
                         reply_to=event.reply_to_msg_id or event,
-                        )
-                        s += 1
+                    )
+                    s += 1
                 except (ValueError, IsADirectoryError):
                     c += 1
             break
@@ -211,11 +211,11 @@ async def _(event):
         await event.client.send_file(
             event.chat_id,
             file,
-        supports_streaming=stream,
-        force_document=force_doc,
-        thumb=thumb,
-        attributes=attributes,
-        caption=f"`Uploaded` `{result}` `in {time_formatter(_*1000)}`",
-        reply_to=event.reply_to_msg_id or event,
+            supports_streaming=stream,
+            force_document=force_doc,
+            thumb=thumb,
+            attributes=attributes,
+            caption=f"`Uploaded` `{result}` `in {time_formatter(_*1000)}`",
+            reply_to=event.reply_to_msg_id or event,
         )
     await msg.try_delete()
