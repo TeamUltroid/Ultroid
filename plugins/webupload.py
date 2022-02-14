@@ -38,7 +38,7 @@ async def _(event):
             _webupload_cache[int(event.chat_id)][int(event.id)] = file
         else:
             file, _ = await event.client.fast_downloader(
-                reply.document, reply.file.name, show_progress=True, event=xx
+                reply.document, show_progress=True, event=xx
             )
             _webupload_cache[int(event.chat_id)][int(event.id)] = file.name
     else:
