@@ -141,9 +141,11 @@ async def _(e):
                 same_peer=True,
             ),
         ]
-        sur = e.builder.article(
+        sur = e.builder.document(
             title=user.first_name,
             description=desc,
+            file=logi.full_user.photo,
+            include_media=False,
             text=text,
             buttons=button,
         )
