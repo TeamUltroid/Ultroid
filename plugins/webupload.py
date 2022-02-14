@@ -15,8 +15,7 @@
 import os
 
 from pyUltroid.functions.tools import _webupload_cache
-
-from . import asst, get_string, ultroid_cmd
+from . import asst, get_string, ultroid_cmd, Button
 
 
 @ultroid_cmd(
