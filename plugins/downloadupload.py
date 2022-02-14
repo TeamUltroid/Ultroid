@@ -167,7 +167,7 @@ async def _(event):
     if not results:
         try:
             await event.reply(file=match)
-            await event.try_delete()
+            return await event.try_delete()
         except Exception as er:
             LOGS.exception(er)
         return await msg.eor("`File doesn't exist or path is incorrect!`")
