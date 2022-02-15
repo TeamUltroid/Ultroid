@@ -21,26 +21,25 @@ import math
 import shutil
 from random import choice
 
-import heroku3
 import psutil
 import requests
 from pyUltroid.functions import some_random_headers
 
-from . import HOSTED_ON, Var, get_string, humanbytes, udB, ultroid_cmd
+from . import HOSTED_ON, LOGS, Var, get_string, humanbytes, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
 
-heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
-try:
-    if heroku_api and app_name:
-        HEROKU_API = heroku_api
-        HEROKU_APP_NAME = app_name
-        Heroku = heroku3.from_key(heroku_api)
-        app = Heroku.app(app_name)
-except BaseException:
-    HEROKU_API = None
-    HEROKU_APP_NAME = None
+if HOSTED_ON == "heroku":
+    heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
+    try:
+        if heroku_api and app_name:
+            Heroku = heroku3.from_key(heroku_api)
+            app = Heroku.app(app_name)
+            HEROKU_API = heroku_api
+            HEROKU_APP_NAME = app_name
+    except BaseException as er:
+        LOGS.exception(er)
 
 
 @ultroid_cmd(pattern="usage")
