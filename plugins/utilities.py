@@ -672,7 +672,9 @@ async def coder_print(event):
         from pygments.formatters import ImageFormatter
         from pygments.lexers import Python3Lexer
     except ImportError:
-        return await event.eor("`pygments` `not installed!`\nInstall it with `pip3 install pygments`")
+        return await event.eor(
+            "`pygments` `not installed!`\nInstall it with `pip3 install pygments`"
+        )
     if not event.reply_to_msg_id:
         return await eod(event, "`Reply to a file or message!`", time=5)
     msg = await event.get_reply_message()
