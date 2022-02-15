@@ -34,7 +34,7 @@ except ModuleNotFoundError:
                 out.update({key: value or []})
             elif "-" in line:
                 spli = line.split("-", maxsplit=1)
-                where = out[list(out.keys)[-1]]
+                where = out[list(out.keys())[-1]]
                 if isinstance(where, list):
                     value = _get_value(spli[1])
                     if value:
