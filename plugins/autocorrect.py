@@ -13,8 +13,7 @@
 
 import string
 
-from . import udB, LOGS# ignore: pylint
-from . import HNDLR, get_string, ultroid_bot, ultroid_cmd
+from . import HNDLR, LOGS, get_string, udB, ultroid_bot, ultroid_cmd  # ignore: pylint
 
 try:
     from gingerit.gingerit import GingerIt
