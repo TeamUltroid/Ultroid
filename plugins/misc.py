@@ -26,6 +26,7 @@ import os
 from datetime import datetime as dt
 
 from bs4 import BeautifulSoup as bs
+
 try:
     from htmlwebshot import WebShot
 except ImportError:
