@@ -15,6 +15,7 @@ from os import execl, remove
 from random import choice
 
 from bs4 import BeautifulSoup as bs
+
 try:
     from pyUltroid.functions.gDrive import GDriveManager
 except ImportError:
@@ -36,7 +37,7 @@ from . import *
 
 # --------------------------------------------------------------------#
 telegraph = telegraph_client()
-GDrive =  GDriveManager() if GDriveManager else None
+GDrive = GDriveManager() if GDriveManager else None
 # --------------------------------------------------------------------#
 
 
