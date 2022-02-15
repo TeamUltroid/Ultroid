@@ -22,7 +22,6 @@
 • `{i}round <reply to any media>`
     To extract round sticker.
 """
-from ast import Import
 import io
 import os
 import random
@@ -47,20 +46,19 @@ from telethon.utils import get_input_document
 
 from . import (
     KANGING_STR,
-    async_searcher,
     LOGS,
     asst,
+    async_searcher,
     bash,
     con,
     functions,
     get_string,
     inline_mention,
     mediainfo,
+    quotly,
     types,
     udB,
     ultroid_cmd,
-    con,
-    quotly
 )
 
 
