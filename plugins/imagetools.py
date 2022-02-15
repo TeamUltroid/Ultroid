@@ -55,10 +55,14 @@
 import asyncio
 import os
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    LOGS.error(f"{__file__}: OpenCv not Installed.")
+
 import numpy as np
 
-from . import LOGS
+from . import LOGS, con
 
 try:
     from PIL import Image
@@ -94,22 +98,7 @@ async def sketch(e):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     img = cv2.imread(file)
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     inverted_gray_image = 255 - gray_image
@@ -164,22 +153,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         xx = await event.eor(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        xx = await event.eor(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     ultroid = cv2.cvtColor(ult, cv2.COLOR_BGR2GRAY)
     cv2.imwrite("ult.jpg", ultroid)
@@ -206,22 +180,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         xx = await event.eor(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        xx = await event.eor(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     ultroid = cv2.GaussianBlur(ult, (35, 35), 0)
     cv2.imwrite("ult.jpg", ultroid)
@@ -249,22 +208,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     ultroid = cv2.bitwise_not(ult)
     cv2.imwrite("ult.jpg", ultroid)
@@ -290,24 +234,7 @@ async def ultd(event):
         await xx.edit(get_string("cvt_3"))
         return
     ultt = await ureply.download_media()
-    if ultt.endswith(".tgs"):
-        await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     ish = cv2.flip(ult, 1)
     ultroid = cv2.hconcat([ult, ish])
@@ -336,22 +263,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     trn = cv2.flip(ult, 1)
     ish = cv2.rotate(trn, cv2.ROTATE_180)
@@ -381,22 +293,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     roid = cv2.flip(ult, 1)
     mici = cv2.hconcat([ult, roid])
@@ -428,22 +325,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     height, width, channels = ult.shape
     samples = np.zeros([height * width, 3], dtype=np.float32)
@@ -488,22 +370,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     ult = cv2.imread(file)
     dan = cv2.cvtColor(ult, cv2.COLOR_BGR2RGB)
     ultroid = cv2.cvtColor(dan, cv2.COLOR_HSV2BGR)
@@ -553,22 +420,7 @@ async def ultd(event):
     ultt = await ureply.download_media()
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
-        cmd = ["lottie_convert.py", ultt, "ult.png"]
-        file = "ult.png"
-        process = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    else:
-        await xx.edit(get_string("com_1"))
-        img = cv2.VideoCapture(ultt)
-        heh, lol = img.read()
-        cv2.imwrite("ult.png", lol)
-        file = "ult.png"
+    file = await con.convert(ultt, convert_to="png", outname="ult")
     got = upf(file)
     lnk = f"https://telegra.ph{got[0]}"
     r = await async_searcher(
