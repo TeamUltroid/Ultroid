@@ -152,7 +152,7 @@ async def soon_(e):
 async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:
-        return await event.eor("`Please Fill Instagram Credentials to Use This...`")
+        return
     msg = await event.eor(get_string("com_1"))
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1).strip()
