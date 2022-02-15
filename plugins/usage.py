@@ -21,10 +21,18 @@ import math
 import shutil
 from random import choice
 
-import requests
 from pyUltroid.functions import some_random_headers
 
-from . import async_searcher, HOSTED_ON, LOGS, Var, get_string, humanbytes, udB, ultroid_cmd
+from . import (
+    HOSTED_ON,
+    LOGS,
+    Var,
+    async_searcher,
+    get_string,
+    humanbytes,
+    udB,
+    ultroid_cmd,
+)
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
@@ -84,7 +92,10 @@ async def heroku_usage():
     try:
         import psutil
     except ImportError:
-        return False, "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`"
+        return (
+            False,
+            "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
+        )
     if not (HEROKU_API and HEROKU_APP_NAME):
         if HOSTED_ON == "heroku":
             return False, "Please fill `HEROKU_API` and `HEROKU_APP_NAME`"
