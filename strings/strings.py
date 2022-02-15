@@ -15,21 +15,30 @@ try:
 except ModuleNotFoundError:
     LOGS.info("'pyYaml' not installed!")
 
+    def _get_value(stri):
+        try:
+            value = eval(stri.strip())
+        except Exception as er:
+            LOGS.debug(er)
+            value = stri.strip()
+        return value
+
     def safe_load(file, *args, **kwargs):
         read = file.readlines()
         out = {}
         for line in read:
             if ":" in line: # Ignores Empty & Invalid lines
                 spli = line.split(":", maxsplit=1)
-                if len(spli) != 2:
-                    break
                 key = spli[0].strip()
-                try:
-                    value = eval(spli[1].strip())
-                except Exception as er:
-                    LOGS.debug(er)
-                    value = spli[1].strip()
-                out.update({key: value})
+                value = _get_value(spli[1])
+                out.update({key: value or []})
+            elif "-" in line:
+                spli = line.split("-", maxsplit=1)
+                where = out[list(out.keys)[-1]]
+                if isinstance(where, list):
+                    value = _get_value(spli[1])
+                    if value:
+                        where.append(value)
         return out
 
 language = [udB.get_key("language") or "en"]
