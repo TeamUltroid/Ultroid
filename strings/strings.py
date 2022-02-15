@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     def safe_load(file, *args, **kwargs):
         read = file.readlines()
         out = {}
-        for line in file:
+        for line in read:
             if ":" in line: # Ignores Empty & Invalid lines
                 spli = line.split(":", maxsplit=1)
                 if len(spli) != 2:
