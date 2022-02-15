@@ -44,17 +44,17 @@ from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
+    HNDLR,
     async_searcher,
     bash,
     downloader,
     eod,
     get_string,
     mediainfo,
+    quotly,
     ultroid_bot,
     ultroid_cmd,
     uploader,
-    quotly,
-    HNDLR
 )
 from .carbon import all_col
 
@@ -351,7 +351,9 @@ async def quott_(event):
     if match == "random":
         match = choice(all_col)
     try:
-        file = await quotly.create_quotly(reply_, bg=match, reply=replied_to, sender=user)
+        file = await quotly.create_quotly(
+            reply_, bg=match, reply=replied_to, sender=user
+        )
     except Exception as er:
         return await msg.edit(str(er))
     message = await reply.reply("Quotly by Ultroid", file=file)

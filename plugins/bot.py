@@ -37,7 +37,6 @@ import sys
 import time
 from platform import python_version as pyver
 from random import choice
-from . import LOGS
 
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
@@ -45,6 +44,9 @@ from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendMediaForbiddenError,
 )
+
+from . import LOGS
+
 try:
     from git import Repo
 except ImportError:
