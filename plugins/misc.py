@@ -26,8 +26,14 @@ import os
 from datetime import datetime as dt
 
 from bs4 import BeautifulSoup as bs
-from htmlwebshot import WebShot
-from img2html.converter import Img2HTMLConverter
+try:
+    from htmlwebshot import WebShot
+except ImportError:
+    WebShot = None
+try:
+    from img2html.converter import Img2HTMLConverter
+except ImportError:
+    Img2HTMLConverter = None
 
 from . import async_searcher, get_random_user_data, get_string, re, ultroid_cmd
 
@@ -119,6 +125,8 @@ async def _gen_data(event):
     pattern="ascii( (.*)|$)",
 )
 async def _(e):
+    if not Img2HTMLConverter:
+        return await e.eor("'img2html-converter' not installed!")
     if not e.reply_to_msg_id:
         return await e.eor(get_string("ascii_1"))
     m = await e.eor(get_string("ascii_2"))
