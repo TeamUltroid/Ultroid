@@ -36,7 +36,7 @@ HEADER = """
 ║║ ║║║║ ╚╗╔╝╔═╗╔══╗╔╗╔═╝║
 ║║ ║║║║  ║║ ║╔╝║╔╗║╠╣║╔╗║
 ║╚═╝║║╚╗ ║╚╗║║ ║╚╝║║║║╚╝║
-╚═══╝╚═╝ ╚═╝╚╝ ╚══╝╚╝╚══╝\n\n
+╚═══╝╚═╝ ╚═╝╚╝ ╚══╝╚╝╚══╝\n
 """
 
 INFO_TEXT = """
@@ -75,10 +75,10 @@ def with_header(text):
     return HEADER + "\n\n" + text
 
 def yes_no_apt():
-    yes_no = input("")
-    if yes_no.lower() in ["yes", "y"]:
+    yes_no = input("").strip().lower()
+    if yes_no in ["yes", "y"]:
         return True
-    elif yes_no.lower() in ["no", "n"]:
+    elif yes_no in ["no", "n"]:
         return False
     print("Invalid Input\nRe-Enter: ")
     return yes_no_apt()
@@ -138,7 +138,7 @@ print(
 {COPYRIGHT}
     """
 )
-sleep(2)
+sleep(5)
 system("clear")
 
 print(with_header(INFO_TEXT))
@@ -150,7 +150,8 @@ print(with_header("Installing Mandatory requirements..."))
 all_ = "".join(f" {pip}" for pip in MANDATORY_REQS)
 system(f"pip install{all_}")
 
-print("\n\n# Moving toward Installing Apt-Packages\n\n")
+system("clear")
+print(with_header("\n# Moving toward Installing Apt-Packages\n\n"))
 print("---Enter---")
 print(" - A = 'Ask Y/N for each'.")
 print(" - I = 'Install all'")
@@ -160,8 +161,8 @@ ask_process_apt_install()
 
 print("#EXTRA Features...\n")
 print("* Do you want to get Ultroid Logs in Colors? [Y/N] ")
-inp = input("")
-if inp.lower() in ["yes", "y"]:
+inp = input("").strip().lower()
+if inp in ["yes", "y"]:
     print("*Spoking the Magical Mantras*")
     system("pip install coloredlogs")
 
