@@ -13,7 +13,6 @@ except ImportError:
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
-    LOGS.info("'pyYaml' not installed!")
 
     def _get_value(stri):
         try:
