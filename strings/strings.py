@@ -25,10 +25,11 @@ except ModuleNotFoundError:
                     break
                 key = spli[0].strip()
                 try:
-                    value = spli[1].strip()
-                    out.update({key: value})
+                    value = eval(spli[1].strip())
                 except Exception as er:
-                    LOGS.exception(er)
+                    LOGS.debug(er)
+                    value = spli[1].strip()
+                out.update({key: value})
         return out
 
 language = [udB.get_key("language") or "en"]
