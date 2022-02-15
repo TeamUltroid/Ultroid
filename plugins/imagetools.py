@@ -52,7 +52,6 @@
 • `{i}pixelator <reply image>`
     Create a Pixelated Image..
 """
-import asyncio
 import os
 
 try:
