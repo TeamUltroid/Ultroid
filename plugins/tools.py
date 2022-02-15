@@ -42,6 +42,7 @@ import os
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 import cv2
+
 try:
     from google_trans_new import google_translator
 except ImportError:
@@ -59,8 +60,8 @@ from telethon.tl.types import (
 )
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, async_searcher, bash, eor, con, get_string
-from . import con, humanbytes as hb
+from . import HNDLR, async_searcher, bash, con, eor, get_string
+from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
