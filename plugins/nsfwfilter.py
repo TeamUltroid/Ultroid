@@ -15,7 +15,9 @@
 """
 
 import os
+
 from . import LOGS
+
 try:
     from ProfanityDetector import detector
 except ImportError:

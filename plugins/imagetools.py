@@ -53,6 +53,7 @@
     Create a Pixelated Image..
 """
 import os
+
 from . import LOGS, con
 
 try:
@@ -61,7 +62,6 @@ except ImportError:
     LOGS.error(f"{__file__}: OpenCv not Installed.")
 
 import numpy as np
-
 
 try:
     from PIL import Image
