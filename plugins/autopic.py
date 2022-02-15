@@ -92,8 +92,11 @@ if search := udB.get_key("AUTOPIC"):
         await ultroid_bot(UploadProfilePhotoRequest(file))
         shuffle(ok)
 
-    from apscheduler.schedulers.asyncio import AsyncIOScheduler
+    try:
+        from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-    schedule = AsyncIOScheduler()
-    schedule.add_job(autopic_func, "interval", seconds=sleep)
-    schedule.start()
+        schedule = AsyncIOScheduler()
+        schedule.add_job(autopic_func, "interval", seconds=sleep)
+        schedule.start()
+    except ModuleNotFoundError as er:
+        LOGS.error(f"autopic: '{er.name}' not installed.")
