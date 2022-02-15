@@ -15,7 +15,10 @@ from os import execl, remove
 from random import choice
 
 from bs4 import BeautifulSoup as bs
-from pyUltroid.functions.gDrive import GDriveManager
+try:
+    from pyUltroid.functions.gDrive import GDriveManager
+except ImportError:
+    GDriveManager = None
 from pyUltroid.functions.helper import fast_download, progress, uploader
 from pyUltroid.functions.tools import (
     Carbon,
@@ -33,7 +36,7 @@ from . import *
 
 # --------------------------------------------------------------------#
 telegraph = telegraph_client()
-GDrive = GDriveManager()
+GDrive =  GDriveManager() if GDriveManager else None
 # --------------------------------------------------------------------#
 
 
