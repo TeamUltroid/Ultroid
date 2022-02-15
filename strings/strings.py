@@ -13,8 +13,24 @@ except ImportError:
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
-    LOGS.info("'pyYaml' not installed!\nPlease install it to use Ultroid.")
-    sys.exit()
+    LOGS.info("'pyYaml' not installed!")
+
+    def safe_load(file, *args, **kwargs):
+        read = file.readlines()
+        out = {}
+        for line in file:
+            if ":" in line: # Ignores Empty & Invalid lines
+                spli = line.split(":", maxsplit=1)
+                if len(spli) != 2:
+                    break
+                key = spli[0].strip()
+                try:
+                    value = str(eval(spli[1].strip()))
+                except Exception as er:
+                    LOGS.exception(er)
+                    break
+                out.update({key: value})
+        return out
 
 language = [udB.get_key("language") or "en"]
 languages = {}
