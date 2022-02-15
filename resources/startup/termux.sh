@@ -1,3 +1,7 @@
+echo "Updating System.."
+pkg update -y
+apt update
+apt upgrade -y
 
 python_not_installed="$(python -c 'exit()')"
 
