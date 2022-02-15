@@ -28,6 +28,7 @@ from strings import get_string
 
 Redis = udB.get_key
 con = TgConverter
+quotly = Quotly()
 OWNER_NAME = ultroid_bot.full_name
 OWNER_ID = ultroid_bot.uid
 

@@ -23,7 +23,7 @@
 • `{i}replay`
    Re-play the current song from the beginning.
 """
-from . import *
+from . import vc_asst, Player, get_string
 
 
 @vc_asst("mutevc")

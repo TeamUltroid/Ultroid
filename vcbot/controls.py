@@ -26,7 +26,7 @@
 
 from pytgcalls.exceptions import NotConnectedError
 
-from . import *
+from . import vc_asst, Player, get_string,CLIENTS,VIDEO_ON
 
 
 @vc_asst("joinvc")

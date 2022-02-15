@@ -40,7 +40,6 @@ from shutil import rmtree
 import pytz
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.misc import create_quotly
 from pyUltroid.functions.tools import metadata
 from telethon.tl.types import DocumentAttributeVideo
 
@@ -54,6 +53,8 @@ from . import (
     ultroid_bot,
     ultroid_cmd,
     uploader,
+    quotly,
+    HNDLR
 )
 from .carbon import all_col
 
@@ -161,9 +162,8 @@ async def hbd(event):
     s = kk[2]
     day = int(p)
     month = r
-    paida = q
     try:
-        jn = dt.strptime(paida, "%d/%m/%Y")
+        jn = dt.strptime(match, "%d/%m/%Y")
     except BaseException:
         return await event.eor(get_string("spcltool_6"))
     jnm = zn.localize(jn)
@@ -234,7 +234,7 @@ async def hbd(event):
         f"""
     Name -: {name}
 
-D.O.B -:  {paida}
+D.O.B -:  {match}
 
 Lived -:  {saal}yr, {mahina}m, {din}d, {ghanta}hr, {mi}min, {slive}sec
 
@@ -351,7 +351,7 @@ async def quott_(event):
     if match == "random":
         match = choice(all_col)
     try:
-        file = await create_quotly(reply_, bg=match, reply=replied_to, sender=user)
+        file = await quotly.create_quotly(reply_, bg=match, reply=replied_to, sender=user)
     except Exception as er:
         return await msg.edit(str(er))
     message = await reply.reply("Quotly by Ultroid", file=file)

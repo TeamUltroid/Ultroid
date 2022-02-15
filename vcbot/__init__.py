@@ -53,9 +53,12 @@ try:
     from yt_dlp import YoutubeDL
 except ImportError:
     YoutubeDL = None
-    LOGS.info("'yt-dlp' not found!")
+    LOGS.error("'yt-dlp' not found!")
 
-from youtubesearchpython import Playlist, ResultMode, Video, VideosSearch
+try:
+   from youtubesearchpython import VideosSearch
+except ImportError:
+    VideosSearch = None
 
 from strings import get_string
 

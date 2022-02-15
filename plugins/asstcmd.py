@@ -18,12 +18,15 @@
 """
 import os
 
-from pyUltroid.dB.asstcmd_db import *
+from pyUltroid.dB.asstcmd_db import rem_cmd, add_cmd, cmd_reply, list_cmds
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
-from telegraph import upload_file as uf
+try:
+    from telegraph import upload_file as uf
+except ImportError:
+    uf = None
 from telethon import events, utils
 
-from . import asst, get_string, mediainfo, ultroid_cmd
+from . import asst, udB, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addcmd( (.*)|$)")

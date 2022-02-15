@@ -7,7 +7,7 @@ try:
     from google_trans_new import google_translator
     Trs = google_translator()
 except ImportError:
-    LOGS.info("'google_trans_new' not installed!")
+    LOGS.error("'google_trans_new' not installed!")
     Trs = None
 
 try:

@@ -37,14 +37,20 @@ import sys
 import time
 from platform import python_version as pyver
 from random import choice
+from . import LOGS
 
-from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendMediaForbiddenError,
 )
+try:
+    from git import Repo
+except ImportError:
+    LOGS.error("bot: 'gitpython' module not found!")
+    Repo = None
+
 from telethon.utils import resolve_bot_file_id
 
 from . import (

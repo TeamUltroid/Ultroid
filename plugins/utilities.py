@@ -62,7 +62,12 @@ except ImportError:
 
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
-from telegraph import upload_file as uf
+
+try:
+    from telegraph import upload_file as uf
+except ImportError:
+    uf = None
+
 from telethon.errors.rpcerrorlist import UserBotError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
