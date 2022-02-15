@@ -45,6 +45,7 @@ from os import remove
 from pyUltroid.dB import DEVLIST
 from pyUltroid.dB.logusers_db import *
 from pyUltroid.dB.pmpermit_db import *
+
 try:
     from tabulate import tabulate
 except ImportError:
@@ -158,7 +159,7 @@ if udB.get_key("PMLOG"):
 
 
 if udB.get_key("PMSETTING"):
-    if udB.get_key("AUTOAPPROVE") != False:
+    if udB.get_key("AUTOAPPROVE"):
 
         @ultroid_bot.on(
             events.NewMessage(
