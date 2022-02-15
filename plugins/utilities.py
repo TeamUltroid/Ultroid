@@ -55,14 +55,11 @@ import os
 import time
 from datetime import datetime as dt
 
-import pygments
-
 try:
     from PIL import Image
 except ImportError:
     Image = None
-from pygments.formatters import ImageFormatter
-from pygments.lexers import Python3Lexer
+
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.misc._assistant import asst_cmd
 from telegraph import upload_file as uf
@@ -670,6 +667,12 @@ async def thumb_dl(event):
 
 @ultroid_cmd(pattern="ncode$")
 async def coder_print(event):
+    try:
+        import pygments
+        from pygments.formatters import ImageFormatter
+        from pygments.lexers import Python3Lexer
+    except ImportError:
+        return await event.eor("`pygments` `not installed!`\nInstall it with `pip3 install pygments`")
     if not event.reply_to_msg_id:
         return await eod(event, "`Reply to a file or message!`", time=5)
     msg = await event.get_reply_message()
