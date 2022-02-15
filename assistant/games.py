@@ -19,8 +19,14 @@ import re
 import uuid
 from html import unescape
 from random import choice, shuffle
+from . import LOGS
 
-import akinator
+try:
+    import akinator
+except ImportError:
+    akinator = None
+    LOGS.error("'akinator' not installed.")
+
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
 from pyUltroid.misc._decorators import ultroid_cmd
@@ -41,6 +47,8 @@ aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
 
 @ultroid_cmd(pattern="akinator")
 async def akina(e):
+    if not akinator:
+        return
     sta = akinator.Akinator()
     games.update({e.chat_id: {e.id: sta}})
     try:
