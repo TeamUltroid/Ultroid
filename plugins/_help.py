@@ -6,7 +6,10 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from fuzzywuzzy.process import extractOne
+try:
+    from fuzzywuzzy.process import extractOne
+except ImportError:
+    extractOne = None
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.tools import cmd_regex_replace
 from telethon.errors.rpcerrorlist import (
@@ -83,11 +86,14 @@ async def _help(ult):
                                 break
                     if not file:
                         # the enter command/plugin name is not found
-                        best_match = extractOne(plug, compare_strings)
+                        text = f"`{plug}` is not a valid plugin!"
+                        if extractOne:
+                            best_match = extractOne(plug, compare_strings)
+                            text += "\nDid you mean `{}`?".format(
+                                best_match[0]
+                            )
                         return await ult.eor(
-                            "`{}` is not a valid plugin!\nDid you mean `{}`?".format(
-                                plug, best_match[0]
-                            ),
+                            text
                         )
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:
