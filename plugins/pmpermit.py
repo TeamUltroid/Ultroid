@@ -45,7 +45,10 @@ from os import remove
 from pyUltroid.dB import DEVLIST
 from pyUltroid.dB.logusers_db import *
 from pyUltroid.dB.pmpermit_db import *
-from tabulate import tabulate
+try:
+    from tabulate import tabulate
+except ImportError:
+    tabulate = None
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.contacts import (
@@ -155,7 +158,7 @@ if udB.get_key("PMLOG"):
 
 
 if udB.get_key("PMSETTING"):
-    if udB.get_key("AUTOAPPROVE") in [True, None]:
+    if udB.get_key("AUTOAPPROVE") != False:
 
         @ultroid_bot.on(
             events.NewMessage(
@@ -614,9 +617,15 @@ async def list_approved(event):
             name = ""
         users.append([name.strip(), str(i)])
     with open("approved_pms.txt", "w") as list_appr:
-        list_appr.write(
-            tabulate(users, headers=["UserName", "UserID"], showindex="always")
-        )
+        if tabulate:
+            list_appr.write(
+                tabulate(users, headers=["UserName", "UserID"], showindex="always")
+            )
+        else:
+            text = ""
+            for user in users:
+                text += f"[{user[-1]}] - {user[0]}"
+            list_appr.write(text)
     await event.reply(
         "List of users approved by [{}](tg://user?id={})".format(OWNER_NAME, OWNER_ID),
         file="approved_pms.txt",
