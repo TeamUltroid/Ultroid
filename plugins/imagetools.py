@@ -53,6 +53,7 @@
     Create a Pixelated Image..
 """
 import os
+from . import LOGS, con
 
 try:
     import cv2
@@ -61,7 +62,6 @@ except ImportError:
 
 import numpy as np
 
-from . import LOGS, con
 
 try:
     from PIL import Image
