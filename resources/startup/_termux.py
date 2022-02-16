@@ -43,7 +43,9 @@ INFO_TEXT = """
 # Important points to know.
 
 1. This script will just install basic requirements because of which some command whose requirements are missing won't work. You can view all optional requirements in (./resources/startup/optional-requirements.txt)
+
 2. You can install that requirement whenever you want with 'pip install' (a very basic python+bash knowledge is required.)
+
 3. Some of the plugins are disabled for 'Termux Users' to save resources (by adding in EXCLUDE_OFFICIAL).
    - Read More - https://t.me/UltroidUpdates/36
    - Also, way to enable the disabled plugins is mentioned in that post.
@@ -58,6 +60,7 @@ INFO_TEXT = """
     -    blacklist      -     forcesubscribe
 
 4. You can't use 'VCBOT' on Termux.
+
 5. You can't use 'MongoDB' on Termux (Android).
 
 * Hope you are smart enought to understand.
@@ -167,8 +170,8 @@ if inp in ["yes", "y"]:
     system("pip install coloredlogs")
 
 print("\nYou are all Done! :party")
-sleep(0.5)
-print("\nUse 'bash startup' to try running Ultroid.")
+sleep(0.2)
+print("Use 'bash startup' to try running Ultroid.")
 sleep(0.5)
 print("\nYou can head over to @UltroidSupport, if you get stucked somewhere.")
 sleep(0.5)
