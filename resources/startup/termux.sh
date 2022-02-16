@@ -12,5 +12,8 @@ then
     pkg install python3 -y
 fi
 
+printf "*Putting some magical effect...*"
+pip install colorama
+
 printf "Running up Installation tool.\n"
 python resources/startup/_termux.py

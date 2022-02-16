@@ -1,6 +1,7 @@
 from os import system
 from time import sleep
-from datetime import date
+from datetime import datetime
+from colorama import Style, Fore, Back
 
 # clear screen
 def clear():
@@ -33,21 +34,21 @@ APT_PACKAGES = [
 
 DISCLAIMER_TEXT = ""
 
-COPYRIGHT = f"©️ TeamUltroid {date.year}"
+COPYRIGHT = f"©️ TeamUltroid {datetime().year}"
 
-HEADER = """
+HEADER = f"""{Fore.MAGENTA}
 ╔╗ ╔╗╔╗  ╔╗            ╔╗
 ║║ ║║║║ ╔╝╚╗           ║║
 ║║ ║║║║ ╚╗╔╝╔═╗╔══╗╔╗╔═╝║
 ║║ ║║║║  ║║ ║╔╝║╔╗║╠╣║╔╗║
 ║╚═╝║║╚╗ ║╚╗║║ ║╚╝║║║║╚╝║
-╚═══╝╚═╝ ╚═╝╚╝ ╚══╝╚╝╚══╝\n
+╚═══╝╚═╝ ╚═╝╚╝ ╚══╝╚╝╚══╝\n{Fore.RESET}
 """
 
-INFO_TEXT = """
-# Important points to know.
+INFO_TEXT = f"""
+{Fore.GREEN}# Important points to know.
 
-1. This script will just install basic requirements because of which some command whose requirements are missing won't work. You can view all optional requirements in (./resources/startup/optional-requirements.txt)
+{Fore.LIGHTGREEN_EX}1. This script will just install basic requirements because of which some command whose requirements are missing won't work. You can view all optional requirements in (./resources/startup/optional-requirements.txt)
 
 2. You can install that requirement whenever you want with 'pip install' (a very basic python+bash knowledge is required.)
 
@@ -67,7 +68,7 @@ INFO_TEXT = """
 4. You can't use 'VCBOT' on Termux.
 
 5. You can't use 'MongoDB' on Termux (Android).
-
+{Fore.RESET}
 * Hope you are smart enought to understand.
 * Enter 'A' to Continue, 'E' to Exit..\n
 """
@@ -153,9 +154,11 @@ def ask_and_wait_opt():
 
 # ------------------------------------------------------------------------------------------ #
 
+clear()
+
 print(
     f"""
- _____________ 
+{Fore.BLACK}{Back.WHITE} _____________ 
  ▄▄   ▄▄ ▄▄▄     ▄▄▄▄▄▄▄ ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ ▄▄▄ ▄▄▄▄▄▄  
 █  █ █  █   █   █       █   ▄  █ █       █   █      █ 
 █  █ █  █   █   █▄     ▄█  █ █ █ █   ▄   █   █  ▄    █
@@ -163,10 +166,10 @@ print(
 █       █   █▄▄▄  █   █ █    ▄▄  █  █▄█  █   █ █▄█   █
 █       █       █ █   █ █   █  █ █       █   █       █
 █▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█ █▄▄▄█ █▄▄▄█  █▄█▄▄▄▄▄▄▄█▄▄▄█▄▄▄▄▄▄█ 
-
-- ULTROID Termux Installation -
+{Style.RESET_ALL}
+{Fore.GREEN}- ULTROID Termux Installation -
   The Main Aim of this script is to deploy Ultroid with basic requirements and save your phone resources.
-
+{Fore.RESET}
 
 {COPYRIGHT}
     """
@@ -185,7 +188,7 @@ all_ = "".join(f" {pip}" for pip in MANDATORY_REQS)
 system(f"pip install{all_}")
 
 clear()
-print(with_header("\n# Moving toward Installing Apt-Packages\n\n"))
+print(with_header(f"\n{Fore.GREEN}# Moving toward Installing Apt-Packages{Fore.RESET}\n\n"))
 print("---Enter---")
 print(" - A = 'Ask Y/N for each'.")
 print(" - I = 'Install all'")
@@ -196,8 +199,8 @@ ask_process_apt_install()
 clear()
 print(
     with_header(f"""
-# Installing other non mandatory requirements.
-(You can Install them, if you want command using them to work!)
+{Fore.YELLOW}# Installing other non mandatory requirements.
+(You can Install them, if you want command using them to work!){Fore.RESET}
 
 {'- '.join(list(OPT_PACKAGES.keys()))}
 
@@ -205,19 +208,21 @@ Enter [ A = Ask for each, I = Install all, S = Skip, E = Exit]""")
 )
 ask_and_wait_opt()
 
-print("\n#EXTRA Features...\n")
-print("* Do you want to get Ultroid Logs in Colors? [Y/N] ")
+print(f"\n{Fore.RED}#EXTRA Features...\n")
+print(f"{Fore.YELLOW}* Do you want to get Ultroid Logs in Colors? [Y/N] ")
 inp = input("").strip().lower()
 if inp in ["yes", "y"]:
-    print("*Spoking the Magical Mantras*")
+    print(f"{Fore.GREEN}*Spoking the Magical Mantras*")
     system("pip install coloredlogs")
 else:
     print("Skipped!")
 
-print("\nYou are all Done! 🥳") 
+print(f"\n{Fore.GREEN}You are all Done! 🥳") 
 sleep(0.2)
-print("Use 'bash startup' to try running Ultroid.")
+print(f"Use 'bash startup' to try running Ultroid.{Fore.RESET}")
 sleep(0.5)
 print("\nYou can head over to @UltroidSupport, if you get stucked somewhere.")
 sleep(0.5)
 print("\nMade with ❤️ by @TeamUltroid...")
+
+system("pip3 uninstall colorama -y")
