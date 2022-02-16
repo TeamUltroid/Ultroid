@@ -131,7 +131,7 @@ def ask_process_apt_install():
         ask_process_apt_install()
 
 def ask_and_wait_opt():
-    strm = input("")
+    strm = input("").strip().lower()
     if strm == "e":
         print("Exiting...")
         exit(0)
