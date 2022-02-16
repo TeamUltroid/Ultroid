@@ -45,7 +45,7 @@ from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,
 )
 
-from . import LOGS
+from . import LOGS, HOSTED_ON
 
 try:
     from git import Repo
@@ -140,7 +140,7 @@ async def lol(ult):
         parse = "html"
         als = in_alive.format(
             header,
-            ultroid_version,
+            ultroid_version + f" [{HOSTED_ON}]",
             UltVer,
             pyver(),
             uptime,
@@ -153,7 +153,7 @@ async def lol(ult):
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
-            ultroid_version,
+            ultroid_version + f" [{HOSTED_ON}],
             UltVer,
             uptime,
             pyver(),
@@ -280,7 +280,7 @@ async def inline_alive(ult):
     kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
         header,
-        ultroid_version,
+        ultroid_version+ f" [{HOSTED_ON}],
         UltVer,
         pyver(),
         uptime,
