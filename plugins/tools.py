@@ -41,7 +41,10 @@ import io
 import os
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
 
 try:
     from google_trans_new import google_translator
