@@ -34,7 +34,7 @@ APT_PACKAGES = [
 
 DISCLAIMER_TEXT = ""
 
-COPYRIGHT = f"©️ TeamUltroid {datetime().year}"
+COPYRIGHT = f"©️ TeamUltroid {datetime().now().year}"
 
 HEADER = f"""{Fore.MAGENTA}
 ╔╗ ╔╗╔╗  ╔╗            ╔╗
