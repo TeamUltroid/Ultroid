@@ -159,9 +159,8 @@ def ask_make_env():
         print(f"{Fore.YELLOW}* Creating .env file..")
         with open(".env", "a") as file:
             for var in ["API_ID", "API_HASH", "SESSION", "REDIS_URI", "REDIS_PASSWORD"]:
-                print(f"Enter {var}\n- ")
-                inp = input("")
-                file.write(f"{var}={inp}")
+                inp = input(f"Enter {var}\n- ")
+                file.write(f"{var}={inp}\n")
         print("* Created '.env' file successfully! 😃")
 
     else:
