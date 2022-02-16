@@ -256,9 +256,9 @@ async def _(e):
     if not files:
         files = "*"
     elif files.endswith("/"):
-        files = files + "*"
+        files += "*"
     elif "*" not in files:
-        files = files + "/*"
+        files += "/*"
     files = glob.glob(files)
     if not files:
         return await e.eor("`Directory Empty or Incorrect.`", time=5)
