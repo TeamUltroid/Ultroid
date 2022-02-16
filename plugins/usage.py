@@ -34,6 +34,13 @@ from . import (
     ultroid_cmd,
 )
 
+try:
+    import psutil
+except ImportError:
+    LOGS.exception(
+        "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
+    )
+
 HEROKU_API = None
 HEROKU_APP_NAME = None
 
@@ -89,12 +96,10 @@ def simple_usage():
 
 
 async def heroku_usage():
-    try:
-        import psutil
-    except ImportError:
-        return (
+    if not psutil:
+        return(
             False,
-            "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
+            "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`"
         )
     if not (HEROKU_API and HEROKU_APP_NAME):
         if HOSTED_ON == "heroku":
