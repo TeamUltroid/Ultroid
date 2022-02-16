@@ -517,7 +517,7 @@ async def _(event):
         msg = getattr(msg, match)
         if hasattr(msg, "to_json"):
             try:
-                msg = json_parser(msg.to_json(), indent=1)
+                msg = json_parser(msg.to_json(ensure_ascii=False), indent=1)
             except Exception as e:
                 LOGS.exception(e)
         msg = str(msg)
