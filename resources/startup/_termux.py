@@ -3,7 +3,8 @@ from time import sleep
 from datetime import date
 
 # clear screen
-system("clear")
+def clear():
+    system("clear")
 
 MANDATORY_REQS = [
     "https://github.com/New-dev0/Telethon/archive/Artifact.zip",
@@ -17,7 +18,11 @@ MANDATORY_REQS = [
 OPT_PACKAGES = {
     "bs4":"Used for site-scrapping (used in commands like - .gadget and many more)",
     "yt-dlp": "Used for Youtuble Related Downloads...",
-    "PIL": "Used for Image-Conversion related task. (size - approx 50mb ) (required for kang, convert and many more.)"
+    "youtube-search-python": "Used for youtube video search..",
+    "pillow": "Used for Image-Conversion related task. (size - approx 50mb ) (required for kang, convert and many more.)",
+    "psutil": "Used for .usage command.",
+    "lottie":"Used for animated sticker related conversion.",
+    "apscheduler":"Used in autopic/nightmode (scheduling tasks.)"
 }
 
 APT_PACKAGES = [
@@ -112,14 +117,39 @@ def ask_process_apt_install():
                 print(f"Installing {apt}...")
                 system(f"apt install {apt} -y")
             else:
-                print("- Discarded {apt}.")
+                print(f"- Discarded {apt}.\n")
     elif strm == "i":
         names = " ".join(APT_PACKAGES)
         print("Installing all apt-packages...")
         system(f"apt install {names} -y")
+    elif strm == "s":
+        pass
     else:
         print("Invalid Input\n* Enter Again...")
         ask_process_apt_install()
+
+def ask_and_wait_opt():
+    strm = input("")
+    if strm == "e":
+        print("Exiting...")
+        exit(0)
+    elif strm == "a":
+        for opt in OPT_PACKAGES.keys():
+            print(f"* Do you want to install '{opt}'? [Y/N]\n- ({OPT_PACKAGES[opt]})")
+            if yes_no_apt():
+                print(f"Installing {opt}...")
+                system(f"pip install {opt} -y")
+            else:
+                print(f"- Discarded {opt}.\n")
+    elif strm == "i":
+        names = " ".join(OPT_PACKAGES.keys())
+        print("Installing all packages...")
+        system(f"pip install {names} -y")
+    elif strm == "s":
+        pass
+    else:
+        print("Invalid Input\n* Enter Again...")
+        ask_and_wait_opt()
 
 # ------------------------------------------------------------------------------------------ #
 
@@ -141,19 +171,20 @@ print(
 {COPYRIGHT}
     """
 )
-sleep(5)
-system("clear")
+print("Press 'Any Key' to continue...")
+input("")
+clear()
 
 print(with_header(INFO_TEXT))
 ask_process_info_text()
 
-system("clear")
+clear()
 
 print(with_header("Installing Mandatory requirements..."))
 all_ = "".join(f" {pip}" for pip in MANDATORY_REQS)
 system(f"pip install{all_}")
 
-system("clear")
+clear()
 print(with_header("\n# Moving toward Installing Apt-Packages\n\n"))
 print("---Enter---")
 print(" - A = 'Ask Y/N for each'.")
@@ -162,17 +193,31 @@ print(" - S = 'Skip Apt installation.'")
 print(" - E = Exit.\n")
 ask_process_apt_install()
 
-print("#EXTRA Features...\n")
+clear()
+print(
+    with_header(f"""
+# Installing other non mandatory requirements.
+(You can Install them, if you want command using them to work!)
+
+{'- '.join(list(OPT_PACKAGES.keys()))}
+
+Enter [ A = Ask for each, I = Install all, S = Skip, E = Exit]""")
+)
+ask_and_wait_opt()
+
+print("\n#EXTRA Features...\n")
 print("* Do you want to get Ultroid Logs in Colors? [Y/N] ")
 inp = input("").strip().lower()
 if inp in ["yes", "y"]:
     print("*Spoking the Magical Mantras*")
     system("pip install coloredlogs")
+else:
+    print("Skipped!")
 
-print("\nYou are all Done! :party")
+print("\nYou are all Done! 🥳") 
 sleep(0.2)
 print("Use 'bash startup' to try running Ultroid.")
 sleep(0.5)
 print("\nYou can head over to @UltroidSupport, if you get stucked somewhere.")
 sleep(0.5)
-print("\nMade with :love by @TeamUltroid...")
+print("\nMade with ❤️ by @TeamUltroid...")
