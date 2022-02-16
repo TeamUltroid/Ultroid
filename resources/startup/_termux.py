@@ -1,4 +1,4 @@
-from os import system
+from os import system, path
 from time import sleep
 from datetime import datetime
 from colorama import Style, Fore, Back
@@ -34,7 +34,7 @@ APT_PACKAGES = [
 
 DISCLAIMER_TEXT = ""
 
-COPYRIGHT = f"©️ TeamUltroid {datetime().now().year}"
+COPYRIGHT = f"©️ TeamUltroid {datetime.now().year}"
 
 HEADER = f"""{Fore.MAGENTA}
 ╔╗ ╔╗╔╗  ╔╗            ╔╗
@@ -152,6 +152,20 @@ def ask_and_wait_opt():
         print("Invalid Input\n* Enter Again...")
         ask_and_wait_opt()
 
+def ask_make_env():
+    strm = input("").strip().lower()
+    if strm in ["yes", "y"]:
+        print("* Creating .env file..")
+        with open(".env", "a") as file:
+            for var in ["API_ID", "API_HASH", "SESSION", "REDIS_URI", "REDIS_PASSWORD"]:
+                print(f"Enter {var}\n- ")
+                inp = input("")
+                file.write(f"{var}={inp}")
+        print("* Created '.env' file successfully! 😃")
+
+    else:
+        print("OK!")
+    
 # ------------------------------------------------------------------------------------------ #
 
 clear()
@@ -216,6 +230,11 @@ if inp in ["yes", "y"]:
     system("pip install coloredlogs")
 else:
     print("Skipped!")
+
+clear()
+if not path.exists(".env"):
+    print(with_header("# Do you want to move toward creating .env file ? [y/N] "))
+    ask_make_env()
 
 print(f"\n{Fore.GREEN}You are all Done! 🥳") 
 sleep(0.2)
