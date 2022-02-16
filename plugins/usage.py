@@ -34,16 +34,18 @@ from . import (
     ultroid_cmd,
 )
 
-HEROKU_API = None
-HEROKU_APP_NAME = None
-psutil = None
-
 try:
     import psutil
 except ImportError:
     LOGS.exception(
         "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
     )
+    psutil = None
+
+
+HEROKU_API = None
+HEROKU_APP_NAME = None
+
 
 if HOSTED_ON == "heroku":
     heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
