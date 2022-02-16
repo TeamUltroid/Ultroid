@@ -34,18 +34,8 @@ from . import (
     ultroid_cmd,
 )
 
-try:
-    import psutil
-except ImportError:
-    LOGS.exception(
-        "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
-    )
-    psutil = None
-
-
 HEROKU_API = None
 HEROKU_APP_NAME = None
-
 
 if HOSTED_ON == "heroku":
     heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
@@ -77,6 +67,10 @@ async def usage_finder(event):
 
 
 def simple_usage():
+    try:
+        import psutil
+    except ImportError:
+        return "Install 'psutil' to use this..."
     total, used, free = shutil.disk_usage(".")
     cpuUsage = psutil.cpu_percent()
     memory = psutil.virtual_memory().percent
@@ -99,7 +93,9 @@ def simple_usage():
 
 
 async def heroku_usage():
-    if not psutil:
+    try:
+        import psutil
+    except ImportError:
         return (
             False,
             "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
