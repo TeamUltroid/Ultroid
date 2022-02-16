@@ -13,7 +13,8 @@ MANDATORY_REQS = [
 #   "py-Ultroid==2022.2.10",
     "gitpython",
     "enhancer==0.3.4",
-    "telegraph"
+    "telegraph",
+    "aiohttp"
 ]
 
 OPT_PACKAGES = {
