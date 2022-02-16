@@ -45,7 +45,7 @@ from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,
 )
 
-from . import LOGS, HOSTED_ON
+from . import HOSTED_ON, LOGS
 
 try:
     from git import Repo
@@ -280,7 +280,7 @@ async def inline_alive(ult):
     kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
         header,
-        ultroid_version+ f" [{HOSTED_ON}]",
+        ultroid_version + f" [{HOSTED_ON}]",
         UltVer,
         pyver(),
         uptime,
