@@ -29,19 +29,15 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
 - run:
-          name: packages
-          # This assumes pytest is installed via the install-package step above
-          command: pip3 install -r res*/sta*/op*
       - checkout
       - python/install-packages:
-          pkg-manager: pip
+          pkg-manager: pip install -r res*/sta*/op* && pip install requirements.txt
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
           name: Run ultroid
           # This assumes pytest is installed via the install-package step above
           command: bash startup
-
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
