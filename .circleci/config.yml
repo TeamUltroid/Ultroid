@@ -28,6 +28,10 @@ jobs:
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
+- run:
+          name: packages
+          # This assumes pytest is installed via the install-package step above
+          command: pip3 install -r res*/sta*/op*
       - checkout
       - python/install-packages:
           pkg-manager: pip
