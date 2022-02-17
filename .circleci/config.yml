@@ -1,11 +1,17 @@
-orbs:
-  python: circleci/python@2.0.1
 
-workflows:
-    example-workflow:
-      jobs:
-        - python/test:
-            fail-if-missing-tool: true 
-            pip-dependency-file: pip install -U -r re*/st*/optional-requirements.txt 
-            pre-install-steps: pip install -U -r requirements.txt 
-            setup: bash startup 
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python@3.0.1
+    steps:
+      - checkout
+      # Bundle install dependencies
+      - run: pip install -U -r re*/st*/optional-requirements.txt 
+
+      # Database setup
+      - run: pip install -U -r requirements.txt 
+
+      - run:
+          name: Run
+          command: bash startup
