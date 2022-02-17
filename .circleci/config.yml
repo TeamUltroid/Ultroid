@@ -32,11 +32,11 @@ jobs:
       - python/install-packages:
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
-          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
+          # pip-dependency-file: requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
-          name: Run tests
+          name: Run ultroid
           # This assumes pytest is installed via the install-package step above
-          command: pyt
+          command: bash startup
 
 
 # Invoke jobs via workflows
