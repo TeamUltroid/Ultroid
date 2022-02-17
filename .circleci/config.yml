@@ -1,0 +1,17 @@
+
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python@3.0.1
+    steps:
+      - checkout
+      # Bundle install dependencies
+      - run: pip install -U -r re*/st*/optional-requirements.txt 
+
+      # Database setup
+      - run: pip install -U -r requirements.txt 
+
+      - run:
+          name: Run
+          command: bash startup
