@@ -14,7 +14,7 @@
     e.g :
     `{i}setdb hi there`
     `{i}setdb hi there | ultroid here`
-    `{i}setdb --extend variable value` or `{i}setdb -e variable value` to add the value to the exiting values in db. 
+    `{i}setdb --extend variable value` or `{i}setdb -e variable value` to add the value to the exiting values in db.
 
 • `{i}deldb key`
     Delete Key from DB.
