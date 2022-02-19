@@ -42,7 +42,7 @@ from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import async_searcher, eod, fast_download, get_string, ultroid_cmd
+from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -145,13 +145,8 @@ async def reverse(event):
         return await event.eor("`Reply to an Image`")
     ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
-    if reply.video:
-        img = cv2.VideoCapture(dl)
-        ult, roid = img.read()
-        os.remove(dl)
-        dl = "file.png"
-        cv2.imwrite(dl, roid)
-    img = Image.open(dl)
+    file = await con.convert(dl, convert_to="png")
+    img = Image.open(file)
     x, y = img.size
     file = {"encoded_image": (dl, open(dl, "rb"))}
     grs = requests.post(
