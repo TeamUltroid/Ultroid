@@ -148,10 +148,10 @@ async def reverse(event):
     file = await con.convert(dl, convert_to="png")
     img = Image.open(file)
     x, y = img.size
-    file = {"encoded_image": (dl, open(dl, "rb"))}
+    files = {"encoded_image": (file, open(file, "rb"))}
     grs = requests.post(
         "https://www.google.com/searchbyimage/upload",
-        files=file,
+        files=files,
         allow_redirects=False,
     )
     loc = grs.headers.get("Location")
@@ -183,7 +183,7 @@ async def reverse(event):
         caption="Similar Images Realted to Search",
     )
     rmtree(f"./resources/downloads/{text}/")
-    os.remove(dl)
+    os.remove(file)
 
 
 @ultroid_cmd(
