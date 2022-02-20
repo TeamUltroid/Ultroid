@@ -41,7 +41,10 @@ try:
     import black
 except ImportError:
     black = None
-
+try:
+    from telegraph import upload_file as uf
+except ImportError:
+    uf = None
 from . import *
 
 
@@ -56,6 +59,7 @@ async def _(e):
     haa = await Carbon(code=p, file_name="neofetch")
     await e.reply(file=haa)
     await xx.delete()
+    remove(haa)
     remove("neo.txt")
 
 
@@ -73,9 +77,14 @@ async def _(event):
     if stderr:
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
-        _o = stdout.split("\n")
-        o = "\n".join(_o)
-        out = f"**• OUTPUT:**\n`{o}`"
+        if udB.get_key("CARBON_ON_BASH") and (event.chat.admin_rights or event.creator or event.chat.default_banned_rights.embed_links)
+            li = await Carbon(code=stdout, file_name="bash")
+            url = "https://telegra.ph" + uf(li)[-1]
+            OUT = f"[\xad]({url})" + OUT
+            out = "**• OUTPUT:**"
+            remove(li)
+        else:
+            out = f"**• OUTPUT:**\n`{stdout}`"
     if not stderr and not stdout:
         out = "**• OUTPUT:**\n`Success`"
     OUT += err + out
