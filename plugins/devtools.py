@@ -77,7 +77,7 @@ async def _(event):
     if stderr:
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
-        if udB.get_key("CARBON_ON_BASH") and (event.chat.admin_rights or event.creator or event.chat.default_banned_rights.embed_links)
+        if udB.get_key("CARBON_ON_BASH") and (event.chat.admin_rights or event.creator or event.chat.default_banned_rights.embed_links):
             li = await Carbon(code=stdout, file_name="bash")
             url = "https://telegra.ph" + uf(li)[-1]
             OUT = f"[\xad]({url})" + OUT
