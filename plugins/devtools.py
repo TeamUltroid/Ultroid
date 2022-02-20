@@ -59,7 +59,6 @@ async def _(e):
     haa = await Carbon(code=p, file_name="neofetch")
     await e.reply(file=haa)
     await xx.delete()
-    remove(haa)
     remove("neo.txt")
 
 
@@ -82,7 +81,7 @@ async def _(event):
             or event.creator
             or event.chat.default_banned_rights.embed_links
         ):
-            li = await Carbon(code=stdout, file_name="bash")
+            li = await Carbon(code=stdout, file_name="bash", download=True)
             url = "https://telegra.ph" + uf(li)[-1]
             OUT = f"[\xad]({url})" + OUT
             out = "**• OUTPUT:**"
