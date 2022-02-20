@@ -41,6 +41,7 @@ try:
 except ImportError:
     black = None
 from random import choice
+
 try:
     from telegraph import upload_file as uf
 except ImportError:
@@ -81,7 +82,12 @@ async def _(event):
             or event.creator
             or event.chat.default_banned_rights.embed_links
         ):
-            li = await Carbon(code=stdout, file_name="bash", download=True, backgroundColor=choice(ATRA_COL))
+            li = await Carbon(
+                code=stdout,
+                file_name="bash",
+                download=True,
+                backgroundColor=choice(ATRA_COL),
+            )
             url = "https://telegra.ph" + uf(li)[-1]
             OUT = f"[\xad]({url})" + OUT
             out = "**• OUTPUT:**"
