@@ -107,7 +107,7 @@ async def _(event):
 
             await xx.delete()
     else:
-        await xx.edit(OUT)
+        await xx.edit(OUT, link_preview=True)
 
 
 pp = pprint  # ignore: pylint
