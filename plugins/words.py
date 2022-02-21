@@ -41,12 +41,12 @@ async def mean(event):
     defi = out[0]["meanings"][0]["definitions"][0]
     ex = "None" if not defi.get("example") else defi["example"]
     text = get_string("wrd_1").format(wrd, defi["definition"], ex)
-    if defi["synonyms"]:
+    if defi.get("synonyms"):
         text += (
             f"\n\n• **{get_string('wrd_5')} :**"
             + "".join(f" {a}," for a in defi["synonyms"])[:-1][:10]
         )
-    if defi["antonyms"]:
+    if defi.get("antonyms"):
         text += (
             f"\n\n**{get_string('wrd_6')} :**"
             + "".join(f" {a}," for a in defi["antonyms"])[:-1][:10]
