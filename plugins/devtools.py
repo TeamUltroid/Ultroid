@@ -79,7 +79,7 @@ async def _(event):
     if stdout:
         if udB.get_key("CARBON_ON_BASH") and (
             event.chat.admin_rights
-            or event.creator
+            or event.chat.creator
             or event.chat.default_banned_rights.embed_links
         ):
             li = await Carbon(
