@@ -503,8 +503,8 @@ async def gcast(event):
                                 chat, msg, file=reply.media if reply else None
                             )
                         done += 1
-                    except Exception as er:
-                        err += f"• {er}\n"
+                    except Exception as rr:
+                        err += f"• {rr}\n"
                         er += 1
                 except BaseException as h:
                     err += "• " + str(h) + "\n"
