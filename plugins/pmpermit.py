@@ -8,28 +8,28 @@
 ✘ Commands Available -
 
 • `{i}a` or `{i}approve`
-    To Approve Someone In PM.
+    Approve someone to PM.
 
 • `{i}da` or `{i}disapprove`
-    To Disapprove Someone In PM.
+    Disapprove someone to PM.
 
 • `{i}block`
-    To Block Someone in PM.
+    Block someone.
 
 • `{i}unblock` | `{i}unblock all`
-    To Unblock Someone in PM.
+    Unblock someone.
 
 • `{i}nologpm`
-    To stop logging from that user.
+    Stop logging messages from the user.
 
 • `{i}logpm`
-    Start logging again from that user.
+    Start logging messages from the user.
 
 • `{i}startarchive`
-    Will start adding new PMs to archive.
+    Archive new PMs.
 
 • `{i}stoparchive`
-    Will stop adding new PMs to archive.
+    Don't archive new PMs.
 
 • `{i}cleararchive`
     Unarchive all chats.
@@ -520,7 +520,7 @@ async def blockpm(block):
         )
     await block.client(BlockRequest(user))
     aname = await block.client.get_entity(user)
-    await block.eor(f"`{aname.first_name} has been blocked!`")
+    await block.eor(f"{inline_mention(aname)} `has been blocked!`")
     try:
         disapprove_user(user)
     except AttributeError:
@@ -529,7 +529,7 @@ async def blockpm(block):
         await asst.edit_message(
             int(udB.get_key("LOG_CHANNEL")),
             _not_approved[user],
-            f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **blocked**.",
+            f"#BLOCKED\n\n{inline_mention(aname)} [`{user}`] has been **blocked**.",
             buttons=[
                 Button.inline("UnBlock", data=f"unblock_{user}"),
             ],
@@ -537,7 +537,7 @@ async def blockpm(block):
     except KeyError:
         _not_approved[user] = await asst.send_message(
             int(udB.get_key("LOG_CHANNEL")),
-            f"#BLOCKED\n\n[{aname.first_name}](tg://user?id={user}) [`{user}`] has been **blocked**.",
+            f"#BLOCKED\n\n{inline_mention(aname)} [`{user}`] has been **blocked**.",
             buttons=[
                 Button.inline("UnBlock", data=f"unblock_{user}"),
             ],
@@ -580,7 +580,7 @@ async def unblockpm(event):
     try:
         await event.client(UnblockRequest(user))
         aname = await event.client.get_entity(user)
-        await event.eor(f"{inline_mention(aname)} [`user`] `has been UnBlocked!`")
+        await event.eor(f"{inline_mention(aname)} [`{user}`] `has been UnBlocked!`")
     except Exception as et:
         return await event.eor(f"ERROR - {et}")
     try:
