@@ -571,7 +571,7 @@ async def unblockpm(event):
                     await event.client(UnblockRequest(user.id))
                 count += len(u_s.users)
             return await eor(msg, f"__Unblocked {count} users.__")
-    
+
         try:
             user = await event.client.parse_id(match)
         except Exception as er:
