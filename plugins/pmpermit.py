@@ -548,31 +548,38 @@ async def blockpm(block):
 
 @ultroid_cmd(pattern="unblock( (.*)|$)")
 async def unblockpm(event):
-    match = (
-        event.pattern_match.group(1).strip()
-        or (await event.get_reply_message()).sender_id
-    )
-    if not match:
-        return await event.eor(NO_REPLY + "`Or give it's username/id`", time=5)
-    if match == "all":
-        msg = await event.eor(get_string("com_1"))
-        u_s = await event.client(GetBlockedRequest(0, 0))
-        count = len(u_s.users)
-        if not count:
-            return await eor(msg, "__You have not blocked Anyone...__")
-        for user in u_s.users:
-            await asyncio.sleep(1)
-            await event.client(UnblockRequest(user.id))
-        # GetBlockedRequest return 20 users at most.
-        if count < 20:
-            return await eor(msg, f"__Unblocked {count} Users!__")
-        while u_s.users:
+    match = event.pattern_match.group(1).strip()
+    if event.reply_to_msg_id:
+        user = (await event.get_reply_message()).sender_id
+    elif match:
+        if match == "all":
+            msg = await event.eor(get_string("com_1"))
             u_s = await event.client(GetBlockedRequest(0, 0))
+            count = len(u_s.users)
+            if not count:
+                return await eor(msg, "__You have not blocked Anyone...__")
             for user in u_s.users:
-                await asyncio.sleep(3)
+                await asyncio.sleep(1)
                 await event.client(UnblockRequest(user.id))
-            count += len(u_s.users)
-        return await eor(msg, f"__Unblocked {count} users.__")
+            # GetBlockedRequest return 20 users at most.
+            if count < 20:
+                return await eor(msg, f"__Unblocked {count} Users!__")
+            while u_s.users:
+                u_s = await event.client(GetBlockedRequest(0, 0))
+                for user in u_s.users:
+                    await asyncio.sleep(3)
+                    await event.client(UnblockRequest(user.id))
+                count += len(u_s.users)
+            return await eor(msg, f"__Unblocked {count} users.__")
+    
+        try:
+            user = await event.client.parse_id(match)
+        except Exception as er:
+            return await event.eor(str(er))
+    elif block.is_private:
+        user = (await event.get_chat()).id
+    else:
+        return await event.eor(NO_REPLY, time=10)
     try:
         user = await event.client.parse_id(match)
     except Exception as er:
