@@ -209,9 +209,9 @@ async def siesace(e):
     song, _ = await fast_download(url, filename=title + ".m4a")
     thumb, _ = await fast_download(img, filename=title + ".jpg")
     song, _ = await e.client.fast_uploader(song, to_delete=True)
-    await e.reply(
+    await eve.eor(
         file=song,
-        message=f"`{title}`\n`From Saavn`",
+        text=f"`{title}`\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),
