@@ -31,7 +31,7 @@ from pyUltroid.functions.admins import ban_time
 from telethon import events
 from telethon.utils import get_display_name
 
-from . import eod, get_string, inline_mention, ultroid_bot, ultroid_cmd, asst
+from . import asst, eod, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
