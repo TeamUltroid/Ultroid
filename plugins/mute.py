@@ -31,7 +31,7 @@ from pyUltroid.functions.admins import ban_time
 from telethon import events
 from telethon.utils import get_display_name
 
-from . import eod, get_string, inline_mention, ultroid_bot, ultroid_cmd
+from . import eod, get_string, inline_mention, ultroid_bot, ultroid_cmd, asst
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
@@ -54,14 +54,17 @@ async def startmute(event):
         except Exception as x:
             return await xx.edit(str(x))
     elif event.reply_to_msg_id:
-        userid = (await event.get_reply_message()).sender_id
+        reply = await event.get_reply_message()
+        user_id = reply.sender_id
+        if reply.out or user_id in [ultroid_bot.me.id, asst.me.id]:
+            return await xx.eor("`You cannot mute yourself or your assistant bot.`")
     elif event.is_private:
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
     chat = await event.get_chat()
     if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
-        if chat.admin_rights.delete_messages is not True:
+        if not chat.admin_rights.delete_messages:
             return await xx.eor("`No proper admin rights...`", time=5)
     elif "creator" not in vars(chat) and not event.is_private:
         return await xx.eor("`No proper admin rights...`", time=5)
@@ -88,10 +91,9 @@ async def endmute(event):
         userid = event.chat_id
     else:
         return await xx.eor("`Reply to a user or add their userid.`", time=5)
-    chat_id = event.chat_id
-    if not is_muted(chat_id, userid):
+    if not is_muted(event.chat_id, userid):
         return await xx.eor("`This user is not muted in this chat.`", time=3)
-    unmute(chat_id, userid)
+    unmute(event.chat_id, userid)
     await xx.eor("`Successfully unmuted...`", time=3)
 
 
