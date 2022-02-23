@@ -63,7 +63,7 @@ async def usage_finder(event):
         is_hk, hk = await heroku_usage()
         await x.edit(hk)
     else:
-        await x.edit(get_full_usage())
+        await x.edit(await get_full_usage())
 
 
 def simple_usage():
@@ -178,8 +178,8 @@ def db_usage():
     return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 
-def get_full_usage():
-    is_hk, hk = heroku_usage()
+async def get_full_usage():
+    is_hk, hk = await heroku_usage()
     her = hk if is_hk else ""
     rd = db_usage()
     return her + "\n\n" + rd
