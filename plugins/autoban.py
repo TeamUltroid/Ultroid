@@ -35,7 +35,7 @@ async def dnd_func(event):
 
 
 @ultroid_cmd(
-    pattern="autokick (on|off)$", manager=True, admins_only=True, groups_only=True
+    pattern="autokick (on|off)$", manager=True, admins_only=True, groups_only=True, fullsudo=True
 )
 async def _(event):
     match = event.pattern_match.group(1)
