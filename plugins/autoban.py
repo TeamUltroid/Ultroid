@@ -36,8 +36,9 @@ async def dnd_func(event):
 
 @ultroid_cmd(
     pattern="autokick (on|off)$",
-    manager=True,
     admins_only=True,
+    manager=True,
+    require="ban_users",
     fullsudo=True,
 )
 async def _(event):
