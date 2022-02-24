@@ -68,7 +68,11 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="promote( (.*)|$)", admins_only=True, manager=True, require="add_admins", fullsudo=True
+    pattern="promote( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="add_admins",
+    fullsudo=True,
 )
 async def prmte(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -96,7 +100,11 @@ async def prmte(ult):
 
 
 @ultroid_cmd(
-    pattern="demote( (.*)|$)", admins_only=True, manager=True, require="add_admins", fullsudo=True
+    pattern="demote( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="add_admins",
+    fullsudo=True,
 )
 async def dmote(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -153,7 +161,11 @@ async def bban(ult):
 
 
 @ultroid_cmd(
-    pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users", fullsudo=True
+    pattern="unban( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="ban_users",
+    fullsudo=True,
 )
 async def uunban(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -217,7 +229,11 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="tban( (.*)|$)", admins_only=True, manager=True, require="ban_users", fullsudo=True
+    pattern="tban( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="ban_users",
+    fullsudo=True,
 )
 async def tkicki(e):
     huh = e.text.split()
@@ -252,7 +268,13 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(pattern="pin$", admins_only=True, manager=True, require="pin_messages", fullsudo=True)
+@ultroid_cmd(
+    pattern="pin$",
+    admins_only=True,
+    manager=True,
+    require="pin_messages",
+    fullsudo=True,
+)
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -295,7 +317,11 @@ async def unp(ult):
 
 
 @ultroid_cmd(
-    pattern="tpin( (.*)|$)", admins_only=True, manager=True, require="pin_messages", fullsudo=True
+    pattern="tpin( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="pin_messages",
+    fullsudo=True,
 )
 async def pin_message(ult):
     match = ult.pattern_match.group(1).strip()
