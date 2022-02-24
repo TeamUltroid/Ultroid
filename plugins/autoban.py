@@ -34,14 +34,18 @@ async def dnd_func(event):
         await event.delete()
 
 
-@ultroid_cmd(pattern="autokick (on|off)$", manager=True, admins_only=True, groups_only=True)
+@ultroid_cmd(
+    pattern="autokick (on|off)$", manager=True, admins_only=True, groups_only=True
+)
 async def _(event):
     match = event.pattern_match.group(1)
     if match == "on":
         if dnd_db.chat_in_dnd(event.chat_id):
             return await event.eor("`Chat already in do not disturb mode.`", time=3)
         dnd_db.add_dnd(event.chat_id)
-        event.client.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
+        event.client.add_handler(
+            dnd_func, events.ChatAction(func=lambda x: x.user_joined)
+        )
         await event.eor("`Do not disturb mode activated for this chat.`", time=3)
     elif match == "off":
         if not dnd_db.chat_in_dnd(event.chat_id):
@@ -50,7 +54,7 @@ async def _(event):
         await event.eor("`Do not disturb mode deactivated for this chat.`", time=3)
     else:
         pass
-    
+
 
 if get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
