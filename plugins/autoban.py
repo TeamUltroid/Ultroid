@@ -38,7 +38,6 @@ async def dnd_func(event):
     pattern="autokick (on|off)$",
     manager=True,
     admins_only=True,
-    groups_only=True,
     fullsudo=True,
 )
 async def _(event):
