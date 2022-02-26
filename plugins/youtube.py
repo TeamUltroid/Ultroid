@@ -39,14 +39,6 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        ytd["postprocessors"] = [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "128",
-            },
-            {"key": "FFmpegMetadata"},
-        ]
         url = event.pattern_match.group(2)
         if not url:
             return await xx.eor(get_string("youtube_1"))
@@ -68,14 +60,6 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        ytd["postprocessors"] = [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "128",
-            },
-            {"key": "FFmpegMetadata"},
-        ]
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
