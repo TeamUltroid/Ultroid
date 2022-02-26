@@ -60,6 +60,6 @@ async def _(event):
         pass
 
 
-if get_dnd_chats():
+if dnd_db.get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
     asst.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
