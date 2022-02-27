@@ -87,7 +87,7 @@ async def fcall(e):
     spli = match.split("_")
     user = await ultroid_bot.get_entity(int(spli[0]))
     cl = await ultroid_bot.get_entity(int(spli[1]))
-    text = f"Hi [{inline_mention(user)}), You Need to Join"
+    text = f"Hi {inline_mention(user)}, You Need to Join"
     text += f" {cl.title} in order to Chat in this Group."
     if not cl.username:
         el = (await ultroid_bot(ExportChatInviteRequest(cl))).link
@@ -131,7 +131,6 @@ async def diesoon(e):
 async def force_sub(ult):
     if not udB.get_key("FORCESUB"):
         return
-
     user = await ult.get_sender()
     joinchat = get_forcesetting(ult.chat_id)
     if (not joinchat) or (isinstance(user, User) and user.bot):
