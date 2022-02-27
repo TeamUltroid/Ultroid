@@ -145,7 +145,7 @@ async def force_sub(ult):
         CACHE.update({ult.chat_id: {user.id: 1}})
     count = CACHE[ult.chat_id][user.id]
     if count == 11:
-        CACHE[ult.chat_id][user.id].update(1)
+        CACHE[ult.chat_id][user.id] = 1
         return
     if count in range(2, 11):
         return
@@ -164,6 +164,7 @@ async def force_sub(ult):
             LOGS.exception(er)
     try:
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
+        await ult.delete()
     except ChatAdminRequiredError:
         return
     except Exception as e:
