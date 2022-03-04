@@ -277,7 +277,7 @@ async def doie(e):
     open("cpp-ultroid.cpp", "w").write(match)
     m = await bash("g++ -o CppUltroid cpp-ultroid.cpp")
     o_cpp = f"• **Eval-Cpp**\n`{match}`"
-    if m[1] != "":
+    if m[1]:
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
         if len(o_cpp) > 3000:
             os.remove("cpp-ultroid.cpp")
@@ -290,7 +290,7 @@ async def doie(e):
     m = await bash("./CppUltroid")
     if m[0] != "":
         o_cpp += f"\n\n**• Output :**\n`{m[0]}`"
-    if m[1] != "":
+    if m[1]:
         o_cpp += f"\n\n**• Error :**\n`{m[1]}`"
     if len(o_cpp) > 3000:
         with BytesIO(str.encode(o_cpp)) as out_file:
