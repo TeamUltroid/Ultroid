@@ -49,6 +49,8 @@ except ImportError:
 from . import *
 
 
+_ignore_eval = []
+
 @ultroid_cmd(
     pattern="sysinfo$",
 )
@@ -70,6 +72,10 @@ async def _(event):
     except IndexError:
         return await event.eor(get_string("devs_1"), time=10)
     xx = await event.eor(get_string("com_1"))
+    if event.sender_id in _ignore_eval:
+        return await xx.edit(
+            "`You cannot use this command now. Contact owner of this bot!`"
+        )
     reply_to_id = event.reply_to_msg_id or event.id
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
@@ -134,9 +140,6 @@ def _parse_eval(value=None):
         except BaseException:
             pass
     return str(value)
-
-
-_ignore_eval = []
 
 
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
