@@ -5,7 +5,7 @@
 |----|-------|-------|---|
 | en | English [English] | 413 | 0 |
 | ka | Kannada [ಕನ್ನಡ] | 112 | 301 |
-| bn | bengoli [বাংলা] | 112 | 301 |
+| bn | Bengali [বাংলা] | 382 | 31 |
 | od | Odia [ଓଡିଆ] | 112 | 301 |
 | ru | Russian [Русский] | 411 | 2 |
 | pt-br | Portuguese [Português] | 413 | NULL |
