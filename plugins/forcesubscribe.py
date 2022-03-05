@@ -163,10 +163,10 @@ async def force_sub(ult):
             LOGS.exception(er)
     try:
         await ultroid_bot.edit_permissions(ult.chat_id, user.id, send_messages=False)
-        await ult.delete()
     except ChatAdminRequiredError:
         return
     except Exception as e:
+        await ult.delete()
         LOGS.info(e)
     res = await ultroid_bot.inline_query(asst.me.username, f"fsub {user.id}_{joinchat}")
     await res[0].click(ult.chat_id, reply_to=ult.id)
