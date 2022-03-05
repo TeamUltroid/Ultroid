@@ -60,8 +60,8 @@ try:
 except ImportError:
     Image = None
 
-from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid._misc._assistant import asst_cmd
+from pyUltroid.dB.gban_mute_db import is_gbanned
 
 try:
     from telegraph import upload_file as uf

@@ -28,9 +28,9 @@ except ImportError:
     akinator = None
     LOGS.error("'akinator' not installed.")
 
+from pyUltroid._misc._decorators import ultroid_cmd
 from pyUltroid.functions.helper import inline_mention
 from pyUltroid.functions.tools import async_searcher
-from pyUltroid._misc._decorators import ultroid_cmd
 from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendStickersForbiddenError,
