@@ -6,6 +6,6 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 from pyUltroid.functions.helper import inline_mention
-from pyUltroid.misc._decorators import ultroid_cmd
+from pyUltroid._misc._decorators import ultroid_cmd
 
 from .. import *

@@ -36,6 +36,7 @@ from . import (
     mediainfo,
     stdr,
     time_formatter,
+    LOGS,
     ultroid_cmd,
     uploader,
 )

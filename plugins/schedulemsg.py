@@ -33,7 +33,7 @@ async def _(e):
             await e.eor(get_string("schdl_1"), time=5)
         else:
             try:
-                z = await ban_time(e, y)
+                z = ban_time(e, y)
                 await e.client.send_message(e.chat_id, k, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:
@@ -46,7 +46,7 @@ async def _(e):
             await e.eor(get_string("schdl_1"), time=5)
         else:
             try:
-                z = await ban_time(e, x)
+                z = ban_time(e, x)
                 await e.client.send_message(e.chat_id, xx, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:
