@@ -60,6 +60,7 @@ NOSPAM_CHAT = [
     -1001109500936,  # TelethonChat
     -1001050982793,  # Python
     -1001256902287,  # DurovsChat
+    -1001473548283,  # SharingUserbot
 ]
 
 KANGING_STR = [
