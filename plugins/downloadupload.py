@@ -164,6 +164,8 @@ async def _(event):
     if match.endswith("/"):
         match += "*"
     results = glob.glob(match)
+    if not results and os.path.exists(match):
+        results = [match]
     if not results:
         try:
             await event.reply(file=match)
