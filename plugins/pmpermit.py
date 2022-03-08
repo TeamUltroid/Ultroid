@@ -70,10 +70,10 @@ UND = get_string("pmperm_1")
 UNS = get_string("pmperm_2")
 NO_REPLY = get_string("pmperm_3")
 
-UNAPPROVED_MSG = "**PMSecurity of {ON}!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
+UNAPPROVED_MSG = "**MASUK SINI DULU YA!**\n\n{UND}\n\nYou have {warn}/{twarn} warnings!"
 if udB.get_key("PM_TEXT"):
     UNAPPROVED_MSG = (
-        "**PMSecurity of {ON}!**\n\n"
+        "**MASUK SINI DULU SYA!**\n\n"
         + udB.get_key("PM_TEXT")
         + "\n\nYou have {warn}/{twarn} warnings!"
     )
