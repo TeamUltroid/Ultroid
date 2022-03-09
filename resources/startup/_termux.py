@@ -8,7 +8,7 @@ def clear():
     system("clear")
 
 MANDATORY_REQS = [
-    "https://github.com/New-dev0/Telethon/archive/Artifact.zip",
+    "https://github.com/New-dev0/Telethon/archive/PlayTime.zip",
     "https://github.com/TeamUltroid/pyUltroid/archive/dev.zip",
 #   "py-Ultroid==2022.2.10",
     "gitpython",
@@ -199,7 +199,7 @@ ask_process_info_text()
 clear()
 
 print(with_header("Installing Mandatory requirements..."))
-all_ = "".join(f" {pip}" for pip in MANDATORY_REQS)
+all_ = " ".join(MANDATORY_REQS)
 system(f"pip install {all_}")
 
 clear()
