@@ -141,13 +141,13 @@ def ask_and_wait_opt():
             print(f"* {Fore.YELLOW}Do you want to install '{opt}'? [Y/N]\n- {OPT_PACKAGES[opt]}")
             if yes_no_apt():
                 print(f"Installing {opt}...")
-                system(f"pip install {opt} -y")
+                system(f"pip install {opt}")
             else:
                 print(f"{Fore.YELLOW}- Discarded {opt}.\n")
     elif strm == "i":
         names = " ".join(OPT_PACKAGES.keys())
         print(f"{Fore.YELLOW}Installing all packages...")
-        system(f"pip install {names} -y")
+        system(f"pip install {names}")
     elif strm == "s":
         pass
     else:
@@ -200,7 +200,7 @@ clear()
 
 print(with_header("Installing Mandatory requirements..."))
 all_ = "".join(f" {pip}" for pip in MANDATORY_REQS)
-system(f"pip install{all_}")
+system(f"pip install {all_}")
 
 clear()
 print(with_header(f"\n{Fore.GREEN}# Moving toward Installing Apt-Packages{Fore.RESET}\n\n"))
