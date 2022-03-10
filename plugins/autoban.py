@@ -14,13 +14,14 @@
     Automatically kick new joined users from the group.
 
 • `{i}cban`
-    Enable/Disable autobanning send as channel in used chat. 
+    Enable/Disable autobanning send as channel in used chat.
 """
 
 
-from pyUltroid.dB import dnd_db, autoban_db
+from pyUltroid.dB import autoban_db, dnd_db
 from telethon import events
 from telethon.tl.types import Channel
+
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
@@ -36,17 +37,21 @@ async def dnd_func(event):
                 LOGS.exception(ex)
         await event.delete()
 
+
 async def channel_del(event):
     if not autoban_db.is_autoban_enabled(event.chat_id):
         return
     if autoban_db.is_whitelisted(event.sender_id):
         return
-    if (event.chat.creator or event.chat.admin_rights.ban_users):
+    if event.chat.creator or event.chat.admin_rights.ban_users:
         try:
-            await event.client.edit_permissions(event.chat_id, event.sender_id, view_messages=False)
+            await event.client.edit_permissions(
+                event.chat_id, event.sender_id, view_messages=False
+            )
         except Exception as er:
             LOGS.exception(er)
     await event.try_delete()
+
 
 @ultroid_cmd(
     pattern="autokick (on|off)$",
@@ -77,11 +82,21 @@ async def ban_cha(ult):
     if autoban_db.is_autoban_enabled(ult.chat_id):
         autoban_db.del_channel(ult.chat_id)
         return await ult.eor("`Disabled Auto ChannelBan...`")
-    if not (ult.creator or (ult.chat.admin_rights.delete_messages or ult.chat.admin_rights.ban_users)):
-        return await ult.eor("You are missing required admin rights!\nYou can't use ChannelBan without Ban/del privilege..`")
+    if not (
+        ult.creator
+        or (ult.chat.admin_rights.delete_messages or ult.chat.admin_rights.ban_users)
+    ):
+        return await ult.eor(
+            "You are missing required admin rights!\nYou can't use ChannelBan without Ban/del privilege..`"
+        )
     autoban_db.add_channel(ult.chat_id)
     await ult.eor("`Enabled Auto ChannelBan Successfully!`")
-    ult.client.add_handler(channel_del, events.NewMessage(func=lambda x: not x.is_private and isinstance(x.sender, Channel)))
+    ult.client.add_handler(
+        channel_del,
+        events.NewMessage(
+            func=lambda x: not x.is_private and isinstance(x.sender, Channel)
+        ),
+    )
 
 
 if dnd_db.get_dnd_chats():
@@ -89,4 +104,9 @@ if dnd_db.get_dnd_chats():
     asst.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
 
 if autoban_db.get_all_channels():
-    ultroid_bot.add_handler(channel_del, events.NewMessage(func=lambda x: not x.is_private and isinstance(x.sender, Channel)))
+    ultroid_bot.add_handler(
+        channel_del,
+        events.NewMessage(
+            func=lambda x: not x.is_private and isinstance(x.sender, Channel)
+        ),
+    )
