@@ -20,7 +20,7 @@
 
 from pyUltroid.dB import dnd_db, autoban_db
 from telethon import events
-
+from telethon.tl.types import Channel
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
