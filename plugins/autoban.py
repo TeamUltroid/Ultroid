@@ -49,7 +49,7 @@ async def dnd_func(event):
 async def channel_del(event):
     if not autoban_db.is_autoban_enabled(event.chat_id):
         return
-    if autoban_db.is_whitelisted(event.sender_id):
+    if autoban_db.is_whitelisted(event.chat_id, event.sender_id):
         return
     if event.chat.creator or event.chat.admin_rights.ban_users:
         try:
@@ -106,6 +106,14 @@ async def ban_cha(ult):
         ),
     )
 
+@ultroid_cmd(pattern="(list|add|rem)wl( (.*)|$)")
+async def do_magic(event):
+    match = event.pattern_match.group(1)
+    msg = await event.eor(get_string("com_1")) 
+    if match == "list":
+        cha = autoban_db.get_whitelisted_channels(event.chat_id)
+        if not cha:
+            return await msg.edit("`No Whitelisted channels for current chat.`")
 
 if dnd_db.get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
