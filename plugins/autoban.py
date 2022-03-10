@@ -30,7 +30,8 @@ from pyUltroid.dB import autoban_db, dnd_db
 from telethon import events
 from telethon.tl.types import Channel
 from telethon.utils import get_display_name
-from . import LOGS, asst, ultroid_bot, ultroid_cmd, get_string, inline_mention
+
+from . import LOGS, asst, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
 
 async def dnd_func(event):
@@ -119,13 +120,15 @@ async def do_magic(event):
         for ch in cha:
             Msg += f"(`{ch}`) "
             try:
-                Msg += get_display_name(await event.client.get_entity(ch)) 
-            except Exception as er:
+                Msg += get_display_name(await event.client.get_entity(ch))
+            except Exception:
                 Msg += "\n"
         return await msg.edit(Msg)
     usea = event.pattern_match.group(2).strip()
     if not usea:
-        return await Msg.edit("`Please provide a channel username/id to add/remove to/from whitelist..`")
+        return await Msg.edit(
+            "`Please provide a channel username/id to add/remove to/from whitelist..`"
+        )
     try:
         u_id = await event.client.parse_id(usea)
         cha = await event.client.get_entity(u_id)
@@ -137,6 +140,7 @@ async def do_magic(event):
         return await msg.edit(f"`Added` {inline_mention(cha)} `to WhiteList..`")
     autoban_db.del_from_whitelist(event.chat_id, u_id)
     await msg.edit(f"`Removed` {inline_mention(cha)} `from WhiteList.`")
+
 
 if dnd_db.get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
