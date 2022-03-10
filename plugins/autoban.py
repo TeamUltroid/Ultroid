@@ -29,7 +29,6 @@
 from pyUltroid.dB import autoban_db, dnd_db
 from telethon import events
 from telethon.tl.types import Channel
-from telethon.utils import get_display_name
 
 from . import LOGS, asst, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
