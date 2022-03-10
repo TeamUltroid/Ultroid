@@ -116,11 +116,11 @@ async def do_magic(event):
         cha = autoban_db.get_whitelisted_channels(event.chat_id)
         if not cha:
             return await msg.edit("`No Whitelisted channels for current chat.`")
-        Msg = ""
+        Msg = "**Whitelist Channels in Current Chat**\n\n"
         for ch in cha:
             Msg += f"(`{ch}`) "
             try:
-                Msg += get_display_name(await event.client.get_entity(ch))
+                Msg += inline_mention(await event.client.get_entity(ch))
             except Exception:
                 Msg += "\n"
         return await msg.edit(Msg)
