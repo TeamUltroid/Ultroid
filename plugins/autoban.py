@@ -29,7 +29,7 @@
 from pyUltroid.dB import autoban_db, dnd_db
 from telethon import events
 from telethon.tl.types import Channel
-
+from pyUltroid.functions.admins import get_update_linked_chat
 from . import LOGS, asst, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
 
@@ -50,6 +50,9 @@ async def channel_del(event):
     if not autoban_db.is_autoban_enabled(event.chat_id):
         return
     if autoban_db.is_whitelisted(event.chat_id, event.sender_id):
+        return
+    linked = await get_update_linked_chat(event)
+    if linked == event.sender.id:
         return
     if event.chat.creator or event.chat.admin_rights.ban_users:
         try:
