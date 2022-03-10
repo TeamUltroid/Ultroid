@@ -22,7 +22,7 @@
 • `{i}remwl <Username>`
    Remove Channel from channelban whitelist.
 
-• `{i}listwl` : List all whitelist channels. 
+• `{i}listwl` : List all whitelist channels.
 """
 
 
