@@ -15,6 +15,14 @@
 
 • `{i}cban`
     Enable/Disable autobanning send as channel in used chat.
+
+• `{i}addwl <Username>`
+   Add Channel to channelban whitelist.
+
+• `{i}remwl <Username>`
+   Remove Channel from channelban whitelist.
+
+• `{i}listwl` : List all whitelist channels. 
 """
 
 
@@ -83,7 +91,7 @@ async def ban_cha(ult):
         autoban_db.del_channel(ult.chat_id)
         return await ult.eor("`Disabled Auto ChannelBan...`")
     if not (
-        ult.creator
+        ult.chat.creator
         or (ult.chat.admin_rights.delete_messages or ult.chat.admin_rights.ban_users)
     ):
         return await ult.eor(
