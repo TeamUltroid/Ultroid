@@ -699,7 +699,7 @@ async def omgubuntu(ult):
         match = ult.text.split(maxsplit=1)[1].lower()
     except IndexError:
         return await ult.answer(
-            [], switch_pm_text="Enter Query to search...", switch_pm_param="start"
+            [], switch_pm="Enter Query to search...", switch_pm_param="start"
         )
     if _OMG.get(match):
         return await ult.answer(
@@ -733,7 +733,7 @@ async def omgubuntu(ult):
         )
     await ult.answer(
         res,
-        switch_pm_text=f"Showing {len(res)} results!" if res else "No Results Found :[",
+        switch_pm=f"Showing {len(res)} results!" if res else "No Results Found :[",
         switch_pm_param="start",
     )
     _OMG[match] = res
