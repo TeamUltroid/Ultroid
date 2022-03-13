@@ -48,7 +48,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 ### Local Deploy - Easy Method
 - Linux - `wget -O locals.py https://git.io/JY9UM && python3 locals.py`
 - Windows - `cd desktop ; wget https://git.io/JY9UM -o locals.py ; python locals.py`
-- Termux - `wget -O locals.py https://git.io/JY9UM && python locals.py`
+- Termux - `wget -O install-termux https://tiny.ultroid.tech/termux && bash install-termux`
 
 ### Local Deploy - Traditional Method
 - Get your [Necessary Variables](#Necessary-Variables)
