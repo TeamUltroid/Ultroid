@@ -56,7 +56,7 @@ async def startmute(event):
     elif event.reply_to_msg_id:
         reply = await event.get_reply_message()
         userid = reply.sender_id
-        if reply.out or user_id in [ultroid_bot.me.id, asst.me.id]:
+        if reply.out or userid in [ultroid_bot.me.id, asst.me.id]:
             return await xx.eor("`You cannot mute yourself or your assistant bot.`")
     elif event.is_private:
         userid = event.chat_id

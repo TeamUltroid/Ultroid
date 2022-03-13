@@ -2,6 +2,7 @@
 *.session-journal
 *.session
 build
+test*
 *.mp3
 *.webm
 *.webp
