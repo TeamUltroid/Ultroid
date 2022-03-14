@@ -77,6 +77,8 @@ async def _(event):
             "`You cannot use this command now. Contact owner of this bot!`"
         )
     reply_to_id = event.reply_to_msg_id or event.id
+    if ".env" in cmd:
+        return await xx.edit("`You can't do this...`")
     stdout, stderr = await bash(cmd)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     err, out = "", ""
