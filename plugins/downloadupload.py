@@ -140,6 +140,8 @@ async def _(event):
     match = event.pattern_match.group(1)
     if match:
         match = match.strip()
+    if not event.out and match == ".env":
+        return await event.reply("`You can't do this...`")
     stream, force_doc, delete, thumb = (
         False,
         True,
