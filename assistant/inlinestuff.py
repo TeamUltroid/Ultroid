@@ -763,15 +763,15 @@ async def inline_tl(ult):
     for key in tlobjects.values():
         if match in key.__name__:
             tyyp = "Function" if "tl.functions." in str(key) else "Type"
-            text = f"**{key.__name__}** (`{key.CONSTRUCTOR_ID}`)\n"
+            text = f"**Name:** `{key.__name__}`\n"
             text += f"**Category:** `{tyyp}`\n"
-            text += "\n`from {key.__module__} import {key.__name__}`\n"
+            text += f"\n`from {key.__module__} import {key.__name__}`\n\n"
             args = str(inspect.signature(key))[1:][:-1]
             if args:
-                text += "Parameter:"
+                text += "**Parameter:**\n"
                 for para in args.split(","):
-                    text += " " * 4 + para + "\n"
-            text += f"Layer: {LAYER}"
+                    text += " " * 4 + "`" + para + "`\n"
+            text += f"\n**Layer:** `{LAYER}`"
             res.append(
                 await ult.builder.article(
                     title=key.__name__,
@@ -784,4 +784,4 @@ async def inline_tl(ult):
         mo = f"No Results for {match}!"
     else:
         mo = f"Showing {len(res)} results!"
-    await ult.answer(res, switch_pm=mo, switch_pm_param="start")
+    await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
