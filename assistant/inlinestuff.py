@@ -761,7 +761,7 @@ async def inline_tl(ult):
         )
     res = []
     for key in tlobjects.values():
-        if match in key.__name__:
+        if match.lower() in key.__name__.lower():
             tyyp = "Function" if "tl.functions." in str(key) else "Type"
             text = f"**Name:** `{key.__name__}`\n"
             text += f"**Category:** `{tyyp}`\n"
@@ -777,7 +777,7 @@ async def inline_tl(ult):
                     title=key.__name__,
                     description=tyyp,
                     url="https://t.me/TheUltroid",
-                    text=text,
+                    text=text[:4000],
                 )
             )
     if not res:
