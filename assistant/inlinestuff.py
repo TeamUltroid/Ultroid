@@ -746,7 +746,7 @@ async def inline_tl(ult):
     try:
         match = ult.text.split(maxsplit=1)[1]
     except IndexError:
-        text = f"**It is Telegram TlObjects Searcher.**\n__(Don't use if you know what it is!)__\n\n• Example Usage\n`@{asst.me.username} tl fns GetUserRequest`"
+        text = f"**It is Telegram TlObjects Searcher.**\n__(Don't use if you don't know what it is!)__\n\n• Example Usage\n`@{asst.me.username} tl GetUserRequest`"
         return await ult.answer(
             [
                 await ult.builder.article(
