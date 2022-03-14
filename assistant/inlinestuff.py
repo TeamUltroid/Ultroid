@@ -6,10 +6,11 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+import inspect
 from datetime import datetime
 from random import choice
 from re import compile as re_compile
-import inspect
+
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import (
@@ -20,9 +21,10 @@ from pyUltroid.functions.tools import (
     webuploader,
 )
 from telethon import Button
+from telethon.tl.alltlobjects import LAYER, tlobjects
 from telethon.tl.types import DocumentAttributeAudio as Audio
 from telethon.tl.types import InputWebDocument as wb
-from telethon.tl.alltlobjects import LAYER, tlobjects
+
 from . import *
 from . import _ult_cache
 
@@ -745,7 +747,18 @@ async def inline_tl(ult):
         match = ult.text.split(maxsplit=1)[1]
     except IndexError:
         text = f"**It is Telegram TlObjects Searcher.**\n__(Don't use if you know what it is!)__\n\n• Example Usage\n`@{asst.me.username} tl fns GetUserRequest`"
-        return await ult.answer([await ult.builder.article(title="How to Use?", description="Tl Searcher by Ultroid", url="https://t.me/TheUltroid", text=text)], switch_pm="Tl Search 🔍", switch_pm_param="start")
+        return await ult.answer(
+            [
+                await ult.builder.article(
+                    title="How to Use?",
+                    description="Tl Searcher by Ultroid",
+                    url="https://t.me/TheUltroid",
+                    text=text,
+                )
+            ],
+            switch_pm="Tl Search 🔍",
+            switch_pm_param="start",
+        )
     res = []
     for key in tlobjects.values():
         if match in key.__name__:
@@ -757,9 +770,16 @@ async def inline_tl(ult):
             if args:
                 text += "Parameter:"
                 for para in args.split(","):
-                    text += " "*4 + para + "\n"
+                    text += " " * 4 + para + "\n"
             text += f"Layer: {LAYER}"
-            res.append(await ult.builder.article(title=key.__name__, description=tyyp, url="https://t.me/TheUltroid", text=text))
+            res.append(
+                await ult.builder.article(
+                    title=key.__name__,
+                    description=tyyp,
+                    url="https://t.me/TheUltroid",
+                    text=text,
+                )
+            )
     if not res:
         mo = f"No Results for {match}!"
     else:
