@@ -820,6 +820,7 @@ async def gh_feeds(ult):
             switch_pm_param="start",
         )
     res = []
+    res_ids = []
     for cont in data[:50]:
         text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
         title = f"@{username}"
@@ -856,8 +857,7 @@ async def gh_feeds(ult):
         if extra:
             text += extra
         thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
-        res.append(
-            await ult.builder.article(
+        article = await ult.builder.article(
                 title=title,
                 text=text,
                 url=repo_url,
@@ -871,7 +871,9 @@ async def gh_feeds(ult):
                     ),
                 ],
             )
-        )
+        if article.id not in res_ids:
+            res_ids.append(article.id)
+            res.append(article)
     if res:
         msg = f"Showing {len(res)} feeds!"
     else:
