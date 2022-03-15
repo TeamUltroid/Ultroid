@@ -797,9 +797,13 @@ async def gh_feeds(ult):
             switch_pm="Enter Github Username to see feeds...",
             switch_pm_param="start",
         )
-    data = await async_searcher(f"https://api.github.com/users/{username}/events", re_json=True)
+    data = await async_searcher(
+        f"https://api.github.com/users/{username}/events", re_json=True
+    )
     if data.get("message") == "Not Found":
-        return await ult.answer([], cache_time=300, switch_pm="Invalid Username...", switch_pm_param="start")
+        return await ult.answer(
+            [], cache_time=300, switch_pm="Invalid Username...", switch_pm_param="start"
+        )
     res = []
     for cont in data[:50]:
         title = f"@{username} "
