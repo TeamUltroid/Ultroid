@@ -800,7 +800,7 @@ async def gh_feeds(ult):
     data = await async_searcher(
         f"https://api.github.com/users/{username}/events", re_json=True
     )
-    if data.get("message") == "Not Found":
+    if not instance(data, list) and data.get("message") == "Not Found":
         return await ult.answer(
             [], cache_time=300, switch_pm="Invalid Username...", switch_pm_param="start"
         )
