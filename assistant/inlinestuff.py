@@ -798,7 +798,9 @@ async def gh_feeds(ult):
             switch_pm_param="start",
         )
     if not username.endswith("."):
-        return await ult.answer([], switch_pm="End your query with . to search...", switch_pm_param="start")
+        return await ult.answer(
+            [], switch_pm="End your query with . to search...", switch_pm_param="start"
+        )
     username = username[:-1]
     data = await async_searcher(
         f"https://api.github.com/users/{username}/events", re_json=True
