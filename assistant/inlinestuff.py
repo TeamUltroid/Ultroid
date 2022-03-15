@@ -820,7 +820,10 @@ async def gh_feeds(ult):
             text += " commented at"
             url = cont["payload"]["comment"]["html_url"]
         elif cont["type"] == "PullRequestEvent":
-            if cont["payload"]["pull_request"].get("user", {}).get("login") != username.lower():
+            if (
+                cont["payload"]["pull_request"].get("user", {}).get("login")
+                != username.lower()
+            ):
                 continue
             url = cont["payload"]["pull_request"]["html_url"]
             text += " created a pull request in"
