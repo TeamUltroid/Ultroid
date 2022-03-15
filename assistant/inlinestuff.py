@@ -858,19 +858,17 @@ async def gh_feeds(ult):
             text += extra
         thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
         article = await ult.builder.article(
-                title=title,
-                text=text,
-                url=repo_url,
-                parse_mode="html",
-                link_preview=False,
-                thumb=thumb,
-                buttons=[
-                    Button.url("View", url),
-                    Button.switch_inline(
-                        "Search again", query=ult.text, same_peer=True
-                    ),
-                ],
-            )
+            title=title,
+            text=text,
+            url=repo_url,
+            parse_mode="html",
+            link_preview=False,
+            thumb=thumb,
+            buttons=[
+                Button.url("View", url),
+                Button.switch_inline("Search again", query=ult.text, same_peer=True),
+            ],
+        )
         if article.id not in res_ids:
             res_ids.append(article.id)
             res.append(article)
