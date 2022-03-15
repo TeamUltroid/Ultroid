@@ -824,7 +824,11 @@ async def gh_feeds(ult):
         else:
             break
         title += cont["repo"]["name"]
-        res.append(await ult.builer.article(title=title, text=title, buttons=Button.url("View", url)))
+        res.append(
+            await ult.builer.article(
+                title=title, text=title, buttons=Button.url("View", url)
+            )
+        )
     if res:
         msg = f"Showing {len(res)} feeds!"
     else:
