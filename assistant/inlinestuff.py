@@ -806,9 +806,11 @@ async def gh_feeds(ult):
         )
     res = []
     for cont in data[:50]:
-        title = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
+        text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
+        title = f"@{username}"
         if cont["type"] == "PushEvent":
-            title += " pushed in"
+            for i in [text, title]:
+                i += " pushed in"
             url = cont["payload"]["commits"][-1]["url"]
         elif cont["type"] == "IssueCommentEvent":
             title += " commented at"
@@ -817,19 +819,25 @@ async def gh_feeds(ult):
             if cont.get("actor", {}).get("login") != username.lower():
                 continue
             url = cont["payload"]["pull_request"]["html_url"]
-            title += " created a pull request in"
+            for i in [text, title]:
+                i += " created a pull request in"
         elif cont["type"] == "ForkEvent":
-            title += " forked"
+            for i in [text, title]:
+                i += " forked"
             url = cont["payload"]["forkee"]["html_url"]
         else:
-            break
+            continue
         repo = cont["repo"]["name"]
-        title += f" <b><a href='https://github.com/{repo}'>{repo}</a></b>"
+        repo_url = "https://github.com/" + repo
+        title += " " + repo
+        text += f" <b><a href='{repo_url}'>{repo}</a></b>"
         res.append(
             await ult.builder.article(
                 title=title,
                 text=title,
+                url=repo_url,
                 parse_mode="html",
+                link_preview=False,
                 buttons=[
                     Button.url("View", url),
                     Button.switch_inline(
