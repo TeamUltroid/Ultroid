@@ -814,7 +814,7 @@ async def gh_feeds(ult):
             title += " pushed in"
             dt = cont["payload"]["commits"][-1]
             url = "https://github.com/" + dt["url"].split("/repos/")[-1]
-            extra = f"\n-> message: <code>{dt['message']}</code>"
+            extra = f"\n-> <b>message:</b> <code>{dt['message']}</code>"
         elif cont["type"] == "IssueCommentEvent":
             title += " commented at"
             text += " commented at"
@@ -861,4 +861,4 @@ async def gh_feeds(ult):
         msg = f"Showing {len(res)} feeds!"
     else:
         msg = "Nothing Found"
-    await ult.answer(res, switch_pm=msg, switch_pm_param="start")
+    await ult.answer(res, cache_time=5000, switch_pm=msg, switch_pm_param="start")
