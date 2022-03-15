@@ -800,9 +800,12 @@ async def gh_feeds(ult):
     data = await async_searcher(
         f"https://api.github.com/users/{username}/events", re_json=True
     )
-    if not isinstance(data, list) and data.get("message") == "Not Found":
+    if isinstance(data, dict):
+        msg = ""
+        for ak in list(data.keys()):
+            msg += ak + ": `" + data[ak] +"`\n"
         return await ult.answer(
-            [], cache_time=300, switch_pm="Invalid Username...", switch_pm_param="start"
+            [await ult.builder.article(title=data["message"], text=msg, link_preview=False)], cache_time=300, switch_pm="Error!!!", switch_pm_param="start"
         )
     res = []
     for cont in data[:50]:
