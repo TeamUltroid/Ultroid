@@ -827,7 +827,15 @@ async def gh_feeds(ult):
         title += f" <b><a href='https://github.com/{repo}'>{repo}</a></b>"
         res.append(
             await ult.builder.article(
-                title=title, text=title, parse_mode="html", buttons=[Button.url("View", url), Button.switch_inline("Search again", query=ult.text, same_peer=True)]
+                title=title,
+                text=title,
+                parse_mode="html",
+                buttons=[
+                    Button.url("View", url),
+                    Button.switch_inline(
+                        "Search again", query=ult.text, same_peer=True
+                    ),
+                ],
             )
         )
     if res:
