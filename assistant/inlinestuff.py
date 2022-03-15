@@ -809,21 +809,22 @@ async def gh_feeds(ult):
         text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
         title = f"@{username}"
         if cont["type"] == "PushEvent":
-            for i in [text, title]:
-                i += " pushed in"
+            text += " pushed in"
+            title += " pushed in"
             url = cont["payload"]["commits"][-1]["url"]
         elif cont["type"] == "IssueCommentEvent":
             title += " commented at"
+            text += " commented at"
             url = cont["payload"]["comment"]["html_url"]
         elif cont["type"] == "PullRequestEvent":
             if cont.get("actor", {}).get("login") != username.lower():
                 continue
             url = cont["payload"]["pull_request"]["html_url"]
-            for i in [text, title]:
-                i += " created a pull request in"
+            text += " created a pull request in"
+            title += " created a pull request in"
         elif cont["type"] == "ForkEvent":
-            for i in [text, title]:
-                i += " forked"
+            text += " forked"
+            title += " forked"
             url = cont["payload"]["forkee"]["html_url"]
         else:
             continue
@@ -835,7 +836,7 @@ async def gh_feeds(ult):
         res.append(
             await ult.builder.article(
                 title=title,
-                text=title,
+                text=text,
                 url=repo_url,
                 parse_mode="html",
                 link_preview=False,
