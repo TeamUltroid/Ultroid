@@ -803,9 +803,16 @@ async def gh_feeds(ult):
     if isinstance(data, dict):
         msg = ""
         for ak in list(data.keys()):
-            msg += ak + ": `" + data[ak] +"`\n"
+            msg += ak + ": `" + data[ak] + "`\n"
         return await ult.answer(
-            [await ult.builder.article(title=data["message"], text=msg, link_preview=False)], cache_time=300, switch_pm="Error!!!", switch_pm_param="start"
+            [
+                await ult.builder.article(
+                    title=data["message"], text=msg, link_preview=False
+                )
+            ],
+            cache_time=300,
+            switch_pm="Error!!!",
+            switch_pm_param="start",
         )
     res = []
     for cont in data[:50]:
