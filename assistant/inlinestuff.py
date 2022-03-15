@@ -797,3 +797,28 @@ async def gh_feeds(ult):
             switch_pm="Enter Github Username to see feeds...",
             switch_pm_param="start",
         )
+    data = await async_searcher(f"https://api.github.com/users/{username}/events", re_json=True)
+    if data.get("message") == "Not Found":
+        return await ult.answer([], cache_time=300, switch_pm="Invalid Username...", switch_pm_param="start")
+    res = []
+    for cont in data[:50]:
+        title = f"@{username} "
+        if cont["type"] == "PushEvent":
+            title += " pushed in"
+        elif cont["type"] == "IssueCommentEvent":
+            title += " commented at"
+        elif cont["type"] == "PullRequestEvent":
+            if cont.get("actor", {}).get("login") != username.lower():
+                break
+            title += " created a pull request in"
+        elif cont["type"] == "ForkEvent":
+            title += " forked"
+        else:
+            break
+        title += cont["repo"]["name"]
+        res.append(await ult.builer.article(title=title, text=title))
+    if res:
+        msg = f"Showing {len(res)} feeds!"
+    else:
+        msg = "Nothing Found"
+    await ult.answer(res, switch_pm=msg, switch_pm_param="start")
