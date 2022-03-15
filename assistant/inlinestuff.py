@@ -835,6 +835,10 @@ async def gh_feeds(ult):
             title += " commented at"
             text += " commented at"
             url = cont["payload"]["comment"]["html_url"]
+        elif cont["type"] == "CreateEvent":
+            title += " created"
+            text += " created"
+            url = "https://github.com/" + cont["repo"]["name"]
         elif cont["type"] == "PullRequestEvent":
             if (
                 cont["payload"]["pull_request"].get("user", {}).get("login")
