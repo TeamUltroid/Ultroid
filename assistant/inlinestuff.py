@@ -831,6 +831,7 @@ async def gh_feeds(ult):
         repo_url = "https://github.com/" + repo
         title += " " + repo
         text += f" <b><a href='{repo_url}'>{repo}</a></b>"
+        thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
         res.append(
             await ult.builder.article(
                 title=title,
@@ -838,6 +839,7 @@ async def gh_feeds(ult):
                 url=repo_url,
                 parse_mode="html",
                 link_preview=False,
+                thumb=thumb,
                 buttons=[
                     Button.url("View", url),
                     Button.switch_inline(
