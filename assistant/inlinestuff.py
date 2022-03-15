@@ -808,16 +808,19 @@ async def gh_feeds(ult):
     for cont in data[:50]:
         text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
         title = f"@{username}"
+        extra = None
         if cont["type"] == "PushEvent":
             text += " pushed in"
             title += " pushed in"
-            url = cont["payload"]["commits"][-1]["url"]
+            dt = cont["payload"]["commits"][-1]
+            url = "https://github.com/" + dt["url"].split("/repos/")[-1]
+            extra = f"\n-> message: <code>{dt['message']}</code>"
         elif cont["type"] == "IssueCommentEvent":
             title += " commented at"
             text += " commented at"
             url = cont["payload"]["comment"]["html_url"]
         elif cont["type"] == "PullRequestEvent":
-            if cont.get("actor", {}).get("login") != username.lower():
+            if cont["payload"]["pull_request"].get("user", {}).get("login") != username.lower():
                 continue
             url = cont["payload"]["pull_request"]["html_url"]
             text += " created a pull request in"
@@ -832,6 +835,8 @@ async def gh_feeds(ult):
         repo_url = "https://github.com/" + repo
         title += " " + repo
         text += f" <b><a href='{repo_url}'>{repo}</a></b>"
+        if extra:
+            text += extra
         thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
         res.append(
             await ult.builder.article(
