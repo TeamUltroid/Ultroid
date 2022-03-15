@@ -785,3 +785,11 @@ async def inline_tl(ult):
     else:
         mo = f"Showing {len(res)} results!"
     await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
+
+
+@in_pattern("ghfeeds", owner=True)
+async def gh_feeds(ult):
+    try:
+        username = ult.text.split(maxsplit=1)[1]
+    except IndexError:
+        return await ult.answer([], switch_pm="Enter Github Username to see feeds...", switch_pm_param="start")
