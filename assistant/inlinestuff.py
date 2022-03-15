@@ -820,7 +820,7 @@ async def gh_feeds(ult):
             title += " created a pull request in"
         elif cont["type"] == "ForkEvent":
             title += " forked"
-            url = cont["payload"]["html_url"]
+            url = cont["payload"]["forkee"]["html_url"]
         else:
             break
         title += cont["repo"]["name"]
