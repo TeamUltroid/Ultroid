@@ -825,7 +825,7 @@ async def gh_feeds(ult):
             break
         title += cont["repo"]["name"]
         res.append(
-            await ult.builer.article(
+            await ult.builder.article(
                 title=title, text=title, buttons=Button.url("View", url)
             )
         )
