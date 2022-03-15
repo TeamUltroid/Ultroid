@@ -241,7 +241,7 @@ print(with_header(f"\n{Fore.GREEN}You are all Done! 🥳"))
 sleep(0.2)
 print(f"Use 'bash startup' to try running Ultroid.{Fore.RESET}")
 sleep(0.5)
-print("\nYou can head over to @UltroidSupport, if you get stucked somewhere.")
+print("\nYou can head over to @UltroidSupport, if you get stuck somewhere, and need help.")
 sleep(0.5)
 print("\nMade with ❤️ by @TeamUltroid...")
 
