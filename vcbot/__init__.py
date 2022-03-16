@@ -339,7 +339,7 @@ async def get_stream_link(ytlink):
                 k = x["url"]
     return k
     """
-    stream = await bash(f'youtube-dl -g -f "best[height<=?720][width<=?1280]" {ytlink}')
+    stream = await bash(f'yt-dlp -g -f "best[height<=?720][width<=?1280]" {ytlink}')
     return stream[0]
 
 
