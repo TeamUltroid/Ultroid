@@ -106,7 +106,7 @@ async def _(e):
                 title = match.split(split[1], maxsplit=1)[1]
             except IndexError:
                 pass
-        
+
     if request:
         try:
             r = await e.client(
