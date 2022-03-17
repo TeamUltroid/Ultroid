@@ -80,36 +80,47 @@ async def _(e):
         int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
-
 @ultroid_cmd(
-    pattern="getlink$",
+    pattern="getlink",
     groups_only=True,
     manager=True,
 )
 async def _(e):
     reply = await e.get_reply_message()
+    match = e.pattern_match.group(1).strip()
     if reply and not isinstance(reply.sender, User):
         chat = await reply.get_sender()
     else:
         chat = await e.get_chat()
     if hasattr(chat, "username") and chat.username:
         return await e.eor(f"Username: @{chat.username}")
-    if isinstance(chat, types.Chat):
-        FC = await e.client(GetFullChatRequest(chat.id))
-    elif isinstance(chat, types.Channel):
-        FC = await e.client(GetFullChannelRequest(chat.id))
-    Inv = FC.full_chat.exported_invite
-    if Inv and not Inv.revoked:
-        link = Inv.link
-    else:
+    request, usage = None, None
+    if match:
+        split = match.split()
+        request = bool(split[0] in ["r", "request"])
+        if len(split) > 1 and split[1].isdigit():
+            usage = int(split[1])
+    if request:
         try:
             r = await e.client(
-                ExportChatInviteRequest(e.chat_id),
+                ExportChatInviteRequest(e.chat_id, request_needed=request, usage_limit=usage, title="Create via Ultroid"),
             )
         except no_admin:
             return await e.eor(get_string("chats_2"), time=10)
         link = r.link
-    await e.eor(f"Link:- {link}")
+    else:
+        if isinstance(chat, types.Chat):
+            FC = await e.client(GetFullChatRequest(chat.id))
+        elif isinstance(chat, types.Channel):
+            FC = await e.client(GetFullChannelRequest(chat.id))
+        else:
+            return
+        Inv = FC.full_chat.exported_invite
+        if Inv and not Inv.revoked:
+            link = Inv.link
+    if link:
+        return await e.eor(f"Link:- {link}")
+    await e.eor("`Failed to getlink!\nSeems like link is inaccessible to you...`")
 
 
 @ultroid_cmd(
