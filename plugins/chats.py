@@ -83,7 +83,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="getlink(| r)$",
+    pattern="getlink( r|)$",
     groups_only=True,
     manager=True,
 )
