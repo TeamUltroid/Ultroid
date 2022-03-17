@@ -67,8 +67,12 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
+    carb = None
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
+        if cmd.split()[0] in ["-c", "--carbon"]:
+            cmd = cmd.split(maxsplit=1)[1]
+            carb = True
     except IndexError:
         return await event.eor(get_string("devs_1"), time=10)
     xx = await event.eor(get_string("com_1"))
@@ -83,7 +87,7 @@ async def _(event):
     if stderr:
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
-        if udB.get_key("CARBON_ON_BASH") and (
+        if (carb or udB.get_key("CARBON_ON_BASH")) and (
             event.chat.admin_rights
             or event.chat.creator
             or event.chat.default_banned_rights.embed_links
