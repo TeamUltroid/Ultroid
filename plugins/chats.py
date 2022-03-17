@@ -10,8 +10,9 @@
 • `{i}delchat <optional- username/id>`
     Delete the group this cmd is used in.
 
-• `{i}getlink`
+• `{i}getlink( r)`
     Get link of group this cmd is used in.
+    r-request needed
 
 • `{i}create (g|b|c) <group_name> ; <optional-username>`
     Create group woth a specific name.
@@ -82,12 +83,12 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="getlink$",
+    pattern="getlink(| r)$",
     groups_only=True,
     manager=True,
 )
 async def _(e):
-    reply = await e.get_reply_message()
+    request = e.pattern_match.group(1).strip()
     if reply and not isinstance(reply.sender, User):
         chat = await reply.get_sender()
     else:
@@ -103,9 +104,14 @@ async def _(e):
         link = Inv.link
     else:
         try:
-            r = await e.client(
-                ExportChatInviteRequest(e.chat_id),
-            )
+            if request:
+                r=await e.client(
+                ExportChatInviteRequest(e.chat_id,request_needed=True,title="Create via Ultroid"),
+                )
+            else:
+                r = await e.client(
+                    ExportChatInviteRequest(e.chat_id),
+                )
         except no_admin:
             return await e.eor(get_string("chats_2"), time=10)
         link = r.link
