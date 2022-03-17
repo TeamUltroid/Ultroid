@@ -92,20 +92,14 @@ async def _(e):
 
 async def _(e):
     reply = await e.get_reply_message()
-    request = e.pattern_match.group(1).strip()
     if reply and not isinstance(reply.sender, User):
         chat = await reply.get_sender()
     else:
         chat = await e.get_chat()
     try:
-        if request:
-            r=await e.client(
-            ExportChatInviteRequest(e.chat_id,request_needed=True,title="Create via Ultroid"),
-            )
-        else:
-            r = await e.client(
-                ExportChatInviteRequest(e.chat_id),
-            )
+        r=await e.client(
+        ExportChatInviteRequest(e.chat_id,request_needed=True,title="Create via Ultroid"),
+        )
     except no_admin:
         return await e.eor(get_string("chats_2"), time=10)
     link = r.link
