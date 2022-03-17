@@ -82,7 +82,7 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="getlink",
+    pattern="getlink( (.*)|$)",
     groups_only=True,
     manager=True,
 )
@@ -95,12 +95,18 @@ async def _(e):
         chat = await e.get_chat()
     if hasattr(chat, "username") and chat.username:
         return await e.eor(f"Username: @{chat.username}")
-    request, usage = None, None
+    request, usage, title = None, None, None
     if match:
         split = match.split()
         request = bool(split[0] in ["r", "request"])
+        title = "Created by Ultroid"
         if len(split) > 1 and split[1].isdigit():
             usage = int(split[1])
+            try:
+                title = match.split(split[1], maxsplit=1)[1]
+            except IndexError:
+                pass
+        
     if request:
         try:
             r = await e.client(
@@ -108,7 +114,7 @@ async def _(e):
                     e.chat_id,
                     request_needed=request,
                     usage_limit=usage,
-                    title="Create via Ultroid",
+                    title=title,
                 ),
             )
         except no_admin:
