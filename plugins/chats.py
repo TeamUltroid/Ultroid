@@ -80,6 +80,7 @@ async def _(e):
         int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
+
 @ultroid_cmd(
     pattern="getlink",
     groups_only=True,
@@ -103,7 +104,12 @@ async def _(e):
     if request:
         try:
             r = await e.client(
-                ExportChatInviteRequest(e.chat_id, request_needed=request, usage_limit=usage, title="Create via Ultroid"),
+                ExportChatInviteRequest(
+                    e.chat_id,
+                    request_needed=request,
+                    usage_limit=usage,
+                    title="Create via Ultroid",
+                ),
             )
         except no_admin:
             return await e.eor(get_string("chats_2"), time=10)
