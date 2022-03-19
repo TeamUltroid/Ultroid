@@ -22,7 +22,6 @@
     Convert replied image into html.
 """
 
-import calendar
 import os
 from datetime import datetime as dt
 
