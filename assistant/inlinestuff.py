@@ -728,7 +728,9 @@ async def omgubuntu(ult):
                 description=desc,
                 url=url,
                 text=text,
-                buttons=Button.switch_inline("Search Again", query=ult.text, same_peer=True),
+                buttons=Button.switch_inline(
+                    "Search Again", query=ult.text, same_peer=True
+                ),
                 include_media=True,
                 content=img,
                 thumb=img,
