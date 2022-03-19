@@ -109,7 +109,7 @@ def ask_process_info_text():
 
 
 def ask_process_apt_install():
-    strm = input("")
+    strm = input("").lower().strip()
     if strm == "e":
         print("Exiting...")
         exit(0)
