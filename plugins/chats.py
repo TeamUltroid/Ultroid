@@ -11,6 +11,9 @@
     Delete the group this cmd is used in.
 
 • `{i}getlink`
+• `{i}getlink r` - `create link with admin approval`
+• `{i}getlink r title_here` - `admin approval with link title`
+• `{i}getlink 10` - `usage limit in new link`
     Get link of group this cmd is used in.
 
 • `{i}create (g|b|c) <group_name> ; <optional-username>`
@@ -108,7 +111,10 @@ async def _(e):
             if len(spli) > 1:
                 title = spli[1]
         elif not request:
-            title = match
+            if match.isdigit():
+                usage = int(match)
+            else:
+                title = match
         if request and usage:
             usage = 0
     if request or title:
