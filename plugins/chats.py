@@ -109,7 +109,7 @@ async def _(e):
                     pass
                 break
 
-    if request:
+    if request or title:
         try:
             r = await e.client(
                 ExportChatInviteRequest(
