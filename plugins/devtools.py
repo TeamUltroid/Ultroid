@@ -9,6 +9,7 @@
 ✘ Commands Available -
 
 • `{i}bash <cmds>`
+• `{i}bash -c <cmds>` Carbon image as command output.
     Run linux commands on telegram.
 
 • `{i}eval <code>`
