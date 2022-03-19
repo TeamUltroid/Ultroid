@@ -100,12 +100,14 @@ async def _(e):
         split = match.split()
         request = bool(split[0] in ["r", "request"])
         title = "Created by Ultroid"
-        if len(split) > 1 and split[1].isdigit():
-            usage = int(split[1])
-            try:
-                title = match.split(split[1], maxsplit=1)[1]
-            except IndexError:
-                pass
+        for en, ine in enumerate(split):
+            if ine.isdigit():
+                usage = int(ine)
+                try:
+                    title = match.split(ine, maxsplit=1)[1].strip()
+                except IndexError:
+                    pass
+                break
 
     if request:
         try:
