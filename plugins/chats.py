@@ -97,18 +97,20 @@ async def _(e):
         return await e.eor(f"Username: @{chat.username}")
     request, usage, title = None, None, None
     if match:
-        split = match.split()
+        split = match.split(maxsplit=1)
         request = bool(split[0] in ["r", "request"])
         title = "Created by Ultroid"
-        for en, ine in enumerate(split):
-            if ine.isdigit():
-                usage = int(ine)
-                try:
-                    title = match.split(ine, maxsplit=1)[1].strip()
-                except IndexError:
-                    pass
-                break
-
+        if len(split) > 1:
+            match = split[1]
+            spli = match.split(maxsplit=1)
+            if spli[0].isdigit():
+                usage = int(spli[0])
+            if len(spli) > 1:
+                title = spli[1]
+        elif not request:
+            title = match
+        if request and usage:
+            usage = 0
     if request or title:
         try:
             r = await e.client(
