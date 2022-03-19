@@ -27,12 +27,19 @@ import os
 import random
 from os import remove
 
-import cv2
-import numpy as np
-import requests
-from PIL import Image, ImageDraw
-from pyUltroid.functions.misc import create_quotly
-from pyUltroid.functions.tools import TgConverter
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+try:
+    import numpy as np
+except ImportError:
+    np = None
+try:
+    from PIL import Image, ImageDraw
+except ImportError:
+    pass
+
 from telethon.errors import PeerIdInvalidError, YouBlockedUserError
 from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
 from telethon.utils import get_input_document
@@ -41,12 +48,14 @@ from . import (
     KANGING_STR,
     LOGS,
     asst,
+    async_searcher,
     bash,
     con,
     functions,
     get_string,
     inline_mention,
     mediainfo,
+    quotly,
     types,
     udB,
     ultroid_cmd,
@@ -134,7 +143,7 @@ async def hehe(args):
         xy = await message.download_media()
         if (message.file.duration or 0) <= 10:
             is_vid = True
-            photo = await TgConverter.create_webm(xy)
+            photo = await con.create_webm(xy)
         else:
             y = cv2.VideoCapture(xy)
             heh, lol = y.read()
@@ -152,7 +161,7 @@ async def hehe(args):
         is_anim = True
         photo = 1
     elif message.message:
-        photo = await create_quotly(message)
+        photo = await quotly.create_quotly(message)
     else:
         return await xx.edit(get_string("com_4"))
     if not udB.get_key("language") or udB.get_key("language") == "en":
@@ -192,8 +201,8 @@ async def hehe(args):
             file.name = "sticker.png"
             image.save(file, "PNG")
 
-        response = requests.get(f"http://t.me/addstickers/{packname}")
-        htmlstr = response.text.split("\n")
+        response = await async_searcher(f"http://t.me/addstickers/{packname}")
+        htmlstr = response.split("\n")
 
         if (
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."

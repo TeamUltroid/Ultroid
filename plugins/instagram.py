@@ -103,17 +103,13 @@ async def insta_dl(e):
         e.media.webpage, WebPage
     ):
         photo = e.media.webpage.photo or e.media.webpage.document
-        if not photo:
-            return await eor(
-                tt,
-                "Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD` to Use This Comamand!",
+        if photo:
+            await tt.delete()
+            return await e.reply(
+                f"**Link** :{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
+                file=photo,
             )
-        await tt.delete()
-        return await e.reply(
-            f"**Link** :{text}\n\nIf This Wasnt Excepted Result, Please Fill `INSTA_USERNAME` and `INSTA_PASSWORD`...",
-            file=photo,
-        )
-    await eor(tt, "Please Fill Instagram Credential to Use this Command...")
+    # await eor(tt, "Please Fill Instagram Credential to Use this Command...")
 
 
 @ultroid_cmd(pattern="instadata( (.*)|$)")
@@ -156,7 +152,7 @@ async def soon_(e):
 async def insta_karbon(event):
     cl = await create_instagram_client(event)
     if not cl:
-        return await event.eor("`Please Fill Instagram Credentials to Use This...`")
+        return
     msg = await event.eor(get_string("com_1"))
     replied = await event.get_reply_message()
     type_ = event.pattern_match.group(1).strip()

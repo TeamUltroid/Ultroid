@@ -13,13 +13,14 @@
 
 import string
 
-from . import udB  # ignore: pylint
-from . import HNDLR, get_string, ultroid_bot, ultroid_cmd
+from . import HNDLR, LOGS, get_string, udB, ultroid_bot, ultroid_cmd  # ignore: pylint
 
 try:
     from gingerit.gingerit import GingerIt
 except ImportError:
     LOGS.info("GingerIt not found")
+    GingerIt = None
+
 from google_trans_new import google_translator
 from telethon import events
 
@@ -54,7 +55,7 @@ async def gramme(event):
         pass
 
 
-if udB.get_key("AUTOCORRECT"):
+if GingerIt and udB.get_key("AUTOCORRECT"):
     ultroid_bot.add_handler(
         gramme, events.NewMessage(outgoing=True, func=lambda x: x.text)
     )

@@ -291,7 +291,9 @@ async def _(e):
     xx = await e.eor("`UnGbanning...`")
     match = e.pattern_match.group(1).strip()
     peer = None
-    if match:
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+    elif match:
         try:
             userid = int(match)
         except ValueError:
@@ -300,8 +302,6 @@ async def _(e):
             userid = (await e.client.get_entity(userid)).id
         except (ValueError, Exception) as er:
             return await xx.edit(f"Failed to get User...\nError: {er}")
-    elif e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
     elif e.is_private:
         userid = e.chat_id
     else:
@@ -354,7 +354,13 @@ async def _(e):
 async def _(e):
     xx = await e.eor("`Gbanning...`")
     reason = ""
-    if e.pattern_match.group(1).strip():
+    if e.reply_to_msg_id:
+        userid = (await e.get_reply_message()).sender_id
+        try:
+            reason = e.text.split(" ", maxsplit=1)[1]
+        except IndexError:
+            pass
+    elif e.pattern_match.group(1).strip():
         usr = e.text.split(maxsplit=2)[1]
         try:
             userid = await e.client.parse_id(usr)
@@ -362,12 +368,6 @@ async def _(e):
             userid = usr
         try:
             reason = e.text.split(maxsplit=2)[2]
-        except IndexError:
-            pass
-    elif e.reply_to_msg_id:
-        userid = (await e.get_reply_message()).sender_id
-        try:
-            reason = e.text.split(" ", maxsplit=1)[1]
         except IndexError:
             pass
     elif e.is_private:
@@ -503,8 +503,8 @@ async def gcast(event):
                                 chat, msg, file=reply.media if reply else None
                             )
                         done += 1
-                    except Exception as er:
-                        err += f"• {er}\n"
+                    except Exception as rr:
+                        err += f"• {rr}\n"
                         er += 1
                 except BaseException as h:
                     err += "• " + str(h) + "\n"

@@ -26,6 +26,7 @@ from datetime import datetime as dt
 from pyUltroid.functions.tools import set_attributes
 
 from . import (
+    LOGS,
     bash,
     downloader,
     eod,

@@ -68,7 +68,11 @@ from . import (
 
 
 @ultroid_cmd(
-    pattern="promote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
+    pattern="promote( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="add_admins",
+    fullsudo=True,
 )
 async def prmte(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -96,7 +100,11 @@ async def prmte(ult):
 
 
 @ultroid_cmd(
-    pattern="demote( (.*)|$)", admins_only=True, manager=True, require="add_admins"
+    pattern="demote( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="add_admins",
+    fullsudo=True,
 )
 async def dmote(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -127,6 +135,7 @@ async def dmote(ult):
     admins_only=True,
     manager=True,
     require="ban_users",
+    fullsudo=True,
 )
 async def bban(ult):
     something = await get_uinfo(ult)
@@ -152,7 +161,11 @@ async def bban(ult):
 
 
 @ultroid_cmd(
-    pattern="unban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+    pattern="unban( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="ban_users",
+    fullsudo=True,
 )
 async def uunban(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -181,6 +194,7 @@ async def uunban(ult):
     pattern="kick( (.*)|$)",
     manager=True,
     require="ban_users",
+    fullsudo=True,
 )
 async def kck(ult):
     if "kickme" in ult.text:
@@ -215,7 +229,11 @@ async def kck(ult):
 
 
 @ultroid_cmd(
-    pattern="tban( (.*)|$)", admins_only=True, manager=True, require="ban_users"
+    pattern="tban( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="ban_users",
+    fullsudo=True,
 )
 async def tkicki(e):
     huh = e.text.split()
@@ -235,9 +253,9 @@ async def tkicki(e):
     try:
         user = await e.client.get_entity(userid)
     except Exception as ex:
-        return await eor(d, f"`{ex}`")
+        return await eor(e, f"`{ex}`")
     try:
-        bun = await ban_time(e, tme)
+        bun = ban_time(e, tme)
         await e.client.edit_permissions(
             e.chat_id, user.id, until_date=bun, view_messages=False
         )
@@ -250,7 +268,13 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages")
+@ultroid_cmd(
+    pattern="pin$",
+    admins_only=True,
+    manager=True,
+    require="pin_messages",
+    fullsudo=True,
+)
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -273,6 +297,7 @@ async def pin(msg):
     admins_only=True,
     manager=True,
     require="pin_messages",
+    fullsudo=True,
 )
 async def unp(ult):
     xx = await ult.eor(get_string("com_1"))
@@ -292,7 +317,11 @@ async def unp(ult):
 
 
 @ultroid_cmd(
-    pattern="tpin( (.*)|$)", admins_only=True, manager=True, require="pin_messages"
+    pattern="tpin( (.*)|$)",
+    admins_only=True,
+    manager=True,
+    require="pin_messages",
+    fullsudo=True,
 )
 async def pin_message(ult):
     match = ult.pattern_match.group(1).strip()
@@ -301,7 +330,7 @@ async def pin_message(ult):
     if not match:
         return await ult.eor("`Please provide time..`", time=8)
     msg = await ult.eor(get_string("com_1"))
-    time = await ban_time(msg, match)
+    time = ban_time(msg, match)
     if not time:
         return
     msg_id = ult.reply_to_msg_id

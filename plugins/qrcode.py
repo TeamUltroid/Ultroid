@@ -18,7 +18,11 @@
 """
 import os
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
 import qrcode
 from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc

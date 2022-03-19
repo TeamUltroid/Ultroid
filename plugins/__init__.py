@@ -11,15 +11,16 @@ import os
 import time
 from random import choice
 
+import requests
 from pyUltroid import *
+from pyUltroid._misc._assistant import asst_cmd, callback, in_pattern
+from pyUltroid._misc._decorators import ultroid_cmd
+from pyUltroid._misc._wrappers import eod, eor
 from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.functions.helper import *
 from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
 from pyUltroid.functions.tools import *
-from pyUltroid.misc._assistant import asst_cmd, callback, in_pattern
-from pyUltroid.misc._decorators import ultroid_cmd
-from pyUltroid.misc._wrappers import eod, eor
 from pyUltroid.version import __version__, ultroid_version
 from telethon import Button, events
 from telethon.tl import functions, types
@@ -28,6 +29,7 @@ from strings import get_string
 
 Redis = udB.get_key
 con = TgConverter
+quotly = Quotly()
 OWNER_NAME = ultroid_bot.full_name
 OWNER_ID = ultroid_bot.uid
 

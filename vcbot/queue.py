@@ -15,7 +15,7 @@
    Clear all queue in chat.
 """
 
-from . import *
+from . import vc_asst, get_string, list_queue, VC_QUEUE
 
 
 @vc_asst("queue")

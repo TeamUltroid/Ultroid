@@ -11,10 +11,10 @@ from datetime import datetime
 from os import remove
 
 from git import Repo
+from pyUltroid._misc._assistant import callback, in_pattern
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
 from pyUltroid.functions.misc import split_list
-from pyUltroid.misc._assistant import callback, in_pattern
 from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
 from telethon.utils import resolve_bot_file_id
@@ -332,9 +332,14 @@ async def _(e):
         [
             Button.switch_inline(
                 "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
-            )
+            ),
+            Button.switch_inline("Sᴀᴀᴠɴ sᴇᴀʀᴄʜ", query="saavn", same_peer=True),
         ],
-        [Button.switch_inline("Sᴀᴀᴠɴ sᴇᴀʀᴄʜ", query="saavn", same_peer=True)],
+        [
+            Button.switch_inline("Tʟ Sᴇᴀʀᴄʜ", query="tl", same_peer=True),
+            Button.switch_inline("GɪᴛHᴜʙ ғᴇᴇᴅs", query="gh", same_peer=True),
+        ],
+        [Button.switch_inline("OᴍɢUʙᴜɴᴛᴜ", query="omgu cutefish", same_peer=True)],
         [
             Button.inline(
                 "« Bᴀᴄᴋ",

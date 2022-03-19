@@ -7,7 +7,7 @@
 
 from telethon import Button
 
-from . import *
+from . import vc_asst, asst, in_pattern
 
 
 @vc_asst("vchelp")

@@ -21,26 +21,32 @@ import math
 import shutil
 from random import choice
 
-import heroku3
-import psutil
-import requests
 from pyUltroid.functions import some_random_headers
 
-from . import HOSTED_ON, Var, get_string, humanbytes, udB, ultroid_cmd
+from . import (
+    HOSTED_ON,
+    LOGS,
+    Var,
+    async_searcher,
+    get_string,
+    humanbytes,
+    udB,
+    ultroid_cmd,
+)
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
 
-heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
-try:
-    if heroku_api and app_name:
-        HEROKU_API = heroku_api
-        HEROKU_APP_NAME = app_name
-        Heroku = heroku3.from_key(heroku_api)
-        app = Heroku.app(app_name)
-except BaseException:
-    HEROKU_API = None
-    HEROKU_APP_NAME = None
+if HOSTED_ON == "heroku":
+    heroku_api, app_name = Var.HEROKU_API, Var.HEROKU_APP_NAME
+    try:
+        if heroku_api and app_name:
+            Heroku = heroku3.from_key(heroku_api)
+            app = Heroku.app(app_name)
+            HEROKU_API = heroku_api
+            HEROKU_APP_NAME = app_name
+    except BaseException as er:
+        LOGS.exception(er)
 
 
 @ultroid_cmd(pattern="usage")
@@ -54,13 +60,17 @@ async def usage_finder(event):
     if opt == "db":
         await x.edit(db_usage())
     elif opt == "heroku":
-        is_hk, hk = heroku_usage()
+        is_hk, hk = await heroku_usage()
         await x.edit(hk)
     else:
-        await x.edit(get_full_usage())
+        await x.edit(await get_full_usage())
 
 
 def simple_usage():
+    try:
+        import psutil
+    except ImportError:
+        return "Install 'psutil' to use this..."
     total, used, free = shutil.disk_usage(".")
     cpuUsage = psutil.cpu_percent()
     memory = psutil.virtual_memory().percent
@@ -82,7 +92,14 @@ def simple_usage():
     )
 
 
-def heroku_usage():
+async def heroku_usage():
+    try:
+        import psutil
+    except ImportError:
+        return (
+            False,
+            "'psutil' not installed!\nPlease Install it to use this.\n`pip3 install psutil`",
+        )
     if not (HEROKU_API and HEROKU_APP_NAME):
         if HOSTED_ON == "heroku":
             return False, "Please fill `HEROKU_API` and `HEROKU_APP_NAME`"
@@ -97,13 +114,10 @@ def heroku_usage():
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     her_url = f"https://api.heroku.com/accounts/{user_id}/actions/get-quota"
-    r = requests.get(her_url, headers=headers)
-    if r.status_code != 200:
-        return (
-            True,
-            f"**ERROR**\n`{r.reason}`",
-        )
-    result = r.json()
+    try:
+        result = await async_searcher(her_url, headers=headers, re_json=True)
+    except Exception as er:
+        return False, str(er)
     quota = result["account_quota"]
     quota_used = result["quota_used"]
     remaining_quota = quota - quota_used
@@ -164,8 +178,8 @@ def db_usage():
     return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 
-def get_full_usage():
-    is_hk, hk = heroku_usage()
+async def get_full_usage():
+    is_hk, hk = await heroku_usage()
     her = hk if is_hk else ""
     rd = db_usage()
     return her + "\n\n" + rd

@@ -36,7 +36,7 @@ async def Function(event):
 
 
 async def DummyHandler(ult):
-   # clean chat actions
+    # clean chat actions
     key = udB.get_key("CLEANCHAT") or []
     if ult.chat_id in key:
         try:

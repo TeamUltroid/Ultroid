@@ -1,5 +1,5 @@
 # Important Requirements here.
 
-https://github.com/New-dev0/Telethon/archive/Artifact.zip
-py-Ultroid==2022.2.10
+https://github.com/New-dev0/Telethon/archive/PlayTime.zip
+py-Ultroid==2022.3.20
 pytgcalls==3.0.0.dev21

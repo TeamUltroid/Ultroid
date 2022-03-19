@@ -21,9 +21,9 @@
 """
 import os
 
+from pyUltroid._misc import sudoers
 from pyUltroid.dB.snips_db import add_snip, get_snips, list_snip, rem_snip
 from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
-from pyUltroid.misc import sudoers
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 

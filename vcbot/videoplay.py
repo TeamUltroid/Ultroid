@@ -14,9 +14,9 @@
    like `{i}videoplay @chat <input/reply>`
 
 """
-
+import re, asyncio
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError
-from . import *
+from . import vc_asst, Player, get_string, inline_mention, is_url_ok, mediainfo, vid_download, file_download,LOGS
 
 
 @vc_asst("videoplay")

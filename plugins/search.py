@@ -42,7 +42,7 @@ from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
 
-from . import async_searcher, eod, fast_download, get_string, ultroid_cmd
+from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -145,18 +145,13 @@ async def reverse(event):
         return await event.eor("`Reply to an Image`")
     ult = await event.eor(get_string("com_1"))
     dl = await reply.download_media()
-    if reply.video:
-        img = cv2.VideoCapture(dl)
-        ult, roid = img.read()
-        os.remove(dl)
-        dl = "file.png"
-        cv2.imwrite(dl, roid)
-    img = Image.open(dl)
+    file = await con.convert(dl, convert_to="png")
+    img = Image.open(file)
     x, y = img.size
-    file = {"encoded_image": (dl, open(dl, "rb"))}
+    files = {"encoded_image": (file, open(file, "rb"))}
     grs = requests.post(
         "https://www.google.com/searchbyimage/upload",
-        files=file,
+        files=files,
         allow_redirects=False,
     )
     loc = grs.headers.get("Location")
@@ -188,7 +183,7 @@ async def reverse(event):
         caption="Similar Images Realted to Search",
     )
     rmtree(f"./resources/downloads/{text}/")
-    os.remove(dl)
+    os.remove(file)
 
 
 @ultroid_cmd(
@@ -214,9 +209,9 @@ async def siesace(e):
     song, _ = await fast_download(url, filename=title + ".m4a")
     thumb, _ = await fast_download(img, filename=title + ".jpg")
     song, _ = await e.client.fast_uploader(song, to_delete=True)
-    await e.reply(
+    await eve.eor(
         file=song,
-        message=f"`{title}`\n`From Saavn`",
+        text=f"`{title}`\n`From Saavn`",
         attributes=[
             DocumentAttributeAudio(
                 duration=int(duration),

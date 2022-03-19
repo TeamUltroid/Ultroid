@@ -28,8 +28,7 @@
 """
 
 from pyUltroid.dB.vc_sudos import add_vcsudo, del_vcsudo, get_vcsudos, is_vcsudo
-
-from . import *
+from . import vc_asst, owner_and_sudos, get_string, udB
 
 
 @vc_asst("addauth", from_users=owner_and_sudos(), vc_auth=False)
@@ -49,8 +48,7 @@ async def auth_group(event):
     key.update({chat: {"admins": admins}})
     udB.set_key("VC_AUTH_GROUPS", key)
     kem = "Admins" if admins else "All"
-    await eor(
-        event,
+    await event.eor(
         f"• Added to AUTH Groups Successfully For <code>{kem}</code>.",
         parse_mode="html",
     )
@@ -118,15 +116,14 @@ async def _(e):
     else:
         return await xx.edit(get_string("vcbot_17"), time=3)
     if not is_vcsudo(userid):
-        return await eod(
+        return await xx.eor(
             xx,
             f"[{name}](tg://user?id={userid})` is not approved to use my Voice Chat Bot.`",
             time=5,
         )
     try:
         del_vcsudo(userid)
-        await eod(
-            xx,
+        await xx.eor(
             f"[{name}](tg://user?id={userid})` is removed from Voice Chat Bot Users.`",
             time=5,
         )
@@ -150,15 +147,14 @@ async def _(e):
     else:
         return await xx.eor(get_string("vcbot_17"), time=3)
     if is_vcsudo(userid):
-        return await eod(
-            xx,
+        return await xx.eor(
             f"[{name}](tg://user?id={userid})` is already approved to use my Voice Chat Bot.`",
             time=5,
         )
     try:
         add_vcsudo(userid)
-        await eod(
-            xx,
+        await xx.eor(
+            
             f"[{name}](tg://user?id={userid})` is added to Voice Chat Bot Users.`",
             time=5,
         )

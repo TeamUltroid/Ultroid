@@ -21,8 +21,9 @@
    Stream Live YouTube
 """
 
-
-from . import *
+import re,os
+from telethon.tl import types
+from . import vc_asst, get_string, inline_mention, add_to_queue, mediainfo, file_download, LOGS, is_url_ok, bash, download, Player, VC_QUEUE
 from telethon.errors.rpcerrorlist import ChatSendMediaForbiddenError, MessageIdInvalidError
 
 
@@ -59,8 +60,7 @@ async def play_music_(event):
         else:
             song = input
     if not (reply or song):
-        return await eor(
-            xx, "Please specify a song name or reply to a audio file !", time=5
+        return await xx.eor("Please specify a song name or reply to a audio file !", time=5
         )
     await xx.eor(get_string("vcbot_20"), parse_mode="md")
     if reply and reply.media and mediainfo(reply.media).startswith(("audio", "video")):
@@ -134,8 +134,8 @@ async def play_music_(event):
     try:
         fromchat = (await event.client.get_entity(input)).id
     except Exception as er:
-        return await eor(msg, str(er))
-    await eor(msg, "`• Started Playing from Channel....`")
+        return await msg.eor(str(er))
+    await msg.eor("`• Started Playing from Channel....`")
     send_message = True
     ultSongs = Player(chat, event)
     count = 0
@@ -168,8 +168,7 @@ async def play_music_(event):
         else:
             add_to_queue(chat, song, song_name, link, thumb, from_user, duration)
             if send_message and count == 1:
-                await eor(
-                    msg,
+                await msg.eor(
                     f"▶ Added 🎵 <strong><a href={link}>{song_name}</a></strong> to queue at <strong>#{list(VC_QUEUE[chat].keys())[-1]}.</strong>",
                     parse_mode="html",
                 )

@@ -38,13 +38,21 @@ import time
 from platform import python_version as pyver
 from random import choice
 
-from git import Repo
 from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendMediaForbiddenError,
 )
+
+from . import HOSTED_ON, LOGS
+
+try:
+    from git import Repo
+except ImportError:
+    LOGS.error("bot: 'gitpython' module not found!")
+    Repo = None
+
 from telethon.utils import resolve_bot_file_id
 
 from . import (
@@ -132,7 +140,7 @@ async def lol(ult):
         parse = "html"
         als = in_alive.format(
             header,
-            ultroid_version,
+            ultroid_version + f" [{HOSTED_ON}]",
             UltVer,
             pyver(),
             uptime,
@@ -145,7 +153,7 @@ async def lol(ult):
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
-            ultroid_version,
+            ultroid_version + f" [{HOSTED_ON}]",
             UltVer,
             uptime,
             pyver(),
@@ -272,7 +280,7 @@ async def inline_alive(ult):
     kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
         header,
-        ultroid_version,
+        ultroid_version + f" [{HOSTED_ON}]",
         UltVer,
         pyver(),
         uptime,
@@ -319,9 +327,12 @@ async def inline_alive(ult):
 @ultroid_cmd(pattern="update( (.*)|$)")
 async def _(e):
     xx = await e.eor(get_string("upd_1"))
-    if e.pattern_match.group(1).strip() and (
-        "fast" in e.pattern_match.group(1).strip()
-        or "soft" in e.pattern_match.group(1).strip()
+    if HOSTED_ON == "heroku" or (
+        e.pattern_match.group(1).strip()
+        and (
+            "fast" in e.pattern_match.group(1).strip()
+            or "soft" in e.pattern_match.group(1).strip()
+        )
     ):
         await bash("git pull -f && pip3 install -r requirements.txt")
         call_back()

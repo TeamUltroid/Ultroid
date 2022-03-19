@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import base64
+import inspect
 from datetime import datetime
 from random import choice
 from re import compile as re_compile
@@ -20,6 +21,7 @@ from pyUltroid.functions.tools import (
     webuploader,
 )
 from telethon import Button
+from telethon.tl.alltlobjects import LAYER, tlobjects
 from telethon.tl.types import DocumentAttributeAudio as Audio
 from telethon.tl.types import InputWebDocument as wb
 
@@ -158,7 +160,7 @@ async def _(e):
         filename = filename.split("/")[-1]
     await e.edit(f"Uploading `{filename}` on {host}")
     link = (await webuploader(chat_id, msg_id, host)).strip().replace("\n", "")
-    await e.edit(f"Uploaded [{filename}]({link}) on {host}.")
+    await e.edit(f"Uploaded `{filename}` on {host}.", buttons=Button.url("View", link))
 
 
 @in_pattern("repo", owner=True)
@@ -688,3 +690,197 @@ async def savn_s(event):
         )
     await event.answer(res, switch_pm=swi, switch_pm_param="start")
     _savn_cache.update({query: res})
+
+
+_OMG = {}
+
+
+@in_pattern("omgu", owner=True)
+async def omgubuntu(ult):
+    try:
+        match = ult.text.split(maxsplit=1)[1].lower()
+    except IndexError:
+        return await ult.answer(
+            [], switch_pm="Enter Query to search...", switch_pm_param="start"
+        )
+    if _OMG.get(match):
+        return await ult.answer(
+            _OMG[match], switch_pm="OMG Ubuntu Search :]", switch_pm_param="start"
+        )
+    get_web = "https://www.omgubuntu.co.uk/?s=" + match.replace(" ", "+")
+    get_ = await async_searcher(get_web, re_content=True)
+    BSC = bs(get_, "html.parser", from_encoding="utf-8")
+    res = []
+    for cont in BSC.find_all("div", "sbs-layout__item"):
+        img = cont.find("div", "sbs-layout__image")
+        url = img.find("a")["href"]
+        src = img.find("img")["src"]
+        con = cont.find("div", "sbs-layout__content")
+        tit = con.find("a", "layout__title-link")
+        title = tit.text.strip()
+        desc = con.find("p", "layout__description").text.strip()
+        text = f"[{title.strip()}]({url})\n\n{desc}"
+        img = wb(src, 0, "image/jpeg", [])
+        res.append(
+            await ult.builder.article(
+                title=title,
+                type="photo",
+                description=desc,
+                url=url,
+                text=text,
+                buttons=Button.switch_inline(
+                    "Search Again", query=ult.text, same_peer=True
+                ),
+                include_media=True,
+                content=img,
+                thumb=img,
+            )
+        )
+    await ult.answer(
+        res,
+        switch_pm=f"Showing {len(res)} results!" if res else "No Results Found :[",
+        switch_pm_param="start",
+    )
+    _OMG[match] = res
+
+
+@in_pattern("tl", owner=True)
+async def inline_tl(ult):
+    try:
+        match = ult.text.split(maxsplit=1)[1]
+    except IndexError:
+        text = f"**It is Telegram TlObjects Searcher.**\n__(Don't use if you don't know what it is!)__\n\n• Example Usage\n`@{asst.me.username} tl GetUserRequest`"
+        return await ult.answer(
+            [
+                await ult.builder.article(
+                    title="How to Use?",
+                    description="Tl Searcher by Ultroid",
+                    url="https://t.me/TheUltroid",
+                    text=text,
+                )
+            ],
+            switch_pm="Tl Search 🔍",
+            switch_pm_param="start",
+        )
+    res = []
+    for key in tlobjects.values():
+        if match.lower() in key.__name__.lower():
+            tyyp = "Function" if "tl.functions." in str(key) else "Type"
+            text = f"**Name:** `{key.__name__}`\n"
+            text += f"**Category:** `{tyyp}`\n"
+            text += f"\n`from {key.__module__} import {key.__name__}`\n\n"
+            args = str(inspect.signature(key))[1:][:-1]
+            if args:
+                text += "**Parameter:**\n"
+                for para in args.split(","):
+                    text += " " * 4 + "`" + para + "`\n"
+            text += f"\n**Layer:** `{LAYER}`"
+            res.append(
+                await ult.builder.article(
+                    title=key.__name__,
+                    description=tyyp,
+                    url="https://t.me/TheUltroid",
+                    text=text[:4000],
+                )
+            )
+    if not res:
+        mo = f"No Results for {match}!"
+    else:
+        mo = f"Showing {len(res)} results!"
+    await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
+
+
+@in_pattern("gh", owner=True)
+async def gh_feeds(ult):
+    try:
+        username = ult.text.split(maxsplit=1)[1]
+    except IndexError:
+        return await ult.answer(
+            [],
+            switch_pm="Enter Github Username to see feeds...",
+            switch_pm_param="start",
+        )
+    if not username.endswith("."):
+        return await ult.answer(
+            [], switch_pm="End your query with . to search...", switch_pm_param="start"
+        )
+    username = username[:-1]
+    data = await async_searcher(
+        f"https://api.github.com/users/{username}/events", re_json=True
+    )
+    if not isinstance(data, list):
+        msg = ""
+        for ak in list(data.keys()):
+            msg += ak + ": `" + data[ak] + "`\n"
+        return await ult.answer(
+            [
+                await ult.builder.article(
+                    title=data["message"], text=msg, link_preview=False
+                )
+            ],
+            cache_time=300,
+            switch_pm="Error!!!",
+            switch_pm_param="start",
+        )
+    res = []
+    res_ids = []
+    for cont in data[:50]:
+        text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
+        title = f"@{username}"
+        extra = None
+        if cont["type"] == "PushEvent":
+            text += " pushed in"
+            title += " pushed in"
+            dt = cont["payload"]["commits"][-1]
+            url = "https://github.com/" + dt["url"].split("/repos/")[-1]
+            extra = f"\n-> <b>message:</b> <code>{dt['message']}</code>"
+        elif cont["type"] == "IssueCommentEvent":
+            title += " commented at"
+            text += " commented at"
+            url = cont["payload"]["comment"]["html_url"]
+        elif cont["type"] == "CreateEvent":
+            title += " created"
+            text += " created"
+            url = "https://github.com/" + cont["repo"]["name"]
+        elif cont["type"] == "PullRequestEvent":
+            if (
+                cont["payload"]["pull_request"].get("user", {}).get("login")
+                != username.lower()
+            ):
+                continue
+            url = cont["payload"]["pull_request"]["html_url"]
+            text += " created a pull request in"
+            title += " created a pull request in"
+        elif cont["type"] == "ForkEvent":
+            text += " forked"
+            title += " forked"
+            url = cont["payload"]["forkee"]["html_url"]
+        else:
+            continue
+        repo = cont["repo"]["name"]
+        repo_url = "https://github.com/" + repo
+        title += " " + repo
+        text += f" <b><a href='{repo_url}'>{repo}</a></b>"
+        if extra:
+            text += extra
+        thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
+        article = await ult.builder.article(
+            title=title,
+            text=text,
+            url=repo_url,
+            parse_mode="html",
+            link_preview=False,
+            thumb=thumb,
+            buttons=[
+                Button.url("View", url),
+                Button.switch_inline("Search again", query=ult.text, same_peer=True),
+            ],
+        )
+        if article.id not in res_ids:
+            res_ids.append(article.id)
+            res.append(article)
+    if res:
+        msg = f"Showing {len(res)} feeds!"
+    else:
+        msg = "Nothing Found"
+    await ult.answer(res, cache_time=5000, switch_pm=msg, switch_pm_param="start")

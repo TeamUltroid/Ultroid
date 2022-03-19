@@ -13,7 +13,8 @@
 
 """
 
-from . import *
+import re
+from . import vc_asst, get_string, inline_mention, Player, dl_playlist, add_to_queue, is_url_ok, VC_QUEUE
 
 
 @vc_asst("ytplaylist")
@@ -26,7 +27,7 @@ async def live_stream(e):
         chat = int(input[1])
         song = e.text.split(maxsplit=2)[2]
     elif input[1].startswith("@"):
-        cid_moosa = (await vcClient.get_entity(input[1])).id
+        cid_moosa = (await e.client.get_entity(input[1])).id
         chat = int("-100" + str(cid_moosa))
         song = e.text.split(maxsplit=2)[2]
     else:
@@ -57,7 +58,6 @@ async def live_stream(e):
     else:
         from_user = inline_mention(e)
         add_to_queue(chat, file, title, link, thumb, from_user, duration)
-        return await eor(
-            xx,
+        return await xx.eor(
             f"▶ Added 🎵 **[{title}]({link})** to queue at #{list(VC_QUEUE[chat].keys())[-1]}.",
         )

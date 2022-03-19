@@ -90,7 +90,7 @@ async def _(e):
     ]
     us = logi.username or logi.first_name
     sur = e.builder.article(
-        title=f"{logi.first_name}",
+        title=logi.first_name,
         description=desc,
         text=get_string("wspr_1").format(us),
         buttons=button,
@@ -141,9 +141,11 @@ async def _(e):
                 same_peer=True,
             ),
         ]
-        sur = e.builder.article(
+        sur = e.builder.document(
             title=user.first_name,
             description=desc,
+            file=logi.full_user.profile_photo,
+            include_media=False,
             text=text,
             buttons=button,
         )

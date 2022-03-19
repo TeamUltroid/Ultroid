@@ -41,10 +41,20 @@ import io
 import os
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
-import cv2
-from google_trans_new import google_translator
-from htmlwebshot import WebShot
-from pyUltroid.functions.tools import TgConverter, metadata
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
+try:
+    from google_trans_new import google_translator
+except ImportError:
+    google_translator = None
+try:
+    from htmlwebshot import WebShot
+except ImportError:
+    WebShot = None
+from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -53,7 +63,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, async_searcher, bash, eor, get_string
+from . import HNDLR, async_searcher, bash, con, eor, get_string
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
@@ -220,7 +230,7 @@ async def _(e):
         msg = await e.eor("**Creating video note**")
         file = await reply.download_media("resources/downloads/")
         if file.endswith(".webm"):
-            nfile = await TgConverter.ffmpeg_convert(file, "file.mp4")
+            nfile = await con.ffmpeg_convert(file, "file.mp4")
             os.remove(file)
             file = nfile
         if file:
@@ -246,9 +256,9 @@ async def _(e):
     if not files:
         files = "*"
     elif files.endswith("/"):
-        files = files + "*"
+        files += "*"
     elif "*" not in files:
-        files = files + "/*"
+        files += "/*"
     files = glob.glob(files)
     if not files:
         return await e.eor("`Directory Empty or Incorrect.`", time=5)

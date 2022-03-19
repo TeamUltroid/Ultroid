@@ -211,7 +211,7 @@ chab_2: "`No user has AI added.`"
 chab_3: "**Total List Of AI Enabled Users In This Chat :**\n\n"
 
 # chats
-chats_1: "`Cant delete this chat`"
+chats_1: "`Cant delete this chat.`"
 chats_2: "`I m not an admin`"
 chats_3: "#Deleted\nDeleted {}"
 chats_4: "Your [{}]({}) Group Made Boss!"

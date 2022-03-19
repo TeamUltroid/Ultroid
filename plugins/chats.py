@@ -11,6 +11,9 @@
     Delete the group this cmd is used in.
 
 • `{i}getlink`
+• `{i}getlink r` - `create link with admin approval`
+• `{i}getlink r title_here` - `admin approval with link title`
+• `{i}getlink 10` - `usage limit in new link`
     Get link of group this cmd is used in.
 
 • `{i}create (g|b|c) <group_name> ; <optional-username>`
@@ -80,8 +83,9 @@ async def _(e):
         int(udB.get_key("LOG_CHANNEL")), get_string("chats_6").format(e.chat_id)
     )
 
+
 @ultroid_cmd(
-    pattern="getlink",
+    pattern="getlink( (.*)|$)",
     groups_only=True,
     manager=True,
 )
@@ -94,16 +98,34 @@ async def _(e):
         chat = await e.get_chat()
     if hasattr(chat, "username") and chat.username:
         return await e.eor(f"Username: @{chat.username}")
-    request, usage = None, None
+    request, usage, title = None, None, None
     if match:
-        split = match.split()
+        split = match.split(maxsplit=1)
         request = bool(split[0] in ["r", "request"])
-        if len(split) > 1 and split[1].isdigit():
-            usage = int(split[1])
-    if request:
+        title = "Created by Ultroid"
+        if len(split) > 1:
+            match = split[1]
+            spli = match.split(maxsplit=1)
+            if spli[0].isdigit():
+                usage = int(spli[0])
+            if len(spli) > 1:
+                title = spli[1]
+        elif not request:
+            if match.isdigit():
+                usage = int(match)
+            else:
+                title = match
+        if request and usage:
+            usage = 0
+    if request or title:
         try:
             r = await e.client(
-                ExportChatInviteRequest(e.chat_id, request_needed=request, usage_limit=usage, title="Create via Ultroid"),
+                ExportChatInviteRequest(
+                    e.chat_id,
+                    request_needed=request,
+                    usage_limit=usage,
+                    title=title,
+                ),
             )
         except no_admin:
             return await e.eor(get_string("chats_2"), time=10)

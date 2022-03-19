@@ -7,10 +7,10 @@
 """
 ✘ Commands Available -
 
-• `{i}yta <(youtube) link>`
+• `{i}yta <(youtube/any) link>`
    Download audio from the link.
 
-• `{i}ytv <(youtube) link>`
+• `{i}ytv <(youtube/any) link>`
    Download video  from the link.
 
 • `{i}ytsa <(youtube) search query>`
@@ -39,14 +39,6 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        ytd["postprocessors"] = [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "128",
-            },
-            {"key": "FFmpegMetadata"},
-        ]
         url = event.pattern_match.group(2)
         if not url:
             return await xx.eor(get_string("youtube_1"))
@@ -68,19 +60,13 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        ytd["postprocessors"] = [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "128",
-            },
-            {"key": "FFmpegMetadata"},
-        ]
         try:
             query = event.text.split(" ", 1)[1]
         except IndexError:
             return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query)
+        if not url:
+            return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_6"))
     elif opt == "sv":
         ytd["format"] = "best"
@@ -91,6 +77,8 @@ async def download_from_youtube_(event):
         except IndexError:
             return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query)
+        if not url:
+            return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_8"))
     else:
         return

@@ -60,7 +60,7 @@ async def gen_sample(e):
         )
         await xxx.delete()
     else:
-        await e.eor(get_string("videotools_8"), time=5)
+        await e.eor(get_string("audiotools_8"), time=5)
 
 
 @ultroid_cmd(pattern="vshots( (.*)|$)")

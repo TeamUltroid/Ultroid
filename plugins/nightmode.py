@@ -29,12 +29,19 @@ And Turn On auto at morning
    Ex- `nmtime 01 00 06 30`
 """
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from . import LOGS
+
+try:
+    from apscheduler.schedulers.asyncio import AsyncIOScheduler
+except ImportError:
+    LOGS.error("nightmode: 'apscheduler' not Installed!")
+    AsyncIOScheduler = None
+
 from pyUltroid.dB.night_db import *
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from . import LOGS, get_string, ultroid_bot, ultroid_cmd, udB
+from . import get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="nmtime( (.*)|$)")
@@ -138,7 +145,7 @@ async def close_grp():
             LOGS.info(er)
 
 
-if night_grps():
+if AsyncIOScheduler and night_grps():
     try:
         h1, m1, h2, m2 = 0, 0, 7, 0
         if udB.get_key("NIGHT_TIME"):

@@ -7,14 +7,38 @@ try:
     from google_trans_new import google_translator
     Trs = google_translator()
 except ImportError:
-    LOGS.info("'google_trans_new' not installed!")
+    LOGS.error("'google_trans_new' not installed!")
     Trs = None
 
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
-    LOGS.info("'pyYaml' not installed!\nPlease install it to use Ultroid.")
-    sys.exit()
+
+    def _get_value(stri):
+        try:
+            value = eval(stri.strip())
+        except Exception as er:
+            LOGS.debug(er)
+            value = stri.strip()
+        return value
+
+    def safe_load(file, *args, **kwargs):
+        read = file.readlines()
+        out = {}
+        for line in read:
+            if ":" in line: # Ignores Empty & Invalid lines
+                spli = line.split(":", maxsplit=1)
+                key = spli[0].strip()
+                value = _get_value(spli[1])
+                out.update({key: value or []})
+            elif "-" in line:
+                spli = line.split("-", maxsplit=1)
+                where = out[list(out.keys())[-1]]
+                if isinstance(where, list):
+                    value = _get_value(spli[1])
+                    if value:
+                        where.append(value)
+        return out
 
 language = [udB.get_key("language") or "en"]
 languages = {}
