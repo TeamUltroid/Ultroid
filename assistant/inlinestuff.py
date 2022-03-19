@@ -695,7 +695,7 @@ async def savn_s(event):
 _OMG = {}
 
 
-@in_pattern("omgubuntu", owner=True)
+@in_pattern("omgu", owner=True)
 async def omgubuntu(ult):
     try:
         match = ult.text.split(maxsplit=1)[1].lower()
@@ -787,7 +787,7 @@ async def inline_tl(ult):
     await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
 
 
-@in_pattern("ghfeeds", owner=True)
+@in_pattern("gh", owner=True)
 async def gh_feeds(ult):
     try:
         username = ult.text.split(maxsplit=1)[1]
