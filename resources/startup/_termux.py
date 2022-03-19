@@ -9,8 +9,7 @@ def clear():
 
 MANDATORY_REQS = [
     "https://github.com/New-dev0/Telethon/archive/PlayTime.zip",
-    "https://github.com/TeamUltroid/pyUltroid/archive/dev.zip",
-#   "py-Ultroid==2022.2.10",
+    "py-Ultroid==2022.3.20",
     "gitpython",
     "enhancer==0.3.4",
     "telegraph",
