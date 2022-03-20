@@ -466,3 +466,37 @@ async def magic(event):
     await event.eor(
         f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : {data['response']['tinyUrl']}"
     )
+
+
+@ultroid_cmd(
+    pattern="rm( (.*)|$)",
+)
+async def _(e):
+    fof = e.pattern_match.group(1)
+    msg = "Successfully Deleted: \n\n"
+    if "-rf" in fof:
+        fof = fof.split("-rf ")[1]
+        is_fof = glob.glob(fof) or None
+            if not is_fof:
+                return await e.eor("Nothing Found something like that..")
+        try:
+            for name in is_fof:
+                asyncio.sleep(0.5)
+                os.rmdir(name)
+                msg += f"{name}\n"
+            await e.eor(msg)
+        except Exception as arre:
+            LOGS.expection(str(arre))
+        return
+    try:
+        is_fof = glob.glob(fof) or None
+        if not is_fof:
+            return await e.eor("Nothing Found something like that..")
+        for name in is_fof:
+            asyncio.sleep(0.3)
+            os.remove(name)
+            msg += f"{name}\n"
+        await e.eor(msg)
+    except Exception as eoo:
+         LOGS.expection(str(eoo))
+
