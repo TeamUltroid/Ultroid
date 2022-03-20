@@ -252,4 +252,4 @@ print("\nYou can head over to @UltroidSupport, if you get stuck somewhere, and n
 sleep(0.5)
 print("\nMade with ❤️ by @TeamUltroid...")
 
-system("pip3 uninstall colorama -y")
+system("pip3 uninstall -q colorama -y")
