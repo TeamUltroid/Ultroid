@@ -24,6 +24,7 @@
 
 # Deploy
 - [Heroku](#Deploy-to-Heroku)
+- [Okteto](#deploy-to-okteto)
 - [Local Machine](#Deploy-Locally)
 
 # Documentation 
