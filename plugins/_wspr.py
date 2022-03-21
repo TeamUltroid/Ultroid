@@ -39,7 +39,8 @@ async def _(e):
         okk = await e.get_reply_message()
         if okk.sender.username:
             put = f"@{okk.sender.username}"
-        put = okk.sender_id
+        else:
+            put = okk.sender_id
     else:
         put = e.pattern_match.group(1).strip()
     if put:
@@ -72,7 +73,8 @@ async def _(e):
             text="You Didn't Type Username or id.",
         )
         return await e.answer([sur])
-    except ValueError:
+    except ValueError as er:
+        LOGS.exception(er)
         sur = e.builder.article(
             title="User Not Found",
             description="Make sure username or id is correct.",
@@ -141,10 +143,9 @@ async def _(e):
                 same_peer=True,
             ),
         ]
-        sur = e.builder.document(
+        sur = e.builder.article(
             title=user.first_name,
             description=desc,
-            include_media=False,
             text=text,
             buttons=button,
         )
