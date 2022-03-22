@@ -89,7 +89,7 @@ async def _(event):
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         if (carb or udB.get_key("CARBON_ON_BASH")) and (
-            event.chat.admin_rights
+            event.is_private or event.chat.admin_rights
             or event.chat.creator
             or event.chat.default_banned_rights.embed_links
         ):
