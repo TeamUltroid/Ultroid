@@ -22,5 +22,5 @@ RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir yt-dlp; fi
 # changing workdir
 WORKDIR /root/TeamUltroid/
 
-# start the bot
+# start the bot.
 CMD ["bash", "startup"]
