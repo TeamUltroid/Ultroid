@@ -12,3 +12,5 @@ services:
       BOT_TOKEN: $BOT_TOKEN # Not mandatory
       LOG_CHANNEL: $LOG_CHANNEL # Not mandatory
       DATABASE_URL: $DATABASE_URL  # defaults to None
+      OKTETO: $OKTETO # whether Okteto or not
+      BRANCH: $BRANCH # Custom Branch, just in some case
