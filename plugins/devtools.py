@@ -207,6 +207,7 @@ async def _(event):
     try:
         value = await aexec(cmd, event)
     except Exception:
+        value = None
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
