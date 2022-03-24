@@ -33,7 +33,7 @@ import traceback
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
-
+import inspect
 from telethon.utils import get_display_name
 
 # Used for Formatting Eval Code, if installed
@@ -153,21 +153,29 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
-    silent = False
-    if cmd.split()[0] in ["-s", "--silent"]:
+    silent, gsource, xx = False, False, None
+    spli = cmd.split()
+    async def get_():
         try:
             cmd = cmd.split(maxsplit=1)[1]
         except IndexError:
-            return await event.eor("->> Wrong Format <<-")
+            await event.eor("->> Wrong Format <<-")
+            cmd = None
+        return cmd
+
+    if spli[0] in ["-s", "--silent"]:
         await event.delete()
         silent = True
-    elif cmd.split()[0] in ["-n", "-noedit"]:
-        try:
-            cmd = cmd.split(maxsplit=1)[1]
-        except IndexError:
-            return await event.eor("->> Wrong Format <<-")
+        cmd = await get_()
+    elif spli[0] in ["-n", "-noedit"]:
+        cmd = await get_()
         xx = await event.reply(get_string("com_1"))
-    else:
+    elif spli[0] in ["-gs", "--source"]:
+        gsource = True
+        cmd = await get_()
+    if not cmd:
+        return
+    if not silent and not xx:
         xx = await event.eor(get_string("com_1"))
     if black:
         try:
@@ -204,6 +212,11 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
+    if value and gsource:
+        try:
+            exc = inspect.getsource(value)
+        except Exception as er:
+            exc = traceback.format_exc()
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
         if exc:
