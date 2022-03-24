@@ -231,3 +231,9 @@ async def crbn(event):
         f"Carbonised by {inline_mention(event.sender)}",
         file=xx,
     )
+
+RaySoTheme = ["meadow", "breeze","raindrop", "candy","crimson","falcon", "sunset","midnight"]
+
+@ultroid_cmd(pattern="rayso")
+async def pass_on(ult):
+    spli = ult.text.split()
