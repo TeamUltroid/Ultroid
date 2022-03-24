@@ -157,11 +157,11 @@ async def _(event):
     spli = cmd.split()
     async def get_():
         try:
-            cmd = cmd.split(maxsplit=1)[1]
+            cm = cmd.split(maxsplit=1)[1]
         except IndexError:
             await event.eor("->> Wrong Format <<-")
-            cmd = None
-        return cmd
+            cm = None
+        return cm
 
     if spli[0] in ["-s", "--silent"]:
         await event.delete()
