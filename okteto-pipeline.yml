@@ -1,3 +1,5 @@
 icon: https://raw.githubusercontent.com/TeamUltroid/Ultroid/main/resources/extras/logo_readme.jpg
 deploy:
+    - curl https://get.okteto.com -sSfL | sh
     - okteto stack deploy --build -f docker-compose.yml
+vars=[{"name": "BRANCH", "value": "v0.5.1"}]
