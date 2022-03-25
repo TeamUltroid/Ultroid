@@ -19,6 +19,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 # Railway's banned dependency
 RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir yt-dlp; fi
 
+# Okteto CLI
+RUN if [ $OKTETO_NAMESPACE ]; then curl https://get.okteto.com -sSfL | sh; fi
+
 # changing workdir
 WORKDIR /root/TeamUltroid/
 
