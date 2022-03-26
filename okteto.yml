@@ -3,8 +3,8 @@ workdir: /root/TeamUltroid
 environment:
   - name=$USER
   - environment=development # will be changed later
-vars:
-  - vars=[{"name": "BRANCH", "value": "v0.5.1"}]
+#vars:
+#  - vars=[{"name": "BRANCH", "value": "v0.5.1"}]
 resources:
   requests:
     memory: "1Gi"
