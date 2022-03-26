@@ -5,10 +5,10 @@ workdir: /root/TeamUltroid
 #  - environment=development # will be changed later
 #vars:
 #  - vars=[{"name": "BRANCH", "value": "v0.5.1"}]
-resources:
-  requests:
-    memory: "1Gi"
-    cpu: "2g"
-  limits:
-    memory: "2Gi"
-    cpu: "4g"
+#resources:
+#  requests:
+#    memory: "1Gi"
+#    cpu: "2g"
+#  limits:
+#    memory: "2Gi"
+#    cpu: "4g"
