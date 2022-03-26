@@ -121,6 +121,8 @@ async def gpoto(e):
     okla = await e.client.download_profile_photo(ult)
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
-    await a.delete()
-    await e.reply(file=okla)
-    os.remove(okla)
+    if not "-dl" in ult:
+        await a.delete()
+        await e.reply(file=okla)
+        return os.remove(okla)
+    await a.edit(f"Downloaded pfp to [ `{okla}` ].")
