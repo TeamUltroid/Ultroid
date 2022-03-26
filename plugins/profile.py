@@ -112,6 +112,8 @@ async def remove_profilepic(delpfp):
 async def gpoto(e):
     ult = e.pattern_match.group(1).strip()
     a = await e.eor(get_string("com_1"))
+    just_dl = ult in ["-dl", "--dl"]
+    if just_dl: ult = None
     if not ult:
         if e.is_reply:
             gs = await e.get_reply_message()
@@ -121,7 +123,7 @@ async def gpoto(e):
     okla = await e.client.download_profile_photo(ult)
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
-    if not "-dl" in ult:
+    if not just_dl:
         await a.delete()
         await e.reply(file=okla)
         return os.remove(okla)
