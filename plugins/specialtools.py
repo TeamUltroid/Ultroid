@@ -56,7 +56,7 @@ from . import (
     ultroid_cmd,
     uploader,
 )
-from .carbon import all_col
+from .beautify import all_col
 
 File = []
 
