@@ -55,7 +55,6 @@ STUFF = {}
 # Feel Free to Add Any other...
 
 NOSPAM_CHAT = [
-    -1001327032795,  # UltroidSupport
     -1001387666944,  # PyrogramChat
     -1001109500936,  # TelethonChat
     -1001050982793,  # Python
@@ -64,16 +63,17 @@ NOSPAM_CHAT = [
 ]
 
 KANGING_STR = [
-    "Using Witchery to kang this sticker...",
+    "Kang Kang Kang....",
     "Plagiarising hehe...",
-    "Inviting this sticker over to my pack...",
-    "Kanging this sticker...",
-    "Hey that's a nice sticker!\nMind if I kang?!..",
+    "Lol, I am stealing your sticker",
+    "Ultroid, :D.....",
+    "Hey that's a nice sticker!",
     "Hehe me stel ur stiker...",
     "Ay look over there (☉｡☉)!→\nWhile I kang this...",
     "Roses are red violets are blue, kanging this sticker so my pack looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal-Your-Sticker is stealing this sticker... ",
+    "Haha ,Lol , Your Stickers are now Mine....",
 ]
 
 ATRA_COL = [
