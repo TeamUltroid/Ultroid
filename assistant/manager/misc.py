@@ -7,6 +7,7 @@
 
 
 import random
+from pyUltroid.functions.admins import admin_check
 
 import aiohttp
 from pyUltroid.dB import DEVLIST
@@ -24,6 +25,8 @@ async def dheh(e):
 
 @asst_cmd(pattern="echo( (.*)|$)")
 async def oqha(e):
+    if not await admin_check(e):
+        return
     match = e.pattern_match.group(1).strip()
     if match:
         text = match
