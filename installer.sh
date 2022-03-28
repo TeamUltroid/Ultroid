@@ -8,7 +8,7 @@ spinner(){
     local pid=$!
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ];
     do
-        for i in "Ooooo" "oOooo" "ooOoo" "oooOo" "ooooO" "oooOo" "ooOoo" "oOooo" "Oooo"
+        for i in "Ooooo" "oOooo" "ooOoo" "oooOo" "ooooO" "oooOo" "ooOoo" "oOooo" "Ooooo"
         do
           echo -ne "\r$i"
           sleep 0.2
