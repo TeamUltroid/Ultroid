@@ -44,7 +44,7 @@ oktetos_shit(){
 
 main(){
     clone_repo
-    install_requirements
+    (install_requirements) & spinner
     railways_shit
     oktetos_shit
 }
