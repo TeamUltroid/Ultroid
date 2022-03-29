@@ -18,10 +18,10 @@ spinner(){
 
 clone_repo(){
     if [ ! $BRANCH ]
-        then BRANCH="$(git branch --show-current)"
+        then BRANCH="main"
     fi
     echo -e "\n\nCloning Ultroid ${BRANCH}... "
-    git clone -q -b $BRANCH $REPO $DIR
+    git clone -b $BRANCH $REPO $DIR
 }
 
 install_requirements(){
