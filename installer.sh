@@ -18,7 +18,7 @@ spinner(){
 
 clone_repo(){
     if [ ! $BRANCH ]
-        then BRANCH="main"
+        then BRANCH=git branch --show-current
     fi
     echo -e "\n\nCloning Ultroid ${BRANCH}... "
     git clone -q -b $BRANCH $REPO $DIR
