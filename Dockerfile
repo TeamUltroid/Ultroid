@@ -14,5 +14,7 @@ RUN bash installer.sh
 
 WORKDIR /root/TeamUltroid
 
+RUN ls
+RUN ls /root/TeamUltroid
 # start the bot.
 CMD ["bash", "startup"]
