@@ -551,7 +551,7 @@ async def unblockpm(event):
     match = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
         user = (await event.get_reply_message()).sender_id
-    elif block.is_private:
+    elif event.is_private:
         user = event.chat_id
     elif match:
         if match == "all":
