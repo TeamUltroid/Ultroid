@@ -10,7 +10,7 @@ spinner(){
     do
         for i in "Ooooo" "oOooo" "ooOoo" "oooOo" "ooooO" "oooOo" "ooOoo" "oOooo" "Ooooo"
         do
-          echo -ne "\r$i"
+          echo -ne "\r• $i"
           sleep 0.2
         done
     done
@@ -20,19 +20,19 @@ clone_repo(){
     if [ ! $BRANCH ]
         then BRANCH="main"
     fi
-    echo "Cloning Ultroid ${BRANCH}"
+    echo -e "\n\nCloning Ultroid ${BRANCH}... "
     git clone -q -b $BRANCH $REPO $DIR
 }
 
 install_requirements(){
-    echo "Installing requirements..."
+    echo -e "\n\nInstalling requirements... "
     pip3 install -q --no-cache-dir -r $DIR/requirements.txt && pip3 install av -q --no-binary av
 }
 
 railways_shit(){
     if [ ! $RAILWAY_STATIC_URL ]
         then
-            echo "Installing YouTube dependency..."
+            echo -e "\n\nInstalling YouTube dependency... "
             pip3 install -q --no-cache-dir yt-dlp
     fi
 }
@@ -40,14 +40,16 @@ railways_shit(){
 oktetos_shit(){
     if [ $OKTETO_TOKEN ]
         then
-            echo "Installing Okteto-CLI..."
+            echo -e "\n\nInstalling Okteto-CLI... "
             curl https://get.okteto.com -sSfL | sh
     fi
 }
 
 main(){
-    clone_repo
+    (clone_repo) & spinner
     (install_requirements) & spinner
-    railways_shit
-    oktetos_shit
+    (railways_shit) & spinner
+    (oktetos_shit) & spinner
 }
+
+main
