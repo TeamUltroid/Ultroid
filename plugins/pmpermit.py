@@ -504,13 +504,13 @@ async def blockpm(block):
     match = block.pattern_match.group(1).strip()
     if block.reply_to_msg_id:
         user = (await block.get_reply_message()).sender_id
-    elif block.is_private:
-        user = block.chat_id
     elif match:
         try:
             user = await block.client.parse_id(match)
         except Exception as er:
             return await block.eor(str(er))
+    elif block.is_private:
+        user = block.chat_id
     else:
         return await eor(block, NO_REPLY, time=10)
     if user in DEVLIST:
@@ -551,8 +551,6 @@ async def unblockpm(event):
     match = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
         user = (await event.get_reply_message()).sender_id
-    elif event.is_private:
-        user = event.chat_id
     elif match:
         if match == "all":
             msg = await event.eor(get_string("com_1"))
@@ -578,6 +576,8 @@ async def unblockpm(event):
             user = await event.client.parse_id(match)
         except Exception as er:
             return await event.eor(str(er))
+    elif event.is_private:
+        user = event.chat_id
     else:
         return await event.eor(NO_REPLY, time=10)
     try:
