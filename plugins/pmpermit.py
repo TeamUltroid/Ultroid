@@ -582,10 +582,6 @@ async def unblockpm(event):
     else:
         return await event.eor(NO_REPLY, time=10)
     try:
-        user = await event.client.parse_id(match)
-    except Exception as er:
-        return await event.eor(str(er))
-    try:
         await event.client(UnblockRequest(user))
         aname = await event.client.get_entity(user)
         await event.eor(f"{inline_mention(aname)} [`{user}`] `has been UnBlocked!`")
