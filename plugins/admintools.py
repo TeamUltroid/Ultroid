@@ -270,10 +270,9 @@ async def tkicki(e):
 
 @ultroid_cmd(
     pattern="pin$",
-    admins_only=True,
     manager=True,
     require="pin_messages",
-    fullsudo=True,
+    fullsudo=True
 )
 async def pin(msg):
     if not msg.is_reply:
@@ -294,7 +293,6 @@ async def pin(msg):
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
-    admins_only=True,
     manager=True,
     require="pin_messages",
     fullsudo=True,
