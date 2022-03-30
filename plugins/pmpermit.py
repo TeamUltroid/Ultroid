@@ -549,8 +549,9 @@ async def blockpm(block):
 @ultroid_cmd(pattern="unblock( (.*)|$)", fullsudo=True)
 async def unblockpm(event):
     match = event.pattern_match.group(1).strip()
-    if event.reply_to_msg_id:
-        user = (await event.get_reply_message()).sender_id
+    reply = await event.get_reply_message()
+    if reply:
+        user = reply.sender_id
     elif match:
         if match == "all":
             msg = await event.eor(get_string("com_1"))
