@@ -104,7 +104,22 @@ async def _(event):
             out = "**• OUTPUT:**"
             remove(li)
         else:
-            out = f"**• OUTPUT:**\n`{stdout}`"
+            if all(":" in line for line in stdout.split("\n")):
+                try:
+                    from strings.strings import safe_load
+                    load = safe_load(stdout)
+                    stdout = ""
+                    for data in list(load.keys()):
+                        res = load[data]
+                        if "http" not in res:
+                            res = f"`{res}`"
+                        stdout += f"**{data}**: {res}"
+                except Exception as er:
+                    stdout = f"`{stdout}`"
+                    LOGS.exception(er)
+            else:
+                stdout = f"`{stdout}`"
+            out = f"**• OUTPUT:**\n{stdout}"
     if not stderr and not stdout:
         out = "**• OUTPUT:**\n`Success`"
     OUT += err + out
