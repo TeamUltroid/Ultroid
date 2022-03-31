@@ -113,7 +113,7 @@ async def _(event):
                         res = load[data]
                         if "http" not in res:
                             res = f"`{res}`"
-                        stdout += f"**{data}**: {res}"
+                        stdout += f"**{data}**: {res}\n"
                 except Exception as er:
                     stdout = f"`{stdout}`"
                     LOGS.exception(er)
