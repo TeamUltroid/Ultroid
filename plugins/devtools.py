@@ -68,7 +68,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    carb = None
+    carb, yamlf = None, False
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
         if cmd.split()[0] in ["-c", "--carbon"]:
@@ -113,7 +113,8 @@ async def _(event):
                         res = load[data]
                         if res and "http" not in res:
                             res = f"`{res}`"
-                        stdout += f"**{data}**: {res}\n"
+                        stdout += f"**{data}**  :  {res}\n"
+                    yamlf = True
                 except Exception as er:
                     stdout = f"`{stdout}`"
                     LOGS.exception(er)
@@ -139,7 +140,7 @@ async def _(event):
 
             await xx.delete()
     else:
-        await xx.edit(OUT, link_preview=True)
+        await xx.edit(OUT, link_preview=not yamlf)
 
 
 pp = pprint  # ignore: pylint
