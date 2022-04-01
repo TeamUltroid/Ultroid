@@ -17,7 +17,7 @@ REPOMSG = """
 • **ULTROID USERBOT** •\n
 • Repo - [Click Here](https://github.com/TeamUltroid/Ultroid)
 • Addons - [Click Here](https://github.com/TeamUltroid/UltroidAddons)
-• Support - @UltroidSupport
+• Support - [Click Here](t.me/UltroidSupport)
 """
 
 RP_BUTTONS = [
