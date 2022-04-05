@@ -110,8 +110,8 @@ async def _(event):
                     load = safe_load(stdout)
                     stdout = ""
                     for data in list(load.keys()):
-                        res = load[data]
-                        if res and "http" not in res:
+                        res = load[data] or ""
+                        if "http" not in res:
                             res = f"`{res}`"
                         stdout += f"**{data}**  :  {res}\n"
                     yamlf = True
