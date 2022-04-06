@@ -1,0 +1,22 @@
+# this is a workaround to prevent the Okteto's free tier instance from sleeping
+# by default, if no interaction happens within 24 hours, the instance will automatically be put to sleep
+name: "Okteto keep awake"
+on:
+  schedule:
+    - cron: "* 5 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: context
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
+      - name: "Activate Namespace"
+        uses: okteto/namespace@latest
+        with:
+          namespace: <put your git Username here>
+      - name: "Trigger the pipeline"
+        uses: okteto/pipeline@latest
+        with:
+          name: Ultroid
