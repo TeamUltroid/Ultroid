@@ -221,6 +221,5 @@ async def _(event):
             thumb=thumb,
             attributes=attributes,
             caption=f"`Uploaded` `{result}` `in {time_formatter(_*1000)}`",
-            reply_to=event.reply_to_msg_id or event,
         )
     await msg.try_delete()
