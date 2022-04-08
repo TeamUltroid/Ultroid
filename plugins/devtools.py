@@ -249,7 +249,7 @@ async def _(event):
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
     final_output = (
-        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
             evaluation,
         )
