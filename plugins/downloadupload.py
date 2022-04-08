@@ -38,6 +38,7 @@ from . import (
     downloader,
     eor,
     fast_download,
+    get_all_files,
     get_string,
     progress,
     time_formatter,
@@ -178,7 +179,7 @@ async def _(event):
     for result in results:
         if os.path.isdir(result):
             c, s = 0, 0
-            for files in sorted(glob.glob(result + "/*")):
+            for files in get_all_files(result):
                 attributes = None
                 if stream:
                     try:
