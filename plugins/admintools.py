@@ -91,6 +91,8 @@ async def prmte(ult):
             pin_messages=True,
             manage_call=True,
             title=rank,
+            change_info=True,
+
         )
         await eod(
             xx, get_string("pro_2").format(inline_mention(user), ult.chat.title, rank)
