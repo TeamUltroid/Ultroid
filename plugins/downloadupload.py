@@ -27,6 +27,7 @@ import glob
 import os
 import time
 from datetime import datetime as dt
+from urllib.parse import unquote
 
 from aiohttp.client_exceptions import InvalidURL
 from pyUltroid.functions.helper import time_formatter
@@ -71,7 +72,7 @@ async def down(event):
                     t,
                     msg,
                     s_time,
-                    f"Downloading from {link}",
+                    f"Downloading {unquote(link.rpartition("/")[-1])}",
                 )
             ),
         )
