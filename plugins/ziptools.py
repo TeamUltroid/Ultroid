@@ -76,11 +76,12 @@ async def zipp(event):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="unzip$")
+@ultroid_cmd(pattern="unzip( (.*)|$)")
 async def unzipp(event):
     reply = await event.get_reply_message()
+    file = event.pattern_match.group(1).strip()
     t = time.time()
-    if not reply:
+    if not ((reply and reply.media) or file):
         await event.eor(get_string("zip_1"))
         return
     xx = await event.eor(get_string("com_1"))
@@ -117,7 +118,7 @@ async def unzipp(event):
 async def azipp(event):
     reply = await event.get_reply_message()
     t = time.time()
-    if not reply:
+    if not (reply and reply.media):
         await event.eor(get_string("zip_1"))
         return
     xx = await event.eor(get_string("com_1"))
