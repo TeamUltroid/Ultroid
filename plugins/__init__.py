@@ -89,15 +89,3 @@ ATRA_COL = [
     "Moccasin",
     "PowderBlue",
 ]
-
-
-if Var.OKTETO:
-    try:
-        from apscheduler.schedulers.asyncio import AsyncIOScheduler
-        sched = AsyncIOScheduler()
-        LOGS.info("Okteto: Setup Done!")
-        sched.add_job(restart, "interval", hours=24)
-        sched.start()
-    except ImportError:
-        LOGS.error("'apscheduler' not installed!\nThere may be a error with your installation.")
-    
