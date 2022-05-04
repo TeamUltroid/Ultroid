@@ -535,6 +535,10 @@ pmbot_5: "Please reply to someone to Unban him."
 pmbot_6: "User was never banned!"
 pmbot_7: "`Congrats! You have been unbanned.`"
 
+# rss feeds
+rss_1: "`Provide Rss url to add..`"
+rss_2: "Failed to verify rss url\n__Error: {}__"
+
 # -------------------------- VcBot ------------------------------- #
 
 vcbot_1: "`Left the voice chat.`"

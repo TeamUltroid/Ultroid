@@ -16,6 +16,7 @@ git+https://github.com/buddhhu/img2html.git
 git+https://github.com/programmingerror/heroku3.py.git
 gitpython
 google-api-python-client
+feedparser
 html-telegraph-poster
 htmlwebshot
 lottie
