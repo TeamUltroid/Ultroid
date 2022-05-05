@@ -123,7 +123,7 @@ async def _(event):
                     load = safe_load(stdout)
                     stdout = ""
                     for data in list(load.keys()):
-                        reso = load[data] or ""
+                        res = load[data] or ""
                         if res and "http" not in str(res):
                             res = f"`{res}`"
                         stdout += f"**{data}**  :  {res}\n"
