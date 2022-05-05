@@ -10,7 +10,9 @@
 
 • `{i}bash <cmds>`
 • `{i}bash -c <cmds>` Carbon image as command output.
+• `{i}bash -s <cmds>` silent output of the command.
     Run linux commands on telegram.
+    
 
 • `{i}eval <code>`
     Evaluate python commands on telegram.
@@ -69,11 +71,15 @@ async def _(e):
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
     carb, yamlf = None, False
+    silent = False
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
         if cmd.split()[0] in ["-c", "--carbon"]:
             cmd = cmd.split(maxsplit=1)[1]
             carb = True
+        elif cmd.split()[0] in ["-s", "--silent"]:
+            cmd = cmd.split(maxsplit=1)[1]
+            silent = True
     except IndexError:
         return await event.eor(get_string("devs_1"), time=10)
     xx = await event.eor(get_string("com_1"))
@@ -103,6 +109,13 @@ async def _(event):
             OUT = f"[\xad]({url})" + OUT
             out = "**• OUTPUT:**"
             remove(li)
+        elif (silent) and (
+            event.is_private or event.chat.admin_rights
+            or event.chat.creator
+            or event.chat.default_banned_rights.embed_links
+        ):
+            OUT = ""
+            out = ""
         else:
             if all(":" in line for line in stdout.split("\n")):
                 try:
@@ -110,7 +123,7 @@ async def _(event):
                     load = safe_load(stdout)
                     stdout = ""
                     for data in list(load.keys()):
-                        res = load[data] or ""
+                        reso = load[data] or ""
                         if res and "http" not in str(res):
                             res = f"`{res}`"
                         stdout += f"**{data}**  :  {res}\n"
@@ -171,6 +184,7 @@ async def _(event):
         return await event.eor(get_string("devs_2"), time=5)
     silent, gsource, xx = False, False, None
     spli = cmd.split()
+
     async def get_():
         try:
             cm = cmd.split(maxsplit=1)[1]
@@ -234,7 +248,8 @@ async def _(event):
             exc = inspect.getsource(value)
         except Exception as er:
             exc = traceback.format_exc()
-    evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
+    evaluation = exc or stderr or stdout or _parse_eval(
+        value) or get_string("instu_4")
     if silent:
         if exc:
             msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
