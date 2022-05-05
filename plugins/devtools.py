@@ -114,7 +114,7 @@ async def _(event):
             or event.chat.creator
             or event.chat.default_banned_rights.embed_links
         ):
-            OUT = ""
+            OUT = "silent"
             out = ""
         else:
             if all(":" in line for line in stdout.split("\n")):
@@ -150,8 +150,9 @@ async def _(event):
                 caption=f"`{cmd}`" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
-
             await xx.delete()
+    elif OUT == "silent":
+        await xx.delete()
     else:
         await xx.edit(OUT, link_preview=not yamlf)
 
