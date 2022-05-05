@@ -230,6 +230,7 @@ async def kck(ult):
         return await xx.edit(get_string("kick_1"))
     except Exception as e:
         LOGS.exception(e)
+        return
     text = get_string("kick_4").format(
         inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title
     )
@@ -395,7 +396,7 @@ async def fastpurger(purg):
 )
 async def fastpurgerme(purg):
     num = purg.pattern_match.group(1).strip()
-    if num and not purg.is_reply:
+    if num:
         try:
             nnt = int(num)
         except BaseException:
@@ -409,32 +410,27 @@ async def fastpurgerme(purg):
             mp += 1
         await eor(purg, f"Purged {mp} Messages!", time=5)
         return
-    chat = await purg.get_input_chat()
-    msgs = []
-    count = 0
-    if not (purg.reply_to_msg_id or num):
+    elif purg.reply_to_msg_id:
+        pass
+    else:
         return await eod(
             purg,
             "`Reply to a message to purge from or use it like ``purgeme <num>`",
             time=10,
         )
+    chat = await purg.get_input_chat()
+    msgs = []
     async for msg in purg.client.iter_messages(
         chat,
         from_user="me",
         min_id=purg.reply_to_msg_id,
     ):
         msgs.append(msg)
-        count += 1
-        msgs.append(purg.reply_to_msg_id)
-        if len(msgs) == 100:
-            await ultroid_bot.delete_messages(chat, msgs)
-            msgs = []
-
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" + str(len(msgs)) + "` **messages.**",
     )
 
 
@@ -524,7 +520,5 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await eor(
-            ult, f"Auto Delete Setting is Already same to `{match}`", time=5
-        )
+        return await ult.eor(f"Auto Delete Setting is Already same to `{match}`", time=5)
     await ult.eor(f"Auto Delete Status Changed to `{match}` !")

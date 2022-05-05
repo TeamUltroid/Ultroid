@@ -1285,7 +1285,7 @@ async def fdroid_dler(event):
         ),
     )
     tt = time.time()
-    n_file = await uploader(file, file, tt, event, "Uploading...")
+    n_file = await event.client.fast_uploader(file, show_progress=True, event=event, message="Uploading...", to_delete=True)
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
         msg = await event.edit(
@@ -1304,10 +1304,8 @@ async def fdroid_dler(event):
             )
         except Exception as er:
             os.remove(thumb)
-            os.remove(file)
             LOGS.exception(er)
             return await event.edit(f"**ERROR**: `{er}`", buttons=buttons)
     if msg and hasattr(msg, "media"):
         FD_MEDIA.update({uri: msg.media})
     os.remove(thumb)
-    os.remove(file)

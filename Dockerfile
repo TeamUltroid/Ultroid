@@ -21,7 +21,7 @@ RUN pip3 install --no-cache-dir -r $DIR/requirements.txt && pip3 install av --no
 RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir yt-dlp; fi
 
 # Okteto CLI
-RUN if [ $OKTETO_TOKEN ]; then curl https://get.okteto.com -sSfL | sh; fi
+RUN curl https://get.okteto.com -sSfL | sh
 
 # changing workdir
 WORKDIR $DIR

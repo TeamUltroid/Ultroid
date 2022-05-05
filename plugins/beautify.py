@@ -16,161 +16,19 @@
 • `{i}ccarbon <color ><text/reply to msg/reply to document>`
     Carbonise the text, with custom bg colours.
 """
-import random
 
+import random
+from telethon.utils import get_display_name
 from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
 
-all_col = [
-    "Black",
-    "Navy",
-    "DarkBlue",
-    "MediumBlue",
-    "Blue",
-    "DarkGreen",
-    "Green",
-    "Teal",
-    "DarkCyan",
-    "DeepSkyBlue",
-    "DarkTurquoise",
-    "MediumSpringGreen",
-    "Lime",
-    "SpringGreen",
-    "Aqua",
-    "Cyan",
-    "MidnightBlue",
-    "DodgerBlue",
-    "LightSeaGreen",
-    "ForestGreen",
-    "SeaGreen",
-    "DarkSlateGray",
-    "DarkSlateGrey",
-    "LimeGreen",
-    "MediumSeaGreen",
-    "Turquoise",
-    "RoyalBlue",
-    "SteelBlue",
-    "DarkSlateBlue",
-    "MediumTurquoise",
-    "Indigo  ",
-    "DarkOliveGreen",
-    "CadetBlue",
-    "CornflowerBlue",
-    "RebeccaPurple",
-    "MediumAquaMarine",
-    "DimGray",
-    "DimGrey",
-    "SlateBlue",
-    "OliveDrab",
-    "SlateGray",
-    "SlateGrey",
-    "LightSlateGray",
-    "LightSlateGrey",
-    "MediumSlateBlue",
-    "LawnGreen",
-    "Chartreuse",
-    "Aquamarine",
-    "Maroon",
-    "Purple",
-    "Olive",
-    "Gray",
-    "Grey",
-    "SkyBlue",
-    "LightSkyBlue",
-    "BlueViolet",
-    "DarkRed",
-    "DarkMagenta",
-    "SaddleBrown",
-    "DarkSeaGreen",
-    "LightGreen",
-    "MediumPurple",
-    "DarkViolet",
-    "PaleGreen",
-    "DarkOrchid",
-    "YellowGreen",
-    "Sienna",
-    "Brown",
-    "DarkGray",
-    "DarkGrey",
-    "LightBlue",
-    "GreenYellow",
-    "PaleTurquoise",
-    "LightSteelBlue",
-    "PowderBlue",
-    "FireBrick",
-    "DarkGoldenRod",
-    "MediumOrchid",
-    "RosyBrown",
-    "DarkKhaki",
-    "Silver",
-    "MediumVioletRed",
-    "IndianRed ",
-    "Peru",
-    "Chocolate",
-    "Tan",
-    "LightGray",
-    "LightGrey",
-    "Thistle",
-    "Orchid",
-    "GoldenRod",
-    "PaleVioletRed",
-    "Crimson",
-    "Gainsboro",
-    "Plum",
-    "BurlyWood",
-    "LightCyan",
-    "Lavender",
-    "DarkSalmon",
-    "Violet",
-    "PaleGoldenRod",
-    "LightCoral",
-    "Khaki",
-    "AliceBlue",
-    "HoneyDew",
-    "Azure",
-    "SandyBrown",
-    "Wheat",
-    "Beige",
-    "WhiteSmoke",
-    "MintCream",
-    "GhostWhite",
-    "Salmon",
-    "AntiqueWhite",
-    "Linen",
-    "LightGoldenRodYellow",
-    "OldLace",
-    "Red",
-    "Fuchsia",
-    "Magenta",
-    "DeepPink",
-    "OrangeRed",
-    "Tomato",
-    "HotPink",
-    "Coral",
-    "DarkOrange",
-    "LightSalmon",
-    "Orange",
-    "LightPink",
-    "Pink",
-    "Gold",
-    "PeachPuff",
-    "NavajoWhite",
-    "Moccasin",
-    "Bisque",
-    "MistyRose",
-    "BlanchedAlmond",
-    "PapayaWhip",
-    "LavenderBlush",
-    "SeaShell",
-    "Cornsilk",
-    "LemonChiffon",
-    "FloralWhite",
-    "Snow",
-    "Yellow",
-    "LightYellow",
-    "Ivory",
-    "White",
-]
 
+_colorspath = "resources/colorlist.txt"
+
+if os.path.exists(_colorspath):
+    with open(_colorspath, "r") as f:
+        all_col = f.read().split()
+else:
+    all_col = []
 
 @ultroid_cmd(
     pattern="(rc|c)arbon",
@@ -234,6 +92,29 @@ async def crbn(event):
 
 RaySoTheme = ["meadow", "breeze","raindrop", "candy","crimson","falcon", "sunset","midnight"]
 
+
 @ultroid_cmd(pattern="rayso")
 async def pass_on(ult):
     spli = ult.text.split()
+    theme, dark, title, text = None, True, get_display_name(ult.chat), None
+    if len(spli) > 2:
+        if spli[1] in RaySoTheme:
+            theme = spli[1]
+        dark = bool(spli[2].lower().strip() in ["true", "t"])
+    elif len(spli) > 1:
+        if spli[1] in RaySoTheme:
+            theme = spli[1]
+        else:
+            try:
+                text = ult.text.split(maxsplit=1)[1]
+            except IndexError:
+                pass
+    if not theme:
+        theme = random.choice(RaySoTheme)
+    if ult.is_reply:
+        msg = await ult.get_reply_message()
+        text = msg.text
+        title = get_display_name(msg.sender)
+    await ult.reply(file = await Carbon(text, rayso=True, title=title, theme=theme, darkMode=dark))
+    
+
