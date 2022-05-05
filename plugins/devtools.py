@@ -109,11 +109,7 @@ async def _(event):
             OUT = f"[\xad]({url})" + OUT
             out = "**• OUTPUT:**"
             remove(li)
-        elif (silent) and (
-            event.is_private or event.chat.admin_rights
-            or event.chat.creator
-            or event.chat.default_banned_rights.embed_links
-        ):
+        elif (silent):
             OUT = "silent"
             out = ""
         else:
