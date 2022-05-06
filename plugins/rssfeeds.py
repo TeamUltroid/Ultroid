@@ -82,4 +82,4 @@ async def PostRss():
 
 if udB.get_key("RSSFEEDS"):
     sched = AsyncIOScheduler()
-    sched.add_job(PostRss, "interval", minutes=udB.get_key("RSSDELAY") or 30)
+    sched.add_job(PostRss, "interval", minutes=udB.get_key("RSSDELAY") or 1)
