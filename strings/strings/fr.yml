@@ -101,23 +101,23 @@ audiotools_9: "`Aucun audio trouvé...`"
 audiotools_10: "`Extraction de l'Audio depuis la Video...`"
 
 # asstcmd
-asstcmd_1: "`Use this Command with Reply and word to use a command.`"
-asstcmd_2: "`Give me the command which you want to remove.`"
-asstcmd_3: "Done Command: `/{}` Removed."
-asstcmd_4: "Done Command : `/{}` saved."
-asstcmd_5: "No commands found"
-asstcmd_6: "**ALL ASSISTANT CMDS**\n\n"
+asstcmd_1: "`Utilisez cette commande avec réponse et mot pour utiliser une commande.`"
+asstcmd_2: "`Donnez moi la commande que vous voulez supprimer.`"
+asstcmd_3: "Commande: `/{}` supprimée."
+asstcmd_4: "Commande : `/{}` enregistrée."
+asstcmd_5: "Aucune commande trouvée"
+asstcmd_6: "**TOUTES LES COMMANDES D'ASSISTANCE**\n\n"
 
 # autocorrect
-act_1: "AUTOCORRECT Feature ON"
-act_2: "AUTOCORRECT Feature Off"
+act_1: "Fonction d'AUTOCORRECTION ON"
+act_2: "Fonction d'AUTOCORRECTION OFF"
 
 # autopic
-autopic_1: "`Give something to search...`"
-autopic_2: "No Results found for `{}`"
-autopic_3: "Got a Collection `{}` related to your search !\nStarting Autopic !"
-autopic_4: "AUTOPIC was not in use !!"
-autopic_5: "AUTOPIC Stopped!"
+autopic_1: "`Donnez moi quelquechose à rechercher...`"
+autopic_2: Aucun résultat trouvé pour `{}`"
+autopic_3: "J'ai trouvé une collection `{}` en rapport avec votre recherche !\nLancement d'Autopic !"
+autopic_4: "AUTOPIC n'était pas en cours d'utilisation !!"
+autopic_5: "Arrêt d'AUTOPIC!"
 
 # inline
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
@@ -125,21 +125,21 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇ�
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setdb ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
-inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
-inline_7: "Do .help {} to get the list of commands."
-inline_8: "Click the below button to update!"
-inline_9: "You Are Already On Latest Version"
+inline_6: "**Menu d'aide du chat vocal pour {}**\n**Commandes disponibles:** `{}`\n\n@TeamUltroid"
+inline_7: "Utilisez .help {} pour voir la liste des commandes."
+inline_8: "Cliquez sur le boutton du dessous pour mettre à jour!"
+inline_9: "Vous utilisez déjà la dernière version"
 
 # tagnotif
-tagnot_1: "{} tagged you in {}\n\n```{}```\n\n[📨 Message 📨]({})"
-tagnot_2: "{} tagged you in {}\n\n [📨 Message 📨]({})"
+tagnot_1: "{} vous a mentionné sur {}\n\n```{}```\n\n[📨 Message 📨]({})"
+tagnot_2: "{} vous a mentionné sur {}\n\n [📨 Message 📨]({})"
 
 # whisper
-wspr_1: "@{} secret msg for you.\nDelete your msg after reading.\nOr the next msg will not be updated."
-wspr_2: "Message deleted"
-wspr_3: "Add some id or username too"
-wspr_4: "User {} Not Found\nSearch Again"
-wspr_5: "You Can't do this"
+wspr_1: "@{} message secret pour vous.\nSupprimez votre message après lecture.\nSinon le prochain message ne sera pas mis à jour."
+wspr_2: "Message supprimé"
+wspr_3: "Ajoutez également une ID ou un pseudo"
+wspr_4: "Utilisateur {} non trouvé\nNouvelle recherche"
+wspr_5: "Vous ne pouvez pas faire cela"
 
 # afk
 afk_1: "**No Longer Afk**\n\nWas away for ~ `{}`"
