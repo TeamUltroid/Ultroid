@@ -15,7 +15,7 @@
 """
 
 import feedparser
-from apscheduler.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from . import ultroid_cmd, get_string, async_searcher
 from pyUltroid.dB.rssdb import get_rss_url, add_rss, remove_rss, udB, ultroid_bot
 
