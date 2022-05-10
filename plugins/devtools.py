@@ -224,7 +224,7 @@ async def _(event):
     try:
         start = datetime.now()
         value = await aexec(cmd, event)
-        timeg = time_formatter((datetime.now() - start).microseconds)
+        timeg = time_formatter((datetime.now() - start).microseconds / 1000)
     except Exception:
         value = None
         exc = traceback.format_exc()
@@ -258,7 +258,7 @@ async def _(event):
         )
     )
     if timeg:
-        final_output += f"\nTime Taken: `{timeg}`"
+        final_output += f"Time Taken: `{timeg}`"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
