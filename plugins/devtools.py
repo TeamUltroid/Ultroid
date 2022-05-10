@@ -33,6 +33,7 @@ import traceback
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
+from datetime import datetime
 import inspect
 from telethon.utils import get_display_name
 
@@ -219,9 +220,11 @@ async def _(event):
     old_stdout = sys.stdout
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
-    stdout, stderr, exc = None, None, None
+    stdout, stderr, exc, timeg = None, None, None, None
     try:
+        start = datetime.now()
         value = await aexec(cmd, event)
+        timeg = time_formatter((datetime.now() - start).microseconds)
     except Exception:
         value = None
         exc = traceback.format_exc()
@@ -254,6 +257,8 @@ async def _(event):
             evaluation,
         )
     )
+    if timeg:
+        final_output += f"\nTime Taken: `{timeg}`"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
