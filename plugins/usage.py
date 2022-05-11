@@ -42,6 +42,7 @@ if HOSTED_ON == "heroku":
     try:
         if heroku_api and app_name:
             import heroku3
+
             Heroku = heroku3.from_key(heroku_api)
             app = Heroku.app(app_name)
             HEROKU_API = heroku_api

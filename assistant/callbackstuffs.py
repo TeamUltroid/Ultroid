@@ -20,7 +20,7 @@ try:
     from pyUltroid.functions.gDrive import GDriveManager
 except ImportError:
     GDriveManager = None
-from pyUltroid.functions.helper import fast_download, progress, uploader
+from pyUltroid.functions.helper import fast_download, progress
 from pyUltroid.functions.tools import (
     Carbon,
     async_searcher,
@@ -1284,8 +1284,10 @@ async def fdroid_dler(event):
             )
         ),
     )
-    tt = time.time()
-    n_file = await event.client.fast_uploader(file, show_progress=True, event=event, message="Uploading...", to_delete=True)
+    time.time()
+    n_file = await event.client.fast_uploader(
+        file, show_progress=True, event=event, message="Uploading...", to_delete=True
+    )
     buttons = Button.switch_inline("Search Back", query="fdroid", same_peer=True)
     try:
         msg = await event.edit(
