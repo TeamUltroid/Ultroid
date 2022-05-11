@@ -16,10 +16,12 @@
 
 import feedparser
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from . import ultroid_cmd, get_string, async_searcher, udB, ultroid_bot
-from pyUltroid.dB.rssdb import get_rss_urls, add_rss, remove_rss
+from pyUltroid.dB.rssdb import add_rss, remove_rss
+
+from . import async_searcher, get_string, udB, ultroid_cmd
 
 cacheRss = {}
+
 
 @ultroid_cmd(pattern="addrss( (.*)|$)")
 async def Add_rss(ult):
@@ -30,7 +32,7 @@ async def Add_rss(ult):
     try:
         cont = await async_searcher(match, re_content=True)
         parsed = feedparser.parse(cont)
-        cacheRss.update({match:parsed.entries})
+        cacheRss.update({match: parsed.entries})
     except Exception as er:
         return await msg.edit(get_string("rss_2").format(er))
     format = None
@@ -52,6 +54,7 @@ async def getrss(ult):
         form += "\n" + url
     await ult.eor(form)
 
+
 @ultroid_cmd(pattern="delrss$")
 async def remove(ult):
     if not get_rss_url(ult.chat_id):
@@ -59,25 +62,22 @@ async def remove(ult):
     remove_rss(ult.chat_id)
     await ult.eor(get_string("rss_4"))
 
+
 async def PostRss():
     data = udB.get_key("RSSFEEDS")
     if not data:
         return
     for chat in data.keys():
         for url in data[chat].keys():
-            format = data[chat][url]
+            data[chat][url]
             try:
                 content = await async_searcher(url, re_content=True)
                 parsed = feedparser.parse(content).entries
                 cacheRss[url] = parsed
-              #  for parse in parsed:
-              #      await ultroid_bot.send_message(chat, )
+            #  for parse in parsed:
+            #      await ultroid_bot.send_message(chat, )
             except Exception as er:
                 LOGS.exception(er)
-            
-
-
-
 
 
 if udB.get_key("RSSFEEDS"):

@@ -28,13 +28,14 @@
     Shows System Info.
 """
 
+import inspect
 import sys
 import traceback
+from datetime import datetime
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
-from datetime import datetime
-import inspect
+
 from telethon.utils import get_display_name
 
 # Used for Formatting Eval Code, if installed
@@ -90,7 +91,8 @@ async def _(event):
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         if (carb or udB.get_key("CARBON_ON_BASH")) and (
-            event.is_private or event.chat.admin_rights
+            event.is_private
+            or event.chat.admin_rights
             or event.chat.creator
             or event.chat.default_banned_rights.embed_links
         ):
@@ -108,6 +110,7 @@ async def _(event):
             if all(":" in line for line in stdout.split("\n")):
                 try:
                     from strings.strings import safe_load
+
                     load = safe_load(stdout)
                     stdout = ""
                     for data in list(load.keys()):
@@ -172,6 +175,7 @@ async def _(event):
         return await event.eor(get_string("devs_2"), time=5)
     silent, gsource, xx = False, False, None
     spli = cmd.split()
+
     async def get_():
         try:
             cm = cmd.split(maxsplit=1)[1]
@@ -235,7 +239,7 @@ async def _(event):
     if value and gsource:
         try:
             exc = inspect.getsource(value)
-        except Exception as er:
+        except Exception:
             exc = traceback.format_exc()
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:

@@ -18,9 +18,10 @@
 """
 
 import random
-from telethon.utils import get_display_name
-from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
 
+from telethon.utils import get_display_name
+
+from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
 
 _colorspath = "resources/colorlist.txt"
 
@@ -29,6 +30,7 @@ if os.path.exists(_colorspath):
         all_col = f.read().split()
 else:
     all_col = []
+
 
 @ultroid_cmd(
     pattern="(rc|c)arbon",
@@ -90,7 +92,17 @@ async def crbn(event):
         file=xx,
     )
 
-RaySoTheme = ["meadow", "breeze","raindrop", "candy","crimson","falcon", "sunset","midnight"]
+
+RaySoTheme = [
+    "meadow",
+    "breeze",
+    "raindrop",
+    "candy",
+    "crimson",
+    "falcon",
+    "sunset",
+    "midnight",
+]
 
 
 @ultroid_cmd(pattern="rayso")
@@ -115,6 +127,6 @@ async def pass_on(ult):
         msg = await ult.get_reply_message()
         text = msg.text
         title = get_display_name(msg.sender)
-    await ult.reply(file = await Carbon(text, rayso=True, title=title, theme=theme, darkMode=dark))
-    
-
+    await ult.reply(
+        file=await Carbon(text, rayso=True, title=title, theme=theme, darkMode=dark)
+    )

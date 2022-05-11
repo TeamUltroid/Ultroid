@@ -48,7 +48,7 @@ from pyUltroid.dB import DEVLIST
 from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import GetFullChannelRequest, EditAdminRequest
+from telethon.tl.functions.channels import EditAdminRequest, GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 from telethon.utils import get_display_name
@@ -62,7 +62,6 @@ from . import (
     get_uinfo,
     inline_mention,
     types,
-    ultroid_bot,
     ultroid_cmd,
 )
 
@@ -90,17 +89,19 @@ async def prmte(ult):
         FullRight = True
     try:
         if FullRight:
-            await ult.client(EditAdminRequest(ult.chat_id, user.id, ult.chat.admin_rights, rank))
+            await ult.client(
+                EditAdminRequest(ult.chat_id, user.id, ult.chat.admin_rights, rank)
+            )
         else:
             await ult.client.edit_admin(
-            ult.chat_id,
-            user.id,
-            invite_users=True,
-            ban_users=True,
-            delete_messages=True,
-            pin_messages=True,
-            manage_call=True,
-            title=rank,
+                ult.chat_id,
+                user.id,
+                invite_users=True,
+                ban_users=True,
+                delete_messages=True,
+                pin_messages=True,
+                manage_call=True,
+                title=rank,
             )
         await eod(
             xx, get_string("pro_2").format(inline_mention(user), ult.chat.title, rank)
@@ -279,12 +280,7 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(
-    pattern="pin$",
-    manager=True,
-    require="pin_messages",
-    fullsudo=True
-)
+@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages", fullsudo=True)
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -520,5 +516,7 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await ult.eor(f"Auto Delete Setting is Already same to `{match}`", time=5)
+        return await ult.eor(
+            f"Auto Delete Setting is Already same to `{match}`", time=5
+        )
     await ult.eor(f"Auto Delete Status Changed to `{match}` !")

@@ -113,7 +113,8 @@ async def gpoto(e):
     ult = e.pattern_match.group(1).strip()
     a = await e.eor(get_string("com_1"))
     just_dl = ult in ["-dl", "--dl"]
-    if just_dl: ult = None
+    if just_dl:
+        ult = None
     if not ult:
         if e.is_reply:
             gs = await e.get_reply_message()
