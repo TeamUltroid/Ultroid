@@ -34,7 +34,6 @@ async def delete_it(delme):
         return
     await msg_src.try_delete()
     await delme.try_delete()
-    
 
 
 @ultroid_cmd(
