@@ -60,6 +60,8 @@ _ignore_eval = []
 async def _(e):
     xx = await e.eor(get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    if y and y.endswith("NOT_FOUND"):
+        return await xx.edit(f"Error: `{y}`")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     haa = await Carbon(code=p, file_name="neofetch", backgroundColor=choice(ATRA_COL))
@@ -84,7 +86,7 @@ async def _(event):
             "`You cannot use this command now. Contact owner of this bot!`"
         )
     reply_to_id = event.reply_to_msg_id or event.id
-    stdout, stderr = await bash(cmd)
+    stdout, stderr = await bash(cmd, run_code=1)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     err, out = "", ""
     if stderr:
