@@ -98,7 +98,7 @@ async def unzipp(event):
     if os.path.isdir("unzip"):
         await bash("rm -rf unzip")
     os.mkdir("unzip")
-    await bash(f"7z x {file} -aoa -ounzip")
+    await bash(f"7z x -ounzip {file}")
     await asyncio.sleep(4)
     ok = get_all_files("unzip")
     for x in ok:
