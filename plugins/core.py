@@ -24,10 +24,6 @@
 • `{i}help <plugin name>`
     Shows you a help menu (like this) for every plugin.
 
-• `{i}pick addons`
-  `{i}pick vcbot`
-    Instantly load 'Addons' or 'VcBot'.
-
 • `{i}getaddons <raw link to code>`
     Load Plugins from the given raw link.
 """
@@ -113,27 +109,6 @@ async def load(event):
             get_string("core_18").format(shortname, e),
             time=3,
         )
-
-
-@ultroid_cmd(pattern="pick( (.*)|$)", fullsudo=True)
-async def pickup_call(ult):
-    match_ = ult.pattern_match.group(1).strip()
-    match = match_.lower()
-    proc = await ult.eor(get_string("com_1"))
-    if match == "addons":
-        if udB.get_key("ADDONS"):
-            return await proc.eor("`Addons are Already Enabled!`", time=8)
-        udB.set_key("ADDONS", True)
-        Loader(path="addons", key="Addons").load(func=load_addons)
-    elif match == "vcbot":
-        if udB.get_key("VCBOT"):
-            return await proc.eor("`VcBot is Already Active!`", time=8)
-        Loader(path="vcbot", key="VCBot").load()
-    else:
-        return await proc.eor(
-            "`Found Nothing to pick!\nSpecify what to pick..`", time=8
-        )
-    await proc.eor(f"`Successfully Activated {match_}`", time=8)
 
 
 @ultroid_cmd(pattern="getaddons( (.*)|$)", fullsudo=True)
