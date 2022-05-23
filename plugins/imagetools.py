@@ -84,6 +84,7 @@ from . import (
     ultroid_cmd,
 )
 
+
 @ultroid_cmd(pattern="color$")
 async def _(event):
     reply = await event.get_reply_message()
