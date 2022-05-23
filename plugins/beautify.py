@@ -15,6 +15,9 @@
 
 • `{i}ccarbon <color ><text/reply to msg/reply to document>`
     Carbonise the text, with custom bg colours.
+
+• `{i}rayso <opt-theme> <text>/<reply to message>`
+  `{i}rayso list` - `Get list of themes.`
 """
 
 import random
@@ -116,6 +119,11 @@ async def pass_on(ult):
     elif len(spli) > 1:
         if spli[1] in RaySoTheme:
             theme = spli[1]
+        elif spli[1] ==  "list":
+            text = "**List of Rayso Themes:**\n"
+            text += "\n".join([f"- `{th_}`" for th_ in RaySoTheme])
+            await ult.eor(text)
+            return
         else:
             try:
                 text = ult.text.split(maxsplit=1)[1]

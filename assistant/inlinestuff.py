@@ -180,7 +180,7 @@ async def repo(e):
 @in_pattern("go", owner=True)
 async def gsearch(q_event):
     try:
-        match = q_event.text.split(" ", maxsplit=1)[1]
+        match = q_event.text.split(maxsplit=1)[1]
     except IndexError:
         return await q_event.answer(
             [], switch_pm="Google Search. Enter a query!", switch_pm_param="start"
@@ -273,7 +273,7 @@ async def _(e):
 
 @in_pattern("xda", owner=True)
 async def xda_dev(event):
-    QUERY = event.text.split(" ", maxsplit=1)
+    QUERY = event.text.split(maxsplit=1)
     try:
         query = QUERY[1]
     except IndexError:
