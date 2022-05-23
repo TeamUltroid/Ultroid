@@ -185,12 +185,12 @@ async def ult_tools(event):
                 samples[count] = ult[x][y]
                 count += 1
         _, labels, centers = cv2.kmeans(
-        samples,
-        12,
-        None,
-        (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10000, 0.0001),
-        5,
-        cv2.KMEANS_PP_CENTERS,
+            samples,
+            12,
+            None,
+            (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10000, 0.0001),
+            5,
+            cv2.KMEANS_PP_CENTERS,
         )
         centers = np.uint8(centers)
         ish = centers[labels.flatten()]
@@ -205,7 +205,6 @@ async def ult_tools(event):
     await xx.delete()
     os.remove("ult.jpg")
     os.remove(file)
-
 
 
 @ultroid_cmd(pattern="csample (.*)")

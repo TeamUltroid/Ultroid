@@ -119,7 +119,7 @@ async def pass_on(ult):
     elif len(spli) > 1:
         if spli[1] in RaySoTheme:
             theme = spli[1]
-        elif spli[1] ==  "list":
+        elif spli[1] == "list":
             text = "**List of Rayso Themes:**\n"
             text += "\n".join([f"- `{th_}`" for th_ in RaySoTheme])
             await ult.eor(text)
