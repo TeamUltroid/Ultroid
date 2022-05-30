@@ -19,7 +19,17 @@ from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
 from telethon.utils import resolve_bot_file_id
 
-from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, start_time, udB, split_list
+from . import (
+    HNDLR,
+    INLINE_PIC,
+    LOGS,
+    OWNER_NAME,
+    asst,
+    get_string,
+    split_list,
+    start_time,
+    udB,
+)
 from ._help import _main_help_menu
 
 # ================================================#
@@ -269,30 +279,33 @@ async def _(event):
     pin = f"🙋Uᴘᴛɪᴍᴇ = {uptime}"
     await event.answer(pin, cache_time=0, alert=True)
 
+
 InPlugin = {
- "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
- "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
- "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
- "Search on XDA": "xda telegram",
- "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
- "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
- "Piston Eval": "run javascript console.log('Hello Ultroid')",
- "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
- "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
- "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
- "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
- "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
- "Tʟ Sᴇᴀʀᴄʜ": "tl",
- "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
- "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish"
+    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
+    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
+    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
+    "Search on XDA": "xda telegram",
+    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
+    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
+    "Piston Eval": "run javascript console.log('Hello Ultroid')",
+    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
+    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
+    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
+    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
+    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
+    "Tʟ Sᴇᴀʀᴄʜ": "tl",
+    "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
+    "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish",
 }
 _InButtons = [Button.switch_inline(_, query=InPlugin[_]) for _ in list(InPlugin.keys())]
 InButtons = split_list(_InButtons, 2)
 
+
 @callback(data="inlone", owner=True)
 async def _(e):
     button = InButtons.copy()
-    button.append([
+    button.append(
+        [
             Button.inline(
                 "« Bᴀᴄᴋ",
                 data="open",
