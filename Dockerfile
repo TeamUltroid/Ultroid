@@ -20,9 +20,6 @@ RUN pip3 install --no-cache-dir -r $DIR/requirements.txt && pip3 install av --no
 # Railway's banned dependency
 RUN if [ ! $RAILWAY_STATIC_URL ]; then pip3 install --no-cache-dir yt-dlp; fi
 
-# Okteto CLI
-RUN curl https://get.okteto.com -sSfL | sh
-
 # changing workdir
 WORKDIR $DIR
 
