@@ -2,7 +2,6 @@
 
 REPO="https://github.com/TeamUltroid/Ultroid.git"
 DIR="/root/TeamUltroid"
-BRANCH=$BRANCH
 
 spinner(){
     local pid=$!
@@ -18,7 +17,7 @@ spinner(){
 
 clone_repo(){
     if [ ! $BRANCH ]
-        then BRANCH="main"
+        then export BRANCH="main"
     fi
     echo -e "\n\nCloning Ultroid ${BRANCH}... "
     git clone -b $BRANCH $REPO $DIR
