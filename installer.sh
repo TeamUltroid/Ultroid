@@ -29,7 +29,7 @@ install_requirements(){
     pip3 install -q --no-cache-dir -r $DIR/requirements.txt && pip3 install av -q --no-binary av
 }
 
-railways_shit(){
+railways_dep(){
     if [ ! $RAILWAY_STATIC_URL ]
         then
             echo -e "\n\nInstalling YouTube dependency... "
@@ -37,7 +37,7 @@ railways_shit(){
     fi
 }
 
-oktetos_shit(){
+install_okteto_cli(){
     if [ $OKTETO_TOKEN ]
         then
             echo -e "\n\nInstalling Okteto-CLI... "
@@ -48,8 +48,8 @@ oktetos_shit(){
 main(){
     (clone_repo) & spinner
     (install_requirements) & spinner
-    (railways_shit) & spinner
-    (oktetos_shit) & spinner
+    (railways_dep) & spinner
+    (install_okteto_cli) & spinner
 }
 
 main
