@@ -19,7 +19,17 @@ from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
 from telethon.utils import resolve_bot_file_id
 
-from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, start_time, udB
+from . import (
+    HNDLR,
+    INLINE_PIC,
+    LOGS,
+    OWNER_NAME,
+    asst,
+    get_string,
+    split_list,
+    start_time,
+    udB,
+)
 from ._help import _main_help_menu
 
 # ================================================#
@@ -270,83 +280,38 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
+InPlugin = {
+    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
+    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
+    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
+    "Search on XDA": "xda telegram",
+    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
+    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
+    "Piston Eval": "run javascript console.log('Hello Ultroid')",
+    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
+    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
+    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
+    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
+    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
+    "Tʟ Sᴇᴀʀᴄʜ": "tl",
+    "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
+    "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish",
+}
+_InButtons = [Button.switch_inline(_, query=InPlugin[_]) for _ in list(InPlugin.keys())]
+InButtons = split_list(_InButtons, 2)
+
+
 @callback(data="inlone", owner=True)
 async def _(e):
-    button = [
-        [
-            Button.switch_inline(
-                "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs",
-                query="app telegram",
-                same_peer=True,
-            ),
-            Button.switch_inline(
-                "Mᴏᴅᴅᴇᴅ Aᴘᴘs",
-                query="mods minecraft",
-                same_peer=True,
-            ),
-        ],
-        [
-            Button.switch_inline(
-                "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ",
-                query="go TeamUltroid",
-                same_peer=True,
-            ),
-            Button.switch_inline(
-                "Search on XDA",
-                query="xda telegram",
-                same_peer=True,
-            ),
-        ],
-        [
-            Button.switch_inline(
-                "WʜɪSᴘᴇʀ",
-                query="wspr @username Hello🎉",
-                same_peer=True,
-            ),
-            Button.switch_inline(
-                "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ",
-                query="yt Ed Sheeran Perfect",
-                same_peer=True,
-            ),
-        ],
-        [
-            Button.switch_inline(
-                "Piston Eval",
-                query="run javascript console.log('Hello Ultroid')",
-                same_peer=True,
-            ),
-            Button.switch_inline(
-                "OʀᴀɴɢᴇFᴏx🦊",
-                query="ofox beryllium",
-                same_peer=True,
-            ),
-        ],
-        [
-            Button.switch_inline(
-                "Tᴡɪᴛᴛᴇʀ Usᴇʀ", query="twitter theultroid", same_peer=True
-            ),
-            Button.switch_inline(
-                "Kᴏᴏ Sᴇᴀʀᴄʜ", query="koo @__kumar__amit", same_peer=True
-            ),
-        ],
-        [
-            Button.switch_inline(
-                "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ", query="fdroid telegram", same_peer=True
-            ),
-            Button.switch_inline("Sᴀᴀᴠɴ sᴇᴀʀᴄʜ", query="saavn", same_peer=True),
-        ],
-        [
-            Button.switch_inline("Tʟ Sᴇᴀʀᴄʜ", query="tl", same_peer=True),
-            Button.switch_inline("GɪᴛHᴜʙ ғᴇᴇᴅs", query="gh", same_peer=True),
-        ],
-        [Button.switch_inline("OᴍɢUʙᴜɴᴛᴜ", query="omgu cutefish", same_peer=True)],
+    button = InButtons.copy()
+    button.append(
         [
             Button.inline(
                 "« Bᴀᴄᴋ",
                 data="open",
             ),
         ],
-    ]
+    )
     await e.edit(buttons=button, link_preview=False)
 
 

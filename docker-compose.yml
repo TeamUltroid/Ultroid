@@ -9,4 +9,7 @@ services:
       API_ID: $API_ID  # defaults to None
       API_HASH: $API_HASH  # defaults to None
       MONGO_URI: $MONGO_URI  # defaults to None
+      BOT_TOKEN: $BOT_TOKEN # Not mandatory
+      LOG_CHANNEL: $LOG_CHANNEL # Not mandatory
       DATABASE_URL: $DATABASE_URL  # defaults to None
+      OKTETO_TOKEN: $OKTETO_TOKEN

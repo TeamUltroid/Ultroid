@@ -98,7 +98,7 @@ async def _(e):
         chat = await e.get_chat()
     if hasattr(chat, "username") and chat.username:
         return await e.eor(f"Username: @{chat.username}")
-    request, usage, title = None, None, None
+    request, usage, title, link = None, None, None, None
     if match:
         split = match.split(maxsplit=1)
         request = bool(split[0] in ["r", "request"])

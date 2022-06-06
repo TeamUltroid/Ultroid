@@ -63,7 +63,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import pack_bot_file_id
 
-from . import HNDLR, async_searcher, bash, con, eor, get_string
+from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
@@ -94,6 +94,7 @@ async def _(event):
         output_str = f"**TRANSLATED** from {fr} to {lan}\n{tt}"
         await event.eor(output_str)
     except Exception as exc:
+        LOGS.exception(exc)
         await event.eor(str(exc), time=5)
 
 

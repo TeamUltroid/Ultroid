@@ -2,7 +2,6 @@ name: English
 natively: English
 
 authors:
-  - karboncopy
   - xditya
   - rojserbest
   - sppidy
@@ -55,7 +54,7 @@ pro_2: "{} `is now an admin in {} with title {}.`"
 de_1: "`Reply to a user to demote him!`"
 de_2: "{} `is no longer an admin in {}`"
 ban_1: "`Reply to a user or give username to ban him!`"
-ban_2: " `LoL, I can't Ban my Developer 😂`"
+ban_2: " `Sorry, but I can't Ban my Developer 😂`"
 ban_3: "`I don't have the right to ban a user.`"
 ban_4: "{} **was banned by** {} **in** `{}`"
 ban_5: "\n**Reason**: `{}`"
@@ -65,7 +64,7 @@ unban_1: "`Reply to a user or give username to unban him!`"
 unban_2: "`I don't have the right to unban a user.`"
 unban_3: "{} **was unbanned by** {} **in** `{}`"
 kick_1: "`I don't have the right to kick a user.`"
-kick_2: " `Lol, I can't Kick my Developer`😂"
+kick_2: " `Sorry, but I can't Kick my Developer`😂"
 kick_3: "`I Cant kick him ever...`"
 kick_4: "{} **was kicked by** {} **in** `{}`"
 pin_1: "`Reply to a message to pin it!`"
@@ -534,6 +533,13 @@ pmbot_4: "`GoodBye! You have been banned.`\n**Further messages you send will not
 pmbot_5: "Please reply to someone to Unban him."
 pmbot_6: "User was never banned!"
 pmbot_7: "`Congrats! You have been unbanned.`"
+
+# rss feeds
+rss_1: "`Provide Rss url to add..`"
+rss_2: "Failed to verify rss url\n__Error: {}__"
+rss_3: "`No rss feed has been added to this chat.`"
+rss_4: "`Removed rss feed from this chat..`"
+rss_5: "`Successfully added to this chat.`"
 
 # -------------------------- VcBot ------------------------------- #
 

@@ -13,7 +13,7 @@ then
 fi
 
 printf "*Putting some magical effect...*"
-pip install colorama
+pip install -q colorama
 
 printf "Running up Installation tool.\n"
 python resources/startup/_termux.py

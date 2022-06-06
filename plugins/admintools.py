@@ -48,7 +48,7 @@ from pyUltroid.dB import DEVLIST
 from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
-from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.channels import EditAdminRequest, GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 from telethon.utils import get_display_name
@@ -62,7 +62,6 @@ from . import (
     get_uinfo,
     inline_mention,
     types,
-    ultroid_bot,
     ultroid_cmd,
 )
 
@@ -79,19 +78,31 @@ async def prmte(ult):
     await ult.get_chat()
     user, rank = await get_uinfo(ult)
     rank = rank or "Admin"
+    FullRight = False
     if not user:
         return await xx.edit(get_string("pro_1"))
+    if rank.split()[0] == "-f":
+        try:
+            rank = rank.split(maxsplit=1)[1]
+        except IndexError:
+            rank = "Admin"
+        FullRight = True
     try:
-        await ult.client.edit_admin(
-            ult.chat_id,
-            user.id,
-            invite_users=True,
-            ban_users=True,
-            delete_messages=True,
-            pin_messages=True,
-            manage_call=True,
-            title=rank,
-        )
+        if FullRight:
+            await ult.client(
+                EditAdminRequest(ult.chat_id, user.id, ult.chat.admin_rights, rank)
+            )
+        else:
+            await ult.client.edit_admin(
+                ult.chat_id,
+                user.id,
+                invite_users=True,
+                ban_users=True,
+                delete_messages=True,
+                pin_messages=True,
+                manage_call=True,
+                title=rank,
+            )
         await eod(
             xx, get_string("pro_2").format(inline_mention(user), ult.chat.title, rank)
         )
@@ -220,6 +231,7 @@ async def kck(ult):
         return await xx.edit(get_string("kick_1"))
     except Exception as e:
         LOGS.exception(e)
+        return
     text = get_string("kick_4").format(
         inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title
     )
@@ -268,13 +280,7 @@ async def tkicki(e):
         return await e.eor(str(m))
 
 
-@ultroid_cmd(
-    pattern="pin$",
-    admins_only=True,
-    manager=True,
-    require="pin_messages",
-    fullsudo=True,
-)
+@ultroid_cmd(pattern="pin$", manager=True, require="pin_messages", fullsudo=True)
 async def pin(msg):
     if not msg.is_reply:
         return await eor(msg, get_string("pin_1"))
@@ -294,7 +300,6 @@ async def pin(msg):
 
 @ultroid_cmd(
     pattern="unpin($| (.*))",
-    admins_only=True,
     manager=True,
     require="pin_messages",
     fullsudo=True,
@@ -387,7 +392,7 @@ async def fastpurger(purg):
 )
 async def fastpurgerme(purg):
     num = purg.pattern_match.group(1).strip()
-    if num and not purg.is_reply:
+    if num:
         try:
             nnt = int(num)
         except BaseException:
@@ -401,32 +406,27 @@ async def fastpurgerme(purg):
             mp += 1
         await eor(purg, f"Purged {mp} Messages!", time=5)
         return
-    chat = await purg.get_input_chat()
-    msgs = []
-    count = 0
-    if not (purg.reply_to_msg_id or num):
+    elif purg.reply_to_msg_id:
+        pass
+    else:
         return await eod(
             purg,
             "`Reply to a message to purge from or use it like ``purgeme <num>`",
             time=10,
         )
+    chat = await purg.get_input_chat()
+    msgs = []
     async for msg in purg.client.iter_messages(
         chat,
         from_user="me",
         min_id=purg.reply_to_msg_id,
     ):
         msgs.append(msg)
-        count += 1
-        msgs.append(purg.reply_to_msg_id)
-        if len(msgs) == 100:
-            await ultroid_bot.delete_messages(chat, msgs)
-            msgs = []
-
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     await eod(
         purg,
-        "__Fast purge complete!__\n**Purged** `" + str(count) + "` **messages.**",
+        "__Fast purge complete!__\n**Purged** `" + str(len(msgs)) + "` **messages.**",
     )
 
 
@@ -516,7 +516,7 @@ async def autodelte(ult):
     try:
         await ult.client(SetHistoryTTLRequest(ult.chat_id, period=tt))
     except ChatNotModifiedError:
-        return await eor(
-            ult, f"Auto Delete Setting is Already same to `{match}`", time=5
+        return await ult.eor(
+            f"Auto Delete Setting is Already same to `{match}`", time=5
         )
     await ult.eor(f"Auto Delete Status Changed to `{match}` !")

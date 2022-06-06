@@ -28,8 +28,10 @@
     Shows System Info.
 """
 
+import inspect
 import sys
 import traceback
+from datetime import datetime
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
@@ -58,6 +60,8 @@ _ignore_eval = []
 async def _(e):
     xx = await e.eor(get_string("com_1"))
     x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    if y and y.endswith("NOT_FOUND"):
+        return await xx.edit(f"Error: `{y}`")
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     haa = await Carbon(code=p, file_name="neofetch", backgroundColor=choice(ATRA_COL))
@@ -68,7 +72,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    carb = None
+    carb, yamlf = None, False
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
         if cmd.split()[0] in ["-c", "--carbon"]:
@@ -82,14 +86,15 @@ async def _(event):
             "`You cannot use this command now. Contact owner of this bot!`"
         )
     reply_to_id = event.reply_to_msg_id or event.id
-    stdout, stderr = await bash(cmd)
+    stdout, stderr = await bash(cmd, run_code=1)
     OUT = f"**☞ BASH\n\n• COMMAND:**\n`{cmd}` \n\n"
     err, out = "", ""
     if stderr:
         err = f"**• ERROR:** \n`{stderr}`\n\n"
     if stdout:
         if (carb or udB.get_key("CARBON_ON_BASH")) and (
-            event.chat.admin_rights
+            event.is_private
+            or event.chat.admin_rights
             or event.chat.creator
             or event.chat.default_banned_rights.embed_links
         ):
@@ -104,7 +109,24 @@ async def _(event):
             out = "**• OUTPUT:**"
             remove(li)
         else:
-            out = f"**• OUTPUT:**\n`{stdout}`"
+            if all(":" in line for line in stdout.split("\n")):
+                try:
+                    from strings.strings import safe_load
+
+                    load = safe_load(stdout)
+                    stdout = ""
+                    for data in list(load.keys()):
+                        res = load[data] or ""
+                        if res and "http" not in str(res):
+                            res = f"`{res}`"
+                        stdout += f"**{data}**  :  {res}\n"
+                    yamlf = True
+                except Exception as er:
+                    stdout = f"`{stdout}`"
+                    LOGS.exception(er)
+            else:
+                stdout = f"`{stdout}`"
+            out = f"**• OUTPUT:**\n{stdout}"
     if not stderr and not stdout:
         out = "**• OUTPUT:**\n`Success`"
     OUT += err + out
@@ -124,7 +146,7 @@ async def _(event):
 
             await xx.delete()
     else:
-        await xx.edit(OUT, link_preview=True)
+        await xx.edit(OUT, link_preview=not yamlf)
 
 
 pp = pprint  # ignore: pylint
@@ -153,21 +175,30 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
-    silent = False
-    if cmd.split()[0] in ["-s", "--silent"]:
+    silent, gsource, xx = False, False, None
+    spli = cmd.split()
+
+    async def get_():
         try:
-            cmd = cmd.split(maxsplit=1)[1]
+            cm = cmd.split(maxsplit=1)[1]
         except IndexError:
-            return await event.eor("->> Wrong Format <<-")
+            await event.eor("->> Wrong Format <<-")
+            cm = None
+        return cm
+
+    if spli[0] in ["-s", "--silent"]:
         await event.delete()
         silent = True
-    elif cmd.split()[0] in ["-n", "-noedit"]:
-        try:
-            cmd = cmd.split(maxsplit=1)[1]
-        except IndexError:
-            return await event.eor("->> Wrong Format <<-")
+        cmd = await get_()
+    elif spli[0] in ["-n", "-noedit"]:
+        cmd = await get_()
         xx = await event.reply(get_string("com_1"))
-    else:
+    elif spli[0] in ["-gs", "--source"]:
+        gsource = True
+        cmd = await get_()
+    if not cmd:
+        return
+    if not silent and not xx:
         xx = await event.eor(get_string("com_1"))
     if black:
         try:
@@ -195,15 +226,23 @@ async def _(event):
     old_stdout = sys.stdout
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
-    stdout, stderr, exc = None, None, None
+    stdout, stderr, exc, timeg = None, None, None, None
     try:
+        start = datetime.now()
         value = await aexec(cmd, event)
+        timeg = time_formatter((datetime.now() - start).microseconds / 1000)
     except Exception:
+        value = None
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
+    if value and gsource:
+        try:
+            exc = inspect.getsource(value)
+        except Exception:
+            exc = traceback.format_exc()
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
     if silent:
         if exc:
@@ -219,11 +258,13 @@ async def _(event):
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
     final_output = (
-        "__►__ **EVALPy**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
             cmd,
             evaluation,
         )
     )
+    if timeg:
+        final_output += f"Time Taken: `{timeg}`"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
