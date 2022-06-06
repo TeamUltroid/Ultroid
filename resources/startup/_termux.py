@@ -16,8 +16,8 @@ def clear():
     system("clear")
 
 MANDATORY_REQS = [
-    "https://github.com/New-dev0/Telethon/archive/PlayTime.zip",
-    "py-Ultroid==2022.3.20",
+    "https://github.com/New-dev0/Telethon/archive/Cartoon.zip",
+    "py-Ultroid==2022.6.6",
     "gitpython",
     "enhancer==0.3.4",
     "telegraph",
