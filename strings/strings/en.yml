@@ -458,7 +458,7 @@ sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.
 sts_9: "`Ooo Animated Sticker 👀...`"
 sts_10: "`Reply to any media...`"
 sts_11: "Kanging this Sticker..."
-sts_12: "`Kanged!`\n`Emoji` : {}\n`Sticker Pack` [here](t.me/addstickers/{})"
+sts_12: "`Kanged!`\n`Emoji- {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
 
 # whichsong
@@ -675,7 +675,7 @@ help_autoban : """
 • `.remwl <Username>`
    Remove Channel from channelban whitelist.
 
-• `.listwl` : List all whitelist channels.
+• `.listwl- List all whitelist channels.
 """
 
 help_autocorrect : """ 
@@ -691,7 +691,7 @@ help_autopic : """
 • `.autopic <search query>`
     Will change your profile pic at defined intervals with pics related to the given topic.
 
-• `.autopic` : stop autopic if active.
+• `.autopic- stop autopic if active.
 """
 
 help_beautify : """ 
@@ -799,7 +799,7 @@ help_channelhacks : """
      This will transfer all old post from channel A to channel B.
       (u can use username or id of channel too)
       example : `.shift @abc | @xyz`
-      [note - this (" | ") sign is nessesary]
+      [note - this ('|') sign is nessesary]
 
 🔹 For auto-posting/forwarding all new message from any source channel to any destination channel.
 
@@ -888,7 +888,7 @@ help_compressor : """
 
 • `.compress <reply to video>`
     optional `crf` and `stream`
-    Example : `.compress 27 stream` or `.compress 28`
+    Example - `.compress 27 stream` or `.compress 28`
     Encode the replied video according to CRF value.
     Less CRF == High Quality, More Size
     More CRF == Low Quality, Less Size
@@ -947,7 +947,7 @@ help_database : """
 
 • `.setdb key | value`
     Set Value in Database.
-    e.g :
+    e.g -
     `.setdb hi there`
     `.setdb hi there | ultroid here`
     `.setdb --extend variable value` or `.setdb -e variable value` to add the value to the exiting values in db.
@@ -968,7 +968,7 @@ help_devtools : """
 
 • `.eval <code>`
     Evaluate python commands on telegram.
-    Shortcuts:
+    Shortcuts-
         client = bot = event.client
         e = event
         p = print
@@ -987,7 +987,7 @@ help_downloadupload : """
 
 • `.ul <path/to/file>`
     Upload files on telegram.
-    Use following arguments before or after filename as per requirement:
+    Use following arguments before or after filename as per requirement -
       `--stream` to upload as stream.
       `--delete` to delete file after uploading.
       `--no-thumb` to upload without thumbnail.
@@ -1109,7 +1109,7 @@ help_filter : """
 """
 
 help_fontgen : """ 
-• `.font <font name> : <text>`
+• `.font <font name> <text>`
     Generate different fonts for the text.
 
 • `.font`
@@ -1190,7 +1190,7 @@ help_globaltools : """
 • `.gstat <reply to user/userid/username>`
    Check if user is GBanned.
 
-• `.listgban` : List all GBanned users.
+• `.listgban- List all GBanned users.
 
 • `.gmute` | `.ungmute` <reply user/ username>
     Mute/UnMute Globally.
@@ -1282,7 +1282,7 @@ help_imagetools : """
     just cool.
 
 • `.csample <color name /color code>`
-   example : `.csample red`
+   example - `.csample red`
              `.csample #ffffff`
 
 • `.pixelator <reply image>`
@@ -1342,7 +1342,7 @@ help_mediatools : """
 
 • `.rotate <degree/angle> <reply to media>`
    Rotate any video/photo/media..
-   Note : for video it should be angle of 90's
+   Note - for video it should be angle of 90's
 """
 
 help_misc : """ 
@@ -1424,7 +1424,7 @@ help_notes : """
 • `.listnote`
     list all notes.
 
-• Use :
+• Use 
    set notes in group so all can use it.
    type `#(Keyword of note)` to get it
 """
@@ -1599,7 +1599,7 @@ help_snips : """
 • `.listsnip`
     list all snips.
 
-• Use :
+• Use -
     type `$(ur snip word)` get setted reply.
 """
 
@@ -1612,7 +1612,7 @@ help_specialtools : """
 • `.q <color-optional>`
 • `.q @username`
 • `.q r <color-optional>`
-• `.q count` : `multiple quotes`
+• `.q count- `multiple quotes`
     Create quotes..
 
 • `.sticker <query>`
@@ -1744,14 +1744,14 @@ help_usage : """
 help_utilities : """ 
 ✘ Commands Available -
 
-• `.kickme` : Leaves the group.
+• `.kickme` - Leaves the group.
 
-• `.date` : Show Calender.
+• `.date` - Show Calender.
 
 • `.listreserved`
     List all usernames (channels/groups) you own.
 
-• `.stats` : See your profile stats.
+• `.stats- See your profile stats.
 
 • `.paste` - `Include long text / Reply to text file.`
 
@@ -1773,14 +1773,14 @@ help_utilities : """
 • `.suggest <reply to message> or <poll title>`
     Create a Yes/No poll for the replied suggestion.
 
-• `.ipinfo <ipAddress>` : Get info about that IP address.
+• `.ipinfo <ipAddress>- Get info about that IP address.
 
 • `.cpy <reply to message>`
    Copy the replied message, with formatting. Expires in 24hrs.
 • `.pst`
    Paste the copied message, with formatting.
 
-• `.thumb <reply file>` : Download the thumbnail of the replied file.
+• `.thumb <reply file>- Download the thumbnail of the replied file.
 
 • `.ncode <file>`
    Use - Paste the contents of file and send as pic.
@@ -1846,7 +1846,7 @@ help_warn : """
 
 •`.setwarn <warn count> | <ban/mute/kick>`
    Set Number in warn count for warnings
-   After putting " | " mark put action like ban/mute/kick
+   After putting ' | ' mark put action like ban/mute/kick
    Its Default 3 kick
    Example : `setwarn 5 | mute`
 
