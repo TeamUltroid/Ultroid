@@ -212,7 +212,7 @@ chats_2: "`Eu não sou um admin`"
 chats_3: "#Excluído\nExcluído {}"
 chats_4: "Tornou-se [{}]({}) Chefe do Grupo!"
 chats_5: "Junte-se a @TeamUltroid"
-chats_6: "Seu [{}]({}) Grupo/Canal tornou-se Chefe!"
+chats_6: "Seu {} Grupo/Canal tornou-se Chefe!"
 
 # clean action
 clan_1: "Adicionado Configuração de Limpeza para esse Chat"
@@ -324,7 +324,7 @@ fsub_8: "Obrigado por participar! "
 ex_1: "'Responda à mensagem.. `"
 
 # gdrive
-gdrive_1: "`Você já autorizou com o Google Drive`"
+gdrive_1: "`Você já autorizou o Google Drive`"
 gdrive_2: "Clique [aqui](https://console.developers.google.com/flows/enableapi?apiid=drive) e pegue o seu `GDRIVE_CLIENT_ID` e `GDRIVE_CLIENT_SECRET`\n\nMande seu GDRIVE_CLIENT_ID e GDRIVE_CLIENT_SECRET com isso.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` separado por espaço."
 gdrive_3: "`Id do Cliente Incorreta`"
 gdrive_4: "`Algo deu errado! Autorize de novo.\nSe acontecer novamente entre em contato`@TheUltroid"
@@ -352,7 +352,7 @@ mdi_1: "Informações Detalhadas"
 
 # nightmode
 nightm_1: "Informe o Tempo no formato correto"
-nightm_2: "Horário acertado com sucesso"
+nightm_2: "Horário corrigido com sucesso"
 nightm_3: "Feito, Adicionado o Chat atual ao Modo Noturno"
 nightm_4: "Feito, Chat atual Removido Do Modo Noturno"
 nightm_5: "Algo deu errado"
