@@ -565,3 +565,1365 @@ vcbot_19: "Already Authed This Chat!"
 vcbot_20: "`Downloading and converting...`"
 vcbot_21: "• Nothing in queue!"
 vcbot_22: "`Cleaned All Queues In Chat`"
+
+# Help Menus
+
+help_admintools : """ 
+✘ Commands Available -
+
+• `.promote <reply to user/userid/username>`
+• `.demote`
+    Promote/Demote the user in the chat.
+
+• `.ban <reply to user/userid/username> <reason>`
+• `.unban`
+    Ban/Unban the user from the chat.
+
+• `.kick <reply to user/userid/username> <reason>`
+    Kick the user from the chat.
+
+• `.pin <reply to message>`
+    Pin the message in the chat
+• `.tpin <time> <temp pin message>`
+• `.unpin (all) <reply to message>`
+    Unpin the messages in the chat.
+
+• `.pinned`
+   Get pinned message in the current chat.
+• `.listpinned`
+   Get all pinned messages in current chat
+
+• `.autodelete <24h/7d/1m/off>`
+   Enable Auto Delete Messages in Chat.
+
+• `.purge <reply to message>`
+    Purge all messages from the replied message.
+
+• `.purgeme <reply to message>`
+    Purge Only your messages from the replied message.
+
+• `.purgeall`
+    Delete all msgs of replied user.
+"""
+
+help_afk : """ 
+✘ Commands Available -
+
+• `.afk <optional reason>`
+    AFK means away from keyboard,
+    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.
+
+    (Note : Set a media file in afk messages by replying to any media with `.afk <reason>`).
+
+"""
+
+help_antiflood : """ 
+✘ Commands Available -
+
+• `.setflood <integer>`
+    Set flood limit in a chat.
+
+• `.remflood`
+    Remove flood limit from a chat.
+
+• `.getflood`
+    Get flood limit of a chat.
+"""
+
+help_asstcmd : """ 
+✘ Commands Available -
+
+•`.addcmd <new cmd> <reply>`
+   It will set new cmd for your assistant bot with that reply message.
+
+•`.remcmd <cmd name>`
+   It will remove your cmd.
+
+•`.listcmd`
+   To Get list of all your custom cmd.
+"""
+
+help_audiotools : """ 
+✘ Commands Available -
+
+`.makevoice <reply to audio>`
+   creates a voice note from Audio.
+
+`.atrim <from time> - <to time>`
+   trim audio as per given time.
+   time must be in seconds. `.atrim 50-70`
+
+`.extractaudio <reply to media>`
+   To extract the audio from it.
+
+"""
+
+help_autoban : """ 
+✘ Commands Available
+
+• `.autokick <on/off>`
+    on - To enable.
+    off - To disable.
+    Automatically kick new joined users from the group.
+
+• `.cban`
+    Enable/Disable autobanning send as channel in used chat.
+
+• `.addwl <Username>`
+   Add Channel to channelban whitelist.
+
+• `.remwl <Username>`
+   Remove Channel from channelban whitelist.
+
+• `.listwl` : List all whitelist channels.
+"""
+
+help_autocorrect : """ 
+✘ Commands Available
+
+• `.autocorrect`
+    To on/off Autocorrect Feature.
+"""
+
+help_autopic : """ 
+✘ Commands Available -
+
+• `.autopic <search query>`
+    Will change your profile pic at defined intervals with pics related to the given topic.
+
+• `.autopic` : stop autopic if active.
+"""
+
+help_beautify : """ 
+✘ Commands Available -
+
+• `.carbon <text/reply to msg/reply to document>`
+    Carbonise the text with default settings.
+
+• `.rcarbon <text/reply to msg/reply to document>`
+    Carbonise the text, with random bg colours.
+
+• `.ccarbon <color ><text/reply to msg/reply to document>`
+    Carbonise the text, with custom bg colours.
+
+• `.rayso <opt-theme> <text>/<reply to message>`
+  `.rayso list` - `Get list of themes.`
+"""
+
+help_blacklist : """ 
+✘ Commands Available -
+
+• `.blacklist <word/all words with a space>`
+    blacklist the choosen word in that chat.
+
+• `.remblacklist <word>`
+    Remove the word from blacklist..
+
+• `.listblacklist`
+    list all blacklisted words.
+
+  'if a person uses blacklist Word his/her msg will be deleted'
+  'And u Must be Admin in that Chat'
+"""
+
+help_bot : """ 
+✘ Commands Available
+
+• `.alive` | `.alive inline`
+    Check if your bot is working.
+
+• `.ping`
+    Check Ultroid's response time.
+
+• `.update`
+    See changelogs if any update is available.
+
+• `.cmds`
+    View all plugin names.
+
+• `.restart`
+    To restart your bot.
+
+• `.logs (sys)`
+    Get the full terminal logs.
+• `.logs carbon`
+    Get the carbonized sys logs.
+• `.logs heroku`
+   Get the latest 100 lines of heroku logs.
+
+• `.shutdown`
+    Turn off your bot.
+"""
+
+help_broadcast : """ 
+✘ Commands Available
+
+• `.addch <id/reply to list/none>`
+    Add chat to database. Adds current chat if no id specified.
+
+• `.remch <all/id/none>`
+    Removes the specified chat (current chat if none specified), or all chats.
+
+• `.broadcast <reply to msg>`
+    Send the replied message to all chats in database.
+
+• `.forward <reply to msg>`
+     Forward the message to all chats in database.
+
+• `.listchannels`
+    To get list of all added chats.
+"""
+
+help_button : """ 
+✘ Commands Available -
+
+• `.button <text with button format`
+   create button u can reply to pic also
+
+Format:- `.button Hey There! @UseUltroid 😎.
+[Ultroid | t.me/theUltroid][Support | t.me/UltroidSupport | same]
+[TeamUltroid | t.me/TeamUltroid]`
+"""
+
+help_calculator : """ 
+✘ Commands Available -
+
+•`.calc` - Inline Calculator
+
+"""
+
+help_channelhacks : """ 
+✘ Commands Available
+
+🔹 `.shift <from channel> | <to channel>`
+     This will transfer all old post from channel A to channel B.
+      (u can use username or id of channel too)
+      example : `.shift @abc | @xyz`
+      [note - this (" | ") sign is nessesary]
+
+🔹 For auto-posting/forwarding all new message from any source channel to any destination channel.
+
+   `.asource <channel username or id>`
+      This add source channel to database
+   `.dsource <channel username or id>`
+      This remove source channels from database
+   `.listsource <channel username or id>`
+      Show list of source channels
+
+
+   `.adest <channel username or id>`
+      This add Ur channels to database
+   `.ddest <channel username or id>`
+      This Remove Ur channels from database
+   `.listdest <channel username or id>`
+      Show List of Ur channels
+
+   'you can set many channels in database'
+   'For activating auto-post use `.setdb AUTOPOST True` '
+"""
+
+help_chatbot : """ 
+✘ Commands Available -
+
+• `.addai <reply to user/give username/userid>`
+   Add a AI ChatBot to reply to that user.
+
+• `.remai <reply to user/give username/userid>`
+   Remove the AI ChatBot.
+
+• `.repai <reply to user/give a message>`
+   Reply to the user with a message by an AI.
+
+• `.listai`
+   List the currently AI added users.
+"""
+
+help_chats : """ 
+✘ Commands Available -
+
+• `.delchat <optional- username/id>`
+    Delete the group this cmd is used in.
+
+• `.getlink`
+• `.getlink r` - `create link with admin approval`
+• `.getlink r title_here` - `admin approval with link title`
+• `.getlink 10` - `usage limit in new link`
+    Get link of group this cmd is used in.
+
+• `.create (g|b|c) <group_name> ; <optional-username>`
+    Create group woth a specific name.
+    g - megagroup/supergroup
+    b - small group
+    c - channel
+
+• `.setgpic <reply to Photo><chat username>`
+    Set Profile photo of Group.
+
+• `.delgpic <chat username -optional>`
+    Delete Profile photo of Group.
+
+• `.unbanall`
+    Unban all Members of a group.
+
+• `.rmusers`
+    Remove users specifically.
+"""
+
+help_cleanaction : """ 
+✘ Commands Available -
+
+•`.addclean`
+    Clean all Upcoming action msg in added chat like someone joined/left/pin etc.
+
+•`.remclean`
+    Remove chat from database.
+
+•`.listclean`
+   To get list of all chats where its activated.
+
+"""
+
+help_compressor : """ 
+✘ Commands Available -
+
+• `.compress <reply to video>`
+    optional `crf` and `stream`
+    Example : `.compress 27 stream` or `.compress 28`
+    Encode the replied video according to CRF value.
+    Less CRF == High Quality, More Size
+    More CRF == Low Quality, Less Size
+    CRF Range = 20-51
+    Default = 27
+
+"""
+
+help_converter : """ 
+✘ Commands Available -
+
+• `.convert <gif/img/sticker/webm>`
+    Reply to media to convert it into gif / image / webm / normal sticker.
+
+• `.doc <filename.ext>`
+    Reply to a text msg to save it in a file.
+
+• `.open`
+    Reply to a file to reveal it's text.
+
+• `.rename <file name with extension>`
+    Rename the file
+
+• `.thumbnail <reply to image/thumbnail file>`
+    Upload Your file with your custom thumbnail.
+"""
+
+help_core : """ 
+✘ Commands Available -
+
+• `.install <reply to plugin>`
+    To install the plugin,
+  `.install f`
+    To force Install.
+
+• `.uninstall <plugin name>`
+    To unload and remove the plugin.
+
+• `.load <plugin name>`
+    To load unloaded unofficial plugin.
+
+• `.unload <plugin name>`
+    To unload unofficial plugin.
+
+• `.help <plugin name>`
+    Shows you a help menu (like this) for every plugin.
+
+• `.getaddons <raw link to code>`
+    Load Plugins from the given raw link.
+"""
+
+help_database : """ 
+✘ Commands Available -
+
+• **DataBase Commands, do not use if you don't know what it is.**
+
+• `.setdb key | value`
+    Set Value in Database.
+    e.g :
+    `.setdb hi there`
+    `.setdb hi there | ultroid here`
+    `.setdb --extend variable value` or `.setdb -e variable value` to add the value to the exiting values in db.
+
+• `.deldb key`
+    Delete Key from DB.
+
+• `.rendb old keyname | new keyname`
+    Update Key Name
+"""
+
+help_devtools : """ 
+✘ Commands Available -
+
+• `.bash <cmds>`
+• `.bash -c <cmds>` Carbon image as command output.
+    Run linux commands on telegram.
+
+• `.eval <code>`
+    Evaluate python commands on telegram.
+    Shortcuts:
+        client = bot = event.client
+        e = event
+        p = print
+        reply = await event.get_reply_message()
+        chat = event.chat_id
+
+• `.cpp <code>`
+    Run c++ code from Telegram.
+
+• `.sysinfo`
+    Shows System Info.
+"""
+
+help_downloadupload : """ 
+✘ Commands Available -
+
+• `.ul <path/to/file>`
+    Upload files on telegram.
+    Use following arguments before or after filename as per requirement:
+      `--stream` to upload as stream.
+      `--delete` to delete file after uploading.
+      `--no-thumb` to upload without thumbnail.
+
+• `.dl <filename(optional)>`
+    Reply to file to download.
+
+• `.download <DDL> (| filename)`
+    Download using DDL. Will autogenerate filename if not given.
+"""
+
+help_echo : """ 
+✘ Commands Available
+
+•`.addecho <reply to anyone>`
+   Start Auto Echo message of Replied user.
+
+•`.remecho <reply to anyone>`
+   Turn It off
+
+•`.listecho <reply to anyone>`
+   To Get list.
+"""
+
+help_extra : """ 
+✘ Commands Available -
+
+• `.del <reply to message>`
+    Delete the replied message.
+
+• `.edit <new message>`
+    Edit your last message or replied msg.
+
+• `.copy <reply to message>`
+    Copy replied message / media.
+
+• `.reply`
+    Reply the last sent msg to replied user.
+"""
+
+help_fakeaction : """ 
+✘ Commands Available -
+
+• `.ftyping <time/in secs>`
+    `Show Fake Typing in current chat.`
+
+• `.faudio <time/in secs>`
+    `Show Fake Recording Action in current chat.`
+
+• `.fvideo <time/in secs>`
+    `Show Fake video action in current chat.`
+
+• `.fgame <time/in secs>`
+    `Show Fake Game Playing Action in current chat.`
+
+• `.fsticker <time/in secs>`
+    `Show Fake sticker choosing Action in current chat.`
+
+• `.flocation <time/in secs>`
+    `Show Fake location Action in current chat.`
+
+• `.fcontact <time/in secs>`
+    `Show Fake contact choosing Action in current chat.`
+
+• `.fround <time/in secs>`
+    `Show Fake video message action in current chat.`
+
+• `.fphoto <time/in secs>`
+    `Show Fake sending photo in current chat.`
+
+• `.fdocument <time/in secs>`
+    `Show Fake sending document in current chat.`
+"""
+
+help_fedutils : """ 
+✘ Commands Available -
+
+• `.superfban <reply to user/userid/username>`
+    FBan the person across all feds in which you are admin.
+
+• `.superunfban <reply to user/userid/username>`
+    Un-FBan the person across all feds in which you are admin.
+
+Specify FBan Group and Feds to exclude in the assistant.
+
+• `.fstat <username/id/reply to user>`
+    Collect fed stat of the person in Rose.
+
+• `.fedinfo <(fedid)>`
+    Collect federation info of the given fed id, or of the fed you own, from Rose.
+"""
+
+help_fileshare : """ 
+✘ Commands Available -
+
+• `.store <reply_to_message>`
+   Store the replied message/media and generate a shareable link to that file, to be accessed via your assistant bot!
+
+• `.delstored <link of stored file>`
+    Delete stored file.
+
+• `.liststored`
+   Get all stored messages.
+
+• Go Inline with your assistant bot with `filestore` to see stored files in inline.
+"""
+
+help_filter : """ 
+✘ Commands Available -
+
+• `.addfilter <word><reply to a message>`
+    add the used word as filter relating to replied message.
+
+• `.remfilter <word>`
+    Remove the filtered user..
+
+• `.listfilter`
+    list all filters.
+"""
+
+help_fontgen : """ 
+• `.font <font name> : <text>`
+    Generate different fonts for the text.
+
+• `.font`
+    To get list of fonts
+"""
+
+help_forcesubscribe : """ 
+✘ Commands Available -
+
+• `.fsub <chat username><id>`
+    Enable ForceSub in Used Chat !
+
+• `.checkfsub`
+    Check/Get Active ForceSub Setting of Used Chat.
+
+• `.remfsub`
+    Remove ForceSub from Used Chat !
+
+    Note - You Need to be Admin in Both Channel/Chats
+        in order to Use ForceSubscribe.
+"""
+
+help_gdrive : """ 
+✘ Commands Available
+
+• `.gdul <reply/file name>`
+    Reply to file to upload on Google Drive.
+    Add file name to upload on Google Drive.
+
+• `.gdown <file id/link> | <filename>`
+    Download from Gdrive link or file id.
+
+• `.gdsearch <file name>`
+    Search file name on Google Drive and get link.
+
+• `.gdlist`
+    List all GDrive files.
+
+• `.gdfolder`
+    Link to your Google Drive Folder.
+    If added then all files will be uploaded in this folder.
+"""
+
+help_giftools : """ 
+✘ Commands Available
+
+•`.invertgif`
+  Make Gif Inverted(negative).
+
+•`.bwgif`
+  Make Gif black and white
+
+•`.rvgif`
+  Reverse a gif
+
+•`.vtog`
+  Reply To Video , It will Create Gif
+  Video to Gif
+
+•`.gif <query>`
+   Send video regarding to query.
+"""
+
+help_glitch : """ 
+✘ Commands Available -
+
+•`.glitch <replt to media>`
+    gives a glitchy gif.
+"""
+
+help_globaltools : """ 
+✘ Commands Available -
+
+• `.gban <reply user/ username>`
+• `.ungban`
+    Ban/Unban Globally.
+
+• `.gstat <reply to user/userid/username>`
+   Check if user is GBanned.
+
+• `.listgban` : List all GBanned users.
+
+• `.gmute` | `.ungmute` <reply user/ username>
+    Mute/UnMute Globally.
+
+• `.gkick <reply/username>` `Globally Kick User`
+• `.gcast <text/reply>` `Globally Send msg in all grps`
+
+• `.gadmincast <text/reply>` `Globally broadcast in your admin chats`
+• `.gucast <text/reply>` `Globally send msg in all pm users`
+
+• `.gblacklist <chat id/username/nothing (for current chat)`
+   Add chat to blacklist and ignores global broadcast.
+• `.ungblacklist` `Remove the chat from blacklist.`
+
+• `.gpromote <reply to user> <channel/group/all> <rank>`
+    globally promote user where you are admin
+    - Set whether To promote only in groups/channels/all.
+    Eg- `gpromote group boss` ~ promotes user in all grps.
+        `gpromote @username all sar` ~ promote the user in all group & channel
+• `.gdemote` - `demote user globally`
+"""
+
+help_greetings : """ 
+✘ Commands Available -
+
+---- Welcomes ----
+• `.setwelcome <message/reply to message>`
+    Set welcome message in the current chat.
+
+• `.clearwelcome`
+    Delete the welcome in the current chat.
+
+• `.getwelcome`
+    Get the welcome message in the current chat.
+
+---- GoodByes ----
+• `.setgoodbye <message/reply to message>`
+    Set goodbye message in the current chat.
+
+• `.cleargoodbye`
+    Delete the goodbye in the current chat.
+
+• `.getgoodbye`
+    Get the goodbye message in the current chat.
+
+• `.thankmembers on/off`
+    Send a thank you sticker on hitting a members count of 100*x in your groups.
+"""
+
+help_imagetools : """ 
+✘ Commands Available -
+
+• `.border <reply to photo/sticker>`
+    To create border around that media..
+    Ex - `.border 12,22,23`
+       - `.border 12,22,23 ; width (in number)`
+
+• `.grey <reply to any media>`
+    To make it black nd white.
+
+• `.color <reply to any Black nd White media>`
+    To make it Colorfull.
+
+• `.toon <reply to any media>`
+    To make it toon.
+
+• `.danger <reply to any media>`
+    To make it look Danger.
+
+• `.negative <reply to any media>`
+    To make negative image.
+
+• `.blur <reply to any media>`
+    To make it blurry.
+
+• `.quad <reply to any media>`
+    create a Vortex.
+
+• `.mirror <reply to any media>`
+    To create mirror pic.
+
+• `.flip <reply to any media>`
+    To make it flip.
+
+• `.sketch <reply to any media>`
+    To draw its sketch.
+
+• `.blue <reply to any media>`
+    just cool.
+
+• `.csample <color name /color code>`
+   example : `.csample red`
+             `.csample #ffffff`
+
+• `.pixelator <reply image>`
+    Create a Pixelated Image..
+"""
+
+help_instagram : """ 
+✘ Commands Available -
+
+• `.instadl <Instagram Url>`
+  `Download Instagram Media...`
+
+• `.instadata <username>`
+  `Get Instagram Data of someone or self`
+
+• `.instaul <reply video/photo> <caption>`
+  `Upload Media to Instagram...`
+
+• `.igtv <reply video> <caption>`
+  `Upload Media to Igtv...`
+
+• `.reels <reply video> <caption>`
+  `Upload Media to Instagram reels...`
+
+• Go Inline with Your Assistant with query `instatm`
+   To get home page's posts...
+
+• Fill `INSTA_USERNAME` and `INSTA_PASSWORD`
+  before using it..
+"""
+
+help_locks : """ 
+✘ Commands Available -
+
+• `.lock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
+    Lock the Used Setting in Used Group.
+
+• `.unlock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
+    UNLOCK the Used Setting in Used Group.
+"""
+
+help_logo : """ 
+✘ Commands Available -
+
+• `.logo <text>`
+   Generate a logo of the given Text
+   Or Reply To image , to write ur text on it.
+   Or Reply To Font File, To write with that font.
+
+"""
+
+help_mediatools : """ 
+✘ Commands Available -
+
+• `.mediainfo <reply to media>`
+   To get info about it.
+
+• `.rotate <degree/angle> <reply to media>`
+   Rotate any video/photo/media..
+   Note : for video it should be angle of 90's
+"""
+
+help_misc : """ 
+✘ Commands Available -
+
+• `.eod`
+    `Get Event of the Today`
+
+• `.pntrst <link/id>`
+    Download and send pinterest pins
+
+• `.gadget <search query>`
+    Gadget Search from Telegram.
+
+• `.randomuser`
+   Generate details about a random user.
+
+• `.ascii <reply image>`
+    Convert replied image into html.
+"""
+
+help_mute : """ 
+✘ Commands Available -
+
+• `.mute <reply to msg/ user id>`
+    Mute user in current chat.
+
+• `.unmute <reply to msg/ user id>`
+    Unmute user in current chat.
+
+• `.dmute <reply to msg/ user id>`
+    Mute user in current chat by deleting msgs.
+
+• `.undmute <reply to msg/ use id>`
+    Unmute dmuted user in current chat.
+
+• `.tmute <time> <reply to msg/ use id>`
+    s- seconds
+    m- minutes
+    h- hours
+    d- days
+    Mute user in current chat with time.
+"""
+
+help_nightmode : """ 
+✘ Commands Available -
+
+At Night it will turn off everyone permission to send message in  an all groups which you added via `.addnight`
+And Turn On auto at morning
+
+• `.addnm`
+   Add NightMode
+   To Add Group To Auto Night Mode.
+
+• `.remnm`
+   Remove NightMode
+   To remove Group From Auto Night Mode
+
+• `.listnm`
+   List NightMode
+   To Get All List of Groups where NightMode Active.
+
+• `.nmtime <close hour> <close min> <open hour> <open min>`
+   NightMode Time
+   By Default Its close 00:00 , open 07:00
+   Use 24hr format
+   Ex- `nmtime 01 00 06 30`
+"""
+
+help_notes : """ 
+✘ Commands Available -
+
+• `.addnote <word><reply to a message>`
+    add note in the used chat with replied message and choosen word.
+
+• `.remnote <word>`
+    Remove the note from used chat.
+
+• `.listnote`
+    list all notes.
+
+• Use :
+   set notes in group so all can use it.
+   type `#(Keyword of note)` to get it
+"""
+
+help_nsfwfilter : """ 
+✘ Commands Available -
+
+•`.addnsfw <ban/mute/kick>`
+   If someone sends 18+ content it will be deleted and action will be taken.
+
+•`.remnsfw`
+   Remove Chat from nsfw filtering.
+"""
+
+help_other : """ 
+✘ Commands Available -
+
+• `.send <username/id> <reply/type>`
+    send message to User/Chat.
+
+• `.fwdreply <reply to msg>`
+    Reply to someone's msg by forwarding it in private.
+
+• `.save <reply message>`
+    Save that replied msg to ur saved messages box.
+
+• `.fsave <reply message>`
+    Forward that replied msg to ur saved messages.
+"""
+
+help_pmpermit : """ 
+✘ Commands Available -
+
+• `.a` or `.approve`
+    Approve someone to PM.
+
+• `.da` or `.disapprove`
+    Disapprove someone to PM.
+
+• `.block`
+    Block someone.
+
+• `.unblock` | `.unblock all`
+    Unblock someone.
+
+• `.nologpm`
+    Stop logging messages from the user.
+
+• `.logpm`
+    Start logging messages from the user.
+
+• `.startarchive`
+    Archive new PMs.
+
+• `.stoparchive`
+    Don't archive new PMs.
+
+• `.cleararchive`
+    Unarchive all chats.
+
+• `.listapproved`
+   List all approved PMs.
+"""
+
+help_polls : """ 
+✘ Commands Available -
+
+• `.poll <question> ; <option> ; <option>`
+    Get the Anonymous Poll with Given Options
+
+• `.poll <question> ; <option> ; <option> | <type>`
+    Get the poll specified with desired type!
+    type should be any of  `public`,  `multiple` or `quiz`
+
+• `.poll <question> ; <option> ; <option> | quiz_<answerno>`
+    Get the quiz poll where answerno is the number of option which is correct
+
+"""
+
+help_profanityfilter : """ 
+✘ Commands Available -
+
+•`.addprofanity`
+   If someone sends bad word in a chat, Then bot will delete that message.
+
+•`.remprofanity`
+   From chat from Profanity list.
+
+"""
+
+help_profile : """ 
+✘ Commands Available -
+
+• `.setname <first name // last name>`
+    Change your profile name.
+
+• `.setbio <bio>`
+    Change your profile bio.
+
+• `.setpic <reply to pic>`
+    Change your profile pic.
+
+• `.delpfp <n>(optional)`
+    Delete one profile pic, if no value given, else delete n number of pics.
+
+• `.poto <username>`
+    Upload the photo of Chat/User if Available.
+"""
+
+help_qrcode : """ 
+✘ Commands Available -
+
+• `.qrcode <text/reply to text>`
+   `Makes qrcode of text`
+
+• `.addqr <reply image> <text>`
+   `Makes qr of text and add it to image.`
+
+• `.qrdecode <reply to qrcode>`
+   `It decodes the qrcode.`
+"""
+
+help_resize : """ 
+✘ Commands Available -
+
+•`.size <reply to media>`
+   To get size of it.
+
+•`.resize <number> <number>`
+   To resize image on x, y axis.
+   eg. `.resize 690 960`
+"""
+
+help_schedulemsg : """ 
+✘ Commands Available -
+
+•`.schedule <text/reply to msg> <time>`
+    In time u can use second as number, or like 1h or 1m
+    eg. `.schedule Hello 100` It deliver msg after 100 sec.
+    eg. `.schedule Hello 1h` It deliver msg after an hour.
+"""
+
+help_search : """ 
+✘ Commands Available -
+
+• `.saavn <search query>`
+    Download songs from Saavn.
+
+• `.google <query>`
+    For doing google search.
+
+• `.github <username>`
+    Get full information of the users github profile.
+
+• `.img <query>`
+  `.img <query> ; <no of results>`
+    For doing Images search.
+
+• `.reverse`
+    Reply an Image or sticker to find its sauce.
+"""
+
+help_snips : """ 
+✘ Commands Available -
+
+• `.addsnip <word><reply to a message>`
+    add the used word as snip relating to replied message.
+
+• `.remsnip <word>`
+    Remove the snip word..
+
+• `.listsnip`
+    list all snips.
+
+• Use :
+    type `$(ur snip word)` get setted reply.
+"""
+
+help_specialtools : """ 
+✘ Commands Available -
+
+• `.wspr <username>`
+    Send secret message..
+
+• `.q <color-optional>`
+• `.q @username`
+• `.q r <color-optional>`
+• `.q count` : `multiple quotes`
+    Create quotes..
+
+• `.sticker <query>`
+    Search Stickers as Per ur Wish..
+
+• `.getaudio <reply to an audio>`
+    Download Audio To put in ur Desired Video/Gif.
+
+• `.addaudio <reply to Video/gif>`
+    It will put the above audio to the replied video/gif.
+
+• `.dob <date of birth>`
+    Put in dd/mm/yy Format only(eg .dob 01/01/1999).
+
+• `.wall <query>`
+    Search Hd Wallpaper as Per ur Wish..
+"""
+
+help_stickertools : """ 
+✘ Commands Available -
+
+• `.destroy <reply to animated sticker>`
+    To destroy the sticker.
+
+• `.tiny <reply to media>`
+    To create Tiny stickers.
+
+• `.kang <reply to image/sticker>`
+    Kang the sticker (add to your pack).
+
+• `.packkang <pack name>`
+    Kang the Complete sticker set (with custom name).
+
+• `.round <reply to any media>`
+    To extract round sticker.
+"""
+
+help_sudo : """ 
+✘ Commands Available -
+
+• `.addsudo`
+    Add Sudo Users by replying to user or using <space> separated userid(s)
+
+• `.delsudo`
+    Remove Sudo Users by replying to user or using <space> separated userid(s)
+
+• `.listsudo`
+    List all sudo users.
+"""
+
+help_tag : """ 
+✘ Commands Available -
+
+• `.tagall`
+    Tag Top 100 Members of chat.
+
+• `.tagadmins`
+    Tag Admins of that chat.
+
+• `.tagowner`
+    Tag Owner of that chat
+
+• `.tagbots`
+    Tag Bots of that chat.
+
+• `.tagrec`
+    Tag recently Active Members.
+
+• `.tagon`
+    Tag online Members(work only if privacy off).
+
+• `.tagoff`
+    Tag Offline Members(work only if privacy off).
+"""
+
+help_tools : """ 
+✘ Commands Available -
+
+• `.circle`
+    Reply to a audio song or gif to get video note.
+
+• `.ls`
+    Get all the Files inside a Directory.
+
+• `.bots`
+    Shows the number of bots in the current chat with their perma-link.
+
+• `.hl <a link> <text-optional>`
+    Embeds the link with a whitespace as message.
+
+• `.id`
+    Reply a Sticker to Get Its Id
+    Reply a User to Get His Id
+    Without Replying You Will Get the Chat's Id
+
+• `.sg <reply to a user><username/id>`
+    Get His Name History of the replied user.
+
+• `.tr <dest lang code> <(reply to) a message>`
+    Get translated message.
+
+• `.webshot <url>`
+    Get a screenshot of the webpage.
+
+• `.shorturl <url> <id-optional>`
+    shorten any url...
+"""
+
+help_unsplash : """ 
+✘ Commands Available -
+
+• .unsplash <search query> ; <no of pics>
+    Unsplash Image Search.
+"""
+
+help_usage : """ 
+✘ Commands Available
+
+• `.usage`
+    Get overall usage.
+
+• `.usage heroku`
+   Get heroku stats.
+
+• `.usage db`
+   Get database storage usage.
+"""
+
+help_utilities : """ 
+✘ Commands Available -
+
+• `.kickme` : Leaves the group.
+
+• `.date` : Show Calender.
+
+• `.listreserved`
+    List all usernames (channels/groups) you own.
+
+• `.stats` : See your profile stats.
+
+• `.paste` - `Include long text / Reply to text file.`
+
+• `.info <username/userid/chatid>`
+    Reply to someone's msg.
+
+• `.invite <username/userid>`
+    Add user to the chat.
+
+• `.rmbg <reply to pic>`
+    Remove background from that picture.
+
+• `.telegraph <reply to media/text>`
+    Upload media/text to telegraph.
+
+• `.json <reply to msg>`
+    Get the json encoding of the message.
+
+• `.suggest <reply to message> or <poll title>`
+    Create a Yes/No poll for the replied suggestion.
+
+• `.ipinfo <ipAddress>` : Get info about that IP address.
+
+• `.cpy <reply to message>`
+   Copy the replied message, with formatting. Expires in 24hrs.
+• `.pst`
+   Paste the copied message, with formatting.
+
+• `.thumb <reply file>` : Download the thumbnail of the replied file.
+
+• `.ncode <file>`
+   Use - Paste the contents of file and send as pic.
+"""
+
+help_variables : """ 
+✘ Commands Available -
+
+• `.get var <variable name>`
+   Get value of the given variable name.
+
+• `.get type <variable name>`
+   Get variable type.
+
+• `.get db <key>`
+   Get db value of the given key.
+
+• `.get keys`
+   Get all redis keys.
+"""
+
+help_vctools : """ 
+✘ Commands Available -
+
+• `.startvc`
+    Start Group Call in a group.
+
+• `.stopvc`
+    Stop Group Call in a group.
+
+• `.vctitle <title>`
+    Change the title Group call.
+
+• `.vcinvite`
+    Invite all members of group in Group Call.
+    (You must be joined)
+"""
+
+help_videotools : """ 
+✘ Commands Available -
+
+•`.sample <duration in seconds>`
+   Creates Short sample of video..
+
+• `.vshots <number of shots>`
+   Creates screenshot of video..
+
+• `.vtrim <start time> - <end time> in seconds`
+    Crop a Lengthy video..
+"""
+
+help_warn : """ 
+✘ Commands Available
+
+•`.warn <reply to user> <reason>`
+    Gives Warn.
+
+•`.resetwarn <reply to user>`
+    To reset All Warns.
+
+•`.warns <reply to user>`
+   To Get List of Warnings of a user.
+
+•`.setwarn <warn count> | <ban/mute/kick>`
+   Set Number in warn count for warnings
+   After putting " | " mark put action like ban/mute/kick
+   Its Default 3 kick
+   Example : `setwarn 5 | mute`
+
+"""
+
+help_webupload : """ 
+✘ Commands Available -
+
+• `.webupload`
+    Upload files on another server.
+"""
+
+help_words : """ 
+✘ Commands Available -
+
+• `.meaning <word>`
+    Get the meaning of the word.
+
+• `.synonym <word>`
+    Get all synonyms.
+
+• `.antonym <word>`
+    Get all antonyms.
+
+• `.ud <word>`
+    Fetch word defenition from urbandictionary.
+"""
+
+help_writer : """ 
+✘ Commands Available -
+
+• `.write <text or reply to text>`
+   It will write on a paper.
+
+• `.image <text or reply to html or any doc file>`
+   Write a image from html or any text.
+"""
+
+help_youtube : """ 
+✘ Commands Available -
+
+• `.yta <(youtube/any) link>`
+   Download audio from the link.
+
+• `.ytv <(youtube/any) link>`
+   Download video  from the link.
+
+• `.ytsa <(youtube) search query>`
+   Search and download audio from youtube.
+
+• `.ytsv <(youtube) search query>`
+   Search and download video from youtube.
+"""
+
+help_ziptools : """ 
+✘ Commands Available
+
+• `.zip <reply to file>`
+    zip the replied file
+    To set password on zip: `.zip <password>` reply to file
+
+• `.unzip <reply to zip file>`
+    unzip the replied file.
+
+• `.azip <reply to file>`
+   add file to batch for batch upload zip
+
+• `.dozip`
+   upload batch zip the files u added from `.azip`
+   To set Password: `.dozip <password>`
+
+"""
+
+help_games : """ 
+• `.akinator` | `/akinator`
+   Start akinator game from Userbot/Assistant
+
+• `/startgame`
+   Open Portal for Games
+"""
