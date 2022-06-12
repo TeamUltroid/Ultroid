@@ -568,8 +568,7 @@ vcbot_22: "`Cleaned All Queues In Chat`"
 
 # Help Menus
 
-help_admintools : """ 
-✘ Commands Available -
+help_admintools : """✘ Commands Available -
 
 • `.promote <reply to user/userid/username>`
 • `.demote`
@@ -606,8 +605,7 @@ help_admintools : """
     Delete all msgs of replied user.
 """
 
-help_afk : """ 
-✘ Commands Available -
+help_afk : """✘ Commands Available -
 
 • `.afk <optional reason>`
     AFK means away from keyboard,
@@ -617,8 +615,7 @@ help_afk : """
 
 """
 
-help_antiflood : """ 
-✘ Commands Available -
+help_antiflood : """✘ Commands Available -
 
 • `.setflood <integer>`
     Set flood limit in a chat.
@@ -630,8 +627,7 @@ help_antiflood : """
     Get flood limit of a chat.
 """
 
-help_asstcmd : """ 
-✘ Commands Available -
+help_asstcmd : """✘ Commands Available -
 
 •`.addcmd <new cmd> <reply>`
    It will set new cmd for your assistant bot with that reply message.
@@ -643,8 +639,7 @@ help_asstcmd : """
    To Get list of all your custom cmd.
 """
 
-help_audiotools : """ 
-✘ Commands Available -
+help_audiotools : """✘ Commands Available -
 
 `.makevoice <reply to audio>`
    creates a voice note from Audio.
@@ -658,8 +653,7 @@ help_audiotools : """
 
 """
 
-help_autoban : """ 
-✘ Commands Available
+help_autoban : """✘ Commands Available
 
 • `.autokick <on/off>`
     on - To enable.
@@ -678,15 +672,13 @@ help_autoban : """
 • `.listwl- List all whitelist channels.
 """
 
-help_autocorrect : """ 
-✘ Commands Available
+help_autocorrect : """✘ Commands Available
 
 • `.autocorrect`
     To on/off Autocorrect Feature.
 """
 
-help_autopic : """ 
-✘ Commands Available -
+help_autopic : """✘ Commands Available -
 
 • `.autopic <search query>`
     Will change your profile pic at defined intervals with pics related to the given topic.
@@ -694,8 +686,7 @@ help_autopic : """
 • `.autopic- stop autopic if active.
 """
 
-help_beautify : """ 
-✘ Commands Available -
+help_beautify : """✘ Commands Available -
 
 • `.carbon <text/reply to msg/reply to document>`
     Carbonise the text with default settings.
@@ -710,8 +701,7 @@ help_beautify : """
   `.rayso list` - `Get list of themes.`
 """
 
-help_blacklist : """ 
-✘ Commands Available -
+help_blacklist : """✘ Commands Available -
 
 • `.blacklist <word/all words with a space>`
     blacklist the choosen word in that chat.
@@ -726,8 +716,7 @@ help_blacklist : """
   'And u Must be Admin in that Chat'
 """
 
-help_bot : """ 
-✘ Commands Available
+help_bot : """✘ Commands Available
 
 • `.alive` | `.alive inline`
     Check if your bot is working.
@@ -755,8 +744,7 @@ help_bot : """
     Turn off your bot.
 """
 
-help_broadcast : """ 
-✘ Commands Available
+help_broadcast : """✘ Commands Available
 
 • `.addch <id/reply to list/none>`
     Add chat to database. Adds current chat if no id specified.
@@ -774,8 +762,7 @@ help_broadcast : """
     To get list of all added chats.
 """
 
-help_button : """ 
-✘ Commands Available -
+help_button : """✘ Commands Available -
 
 • `.button <text with button format`
    create button u can reply to pic also
@@ -785,15 +772,13 @@ Format:- `.button Hey There! @UseUltroid 😎.
 [TeamUltroid | t.me/TeamUltroid]`
 """
 
-help_calculator : """ 
-✘ Commands Available -
+help_calculator : """✘ Commands Available -
 
 •`.calc` - Inline Calculator
 
 """
 
-help_channelhacks : """ 
-✘ Commands Available
+help_channelhacks : """✘ Commands Available
 
 🔹 `.shift <from channel> | <to channel>`
      This will transfer all old post from channel A to channel B.
@@ -822,8 +807,7 @@ help_channelhacks : """
    'For activating auto-post use `.setdb AUTOPOST True` '
 """
 
-help_chatbot : """ 
-✘ Commands Available -
+help_chatbot : """✘ Commands Available -
 
 • `.addai <reply to user/give username/userid>`
    Add a AI ChatBot to reply to that user.
@@ -838,8 +822,7 @@ help_chatbot : """
    List the currently AI added users.
 """
 
-help_chats : """ 
-✘ Commands Available -
+help_chats : """✘ Commands Available -
 
 • `.delchat <optional- username/id>`
     Delete the group this cmd is used in.
@@ -869,8 +852,7 @@ help_chats : """
     Remove users specifically.
 """
 
-help_cleanaction : """ 
-✘ Commands Available -
+help_cleanaction : """✘ Commands Available -
 
 •`.addclean`
     Clean all Upcoming action msg in added chat like someone joined/left/pin etc.
@@ -883,8 +865,7 @@ help_cleanaction : """
 
 """
 
-help_compressor : """ 
-✘ Commands Available -
+help_compressor : """✘ Commands Available -
 
 • `.compress <reply to video>`
     optional `crf` and `stream`
@@ -897,8 +878,7 @@ help_compressor : """
 
 """
 
-help_converter : """ 
-✘ Commands Available -
+help_converter : """✘ Commands Available -
 
 • `.convert <gif/img/sticker/webm>`
     Reply to media to convert it into gif / image / webm / normal sticker.
@@ -916,8 +896,7 @@ help_converter : """
     Upload Your file with your custom thumbnail.
 """
 
-help_core : """ 
-✘ Commands Available -
+help_core : """✘ Commands Available -
 
 • `.install <reply to plugin>`
     To install the plugin,
@@ -940,8 +919,7 @@ help_core : """
     Load Plugins from the given raw link.
 """
 
-help_database : """ 
-✘ Commands Available -
+help_database : """✘ Commands Available -
 
 • **DataBase Commands, do not use if you don't know what it is.**
 
@@ -959,8 +937,7 @@ help_database : """
     Update Key Name
 """
 
-help_devtools : """ 
-✘ Commands Available -
+help_devtools : """✘ Commands Available -
 
 • `.bash <cmds>`
 • `.bash -c <cmds>` Carbon image as command output.
@@ -982,8 +959,7 @@ help_devtools : """
     Shows System Info.
 """
 
-help_downloadupload : """ 
-✘ Commands Available -
+help_downloadupload : """✘ Commands Available -
 
 • `.ul <path/to/file>`
     Upload files on telegram.
@@ -999,8 +975,7 @@ help_downloadupload : """
     Download using DDL. Will autogenerate filename if not given.
 """
 
-help_echo : """ 
-✘ Commands Available
+help_echo : """✘ Commands Available
 
 •`.addecho <reply to anyone>`
    Start Auto Echo message of Replied user.
@@ -1012,8 +987,7 @@ help_echo : """
    To Get list.
 """
 
-help_extra : """ 
-✘ Commands Available -
+help_extra : """✘ Commands Available -
 
 • `.del <reply to message>`
     Delete the replied message.
@@ -1028,8 +1002,7 @@ help_extra : """
     Reply the last sent msg to replied user.
 """
 
-help_fakeaction : """ 
-✘ Commands Available -
+help_fakeaction : """✘ Commands Available -
 
 • `.ftyping <time/in secs>`
     `Show Fake Typing in current chat.`
@@ -1062,8 +1035,7 @@ help_fakeaction : """
     `Show Fake sending document in current chat.`
 """
 
-help_fedutils : """ 
-✘ Commands Available -
+help_fedutils : """✘ Commands Available -
 
 • `.superfban <reply to user/userid/username>`
     FBan the person across all feds in which you are admin.
@@ -1080,8 +1052,7 @@ Specify FBan Group and Feds to exclude in the assistant.
     Collect federation info of the given fed id, or of the fed you own, from Rose.
 """
 
-help_fileshare : """ 
-✘ Commands Available -
+help_fileshare : """✘ Commands Available -
 
 • `.store <reply_to_message>`
    Store the replied message/media and generate a shareable link to that file, to be accessed via your assistant bot!
@@ -1095,8 +1066,7 @@ help_fileshare : """
 • Go Inline with your assistant bot with `filestore` to see stored files in inline.
 """
 
-help_filter : """ 
-✘ Commands Available -
+help_filter : """✘ Commands Available -
 
 • `.addfilter <word><reply to a message>`
     add the used word as filter relating to replied message.
@@ -1116,8 +1086,7 @@ help_fontgen : """
     To get list of fonts
 """
 
-help_forcesubscribe : """ 
-✘ Commands Available -
+help_forcesubscribe : """✘ Commands Available -
 
 • `.fsub <chat username><id>`
     Enable ForceSub in Used Chat !
@@ -1132,8 +1101,7 @@ help_forcesubscribe : """
         in order to Use ForceSubscribe.
 """
 
-help_gdrive : """ 
-✘ Commands Available
+help_gdrive : """✘ Commands Available
 
 • `.gdul <reply/file name>`
     Reply to file to upload on Google Drive.
@@ -1153,8 +1121,7 @@ help_gdrive : """
     If added then all files will be uploaded in this folder.
 """
 
-help_giftools : """ 
-✘ Commands Available
+help_giftools : """✘ Commands Available
 
 •`.invertgif`
   Make Gif Inverted(negative).
@@ -1173,15 +1140,13 @@ help_giftools : """
    Send video regarding to query.
 """
 
-help_glitch : """ 
-✘ Commands Available -
+help_glitch : """✘ Commands Available -
 
 •`.glitch <replt to media>`
     gives a glitchy gif.
 """
 
-help_globaltools : """ 
-✘ Commands Available -
+help_globaltools : """✘ Commands Available -
 
 • `.gban <reply user/ username>`
 • `.ungban`
@@ -1213,8 +1178,7 @@ help_globaltools : """
 • `.gdemote` - `demote user globally`
 """
 
-help_greetings : """ 
-✘ Commands Available -
+help_greetings : """✘ Commands Available -
 
 ---- Welcomes ----
 • `.setwelcome <message/reply to message>`
@@ -1240,8 +1204,7 @@ help_greetings : """
     Send a thank you sticker on hitting a members count of 100*x in your groups.
 """
 
-help_imagetools : """ 
-✘ Commands Available -
+help_imagetools : """✘ Commands Available -
 
 • `.border <reply to photo/sticker>`
     To create border around that media..
@@ -1289,8 +1252,7 @@ help_imagetools : """
     Create a Pixelated Image..
 """
 
-help_instagram : """ 
-✘ Commands Available -
+help_instagram : """✘ Commands Available -
 
 • `.instadl <Instagram Url>`
   `Download Instagram Media...`
@@ -1314,8 +1276,7 @@ help_instagram : """
   before using it..
 """
 
-help_locks : """ 
-✘ Commands Available -
+help_locks : """✘ Commands Available -
 
 • `.lock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
     Lock the Used Setting in Used Group.
@@ -1324,8 +1285,7 @@ help_locks : """
     UNLOCK the Used Setting in Used Group.
 """
 
-help_logo : """ 
-✘ Commands Available -
+help_logo : """✘ Commands Available -
 
 • `.logo <text>`
    Generate a logo of the given Text
@@ -1334,8 +1294,7 @@ help_logo : """
 
 """
 
-help_mediatools : """ 
-✘ Commands Available -
+help_mediatools : """✘ Commands Available -
 
 • `.mediainfo <reply to media>`
    To get info about it.
@@ -1345,8 +1304,7 @@ help_mediatools : """
    Note - for video it should be angle of 90's
 """
 
-help_misc : """ 
-✘ Commands Available -
+help_misc : """✘ Commands Available -
 
 • `.eod`
     `Get Event of the Today`
@@ -1364,8 +1322,7 @@ help_misc : """
     Convert replied image into html.
 """
 
-help_mute : """ 
-✘ Commands Available -
+help_mute : """✘ Commands Available -
 
 • `.mute <reply to msg/ user id>`
     Mute user in current chat.
@@ -1387,8 +1344,7 @@ help_mute : """
     Mute user in current chat with time.
 """
 
-help_nightmode : """ 
-✘ Commands Available -
+help_nightmode : """✘ Commands Available -
 
 At Night it will turn off everyone permission to send message in  an all groups which you added via `.addnight`
 And Turn On auto at morning
@@ -1412,8 +1368,7 @@ And Turn On auto at morning
    Ex- `nmtime 01 00 06 30`
 """
 
-help_notes : """ 
-✘ Commands Available -
+help_notes : """✘ Commands Available -
 
 • `.addnote <word><reply to a message>`
     add note in the used chat with replied message and choosen word.
@@ -1429,8 +1384,7 @@ help_notes : """
    type `#(Keyword of note)` to get it
 """
 
-help_nsfwfilter : """ 
-✘ Commands Available -
+help_nsfwfilter : """✘ Commands Available -
 
 •`.addnsfw <ban/mute/kick>`
    If someone sends 18+ content it will be deleted and action will be taken.
@@ -1439,8 +1393,7 @@ help_nsfwfilter : """
    Remove Chat from nsfw filtering.
 """
 
-help_other : """ 
-✘ Commands Available -
+help_other : """✘ Commands Available -
 
 • `.send <username/id> <reply/type>`
     send message to User/Chat.
@@ -1455,8 +1408,7 @@ help_other : """
     Forward that replied msg to ur saved messages.
 """
 
-help_pmpermit : """ 
-✘ Commands Available -
+help_pmpermit : """✘ Commands Available -
 
 • `.a` or `.approve`
     Approve someone to PM.
@@ -1489,8 +1441,7 @@ help_pmpermit : """
    List all approved PMs.
 """
 
-help_polls : """ 
-✘ Commands Available -
+help_polls : """✘ Commands Available -
 
 • `.poll <question> ; <option> ; <option>`
     Get the Anonymous Poll with Given Options
@@ -1504,8 +1455,7 @@ help_polls : """
 
 """
 
-help_profanityfilter : """ 
-✘ Commands Available -
+help_profanityfilter : """✘ Commands Available -
 
 •`.addprofanity`
    If someone sends bad word in a chat, Then bot will delete that message.
@@ -1515,8 +1465,7 @@ help_profanityfilter : """
 
 """
 
-help_profile : """ 
-✘ Commands Available -
+help_profile : """✘ Commands Available -
 
 • `.setname <first name // last name>`
     Change your profile name.
@@ -1534,8 +1483,7 @@ help_profile : """
     Upload the photo of Chat/User if Available.
 """
 
-help_qrcode : """ 
-✘ Commands Available -
+help_qrcode : """✘ Commands Available -
 
 • `.qrcode <text/reply to text>`
    `Makes qrcode of text`
@@ -1547,8 +1495,7 @@ help_qrcode : """
    `It decodes the qrcode.`
 """
 
-help_resize : """ 
-✘ Commands Available -
+help_resize : """✘ Commands Available -
 
 •`.size <reply to media>`
    To get size of it.
@@ -1558,8 +1505,7 @@ help_resize : """
    eg. `.resize 690 960`
 """
 
-help_schedulemsg : """ 
-✘ Commands Available -
+help_schedulemsg : """✘ Commands Available -
 
 •`.schedule <text/reply to msg> <time>`
     In time u can use second as number, or like 1h or 1m
@@ -1567,8 +1513,7 @@ help_schedulemsg : """
     eg. `.schedule Hello 1h` It deliver msg after an hour.
 """
 
-help_search : """ 
-✘ Commands Available -
+help_search : """✘ Commands Available -
 
 • `.saavn <search query>`
     Download songs from Saavn.
@@ -1587,8 +1532,7 @@ help_search : """
     Reply an Image or sticker to find its sauce.
 """
 
-help_snips : """ 
-✘ Commands Available -
+help_snips : """✘ Commands Available -
 
 • `.addsnip <word><reply to a message>`
     add the used word as snip relating to replied message.
@@ -1603,8 +1547,7 @@ help_snips : """
     type `$(ur snip word)` get setted reply.
 """
 
-help_specialtools : """ 
-✘ Commands Available -
+help_specialtools : """✘ Commands Available -
 
 • `.wspr <username>`
     Send secret message..
@@ -1631,8 +1574,7 @@ help_specialtools : """
     Search Hd Wallpaper as Per ur Wish..
 """
 
-help_stickertools : """ 
-✘ Commands Available -
+help_stickertools : """✘ Commands Available -
 
 • `.destroy <reply to animated sticker>`
     To destroy the sticker.
@@ -1650,8 +1592,7 @@ help_stickertools : """
     To extract round sticker.
 """
 
-help_sudo : """ 
-✘ Commands Available -
+help_sudo : """✘ Commands Available -
 
 • `.addsudo`
     Add Sudo Users by replying to user or using <space> separated userid(s)
@@ -1663,8 +1604,7 @@ help_sudo : """
     List all sudo users.
 """
 
-help_tag : """ 
-✘ Commands Available -
+help_tag : """✘ Commands Available -
 
 • `.tagall`
     Tag Top 100 Members of chat.
@@ -1688,8 +1628,7 @@ help_tag : """
     Tag Offline Members(work only if privacy off).
 """
 
-help_tools : """ 
-✘ Commands Available -
+help_tools : """✘ Commands Available -
 
 • `.circle`
     Reply to a audio song or gif to get video note.
@@ -1721,15 +1660,13 @@ help_tools : """
     shorten any url...
 """
 
-help_unsplash : """ 
-✘ Commands Available -
+help_unsplash : """✘ Commands Available -
 
 • .unsplash <search query> ; <no of pics>
     Unsplash Image Search.
 """
 
-help_usage : """ 
-✘ Commands Available
+help_usage : """✘ Commands Available
 
 • `.usage`
     Get overall usage.
@@ -1741,8 +1678,7 @@ help_usage : """
    Get database storage usage.
 """
 
-help_utilities : """ 
-✘ Commands Available -
+help_utilities : """✘ Commands Available -
 
 • `.kickme` - Leaves the group.
 
@@ -1786,8 +1722,7 @@ help_utilities : """
    Use - Paste the contents of file and send as pic.
 """
 
-help_variables : """ 
-✘ Commands Available -
+help_variables : """✘ Commands Available -
 
 • `.get var <variable name>`
    Get value of the given variable name.
@@ -1802,8 +1737,7 @@ help_variables : """
    Get all redis keys.
 """
 
-help_vctools : """ 
-✘ Commands Available -
+help_vctools : """✘ Commands Available -
 
 • `.startvc`
     Start Group Call in a group.
@@ -1819,8 +1753,7 @@ help_vctools : """
     (You must be joined)
 """
 
-help_videotools : """ 
-✘ Commands Available -
+help_videotools : """✘ Commands Available -
 
 •`.sample <duration in seconds>`
    Creates Short sample of video..
@@ -1832,8 +1765,7 @@ help_videotools : """
     Crop a Lengthy video..
 """
 
-help_warn : """ 
-✘ Commands Available
+help_warn : """✘ Commands Available
 
 •`.warn <reply to user> <reason>`
     Gives Warn.
@@ -1852,15 +1784,13 @@ help_warn : """
 
 """
 
-help_webupload : """ 
-✘ Commands Available -
+help_webupload : """✘ Commands Available -
 
 • `.webupload`
     Upload files on another server.
 """
 
-help_words : """ 
-✘ Commands Available -
+help_words : """✘ Commands Available -
 
 • `.meaning <word>`
     Get the meaning of the word.
@@ -1875,8 +1805,7 @@ help_words : """
     Fetch word defenition from urbandictionary.
 """
 
-help_writer : """ 
-✘ Commands Available -
+help_writer : """✘ Commands Available -
 
 • `.write <text or reply to text>`
    It will write on a paper.
@@ -1885,8 +1814,7 @@ help_writer : """
    Write a image from html or any text.
 """
 
-help_youtube : """ 
-✘ Commands Available -
+help_youtube : """✘ Commands Available -
 
 • `.yta <(youtube/any) link>`
    Download audio from the link.
@@ -1901,8 +1829,7 @@ help_youtube : """
    Search and download video from youtube.
 """
 
-help_ziptools : """ 
-✘ Commands Available
+help_ziptools : """✘ Commands Available
 
 • `.zip <reply to file>`
     zip the replied file
