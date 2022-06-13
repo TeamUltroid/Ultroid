@@ -228,9 +228,7 @@ async def _(event):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc, timeg = None, None, None, None
     try:
-        start = datetime.now()
         value = await aexec(cmd, event)
-        timeg = time_formatter((datetime.now() - start).microseconds / 1000)
     except Exception:
         value = None
         exc = traceback.format_exc()
@@ -263,8 +261,6 @@ async def _(event):
             evaluation,
         )
     )
-    if timeg:
-        final_output += f"Time Taken: `{timeg}`"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
