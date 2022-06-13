@@ -83,10 +83,10 @@ async def _(e):
         x, y = await bash(
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
+        if y and y.endswith("NOT_FOUND"):
+            return await xxx.edit(f"ERROR: `{y}`")
         total_frames = x.split(":")[1].split("\n")[0]
         progress = f"progress-{c_time}.txt"
-        with open(progress, "w") as fk:
-            pass
         proce = await asyncio.create_subprocess_shell(
             f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} -c:a copy """{out}""" -y',
             stdout=asyncio.subprocess.PIPE,
