@@ -18,9 +18,11 @@ from telethon.errors.rpcerrorlist import (
     PeerIdInvalidError,
     UserNotParticipantError,
 )
-from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User, UpdateChannel
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User, UpdateChannel, ChannelParticipantSelf
 from telethon.utils import get_display_name
+from telethon.tl.functions.channels import GetParticipantRequest
 
+from datetime import datetime, timezone
 from . import (
     LOG_CHANNEL,
     LOGS,
@@ -237,8 +239,15 @@ ultroid_bot.add_event_handler(
 )
 
 @ultroid_bot.on(events.Raw(UpdateChannel))
-async def _(ult):
-    pass
+async def _(ult: UpdateChannel):
+    try:
+        self_p = await ultroid_bot(GetParticipantRequest(ult.channel_id, "me"))
+    except UserNotParticipantError:
+        return
+    if isinstance(self_p, ChannelParticipantSelf) and (datetime.now(timezone.utc) - self_p.date(timezone.utc)).seconds < 20:
+        chat = await ultroid_bot.get_entity(ult.channel_id)
+        text = f"#JOIN_LOG\n\n{inline_mention(ultroid_bot.me)} just joined {inline_mention(chat)}."
+        await asst.send_message(udB.get_key("LOG_CHANNEL"), text)
 
 _client = {"bot": asst, "user": ultroid_bot}
 
