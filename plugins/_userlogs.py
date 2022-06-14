@@ -18,7 +18,7 @@ from telethon.errors.rpcerrorlist import (
     PeerIdInvalidError,
     UserNotParticipantError,
 )
-from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User, UpdateChannel
 from telethon.utils import get_display_name
 
 from . import (
@@ -235,6 +235,10 @@ ultroid_bot.add_event_handler(
     when_added_or_joined,
     events.ChatAction(func=lambda x: x.user_added or x.user_joined),
 )
+
+@ultroid_bot.on(events.Raw(UpdateChannel))
+async def _(ult):
+    pass
 
 _client = {"bot": asst, "user": ultroid_bot}
 
