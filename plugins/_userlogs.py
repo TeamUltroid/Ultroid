@@ -241,10 +241,9 @@ ultroid_bot.add_event_handler(
 @ultroid_bot.on(events.Raw(UpdateChannel))
 async def _(ult: UpdateChannel):
     try:
-        self_p = await ultroid_bot(GetParticipantRequest(ult.channel_id, "me"))
+        self_p = (await ultroid_bot(GetParticipantRequest(ult.channel_id, "me"))).participant
     except UserNotParticipantError:
         return
-    LOGS.info(self_p)
     if isinstance(self_p, ChannelParticipantSelf) and (datetime.now(timezone.utc) - self_p.date).seconds < 30:
         chat = await ultroid_bot.get_entity(ult.channel_id)
         text = f"#JOIN_LOG\n\n{inline_mention(ultroid_bot.me)} just joined {inline_mention(chat)}."
