@@ -1,0 +1,529 @@
+name: Uzbekcha
+natively: Uzbekcha
+
+authors:
+  - TechnobladeUzb
+
+# umumiy
+ com_1: "`Qayta ishlanmoqda...`"
+ com_2: "`Qidirilmoqda...`"
+ com_3: "`Noto'g'ri kiritish`"
+ com_4: "`Qo'llab-quvvatlanmaydigan media..`"
+ com_5: "Yuklab olinmoqda..."
+ com_6: "Yuklanmoqda..."
+
+ # chat
+ can_1: "#GBanned_User qoʻshildi.\n\n**Foydalanuvchi** : {}\n**Sabab**: {}\n\n`Foydalanuvchi taqiqlangan.`"
+ can_2: "∆ #Foydalanuvchi nomini yangilash\n\n@{} foydalanuvchi nomini @{} qilib o'zgartirdi"
+ can_3: "∆ #UsernameUpdate\n\n{} foydalanuvchi nomini olib tashladi. (@{})"
+ can_4: "∆ #Foydalanuvchi nomini yangilash\n\n{} ning yangi foydalanuvchi nomi --> @{}"
+
+ # Yordam bering
+ help_1: "`{}` yaroqli plagin emas!"
+ help_2: "Bot ichki soʻrovga javob bermadi.\n`{}qayta ishga tushirish`dan foydalanishni oʻylab koʻring"
+ help_3: "` @Botfather'dan botingiz uchun inline rejimini yoqing."
+ help_4: "• Plaginlar"
+ help_5: "• Qo'shimchalar"
+ help_6: "••Ovozli chat"
+ help_7: "Inline plaginlar••"
+ help_8: "⚙️ Egasi vositalari"
+ help_9: "Sozlamalar ⚙️"
+ help_10: "••Cʟᴏgaᴇ••"
+ help_11: "Plagin nomi-{}\n\n✘ Mavjud buyruqlar -\n\n"
+
+
+ # foydalanuvchi jurnali
+ userlogs_1: "Teg jurnalida siz o'rnatgan suhbat identifikatori noto'g'ri, uni to'g'rilang"
+ userlogs_2: "Teglar jurnaliga kirish uchun meni teg qayd qiluvchi chatingizga qo'shing"
+ userlogs_3: "Chatdan chiqish"
+ userlogs_4: "Sizning yordamchi botingiz teglar jurnali chatida xabar yubora olmaydi.\nTeg jurnallaringizni olish uchun uni qoʻshing.."
+ userlogs_5: "Chap `{}`"
+
+ # administrator
+ adm_1: "`U kimligini tushunolmadim!`"
+ adm_2: "`Hmm.. Bu yerda mening huquqim yo'q deb o'ylayman!`"
+ adm_3: "`Vaqt ham bering..`"
+ pro_1: "`Foydalanuvchini reklama qilish uchun unga javob bering!`"
+ pro_2: "{} `endi {} nomli {} administratori.`"
+ de_1: "`Foydalanuvchining lavozimini pasaytirish uchun unga javob bering!`"
+ de_2: "{} ` endi {}` da administrator emas"
+ ban_1: "`Foydalanuvchiga javob bering yoki uni bloklash uchun foydalanuvchi nomini bering!`"
+ ban_2: " `LoL, men dasturchini bloklay olmayman 😂`"
+ ban_3: "`Foydalanuvchini taqiqlashga haqqim yo'q.`"
+ ban_4: "{} ** tomonidan taqiqlangan** {} **in** `{}`"
+ ban_5: "\n**Sabab**: `{}`"
+ tban_1: "`Birovga javob bering yoki uning identifikatorini bering...`"
+ tban_2: "`Muvaffaqiyatli taqiqlandi` `{}` {} ichida {}` uchun"
+ unban_1: "`Foydalanuvchiga javob bering yoki uni blokdan chiqarish uchun foydalanuvchi nomini bering!`"
+ unban_2: "`Foydalanuvchini blokdan chiqarish huquqiga ega emasman.`"
+ unban_3: "{} ** tomonidan taqiqlangan** {} **in** `{}`"
+ kick_1: "`Men foydalanuvchini tepishga haqqim yo'q.`"
+ kick_2: " `Lol, men dasturchimni tepolmayman`😂"
+ kick_3: "`Men uni hech qachon tepolmayman...`"
+ kick_4: "{} ** tomonidan tepildi** {} **in** `{}`"
+ pin_1: "` Xabarni mahkamlash uchun unga javob bering!`"
+ pinned_1: "Hech qanday mahkamlangan xabar topilmadi!"
+ unpin_1: "Yoki xabarga javob bering yoki "{}hammasini olib tashlash" dan foydalaning"
+ listpin_1: "Bu guruhda hech qanday xabar qadalmagan!"
+ purge_1: "`Tozalash uchun xabarga javob berish.`"
+ purgeall_1: "`Oʻchirish uchun birovning xabariga javob bering.`"
+ purgeall_2: "{} dan barcha xabarlar muvaffaqiyatli tozalandi"
+
+ #akinator
+ aki_1: "Oʻyin tugatildi...."
+ aki_2: "O'yinni boshlash"
+ aki_3: "Vaqt tugadi!"
+
+ #toshqinga qarshi
+ antiflood_1: "`Floodga qarshi sozlamalar o'chirilgan`"
+ antiflood_2: "`Bu chatda toshqin chegarasi yo'q.`"
+ antiflood_3: "`Sizning ovozingiz o'chirildi.`"
+ antiflood_4: "`Ushbu chatda toshqinga qarshi sozlamalar {} ga muvaffaqiyatli yangilandi.`"
+ antiflood_5: "`Bu chat uchun toshqin chegarasi: {}.`"
+
+ # ascii
+ ascii_1: "`Rasmga javob berish.`"
+ ascii_2: "`html-ga aylantirilmoqda...`"
+
+ # audio asbob
+ audiotools_1: "Audio yoki videoga javob berish.."
+ audiotools_2: "Muvaffaqiyatli yuklab olindi, endi ovozga aylantirilmoqda"
+ audiotools_3: "`Qisqish uchun formatda vaqt bering`"
+ audiotools_4: "`Noto'g'ri ma'lumotlar`"
+ audiotools_5: "`Yuklab olishga urinilmoqda...`"
+ audiotools_6: "`Noto'g'ri kesish muddati`"
+ audiotools_7: "Ovoz `{}`dan `{}`gacha kesilgan"
+ audiotools_8: "Video faylga javob berish..`"
+ audiotools_9: "`Hech qanday audio topilmadi...`"
+ audiotools_10: "`Videodan olingan audio...`"
+
+ # asstcmd
+ asstcmd_1: "`Buyruqdan foydalanish uchun javob va soʻz bilan ushbu buyruqdan foydalaning.`"
+ asstcmd_2: "`Oʻchirmoqchi boʻlgan buyruqni bering.'"
+ asstcmd_3: "Buyruq bajarildi: `/{}` olib tashlandi."
+ asstcmd_4: "Bajarildi buyruq: `/{}` saqlandi."
+ asstcmd_5: "Hech qanday buyruq topilmadi"
+ asstcmd_6: "**BARCHA ASSISTANT CMDS**\n\n"
+
+ # avtomatik tuzatish
+ act_1: “AVTOTOZORAT funksiyasi yoqilgan”
+ akt_2: "AVTOTOZORAT funksiyasi oʻchirilgan"
+
+ #avtopik
+ autopic_1: "`Qidirish uchun biror narsa bering...`"
+ autopic_2: "`{}` uchun hech qanday natija topilmadi"
+ autopic_3: "Qidiruvingizga tegishli `{}` toʻplami bor !\nAutopic boshlanmoqda !"
+ autopic_4: "AUTOPIC ishlatilmadi !!"
+ autopic_5: "AUTOPIC to'xtatildi!"
+
+ # mos ravishda
+ inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nPʟᴜɢɪɪɴs ~
+ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nAᴅᴅᴏɴs ~ {}**ɴs
+ Inline_3: "[Uʟᴛʀᴏ_ULDODUPRANK) \ N \ N \ {\ NAYS ~ n \ Naᴅᴅᴏɴs ~ \ nd \ ndᴏ ** \ ndᴏ  ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
+ inline_4: "** Bᴏᴛ Og {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴛᴀʟ Cᴏᴍɴs ~}ᴏᴍ"
+ inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
+ inline_6: "**{}**\n**Mavjud buyruqlar uchun ovozli suhbat yordam menyusi:** `{}`\n\n@TeamUltroid"
+ inline_7: "Buyruqlar roʻyxatini olish uchun .help {} dasturini bajaring."
+ inline_8: "Yangilanish uchun quyidagi tugmani bosing!"
+ inline_9: "Siz allaqachon oxirgi versiyadasiz"
+
+ #tagnotif
+ tagnot_1: "{} sizni {}\n\n```{}```\n\n[📨 Xabar 📨]({}) da belgiladi"
+ tagnot_2: "{} sizni {}\n\n [📨 Xabar 📨]({}) da belgiladi"
+
+ #shivir
+ wspr_1: "@{} siz uchun maxfiy xabar.\nOʻqib boʻlgach, xabaringizni oʻchirib tashlang.\nYoki keyingi xabar yangilanmaydi."
+ wspr_2: "Xabar o'chirildi"
+ wspr_3: "Id yoki foydalanuvchi nomini ham qo'shing"
+ wspr_4: "Foydalanuvchi {} topilmadi\nQayta qidirish"
+ wspr_5: "Siz buni qila olmaysiz"
+
+ # afk
+ afk_1: "**Endi Afk emas**\n\n~ `{}` uchun uzoqda edi"
+ afk_2: "#AFK\nAFK rejimini "False"ga o'rnating.\n~ `{}` dan beri AFK edi"
+ afk_3: "**Men hozir AFKman.**\nOxirgi marta `{}` oldin koʻrilgan.\n\n**Sabab:** `{}`"
+ afk_4: "**Men hozirda AFKman.**\n\nOxirgi marta `{}` oldin koʻrilgan."
+ afk_5: "**Men AFKga boraman.**\n\n**Sabab:** `{}`"
+ afk_6: "**Men AFKga ketyapman.**"
+
+ #bot
+ bot_1: "Hey, men tirikman."
+ bot_2: "Statistikalar"
+ bot_3: "Repo"
+ bot_4: "Qo'llab-quvvatlash"
+ bot_5: "• `Qayta ishga tushirilmoqda...`"
+ alive_1: "**Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\  n┣ **Egasi** - `{}`\n┣ **Versiya** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `  {}`\n┣ **Python** - `{}`\n┣ **Telefon** - `{}`\n┣ **Filial** - `{}`\n┗━━━━━  ━━━━━━━━━━━━━━━━"
+ log: "**Heroku** Ultroid jurnallari.\nShuningdek [bu yerga]({}) joylandi!"
+ ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
+ foydalanish: "**⚙️ Dyno-dan foydalanish ⚙️**:\n\n-> **Dyno-dan foydalanish** `{}`:\n • **{}h** **{}m |** `[  {}%]`\n-> **Bu oyda qolgan ish soatlari kvotasi**:\n • **{}h** **{}m |** `[{}%]`\n\n*  *Jami disk maydoni**: `{}`\n**Ishlatilgan**: `{}`\n**Bepul**: `{}`\n\n**📊 Ma'lumotlardan foydalanish 📊**\n*  *Yuklash**: `{}`\n**pastga**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\  n**DISK**: `{}%`"
+ usage_simple: "**Jami disk maydoni**: `{}`\n**Ishlatilgan**: `{}`\n**Bepul**: `{}`\n\n**📊 Ma'lumotlardan foydalanish 📊*  *\n**Yuklash**: `{}`\n**pastga**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{  }%`\n**DISK**: `{}%`"
+ oʻchirish: "Alvido {}.\n`Oʻchirish...`"
+
+ # qora roʻyxat
+ blk_1: "`Soʻzni qora roʻyxatga kiriting..'"
+ blk_2: "Bajarildi: `{}` Bu yerda qora roʻyxatga kiritilgan."
+ blk_3: "`Qora ro'yxatdan olib tashlash uchun so'zni bering..`"
+ blk_4: "Bajarildi: `{}` Qora roʻyxatdan oʻchirildi."
+ blk_5: "Ushbu chatlarda topilgan qora roʻyxat:\n\n"
+ blk_6: "Bu erda qora ro'yxatdagi so'z topilmadi"
+
+ #ko'rsatuv
+ bd_1: "`JBga qoʻshilmoqda...'"
+ bd_2: "`Barcha administrator kanallarini JB ga qo'shishga urinilmoqda...`"
+ bd_3: "**Bajarildi.**\nMa'lumotlar bazasida allaqachon chatlar: {}\nYangi qo'shilgan: {}"
+ bd_4: "Kanallar qo'shildi!"
+ bd_5: "`Ma`lumotlar bazasiga qo`shildi!`"
+ bd_6: "`Kanal allaqachon ma'lumotlar bazasi!'"
+ bd_7: "Ma'lumotlar bazasidan o'chirildi"
+ bd_8: "`O'chirish...`"
+ bd_9: "Kanal allaqachon ma'lumotlar bazasidan o'chirilgan."
+
+
+ # kalkulyator
+ calc_1: "• Ultraroid Inline Kalkulyator •"
+ calc_2: "Kalkulyatorni yana oching"
+
+ # kanalni buzish
+ cha_1: "yaroqsiz kanal berilgan"
+ cha_2: "Manba muvaffaqiyatli qo'shildi"
+ cha_3: "Manba kanal allaqachon qo'shilgan"
+ cha_4: "Manba ma'lumotlar bazasi tozalandi."
+ cha_5: "Manba ma'lumotlar bazasidan olib tashlandi"
+ cha_6: "Manba kanali allaqachon ma'lumotlar bazasidan o'chirilgan."
+ cha_7: "Ma'lumotlar bazasidagi maqsadli kanallar:"
+ cha_8: "Ma'lumotlar bazasidagi manba kanallari:"
+
+ #uglerod
+ carbon_1: “[{}](tg://user?id={}) tomonidan karbonlangan”
+ carbon_2: "`Xabarga javob berish yoki o'qilishi mumkin bo'lgan fayl..`"
+ carbon_3: "`Uglerod yaratish uchun maxsus rang bering...`"
+
+ # chat_bot
+ chab_1: "AI ChatBot qo'shish uchun foydalanuvchiga javob bering yoki uning id/foydalanuvchi nomini bering!"
+ chab_2: "`Hech bir foydalanuvchi AI qo'shilmagan.`"
+ chab_3: "**Ushbu chatdagi sunʼiy intellektga ega foydalanuvchilarning umumiy roʻyxati:**\n\n"
+
+ # chat
+ chats_1: "`Ushbu suhbatni oʻchirib boʻlmadi'"
+ chats_2: "`Men admin emasman`"
+ chats_3: "#O'chirildi\nO'chirildi {}"
+ chats_4: "Sizning [{}]({}) guruhingiz xo'jayiniga aylandi!"
+ chats_5: "@TeamUltroidga qo'shiling"
+ chats_6: "Sizning {} guruhingiz/kanalingiz rahbari etib tayinlandi!"
+
+ # toza harakat
+ clan_1: "Ushbu chat uchun toza harakat sozlamalari qo'shildi"
+ clan_2: "Ushbu chat uchun toza harakat sozlamalari olib tashlandi"
+ clan_3: "`Noto'g'ri ID`"
+ clan_4: "`Chat qoʻshilmagan"
+
+ # konvertor
+ cvt_1: "`Har qanday media/hujjatga javob berish.`"
+ cvt_2: "Fayl nomi va kengaytmasini bering"
+ cvt_3: "`Ommaviy axborot vositalariga javob berish..`"
+ cvt_4: "`img yoki eskiz bilan faylga javob bering.`"
+ cvt_5: "Javob berilgan faylda eskiz yo'q.`"
+ cvt_6: “[Bu]({}) sizning shaxsiy eskizingiz sifatida qo‘shildi”
+ cvt_7: "`O'qilishi mumkin bo'lgan faylga javob berish`"
+ cvt_8: "`Oʻqish mumkin boʻlmagan fayl.'"
+
+ #kun voqealari
+ eod_1: "🎊 **Kun voqealari**\n\n"
+ eod_2: "• **{}/2021 yilgi voqealar**\n\n"
+
+ #yadro
+ core_1: "Modul topildi"
+ core_2: "{}.py neko va xom shaklda joylashtirish uchun .paste dan foydalaning.."
+ core_3: "Yana qidirilsin..?"
+ core_4: "Modul {} topildi"
+ core_5: "{}.py neko va xom shaklda joylashtirish uchun .paste dan foydalaning.."
+ core_6: "Modul {}.py topilmadi"
+ core_7: "Bunday modul yo'q"
+ core_8: "{}.py nomli modul yo'q"
+ core_9: "`Yuklamoqchi boʻlgan plagin nomini bering'"
+ core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Sᴜᴄᴄᴇssgᴜʟʟʏ.**"
+ core_11: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴʟᴏᴀᴅ Oggɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+ core_12: "**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{}`"
+ core_13: "`Oʻchirib tashlamoqchi boʻlgan plagin nomini bering'"
+ core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Sᴜᴄᴄᴇssgᴜʟʟʏ.**"
+ core_15: "**Yᴏᴜ Cᴀɴ'ᴛ Uɴɪɴsᴛᴀʟʟ Oggɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+ core_16: "`Yuklamoqchi bo'lgan plagin nomini bering`"
+ core_17: "**Sᴜᴄᴄᴇssgᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`"
+ core_18: "**Yuklab bo‘lmadi** `{}` **quyidagi xatolik tufayli.**\n`{}`"
+
+ # ishlab chiquvchi vositalar
+ devs_1: "`Cmd berilmagan`"
+ devs_2: "`Bir oz python cmd bering`"
+ devs_3: "`C++ kodini bering..`"
+
+ # dm
+ dm_1: "`Chat foydalanuvchi nomi yoki identifikatorini qayerga yuborishni bering.`"
+ dm_2: "`Xabar yuborish yoki javob berish uchun matnni bering`"
+ dm_3: "`⚜️Xabar yetkazildi!⚜️`"
+ dm_4: "Xato: {}\nFoydalanishni o'qish: `{}help dm`"
+ dm_5: "`Shaxsiy tekshirish.`"
+ dm_6: "`Etkazib berish uchun hech qanday xabar topilmadi :(`"
+
+ # aks-sado
+ echo_1: "**Foydalanuvchilar uchun echo faollashtirilgan:**\n\n"
+
+ # soxta harakat
+ fka_1: "{} soniya davomida soxta harakat boshlanmoqda."
+
+ # fedutils
+ sf_1: "Mass-FedBan ishga tushirilmoqda..."
+ sf_2: "`Hech qanday foydalanuvchi belgilanmagan!`"
+ sf_3: "Siz mening devimni taqiqlay olmaysiz, noob!!"
+ sf_4: "`Rose javob bermayotganga oʻxshaydi yoki plagin notoʻgʻri ishlayapti'"
+ sf_5: "Siz har 5 daqiqada bir marta ta'minlangan buyruqlardan foydalanishingiz mumkin"
+ sf_6: "5 daqiqadan keyin qayta urinib ko'ring."
+ sf_7: "FedAdminListni yig‘ib bo‘lmadi. Qayta urinilmoqda ({}/3)..."
+ sf_8: "Xato"
+ sf_9: "FedAdminListni yig‘ib bo‘lmadi."
+ sf_10: "{} ta kanalda FBaning."
+ sf_11: "Ko'rsatilgan FBan guruhi identifikatori noto'g'ri."
+ sf_12: "{} istisno."
+ sf_13: "FedAdmin faylini olib tashlashda xatolik.\n{}"
+ sf_14: "SuperFBan tugallandi.\nJami Fedlar - {}.\nChikarildi - {}.\n Ta'sir qilingan {} ta ta'sir.\n#TB"
+ sf_15: "Ommaviy UnFedBan ishga tushirilmoqda..."
+ sf_16: "SuperUnFBan tugallandi.\nJami Fedlar - {}.\nChikarildi - {}.\n Ta'sir qilingan {} ta ta'sir.\n#TB"
+ sf_17: "`Menga kimningdir identifikatorini bering yoki uning federal statistikasini tekshirish uchun somones xabariga javob bering.`"
+ sf_18: "Fedlar roʻyxati {} taqiqlangan.\n\nUltroid yordamida toʻplangan."
+ sf_19: "**Xato**\n `Blokdan chiqarish` @MissRose_Bot `va qayta urinib ko'ring!"
+ sf_20: "`Ma'lumot olinmoqda...`"
+ sf_21: "\n\nFedInfo Ultroid tomonidan olingan"
+ sf_22: "Hech qanday foydalanuvchi belgilanmagan."
+ sf_23: "**Xato**\n `Blokdan chiqarish` @MissRose_Bot `va qayta urinib ko'ring!"
+
+ # filtr
+ flr_1: "`Filtr sifatida belgilash va javob berish uchun ushbu buyruq soʻzidan foydalaning...`"
+ flr_2: "Ushbu chatlarda topilgan filtrlar\n\n"
+ flr_3: "`Olib tashlash uchun filtrni bering..`"
+ flr_4: "Bajarildi: Filtr `{}` saqlandi."
+ flr_5: "Bajarildi: `{}` filtri olib tashlandi."
+ flr_6: "Bu erda hech qanday filtr topilmadi"
+
+ # shriftgen
+ fgn_1: "**Mavjud shriftlar**\n\n"
+
+ # majburiy obuna
+ fsub_1: "Foydalanuvchi qo'shilishi kerak bo'lgan kanalni bering!"
+ fsub_2: "To'g'ri kanal foydalanuvchi nomi yoki identifikatorini bering"
+ fsub_3: "ForceSub bu chatda faol emas edi!"
+ fsub_4: "Kanalga qo'shilish"
+ fsub_5: "Ovozimni o'chirish"
+ fsub_6: "Iltimos, o'sha kanalga qo'shiling !\nKeyin bu tugmani bosing !"
+ fsub_7: "Bu xabar siz uchun emas"
+ fsub_8: "Qo'shilganingiz uchun rahmat!"
+
+ # qo'shimcha
+ ex_1: "`Xatga javob berish..`"
+
+ # gdrive
+ gdrive_1: "`Siz allaqachon Google Drive bilan avtorizatsiya qilgansiz`"
+ gdrive_2: “[bu yerga](https://console.developers.google.com/flows/enableapi?apiid=drive) o‘ting va `GDRIVE_CLIENT_ID` va `GDRIVE_CLIENT_SECRET`ni oling\n\nGDRIVE_CLIENT_ID va GDRIVEETC-ni shu GDRIVEETC.\n sifatida yuboring.  n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` bo'sh joy bilan ajratilgan."
+ gdrive_3: "`Mijoz identifikatori noto'g'ri`"
+ gdrive_4: "`Nimadir xato ketdi! Yana avtorizatsiya qiling.\nAgar shunday boʻlsa, `@TheUltroid bilan bogʻlaning"
+ gdrive_5: "`Muvaffaqiyatli!\nSiz Google Diskdan Ultroid Userbot bilan foydalanishga tayyorsiz.`"
+ gdrive_6: "``[bu yerga](t.me/{}?start=set)` o'ting va G-Drive`ni sozlang."
+ gdrive_7: “G-Drive’ga [{}]({}) muvaffaqiyatli yuklandi”
+
+ # qo'shimchalarni oling
+ gas_1: "Iltimos, xom havolani taqdim eting!"
+
+ #salom
+ grt_1: "`Xush kelibsiz eslatma saqlandi`"
+ grt_2: "Iltimos, bundan PM emas, balki guruhda foydalaning!"
+ grt_3: "`Xush kelibsiz deb belgilamoqchi bo'lgan xabarga javob bering`"
+ grt_4: "`Xush kelibsiz sozlanmagan!`"
+ grt_5: "`Xush kelibsiz eslatma o'chirildi`"
+ grt_6: "`Hech qanday xayrlashmagan!`"
+ grt_7: "`Xayrlashmoqchi bo'lgan xabarga javob bering`"
+
+ #mediainfo
+ mdi_1: "Batafsil ma'lumot"
+
+ # tungi rejim
+ nightm_1: "Vaqtni to'g'ri formatda bering"
+ nightm_2: "Vaqt muvaffaqiyatli o'rnatildi"
+ nightm_3: "Bajarildi, joriy chat tungi rejimga qo'shildi"
+ nightm_4: "Bajarildi, joriy chat tungi rejimdan olib tashlandi"
+ nightm_5: "Nimadir noto'g'ri ketdi"
+
+ # pmpermit
+ pmperm_1: "Iltimos, javob berishimni kuting, aks holda siz bloklanadi va spam deb xabar qilinadi!!"
+ pmperm_2: "Ey, men sizga spam yubormaslikni aytdim!\nSiz hozircha bloklandingiz va xabar qilindingiz."
+ pmperm_3: "Birovning xabariga javob bering yoki bu buyruqni shaxsiy tarzda sinab ko‘ring."
+
+ # jadval_xabar
+ schdl_1: "`Rejalashtirilgan xabar muvaffaqiyatli'"
+ schdl_2: "`Noto'g'ri format`"
+
+ # ta qidiruv
+ srch_1: "`Kimni qidiring? Menga foydalanuvchi nomini bering!!`"
+ srch_2: "`Bunday foydalanuvchi topilmadi...`"
+ srch_3: "`Qo'shiq topilmadi...`"
+
+ # parcha
+ snip_1: "Snip sifatida belgilash va xabarga javob berish uchun so'z bering."
+ snip_2: "O'chirish uchun so'zni bering..."
+ snip_3: "Bu yerda hech qanday parcha topilmadi."
+
+ #maxsus vositalar
+ spcltool_1: "Audio yoki videoga javob berish"
+ spcltool_2: "`Bajarildi. Endi siz ushbu Audio qo'shmoqchi bo'lgan videoga javob bering`"
+ spcltool_3: "Videoga javob berish"
+ spcltool_4: "`Birinchi navbatda audioga .raw bilan javob bering`"
+ spcltool_5: "Muvaffaqiyatli yuklab olindi, endi audio videoga qo'shilmoqda"
+ spcltool_6: "`Kirishni dd/aa/yyyy formatida qo'ying`"
+ spcltool_7: "`Tug'ilgan kuning bilan🎉🎊`"
+ spcltool_8: "Qidirish uchun biror narsa bering .."
+ spcltool_9: "Hech narsa topilmadi"
+
+ # sudo
+ sudo_1: "`Xatga javob bering yoki uning identifikatori/foydalanuvchi nomini qo'shing.`"
+ sudo_2: "Siz o'zingizni Sudo foydalanuvchisi sifatida qo'sha olmaysiz..."
+ sudo_3: "`Hech qanday SUDO foydalanuvchisi tayinlanmagan ...`"
+ sudo_4: "`Botlarni Sudo foydalanuvchilari sifatida qoʻshib boʻlmaydi.'"
+
+ # chiqish
+ unspl_1: "Hech qanday natija topilmadi!"
+
+ # yangilovchi
+ upd_1: "`Yangilanishlar tekshirilmoqda...`"
+ upd_2: "`Of.. Ba'zi muammolar tufayli yangilovchi davom eta olmaydi.`\n\n**LOGTRACE:**\n"
+ upd_3: "**Yangi YANGILANISH [[{}]]({}/tree/{}) uchun mavjud:\n\nCHANGELOG**\n\n{}"
+ upd_4: "`Oʻzgarishlar jurnali juda katta, uni koʻrish uchun faylni koʻring.'"
+ upd_5: "Yangilanish uchun quyidagi tugmani bosing."
+ upd_6: "\n`Sizning BOTingiz` **yangilangan** `bilan` **[[{}]]({}/tree/{})**\n"
+ upd_7: "`Tezkor yumshoq yangilanish...`"
+
+ # yuklab olish
+ udl_1: "`Yuklab olmoqchi bo'lgan fayl/mediaga javob bering...`"
+ udl_2: "Yuklab olish muvaffaqiyatli..\n\n`{}`\nin `{}`"
+ udl_3: "`Faylga aniq yoʻlni bering`"
+ udl_4: "`Yuklab olishga urinilmoqda...`"
+ udl_5: "`Siz havolani berishni unutdingiz :(`"
+ udl_6: "`Bu katalog boʻsh.`"
+ udl_7: "`Siz buni qilolmaysiz!`"
+
+ # so'z
+ wrd_1: "• **Soʻz:** `{}`\n• **Maʼnosi:** __{}__\n\n• **Misol:** __{}__"
+ wrd_2: "**Word** - `{}`\n\n**Sinonimlar** - \n"
+ wrd_3: "**So'z** - `{}`\n\n**Antonimlar** - \n"
+ wrd_4: "`Ma`nosini topish uchun so`z bering..`"
+ wrd_5: "Sinonimlar"
+ wrd_6: "Antonimlar"
+ wrd_7: "Hech qanday sinonim topilmadi!!\n\n`{}`"
+ wrd_8: "Hech qanday antonim topilmadi!!\n\n`{}`"
+
+ # qabihlik
+ prof_1: "`Ushbu chatni haqoratli so'zlarni filtrlash uchun qo'shdi!'"
+ prof_2: "`Ushbu chat haqoratli soʻzlarni filtrlashdan olib tashlandi!'"
+
+ # ta qayd
+ notes_1: "` Qayddan foydalanish uchun javob va soʻz bilan ushbu buyruqdan foydalaning.`"
+ notes_2: "Bajarildi Eslatma: `#{}` saqlandi."
+ notes_3: "`Oʻchirmoqchi boʻlgan eslatma ishlov beruvchisini bering.'"
+ notes_4: "Ushbu chatlarda topilgan eslatmalar\n\n"
+ notes_5: "Bu yerda hech qanday eslatma topilmadi"
+
+ # stiker vositalari
+ sts_1: "`Siz hech qanday maqola yozmagansiz, Waifu ketadi.`"
+ sts_2: "`Animatsiyalangan stikerga javob berish...`"
+ sts_3: "**Iltimos, {} ** dan tanlang"
+ sts_4: "`Animatsiya qilinmagan stikerga javob berish.`"
+ sts_5: "**To‘plam muvaffaqiyatli o‘tkazildi**.\n**Kanged to‘plami:** [link]({})"
+ sts_6: "`Xabarga/mediaga javob berish...`"
+ sts_7: "`Stiker boshqa toʻplamga qoʻshilgan !\nUshbu toʻplam yangi yaratilgan!\nSizning toʻplamingizni topish mumkin` [bu yerda](t.me/addstickers/{})"
+ sts_8: "`Stiker qo‘shib bo‘lmadi, stikerni qo‘lda qo‘shish uchun @Stickers `botidan foydalaning.`"
+ sts_9: "`Ooo animatsion stiker 👀...`"
+ sts_10: "`Har qanday mediaga javob berish...`"
+ sts_11: "Ushbu stiker o‘rnatilmoqda..."
+ sts_12: "`Kanged!`\n`Emoji`: {}\n`Stikerlar toʻplami` [bu yerda](t.me/addstickers/{})"
+ sts_13: "Bo‘sh joy yetarli emasligi sababli {} to‘plamiga o‘tilmoqda`"
+
+ #qaysi qo'shiq
+ whs_1: "<• Audio faylga javob berish •>"
+ whs_2: "`Qo'shiqni aniqlashga urinilmoqda....`"
+ whs_3: "Qo'shiqni aniqlab bo'lmadi :("
+ whs_4: "**Qo'shiq tanildi!**\nIsmi: __{}__"
+
+ # veb-yuklash
+ wbl_1: "`Fayl nomini bering, iltimos..`"
+
+ #yozuvchi
+ writer_1: "`Matn ham bering`"
+
+ # veb-surat
+ wbs_1: "`Iltimos, URL manzilini bering!`"
+ wbs_2: "URL noto'g'ri!"
+ wbs_3: "**WebShot yaratilgan**\n**URL**: {}"
+
+ #youtube
+ youtube_1: "Audio yuklab olish uchun (youtube) URL manzilini bering!"
+ youtube_2: "`Yuklab olish uchun toʻgʻridan-toʻgʻri audio havolasini bering'"
+ youtube_3: "Videoni yuklab olish uchun (youtube) URL manzilini bering!"
+ youtube_4: "`Yuklab olish uchun bevosita video havolasini bering`"
+ youtube_5: "Audio yuklab olish uchun menga (youtube) qidiruv so'rovini bering!"
+ youtube_6: "`Audio qoʻshiq yuklab olinmoqda...`"
+ youtube_7: "Video yuklab olish uchun menga (youtube) qidiruv so'rovini bering!"
+ youtube_8: "`Video qoʻshiq yuklab olinmoqda...`"
+
+ # ziptools
+ zip_1: "Har qanday media/hujjatga javob bering."
+ zip_2: "Avval barcha fayllarni `{}addzip` orqali qo'shing, so'ngra barcha fayllarni bittadan ziplash uchun doZip."
+ zip_3: "`Faqat zip faylga javob berish`"
+
+ # ------------------------- yordamchi -----------------------  ---#
+
+ ast_1: "Qaysi APIni o'rnatmoqchi bo'lganingizni tanlang."
+ ast_2: "**remove.bg API**\nRemove.bg dan API kalitingizni kiriting.\n\nAmaliyatni tugatish uchun /cancel dan foydalaning."
+ ast_3: "Salom {}. Variantlar bilan tanishib chiqing"
+
+ # qatordagi narsa
+ instu_1: "Ilova qidiruvi. Ilova nomini kiriting!"
+ instu_2: "So'nggi qidiruvlar.."
+ instu_3: "Qidirish uchun so'rovni kiriting"
+ instu_4: "Muvaffaqiyat"
+
+ # qayta qo'ng'iroq
+ clst_1: "`Userbot dyno qurilishi davom etmoqda, uning tugashini kuting.`"
+ clst_2: "`Muvaffaqiyatli yangilandi!\nQayta ishga tushirilmoqda, kuting...`"
+ clst_3: "■ O‘zgarishlar jurnallari yaratilmoqda..."
+ clst_4: "Nimadir noto‘g‘ri ketdi..."
+ clst_5: "Bajarildi!"
+
+ # pmbot
+ pmbot_1: "**Ustozim bilan suhbatlashish uchun quyidagi chat(lar)ga qo‘shilishingiz kerak!\n\n**"
+ pmbot_2: "Iltimos, kimnidir bloklash uchun javob yozing."
+ pmbot_3: "Foydalanuvchi allaqachon taqiqlangan!"
+ pmbot_4: "`Xayr! Siz taqiqlangansiz.`\n**Siz yuborgan boshqa xabarlar boshqa yoʻnaltirilmaydi.**"
+ pmbot_5: "Iltimos, kimnidir blokdan chiqarish uchun javob yozing."
+ pmbot_6: "Foydalanuvchi hech qachon taqiqlanmagan!"
+ pmbot_7: "`Tabriklaymiz! Siz taqiqdan chiqarildingiz.`"
+
+ # ---------------------------------- VcBot -----------------  --------- #
+
+ vcbot_1: "`Ovozli suhbatni tark etdim.`"
+ vcbot_2: "**XATO:**\n{}"
+ vcbot_3: "• Ovoz balandligi `{}%` ga o'zgartirildi •"
+ vcbot_4: "`Iltimos, 1 dan 200 gacha hajmni belgilang!`"
+ vcbot_5: "`Ushbu ovozli chatga qayta qoʻshilish.`"
+ vcbot_6: "Siz ovozli chatga ulanmagansiz!"
+ vcbot_7: "`Sabr qiling... Bu biroz vaqt oladi.`"
+ vcbot_8: "Faqat youtube pleylistini bering"
+ vcbot_9: "Meni hazillashyapsanmi?\nNima o'ynash kerak?"
+ vcbot_10: "Chat Vc AUTH guruhlaridan olib tashlandi!"
+ vcbot_11: "`Ovozli suhbat bot foydalanuvchilari roʻyxati olinmoqda...`"
+ vcbot_12: "`Ushbu chatda ovozsiz ijro.`"
+ vcbot_13: "`Ushbu chatda oʻynatish davom ettirildi.`"
+ vcbot_14: "`Ushbu chatda ijro toʻxtatildi.`"
+ vcbot_15: "Iltimos, qo‘shiq nomini ko‘rsating yoki video faylga javob yozing !"
+ vcbot_16: "Chat Vc Auth ro'yxatida yo'q..."
+ vcbot_17: "`Foydalanuvchining xabariga javob bering yoki uning identifikatori/foydalanuvchi nomini qo'shing...`"
+ vcbot_18: "• Vc autentifikatsiya roʻyxati boʻsh.."
+ vcbot_19: "Ushbu suhbatni allaqachon tasdiqlagan!"
+ vcbot_20: "`Yuklash va konvertatsiya qilish...`"
+ vcbot_21: "• Navbatda hech narsa yo‘q!"
+ vcbot_22: "`Chatdagi barcha navbatlar tozalandi`"
