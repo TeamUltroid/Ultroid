@@ -113,7 +113,7 @@ conv_keys = {
     "webp": "webp",
     "image": "png",
     "webm": "webm",
-    "gif": "gif",
+    "gif": "mp4",
 }
 
 
