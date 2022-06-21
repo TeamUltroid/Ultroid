@@ -115,13 +115,15 @@ async def pass_on(ult):
     if len(spli) > 2:
         if spli[1] in RaySoTheme:
             theme = spli[1]
-        dark = bool(spli[2].lower().strip() in ["true", "t"])
+        dark = spli[2].lower().strip() in ["true", "t"]
     elif len(spli) > 1:
         if spli[1] in RaySoTheme:
             theme = spli[1]
         elif spli[1] == "list":
-            text = "**List of Rayso Themes:**\n"
-            text += "\n".join([f"- `{th_}`" for th_ in RaySoTheme])
+            text = "**List of Rayso Themes:**\n" + "\n".join(
+                [f"- `{th_}`" for th_ in RaySoTheme]
+            )
+
             await ult.eor(text)
             return
         else:

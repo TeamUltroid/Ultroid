@@ -42,7 +42,7 @@ async def _(ult):
         await ult.client(UpdateProfileRequest(about=set))
         await eod(ok, f"Profile bio changed to\n`{set}`")
     except Exception as ex:
-        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
+        await eod(ok, f"Error occured.\n`{str(ex)}`")
 
 
 # name changer
@@ -65,7 +65,7 @@ async def _(ult):
         )
         await eod(ok, f"Name changed to `{names}`")
     except Exception as ex:
-        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
+        await eod(ok, f"Error occured.\n`{str(ex)}`")
 
 
 # profile pic
@@ -86,7 +86,7 @@ async def _(ult):
             await ult.client(UploadProfilePhotoRequest(video=file))
         await eod(ok, "`My Profile Photo has Successfully Changed !`")
     except Exception as ex:
-        await eod(ok, "Error occured.\n`{}`".format(str(ex)))
+        await eod(ok, f"Error occured.\n`{str(ex)}`")
     os.remove(replfile)
 
 

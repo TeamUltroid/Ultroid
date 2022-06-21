@@ -76,14 +76,12 @@ async def broadcast_adder(event):
     chat_id = event.chat_id
     if chat_id == udB.get_key("LOG_CHANNEL"):
         return
-    if not is_channel_added(chat_id):
-        xx = add_channel(chat_id)
-        if xx:
-            await x.edit(get_string("bd_5"))
-        else:
-            await x.edit(get_string("sf_8"))
-    else:
+    if is_channel_added(chat_id):
         await x.edit(get_string("bd_6"))
+    elif xx := add_channel(chat_id):
+        await x.edit(get_string("bd_5"))
+    else:
+        await x.edit(get_string("sf_8"))
     await asyncio.sleep(3)
     await x.delete()
 

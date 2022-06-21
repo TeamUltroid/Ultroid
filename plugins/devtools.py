@@ -104,8 +104,8 @@ async def _(event):
                 download=True,
                 backgroundColor=choice(ATRA_COL),
             )
-            url = "https://telegra.ph" + uf(li)[-1]
-            OUT = f"[\xad]({url})" + OUT
+            url = f"https://telegra.ph{uf(li)[-1]}"
+            OUT = f"[\xad]({url}){OUT}"
             out = "**• OUTPUT:**"
             remove(li)
         else:

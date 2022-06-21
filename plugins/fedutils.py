@@ -176,7 +176,7 @@ async def _(event):
                 REASON = event.text.split(" ", maxsplit=1)[1]
             except BaseException:
                 REASON = ""
-            if REASON.strip() == "":
+            if not REASON.strip():
                 REASON = ""
     else:
         arg = event.text.split(" ", maxsplit=2)
@@ -304,7 +304,7 @@ async def _(event):
             try:
                 await conv.send_message("/start")
                 await conv.get_response()
-                await conv.send_message("/fedstat " + sysarg)
+                await conv.send_message(f"/fedstat {sysarg}")
                 audio = await conv.get_response()
                 if audio.message.startswith("This command can only be used once"):
                     await ok.edit(
@@ -339,7 +339,7 @@ async def _(event):
         try:
             await conv.send_message("/start")
             await conv.get_response()
-            await conv.send_message("/fedinfo " + sysarg)
+            await conv.send_message(f"/fedinfo {sysarg}")
             audio = await conv.get_response()
             await event.client.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")

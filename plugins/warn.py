@@ -58,7 +58,7 @@ async def warn(e):
         except BaseException:
             reason = "unknown"
     count, r = warns(e.chat_id, user)
-    r = reason if not r else r + "|$|" + reason
+    r = f"{r}|$|{reason}" if r else reason
     try:
         x = udB.get_key("SETWARN")
         number, action = int(x.split()[0]), x.split()[1]

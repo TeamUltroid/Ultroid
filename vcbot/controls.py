@@ -113,7 +113,7 @@ async def skipper(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat, event)

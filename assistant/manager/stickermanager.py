@@ -65,7 +65,7 @@ async def kang_cmd(ult):
             await ult.client(UploadMediaRequest(InputPeerSelf(), upl))
         )
     get_ = udB.get_key("STICKERS") or {}
-    type_ = "static" if not animated else "anim"
+    type_ = "anim" if animated else "static"
     if not get_.get(ult.sender_id) or not get_.get(ult.sender_id, {}).get(type_):
         sn = f"{pre}_{ult.sender_id}"
         title = f"{get_display_name(sender)}'s Kang Pack"

@@ -107,9 +107,7 @@ def ask_process_info_text():
     if strm == "e":
         print("Exiting...")
         exit(0)
-    elif strm == "a":
-        pass
-    else:
+    elif strm != "a":
         print("Invalid Input")
         print("Enter 'A' to Continue or 'E' to exit...")
         ask_process_info_text()
@@ -132,9 +130,7 @@ def ask_process_apt_install():
         names = " ".join(APT_PACKAGES)
         print("Installing all apt-packages...")
         system(f"apt install {names} -y")
-    elif strm == "s":
-        pass
-    else:
+    elif strm != "s":
         print("Invalid Input\n* Enter Again...")
         ask_process_apt_install()
 
@@ -155,9 +151,7 @@ def ask_and_wait_opt():
         names = " ".join(OPT_PACKAGES.keys())
         print(f"{Fore.YELLOW}Installing all packages...")
         system(f"pip install {names}")
-    elif strm == "s":
-        pass
-    else:
+    elif strm != "s":
         print("Invalid Input\n* Enter Again...")
         ask_and_wait_opt()
 
