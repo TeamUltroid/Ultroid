@@ -88,7 +88,7 @@ async def _help(ult):
                         text = f"`{plug}` is not a valid plugin!"
                         if extractOne:
                             best_match = extractOne(plug, compare_strings)
-                            text += "\nDid you mean `{}`?".format(best_match[0])
+                            text += f"\nDid you mean `{best_match[0]}`?"
                         return await ult.eor(text)
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:

@@ -391,8 +391,7 @@ async def fastpurger(purg):
     pattern="purgeme( (.*)|$)",
 )
 async def fastpurgerme(purg):
-    num = purg.pattern_match.group(1).strip()
-    if num:
+    if num := purg.pattern_match.group(1).strip():
         try:
             nnt = int(num)
         except BaseException:
@@ -406,9 +405,7 @@ async def fastpurgerme(purg):
             mp += 1
         await eor(purg, f"Purged {mp} Messages!", time=5)
         return
-    elif purg.reply_to_msg_id:
-        pass
-    else:
+    elif not purg.reply_to_msg_id:
         return await eod(
             purg,
             "`Reply to a message to purge from or use it like ``purgeme <num>`",
@@ -480,7 +477,7 @@ async def get_all_pinned(event):
     ):
         if i.message:
             t = " ".join(i.message.split()[:4])
-            txt = "{}....".format(t)
+            txt = f"{t}...."
         else:
             txt = "Go to message."
         a += f"{c}. <a href=https://t.me/c/{chat_id}/{i.id}>{txt}</a>\n"

@@ -104,12 +104,13 @@ async def download(event):
                     filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
             try:
                 result = await downloader(
-                    "resources/downloads/" + filename,
+                    f"resources/downloads/{filename}",
                     file,
                     xx,
                     k,
-                    "Downloading " + filename + "...",
+                    f"Downloading {filename}...",
                 )
+
             except MessageNotModifiedError as err:
                 return await xx.edit(str(err))
             file_name = result.name

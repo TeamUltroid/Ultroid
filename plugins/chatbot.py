@@ -61,7 +61,7 @@ async def lister(event):
             user = inline_mention(user)
         except BaseException:
             user = f"`{i}`"
-        msg += "• {}\n".format(user)
+        msg += f"• {user}\n"
     await event.eor(msg, link_preview=False)
 
 

@@ -190,8 +190,7 @@ async def ult_tools(event):
 
 @ultroid_cmd(pattern="csample (.*)")
 async def sampl(ult):
-    color = ult.pattern_match.group(1).strip()
-    if color:
+    if color := ult.pattern_match.group(1).strip():
         img = Image.new("RGB", (200, 100), f"{color}")
         img.save("csample.png")
         try:

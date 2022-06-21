@@ -39,11 +39,7 @@ helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
 
-if add_ons is not False:
-    zhelps = get_string("inline_2")
-else:
-    zhelps = get_string("inline_3")
-
+zhelps = get_string("inline_3") if add_ons is False else get_string("inline_2")
 PLUGINS = HELP.get("Official", [])
 ADDONS = HELP.get("Addons", [])
 upage = 0
@@ -117,7 +113,7 @@ async def inline_handler(event):
 @in_pattern("pasta", owner=True)
 async def _(event):
     ok = event.text.split("-")[1]
-    link = "https://spaceb.in/" + ok
+    link = f"https://spaceb.in/{ok}"
     raw = f"https://spaceb.in/api/v1/documents/{ok}/raw"
     result = await event.builder.article(
         title="Paste",
@@ -172,7 +168,7 @@ async def help_func(ult):
         return await ult.answer(get_string("help_13").format(HNDLR), alert=True)
     if "|" in count:
         _, count = count.split("|")
-    count = 0 if not count else int(count)
+    count = int(count) if count else 0
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(
         text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False

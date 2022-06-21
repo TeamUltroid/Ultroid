@@ -28,7 +28,7 @@ async def live_stream(e):
         song = e.text.split(maxsplit=2)[2]
     elif input[1].startswith("@"):
         cid_moosa = (await e.client.get_entity(input[1])).id
-        chat = int("-100" + str(cid_moosa))
+        chat = int(f"-100{str(cid_moosa)}")
         song = e.text.split(maxsplit=2)[2]
     else:
         song = e.text.split(maxsplit=1)[1]
@@ -48,11 +48,12 @@ async def live_stream(e):
         from_user = inline_mention(e.sender)
         await xx.reply(
             "🎸 **Now playing:** [{}]({})\n⏰ **Duration:** `{}`\n👥 **Chat:** `{}`\n🙋‍♂ **Requested by:** {}".format(
-                title[:30] + "...", link, duration, chat, from_user
+                f"{title[:30]}...", link, duration, chat, from_user
             ),
             file=thumb,
             link_preview=False,
         )
+
         await xx.delete()
         await ultSongs.group_call.start_audio(file)
     else:

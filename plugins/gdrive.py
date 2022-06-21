@@ -64,9 +64,8 @@ async def files(event):
     if not os.path.exists(GDrive.token_file):
         return await event.eor(get_string("gdrive_6").format(asst.me.username))
     eve = await event.eor(get_string("com_1"))
-    files = GDrive._list_files
     msg = ""
-    if files:
+    if files := GDrive._list_files:
         msg += f"{len(files.keys())} files found in gdrive.\n\n"
         for _ in files:
             msg += f"> [{files[_]}]({_})\n"
@@ -114,7 +113,7 @@ async def _(event):
             filename = input_file.file.name
             if not filename:
                 filename = str(round(time.time()))
-            filename = location + "/" + filename
+            filename = f"{location}/{filename}"
             try:
                 filename, downloaded_in = await event.client.fast_downloader(
                     file=input_file.media.document,
@@ -147,7 +146,7 @@ async def _(event):
         folder_id = GDrive.create_directory(filename)
         c = 0
         for files in sorted(files):
-            file = filename + "/" + files
+            file = f"{filename}/{files}"
             if not os.path.isdir(file):
                 try:
                     await GDrive._upload_file(mone, path=file, folder_id=folder_id)

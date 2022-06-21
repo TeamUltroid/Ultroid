@@ -50,7 +50,7 @@ async def on_new_mssg(event):
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
-                        uri = "t.me/" + TAHC_.username
+                        uri = f"t.me/{TAHC_.username}"
                     elif CACHE.get(chat):
                         uri = CACHE[chat]
                     else:
@@ -98,7 +98,7 @@ async def on_out_mssg(event):
                 os.remove(photu)
             return
         except BaseException as er:
-            return await event.reply("**ERROR : **" + str(er))
+            return await event.reply(f"**ERROR : **{str(er)}")
     elif event.text.startswith("/"):
         return
     if to_user:

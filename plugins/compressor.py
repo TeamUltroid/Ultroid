@@ -66,12 +66,13 @@ async def _(e):
         xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
-            "resources/downloads/" + name,
+            f"resources/downloads/{name}",
             vfile,
             xxx,
             c_time,
-            "Downloading " + name + "...",
+            f"Downloading {name}...",
         )
+
         o_size = os.path.getsize(file.name)
         d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
@@ -110,13 +111,14 @@ async def _(e):
                     some_eta = ((int(total_frames) - elapse) / speed) * 1000
                     text = f"`Compressing {file_name} at {crf} CRF.\n`"
                     progress_str = "`[{0}{1}] {2}%\n\n`".format(
-                        "".join("●" for i in range(math.floor(per / 5))),
-                        "".join("" for i in range(20 - math.floor(per / 5))),
+                        "".join("●" for _ in range(math.floor(per / 5))),
+                        "".join("" for _ in range(20 - math.floor(per / 5))),
                         round(per, 2),
                     )
 
-                    e_size = humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
-                    eta = "~" + time_formatter(some_eta)
+
+                    e_size = f"{humanbytes(size)} of ~{humanbytes((size / per) * 100)}"
+                    eta = f"~{time_formatter(some_eta)}"
                     try:
                         await xxx.edit(
                             text
@@ -142,13 +144,7 @@ async def _(e):
         caption += f"**Compressed Size: **`{humanbytes(c_size)}`\n"
         caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
         caption += f"\n**Time Taken To Compress: **`{difff}`"
-        mmmm = await uploader(
-            out,
-            out,
-            f_time,
-            xxx,
-            "Uploading " + out + "...",
-        )
+        mmmm = await uploader(out, out, f_time, xxx, f"Uploading {out}...")
         if to_stream:
             data = await metadata(out)
             width = data["width"]

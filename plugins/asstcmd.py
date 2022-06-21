@@ -45,14 +45,14 @@ async def ac(e):
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://telegra.ph{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await e.eor(get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://telegra.ph{variable[0]}"
         else:
             m = utils.pack_bot_file_id(wt.media)
         if wt.text:
@@ -91,7 +91,7 @@ async def lscmd(e):
     if list_cmds():
         ok = get_string("asstcmd_6")
         for x in list_cmds():
-            ok += "/" + x + "\n"
+            ok += f"/{x}" + "\n"
         return await e.eor(ok)
     return await e.eor(get_string("asstcmd_5"))
 

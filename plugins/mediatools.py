@@ -57,12 +57,13 @@ async def mi(e):
             elif "video" in mime_type:
                 filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
         dl = await downloader(
-            "resources/downloads/" + filename,
+            f"resources/downloads/{filename}",
             file,
             ee,
             taime,
             f"`**[{xx}]({url})**\n\n`Loading More...",
         )
+
         naam = dl.name
     else:
         naam = await r.download_media()
@@ -104,7 +105,7 @@ async def rotate_(ult):
         cv2.imwrite(file, new_)
     elif reply.video:
         media = await reply.download_media()
-        file = media + ".mp4"
+        file = f"{media}.mp4"
         await bash(
             f'ffmpeg -i "{media}" -c copy -metadata:s:v:0 rotate={match} "{file}" -y'
         )

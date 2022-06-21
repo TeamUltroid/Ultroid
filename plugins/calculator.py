@@ -85,20 +85,20 @@ async def _(e):
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "/100"})
-            await e.answer(str(get + "/100"))
+            CALC.update({user: f"{get}/100"})
+            await e.answer(str(f"{get}/100"))
     elif x == "÷":
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "/"})
-            await e.answer(str(get + "/"))
+            CALC.update({user: f"{get}/"})
+            await e.answer(str(f"{get}/"))
     elif x == "x":
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "*"})
-            await e.answer(str(get + "*"))
+            CALC.update({user: f"{get}*"})
+            await e.answer(str(f"{get}*"))
     elif x == "=":
         if CALC.get(user):
             get = CALC[user]

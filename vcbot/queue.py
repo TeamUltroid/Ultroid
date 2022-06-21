@@ -31,7 +31,7 @@ async def lstqueue(event):
     q = list_queue(chat)
     if not q:
         return await event.eor(get_string("vcbot_21"))
-    await event.eor("• <strong>Queue:</strong>\n\n{}".format(q), parse_mode="html")
+    await event.eor(f"• <strong>Queue:</strong>\n\n{q}", parse_mode="html")
 
 
 @vc_asst("clearqueue")
@@ -41,7 +41,7 @@ async def clean_queue(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     if VC_QUEUE.get(chat):
