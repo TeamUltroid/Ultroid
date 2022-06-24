@@ -27,8 +27,7 @@ async def dheh(e):
 async def oqha(e):
     if not await admin_check(e):
         return
-    match = e.pattern_match.group(1).strip()
-    if match:
+    if match := e.pattern_match.group(1).strip():
         text = match
         reply_to = e
     elif e.is_reply:

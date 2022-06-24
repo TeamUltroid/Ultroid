@@ -33,7 +33,7 @@ async def mute(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -48,7 +48,7 @@ async def unmute(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -63,7 +63,7 @@ async def pauser(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -78,7 +78,7 @@ async def resumer(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat)
@@ -93,7 +93,7 @@ async def replayer(event):
         try:
             chat = await event.client.parse_id(chat)
         except Exception as e:
-            return await event.eor("**ERROR:**\n{}".format(str(e)))
+            return await event.eor(f"**ERROR:**\n{str(e)}")
     else:
         chat = event.chat_id
     ultSongs = Player(chat)

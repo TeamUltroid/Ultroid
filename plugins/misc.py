@@ -44,14 +44,14 @@ async def diela(e):
     m = await e.eor(get_string("com_1"))
     li = "https://daysoftheyear.com"
     te = "🎊 **Events of the Day**\n\n"
-    da = dt.today()
+    da = dt.now()
     month = da.strftime("%b")
-    li += "/days/" + month + "/" + da.strftime("%F").split("-")[2]
+    li += f"/days/{month}/" + da.strftime("%F").split("-")[2]
     ct = await async_searcher(li, re_content=True)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:
-        te += "• " + f'[{eve.text}]({eve["href"]})\n'
+        te += f'• [{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)
 
 
@@ -71,10 +71,7 @@ async def pinterest(e):
         _soup = bs(soup, "html.parser").find("table").tbody.find_all("tr")
     except BaseException:
         return await e.eor("`Wrong link or private pin.`", time=5)
-    if len(_soup) > 1:
-        file = _soup[1]
-    else:
-        file = _soup[0]
+    file = _soup[1] if len(_soup) > 1 else _soup[0]
     file = file.td.a["href"]
     await e.client.send_file(e.chat_id, file, caption=f"Pin:- {m}")
 
@@ -132,11 +129,7 @@ async def _(e):
         return await e.eor(get_string("ascii_1"))
     m = await e.eor(get_string("ascii_2"))
     img = await (await e.get_reply_message()).download_media()
-    char = (
-        "■"
-        if not e.pattern_match.group(1).strip()
-        else e.pattern_match.group(1).strip()
-    )
+    char = e.pattern_match.group(1).strip() or "■"
     converter = Img2HTMLConverter(char=char)
     html = converter.convert(img)
     shot = WebShot(quality=85)

@@ -206,8 +206,8 @@ async def siesace(e):
         performer = data["primary_artists"]
     except KeyError:
         return await eve.eor("`Something went wrong.`")
-    song, _ = await fast_download(url, filename=title + ".m4a")
-    thumb, _ = await fast_download(img, filename=title + ".jpg")
+    song, _ = await fast_download(url, filename=f"{title}.m4a")
+    thumb, _ = await fast_download(img, filename=f"{title}.jpg")
     song, _ = await e.client.fast_uploader(song, to_delete=True)
     await eve.eor(
         file=song,

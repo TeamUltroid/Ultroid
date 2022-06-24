@@ -125,8 +125,7 @@ if udB.get_key("TAG_LOG"):
                 return
             if event.is_private:
                 return
-            entities = event.get_entities_text()
-            if entities:
+            if entities := event.get_entities_text():
                 is_self = False
                 username = event.client.me.username
                 if username:

@@ -61,8 +61,7 @@ async def set_time(e):
 
 @ultroid_cmd(pattern="addnm( (.*)|$)")
 async def add_grp(e):
-    pat = e.pattern_match.group(1).strip()
-    if pat:
+    if pat := e.pattern_match.group(1).strip():
         try:
             add_night((await ultroid_bot.get_entity(pat)).id)
             return await e.eor(f"Done, Added {pat} To Night Mode.")
@@ -74,8 +73,7 @@ async def add_grp(e):
 
 @ultroid_cmd(pattern="remnm( (.*)|$)")
 async def rem_grp(e):
-    pat = e.pattern_match.group(1).strip()
-    if pat:
+    if pat := e.pattern_match.group(1).strip():
         try:
             rem_night((await ultroid_bot.get_entity(pat)).id)
             return await e.eor(f"Done, Removed {pat} To Night Mode.")
@@ -92,7 +90,7 @@ async def rem_grp(e):
     for x in chats:
         try:
             ok = await ultroid_bot.get_entity(x)
-            name += "@" + ok.username if ok.username else ok.title
+            name += f"@{ok.username}" if ok.username else ok.title
         except BaseException:
             name += str(x)
     await e.eor(name)

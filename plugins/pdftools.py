@@ -62,12 +62,9 @@ async def pdfseimg(event):
     k = time.time()
     filename = "hehe.pdf"
     result = await downloader(
-        "pdf/" + filename,
-        file,
-        xx,
-        k,
-        "Downloading " + filename + "...",
+        f"pdf/{filename}", file, xx, k, f"Downloading {filename}..."
     )
+
     await xx.delete()
     pdfp = "pdf/hehe.pdf"
     pdfp.replace(".pdf", "")
@@ -77,7 +74,7 @@ async def pdfseimg(event):
         for num in range(pdf.numPages):
             pw = PdfFileWriter()
             pw.addPage(pdf.getPage(num))
-            fil = os.path.join("pdf/ult{}.png".format(num + 1))
+            fil = os.path.join(f"pdf/ult{num + 1}.png")
             ok.append(fil)
             with open(fil, "wb") as f:
                 pw.write(f)
@@ -126,13 +123,7 @@ async def pdfsetxt(event):
     file = ok.media.document
     k = time.time()
     filename = ok.file.name
-    result = await downloader(
-        filename,
-        file,
-        xx,
-        k,
-        "Downloading " + filename + "...",
-    )
+    result = await downloader(filename, file, xx, k, f"Downloading {filename}...")
     await xx.delete()
     dl = result.name
     if not msg:
@@ -142,7 +133,7 @@ async def pdfsetxt(event):
             for page_num in range(pdf.numPages):
                 pageObj = pdf.getPage(page_num)
                 txt = pageObj.extractText()
-                f.write("Page {}\n".format(page_num + 1))
+                f.write(f"Page {page_num + 1}\n")
                 f.write("".center(100, "-"))
                 f.write(txt)
         await event.client.send_file(

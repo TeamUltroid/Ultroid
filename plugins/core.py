@@ -50,7 +50,7 @@ async def unload(event):
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
-    zym = shortname + ".py"
+    zym = f"{shortname}.py"
     if zym in lsd:
         try:
             un_plug(shortname)
@@ -73,7 +73,7 @@ async def uninstall(event):
         return
     lsd = os.listdir("addons")
     lst = os.listdir("plugins")
-    zym = shortname + ".py"
+    zym = f"{shortname}.py"
     if zym in lsd:
         try:
             un_plug(shortname)

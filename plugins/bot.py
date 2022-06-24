@@ -140,12 +140,13 @@ async def lol(ult):
         parse = "html"
         als = in_alive.format(
             header,
-            ultroid_version + f" [{HOSTED_ON}]",
+            f"{ultroid_version} [{HOSTED_ON}]",
             UltVer,
             pyver(),
             uptime,
             kk,
         )
+
         if _e := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("🌀", _e)
     else:
@@ -153,13 +154,14 @@ async def lol(ult):
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
-            ultroid_version + f" [{HOSTED_ON}]",
+            f"{ultroid_version} [{HOSTED_ON}]",
             UltVer,
             uptime,
             pyver(),
             __version__,
             kk,
         )
+
         if a := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("✵", a)
     if pic:
@@ -279,13 +281,9 @@ async def inline_alive(ult):
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
-        header,
-        ultroid_version + f" [{HOSTED_ON}]",
-        UltVer,
-        pyver(),
-        uptime,
-        kk,
+        header, f"{ultroid_version} [{HOSTED_ON}]", UltVer, pyver(), uptime, kk
     )
+
     if _e := udB.get_key("ALIVE_EMOJI"):
         als = als.replace("🌀", _e)
     builder = ult.builder
@@ -298,8 +296,7 @@ async def inline_alive(ult):
                     )
                 ]
             else:
-                _pic = resolve_bot_file_id(pic)
-                if _pic:
+                if _pic := resolve_bot_file_id(pic):
                     pic = _pic
                     buttons.insert(
                         0, [Button.inline(get_string("bot_2"), data="alive")]

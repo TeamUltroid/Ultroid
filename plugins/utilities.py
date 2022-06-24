@@ -250,7 +250,7 @@ async def _(event):
     done, key = await get_paste(message)
     if not done:
         return await xx.eor(key)
-    link = "https://spaceb.in/" + key
+    link = f"https://spaceb.in/{key}"
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     reply_text = (
         f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
@@ -258,7 +258,7 @@ async def _(event):
     try:
         if event.client._bot:
             return await xx.eor(reply_text)
-        ok = await event.client.inline_query(asst.me.username, "pasta-" + key)
+        ok = await event.client.inline_query(asst.me.username, f"pasta-{key}")
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException as e:
@@ -271,8 +271,7 @@ async def _(event):
     manager=True,
 )
 async def _(event):
-    match = event.pattern_match.group(1).strip()
-    if match:
+    if match := event.pattern_match.group(1).strip():
         try:
             user = await event.client.parse_id(match)
         except Exception as er:
@@ -351,8 +350,7 @@ async def _(event):
         user.bot,
         common_chats,
     )
-    chk = is_gbanned(user_id)
-    if chk:
+    if chk := is_gbanned(user_id):
         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
 <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
     else:
@@ -433,7 +431,7 @@ async def abs_rmbg(event):
         os.remove(dl)
         return await event.eor(get_string("com_4"))
     if dl.endswith("webp"):
-        file = dl + ".png"
+        file = f"{dl}.png"
         Image.open(dl).save(file)
         os.remove(dl)
         dl = file
@@ -477,18 +475,18 @@ async def telegraphcmd(event):
         getit = await reply.download_media()
         dar = mediainfo(reply.media)
         if dar == "sticker":
-            file = getit + ".png"
+            file = f"{getit}.png"
             Image.open(getit).save(file)
             os.remove(getit)
             getit = file
         elif dar.endswith("animated"):
-            file = getit + ".gif"
+            file = f"{getit}.gif"
             await bash(f"lottie_convert.py '{getit}' {file}")
             os.remove(getit)
             getit = file
         if "document" not in dar:
             try:
-                nn = "https://telegra.ph" + uf(getit)[0]
+                nn = f"https://telegra.ph{uf(getit)[0]}"
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error : {e}"
@@ -575,7 +573,7 @@ async def ipinfo(event):
     ip = event.text.split()
     ipaddr = ""
     try:
-        ipaddr = "/" + ip[1]
+        ipaddr = f"/{ip[1]}"
     except IndexError:
         ipaddr = ""
     det = await async_searcher(f"https://ipinfo.io{ipaddr}/geo", re_json=True)

@@ -167,16 +167,16 @@ async def heroku_usage():
 
 
 def db_usage():
-    if udB.name == "Redis":
+    if udB.name == "Mongo":
+        total = 512
+    elif udB.name == "Redis":
         total = 30
     elif udB.name == "SQL":
         total = 20
-    elif udB.name == "Mongo":
-        total = 512
     total = total * (2**20)
     used = udB.usage
-    a = humanbytes(used) + "/" + humanbytes(total)
-    b = str(round((used / total) * 100, 2)) + "%"
+    a = f"{humanbytes(used)}/{humanbytes(total)}"
+    b = f"{str(round((used / total) * 100, 2))}%"
     return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 

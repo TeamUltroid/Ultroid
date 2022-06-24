@@ -44,8 +44,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="listclean$")
 async def _(e):
-    k = udB.get_key("CLEANCHAT")
-    if k:
+    if k := udB.get_key("CLEANCHAT"):
         o = ""
         for x in k:
             try:

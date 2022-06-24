@@ -89,7 +89,7 @@ async def doai(e):
 
     bts = [bts, cts]
     # ignored Back Button since it makes the Pagination looks Bad
-    await e.edit("Q. " + qu, buttons=bts)
+    await e.edit(f"Q. {qu}", buttons=bts)
 
 
 @callback(re.compile("aka_(.*)"), owner=True)

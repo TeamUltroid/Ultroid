@@ -157,19 +157,17 @@ class Player:
             if MSGID_CACHE.get(chat_id):
                 await MSGID_CACHE[chat_id].delete()
                 del MSGID_CACHE[chat_id]
-            text = "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
-                pos, link, title, dur, from_user
-            )
+            text = f"<strong>🎧 Now playing #{pos}: <a href={link}>{title}</a>\n⏰ Duration:</strong> <code>{dur}</code>\n👤 <strong>Requested by:</strong> {from_user}"
+
             try:
                 xx = await vcClient.send_message(
                     self._current_chat,
-                    "<strong>🎧 Now playing #{}: <a href={}>{}</a>\n⏰ Duration:</strong> <code>{}</code>\n👤 <strong>Requested by:</strong> {}".format(
-                        pos, link, title, dur, from_user
-                    ),
+                    f"<strong>🎧 Now playing #{pos}: <a href={link}>{title}</a>\n⏰ Duration:</strong> <code>{dur}</code>\n👤 <strong>Requested by:</strong> {from_user}",
                     file=thumb,
                     link_preview=False,
                     parse_mode="html",
                 )
+
             except ChatSendMediaForbiddenError:
                 xx = await vcClient.send_message(
                     self._current_chat, text, link_preview=False, parse_mode="html"
@@ -202,9 +200,10 @@ class Player:
         if done:
             await vcClient.send_message(
                 self._current_chat,
-                "• Joined VC in <code>{}</code>".format(chat_id),
+                f"• Joined VC in <code>{chat_id}</code>",
                 parse_mode="html",
             )
+
             return True
         await vcClient.send_message(
             self._current_chat,
@@ -314,7 +313,7 @@ async def get_from_queue(chat_id):
 
 
 async def download(query):
-    if query.startswith("https://") and not "youtube" in query.lower():
+    if query.startswith("https://") and "youtube" not in query.lower():
         thumb, duration = None, "Unknown"
         title = link = query
     else:
@@ -398,16 +397,17 @@ async def dl_playlist(chat, from_user, link):
 
 async def file_download(event, reply, fast_download=True):
     thumb = "https://telegra.ph/file/22bb2349da20c7524e4db.mp4"
-    title = reply.file.title or reply.file.name or str(time()) + ".mp4"
-    file = reply.file.name or str(time()) + ".mp4"
+    title = reply.file.title or reply.file.name or f"{str(time())}.mp4"
+    file = reply.file.name or f"{str(time())}.mp4"
     if fast_download:
         dl = await downloader(
-            "vcbot/downloads/" + file,
+            f"vcbot/downloads/{file}",
             reply.media.document,
             event,
             time(),
-            "Downloading " + title + "...",
+            f"Downloading {title}...",
         )
+
         dl = dl.name
     else:
         dl = await reply.download_media()

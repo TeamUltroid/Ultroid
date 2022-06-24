@@ -32,14 +32,14 @@ async def mean(event):
     wrd = event.pattern_match.group(1).strip()
     if not wrd:
         return await event.eor(get_string("wrd_4"))
-    url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + wrd
+    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{wrd}"
     out = await async_searcher(url, re_json=True)
     try:
         return await event.eor(f'**{out["title"]}**')
     except (KeyError, TypeError):
         pass
     defi = out[0]["meanings"][0]["definitions"][0]
-    ex = "None" if not defi.get("example") else defi["example"]
+    ex = defi["example"] if defi.get("example") else "None"
     text = get_string("wrd_1").format(wrd, defi["definition"], ex)
     if defi.get("synonyms"):
         text += (

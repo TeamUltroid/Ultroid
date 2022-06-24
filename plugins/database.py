@@ -38,15 +38,13 @@ async def _(ult):
         data = match.split(delim, maxsplit=1)
         if data[0] in ["--extend", "-e"]:
             data = data[1].split(maxsplit=1)
-            data[1] = str(udB.get_key(data[0])) + " " + data[1]
+            data[1] = f"{str(udB.get_key(data[0]))} {data[1]}"
         udB.set_key(data[0], data[1])
         redisdata = Redis(data[0])
         await ult.eor(
-            "**DB Key Value Pair Updated\nKey :** `{}`\n**Value :** `{}`".format(
-                data[0],
-                redisdata,
-            ),
+            f"**DB Key Value Pair Updated\nKey :** `{data[0]}`\n**Value :** `{redisdata}`"
         )
+
     except BaseException:
         await ult.eor(get_string("com_7"))
 
@@ -83,11 +81,9 @@ async def _(ult):
             udB.rename(data[0], data[1])
             await eor(
                 ult,
-                "**DB Key Rename Successful\nOld Key :** `{}`\n**New Key :** `{}`".format(
-                    data[0],
-                    data[1],
-                ),
+                f"**DB Key Rename Successful\nOld Key :** `{data[0]}`\n**New Key :** `{data[1]}`",
             )
+
         except BaseException:
             await ult.eor(get_string("com_7"))
     else:

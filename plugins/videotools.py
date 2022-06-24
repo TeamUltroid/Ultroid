@@ -28,9 +28,7 @@ from . import bash, duration_s, eod, genss, get_string, mediainfo, stdr, ultroid
 @ultroid_cmd(pattern="sample( (.*)|$)")
 async def gen_sample(e):
     sec = e.pattern_match.group(1).strip()
-    stime = 30
-    if sec and sec.isdigit():
-        stime = int(sec)
+    stime = int(sec) if sec and sec.isdigit() else 30
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
         msg = await e.eor(get_string("com_1"))
@@ -66,9 +64,7 @@ async def gen_sample(e):
 @ultroid_cmd(pattern="vshots( (.*)|$)")
 async def gen_shots(e):
     ss = e.pattern_match.group(1).strip()
-    shot = 5
-    if ss and ss.isdigit():
-        shot = int(ss)
+    shot = int(ss) if ss and ss.isdigit() else 5
     vido = await e.get_reply_message()
     if vido and vido.media and "video" in mediainfo(vido.media):
         msg = await e.eor(get_string("com_1"))

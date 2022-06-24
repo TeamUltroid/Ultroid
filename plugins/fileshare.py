@@ -34,7 +34,7 @@ async def filestoreplg(event):
         return await event.eor(get_string("fsh_3"), time=10)
     # allow storing both messages and media.
     filehash = await get_file_link(msg)
-    link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
+    link_to_file = f"https://t.me/{asst.me.username}?start={filehash}"
     await event.eor(
         get_string("fsh_2").format(link_to_file),
         link_preview=False,
@@ -100,6 +100,6 @@ async def file_short(event):
                 )
     if not res:
         title = "You have no stored file :("
-        text = title + f"\n\nRead `{HNDLR}help fileshare` to know how to store."
+        text = f"{title}\n\nRead `{HNDLR}help fileshare` to know how to store."
         return await event.answer([await event.builder.article(title=title, text=text)])
     await event.answer(res, switch_pm="• File Store •", switch_pm_param="start")
