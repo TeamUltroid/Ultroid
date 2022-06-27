@@ -1,5 +1,5 @@
 # Important Requirements here.
 
 https://github.com/New-dev0/Telethon/archive/Aurium.zip
-py-Ultroid==2022.6.6
+https://github.com/TeamUltroid/pyUltroid/archive/refs/heads/dev.zip
 pytgcalls==3.0.0.dev21
