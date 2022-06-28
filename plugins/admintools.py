@@ -4,43 +4,48 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}promote <reply to user/userid/username>`
-• `{i}demote`
-    Promote/Demote the user in the chat.
+from . import get_string
 
-• `{i}ban <reply to user/userid/username> <reason>`
-• `{i}unban`
-    Ban/Unban the user from the chat.
+__doc__ = get_string("help_admintools")
 
-• `{i}kick <reply to user/userid/username> <reason>`
-    Kick the user from the chat.
+# """
+# ✘ Commands Available -
 
-• `{i}pin <reply to message>`
-    Pin the message in the chat
-• `{i}tpin <time> <temp pin message>`
-• `{i}unpin (all) <reply to message>`
-    Unpin the messages in the chat.
+# • `{i}promote <reply to user/userid/username>`
+# • `{i}demote`
+#     Promote/Demote the user in the chat.
 
-• `{i}pinned`
-   Get pinned message in the current chat.
-• `{i}listpinned`
-   Get all pinned messages in current chat
+# • `{i}ban <reply to user/userid/username> <reason>`
+# • `{i}unban`
+#     Ban/Unban the user from the chat.
 
-• `{i}autodelete <24h/7d/1m/off>`
-   Enable Auto Delete Messages in Chat.
+# • `{i}kick <reply to user/userid/username> <reason>`
+#     Kick the user from the chat.
 
-• `{i}purge <reply to message>`
-    Purge all messages from the replied message.
+# • `{i}pin <reply to message>`
+#     Pin the message in the chat
+# • `{i}tpin <time> <temp pin message>`
+# • `{i}unpin (all) <reply to message>`
+#     Unpin the messages in the chat.
 
-• `{i}purgeme <reply to message>`
-    Purge Only your messages from the replied message.
+# • `{i}pinned`
+#    Get pinned message in the current chat.
+# • `{i}listpinned`
+#    Get all pinned messages in current chat
 
-• `{i}purgeall`
-    Delete all msgs of replied user.
-"""
+# • `{i}autodelete <24h/7d/1m/off>`
+#    Enable Auto Delete Messages in Chat.
+
+# • `{i}purge <reply to message>`
+#     Purge all messages from the replied message.
+
+# • `{i}purgeme <reply to message>`
+#     Purge Only your messages from the replied message.
+
+# • `{i}purgeall`
+#     Delete all msgs of replied user.
+# """
 
 import asyncio
 
@@ -267,7 +272,7 @@ async def tkicki(e):
     except Exception as ex:
         return await eor(e, f"`{ex}`")
     try:
-        bun = ban_time(e, tme)
+        bun = ban_time(tme)
         await e.client.edit_permissions(
             e.chat_id, user.id, until_date=bun, view_messages=False
         )
@@ -335,11 +340,9 @@ async def pin_message(ult):
     if not match:
         return await ult.eor("`Please provide time..`", time=8)
     msg = await ult.eor(get_string("com_1"))
-    time = ban_time(msg, match)
-    if not time:
-        return
     msg_id = ult.reply_to_msg_id
     try:
+        time = ban_time(match)
         await ult.client.pin_message(ult.chat_id, msg_id)
         await msg.eor(f"`pinned for time` `{time}`", time=8)
     except Exception as er:
@@ -488,7 +491,7 @@ async def get_all_pinned(event):
     else:
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
-    if a == "":
+    if not a:
         return await eor(x, get_string("listpin_1"), time=5)
 
     await x.edit(m + a, parse_mode="html")
