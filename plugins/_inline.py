@@ -305,6 +305,7 @@ async def _(e):
             Button.inline(
                 "« Bᴀᴄᴋ",
                 data="open",
+                same_peer=True
             ),
         ],
     )
