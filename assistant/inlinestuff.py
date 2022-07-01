@@ -11,6 +11,7 @@ from datetime import datetime
 from random import choice
 from re import compile as re_compile
 
+from html import unescape
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import (
@@ -303,12 +304,12 @@ async def xda_dev(event):
 
 APP_CACHE = {}
 RECENTS = {}
-
+PLAY_API = "https://googleplay.onrender.com/api/apps?q="
 
 @in_pattern("app", owner=True)
 async def _(e):
     try:
-        f = e.text.split(" ", maxsplit=1)[1].lower()
+        f = e.text.split(maxsplit=1)[1].lower()
     except IndexError:
         get_string("instu_1")
         res = []
@@ -324,33 +325,21 @@ async def _(e):
     except KeyError:
         pass
     foles = []
-    base_uri = "https://play.google.com"
-    url = f"{base_uri}/store/search?q={f.replace(' ', '%20')}&c=apps"
-    aap = await async_searcher(url, re_content=True)
-    b_ = bs(aap, "html.parser", from_encoding="utf-8")
-    aap = b_.find_all("div", "Vpfmgd")
-    for z in aap[:10]:
-        url = base_uri + z.find("a")["href"]
-        scra = await async_searcher(url, re_content=True)
-        bp = bs(scra, "html.parser", from_encoding="utf-8")
-        name = z.find("div", "WsMG1c nnK0zc")["title"]
-        desc = (
-            str(bp.find("div", jsname="sngebd"))
-            .replace('<div jsname="sngebd">', "")
-            .replace("<br/>", "\n")
-            .replace("</div>", "")[:300]
-            + "..."
-        )
-        dev = z.find("div", "KoLSrc").text
-        icon = z.find("img", "T75of QNCnCf")["data-src"]
-        text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({icon})\n"
+    url = PLAY_API + f.replace(" ", "+")
+    aap = await async_searcher(url, re_json=True)
+    for z in aap["results"][:50]:
+        url = "https://play.google.com/store/apps/details?id=" + z["appId"]
+        name = z["title"]
+        desc = unescape(z["summary"]) + "..."
+        dev = z["developer"]["devId"]
+        text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({url})\n"
         text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
         text += f"**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`"
         foles.append(
             await e.builder.article(
                 title=name,
                 description=dev,
-                thumb=wb(icon, 0, "image/jpeg", []),
+                thumb=wb(z["icon"], 0, "image/jpeg", []),
                 text=text,
                 link_preview=True,
                 buttons=[
