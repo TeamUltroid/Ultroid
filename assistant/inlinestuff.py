@@ -330,7 +330,7 @@ async def _(e):
     for z in aap["results"][:50]:
         url = "https://play.google.com/store/apps/details?id=" + z["appId"]
         name = z["title"]
-        desc = unescape(z["summary"])[:300] + "..."
+        desc = unescape(z["summary"])[:300].replace("<br>", "\n") + "..."
         dev = z["developer"]["devId"]
         text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({url})\n"
         text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
