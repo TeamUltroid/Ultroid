@@ -50,7 +50,7 @@ upage = 0
 SUP_BUTTONS = [
     [
         Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("• Support •", url="t.me/UltroidSupport"),
+        Button.url("• Support •", url="t.me/UltroidSupportChat"),
     ],
 ]
 
@@ -302,11 +302,7 @@ async def _(e):
     button = InButtons.copy()
     button.append(
         [
-            Button.inline(
-                "« Bᴀᴄᴋ",
-                data="open",
-                same_peer=True
-            ),
+            Button.inline("« Bᴀᴄᴋ", data="open", same_peer=True),
         ],
     )
     await e.edit(buttons=button, link_preview=False)

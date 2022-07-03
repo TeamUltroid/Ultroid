@@ -32,7 +32,7 @@ from . import _ult_cache
 SUP_BUTTONS = [
     [
         Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("• Support •", url="t.me/UltroidSupport"),
+        Button.url("• Support •", url="t.me/UltroidSupportChat"),
     ],
 ]
 
@@ -306,6 +306,7 @@ APP_CACHE = {}
 RECENTS = {}
 PLAY_API = "https://googleplay.onrender.com/api/apps?q="
 
+
 @in_pattern("app", owner=True)
 async def _(e):
     try:
@@ -314,7 +315,9 @@ async def _(e):
         get_string("instu_1")
         res = []
         if APP_CACHE and RECENTS.get(e.sender_id):
-            res.extend(APP_CACHE[a][0] for a in RECENTS[e.sender_id] if APP_CACHE.get(a))
+            res.extend(
+                APP_CACHE[a][0] for a in RECENTS[e.sender_id] if APP_CACHE.get(a)
+            )
         return await e.answer(
             res, switch_pm=get_string("instu_2"), switch_pm_param="start"
         )
@@ -556,9 +559,7 @@ async def koo_search(ult):
                         ),
                         Button.switch_inline(
                             "• Share •",
-                            query=ult.text
-                            if key_count
-                            else f"{ult.text} | {count}",
+                            query=ult.text if key_count else f"{ult.text} | {count}",
                         ),
                     ],
                 )

@@ -38,7 +38,7 @@ STRINGS = {
   - `{HNDLR}help`
   - `{HNDLR}cmds`""",
     5: """• **For Any Other Query or Suggestion**
-  - Move to **@UltroidSupport**.
+  - Move to **@UltroidSupportChat**.
 
 • Thanks for Reaching till END.""",
 }
@@ -50,7 +50,7 @@ async def init_depl(e):
     if CURRENT == 5:
         return await e.edit(
             STRINGS[5],
-            buttons=Button.inline("<< Back", 'initbk_4'),
+            buttons=Button.inline("<< Back", "initbk_4"),
             link_preview=False,
         )
 
@@ -70,7 +70,7 @@ async def ineiq(e):
     if CURRENT == 1:
         return await e.edit(
             STRINGS[1],
-            buttons=Button.inline("Start Back >>", 'initft_2'),
+            buttons=Button.inline("Start Back >>", "initft_2"),
             link_preview=False,
         )
 

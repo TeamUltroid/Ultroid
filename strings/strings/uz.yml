@@ -2,7 +2,7 @@ name: Uzbekcha
 natively: Uzbekcha
 
 authors:
- - TechnobladeUzb
+  - TechnobladeUzb
 
 # umumiy
 com_1: "`Qayta ishlanmoqda...`"
@@ -30,7 +30,6 @@ help_8: "⚙️ Egasi vositalari"
 help_9: "Sozlamalar ⚙️"
 help_10: "••Cʟᴏgaᴇ••"
 help_11: "Plagin nomi-{}\n\n✘ Mavjud buyruqlar -\n\n"
-
 
 # foydalanuvchi jurnali
 userlogs_1: "Teg jurnalida siz o'rnatgan suhbat identifikatori noto'g'ri, uni to'g'rilang"
@@ -117,8 +116,8 @@ autopic_4: "AUTOPIC ishlatilmadi !!"
 autopic_5: "AUTOPIC to'xtatildi!"
 
 # mos ravishda
-inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nPʟᴜɢɪɪɴs ~"
-inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nAᴅᴅᴏɴs ~ {}**ɴs"
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nPʟᴜɢɪɪɴs ~"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nAᴅᴅᴏɴs ~ {}**ɴs"
 Inline_3: "[Uʟᴛʀᴏ_ULDODUPRANK) \ N \ N \ {\ NAYS ~ n \ Naᴅᴅᴏɴs ~ \ nd \ ndᴏ ** \ ndᴏ  ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Og {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴛᴀʟ Cᴏᴍɴs ~}ᴏᴍ"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
@@ -177,7 +176,6 @@ bd_6: "`Kanal allaqachon ma'lumotlar bazasi!'"
 bd_7: "Ma'lumotlar bazasidan o'chirildi"
 bd_8: "`O'chirish...`"
 bd_9: "Kanal allaqachon ma'lumotlar bazasidan o'chirilgan."
-
 
 # kalkulyator
 calc_1: "• Ultraroid Inline Kalkulyator •"

@@ -43,7 +43,7 @@ userlogs_4: "Seu Bot Assistente pode enviar mensagens no chat de registro de Men
 userlogs_5: "Saiu de `{}`"
 
 # admintools
-adm_1: "\"Eu não conseguir encontra-lo!\""
+adm_1: '"Eu não conseguir encontra-lo!"'
 adm_2: "Hmm. Acho que eu não tenho permissões aqui!`"
 adm_3: "`Forneça um Horário Também..`"
 pro_1: "'Responda a um usuário para promovê-lo!'"
@@ -121,9 +121,9 @@ autopic_4: "AUTOPIC não estava em uso !!"
 autopic_5: "AUTOPIC Parou!"
 
 # inline
-inline_1: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu de Ajuda {}.\n\n Plugins ~ {}**"
-inline_2: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu De ajuda {}.\n\n Addons ~ {}**"
-inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/ultroidsupport)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
+inline_1: "[Suporte Ultroid](t.me/UltroidSupportChat)\n\n **Menu de Ajuda {}.\n\n Plugins ~ {}**"
+inline_2: "[Suporte Ultroid](t.me/UltroidSupportChat)\n\n **Menu De ajuda {}.\n\n Addons ~ {}**"
+inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/UltroidSupportChat)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
 inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
 inline_5: "**O Menu Foi Fechado**"
 inline_6: "**Menu de Ajuda para Chat de Voz {}**\n**Comandos Disponíveis:** `{}`\n\n@TeamUltroid"
