@@ -139,9 +139,10 @@ async def heroku_usage():
     AppHours = math.floor(AppQuotaUsed / 60)
     AppMinutes = math.floor(AppQuotaUsed % 60)
     total, used, free = shutil.disk_usage(".")
+    _ = shutil.disk_usage("/")
+    disk = _.used / _.total * 100
     cpuUsage = psutil.cpu_percent()
     memory = psutil.virtual_memory().percent
-    disk = psutil.disk_usage("/").percent
     upload = humanbytes(psutil.net_io_counters().bytes_sent)
     down = humanbytes(psutil.net_io_counters().bytes_recv)
     TOTAL = humanbytes(total)
