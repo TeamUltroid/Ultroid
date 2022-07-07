@@ -385,9 +385,7 @@ async def fastpurger(purg):
 
     except Exception as er:
         LOGS.info(er)
-    await purg.respond(
-        "__Fast purge complete!__",
-    )
+    await purg.eor("__Fast purge complete!__", time=5)
 
 
 @ultroid_cmd(
@@ -424,9 +422,9 @@ async def fastpurgerme(purg):
         msgs.append(msg)
     if msgs:
         await purg.client.delete_messages(chat, msgs)
-    await eod(
-        purg,
+    await purg.eor(
         "__Fast purge complete!__\n**Purged** `" + str(len(msgs)) + "` **messages.**",
+        time=5,
     )
 
 
