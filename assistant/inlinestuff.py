@@ -234,7 +234,7 @@ async def _(e):
     da = base64.b64decode(choice(apis)).decode("ascii")
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
     data = await async_searcher(url, re_json=True)
-    search_items = data.get("items")
+    search_items = data.get("items", [])
     modss = []
     for a in search_items:
         title = a.get("title")
