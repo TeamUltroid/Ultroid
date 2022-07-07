@@ -27,15 +27,12 @@ opencv-python-headless
 pillow>=7.0.0
 profanitydetector
 psutil
-psycopg2-binary
 pygments
-pymongo[srv]
 pypdf2>=1.26.0
 pytz
 pyyaml>=5.4.1
 qrcode
 requests
-scikit-image
 tabulate
 telegraph
 tgcrypto
