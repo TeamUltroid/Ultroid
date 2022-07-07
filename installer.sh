@@ -44,10 +44,24 @@ install_okteto_cli(){
     fi
 }
 
+dep_install(){
+    echo -e "\n\nInstalling DB Requirement..."
+    if [ $MONGO_URI ]
+        then
+            pip install pymongo[srv]
+    elif [ $DATABASE_URL ]
+        then
+            pip install psycopg2-binary
+    else
+        pip install redis
+    fi
+}
+
 main(){
     (clone_repo) & spinner
     (install_requirements) & spinner
     (railways_dep) & spinner
+    (dep_install) & spinner
     (install_okteto_cli) & spinner
 }
 
