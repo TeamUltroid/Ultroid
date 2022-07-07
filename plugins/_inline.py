@@ -293,7 +293,7 @@ InPlugin = {
     "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
     "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish",
 }
-_InButtons = [Button.switch_inline(_, query=InPlugin[_]) for _ in list(InPlugin.keys())]
+_InButtons = [Button.switch_inline(_, query=InPlugin[_], same_peer=True) for _ in list(InPlugin.keys())]
 InButtons = split_list(_InButtons, 2)
 
 
@@ -302,7 +302,7 @@ async def _(e):
     button = InButtons.copy()
     button.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data="open", same_peer=True),
+            Button.inline("« Bᴀᴄᴋ", data="open"),
         ],
     )
     await e.edit(buttons=button, link_preview=False)
