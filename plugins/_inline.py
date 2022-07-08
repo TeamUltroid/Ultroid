@@ -21,7 +21,8 @@ from telethon.utils import resolve_bot_file_id
 
 from . import (
     HNDLR,
-    INLINE_PIC,
+    inline_pic,
+    InlinePlugin,
     LOGS,
     OWNER_NAME,
     asst,
@@ -34,7 +35,6 @@ from ._help import _main_help_menu
 
 # ================================================#
 
-TLINK = INLINE_PIC or "https://telegra.ph/file/74d6259983e0642923fdb.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
@@ -59,6 +59,7 @@ SUP_BUTTONS = [
 
 @in_pattern(owner=True, func=lambda x: not x.text)
 async def inline_alive(o):
+    TLINK = inline_pic() or "https://telegra.ph/file/74d6259983e0642923fdb.jpg"
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
         "https://telegra.ph/file/acd4f5d61369f74c5e7a7.jpg", 0, "image/jpg", []
@@ -96,9 +97,9 @@ async def inline_handler(event):
         len(HELP.get("Addons", [])),
         len(z),
     )
-    if INLINE_PIC:
+    if inline_pic():
         result = await event.builder.photo(
-            file=INLINE_PIC,
+            file=inline_pic(),
             link_preview=False,
             text=text,
             buttons=_main_help_menu,
@@ -140,7 +141,7 @@ async def setting(event):
             len(HELP.get("Addons", [])),
             len(z),
         ),
-        file=INLINE_PIC,
+        file=inline_pic(),
         link_preview=False,
         buttons=[
             [
@@ -171,7 +172,7 @@ async def help_func(ult):
     count = int(count) if count else 0
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(
-        text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False
+        text, file=inline_pic(), buttons=page_num(count, key), link_preview=False
     )
 
 
@@ -197,7 +198,7 @@ async def uptd_plugin(event):
         help_ = f"{file} has no Detailed Help!"
     help_ += "\n© @TeamUltroid"
     buttons = []
-    if INLINE_PIC:
+    if inline_pic():
         data = f"sndplug_{key}_{file}"
         if index is not None:
             data += f"|{index}"
@@ -229,7 +230,7 @@ async def uptd_plugin(event):
 async def _(event):
     if not await updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
-    if not INLINE_PIC:
+    if not inline_pic():
         return await event.answer(f"Do '{HNDLR}update' to update..")
     repo = Repo.init()
     changelog, tl_chnglog = await gen_chlog(
@@ -276,29 +277,11 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-InPlugin = {
-    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
-    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
-    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
-    "Search on XDA": "xda telegram",
-    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
-    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
-    "Piston Eval": "run javascript console.log('Hello Ultroid')",
-    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
-    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
-    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
-    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
-    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
-    "Tʟ Sᴇᴀʀᴄʜ": "tl",
-    "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
-    "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish",
-}
-_InButtons = [Button.switch_inline(_, query=InPlugin[_], same_peer=True) for _ in list(InPlugin.keys())]
-InButtons = split_list(_InButtons, 2)
-
-
 @callback(data="inlone", owner=True)
 async def _(e):
+    _InButtons = [Button.switch_inline(_, query=InlinePlugin[_], same_peer=True) for _ in list(InlinePlugin.keys())]
+    InButtons = split_list(_InButtons, 2)
+
     button = InButtons.copy()
     button.append(
         [

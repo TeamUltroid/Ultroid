@@ -18,7 +18,7 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.custom import Button
 
-from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
+from . import HNDLR, inline_pic, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
 
 _main_help_menu = [
     [
@@ -122,7 +122,7 @@ async def _help(ult):
                     len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
-                file=INLINE_PIC,
+                file=inline_pic(),
                 buttons=_main_help_menu,
             )
         except BotResponseTimeoutError:

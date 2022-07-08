@@ -57,7 +57,7 @@ from telethon.utils import resolve_bot_file_id
 
 from . import (
     ATRA_COL,
-    INLINE_PIC,
+    inline_pic,
     LOGS,
     OWNER_NAME,
     ULTROID_IMAGES,
@@ -85,7 +85,7 @@ from . import (
     updater,
 )
 
-ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
+ULTPIC = lambda: inline_pic() or choice(ULTROID_IMAGES)
 buttons = [
     [
         Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
@@ -254,7 +254,8 @@ async def _(event):
         await heroku_logs(event)
     elif opt == "carbon" and Carbon:
         event = await event.eor(get_string("com_1"))
-        code = open(file, "r").read()[-2500:]
+        with open(file, "r") as f:
+            code = f.read()[-2500:]
         file = await Carbon(
             file_name="ultroid-logs",
             code=code,
@@ -262,7 +263,8 @@ async def _(event):
         )
         await event.reply("**Ultroid Logs.**", file=file)
     elif opt == "open":
-        file = open("ultroid.log", "r").read()[-4000:]
+        with open("ultroid.log", "r") as f:
+            file = f.read()[-4000:]
         return await event.eor(f"`{file}`")
     else:
         await def_logs(event, file)
@@ -335,13 +337,13 @@ async def _(e):
         call_back()
         await xx.edit(get_string("upd_7"))
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
-        return
+        # return
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
         x = await asst.send_file(
             udB.get_key("LOG_CHANNEL"),
-            ULTPIC,
+            ULTPIC(),
             caption="• **Update Available** •",
             force_document=False,
             buttons=Button.inline("Changelogs", data="changes"),
@@ -365,7 +367,7 @@ async def updava(event):
     await event.delete()
     await asst.send_file(
         udB.get_key("LOG_CHANNEL"),
-        ULTPIC,
+        ULTPIC(),
         caption="• **Update Available** •",
         force_document=False,
         buttons=Button.inline("Changelogs", data="changes"),

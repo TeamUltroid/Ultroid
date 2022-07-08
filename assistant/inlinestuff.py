@@ -268,40 +268,6 @@ async def _(e):
     await e.answer(modss, switch_pm="Search Mod Applications.", switch_pm_param="start")
 
 
-# Inspired by @FindXDaBot
-
-
-@in_pattern("xda", owner=True)
-async def xda_dev(event):
-    QUERY = event.text.split(maxsplit=1)
-    try:
-        query = QUERY[1]
-    except IndexError:
-        return await event.answer(
-            [], switch_pm=get_string("instu_3"), switch_pm_param="start"
-        )
-    le = "https://www.xda-developers.com/search/" + query.replace(" ", "+")
-    ct = await async_searcher(le, re_content=True)
-    ml = bs(ct, "html.parser", from_encoding="utf-8")
-    ml = ml.find_all("div", re_compile("layout_post_"), id=re_compile("post-"))
-    out = []
-    for on in ml:
-        data = on.find_all("img", "xda_image")[0]
-        title = data["alt"]
-        thumb = data["src"]
-        hre = on.find_all("div", "item_content")[0].find("h4").find("a")["href"]
-        desc = on.find_all("div", "item_meta clearfix")[0].text
-        thumb = wb(thumb, 0, "image/jpeg", [])
-        text = f"[{title}]({hre})"
-        out.append(
-            await event.builder.article(
-                title=title, description=desc, url=hre, thumb=thumb, text=text
-            )
-        )
-    uppar = "|| XDA Search Results ||" if out else "No Results Found :("
-    await event.answer(out, switch_pm=uppar, switch_pm_param="start")
-
-
 APP_CACHE = {}
 RECENTS = {}
 PLAY_API = "https://googleplay.onrender.com/api/apps?q="
@@ -688,57 +654,6 @@ async def savn_s(event):
     _savn_cache.update({query: res})
 
 
-_OMG = {}
-
-
-@in_pattern("omgu", owner=True)
-async def omgubuntu(ult):
-    try:
-        match = ult.text.split(maxsplit=1)[1].lower()
-    except IndexError:
-        return await ult.answer(
-            [], switch_pm="Enter Query to search...", switch_pm_param="start"
-        )
-    if _OMG.get(match):
-        return await ult.answer(
-            _OMG[match], switch_pm="OMG Ubuntu Search :]", switch_pm_param="start"
-        )
-    get_web = "https://www.omgubuntu.co.uk/?s=" + match.replace(" ", "+")
-    get_ = await async_searcher(get_web, re_content=True)
-    BSC = bs(get_, "html.parser", from_encoding="utf-8")
-    res = []
-    for cont in BSC.find_all("div", "sbs-layout__item"):
-        img = cont.find("div", "sbs-layout__image")
-        url = img.find("a")["href"]
-        src = img.find("img")["src"]
-        con = cont.find("div", "sbs-layout__content")
-        tit = con.find("a", "layout__title-link")
-        title = tit.text.strip()
-        desc = con.find("p", "layout__description").text.strip()
-        text = f"[{title.strip()}]({url})\n\n{desc}"
-        img = wb(src, 0, "image/jpeg", [])
-        res.append(
-            await ult.builder.article(
-                title=title,
-                type="photo",
-                description=desc,
-                url=url,
-                text=text,
-                buttons=Button.switch_inline(
-                    "Search Again", query=ult.text, same_peer=True
-                ),
-                include_media=True,
-                content=img,
-                thumb=img,
-            )
-        )
-    await ult.answer(
-        res,
-        switch_pm=f"Showing {len(res)} results!" if res else "No Results Found :[",
-        switch_pm_param="start",
-    )
-    _OMG[match] = res
-
 
 @in_pattern("tl", owner=True)
 async def inline_tl(ult):
@@ -782,92 +697,18 @@ async def inline_tl(ult):
     await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
 
 
-@in_pattern("gh", owner=True)
-async def gh_feeds(ult):
-    try:
-        username = ult.text.split(maxsplit=1)[1]
-    except IndexError:
-        return await ult.answer(
-            [],
-            switch_pm="Enter Github Username to see feeds...",
-            switch_pm_param="start",
-        )
-    if not username.endswith("."):
-        return await ult.answer(
-            [], switch_pm="End your query with . to search...", switch_pm_param="start"
-        )
-    username = username[:-1]
-    data = await async_searcher(
-        f"https://api.github.com/users/{username}/events", re_json=True
-    )
-    if not isinstance(data, list):
-        msg = "".join(f"{ak}: `{data[ak]}" + "`\n" for ak in list(data.keys()))
-        return await ult.answer(
-            [
-                await ult.builder.article(
-                    title=data["message"], text=msg, link_preview=False
-                )
-            ],
-            cache_time=300,
-            switch_pm="Error!!!",
-            switch_pm_param="start",
-        )
-    res = []
-    res_ids = []
-    for cont in data[:50]:
-        text = f"<b><a href='https://github.com/{username}'>@{username}</a></b>"
-        title = f"@{username}"
-        extra = None
-        if cont["type"] == "PushEvent":
-            text += " pushed in"
-            title += " pushed in"
-            dt = cont["payload"]["commits"][-1]
-            url = "https://github.com/" + dt["url"].split("/repos/")[-1]
-            extra = f"\n-> <b>message:</b> <code>{dt['message']}</code>"
-        elif cont["type"] == "IssueCommentEvent":
-            title += " commented at"
-            text += " commented at"
-            url = cont["payload"]["comment"]["html_url"]
-        elif cont["type"] == "CreateEvent":
-            title += " created"
-            text += " created"
-            url = "https://github.com/" + cont["repo"]["name"]
-        elif cont["type"] == "PullRequestEvent":
-            if (
-                cont["payload"]["pull_request"].get("user", {}).get("login")
-                != username.lower()
-            ):
-                continue
-            url = cont["payload"]["pull_request"]["html_url"]
-            text += " created a pull request in"
-            title += " created a pull request in"
-        elif cont["type"] == "ForkEvent":
-            text += " forked"
-            title += " forked"
-            url = cont["payload"]["forkee"]["html_url"]
-        else:
-            continue
-        repo = cont["repo"]["name"]
-        repo_url = f"https://github.com/{repo}"
-        title += f" {repo}"
-        text += f" <b><a href='{repo_url}'>{repo}</a></b>"
-        if extra:
-            text += extra
-        thumb = wb(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
-        article = await ult.builder.article(
-            title=title,
-            text=text,
-            url=repo_url,
-            parse_mode="html",
-            link_preview=False,
-            thumb=thumb,
-            buttons=[
-                Button.url("View", url),
-                Button.switch_inline("Search again", query=ult.text, same_peer=True),
-            ],
-        )
-        if article.id not in res_ids:
-            res_ids.append(article.id)
-            res.append(article)
-    msg = f"Showing {len(res)} feeds!" if res else "Nothing Found"
-    await ult.answer(res, cache_time=5000, switch_pm=msg, switch_pm_param="start")
+
+InlinePlugin.update({
+    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
+    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
+    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
+    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
+    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
+    "Piston Eval": "run javascript console.log('Hello Ultroid')",
+    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
+    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
+    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
+    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
+    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
+    "Tʟ Sᴇᴀʀᴄʜ": "tl",
+})

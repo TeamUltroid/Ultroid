@@ -13,7 +13,7 @@ from pyUltroid.functions.helper import *
 from pyUltroid.functions.tools import get_stored_file
 from telethon import Button, custom
 
-from plugins import ATRA_COL
+from plugins import ATRA_COL, InlinePlugin
 from strings import get_languages, get_string, language
 
 OWNER_NAME = ultroid_bot.full_name

@@ -34,17 +34,20 @@ OWNER_ID = ultroid_bot.uid
 
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 
-INLINE_PIC = udB.get_key("INLINE_PIC")
+def inline_pic():
+    INLINE_PIC = udB.get_key("INLINE_PIC")
+    if INLINE_PIC is None:
+        INLINE_PIC = choice(ULTROID_IMAGES)
+    elif INLINE_PIC == False:
+        INLINE_PIC = None
+    return INLINE_PIC
 
-if INLINE_PIC is None:
-    INLINE_PIC = choice(ULTROID_IMAGES)
-elif INLINE_PIC == False:
-    INLINE_PIC = None
 
 Telegraph = telegraph_client()
 
 List = []
 Dict = {}
+InlinePlugin = {}
 N = 0
 
 STUFF = {}
