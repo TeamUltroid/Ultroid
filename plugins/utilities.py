@@ -727,18 +727,18 @@ async def get_restriced_msg(event):
         await event.eor("`Please provide a link!`", time=5)
         return
     xx = await event.eor(get_string("com_1"))
+    chat, msg = get_chat_and_msgid(match)
+    if not (chat and msg):
+        await event.eor(
+            "Provide a valid message link!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
+        )
     try:
-        chat, msg = get_chat_and_msgid(match)
-    except ValueError as error:
-        await event.eor(error, time=5)
-        return
-    if chat.isdigit():
-        chat = int(chat)
-
-    message = await event.client.get_messages(chat, ids=int(msg))
+        message = await event.client.get_messages(chat, ids=msg)
+    except BaseException as er:
+        await event.eor(f"**ERROR**\n`{er}`")
     if message.media:
         media, _ = await event.client.fast_downloader(
-            message.media,
+            message.document,
             show_progress=True,
             event=xx,
             message="Downloading message media...",
