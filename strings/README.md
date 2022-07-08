@@ -26,6 +26,7 @@
 | bn | Bengali [বাংলা] | 382 | 36 |
 | it | Italian [italiano] | 111 | 307 |
 | az | Azerbaijan [Azərbaycan] | 382 | 36 |
+| gl |Galician [Galiciano]
 
 
 If Strings are not present, Google Translation will be used to Translate them at time of Usage.
