@@ -554,7 +554,11 @@ async def sugg(event):
             "`Please reply to a message to make a suggestion poll!`",
         )
     if event.is_reply and not text:
-        text = "Do you Agree to Replied Suggestion ?"
+        reply = await event.get_reply_message()
+        if reply.text and len(reply.text) < 35:
+            text = reply.text
+        else:
+            text = "Do you Agree to Replied Suggestion ?"
     reply_to = event.reply_to_msg_id if event.is_reply else event.id
     try:
         await event.client.send_file(
