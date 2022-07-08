@@ -38,11 +38,11 @@ except ImportError:
     Image = None
     LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
+
 from pyUltroid.functions.tools import four_point_transform
-from skimage.filters import threshold_local
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
-from . import HNDLR, check_filename, downloader, eor, get_string, ultroid_cmd
+from . import HNDLR, check_filename, downloader, eor, get_string, ultroid_cmd, bash, LOGS
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")
@@ -174,11 +174,10 @@ async def imgscan(event):
     if not (ok and (ok.media)):
         await event.eor("`Reply The pdf u Want to Download..`")
         return
-    ultt = await ok.download_media()
-    if not ultt.endswith(("png", "jpg", "jpeg", "webp")):
+    if not (ok.photo or (ok.file.name and ok.file.name.endswith(("png", "jpg", "jpeg", "webp")))):
         await event.eor("`Reply to a Image only...`")
-        os.remove(ultt)
         return
+    ultt = await ok.download_media()
     xx = await event.eor(get_string("com_1"))
     image = cv2.imread(ultt)
     original_image = image.copy()
@@ -205,6 +204,14 @@ async def imgscan(event):
         cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
         simplified_cnt = sortedPoly[0]
     if len(simplified_cnt) == 4:
+        try:
+            from skimage.filters import threshold_local
+        except ImportError:
+            LOGS.info(f"Scikit-Image is not Installed.")
+            await xx.edit("`Installing Scikit-Image...\nThis may take some long...`")
+            _, __ = await bash("pip install scikit-image")
+            LOGS.info(_)
+            from skimage.filters import threshold_local
         cropped_image = four_point_transform(
             original_image,
             simplified_cnt.reshape(4, 2) * ratio,
@@ -266,6 +273,14 @@ async def savepdf(event):
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
             simplified_cnt = sortedPoly[0]
         if len(simplified_cnt) == 4:
+            try:
+                from skimage.filters import threshold_local
+            except ImportError:
+                LOGS.info(f"Scikit-Image is not Installed.")
+                await xx.edit("`Installing Scikit-Image...\nThis may take some long...`")
+                _, __ = await bash("pip install scikit-image")
+                LOGS.info(_)
+                from skimage.filters import threshold_local
             cropped_image = four_point_transform(
                 original_image,
                 simplified_cnt.reshape(4, 2) * ratio,
