@@ -1,0 +1,594 @@
+name: Galician
+natively: Galiciano
+
+
+authors:
+ - D3KRISH
+
+# Commons
+com_1: "Inicie o proceso ..."
+com_2: "A busca comeza ..."
+com_3: "entrada non válida"
+com_4: "Medios non capaces .."
+com_5: "Descargar ..."
+com_6: "Cargando ..."
+com_7: "algo desordenado"
+
+#Chatactions
+can_1: "#GBanned_user unido. \ N \ n usuario: {} \ n razón: {} \ n \ n o usuario estaba prohibido"
+can_2: "∆ #USERNAMEUPDATE \ n \ n @{} cambiou o nome de usuario en @{}"
+can_3: "∆ #USERNAMEUPDATE \ n \ n {} eliminou o nome de usuario (@{})"
+can_4: "∆ #USERNAMEUPDATE \ n \ n {{} novo nome de usuario -> @{}"
+    
+# helpa
+help_1: "{} non é un complemento válido!"
+help_2: "Bot non respondeu á consulta en liña. \ N {} proba o comando de reinicio!"
+help_3: "Por favor, acenda o modo en liña para o seu bot @Botfather."
+help_4: "• complementos"
+help_5: "• Adons"
+help_6: "•• Conversa sonora"
+help_7: "complementos en liña ••"
+help_8: ": Gear: propietario Equipment"
+help_9: "Configuración: engrenaxe:"
+help_10: "•• Cʟᴏꜱᴇ ••"
+help_11: "Nome do complemento -{} \ n \ n✘ comandos dispoñibles -\ n \ n"
+help_12: "A chamada de voz non comeza"
+help_13: "Vostede fai '{} setDb Addons True" para que os complementos poidan vir "
+
+# userlogs
+userlogs_1: "O ID de chat que introduciu é incorrecto, corríxelo"
+userlogs_2: "Póñame a etiqueta a xente en grupo para que a xente poida ser"
+userlogs_3: "Chat" "
+userlogs_4: "O teu barco non pode mensaxes no grupo de rexistro de etiquetas. \ N Engádeo ao rexistro de etiquetas .."
+userlogs_5: "Esquerda {}"
+
+# admintools
+adm_1: "Non sei que o sexa"
+adm_2: "Hmm .. Creo que non teño dereitos aquí"
+adm_3: "Dime o tempo ..."
+pro_1: "promove respondendo a unha persoa"
+pro_2: "{} é agora o administrador {} co nome {}"
+de_1: "DeMote respondendo a unha persoa"
+de_2: "{} xa non no administrador {}"
+ban_1: "Ban o ID do usuario ou o nome de usuario"
+ban_2: "Non podo prohibir ao meu fabricante"
+ban_3: "Non teño dereito a prohibir ao usuario."
+ban_4: "{} {} prohibido {} en {}"
+ban_5: "\ n Reason: {}"
+tban_1: "Responde a alguén ou dá o seu DNI ..."
+tban_2: "prohibido con éxito {} para {}"
+unban_1: "Responder a alguén ou darlle a prohibición o seu DNI"
+unban_2: "Non teño a forza de ter un usuario para ter un desproporcionado"
+unban_3: "{} {} en desgraza {}"
+kick  _1: "Non teño a forza para Prohibir a un usuario"
+kick  _2: "Non podo prohibir o meu fabricante: face_with_tears_of_joy:"
+kick   _3: "Nunca podo darlle unha patada ..."
+kick   _4: "{} patada {} en {}"
+pin_1: "Responde unha mensaxe a pin"
+pinned_1: "Non se atopou ningunha mensaxe de pin"
+pinned_2: "A mensaxe PIN deste chat está aquí [aquí] ({})."
+unpin_1: "Se respondes a unha mensaxe ou usas {} unpin todo"
+listpin_1: "Non hai ningún pin de mensaxes aquí"
+Purge_1: "Responde alí para eliminar a mensaxe de onde"
+Purgeall_1: "Responde a mensaxe de alguén para eliminar a súa mensaxe"
+Purgeall_2: "todas as mensaxes de" {} foron eliminadas "
+
+# antiflood
+antiflood_1: "Configuración antiflood desactivada"
+antiflood_2: "Non hai límites de inundación neste chat."
+antiflood_3: "deixaches de escribir"
+antiflood_4: "actualizou con éxito a configuración antiiflood a {} neste chat."
+antiflood_5: "O límite de inundación para este chat é {}."
+
+# ascii
+ascii_1: "Responde a unha foto"
+ascii_2: "HTML está convertendo ..."
+
+# audiotools
+audiotools_1: "Responde un audio ou vídeo .."
+audiotools_2: "Descargado con éxito agora está a cambiarse de voz"
+audiotools_3: "Escribe o tempo correctamente para recortar"
+audiotools_4: "Datos incorrectos"
+audiotools_5: "Intentar descargar está a suceder ..."
+audiotools_6: "O tempo de recorte é incorrecto"
+audiotools_7: "Audio foi recortado {} a {}"
+audiotools_8: "Responde a un vídeo .."
+audiotools_9: "Non se atopou un son ..."
+audiotools_10: "A voz saíu do vídeo ..."
+
+# asstcmd
+asstcmd_1: "Use este comando con resposta e palabra para usar un comando."
+asstcmd_2: "Dame o comando que queres eliminar"
+asstcmd_3: "/{} eliminado"
+asstcmd_4: "/} 'Comando engadido"
+asstcmd_5: "Non se atopou ningún comando"
+asstcmd_6: "Todos os comandos asistentes \ n \ n"
+
+# Autocorrección
+act_1: "A función de corrección automática activada"
+act_2: "A función de corrección automática desactivada"
+
+
+# Autópico
+Autopic_1: "Dame algunhas frases de asunto ..."
+Autopic_2: "Non hai resultados atopados para" {} "
+Autopic_3: "{} atopou algúns resultados relacionados co teu descubrimento! \ N Autopic comezou!"
+Autopic_4: "Non se está a usar o autópico !!"
+Autopic_5: "Autópico pechado!"
+
+# EN LIÑA
+inline_1: "[soporte vomitroid] (t.me/ultroidsupport) \ n \ n \ n \ n {} Menú de helpa. \ N \ n \ n \ n \ n Plug-in ~ {}"
+inline_2: "[soporte vomitroid] (t.me/ultroidsupport) \ n \ n \ n \ n {} Menú de helpa. \ N \ n \ n \ n \ n adon ~ {}"
+inline_3: "[soporte vomitroid] (t.me/ultroidsupport) \ n \ n \ n {} का मदद मेनू. \ n \ n \ n एडऑन मूल daथ \ n \ n ज.
+inline_4: "{} bot \ n \ n \ n \ n \ n plug-in ~ {} \ n adon ~ {} \ n Comando total ~ {}"
+inline_5: "O menú foi pechado!"
+inline_6: "Menú de helpa de chat de voz para {} \ n comandos dispoñibles {} \ n \ n \ n@Teamultroid"
+inline_7: "dohlp {} para obter a lista de comandos."
+inline_8: "Faga clic no botón inferior para actualizar"
+inline_9: "estás na última actualización"
+
+# tagnotif
+tagnot_1: "{} etiquetado en {} \ n \ n en
+,
+\ n \ n [: entrante_envelope: mensaxe: entrante_envelope:] ({}) "
+tagnot_2: "{} etiquetouche en {} \ n \ n [: entrante_envelope: mensaxe: entrante_envelope:] ({})"
+
+# murmurar
+wspr_1: "@{} elimina a túa mensaxe despois de ler mensaxes secretas. \ N. \ N ou a seguinte mensaxe non se actualizará."
+wspr_2: "A mensaxe elimínase!"
+wspr_3: "Dálle calquera identificación ou nome de usuario tamén"
+wspr_4: "{} atopado \ n de novo busca"
+wspr_5: "Non podes facelo"
+
+# afk
+afk_1: "Xa non era afk \ n \ n {} era para o tempo"
+afk_2: "#AFK \ NAFK foi pechado. \ N \ n Away {}"
+afk_3: "Agora son afk. \ N \ n foi visto por última vez {} primeiro. \ N \ n razón: {}"
+afk_4: "Agora son afk. \ N \ n \ n visto por última vez antes."
+afk_5: "AFK vai. \ N \ n \ n razóns: {}"
+afk_6: "Vou a AFK .."
+
+# bot
+bot_1: "Ola. Estou vivo".
+bot_2: "estatísticas"
+bot_3: "repo"
+bot_4: "soporte"
+bot_5: "• reiniciar ..."
+alive_1: "Bot Ultroid User ... \ n \ n
+**{}**\n\n
+┏━━━━━━━━━━━━━━━━━━━━━ \ n
+┣ propietario - {} \ n
+┣ versión - {} \ n
+┣ py -ulteroide - {} \ n
+┣ Período activo - {} \ n
+┣ python - {} \ n
+┣ Teletón - {} \ n
+┣ Bra -ch -{} \ n
+┗━━━━━━━━━━━━━━━━━━━━
+"
+,
+log: "Hiroku Reverse Regist. \ N Cast [aquí] ({}) tamén!"
+ping: "Ping !! {} ms \ n período activo - {}"
+usage: ": Gear: Dyne Usos: Gear :: \ n \ n
+ -> para o uso de dyeno {}: \ n
+     • {} h {} m
+, [{}%] \ n \ n
+ -> Canta hora permanece a cota de hora este mes: \ n
+     • {} h {} m
+, [{}%] \ n \ n
+Espazo total do disco: {} \ n \ n
+Adecuado: {} baleiro: {} \ n \ n
+: Bar_chart: datos usos: bar_chart: \ n \ n upload: {} \ n descargar: {} \ n \ n
+CPU: {}%\ n Ram: {}%\ n Disc: {}%"
+use_simple: "Espazo de disco total: {} \ n
+Usos: {} \ n
+Libre: {} \ n \ n
+: Bar_chart: datos usos: bar_chart: \ n
+Carga: {} \ n
+Descargar: {} \ n \ n
+CPU: {}%\ n
+Ram: {}%\ n
+Disco: {}%\ n "
+Apagado: "Adeus {}. \ N está pechando ..."
+
+# Lista negra
+blk_1: "Para darme unha palabra á lista negra .."
+blk_2: "{} foi listada aquí."
+blk_3: "Dea unha palabra para eliminar da lista negra .."
+blk_4: "{} eliminado da lista negra"
+blk_5: "Nomes de todas as palabras da lista negra sobre isto: \ n \ n"
+blk_6: "Esta non é unha palabra de lista negra"
+
+# Emisión
+bd_1: "DB está a engadirse ..."
+bd_2: "Intentando engadir todas as canles de administración a DB ..."
+bd_3: "Feito. \ N base de datos xa conectado Chat: {} \ n Chats recén asociados: {}"
+bd_4: "Engadíronse as canles!"
+bd_5: "Engadido á base de datos!"
+bd_6: "A canle xa está na base de datos!"
+bd_7: "Eliminado da base de datos"
+bd_8: "Está a ser eliminado ..."
+bd_9: "A canle xa foi eliminada"
+
+# calculadora
+calc_1: "• Calculadora en liña ultroide •"
+calc_2: "Calculadora pechada"
+
+# Hacks de canle
+cha_1: "canle non válida dada"
+cha_2: "A fonte engadiu correctamente"
+cha_3: "A canle de fonte Alredy engadiu"
+cha_4: "A base de datos de orixe limpou."
+cha_5: "fonte eliminada da base de datos"
+cha_6: "A canle de fonte é alredada da base de datos."
+cha_7: "Canles de destino na base de datos:"
+cha_8: "Canles de orixe na base de datos:"
+
+# Carbono
+carbon_1: "O proceso continúa ..."
+carbon_2: "[{}] (tg: // usuario? Id = {}) carbonatado!"
+carbon_3: "Dálle cor personalizada para crear carbono ..."
+
+# chat_bot
+chab_1: "Responde a un usuario ou dame o seu nome de identificación/usuario para engadir un chatbot de AI!"
+chab_2: "Ningún usuario engadiu AI."
+chab_3: "Lista total de usuarios habilitados por AI neste chat: \ n \ n"
+
+#chats
+chats_1: "O proceso continúa ......"
+chats_2: "Este chat non se pode eliminar"
+chats_3: "#deleted \ n eliminado {}"
+chats_4: "O teu [{}] ({}) converteuse en grupo!"
+chats_5: "Únete a @Teamultroid"
+chats_6: "O teu xefe de grupo / canle creouse!"
+
+# Acción limpa
+clan _1: "Engadido configuración de acción limpa para este chat"
+clan _2: "Eliminouse a configuración de acción limpa para este chat"
+clan _3: "ID non válido"
+clan _4: "Non se engadiu chat"
+clan _5: "As accións limpas están habilitadas neste chat."
+
+# Converter
+cvt_1: "Responde a calquera soporte."
+cvt_2: "Dá o nome e a extensión do ficheiro!"
+cvt_3: "O proceso continúa ..."
+cvt_4: "Responde a calquera soporte .."
+cvt_5: "O ficheiro respondeu non ten miniatura."
+cvt_6: "Engadiu [isto] ({}) como a súa miniatura personalizada"
+cvt_7: "Responde a un ficheiro lexible"
+cvt_8: "Non é un ficheiro lexible."
+
+# Eventos de día
+eod_1: ": confetti_ball: eventos do día \ n \ n"
+eod_2: "• Eventos para {}/2022 \ n \ n"
+
+# Núcleo
+core_1: "Módulo atopado"
+core_2: "Use {} .Paste para pegar en Neko e Raw .."
+core_3: "Busca de novo ..?"
+core_4: "{} módulo atopado"
+core_5: "Use {}. Paste para pegar en Neko e Raw ...."
+core_6: "Módulo {}.
+core_7: "Non hai tales módulos."
+core_8: "Sen módulo {}.
+core_9: "Nomea o complemento que desexa descargar"
+core_10: "{} fíxose correctamente."
+core_11: "Non podes descargar complementos oficiais"
+core_12: "*ningún complemento ** {} é nomeado"
+core_13: "Nomea o complemento que queres desinstalar"
+core_14: "{} foi desinstalado con éxito."
+core_15: "Non podes desinstalar complementos oficiais"
+core_16: "Nomea o complemento que desexa cargar"
+core_17: "{} foi cargado con éxito!"
+core_18: "Este complemento non se puido cargar {} debido ao seguinte erro. \ N {}"
+
+# devtools
+devs_1: "non cmd dado"
+devs_2: "Dar un pouco de Python CMD"
+devs_3: "Dálle algún código C ++ .."
+
+# dm
+dm_1: "Dar nome de usuario ou id de chat onde enviar."
+dm_2: "Dar texto para enviar ou responder a MSG"
+dm_3: ": fleur-de-lis: mensaxe entregada!: Fleur-de-lis:"
+dm_4: "Erro: {} \ nread USAGE: {} helpa a outro"
+dm_5: "Consulte privado."
+dm_6: "Non se atopou ningunha mensaxe para entregar :("
+
+# eco
+eco_1: "eco activado para os usuarios: \ n \ n"
+
+# acción falsa
+fla_1: "Comezar a acción falsa para {} seg."
+
+# fedutils
+sf_1: "Mass-fedban comezou ..."
+sf_2: "Non se lle dixo ningún usuario!"
+sf_3: "Non podes prohibir o meu fabricante !!"
+sf_4: "Rose non está a responder ou o complemento non funciona"
+sf_5: "Podes usar o comando Fed só unha vez cada 5 minutos"
+sf_6: "Téntao de novo despois de 5 minutos."
+sf_7: "Non se puido recoller FedadminList. Re -efort ({}/3) ..."
+sf_8: "err"
+sf_9: "Non se puido recoller FedadminList."
+sf_10: "fbaning {} feds."
+sf_11: "O ID do grupo FBAN especificado é incorrecto."
+sf_12: "{} eliminado."
+sf_13: "Err in Fedadmin File. \ N {}"
+sf_14: "SuperFedbane completouse. \ N \ n total Fed - {}. \ N extraído - {}. \ N Safal {} fed."
+sf_15: "Mass-anfedbane comezou ..."
+sf_16: "Super -Anfedbane completouse.
+sf_17: "Dame o DNI de alguén ou responde para comprobar a mensaxe de alguén para que os FedStats poidan obter"
+sf_18: "{} foi prohibido na lista de tantos feds. \ N \ n obtense invertido."
+sf_19: "Earr \ n @missrose_bot uplighten e logo tenta!"
+sf_20: "Estase a extraer información ..."
+sf_21: "\ n \ nfedinfo obtido por vómitos."
+sf_22: "Non se designou ningún usuario".
+sf_23: "Erro \ n desbloqueo @missrose_bot e téntao de novo!"
+
+# Filtro
+flr_1: "Use esta palabra de comando para definir como filtro e resposta ..."
+flr_2: "Os filtros atopados neste chats son \ n \ n"
+flr_3: "Dálle o filtro para eliminar .."
+flr_4: "Feito: Filter {} Saved."
+flr_5: "Feito: Filtro {} eliminado."
+flr_6: "Non hai filtros que se atopan aquí"
+
+# fontgen
+fgn_1: "Fontes dispoñibles \ n \ n"
+
+# Forza subscríbete
+fsub_1: "Dálle canle onde queres que o usuario se une!"
+fsub_2: "Dar nome de usuario ou ID de canle correcto"
+fsub_3: "Forcesub non estivo activo neste chat!"
+fsub_4: "Únete á canle"
+fsub_5: "Unmute Me"
+fsub_6: "Únete a esa canle! \ Nthen fai clic neste botón!"
+fsub_7: "Esta mensaxe non é para ti"
+fsub_8: "Grazas por unirse!"
+
+# Extra
+ex_1: "Responde á mensaxe .."
+
+# gdrive
+gdrive_1: "Xa autorizaches con Google Drive"
+gdrive_2: "[Vaia aquí] (https://console.developers.google.com/flows/enablepiyapiid=drive) e o seu gdrive_client_id e gdrive_client_secret \ n \ n \ n \ n \ n \
+Envía o teu GDRive_Client_ID e GDRive_Client_Secret."
+gdrive_3: "ID de cliente incorrecto"
+gdrive_4: "Algo saíu mal! Envía de novo /autor."
+gdrive_5: "Success! \ N estás completamente preparado para usar Google Drive. Con Invertroid User Bot."
+gdrive_6: "Vaia aquí {} e '/autor. Enviar"
+gdrive_7: "O ficheiro en G-Drive foi cargado con éxito: \ n \ n [{}] ({})"
+
+# Obter complementos
+gas_1: "Por favor, proporcione unha ligazón bruta!"
+
+# Saúdos
+grt_1: "Nota de benvida gardada"
+grt_2: "Por favor, use isto nun grupo e non en PMS!"
+grt_3: "Responde á mensaxe que queres establecer como benvida"
+grt_4: "Non se fixou benvido!"
+grt_5: "Nota de benvida eliminada"
+grt_6: "Non se fixou adeus!"
+grt_7: "Responde á mensaxe que queres establecer como adeus"
+
+# Glittch
+glich_1: "Gliching ..."
+
+# MediaInfo
+mdi_1: "Información máis explicada"
+
+# Pesadelo
+nightm_1: "Dar tempo en formato correcto"
+nightm_2: "Establecido o tempo con éxito"
+nightm_3: "Feito, engadiu o chat actual ao modo nocturno"
+nightm_4: "Feito, eliminado o chat actual do modo nocturno"
+nightm_5: "Algo saíu mal"
+
+# pmpermit
+pmperm_1: "Agarde a miña resposta ou ben será informado como bloqueado e spam!"
+pmperm_2: "Estabas a spam no primeiro ministro do meu mestre, que non me gustou. \ N Vostede foi bloqueado ata o seguinte aviso e informou de spam."
+pmperm_3: "Responde á mensaxe de alguén ou proba esta orde no chat privado".
+
+# Horario_msg
+schdl_1: "MSG programado con éxito"
+schdl_2: "formato incorrecto"
+
+# Buscas
+srch_1: "Busque un nome de usuario !!"
+srch_2: "Non se atopou tal usuario ..."
+srch_3: "Canción non atopada ..."
+
+# snip
+snip_1: "Dálle a palabra para fixarse ​​como sacar e responder a unha mensaxe."
+snip_2: "Dálle a palabra para eliminar ..."
+snip_3: "Non se atopan aquí."
+
+# Specialtools
+spcltool_1: "Responde a audio ou vídeo"
+spcltool_2: "Feito .. agora responde ao vídeo no que queres engadir este audio"
+spcltool_3: "Responde ao vídeo"
+spcltool_4: "Primeira resposta a un audio con .raw"
+spcltool_5: "Descargado con éxito, engadindo agora o seu audio ao vídeo"
+spcltool_6: "Pon a entrada en formato DD/mm/aaaa"
+spcltool_7: "Feliz aniversario a U: Party_Popper :: confetti_ball:"
+spcltool_8: "Dá algo para buscar .."
+spcltool_9: "non atopou nada"
+
+# sudo
+sudo_1: "Responde a un MSG ou engade o seu nome/nome de usuario."
+sudo_2: "Podes engadirte como usuario sudo..."
+sudo_3: "Non se asignou ningún usuario sudo..."
+sudo_4: "Os bots non se poden engadir como usuarios de sudo."
+
+# Senplash
+unspl_1: "Non se atoparon resultados!"
+
+# actualizador
+upd_1: "Estanse descubrindo actualizacións, agarda ...."
+upd_2: "Oh .. Os actualizadores non poden continuar debido a algúns problemas. \ N \ n Predicación: \ n"
+upd_3: "[[{}]] ({}/árbore/{}) के लिए नया अपडेट उपलब्ध है: \ n \ n बदलाव: \ n \ n {}"
+upd_4: "O cambio é moi grande, vexa o ficheiro para velo."
+upd_5: "Faga clic no botón seguinte para actualizar."
+upd_6: "\ n o seu bot está actualizado [[{}]] ({}/{}) \ n con \ n"
+upd_7: "actualización suave rápida ..."
+
+# Cargar descarga
+udl_1: "Responde ao ficheiro / soporte que desexa descargar ..."
+udl_2: "Descargar éxito .. \ n \ n - {} \ n en {}"
+udl_3: "Dea un camiño específico para o arquivo!"
+udl_4: "Intentando descargar ..."
+udl_5: "Esqueciches dar Link :("
+udl_6: "Este directorio é ampty."
+udl_7: "Non podes facelo!"
+
+# vctools
+vct_1: "Comezou o chat de voz ..."
+vct_2: "Cambiou con éxito o título de VC a {}"
+vct_3: "Invitando aos membros a chat de voz ..."
+vct_4: "O chat de voz parou ..."
+vct_5: "invitados {} usuarios"
+vct_6: "Non hai entrada atopada!"
+
+# palabras
+wrd_1: "• Palabras: {} \ n • Significado: {} \ n \ n • Exemplo: {}"
+wrd_2: "Word - {} \ n \ nsynonyms - \ n"
+wrd_3: "Word - {} \ n \ nantónimos - \ n"
+wrd_4: "Dea unha palabra para atopar o seu significado .."
+wrd_5: "Sinónimos"
+wrd_6: "Antónimos"
+wrd_7: "Non se atopou ningún sinónimo !! \ n \ n {}"
+wrd_8: "Non hai antónimos atopados !! \ n \ n {}"
+
+# profanidade
+prof_1: "Engadiu este chat para o filtrado de profanidade!"
+prof_2: "Eliminou este chat do filtrado de profanidade!"
+
+# notas
+notes_1: "Use este comando con resposta e palabra para usar unha nota."
+notes_2: "Nota feita: #{} gardado."
+notes_3: "Dame o controlador de notas que queres eliminar."
+notes_4: "As notas atopadas neste chats son \ n \ n"
+notes_5: "Non hai notas aquí"
+
+# stickertools
+sts_1: "Non escribiches ningún artigo, Waifu vai desaparecer."
+sts_2: "Responde a un adhesivo animado ..."
+sts_3: "Por favor, seleccione entre {}"
+sts_4: "Responde a un adhesivo non animado."
+sts_5: "Pack Kanged con éxito. \ Nkanged Pack: [Ligazón] ({})"
+sts_6: "कोई मैसेज या मीडिया को indo
+sts_7: "O adhesivo engadido nun paquete diferente! \ nthis está de novo creado! \ ny o seu paquete pódese atopar [aquí] (t.me/addstickers/ {})"
+sts_8: "Non puido engadir adhesivo, use @stickers Bot para engadir o adhesivo manualmente."
+sts_9: "OOO Pegatina animada: Ollos: ..."
+sts_10: "Responde a calquera soporte ..."
+sts_11: "Kanging este adhesivo ..."
+sts_12: "Kanged! \ n Emoji: {} \ n Sticker pack [aquí] (t.me/addstickers/ {})"
+sts_13: "Cambiar ao paquete {} debido ao espazo insuficiente"
+
+# Whatsg
+whs_1: "<• Responder ao ficheiro de audio •>"
+whs_2: "Intentando identificar a canción ...."
+whs_3: "Fallou a identificar a canción :("
+whs_4: "Canción recoñecida! \ NAME: {}"
+
+# WebUpload
+wbl_1: "proporcione un nome de ficheiro pls .."
+
+# escritor
+escritor_1: "Dálle un texto tamén"
+
+# Webshot
+wbs_1: "Dálle un URL por favor!"
+wbs_2: "URL non válido!"
+wbs_3: "Webshot xerado \ nurl: {}"
+
+# youtube
+youtube_1: "Dame un URL (YouTube) para descargar audio de!"
+youtube_2: "Dar unha ligazón de audio directo para descargar"
+youtube_3: "Dame un URL (YouTube) para descargar o vídeo de!"
+youtube_4: "Dar unha ligazón de vídeo directa á descarga"
+youtube_5: "Dame unha consulta de busca (YouTube) para descargar audio de!"
+youtube_6: "Descargar canción de audio ..."
+youtube_7: "Dame unha consulta de busca (YouTube) para descargar o vídeo de!"
+youtube_8: "Descargar canción de vídeo ..."
+
+# ziptools
+zip_1: "Responde a calquera soporte/documento."
+zip_2: "En primeiro lugar engade todos os ficheiros a través de {} addzip e logo dozip para zip todos os ficheiros a un."
+zip_3: "Responde só ao ficheiro zip"
+
+# compartir ficheiro
+fsh_1: "Lista de ficheiros almacenados:"
+fsh_2: "O ficheiro foi almacenado! \ n \ nshareable Link: {}"
+fsh_3: "Responde a unha mensaxe para facer unha ligazón compartible!"
+fsh_4: "Non hai ficheiros almacenados!"
+# ------------------------- helpante ----------------------- ---#
+
+ast_1: "Escolla a API que desexa configurar."
+ast_2: "Eliminar.bg API \ nremove.bg Introduza a túa API desde \ n \ n operación
+ast_3: "Ola {}. Navega por opcións"
+
+# inlinestuff
+instu_1: "Busca de aplicacións. Introduza o nome da aplicación!"
+instu_2: "Buscas recentes .."
+instu_3: "Introduza a consulta para buscar"
+instu_4: "éxito"
+
+# CallbackStuffs
+clst _1: "UserBot Dyno Build In progress, agarde a que se complete."
+clst _2: "actualizado con éxito! \ NRESTARTING, por favor, agarde ..."
+clst _3: "■ Xerar Changelogs ..."
+clst _4: "Algo saíu mal ..."
+clst _5: "Feito!"
+
+# pmbot
+pmbot_1: "Debe unirse a continuación de chat (s) para falar co meu mestre! \ n \ n"
+pmbot_2: "Por favor, responda a alguén que o prohiba."
+pmbot_3: "O usuario xa está prohibido!"
+pmbot_4: "Adeus! Foi prohibido. As mensaxes que envías non serán reenviadas."
+pmbot_5: "Por favor, responda a alguén para que o desbanquei."
+pmbot_6: "O usuario nunca foi prohibido!"
+pmbot_7: "Felicidades! Vostede non foi prohibido."
+
+# -------------------------- vcbot ---------------------- --------- #
+
+# Xogos
+games_1: "Escolla o xogo: video_game:"
+games_2: "Seleccione a categoría!"
+games_3: "Selecciona o nivel de dificultade"
+games_4: "Seleccione o número de preguntas .."
+games_5: "Escolla intervalos de tempo ..."
+games_6: "• Iniciar probas en 5 segundos. \ N • Nivel: {} \ n • Qs: {}"
+
+# akinator
+aki_1: "O xogo rematou ...."
+aki_2: "Start Game"
+aki_3: "O tempo rematou!"
+
+
+#vcbot
+vcbot_1: "Chat de voz esquerda".
+vcbot_2: "Erro: {}"
+vcbot_3: "• Volume cambiado {}% •"
+vcbot_4: "Por favor, especifique o volume de 1 a 200!"
+vcbot_5: "Para unirse a este chat de voz".
+vcbot_6: "Non estás conectado a un chat de voz!"
+vcbot_7: "Sexa paciente ... levará algún tempo".
+vcbot_8: "Dálle só a lista de reprodución de YouTube"
+vcbot_9: "¿Estás bromeando comigo? Que xogar?"
+vcbot_10: "Eliminou o chat do grupo VC OTH!"
+vcbot_11: "Lista de usuarios de chat de chat de chat ..."
+vcbot_12: "Playback de silencio neste chat".
+vcbot_13: "A reprodución retomouse neste chat".
+vcbot_14: "A reprodución foi detida neste chat".
+vcbot_15: "Por favor, especifique un nome de canción ou responda a un ficheiro de vídeo!"
+vcbot_16: "Chat VC non está na lista OTH ..."
+vcbot_17: "Responde á mensaxe do usuario ou engade o ID/nome de usuario ..."
+vcbot_18: "• A lista de VC está baleira .."
+vcbot_19: "Xa neste chat!"
+vcbot_20: "Descargar e converter ..."
+vcbot_21: "• Nada na cola!"
+vcbot_22: "Limpar todas as colas no chat"
+
