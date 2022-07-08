@@ -25,14 +25,14 @@ clone_repo(){
 
 install_requirements(){
     echo -e "\n\nInstalling requirements... "
-    pip3 install -q --no-cache-dir -r $DIR/requirements.txt && pip3 install av -q --no-binary av
+    pip3 install -q -r $DIR/requirements.txt && pip3 install av -q --no-binary av
 }
 
 railways_dep(){
     if [ ! $RAILWAY_STATIC_URL ]
         then
             echo -e "\n\nInstalling YouTube dependency... "
-            pip3 install -q --no-cache-dir yt-dlp
+            pip3 install -q yt-dlp
     fi
 }
 
@@ -48,12 +48,13 @@ dep_install(){
     echo -e "\n\nInstalling DB Requirement..."
     if [ $MONGO_URI ]
         then
-            pip install pymongo[srv]
+            pip3 install -q pymongo[srv]
     elif [ $DATABASE_URL ]
         then
-            pip install psycopg2-binary
-    else
-        pip install redis
+            pip3 install -q psycopg2-binary
+    elif [ $REDIS_URI ]
+        then
+            pip3 install -q redis hiredis
     fi
 }
 
