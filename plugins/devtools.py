@@ -152,6 +152,8 @@ async def _(event):
 pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
+class u:
+    ...
 
 def _parse_eval(value=None):
     if not value:
@@ -290,7 +292,7 @@ async def aexec(code, event):
             "async def __aexec(e, client): "
             + "\n print = p = _stringify"
             + "\n message = event = e"
-            + "\n reply = await event.get_reply_message()"
+            + "\n u.r = reply = await event.get_reply_message()"
             + "\n chat = event.chat_id"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
