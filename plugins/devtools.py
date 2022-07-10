@@ -296,6 +296,7 @@ async def aexec(code, event):
             + "\n chat = event.chat_id"
         )
         + "".join(f"\n {l}" for l in code.split("\n"))
+        + "\n u.lr = locals()"
     )
 
     return await locals()["__aexec"](event, event.client)
