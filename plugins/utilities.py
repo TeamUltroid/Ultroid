@@ -52,10 +52,12 @@
   Get messages from chats with forward/copy restrictions.
 
 """
+
 import calendar
 import html
 import io
 import os
+import pathlib
 import time
 from datetime import datetime as dt
 
@@ -470,10 +472,11 @@ async def abs_rmbg(event):
     pattern="telegraph( (.*)|$)",
 )
 async def telegraphcmd(event):
+    xx = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1).strip() or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
-        return await event.eor("`Reply to Message.`")
+        return await xx.eor("`Reply to Message.`")
     if not reply.media and reply.message:
         content = reply.message
     else:
@@ -496,13 +499,12 @@ async def telegraphcmd(event):
             except Exception as e:
                 amsg = f"Error : {e}"
             os.remove(getit)
-            return await event.eor(amsg)
-        with open(getit) as ab:
-            content = ab.read()
+            return await xx.eor(amsg)
+        content = pathlib.Path(getit).read_text()
         os.remove(getit)
     makeit = Telegraph.create_page(title=match, content=[content])
-    await eor(
-        event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False
+    await xx.eor(
+        f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False
     )
 
 
