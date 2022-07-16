@@ -271,7 +271,7 @@ async def _(event):
         )
     )
     if tima:
-        final_output += f"\n\n> **Time Taken: `{time_formatter(tima)}` (`{tima}ms`)"
+        final_output += f"\n> **Time Taken:** `{time_formatter(tima / 1000)}` (`{tima}ms`)"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
