@@ -19,19 +19,31 @@ clone_repo(){
     if [ ! $BRANCH ]
         then export BRANCH="main"
     fi
-    echo -e "\n\nCloning Ultroid ${BRANCH}... "
+    if [ -d $DIR ]
+        then
+            echo -e $DIR "Already exists.."
+            cd $DIR
+            git pull
+            currentbranch="$(git rev-parse --abbrev-ref HEAD)"
+            if [currentbranch != $BRANCH]
+                then
+                    git checkout $BRANCH
+            fi
+    fi
+    echo -e "Cloning Ultroid ${BRANCH}... "
     git clone -b $BRANCH $REPO $DIR
 }
 
 install_requirements(){
-    echo -e "\n\nInstalling requirements... "
+    echo -e "Installing requirements... "
     pip3 install -q -r $DIR/requirements.txt && pip3 install av -q --no-binary av
+    pip3 install -r resources/startup/optional-requirements.txt -y
 }
 
 railways_dep(){
-    if [ ! $RAILWAY_STATIC_URL ]
+    if [ $RAILWAY_STATIC_URL ]
         then
-            echo -e "\n\nInstalling YouTube dependency... "
+            echo -e "Installing YouTube dependency... "
             pip3 install -q yt-dlp
     fi
 }
@@ -39,7 +51,7 @@ railways_dep(){
 install_okteto_cli(){
     if [ $OKTETO_TOKEN ]
         then
-            echo -e "\n\nInstalling Okteto-CLI... "
+            echo -e "Installing Okteto-CLI... "
             curl https://get.okteto.com -sSfL | sh
     fi
 }
