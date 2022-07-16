@@ -178,7 +178,7 @@ async def _(event):
         cmd = event.text.split(maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
-    silent, gsource, tima, xx = False, False, None, None
+    silent, gsource, xx = False, False, None
     spli = cmd.split()
 
     async def get_():
@@ -198,9 +198,6 @@ async def _(event):
         xx = await event.reply(get_string("com_1"))
     elif spli[0] in ["-gs", "--source"]:
         gsource = True
-        cmd = await get_()
-    elif spli[0] in ["-t", "--time"]:
-        tima = True
         cmd = await get_()
     if not cmd:
         return
@@ -233,15 +230,13 @@ async def _(event):
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc, timeg = None, None, None, None
-    if tima:
-        tima = time.time()
+    tima = time.time()
     try:
         value = await aexec(cmd, event)
     except Exception:
         value = None
         exc = traceback.format_exc()
-    if tima:
-        tima = time.time() - tima
+    tima = time.time() - tima
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -265,14 +260,16 @@ async def _(event):
                 )
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
+    tmt = tima*1000
+    timef = time_formatter(tmt)
+    timeform = timef if not timef == "0s" else f"{tmt:.3f}ms"
     final_output = (
-        "__►__ **EVAL**\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        "__►__ **EVAL** [__in {}__]\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+            timeform,
             cmd,
             evaluation,
         )
     )
-    if tima:
-        final_output += f"\n __►__ **Time Taken:** `{time_formatter(tima * 1000)}` (`{tima * 1000}ms`)"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
