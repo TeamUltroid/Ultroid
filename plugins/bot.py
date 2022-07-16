@@ -57,7 +57,6 @@ from telethon.utils import resolve_bot_file_id
 
 from . import (
     ATRA_COL,
-    inline_pic,
     LOGS,
     OWNER_NAME,
     ULTROID_IMAGES,
@@ -75,6 +74,7 @@ from . import (
     get_string,
     heroku_logs,
     in_pattern,
+    inline_pic,
     restart,
     shutdown,
     start_time,
@@ -85,7 +85,11 @@ from . import (
     updater,
 )
 
-ULTPIC = lambda: inline_pic() or choice(ULTROID_IMAGES)
+
+def ULTPIC():
+    return inline_pic() or choice(ULTROID_IMAGES)
+
+
 buttons = [
     [
         Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),

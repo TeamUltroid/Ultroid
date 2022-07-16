@@ -34,6 +34,7 @@ OWNER_ID = ultroid_bot.uid
 
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 
+
 def inline_pic():
     INLINE_PIC = udB.get_key("INLINE_PIC")
     if INLINE_PIC is None:

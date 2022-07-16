@@ -21,12 +21,12 @@ from telethon.utils import resolve_bot_file_id
 
 from . import (
     HNDLR,
-    inline_pic,
-    InlinePlugin,
     LOGS,
     OWNER_NAME,
+    InlinePlugin,
     asst,
     get_string,
+    inline_pic,
     split_list,
     start_time,
     udB,
@@ -279,7 +279,10 @@ async def _(event):
 
 @callback(data="inlone", owner=True)
 async def _(e):
-    _InButtons = [Button.switch_inline(_, query=InlinePlugin[_], same_peer=True) for _ in list(InlinePlugin.keys())]
+    _InButtons = [
+        Button.switch_inline(_, query=InlinePlugin[_], same_peer=True)
+        for _ in list(InlinePlugin.keys())
+    ]
     InButtons = split_list(_InButtons, 2)
 
     button = InButtons.copy()

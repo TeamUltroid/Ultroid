@@ -17,7 +17,8 @@ from telethon.errors.rpcerrorlist import (
     BotResponseTimeoutError,
 )
 from telethon.tl.custom import Button
-from . import HNDLR, inline_pic, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
+
+from . import HNDLR, LOGS, OWNER_NAME, asst, get_string, inline_pic, udB, ultroid_cmd
 
 _main_help_menu = [
     [

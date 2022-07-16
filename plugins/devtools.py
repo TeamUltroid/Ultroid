@@ -31,7 +31,6 @@
 import inspect
 import sys
 import traceback
-from datetime import datetime
 from io import BytesIO, StringIO
 from os import remove
 from pprint import pprint
@@ -44,6 +43,7 @@ try:
 except ImportError:
     black = None
 from random import choice
+
 try:
     from yaml import safe_load
 except ImportError:
@@ -153,8 +153,10 @@ async def _(event):
 pp = pprint  # ignore: pylint
 bot = ultroid = ultroid_bot
 
+
 class u:
     ...
+
 
 def _parse_eval(value=None):
     if not value:
@@ -260,15 +262,13 @@ async def _(event):
                 )
             await event.client.send_message(log_chat, msg, parse_mode="html")
         return
-    tmt = tima*1000
+    tmt = tima * 1000
     timef = time_formatter(tmt)
     timeform = timef if not timef == "0s" else f"{tmt:.3f}ms"
-    final_output = (
-        "__►__ **EVAL** [__in {}__]\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
-            timeform,
-            cmd,
-            evaluation,
-        )
+    final_output = "__►__ **EVAL** [__in {}__]\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
+        timeform,
+        cmd,
+        evaluation,
     )
     if len(final_output) > 4096:
         final_output = evaluation

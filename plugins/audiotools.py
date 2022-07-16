@@ -156,9 +156,7 @@ async def ex_aud(e):
 
     f_time = time.time()
     try:
-        fo = await uploader(
-            out_file, out_file, f_time, msg, f"Uploading {out_file}..."
-        )
+        fo = await uploader(out_file, out_file, f_time, msg, f"Uploading {out_file}...")
 
     except FileNotFoundError:
         return await eor(msg, get_string("audiotools_9"))

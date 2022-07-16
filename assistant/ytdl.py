@@ -183,9 +183,7 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
-        thumb, _ = await fast_download(
-            ytdl_data["thumbnail"], filename=f"{vid_id}.jpg"
-        )
+        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=f"{vid_id}.jpg")
 
         likes = numerize(ytdl_data.get("like_count")) or 0
         duration = ytdl_data.get("duration") or 0
@@ -235,9 +233,7 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
-        thumb, _ = await fast_download(
-            ytdl_data["thumbnail"], filename=f"{vid_id}.jpg"
-        )
+        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=f"{vid_id}.jpg")
 
         try:
             Image.open(thumb).save(thumb, "JPEG")

@@ -118,7 +118,6 @@ async def _(e):
                         round(per, 2),
                     )
 
-
                     e_size = f"{humanbytes(size)} of ~{humanbytes((size / per) * 100)}"
                     eta = f"~{time_formatter(some_eta)}"
                     try:

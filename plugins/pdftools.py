@@ -38,11 +38,19 @@ except ImportError:
     Image = None
     LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
-
 from pyUltroid.functions.tools import four_point_transform
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
-from . import HNDLR, check_filename, downloader, eor, get_string, ultroid_cmd, bash, LOGS
+from . import (
+    HNDLR,
+    LOGS,
+    bash,
+    check_filename,
+    downloader,
+    eor,
+    get_string,
+    ultroid_cmd,
+)
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")
@@ -174,7 +182,10 @@ async def imgscan(event):
     if not (ok and (ok.media)):
         await event.eor("`Reply The pdf u Want to Download..`")
         return
-    if not (ok.photo or (ok.file.name and ok.file.name.endswith(("png", "jpg", "jpeg", "webp")))):
+    if not (
+        ok.photo
+        or (ok.file.name and ok.file.name.endswith(("png", "jpg", "jpeg", "webp")))
+    ):
         await event.eor("`Reply to a Image only...`")
         return
     ultt = await ok.download_media()
@@ -277,7 +288,9 @@ async def savepdf(event):
                 from skimage.filters import threshold_local
             except ImportError:
                 LOGS.info(f"Scikit-Image is not Installed.")
-                await xx.edit("`Installing Scikit-Image...\nThis may take some long...`")
+                await xx.edit(
+                    "`Installing Scikit-Image...\nThis may take some long...`"
+                )
                 _, __ = await bash("pip install scikit-image")
                 LOGS.info(_)
                 from skimage.filters import threshold_local

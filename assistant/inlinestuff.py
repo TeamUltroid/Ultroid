@@ -8,10 +8,10 @@
 import base64
 import inspect
 from datetime import datetime
+from html import unescape
 from random import choice
 from re import compile as re_compile
 
-from html import unescape
 from bs4 import BeautifulSoup as bs
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import (
@@ -654,7 +654,6 @@ async def savn_s(event):
     _savn_cache.update({query: res})
 
 
-
 @in_pattern("tl", owner=True)
 async def inline_tl(ult):
     try:
@@ -697,18 +696,19 @@ async def inline_tl(ult):
     await ult.answer(res[:50], switch_pm=mo, switch_pm_param="start")
 
 
-
-InlinePlugin.update({
-    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
-    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
-    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
-    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
-    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
-    "Piston Eval": "run javascript console.log('Hello Ultroid')",
-    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
-    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
-    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
-    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
-    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
-    "Tʟ Sᴇᴀʀᴄʜ": "tl",
-})
+InlinePlugin.update(
+    {
+        "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
+        "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
+        "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
+        "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
+        "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
+        "Piston Eval": "run javascript console.log('Hello Ultroid')",
+        "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
+        "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
+        "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
+        "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
+        "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
+        "Tʟ Sᴇᴀʀᴄʜ": "tl",
+    }
+)
