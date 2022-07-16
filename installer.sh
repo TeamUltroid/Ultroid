@@ -29,6 +29,7 @@ clone_repo(){
                 then
                     git checkout $BRANCH
             fi
+            return
     fi
     echo -e "Cloning Ultroid ${BRANCH}... "
     git clone -b $BRANCH $REPO $DIR
@@ -48,11 +49,20 @@ railways_dep(){
     fi
 }
 
-install_okteto_cli(){
+misc_install(){
     if [ $OKTETO_TOKEN ]
         then
             echo -e "Installing Okteto-CLI... "
             curl https://get.okteto.com -sSfL | sh
+    elif [ $VCBOT ]
+        then
+            if [ -d $DIR/vcbot]
+                then
+                    cd $DIR/vcbot
+                    git pull
+            else
+                echo -e "Cloning VCBOT.."
+                git clone https://github.com/TeamUltroid/VcBot $DIR/vcbot
     fi
 }
 
@@ -75,7 +85,7 @@ main(){
     (install_requirements)
     (railways_dep)
     (dep_install)
-    (install_okteto_cli)
+    (misc_install)
 }
 
 main
