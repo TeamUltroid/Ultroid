@@ -346,7 +346,7 @@ async def _(e):
     if isinstance(peer, User):
         await e.client(UnblockRequest(userid))
     await xx.edit(
-        f"`Ungbaned` {name} in {chats} chats.\nRemoved from gbanwatch.`",
+        f"`Ungbaned` {name} in {chats} `chats.\nRemoved from gbanwatch.`",
     )
 
 
