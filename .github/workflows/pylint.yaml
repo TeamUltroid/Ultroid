@@ -1,0 +1,44 @@
+name: PyLint
+on:
+  push:
+    branches: [ dev ]
+    paths:
+    - "**.py"
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install Python lint libraries
+        run: pip install autopep8 autoflake isort black
+      - name: Check for showstoppers
+        run: |
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/*.py
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/manager/*.py
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive plugins/*.py
+      - name: Remove unused imports and variables
+        run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/manager/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*.py
+      - name: lint with isort and black
+        run: |
+          isort assistant/*.py
+          isort assistant/manager/*.py
+          black --fast assistant/*.py
+          black assistant/manager/*.py
+          isort plugins/*.py
+          black --fast plugins/*.py
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'pylint: auto fixes'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: buddhhu
+          commit_user_email: 48654350+buddhhu@users.noreply.github.com
+          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>
+          
