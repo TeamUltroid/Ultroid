@@ -36,8 +36,8 @@ clone_repo(){
 
 install_requirements(){
     echo -e "Installing requirements... "
-    pip3 install -q -r $DIR/requirements.txt && pip3 install av -q --no-binary av
-    pip3 install -r resources/startup/optional-requirements.txt -y
+    pip3 install -r $DIR/requirements.txt && pip3 install av -q --no-binary av
+    pip3 install -r resources/startup/optional-requirements.txt
 }
 
 railways_dep(){
