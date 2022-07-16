@@ -175,7 +175,7 @@ def _parse_eval(value=None):
 @ultroid_cmd(pattern="eval", fullsudo=True, only_devs=True)
 async def _(event):
     try:
-        cmd = event.text.split(" ", maxsplit=1)[1]
+        cmd = event.text.split(maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
     silent, gsource, tima, xx = False, False, None, None
@@ -234,14 +234,14 @@ async def _(event):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc, timeg = None, None, None, None
     if tima:
-        tima = time.now()
+        tima = time.time()
     try:
         value = await aexec(cmd, event)
     except Exception:
         value = None
         exc = traceback.format_exc()
     if tima:
-        tima = time.now() - tima
+        tima = time.time() - tima
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -272,7 +272,7 @@ async def _(event):
         )
     )
     if tima:
-        final_output += f"\n> **Time Taken:** `{time_formatter(tima / 1000)}` (`{tima / 1000}ms`)"
+        final_output += f"\n __►__ **Time Taken:** `{time_formatter(tima * 1000)}` (`{tima * 1000}ms`)"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
