@@ -30,7 +30,6 @@ psutil
 pygments
 pypdf2>=1.26.0
 pytz
-pyyaml>=5.4.1
 qrcode
 requests
 tabulate
