@@ -177,7 +177,7 @@ async def _(event):
         cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
-    silent, gsource, xx = False, False, None
+    silent, gsource, tima, xx = False, False, None, None
     spli = cmd.split()
 
     async def get_():
@@ -197,6 +197,9 @@ async def _(event):
         xx = await event.reply(get_string("com_1"))
     elif spli[0] in ["-gs", "--source"]:
         gsource = True
+        cmd = await get_()
+    elif spli[0] in ["-t", "--time"]:
+        tima = True
         cmd = await get_()
     if not cmd:
         return
@@ -229,11 +232,15 @@ async def _(event):
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc, timeg = None, None, None, None
+    if tima:
+        tima = datetime.now()
     try:
         value = await aexec(cmd, event)
     except Exception:
         value = None
         exc = traceback.format_exc()
+    if tima:
+        tima = (datetime.now() - tima).microseconds
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -263,6 +270,8 @@ async def _(event):
             evaluation,
         )
     )
+    if tima:
+        final_output += f"\n\n> **Time Taken: `{time_formatter(tima)}` (`{tima}ms`)"
     if len(final_output) > 4096:
         final_output = evaluation
         with BytesIO(str.encode(final_output)) as out_file:
