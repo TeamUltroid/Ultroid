@@ -44,7 +44,10 @@ try:
 except ImportError:
     black = None
 from random import choice
-
+try:
+    from yaml import safe_load
+except ImportError:
+    from pyUltroid.functions.tools import safe_load
 try:
     from telegraph import upload_file as uf
 except ImportError:
@@ -109,10 +112,8 @@ async def _(event):
             out = "**• OUTPUT:**"
             remove(li)
         else:
-            if all(":" in line for line in stdout.split("\n")):
+            if "pip" in cmd and all(":" in line for line in stdout.split("\n")):
                 try:
-                    from strings.strings import safe_load
-
                     load = safe_load(stdout)
                     stdout = ""
                     for data in list(load.keys()):
