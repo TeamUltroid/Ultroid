@@ -59,11 +59,11 @@ dep_install(){
 }
 
 main(){
-    (clone_repo) & spinner
-    (install_requirements) & spinner
-    (railways_dep) & spinner
-    (dep_install) & spinner
-    (install_okteto_cli) & spinner
+    (clone_repo)
+    (install_requirements)
+    (railways_dep)
+    (dep_install)
+    (install_okteto_cli)
 }
 
 main
