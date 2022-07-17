@@ -75,10 +75,10 @@ async def logo_gen(event):
     )
     await xx.edit("`Done!`")
     await event.client.send_file(
-            event.chat_id,
-            file=name,
-            caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
-            force_document=True,
+        event.chat_id,
+        file=name,
+        caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
+        force_document=True,
     )
     os.remove(name)
     await xx.delete()
