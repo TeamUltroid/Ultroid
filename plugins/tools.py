@@ -64,11 +64,9 @@ from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
-@ultroid_cmd(pattern="tr", manager=True)
+@ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
 async def _(event):
-    if len(event.text) > 3 and event.text[3] != " ":
-        return
-    input = event.text[4:].split(maxsplit=1)
+    input = event.pattern_match.group(1).strip().split(maxsplit=1)
     txt = input[1] if len(input) > 1 else None
     if input:
         input = input[0]
