@@ -40,10 +40,10 @@ async def cd(e):
     elif not msg:
         return await e.eor("`Give Some Text or Reply", time=5)
     kk = await e.eor(get_string("com_1"))
-    await e.client.get_profile_photos(ultroid_bot.uid)
-    img = "resources/extras/teamultroid.jpg"
-    # if len(pfp) >= 1:
-    #    img = await e.client.download_media(pfp[0])
+    default, pfp = "resources/extras/ultroid.jpg", None
+    if ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
+         pfp = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
+    img = default or pfp
     ok = Image.open(img)
     logo = ok.resize((60, 60))
     cod = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
@@ -55,7 +55,8 @@ async def cd(e):
     imgg.save(img)
     await e.client.send_file(e.chat_id, img, supports_streaming=True)
     await kk.delete()
-    os.remove(img)
+    if pfp:
+        os.remove(img)
 
 
 @ultroid_cmd(pattern="addqr( (.*)|$)")
