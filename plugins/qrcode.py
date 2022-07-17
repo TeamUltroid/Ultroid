@@ -28,7 +28,7 @@ from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import get_string, ultroid_bot, ultroid_cmd
+from . import get_string, ultroid_bot, ultroid_cmd, check_filename
 
 
 @ultroid_cmd(pattern="qrcode( (.*)|$)")
@@ -39,11 +39,14 @@ async def cd(e):
         msg = reply.text
     elif not msg:
         return await e.eor("`Give Some Text or Reply", time=5)
+    default, cimg = "resources/extras/ultroid.jpg", None
+    if reply and (reply.sticker or reply.photo):
+         cimg = await reply.download_media()
+    elif ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
+         cimg = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
+
     kk = await e.eor(get_string("com_1"))
-    default, pfp = "resources/extras/ultroid.jpg", None
-    if ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
-        pfp = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
-    img = default or pfp
+    img = cimg or default
     ok = Image.open(img)
     logo = ok.resize((60, 60))
     cod = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
@@ -52,11 +55,13 @@ async def cd(e):
     imgg = cod.make_image().convert("RGB")
     pstn = ((imgg.size[0] - logo.size[0]) // 2, (imgg.size[1] - logo.size[1]) // 2)
     imgg.paste(logo, pstn)
-    imgg.save(img)
-    await e.client.send_file(e.chat_id, img, supports_streaming=True)
+    newname = check_filename("qr.jpg")
+    imgg.save(newname)
+    await e.client.send_file(e.chat_id, newname, supports_streaming=True)
     await kk.delete()
-    if pfp:
-        os.remove(img)
+    os.remove(newname)
+    if cimg:
+        os.remove(cimg)
 
 
 @ultroid_cmd(pattern="addqr( (.*)|$)")
