@@ -57,6 +57,8 @@ def get_string(key: str) -> Any:
             LOGS.exception(er)
         return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
+def get_help(key):
+    return get_string("cmda") + get_string(key)
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:
     return {
