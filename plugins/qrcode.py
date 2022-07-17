@@ -28,7 +28,7 @@ from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
 from telethon.tl.types import MessageMediaPhoto as photu
 
-from . import get_string, ultroid_bot, ultroid_cmd, check_filename
+from . import check_filename, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="qrcode( (.*)|$)")
@@ -41,9 +41,9 @@ async def cd(e):
         return await e.eor("`Give Some Text or Reply", time=5)
     default, cimg = "resources/extras/ultroid.jpg", None
     if reply and (reply.sticker or reply.photo):
-         cimg = await reply.download_media()
+        cimg = await reply.download_media()
     elif ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
-         cimg = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
+        cimg = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
 
     kk = await e.eor(get_string("com_1"))
     img = cimg or default
