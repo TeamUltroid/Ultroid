@@ -42,7 +42,7 @@ async def cd(e):
     kk = await e.eor(get_string("com_1"))
     default, pfp = "resources/extras/ultroid.jpg", None
     if ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
-         pfp = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
+        pfp = await e.client.get_profile_photos(ultroid_bot.uid, limit=1)[0]
     img = default or pfp
     ok = Image.open(img)
     logo = ok.resize((60, 60))
