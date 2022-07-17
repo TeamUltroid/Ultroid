@@ -104,7 +104,6 @@ from . import (
     json_parser,
     mediainfo,
     udB,
-    ultroid_bot,
     ultroid_cmd,
 )
 
@@ -673,7 +672,7 @@ async def thumb_dl(event):
     await event.reply(file=m)
     os.remove(m)
 
-    
+
 @ultroid_cmd(pattern="getmsg ?(.*)")
 async def get_restriced_msg(event):
     match = event.pattern_match.group(1)
