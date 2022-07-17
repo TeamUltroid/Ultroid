@@ -6,7 +6,16 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from . import get_help
+import asyncio
+import os
+import random
+from glob import glob
+from random import shuffle
+
+from pyUltroid.functions.google_image import googleimagesdownload
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
+
+from . import LOGS, get_help, get_string, udB, ultroid_bot, ultroid_cmd
 
 __doc__ = get_help("help_autopic")
 
@@ -18,16 +27,6 @@ _ = """
 
 • `{i}autopic` : stop autopic if active.
 """
-import asyncio
-import os
-import random
-from glob import glob
-from random import shuffle
-
-from pyUltroid.functions.google_image import googleimagesdownload
-from telethon.tl.functions.photos import UploadProfilePhotoRequest
-
-from . import LOGS, get_string, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="autopic( (.*)|$)")

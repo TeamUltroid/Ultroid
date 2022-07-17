@@ -6,7 +6,28 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from . import get_help
+import os
+import time
+from datetime import datetime as dt
+
+from pyUltroid.functions.tools import set_attributes
+
+from . import (
+    LOGS,
+    bash,
+    downloader,
+    eod,
+    eor,
+    genss,
+    get_help,
+    get_string,
+    humanbytes,
+    mediainfo,
+    stdr,
+    time_formatter,
+    ultroid_cmd,
+    uploader,
+)
 
 __doc__ = get_help("help_audiotools")
 
@@ -24,28 +45,6 @@ _ = """
    To extract the audio from it.
 
 """
-
-import os
-import time
-from datetime import datetime as dt
-
-from pyUltroid.functions.tools import set_attributes
-
-from . import (
-    LOGS,
-    bash,
-    downloader,
-    eod,
-    eor,
-    genss,
-    get_string,
-    humanbytes,
-    mediainfo,
-    stdr,
-    time_formatter,
-    ultroid_cmd,
-    uploader,
-)
 
 
 @ultroid_cmd(pattern="makevoice$")
