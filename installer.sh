@@ -38,7 +38,7 @@ clone_repo(){
 install_requirements(){
     pip install --upgrade pip
     echo -e "Installing requirements... "
-    pip3 install -r $DIR/requirements.txt && pip3 install av -q --no-binary av
+    pip3 install -r $DIR/requirements.txt
     pip3 install -r $DIR/resources/startup/optional-requirements.txt
 }
 
@@ -65,6 +65,7 @@ misc_install(){
                 echo -e "Cloning VCBOT.."
                 git clone https://github.com/TeamUltroid/VcBot $DIR/vcbot
             fi
+            pip3 install pytgcalls && pip3 install av -q --no-binary av
     fi
 }
 
