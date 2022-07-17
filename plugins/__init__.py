@@ -24,7 +24,7 @@ from pyUltroid.version import __version__, ultroid_version
 from telethon import Button, events
 from telethon.tl import functions, types
 
-from strings import get_string
+from strings import get_string, get_help
 
 Redis = udB.get_key
 con = TgConverter
