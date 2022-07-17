@@ -16,7 +16,5 @@ RUN bash installer.sh
 # changing workdir
 WORKDIR "/root/TeamUltroid"
 
-COPY startup .
-
 # start the bot.
 CMD ["bash", "startup"]
