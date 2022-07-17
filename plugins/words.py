@@ -90,7 +90,9 @@ async def mean(event):
         else:
             await event.eor(x)
     except Exception as e:
-        await event.eor(get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e))
+        await event.eor(
+            get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e)
+        )
 
 
 @ultroid_cmd(pattern="ud (.*)")
