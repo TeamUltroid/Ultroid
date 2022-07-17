@@ -54,8 +54,6 @@ except ImportError:
     uf = None
 from . import *
 
-_ignore_eval = []
-
 
 @ultroid_cmd(
     pattern="sysinfo$",
