@@ -19,7 +19,6 @@ feedparser
 html-telegraph-poster
 htmlwebshot
 lottie
-multiprocess
 numpy>=1.21.2
 oauth2client
 opencv-python-headless
