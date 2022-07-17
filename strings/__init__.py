@@ -3,13 +3,7 @@ from os import listdir, path
 from typing import Any, Dict, List, Union
 
 from pyUltroid import udB, LOGS
-try:
-    from google_trans_new import google_translator
-    Trs = google_translator()
-except ImportError:
-    LOGS.error("'google_trans_new' not installed!")
-    Trs = None
-
+from pyUltroid.functions.tools import translate
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
@@ -41,7 +35,7 @@ def get_string(key: str) -> Any:
             en_ = languages["en"][key]
             if not Trs:
                 return en_
-            tr = Trs.translate(en_, lang_tgt=lang).replace("\ N", "\n")
+            tr = await translate(en_, lang_tgt=lang).replace("\ N", "\n")
             if en_.count("{}") != tr.count("{}"):
                 tr = en_
             if languages.get(lang):
