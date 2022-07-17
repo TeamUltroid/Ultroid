@@ -65,67 +65,32 @@ async def mean(event):
 
 
 @ultroid_cmd(
-    pattern="synonym",
+    pattern="(syno|anto)nym",
 )
 async def mean(event):
+    task = event.pattern_match.group(1) + "nyms"
     wrd = event.text.split(maxsplit=1)[1]
     try:
-        ok = await get_synonyms_or_antonyms(wrd, "synonyms")
-    except IndexError:
-        return await event.eor("**Synonym not Found...**")
-    x = get_string("wrd_2").format(wrd)
-    try:
+        ok = await get_synonyms_or_antonyms(wrd, task)
+        x = get_string("wrd_2" if task == "synonyms" else "wrd_3").format(wrd)
         for c, i in enumerate(ok, start=1):
             x += f"**{c}.** `{i}`\n"
         if len(x) > 4096:
             with io.BytesIO(str.encode(x)) as fle:
-                fle.name = f"{wrd}-synonyms.txt"
+                fle.name = f"{wrd}-{task}.txt"
                 await event.client.send_file(
                     event.chat_id,
                     fle,
                     force_document=True,
                     allow_cache=False,
-                    caption=f"Synonyms of {wrd}",
+                    caption=f"{task} of {wrd}",
                     reply_to=event.reply_to_msg_id,
                 )
                 await event.delete()
         else:
             await event.eor(x)
     except Exception as e:
-        await event.eor(get_string("wrd_7").format(e))
-
-
-@ultroid_cmd(
-    pattern="antonym",
-)
-async def mean(event):
-    evid = event.message.id
-    wrd = event.text.split(" ", maxsplit=1)[1]
-    try:
-        ok = await get_synonyms_or_antonyms(wrd, "antonyms")
-    except IndexError:
-        return await event.eor("**Antonym not Found...**")
-    x = get_string("wrd_3").format(wrd)
-    c = 1
-    try:
-        for c, i in enumerate(ok, start=1):
-            x += f"**{c}.** `{i}`\n"
-        if len(x) > 4096:
-            with io.BytesIO(str.encode(x)) as fle:
-                fle.name = f"{wrd}-antonyms.txt"
-                await event.client.send_file(
-                    event.chat_id,
-                    fle,
-                    force_document=True,
-                    allow_cache=False,
-                    caption=f"Antonyms of {wrd}",
-                    reply_to=evid,
-                )
-                await event.delete()
-        else:
-            await event.eor(x)
-    except Exception as e:
-        await event.eor(get_string("wrd_8").format(e))
+        await event.eor(get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e))
 
 
 @ultroid_cmd(pattern="ud (.*)")
