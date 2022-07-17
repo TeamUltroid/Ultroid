@@ -47,14 +47,10 @@ except ImportError:
     cv2 = None
 
 try:
-    from google_trans_new import google_translator
-except ImportError:
-    google_translator = None
-try:
     from htmlwebshot import WebShot
 except ImportError:
     WebShot = None
-from pyUltroid.functions.tools import metadata
+from pyUltroid.functions.tools import metadata, translate
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -78,20 +74,17 @@ async def _(event):
         input = input[0]
     if txt:
         text = txt
-        lan = input or "en"
     elif event.is_reply:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input or "en"
     else:
         return await eor(
             event, f"`{HNDLR}tr LanguageCode` as reply to a message", time=5
         )
-    translator = google_translator()
+    lan = input or "en"
     try:
-        tt = translator.translate(text, lang_tgt=lan)
-        fr = translator.detect(text)
-        output_str = f"**TRANSLATED** from {fr} to {lan}\n{tt}"
+        tt = await translate(text, lang_tgt=lan)
+        output_str = f"**TRANSLATED** to {lan}\n{tt}"
         await event.eor(output_str)
     except Exception as exc:
         LOGS.exception(exc)
