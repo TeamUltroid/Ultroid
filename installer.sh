@@ -63,6 +63,7 @@ misc_install(){
             else
                 echo -e "Cloning VCBOT.."
                 git clone https://github.com/TeamUltroid/VcBot $DIR/vcbot
+            fi
     fi
 }
 
