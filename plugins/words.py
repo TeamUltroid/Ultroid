@@ -69,7 +69,10 @@ async def mean(event):
 )
 async def mean(event):
     task = event.pattern_match.group(1) + "nyms"
-    wrd = event.text.split(maxsplit=1)[1]
+    try:
+        wrd = event.text.split(maxsplit=1)[1]
+    except IndexError:
+        return await event.eor("Give Something to search..")
     try:
         ok = await get_synonyms_or_antonyms(wrd, task)
         x = get_string("wrd_2" if task == "synonyms" else "wrd_3").format(wrd)
@@ -90,9 +93,7 @@ async def mean(event):
         else:
             await event.eor(x)
     except Exception as e:
-        await event.eor(
-            get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e)
-        )
+        await event.eor(get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e))
 
 
 @ultroid_cmd(pattern="ud (.*)")
