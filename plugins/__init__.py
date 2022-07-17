@@ -50,7 +50,7 @@ List = []
 Dict = {}
 InlinePlugin = {}
 N = 0
-
+cmd = ultroid_cmd
 STUFF = {}
 
 # Chats, which needs to be ignore for some cases
