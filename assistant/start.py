@@ -15,7 +15,7 @@ from telethon import Button, events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.utils import get_display_name
 
-from strings.strings import get_string
+from strings import get_string
 
 from . import *
 
