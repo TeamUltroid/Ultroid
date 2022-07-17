@@ -4,7 +4,6 @@
 akinator.py
 apscheduler
 aiohttp
-aiofiles
 bs4
 cairosvg
 cfscrape
