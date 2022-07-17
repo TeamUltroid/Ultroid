@@ -68,8 +68,11 @@ async def mean(event):
     pattern="synonym",
 )
 async def mean(event):
-    wrd = event.text.split(" ", maxsplit=1)[1]
-    ok = await get_synonyms_or_antonyms(wrd, "synonyms")
+    wrd = event.text.split(maxsplit=1)[1]
+    try:
+        ok = await get_synonyms_or_antonyms(wrd, "synonyms")
+    except IndexError:
+        return await event.eor("**Synonym not Found...**")
     x = get_string("wrd_2").format(wrd)
     try:
         for c, i in enumerate(ok, start=1):
@@ -98,7 +101,10 @@ async def mean(event):
 async def mean(event):
     evid = event.message.id
     wrd = event.text.split(" ", maxsplit=1)[1]
-    ok = await get_synonyms_or_antonyms(wrd, "antonyms")
+    try:
+        ok = await get_synonyms_or_antonyms(wrd, "antonyms")
+    except IndexError:
+        return await event.eor("**Antonym not Found...**")
     x = get_string("wrd_3").format(wrd)
     c = 1
     try:
