@@ -45,12 +45,8 @@
 
 • `{i}thumb <reply file>` : Download the thumbnail of the replied file.
 
-• `{i}ncode <file>`
-   Use - Paste the contents of file and send as pic.
-
 • `{i}getmsg <message link>`
   Get messages from chats with forward/copy restrictions.
-
 """
 
 import calendar
@@ -121,8 +117,7 @@ _copied_msg = {}
 
 @ultroid_cmd(pattern="kickme$", fullsudo=True)
 async def leave(ult):
-    me = asst.me if ult.client._bot else ultroid_bot.me
-    await ult.eor(f"`{me.first_name} has left this group, bye!!.`")
+    await ult.eor(f"`{ult.client.me.first_name} has left this group, bye!!.`")
     await ult.client(LeaveChannelRequest(ult.chat_id))
 
 
@@ -678,50 +673,7 @@ async def thumb_dl(event):
     await event.reply(file=m)
     os.remove(m)
 
-
-@ultroid_cmd(pattern="ncode$")
-async def coder_print(event):
-    try:
-        import pygments
-        from pygments.formatters import ImageFormatter
-        from pygments.lexers import Python3Lexer
-    except ImportError:
-        return await event.eor(
-            "`pygments` `not installed!`\nInstall it with `pip3 install pygments`"
-        )
-    if not event.reply_to_msg_id:
-        return await eod(event, "`Reply to a file or message!`", time=5)
-    msg = await event.get_reply_message()
-    if msg.document:
-        a = await event.client.download_media(
-            await event.get_reply_message(), "ncode.png"
-        )
-        with open(a, "r") as s:
-            c = s.read()
-    else:
-        a = None
-        c = msg.text
-    pygments.highlight(
-        c,
-        Python3Lexer(),
-        ImageFormatter(line_numbers=True),
-        "result.png",
-    )
-    res = await event.client.send_message(
-        event.chat_id,
-        "**Pasting this code on my page...**",
-        reply_to=event.reply_to_msg_id,
-    )
-    await event.client.send_file(
-        event.chat_id, "result.png", force_document=True, reply_to=event.reply_to_msg_id
-    )
-    await res.delete()
-    await event.delete()
-    if a:
-        os.remove(a)
-    os.remove("result.png")
-
-
+    
 @ultroid_cmd(pattern="getmsg ?(.*)")
 async def get_restriced_msg(event):
     match = event.pattern_match.group(1)
