@@ -27,7 +27,6 @@ opencv-python-headless
 pillow>=7.0.0
 profanitydetector
 psutil
-pygments
 pypdf2>=1.26.0
 pytz
 qrcode
@@ -37,7 +36,6 @@ telegraph
 tgcrypto
 youtube-search-python
 yt-dlp
-pygments
 python-Levenshtein
 fuzzywuzzy
 # -------------------------------------------------------#
