@@ -29,7 +29,7 @@ async def logo_gen(event):
     xx = await event.eor(get_string("com_1"))
     name = event.pattern_match.group(1).strip()
     if not name:
-        await xx.eor("`Give a name too!`", time=5)
+        return await xx.eor("`Give a name too!`", time=5)
     bg_, font_ = None, None
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
@@ -65,7 +65,7 @@ async def logo_gen(event):
         strke = 5
     else:
         strke = 20
-    LogoHelper.make_logo(
+    name = LogoHelper.make_logo(
         bg_,
         name,
         font_,
@@ -73,16 +73,14 @@ async def logo_gen(event):
         stroke_width=strke,
         stroke_fill="black",
     )
-    flnme = "Logo.png"
     await xx.edit("`Done!`")
-    if os.path.exists(flnme):
-        await event.client.send_file(
+    await event.client.send_file(
             event.chat_id,
-            file=flnme,
+            file=name,
             caption=f"Logo by [{OWNER_NAME}](tg://user?id={OWNER_ID})",
             force_document=True,
-        )
-        os.remove(flnme)
-        await xx.delete()
+    )
+    os.remove(name)
+    await xx.delete()
     if os.path.exists(bg_):
         os.remove(bg_)
