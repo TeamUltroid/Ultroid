@@ -42,8 +42,8 @@ async def cd(e):
     kk = await e.eor(get_string("com_1"))
     pfp = await e.client.get_profile_photos(ultroid_bot.uid)
     img = "resources/extras/teamultroid.jpg"
-    if len(pfp) >= 1:
-        img = await e.client.download_media(pfp[0])
+    #if len(pfp) >= 1:
+    #    img = await e.client.download_media(pfp[0])
     ok = Image.open(img)
     logo = ok.resize((60, 60))
     cod = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
