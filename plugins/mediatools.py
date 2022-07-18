@@ -35,11 +35,13 @@ async def mi(e):
     r = await e.get_reply_message()
     match = e.pattern_match.group(1).strip()
     taime = time.time()
+    extra = ""
     if r and r.media:
         xx = mediainfo(r.media)
         murl = r.media.stringify()
         url = await make_html_telegraph("Mediainfo", f"<pre>{murl}</pre>")
-        e = await e.eor(f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
+        extra= f"**[{xx}]({url})**\n\n"
+        e = await e.eor(f"{extra}`Loading More...`", link_preview=False)
 
         if hasattr(r.media, "document"):
             file = r.media.document
@@ -55,7 +57,7 @@ async def mi(e):
                 file,
                 e,
                 taime,
-                f"`**[{xx}]({url})**\n\n`Loading More...",
+                f"{extra}`Loading More...`",
             )
 
             naam = dl.name
@@ -68,7 +70,8 @@ async def mi(e):
     out, er = await bash(f"mediainfo '{naam}'")
     if er:
         LOGS.info(er)
-        return await e.edit(f"**[{xx}]({url})**", link_preview=False)
+        out = extra or str(er)
+        return await e.edit(out, link_preview=False)
     makehtml = ""
     for line in out.split("\n"):
         line = line.strip()
@@ -84,7 +87,7 @@ async def mi(e):
         LOGS.exception(er)
         return
     await e.eor(
-        f"**[{xx}]({url})**\n\n[{get_string('mdi_1')}]({urll})", link_preview=False
+        f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False
     )
     os.remove(naam)
 
