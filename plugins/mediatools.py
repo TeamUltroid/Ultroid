@@ -53,7 +53,7 @@ async def mi(e):
             dl = await downloader(
                 f"resources/downloads/{filename}",
                 file,
-                ee,
+                e,
                 taime,
                 f"`**[{xx}]({url})**\n\n`Loading More...",
             )
@@ -68,7 +68,7 @@ async def mi(e):
     out, er = await bash(f"mediainfo '{naam}'")
     if er:
         LOGS.info(er)
-        return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
+        return await e.edit(f"**[{xx}]({url})**", link_preview=False)
     makehtml = ""
     for line in out.split("\n"):
         line = line.strip()
@@ -83,7 +83,7 @@ async def mi(e):
     except Exception as er:
         LOGS.exception(er)
         return
-    await ee.edit(
+    await e.eor(
         f"**[{xx}]({url})**\n\n[{get_string('mdi_1')}]({urll})", link_preview=False
     )
     os.remove(naam)
