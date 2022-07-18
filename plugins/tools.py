@@ -257,10 +257,11 @@ async def _(e):
                 if os.path.endswith(ext):
                     allfiles.append(f"{FilesEMOJI[ext]} {file}")
                     break
-            elif "." in str(file)[1:]:
-                allfiles.append(f"🏷 {file}")
             else:
-                allfiles.append(f"📒 {file}")
+                if "." in str(file)[1:]:
+                    allfiles.append(f"🏷 {file}")
+                else:
+                    allfiles.append(f"📒 {file}")
     omk = sorted(allfiles)
     text = ""
     fls, fos = 0, 0
