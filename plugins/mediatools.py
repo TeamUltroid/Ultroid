@@ -18,18 +18,10 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import make_html_telegraph
 from pyUltroid.functions.misc import rotate_image
+from pyUltroid.functions.tools import make_html_telegraph
 
-from . import (
-    LOGS,
-    bash,
-    downloader,
-    get_string,
-   json_parser,
-    mediainfo,
-    ultroid_cmd,
-)
+from . import LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd
 
 try:
     import cv2
@@ -74,12 +66,12 @@ async def mi(e):
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
     makehtml = ""
     for line in out.split("\n"):
-         line = line.strip()
-         if not line:
+        line = line.strip()
+        if not line:
             makehtml += "<br>"
-         elif ":" not in line:
+        elif ":" not in line:
             makehtml += f"<h3>{line}</h3>"
-         else:
+        else:
             makehtml += f"<p>{line}</p>"
     try:
         urll = await make_html_telegraph("Mediainfo", makehtml)
