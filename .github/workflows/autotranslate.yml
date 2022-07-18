@@ -17,8 +17,8 @@ jobs:
         with:
           python-version: 3.9.x
       - name: Update Translations
-       uses: technote-space/create-pr-action@v2
-       with:
+        uses: technote-space/create-pr-action@v2
+        with:
          EXECUTE_COMMANDS: |
            sudo apt-get update && sudo apt-get upgrade -y && sudo apt install wget -y
            pip install pyyaml https://github.com/TeamUltroid/pyUltroid/archive/dev.zip requests
