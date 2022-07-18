@@ -23,7 +23,7 @@ can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
 can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
 can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
 
-# help
+# help 
 help_1: "`{}` is not a valid plugin!"
 help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`" 
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
