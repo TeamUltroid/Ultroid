@@ -25,9 +25,12 @@ jobs:
            
            git config --global user.email "newdev0@outlook.com"
            git config --global user.name "New-Dev0"
-           git branch translation && git checkout translation && pip install pyyaml https://github.com/TeamUltroid/pyUltroid/archive/dev.zip requests telethon 
-           wget -O run.py https://gist.githubusercontent.com/New-dev0/c7d0d1eb514d311e8e3b687ae5cbe5f3/raw/dfb25263ccff7e31ed3c0ab2d247d7f16b2920ee/updater.py
-           python3 run.py && rm run.py
+           git branch translation && git checkout translation
+           pip install pyyaml https://github.com/TeamUltroid/pyUltroid/archive/dev.zip requests telethon 
+           wget -O run.py https://gist.githubusercontent.com/New-dev0/c7d0d1eb514d311e8e3b687ae5cbe5f3/raw/ab4bdda6b1e5dcb726b402bad431a68a12f28a1c/updater.py
+           python3 run.py
+           rm run.py
            git add . && git commit -m "[Auto] Translate" && git push --set-upstream origin translation
            gh pr create --title "[Auto] Translation" -B dev --body "Update Translation"
-           git branch -d translation && git add . && git commit -m "delete" && git push
+           git branch -d translation
+           git add . && git commit -m "delete" && git push
