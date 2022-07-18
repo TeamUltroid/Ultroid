@@ -57,7 +57,6 @@ from telethon.tl.types import (
     ChannelParticipantsBots,
     DocumentAttributeVideo,
 )
-from telethon.utils import pack_bot_file_id
 
 from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
 from . import humanbytes as hb
