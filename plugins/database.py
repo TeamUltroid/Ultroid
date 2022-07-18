@@ -39,10 +39,9 @@ async def _(ult):
         if data[0] in ["--extend", "-e"]:
             data = data[1].split(maxsplit=1)
             data[1] = f"{str(udB.get_key(data[0]))} {data[1]}"
-        udB.set_key(data[0], data[1])
-        redisdata = Redis(data[0])
+        udB.set(data[0], data[1])
         await ult.eor(
-            f"**DB Key Value Pair Updated\nKey :** `{data[0]}`\n**Value :** `{redisdata}`"
+            f"**DB Key Value Pair Updated\nKey :** `{data[0]}`\n**Value :** `{data[1]}`"
         )
 
     except BaseException:
