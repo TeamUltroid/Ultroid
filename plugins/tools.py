@@ -220,19 +220,21 @@ async def _(e):
     else:
         await e.eor("`Reply to a gif or audio file only.`")
 
+
 FilesEMOJI = {
-    "py":"🐍",
-    "json":"🔮",
+    "py": "🐍",
+    "json": "🔮",
     ("sh", "bat"): "⌨️",
-    (".mkv", ".mp4", ".avi", ".gif", "webm"):"🎥",
-    (".mp3", ".ogg", ".m4a", ".opus"):"🔊",
-    (".jpg", ".jpeg", ".png", ".webp", ".ico"):"🖼",
+    (".mkv", ".mp4", ".avi", ".gif", "webm"): "🎥",
+    (".mp3", ".ogg", ".m4a", ".opus"): "🔊",
+    (".jpg", ".jpeg", ".png", ".webp", ".ico"): "🖼",
     (".txt", ".text", ".log"): "📄",
     (".apk", ".xapk"): "📲",
     (".pdf", ".epub"): "📗",
     (".zip", ".rar"): "🗜",
-    (".exe", ".iso"): "⚙"
+    (".exe", ".iso"): "⚙",
 }
+
 
 @ultroid_cmd(
     pattern="ls( (.*)|$)",
@@ -307,7 +309,7 @@ async def _(e):
         ttol = "0 B"
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     try:
-        if (flc+foc) > 100:
+        if (flc + foc) > 100:
             text = text.replace("`", "")
         await e.eor(text)
     except MessageTooLongError:
