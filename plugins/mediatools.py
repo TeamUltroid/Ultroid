@@ -18,6 +18,7 @@ import os
 import time
 from datetime import datetime as dt
 
+from pyUltroid.functions.tools import make_html_telegraph
 from pyUltroid.functions.misc import rotate_image
 
 from . import (
@@ -25,7 +26,7 @@ from . import (
     bash,
     downloader,
     get_string,
-    make_html_telegraph,
+   json_parser,
     mediainfo,
     ultroid_cmd,
 )
@@ -44,7 +45,7 @@ async def mi(e):
         return await e.eor(get_string("cvt_3"), time=5)
     xx = mediainfo(r.media)
     murl = r.media.stringify()
-    url = await make_html_telegraph("Mediainfo", "Ultroid", f"<code>{murl}</code>")
+    url = make_html_telegraph("Mediainfo", f"<code>{murl}</code>")
     ee = await e.eor(f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
     taime = time.time()
     if hasattr(r.media, "document"):
@@ -67,12 +68,21 @@ async def mi(e):
         naam = dl.name
     else:
         naam = await r.download_media()
-    out, er = await bash(f"mediainfo '{naam}' --Output=HTML")
+    out, er = await bash(f"mediainfo '{naam}'")
     if er:
         LOGS.info(er)
         return await ee.edit(f"**[{xx}]({url})**", link_preview=False)
+    makehtml = ""
+    for line in out.split("\n"):
+         line = line.strip()
+         if not line:
+            makehtml += "<br>"
+         elif ":" not in line:
+            makehtml += f"<h3>{line}</h3>"
+         else:
+            makehtml += f"<p>{line}</p>"
     try:
-        urll = await make_html_telegraph("Mediainfo", "Ultroid", out)
+        urll = await make_html_telegraph("Mediainfo", makehtml)
     except Exception as er:
         LOGS.exception(er)
         return
