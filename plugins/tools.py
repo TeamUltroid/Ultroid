@@ -222,7 +222,8 @@ async def _(e):
 
 FilesEMOJI = {
     "py":"🐍",
-    "json"":"🔮",
+    "json":"🔮",
+    ("sh", "bat"): "⌨️",
     (".mkv", ".mp4", ".avi", ".gif", "webm"):"🎥",
     (".mp3", ".ogg", ".m4a", ".opus"):"🔊",
     (".jpg", ".jpeg", ".png", ".webp", ".ico"):"🖼",
