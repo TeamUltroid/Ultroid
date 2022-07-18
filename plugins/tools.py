@@ -81,7 +81,7 @@ async def _(event):
         )
     lan = input or "en"
     try:
-        tt = await translate(text, lang_tgt=lan)
+        tt = translate(text, lang_tgt=lan)
         output_str = f"**TRANSLATED** to {lan}\n{tt}"
         await event.eor(output_str)
     except Exception as exc:
@@ -94,35 +94,25 @@ async def _(event):
     manager=True,
 )
 async def _(event):
+    ult = event
     match = event.pattern_match.group(1).strip()
-    if event.reply_to_msg_id:
-        await event.get_input_chat()
-        r_msg = await event.get_reply_message()
-        if r_msg.media:
-            bot_api_file_id = pack_bot_file_id(r_msg.media)
-            await event.eor(
-                f"**Current Chat ID:**  `{str(event.chat_id)}`\n**From User ID:**  `{str(r_msg.sender_id)}`\n**Bot API File ID:**  `{bot_api_file_id}`\n**Msg ID:**  `{str(r_msg.id)}`"
-            )
-
-        else:
-            await event.eor(
-                f"**Chat ID:**  `{str(event.chat_id)}`\n**User ID:**  `{str(r_msg.sender_id)}`\n**Msg ID:**  `{str(r_msg.id)}`"
-            )
-
-    elif match:
+    if match:
         try:
             ids = await event.client.parse_id(match)
         except Exception as er:
             return await event.eor(str(er))
-        await event.eor(
-            f"**Chat ID:**  `{str(event.chat_id)}`\n**User ID:**  `{str(ids)}`"
+        return await event.eor(
+            f"**Chat ID:**  `{event.chat_id}`\n**User ID:**  `{ids}`"
         )
-
-    else:
-        await event.eor(
-            f"**Current Chat ID:**  `{str(event.chat_id)}`\n**Msg ID:**  `{str(event.id)}`"
-        )
-
+    data = f"**Current Chat ID:**  `{event.chat_id}`"
+    if event.reply_to_msg_id:
+        event = await event.get_reply_message()
+        data += f"\n**From User ID:**  `{event.sender_id)}`"
+    if event.media:
+        bot_api_file_id = event.file.id
+        data += f"\n**Bot API File ID:**  `{bot_api_file_id}`"
+    data += f"\n**Msg ID:**  `{event.id}`"
+    await ult.eor(data)
 
 @ultroid_cmd(pattern="bots( (.*)|$)", groups_only=True, manager=True)
 async def _(ult):
