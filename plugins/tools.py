@@ -107,7 +107,7 @@ async def _(event):
     data = f"**Current Chat ID:**  `{event.chat_id}`"
     if event.reply_to_msg_id:
         event = await event.get_reply_message()
-        data += f"\n**From User ID:**  `{event.sender_id)}`"
+        data += f"\n**From User ID:**  `{event.sender_id}`"
     if event.media:
         bot_api_file_id = event.file.id
         data += f"\n**Bot API File ID:**  `{bot_api_file_id}`"
