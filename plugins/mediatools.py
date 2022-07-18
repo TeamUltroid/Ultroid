@@ -73,6 +73,9 @@ async def mi(e):
         out = extra or str(er)
         return await e.edit(out, link_preview=False)
     makehtml = ""
+    if naam.endswith((".jpg", ".png", ".webp")):
+        med = "https://telegra.ph" + Telegraph.upload_file(naam)[0]["src"]
+        makehtml += f"<img src='{med}'><br>"
     for line in out.split("\n"):
         line = line.strip()
         if not line:
@@ -87,7 +90,8 @@ async def mi(e):
         LOGS.exception(er)
         return
     await e.eor(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
-    os.remove(naam)
+    if not match:
+        os.remove(naam)
 
 
 @ultroid_cmd(pattern="rotate( (.*)|$)")
