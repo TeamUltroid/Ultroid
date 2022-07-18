@@ -534,13 +534,6 @@ pmbot_5: "Please reply to someone to Unban him."
 pmbot_6: "User was never banned!"
 pmbot_7: "`Congrats! You have been unbanned.`"
 
-# rss feeds
-rss_1: "`Provide Rss url to add..`"
-rss_2: "Failed to verify rss url\n__Error: {}__"
-rss_3: "`No rss feed has been added to this chat.`"
-rss_4: "`Removed rss feed from this chat..`"
-rss_5: "`Successfully added to this chat.`"
-
 # -------------------------- VcBot ------------------------------- #
 
 vcbot_1: "`Left the voice chat.`"
@@ -571,9 +564,7 @@ vcbot_22: "`Cleaned All Queues In Chat`"
 cmda: ✘ Commands Available -"
 help_admintools: "\n\n• `.promote <reply to user/userid/username>`\n• `.demote`\n    Promote/Demote the user in the chat.\n\n• `.ban <reply to user/userid/username> <reason>`\n• `.unban`\n    Ban/Unban the user from the chat.\n\n• `.kick <reply to user/userid/username> <reason>`\n    Kick the user from the chat.\n\n• `.pin <reply to message>`\n    Pin the message in the chat\n• `.tpin <time> <temp pin message>`\n• `.unpin (all) <reply to message>`\n    Unpin the messages in the chat.\n\n• `.pinned`\n   Get pinned message in the current chat.\n• `.listpinned`\n   Get all pinned messages in current chat\n\n• `.autodelete <24h/7d/1m/off>`\n   Enable Auto Delete Messages in Chat.\n\n• `.purge <reply to message>`\n    Purge all messages from the replied message.\n\n• `.purgeme <reply to message>`\n    Purge Only your messages from the replied message.\n\n• `.purgeall`\n    Delete all msgs of replied user.\n"
 help_afk: "\n\n• `.afk <optional reason>`\n    AFK means away from keyboard,\n    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.\n\n    (Note : Set a media file in afk messages by replying to any media with `.afk <reason>`).\n\n"
-
 help_antiflood: "\n\n• `.setflood <integer>`\n    Set flood limit in a chat.\n\n• `.remflood`\n    Remove flood limit from a chat.\n\n• `.getflood`\n    Get flood limit of a chat.\n"
-
 help_asstcmd: "\n\n•`.addcmd <new cmd> <reply>`\n   It will set new cmd for your assistant bot with that reply message.\n\n•`.remcmd <cmd name>`\n   It will remove your cmd.\n\n•`.listcmd`\n   To Get list of all your custom cmd.\n"
 help_audiotools: " \n`.makevoice <reply to audio>`\n   creates a voice note from Audio.\n\n`.atrim <from time> - <to time>`\n   trim audio as per given time.\n   time must be in seconds. `.atrim 50-70`\n\n`.extractaudio <reply to media>`\n   To extract the audio from it.\n\n"
 help_autoban: "\n\n• `.autokick <on/off>`\n    on - To enable.\n    off - To disable.\n    Automatically kick new joined users from the group.\n\n• `.cban`\n    Enable/Disable autobanning send as channel in used chat.\n\n• `.addwl <Username>`\n   Add Channel to channelban whitelist.\n\n• `.remwl <Username>`\n   Remove Channel from channelban whitelist.\n\n• `.listwl` : List all whitelist channels.\n"
@@ -623,43 +614,24 @@ help_mute: " \n• `.mute <reply to msg/ user id>`\n    Mute user in current cha
 help_nightmode: " \nAt Night it will turn off everyone permission to send message in  an all groups which you added via `.addnight`\nAnd Turn On auto at morning\n\n• `.addnm`\n   Add NightMode\n   To Add Group To Auto Night Mode.\n\n• `.remnm`\n   Remove NightMode\n   To remove Group From Auto Night Mode\n\n• `.listnm`\n   List NightMode\n   To Get All List of Groups where NightMode Active.\n\n• `.nmtime <close hour> <close min> <open hour> <open min>`\n   NightMode Time\n   By Default Its close 00:00 , open 07:00\n   Use 24hr format\n   Ex- `nmtime 01 00 06 30`\n"
 
 help_notes: " \n• `.addnote <word><reply to a message>`\n    add note in the used chat with replied message and choosen word.\n\n• `.remnote <word>`\n    Remove the note from used chat.\n\n• `.listnote`\n    list all notes.\n\n• Use :\n   set notes in group so all can use it.\n   type `#(Keyword of note)` to get it\n"
-
 help_nsfwfilter: " \n•`.addnsfw <ban/mute/kick>`\n   If someone sends 18+ content it will be deleted and action will be taken.\n\n•`.remnsfw`\n   Remove Chat from nsfw filtering.\n"
-
 help_other: " \n• `.send <username/id> <reply/type>`\n    send message to User/Chat.\n\n• `.fwdreply <reply to msg>`\n    Reply to someone's msg by forwarding it in private.\n\n• `.save <reply message>`\n    Save that replied msg to ur saved messages box.\n\n• `.fsave <reply message>`\n    Forward that replied msg to ur saved messages.\n"
-
 help_pmpermit: " \n• `.a` or `.approve`\n    Approve someone to PM.\n\n• `.da` or `.disapprove`\n    Disapprove someone to PM.\n\n• `.block`\n    Block someone.\n\n• `.unblock` | `.unblock all`\n    Unblock someone.\n\n• `.nologpm`\n    Stop logging messages from the user.\n\n• `.logpm`\n    Start logging messages from the user.\n\n• `.startarchive`\n    Archive new PMs.\n\n• `.stoparchive`\n    Don't archive new PMs.\n\n• `.cleararchive`\n    Unarchive all chats.\n\n• `.listapproved`\n   List all approved PMs.\n"
-
 help_polls: " \n• `.poll <question> ; <option> ; <option>`\n    Get the Anonymous Poll with Given Options\n\n• `.poll <question> ; <option> ; <option> | <type>`\n    Get the poll specified with desired type!\n    type should be any of  `public`,  `multiple` or `quiz`\n\n• `.poll <question> ; <option> ; <option> | quiz_<answerno>`\n    Get the quiz poll where answerno is the number of option which is correct\n\n"
-
 help_profanityfilter: " \n•`.addprofanity`\n   If someone sends bad word in a chat, Then bot will delete that message.\n\n•`.remprofanity`\n   From chat from Profanity list.\n\n"
-
 help_profile: " \n• `.setname <first name // last name>`\n    Change your profile name.\n\n• `.setbio <bio>`\n    Change your profile bio.\n\n• `.setpic <reply to pic>`\n    Change your profile pic.\n\n• `.delpfp <n>(optional)`\n    Delete one profile pic, if no value given, else delete n number of pics.\n\n• `.poto <username>`\n    Upload the photo of Chat/User if Available.\n"
-
 help_qrcode: " \n• `.qrcode <text/reply to text>`\n   `Makes qrcode of text`\n\n• `.addqr <reply image> <text>`\n   `Makes qr of text and add it to image.`\n\n• `.qrdecode <reply to qrcode>`\n   `It decodes the qrcode.`\n"
-
 help_resize: " \n•`.size <reply to media>`\n   To get size of it.\n\n•`.resize <number> <number>`\n   To resize image on x, y axis.\n   eg. `.resize 690 960`\n"
-
 help_schedulemsg: " \n•`.schedule <text/reply to msg> <time>`\n    In time u can use second as number, or like 1h or 1m\n    eg. `.schedule Hello 100` It deliver msg after 100 sec.\n    eg. `.schedule Hello 1h` It deliver msg after an hour.\n"
-
 help_search: " \n• `.saavn <search query>`\n    Download songs from Saavn.\n\n• `.google <query>`\n    For doing google search.\n\n• `.github <username>`\n    Get full information of the users github profile.\n\n• `.img <query>`\n  `.img <query> ; <no of results>`\n    For doing Images search.\n\n• `.reverse`\n    Reply an Image or sticker to find its sauce.\n"
-
 help_snips: " \n• `.addsnip <word><reply to a message>`\n    add the used word as snip relating to replied message.\n\n• `.remsnip <word>`\n    Remove the snip word..\n\n• `.listsnip`\n    list all snips.\n\n• Use :\n    type `$(ur snip word)` get setted reply.\n"
-
 help_specialtools: " \n• `.wspr <username>`\n    Send secret message..\n\n• `.q <color-optional>`\n• `.q @username`\n• `.q r <color-optional>`\n• `.q count` : `multiple quotes`\n    Create quotes..\n\n• `.sticker <query>`\n    Search Stickers as Per ur Wish..\n\n• `.getaudio <reply to an audio>`\n    Download Audio To put in ur Desired Video/Gif.\n\n• `.addaudio <reply to Video/gif>`\n    It will put the above audio to the replied video/gif.\n\n• `.dob <date of birth>`\n    Put in dd/mm/yy Format only(eg .dob 01/01/1999).\n\n• `.wall <query>`\n    Search Hd Wallpaper as Per ur Wish..\n"
-
 help_stickertools: " \n• `.destroy <reply to animated sticker>`\n    To destroy the sticker.\n\n• `.tiny <reply to media>`\n    To create Tiny stickers.\n\n• `.kang <reply to image/sticker>`\n    Kang the sticker (add to your pack).\n\n• `.packkang <pack name>`\n    Kang the Complete sticker set (with custom name).\n\n• `.round <reply to any media>`\n    To extract round sticker.\n"
-
 help_sudo: " \n• `.addsudo`\n    Add Sudo Users by replying to user or using <space> separated userid(s)\n\n• `.delsudo`\n    Remove Sudo Users by replying to user or using <space> separated userid(s)\n\n• `.listsudo`\n    List all sudo users.\n"
-
 help_tag: " \n• `.tagall`\n    Tag Top 100 Members of chat.\n\n• `.tagadmins`\n    Tag Admins of that chat.\n\n• `.tagowner`\n    Tag Owner of that chat\n\n• `.tagbots`\n    Tag Bots of that chat.\n\n• `.tagrec`\n    Tag recently Active Members.\n\n• `.tagon`\n    Tag online Members(work only if privacy off).\n\n• `.tagoff`\n    Tag Offline Members(work only if privacy off).\n"
-
 help_tools: " \n• `.circle`\n    Reply to a audio song or gif to get video note.\n\n• `.ls`\n    Get all the Files inside a Directory.\n\n• `.bots`\n    Shows the number of bots in the current chat with their perma-link.\n\n• `.hl <a link> <text-optional>`\n    Embeds the link with a whitespace as message.\n\n• `.id`\n    Reply a Sticker to Get Its Id\n    Reply a User to Get His Id\n    Without Replying You Will Get the Chat's Id\n\n• `.sg <reply to a user><username/id>`\n    Get His Name History of the replied user.\n\n• `.tr <dest lang code> <(reply to) a message>`\n    Get translated message.\n\n• `.webshot <url>`\n    Get a screenshot of the webpage.\n\n• `.shorturl <url> <id-optional>`\n    shorten any url...\n"
-
 help_unsplash: " \n• .unsplash <search query> ; <no of pics>\n    Unsplash Image Search.\n"
-
 help_usage: "\n• `.usage`\n    Get overall usage.\n\n• `.usage heroku`\n   Get heroku stats.\n\n• `.usage db`\n   Get database storage usage.\n"
-
 help_utilities: " \n• `.kickme` : Leaves the group.\n\n• `.date` : Show Calender.\n\n• `.listreserved`\n    List all usernames (channels/groups) you own.\n\n• `.stats` : See your profile stats.\n\n• `.paste` - `Include long text / Reply to text file.`\n\n• `.info <username/userid/chatid>`\n    Reply to someone's msg.\n\n• `.invite <username/userid>`\n    Add user to the chat.\n\n• `.rmbg <reply to pic>`\n    Remove background from that picture.\n\n• `.telegraph <reply to media/text>`\n    Upload media/text to telegraph.\n\n• `.json <reply to msg>`\n    Get the json encoding of the message.\n\n• `.suggest <reply to message> or <poll title>`\n    Create a Yes/No poll for the replied suggestion.\n\n• `.ipinfo <ipAddress>` : Get info about that IP address.\n\n• `.cpy <reply to message>`\n   Copy the replied message, with formatting. Expires in 24hrs.\n• `.pst`\n   Paste the copied message, with formatting.\n\n• `.thumb <reply file>` : Download the thumbnail of the replied file.\n\n• `.ncode <file>`\n   Use - Paste the contents of file and send as pic.\n"
 
 help_variables: " \n• `.get var <variable name>`\n   Get value of the given variable name.\n\n• `.get type <variable name>`\n   Get variable type.\n\n• `.get db <key>`\n   Get db value of the given key.\n\n• `.get keys`\n   Get all redis keys.\n"
