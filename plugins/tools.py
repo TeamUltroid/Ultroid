@@ -114,6 +114,7 @@ async def _(event):
     data += f"\n**Msg ID:**  `{event.id}`"
     await ult.eor(data)
 
+
 @ultroid_cmd(pattern="bots( (.*)|$)", groups_only=True, manager=True)
 async def _(ult):
     mentions = "• **Bots in this Chat**: \n"
