@@ -21,7 +21,7 @@ from datetime import datetime as dt
 from pyUltroid.functions.misc import rotate_image
 from pyUltroid.functions.tools import make_html_telegraph
 
-from . import LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd
+from . import LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd, Telegraph
 
 try:
     import cv2
