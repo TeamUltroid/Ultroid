@@ -34,7 +34,7 @@ except ImportError:
 async def mi(e):
     r = await e.get_reply_message()
     match = e.pattern_match.group(1).strip()
-    taime = time.time()
+    taime = time.time() 
     extra = ""
     if r and r.media:
         xx = mediainfo(r.media)
@@ -73,7 +73,7 @@ async def mi(e):
         out = extra or str(er)
         return await e.edit(out, link_preview=False)
     makehtml = ""
-    if naam.endswith((".jpg", ".png", ".webp")):
+    if naam.endswith((".jpg", ".png")):
         med = "https://telegra.ph" + Telegraph.upload_file(naam)[0]["src"]
         makehtml += f"<img src='{med}'><br>"
     for line in out.split("\n"):
