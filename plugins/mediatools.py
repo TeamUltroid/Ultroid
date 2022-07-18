@@ -34,7 +34,7 @@ except ImportError:
 async def mi(e):
     r = await e.get_reply_message()
     match = e.pattern_match.group(1).strip()
-    taime = time.time() 
+    taime = time.time()
     extra = ""
     if r and r.media:
         xx = mediainfo(r.media)
