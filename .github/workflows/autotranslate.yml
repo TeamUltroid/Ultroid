@@ -29,5 +29,5 @@ jobs:
            wget -O run.py https://gist.githubusercontent.com/New-dev0/906ba98055bf4ab0ce54d2ff8836ec5e/raw/67487b5576688d967f7a68734d62aef0f2b4b84d/updatetr.py
            python3 run.py && rm run.py
            git add . && git commit -m "[Auto] Translate" && git push --set-upstream origin translation
-           gh pr create --title "[Auto] Translation" -B dev
+           gh pr create --title "[Auto] Translation" -B dev --body "Update Translation"
            git branch -d translation && git add . && git commit -m "delete" && git push
