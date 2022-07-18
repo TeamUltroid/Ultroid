@@ -256,7 +256,7 @@ async def _(e):
             allfiles.append(f"📂 {file}")
         else:
             for ext in FilesEMOJI.keys():
-                if os.path.endswith(ext):
+                if file.endswith(ext):
                     allfiles.append(f"{FilesEMOJI[ext]} {file}")
                     break
             else:
