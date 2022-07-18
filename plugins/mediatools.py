@@ -30,36 +30,41 @@ except ImportError:
     cv2 = None
 
 
-@ultroid_cmd(pattern="mediainfo$")
+@ultroid_cmd(pattern="mediainfo( (.*)|$)")
 async def mi(e):
     r = await e.get_reply_message()
-    if not (r and r.media):
-        return await e.eor(get_string("cvt_3"), time=5)
-    xx = mediainfo(r.media)
-    murl = r.media.stringify()
-    url = await make_html_telegraph("Mediainfo", f"<code>{murl}</code>")
-    ee = await e.eor(f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
+    match = e.pattern_match.group(1).strip()
     taime = time.time()
-    if hasattr(r.media, "document"):
-        file = r.media.document
-        mime_type = file.mime_type
-        filename = r.file.name
-        if not filename:
-            if "audio" in mime_type:
-                filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
-            elif "video" in mime_type:
-                filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        dl = await downloader(
+    if r and r.media:
+        xx = mediainfo(r.media)
+        murl = r.media.stringify()
+        url = await make_html_telegraph("Mediainfo", f"<pre>{murl}</pre>")
+        e = await e.eor(f"**[{xx}]({url})**\n\n`Loading More...`", link_preview=False)
+
+        if hasattr(r.media, "document"):
+            file = r.media.document
+            mime_type = file.mime_type
+            filename = r.file.name
+            if not filename:
+                if "audio" in mime_type:
+                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
+                elif "video" in mime_type:
+                    filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+            dl = await downloader(
             f"resources/downloads/{filename}",
             file,
             ee,
             taime,
             f"`**[{xx}]({url})**\n\n`Loading More...",
-        )
+            )
 
-        naam = dl.name
+            naam = dl.name
+        else:
+             naam = await r.download_media()
+    elif match and os.path.isfile(match):
+        naam, xx = match, "file"
     else:
-        naam = await r.download_media()
+        return await e.eor(get_string("cvt_3"), time=5)
     out, er = await bash(f"mediainfo '{naam}'")
     if er:
         LOGS.info(er)
