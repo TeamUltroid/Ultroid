@@ -27,7 +27,7 @@ jobs:
            git config --global user.name "New-Dev0"
            git branch translation && git checkout translation
            pip install pyyaml https://github.com/TeamUltroid/pyUltroid/archive/dev.zip requests telethon 
-           wget -O run.py https://gist.githubusercontent.com/New-dev0/c7d0d1eb514d311e8e3b687ae5cbe5f3/raw/f5267b12d9b0e51f13634c304014074fd7aa55dd/updater.py
+           wget -O run.py https://gist.githubusercontent.com/New-dev0/c7d0d1eb514d311e8e3b687ae5cbe5f3/raw/86bd223bf9fe63da0de1722263243a67b0a2f686/updater.py
            python3 run.py
            rm run.py
            git add . && git commit -m "[Auto] Translate" && git push --set-upstream origin translation
