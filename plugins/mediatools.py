@@ -40,7 +40,7 @@ async def mi(e):
         xx = mediainfo(r.media)
         murl = r.media.stringify()
         url = await make_html_telegraph("Mediainfo", f"<pre>{murl}</pre>")
-        extra= f"**[{xx}]({url})**\n\n"
+        extra = f"**[{xx}]({url})**\n\n"
         e = await e.eor(f"{extra}`Loading More...`", link_preview=False)
 
         if hasattr(r.media, "document"):
@@ -86,9 +86,7 @@ async def mi(e):
     except Exception as er:
         LOGS.exception(er)
         return
-    await e.eor(
-        f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False
-    )
+    await e.eor(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
     os.remove(naam)
 
 
