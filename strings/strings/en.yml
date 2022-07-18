@@ -11,7 +11,7 @@ authors:
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
-com_3: "`Invalid Input`" 
+com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
 com_5: "Downloading..."
 com_6: "Uploading..."
