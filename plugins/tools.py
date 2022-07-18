@@ -220,6 +220,18 @@ async def _(e):
     else:
         await e.eor("`Reply to a gif or audio file only.`")
 
+FilesEMOJI = {
+    "py":"🐍",
+    "json"":"🔮",
+    (".mkv", ".mp4", ".avi", ".gif", "webm"):"🎥",
+    (".mp3", ".ogg", ".m4a", ".opus"):"🔊",
+    (".jpg", ".jpeg", ".png", ".webp", ".ico"):"🖼",
+    (".txt", ".text", ".log"): "📄",
+    (".apk", ".xapk"): "📲",
+    (".pdf", ".epub"): "📗",
+    (".zip", ".rar"): "🗜",
+    (".exe", ".iso"): "⚙"
+}
 
 @ultroid_cmd(
     pattern="ls( (.*)|$)",
@@ -235,61 +247,20 @@ async def _(e):
     files = glob.glob(files)
     if not files:
         return await e.eor("`Directory Empty or Incorrect.`", time=5)
-    pyfiles = []
-    jsons = []
-    vdos = []
-    audios = []
-    pics = []
-    others = []
-    otherfiles = []
-    folders = []
-    text = []
-    apk = []
-    exe = []
-    zip_ = []
-    book = []
+    allfiles = []
     for file in sorted(files):
         if os.path.isdir(file):
-            folders.append(f"📂 {str(file)}")
-        elif str(file).endswith(".py"):
-            pyfiles.append(f"🐍 {str(file)}")
-        elif str(file).endswith(".json"):
-            jsons.append(f"🔮 {str(file)}")
-        elif str(file).endswith((".mkv", ".mp4", ".avi", ".gif", "webm")):
-            vdos.append(f"🎥 {str(file)}")
-        elif str(file).endswith((".mp3", ".ogg", ".m4a", ".opus")):
-            audios.append(f"🔊 {str(file)}")
-        elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp", ".ico")):
-            pics.append(f"🖼 {str(file)}")
-        elif str(file).endswith((".txt", ".text", ".log")):
-            text.append(f"📄 {str(file)}")
-        elif str(file).endswith((".apk", ".xapk")):
-            apk.append(f"📲 {str(file)}")
-        elif str(file).endswith((".exe", ".iso")):
-            exe.append(f"⚙ {str(file)}")
-        elif str(file).endswith((".zip", ".rar")):
-            zip_.append(f"🗜 {str(file)}")
-        elif str(file).endswith((".pdf", ".epub")):
-            book.append(f"📗 {str(file)}")
-        elif "." in str(file)[1:]:
-            others.append(f"🏷 {str(file)}")
+            allfiles.append(f"📂 {file}")
         else:
-            otherfiles.append(f"📒 {str(file)}")
-    omk = [
-        *sorted(folders),
-        *sorted(pyfiles),
-        *sorted(jsons),
-        *sorted(zip_),
-        *sorted(vdos),
-        *sorted(pics),
-        *sorted(audios),
-        *sorted(apk),
-        *sorted(exe),
-        *sorted(book),
-        *sorted(text),
-        *sorted(others),
-        *sorted(otherfiles),
-    ]
+            for ext in FilesEMOJI.keys():
+                if os.path.endswith(ext):
+                    allfiles.append(f"{FilesEMOJI[ext]} {file}")
+                    break
+            elif "." in str(file)[1:]:
+                allfiles.append(f"🏷 {file}")
+            else:
+                allfiles.append(f"📒 {file}")
+    omk = sorted(allfiles)
     text = ""
     fls, fos = 0, 0
     flc, foc = 0, 0
@@ -334,6 +305,8 @@ async def _(e):
         ttol = "0 B"
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     try:
+        if (flc+foc) > 100:
+            text = text.replace("`", "")
         await e.eor(text)
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
