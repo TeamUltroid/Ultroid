@@ -475,7 +475,7 @@ writer_1: "`Give Some Text Too`"
 
 # webshot
 wbs_1: "`Give a URL please!`"
-wbs_2: "Invalid URL!"
+wbs_2: "Invalid URL!" 
 wbs_3: "**WebShot Generated**\n**URL**: {}"
 
 # youtube
