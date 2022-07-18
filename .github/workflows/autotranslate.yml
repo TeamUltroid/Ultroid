@@ -3,7 +3,8 @@ name: Strings Translation
 on:
   push:
     branches: dev
-    paths: strings/strings/en.yml
+    paths:
+    - strings/strings/en.yml
   workflow_dispatch:
 
 jobs:
