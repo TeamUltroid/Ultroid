@@ -16,7 +16,7 @@ com_4: "`UnSupported Media..`"
 com_5: "Downloading..."
 com_6: "Uploading..."
 com_7: "`Something Went Wrong.`"
-
+ 
 #chatactions
 can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
 can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
