@@ -190,3 +190,4 @@ wrd_3: "**Word** - `{}`\n\n**反义词** - \n"
 ast_1: "选择你要设置的 API."
 ast_2: "**remove.bg API**\n输入你的 remove.bg API key .\n\n使用 /cancel 终止操作."
 ast_3: "Hi {}. 请浏览以下选项"
+
