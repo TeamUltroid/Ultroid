@@ -189,3 +189,4 @@ ast_1: "Scegli quale API desideri impostare."
 ast_2: "**remove.bg API**\nInserisci la tua chiave API da remove.bg.\n\nUsa /cancel per terminare l'operazione."
 ast_3: "Ciao {}. Si prega di sfogliare le opzioni"
 
+help_pmpermit: "`` .A` বা `.আপনি\n    প্রধানমন্ত্রীর কাছে কাউকে অনুমোদন দিন।\n\n`` .Da` বা `.ডিস অ্যাপ্রোভে`\n    প্রধানমন্ত্রীর কাছে কাউকে অস্বীকার করুন।\n\n• `.ব্লক`\n    কাউকে ব্লক করুন।\n\n• `.unblock` |`.আনব্লক অল\n    কাউকে অবরুদ্ধ করুন।\n\n• `.নোলজপিএম`\n    ব্যবহারকারীর কাছ থেকে লগিং বার্তাগুলি বন্ধ করুন।\n\n• `.logpm`\n    ব্যবহারকারীর কাছ থেকে লগিং বার্তা শুরু করুন।\n\n• `। স্টার্টার্কিভ`\n    সংরক্ষণাগার নতুন পিএমএস।\n\n• `। স্টোপারচাইভ`\n    নতুন পিএমএস সংরক্ষণাগার করবেন না।\n\n• `। ক্লেয়ারচাইভ`\n    অলৌকিক সমস্ত চ্যাট।\n\n• `। লিস্টপ্রেসড``\n   সমস্ত অনুমোদিত পিএমএস তালিকাভুক্ত করুন।"audiotools_5: "`Trying To Download...`"
