@@ -176,7 +176,7 @@ blk_6: "No Blacklist word Found Here"
 
 # broadcast
 bd_1: "`Adding to db...`"
-bd_2: "`Trying to add all admin channels to db...`"
+bd_2: "`Trying to add all admin channels to db...`" 
 bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
 bd_4: "Channels added!"
 bd_5: "`Added to database!`"
