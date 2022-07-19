@@ -17,7 +17,7 @@
 | it | Italian [italiano] | 111 | 378 |
 | my | Malay [Bahasa Melayu] | 112 | 377 |
 | ru | Russian [Русский] | 413 | 76 |
-| od | Odia [ଓଡିଆ] | 144 | 345 |
+| od | Odia [ଓଡିଆ] | 149 | 340 |
 | pt-br | Português [Português] | 418 | 71 |
 | ml | Malayalam [മലയാളം] | 112 | 377 |
 | ta | தமிழ் [தமிழ்] | 112 | 377 |
