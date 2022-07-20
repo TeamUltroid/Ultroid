@@ -199,11 +199,11 @@ async def siesace(e):
     except IndexError:
         return await eve.eor(f"`{song} not found on saavn.`")
     try:
-        title = data["song"]
-        url = data["media_url"]
+        title = data["title"]
+        url = data["url"]
         img = data["image"]
         duration = data["duration"]
-        performer = data["primary_artists"]
+        performer = data["artists"]
     except KeyError:
         return await eve.eor("`Something went wrong.`")
     song, _ = await fast_download(url, filename=f"{title}.m4a")
