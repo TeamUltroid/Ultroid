@@ -621,14 +621,14 @@ async def savn_s(event):
     res = []
     for song in results:
         thumb = wb(song["image"], 0, "image/jpeg", [])
-        text = f"• **Title :** {song['song']}"
+        text = f"• **Title :** {song['title']}"
         text += f"\n• **Year :** {song['year']}"
         text += f"\n• **Lang :** {song['language']}"
-        text += f"\n• **Artist :** {song['primary_artists']}"
+        text += f"\n• **Artist :** {song['artists']}"
         text += f"\n• **Release Date :** {song['release_date']}"
         res.append(
             await event.builder.article(
-                title=song["song"],
+                title=song["title"],
                 type="audio",
                 text=text,
                 include_media=True,
@@ -637,14 +637,14 @@ async def savn_s(event):
                 ),
                 thumb=thumb,
                 content=wb(
-                    song["media_url"],
+                    song["url"],
                     0,
                     "audio/mp4",
                     [
                         Audio(
-                            title=song["song"],
+                            title=song["title"],
                             duration=int(song["duration"]),
-                            performer=song["primary_artists"],
+                            performer=song["artists"],
                         )
                     ],
                 ),
