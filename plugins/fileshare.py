@@ -4,20 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}store <reply_to_message>`
-   Store the replied message/media and generate a shareable link to that file, to be accessed via your assistant bot!
+from . import get_help
 
-• `{i}delstored <link of stored file>`
-    Delete stored file.
-
-• `{i}liststored`
-   Get all stored messages.
-
-• Go Inline with your assistant bot with `filestore` to see stored files in inline.
-"""
+__doc__ = get_help("help_fileshare")
 
 import os
 
