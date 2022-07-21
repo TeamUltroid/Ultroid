@@ -4,39 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}ftyping <time/in secs>`
-    `Show Fake Typing in current chat.`
+from . import get_help
 
-• `{i}faudio <time/in secs>`
-    `Show Fake Recording Action in current chat.`
+__doc__ = get_help("help_fakeaction")
 
-• `{i}fvideo <time/in secs>`
-    `Show Fake video action in current chat.`
-
-• `{i}fgame <time/in secs>`
-    `Show Fake Game Playing Action in current chat.`
-
-• `{i}fsticker <time/in secs>`
-    `Show Fake sticker choosing Action in current chat.`
-
-• `{i}flocation <time/in secs>`
-    `Show Fake location Action in current chat.`
-
-• `{i}fcontact <time/in secs>`
-    `Show Fake contact choosing Action in current chat.`
-
-• `{i}fround <time/in secs>`
-    `Show Fake video message action in current chat.`
-
-• `{i}fphoto <time/in secs>`
-    `Show Fake sending photo in current chat.`
-
-• `{i}fdocument <time/in secs>`
-    `Show Fake sending document in current chat.`
-"""
 import math
 import time
 
