@@ -63,6 +63,8 @@ async def _(e):
         if query.isdigit():
             query = int(query)
         logi = await ultroid_bot.get_entity(query)
+        if not isinstance(logi, types.User):
+            raise ValueError("Invalid Username.")
     except IndexError:
         sur = e.builder.article(
             title="Give Username",
