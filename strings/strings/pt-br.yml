@@ -159,7 +159,7 @@ bot_5: "• `Reiniciando...`"
 alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n✵ **Proprietário** - '{}'\n✵ **Ultroid** - '{}'\n✵ **Py-Ultroid** - '{}'\n✵ **Em Atividade** - '{}'\n✵ **Python** - '{}'\n✵ **Teleton** - '{}'\n✵ **Filial** - '{}'"
 log: "**Heroku** Ultroid Logs.\nColado [aqui]({}) também!"
 ping: "**Pong!!** `{}ms`\n**Em Atividade** - `{}`"
-usage: "**⚙️ Uso Dyno ⚙️**:\n\n-> **Dyno usado por** `{}`:\n  • **{}h** **{{}m |** '[{}%]'\n-> **Cota de horas Dyno restantes neste mês**:\n  • **{}h** **{{}m |** '[{}%]'\n\n**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
+usage: "**⚙️ Uso Dyno ⚙️**:\n\n-> **Dyno usado por** `{}`:\n  • **{}h** **}m |** '[{}%]'\n-> **Cota de horas Dyno restantes neste mês**:\n  • **{}h** **}m |** '[{}%]'\n\n**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
 usage_simple: "**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
 shutdown: "Adeus {}.\n`Desligando...`"
 
