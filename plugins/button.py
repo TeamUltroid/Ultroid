@@ -4,16 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}button <text with button format`
-   create button u can reply to pic also
+from . import get_help
 
-Format:- `{i}button Hey There! @UseUltroid 😎.
-[Ultroid | t.me/theUltroid][Support | t.me/UltroidSupportChat | same]
-[TeamUltroid | t.me/TeamUltroid]`
-"""
+__doc__ = get_help("help_button")
+
 import os
 
 from pyUltroid.functions.tools import create_tl_btn, get_msg_button

@@ -5,22 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available -
+from . import get_help
 
-• `{i}ul <path/to/file>`
-    Upload files on telegram.
-    Use following arguments before or after filename as per requirement:
-      `--stream` to upload as stream.
-      `--delete` to delete file after uploading.
-      `--no-thumb` to upload without thumbnail.
-
-• `{i}dl <filename(optional)>`
-    Reply to file to download.
-
-• `{i}download <DDL> (| filename)`
-    Download using DDL. Will autogenerate filename if not given.
-"""
+__doc__ = get_help("help_downloadupload")
 
 import asyncio
 import glob

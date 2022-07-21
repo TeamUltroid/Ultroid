@@ -4,24 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}convert <gif/img/sticker/webm>`
-    Reply to media to convert it into gif / image / webm / normal sticker.
+from . import get_help
 
-• `{i}doc <filename.ext>`
-    Reply to a text msg to save it in a file.
+__doc__ = get_help("help_converter")
 
-• `{i}open`
-    Reply to a file to reveal it's text.
-
-• `{i}rename <file name with extension>`
-    Rename the file
-
-• `{i}thumbnail <reply to image/thumbnail file>`
-    Upload Your file with your custom thumbnail.
-"""
 import os
 import time
 

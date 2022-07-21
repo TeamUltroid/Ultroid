@@ -19,15 +19,6 @@ from . import LOGS, get_help, get_string, udB, ultroid_bot, ultroid_cmd
 
 __doc__ = get_help("help_autopic")
 
-_ = """
-✘ Commands Available -
-
-• `{i}autopic <search query>`
-    Will change your profile pic at defined intervals with pics related to the given topic.
-
-• `{i}autopic` : stop autopic if active.
-"""
-
 
 @ultroid_cmd(pattern="autopic( (.*)|$)")
 async def autopic(e):

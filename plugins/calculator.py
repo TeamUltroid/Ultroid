@@ -4,12 +4,13 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}calc` - Inline Calculator
 
-"""
+
+from . import get_help
+
+__doc__ = get_help("help_calculator")
+
 import re
 
 from . import Button, asst, callback, get_string, in_pattern, udB, ultroid_cmd

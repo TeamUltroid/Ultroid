@@ -4,24 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• **DataBase Commands, do not use if you don't know what it is.**
 
-• `{i}setdb key | value`
-    Set Value in Database.
-    e.g :
-    `{i}setdb hi there`
-    `{i}setdb hi there | ultroid here`
-    `{i}setdb --extend variable value` or `{i}setdb -e variable value` to add the value to the exiting values in db.
+from . import get_help
 
-• `{i}deldb key`
-    Delete Key from DB.
+__doc__ = get_help("help_database")
 
-• `{i}rendb old keyname | new keyname`
-    Update Key Name
-"""
 
 import re
 

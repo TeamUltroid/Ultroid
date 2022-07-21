@@ -4,24 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}addch <id/reply to list/none>`
-    Add chat to database. Adds current chat if no id specified.
 
-• `{i}remch <all/id/none>`
-    Removes the specified chat (current chat if none specified), or all chats.
+from . import get_help
 
-• `{i}broadcast <reply to msg>`
-    Send the replied message to all chats in database.
+__doc__ = get_help("help_broadcast")
 
-• `{i}forward <reply to msg>`
-     Forward the message to all chats in database.
-
-• `{i}listchannels`
-    To get list of all added chats.
-"""
 import asyncio
 import io
 

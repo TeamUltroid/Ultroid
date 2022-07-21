@@ -4,29 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}install <reply to plugin>`
-    To install the plugin,
-  `{i}install f`
-    To force Install.
 
-• `{i}uninstall <plugin name>`
-    To unload and remove the plugin.
+from . import get_help
 
-• `{i}load <plugin name>`
-    To load unloaded unofficial plugin.
+__doc__ = get_help("help_core")
 
-• `{i}unload <plugin name>`
-    To unload unofficial plugin.
-
-• `{i}help <plugin name>`
-    Shows you a help menu (like this) for every plugin.
-
-• `{i}getaddons <raw link to code>`
-    Load Plugins from the given raw link.
-"""
 
 import os
 

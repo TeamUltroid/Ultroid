@@ -4,12 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}autocorrect`
-    To on/off Autocorrect Feature.
-"""
+from . import get_help
+
+__doc__ = get_help("help_autocorrect")
 
 import string
 

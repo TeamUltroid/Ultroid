@@ -5,26 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available
+from . import get_help
 
-• `{i}autokick <on/off>`
-    on - To enable.
-    off - To disable.
-    Automatically kick new joined users from the group.
-
-• `{i}cban`
-    Enable/Disable autobanning send as channel in used chat.
-
-• `{i}addwl <Username>`
-   Add Channel to channelban whitelist.
-
-• `{i}remwl <Username>`
-   Remove Channel from channelban whitelist.
-
-• `{i}listwl` : List all whitelist channels.
-"""
-
+__doc__ = get_help("help_autoban")
 
 from pyUltroid.dB import autoban_db, dnd_db
 from pyUltroid.functions.admins import get_update_linked_chat

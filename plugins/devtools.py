@@ -5,28 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available -
+from . import get_help
 
-• `{i}bash <cmds>`
-• `{i}bash -c <cmds>` Carbon image as command output.
-    Run linux commands on telegram.
-
-• `{i}eval <code>`
-    Evaluate python commands on telegram.
-    Shortcuts:
-        client = bot = event.client
-        e = event
-        p = print
-        reply = await event.get_reply_message()
-        chat = event.chat_id
-
-• `{i}cpp <code>`
-    Run c++ code from Telegram.
-
-• `{i}sysinfo`
-    Shows System Info.
-"""
+__doc__ = get_help("help_devtools")
 
 import inspect
 import sys

@@ -4,34 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}alive` | `{i}alive inline`
-    Check if your bot is working.
+from . import get_help
 
-• `{i}ping`
-    Check Ultroid's response time.
+__doc__ = get_help("help_bot")
 
-• `{i}update`
-    See changelogs if any update is available.
-
-• `{i}cmds`
-    View all plugin names.
-
-• `{i}restart`
-    To restart your bot.
-
-• `{i}logs (sys)`
-    Get the full terminal logs.
-• `{i}logs carbon`
-    Get the carbonized sys logs.
-• `{i}logs heroku`
-   Get the latest 100 lines of heroku logs.
-
-• `{i}shutdown`
-    Turn off your bot.
-"""
 import os
 import sys
 import time

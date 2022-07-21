@@ -4,21 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}addai <reply to user/give username/userid>`
-   Add a AI ChatBot to reply to that user.
+from . import get_help
 
-• `{i}remai <reply to user/give username/userid>`
-   Remove the AI ChatBot.
+__doc__ = get_help("help_chatbot")
 
-• `{i}repai <reply to user/give a message>`
-   Reply to the user with a message by an AI.
-
-• `{i}listai`
-   List the currently AI added users.
-"""
 
 from pyUltroid.functions.tools import get_chatbot_reply
 

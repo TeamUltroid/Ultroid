@@ -4,18 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}addcmd <new cmd> <reply>`
-   It will set new cmd for your assistant bot with that reply message.
+from . import get_help
 
-•`{i}remcmd <cmd name>`
-   It will remove your cmd.
+__doc__ = get_help("help_asstcmd")
 
-•`{i}listcmd`
-   To Get list of all your custom cmd.
-"""
 import os
 
 from pyUltroid.dB.asstcmd_db import add_cmd, cmd_reply, list_cmds, rem_cmd

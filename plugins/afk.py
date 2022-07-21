@@ -4,16 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}afk <optional reason>`
-    AFK means away from keyboard,
-    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.
+from . import get_help
 
-    (Note : Set a media file in afk messages by replying to any media with `{i}afk <reason>`).
+__doc__ = get_help("help_afk")
 
-"""
 
 import asyncio
 

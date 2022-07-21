@@ -31,21 +31,6 @@ from . import (
 
 __doc__ = get_help("help_audiotools")
 
-_ = """
-✘ Commands Available -
-
-`{i}makevoice <reply to audio>`
-   creates a voice note from Audio.
-
-`{i}atrim <from time> - <to time>`
-   trim audio as per given time.
-   time must be in seconds. `{i}atrim 50-70`
-
-`{i}extractaudio <reply to media>`
-   To extract the audio from it.
-
-"""
-
 
 @ultroid_cmd(pattern="makevoice$")
 async def vnc(e):

@@ -4,18 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}setflood <integer>`
-    Set flood limit in a chat.
+from . import get_help
 
-• `{i}remflood`
-    Remove flood limit from a chat.
+__doc__ = get_help("help_antiflood")
 
-• `{i}getflood`
-    Get flood limit of a chat.
-"""
 
 import re
 
