@@ -89,7 +89,7 @@ ULTPIC = INLINE_PIC or choice(ULTROID_IMAGES)
 buttons = [
     [
         Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
-        Button.url(get_string("bot_4"), "t.me/UltroidSupport"),
+        Button.url(get_string("bot_4"), "t.me/ultroidsupportchat"),
     ]
 ]
 

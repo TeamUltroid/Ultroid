@@ -19,13 +19,13 @@ autopic_2: "Nessun risultato trovato per `{}`"
 autopic_3: "Hai una raccolta`{}` correlata alla tua ricerca! \nAvvio di Autopic!"
 
 # inline
-inline_1: "[Supporto Ultroid](t.me/ultroidsupport)\n\n
+inline_1: "[Supporto Ultroid](t.me/ultroidsupportchat)\n\n
 **Menù di aiuto di {}.\n\n
 Pʟᴜɢɪɴs ~ {}**"
-inline_2: "[Supporto Ultroid](t.me/ultroidsupport)\n\n
+inline_2: "[Supporto Ultroid](t.me/ultroidsupportchat)\n\n
 **Menù di aiuto di {}.\n\n
 Aᴅᴅᴏɴs ~ {}**"
-inline_3: "[Supporto Ultroid](t.me/ultroidsupport)\n\n
+inline_3: "[Supporto Ultroid](t.me/ultroidsupportchat)\n\n
 **Menù di aiuto di {}.\n\n
 Aᴅᴅᴏɴs ~ {}\n\n
 Vai e aggiungi la variabile ADDONS con valore true**"

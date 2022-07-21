@@ -20,13 +20,13 @@ autopic_2: "找不到的结果 `{}`"
 autopic_3: "有收藏吗 `{}` 与您的搜索相关 !\n开始自选 !"
 
 # inline
-inline_1: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+inline_1: "[Ultroid 帮助](t.me/ultroidsupportchat)\n\n
 **帮助菜单 {}.\n\n
 插件 ~ {}**"
-inline_2: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+inline_2: "[Ultroid 帮助](t.me/ultroidsupportchat)\n\n
 **帮助菜单 {}.\n\n
 附加组件 ~ {}**"
-inline_3: "[Ultroid 帮助](t.me/ultroidsupport)\n\n
+inline_3: "[Ultroid 帮助](t.me/ultroidsupportchat)\n\n
 **帮助菜单 {}.\n\n
 附加组件 ~ {}\n\n
 去添加 `附加组件` var为true的值**"

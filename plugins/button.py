@@ -11,7 +11,7 @@
    create button u can reply to pic also
 
 Format:- `{i}button Hey There! @UseUltroid 😎.
-[Ultroid | t.me/theUltroid][Support | t.me/UltroidSupport | same]
+[Ultroid | t.me/theUltroid][Support | t.me/ultroidsupportchat | same]
 [TeamUltroid | t.me/TeamUltroid]`
 """
 import os

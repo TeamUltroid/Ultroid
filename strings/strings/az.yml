@@ -116,9 +116,9 @@ autopic_4: "AUTOPIC istifadə olunmur !!"
 autopic_5: "AUTOPIC dayandırıldı!"
 
 # inline
-inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nPluginlər ~ {}**"
-inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}**"
-inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupport)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setdb ADDONS True`** edin sonra restart atın.**"
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupportchat)\n\n**Kömək menusu {}.\n\nPluginlər ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupportchat)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/ultroidsupportchat)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setdb ADDONS True`** edin sonra restart atın.**"
 inline_4: "** Bot: {}\n\nMenu\n\nPluginlər~ {}\nƏlavələr ~ {}\nBütün əmrlər~ {}**"
 inline_5: "**Menu bağlandı**"
 inline_6: "**{} üçün Səsli Çat Yardım Menyu**\n**Mümkün əmrlər:** `{}`\n\n@TeamUltroid"

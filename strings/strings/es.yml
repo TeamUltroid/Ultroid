@@ -120,9 +120,9 @@ autopic_4: "AUTOPIC no estaba en uso !!"
 autopic_5: "AUTOPIC detenido!"
 
 # inline
-inline_1: "[Uʟᴛʀᴏɪᴅ Soporte](t.me/ultroidsupport)\n\n **Menú de Toda de {}.\n\n Complementos ~ {}**"
-inline_2: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}**"
-inline_3: "[Soporte de Ultroid](t.me/ultroidsupport)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}\n\nVe y añade `ADDONS` var con valor true**"
+inline_1: "[Uʟᴛʀᴏɪᴅ Soporte](t.me/ultroidsupportchat)\n\n **Menú de Toda de {}.\n\n Complementos ~ {}**"
+inline_2: "[Soporte de Ultroid](t.me/ultroidsupportchat)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}**"
+inline_3: "[Soporte de Ultroid](t.me/ultroidsupportchat)\n\n**Menú de ayuda de{}.\n\nComplementos ~ {}\n\nVe y añade `ADDONS` var con valor true**"
 inline_4: "** Bot de {}\n\nMenú principal\n\nPʟᴜɢɪɴs ~ {}\nComplementos ~ {}\nComandos Totales ~ {}**"
 inline_5: "**El menú se ha cerrado**"
 inline_6: "**Menú de ayuda del chat de voz para {}**\n**Comandos disponibles:** `{}`\n\n@TeamUltroid"

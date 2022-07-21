@@ -121,9 +121,9 @@ autopic_4: "AUTOPIC não estava em uso !!"
 autopic_5: "AUTOPIC Parou!"
 
 # inline
-inline_1: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu de Ajuda {}.\n\n Plugins ~ {}**"
-inline_2: "[Suporte Ultroid](t.me/ultroidsupport)\n\n **Menu De ajuda {}.\n\n Addons ~ {}**"
-inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/ultroidsupport)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
+inline_1: "[Suporte Ultroid](t.me/ultroidsupportchat)\n\n **Menu de Ajuda {}.\n\n Plugins ~ {}**"
+inline_2: "[Suporte Ultroid](t.me/ultroidsupportchat)\n\n **Menu De ajuda {}.\n\n Addons ~ {}**"
+inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/ultroidsupportchat)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
 inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
 inline_5: "**O Menu Foi Fechado**"
 inline_6: "**Menu de Ajuda para Chat de Voz {}**\n**Comandos Disponíveis:** `{}`\n\n@TeamUltroid"

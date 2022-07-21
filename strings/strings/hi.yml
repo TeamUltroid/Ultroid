@@ -116,9 +116,9 @@ autopic_4: "AUTOPIC इस्तेमाल नही हो रहा है!!
 autopic_5: "AUTOPIC को बंद किया गया!"
 
 # inline
-inline_1: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupport)\n\n\n**{} का मदद मेनू.\n\n\nप्लग-इन ~ {}**"
-inline_2: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupport)\n\n\n**{} का मदद मेनू.\n\n\nएडऑन ~ {}**"
-inline_3: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupport)\n\n\n**{} का मदद मेनू.\n\n\nएडऑन ~ {}\n\nजाओ और जोड़ो `ADDONS` Vᴀʀ Tʀᴜᴇ मूल्य के साथ !**"
+inline_1: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupportchat)\n\n\n**{} का मदद मेनू.\n\n\nप्लग-इन ~ {}**"
+inline_2: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupportchat)\n\n\n**{} का मदद मेनू.\n\n\nएडऑन ~ {}**"
+inline_3: "[उल्ट्रॉइड सपोर्ट](t.me/ultroidsupportchat)\n\n\n**{} का मदद मेनू.\n\n\nएडऑन ~ {}\n\nजाओ और जोड़ो `ADDONS` Vᴀʀ Tʀᴜᴇ मूल्य के साथ !**"
 inline_4: "**{} का बॉट\n\nमुख्य मेन्यू\n\nप्लग-इन ~ {}\nएडऑन ~ {}\nकुल कमांड ~ {}**"
 inline_5: "**मेनू बंद कर दिया गया है !**"
 inline_6: "**वॉइस चैट हेल्प मेनू for {}**\n**उपलब्द कमांड्स** `{}`\n\n@TeamUltroid"

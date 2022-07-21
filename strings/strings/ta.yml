@@ -19,9 +19,9 @@ autopic_2: "`{}`  க்கான முடிவுகள் எதுவும
 autopic_3: "உங்கள் தேடலுடன் தொடர்புடைய `{}` தொகுப்பு கிடைத்தது!\nஆட்டோபிக் தொடங்குகிறது!"
 
 #inline
-inline_1: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupport)\n\n ** Help of இன் உதவி மெனு.\n\n செருகுநிரல்கள் ~ {} **"
-inline_2: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupport)\n\n ** Help of இன் உதவி மெனு.\n\n துணை நிரல்கள் ~ {} **"
-inline_3: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupport)\n\n [அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupport)\n\n ** Help of இன் உதவி மெனு.\n\n துணை நிரல்கள் ~ {}\n\n சென்று மதிப்புடன் `ADDONS` Var ஐச் சேர்க்கவும் **"
+inline_1: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupportchat)\n\n ** Help of இன் உதவி மெனு.\n\n செருகுநிரல்கள் ~ {} **"
+inline_2: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupportchat)\n\n ** Help of இன் உதவி மெனு.\n\n துணை நிரல்கள் ~ {} **"
+inline_3: "[அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupportchat)\n\n [அல்ட்ராய்டு ஆதரவு] (t.me/ultroidsupportchat)\n\n ** Help of இன் உதவி மெனு.\n\n துணை நிரல்கள் ~ {}\n\n சென்று மதிப்புடன் `ADDONS` Var ஐச் சேர்க்கவும் **"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "** மெனு மூடப்பட்டுள்ளது **"
 

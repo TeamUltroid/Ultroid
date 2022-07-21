@@ -106,7 +106,7 @@ def telethon_session():
     except Exception as er:
         print("Unexpected Error Occurred while Creating Session")
         print(er)
-        print("If you think It as a Bug, Report to @UltroidSupport.\n\n")
+        print("If you think It as a Bug, Report to @UltroidSupportChat.\n\n")
 
 
 def main():
