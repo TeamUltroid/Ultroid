@@ -34,7 +34,7 @@ help_7: "Inline Plugins••"
 help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
-help_11: "Plugin Name-{}\n -\n\n"
+help_11: "Plugin Name-{}\n✘ Commands Available -\n\n"
 help_12: "Voice Chat Bot is not active! Use .setdb VCBOT True to enable!"
 help_13: "Do '{}setdb ADDONS True' to Load Official Addons"
 
