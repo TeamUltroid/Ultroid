@@ -7,7 +7,6 @@
 
 import os
 import re
-from datetime import datetime, timezone
 
 from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
@@ -19,14 +18,7 @@ from telethon.errors.rpcerrorlist import (
     PeerIdInvalidError,
     UserNotParticipantError,
 )
-from telethon.tl.functions.channels import GetParticipantRequest
-from telethon.tl.types import (
-    ChannelParticipantSelf,
-    MessageEntityMention,
-    MessageEntityMentionName,
-    UpdateChannel,
-    User,
-)
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
 from . import (
