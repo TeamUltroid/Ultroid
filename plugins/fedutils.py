@@ -4,23 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}superfban <reply to user/userid/username>`
-    FBan the person across all feds in which you are admin.
+from . import get_help
 
-• `{i}superunfban <reply to user/userid/username>`
-    Un-FBan the person across all feds in which you are admin.
+__doc__ = get_help("help_fedutils")
 
-Specify FBan Group and Feds to exclude in the assistant.
-
-• `{i}fstat <username/id/reply to user>`
-    Collect fed stat of the person in Rose.
-
-• `{i}fedinfo <(fedid)>`
-    Collect federation info of the given fed id, or of the fed you own, from Rose.
-"""
 import asyncio
 import os
 
