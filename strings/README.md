@@ -25,7 +25,7 @@
 | ka | Kannada [ಕನ್ನಡ] | 460 | 18 |
 | fr | French [Français] | 478 | NULL |
 | bn | Bengali [বাংলা] | 478 | NULL |
-| ar | Arabic [العربية] | 483 | -5 |
+| ar | Arabic [العربية] | 478 | NULL |
 | fa | Persian [Farsi] | 479 | -1 |
 
 
