@@ -18,7 +18,7 @@
 | ru | Russian [Русский] | 478 | NULL |
 | cn | Chinese [简体中文] | 478 | NULL |
 | hi | Hindi [हिंदी] | 478 | NULL |
-| uz | Uzbekcha [Uzbekcha] | 482 | -4 |
+| uz | Uzbekcha [Uzbekcha] | 478 | NULL |
 | es | Spanish [Español] | 478 | NULL |
 | gu | Gujarati [ગુજરાતી] | 460 | 18 |
 | or | Odia [ଓଡିଆ] | 478 | NULL |
