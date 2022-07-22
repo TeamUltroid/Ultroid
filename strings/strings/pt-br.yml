@@ -531,13 +531,6 @@ pmbot_5: "Por favor, responda a alguém para Desbani-lo."
 pmbot_6: "O usuário nunca foi banido!"
 pmbot_7: "`Parabéns! Você foi desbanido.`"
 
-# rss feeds
-rss_1: "'Forneça a Url Rss para adicionar.. `"
-rss_2: "Falha ao verificar url rss\n__Erro: {}__"
-rss_3: "'Nenhum feed rss foi adicionado a este bate-papo.'"
-rss_4: "'Removido rss feed deste chat.. `"
-rss_5: "`Adicionado com sucesso a este chat.`"
-
 #-------------------------- VcBot ------------------------------- #
 
 vcbot_1: "`Saiu do chat de voz.`"
