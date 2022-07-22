@@ -106,7 +106,7 @@ asstcmd_6: "**BARCHA ASSISTANT CMDS**\n\n"
 
 # avtomatik tuzatish
 act_1: “AVTOTOZORAT funksiyasi yoqilgan”
-akt_2: "AVTOTOZORAT funksiyasi oʻchirilgan"
+act_2: "AVTOTOZORAT funksiyasi oʻchirilgan"
 
 #avtopik
 autopic_1: "`Qidirish uchun biror narsa bering...`"
@@ -118,7 +118,7 @@ autopic_5: "AUTOPIC to'xtatildi!"
 # mos ravishda
 inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nPʟᴜɢɪɪɴs ~"
 inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Og {}.\n\nAᴅᴅᴏɴs ~ {}**ɴs"
-Inline_3: "[Uʟᴛʀᴏ_ULDODUPRANK) \ N \ N \ {\ NAYS ~ n \ Naᴅᴅᴏɴs ~ \ nd \ ndᴏ ** \ ndᴏ  ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
+inline_3: "[Uʟᴛʀᴏ_ULDODUPRANK) \ N \ N \ {\ NAYS ~ n \ Naᴅᴅᴏɴs ~ \ nd \ ndᴏ ** \ ndᴏ  ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Og {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴛᴀʟ Cᴏᴍɴs ~}ᴏᴍ"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
 inline_6: "**{}**\n**Mavjud buyruqlar uchun ovozli suhbat yordam menyusi:** `{}`\n\n@TeamUltroid"
@@ -156,7 +156,6 @@ log: "**Heroku** Ultroid jurnallari.\nShuningdek [bu yerga]({}) joylandi!"
 ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
 foydalanish: "**⚙️ Dyno-dan foydalanish ⚙️**:\n\n-> **Dyno-dan foydalanish** `{}`:\n • **{}h** **{}m |** `[  {}%]`\n-> **Bu oyda qolgan ish soatlari kvotasi**:\n • **{}h** **{}m |** `[{}%]`\n\n*  *Jami disk maydoni**: `{}`\n**Ishlatilgan**: `{}`\n**Bepul**: `{}`\n\n**📊 Ma'lumotlardan foydalanish 📊**\n*  *Yuklash**: `{}`\n**pastga**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\  n**DISK**: `{}%`"
 usage_simple: "**Jami disk maydoni**: `{}`\n**Ishlatilgan**: `{}`\n**Bepul**: `{}`\n\n**📊 Ma'lumotlardan foydalanish 📊*  *\n**Yuklash**: `{}`\n**pastga**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{  }%`\n**DISK**: `{}%`"
-oʻchirish: "Alvido {}.\n`Oʻchirish...`"
 
 # qora roʻyxat
 blk_1: "`Soʻzni qora roʻyxatga kiriting..'"
@@ -528,7 +527,6 @@ vcbot_22: "`Chatdagi barcha navbatlar tozalandi`"
 
 help_echo: "• {i} ececho <hech kimga javob bering> '\n   Javob qilingan foydalanuvchining avtomatik aks sado-ni ishga tushiring.\n\n• {i} Reedo <Hech kimga javob bering> '\n   Uni o'chiring\n\n• {i} lowchecho <Hech kimga javob bering> '\n   Ro'yxat olish."
 help_mediatools: "-\n\n• {i} mediainfo <media-ga javob bering> `\n   Bu haqda ma'lumot olish.\n\n• {i} aylanma <daraja / burchak> <Media-ga javob bering> `\n   Har qanday video / foto / ommaviy axborotni aylantiring ..\n   Eslatma: Videoni 90-yillar burchagi bo'lishi kerak"
-inline_3: "[Uʟᴛʀᴏɪᴅ sᴜᴘᴘᴏʀᴛ] (T.ME/Ultroidpportchat)\n\n** Hᴇʟᴘ Mᴇɴᴜ O {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ ** `etdb qo'shimchalar haqiqiy emas '** ᴀɴᴅ ᴀɴᴅ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴ"
 help_mute: "-\n\n• {i} MUTE <MSG / foydalanuvchi identifikatori> 'ga javob bering\n    Ovozli foydalanuvchi joriy chatda.\n\n• {i} indenke <msg / foydalanuvchi identifikatori> 'ga javob bering\n    Joriy chatda yoqimsiz foydalanuvchi.\n\n• {i} dhue <msg / foydalanuvchi identifikatori> `\n    MSG-ni o'chirish orqali hozirgi suhbatda.\n\n• {i} Bool <MSG / FAQAT SO'RA ID> '\n    Joriy suhbatda haddan tashqari duygan foydalanuvchi.\n\n• {i} TMute <Vaqt> <MSG / FOYDALANISHINGIZNI FOYDALANADI\n    S- soniya\n    M- daqiqa\n    h- soat\n    Dal\n    Muddali foydalanuvchi vaqt bilan hozirgi suhbatda."
 fsh_1: "** Saqlangan fayllar ro'yxati ::**"
 games_6: "** • Viktorinada 5 soniya ichida. **\n**• Daraja :** {}\n** • QS: ** {}"
@@ -612,8 +610,7 @@ vct_2: "** 'OW {}' ga muvaffaqiyatli o'zgartirilgan"
 help_unsplash: "-\n\n• {i} SETPERE <Qidiruv so'rovi>;<pics yo'q>\n    Rasmni qidirish."
 help_misc: "-\n\n• {i} eod '\n    'Bugungi kunni oling'\n\n• {i} pntrst <Link / ID> `\n    Pinterest pinlarni yuklab oling va yuboring\n\n• {i} gadget <qidirish so'rovi> `\n    Teregrammadan Gadget qidirish.\n\n• {i} tasodifiyuser '\n   Tasodifiy foydalanuvchi haqida tafsilotlarni yarating.\n\n• {i} ASCII <Javob Rasm> `\n    Javob qilingan rasm HTML-ga aylantiring."
 help_profile: "-\n\n• {i} setname <Ism // Familiya // Familiya> `` '\n    Profil ismingizni o'zgartiring.\n\n• {i} cetbio <bio> `'\n    Profil Bioingizni o'zgartiring.\n\n• {i} setiping <pic> `'ga javob bering\n    Profil rasmingizni o'zgartiring.\n\n• {i} delpfp <n> (ixtiyoriy) `\n    Bitta profil rasmini o'chiring, agar hech qanday qiymat berilmasa, boshqa rasmlarni o'chiring.\n\n• {i} poto <foydalanuvchi nomi> `\n    Agar mavjud bo'lsa, chat / foydalanuvchi rasmini yuklang."
-glitch_1: "`G -`"
 help_database: "-\n\n• ** Ma'lumotlar bazasi buyruqlari, agar siz nima ekanligini bilmasangiz, ishlatmang. **\n\n• {i} SETDB tugmasi |qiymati\n    Ma'lumotlar bazasida qiymatni belgilang.\n    E.G:\n    `{i} setdb salom\n    {i} setdb salom u erda |Bu erda ultroid\n    `{i} seldb - ekstrend o'zgaruvchisi yoki {i} o'zgaruvchan qiymat 'DB ning chiqish qiymatlariga qiymatni qo'shish uchun.\n\n• {i} Deldb Keyx\n    Db tugmachasini o'chirish.\n\n• {i} RendB Esc Esce Mauname |Yangi tugmacham\n    Asosiy ismni yangilang"
-help_admintools: "-\n\n• .Promote <Foydalanuvchi / UserID / Foydalanuvchi nomi> `` '\n• '.demot'\n    Suhbatda foydalanuvchini targ'ib qilish / taqsimlash.\n\n• .ban <Foydalanuvchi / foydalanuvchi nomi> <sabab>\n• .banban\n    Suhbatdan foydalanuvchini Ban / Nowan.\n\n• .KIK <Foydalanuvchi / foydalanuvchi nomi> <sabab>\n    Foydalanuvchini suhbatdan teping.\n\n• '.pin <Xabarga javob bering>'\n    Xabarni chatga yuboring\n• '\n• .HackPin (barchasi) <Xabarga javob>\n    Suhbatda xabarlarni chiqarib oling.\n\n• '.pnizatsiya qilindi\n   Mavjud suhbatda xabar oling.\n• '.ListPinnited'\n   Barcha xabarlarni joriy chatda oling\n\n• ..autodelete <24 soat / 1m / Off>\n   Televizordagi avtomatik o'chirishlarni yoqish.\n\n• '.Purge <Xabarga javob bering>'\n    Javob qilingan xabardan barcha xabarlarni poklang.\n\n• '.Purgeme <Xabarga javob>\n    Faqat javoblaringizni javob etilgan xabardan tozalash.\n\n• '.purgeaLel'\n    Javob qilingan foydalanuvchi msgs-ni o'chirib tashlang."
+help_admintools: "-\n\n• .Promote <Foydalanuvchi / UserID / Foydalanuvchi nomi>  '\n• '.demot'\n    Suhbatda foydalanuvchini targ'ib qilish / taqsimlash.\n\n• .ban <Foydalanuvchi / foydalanuvchi nomi> <sabab>\n• .banban\n    Suhbatdan foydalanuvchini Ban / Nowan.\n\n• .KIK <Foydalanuvchi / foydalanuvchi nomi> <sabab>\n    Foydalanuvchini suhbatdan teping.\n\n• '.pin <Xabarga javob bering>'\n    Xabarni chatga yuboring\n• '\n• .HackPin (barchasi) <Xabarga javob>\n    Suhbatda xabarlarni chiqarib oling.\n\n• '.pnizatsiya qilindi\n   Mavjud suhbatda xabar oling.\n• '.ListPinnited'\n   Barcha xabarlarni joriy chatda oling\n\n• ..autodelete <24 soat / 1m / Off>\n   Televizordagi avtomatik o'chirishlarni yoqish.\n\n• '.Purge <Xabarga javob bering>'\n    Javob qilingan xabardan barcha xabarlarni poklang.\n\n• '.Purgeme <Xabarga javob>\n    Faqat javoblaringizni javob etilgan xabardan tozalash.\n\n• '.purgeaLel'\n    Javob qilingan foydalanuvchi msgs-ni o'chirib tashlang."
 help_logo: "-\n\n• {i} logotip <TEXT> `\n   Ushbu matnning logotipini yarating\n   Yoki rasmga javob berish, unga matn yozish.\n   Yoki bu shrift bilan yozish uchun shrift fayliga javob bering."
 help_specialtools: "-\n\n• {i} wspr <foydalanuvchi nomi> `'\n    Maxfiy xabarni yuboring ..\n\n• {i} q <rang-ixtiyoriy> '`'\n• {i} Q @ Foydalanuvchi nomi\n• {i} q <rang-ixtiyoriy> '`'\n• {i} Q: 'Bir nechta tirnoq'\n    Tirnoqlarni yarating ..\n\n• {i} stiker <so'rovlar>\n    Stikerlar ur istagi bo'yicha ..\n\n• {i} glaudio <audio> 'ga javob bering\n    O'zingiz xohlagan videoni / gifga qo'yish uchun Audio yuklab oling.\n\n• {i} AddAudio <video / gif> `\n    U yuqoridagi audio javobni javob berdi video / gifga qo'yadi.\n\n• {i} dob <Tug'ilgan sana>\n    Faqat DD / MM / YY formatini kiriting (masalan, 01/01/1999).\n\n• {i} devor <so'rov> `'\n    HD fon rasmini qidirish bo'yicha qidirish .."
