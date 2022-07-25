@@ -7,7 +7,7 @@
 """
 ✘ Commands Available -
 
-•`{i}glitch <replt to media>`
+•`{i}glitch <reply to media>`
     gives a glitchy gif.
 """
 import os
