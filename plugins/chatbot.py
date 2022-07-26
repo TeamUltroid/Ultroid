@@ -61,11 +61,11 @@ async def chat_bot_fn(event, type_):
     else:
         temp = event.text.split(maxsplit=1)
         try:
-            user_ = await event.client.get_entity(temp[1])
+            user_ = await event.client.get_entity(await event.client.parse_id(temp[1]))
         except BaseException:
             if event.is_private:
                 user_ = event.chat
-            else:
+            if not user_:
                 return await eod(
                     event,
                     get_string("chab_1"),
