@@ -579,7 +579,7 @@ async def Carbon(
         file.name = file_name + ".jpg"
     else:
         file = file_name + ".jpg"
-        with open(file_name, "wb") as f:
+        with open(file, "wb") as f:
             f.write(con)
     return file
 
