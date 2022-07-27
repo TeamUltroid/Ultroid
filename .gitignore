@@ -18,8 +18,7 @@ package-lock.json
 # Directories
 addons/
 vcbot/
-pyUltroid/
-__pycache__/
+pyUltroid/__pycache__/
 venv/
 node_modules/
 glitch_me/
