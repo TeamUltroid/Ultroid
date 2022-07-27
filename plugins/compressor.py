@@ -16,9 +16,10 @@ import re
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
+
+from pyUltroid.functions.tools import metadata
 
 from . import (
     bash,

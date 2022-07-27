@@ -39,9 +39,10 @@ from shutil import rmtree
 
 import pytz
 from bs4 import BeautifulSoup as bs
+from telethon.tl.types import DocumentAttributeVideo
+
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.tools import metadata
-from telethon.tl.types import DocumentAttributeVideo
 
 from . import (
     HNDLR,

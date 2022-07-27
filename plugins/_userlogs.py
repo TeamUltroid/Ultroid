@@ -8,7 +8,6 @@
 import os
 import re
 
-from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChannelPrivateError,
     ChatWriteForbiddenError,
@@ -20,6 +19,8 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 from telethon.utils import get_display_name
+
+from pyUltroid.dB.botchat_db import tag_add, who_tag
 
 from . import (
     LOG_CHANNEL,

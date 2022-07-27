@@ -13,6 +13,11 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
+from telethon import Button
+from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from telethon.tl.types import InputWebDocument as wb
+
 from pyUltroid.functions.helper import (
     bash,
     fast_download,
@@ -21,10 +26,6 @@ from pyUltroid.functions.helper import (
     time_formatter,
 )
 from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
-from telethon import Button
-from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from telethon.tl.types import InputWebDocument as wb
 
 from . import LOGS, asst, callback, in_pattern, udB
 

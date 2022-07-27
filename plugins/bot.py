@@ -15,12 +15,13 @@ import time
 from platform import python_version as pyver
 from random import choice
 
-from pyUltroid.version import __version__ as UltVer
 from telethon import __version__
 from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendMediaForbiddenError,
 )
+
+from pyUltroid.version import __version__ as UltVer
 
 from . import HOSTED_ON, LOGS
 

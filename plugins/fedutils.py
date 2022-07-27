@@ -12,8 +12,9 @@ __doc__ = get_help("help_fedutils")
 import asyncio
 import os
 
-from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from pyUltroid.dB import DEVLIST
 
 from . import get_string, udB, ultroid_bot, ultroid_cmd
 

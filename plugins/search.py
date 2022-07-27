@@ -37,10 +37,11 @@ try:
     import cv2
 except ImportError:
     cv2 = None
+from telethon.tl.types import DocumentAttributeAudio
+
 from pyUltroid.functions.google_image import googleimagesdownload
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import saavn_search
-from telethon.tl.types import DocumentAttributeAudio
 
 from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 

@@ -20,6 +20,11 @@ try:
     from pyUltroid.functions.gDrive import GDriveManager
 except ImportError:
     GDriveManager = None
+from telegraph import upload_file as upl
+from telethon import Button, events
+from telethon.tl.types import MessageMediaWebPage
+from telethon.utils import get_peer_id
+
 from pyUltroid.functions.helper import fast_download, progress
 from pyUltroid.functions.tools import (
     Carbon,
@@ -28,10 +33,6 @@ from pyUltroid.functions.tools import (
     telegraph_client,
 )
 from pyUltroid.startup.loader import Loader
-from telegraph import upload_file as upl
-from telethon import Button, events
-from telethon.tl.types import MessageMediaWebPage
-from telethon.utils import get_peer_id
 
 from . import *
 

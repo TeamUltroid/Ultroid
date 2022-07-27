@@ -13,6 +13,11 @@ from random import choice
 from re import compile as re_compile
 
 from bs4 import BeautifulSoup as bs
+from telethon import Button
+from telethon.tl.alltlobjects import LAYER, tlobjects
+from telethon.tl.types import DocumentAttributeAudio as Audio
+from telethon.tl.types import InputWebDocument as wb
+
 from pyUltroid.functions.misc import google_search
 from pyUltroid.functions.tools import (
     _webupload_cache,
@@ -21,10 +26,6 @@ from pyUltroid.functions.tools import (
     saavn_search,
     webuploader,
 )
-from telethon import Button
-from telethon.tl.alltlobjects import LAYER, tlobjects
-from telethon.tl.types import DocumentAttributeAudio as Audio
-from telethon.tl.types import InputWebDocument as wb
 
 from . import *
 from . import _ult_cache

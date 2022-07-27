@@ -50,13 +50,14 @@ try:
     from htmlwebshot import WebShot
 except ImportError:
     WebShot = None
-from pyUltroid.functions.tools import metadata, translate
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantsBots,
     DocumentAttributeVideo,
 )
+
+from pyUltroid.functions.tools import metadata, translate
 
 from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
 from . import humanbytes as hb

@@ -32,8 +32,6 @@
 import os
 from re import compile
 
-from pyUltroid.functions.helper import numerize
-from pyUltroid.functions.misc import create_instagram_client
 from telethon.errors.rpcerrorlist import ChatSendInlineForbiddenError
 from telethon.tl.types import (
     DocumentAttributeFilename,
@@ -41,6 +39,9 @@ from telethon.tl.types import (
     MessageMediaWebPage,
     WebPage,
 )
+
+from pyUltroid.functions.helper import numerize
+from pyUltroid.functions.misc import create_instagram_client
 
 from . import (
     LOGS,

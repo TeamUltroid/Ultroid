@@ -11,6 +11,9 @@ import time
 from random import choice
 
 import requests
+from telethon import Button, events
+from telethon.tl import functions, types
+
 from pyUltroid import *
 from pyUltroid._misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid._misc._decorators import ultroid_cmd
@@ -21,9 +24,6 @@ from pyUltroid.functions.info import *
 from pyUltroid.functions.misc import *
 from pyUltroid.functions.tools import *
 from pyUltroid.version import __version__, ultroid_version
-from telethon import Button, events
-from telethon.tl import functions, types
-
 from strings import get_help, get_string
 
 Redis = udB.get_key

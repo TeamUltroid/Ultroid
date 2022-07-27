@@ -12,10 +12,11 @@ __doc__ = get_help("help_antiflood")
 
 import re
 
+from telethon.events import NewMessage as NewMsg
+
 from pyUltroid.dB import DEVLIST
 from pyUltroid.dB.antiflood_db import get_flood, get_flood_limit, rem_flood, set_flood
 from pyUltroid.functions.admins import admin_check
-from telethon.events import NewMessage as NewMsg
 
 from . import Button, Redis, asst, callback, eod, get_string, ultroid_bot, ultroid_cmd
 
