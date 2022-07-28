@@ -7,7 +7,7 @@
 
 import re
 
-from . import Button, callback, get_back_button, get_languages, language, udB
+from . import Button, callback, get_back_button, get_languages, language, udB, get_string
 
 
 @callback("lang", owner=True)
@@ -24,7 +24,7 @@ async def setlang(event):
     if len(tultd) % 2 == 1:
         buttons.append((tultd[-1],))
     buttons.append([Button.inline("« Back", data="mainmenu")])
-    await event.edit("List Of Available Languages.", buttons=buttons)
+    await event.edit(get_string("ast_4"), buttons=buttons)
 
 
 @callback(re.compile(b"set_(.*)"), owner=True)
