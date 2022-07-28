@@ -8,6 +8,12 @@ authors:
   - ProgrammingError 
   - aviskumar
 
+# pyUltroid
+py_c1: "Wrong string session. Copy paste correctly!"
+py_c2: "No String Session found. Quitting..."
+py_c3: "Your VC_SESSION Expired. Deleting VC_SESSION from redis...\nRenew/Change it to Use Voice/Video Chat from VC Account..."
+
+
 # commons
 com_1: "`Processing...`"
 com_2: "`Searching...`"
@@ -503,6 +509,8 @@ fsh_4: "**No files stored!**"
 ast_1: "Choose which API you want to set."
 ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
+ast_4: "List Of Available Languages."
+
 
 # inlinestuff
 instu_1: "App search. Enter app name!"
