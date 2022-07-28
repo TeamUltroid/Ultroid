@@ -139,6 +139,8 @@ async def eiagx(e):
 
 # ----------------------- Main Command ------------------- #
 
+GIMAGES = ["https://telegra.ph/file/1c51015bae5205a65fd69.jpg",
+           "https://imgwhale.xyz/3xyr322l64j9590"]
 
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
@@ -148,7 +150,7 @@ async def magic(event):
     ]
     await event.reply(
         get_string("games_1"),
-        file="https://telegra.ph/file/1c51015bae5205a65fd69.jpg",
+        file=choice(GIMAGES),
         buttons=buttons,
     )
 
