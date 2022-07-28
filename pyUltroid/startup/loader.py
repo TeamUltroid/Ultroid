@@ -10,7 +10,7 @@ from shutil import rmtree
 
 from decouple import config
 from git import Repo
-
+from strings import get_string
 from .. import *
 from ..dB._core import HELP
 from ..loader import Loader
@@ -19,8 +19,15 @@ from .utils import load_addons
 
 
 def _after_load(loader, module, plugin_name=""):
-    if module and not plugin_name.startswith("_") and (module.__doc__):
-        doc = module.__doc__.format(i=HNDLR)
+    if not (module and not plugin_name.startswith("_")):
+        return
+    doc_ = get_string(f"help_{plugin_name}") or module.__doc__
+    if doc:
+        try:
+            doc = doc_.format(i=HNDLR)
+        except Exception as er:
+            loader._logger.exception(er)
+            return
         if loader.key in HELP.keys():
             update_cmd = HELP[loader.key]
             try:
