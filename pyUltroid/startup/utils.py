@@ -62,17 +62,14 @@ def load_addons(plugin_name):
     mod.CMD_HELP = HELP.get("Addons", {})
     modules["ub"] = xxx
     modules["var"] = xxx
-    modules["jarvis"] = xxx
     modules["support"] = xxx
     modules["userbot"] = xxx
     modules["telebot"] = xxx
     modules["fridaybot"] = xxx
-    modules["jarvis.utils"] = xxx
     modules["uniborg.util"] = xxx
     modules["telebot.utils"] = xxx
     modules["userbot.utils"] = xxx
     modules["userbot.events"] = xxx
-    modules["jarvis.jconfig"] = xxx
     modules["userbot.config"] = xxx
     modules["fridaybot.utils"] = xxx
     modules["fridaybot.Config"] = xxx
