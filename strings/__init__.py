@@ -2,7 +2,7 @@ import sys
 import os
 from typing import Any, Dict, List, Union
 from glob import glob
-from pyUltroid import udB, LOGS
+from pyUltroid import *
 from pyUltroid.functions.tools import translate
 try:
     from yaml import safe_load
