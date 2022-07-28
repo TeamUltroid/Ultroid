@@ -1,7 +1,7 @@
 import sys
-from os import listdir, path
+import os
 from typing import Any, Dict, List, Union
-
+from glob import glob
 from pyUltroid import udB, LOGS
 from pyUltroid.functions.tools import translate
 try:
@@ -9,17 +9,15 @@ try:
 except ModuleNotFoundError:
     from pyUltroid.functions.tools import safe_load
 
-language = [udB.get_key("language") or "en"]
+language = [udB.get_key("language") or os.getenv("LANGUAGE") or "en"]
 languages = {}
 
-strings_folder = path.join(path.dirname(path.realpath(__file__)), "strings")
-
-for file in listdir(strings_folder):
+for file in glob("strings/strings/*yml"):
     if file.endswith(".yml"):
         code = file[:-4]
         try:
             languages[code] = safe_load(
-                open(path.join(strings_folder, file), encoding="UTF-8"),
+                open(file, encoding="UTF-8"),
             )
         except Exception as er:
             LOGS.info(f"Error in {file[:-4]} language file")
