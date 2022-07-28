@@ -1,6 +1,6 @@
 # Important Requirements here.
 
-decouple-python
+python-decouple
 gitpython
 requests
 telegraph
