@@ -14,6 +14,7 @@ from pathlib import Path
 from time import gmtime, strftime
 from traceback import format_exc
 
+from strings import get_string
 from telethon import Button
 from telethon import __version__ as telever
 from telethon import events
@@ -83,10 +84,10 @@ def ultroid_cmd(
                 if ult.sender_id in _ignore_eval:
                     return await eod(
                         ult,
-                        "`You cannot use this command now. Contact owner of this bot!`",
+                        get_string("py_d1"),
                     )
                 if fullsudo and ult.sender_id not in SUDO_M.fullsudos:
-                    return await eod(ult, "`Full Sudo User Required...`", time=15)
+                    return await eod(ult, get_string("py_d2"), time=15)
             chat = ult.chat
             if hasattr(chat, "title"):
                 if (
@@ -97,17 +98,17 @@ def ultroid_cmd(
                     return
             if admins_only:
                 if ult.is_private:
-                    return await eod(ult, "`Use this in group/channel.`")
+                    return await eod(ult, get_string("py_d3"))
                 if not (chat.admin_rights or chat.creator):
-                    return await eod(ult, "`I am not an admin.`")
+                    return await eod(ult, get_string("py_d5"))
             if only_devs and not udB.get_key("I_DEV"):
                 return await eod(
                     ult,
-                    f"**⚠️ Developer Restricted!**\nIf you know what this does, and want to proceed, use\n`{HNDLR}setdb I_DEV True`.\n\nThis Might Be Dangerous.",
+                    get_string("py_d4").format(HNDLR),
                     time=10,
                 )
             if groups_only and ult.is_private:
-                return await eod(ult, "`Use this in Group/Channel.`")
+                return await eod(ult, get_string("py_d5"))
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
@@ -127,14 +128,14 @@ def ultroid_cmd(
                 return await eod(ult, "`Inline Locked In This Chat.`")
             except (ChatSendMediaForbiddenError, ChatSendStickersForbiddenError):
                 return await eod(
-                    ult, "`Sending media or sticker is not allowed in this chat.`"
+                    ult, get_string("py_d8")
                 )
             except (BotMethodInvalidError, UserIsBotError):
-                return await eod(ult, "This Command Can't be used by Bot!")
+                return await eod(ult, get_string("py_d6"))
             except AlreadyInConversationError:
                 return await eod(
                     ult,
-                    "Conversation Is Already On, Kindly Wait Sometime Then Try Again.",
+                    get_string("py_d7"),
                 )
             except (BotInlineDisabledError) as er:
                 return await eod(ult, f"`{er}`")
