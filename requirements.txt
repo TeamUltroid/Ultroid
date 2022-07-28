@@ -4,4 +4,3 @@ gitpython
 requests
 telegraph
 https://github.com/New-dev0/Telethon/archive/Aurium.zip
-https://github.com/TeamUltroid/pyUltroid/archive/refs/heads/dev.zip
