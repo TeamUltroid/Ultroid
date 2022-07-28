@@ -50,7 +50,9 @@ def get_string(key: str) -> Any:
         return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
 def get_help(key):
-    return get_string("cmda") + get_string(key)
+    doc = get_string(key)
+    if doc:
+        return get_string("cmda") + doc
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:
     return {
