@@ -9,6 +9,7 @@ import base64
 import ipaddress
 import struct
 import sys
+from strings import get_string
 
 from telethon.errors.rpcerrorlist import AuthKeyDuplicatedError
 from telethon.sessions.string import _STRUCT_PREFORMAT, CURRENT_VERSION, StringSession
@@ -35,7 +36,7 @@ def validate_session(session, logger=LOGS):
         # Telethon Session
         if session.startswith(CURRENT_VERSION):
             if len(session.strip()) != 353:
-                logger.exception("Wrong string session. Copy paste correctly!")
+                logger.exception(get_string("py_c1"))
                 sys.exit()
             return StringSession(session)
         # Pyrogram Session
@@ -62,7 +63,7 @@ def validate_session(session, logger=LOGS):
                     )
                 ).decode("ascii")
             )
-    logger.exception("No String Session found. Quitting...")
+    logger.exception(get_string("py_c2"))
     sys.exit()
 
 
@@ -76,10 +77,7 @@ def vc_connection(udB, ultroid_bot):
                 handle_auth_error=False,
             )
         except (AuthKeyDuplicatedError, EOFError):
-            LOGS.info(
-                "Your VC_SESSION Expired. Deleting VC_SESSION from redis..."
-                + "\nRenew/Change it to Use Voice/Video Chat from VC Account..."
-            )
+            LOGS.info(get_string("py_c3"))
             udB.del_key("VC_SESSION")
         except Exception as er:
             LOGS.info("While creating Client for VC.")
