@@ -187,7 +187,7 @@ def get_formats(type, id, data):
         for vid in data["formats"]:
             if vid["format_id"] == "251":
                 size += vid["filesize"] if vid.get("filesize") else 0
-            if vid["vcodec"] is not "none":
+            if vid["vcodec"] != "none":
                 _id = int(vid["format_id"])
                 _quality = str(vid["width"]) + "×" + str(vid["height"])
                 _size = size + (vid["filesize"] if vid.get("filesize") else 0)
