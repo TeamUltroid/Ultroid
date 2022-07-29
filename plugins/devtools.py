@@ -35,9 +35,11 @@ try:
     from telegraph import upload_file as uf
 except ImportError:
     uf = None
-from telethon.tl import types, functions
+from telethon.tl import functions
+
 fn = functions
-    
+
+
 @ultroid_cmd(
     pattern="sysinfo$",
 )
