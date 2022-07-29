@@ -14,7 +14,7 @@ languages = {}
 
 for file in glob("strings/strings/*yml"):
     if file.endswith(".yml"):
-        code = file[:-4]
+        code = file.split("/")[-1].split("\\")[-1][:-4]
         try:
             languages[code] = safe_load(
                 open(file, encoding="UTF-8"),
