@@ -18,6 +18,8 @@ from pprint import pprint
 
 from telethon.utils import get_display_name
 
+from . import *
+
 # Used for Formatting Eval Code, if installed
 try:
     import black
@@ -33,9 +35,9 @@ try:
     from telegraph import upload_file as uf
 except ImportError:
     uf = None
-from . import *
-
-
+from telethon.tl import types, functions
+fn = functions
+    
 @ultroid_cmd(
     pattern="sysinfo$",
 )
