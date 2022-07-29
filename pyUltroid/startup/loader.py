@@ -10,7 +10,6 @@ from shutil import rmtree
 
 from decouple import config
 from git import Repo
-from strings import get_string
 from .. import *
 from ..dB._core import HELP
 from ..loader import Loader
@@ -21,6 +20,7 @@ from .utils import load_addons
 def _after_load(loader, module, plugin_name=""):
     if not (module and not plugin_name.startswith("_")):
         return
+    from strings import get_string
     doc_ = get_string(f"help_{plugin_name}") or module.__doc__
     if doc:
         try:
