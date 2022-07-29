@@ -22,7 +22,7 @@ def _after_load(loader, module, plugin_name=""):
         return
     from strings import get_string
     doc_ = get_string(f"help_{plugin_name}") or module.__doc__
-    if doc:
+    if doc_:
         try:
             doc = doc_.format(i=HNDLR)
         except Exception as er:
