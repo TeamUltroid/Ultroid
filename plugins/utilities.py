@@ -336,6 +336,7 @@ async def _(event):
 <b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
 <b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
 <b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
+<b>••Is Pʀᴇᴍɪᴜᴍ</b>: <code>{}</code>
 <b>••Is A Bᴏᴛ</b>: <code>{}</code>
 <b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
 """.format(
@@ -348,14 +349,13 @@ async def _(event):
         user_photos,
         user.restricted,
         user.verified,
+        user.premium,
         user.bot,
         common_chats,
     )
     if chk := is_gbanned(user_id):
         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
 <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
-    else:
-        caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
     await event.client.send_message(
         event.chat_id,
         caption,
