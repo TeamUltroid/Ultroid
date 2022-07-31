@@ -215,7 +215,7 @@ if udB.get_key("PMSETTING"):
                     await ultroid_bot.edit_folder(user.id, folder=1)
                 except BaseException as er:
                     LOGS.info(er)
-            if event.media:
+            if event.media and not udB.get_key("DISABLE_PMDEL"):
                 await event.delete()
             name = user.first_name
             fullname = get_display_name(user)
@@ -510,11 +510,7 @@ async def blockpm(block):
         user = block.chat_id
     else:
         return await eor(block, NO_REPLY, time=10)
-    if user in DEVLIST:
-        return await eor(
-            block,
-            "`Lol, He is my Developer\nHe Can't Be Blocked`",
-        )
+
     await block.client(BlockRequest(user))
     aname = await block.client.get_entity(user)
     await block.eor(f"{inline_mention(aname)} [`{user}`] `has been blocked!`")
