@@ -8,7 +8,7 @@
 | si | sinhala [සිංහල] | 112 | 306 |
 | hi | Hindi [हिंदी] | 413 | 5 |
 | fr | French [Français] | 110 | 308 |
-| jp | Japanese [日本] | 413 | 5 |
+| jp | Japanese [日本] | 418 | 0 |
 | fa | Persian [Farsi] | 391 | 27 |
 | id | Indonesia [Indonesia] | 413 | 5 |
 | pt-br | Portuguese [Português] | 413 | 5 |
