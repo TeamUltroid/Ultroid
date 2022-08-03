@@ -398,20 +398,21 @@ async def plug(plugin_channels):
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=10
             ):
-                plugin = "addons/"+x.file.name.replace("_", "-").replace("|", "-")
+                plugin = "addons" + x.file.name.replace("_", "-").replace("|", "-")
                 if not os.path.exists(plugin):
                     await asyncio.sleep(0.6)
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
                 try:
-                    load_addons(plugin)
+                    load_addons(plugin.split("/")[-1].replace(".py", ""))
                 except Exception as e:
                     LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
                     LOGS.exception(e)
                     os.remove(plugin)
         except Exception as er:
             LOGS.exception(er)
+
 
 
 # some stuffs
