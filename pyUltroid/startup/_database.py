@@ -299,9 +299,10 @@ class RedisDB(_BaseDatabase):
 # --------------------------------------------------------------------------------------------- #
 
 
-class LocalDB(Database, _BaseDatabase):
+class LocalDB(_BaseDatabase):
     def __init__(self):
-        super().__init__(database_name="ultroid.json")
+        self.db = Database("ultroid")
+        super().__init__()
 
     def keys(self):
         return self._cache.keys()
