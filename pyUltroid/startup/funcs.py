@@ -405,11 +405,7 @@ async def plug(plugin_channels):
                         continue
                     plugin = await x.download_media(f"addons/{plugin}")
                 try:
-                    _plugin = plugin.replace(".py", "")
-                    if _plugin:
-                        load_addons(_plugin)
-                    else:
-                        LOGS.info(_plugin)
+                    load_addons(plugin)
                 except Exception as e:
                     LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
                     LOGS.exception(e)
