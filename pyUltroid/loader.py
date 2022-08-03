@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import contextlib
 import glob
 import os
 from importlib import import_module
@@ -45,13 +46,11 @@ class Loader:
             if exclude:
                 for path in exclude:
                     if not path.startswith("_"):
-                        try:
+                        with contextlib.suppress(ValueError):
                             files.remove(f"{self.path}/{path}.py")
-                        except ValueError:
-                            pass
         if log:
             self._logger.info(
-                f"• Installing {self.key}'s Plugins || Count : {len(files)} •"
+                f"• Installing {self.key} Plugins || Count : {len(files)} •"
             )
         for plugin in sorted(files):
             if func == import_module:
@@ -60,7 +59,7 @@ class Loader:
                 modl = func(plugin)
             except ModuleNotFoundError as er:
                 modl = None
-                self._logger.error(f"{plugin}: '{er.name}' module not installed!")
+                self._logger.error(f"{plugin}: '{er.name}' not installed!")
             except Exception as exc:
                 modl = None
                 self._logger.error(f"pyUltroid - {self.key} - ERROR - {plugin}")

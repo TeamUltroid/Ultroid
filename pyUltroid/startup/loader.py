@@ -18,11 +18,11 @@ from .utils import load_addons
 
 
 def _after_load(loader, module, plugin_name=""):
-    if not (module and not plugin_name.startswith("_")):
+    if not module or plugin_name.startswith("_"):
         return
     from strings import get_string
-    doc_ = get_string(f"help_{plugin_name}") or module.__doc__
-    if doc_:
+
+    if doc_ := get_string(f"help_{plugin_name}") or module.__doc__:
         try:
             doc = doc_.format(i=HNDLR)
         except Exception as er:
@@ -63,9 +63,8 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
 
     # for addons
     if addons:
-        url = udB.get_key("ADDONS_URL")
-        if url:
-            os.system("git clone -q {} addons".format(url))
+        if url := udB.get_key("ADDONS_URL"):
+            os.system(f"git clone -q {url} addons")
         if os.path.exists("addons") and not os.path.exists("addons/.git"):
             rmtree("addons")
         if not os.path.exists("addons"):

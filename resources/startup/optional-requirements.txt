@@ -1,4 +1,4 @@
-# Required only while Local Deploy
+# Required only for Local Deploys
 # ------------------------------------------------------ #
 
 akinator.py
@@ -31,4 +31,5 @@ youtube-search-python
 yt-dlp
 python-Levenshtein
 fuzzywuzzy
+google_trans_new
 # -------------------------------------------------------#
