@@ -9,40 +9,39 @@ import ast
 import os
 import sys
 
-try:
-    from redis import Redis
-except ImportError:
-    Redis = None
-
 from .. import run_as_module
 from . import *
 
 if run_as_module:
     from ..configs import Var
 
-try:
-    from pymongo import MongoClient
-except ImportError:
-    MongoClient = None
-    if Var.MONGO_URI:
-        LOGS.warning(
-            "'pymongo' not found!\nInstall pymongo[srv] to use Mongo database.."
-        )
-
-
-try:
-    import psycopg2
-except ImportError:
-    psycopg2 = None
-    if Var.DATABASE_URL:
-        LOGS.warning("'psycopg2' not found!\nInstall psycopg2 to use SQL database..")
-
-
-try:
-    from localdb import Database
-except ImportError:
-    os.system("pip3 install -q localdb.json")
-    from localdb import Database
+if (Var.REDIS_URI or Var.REDISHOST):
+    try:
+        from redis import Redis
+    except ImportError:
+        LOGS.info("Installing 'redis' for database.")
+        os.system("pip3 install -q redis hiredis")
+elif Var.MONGO_URI:
+    try:
+        from pymongo import MongoClient
+    except ImportError:
+        LOGS.info("Installing 'pymongo' for database.")
+        os.system("pip3 install -q pymongo[srv]")
+        from pymongo import MongoClient
+elif Var.DATABASE_URL:
+    try:
+        import psycopg2
+    except ImportError:
+        LOGS.info("Installing 'pyscopg2' for database.")
+        os.system("pip3 install -q psycopg2-binary")
+        import psycopg2
+else:
+    try:
+        from localdb import Database
+    except ImportError:
+        LOGS.info("Using local file as database.")
+        os.system("pip3 install -q localdb.json")
+        from localdb import Database
 
 # --------------------------------------------------------------------------------------------- #
 
@@ -312,7 +311,7 @@ class LocalDB(Database, _BaseDatabase):
 def UltroidDB():
     _er = False
     try:
-        if Redis and (Var.REDIS_URI or Var.REDISHOST):
+        if Redis:
             from .. import HOSTED_ON
 
             return RedisDB(
@@ -324,9 +323,9 @@ def UltroidDB():
                 socket_timeout=5,
                 retry_on_timeout=True,
             )
-        if MongoClient and Var.MONGO_URI:
+        if MongoClient:
             return MongoDB(Var.MONGO_URI)
-        if psycopg2 and Var.DATABASE_URL:
+        if psycopg2:
             return SqlDB(Var.DATABASE_URL)
     except BaseException as err:
         LOGS.exception(err)
