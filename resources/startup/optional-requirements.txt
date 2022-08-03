@@ -31,5 +31,4 @@ youtube-search-python
 yt-dlp
 python-Levenshtein
 fuzzywuzzy
-google_trans_new
 # -------------------------------------------------------#
