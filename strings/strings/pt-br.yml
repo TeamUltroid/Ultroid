@@ -151,16 +151,16 @@ afk_5: "**Ficando em AFK.**\n\n**Razão:** '{}'"
 afk_6: "**Estou ficando AFK.**"
 
 # bot
-bot_1: "Ei, estou vivo."
+bot_1: "Olá, Eu Estou Online."
 bot_2: "Estatísticas"
 bot_3: "Repositório"
 bot_4: "Suporte"
 bot_5: "• `Reiniciando...`"
-alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n✵ **Proprietário** - '{}'\n✵ **Ultroid** - '{}'\n✵ **Py-Ultroid** - '{}'\n✵ **Em Atividade** - '{}'\n✵ **Python** - '{}'\n✵ **Teleton** - '{}'\n✵ **Filial** - '{}'"
-log: "**Heroku** Ultroid Logs.\nColado [aqui]({}) também!"
-ping: "**Pong!!** `{}ms`\n**Em Atividade** - `{}`"
-usage: "**⚙️ Uso Dyno ⚙️**:\n\n-> **Dyno usado por** `{}`:\n  • **{}h** **{{}m |** '[{}%]'\n-> **Cota de horas Dyno restantes neste mês**:\n  • **{}h** **{{}m |** '[{}%]'\n\n**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
-usage_simple: "**Espaço Total em Disco**: '{}'\n**Usado**: '{}'\n**Livre**: '{}'\n\n**📊 Uso de dados 📊**\n**Upload**: '{}'\n**Down**: '{}'\n\n**CPU**: '{}%'\n**RAM**: '{}%'\n**DISCO**: '{}%'"
+alive_1: "**O Ultroid Userbot...**\n\n**{}**\n\n✵ **Propietário** - `{}`\n✵ **Ultroid** - `{}`\n✵ **Py-Ultroid** - `{}`\n✵ **Online há** - `{}`\n✵ **Python** - `{}`\n✵ **Telethon** - `{}`\n✵ **Branch** - `{}`"
+log: "**Heroku** Ultroid Logs.\nColado [Aqui]({}) Também!"
+ping: "**Pong !!** `{}ms`\n**Em Atividade** - `{}`"
+usage: "**⚙️ Uso do Dyno ⚙️**:\n\n-> **Uso do Dyno por** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n-> **Cota de horas Dyno restantes neste mês**:\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Espaço Total**: `{}`\n**Usado**: `{}`\n**Livre**: `{}`\n\n**📊 Uso de Dados 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISCO**: `{}%`"
+usage_simple: "**Espaço Total**: `{}`\n**Usado**: `{}`\n**Livre**: `{}`\n\n**📊 Uso de Dados 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISCO**: `{}%`"
 shutdown: "Adeus {}.\n`Desligando...`"
 
 # blacklist
