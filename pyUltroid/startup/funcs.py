@@ -6,7 +6,7 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 import asyncio
-import os
+import os, shutil
 import random
 import time
 from random import randint
@@ -386,6 +386,8 @@ async def plug(plugin_channels):
     if ultroid_bot._bot:
         LOGS.info("Plugin Channels can't be used in 'BOTMODE'")
         return
+    if os.path.exists("addons") and os.path.exists("addons/.git"):
+        shutil.rmtree("addons")
     if not os.path.exists("addons"):
         os.mkdir("addons")
     if not os.path.exists("addons/__init__.py"):
@@ -404,12 +406,12 @@ async def plug(plugin_channels):
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
-                    try:
-                        load_addons(plugin)
-                    except Exception as e:
-                        LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
-                        LOGS.exception(e)
-                        os.remove(plugin)
+                try:
+                    load_addons(plugin)
+                except Exception as e:
+                    LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
+                    LOGS.exception(e)
+                    os.remove(plugin)
         except Exception as er:
             LOGS.exception(er)
 
