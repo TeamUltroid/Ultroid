@@ -24,7 +24,7 @@ def load_addons(plugin_name):
     from ..configs import Var
     from ..dB._core import HELP
 
-    name = plugin_name.replace("/", ".").replace("\\", ".")
+    name = plugin_name.replace("/", ".").replace("\\", ".").replace(".py","")
     spec = util.spec_from_file_location(name, plugin_name)
     mod = util.module_from_spec(spec)
     mod.LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
