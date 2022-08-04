@@ -386,7 +386,7 @@ async def plug(plugin_channels):
     if ultroid_bot._bot:
         LOGS.info("Plugin Channels can't be used in 'BOTMODE'")
         return
-    if os.path.exists("addons") and os.path.exists("addons/.git"):
+    if os.path.exists("addons") and not os.path.exists("addons/.git"):
         shutil.rmtree("addons")
     if not os.path.exists("addons"):
         os.mkdir("addons")
