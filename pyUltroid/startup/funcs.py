@@ -404,12 +404,12 @@ async def plug(plugin_channels):
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
-        #####  try:
-      #       #        load_addons(plugin)
-      #        #    except Exception as e:
-      #         #      LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
-      #        #       LOGS.exception(e)
-      ########  os.remove(plugin)
+                    try:
+                        load_addons(plugin)
+                    except Exception as e:
+                        LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
+                        LOGS.exception(e)
+                        os.remove(plugin)
         except Exception as er:
             LOGS.exception(er)
 
