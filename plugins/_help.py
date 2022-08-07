@@ -5,10 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-try:
-    from fuzzywuzzy.process import extractOne
-except ImportError:
-    extractOne = None
 from telethon.errors.rpcerrorlist import (
     BotInlineDisabledError,
     BotMethodInvalidError,
@@ -93,7 +89,7 @@ async def _help(ult):
                                 best_match = _
                                 break
                         if best_match:
-                            text += f"\nDid you mean `{best_match[0]}`?"
+                            text += f"\nDid you mean `{best_match}`?"
                         return await ult.eor(text)
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:
