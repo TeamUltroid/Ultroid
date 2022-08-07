@@ -6,7 +6,6 @@ apscheduler
 aiohttp
 bs4
 enhancer>=0.3.4
-gingerit
 git+https://github.com/New-dev0/instagrapi.git@39df1b1#egg=instagrapi
 git+https://github.com/buddhhu/img2html.git@c44170d#egg=img2html
 heroku3
