@@ -85,7 +85,7 @@ async def _help(ult):
                         text = f"`{plug}` is not a valid plugin!"
                         best_match = None
                         for _ in compare_strings:
-                            if plug in _:
+                            if plug in _ and not _.startswith("_"):
                                 best_match = _
                                 break
                         if best_match:
