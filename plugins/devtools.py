@@ -9,7 +9,6 @@ from . import get_help
 
 __doc__ = get_help("help_devtools")
 
-from pyUltroid import _ignore_eval
 import inspect
 import sys
 import traceback
@@ -18,6 +17,8 @@ from os import remove
 from pprint import pprint
 
 from telethon.utils import get_display_name
+
+from pyUltroid import _ignore_eval
 
 from . import *
 
