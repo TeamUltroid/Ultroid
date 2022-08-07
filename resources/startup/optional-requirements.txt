@@ -1,15 +1,15 @@
 # Required only for Local Deploys
 # ------------------------------------------------------ #
 
-git+https://github.com/Pysics/akinator.py.git
+git+https://github.com/Pysics/akinator.py.git#egg=akinator.py
 apscheduler
 aiohttp
 bs4
 enhancer>=0.3.4
 gingerit
-git+https://github.com/New-dev0/instagrapi.git
-git+https://github.com/buddhhu/img2html.git
-git+https://github.com/programmingerror/heroku3.py.git
+git+https://github.com/New-dev0/instagrapi.git#egg=instagrapi
+git+https://github.com/buddhhu/img2html.git#egg=img2html
+git+https://github.com/programmingerror/heroku3.py.git#egg=heroku3
 gitpython
 google-api-python-client
 htmlwebshot
@@ -29,6 +29,5 @@ telegraph
 tgcrypto
 youtube-search-python
 yt-dlp
-python-Levenshtein
 fuzzywuzzy
 # -------------------------------------------------------#
