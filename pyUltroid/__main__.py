@@ -13,7 +13,7 @@ def main():
     import sys
     import time
 
-    from .functions.helper import time_formatter, updater
+    from .functions.helper import time_formatter, updater, bash
     from .startup.funcs import (
         WasItRestart,
         autopilot,
@@ -30,8 +30,8 @@ def main():
         and os.path.exists(".git")
         and ultroid_bot.run_in_loop(updater())
     ):
-        os.system(
-            "git pull -f -q && pip3 install --no-cache-dir -U -q -r requirements.txt"
+        ultroid_bot.run_in_loop(
+            bash("bash installer.sh")
         )
 
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
