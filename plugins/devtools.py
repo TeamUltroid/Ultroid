@@ -9,6 +9,7 @@ from . import get_help
 
 __doc__ = get_help("help_devtools")
 
+from pyUltroid import _ignore_eval
 import inspect
 import sys
 import traceback
