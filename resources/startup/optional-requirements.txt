@@ -1,12 +1,11 @@
 # Required only while Local Deploy
 # ------------------------------------------------------ #
 
-akinator.py
+git+https://github.com/New-dev0/akinator.py.git
 apscheduler
 aiohttp
 aiofiles
 bs4
-cairosvg
 cfscrape
 enhancer>=0.3.4
 gingerit
@@ -16,7 +15,6 @@ git+https://github.com/buddhhu/img2html.git
 git+https://github.com/programmingerror/heroku3.py.git
 gitpython
 google-api-python-client
-feedparser
 html-telegraph-poster
 htmlwebshot
 lottie
