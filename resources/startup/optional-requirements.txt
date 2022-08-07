@@ -1,7 +1,8 @@
 # Required only for Local Deploys
 # ------------------------------------------------------ #
 
-git+https://github.com/Pysics/akinator.py.git#egg=akinator.py
+akinator
+#git+https://github.com/Pysics/akinator.py.git#egg=akinator.py
 apscheduler
 aiohttp
 bs4
