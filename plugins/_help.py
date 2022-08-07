@@ -87,8 +87,12 @@ async def _help(ult):
                     if not file:
                         # the enter command/plugin name is not found
                         text = f"`{plug}` is not a valid plugin!"
-                        if extractOne:
-                            best_match = extractOne(plug, compare_strings)
+                        best_match = None
+                        for _ in compare_strings:
+                            if plug in _:
+                                best_match = _
+                                break
+                        if best_match:
                             text += f"\nDid you mean `{best_match[0]}`?"
                         return await ult.eor(text)
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
