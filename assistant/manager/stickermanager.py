@@ -38,7 +38,7 @@ async def kang_cmd(ult):
         pre = sender.username[:4]
     else:
         pre = random.random_string(length=3)
-    animated, dl = None, None
+    animated, dl, video = None, None, None
     try:
         emoji = ult.text.split(maxsplit=1)[1]
     except IndexError:
@@ -46,9 +46,12 @@ async def kang_cmd(ult):
     if reply.sticker:
         file = get_input_document(reply.sticker)
         emoji = emoji or reply.file.emoji
-        if reply.file.name.endswith(".tgs"):
+        name = reply.file.name
+        if name.endswith(".tgs"):
             animated = True
             dl = await reply.download_media()
+        elif name.endswith(".webm"):
+            video = True
     elif reply.photo:
         dl = await reply.download_media()
         name = "sticker.webp"
@@ -74,6 +77,10 @@ async def kang_cmd(ult):
             type_ = "anim"
             sn += "_anim"
             title += " (Animated)"
+        elif video:
+            type_ = "vid"
+            sn += "_vid"
+            title += "(Video)"
         sn += f"_by_{asst.me.username}"
         try:
             await asst(GetSticker(InputStickerSetShortName(sn), hash=0))
@@ -87,7 +94,9 @@ async def kang_cmd(ult):
                     title=title,
                     short_name=sn,
                     stickers=[SetItem(file, emoji=emoji)],
+                    videos=video,
                     animated=animated,
+                    software="@TeamUltroid"
                 )
             )
         except Exception as er:
@@ -116,6 +125,9 @@ async def kang_cmd(ult):
         if animated:
             sn += "_anim"
             title += " (Animated)"
+        elif video:
+            sn += "_vid"
+            title += "(Video)"
         sn += f"_by_{asst.me.username}"
         try:
             pack = await ult.client(
