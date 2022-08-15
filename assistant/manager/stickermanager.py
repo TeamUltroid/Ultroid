@@ -81,7 +81,7 @@ async def kang_cmd(ult):
         elif video:
             type_ = "vid"
             sn += "_vid"
-            title += "(Video)"
+            title += " (Video)"
         sn += f"_by_{asst.me.username}"
         try:
             await asst(GetSticker(InputStickerSetShortName(sn), hash=0))
