@@ -41,8 +41,12 @@ except ImportError:
     pass
 
 from telethon.errors import PeerIdInvalidError, YouBlockedUserError
-from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker, InputPeerSelf
 from telethon.tl.functions.messages import UploadMediaRequest
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    DocumentAttributeSticker,
+    InputPeerSelf,
+)
 from telethon.utils import get_input_document
 
 from . import (
@@ -71,7 +75,7 @@ async def pack_kangish(_):
         cmdtext = _.text.split(maxsplit=1)
     except IndexError:
         cmdtext = None
-    if (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+    if _e and _e.sticker and _e.file.mime_type == "image/webp":
         _packname = cmdtext or f"Ultroid Kang Pack By {_.sender_id}"
     elif os.path.isdir(cmdtext):
         local = True
@@ -82,16 +86,16 @@ async def pack_kangish(_):
         _hash = _e.media.document.attributes[1].stickerset.access_hash
         _get_stiks = await _.client(
             functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
+                stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
             )
-         )
+        )
         docs = _get_stiks.documents
     else:
         docs = []
         for file in glob.glob(cmdtext + "/*"):
             upl = await asst.upload_file(file)
             docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
-            
+
     stiks = []
     for i in docs:
         x = get_input_document(i)
