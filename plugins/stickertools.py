@@ -23,7 +23,7 @@
     To extract round sticker.
 """
 import io
-import os
+import os, glob
 import random
 from os import remove
 
@@ -72,7 +72,7 @@ async def pack_kangish(_):
     _e = await _.get_reply_message()
     local = None
     try:
-        cmdtext = _.text.split(maxsplit=1)
+        cmdtext = _.text.split(maxsplit=1)[1]
     except IndexError:
         cmdtext = None
     if _e and _e.sticker and _e.file.mime_type == "image/webp":
