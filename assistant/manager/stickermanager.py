@@ -162,10 +162,8 @@ async def do_magic(ult):
         return await ult.reply("No Sticker Pack Found!")
     al_ = []
     ul = ko[ult.sender_id]
-    if ul.get("static"):
-        al_.extend(ul["static"])
-    if ul.get("anim"):
-        al_.extend(ul["anim"])
+    for _ in ul.keys():
+        al_.extend(ul[_])
     msg = "• **Stickers Owned by You!**\n\n"
     for _ in al_:
         try:
@@ -174,7 +172,9 @@ async def do_magic(ult):
         except StickerSetInvalidError:
             if ul.get("anim") and _ in ul["anim"]:
                 ul["anim"].remove(_)
+            elif ul.get("vid") and _ in ul["vid"]:
+                ul["vid"].remove(_)
             else:
                 ul["static"].remove(_)
-    udB.set_key("STICKERS", ko)
+            udB.set_key("STICKERS", ko)
     await ult.reply(msg)
