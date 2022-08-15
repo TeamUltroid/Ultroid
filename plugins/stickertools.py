@@ -82,6 +82,7 @@ async def pack_kangish(_):
         local = True
     else:
         return await _.eor(get_string("sts_4"))
+    typee = None
     if not local:
         _id = _e.media.document.attributes[1].stickerset.id
         _hash = _e.media.document.attributes[1].stickerset.access_hash
@@ -93,9 +94,16 @@ async def pack_kangish(_):
         docs = _get_stiks.documents
     else:
         docs = []
-        for file in glob.glob(cmdtext + "/*"):
-            upl = await asst.upload_file(file)
-            docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
+        files = glob.glob(cmdtext + "/*")
+        exte = files[-1]
+        if exte.endswith(".tgs"):
+            typee = "anim"
+        elif exte.endswith(".webm"):
+            typee = "vid"
+        for file in files:
+            if file.endswith((".tgs", ".webm")):
+                upl = await asst.upload_file(file)
+                docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
 
     stiks = []
     for i in docs:
@@ -103,7 +111,7 @@ async def pack_kangish(_):
         stiks.append(
             types.InputStickerSetItem(
                 document=x,
-                emoji=(i.attributes[1]).alt,
+                emoji=random.choice(["😐","👍","😂"]) if local else (i.attributes[1]).alt,
             )
         )
     try:
@@ -113,6 +121,8 @@ async def pack_kangish(_):
                 user_id=_.sender_id,
                 title=_packname,
                 short_name=f"{short_name}_by_{asst.me.username}",
+                animated= typee == "anim",
+                videos=typee == "vid",
                 stickers=stiks,
             )
         )
