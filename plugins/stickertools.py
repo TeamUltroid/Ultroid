@@ -22,8 +22,9 @@
 • `{i}round <reply to any media>`
     To extract round sticker.
 """
+import glob
 import io
-import os, glob
+import os
 import random
 from os import remove
 
