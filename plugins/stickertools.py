@@ -41,7 +41,8 @@ except ImportError:
     pass
 
 from telethon.errors import PeerIdInvalidError, YouBlockedUserError
-from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
+from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker, InputPeerSelf
+from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.utils import get_input_document
 
 from . import (
@@ -65,21 +66,34 @@ from . import (
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
-        return await _.eor(get_string("sts_4"))
-    if len(_.text) > 9:
-        _packname = _.text.split(" ", maxsplit=1)[1]
+    local = None
+    try:
+        cmdtext = _.text.split(maxsplit=1)
+    except IndexError:
+        cmdtext = None
+    if (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+        _packname = cmdtext or f"Ultroid Kang Pack By {_.sender_id}"
+    elif os.path.isdir(cmdtext):
+        local = True
     else:
-        _packname = f"Ultroid Kang Pack By {_.sender_id}"
-    _id = _e.media.document.attributes[1].stickerset.id
-    _hash = _e.media.document.attributes[1].stickerset.access_hash
-    _get_stiks = await _.client(
-        functions.messages.GetStickerSetRequest(
+        return await _.eor(get_string("sts_4"))
+    if not local:
+        _id = _e.media.document.attributes[1].stickerset.id
+        _hash = _e.media.document.attributes[1].stickerset.access_hash
+        _get_stiks = await _.client(
+            functions.messages.GetStickerSetRequest(
             stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
-        )
-    )
+            )
+         )
+        docs = _get_stiks.documents
+    else:
+        docs = []
+        for file in glob.glob(cmdtext + "/*"):
+            upl = await asst.upload_file(file)
+            docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
+            
     stiks = []
-    for i in _get_stiks.documents:
+    for i in docs:
         x = get_input_document(i)
         stiks.append(
             types.InputStickerSetItem(
