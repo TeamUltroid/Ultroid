@@ -52,6 +52,7 @@ async def kang_cmd(ult):
             dl = await reply.download_media()
         elif name.endswith(".webm"):
             video = True
+            dl = await reply.download_media()
     elif reply.photo:
         dl = await reply.download_media()
         name = "sticker.webp"
