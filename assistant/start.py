@@ -14,7 +14,7 @@ from telethon.utils import get_display_name
 
 from pyUltroid._misc import SUDO_M, owner_and_sudos
 from pyUltroid.dB.asst_fns import *
-from pyUltroid.functions.helper import inline_mention
+from pyUltroid.fns.helper import inline_mention
 from strings import get_string
 
 from . import *

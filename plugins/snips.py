@@ -26,7 +26,7 @@ from telethon.utils import pack_bot_file_id
 
 from pyUltroid._misc import sudoers
 from pyUltroid.dB.snips_db import add_snip, get_snips, list_snip, rem_snip
-from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
 from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something

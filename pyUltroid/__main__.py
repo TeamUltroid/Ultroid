@@ -13,7 +13,7 @@ def main():
     import sys
     import time
 
-    from .functions.helper import time_formatter, updater, bash
+    from .fns.helper import time_formatter, updater, bash
     from .startup.funcs import (
         WasItRestart,
         autopilot,

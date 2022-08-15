@@ -18,8 +18,8 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.misc import rotate_image
-from pyUltroid.functions.tools import make_html_telegraph
+from pyUltroid.fns.misc import rotate_image
+from pyUltroid.fns.tools import make_html_telegraph
 
 from . import LOGS, Telegraph, bash, downloader, get_string, mediainfo, ultroid_cmd
 

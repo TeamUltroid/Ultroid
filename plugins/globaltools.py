@@ -59,7 +59,7 @@ from pyUltroid.dB.gcast_blacklist_db import (
     is_gblacklisted,
     rem_gblacklist,
 )
-from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
 from . import (
     HNDLR,

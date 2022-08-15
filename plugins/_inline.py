@@ -17,8 +17,8 @@ from telethon.utils import resolve_bot_file_id
 
 from pyUltroid._misc._assistant import callback, in_pattern
 from pyUltroid.dB._core import HELP, LIST
-from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
-from pyUltroid.functions.misc import split_list
+from pyUltroid.fns.helper import gen_chlog, time_formatter, updater
+from pyUltroid.fns.misc import split_list
 
 from . import (
     HNDLR,

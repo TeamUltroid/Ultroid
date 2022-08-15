@@ -18,8 +18,8 @@ from datetime import datetime as dt
 from aiohttp.client_exceptions import InvalidURL
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
-from pyUltroid.functions.helper import time_formatter
-from pyUltroid.functions.tools import set_attributes
+from pyUltroid.fns.helper import time_formatter
+from pyUltroid.fns.tools import set_attributes
 
 from . import (
     LOGS,

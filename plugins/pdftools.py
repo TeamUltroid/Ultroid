@@ -40,7 +40,7 @@ except ImportError:
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
-from pyUltroid.functions.tools import four_point_transform
+from pyUltroid.fns.tools import four_point_transform
 
 from . import (
     HNDLR,

@@ -32,7 +32,7 @@ from random import choice
 try:
     from yaml import safe_load
 except ImportError:
-    from pyUltroid.functions.tools import safe_load
+    from pyUltroid.fns.tools import safe_load
 try:
     from telegraph import upload_file as uf
 except ImportError:

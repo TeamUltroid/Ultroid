@@ -21,8 +21,8 @@
 """
 import io
 
-from pyUltroid.functions.misc import get_synonyms_or_antonyms
-from pyUltroid.functions.tools import async_searcher
+from pyUltroid.fns.misc import get_synonyms_or_antonyms
+from pyUltroid.fns.tools import async_searcher
 
 from . import get_string, ultroid_cmd
 

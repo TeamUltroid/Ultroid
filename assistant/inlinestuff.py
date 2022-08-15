@@ -18,8 +18,8 @@ from telethon.tl.alltlobjects import LAYER, tlobjects
 from telethon.tl.types import DocumentAttributeAudio as Audio
 from telethon.tl.types import InputWebDocument as wb
 
-from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import (
+from pyUltroid.fns.misc import google_search
+from pyUltroid.fns.tools import (
     _webupload_cache,
     async_searcher,
     get_ofox,

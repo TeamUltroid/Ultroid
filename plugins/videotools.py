@@ -20,7 +20,7 @@
 import glob
 import os
 
-from pyUltroid.functions.tools import set_attributes
+from pyUltroid.fns.tools import set_attributes
 
 from . import bash, duration_s, eod, genss, get_string, mediainfo, stdr, ultroid_cmd
 

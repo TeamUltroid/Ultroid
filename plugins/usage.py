@@ -21,7 +21,7 @@ import math
 import shutil
 from random import choice
 
-from pyUltroid.functions import some_random_headers
+from pyUltroid.fns import some_random_headers
 
 from . import (
     HOSTED_ON,

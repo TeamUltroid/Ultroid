@@ -12,7 +12,7 @@ from importlib import import_module
 from logging import Logger
 
 from . import LOGS
-from .functions.tools import get_all_files
+from .fns.tools import get_all_files
 
 
 class Loader:

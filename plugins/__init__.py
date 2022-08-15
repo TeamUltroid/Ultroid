@@ -19,10 +19,10 @@ from pyUltroid._misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid._misc._decorators import ultroid_cmd
 from pyUltroid._misc._wrappers import eod, eor
 from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
-from pyUltroid.functions.helper import *
-from pyUltroid.functions.info import *
-from pyUltroid.functions.misc import *
-from pyUltroid.functions.tools import *
+from pyUltroid.fns.helper import *
+from pyUltroid.fns.info import *
+from pyUltroid.fns.misc import *
+from pyUltroid.fns.tools import *
 from pyUltroid.version import __version__, ultroid_version
 from strings import get_help, get_string
 

@@ -15,7 +15,7 @@ from telethon.events import CallbackQuery, InlineQuery, NewMessage
 from telethon.tl.types import InputWebDocument
 
 from .. import LOGS, asst, udB, ultroid_bot
-from ..functions.admins import admin_check
+from ..fns.admins import admin_check
 from . import append_or_update, owner_and_sudos
 
 OWNER = ultroid_bot.full_name

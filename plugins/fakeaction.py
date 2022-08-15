@@ -12,7 +12,7 @@ __doc__ = get_help("help_fakeaction")
 import math
 import time
 
-from pyUltroid.functions.admins import ban_time
+from pyUltroid.fns.admins import ban_time
 
 from . import asyncio, get_string, ultroid_cmd
 

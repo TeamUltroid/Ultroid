@@ -19,7 +19,7 @@ from datetime import datetime as dt
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
 
-from pyUltroid.functions.tools import metadata
+from pyUltroid.fns.tools import metadata
 
 from . import (
     bash,

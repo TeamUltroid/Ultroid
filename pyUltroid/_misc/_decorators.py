@@ -39,9 +39,9 @@ from .. import *
 from .. import _ignore_eval
 from ..dB import DEVLIST
 from ..dB._core import LIST, LOADED
-from ..functions.admins import admin_check
-from ..functions.helper import bash
-from ..functions.helper import time_formatter as tf
+from ..fns.admins import admin_check
+from ..fns.helper import bash
+from ..fns.helper import time_formatter as tf
 from ..version import __version__ as pyver
 from ..version import ultroid_version as ult_ver
 from . import SUDO_M, owner_and_sudos

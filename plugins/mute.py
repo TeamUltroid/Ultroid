@@ -30,7 +30,7 @@ from telethon import events
 from telethon.utils import get_display_name
 
 from pyUltroid.dB.mute_db import is_muted, mute, unmute
-from pyUltroid.functions.admins import ban_time
+from pyUltroid.fns.admins import ban_time
 
 from . import asst, eod, get_string, inline_mention, ultroid_bot, ultroid_cmd
 

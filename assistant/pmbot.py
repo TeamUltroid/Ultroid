@@ -20,7 +20,7 @@ from telethon.utils import get_display_name
 
 from pyUltroid.dB.asst_fns import *
 from pyUltroid.dB.botchat_db import *
-from pyUltroid.functions.helper import inline_mention
+from pyUltroid.fns.helper import inline_mention
 
 from . import *
 

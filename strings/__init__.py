@@ -3,11 +3,11 @@ import os
 from typing import Any, Dict, List, Union
 from glob import glob
 from pyUltroid import *
-from pyUltroid.functions.tools import translate
+from pyUltroid.fns.tools import translate
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
-    from pyUltroid.functions.tools import safe_load
+    from pyUltroid.fns.tools import safe_load
 
 language = [udB.get_key("language") or os.getenv("LANGUAGE") or "en"]
 languages = {}

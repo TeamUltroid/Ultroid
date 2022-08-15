@@ -64,7 +64,7 @@ except ImportError:
 
 from pyUltroid._misc._assistant import asst_cmd
 from pyUltroid.dB.gban_mute_db import is_gbanned
-from pyUltroid.functions.tools import get_chat_and_msgid
+from pyUltroid.fns.tools import get_chat_and_msgid
 
 try:
     from telegraph import upload_file as uf

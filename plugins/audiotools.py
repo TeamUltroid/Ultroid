@@ -10,7 +10,7 @@ import os
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import set_attributes
+from pyUltroid.fns.tools import set_attributes
 
 from . import (
     LOGS,

@@ -40,8 +40,8 @@ from telethon.tl.types import (
     WebPage,
 )
 
-from pyUltroid.functions.helper import numerize
-from pyUltroid.functions.misc import create_instagram_client
+from pyUltroid.fns.helper import numerize
+from pyUltroid.fns.misc import create_instagram_client
 
 from . import (
     LOGS,

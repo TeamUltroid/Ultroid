@@ -57,7 +57,7 @@ from telethon.tl.types import (
     DocumentAttributeVideo,
 )
 
-from pyUltroid.functions.tools import metadata, translate
+from pyUltroid.fns.tools import metadata, translate
 
 from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
 from . import humanbytes as hb

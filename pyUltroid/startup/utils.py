@@ -17,6 +17,7 @@ def load_addons(plugin_name):
         return
     from .. import HNDLR, LOGS, asst, udB, ultroid_bot
     from .._misc import _supporter as xxx
+    from pyUltroid import fns
     from .._misc._assistant import asst_cmd, callback, in_pattern
     from .._misc._decorators import ultroid_cmd
     from .._misc._supporter import Config, admin_cmd, sudo_cmd
@@ -74,6 +75,7 @@ def load_addons(plugin_name):
     modules["fridaybot.utils"] = xxx
     modules["fridaybot.Config"] = xxx
     modules["userbot.uniborgConfig"] = xxx
+    modules["pyUltroid.functions"] = fns
     spec.loader.exec_module(mod)
     modules[name] = mod
     doc = modules[name].__doc__.format(i=HNDLR) if modules[name].__doc__ else ""

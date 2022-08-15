@@ -19,7 +19,7 @@ from telethon.tl.types import InputMessagesFilterPinned
 from telethon.utils import get_display_name
 
 from pyUltroid.dB import DEVLIST
-from pyUltroid.functions.admins import ban_time
+from pyUltroid.fns.admins import ban_time
 
 from . import (
     HNDLR,

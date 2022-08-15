@@ -13,7 +13,7 @@ from telethon import events
 from telethon.tl.types import Channel
 
 from pyUltroid.dB import autoban_db, dnd_db
-from pyUltroid.functions.admins import get_update_linked_chat
+from pyUltroid.fns.admins import get_update_linked_chat
 
 from . import LOGS, asst, get_string, inline_mention, ultroid_bot, ultroid_cmd
 
