@@ -76,12 +76,12 @@ async def pack_kangish(_):
         cmdtext = _.text.split(maxsplit=1)[1]
     except IndexError:
         cmdtext = None
-    if _e and _e.sticker and _e.file.mime_type == "image/webp":
-        _packname = cmdtext or f"Ultroid Kang Pack By {_.sender_id}"
-    elif os.path.isdir(cmdtext):
+    if cmdtext and os.path.isdir(cmdtext):
         local = True
-    else:
+    elif not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
         return await _.eor(get_string("sts_4"))
+    msg = await _.eor(get_string("com_1"))
+    _packname = cmdtext or f"Ultroid Kang Pack By {_.sender_id}"
     typee = None
     if not local:
         _id = _e.media.document.attributes[1].stickerset.id
@@ -100,10 +100,14 @@ async def pack_kangish(_):
             typee = "anim"
         elif exte.endswith(".webm"):
             typee = "vid"
+        count = 0
         for file in files:
             if file.endswith((".tgs", ".webm")):
+                count += 1
                 upl = await asst.upload_file(file)
                 docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
+                if count % 5 == 0:
+                    await msg.edit(f"`Uploaded {count} files.`")
 
     stiks = []
     for i in docs:
@@ -129,13 +133,13 @@ async def pack_kangish(_):
             )
         )
     except PeerIdInvalidError:
-        return await _.eor(
+        return await msg.eor(
             f"Hey {inline_mention(_.sender)} send `/start` to @{asst.me.username} and later try this command again.."
         )
     except BaseException as er:
         LOGS.exception(er)
-        return await _.eor(str(er))
-    await _.eor(
+        return await msg.eor(str(er))
+    await msg.eor(
         get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
