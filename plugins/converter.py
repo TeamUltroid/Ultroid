@@ -101,6 +101,8 @@ conv_keys = {
     "image": "png",
     "webm": "webm",
     "gif": "gif",
+    "json": "json",
+    "tgs": "tgs"
 }
 
 
