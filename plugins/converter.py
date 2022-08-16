@@ -102,7 +102,7 @@ conv_keys = {
     "webm": "webm",
     "gif": "gif",
     "json": "json",
-    "tgs": "tgs"
+    "tgs": "tgs",
 }
 
 
