@@ -112,6 +112,8 @@ conv_keys = {
 async def uconverter(event):
     xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
+    if a is None:
+        return await event.eor("`Reply to Photo or media with thumb...`")
     input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
     if not b and (a.document and a.document.thumbs):
