@@ -203,7 +203,7 @@ if run_as_module:
         await event.client.send_file(
             event.chat_id,
             file="ultroid-heroku.log",
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption="**Ultroid Heroku Logs.**",
         )
 
@@ -214,7 +214,7 @@ if run_as_module:
         await ult.client.send_file(
             ult.chat_id,
             file=file,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption="**Ultroid Logs.**",
         )
 
