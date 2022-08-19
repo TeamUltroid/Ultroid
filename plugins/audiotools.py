@@ -15,6 +15,7 @@ from pyUltroid.fns.tools import set_attributes
 from . import (
     LOGS,
     bash,
+    ULTConfig,
     downloader,
     eod,
     eor,
@@ -110,7 +111,7 @@ async def trim_aud(e):
         await e.client.send_file(
             e.chat_id,
             mmmm,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption=caption,
             attributes=attributes,
             force_document=False,

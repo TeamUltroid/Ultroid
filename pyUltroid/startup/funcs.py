@@ -39,14 +39,14 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_peer_id
 
-from .. import LOGS
+from .. import LOGS, ULTConfig
 from ..fns.helper import download_file, inline_mention, updater
 
 db_url = 0
 
 
 async def autoupdate_local_database():
-    from .. import asst, udB
+    from .. import asst, udB, ultroid_bot, Var
 
     global db_url
     db_url = (
@@ -102,10 +102,14 @@ async def startup_stuff():
 
     CT = udB.get_key("CUSTOM_THUMBNAIL")
     if CT:
+        path = "resources/extras/thumbnail.jpg"
+        ULTConfig.thumb = path
         try:
-            await download_file(CT, "resources/extras/ultroid.jpg")
+            await download_file(CT, path)
         except Exception as er:
             LOGS.exception(er)
+    elif CT is False:
+        ULTConfig.thumb = None
     GT = udB.get_key("GDRIVE_AUTH_TOKEN")
     if GT:
         with open("resources/auth/gdrive_creds.json", "w") as t_file:

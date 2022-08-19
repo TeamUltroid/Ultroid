@@ -27,7 +27,7 @@ except ImportError:
 
 from telegraph import upload_file as uf
 
-from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader, ULTConfig
 
 opn = []
 
@@ -88,7 +88,7 @@ async def imak(event):
         f"`{xxx.name}`",
         file=xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
     )
     os.remove(inp)
     await xx.delete()
@@ -147,7 +147,7 @@ async def _(event):
     with open(input_str, "w") as b:
         b.write(str(a.message))
     await xx.edit(f"**Packing into** `{input_str}`")
-    await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
+    await event.reply(file=input_str, thumb=ULTConfig.thumb)
     await xx.delete()
     os.remove(input_str)
 

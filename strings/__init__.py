@@ -9,7 +9,8 @@ try:
 except ModuleNotFoundError:
     from pyUltroid.fns.tools import safe_load
 
-language = [udB.get_key("language") or os.getenv("LANGUAGE") or "en"]
+ULTConfig.lang = udB.get_key("language") or os.getenv("LANGUAGE", "en")
+
 languages = {}
 
 for file in glob("strings/strings/*yml"):
@@ -24,8 +25,8 @@ for file in glob("strings/strings/*yml"):
             LOGS.exception(er)
 
 
-def get_string(key: str) -> Any:
-    lang = language[0]
+def get_string(key: str, _res: bool = True) -> Any:
+    lang = ULTConfig.lang or "en"
     try:
         return languages[lang][key]
     except KeyError:
@@ -40,15 +41,19 @@ def get_string(key: str) -> Any:
                 languages.update({lang: {key: tr}})
             return tr
         except KeyError:
+            if not _res:
+                return
             return f"Warning: could not load any string with the key `{key}`"
         except TypeError:
             pass
         except Exception as er:
             LOGS.exception(er)
+        if not _res:
+            return None
         return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
 def get_help(key):
-    doc = get_string(key)
+    doc = get_string(key, _res=False)
     if doc:
         return get_string("cmda") + doc
 

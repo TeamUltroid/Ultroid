@@ -60,7 +60,7 @@ from telethon.tl.types import (
 from pyUltroid.fns.tools import metadata, translate
 
 from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
-from . import humanbytes as hb
+from . import humanbytes as hb, ULTConfig
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
@@ -212,7 +212,7 @@ async def _(e):
                 e.chat_id,
                 file,
                 video_note=True,
-                thumb="resources/extras/ultroid.jpg",
+                thumb=ULTConfig.thumb,
                 reply_to=reply,
             )
             os.remove(file)
@@ -317,7 +317,7 @@ async def _(e):
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"
             await e.reply(
-                f"`{e.text}`", file=out_file, thumb="resources/extras/ultroid.jpg"
+                f"`{e.text}`", file=out_file, thumb=ULTConfig.thumb
             )
         await e.delete()
 

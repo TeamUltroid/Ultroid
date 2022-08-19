@@ -14,6 +14,7 @@ test*
 *.log
 target/npmlist.json
 package-lock.json
+resources/extras/thumbnail.jpg
 
 # Directories
 addons/

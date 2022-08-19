@@ -33,7 +33,7 @@ from telethon.tl.types import Message
 from pyUltroid.fns.gDrive import GDriveManager
 from pyUltroid.fns.helper import time_formatter
 
-from . import asst, eod, eor, get_string, ultroid_cmd
+from . import asst, eod, eor, get_string, ultroid_cmd, ULTConfig
 
 
 @ultroid_cmd(
@@ -88,7 +88,7 @@ async def files(event):
         await event.client.send_file(
             event.chat_id,
             "drive-files.txt",
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             reply_to=event,
         )
         os.remove("drive-files.txt")
@@ -209,7 +209,7 @@ async def _(event):
         await event.client.send_file(
             event.chat_id,
             f"{input_str}.txt",
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             reply_to=event,
         )
         os.remove(f"{input_str}.txt")

@@ -22,7 +22,7 @@ import os
 
 from pyUltroid.fns.tools import set_attributes
 
-from . import bash, duration_s, eod, genss, get_string, mediainfo, stdr, ultroid_cmd
+from . import bash, duration_s, eod, genss, get_string, mediainfo, stdr, ultroid_cmd, ULTConfig
 
 
 @ultroid_cmd(pattern="sample( (.*)|$)")
@@ -50,7 +50,7 @@ async def gen_sample(e):
         await e.client.send_file(
             e.chat_id,
             mmmm,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption=caption,
             attributes=attributes,
             force_document=False,
@@ -118,7 +118,7 @@ async def gen_sample(e):
         await e.client.send_file(
             e.chat_id,
             mmmm,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption=caption,
             attributes=attributes,
             force_document=False,

@@ -34,6 +34,7 @@ from . import (
     get_string,
     ultroid_cmd,
     uploader,
+    ULTConfig
 )
 
 
@@ -67,7 +68,7 @@ async def zipp(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
         caption=f"`{xxx.name}`",
         reply_to=reply,
     )
@@ -108,7 +109,7 @@ async def unzipp(event):
             event.chat_id,
             xxx,
             force_document=True,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption=f"`{xxx.name}`",
         )
     await xx.delete()
@@ -160,7 +161,7 @@ async def do_zip(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
     )
     await bash("rm -rf zip")
     os.remove("ultroid.zip")

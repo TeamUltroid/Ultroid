@@ -28,6 +28,7 @@ from . import (
     humanbytes,
     math,
     mediainfo,
+    ULTConfig,
     time_formatter,
     ultroid_cmd,
     uploader,
@@ -152,7 +153,7 @@ async def _(e):
             await e.client.send_file(
                 e.chat_id,
                 mmmm,
-                thumb="resources/extras/ultroid.jpg",
+                thumb=ULTConfig.thumb,
                 caption=caption,
                 attributes=attributes,
                 force_document=False,
@@ -162,7 +163,7 @@ async def _(e):
             await e.client.send_file(
                 e.chat_id,
                 mmmm,
-                thumb="resources/extras/ultroid.jpg",
+                thumb=ULTConfig.thumb,
                 caption=caption,
                 force_document=True,
                 reply_to=e.reply_to_msg_id,

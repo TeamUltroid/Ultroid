@@ -49,6 +49,7 @@ from . import (
     async_searcher,
     bash,
     downloader,
+    ULTConfig,
     eod,
     get_string,
     mediainfo,
@@ -126,7 +127,7 @@ async def adaudroid(e):
     await e.client.send_file(
         e.chat_id,
         mmmm,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
         attributes=attributes,
         force_document=False,
         reply_to=e.reply_to_msg_id,
