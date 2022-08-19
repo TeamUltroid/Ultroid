@@ -14,8 +14,8 @@ from pyUltroid.fns.tools import set_attributes
 
 from . import (
     LOGS,
-    bash,
     ULTConfig,
+    bash,
     downloader,
     eod,
     eor,

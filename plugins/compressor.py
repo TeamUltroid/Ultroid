@@ -22,13 +22,13 @@ from telethon.tl.types import DocumentAttributeVideo
 from pyUltroid.fns.tools import metadata
 
 from . import (
+    ULTConfig,
     bash,
     downloader,
     get_string,
     humanbytes,
     math,
     mediainfo,
-    ULTConfig,
     time_formatter,
     ultroid_cmd,
     uploader,

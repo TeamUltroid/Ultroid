@@ -22,7 +22,17 @@ import os
 
 from pyUltroid.fns.tools import set_attributes
 
-from . import bash, duration_s, eod, genss, get_string, mediainfo, stdr, ultroid_cmd, ULTConfig
+from . import (
+    ULTConfig,
+    bash,
+    duration_s,
+    eod,
+    genss,
+    get_string,
+    mediainfo,
+    stdr,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="sample( (.*)|$)")
