@@ -26,6 +26,7 @@ from . import (
     downloader,
     eor,
     fast_download,
+    ULTConfig,
     get_all_files,
     get_string,
     progress,
@@ -136,7 +137,7 @@ async def _(event):
         False,
         True,
         False,
-        "resources/extras/ultroid.jpg",
+        ULTConfig.thumb,
     )
     if "--stream" in match:
         stream = True

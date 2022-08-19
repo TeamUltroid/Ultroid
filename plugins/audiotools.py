@@ -11,6 +11,7 @@ import time
 from datetime import datetime as dt
 
 from pyUltroid.fns.tools import set_attributes
+from pyUltroid.startup.BaseClient import UltroidClient
 
 from . import (
     LOGS,
@@ -155,7 +156,7 @@ async def ex_aud(e):
         e.chat_id,
         fo,
         caption=get_string("audiotools_10"),
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
         attributes=attributes,
         reply_to=e.reply_to_msg_id,
     )

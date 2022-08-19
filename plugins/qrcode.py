@@ -17,6 +17,7 @@
    `It decodes the qrcode.`
 """
 import os
+from pyUltroid import ULTConfig
 
 try:
     import cv2
@@ -39,7 +40,7 @@ async def cd(e):
         msg = reply.text
     elif not msg:
         return await e.eor("`Give Some Text or Reply", time=5)
-    default, cimg = "resources/extras/ultroid.jpg", None
+    default, cimg = ULTConfig.thumb, None
     if reply and (reply.sticker or reply.photo):
         cimg = await reply.download_media()
     elif ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:

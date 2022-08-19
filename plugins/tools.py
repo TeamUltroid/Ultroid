@@ -169,7 +169,7 @@ async def _(e):
         try:
             bbbb = await reply.download_media(thumb=-1)
         except TypeError:
-            bbbb = "resources/extras/ultroid.jpg"
+            bbbb = ULTConfig.thumb
         im = cv2.imread(bbbb)
         dsize = (512, 512)
         output = cv2.resize(im, dsize, interpolation=cv2.INTER_AREA)
