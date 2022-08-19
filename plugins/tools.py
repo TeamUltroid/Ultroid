@@ -59,8 +59,8 @@ from telethon.tl.types import (
 
 from pyUltroid.fns.tools import metadata, translate
 
-from . import HNDLR, LOGS, async_searcher, bash, con, eor, get_string
-from . import humanbytes as hb, ULTConfig
+from . import HNDLR, LOGS, ULTConfig, async_searcher, bash, con, eor, get_string
+from . import humanbytes as hb
 from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
@@ -316,9 +316,7 @@ async def _(e):
     except MessageTooLongError:
         with io.BytesIO(str.encode(text)) as out_file:
             out_file.name = "output.txt"
-            await e.reply(
-                f"`{e.text}`", file=out_file, thumb=ULTConfig.thumb
-            )
+            await e.reply(f"`{e.text}`", file=out_file, thumb=ULTConfig.thumb)
         await e.delete()
 
 

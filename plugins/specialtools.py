@@ -46,10 +46,10 @@ from pyUltroid.fns.tools import metadata
 
 from . import (
     HNDLR,
+    ULTConfig,
     async_searcher,
     bash,
     downloader,
-    ULTConfig,
     eod,
     get_string,
     mediainfo,

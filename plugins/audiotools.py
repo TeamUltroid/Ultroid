@@ -15,8 +15,8 @@ from pyUltroid.startup.BaseClient import UltroidClient
 
 from . import (
     LOGS,
-    bash,
     ULTConfig,
+    bash,
     downloader,
     eod,
     eor,

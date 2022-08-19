@@ -27,6 +27,7 @@ import time
 
 from . import (
     HNDLR,
+    ULTConfig,
     asyncio,
     bash,
     downloader,
@@ -34,7 +35,6 @@ from . import (
     get_string,
     ultroid_cmd,
     uploader,
-    ULTConfig
 )
 
 

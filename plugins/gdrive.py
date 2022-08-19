@@ -33,7 +33,7 @@ from telethon.tl.types import Message
 from pyUltroid.fns.gDrive import GDriveManager
 from pyUltroid.fns.helper import time_formatter
 
-from . import asst, eod, eor, get_string, ultroid_cmd, ULTConfig
+from . import ULTConfig, asst, eod, eor, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
