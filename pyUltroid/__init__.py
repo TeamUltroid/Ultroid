@@ -12,6 +12,9 @@ from .version import __version__
 
 run_as_module = False
 
+class ULTConfig:
+    ...
+
 if sys.argv[0] == "-m":
     run_as_module = True
 
