@@ -173,7 +173,7 @@ async def help_func(ult):
     count = int(count) if count else 0
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
     await ult.edit(
-        text, file=inline_pic(), buttons=page_num(count, key), link_preview=False
+        text, buttons=page_num(count, key), link_preview=False
     )
 
 
