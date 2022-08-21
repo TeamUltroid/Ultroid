@@ -172,9 +172,7 @@ async def help_func(ult):
         _, count = count.split("|")
     count = int(count) if count else 0
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
-    await ult.edit(
-        text, buttons=page_num(count, key), link_preview=False
-    )
+    await ult.edit(text, buttons=page_num(count, key), link_preview=False)
 
 
 @callback(re.compile("uplugin_(.*)"), owner=True)
