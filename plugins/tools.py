@@ -404,9 +404,9 @@ async def webss(event):
     if pic:
         await xx.reply(
             get_string("wbs_3").format(xurl),
-        file=pic,
-        link_preview=False,
-        force_document=True,
+            file=pic,
+            link_preview=False,
+            force_document=True,
         )
         os.remove(pic)
     await xx.delete()
