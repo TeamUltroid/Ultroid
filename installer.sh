@@ -25,7 +25,7 @@ clone_repo(){
             cd $DIR
             git pull
             currentbranch="$(git rev-parse --abbrev-ref HEAD)"
-            if [currentbranch != $BRANCH]
+            if [ currentbranch != $BRANCH ]
                 then
                     git checkout $BRANCH
             fi

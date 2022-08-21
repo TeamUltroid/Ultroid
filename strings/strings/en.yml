@@ -5,22 +5,21 @@ authors:
   - xditya
   - rojserbest
   - sppidy
-  - ProgrammingError 
+  - ProgrammingError
   - aviskumar
 
-# pyUltroid 
+# pyUltroid
 py_c1: "Wrong string session. Copy paste correctly!"
 py_c2: "No String Session found. Quitting..."
 py_c3: "Your VC_SESSION Expired. Deleting VC_SESSION from redis...\nRenew/Change it to Use Voice/Video Chat from VC Account..."
 py_d1: "`You cannot use this command now. Contact owner of this bot!`"
-py_d2:  "`Full Sudo User Required...`"
+py_d2: "`Full Sudo User Required...`"
 py_d3: "`Use this in group/channel.`"
 py_d4: "**⚠️ Developer Restricted!**\nIf you know what this does, and want to proceed, use\n`{}setdb I_DEV True`.\n\nThis Might Be Dangerous."
 py_d5: "`I am not an admin.`"
 py_d6: "This Command Can't be used by Bot!"
 py_d7: "Conversation Is Already On, Kindly Wait Sometime Then Try Again."
 py_d8: "`Sending media or sticker is not allowed in this chat.`"
-
 
 # commons
 com_1: "`Processing...`"
@@ -29,7 +28,7 @@ com_3: "`Invalid Input`"
 com_4: "`UnSupported Media..`"
 com_5: "Downloading..."
 com_6: "Uploading..."
-com_7: "`Something Went Wrong.`" 
+com_7: "`Something Went Wrong.`"
 
 #chatactions
 can_1: "#GBanned_User Joined.\n\n**User** : {}\n**Reason**: {}\n\n`User Banned.`"
@@ -37,14 +36,14 @@ can_2: "∆ #UsernameUpdate\n\n@{} changed username to @{}"
 can_3: "∆ #UsernameUpdate\n\n{} removed its username. (@{})"
 can_4: "∆ #UsernameUpdate\n\n{}'s new username --> @{}"
 
-# help 
+# help
 help_1: "`{}` is not a valid plugin!"
-help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`" 
+help_2: "The bot did not respond to the inline query.\nConsider using `{}restart`"
 help_3: "`Please turn on inline mode for your bot from` @Botfather."
 help_4: "• Plugins"
 help_5: "Addons •"
 help_6: "••Voice Chat"
-help_7: "Inline Plugins••" 
+help_7: "Inline Plugins••"
 help_8: "⚙️ Owner Tools"
 help_9: "Settings ⚙️"
 help_10: "••Cʟᴏꜱᴇ••"
@@ -190,7 +189,7 @@ blk_6: "No Blacklist word Found Here"
 
 # broadcast
 bd_1: "`Adding to db...`"
-bd_2: "`Trying to add all admin channels to db...`" 
+bd_2: "`Trying to add all admin channels to db...`"
 bd_3: "**Done.**\nChats already in Database: {}\nNewly Added: {}"
 bd_4: "Channels added!"
 bd_5: "`Added to database!`"
@@ -489,7 +488,7 @@ writer_1: "`Give Some Text Too`"
 
 # webshot
 wbs_1: "`Give a URL please!`"
-wbs_2: "Invalid URL!" 
+wbs_2: "Invalid URL!"
 wbs_3: "**WebShot Generated**\n**URL**: {}"
 
 # youtube
@@ -518,7 +517,6 @@ ast_1: "Choose which API you want to set."
 ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
 ast_4: "List Of Available Languages."
-
 
 # inlinestuff
 instu_1: "App search. Enter app name!"
@@ -563,7 +561,7 @@ vcbot_8: "Give only youtube playlist"
 vcbot_9: "Are You Kidding Me?\nWhat to Play?"
 vcbot_10: "Removed Chat from Vc AUTH Groups!"
 vcbot_11: "`Getting Voice Chat Bot Users List...`"
-vcbot_12: "`Muted playback in this chat.`" 
+vcbot_12: "`Muted playback in this chat.`"
 vcbot_13: "`Resumed playback in this chat.`"
 vcbot_14: "`Paused playback in this chat.`"
 vcbot_15: "Please specify a song name or reply to a video file !"

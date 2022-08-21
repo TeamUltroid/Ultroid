@@ -24,6 +24,10 @@ try:
     import aiohttp
 except ImportError:
     aiohttp = None
+    try:
+        import requests
+    except ImportError:
+        requests = None
 
 try:
     import heroku3
@@ -349,17 +353,23 @@ async def downloader(filename, file, event, taime, msg):
 
 async def download_file(link, name):
     """for files, without progress callback with aiohttp"""
-    if not aiohttp:
-        urlretrieve(link, name)
-        return name
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(link) as re_ses:
-            with open(name, "wb") as file:
-                file.write(await re_ses.read())
+    if aiohttp:
+        async with aiohttp.ClientSession() as ses:
+            async with ses.get(link) as re_ses:
+                with open(name, "wb") as file:
+                    file.write(await re_ses.read())
+    elif requests:
+        content = requests.get(link).content
+        with open(name, "wb") as file:
+            file.write(content)
+    else:
+        raise Exception("Aiohttp or requests is not installed.")
     return name
 
 
 async def fast_download(download_url, filename=None, progress_callback=None):
+    if not aiohttp:
+        return await download_file(download_url, filename)
     async with aiohttp.ClientSession() as session:
         async with session.get(download_url, timeout=None) as response:
             if not filename:
