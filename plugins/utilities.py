@@ -713,7 +713,7 @@ async def get_restriced_msg(event):
             message.text,
             file=uploaded,
             thumb=thumb,
-            attributes=message.media.attributes,
+            attributes=message.document.attributes,
         )
         await xx.delete()
         if thumb:
