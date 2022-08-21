@@ -62,7 +62,7 @@ misc_install(){
             curl https://get.okteto.com -sSfL | sh
     elif [ $VCBOT ]
         then
-            if [ -d $DIR/vcbot]
+            if [ -d $DIR/vcbot ]
                 then
                     cd $DIR/vcbot
                     git pull
