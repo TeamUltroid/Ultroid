@@ -690,15 +690,23 @@ async def get_restriced_msg(event):
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
     if message.media:
+        thumb = None
+        if message.media.thumbs:
+            thumb = await message.download_media(thumb=-1)
         media, _ = await event.client.fast_downloader(
             message.document,
             show_progress=True,
             event=xx,
-            message="Downloading message media...",
+            message=f"Downloading {message.file.name}...",
         )
         await xx.edit("`Uploading...`")
         uploaded, _ = await event.client.fast_uploader(
             media.name, event=xx, show_progress=True, to_delete=True
         )
-        await event.reply(message.text, file=uploaded)
+        await event.reply(message.text,
+                          file=uploaded,
+                          thumb=thumb,
+                          attributes=message.media.attributes)
         await xx.delete()
+        if thumb:
+            os.remove(thumb)
