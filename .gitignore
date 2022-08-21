@@ -19,7 +19,7 @@ resources/extras/thumbnail.jpg
 # Directories
 addons/
 vcbot/
-*/__pycache__/
+__pycache__/
 venv/
 node_modules/
 glitch_me/
