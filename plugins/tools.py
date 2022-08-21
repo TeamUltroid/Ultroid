@@ -399,15 +399,16 @@ async def webss(event):
     except FileNotFoundError:
         pic = await fast_download(
             f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-            check_filename("shot.png"),
+            filename=check_filename("shot.png"),
         )
-    await xx.reply(
-        get_string("wbs_3").format(xurl),
+    if pic:
+        await xx.reply(
+            get_string("wbs_3").format(xurl),
         file=pic,
         link_preview=False,
         force_document=True,
-    )
-    os.remove(pic)
+        )
+        os.remove(pic)
     await xx.delete()
 
 
