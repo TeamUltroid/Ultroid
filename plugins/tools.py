@@ -59,8 +59,20 @@ from telethon.tl.types import (
 
 from pyUltroid.fns.tools import metadata, translate
 
-from . import HNDLR, LOGS, ULTConfig, async_searcher, bash, con, eor, get_string, check_filename, fast_download
-from . import humanbytes as hb, inline_mention, is_url_ok, mediainfo, ultroid_cmd
+from . import (
+    HNDLR,
+    LOGS,
+    ULTConfig,
+    async_searcher,
+    bash,
+    check_filename,
+    con,
+    eor,
+    fast_download,
+    get_string,
+)
+from . import humanbytes as hb
+from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
@@ -380,10 +392,15 @@ async def webss(event):
     if not is_url_ok(xurl):
         return await xx.eor(get_string("wbs_2"), time=5)
     try:
-        shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
+        shot = WebShot(
+            quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
+        )
         pic = await shot.create_pic_async(url=xurl)
     except FileNotFoundError:
-        pic = await fast_download(f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load", check_filename("shot.png"))
+        pic = await fast_download(
+            f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
+            check_filename("shot.png"),
+        )
     await xx.reply(
         get_string("wbs_3").format(xurl),
         file=pic,
