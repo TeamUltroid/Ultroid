@@ -20,9 +20,9 @@ from .utils import load_addons
 def _after_load(loader, module, plugin_name=""):
     if not module or plugin_name.startswith("_"):
         return
-    from strings import get_string
+    from strings import get_help
 
-    if doc_ := get_string(f"help_{plugin_name}") or module.__doc__:
+    if doc_ := get_help(plugin_name) or module.__doc__:
         try:
             doc = doc_.format(i=HNDLR)
         except Exception as er:
