@@ -20,7 +20,7 @@ jobs:
       - name: Install Stuff
         run: pip install pyyaml
       - name: dl stuff
-        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/4398a482251d85f5f0b18549aadc321bb7337afb/stringzer.py
+        run: wget -O stringizer.py https://gist.githubusercontent.com/New-dev0/6dfc8a177418565a776167764b2fe0e4/raw/f515e9892a331110c1565eb109eb712eb64423bd/stringzer.py
       - name: do stuff
         run: python stringizer.py && rm stringizer.py
       - uses: stefanzweifel/git-auto-commit-action@v4
