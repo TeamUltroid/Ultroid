@@ -703,10 +703,12 @@ async def get_restriced_msg(event):
         uploaded, _ = await event.client.fast_uploader(
             media.name, event=xx, show_progress=True, to_delete=True
         )
-        await event.reply(message.text,
-                          file=uploaded,
-                          thumb=thumb,
-                          attributes=message.media.attributes)
+        await event.reply(
+            message.text,
+            file=uploaded,
+            thumb=thumb,
+            attributes=message.media.attributes,
+        )
         await xx.delete()
         if thumb:
             os.remove(thumb)
