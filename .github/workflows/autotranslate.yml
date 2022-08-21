@@ -22,7 +22,6 @@ jobs:
           python-version: 3.9.x
       - name: Update Translations
         run: |
-           
            git config --global user.email "newdev0@outlook.com"
            git config --global user.name "New-Dev0"
            git branch translation && git checkout translation
@@ -30,6 +29,5 @@ jobs:
            wget -O run.py https://gist.githubusercontent.com/New-dev0/c7d0d1eb514d311e8e3b687ae5cbe5f3/raw/350cc6d451a02a4b07d0f9bbc27b0e7c9465d3d4/updater.py
            python3 run.py
            rm run.py
-           git pull
            git add . && git commit -m "[Auto] Translate" && git push --set-upstream origin translation
            gh pr create --title "[Auto] Translation" -B dev --body "Update Translation"

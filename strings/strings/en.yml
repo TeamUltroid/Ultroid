@@ -393,7 +393,7 @@ snip_2: "Give the word to remove..."
 snip_3: "No Snips Found Here."
 
 # specialtools
-spcltool_1: "Reply To Audio or video"
+spcltool_1: "Reply To Audio or video."
 spcltool_2: "`Done.. Now reply to video In which u want to add this Audio`"
 spcltool_3: "Reply To video"
 spcltool_4: "`First reply an audio with .raw`"
