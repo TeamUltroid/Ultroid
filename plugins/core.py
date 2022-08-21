@@ -15,7 +15,7 @@ import os
 
 from pyUltroid.startup.loader import load_addons
 
-from . import async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug, LOGS
+from . import LOGS, async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)
