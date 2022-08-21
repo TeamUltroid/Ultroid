@@ -71,7 +71,7 @@ try:
 except ImportError:
     uf = None
 
-from telethon.errors.rpcerrorlist import UserBotError, ChatForwardsRestrictedError
+from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
