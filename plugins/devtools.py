@@ -266,8 +266,8 @@ async def _(event):
 
 def _stringify(text=None, *args, **kwargs):
     if text:
-        text = _parse_eval(text)
         u._ = text
+        text = _parse_eval(text)
     return print(text, *args, **kwargs)
 
 
