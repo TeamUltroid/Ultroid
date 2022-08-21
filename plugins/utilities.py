@@ -709,9 +709,12 @@ async def get_restriced_msg(event):
         uploaded, _ = await event.client.fast_uploader(
             media.name, event=xx, show_progress=True, to_delete=True
         )
+        typ = not bool(message.video)
         await event.reply(
             message.text,
             file=uploaded,
+            supports_streaming=typ,
+            force_document=typ,
             thumb=thumb,
             attributes=message.document.attributes,
         )
