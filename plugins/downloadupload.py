@@ -23,10 +23,10 @@ from pyUltroid.fns.tools import set_attributes
 
 from . import (
     LOGS,
+    ULTConfig,
     downloader,
     eor,
     fast_download,
-    ULTConfig,
     get_all_files,
     get_string,
     progress,

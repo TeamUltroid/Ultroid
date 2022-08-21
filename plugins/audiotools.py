@@ -11,7 +11,6 @@ import time
 from datetime import datetime as dt
 
 from pyUltroid.fns.tools import set_attributes
-from pyUltroid.startup.BaseClient import UltroidClient
 
 from . import (
     LOGS,

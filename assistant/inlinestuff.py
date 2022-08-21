@@ -538,6 +538,7 @@ async def savn_s(event):
         res.append(
             await event.builder.article(
                 title=song["title"],
+                description=song["artists"],
                 type="audio",
                 text=text,
                 include_media=True,
