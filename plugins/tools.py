@@ -59,9 +59,8 @@ from telethon.tl.types import (
 
 from pyUltroid.fns.tools import metadata, translate
 
-from . import HNDLR, LOGS, ULTConfig, async_searcher, bash, con, eor, get_string
-from . import humanbytes as hb
-from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
+from . import HNDLR, LOGS, ULTConfig, async_searcher, bash, con, eor, get_string, check_filename, fast_download
+from . import humanbytes as hb, inline_mention, is_url_ok, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
@@ -251,10 +250,11 @@ async def _(e):
     files = glob.glob(files)
     if not files:
         return await e.eor("`Directory Empty or Incorrect.`", time=5)
+    folders = []
     allfiles = []
     for file in sorted(files):
         if os.path.isdir(file):
-            allfiles.append(f"📂 {file}")
+            folders.append(f"📂 {file}")
         else:
             for ext in FilesEMOJI.keys():
                 if file.endswith(ext):
@@ -265,7 +265,7 @@ async def _(e):
                     allfiles.append(f"🏷 {file}")
                 else:
                     allfiles.append(f"📒 {file}")
-    omk = sorted(allfiles)
+    omk = [*sorted(folders), *sorted(allfiles)]
     text = ""
     fls, fos = 0, 0
     flc, foc = 0, 0
@@ -379,8 +379,11 @@ async def webss(event):
         return await xx.eor(get_string("wbs_1"), time=5)
     if not is_url_ok(xurl):
         return await xx.eor(get_string("wbs_2"), time=5)
-    shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
-    pic = await shot.create_pic_async(url=xurl)
+    try:
+        shot = WebShot(quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"])
+        pic = await shot.create_pic_async(url=xurl)
+    except FileNotFoundError:
+        pic = await fast_download(f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load", check_filename("shot.png"))
     await xx.reply(
         get_string("wbs_3").format(xurl),
         file=pic,
