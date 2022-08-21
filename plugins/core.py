@@ -83,7 +83,7 @@ async def load(event):
             un_plug(shortname)
         except BaseException:
             pass
-        load_addons(shortname)
+        load_addons(f"addons/{shortname}.py")
         await event.eor(get_string("core_17").format(shortname), time=3)
     except Exception as e:
         LOGS.exception(e)
@@ -102,7 +102,7 @@ async def get_the_addons_lol(event):
     if thelink is None:
         return await xx.eor(fool, time=10)
     split_thelink = thelink.split("/")
-    if "raw" not in thelink:
+    if not ("raw" in thelink and thelink.endswith(".py")):
         return await xx.eor(fool, time=10)
     name_of_it = split_thelink[-1]
     plug = await async_searcher(thelink)
@@ -113,7 +113,7 @@ async def get_the_addons_lol(event):
     await xx.edit("Packed. Now loading the plugin..")
     shortname = name_of_it.split(".")[0]
     try:
-        load_addons(shortname)
+        load_addons(fil)
         await xx.eor(get_string("core_17").format(shortname), time=15)
     except Exception as e:
         LOGS.exception(e)
