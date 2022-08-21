@@ -673,22 +673,22 @@ async def thumb_dl(event):
     os.remove(m)
 
 
-@ultroid_cmd(pattern="getmsg ?(.*)")
+@ultroid_cmd(pattern="getmsg( ?(.*)|$)")
 async def get_restriced_msg(event):
-    match = event.pattern_match.group(1)
+    match = event.pattern_match.group(1).strip()
     if not match:
         await event.eor("`Please provide a link!`", time=5)
         return
     xx = await event.eor(get_string("com_1"))
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
-        await event.eor(
-            "Provide a valid message link!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
+        return await event.eor(
+            "Provide a valid message link!\nEg: `https://t.me/TheUltroid/3 or `https://t.me/c/1313492028/3`"
         )
     try:
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
-        await event.eor(f"**ERROR**\n`{er}`")
+        return await event.eor(f"**ERROR**\n`{er}`")
     if message.media:
         media, _ = await event.client.fast_downloader(
             message.document,
@@ -698,7 +698,7 @@ async def get_restriced_msg(event):
         )
         await xx.edit("`Uploading...`")
         uploaded, _ = await event.client.fast_uploader(
-            media, event=xx, show_progress=True, to_delete=True
+            media.name, event=xx, show_progress=True, to_delete=True
         )
         await event.reply(message.text, file=uploaded)
         await xx.delete()
