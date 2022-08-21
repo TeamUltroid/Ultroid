@@ -121,7 +121,7 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**K
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Kömək menusu {}.\n\nƏlavələr ~ {}\n\nDᴏ **`.setdb ADDONS True`** edin sonra restart atın.**"
 inline_4: "** Bot: {}\n\nMenu\n\nPluginlər~ {}\nƏlavələr ~ {}\nBütün əmrlər~ {}**"
 inline_5: "**Menu bağlandı**"
-inline_6: "**{} üçün Səsli Çat Yardım Menyu**\n**Mümkün əmrlər:** `{}`\n\n@TeamUltroid"
+inline_6: "**{} üçün Səsli Çat Yardım Menyu**\n**Mümkün əmrlər:** `{}`\n\n@TheUltroid"
 inline_7: "Do .help {} to get the list of commands."
 inline_8: "Yeniləmək üçün aşağıdakı düyməni basın!"
 inline_9: "Siz Artıq Ən Son Versiyadasınız"
@@ -206,7 +206,7 @@ chats_1: "`Bu söhbəti silmək`"
 chats_2: "`Mən admin deyiləm`"
 chats_3: "#silindi\nsilindi {}"
 chats_4: "Sizin [{}]({}}) qrupu patron hazırladı!"
-chats_5: "@Teamultroid ə qoşulun"
+chats_5: "@TheUltroid ə qoşulun"
 chats_6: "{} qrupunuz/kanalınız patron hazırlandı!"
 
 # clean action

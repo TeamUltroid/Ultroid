@@ -29,7 +29,7 @@ if Owner_info_msg is None:
 
 **Message Forwards** - {udB.get_key("PMBOT")}
 
-**Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
+**Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TheUltroid**
 """
 
 

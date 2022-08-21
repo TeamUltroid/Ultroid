@@ -127,9 +127,7 @@ def ultroid_cmd(
             except ChatSendInlineForbiddenError:
                 return await eod(ult, "`Inline Locked In This Chat.`")
             except (ChatSendMediaForbiddenError, ChatSendStickersForbiddenError):
-                return await eod(
-                    ult, get_string("py_d8")
-                )
+                return await eod(ult, get_string("py_d8"))
             except (BotMethodInvalidError, UserIsBotError):
                 return await eod(ult, get_string("py_d6"))
             except AlreadyInConversationError:
@@ -154,7 +152,7 @@ def ultroid_cmd(
                         Button.url("Bot", "t.me/SessionGeneratorBot?start="),
                         Button.url(
                             "Repl",
-                            "https://replit.com/@TeamUltroid/UltroidStringSession",
+                            "https://replit.com/@TheUltroid/UltroidStringSession",
                         ),
                     ],
                 )

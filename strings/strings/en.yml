@@ -142,7 +142,7 @@ inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**H
 inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDᴏ **`.setdb ADDONS True`** ᴀɴᴅ ʀᴇsᴛᴀʀᴛ ᴛᴏ ɢᴇᴛ ᴀᴅᴅᴏɴs.**"
 inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
 inline_5: "**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**"
-inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TeamUltroid"
+inline_6: "**Voice Chat Help Menu for {}**\n**Available Commands:** `{}`\n\n@TheUltroid"
 inline_7: "Do .help {} to get the list of commands."
 inline_8: "Click the below button to update!"
 inline_9: "You Are Already On Latest Version"
@@ -227,7 +227,7 @@ chats_1: "`Cant delete this chat.`"
 chats_2: "`I m not an admin`"
 chats_3: "#Deleted\nDeleted {}"
 chats_4: "Your [{}]({}) Group Made Boss!"
-chats_5: "Join @TeamUltroid"
+chats_5: "Join @TheUltroid"
 chats_6: "Your {} Group/Channel Has been made Boss!"
 
 # clean action

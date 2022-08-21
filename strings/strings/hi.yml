@@ -121,7 +121,7 @@ inline_2: "[उल्ट्रॉइड सपोर्ट](t.me/UltroidSupportC
 inline_3: "[उल्ट्रॉइड सपोर्ट](t.me/UltroidSupportChat)\n\n\n**{} का मदद मेनू.\n\n\nएडऑन ~ {}\n\nजाओ और जोड़ो `ADDONS` Vᴀʀ Tʀᴜᴇ मूल्य के साथ !**"
 inline_4: "**{} का बॉट\n\nमुख्य मेन्यू\n\nप्लग-इन ~ {}\nएडऑन ~ {}\nकुल कमांड ~ {}**"
 inline_5: "**मेनू बंद कर दिया गया है !**"
-inline_6: "**वॉइस चैट हेल्प मेनू for {}**\n**उपलब्द कमांड्स** `{}`\n\n@TeamUltroid"
+inline_6: "**वॉइस चैट हेल्प मेनू for {}**\n**उपलब्द कमांड्स** `{}`\n\n@TheUltroid"
 inline_7: "Do .help {} to get the list of commands."
 inline_8: "अपडेट करने के लिए नीचे बटन को क्लिक करे"
 inline_9: "आप लेटेस्ट अपडेट में है"
@@ -224,7 +224,7 @@ chats_1: "`प्रक्रिया जारी है......`"
 chats_2: "`इस चैट को हटाया नहीं जा सकता`"
 chats_3: "#Deleted\nहटाया गया {}"
 chats_4: "आपका [{}]({}) ग्रुप बन गया!"
-chats_5: "@TeamUltroid को जॉइन करें"
+chats_5: "@TheUltroid को जॉइन करें"
 chats_6: "आपका {} समूह / चैनल बॉस बनाया गया है!"
 
 # clean action

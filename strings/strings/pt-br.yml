@@ -126,7 +126,7 @@ inline_2: "[Suporte Ultroid](t.me/UltroidSupportChat)\n\n **Menu De ajuda {}.\n\
 inline_3: "[Sᴜᴘorte Uʟᴛʀᴏɪᴅ] (t.me/UltroidSupportChat)\n\n**Menu De Ajuda {}.\n\nAᴅᴅᴏɴs ~ {}\n\nDefina **`.setdb ADDONS para True`** e REINICIE PARA OBTER ADDONS.**"
 inline_4: "** Bᴏᴛ De {}\n\nMenu Principal\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ de Cᴏᴍᴀɴᴅos ~ {}**"
 inline_5: "**O Menu Foi Fechado**"
-inline_6: "**Menu de Ajuda para Chat de Voz {}**\n**Comandos Disponíveis:** `{}`\n\n@TeamUltroid"
+inline_6: "**Menu de Ajuda para Chat de Voz {}**\n**Comandos Disponíveis:** `{}`\n\n@TheUltroid"
 inline_7: "Use .help {} para obter a lista de comandos."
 inline_8: "Clique no botão abaixo para atualizar!"
 inline_9: "Você já está com a Versão mais Recente"
@@ -211,7 +211,7 @@ chats_1: "`Não foi possível excluir este chat`"
 chats_2: "`Eu não sou um admin`"
 chats_3: "#Excluído\nExcluído {}"
 chats_4: "Tornou-se [{}]({}) Chefe do Grupo!"
-chats_5: "Junte-se a @TeamUltroid"
+chats_5: "Junte-se a @TheUltroid"
 chats_6: "Seu {} Grupo/Canal tornou-se Chefe!"
 
 # clean action

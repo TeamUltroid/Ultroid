@@ -195,7 +195,7 @@ async def uptd_plugin(event):
                 help_ += "\n"
     if not help_:
         help_ = f"{file} has no Detailed Help!"
-    help_ += "\n© @TeamUltroid"
+    help_ += "\n© @TheUltroid"
     buttons = []
     if inline_pic():
         data = f"sndplug_{key}_{file}"
@@ -416,7 +416,7 @@ async def ibuild(e):
                         title="Ultroid Op",
                         type=_type,
                         text=txt,
-                        description="@TeamUltroid",
+                        description="@TheUltroid",
                         include_media=include_media,
                         buttons=btn,
                         thumb=cont,

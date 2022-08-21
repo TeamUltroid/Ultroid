@@ -24,7 +24,7 @@ MSG = f"""
 **Ultroid - UserBot**
 ➖➖➖➖➖➖➖➖➖➖
 **Owner**: [{OWNER}](tg://user?id={ultroid_bot.uid})
-**Support**: @TeamUltroid
+**Support**: @TheUltroid
 ➖➖➖➖➖➖➖➖➖➖
 """
 
