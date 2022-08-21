@@ -337,7 +337,8 @@ def UltroidDB():
         LOGS.critical(
             "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
         )
-    return LocalDB()
-
+    if HOSTED_ON == "termux":
+        return LocalDB()
+    exit()
 
 # --------------------------------------------------------------------------------------------- #
