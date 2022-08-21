@@ -26,7 +26,7 @@
 | si | sinhala [සිංහල] | 490 | NULL |
 | ta | தமிழ் [தமிழ்] | 490 | NULL |
 | tr | Turkish [Türk] | 490 | NULL |
-| uz | Uzbekcha [Uzbekcha] | 491 | -1 |
+| uz | Uzbekcha [Uzbekcha] | 490 | NULL |
 
 
 If Strings are not present, Google Translation will be used to Translate them at time of Usage.
