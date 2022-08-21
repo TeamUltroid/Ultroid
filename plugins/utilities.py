@@ -71,7 +71,7 @@ try:
 except ImportError:
     uf = None
 
-from telethon.errors.rpcerrorlist import UserBotError
+from telethon.errors.rpcerrorlist import UserBotError, ChatForwardsRestrictedError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
@@ -689,9 +689,15 @@ async def get_restriced_msg(event):
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
+    try:
+        await event.client.send_message(event.chat_id, message)
+        await xx.try_delete()
+        return
+    except ChatForwardsRestrictedError:
+        pass
     if message.media:
         thumb = None
-        if message.media.thumbs:
+        if message.document.thumbs:
             thumb = await message.download_media(thumb=-1)
         media, _ = await event.client.fast_downloader(
             message.document,
