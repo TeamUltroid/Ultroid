@@ -15,7 +15,7 @@ py_c3: "Your VC_SESSION Expired. Deleting VC_SESSION from redis...\nRenew/Change
 py_d1: "`You cannot use this command now. Contact owner of this bot!`"
 py_d2: "`Full Sudo User Required...`"
 py_d3: "`Use this in group/channel.`"
-py_d4: "**⚠️ Developer Restricted!**\nIf you know what this does, and want to proceed, use\n`{}setdb I_DEV True`.\n\nThis Might Be Dangerous."
+py_d4: "**⚠️ Developer Restricted!** \nIf you know what this does, and want to proceed, use\n`{}setdb I_DEV True`.\n\nThis Might Be Dangerous."
 py_d5: "`I am not an admin.`"
 py_d6: "This Command Can't be used by Bot!"
 py_d7: "Conversation Is Already On, Kindly Wait Sometime Then Try Again."
