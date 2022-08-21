@@ -15,7 +15,7 @@ import os
 
 from pyUltroid.startup.loader import load_addons
 
-from . import async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug
+from . import async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug, LOGS
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)
@@ -32,18 +32,18 @@ async def unload(event):
         await event.eor(get_string("core_9"))
         return
     lsd = os.listdir("addons")
-    lst = os.listdir("plugins")
     zym = f"{shortname}.py"
     if zym in lsd:
         try:
             un_plug(shortname)
             await event.eor(f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
         except Exception as ex:
+            LOGS.exception(ex)
             return await event.eor(str(ex))
-    elif zym in lst:
+    elif zym in os.listdir("plugins"):
         return await event.eor(get_string("core_11"), time=3)
     else:
-        return await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
+        await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
 
 
 @ultroid_cmd(
@@ -55,7 +55,6 @@ async def uninstall(event):
         await event.eor(get_string("core_13"))
         return
     lsd = os.listdir("addons")
-    lst = os.listdir("plugins")
     zym = f"{shortname}.py"
     if zym in lsd:
         try:
@@ -64,7 +63,7 @@ async def uninstall(event):
             os.remove(f"addons/{shortname}.py")
         except Exception as ex:
             return await event.eor(str(ex))
-    elif zym in lst:
+    elif zym in os.listdir("plugins"):
         return await event.eor(get_string("core_15"), time=3)
     else:
         return await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
@@ -87,6 +86,7 @@ async def load(event):
         load_addons(shortname)
         await event.eor(get_string("core_17").format(shortname), time=3)
     except Exception as e:
+        LOGS.exception(e)
         await eod(
             event,
             get_string("core_18").format(shortname, e),
@@ -116,6 +116,7 @@ async def get_the_addons_lol(event):
         load_addons(shortname)
         await xx.eor(get_string("core_17").format(shortname), time=15)
     except Exception as e:
+        LOGS.exception(e)
         await eod(
             xx,
             get_string("core_18").format(shortname, e),
