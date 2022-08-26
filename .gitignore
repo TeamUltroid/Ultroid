@@ -39,3 +39,6 @@ bin-release/
 
 # temporary files
 *.raw
+
+# fly.io configs
+fly.toml
