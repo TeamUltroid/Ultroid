@@ -24,7 +24,7 @@ MSG = f"""
 **Ultroid - UserBot**
 ➖➖➖➖➖➖➖➖➖➖
 **Owner**: [{OWNER}](tg://user?id={ultroid_bot.uid})
-**Support**: @TheUltroid
+**Support**: @TeamUltroid
 ➖➖➖➖➖➖➖➖➖➖
 """
 
@@ -92,7 +92,7 @@ def in_pattern(pattern=None, owner=False, **kwargs):
                 res = [
                     await event.builder.article(
                         title="Ultroid Userbot",
-                        url="https://t.me/TheUltroid",
+                        url="https://t.me/TeamUltroid",
                         description="(c) TeamUltroid",
                         text=MSG,
                         thumb=InputWebDocument(

@@ -17,7 +17,7 @@ STRINGS = {
 
 🧿 Ultroid is Pluggable and powerful Telethon Userbot, made in Python from Scratch. It is Aimed to Increase Security along with Addition of Other Useful Features.
 
-❣ Made by **@TheUltroid**""",
+❣ Made by **@TeamUltroid**""",
     3: """**💡• FAQs •**
 
 -> [Username Tracker](https://t.me/UltroidUpdates/24)
@@ -32,7 +32,7 @@ STRINGS = {
 -> [Also Check](https://t.me/UltroidUpdates/14)
 
 **• To Know About Updates**
-  - Join @TheUltroid.""",
+  - Join @TeamUltroid.""",
     4: f"""• `To Know All Available Commands`
 
   - `{HNDLR}help`

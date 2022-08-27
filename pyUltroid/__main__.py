@@ -30,9 +30,7 @@ def main():
         and os.path.exists(".git")
         and ultroid_bot.run_in_loop(updater())
     ):
-        ultroid_bot.run_in_loop(
-            bash("bash installer.sh")
-        )
+        ultroid_bot.run_in_loop(bash("bash installer.sh"))
 
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
 
@@ -64,7 +62,7 @@ def main():
 
     suc_msg = """
             ----------------------------------------------------------------------
-                Ultroid has been deployed! Visit @TheUltroid for updates!!
+                Ultroid has been deployed! Visit @TeamUltroid for updates!!
             ----------------------------------------------------------------------
     """
 

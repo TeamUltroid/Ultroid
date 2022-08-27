@@ -84,7 +84,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
-in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b> [ {} ]\n\n• <b>Join @TheUltroid</b>"
+in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b> [ {} ]\n\n• <b>Join @TeamUltroid</b>"
 
 
 @callback("alive")
@@ -289,7 +289,7 @@ async def inline_alive(ult):
                     await builder.document(
                         pic,
                         title="Inline Alive",
-                        description="@TheUltroid",
+                        description="@TeamUltroid",
                         parse_mode="html",
                         buttons=buttons,
                     )

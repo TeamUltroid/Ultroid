@@ -267,7 +267,7 @@ async def choose_cata(event):
                     close_period=int(in_),
                 ),
                 correct_answers=[ansi],
-                solution="Join @TheUltroid",
+                solution="Join @TeamUltroid",
                 solution_entities=[],
             )
             m_ = await event.client.send_message(chat, file=poll)

@@ -50,7 +50,7 @@ def text_to_url(event):
 
 _buttons = {
     "otvars": {
-        "text": "Other Variables to set for @TheUltroid:",
+        "text": "Other Variables to set for @TeamUltroid:",
         "buttons": [
             [
                 Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),

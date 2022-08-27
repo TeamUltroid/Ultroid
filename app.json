@@ -11,7 +11,7 @@
     ],
     "repository": "https://github.com/TeamUltroid/Ultroid",
     "website": "https://ultroid.tech",
-    "success_url": "https://t.me/TheUltroid",
+    "success_url": "https://t.me/TeamUltroid",
     "stack": "container",
     "env": {
         "API_ID": {

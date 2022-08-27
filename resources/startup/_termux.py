@@ -256,6 +256,6 @@ print(
     "\nYou can head over to @UltroidSupportChat, if you get stuck somewhere, and need help."
 )
 sleep(0.5)
-print("\nMade with ❤️ by @TheUltroid...")
+print("\nMade with ❤️ by @TeamUltroid...")
 
 system("pip3 uninstall -q colorama -y")
