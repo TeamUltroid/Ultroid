@@ -20,7 +20,7 @@ DEVLIST = [
 ]
 
 ULTROID_IMAGES = [
-    f"https://telegra.ph/file/{_}.jpg"
+    f"https://graph.org/file/{_}.jpg"
     for _ in [
         "ec250c66268b62ee4ade6",
         "3c25230ae30d246194eba",

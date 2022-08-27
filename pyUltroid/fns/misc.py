@@ -397,10 +397,10 @@ class Quotly:
             Image.open(file_).save(file, "PNG")
             files = {"file": open(file, "rb").read()}
             uri = (
-                "https://telegra.ph"
+                "https://graph.org"
                 + (
                     await async_searcher(
-                        "https://telegra.ph/upload", post=True, data=files, re_json=True
+                        "https://graph.org/upload", post=True, data=files, re_json=True
                     )
                 )[0]["src"]
             )

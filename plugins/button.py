@@ -32,14 +32,14 @@ async def butt(event):
         if wut and wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
             variable = uf(dl)
-            media = f"https://telegra.ph{variable[0]}"
+            media = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await event.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
-            media = f"https://telegra.ph{variable[0]}"
+            media = f"https://graph.org{variable[0]}"
         else:
             media = pack_bot_file_id(wt.media)
     try:

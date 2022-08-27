@@ -88,7 +88,7 @@ async def _(event):
                 download=True,
                 backgroundColor=choice(ATRA_COL),
             )
-            url = f"https://telegra.ph{uf(li)[-1]}"
+            url = f"https://graph.org{uf(li)[-1]}"
             OUT = f"[\xad]({url}){OUT}"
             out = "**• OUTPUT:**"
             remove(li)

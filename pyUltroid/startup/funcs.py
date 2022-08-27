@@ -134,7 +134,7 @@ async def startup_stuff():
             LOGS.debug(er)
         except BaseException:
             LOGS.critical(
-                "Incorrect Timezone ,\nCheck Available Timezone From Here https://telegra.ph/Ultroid-06-18-2\nSo Time is Default UTC"
+                "Incorrect Timezone ,\nCheck Available Timezone From Here https://graph.org/Ultroid-06-18-2\nSo Time is Default UTC"
             )
             os.environ["TZ"] = "UTC"
             time.tzset()
@@ -303,7 +303,7 @@ async def autopilot():
                 LOGS.exception(er)
     if isinstance(chat.photo, ChatPhotoEmpty):
         photo = await download_file(
-            "https://telegra.ph/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
+            "https://graph.org/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
         )
         ll = await ultroid_bot.upload_file(photo)
         try:
@@ -334,8 +334,8 @@ async def customize():
             sir = f"@{ultroid_bot.me.username}"
         file = random.choice(
             [
-                "https://telegra.ph/file/92cd6dbd34b0d1d73a0da.jpg",
-                "https://telegra.ph/file/a97973ee0425b523cdc28.jpg",
+                "https://graph.org/file/92cd6dbd34b0d1d73a0da.jpg",
+                "https://graph.org/file/a97973ee0425b523cdc28.jpg",
                 "resources/extras/ultroid_assistant.jpg",
             ]
         )
@@ -432,7 +432,7 @@ async def ready():
     if not udB.get_key("INIT_DEPLOY"):  # Detailed Message at Initial Deploy
         MSG = """🎇 **Thanks for Deploying Ultroid Userbot!**
 • Here, are the Some Basic stuff from, where you can Know, about its Usage."""
-        PHOTO = "https://telegra.ph/file/54a917cc9dbb94733ea5f.jpg"
+        PHOTO = "https://graph.org/file/54a917cc9dbb94733ea5f.jpg"
         BTTS = Button.inline("• Click to Start •", "initft_2")
         udB.set_key("INIT_DEPLOY", "Done")
     else:

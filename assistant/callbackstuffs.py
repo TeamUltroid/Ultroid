@@ -827,7 +827,7 @@ async def media(event):
             media = await event.client.download_media(response, "alvpc")
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(
@@ -964,7 +964,7 @@ async def media(event):
         else:
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(
@@ -1230,7 +1230,7 @@ async def media(event):
         else:
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(

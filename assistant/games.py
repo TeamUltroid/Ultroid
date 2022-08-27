@@ -44,7 +44,7 @@ from . import *
 # -------------------------- Akinator ----------------------- #
 
 games = {}
-aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
+aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
 
 
 @ultroid_cmd(pattern="akinator")
@@ -140,7 +140,7 @@ async def eiagx(e):
 # ----------------------- Main Command ------------------- #
 
 GIMAGES = [
-    "https://telegra.ph/file/1c51015bae5205a65fd69.jpg",
+    "https://graph.org/file/1c51015bae5205a65fd69.jpg",
     "https://imgwhale.xyz/3xyr322l64j9590",
 ]
 

@@ -74,7 +74,7 @@ async def mi(e):
         return await e.edit(out, link_preview=False)
     makehtml = ""
     if naam.endswith((".jpg", ".png")):
-        med = "https://telegra.ph" + Telegraph.upload_file(naam)[0]["src"]
+        med = "https://graph.org" + Telegraph.upload_file(naam)[0]["src"]
         makehtml += f"<img src='{med}'><br>"
     for line in out.split("\n"):
         line = line.strip()

@@ -49,7 +49,7 @@ async def set_afk(event):
             if media_type.startswith(("pic", "gif")):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
-                media = f"https://telegra.ph{iurl[0]}"
+                media = f"https://graph.org{iurl[0]}"
             else:
                 media = reply.file.id
     await event.eor("`Done`", time=2)

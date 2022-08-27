@@ -488,7 +488,7 @@ async def telegraphcmd(event):
             getit = file
         if "document" not in dar:
             try:
-                nn = f"https://telegra.ph{uf(getit)[0]}"
+                nn = f"https://graph.org{uf(getit)[0]}"
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error : {e}"

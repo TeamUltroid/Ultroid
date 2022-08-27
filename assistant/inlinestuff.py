@@ -37,9 +37,9 @@ SUP_BUTTONS = [
     ],
 ]
 
-ofox = "https://telegra.ph/file/231f0049fcd722824f13b.jpg"
-gugirl = "https://telegra.ph/file/0df54ae4541abca96aa11.jpg"
-ultpic = "https://telegra.ph/file/4136aa1650bc9d4109cc5.jpg"
+ofox = "https://graph.org/file/231f0049fcd722824f13b.jpg"
+gugirl = "https://graph.org/file/0df54ae4541abca96aa11.jpg"
+ultpic = "https://graph.org/file/4136aa1650bc9d4109cc5.jpg"
 
 apis = [
     "QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV",
@@ -351,9 +351,9 @@ async def piston_run(event):
             title="Bad Query",
             description="Usage: [Language] [code]",
             thumb=wb(
-                "https://telegra.ph/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []
+                "https://graph.org/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []
             ),
-            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://graph.org/Ultroid-09-01-6)',
         )
         return await event.answer([result])
     if not PISTON_LANGS:
@@ -366,9 +366,9 @@ async def piston_run(event):
             title="Unsupported Language",
             description="Usage: [Language] [code]",
             thumb=wb(
-                "https://telegra.ph/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []
+                "https://graph.org/file/e33c57fc5f1044547e4d8.jpg", 0, "image/jpeg", []
             ),
-            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://telegra.ph/Ultroid-09-01-6)',
+            text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://graph.org/Ultroid-09-01-6)',
         )
         return await event.answer([result])
     output = await async_searcher(
@@ -390,7 +390,7 @@ async def piston_run(event):
         description=output,
         text=f"• **Language:**\n`{lang}`\n\n• **Code:**\n`{code}`\n\n• **Result:**\n`{output}`",
         thumb=wb(
-            "https://telegra.ph/file/871ee4a481f58117dccc4.jpg", 0, "image/jpeg", []
+            "https://graph.org/file/871ee4a481f58117dccc4.jpg", 0, "image/jpeg", []
         ),
         buttons=Button.switch_inline("Fork", query=event.text, same_peer=True),
     )
@@ -419,7 +419,7 @@ async def do_magic(event):
     for dat in BSC.find_all("a", "package-header")[:10]:
         image = dat.find("img", "package-icon")["src"]
         if image.endswith("/"):
-            image = "https://telegra.ph/file/a8dd4a92c5a53a89d0eff.jpg"
+            image = "https://graph.org/file/a8dd4a92c5a53a89d0eff.jpg"
         title = dat.find("h4", "package-name").text.strip()
         desc = dat.find("span", "package-summary").text.strip()
         text = f"• **Name :** `{title}`\n\n"

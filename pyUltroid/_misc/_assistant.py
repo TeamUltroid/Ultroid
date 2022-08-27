@@ -96,7 +96,7 @@ def in_pattern(pattern=None, owner=False, **kwargs):
                         description="(c) TeamUltroid",
                         text=MSG,
                         thumb=InputWebDocument(
-                            "https://telegra.ph/file/dde85d441fa051a0d7d1d.jpg",
+                            "https://graph.org/file/dde85d441fa051a0d7d1d.jpg",
                             0,
                             "image/jpeg",
                             [],
