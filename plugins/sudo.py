@@ -60,7 +60,7 @@ async def _(ult):
         key = sudoers()
         key.append(id)
         udB.set_key("SUDOS", key)
-        mmm = f"**Added {name} as SUDO User**"
+        mmm = f"**Added** {name} **as SUDO User**"
     await ult.eor(mmm, time=5)
 
 
@@ -95,7 +95,7 @@ async def _(ult):
         key = sudoers()
         key.remove(id)
         udB.set_key("SUDOS", key)
-        mmm = f"**Removed {name} from SUDO User(s)**"
+        mmm = f"**Removed** {name} **from SUDO User(s)**"
     await ult.eor(mmm, time=5)
 
 
