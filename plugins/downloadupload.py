@@ -20,6 +20,7 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from pyUltroid.fns.helper import time_formatter
 from pyUltroid.fns.tools import set_attributes
+from pyUltroid.fns.tools import get_chat_and_msgid
 
 from . import (
     LOGS,
@@ -73,26 +74,31 @@ async def down(event):
     pattern="dl( (.*)|$)",
 )
 async def download(event):
-    if not event.reply_to_msg_id:
+    match = event.pattern_match.group(1).strip()
+    if match and "t.me/" in match:
+        chat, msg = get_chat_and_msgid(match)
+        if not (chat and msg):
+            return await event.eor(get_string("gms_1"))
+    elif event.reply_to_msg_id:
+        ok = await event.get_reply_message()
+    else:
         return await event.eor(get_string("cvt_3"), time=8)
     xx = await event.eor(get_string("com_1"))
+    if not (ok and ok.media):
+        return await xx.eor(get_string("udl_1"), time=5)
     s = dt.now()
     k = time.time()
-    if event.reply_to_msg_id:
-        ok = await event.get_reply_message()
-        if not ok.media:
-            return await xx.eor(get_string("udl_1"), time=5)
-        if hasattr(ok.media, "document"):
-            file = ok.media.document
-            mime_type = file.mime_type
-            filename = event.pattern_match.group(1).strip() or ok.file.name
-            if not filename:
-                if "audio" in mime_type:
-                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
-                elif "video" in mime_type:
-                    filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-            try:
-                result = await downloader(
+    if hasattr(ok.media, "document"):
+        file = ok.media.document
+        mime_type = file.mime_type
+        filename = match or ok.file.name
+        if not filename:
+            if "audio" in mime_type:
+                filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
+            elif "video" in mime_type:
+                filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+        try:
+             result = await downloader(
                     f"resources/downloads/{filename}",
                     file,
                     xx,
@@ -100,12 +106,12 @@ async def download(event):
                     f"Downloading {filename}...",
                 )
 
-            except MessageNotModifiedError as err:
-                return await xx.edit(str(err))
-            file_name = result.name
-        else:
-            d = "resources/downloads/"
-            file_name = await event.client.download_media(
+        except MessageNotModifiedError as err:
+            return await xx.edit(str(err))
+        file_name = result.name
+    else:
+        d = "resources/downloads/"
+        file_name = await event.client.download_media(
                 ok,
                 d,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -165,7 +171,7 @@ async def _(event):
             return await event.try_delete()
         except Exception as er:
             LOGS.exception(er)
-        return await msg.eor("`File doesn't exist or path is incorrect!`")
+        return await msg.eor(get_string("ls1"))
     for result in results:
         if os.path.isdir(result):
             c, s = 0, 0
