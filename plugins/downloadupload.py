@@ -19,8 +19,7 @@ from aiohttp.client_exceptions import InvalidURL
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from pyUltroid.fns.helper import time_formatter
-from pyUltroid.fns.tools import set_attributes
-from pyUltroid.fns.tools import get_chat_and_msgid
+from pyUltroid.fns.tools import get_chat_and_msgid, set_attributes
 
 from . import (
     LOGS,
@@ -98,13 +97,13 @@ async def download(event):
             elif "video" in mime_type:
                 filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
         try:
-             result = await downloader(
-                    f"resources/downloads/{filename}",
-                    file,
-                    xx,
-                    k,
-                    f"Downloading {filename}...",
-                )
+            result = await downloader(
+                f"resources/downloads/{filename}",
+                file,
+                xx,
+                k,
+                f"Downloading {filename}...",
+            )
 
         except MessageNotModifiedError as err:
             return await xx.edit(str(err))
@@ -112,18 +111,18 @@ async def download(event):
     else:
         d = "resources/downloads/"
         file_name = await event.client.download_media(
-                ok,
-                d,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        xx,
-                        k,
-                        get_string("com_5"),
-                    ),
+            ok,
+            d,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d,
+                    t,
+                    xx,
+                    k,
+                    get_string("com_5"),
                 ),
-            )
+            ),
+        )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     await xx.eor(get_string("udl_2").format(file_name, t))
