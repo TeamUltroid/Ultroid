@@ -511,6 +511,13 @@ fsh_1: "**List of files stored.:**"
 fsh_2: "**File has been stored!**\n\n**Shareable link:** {}"
 fsh_3: "`Reply to a message to make a shareable link!`"
 fsh_4: "**No files stored!**"
+
+# getmsgs
+gms_1: "Provide a valid message link!"
+ls1: "`File doesn't exist or path is incorrect!`"
+th_1: "`Please reply to a file to download its thumbnail!`"
+th_2: "`Replied file has no thumbnail.`"
+
 # ------------------------- assistant --------------------------#
 
 ast_1: "Choose which API you want to set."
