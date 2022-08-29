@@ -662,10 +662,10 @@ async def thumb_dl(event):
     reply = await event.get_reply_message()
     if not (reply and reply.file):
         return await eod(
-            event, "`Please reply to a file to download its thumbnail!`", time=5
+            event, get_string("th_1"), time=5
         )
     if not reply.file.media.thumbs:
-        return await eod(event, "`Replied file has no thumbnail.`")
+        return await eod(event, get_string("th_2"))
     await event.eor(get_string("com_1"))
     x = await event.get_reply_message()
     m = await x.download_media(thumb=-1)
@@ -683,7 +683,7 @@ async def get_restriced_msg(event):
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
         return await event.eor(
-            "Provide a valid message link!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
+            f"{get_string('gms_1')}!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
         )
     try:
         message = await event.client.get_messages(chat, ids=msg)
