@@ -661,9 +661,7 @@ async def toothpaste(event):
 async def thumb_dl(event):
     reply = await event.get_reply_message()
     if not (reply and reply.file):
-        return await eod(
-            event, get_string("th_1"), time=5
-        )
+        return await eod(event, get_string("th_1"), time=5)
     if not reply.file.media.thumbs:
         return await eod(event, get_string("th_2"))
     await event.eor(get_string("com_1"))
