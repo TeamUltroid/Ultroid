@@ -23,6 +23,7 @@ if (Var.REDIS_URI or Var.REDISHOST):
     except ImportError:
         LOGS.info("Installing 'redis' for database.")
         os.system("pip3 install -q redis hiredis")
+        from redis import Redis
 elif Var.MONGO_URI:
     try:
         from pymongo import MongoClient
@@ -313,10 +314,9 @@ class LocalDB(_BaseDatabase):
 
 def UltroidDB():
     _er = False
+    from .. import HOSTED_ON
     try:
         if Redis:
-            from .. import HOSTED_ON
-
             return RedisDB(
                 host=Var.REDIS_URI or Var.REDISHOST,
                 password=Var.REDIS_PASSWORD or Var.REDISPASSWORD,

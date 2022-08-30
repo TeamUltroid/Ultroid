@@ -160,7 +160,7 @@ def is_url_ok(url: str):
 async def metadata(file):
     out, _ = await bash(f'mediainfo "{_unquote_text(file)}" --Output=JSON')
     if _ and _.endswith("NOT_FOUND"):
-        return _
+        raise Exception(_)
     data = {}
     _info = json.loads(out)["media"]["track"]
     info = _info[0]
@@ -516,7 +516,7 @@ def telegraph_client():
     if TELEGRAPH:
         return TELEGRAPH[0]
 
-    from .. import udB
+    from .. import udB, ultroid_bot
 
     token = udB.get_key("_TELEGRAPH_TOKEN")
     TelegraphClient = Telegraph(token)
