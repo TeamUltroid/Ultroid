@@ -22,6 +22,7 @@
 • `{i}round <reply to any media>`
     To extract round sticker.
 """
+import glob
 import io
 import os
 import random
@@ -41,7 +42,12 @@ except ImportError:
     pass
 
 from telethon.errors import PeerIdInvalidError, YouBlockedUserError
-from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker
+from telethon.tl.functions.messages import UploadMediaRequest
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    DocumentAttributeSticker,
+    InputPeerSelf,
+)
 from telethon.utils import get_input_document
 
 from . import (
@@ -65,26 +71,53 @@ from . import (
 @ultroid_cmd(pattern="packkang")
 async def pack_kangish(_):
     _e = await _.get_reply_message()
-    if not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
+    local = None
+    try:
+        cmdtext = _.text.split(maxsplit=1)[1]
+    except IndexError:
+        cmdtext = None
+    if cmdtext and os.path.isdir(cmdtext):
+        local = True
+    elif not (_e and _e.sticker and _e.file.mime_type == "image/webp"):
         return await _.eor(get_string("sts_4"))
-    if len(_.text) > 9:
-        _packname = _.text.split(" ", maxsplit=1)[1]
-    else:
-        _packname = f"Ultroid Kang Pack By {_.sender_id}"
-    _id = _e.media.document.attributes[1].stickerset.id
-    _hash = _e.media.document.attributes[1].stickerset.access_hash
-    _get_stiks = await _.client(
-        functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
+    msg = await _.eor(get_string("com_1"))
+    _packname = cmdtext or f"Ultroid Kang Pack By {_.sender_id}"
+    typee = None
+    if not local:
+        _id = _e.media.document.attributes[1].stickerset.id
+        _hash = _e.media.document.attributes[1].stickerset.access_hash
+        _get_stiks = await _.client(
+            functions.messages.GetStickerSetRequest(
+                stickerset=types.InputStickerSetID(id=_id, access_hash=_hash), hash=0
+            )
         )
-    )
+        docs = _get_stiks.documents
+    else:
+        docs = []
+        files = glob.glob(cmdtext + "/*")
+        exte = files[-1]
+        if exte.endswith(".tgs"):
+            typee = "anim"
+        elif exte.endswith(".webm"):
+            typee = "vid"
+        count = 0
+        for file in files:
+            if file.endswith((".tgs", ".webm")):
+                count += 1
+                upl = await asst.upload_file(file)
+                docs.append(await asst(UploadMediaRequest(InputPeerSelf(), upl)))
+                if count % 5 == 0:
+                    await msg.edit(f"`Uploaded {count} files.`")
+
     stiks = []
-    for i in _get_stiks.documents:
+    for i in docs:
         x = get_input_document(i)
         stiks.append(
             types.InputStickerSetItem(
                 document=x,
-                emoji=(i.attributes[1]).alt,
+                emoji=random.choice(["😐", "👍", "😂"])
+                if local
+                else (i.attributes[1]).alt,
             )
         )
     try:
@@ -94,17 +127,19 @@ async def pack_kangish(_):
                 user_id=_.sender_id,
                 title=_packname,
                 short_name=f"{short_name}_by_{asst.me.username}",
+                animated=typee == "anim",
+                videos=typee == "vid",
                 stickers=stiks,
             )
         )
     except PeerIdInvalidError:
-        return await _.eor(
+        return await msg.eor(
             f"Hey {inline_mention(_.sender)} send `/start` to @{asst.me.username} and later try this command again.."
         )
     except BaseException as er:
         LOGS.exception(er)
-        return await _.eor(str(er))
-    await _.eor(
+        return await msg.eor(str(er))
+    await msg.eor(
         get_string("sts_5").format(f"https://t.me/addstickers/{_r_e_s.set.short_name}"),
     )
 
@@ -117,10 +152,7 @@ async def hehe(args):
     xx = await args.eor(get_string("com_1"))
     user = ultroid_bot.me
     username = user.username
-    if not username:
-        username = user.first_name
-    else:
-        username = "@" + username
+    username = f"@{username}" if username else user.first_name
     message = await args.get_reply_message()
     photo = None
     is_anim, is_vid = False, False

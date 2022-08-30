@@ -32,7 +32,7 @@ STRINGS = {
 -> [Also Check](https://t.me/UltroidUpdates/14)
 
 **• To Know About Updates**
-  - Join @TheUltroid.""",
+  - Join @TeamUltroid.""",
     4: f"""• `To Know All Available Commands`
 
   - `{HNDLR}help`
@@ -50,14 +50,15 @@ async def init_depl(e):
     if CURRENT == 5:
         return await e.edit(
             STRINGS[5],
-            buttons=Button.inline("<< Back", "initbk_" + str(4)),
+            buttons=Button.inline("<< Back", "initbk_4"),
             link_preview=False,
         )
+
     await e.edit(
         STRINGS[CURRENT],
         buttons=[
-            Button.inline("<<", "initbk_" + str(CURRENT - 1)),
-            Button.inline(">>", "initft_" + str(CURRENT + 1)),
+            Button.inline("<<", f"initbk_{str(CURRENT - 1)}"),
+            Button.inline(">>", f"initft_{str(CURRENT + 1)}"),
         ],
         link_preview=False,
     )
@@ -69,14 +70,15 @@ async def ineiq(e):
     if CURRENT == 1:
         return await e.edit(
             STRINGS[1],
-            buttons=Button.inline("Start Back >>", "initft_" + str(2)),
+            buttons=Button.inline("Start Back >>", "initft_2"),
             link_preview=False,
         )
+
     await e.edit(
         STRINGS[CURRENT],
         buttons=[
-            Button.inline("<<", "initbk_" + str(CURRENT - 1)),
-            Button.inline(">>", "initft_" + str(CURRENT + 1)),
+            Button.inline("<<", f"initbk_{str(CURRENT - 1)}"),
+            Button.inline(">>", f"initft_{str(CURRENT + 1)}"),
         ],
         link_preview=False,
     )

@@ -4,21 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}del <reply to message>`
-    Delete the replied message.
+from . import get_help
 
-• `{i}edit <new message>`
-    Edit your last message or replied msg.
+__doc__ = get_help("extra")
 
-• `{i}copy <reply to message>`
-    Copy replied message / media.
-
-• `{i}reply`
-    Reply the last sent msg to replied user.
-"""
 import asyncio
 
 from . import get_string, ultroid_cmd

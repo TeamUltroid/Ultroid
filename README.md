@@ -7,7 +7,7 @@
 
 <b>A stable pluggable Telegram userbot + Voice & Video Call music bot, based on Telethon.</b>
 
-[![](https://img.shields.io/badge/Ultroid-v0.6-darkblue)](#)
+[![](https://img.shields.io/badge/Ultroid-v0.7-darkgreen)](#)
 [![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
 [![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
 [![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)   
@@ -84,8 +84,9 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
    `bash startup`
   - Windows Users:
     `python(3) -m pyUltroid`
+<details>
+<summary><h3>[OUTDATED] Ultroid CLI</h3></summary>
 
-### Ultroid CLI
 [Ultroid CLI](https://github.com/BLUE-DEVIL1134/UltroidCli) is a command-line interface for deploying Ultroid.   
 
 - **Installing** -    
@@ -96,6 +97,7 @@ Go to [UltroidCli](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the
 
 - **Documentation** -
 Take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) for more detailed information.
+</details>
 
 ---
 ## Necessary Variables

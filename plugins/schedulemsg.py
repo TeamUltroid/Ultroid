@@ -14,7 +14,7 @@
 """
 from datetime import timedelta
 
-from pyUltroid.functions.admins import ban_time
+from pyUltroid.fns.admins import ban_time
 
 from . import get_string, ultroid_cmd
 
@@ -33,7 +33,7 @@ async def _(e):
             await e.eor(get_string("schdl_1"), time=5)
         else:
             try:
-                z = ban_time(e, y)
+                z = ban_time(y)
                 await e.client.send_message(e.chat_id, k, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:
@@ -46,7 +46,7 @@ async def _(e):
             await e.eor(get_string("schdl_1"), time=5)
         else:
             try:
-                z = ban_time(e, x)
+                z = ban_time(x)
                 await e.client.send_message(e.chat_id, xx, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:

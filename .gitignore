@@ -14,10 +14,11 @@ test*
 *.log
 target/npmlist.json
 package-lock.json
+resources/extras/thumbnail.jpg
 
 # Directories
 addons/
-pyUltroid/
+vcbot/
 __pycache__/
 venv/
 node_modules/
@@ -38,5 +39,6 @@ bin-release/
 
 # temporary files
 *.raw
-tplugins
-tassistant
+
+# fly.io configs
+fly.toml

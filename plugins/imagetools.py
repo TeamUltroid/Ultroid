@@ -190,8 +190,7 @@ async def ult_tools(event):
 
 @ultroid_cmd(pattern="csample (.*)")
 async def sampl(ult):
-    color = ult.pattern_match.group(1).strip()
-    if color:
+    if color := ult.pattern_match.group(1).strip():
         img = Image.new("RGB", (200, 100), f"{color}")
         img.save("csample.png")
         try:
@@ -223,7 +222,7 @@ async def ultd(event):
         await xx.edit(get_string("sts_9"))
     file = await con.convert(ultt, convert_to="png", outname="ult")
     got = upf(file)
-    lnk = f"https://telegra.ph{got[0]}"
+    lnk = f"https://graph.org{got[0]}"
     r = await async_searcher(
         f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}", re_json=True
     )

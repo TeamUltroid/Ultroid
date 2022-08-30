@@ -5,22 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available -
+from . import get_help
 
-• `{i}ul <path/to/file>`
-    Upload files on telegram.
-    Use following arguments before or after filename as per requirement:
-      `--stream` to upload as stream.
-      `--delete` to delete file after uploading.
-      `--no-thumb` to upload without thumbnail.
-
-• `{i}dl <filename(optional)>`
-    Reply to file to download.
-
-• `{i}download <DDL> (| filename)`
-    Download using DDL. Will autogenerate filename if not given.
-"""
+__doc__ = get_help("help_downloadupload")
 
 import asyncio
 import glob
@@ -29,12 +16,14 @@ import time
 from datetime import datetime as dt
 
 from aiohttp.client_exceptions import InvalidURL
-from pyUltroid.functions.helper import time_formatter
-from pyUltroid.functions.tools import set_attributes
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
+
+from pyUltroid.fns.helper import time_formatter
+from pyUltroid.fns.tools import get_chat_and_msgid, set_attributes
 
 from . import (
     LOGS,
+    ULTConfig,
     downloader,
     eor,
     fast_download,
@@ -84,50 +73,58 @@ async def down(event):
     pattern="dl( (.*)|$)",
 )
 async def download(event):
-    if not event.reply_to_msg_id:
+    match = event.pattern_match.group(1).strip()
+    if match and "t.me/" in match:
+        chat, msg = get_chat_and_msgid(match)
+        if not (chat and msg):
+            return await event.eor(get_string("gms_1"))
+        match = ""
+        ok = await event.client.get_messages(chat, ids=msg)
+    elif event.reply_to_msg_id:
+        ok = await event.get_reply_message()
+    else:
         return await event.eor(get_string("cvt_3"), time=8)
     xx = await event.eor(get_string("com_1"))
+    if not (ok and ok.media):
+        return await xx.eor(get_string("udl_1"), time=5)
     s = dt.now()
     k = time.time()
-    if event.reply_to_msg_id:
-        ok = await event.get_reply_message()
-        if not ok.media:
-            return await xx.eor(get_string("udl_1"), time=5)
-        if hasattr(ok.media, "document"):
-            file = ok.media.document
-            mime_type = file.mime_type
-            filename = event.pattern_match.group(1).strip() or ok.file.name
-            if not filename:
-                if "audio" in mime_type:
-                    filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
-                elif "video" in mime_type:
-                    filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-            try:
-                result = await downloader(
-                    "resources/downloads/" + filename,
-                    file,
+    if hasattr(ok.media, "document"):
+        file = ok.media.document
+        mime_type = file.mime_type
+        filename = match or ok.file.name
+        if not filename:
+            if "audio" in mime_type:
+                filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
+            elif "video" in mime_type:
+                filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+        try:
+            result = await downloader(
+                f"resources/downloads/{filename}",
+                file,
+                xx,
+                k,
+                f"Downloading {filename}...",
+            )
+
+        except MessageNotModifiedError as err:
+            return await xx.edit(str(err))
+        file_name = result.name
+    else:
+        d = "resources/downloads/"
+        file_name = await event.client.download_media(
+            ok,
+            d,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d,
+                    t,
                     xx,
                     k,
-                    "Downloading " + filename + "...",
-                )
-            except MessageNotModifiedError as err:
-                return await xx.edit(str(err))
-            file_name = result.name
-        else:
-            d = "resources/downloads/"
-            file_name = await event.client.download_media(
-                ok,
-                d,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d,
-                        t,
-                        xx,
-                        k,
-                        get_string("com_5"),
-                    ),
+                    get_string("com_5"),
                 ),
-            )
+            ),
+        )
     e = dt.now()
     t = time_formatter(((e - s).seconds) * 1000)
     await xx.eor(get_string("udl_2").format(file_name, t))
@@ -147,7 +144,7 @@ async def _(event):
         False,
         True,
         False,
-        "resources/extras/ultroid.jpg",
+        ULTConfig.thumb,
     )
     if "--stream" in match:
         stream = True
@@ -175,7 +172,7 @@ async def _(event):
             return await event.try_delete()
         except Exception as er:
             LOGS.exception(er)
-        return await msg.eor("`File doesn't exist or path is incorrect!`")
+        return await msg.eor(get_string("ls1"))
     for result in results:
         if os.path.isdir(result):
             c, s = 0, 0

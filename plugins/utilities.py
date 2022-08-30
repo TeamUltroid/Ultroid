@@ -45,13 +45,15 @@
 
 • `{i}thumb <reply file>` : Download the thumbnail of the replied file.
 
-• `{i}ncode <file>`
-   Use - Paste the contents of file and send as pic.
+• `{i}getmsg <message link>`
+  Get messages from chats with forward/copy restrictions.
 """
+
 import calendar
 import html
 import io
 import os
+import pathlib
 import time
 from datetime import datetime as dt
 
@@ -62,13 +64,14 @@ except ImportError:
 
 from pyUltroid._misc._assistant import asst_cmd
 from pyUltroid.dB.gban_mute_db import is_gbanned
+from pyUltroid.fns.tools import get_chat_and_msgid
 
 try:
     from telegraph import upload_file as uf
 except ImportError:
     uf = None
 
-from telethon.errors.rpcerrorlist import UserBotError
+from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
@@ -101,7 +104,6 @@ from . import (
     json_parser,
     mediainfo,
     udB,
-    ultroid_bot,
     ultroid_cmd,
 )
 
@@ -114,8 +116,7 @@ _copied_msg = {}
 
 @ultroid_cmd(pattern="kickme$", fullsudo=True)
 async def leave(ult):
-    me = asst.me if ult.client._bot else ultroid_bot.me
-    await ult.eor(f"`{me.first_name} has left this group, bye!!.`")
+    await ult.eor(f"`{ult.client.me.first_name} has left this group, bye!!.`")
     await ult.client(LeaveChannelRequest(ult.chat_id))
 
 
@@ -250,7 +251,7 @@ async def _(event):
     done, key = await get_paste(message)
     if not done:
         return await xx.eor(key)
-    link = "https://spaceb.in/" + key
+    link = f"https://spaceb.in/{key}"
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     reply_text = (
         f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
@@ -258,7 +259,7 @@ async def _(event):
     try:
         if event.client._bot:
             return await xx.eor(reply_text)
-        ok = await event.client.inline_query(asst.me.username, "pasta-" + key)
+        ok = await event.client.inline_query(asst.me.username, f"pasta-{key}")
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException as e:
@@ -271,8 +272,7 @@ async def _(event):
     manager=True,
 )
 async def _(event):
-    match = event.pattern_match.group(1).strip()
-    if match:
+    if match := event.pattern_match.group(1).strip():
         try:
             user = await event.client.parse_id(match)
         except Exception as er:
@@ -336,6 +336,7 @@ async def _(event):
 <b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
 <b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
 <b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
+<b>••Is Pʀᴇᴍɪᴜᴍ</b>: <code>{}</code>
 <b>••Is A Bᴏᴛ</b>: <code>{}</code>
 <b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
 """.format(
@@ -348,15 +349,13 @@ async def _(event):
         user_photos,
         user.restricted,
         user.verified,
+        user.premium,
         user.bot,
         common_chats,
     )
-    chk = is_gbanned(user_id)
-    if chk:
+    if chk := is_gbanned(user_id):
         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
 <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
-    else:
-        caption += "<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>False</code>"
     await event.client.send_message(
         event.chat_id,
         caption,
@@ -433,7 +432,7 @@ async def abs_rmbg(event):
         os.remove(dl)
         return await event.eor(get_string("com_4"))
     if dl.endswith("webp"):
-        file = dl + ".png"
+        file = f"{dl}.png"
         Image.open(dl).save(file)
         os.remove(dl)
         dl = file
@@ -467,39 +466,39 @@ async def abs_rmbg(event):
     pattern="telegraph( (.*)|$)",
 )
 async def telegraphcmd(event):
+    xx = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1).strip() or "Ultroid"
     reply = await event.get_reply_message()
     if not reply:
-        return await event.eor("`Reply to Message.`")
+        return await xx.eor("`Reply to Message.`")
     if not reply.media and reply.message:
         content = reply.message
     else:
         getit = await reply.download_media()
         dar = mediainfo(reply.media)
         if dar == "sticker":
-            file = getit + ".png"
+            file = f"{getit}.png"
             Image.open(getit).save(file)
             os.remove(getit)
             getit = file
         elif dar.endswith("animated"):
-            file = getit + ".gif"
+            file = f"{getit}.gif"
             await bash(f"lottie_convert.py '{getit}' {file}")
             os.remove(getit)
             getit = file
         if "document" not in dar:
             try:
-                nn = "https://telegra.ph" + uf(getit)[0]
+                nn = f"https://graph.org{uf(getit)[0]}"
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error : {e}"
             os.remove(getit)
-            return await event.eor(amsg)
-        with open(getit) as ab:
-            content = ab.read()
+            return await xx.eor(amsg)
+        content = pathlib.Path(getit).read_text()
         os.remove(getit)
     makeit = Telegraph.create_page(title=match, content=[content])
-    await eor(
-        event, f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False
+    await xx.eor(
+        f"Pasted to Telegraph : [Telegraph]({makeit['url']})", link_preview=False
     )
 
 
@@ -551,7 +550,11 @@ async def sugg(event):
             "`Please reply to a message to make a suggestion poll!`",
         )
     if event.is_reply and not text:
-        text = "Do you Agree to Replied Suggestion ?"
+        reply = await event.get_reply_message()
+        if reply.text and len(reply.text) < 35:
+            text = reply.text
+        else:
+            text = "Do you Agree to Replied Suggestion ?"
     reply_to = event.reply_to_msg_id if event.is_reply else event.id
     try:
         await event.client.send_file(
@@ -575,7 +578,7 @@ async def ipinfo(event):
     ip = event.text.split()
     ipaddr = ""
     try:
-        ipaddr = "/" + ip[1]
+        ipaddr = f"/{ip[1]}"
     except IndexError:
         ipaddr = ""
     det = await async_searcher(f"https://ipinfo.io{ipaddr}/geo", re_json=True)
@@ -658,11 +661,9 @@ async def toothpaste(event):
 async def thumb_dl(event):
     reply = await event.get_reply_message()
     if not (reply and reply.file):
-        return await eod(
-            event, "`Please reply to a file to download its thumbnail!`", time=5
-        )
+        return await eod(event, get_string("th_1"), time=5)
     if not reply.file.media.thumbs:
-        return await eod(event, "`Replied file has no thumbnail.`")
+        return await eod(event, get_string("th_2"))
     await event.eor(get_string("com_1"))
     x = await event.get_reply_message()
     m = await x.download_media(thumb=-1)
@@ -670,44 +671,51 @@ async def thumb_dl(event):
     os.remove(m)
 
 
-@ultroid_cmd(pattern="ncode$")
-async def coder_print(event):
-    try:
-        import pygments
-        from pygments.formatters import ImageFormatter
-        from pygments.lexers import Python3Lexer
-    except ImportError:
+@ultroid_cmd(pattern="getmsg( ?(.*)|$)")
+async def get_restriced_msg(event):
+    match = event.pattern_match.group(1).strip()
+    if not match:
+        await event.eor("`Please provide a link!`", time=5)
+        return
+    xx = await event.eor(get_string("com_1"))
+    chat, msg = get_chat_and_msgid(match)
+    if not (chat and msg):
         return await event.eor(
-            "`pygments` `not installed!`\nInstall it with `pip3 install pygments`"
+            f"{get_string('gms_1')}!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
         )
-    if not event.reply_to_msg_id:
-        return await eod(event, "`Reply to a file or message!`", time=5)
-    msg = await event.get_reply_message()
-    if msg.document:
-        a = await event.client.download_media(
-            await event.get_reply_message(), "ncode.png"
+    try:
+        message = await event.client.get_messages(chat, ids=msg)
+    except BaseException as er:
+        return await event.eor(f"**ERROR**\n`{er}`")
+    try:
+        await event.client.send_message(event.chat_id, message)
+        await xx.try_delete()
+        return
+    except ChatForwardsRestrictedError:
+        pass
+    if message.media:
+        thumb = None
+        if message.document.thumbs:
+            thumb = await message.download_media(thumb=-1)
+        media, _ = await event.client.fast_downloader(
+            message.document,
+            show_progress=True,
+            event=xx,
+            message=f"Downloading {message.file.name}...",
         )
-        with open(a, "r") as s:
-            c = s.read()
-    else:
-        a = None
-        c = msg.text
-    pygments.highlight(
-        c,
-        Python3Lexer(),
-        ImageFormatter(line_numbers=True),
-        "result.png",
-    )
-    res = await event.client.send_message(
-        event.chat_id,
-        "**Pasting this code on my page...**",
-        reply_to=event.reply_to_msg_id,
-    )
-    await event.client.send_file(
-        event.chat_id, "result.png", force_document=True, reply_to=event.reply_to_msg_id
-    )
-    await res.delete()
-    await event.delete()
-    if a:
-        os.remove(a)
-    os.remove("result.png")
+        await xx.edit("`Uploading...`")
+        uploaded, _ = await event.client.fast_uploader(
+            media.name, event=xx, show_progress=True, to_delete=True
+        )
+        typ = not bool(message.video)
+        await event.reply(
+            message.text,
+            file=uploaded,
+            supports_streaming=typ,
+            force_document=typ,
+            thumb=thumb,
+            attributes=message.document.attributes,
+        )
+        await xx.delete()
+        if thumb:
+            os.remove(thumb)

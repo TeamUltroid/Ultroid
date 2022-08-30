@@ -4,12 +4,12 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}calc` - Inline Calculator
 
-"""
+from . import get_help
+
+__doc__ = get_help("help_calculator")
+
 import re
 
 from . import Button, asst, callback, get_string, in_pattern, udB, ultroid_cmd
@@ -85,20 +85,20 @@ async def _(e):
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "/100"})
-            await e.answer(str(get + "/100"))
+            CALC.update({user: f"{get}/100"})
+            await e.answer(str(f"{get}/100"))
     elif x == "÷":
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "/"})
-            await e.answer(str(get + "/"))
+            CALC.update({user: f"{get}/"})
+            await e.answer(str(f"{get}/"))
     elif x == "x":
         if CALC.get(user):
             get = CALC[user]
         if get:
-            CALC.update({user: get + "*"})
-            await e.answer(str(get + "*"))
+            CALC.update({user: f"{get}*"})
+            await e.answer(str(f"{get}*"))
     elif x == "=":
         if CALC.get(user):
             get = CALC[user]

@@ -14,7 +14,7 @@ START = """
 ✘  /help : Get This Message.
 ✘  /repo : Get Bot's Repo..
 
-🧑‍💻 Join **@TheUltroid**
+🧑‍💻 Join **@TeamUltroid**
 """
 
 ADMINTOOLS = """✘ **AdminTools** ✘
@@ -93,11 +93,11 @@ def get_buttons():
     while keys:
         BT = []
         for i in list(keys)[:2]:
-            text = MNGE + " " + i + " " + MNGE
-            BT.append(Button.inline(text, "hlp_" + i))
+            text = f"{MNGE} {i} {MNGE}"
+            BT.append(Button.inline(text, f"hlp_{i}"))
             del keys[i]
         BTTS.append(BT)
-    url = "https://t.me/" + asst.me.username + "?startgroup=true"
+    url = f"https://t.me/{asst.me.username}?startgroup=true"
     BTTS.append([Button.url("Add me to Group", url)])
     return BTTS
 

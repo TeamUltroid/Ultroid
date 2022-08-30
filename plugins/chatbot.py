@@ -4,23 +4,13 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}addai <reply to user/give username/userid>`
-   Add a AI ChatBot to reply to that user.
+from . import get_help
 
-• `{i}remai <reply to user/give username/userid>`
-   Remove the AI ChatBot.
+__doc__ = get_help("help_chatbot")
 
-• `{i}repai <reply to user/give a message>`
-   Reply to the user with a message by an AI.
 
-• `{i}listai`
-   List the currently AI added users.
-"""
-
-from pyUltroid.functions.tools import get_chatbot_reply
+from pyUltroid.fns.tools import get_chatbot_reply
 
 from . import eod, get_string, inline_mention, udB, ultroid_cmd
 
@@ -61,7 +51,7 @@ async def lister(event):
             user = inline_mention(user)
         except BaseException:
             user = f"`{i}`"
-        msg += "• {}\n".format(user)
+        msg += f"• {user}\n"
     await event.eor(msg, link_preview=False)
 
 
@@ -71,11 +61,11 @@ async def chat_bot_fn(event, type_):
     else:
         temp = event.text.split(maxsplit=1)
         try:
-            user_ = await event.client.get_entity(temp[1])
+            user_ = await event.client.get_entity(await event.client.parse_id(temp[1]))
         except BaseException:
             if event.is_private:
                 user_ = event.chat
-            else:
+            if not user_:
                 return await eod(
                     event,
                     get_string("chab_1"),

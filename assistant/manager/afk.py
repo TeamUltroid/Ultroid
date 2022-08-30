@@ -7,7 +7,6 @@
 
 from datetime import datetime as dt
 
-from pyUltroid.functions.helper import inline_mention, time_formatter
 from telethon.events import NewMessage
 from telethon.tl.types import (
     Message,
@@ -16,6 +15,8 @@ from telethon.tl.types import (
     User,
 )
 from telethon.utils import get_display_name
+
+from pyUltroid.fns.helper import inline_mention, time_formatter
 
 from . import asst, asst_cmd
 

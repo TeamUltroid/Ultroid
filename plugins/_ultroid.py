@@ -25,7 +25,7 @@ RP_BUTTONS = [
         Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
         Button.url("Addons", "https://github.com/TeamUltroid/UltroidAddons"),
     ],
-    [Button.url("Support Group", "t.me/ultroidsupportchat")],
+    [Button.url("Support Group", "t.me/UltroidSupportChat")],
 ]
 
 ULTSTRING = """🎇 **Thanks for Deploying Ultroid Userbot!**
@@ -49,7 +49,7 @@ async def repify(e):
     ):
         pass
     except Exception as er:
-        LOGS.info("Error while repo command : " + str(er))
+        LOGS.info(f"Error while repo command : {str(er)}")
     await e.eor(REPOMSG)
 
 
@@ -59,7 +59,7 @@ async def useUltroid(rs):
     msg = await asst.send_message(
         LOG_CHANNEL,
         ULTSTRING,
-        file="https://telegra.ph/file/54a917cc9dbb94733ea5f.jpg",
+        file="https://graph.org/file/54a917cc9dbb94733ea5f.jpg",
         buttons=button,
     )
     if not (rs.chat_id == LOG_CHANNEL and rs.client._bot):

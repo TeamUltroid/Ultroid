@@ -21,7 +21,7 @@ import math
 import shutil
 from random import choice
 
-from pyUltroid.functions import some_random_headers
+from pyUltroid.fns import some_random_headers
 
 from . import (
     HOSTED_ON,
@@ -139,9 +139,10 @@ async def heroku_usage():
     AppHours = math.floor(AppQuotaUsed / 60)
     AppMinutes = math.floor(AppQuotaUsed % 60)
     total, used, free = shutil.disk_usage(".")
+    _ = shutil.disk_usage("/")
+    disk = _.used / _.total * 100
     cpuUsage = psutil.cpu_percent()
     memory = psutil.virtual_memory().percent
-    disk = psutil.disk_usage("/").percent
     upload = humanbytes(psutil.net_io_counters().bytes_sent)
     down = humanbytes(psutil.net_io_counters().bytes_recv)
     TOTAL = humanbytes(total)
@@ -167,16 +168,16 @@ async def heroku_usage():
 
 
 def db_usage():
-    if udB.name == "Redis":
+    if udB.name == "Mongo":
+        total = 512
+    elif udB.name == "Redis":
         total = 30
     elif udB.name == "SQL":
         total = 20
-    elif udB.name == "Mongo":
-        total = 512
     total = total * (2**20)
     used = udB.usage
-    a = humanbytes(used) + "/" + humanbytes(total)
-    b = str(round((used / total) * 100, 2)) + "%"
+    a = f"{humanbytes(used)}/{humanbytes(total)}"
+    b = f"{str(round((used / total) * 100, 2))}%"
     return f"**{udB.name}**\n\n**Storage Used**: `{a}`\n**Usage percentage**: **{b}**"
 
 

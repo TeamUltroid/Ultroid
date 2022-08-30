@@ -4,25 +4,15 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}store <reply_to_message>`
-   Store the replied message/media and generate a shareable link to that file, to be accessed via your assistant bot!
+from . import get_help
 
-• `{i}delstored <link of stored file>`
-    Delete stored file.
-
-• `{i}liststored`
-   Get all stored messages.
-
-• Go Inline with your assistant bot with `filestore` to see stored files in inline.
-"""
+__doc__ = get_help("help_fileshare")
 
 import os
 
 from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
-from pyUltroid.functions.tools import get_file_link
+from pyUltroid.fns.tools import get_file_link
 
 from . import HNDLR, asst, get_string, in_pattern, udB, ultroid_bot, ultroid_cmd
 
@@ -34,7 +24,7 @@ async def filestoreplg(event):
         return await event.eor(get_string("fsh_3"), time=10)
     # allow storing both messages and media.
     filehash = await get_file_link(msg)
-    link_to_file = "https://t.me/{}?start={}".format(asst.me.username, filehash)
+    link_to_file = f"https://t.me/{asst.me.username}?start={filehash}"
     await event.eor(
         get_string("fsh_2").format(link_to_file),
         link_preview=False,
@@ -100,6 +90,6 @@ async def file_short(event):
                 )
     if not res:
         title = "You have no stored file :("
-        text = title + f"\n\nRead `{HNDLR}help fileshare` to know how to store."
+        text = f"{title}\n\nRead `{HNDLR}help fileshare` to know how to store."
         return await event.answer([await event.builder.article(title=title, text=text)])
     await event.answer(res, switch_pm="• File Store •", switch_pm_param="start")

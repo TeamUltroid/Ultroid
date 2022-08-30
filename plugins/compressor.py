@@ -4,19 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}compress <reply to video>`
-    optional `crf` and `stream`
-    Example : `{i}compress 27 stream` or `{i}compress 28`
-    Encode the replied video according to CRF value.
-    Less CRF == High Quality, More Size
-    More CRF == Low Quality, Less Size
-    CRF Range = 20-51
-    Default = 27
+from . import get_help
 
-"""
+__doc__ = get_help("help_compressor")
+
 
 import asyncio
 import os
@@ -24,11 +16,13 @@ import re
 import time
 from datetime import datetime as dt
 
-from pyUltroid.functions.tools import metadata
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
 
+from pyUltroid.fns.tools import metadata
+
 from . import (
+    ULTConfig,
     bash,
     downloader,
     get_string,
@@ -66,12 +60,13 @@ async def _(e):
         xxx = await e.eor(get_string("audiotools_5"))
         c_time = time.time()
         file = await downloader(
-            "resources/downloads/" + name,
+            f"resources/downloads/{name}",
             vfile,
             xxx,
             c_time,
-            "Downloading " + name + "...",
+            f"Downloading {name}...",
         )
+
         o_size = os.path.getsize(file.name)
         d_time = time.time()
         diff = time_formatter((d_time - c_time) * 1000)
@@ -83,9 +78,11 @@ async def _(e):
         x, y = await bash(
             f'mediainfo --fullscan """{file.name}""" | grep "Frame count"'
         )
+        if y and y.endswith("NOT_FOUND"):
+            return await xxx.edit(f"ERROR: `{y}`")
         total_frames = x.split(":")[1].split("\n")[0]
         progress = f"progress-{c_time}.txt"
-        with open(progress, "w") as fk:
+        with open(progress, "w"):
             pass
         proce = await asyncio.create_subprocess_shell(
             f'ffmpeg -hide_banner -loglevel quiet -progress {progress} -i """{file.name}""" -preset ultrafast -vcodec libx265 -crf {crf} -c:a copy """{out}""" -y',
@@ -110,13 +107,13 @@ async def _(e):
                     some_eta = ((int(total_frames) - elapse) / speed) * 1000
                     text = f"`Compressing {file_name} at {crf} CRF.\n`"
                     progress_str = "`[{0}{1}] {2}%\n\n`".format(
-                        "".join("●" for i in range(math.floor(per / 5))),
-                        "".join("" for i in range(20 - math.floor(per / 5))),
+                        "".join("●" for _ in range(math.floor(per / 5))),
+                        "".join("" for _ in range(20 - math.floor(per / 5))),
                         round(per, 2),
                     )
 
-                    e_size = humanbytes(size) + " of ~" + humanbytes((size / per) * 100)
-                    eta = "~" + time_formatter(some_eta)
+                    e_size = f"{humanbytes(size)} of ~{humanbytes((size / per) * 100)}"
+                    eta = f"~{time_formatter(some_eta)}"
                     try:
                         await xxx.edit(
                             text
@@ -142,13 +139,7 @@ async def _(e):
         caption += f"**Compressed Size: **`{humanbytes(c_size)}`\n"
         caption += f"**Compression Ratio: **`{differ:.2f}%`\n"
         caption += f"\n**Time Taken To Compress: **`{difff}`"
-        mmmm = await uploader(
-            out,
-            out,
-            f_time,
-            xxx,
-            "Uploading " + out + "...",
-        )
+        mmmm = await uploader(out, out, f_time, xxx, f"Uploading {out}...")
         if to_stream:
             data = await metadata(out)
             width = data["width"]
@@ -162,7 +153,7 @@ async def _(e):
             await e.client.send_file(
                 e.chat_id,
                 mmmm,
-                thumb="resources/extras/ultroid.jpg",
+                thumb=ULTConfig.thumb,
                 caption=caption,
                 attributes=attributes,
                 force_document=False,
@@ -172,7 +163,7 @@ async def _(e):
             await e.client.send_file(
                 e.chat_id,
                 mmmm,
-                thumb="resources/extras/ultroid.jpg",
+                thumb=ULTConfig.thumb,
                 caption=caption,
                 force_document=True,
                 reply_to=e.reply_to_msg_id,

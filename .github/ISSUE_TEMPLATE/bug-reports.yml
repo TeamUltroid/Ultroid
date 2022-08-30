@@ -30,18 +30,18 @@ body:
       label: Version
       description: What version of Ultroid are you running?
       options:
-        - 0.3
-        - 0.2
-        - 0.1
-        - 0.0.9
-        - 0.0.8 (or lesser)
+        - "0.5"
+        - "0.6"
+        - "0.7"
+        - "> 0.7"
+
     validations:
       required: true
   - type: dropdown
     id: hosted
     attributes:
       label: Hosted On
-      description: You Hosted Ultroid In Which Platform?
+      description: You are hosting Ultroid on Which Platform?
       options:
         - Vps
         - Heroku

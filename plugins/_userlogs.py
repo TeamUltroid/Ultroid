@@ -8,7 +8,6 @@
 import os
 import re
 
-from pyUltroid.dB.botchat_db import tag_add, who_tag
 from telethon.errors.rpcerrorlist import (
     ChannelPrivateError,
     ChatWriteForbiddenError,
@@ -20,6 +19,8 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 from telethon.utils import get_display_name
+
+from pyUltroid.dB.botchat_db import tag_add, who_tag
 
 from . import (
     LOG_CHANNEL,
@@ -123,8 +124,7 @@ if udB.get_key("TAG_LOG"):
                 return
             if event.is_private:
                 return
-            entities = event.get_entities_text()
-            if entities:
+            if entities := event.get_entities_text():
                 is_self = False
                 username = event.client.me.username
                 if username:
@@ -235,7 +235,6 @@ ultroid_bot.add_event_handler(
     when_added_or_joined,
     events.ChatAction(func=lambda x: x.user_added or x.user_joined),
 )
-
 _client = {"bot": asst, "user": ultroid_bot}
 
 

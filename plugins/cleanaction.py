@@ -4,19 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}addclean`
-    Clean all Upcoming action msg in added chat like someone joined/left/pin etc.
+from . import get_help
 
-•`{i}remclean`
-    Remove chat from database.
+__doc__ = get_help("help_cleanaction")
 
-•`{i}listclean`
-   To get list of all chats where its activated.
-
-"""
 
 from telethon.utils import get_display_name
 
@@ -44,8 +36,7 @@ async def _(e):
 
 @ultroid_cmd(pattern="listclean$")
 async def _(e):
-    k = udB.get_key("CLEANCHAT")
-    if k:
+    if k := udB.get_key("CLEANCHAT"):
         o = ""
         for x in k:
             try:

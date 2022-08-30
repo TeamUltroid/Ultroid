@@ -9,8 +9,9 @@
 import random
 
 import aiohttp
+
 from pyUltroid.dB import DEVLIST
-from pyUltroid.functions.admins import admin_check
+from pyUltroid.fns.admins import admin_check
 
 from . import *
 
@@ -27,8 +28,7 @@ async def dheh(e):
 async def oqha(e):
     if not await admin_check(e):
         return
-    match = e.pattern_match.group(1).strip()
-    if match:
+    if match := e.pattern_match.group(1).strip():
         text = match
         reply_to = e
     elif e.is_reply:

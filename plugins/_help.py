@@ -5,12 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-try:
-    from fuzzywuzzy.process import extractOne
-except ImportError:
-    extractOne = None
-from pyUltroid.dB._core import HELP, LIST
-from pyUltroid.functions.tools import cmd_regex_replace
 from telethon.errors.rpcerrorlist import (
     BotInlineDisabledError,
     BotMethodInvalidError,
@@ -18,7 +12,10 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.custom import Button
 
-from . import HNDLR, INLINE_PIC, LOGS, OWNER_NAME, asst, get_string, udB, ultroid_cmd
+from pyUltroid.dB._core import HELP, LIST
+from pyUltroid.fns.tools import cmd_regex_replace
+
+from . import HNDLR, LOGS, OWNER_NAME, asst, get_string, inline_pic, udB, ultroid_cmd
 
 _main_help_menu = [
     [
@@ -86,9 +83,13 @@ async def _help(ult):
                     if not file:
                         # the enter command/plugin name is not found
                         text = f"`{plug}` is not a valid plugin!"
-                        if extractOne:
-                            best_match = extractOne(plug, compare_strings)
-                            text += "\nDid you mean `{}`?".format(best_match[0])
+                        best_match = None
+                        for _ in compare_strings:
+                            if plug in _ and not _.startswith("_"):
+                                best_match = _
+                                break
+                        if best_match:
+                            text += f"\nDid you mean `{best_match}`?"
                         return await ult.eor(text)
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:
@@ -122,7 +123,7 @@ async def _help(ult):
                     len(HELP["Addons"] if "Addons" in HELP else []),
                     cmd,
                 ),
-                file=INLINE_PIC,
+                file=inline_pic(),
                 buttons=_main_help_menu,
             )
         except BotResponseTimeoutError:

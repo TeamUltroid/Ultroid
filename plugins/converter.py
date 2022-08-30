@@ -4,24 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}convert <gif/img/sticker/webm>`
-    Reply to media to convert it into gif / image / webm / normal sticker.
+from . import get_help
 
-• `{i}doc <filename.ext>`
-    Reply to a text msg to save it in a file.
+__doc__ = get_help("help_converter")
 
-• `{i}open`
-    Reply to a file to reveal it's text.
-
-• `{i}rename <file name with extension>`
-    Rename the file
-
-• `{i}thumbnail <reply to image/thumbnail file>`
-    Upload Your file with your custom thumbnail.
-"""
 import os
 import time
 
@@ -40,7 +27,17 @@ except ImportError:
 
 from telegraph import upload_file as uf
 
-from . import bash, con, downloader, get_paste, get_string, udB, ultroid_cmd, uploader
+from . import (
+    ULTConfig,
+    bash,
+    con,
+    downloader,
+    get_paste,
+    get_string,
+    udB,
+    ultroid_cmd,
+    uploader,
+)
 
 opn = []
 
@@ -58,7 +55,7 @@ async def _(e):
         return await e.eor("`Reply to Photo or media with thumb...`")
     variable = uf(dl)
     os.remove(dl)
-    nn = "https://telegra.ph" + variable[0]
+    nn = f"https://graph.org{variable[0]}"
     udB.set_key("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
     await e.eor(get_string("cvt_6").format(nn), link_preview=False)
@@ -101,7 +98,7 @@ async def imak(event):
         f"`{xxx.name}`",
         file=xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
     )
     os.remove(inp)
     await xx.delete()
@@ -114,6 +111,8 @@ conv_keys = {
     "image": "png",
     "webm": "webm",
     "gif": "gif",
+    "json": "json",
+    "tgs": "tgs",
 }
 
 
@@ -123,6 +122,8 @@ conv_keys = {
 async def uconverter(event):
     xx = await event.eor(get_string("com_1"))
     a = await event.get_reply_message()
+    if a is None:
+        return await event.eor("`Reply to Photo or media with thumb...`")
     input_ = event.pattern_match.group(1).strip()
     b = await a.download_media("resources/downloads/")
     if not b and (a.document and a.document.thumbs):
@@ -156,7 +157,7 @@ async def _(event):
     with open(input_str, "w") as b:
         b.write(str(a.message))
     await xx.edit(f"**Packing into** `{input_str}`")
-    await event.reply(file=input_str, thumb="resources/extras/ultroid.jpg")
+    await event.reply(file=input_str, thumb=ULTConfig.thumb)
     await xx.delete()
     os.remove(input_str)
 

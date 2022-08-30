@@ -27,6 +27,7 @@ import time
 
 from . import (
     HNDLR,
+    ULTConfig,
     asyncio,
     bash,
     downloader,
@@ -67,7 +68,7 @@ async def zipp(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
         caption=f"`{xxx.name}`",
         reply_to=reply,
     )
@@ -108,7 +109,7 @@ async def unzipp(event):
             event.chat_id,
             xxx,
             force_document=True,
-            thumb="resources/extras/ultroid.jpg",
+            thumb=ULTConfig.thumb,
             caption=f"`{xxx.name}`",
         )
     await xx.delete()
@@ -128,12 +129,13 @@ async def azipp(event):
         if hasattr(reply.media, "document"):
             file = reply.media.document
             image = await downloader(
-                "zip/" + reply.file.name,
+                f"zip/{reply.file.name}",
                 reply.media.document,
                 xx,
                 t,
                 get_string("com_5"),
             )
+
             file = image.name
         else:
             file = await event.download_media(reply.media, "zip/")
@@ -159,7 +161,7 @@ async def do_zip(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb="resources/extras/ultroid.jpg",
+        thumb=ULTConfig.thumb,
     )
     await bash("rm -rf zip")
     os.remove("ultroid.zip")

@@ -4,28 +4,17 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}superfban <reply to user/userid/username>`
-    FBan the person across all feds in which you are admin.
+from . import get_help
 
-• `{i}superunfban <reply to user/userid/username>`
-    Un-FBan the person across all feds in which you are admin.
+__doc__ = get_help("help_fedutils")
 
-Specify FBan Group and Feds to exclude in the assistant.
-
-• `{i}fstat <username/id/reply to user>`
-    Collect fed stat of the person in Rose.
-
-• `{i}fedinfo <(fedid)>`
-    Collect federation info of the given fed id, or of the fed you own, from Rose.
-"""
 import asyncio
 import os
 
-from pyUltroid.dB import DEVLIST
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from pyUltroid.dB import DEVLIST
 
 from . import get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -176,7 +165,7 @@ async def _(event):
                 REASON = event.text.split(" ", maxsplit=1)[1]
             except BaseException:
                 REASON = ""
-            if REASON.strip() == "":
+            if not REASON.strip():
                 REASON = ""
     else:
         arg = event.text.split(" ", maxsplit=2)
@@ -304,7 +293,7 @@ async def _(event):
             try:
                 await conv.send_message("/start")
                 await conv.get_response()
-                await conv.send_message("/fedstat " + sysarg)
+                await conv.send_message(f"/fedstat {sysarg}")
                 audio = await conv.get_response()
                 if audio.message.startswith("This command can only be used once"):
                     await ok.edit(
@@ -339,7 +328,7 @@ async def _(event):
         try:
             await conv.send_message("/start")
             await conv.get_response()
-            await conv.send_message("/fedinfo " + sysarg)
+            await conv.send_message(f"/fedinfo {sysarg}")
             audio = await conv.get_response()
             await event.client.send_read_acknowledge(bot)
             await ok.edit(audio.text + "\n\nFedInfo Extracted by Ultroid")

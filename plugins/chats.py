@@ -4,36 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
+from . import get_help
 
-• `{i}delchat <optional- username/id>`
-    Delete the group this cmd is used in.
+__doc__ = get_help("help_chats")
 
-• `{i}getlink`
-• `{i}getlink r` - `create link with admin approval`
-• `{i}getlink r title_here` - `admin approval with link title`
-• `{i}getlink 10` - `usage limit in new link`
-    Get link of group this cmd is used in.
-
-• `{i}create (g|b|c) <group_name> ; <optional-username>`
-    Create group woth a specific name.
-    g - megagroup/supergroup
-    b - small group
-    c - channel
-
-• `{i}setgpic <reply to Photo><chat username>`
-    Set Profile photo of Group.
-
-• `{i}delgpic <chat username -optional>`
-    Delete Profile photo of Group.
-
-• `{i}unbanall`
-    Unban all Members of a group.
-
-• `{i}rmusers`
-    Remove users specifically.
-"""
 
 from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.channels import (
@@ -101,7 +75,7 @@ async def _(e):
     request, usage, title, link = None, None, None, None
     if match:
         split = match.split(maxsplit=1)
-        request = bool(split[0] in ["r", "request"])
+        request = split[0] in ["r", "request"]
         title = "Created by Ultroid"
         if len(split) > 1:
             match = split[1]
@@ -190,7 +164,7 @@ async def _(e):
             created_chat_id = r.chats[0].id
             if username:
                 await e.client(UpdateUsernameRequest(created_chat_id, username))
-                result = "https://t.me/" + username
+                result = f"https://t.me/{username}"
             else:
                 result = (
                     await e.client(
@@ -245,7 +219,7 @@ async def _(ult):
         await ult.client(EditPhotoRequest(chat, file))
         await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
-        await ult.eor("Error occured.\n`{}`".format(str(ex)), time=5)
+        await ult.eor(f"Error occured.\n`{str(ex)}`", time=5)
     os.remove(replfile)
 
 

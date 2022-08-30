@@ -15,31 +15,28 @@ from colorama import Style, Fore, Back
 def clear():
     system("clear")
 
+
 MANDATORY_REQS = [
     "https://github.com/New-dev0/Telethon/archive/Cartoon.zip",
     "py-Ultroid==2022.6.6",
     "gitpython",
     "enhancer==0.3.4",
     "telegraph",
-    "aiohttp"
+    "aiohttp",
 ]
 
 OPT_PACKAGES = {
-    "bs4":"Used for site-scrapping (used in commands like - .gadget and many more)",
+    "bs4": "Used for site-scrapping (used in commands like - .gadget and many more)",
     "yt-dlp": "Used for Youtuble Related Downloads...",
     "youtube-search-python": "Used for youtube video search..",
     "pillow": "Used for Image-Conversion related task. (size - approx 50mb ) (required for kang, convert and many more.)",
     "psutil": "Used for .usage command.",
-    "lottie":"Used for animated sticker related conversion.",
-    "apscheduler":"Used in autopic/nightmode (scheduling tasks.)",
-    "git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes."
+    "lottie": "Used for animated sticker related conversion.",
+    "apscheduler": "Used in autopic/nightmode (scheduling tasks.)",
+    "git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes.",
 }
 
-APT_PACKAGES = [
-    "ffmpeg",
-    "neofetch",
-    "mediainfo"
-]
+APT_PACKAGES = ["ffmpeg", "neofetch", "mediainfo"]
 
 DISCLAIMER_TEXT = ""
 
@@ -82,7 +79,8 @@ INFO_TEXT = f"""
 * Enter 'A' to Continue, 'E' to Exit..\n
 """
 
-def ask_and_wait(text, header:bool=False):
+
+def ask_and_wait(text, header: bool = False):
     if header:
         text = with_header(text)
     print(text + "\nPress 'ANY Key' to Continue or 'Ctrl+C' to exit...\n")
@@ -92,6 +90,7 @@ def ask_and_wait(text, header:bool=False):
 def with_header(text):
     return HEADER + "\n\n" + text
 
+
 def yes_no_apt():
     yes_no = input("").strip().lower()
     if yes_no in ["yes", "y"]:
@@ -100,16 +99,14 @@ def yes_no_apt():
         return False
     print("Invalid Input\nRe-Enter: ")
     return yes_no_apt()
-                
+
 
 def ask_process_info_text():
     strm = input("").lower().strip()
     if strm == "e":
         print("Exiting...")
         exit(0)
-    elif strm == "a":
-        pass
-    else:
+    elif strm != "a":
         print("Invalid Input")
         print("Enter 'A' to Continue or 'E' to exit...")
         ask_process_info_text()
@@ -132,11 +129,10 @@ def ask_process_apt_install():
         names = " ".join(APT_PACKAGES)
         print("Installing all apt-packages...")
         system(f"apt install {names} -y")
-    elif strm == "s":
-        pass
-    else:
+    elif strm != "s":
         print("Invalid Input\n* Enter Again...")
         ask_process_apt_install()
+
 
 def ask_and_wait_opt():
     strm = input("").strip().lower()
@@ -145,7 +141,9 @@ def ask_and_wait_opt():
         exit(0)
     elif strm == "a":
         for opt in OPT_PACKAGES.keys():
-            print(f"* {Fore.YELLOW}Do you want to install '{opt}'? [Y/N]\n- {OPT_PACKAGES[opt]}")
+            print(
+                f"* {Fore.YELLOW}Do you want to install '{opt}'? [Y/N]\n- {OPT_PACKAGES[opt]}"
+            )
             if yes_no_apt():
                 print(f"Installing {opt}...")
                 system(f"pip install {opt}")
@@ -155,11 +153,10 @@ def ask_and_wait_opt():
         names = " ".join(OPT_PACKAGES.keys())
         print(f"{Fore.YELLOW}Installing all packages...")
         system(f"pip install {names}")
-    elif strm == "s":
-        pass
-    else:
+    elif strm != "s":
         print("Invalid Input\n* Enter Again...")
         ask_and_wait_opt()
+
 
 def ask_make_env():
     strm = input("").strip().lower()
@@ -173,7 +170,8 @@ def ask_make_env():
 
     else:
         print("OK!")
-    
+
+
 # ------------------------------------------------------------------------------------------ #
 
 clear()
@@ -210,7 +208,11 @@ all_ = " ".join(MANDATORY_REQS)
 system(f"pip install {all_}")
 
 clear()
-print(with_header(f"\n{Fore.GREEN}# Moving toward Installing Apt-Packages{Fore.RESET}\n\n"))
+print(
+    with_header(
+        f"\n{Fore.GREEN}# Moving toward Installing Apt-Packages{Fore.RESET}\n\n"
+    )
+)
 print("---Enter---")
 print(" - A = 'Ask Y/N for each'.")
 print(" - I = 'Install all'")
@@ -220,13 +222,15 @@ ask_process_apt_install()
 
 clear()
 print(
-    with_header(f"""
+    with_header(
+        f"""
 {Fore.YELLOW}# Installing other non mandatory requirements.
 (You can Install them, if you want command using them to work!){Fore.RESET}
 
 {'- '.join(list(OPT_PACKAGES.keys()))}
 
-Enter [ A = Ask for each, I = Install all, S = Skip, E = Exit]""")
+Enter [ A = Ask for each, I = Install all, S = Skip, E = Exit]"""
+    )
 )
 ask_and_wait_opt()
 
@@ -248,7 +252,9 @@ print(with_header(f"\n{Fore.GREEN}You are all Done! 🥳"))
 sleep(0.2)
 print(f"Use 'bash startup' to try running Ultroid.{Fore.RESET}")
 sleep(0.5)
-print("\nYou can head over to @UltroidSupportChat, if you get stuck somewhere, and need help.")
+print(
+    "\nYou can head over to @UltroidSupportChat, if you get stuck somewhere, and need help."
+)
 sleep(0.5)
 print("\nMade with ❤️ by @TeamUltroid...")
 

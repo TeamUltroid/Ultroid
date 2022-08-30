@@ -8,14 +8,14 @@
 from datetime import datetime
 
 from pytz import timezone as tz
-from pyUltroid._misc import SUDO_M, owner_and_sudos
-from pyUltroid.dB.asst_fns import *
-from pyUltroid.functions.helper import inline_mention
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.utils import get_display_name
 
-from strings.strings import get_string
+from pyUltroid._misc import SUDO_M, owner_and_sudos
+from pyUltroid.dB.asst_fns import *
+from pyUltroid.fns.helper import inline_mention
+from strings import get_string
 
 from . import *
 
@@ -68,7 +68,7 @@ async def own(event):
         mention=event.sender.mention, me=inline_mention(ultroid_bot.me)
     )
     if custom_info:
-        msg += "\n\n• Powered by **@TheUltroid**"
+        msg += "\n\n• Powered by **@TeamUltroid**"
     await event.edit(
         msg,
         buttons=[Button.inline("Close", data="closeit")],

@@ -37,10 +37,7 @@ buddhhu = {}
 async def _(e):
     if e.reply_to_msg_id:
         okk = await e.get_reply_message()
-        if okk.sender.username:
-            put = f"@{okk.sender.username}"
-        else:
-            put = okk.sender_id
+        put = f"@{okk.sender.username}" if okk.sender.username else okk.sender_id
     else:
         put = e.pattern_match.group(1).strip()
     if put:
@@ -66,6 +63,8 @@ async def _(e):
         if query.isdigit():
             query = int(query)
         logi = await ultroid_bot.get_entity(query)
+        if not isinstance(logi, types.User):
+            raise ValueError("Invalid Username.")
     except IndexError:
         sur = e.builder.article(
             title="Give Username",

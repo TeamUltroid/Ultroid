@@ -4,22 +4,15 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}addcmd <new cmd> <reply>`
-   It will set new cmd for your assistant bot with that reply message.
+from . import get_help
 
-•`{i}remcmd <cmd name>`
-   It will remove your cmd.
+__doc__ = get_help("help_asstcmd")
 
-•`{i}listcmd`
-   To Get list of all your custom cmd.
-"""
 import os
 
 from pyUltroid.dB.asstcmd_db import add_cmd, cmd_reply, list_cmds, rem_cmd
-from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
+from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
 try:
     from telegraph import upload_file as uf
@@ -45,14 +38,14 @@ async def ac(e):
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await e.eor(get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
             variable = uf(dl)
             os.remove(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://graph.org{variable[0]}"
         else:
             m = utils.pack_bot_file_id(wt.media)
         if wt.text:
@@ -91,7 +84,7 @@ async def lscmd(e):
     if list_cmds():
         ok = get_string("asstcmd_6")
         for x in list_cmds():
-            ok += "/" + x + "\n"
+            ok += f"/{x}" + "\n"
         return await e.eor(ok)
     return await e.eor(get_string("asstcmd_5"))
 

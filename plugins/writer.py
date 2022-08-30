@@ -25,8 +25,7 @@ from . import async_searcher, eod, get_string, text_set, ultroid_cmd
 
 @ultroid_cmd(pattern="gethtml( (.*)|$)")
 async def ghtml(e):
-    txt = e.pattern_match.group(1).strip()
-    if txt:
+    if txt := e.pattern_match.group(1).strip():
         link = e.text.split(maxsplit=1)[1]
     else:
         return await eod(e, "`Either reply to any file or give any text`")

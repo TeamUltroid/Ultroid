@@ -4,54 +4,22 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}promote <reply to user/userid/username>`
-• `{i}demote`
-    Promote/Demote the user in the chat.
+from . import get_help
 
-• `{i}ban <reply to user/userid/username> <reason>`
-• `{i}unban`
-    Ban/Unban the user from the chat.
-
-• `{i}kick <reply to user/userid/username> <reason>`
-    Kick the user from the chat.
-
-• `{i}pin <reply to message>`
-    Pin the message in the chat
-• `{i}tpin <time> <temp pin message>`
-• `{i}unpin (all) <reply to message>`
-    Unpin the messages in the chat.
-
-• `{i}pinned`
-   Get pinned message in the current chat.
-• `{i}listpinned`
-   Get all pinned messages in current chat
-
-• `{i}autodelete <24h/7d/1m/off>`
-   Enable Auto Delete Messages in Chat.
-
-• `{i}purge <reply to message>`
-    Purge all messages from the replied message.
-
-• `{i}purgeme <reply to message>`
-    Purge Only your messages from the replied message.
-
-• `{i}purgeall`
-    Delete all msgs of replied user.
-"""
+__doc__ = get_help("help_admintools")
 
 import asyncio
 
-from pyUltroid.dB import DEVLIST
-from pyUltroid.functions.admins import ban_time
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserIdInvalidError
 from telethon.tl.functions.channels import EditAdminRequest, GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, SetHistoryTTLRequest
 from telethon.tl.types import InputMessagesFilterPinned
 from telethon.utils import get_display_name
+
+from pyUltroid.dB import DEVLIST
+from pyUltroid.fns.admins import ban_time
 
 from . import (
     HNDLR,
@@ -267,7 +235,7 @@ async def tkicki(e):
     except Exception as ex:
         return await eor(e, f"`{ex}`")
     try:
-        bun = ban_time(e, tme)
+        bun = ban_time(tme)
         await e.client.edit_permissions(
             e.chat_id, user.id, until_date=bun, view_messages=False
         )
@@ -335,11 +303,9 @@ async def pin_message(ult):
     if not match:
         return await ult.eor("`Please provide time..`", time=8)
     msg = await ult.eor(get_string("com_1"))
-    time = ban_time(msg, match)
-    if not time:
-        return
     msg_id = ult.reply_to_msg_id
     try:
+        time = ban_time(match)
         await ult.client.pin_message(ult.chat_id, msg_id)
         await msg.eor(f"`pinned for time` `{time}`", time=8)
     except Exception as er:
@@ -377,22 +343,19 @@ async def fastpurger(purg):
         return await eor(purg, get_string("purge_1"), time=10)
     try:
         await purg.client.delete_messages(
-            purg.chat_id, list(range(purg.reply_to_msg_id, purg.id + 1))
+            purg.chat_id, list(range(purg.reply_to_msg_id, purg.id))
         )
 
     except Exception as er:
         LOGS.info(er)
-    await purg.respond(
-        "__Fast purge complete!__",
-    )
+    await purg.eor("__Fast purge complete!__", time=5)
 
 
 @ultroid_cmd(
     pattern="purgeme( (.*)|$)",
 )
 async def fastpurgerme(purg):
-    num = purg.pattern_match.group(1).strip()
-    if num:
+    if num := purg.pattern_match.group(1).strip():
         try:
             nnt = int(num)
         except BaseException:
@@ -406,9 +369,7 @@ async def fastpurgerme(purg):
             mp += 1
         await eor(purg, f"Purged {mp} Messages!", time=5)
         return
-    elif purg.reply_to_msg_id:
-        pass
-    else:
+    elif not purg.reply_to_msg_id:
         return await eod(
             purg,
             "`Reply to a message to purge from or use it like ``purgeme <num>`",
@@ -424,9 +385,9 @@ async def fastpurgerme(purg):
         msgs.append(msg)
     if msgs:
         await purg.client.delete_messages(chat, msgs)
-    await eod(
-        purg,
+    await purg.eor(
         "__Fast purge complete!__\n**Purged** `" + str(len(msgs)) + "` **messages.**",
+        time=5,
     )
 
 
@@ -480,7 +441,7 @@ async def get_all_pinned(event):
     ):
         if i.message:
             t = " ".join(i.message.split()[:4])
-            txt = "{}....".format(t)
+            txt = f"{t}...."
         else:
             txt = "Go to message."
         a += f"{c}. <a href=https://t.me/c/{chat_id}/{i.id}>{txt}</a>\n"
@@ -491,7 +452,7 @@ async def get_all_pinned(event):
     else:
         m = f"<b>List of pinned message(s) in {chat_name}:</b>\n\n"
 
-    if a == "":
+    if not a:
         return await eor(x, get_string("listpin_1"), time=5)
 
     await x.edit(m + a, parse_mode="html")

@@ -11,21 +11,23 @@ from datetime import datetime
 from os import remove
 
 from git import Repo
-from pyUltroid._misc._assistant import callback, in_pattern
-from pyUltroid.dB._core import HELP, LIST
-from pyUltroid.functions.helper import gen_chlog, time_formatter, updater
-from pyUltroid.functions.misc import split_list
 from telethon import Button
 from telethon.tl.types import InputWebDocument, Message
 from telethon.utils import resolve_bot_file_id
 
+from pyUltroid._misc._assistant import callback, in_pattern
+from pyUltroid.dB._core import HELP, LIST
+from pyUltroid.fns.helper import gen_chlog, time_formatter, updater
+from pyUltroid.fns.misc import split_list
+
 from . import (
     HNDLR,
-    INLINE_PIC,
     LOGS,
     OWNER_NAME,
+    InlinePlugin,
     asst,
     get_string,
+    inline_pic,
     split_list,
     start_time,
     udB,
@@ -34,16 +36,11 @@ from ._help import _main_help_menu
 
 # ================================================#
 
-TLINK = INLINE_PIC or "https://telegra.ph/file/74d6259983e0642923fdb.jpg"
 helps = get_string("inline_1")
 
 add_ons = udB.get_key("ADDONS")
 
-if add_ons is not False:
-    zhelps = get_string("inline_2")
-else:
-    zhelps = get_string("inline_3")
-
+zhelps = get_string("inline_3") if add_ons is False else get_string("inline_2")
 PLUGINS = HELP.get("Official", [])
 ADDONS = HELP.get("Addons", [])
 upage = 0
@@ -54,7 +51,7 @@ upage = 0
 SUP_BUTTONS = [
     [
         Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("• Support •", url="t.me/ultroidsupportchat"),
+        Button.url("• Support •", url="t.me/UltroidSupportChat"),
     ],
 ]
 
@@ -63,9 +60,10 @@ SUP_BUTTONS = [
 
 @in_pattern(owner=True, func=lambda x: not x.text)
 async def inline_alive(o):
+    TLINK = inline_pic() or "https://graph.org/file/74d6259983e0642923fdb.jpg"
     MSG = "• **Ultroid Userbot •**"
     WEB0 = InputWebDocument(
-        "https://telegra.ph/file/acd4f5d61369f74c5e7a7.jpg", 0, "image/jpg", []
+        "https://graph.org/file/acd4f5d61369f74c5e7a7.jpg", 0, "image/jpg", []
     )
     RES = [
         await o.builder.article(
@@ -100,9 +98,9 @@ async def inline_handler(event):
         len(HELP.get("Addons", [])),
         len(z),
     )
-    if INLINE_PIC:
+    if inline_pic():
         result = await event.builder.photo(
-            file=INLINE_PIC,
+            file=inline_pic(),
             link_preview=False,
             text=text,
             buttons=_main_help_menu,
@@ -117,7 +115,7 @@ async def inline_handler(event):
 @in_pattern("pasta", owner=True)
 async def _(event):
     ok = event.text.split("-")[1]
-    link = "https://spaceb.in/" + ok
+    link = f"https://spaceb.in/{ok}"
     raw = f"https://spaceb.in/api/v1/documents/{ok}/raw"
     result = await event.builder.article(
         title="Paste",
@@ -144,7 +142,7 @@ async def setting(event):
             len(HELP.get("Addons", [])),
             len(z),
         ),
-        file=INLINE_PIC,
+        file=inline_pic(),
         link_preview=False,
         buttons=[
             [
@@ -172,11 +170,9 @@ async def help_func(ult):
         return await ult.answer(get_string("help_13").format(HNDLR), alert=True)
     if "|" in count:
         _, count = count.split("|")
-    count = 0 if not count else int(count)
+    count = int(count) if count else 0
     text = _strings.get(key, "").format(OWNER_NAME, len(HELP.get(key)))
-    await ult.edit(
-        text, file=INLINE_PIC, buttons=page_num(count, key), link_preview=False
-    )
+    await ult.edit(text, buttons=page_num(count, key), link_preview=False)
 
 
 @callback(re.compile("uplugin_(.*)"), owner=True)
@@ -201,7 +197,7 @@ async def uptd_plugin(event):
         help_ = f"{file} has no Detailed Help!"
     help_ += "\n© @TeamUltroid"
     buttons = []
-    if INLINE_PIC:
+    if inline_pic():
         data = f"sndplug_{key}_{file}"
         if index is not None:
             data += f"|{index}"
@@ -233,7 +229,7 @@ async def uptd_plugin(event):
 async def _(event):
     if not await updater():
         return await event.answer(get_string("inline_9"), cache_time=0, alert=True)
-    if not INLINE_PIC:
+    if not inline_pic():
         return await event.answer(f"Do '{HNDLR}update' to update..")
     repo = Repo.init()
     changelog, tl_chnglog = await gen_chlog(
@@ -280,36 +276,18 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-InPlugin = {
-    "Pʟᴀʏ Sᴛᴏʀᴇ Aᴘᴘs": "app telegram",
-    "Mᴏᴅᴅᴇᴅ Aᴘᴘs": "mods minecraft",
-    "Sᴇᴀʀᴄʜ Oɴ Gᴏᴏɢʟᴇ": "go TeamUltroid",
-    "Search on XDA": "xda telegram",
-    "WʜɪSᴘᴇʀ": "wspr @username Hello🎉",
-    "YᴏᴜTᴜʙᴇ Dᴏᴡɴʟᴏᴀᴅᴇʀ": "yt Ed Sheeran Perfect",
-    "Piston Eval": "run javascript console.log('Hello Ultroid')",
-    "OʀᴀɴɢᴇFᴏx🦊": "ofox beryllium",
-    "Tᴡɪᴛᴛᴇʀ Usᴇʀ": "twitter theultroid",
-    "Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit",
-    "Fᴅʀᴏɪᴅ Sᴇᴀʀᴄʜ": "fdroid telegram",
-    "Sᴀᴀᴠɴ sᴇᴀʀᴄʜ": "saavn",
-    "Tʟ Sᴇᴀʀᴄʜ": "tl",
-    "GɪᴛHᴜʙ ғᴇᴇᴅs": "gh",
-    "OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish",
-}
-_InButtons = [Button.switch_inline(_, query=InPlugin[_]) for _ in list(InPlugin.keys())]
-InButtons = split_list(_InButtons, 2)
-
-
 @callback(data="inlone", owner=True)
 async def _(e):
+    _InButtons = [
+        Button.switch_inline(_, query=InlinePlugin[_], same_peer=True)
+        for _ in list(InlinePlugin.keys())
+    ]
+    InButtons = split_list(_InButtons, 2)
+
     button = InButtons.copy()
     button.append(
         [
-            Button.inline(
-                "« Bᴀᴄᴋ",
-                data="open",
-            ),
+            Button.inline("« Bᴀᴄᴋ", data="open"),
         ],
     )
     await e.edit(buttons=button, link_preview=False)
@@ -422,7 +400,7 @@ async def ibuild(e):
                             _pic,
                             title="Ultroid Op",
                             text=txt,
-                            description="@TheUltroid",
+                            description="@TeamUltroid",
                             buttons=btn,
                             link_preview=False,
                         )

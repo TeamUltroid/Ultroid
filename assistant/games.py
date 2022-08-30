@@ -28,9 +28,6 @@ except ImportError:
     akinator = None
     LOGS.error("'akinator' not installed.")
 
-from pyUltroid._misc._decorators import ultroid_cmd
-from pyUltroid.functions.helper import inline_mention
-from pyUltroid.functions.tools import async_searcher
 from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendStickersForbiddenError,
@@ -38,12 +35,16 @@ from telethon.errors.rpcerrorlist import (
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
+from pyUltroid._misc._decorators import ultroid_cmd
+from pyUltroid.fns.helper import inline_mention
+from pyUltroid.fns.tools import async_searcher
+
 from . import *
 
 # -------------------------- Akinator ----------------------- #
 
 games = {}
-aki_photo = "https://telegra.ph/file/3cc8825c029fd0cab9edc.jpg"
+aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
 
 
 @ultroid_cmd(pattern="akinator")
@@ -89,7 +90,7 @@ async def doai(e):
 
     bts = [bts, cts]
     # ignored Back Button since it makes the Pagination looks Bad
-    await e.edit("Q. " + qu, buttons=bts)
+    await e.edit(f"Q. {qu}", buttons=bts)
 
 
 @callback(re.compile("aka_(.*)"), owner=True)
@@ -138,6 +139,11 @@ async def eiagx(e):
 
 # ----------------------- Main Command ------------------- #
 
+GIMAGES = [
+    "https://graph.org/file/1c51015bae5205a65fd69.jpg",
+    "https://imgwhale.xyz/3xyr322l64j9590",
+]
+
 
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
@@ -147,7 +153,7 @@ async def magic(event):
     ]
     await event.reply(
         get_string("games_1"),
-        file="https://telegra.ph/file/1c51015bae5205a65fd69.jpg",
+        file=choice(GIMAGES),
         buttons=buttons,
     )
 
@@ -261,7 +267,7 @@ async def choose_cata(event):
                     close_period=int(in_),
                 ),
                 correct_answers=[ansi],
-                solution="Join @TheUltroid",
+                solution="Join @TeamUltroid",
                 solution_entities=[],
             )
             m_ = await event.client.send_message(chat, file=poll)

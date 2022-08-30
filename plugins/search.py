@@ -37,10 +37,11 @@ try:
     import cv2
 except ImportError:
     cv2 = None
-from pyUltroid.functions.google_image import googleimagesdownload
-from pyUltroid.functions.misc import google_search
-from pyUltroid.functions.tools import saavn_search
 from telethon.tl.types import DocumentAttributeAudio
+
+from pyUltroid.fns.google_image import googleimagesdownload
+from pyUltroid.fns.misc import google_search
+from pyUltroid.fns.tools import saavn_search
 
 from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
@@ -199,15 +200,15 @@ async def siesace(e):
     except IndexError:
         return await eve.eor(f"`{song} not found on saavn.`")
     try:
-        title = data["song"]
-        url = data["media_url"]
+        title = data["title"]
+        url = data["url"]
         img = data["image"]
         duration = data["duration"]
-        performer = data["primary_artists"]
+        performer = data["artists"]
     except KeyError:
         return await eve.eor("`Something went wrong.`")
-    song, _ = await fast_download(url, filename=title + ".m4a")
-    thumb, _ = await fast_download(img, filename=title + ".jpg")
+    song, _ = await fast_download(url, filename=f"{title}.m4a")
+    thumb, _ = await fast_download(img, filename=f"{title}.jpg")
     song, _ = await e.client.fast_uploader(song, to_delete=True)
     await eve.eor(
         file=song,

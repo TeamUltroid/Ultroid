@@ -17,21 +17,17 @@ from random import choice
 from bs4 import BeautifulSoup as bs
 
 try:
-    from pyUltroid.functions.gDrive import GDriveManager
+    from pyUltroid.fns.gDrive import GDriveManager
 except ImportError:
     GDriveManager = None
-from pyUltroid.functions.helper import fast_download, progress
-from pyUltroid.functions.tools import (
-    Carbon,
-    async_searcher,
-    get_paste,
-    telegraph_client,
-)
-from pyUltroid.startup.loader import Loader
 from telegraph import upload_file as upl
 from telethon import Button, events
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
+
+from pyUltroid.fns.helper import fast_download, progress
+from pyUltroid.fns.tools import Carbon, async_searcher, get_paste, telegraph_client
+from pyUltroid.startup.loader import Loader
 
 from . import *
 
@@ -54,7 +50,7 @@ def text_to_url(event):
 
 _buttons = {
     "otvars": {
-        "text": "Other Variables to set for @TheUltroid:",
+        "text": "Other Variables to set for @TeamUltroid:",
         "buttons": [
             [
                 Button.inline("Tᴀɢ Lᴏɢɢᴇʀ", data="taglog"),
@@ -306,8 +302,9 @@ async def update(eve):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + heroku_api + "@"
+            "https://", f"https://api:{heroku_api}@"
         )
+
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
             remote.set_url(heroku_git_url)
@@ -340,7 +337,7 @@ async def changes(okk):
     if not match:
         try:
             if len(tl_chnglog) > 700:
-                tl_chnglog = tl_chnglog[:700] + "..."
+                tl_chnglog = f"{tl_chnglog[:700]}..."
                 button.append([Button.inline("View Complete", "changesall")])
             await okk.edit("• Writing Changelogs 📝 •")
             img = await Carbon(
@@ -387,7 +384,7 @@ async def _(e):
         ok, index = ok.split("|")
     with open(ok, "r") as hmm:
         _, key = await get_paste(hmm.read())
-    link = "https://spaceb.in/" + key
+    link = f"https://spaceb.in/{key}"
     raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
     if not _:
         return await e.answer(key[:30], alert=True)
@@ -512,7 +509,7 @@ async def rhwhe(e):
     else:
         udB.set_key("DUAL_MODE", "True")
         key = "On"
-    Msg = "Dual Mode : " + key
+    Msg = f"Dual Mode : {key}"
     await e.edit(Msg, buttons=get_back_button("cbs_otvars"))
 
 
@@ -603,10 +600,7 @@ async def pluginch(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                "{} changed to {}\n After Setting All Things Do Restart".format(
-                    name,
-                    themssg,
-                ),
+                f"{name} changed to {themssg}\n After Setting All Things Do Restart",
                 buttons=get_back_button("cbs_otvars"),
             )
 
@@ -705,10 +699,12 @@ async def _(e):
 
 @callback("eaddon", owner=True)
 async def pmset(event):
-    if not udB.get_key("ADDONS"):
-        BT = [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
-    else:
-        BT = [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")]
+    BT = (
+        [Button.inline("Aᴅᴅᴏɴs  Oғғ", data="edof")]
+        if udB.get_key("ADDONS")
+        else [Button.inline("Aᴅᴅᴏɴs  Oɴ", data="edon")]
+    )
+
     await event.edit(
         "ADDONS~ Extra Plugins:",
         buttons=[
@@ -739,10 +735,12 @@ async def eddof(event):
 
 @callback("sudo", owner=True)
 async def pmset(event):
-    if not udB.get_key("SUDO"):
-        BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
-    else:
-        BT = [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
+    BT = (
+        [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oғғ", data="ofsudo")]
+        if udB.get_key("SUDO")
+        else [Button.inline("Sᴜᴅᴏ Mᴏᴅᴇ  Oɴ", data="onsudo")]
+    )
+
     await event.edit(
         f"SUDO MODE ~ Some peoples can use ur Bot which u selected. To know More use `{HNDLR}help sudo`",
         buttons=[
@@ -829,7 +827,7 @@ async def media(event):
             media = await event.client.download_media(response, "alvpc")
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(
@@ -902,10 +900,7 @@ async def name(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            "{} changed to {}\n\nAfter Setting All Things Do restart".format(
-                name,
-                themssg,
-            ),
+            f"{name} changed to {themssg}\n\nAfter Setting All Things Do restart",
             buttons=get_back_button("cbs_pmcstm"),
         )
 
@@ -925,8 +920,7 @@ async def name(event):
 @callback(re.compile(b"wrns_(.*)"), owner=True)
 async def set_wrns(event):
     value = int(event.data_match.group(1).decode("UTF-8"))
-    dn = udB.set_key("PMWARNS", value)
-    if dn:
+    if dn := udB.set_key("PMWARNS", value):
         await event.edit(
             f"PM Warns Set to {value}.\nNew users will have {value} chances in PMs before getting banned.",
             buttons=get_back_button("cbs_pmcstm"),
@@ -970,7 +964,7 @@ async def media(event):
         else:
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(
@@ -1025,10 +1019,12 @@ async def apof(event):
 
 @callback("pml", owner=True)
 async def l_vcs(event):
-    if not udB.get_key("PMLOG"):
-        BT = [Button.inline("PMLOGGER ON", data="pmlog")]
-    else:
-        BT = [Button.inline("PMLOGGER OFF", data="pmlogof")]
+    BT = (
+        [Button.inline("PMLOGGER OFF", data="pmlogof")]
+        if udB.get_key("PMLOG")
+        else [Button.inline("PMLOGGER ON", data="pmlog")]
+    )
+
     await event.edit(
         "PMLOGGER This Will Forward Ur Pm to Ur Private Group -",
         buttons=[
@@ -1170,10 +1166,7 @@ async def name(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            "{} changed to {}".format(
-                name,
-                themssg,
-            ),
+            f"{name} changed to {themssg}",
             buttons=get_back_button("cbs_chatbot"),
         )
 
@@ -1237,7 +1230,7 @@ async def media(event):
         else:
             try:
                 x = upl(media)
-                url = f"https://telegra.ph/{x[0]}"
+                url = f"https://graph.org/{x[0]}"
                 remove(media)
             except BaseException:
                 return await conv.send_message(
@@ -1268,12 +1261,12 @@ async def fdroid_dler(event):
     title = BSC.find("h3", "package-name").text.strip()
     thumb = BSC.find("img", "package-icon")["src"]
     if thumb.startswith("/"):
-        thumb = "https://f-droid.org" + thumb
-    thumb, _ = await fast_download(thumb, filename=uri + ".png")
+        thumb = f"https://f-droid.org{thumb}"
+    thumb, _ = await fast_download(thumb, filename=f"{uri}.png")
     s_time = time.time()
     file, _ = await fast_download(
         dl_,
-        filename=title + ".apk",
+        filename=f"{title}.apk",
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
             progress(
                 d,
@@ -1284,6 +1277,7 @@ async def fdroid_dler(event):
             )
         ),
     )
+
     time.time()
     n_file = await event.client.fast_uploader(
         file, show_progress=True, event=event, message="Uploading...", to_delete=True

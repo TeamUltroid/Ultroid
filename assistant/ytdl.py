@@ -13,18 +13,19 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
-from pyUltroid.functions.helper import (
+from telethon import Button
+from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from telethon.tl.types import InputWebDocument as wb
+
+from pyUltroid.fns.helper import (
     bash,
     fast_download,
     humanbytes,
     numerize,
     time_formatter,
 )
-from pyUltroid.functions.ytdl import dler, get_buttons, get_formats
-from telethon import Button
-from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from telethon.tl.types import InputWebDocument as wb
+from pyUltroid.fns.ytdl import dler, get_buttons, get_formats
 
 from . import LOGS, asst, callback, in_pattern, udB
 
@@ -35,7 +36,7 @@ except ImportError:
     VideosSearch = None
 
 
-ytt = "https://telegra.ph/file/afd04510c13914a06dd03.jpg"
+ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
 BACK_BUTTON = {}
 
@@ -130,9 +131,12 @@ async def _(e):
     _ytdl_data = await dler(e, _yt_base_url + _lets_split[1])
     _data = get_formats(_lets_split[0], _lets_split[1], _ytdl_data)
     _buttons = get_buttons(_data)
-    _text = "`Select Your Format.`"
-    if not _buttons:
-        _text = "`Error downloading from YouTube.\nTry Restarting your bot.`"
+    _text = (
+        "`Select Your Format.`"
+        if _buttons
+        else "`Error downloading from YouTube.\nTry Restarting your bot.`"
+    )
+
     await e.edit(_text, buttons=_buttons)
 
 
@@ -159,7 +163,7 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s." + ext,
+            "outtmpl": f"%(id)s.{ext}",
             "logtostderr": False,
             "postprocessors": [
                 {
@@ -170,6 +174,7 @@ async def _(event):
                 {"key": "FFmpegMetadata"},
             ],
         }
+
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         if ytdl_data.get("artist"):
@@ -179,7 +184,8 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
-        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=f"{vid_id}.jpg")
+
         likes = numerize(ytdl_data.get("like_count")) or 0
         duration = ytdl_data.get("duration") or 0
         description = (
@@ -188,17 +194,18 @@ async def _(event):
             else ytdl_data["description"][:100]
         )
         description = description or "None"
-        filepath = vid_id + f".{ext}"
+        filepath = f"{vid_id}.{ext}"
         if not os.path.exists(filepath):
-            filepath = filepath + f".{ext}"
+            filepath = f"{filepath}.{ext}"
         size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
             filepath,
-            filename=title + "." + ext,
+            filename=f"{title}.{ext}",
             show_progress=True,
             event=event,
             to_delete=True,
         )
+
         attributes = [
             DocumentAttributeAudio(
                 duration=int(duration),
@@ -213,10 +220,11 @@ async def _(event):
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
-            "outtmpl": "%(id)s." + ext,
+            "outtmpl": f"%(id)s.{ext}",
             "logtostderr": False,
             "postprocessors": [{"key": "FFmpegMetadata"}],
         }
+
         ytdl_data = await dler(event, link, opts, True)
         title = ytdl_data["title"]
         if ytdl_data.get("artist"):
@@ -226,7 +234,8 @@ async def _(event):
         elif ytdl_data.get("channel"):
             artist = ytdl_data["channel"]
         views = numerize(ytdl_data.get("view_count")) or 0
-        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=vid_id + ".jpg")
+        thumb, _ = await fast_download(ytdl_data["thumbnail"], filename=f"{vid_id}.jpg")
+
         try:
             Image.open(thumb).save(thumb, "JPEG")
         except Exception as er:
@@ -240,17 +249,18 @@ async def _(event):
         likes = numerize(ytdl_data.get("like_count")) or 0
         hi, wi = ytdl_data.get("height") or 720, ytdl_data.get("width") or 1280
         duration = ytdl_data.get("duration") or 0
-        filepath = vid_id + ".mkv"
+        filepath = f"{vid_id}.mkv"
         if not os.path.exists(filepath):
-            filepath = filepath + ".webm"
+            filepath = f"{filepath}.webm"
         size = os.path.getsize(filepath)
         file, _ = await event.client.fast_uploader(
             filepath,
-            filename=title + ".mkv",
+            filename=f"{title}.mkv",
             show_progress=True,
             event=event,
             to_delete=True,
         )
+
         attributes = [
             DocumentAttributeVideo(
                 duration=int(duration),

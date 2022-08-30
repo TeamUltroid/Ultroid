@@ -4,38 +4,16 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
+from . import get_help
 
-🔹 `{i}shift <from channel> | <to channel>`
-     This will transfer all old post from channel A to channel B.
-      (u can use username or id of channel too)
-      example : `{i}shift @abc | @xyz`
-      [note - this (" | ") sign is nessesary]
+__doc__ = get_help("help_channelhacks")
 
-🔹 For auto-posting/forwarding all new message from any source channel to any destination channel.
-
-   `{i}asource <channel username or id>`
-      This add source channel to database
-   `{i}dsource <channel username or id>`
-      This remove source channels from database
-   `{i}listsource <channel username or id>`
-      Show list of source channels
-
-
-   `{i}adest <channel username or id>`
-      This add Ur channels to database
-   `{i}ddest <channel username or id>`
-      This Remove Ur channels from database
-   `{i}listdest <channel username or id>`
-      Show List of Ur channels
-
-   'you can set many channels in database'
-   'For activating auto-post use `{i}setdb AUTOPOST True` '
-"""
 
 import asyncio
 import io
+
+from telethon.errors.rpcerrorlist import FloodWaitError
+from telethon.utils import get_display_name, get_peer_id
 
 from pyUltroid.dB.ch_db import (
     add_destination,
@@ -49,8 +27,6 @@ from pyUltroid.dB.ch_db import (
     rem_destination,
     rem_source_channel,
 )
-from telethon.errors.rpcerrorlist import FloodWaitError
-from telethon.utils import get_display_name, get_peer_id
 
 from . import LOGS, asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -107,15 +83,14 @@ async def _(e):
 
 @ultroid_cmd(pattern="asource (.*)")
 async def source(e):
-    x = e.pattern_match.group(1).strip()
-    if not x:
-        y = e.chat_id
-    else:
+    if x := e.pattern_match.group(1).strip():
         try:
             y = await e.client.parse_id(x)
         except Exception as er:
             LOGS.exception(er)
             return
+    else:
+        y = e.chat_id
     if not is_source_channel_added(y):
         add_source_channel(y)
         await e.eor(get_string("cha_2"))
@@ -186,8 +161,7 @@ async def list_all(event):
 
 @ultroid_cmd(pattern="adest (.*)")
 async def destination(e):
-    x = e.pattern_match.group(1).strip()
-    if x:
+    if x := e.pattern_match.group(1).strip():
         try:
             y = await e.client.parse_id(x)
         except Exception as er:

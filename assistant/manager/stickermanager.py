@@ -7,8 +7,6 @@
 
 import random
 
-from pyUltroid.functions.misc import Quotly
-from pyUltroid.functions.tools import TgConverter
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.messages import GetStickerSetRequest as GetSticker
@@ -19,6 +17,9 @@ from telethon.tl.types import InputPeerSelf
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName, User
 from telethon.utils import get_display_name, get_input_document
+
+from pyUltroid.fns.misc import Quotly
+from pyUltroid.fns.tools import TgConverter
 
 from . import LOGS, asst, asst_cmd, udB
 
@@ -37,7 +38,7 @@ async def kang_cmd(ult):
         pre = sender.username[:4]
     else:
         pre = random.random_string(length=3)
-    animated, dl = None, None
+    animated, dl, video = None, None, None
     try:
         emoji = ult.text.split(maxsplit=1)[1]
     except IndexError:
@@ -45,8 +46,12 @@ async def kang_cmd(ult):
     if reply.sticker:
         file = get_input_document(reply.sticker)
         emoji = emoji or reply.file.emoji
-        if reply.file.name.endswith(".tgs"):
+        name = reply.file.name
+        if name.endswith(".tgs"):
             animated = True
+            dl = await reply.download_media()
+        elif name.endswith(".webm"):
+            video = True
             dl = await reply.download_media()
     elif reply.photo:
         dl = await reply.download_media()
@@ -65,7 +70,7 @@ async def kang_cmd(ult):
             await ult.client(UploadMediaRequest(InputPeerSelf(), upl))
         )
     get_ = udB.get_key("STICKERS") or {}
-    type_ = "static" if not animated else "anim"
+    type_ = "anim" if animated else "static"
     if not get_.get(ult.sender_id) or not get_.get(ult.sender_id, {}).get(type_):
         sn = f"{pre}_{ult.sender_id}"
         title = f"{get_display_name(sender)}'s Kang Pack"
@@ -73,6 +78,10 @@ async def kang_cmd(ult):
             type_ = "anim"
             sn += "_anim"
             title += " (Animated)"
+        elif video:
+            type_ = "vid"
+            sn += "_vid"
+            title += " (Video)"
         sn += f"_by_{asst.me.username}"
         try:
             await asst(GetSticker(InputStickerSetShortName(sn), hash=0))
@@ -86,7 +95,9 @@ async def kang_cmd(ult):
                     title=title,
                     short_name=sn,
                     stickers=[SetItem(file, emoji=emoji)],
+                    videos=video,
                     animated=animated,
+                    software="@TeamUltroid",
                 )
             )
         except Exception as er:
@@ -115,6 +126,9 @@ async def kang_cmd(ult):
         if animated:
             sn += "_anim"
             title += " (Animated)"
+        elif video:
+            sn += "_vid"
+            title += "(Video)"
         sn += f"_by_{asst.me.username}"
         try:
             pack = await ult.client(
@@ -148,10 +162,8 @@ async def do_magic(ult):
         return await ult.reply("No Sticker Pack Found!")
     al_ = []
     ul = ko[ult.sender_id]
-    if ul.get("static"):
-        al_.extend(ul["static"])
-    if ul.get("anim"):
-        al_.extend(ul["anim"])
+    for _ in ul.keys():
+        al_.extend(ul[_])
     msg = "• **Stickers Owned by You!**\n\n"
     for _ in al_:
         try:
@@ -160,7 +172,9 @@ async def do_magic(ult):
         except StickerSetInvalidError:
             if ul.get("anim") and _ in ul["anim"]:
                 ul["anim"].remove(_)
+            elif ul.get("vid") and _ in ul["vid"]:
+                ul["vid"].remove(_)
             else:
                 ul["static"].remove(_)
-    udB.set_key("STICKERS", ko)
+            udB.set_key("STICKERS", ko)
     await ult.reply(msg)

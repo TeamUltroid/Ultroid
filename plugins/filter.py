@@ -4,27 +4,20 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}addfilter <word><reply to a message>`
-    add the used word as filter relating to replied message.
+from . import get_help
 
-• `{i}remfilter <word>`
-    Remove the filtered user..
-
-• `{i}listfilter`
-    list all filters.
-"""
+__doc__ = get_help("help_filter")
 
 import os
 import re
 
-from pyUltroid.dB.filter_db import add_filter, get_filter, list_filter, rem_filter
-from pyUltroid.functions.tools import create_tl_btn, format_btn, get_msg_button
 from telegraph import upload_file as uf
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
+
+from pyUltroid.dB.filter_db import add_filter, get_filter, list_filter, rem_filter
+from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
 from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ._inline import something
@@ -43,14 +36,14 @@ async def af(e):
         if wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
             variable = uf(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await e.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
             variable = uf(dl)
             os.remove(dl)
-            m = "https://telegra.ph" + variable[0]
+            m = f"https://graph.org{variable[0]}"
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
@@ -81,8 +74,7 @@ async def rf(e):
 
 @ultroid_cmd(pattern="listfilter$")
 async def lsnote(e):
-    x = list_filter(e.chat_id)
-    if x:
+    if x := list_filter(e.chat_id):
         sd = "Filters Found In This Chats Are\n\n"
         return await e.eor(sd + x)
     await e.eor(get_string("flr_6"))
@@ -93,13 +85,11 @@ async def filter_func(e):
         return
     xx = (e.text).lower()
     chat = e.chat_id
-    x = get_filter(chat)
-    if x:
+    if x := get_filter(chat):
         for c in x:
             pat = r"( |^|[^\w])" + re.escape(c) + r"( |$|[^\w])"
             if re.search(pat, xx):
-                k = x.get(c)
-                if k:
+                if k := x.get(c):
                     msg = k["msg"]
                     media = k["media"]
                     if k.get("button"):

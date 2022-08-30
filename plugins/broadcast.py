@@ -4,29 +4,18 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}addch <id/reply to list/none>`
-    Add chat to database. Adds current chat if no id specified.
 
-• `{i}remch <all/id/none>`
-    Removes the specified chat (current chat if none specified), or all chats.
+from . import get_help
 
-• `{i}broadcast <reply to msg>`
-    Send the replied message to all chats in database.
+__doc__ = get_help("help_broadcast")
 
-• `{i}forward <reply to msg>`
-     Forward the message to all chats in database.
-
-• `{i}listchannels`
-    To get list of all added chats.
-"""
 import asyncio
 import io
 
-from pyUltroid.dB.broadcast_db import *
 from telethon.utils import get_display_name
+
+from pyUltroid.dB.broadcast_db import *
 
 from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -76,14 +65,12 @@ async def broadcast_adder(event):
     chat_id = event.chat_id
     if chat_id == udB.get_key("LOG_CHANNEL"):
         return
-    if not is_channel_added(chat_id):
-        xx = add_channel(chat_id)
-        if xx:
-            await x.edit(get_string("bd_5"))
-        else:
-            await x.edit(get_string("sf_8"))
-    else:
+    if is_channel_added(chat_id):
         await x.edit(get_string("bd_6"))
+    elif xx := add_channel(chat_id):
+        await x.edit(get_string("bd_5"))
+    else:
+        await x.edit(get_string("sf_8"))
     await asyncio.sleep(3)
     await x.delete()
 

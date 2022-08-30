@@ -11,15 +11,16 @@
 
 import os
 
-from pyUltroid.dB.asst_fns import *
-from pyUltroid.dB.botchat_db import *
-from pyUltroid.functions.helper import inline_mention
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import Channel, Chat
 from telethon.utils import get_display_name
+
+from pyUltroid.dB.asst_fns import *
+from pyUltroid.dB.botchat_db import *
+from pyUltroid.fns.helper import inline_mention
 
 from . import *
 
@@ -50,7 +51,7 @@ async def on_new_mssg(event):
                 try:
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
-                        uri = "t.me/" + TAHC_.username
+                        uri = f"t.me/{TAHC_.username}"
                     elif CACHE.get(chat):
                         uri = CACHE[chat]
                     else:
@@ -98,7 +99,7 @@ async def on_out_mssg(event):
                 os.remove(photu)
             return
         except BaseException as er:
-            return await event.reply("**ERROR : **" + str(er))
+            return await event.reply(f"**ERROR : **{str(er)}")
     elif event.text.startswith("/"):
         return
     if to_user:

@@ -4,23 +4,19 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}afk <optional reason>`
-    AFK means away from keyboard,
-    After this is activated, if someone tags or messages you, he/she would get an automated reply from the bot.
+from . import get_help
 
-    (Note : Set a media file in afk messages by replying to any media with `{i}afk <reason>`).
+__doc__ = get_help("help_afk")
 
-"""
 
 import asyncio
 
-from pyUltroid.dB.afk_db import add_afk, del_afk, is_afk
-from pyUltroid.dB.pmpermit_db import is_approved
 from telegraph import upload_file as uf
 from telethon import events
+
+from pyUltroid.dB.afk_db import add_afk, del_afk, is_afk
+from pyUltroid.dB.pmpermit_db import is_approved
 
 from . import (
     LOG_CHANNEL,
@@ -53,7 +49,7 @@ async def set_afk(event):
             if media_type.startswith(("pic", "gif")):
                 file = await event.client.download_media(reply.media)
                 iurl = uf(file)
-                media = f"https://telegra.ph{iurl[0]}"
+                media = f"https://graph.org{iurl[0]}"
             else:
                 media = reply.file.id
     await event.eor("`Done`", time=2)

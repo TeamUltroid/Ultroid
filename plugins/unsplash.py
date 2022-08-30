@@ -11,7 +11,7 @@
     Unsplash Image Search.
 """
 
-from pyUltroid.functions.misc import unsplashsearch
+from pyUltroid.fns.misc import unsplashsearch
 
 from . import asyncio, download_file, get_string, os, ultroid_cmd
 
