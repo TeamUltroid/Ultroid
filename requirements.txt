@@ -1,3 +1,5 @@
 # Important Requirements here.
 
 https://github.com/New-dev0/Telethon/archive/Carbon.zip
+python-decouple
+python-dotenv
