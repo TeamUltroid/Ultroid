@@ -78,6 +78,7 @@ async def download(event):
         chat, msg = get_chat_and_msgid(match)
         if not (chat and msg):
             return await event.eor(get_string("gms_1"))
+        match = ""
         ok = await event.client.get_messages(chat, ids=msg)
     elif event.reply_to_msg_id:
         ok = await event.get_reply_message()
