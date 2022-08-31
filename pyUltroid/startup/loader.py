@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import os
+import os, subprocess
 from shutil import rmtree
 
 from decouple import config
@@ -27,6 +27,7 @@ def _after_load(loader, module, plugin_name=""):
             doc = doc_.format(i=HNDLR)
         except Exception as er:
             loader._logger.exception(er)
+            loader._logger.info(f"Error in {plugin_name}: {module}")
             return
         if loader.key in HELP.keys():
             update_cmd = HELP[loader.key]
@@ -64,26 +65,26 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
     # for addons
     if addons:
         if url := udB.get_key("ADDONS_URL"):
-            os.system(f"git clone -q {url} addons")
+            subprocess.run(f"git clone -q {url} addons")
         if os.path.exists("addons") and not os.path.exists("addons/.git"):
             rmtree("addons")
         if not os.path.exists("addons"):
-            os.system(
+            subprocess.run(
                 f"git clone -q -b {Repo().active_branch} https://github.com/TeamUltroid/UltroidAddons.git addons"
             )
         else:
-            os.system("cd addons && git pull -q && cd ..")
+            subprocess.run("cd addons && git pull -q && cd ..")
 
         if not os.path.exists("addons"):
-            os.system(
+            subprocess.run(
                 "git clone -q https://github.com/TeamUltroid/UltroidAddons.git addons"
             )
         if os.path.exists("addons/addons.txt"):
             # generally addons req already there so it won't take much time
-            os.system(
+            subprocess.run(
                 "rm -rf /usr/local/lib/python3.9/site-packages/pip/_vendor/.wh.appdirs.py"
             )
-            os.system("pip3 install --no-cache-dir -q -r ./addons/addons.txt")
+            subprocess.run("pip3 install --no-cache-dir -q -r ./addons/addons.txt")
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
@@ -113,11 +114,11 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
 
             if os.path.exists("vcbot"):
                 if os.path.exists("vcbot/.git"):
-                    os.system("cd vcbot && git pull")
+                    subprocess.run("cd vcbot && git pull")
                 else:
                     rmtree("vcbot")
             if not os.path.exists("vcbot"):
-                os.system("git clone https://github.com/TeamUltroid/VcBot vcbot")
+                subprocess.run("git clone https://github.com/TeamUltroid/VcBot vcbot")
             try:
                 if not os.path.exists("vcbot/downloads"):
                     os.mkdir("vcbot/downloads")
