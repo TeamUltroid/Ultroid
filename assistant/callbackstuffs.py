@@ -808,7 +808,7 @@ async def media(event):
         )
         response = await conv.get_response()
         try:
-            themssg = response.message.message
+            themssg = response.message
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
@@ -947,7 +947,7 @@ async def media(event):
         )
         response = await conv.get_response()
         try:
-            themssg = response.message.message
+            themssg = response.message
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
@@ -1219,7 +1219,7 @@ async def media(event):
         )
         response = await conv.get_response()
         try:
-            themssg = response.message.message
+            themssg = response.message
             if themssg == "/cancel":
                 return await conv.send_message(
                     "Operation cancelled!!",
