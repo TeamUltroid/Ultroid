@@ -64,7 +64,7 @@ async def mi(e):
         else:
             naam = await r.download_media()
     elif match and (os.path.isfile(match) or (match.startswith("https://") and is_url_ok(match))):
-        naam, xx = match, "file
+        naam, xx = match, "file"
     else:
         return await e.eor(get_string("cvt_3"), time=5)
     out, er = await bash(f"mediainfo '{naam}'")
