@@ -45,7 +45,6 @@ install_requirements(){
     echo -e "\n\nInstalling requirements... "
     pip3 install -q --no-cache-dir -r $DIR/requirements.txt
     pip3 install -q -r $DIR/resources/startup/optional-requirements.txt
-    apt install ffmpeg mediainfo -y
 }
 
 railways_dep(){
