@@ -19,8 +19,11 @@ ULTROID = r"""
 """
 
 
-def spinner():
-    print("Checking if Telethon is installed...")
+def spinner(x):
+    if x == "tele":
+        print("Checking if Telethon is installed...")
+    else:
+        print("Checking if Pyrogram is installed...")
     for _ in range(3):
         for frame in r"-\|/-\|/":
             print("\b", frame, sep="", end="", flush=True)
@@ -51,18 +54,17 @@ def get_api_id_and_hash():
 
 def telethon_session():
     try:
-        spinner()
-        import telethon  # ignore: pylint
+        spinner("tele")
 
-        text = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
+        x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except ImportError:
         print("Installing Telethon...")
         os.system("pip uninstall telethon -y && pip install -U telethon")
 
-        text = "\bDone. Installed and imported Telethon."
+        x = "\bDone. Installed and imported Telethon."
     clear_screen()
     print(ULTROID)
-    print(text)
+    print(x)
 
     # the imports
 
@@ -81,7 +83,7 @@ def telethon_session():
         with TelegramClient(StringSession(), API_ID, API_HASH) as ultroid:
             print("Generating a string session for •ULTROID•")
             try:
-                ult = ultroid.send_message(
+                ultroid.send_message(
                     "me",
                     f"**ULTROID** `SESSION`:\n\n`{ultroid.session.save()}`\n\n**Do not share this anywhere!**",
                 )
@@ -110,11 +112,52 @@ def telethon_session():
         print("If you think It as a Bug, Report to @UltroidSupportChat.\n\n")
 
 
+def pyro_session():
+    try:
+        spinner("pyro")
+        from pyrogram import Client
+
+        x = "\bFound an existing installation of Pyrogram...\nSuccessfully Imported.\n\n"
+    except BaseException:
+        print("Installing Pyrogram...")
+        os.system("pip install pyrogram tgcrypto")
+        x = "\bDone. Installed and imported Pyrogram."
+    clear_screen()
+    print(ULTROID)
+    print(x)
+
+    # generate a session
+    API_ID, API_HASH = get_api_id_and_hash()
+    print("Enter phone number when asked.\n\n")
+    with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
+        ss = pyro.export_session_string()
+        pyro.send_message(
+            "me",
+            f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid. **DO NOT SHARE it.**",
+        )
+        print("Session has been sent to your saved messages!")
+        exit(0)
+
+
 def main():
     clear_screen()
     print(ULTROID)
-    telethon_session()
-    x = input("Run again? (y/n)")
+    try:
+        type_of_ss = int(
+            input(
+                "\nUltroid supports both telethon as well as pyrogram sessions.\n\nWhich session do you want to generate?\n1. Telethon Session.\n2. Pyrogram Session.\n\nEnter choice:  "
+            )
+        )
+    except Exception as e:
+        print(e)
+        exit(0)
+    if type_of_ss == 1:
+        telethon_session()
+    elif type_of_ss == 2:
+        pyro_session()
+    else:
+        print("Invalid choice.")
+    x = input("Run again? (Y/n)")
     if x.lower() in ["y", "yes"]:
         main()
     else:
