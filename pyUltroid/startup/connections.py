@@ -30,7 +30,7 @@ DC_IPV4 = {
 }
 
 
-def validate_session(session, logger=LOGS):
+def validate_session(session, logger=LOGS, _exit=True):
     from strings import get_string
     if session:
         # Telethon Session
@@ -63,8 +63,13 @@ def validate_session(session, logger=LOGS):
                     )
                 ).decode("ascii")
             )
+        else:
+            logger.exception(get_string("py_c1"))
+            if _exit:
+                sys.exit()
     logger.exception(get_string("py_c2"))
-    sys.exit()
+    if _exit:
+        sys.exit()
 
 
 def vc_connection(udB, ultroid_bot):
@@ -74,7 +79,7 @@ def vc_connection(udB, ultroid_bot):
         LOGS.info("Starting up VcClient.")
         try:
             return UltroidClient(
-                validate_session(VC_SESSION, LOGS),
+                validate_session(VC_SESSION, _exit=False),
                 log_attempt=False,
                 exit_on_error=False
             )
