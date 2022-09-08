@@ -75,7 +75,7 @@ def vc_connection(udB, ultroid_bot):
             return UltroidClient(
                 validate_session(VC_SESSION, LOGS),
                 log_attempt=False,
-                handle_auth_error=False,
+                exit_on_error=False
             )
         except (AuthKeyDuplicatedError, EOFError):
             LOGS.info(get_string("py_c3"))
