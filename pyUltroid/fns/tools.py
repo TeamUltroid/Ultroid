@@ -16,7 +16,7 @@ from io import BytesIO
 from json.decoder import JSONDecodeError
 from traceback import format_exc
 
-from .. import LOGS
+from .. import LOGS, asst
 from ..exceptions import DependencyMissingError
 
 try:
