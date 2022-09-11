@@ -16,8 +16,9 @@ from io import BytesIO
 from json.decoder import JSONDecodeError
 from traceback import format_exc
 
-from .. import LOGS, asst
+from .. import *
 from ..exceptions import DependencyMissingError
+from .helper import bash, run_async
 
 try:
     import certifi
@@ -39,9 +40,6 @@ except ImportError:
     requests = None
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-
-from .. import *
-from .helper import bash, run_async
 
 if run_as_module:
     from ..dB.filestore_db import get_stored_msg, store_msg
