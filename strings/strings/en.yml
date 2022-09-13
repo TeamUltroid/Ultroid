@@ -471,7 +471,7 @@ sts_8: "`Failed to add sticker, use` @Stickers `bot to add the sticker manually.
 sts_9: "`Ooo Animated Sticker 👀...`"
 sts_10: "`Reply to any media...`"
 sts_11: "Kanging this Sticker..."
-sts_12: "`Kanged!`\n`Emoji- {}\n`Sticker Pack` [here](t.me/addstickers/{})"
+sts_12: "`Kanged!`\n`Emoji-` {}\n`Sticker Pack` [here](t.me/addstickers/{})"
 sts_13: "`Switching to Pack {} due to insufficient space`"
 
 # whichsong
