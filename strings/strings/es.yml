@@ -633,3 +633,7 @@ py_d1: "`No puedes usar este comando ahora.Contacte al propietario de este bot! 
 py_c2: "No se encontró sesión de cadena.Dejar..."
 py_c3: "Tu VC_Session expiró.Eliminar VC_Session de Redis ...\nRenovarlo/Cambiarlo para usar la voz/chat de video desde la cuenta VC ..."
 py_d7: "La conversación ya está encendida, por favor espere en algún momento y luego vuelva a intentarlo."
+ls1: "`El archivo no existe o la ruta es incorrecta!`"
+th_2: "`El archivo respondió no tiene miniatura."
+gms_1: "¡Proporcione un enlace de mensaje válido!"
+th_1: "`Responde a un archivo para descargar su miniatura!`"

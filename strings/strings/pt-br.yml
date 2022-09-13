@@ -635,3 +635,8 @@ py_d1: "`Você não pode usar este comando agora.O proprietário do contato dest
 py_c2: "Nenhuma sessão de string encontrada.Desistindo ..."
 py_c3: "Sua VC_Session expirou.Excluindo vc_session de Redis ...\nRenove/altere para usar o bate -papo por voz/vídeo da conta VC ..."
 py_d7: "A conversa já está ligada, espere em algum momento e tente novamente."
+
+ls1: "`O arquivo não existe ou o caminho está incorreto!`"
+th_2: "`O arquivo respondido não tem miniatura."
+gms_1: "Forneça um link de mensagem válido!"
+th_1: "`Por favor, responda a um arquivo para baixar sua miniatura!`"

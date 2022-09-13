@@ -522,3 +522,7 @@ py_d1: "«Vous ne pouvez pas utiliser cette commande maintenant.Contactez le pro
 py_c2: "Aucune session de chaîne trouvée.En quittant..."
 py_c3: "Votre VC_SESSION a expiré.Suppression de VC_Session de Redis ...\nRenouveler / changer pour utiliser le chat vocal / vidéo à partir du compte VC ..."
 py_d7: "La conversation est déjà allumée, veuillez attendre un jour, puis réessayer."
+ls1: "`Le fichier n'existe pas ou le chemin est incorrect!"
+th_2: "`Le fichier répondu n'a pas de vignette."
+gms_1: "Fournissez un lien de message valide!"
+th_1: "«Veuillez répondre à un fichier pour télécharger sa miniature!»"
