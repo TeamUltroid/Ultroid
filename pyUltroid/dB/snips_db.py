@@ -27,9 +27,7 @@ def rem_snip(word):
 
 def get_snips(word):
     ok = get_all_snips()
-    if ok.get(word):
-        return ok[word]
-    return False
+    return ok[word] if ok.get(word) else False
 
 
 def list_snip():

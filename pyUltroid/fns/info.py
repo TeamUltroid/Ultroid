@@ -94,10 +94,11 @@ async def get_chat_info(chat, event):
         else None
     )
     created = msg_info.messages[0].date if first_msg_valid else None
-    if not isinstance(chat.photo, types.ChatPhotoEmpty):
-        dc_id = chat.photo.dc_id
-    else:
-        dc_id = "Null"
+    dc_id = (
+        "Null"
+        if isinstance(chat.photo, types.ChatPhotoEmpty)
+        else chat.photo.dc_id
+    )
 
     restricted_users = getattr(full, "banned_count", None)
     members = getattr(full, "participants_count", chat.participants_count)
@@ -112,7 +113,7 @@ async def get_chat_info(chat, event):
     messages_sent_alt = getattr(full, "read_outbox_max_id", None)
     exp_count = getattr(full, "pts", None)
     supergroup = "<b>Yes</b>" if getattr(chat, "megagroup", None) else "No"
-    creator_username = "@{}".format(creator_username) if creator_username else None
+    creator_username = f"@{creator_username}" if creator_username else None
 
     if admins is None:
         try:
@@ -170,7 +171,7 @@ async def get_chat_info(chat, event):
         caption += f'📹 <b>{chat_type} stickers:</b> <a href="t.me/addstickers/{full.stickerset.short_name}">{group_stickers}</a>\n'
     if not broadcast:
         if getattr(chat, "slowmode_enabled", None):
-            caption += f"👉 <b>Slow mode:</b> <code>True</code>"
+            caption += "👉 <b>Slow mode:</b> <code>True</code>"
             caption += f", 🕐 <code>{full.slowmode_seconds}s</code>\n"
         else:
             caption += f"🦸‍♂ <b>Supergroup:</b> {supergroup}\n"

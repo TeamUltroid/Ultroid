@@ -68,7 +68,7 @@ async def mean(event):
     pattern="(syno|anto)nym",
 )
 async def mean(event):
-    task = event.pattern_match.group(1) + "nyms"
+    task = f"{event.pattern_match.group(1)}nyms"
     try:
         wrd = event.text.split(maxsplit=1)[1]
     except IndexError:

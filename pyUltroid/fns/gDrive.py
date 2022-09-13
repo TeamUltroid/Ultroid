@@ -232,7 +232,7 @@ class GDriveManager:
             )
             .execute()
         )
-        _files = {}
-        for files in _items["items"]:
-            _files[self._create_download_link(files["id"])] = files["title"]
-        return _files
+        return {
+            self._create_download_link(files["id"]): files["title"]
+            for files in _items["items"]
+        }

@@ -51,9 +51,7 @@ class UltroidClient(TelegramClient):
         self.dc_id = self.session.dc_id
 
     def __repr__(self):
-        return "<Ultroid.Client :\n self: {}\n bot: {}\n>".format(
-            self.full_name, self._bot
-        )
+        return f"<Ultroid.Client :\n self: {self.full_name}\n bot: {self._bot}\n>"
 
     @property
     def __dict__(self):
@@ -170,7 +168,7 @@ class UltroidClient(TelegramClient):
         """Download files in a faster way"""
         # Set to True and pass event to show progress bar.
         show_progress = kwargs.get("show_progress", False)
-        filename = kwargs.get("filename", None)
+        filename = kwargs.get("filename")
         if show_progress:
             event = kwargs["event"]
         # Don't show progress bar when file size is less than 10MB.

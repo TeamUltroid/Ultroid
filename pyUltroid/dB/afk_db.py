@@ -21,8 +21,7 @@ def add_afk(msg, media_type, media):
 
 
 def is_afk():
-    afk = get_stuff()
-    if afk:
+    if afk := get_stuff():
         start_time = dt.strptime(afk[3], "%b %d %Y %I:%M:%S%p")
         afk_since = str(dt.now().replace(microsecond=0) - start_time)
         return afk[0], afk[1], afk[2], afk_since

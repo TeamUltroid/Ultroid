@@ -219,7 +219,7 @@ async def imgscan(event):
         try:
             from skimage.filters import threshold_local
         except ImportError:
-            LOGS.info(f"Scikit-Image is not Installed.")
+            LOGS.info("Scikit-Image is not Installed.")
             await xx.edit("`Installing Scikit-Image...\nThis may take some long...`")
             _, __ = await bash("pip install scikit-image")
             LOGS.info(_)
@@ -288,7 +288,7 @@ async def savepdf(event):
             try:
                 from skimage.filters import threshold_local
             except ImportError:
-                LOGS.info(f"Scikit-Image is not Installed.")
+                LOGS.info("Scikit-Image is not Installed.")
                 await xx.edit(
                     "`Installing Scikit-Image...\nThis may take some long...`"
                 )

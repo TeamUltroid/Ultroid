@@ -193,8 +193,10 @@ async def _(event):
             # Consider it as Code Error, and move on to be shown ahead.
             pass
     reply_to_id = event.reply_to_msg_id or event
-    if any(item in cmd for item in KEEP_SAFE().All) and (
-        not (event.out or event.sender_id == ultroid_bot.uid)
+    if (
+        any(item in cmd for item in KEEP_SAFE().All)
+        and not event.out
+        and event.sender_id != ultroid_bot.uid
     ):
         warning = await event.forward_to(udB.get_key("LOG_CHANNEL"))
         await warning.reply(
@@ -241,7 +243,7 @@ async def _(event):
         return
     tmt = tima * 1000
     timef = time_formatter(tmt)
-    timeform = timef if not timef == "0s" else f"{tmt:.3f}ms"
+    timeform = timef if timef != "0s" else f"{tmt:.3f}ms"
     final_output = "__►__ **EVAL** (__in {}__)\n```{}``` \n\n __►__ **OUTPUT**: \n```{}``` \n".format(
         timeform,
         cmd,

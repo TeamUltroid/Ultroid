@@ -60,7 +60,7 @@ async def download_yt(event, link, ytd):
         for num, file in enumerate(info["entries"]):
             num += 1
             id_ = file["id"]
-            thumb = id_ + ".jpg"
+            thumb = f"{id_}.jpg"
             title = file["title"]
             await download_file(
                 file.get("thumbnail", None) or file["thumbnails"][-1]["url"], thumb
@@ -117,9 +117,9 @@ async def download_yt(event, link, ytd):
         return
     title = info["title"]
     if len(title) > 20:
-        title = title[:17] + "..."
+        title = f"{title[:17]}..."
     id_ = info["id"]
-    thumb = id_ + ".jpg"
+    thumb = f"{id_}.jpg"
     await download_file(
         info.get("thumbnail", None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
         thumb,
@@ -170,15 +170,15 @@ def get_formats(type, id, data):
     if type == "audio":
         audio = []
         for _quality in ["64", "128", "256", "320"]:
-            _audio = {}
-            _audio.update(
+            _audio = dict(
                 {
                     "ytid": id,
                     "type": "audio",
                     "id": _quality,
-                    "quality": _quality + "KBPS",
+                    "quality": f"{_quality}KBPS",
                 }
             )
+
             audio.append(_audio)
         return audio
     if type == "video":
@@ -193,17 +193,17 @@ def get_formats(type, id, data):
                 _size = size + (vid["filesize"] if vid.get("filesize") else 0)
                 _ext = "mkv" if vid["ext"] == "webm" else "mp4"
                 if _size < 2147483648:  # Telegram's Limit of 2GB
-                    _video = {}
-                    _video.update(
+                    _video = dict(
                         {
                             "ytid": id,
                             "type": "video",
-                            "id": str(_id) + "+251",
+                            "id": f"{_id}+251",
                             "quality": _quality,
                             "size": _size,
                             "ext": _ext,
                         }
                     )
+
                     video.append(_video)
         return video
     return []
@@ -261,9 +261,9 @@ def get_videos_link(url):
     regex = re.search(r"\?list=([(\w+)\-]*)", url)
     if not regex:
         return to_return
-    playlist_id = regex.group(1)
+    playlist_id = regex[1]
     videos = Playlist(playlist_id)
     for vid in videos.videos:
-        link = re.search(r"\?v=([(\w+)\-]*)", vid["link"]).group(1)
+        link = re.search(r"\?v=([(\w+)\-]*)", vid["link"])[1]
         to_return.append(f"https://youtube.com/watch?v={link}")
     return to_return

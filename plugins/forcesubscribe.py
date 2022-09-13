@@ -67,10 +67,10 @@ async def addfor(e):
 
 @ultroid_cmd(pattern="remfsub$")
 async def remor(e):
-    res = rem_forcesub(e.chat_id)
-    if not res:
+    if res := rem_forcesub(e.chat_id):
+        await e.eor("Removed ForceSub...")
+    else:
         return await e.eor(get_string("fsub_3"), time=5)
-    await e.eor("Removed ForceSub...")
 
 
 @ultroid_cmd(pattern="checkfsub$")

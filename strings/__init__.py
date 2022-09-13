@@ -48,13 +48,15 @@ def get_string(key: str, _res: bool = True) -> Any:
             pass
         except Exception as er:
             LOGS.exception(er)
-        if not _res:
-            return None
-        return languages["en"].get(key) or f"Failed to load language string '{key}'"
+        return (
+            languages["en"].get(key)
+            or f"Failed to load language string '{key}'"
+            if _res
+            else None
+        )
 
 def get_help(key):
-    doc = get_string(key, _res=False)
-    if doc:
+    if doc := get_string(key, _res=False):
         return get_string("cmda") + doc
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:

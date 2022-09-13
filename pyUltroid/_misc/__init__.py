@@ -54,7 +54,7 @@ class _SudoManager:
         return [int(_) for _ in fsudos]
 
     def is_sudo(self, id_):
-        return bool(id_ in self.get_sudos())
+        return id_ in self.get_sudos()
 
 
 SUDO_M = _SudoManager()

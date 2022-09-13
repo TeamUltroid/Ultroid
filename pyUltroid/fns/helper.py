@@ -83,7 +83,7 @@ def make_mention(user, custom=None):
 
 
 def inline_mention(user, custom=None, html=False):
-    mention_text = get_display_name(user) or "Deleted Account" if not custom else custom
+    mention_text = custom or get_display_name(user) or "Deleted Account"
     if isinstance(user, types.User):
         if html:
             return f"<a href=tg://user?id={user.id}>{mention_text}</a>"
@@ -164,7 +164,7 @@ if run_as_module:
             return await eor(ok, f"**ERROR**\n\n`{format_exc()}`", time=30)
         plug = sm.replace(".py", "")
         if plug in HELP:
-            output = "**Plugin** - `{}`\n".format(plug)
+            output = f"**Plugin** - `{plug}`\n"
             for i in HELP[plug]:
                 output += i
             output += "\n© @TeamUltroid"
@@ -436,18 +436,17 @@ def time_formatter(milliseconds):
     days, hours = divmod(hours, 24)
     weeks, days = divmod(days, 7)
     tmp = (
-        ((str(weeks) + "w:") if weeks else "")
-        + ((str(days) + "d:") if days else "")
-        + ((str(hours) + "h:") if hours else "")
-        + ((str(minutes) + "m:") if minutes else "")
-        + ((str(seconds) + "s") if seconds else "")
+        (f"{str(weeks)}w:" if weeks else "")
+        + (f"{str(days)}d:" if days else "")
+        + (f"{str(hours)}h:" if hours else "")
+        + (f"{str(minutes)}m:" if minutes else "")
+        + (f"{str(seconds)}s" if seconds else "")
     )
+
     if not tmp:
         return "0s"
 
-    if tmp.endswith(":"):
-        return tmp[:-1]
-    return tmp
+    return tmp[:-1] if tmp.endswith(":") else tmp
 
 
 def humanbytes(size):
@@ -497,10 +496,11 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         speed = current / diff
         time_to_completion = round((total - current) / speed) * 1000
         progress_str = "`[{0}{1}] {2}%`\n\n".format(
-            "".join("●" for i in range(math.floor(percentage / 5))),
-            "".join("" for i in range(20 - math.floor(percentage / 5))),
+            "".join("●" for _ in range(math.floor(percentage / 5))),
+            "".join("" for _ in range(20 - math.floor(percentage / 5))),
             round(percentage, 2),
         )
+
 
         tmp = (
             progress_str
@@ -512,11 +512,9 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
             )
         )
         if file_name:
-            await event.edit(
-                "`✦ {}`\n\n`File Name: {}`\n\n{}".format(type_of_ps, file_name, tmp)
-            )
+            await event.edit(f"`✦ {type_of_ps}`\n\n`File Name: {file_name}`\n\n{tmp}")
         else:
-            await event.edit("`✦ {}`\n\n{}".format(type_of_ps, tmp))
+            await event.edit(f"`✦ {type_of_ps}`\n\n{tmp}")
 
 
 # ------------------System\\Heroku stuff----------------
@@ -537,23 +535,23 @@ async def restart(ult=None):
                     ult,
                     "`HEROKU_API` or `HEROKU_APP_NAME` is wrong! Kindly re-check in config vars.",
                 )
-            LOGS.exception(er)
+            else:
+                LOGS.exception(er)
+    elif len(sys.argv) == 1:
+        os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
     else:
-        if len(sys.argv) == 1:
-            os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
-        else:
-            os.execl(
-                sys.executable,
-                sys.executable,
-                "-m",
-                "pyUltroid",
-                sys.argv[1],
-                sys.argv[2],
-                sys.argv[3],
-                sys.argv[4],
-                sys.argv[5],
-                sys.argv[6],
-            )
+        os.execl(
+            sys.executable,
+            sys.executable,
+            "-m",
+            "pyUltroid",
+            sys.argv[1],
+            sys.argv[2],
+            sys.argv[3],
+            sys.argv[4],
+            sys.argv[5],
+            sys.argv[6],
+        )
 
 
 async def shutdown(ult):

@@ -13,9 +13,9 @@ def is_autoban_enabled(chat_id: int) -> bool:
 
 def add_channel(chat_id: int) -> bool:
     """Enable channel ban in a given chat."""
-    if not is_autoban_enabled(int(chat_id)):
+    if not is_autoban_enabled(chat_id):
         channels = get_all_channels()
-        channels[int(chat_id)] = []
+        channels[chat_id] = []
         return udB.set_key("AUTOBAN_CHANNELS", channels)
 
 
@@ -23,7 +23,7 @@ def del_channel(chat_id: int) -> bool:
     """Disable channel ban in a given chat."""
     if is_autoban_enabled(chat_id):
         channels = get_all_channels()
-        channels.pop(int(chat_id))
+        channels.pop(chat_id)
         return udB.set_key("AUTOBAN_CHANNELS", channels)
 
 
@@ -39,17 +39,15 @@ def is_whitelisted(chat_id: int, channel_id: int) -> bool:
 
 def add_to_whitelist(chat_id: int, channel_id: int) -> bool:
     """Add a channel in whitelist in a chat."""
-    if is_autoban_enabled(chat_id):
-        if not is_whitelisted(chat_id, channel_id):
-            channels = get_all_channels()
-            channels[int(chat_id)].append(int(channel_id))
-            return udB.set_key("AUTOBAN_CHANNELS", channels)
+    if is_autoban_enabled(chat_id) and not is_whitelisted(chat_id, channel_id):
+        channels = get_all_channels()
+        channels[chat_id].append(channel_id)
+        return udB.set_key("AUTOBAN_CHANNELS", channels)
 
 
 def del_from_whitelist(chat_id: int, channel_id: int) -> bool:
     """Remove a channel from whitelist in a chat."""
-    if is_autoban_enabled(chat_id):
-        if is_whitelisted(chat_id, channel_id):
-            channels = get_all_channels()
-            channels[int(chat_id)].remove(int(channel_id))
-            return udB.set_key("AUTOBAN_CHANNELS", channels)
+    if is_autoban_enabled(chat_id) and is_whitelisted(chat_id, channel_id):
+        channels = get_all_channels()
+        channels[chat_id].remove(channel_id)
+        return udB.set_key("AUTOBAN_CHANNELS", channels)

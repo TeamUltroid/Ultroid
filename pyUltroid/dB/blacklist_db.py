@@ -33,8 +33,7 @@ def rem_blacklist(chat, word):
 def list_blacklist(chat):
     ok = get_stuff()
     if ok.get(chat):
-        txt = "".join(f"👉`{z}`\n" for z in ok[chat])
-        if txt:
+        if txt := "".join(f"👉`{z}`\n" for z in ok[chat]):
             return txt
 
 

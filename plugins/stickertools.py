@@ -94,7 +94,7 @@ async def pack_kangish(_):
         docs = _get_stiks.documents
     else:
         docs = []
-        files = glob.glob(cmdtext + "/*")
+        files = glob.glob(f"{cmdtext}/*")
         exte = files[-1]
         if exte.endswith(".tgs"):
             typee = "anim"

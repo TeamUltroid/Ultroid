@@ -228,9 +228,7 @@ async def _(ult):
 )
 async def _(ult):
     match = ult.pattern_match.group(1).strip()
-    chat = ult.chat_id
-    if not ult.client._bot and match:
-        chat = match
+    chat = match if not ult.client._bot and match else ult.chat_id
     try:
         await ult.client(EditPhotoRequest(chat, types.InputChatPhotoEmpty()))
         text = "`Removed Chat Photo..`"

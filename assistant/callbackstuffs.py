@@ -409,10 +409,10 @@ async def _(e):
 @callback(re.compile("cbs_(.*)"), owner=True)
 async def _edit_to(event):
     match = event.data_match.group(1).decode("utf-8")
-    data = _buttons.get(match)
-    if not data:
+    if data := _buttons.get(match):
+        await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
+    else:
         return
-    await event.edit(data["text"], buttons=data["buttons"], link_preview=False)
 
 
 @callback(re.compile("abs_(.*)"), owner=True)

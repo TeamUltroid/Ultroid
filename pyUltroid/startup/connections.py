@@ -39,9 +39,8 @@ def validate_session(session, logger=LOGS):
                 logger.exception(get_string("py_c1"))
                 sys.exit()
             return StringSession(session)
-        # Pyrogram Session
         elif len(session) in _PYRO_FORM.keys():
-            if len(session) in [351, 356]:
+            if len(session) in {351, 356}:
                 dc_id, _, auth_key, _, _ = struct.unpack(
                     _PYRO_FORM[len(session)],
                     base64.urlsafe_b64decode(session + "=" * (-len(session) % 4)),

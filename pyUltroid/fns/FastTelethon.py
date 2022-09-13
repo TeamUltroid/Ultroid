@@ -174,9 +174,7 @@ class ParallelTransferrer:
         file_size: int,
     ) -> int:
         full_size = 100 * (1024**2)
-        if file_size > full_size:
-            return 20
-        return math.ceil((file_size / full_size) * 20)
+        return 20 if file_size > full_size else math.ceil((file_size / full_size) * 20)
 
     async def _init_download(
         self, connections: int, file: TypeLocation, part_count: int, part_size: int
@@ -325,10 +323,10 @@ parallel_transfer_locks: DefaultDict[int, asyncio.Lock] = defaultdict(
 
 def stream_file(file_to_stream: BinaryIO, chunk_size=1024):
     while True:
-        data_read = file_to_stream.read(chunk_size)
-        if not data_read:
+        if data_read := file_to_stream.read(chunk_size):
+            yield data_read
+        else:
             break
-        yield data_read
 
 
 async def _internal_transfer_to_telegram(

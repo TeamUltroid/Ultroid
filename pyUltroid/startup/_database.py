@@ -97,8 +97,7 @@ class _BaseDatabase:
         return self.set(str(key), str(value))
 
     def rename(self, key1, key2):
-        _ = self.get_key(key1)
-        if _:
+        if _ := self.get_key(key1):
             self.del_key(key1)
             self.set_key(key2, _)
             return 0

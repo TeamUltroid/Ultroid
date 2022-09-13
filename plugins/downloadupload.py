@@ -91,9 +91,9 @@ async def download(event):
     k = time.time()
     if hasattr(ok.media, "document"):
         file = ok.media.document
-        mime_type = file.mime_type
         filename = match or ok.file.name
         if not filename:
+            mime_type = file.mime_type
             if "audio" in mime_type:
                 filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
             elif "video" in mime_type:

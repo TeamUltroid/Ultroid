@@ -31,9 +31,7 @@ def where_hosted():
         return "github actions"
     if os.getenv("ANDROID_ROOT"):
         return "termux"
-    if os.getenv("FLY_APP_NAME"):
-        return "fly.io"
-    return "local"
+    return "fly.io" if os.getenv("FLY_APP_NAME") else "local"
 
 
 if run_as_module:

@@ -45,9 +45,9 @@ async def mi(e):
 
         if hasattr(r.media, "document"):
             file = r.media.document
-            mime_type = file.mime_type
             filename = r.file.name
             if not filename:
+                mime_type = file.mime_type
                 if "audio" in mime_type:
                     filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
                 elif "video" in mime_type:

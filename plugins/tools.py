@@ -106,8 +106,7 @@ async def _(event):
 )
 async def _(event):
     ult = event
-    match = event.pattern_match.group(1).strip()
-    if match:
+    if match := event.pattern_match.group(1).strip():
         try:
             ids = await event.client.parse_id(match)
         except Exception as er:

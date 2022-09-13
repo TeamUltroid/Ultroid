@@ -84,7 +84,6 @@ async def randomchannel(
 
 
 async def YtDataScraper(url: str):
-    to_return = {}
     data = json_parser(
         BeautifulSoup(
             await async_searcher(url),
@@ -104,24 +103,23 @@ async def YtDataScraper(url: str):
     description = "".join(
         description_datum["text"] for description_datum in description_data
     )
-    to_return["title"] = common_data["title"]["runs"][0]["text"]
-    to_return["views"] = (
-        common_data["viewCount"]["videoViewCountRenderer"]["shortViewCount"][
+    return {
+        "title": common_data["title"]["runs"][0]["text"],
+        "views": common_data["viewCount"]["videoViewCountRenderer"][
+            "shortViewCount"
+        ]["simpleText"]
+        or common_data["viewCount"]["videoViewCountRenderer"]["viewCount"][
             "simpleText"
-        ]
-        or common_data["viewCount"]["videoViewCountRenderer"]["viewCount"]["simpleText"]
-    )
-    to_return["publish_date"] = common_data["dateText"]["simpleText"]
-    to_return["likes"] = (
-        common_data["videoActions"]["menuRenderer"]["topLevelButtons"][0][
-            "toggleButtonRenderer"
-        ]["defaultText"]["simpleText"]
-        or like_dislike[0]["toggleButtonRenderer"]["defaultText"]["accessibility"][
-            "accessibilityData"
-        ]["label"]
-    )
-    to_return["description"] = description
-    return to_return
+        ],
+        "publish_date": common_data["dateText"]["simpleText"],
+        "likes": common_data["videoActions"]["menuRenderer"][
+            "topLevelButtons"
+        ][0]["toggleButtonRenderer"]["defaultText"]["simpleText"]
+        or like_dislike[0]["toggleButtonRenderer"]["defaultText"][
+            "accessibility"
+        ]["accessibilityData"]["label"],
+        "description": description,
+    }
 
 
 # --------------------------------------------------
@@ -135,7 +133,7 @@ async def google_search(query):
         "Connection": "keep-alive",
         "User-Agent": choice(some_random_headers),
     }
-    con = await async_searcher(_base + "/search?q=" + query, headers=headers)
+    con = await async_searcher(f"{_base}/search?q={query}", headers=headers)
     soup = BeautifulSoup(con, "html.parser")
     result = []
     pdata = soup.find_all("a", href=re.compile("url="))
@@ -196,7 +194,7 @@ async def ReTrieveFile(input_file_name):
 
 async def unsplashsearch(query, limit=None, shuf=True):
     query = query.replace(" ", "-")
-    link = "https://unsplash.com/s/photos/" + query
+    link = f"https://unsplash.com/s/photos/{query}"
     extra = await async_searcher(link, re_content=True)
     res = BeautifulSoup(extra, "html.parser", from_encoding="utf-8")
     all_ = res.find_all("img", "YVj9w")
@@ -393,7 +391,7 @@ class Quotly:
 
     async def _format_quote(self, event, reply=None, sender=None, type_="private"):
         async def telegraph(file_):
-            file = file_ + ".png"
+            file = f"{file_}.png"
             Image.open(file_).save(file, "PNG")
             files = {"file": open(file, "rb").read()}
             uri = (
