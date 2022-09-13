@@ -65,12 +65,13 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
     # for addons
     if addons:
         if url := udB.get_key("ADDONS_URL"):
-            subprocess.run(f"git clone -q {url} addons")
+            subprocess.run(f"git clone -q {url} addons", shell=True)
         if os.path.exists("addons") and not os.path.exists("addons/.git"):
             rmtree("addons")
         if not os.path.exists("addons"):
             subprocess.run(
                 f"git clone -q -b {Repo().active_branch} https://github.com/TeamUltroid/UltroidAddons.git addons"
+                shell=True,
             )
         else:
             subprocess.run("cd addons && git pull -q && cd ..", shell=True)
@@ -78,13 +79,14 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
         if not os.path.exists("addons"):
             subprocess.run(
                 "git clone -q https://github.com/TeamUltroid/UltroidAddons.git addons"
+                shell=True,
             )
         if os.path.exists("addons/addons.txt"):
             # generally addons req already there so it won't take much time
             subprocess.run(
                 "rm -rf /usr/local/lib/python3.9/site-packages/pip/_vendor/.wh.appdirs.py"
             )
-            subprocess.run("pip3 install --no-cache-dir -q -r ./addons/addons.txt")
+            subprocess.run("pip3 install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
@@ -118,7 +120,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
                 else:
                     rmtree("vcbot")
             if not os.path.exists("vcbot"):
-                subprocess.run("git clone https://github.com/TeamUltroid/VcBot vcbot")
+                subprocess.run("git clone https://github.com/TeamUltroid/VcBot vcbot", shell=True)
             try:
                 if not os.path.exists("vcbot/downloads"):
                     os.mkdir("vcbot/downloads")
