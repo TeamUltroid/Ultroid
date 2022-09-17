@@ -200,10 +200,7 @@ if udB.get_key("PMSETTING"):
             incoming=True,
             func=lambda e: e.is_private
             and e.sender_id not in DEVLIST
-            and not e.out
-            and not e.sender.bot
-            and not e.sender.is_self
-            and not e.sender.verified,
+            and not e.sender
         )
     )
     async def permitpm(event):
