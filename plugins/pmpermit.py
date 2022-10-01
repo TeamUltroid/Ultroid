@@ -198,7 +198,12 @@ if udB.get_key("PMSETTING"):
     @ultroid_bot.on(
         events.NewMessage(
             incoming=True,
-            func=lambda e: e.is_private and e.sender_id not in DEVLIST and not e.sender,
+            func=lambda e: e.is_private
+            and e.sender_id not in DEVLIST
+            and not e.out
+            and not e.sender.bot
+            and not e.sender.is_self
+            and not e.sender.verified,
         )
     )
     async def permitpm(event):
