@@ -41,6 +41,7 @@ clone_repo(){
 }
 
 install_requirements(){
+    pip install --upgrade pip
     echo -e "\n\nInstalling requirements... "
     pip3 install -q --no-cache-dir -r $DIR/requirements.txt
     pip3 install -q -r $DIR/resources/startup/optional-requirements.txt

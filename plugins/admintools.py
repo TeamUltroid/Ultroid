@@ -43,7 +43,6 @@ from . import (
 )
 async def prmte(ult):
     xx = await ult.eor(get_string("com_1"))
-    await ult.get_chat()
     user, rank = await get_uinfo(ult)
     rank = rank or "Admin"
     FullRight = False
@@ -87,7 +86,6 @@ async def prmte(ult):
 )
 async def dmote(ult):
     xx = await ult.eor(get_string("com_1"))
-    await ult.get_chat()
     user, rank = await get_uinfo(ult)
     if not rank:
         rank = "Not Admin"

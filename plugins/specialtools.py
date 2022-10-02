@@ -210,7 +210,7 @@ async def hbd(event):
     elif month == "09":
         sign = "Virgo" if (day < 23) else "Libra"
     elif month == "10":
-        sign = "Libra" if (day < 23) else "Scorpion"
+        sign = "Libra" if (day < 23) else "Scorpio"
     elif month == "11":
         sign = "Scorpio" if (day < 22) else "Sagittarius"
     elif month == "12":

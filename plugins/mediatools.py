@@ -7,7 +7,7 @@
 """
 ✘ Commands Available -
 
-• `{i}mediainfo <reply to media>`
+• `{i}mediainfo <reply to media>/<file path>/<url>`
    To get info about it.
 
 • `{i}rotate <degree/angle> <reply to media>`
@@ -21,7 +21,16 @@ from datetime import datetime as dt
 from pyUltroid.fns.misc import rotate_image
 from pyUltroid.fns.tools import make_html_telegraph
 
-from . import LOGS, Telegraph, bash, downloader, get_string, mediainfo, ultroid_cmd
+from . import (
+    LOGS,
+    Telegraph,
+    bash,
+    downloader,
+    get_string,
+    is_url_ok,
+    mediainfo,
+    ultroid_cmd,
+)
 
 try:
     import cv2
@@ -63,7 +72,9 @@ async def mi(e):
             naam = dl.name
         else:
             naam = await r.download_media()
-    elif match and os.path.isfile(match):
+    elif match and (
+        os.path.isfile(match) or (match.startswith("https://") and is_url_ok(match))
+    ):
         naam, xx = match, "file"
     else:
         return await e.eor(get_string("cvt_3"), time=5)
@@ -74,7 +85,10 @@ async def mi(e):
         return await e.edit(out, link_preview=False)
     makehtml = ""
     if naam.endswith((".jpg", ".png")):
-        med = "https://graph.org" + Telegraph.upload_file(naam)[0]["src"]
+        if os.path.exists(naam):
+            med = "https://graph.org" + Telegraph.upload_file(naam)[0]["src"]
+        else:
+            med = match
         makehtml += f"<img src='{med}'><br>"
     for line in out.split("\n"):
         line = line.strip()

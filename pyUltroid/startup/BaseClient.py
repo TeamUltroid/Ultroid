@@ -33,13 +33,13 @@ class UltroidClient(TelegramClient):
         udB=None,
         logger: Logger = LOGS,
         log_attempt=True,
-        handle_auth_error=True,
+        exit_on_error=True,
         *args,
         **kwargs,
     ):
         self._cache = {}
         self._dialogs = []
-        self._handle_error = handle_auth_error
+        self._handle_error = exit_on_error
         self._log_at = log_attempt
         self.logger = logger
         self.udB = udB
@@ -74,7 +74,7 @@ class UltroidClient(TelegramClient):
             if self._handle_error:
                 self.logger.critical("String session expired. Create new!")
                 return sys.exit()
-            raise er
+            self.logger.critical("String session expired.")
         except (AccessTokenExpiredError, AccessTokenInvalidError):
             # AccessTokenError can only occur for Bot account
             # And at Early Process, Its saved in DB.
