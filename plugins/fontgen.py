@@ -28,7 +28,6 @@ Fonts = {
 async def _(e):
     input = e.pattern_match.group(1).strip()
     reply = await e.get_reply_message()
-    help = __doc__.format(i=HNDLR)
     if not input:
         m = "**Available Fonts**\n\n"
         for x in Fonts.keys():
