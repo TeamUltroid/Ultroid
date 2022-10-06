@@ -3,3 +3,6 @@
 https://github.com/New-dev0/Telethon/archive/diamond.zip
 python-decouple
 python-dotenv
+pytgcalls==3.0.0.dev22
+pyrogram
+tgcrypto
