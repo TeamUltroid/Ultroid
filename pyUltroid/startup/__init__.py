@@ -45,9 +45,6 @@ if run_as_module:
 
     file = f"ultroid{sys.argv[6]}.log" if len(sys.argv) > 6 else "ultroid.log"
 
-    if os.path.exists(file):
-        os.remove(file)
-
     HOSTED_ON = where_hosted()
     LOGS = getLogger("pyUltLogs")
     TelethonLogger = getLogger("Telethon")
@@ -70,7 +67,7 @@ if run_as_module:
         format=_LOG_FORMAT,
         level=INFO,
         datefmt="%m/%d/%Y, %H:%M:%S",
-        handlers=[FileHandler(file), StreamHandler()],
+        handlers=[FileHandler(file, mode="w", encoding="utf-8"), StreamHandler()],
     )
     try:
 
