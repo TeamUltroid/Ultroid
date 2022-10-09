@@ -12,7 +12,7 @@
 | fa | Persian [Farsi] | 491 | 3 |
 | fr | French [Français] | 490 | 4 |
 | gu | Gujarati [ગુજરાતી] | 490 | 4 |
-| hi | Hindi [हिंदी] | 490 | 4 |
+| hi | Hindi [हिंदी] | 489 | 5 |
 | id | Indonesia [Indonesia] | 490 | 4 |
 | it | Italian [italiano] | 490 | 4 |
 | jp | Japanese [日本] | 490 | 4 |
