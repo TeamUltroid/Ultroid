@@ -20,7 +20,7 @@
 | ml | Malayalam [മലയാളം] | 490 | 4 |
 | mr | Marathi [मराठी] | 491 | 3 |
 | my | Malay [Bahasa Melayu] | 490 | 4 |
-| or | Odia [ଓଡିଆ] | 143 | 351 |
+| or | Odia [ଓଡିଆ] | 149 | 345 |
 | pt-br | Português [Português] | 490 | 4 |
 | ru | Russian [Русский] | 490 | 4 |
 | si | sinhala [සිංහල] | 490 | 4 |
