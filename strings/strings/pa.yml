@@ -474,28 +474,28 @@ sts_13: "`Switching to Pack {} due to insufficient space`"
 whs_1: "<• Reply to Audio File •>"
 whs_2: "`Trying to identify the song....`"
 whs_3: "Failed to Identify song :("
-whs_4: "**Song Recognised!**\nName: __{}__"
+whs_4: "**ਗੀਤ ਪਛਾਣਿਆ ਗਿਆ!**\nਨਾਮ: __{}__"
 
 # webupload
-wbl_1: "`Provide a File Name pls..`"
+wbl_1: "`ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਫਾਈਲ ਨਾਮ ਪ੍ਰਦਾਨ ਕਰੋ ...`"
 
 # writer
 writer_1: "`ਕੁਝ ਟੈਕਸਟ ਵੀ ਦਿਓ`"
 
 # webshot
-wbs_1: "`Give a URL please!`"
-wbs_2: "Invalid URL!"
-wbs_3: "**WebShot Generated**\n**URL**: {}"
+wbs_1: "`ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ URL ਦਿਓ!`"
+wbs_2: "ਅਵੈਧ URL!"
+wbs_3: "**ਵੈਬਸ਼ੌਟ ਤਿਆਰ ਕੀਤਾ ਗਿਆ**\n**URL**: {}"
 
 # youtube
-youtube_1: "Give me a (youtube) URL to download audio from!"
-youtube_2: "`Give A Direct Audio Link To Download`"
-youtube_3: "Give me a (youtube) URL to download video from!"
-youtube_4: "`Give A Direct Video Link To Download`"
-youtube_5: "Give me a (youtube) search query to download audio from!"
-youtube_6: "`Downloading audio song...`"
-youtube_7: "Give me a (youtube) search query to download video from!"
-youtube_8: "`Downloading video song...`"
+youtube_1: "ਆਡੀਓ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਮੈਨੂੰ ਇੱਕ (youtube) URL ਦਿਓ!"
+youtube_2: "`ਡਾਉਨਲੋਡ ਕਰਨ ਲਈ ਸਿੱਧਾ ਆਡੀਓ ਲਿੰਕ ਦਿਓ`"
+youtube_3: "ਮੈਨੂੰ ਇਸ ਤੋਂ ਵੀਡੀਓ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਇੱਕ (youtube) URL ਦਿਓ!"
+youtube_4: "`ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਸਿੱਧਾ ਵੀਡੀਓ ਲਿੰਕ ਦਿਓ`"
+youtube_5: "ਆਡੀਓ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਮੈਨੂੰ ਇੱਕ (youtube) ਖੋਜ ਪੁੱਛਗਿੱਛ ਦਿਓ!"
+youtube_6: "`ਆਡੀਓ ਗੀਤ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...`"
+youtube_7: "ਮੈਨੂੰ ਇਸ ਤੋਂ ਵੀਡੀਓ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ (youtube) ਖੋਜ ਪੁੱਛਗਿੱਛ ਦਿਓ!"
+youtube_8: "`ਵੀਡੀਓ ਗੀਤ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...`"
 
 # ziptools
 zip_1: "ਕਿਸੇ ਵੀ ਮੀਡੀਆ/ਦਸਤਾਵੇਜ਼ ਦਾ ਜਵਾਬ ਦਿਓ।"
