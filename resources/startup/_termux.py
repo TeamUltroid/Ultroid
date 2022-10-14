@@ -30,10 +30,9 @@ OPT_PACKAGES = {
     "yt-dlp": "Used for Youtuble Related Downloads...",
     "youtube-search-python": "Used for youtube video search..",
     "pillow": "Used for Image-Conversion related task. (size - approx 50mb ) (required for kang, convert and many more.)",
-    "psutil": "Used for .usage command.",
+    # "psutil": "Used for .usage command.", # Need root access
     "lottie": "Used for animated sticker related conversion.",
     "apscheduler": "Used in autopic/nightmode (scheduling tasks.)",
-    "google_trans_new": "Used for translation purposes.",
 }
 
 APT_PACKAGES = ["ffmpeg", "neofetch", "mediainfo"]
