@@ -33,7 +33,7 @@ OPT_PACKAGES = {
     "psutil": "Used for .usage command.",
     "lottie": "Used for animated sticker related conversion.",
     "apscheduler": "Used in autopic/nightmode (scheduling tasks.)",
-    "git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes.",
+    #"git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes.",
 }
 
 APT_PACKAGES = ["ffmpeg", "neofetch", "mediainfo"]
