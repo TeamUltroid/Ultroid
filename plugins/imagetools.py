@@ -275,7 +275,7 @@ async def ok(event):
 @ultroid_cmd(pattern="pixelator( (.*)|$)")
 async def pixelator(event):
     reply_message = await event.get_reply_message()
-    if not (reply_message and reply_message.photo):
+    if not (reply_message and (reply_message.photo or reply_message.sticker)):
         return await event.eor("`Reply to a photo`")
     hw = 50
     try:
