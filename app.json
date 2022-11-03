@@ -1,17 +1,17 @@
 {
-    "name": "Ultroid UserBot",
+    "name": "Ayra UserBot",
     "description": "Pluggable telegram userbot, made in python using Telethon.",
-    "logo": "https://graph.org/file/031957757a4f6a5191040.jpg",
+    "logo": "https://graph.org/file/098f5964288af38f0f343.jpg",
     "keywords": [
         "Telethon",
         "telegram",
         "userbot",
         "python",
-        "ultroid"
+        "Ayra"
     ],
-    "repository": "https://github.com/TeamUltroid/Ultroid",
-    "website": "https://ultroid.tech",
-    "success_url": "https://t.me/TeamUltroid",
+    "repository": "https://github.com/riizzvbss/Ayra",
+    "website": "https://Ayra.tech",
+    "success_url": "https://t.me/riizzvbss",
     "stack": "container",
     "env": {
         "API_ID": {
@@ -48,7 +48,7 @@
         }
     },
     "formation": {
-        "ultroid": {
+        "Ayra": {
             "quantity": 1,
             "size": "free"
         }
