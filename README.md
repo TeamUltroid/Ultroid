@@ -43,7 +43,7 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan userbot ini dengan bijak
  
  • `pip3 install --no-cache-dir -r resources/startup/optional-requirements.txt`
 
- • `cp sample_config.env .env `
+ • `cp .env.sample .env `
 
  • `nano .env `
   - isi vars
