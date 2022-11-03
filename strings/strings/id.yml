@@ -636,3 +636,4 @@ py_d1: "`Anda tidak dapat menggunakan perintah ini sekarang.Hubungi pemilik bot 
 py_c2: "Tidak ada sesi string yang ditemukan.Berhenti ..."
 py_c3: "VC_SESSI Anda kedaluwarsa.Menghapus vc_session dari redis ...\nPerbarui/ubah untuk menggunakan obrolan suara/video dari akun VC ..."
 py_d7: "Percakapan sudah menyala, tunggu kapan -kapan lalu coba lagi."
+ 
