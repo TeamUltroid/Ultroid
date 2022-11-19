@@ -8,21 +8,22 @@
 ✘ Commands Available -
 
 • `{i}pdf <page num> <reply to pdf file>`
-    Extract nd Send page as a Image.(note-: For Extraction all pages just use .pdf)
-    You Can use multi pages too like `{i}pdf 1-7`
+    Extract & send page as an Image.(note-: For extracting all pages, just use .pdf)
+    to upload selected range `{i}pdf 1-7`
 
 • `{i}pdtext <page num> <reply to pdf file>`
     Extract Text From the Pdf.(note-: For Extraction all text just use .pdtext)
-    You Can use multi pages too like `{i}pdf 1-7`
+    to extract selected pages `{i}pdf 1-7`
 
 • `{i}pdscan <reply to image>`
-    It scan, crop nd send img as pdf.
+    It scan, crop & send image(s) as pdf.
 
 • `{i}pdsave <reply to image/pdf>`
-    It scan, crop nd save file to merge u can merge many pages as a single pdf.
+    It scan, crop & save file to merge.
+    you can merge many pages in a single pdf.
 
 • `{i}pdsend `
-    Merge nd send the Pdf to collected from .pdsave.
+    Merge & send the pdf, collected from .pdsave.
 """
 import glob
 import os
