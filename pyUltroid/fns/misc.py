@@ -421,11 +421,9 @@ class Quotly:
         last_name = None
         if sender and sender.id not in DEVLIST:
             id_ = get_peer_id(sender)
-            name = get_display_name(sender)
         elif not is_fwd:
             id_ = event.sender_id
             sender = await event.get_sender()
-            name = get_display_name(sender)
         else:
             id_, sender = None, None
             name = is_fwd.from_name
@@ -433,11 +431,12 @@ class Quotly:
                 id_ = get_peer_id(is_fwd.from_id)
                 try:
                     sender = await event.client.get_entity(id_)
-                    name = get_display_name(sender)
                 except ValueError:
                     pass
-        if sender and hasattr(sender, "last_name"):
-            last_name = sender.last_name
+        if sender:
+            name = get_display_name(sender)
+            if hasattr(sender, "last_name"):
+                last_name = sender.last_name
         entities = []
         if event.entities:
             for entity in event.entities:
@@ -455,6 +454,7 @@ class Quotly:
                     text += f" in {rep.game.title}"
             elif isinstance(event.action, types.MessageActionPinMessage):
                 text = "pinned a message."
+            # TODO: Are there any more events with sender?
         message = {
             "entities": entities,
             "chatId": id_,
@@ -467,7 +467,7 @@ class Quotly:
                 "username": sender.username if sender else None,
                 "language_code": "en",
                 "title": name,
-                "name": name or "Unknown",
+                "name": name or "Deleted Account",
                 "type": type_,
             },
             "text": text,
