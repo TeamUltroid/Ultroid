@@ -73,6 +73,7 @@ except ImportError:
 
 from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
 from telethon.events import NewMessage
+from telethon.tl.types import TLObject
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
     GetAdminedPublicChannelsRequest,
@@ -519,7 +520,10 @@ async def _(event):
                 msg = msg.to_json(ensure_ascii=False, indent=1)
             except Exception as e:
                 LOGS.exception(e)
-        msg = str(msg)
+        try:
+            msg = TLObject.stringify(msg)
+        except Exception:
+            msg = str(msg)
     else:
         msg = json_parser(msg.to_json(), indent=1)
     if "-t" in match:
