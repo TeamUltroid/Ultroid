@@ -523,11 +523,13 @@ async def _(event):
     else:
         msg = json_parser(msg.to_json(), indent=1)
     if "-t" in match:
-         try:
-             data = json_parser(msg)
-             msg = json_parser({key: data[key] for key in data.keys() if data[key]}, indent=1)
-         except Exception as er:
-             pass
+        try:
+            data = json_parser(msg)
+            msg = json_parser(
+                {key: data[key] for key in data.keys() if data[key]}, indent=1
+            )
+        except Exception:
+            pass
     if len(msg) > 4096:
         with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "json-ult.txt"
