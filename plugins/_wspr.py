@@ -66,7 +66,7 @@ async def _(e):
         if not isinstance(logi, types.User):
             raise ValueError("Invalid Username.")
     except IndexError:
-        sur = e.builder.article(
+        sur = await e.builder.article(
             title="Give Username",
             description="You Didn't Type Username or id.",
             text="You Didn't Type Username or id.",
@@ -74,7 +74,7 @@ async def _(e):
         return await e.answer([sur])
     except ValueError as er:
         LOGS.exception(er)
-        sur = e.builder.article(
+        sur = await e.builder.article(
             title="User Not Found",
             description="Make sure username or id is correct.",
             text="Make sure username or id is correct.",
@@ -83,14 +83,15 @@ async def _(e):
     try:
         desc = zzz[2]
     except IndexError:
-        sur = e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
+        sur = await e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
         return await e.answer([sur])
     button = [
         Button.inline("Secret Msg", data=f"dd_{e.id}"),
         Button.inline("Delete Msg", data=f"del_{e.id}"),
+        Button.switch_inline("New", query=f"wspr {logi.username or logi.id}", same_peer=True)
     ]
     us = logi.username or logi.first_name
-    sur = e.builder.article(
+    sur = await e.builder.article(
         title=logi.first_name,
         description=desc,
         text=get_string("wspr_1").format(us),
