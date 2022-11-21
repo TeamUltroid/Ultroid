@@ -512,7 +512,8 @@ async def _(event):
     else:
         msg = event
         reply_to_id = event.message.id
-    if match and msg := getattr(msg, match.split()[0], None):
+    if match and hasattr(msg, match.split()[0]):
+        msg = getattr(msg, match.split()[0])
         if hasattr(msg, "to_json"):
             try:
                 msg = msg.to_json(ensure_ascii=False, indent=1)
