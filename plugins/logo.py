@@ -18,7 +18,10 @@ import os
 import random
 
 from telethon.tl.types import InputMessagesFilterPhotos
-
+try:
+   from PIL import Image
+except ImportError:
+   Image = None
 from pyUltroid.fns.misc import unsplashsearch
 from pyUltroid.fns.tools import LogoHelper
 
@@ -56,6 +59,11 @@ async def logo_gen(event):
             ]
             res = await unsplashsearch(random.choice(SRCH), limit=1)
             bg_ = await download_file(res[0], "resources/downloads/logo.png")
+            newimg = "resources/downloads/unsplash-temp.jpg"
+            img_ = Image.open(bg_)
+            img_.resize((5000, 5000)).save(newimg)
+            os.remove(bg_)
+            bg_ = newimg
         else:
             pics = []
             async for i in event.client.iter_messages(
