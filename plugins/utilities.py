@@ -73,7 +73,6 @@ except ImportError:
 
 from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
 from telethon.events import NewMessage
-from telethon.tl.types import TLObject
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
     GetAdminedPublicChannelsRequest,
@@ -83,7 +82,15 @@ from telethon.tl.functions.channels import (
 from telethon.tl.functions.contacts import GetBlockedRequest
 from telethon.tl.functions.messages import AddChatUserRequest, GetAllStickersRequest
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import Channel, Chat, InputMediaPoll, Poll, PollAnswer, User
+from telethon.tl.types import (
+    Channel,
+    Chat,
+    InputMediaPoll,
+    Poll,
+    PollAnswer,
+    TLObject,
+    User,
+)
 from telethon.utils import get_peer_id
 
 from . import (
