@@ -196,7 +196,7 @@ async def DummyHandler(ult):
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
     sender = await e.get_sender()
-    if not isinstance(sender, types.User):
+    if not isinstance(sender, types.User) or sender.bot:
         return
     key = udB.get_key("CHATBOT_USERS") or {}
     if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
@@ -206,11 +206,9 @@ async def chatBot_replies(e):
             await asyncio.sleep(sleep)
             await e.reply(msg)
     chat = await e.get_chat()
-    if e.is_group and not sender.bot:
-        if sender.username:
+    if e.is_group and sender.username:
             await uname_stuff(e.sender_id, sender.username, sender.first_name)
-    elif e.is_private and not sender.bot:
-        if chat.username:
+    elif e.is_private and chat.username:
             await uname_stuff(e.sender_id, chat.username, chat.first_name)
     if detector and is_profan(e.chat_id) and e.text:
         x, y = detector(e.text)
@@ -220,11 +218,11 @@ async def chatBot_replies(e):
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
-    await uname_stuff(e.user_id, e.username, e.first_name)
+    await uname_stuff(e.user_id, e.usernames[0] if e.usernames else None, e.first_name)
 
 
 async def uname_stuff(id, uname, name):
-    if udB.get_key("USERNAME_LOG") == "True":
+    if udB.get_key("USERNAME_LOG"):
         old_ = udB.get_key("USERNAME_DB") or {}
         old = old_.get(id)
         # Ignore Name Logs
