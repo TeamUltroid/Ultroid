@@ -512,11 +512,13 @@ async def _(event):
     else:
         msg = event
         reply_to_id = event.message.id
-    if match and hasattr(msg, match):
-        msg = getattr(msg, match)
+    if match and msg := getattr(msg, match.split()[0], None):
         if hasattr(msg, "to_json"):
             try:
-                msg = json_parser(msg.to_json(ensure_ascii=False), indent=1)
+                msg = msg.to_json(ensure_ascii=False, indent=1)
+                if "-t" in match:
+                    data = json_parser(tjson)
+                    msg = {key: data[key] for key in data.keys() if data[key]}
             except Exception as e:
                 LOGS.exception(e)
         msg = str(msg)
