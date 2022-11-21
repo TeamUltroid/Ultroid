@@ -83,12 +83,16 @@ async def _(e):
     try:
         desc = zzz[2]
     except IndexError:
-        sur = await e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
+        sur = await e.builder.article(
+            title="Type ur msg", text="You Didn't Type Your Msg"
+        )
         return await e.answer([sur])
     button = [
         Button.inline("Secret Msg", data=f"dd_{e.id}"),
         Button.inline("Delete Msg", data=f"del_{e.id}"),
-        Button.switch_inline("New", query=f"wspr {logi.username or logi.id}", same_peer=True)
+        Button.switch_inline(
+            "New", query=f"wspr {logi.username or logi.id}", same_peer=True
+        ),
     ]
     us = logi.username or logi.first_name
     sur = await e.builder.article(
