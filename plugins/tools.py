@@ -38,6 +38,7 @@
 """
 import glob
 import io
+import secrets
 import os
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
@@ -421,9 +422,9 @@ async def magic(event):
     except IndexError:
         return await event.eor("`Provide url to turn into tiny...`")
     match, id_ = match.split(), None
-    data = {}
-    if len(match) > 1:
-        data["id"] = match[1]
+    data = {
+        "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6)
+    }
     url = match[0]
     data["link"] = url
     data = await async_searcher(
