@@ -522,15 +522,16 @@ async def _(event):
         reply_to_id = event.message.id
     if match and hasattr(msg, match.split()[0]):
         msg = getattr(msg, match.split()[0])
-        if hasattr(msg, "to_json"):
-            try:
-                msg = msg.to_json(ensure_ascii=False, indent=1)
-            except Exception as e:
-                LOGS.exception(e)
         try:
-            msg = TLObject.stringify(msg)
+            if hasattr(msg, "to_json"):
+                msg = msg.to_json(ensure_ascii=False, indent=1) 
+            elif hasattr(msg, "to_dict"):
+                msg = json_parser(msg.to_dict(), indent=1)
+            else:
+                msg = TLObject.stringify(msg)
         except Exception:
-            msg = str(msg)
+            pass
+        msg = str(msg)
     else:
         msg = json_parser(msg.to_json(), indent=1)
     if "-t" in match:
