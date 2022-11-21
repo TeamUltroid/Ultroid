@@ -524,7 +524,7 @@ async def _(event):
         msg = getattr(msg, match.split()[0])
         try:
             if hasattr(msg, "to_json"):
-                msg = msg.to_json(ensure_ascii=False, indent=1) 
+                msg = msg.to_json(ensure_ascii=False, indent=1)
             elif hasattr(msg, "to_dict"):
                 msg = json_parser(msg.to_dict(), indent=1)
             else:
