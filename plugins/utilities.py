@@ -518,7 +518,7 @@ async def _(event):
             try:
                 msg = msg.to_json(ensure_ascii=False, indent=1)
                 if "-t" in match:
-                    data = json_parser(tjson)
+                    data = json_parser(msg)
                     msg = {key: data[key] for key in data.keys() if data[key]}
             except Exception as e:
                 LOGS.exception(e)
