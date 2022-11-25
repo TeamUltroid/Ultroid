@@ -35,11 +35,9 @@ from . import some_random_headers
 from .tools import async_searcher, check_filename, json_parser
 
 try:
-    import aiofiles
     import aiohttp
 except ImportError:
     aiohttp = None
-    aiofiles = None
 
 try:
     from instagrapi import Client
@@ -184,9 +182,8 @@ async def ReTrieveFile(input_file_name):
                 return False, (await out.json())
 
             name = check_filename("ult-rmbg.png")
-            file = await aiofiles.open(name, "wb")
-            await file.write(await out.read())
-            await file.close()
+            with open(name, "wb") as file:
+                file.write(await out.read())
             return True, name
 
 
