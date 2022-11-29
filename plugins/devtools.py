@@ -152,6 +152,8 @@ def _parse_eval(value=None):
             return json_parser(value, indent=1)
         except BaseException:
             pass
+    elif isinstance(value, list):
+        return str([_parse_eval(child) for child in value])
     return str(value)
 
 
