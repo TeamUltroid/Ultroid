@@ -153,7 +153,13 @@ def _parse_eval(value=None):
         except BaseException:
             pass
     elif isinstance(value, list):
-        return str([_parse_eval(child) for child in value])
+        newlist = "["
+        for index, child in enumerate(value):
+            newlist += "\n  " + str(_parse_eval(child))
+            if index < len(value) - 1:
+                newlist += ","
+        newlist += "\n]"
+        return newlist
     return str(value)
 
 
