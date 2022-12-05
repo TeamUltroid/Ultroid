@@ -24,6 +24,9 @@ def main():
     )
     from .startup.loader import load_other_plugins
 
+    # Do not save session while bot is running. (Fixes session generator)
+    [delattr(sess, "save") for sess in [asst.session, ultroid_bot.session] if hasattr(sess, "save")]
+
     # Option to Auto Update On Restarts..
     if (
         udB.get_key("UPDATE_ON_RESTART")
