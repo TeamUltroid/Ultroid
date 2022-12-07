@@ -129,7 +129,7 @@ def pyro_session():
     # generate a session
     API_ID, API_HASH = get_api_id_and_hash()
     print("Enter phone number when asked.\n\n")
-    with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
+    with Client(name="ultroid", api_id=API_ID, api_hash=API_HASH, in_memory=True) as pyro:
         ss = pyro.export_session_string()
         pyro.send_message(
             "me",
