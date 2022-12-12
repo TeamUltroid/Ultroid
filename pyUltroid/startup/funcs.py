@@ -436,7 +436,7 @@ async def fetch_ann():
             if key not in get_:
                 cont = upt[key]
                 if isinstance(cont, dict) and cont.get("lang"):
-                    if not cont["lang"] == (udB.get_key("language") || "en"):
+                    if cont["lang"] != (udB.get_key("language") or"en"):
                         continue
                     cont = cont["msg"]
                 if isinstance(cont, str):
@@ -456,7 +456,6 @@ async def fetch_ann():
 
 async def ready():
     from .. import asst, udB, ultroid_bot
-    from ..fns.tools import async_searcher
 
     chat_id = udB.get_key("LOG_CHANNEL")
     spam_sent = None
