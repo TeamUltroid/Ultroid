@@ -20,10 +20,14 @@ def main():
         customize,
         plug,
         ready,
+        fetch_ann,
         startup_stuff,
     )
     from .startup.loader import load_other_plugins
-
+    try:
+        from apscheduler.schedulers.asyncio import AsyncIOScheduler
+    except ImportError:
+        AsyncIOScheduler = None
     # Do not save session while bot is running. (Fixes session generator)
     # [delattr(sess, "save") for sess in [asst.session, ultroid_bot.session] if hasattr(sess, "save")]
 
@@ -82,6 +86,10 @@ def main():
     # Send/Ignore Deploy Message..
     if not udB.get_key("LOG_OFF"):
         ultroid_bot.run_in_loop(ready())
+    if AsyncIOScheduler:
+        scheduler = AsyncIOScheduler()
+        scheduler.add_job(fetch_ann, hours=12)
+        scheduler.start()
 
     # Edit Restarting Message (if It's restarting)
     ultroid_bot.run_in_loop(WasItRestart(udB))
