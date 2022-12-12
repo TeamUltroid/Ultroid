@@ -472,6 +472,10 @@ async def ready():
             key = list(upt.keys())[0]
             if key not in get_:
                 cont = upt[key]
+                if isinstance(cont, dict) and cont.get("lang"):
+                    if not cont["lang"] == (udB.get_key("language") || "en"):
+                        continue
+                    cont = cont["msg"]
                 if isinstance(cont, str):
                     await asst.send_message(chat_id, cont)
                 elif isinstance(cont, dict) and cont.get("chat"):
