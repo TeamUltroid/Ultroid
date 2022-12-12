@@ -427,6 +427,8 @@ async def fetch_ann():
     from ..fns.tools import async_searcher
 
     get_ = udB.get_key("OLDANN") or []
+    chat_id = udB.get_key("LOG_CHANNEL")
+
     try:
         updts = await async_searcher(
             "https://ultroid-api.vercel.app/announcements", post=True, re_json=True
