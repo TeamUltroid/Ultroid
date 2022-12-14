@@ -256,7 +256,7 @@ async def autopilot():
         new_channel = True
         chat = r.chats[0]
         channel = get_peer_id(chat)
-        udB.set_key("LOG_CHANNEL", str(channel))
+        udB.set_key("LOG_CHANNEL", channel)
     assistant = True
     try:
         await ultroid_bot.get_permissions(int(channel), asst.me.username)
@@ -492,7 +492,7 @@ async def ready():
         try:
             spam_sent = await ultroid_bot.send_message(chat_id, MSG)
         except Exception as ef:
-            LOGS.info(ef)
+            LOGS.exception(ef)
     if spam_sent and not spam_sent.media:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)
     await fetch_ann()
