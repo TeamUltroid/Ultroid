@@ -169,7 +169,8 @@ async def _(event):
         cmd = event.text.split(maxsplit=1)[1]
     except IndexError:
         return await event.eor(get_string("devs_2"), time=5)
-    silent, gsource, xx = False, False, None
+    xx = None
+    mode = ""
     spli = cmd.split()
 
     async def get_():
@@ -182,17 +183,19 @@ async def _(event):
 
     if spli[0] in ["-s", "--silent"]:
         await event.delete()
-        silent = True
-        cmd = await get_()
+        mode = "silent"
     elif spli[0] in ["-n", "-noedit"]:
-        cmd = await get_()
+        mode = "no-edit"
         xx = await event.reply(get_string("com_1"))
     elif spli[0] in ["-gs", "--source"]:
-        gsource = True
+        mode = "gsource"
+    elif spli[0] in ["-ga", "--args"]:
+        mode = "g-args"
+    if mode:
         cmd = await get_()
     if not cmd:
         return
-    if not silent and not xx:
+    if not mode == "silent" and not xx:
         xx = await event.eor(get_string("com_1"))
     if black:
         try:
@@ -228,13 +231,20 @@ async def _(event):
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    if value and gsource:
+    if value:
         try:
-            exc = inspect.getsource(value)
+            if mode == "gsource":
+                exc = inspect.getsource(value)
+            elif mode == "g-args":
+                args = inspect.signature(value).parameters.values()
+                name = ""
+                if hasattr(value, "__name__"):
+                    name = value.__name__
+                exc = f"**{name}**\n\n" + "\n ".join([str(arg) for arg in args])
         except Exception:
             exc = traceback.format_exc()
     evaluation = exc or stderr or stdout or _parse_eval(value) or get_string("instu_4")
-    if silent:
+    if mode == "silent":
         if exc:
             msg = f"• <b>EVAL ERROR\n\n• CHAT:</b> <code>{get_display_name(event.chat)}</code> [<code>{event.chat_id}</code>]"
             msg += f"\n\n∆ <b>CODE:</b>\n<code>{cmd}</code>\n\n∆ <b>ERROR:</b>\n<code>{exc}</code>"
