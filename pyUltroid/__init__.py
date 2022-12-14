@@ -20,6 +20,11 @@ if sys.argv[0] == "-m":
     run_as_module = True
 
     import time
+    try:
+        from telethonpatch import apply
+        apply()
+    except ModuleNotFoundError:
+        pass
 
     from .configs import Var
     from .startup import *
