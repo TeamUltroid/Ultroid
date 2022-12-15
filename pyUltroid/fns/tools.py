@@ -566,7 +566,7 @@ async def Carbon(
     **kwargs,
 ):
     if rayso:
-        base_url = "https://raysoapi.herokuapp.com/generate"
+        base_url = "https://rayso-api-desvhu-33.koyeb.app/generate"
         kwargs["text"] = code
         kwargs["theme"] = kwargs.get("theme", "meadow")
         kwargs["darkMode"] = kwargs.get("darkMode", True)
