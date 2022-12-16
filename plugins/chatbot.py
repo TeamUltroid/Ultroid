@@ -66,9 +66,9 @@ async def chat_bot_fn(event, type_):
             user_ = event.chat if event.is_private else None
     if not user_:
         return await eod(
-                    event,
-                    get_string("chab_1"),
-                )
+            event,
+            get_string("chab_1"),
+        )
     key = udB.get_key("CHATBOT_USERS") or {}
     chat = event.chat_id
     user = user_.id
