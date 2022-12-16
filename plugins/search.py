@@ -132,7 +132,7 @@ async def goimg(event):
         }
         pth = await gi.download(args)
         ok = pth[0][query]
-    except BaseException:
+    except BaseException as er:
         return await nn.edit(get_string("autopic_2").format(query))
     await event.reply(file=ok, message=query)
     rmtree(f"./resources/downloads/{query}/")

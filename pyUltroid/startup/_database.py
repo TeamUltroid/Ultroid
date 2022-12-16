@@ -84,7 +84,7 @@ class _BaseDatabase:
     def _get_data(self, key=None, data=None):
         if key:
             data = self.get(str(key))
-        if data:
+        if data and isinstance(data, str):
             try:
                 data = ast.literal_eval(data)
             except BaseException:

@@ -28,8 +28,6 @@ def main():
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
     except ImportError:
         AsyncIOScheduler = None
-    # Do not save session while bot is running. (Fixes session generator)
-    # [delattr(sess, "save") for sess in [asst.session, ultroid_bot.session] if hasattr(sess, "save")]
 
     # Option to Auto Update On Restarts..
     if (
