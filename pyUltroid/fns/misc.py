@@ -480,7 +480,7 @@ class Quotly:
     async def create_quotly(
         self,
         event,
-        url="https://qoute-api-akashpattnaik.koyeb.app/generate",
+        url="https://bot.lyo.su/quote/generate",
         reply={},
         bg=None,
         sender=None,
@@ -527,10 +527,7 @@ class Quotly:
             return file_name
         raise Exception(str(request))
 
-
-# Some Sarcasm
-
-
+        
 def split_list(List, index):
     new_ = []
     while List:
