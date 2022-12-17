@@ -50,9 +50,15 @@ def asst_cmd(pattern=None, load=None, owner=False, **kwargs):
     def ult(func):
         if pattern:
             kwargs["pattern"] = re.compile(f"^/{pattern}")
-        if owner:
-            kwargs["from_users"] = owner_and_sudos
-        asst.add_event_handler(func, NewMessage(**kwargs))
+
+        async def handler(event):
+            if owner and event.sender_id not in owner_and_sudos():
+                return
+            try:
+                await func(event)
+            except Exception as er:
+                LOGS.exception(er)
+        asst.add_event_handler(handler, NewMessage(**kwargs))
         if load is not None:
             append_or_update(load, func, name, kwargs)
 
