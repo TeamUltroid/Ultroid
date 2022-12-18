@@ -256,7 +256,7 @@ async def autopilot():
         new_channel = True
         chat = r.chats[0]
         channel = get_peer_id(chat)
-        udB.set_key("LOG_CHANNEL", str(channel))
+        udB.set_key("LOG_CHANNEL", channel)
     assistant = True
     try:
         await ultroid_bot.get_permissions(int(channel), asst.me.username)
