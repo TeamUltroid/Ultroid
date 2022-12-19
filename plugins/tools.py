@@ -412,7 +412,7 @@ async def webss(event):
     if WebShot and not pic:
         try:
             shot = WebShot(
-               quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
+                quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
             )
             pic = await shot.create_pic_async(url=xurl)
         except Exception as er:
