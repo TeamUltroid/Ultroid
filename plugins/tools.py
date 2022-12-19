@@ -48,9 +48,14 @@ except ImportError:
     cv2 = None
 
 try:
+    from playwright.async_api import async_playwright
+except ImportError:
+    async_playwright = None
+try:
     from htmlwebshot import WebShot
 except ImportError:
     WebShot = None
+
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -392,16 +397,31 @@ async def webss(event):
         return await xx.eor(get_string("wbs_1"), time=5)
     if not is_url_ok(xurl):
         return await xx.eor(get_string("wbs_2"), time=5)
-    try:
-        shot = WebShot(
-            quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
-        )
-        pic = await shot.create_pic_async(url=xurl)
-    except FileNotFoundError:
+    path, pic = check_filename("shot.png"), None
+    if async_playwright:
+        try:
+            async with async_playwright() as playwright:
+                chrome = await playwright.chromium.launch()
+                page = await chrome.new_page()
+                await page.goto(xurl)
+                await page.screenshot(path=path, full_page=True, quality=88)
+                pic = path
+        except Exception as er:
+            LOGS.exception(er)
+            await xx.edit(f"Error with playwright:\n`{er}`")
+    if WebShot and not pic:
+        try:
+            shot = WebShot(
+               quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
+            )
+            pic = await shot.create_pic_async(url=xurl)
+        except Exception as er:
+            LOGS.exception(er)
+    if not pic:
         pic = (
             await fast_download(
                 f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-                filename=check_filename("shot.png"),
+                filename=path,
             )
         )[0]
     if pic:
