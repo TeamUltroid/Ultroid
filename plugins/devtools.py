@@ -155,8 +155,8 @@ def _parse_eval(value=None, i=0):
     elif isinstance(value, list):
         newlist = "["
         for index, child in enumerate(value):
-            i+= 1
-            newlist += "\n" + ("  "*i) + str(_parse_eval(child, i))
+            i += 1
+            newlist += "\n" + ("  " * i) + str(_parse_eval(child, i))
             if index < len(value) - 1:
                 newlist += ","
         newlist += "\n]"
