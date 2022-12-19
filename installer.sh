@@ -3,18 +3,6 @@
 REPO="https://github.com/TeamUltroid/Ultroid.git"
 DIR="/root/TeamUltroid"
 
-spinner(){
-    local pid=$!
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ];
-    do
-        for i in "Ooooo" "oOooo" "ooOoo" "oooOo" "ooooO" "oooOo" "ooOoo" "oOooo" "Ooooo"
-        do
-          echo -ne "\r• $i"
-          sleep 0.2
-        done
-    done
-}
-
 clone_repo(){
     if [ ! $BRANCH ]
         then export BRANCH="main"
@@ -56,6 +44,11 @@ railways_dep(){
 }
 
 misc_install(){
+    if [ $SETUP_PLAYWRIGHT ]
+        then
+            echo -e "Installing playwright."
+            pip3 install playwright
+            playwright install
     if [ $OKTETO_TOKEN ]
         then
             echo -e "Installing Okteto-CLI... "
