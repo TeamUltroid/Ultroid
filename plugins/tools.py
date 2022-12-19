@@ -404,11 +404,11 @@ async def webss(event):
                 chrome = await playwright.chromium.launch()
                 page = await chrome.new_page()
                 await page.goto(xurl)
-                await page.screenshot(path=path, full_page=True, quality=88)
+                await page.screenshot(path=path, full_page=True)
                 pic = path
         except Exception as er:
             LOGS.exception(er)
-            await xx.edit(f"Error with playwright:\n`{er}`")
+            await xx.respond(f"Error with playwright:\n`{er}`")
     if WebShot and not pic:
         try:
             shot = WebShot(
