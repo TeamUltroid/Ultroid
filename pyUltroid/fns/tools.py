@@ -407,14 +407,18 @@ async def get_paste(data: str, extension: str = "txt"):
 
 
 async def get_chatbot_reply(message):
-    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"
+    from .. import ultroid_bot
+
+    chatbot_base = "https://kukiapi.xyz/api/apikey=ULTROIDUSERBOT/Ultroid/{}/message={}"
     req_link = chatbot_base.format(
+        ultroid_bot.me.first_name or "ultroid user",
         message,
     )
     try:
         return (await async_searcher(req_link, re_json=True)).get("reply")
     except Exception:
         LOGS.info(f"**ERROR:**`{format_exc()}`")
+
 
 def check_filename(filroid):
     if os.path.exists(filroid):
@@ -555,19 +559,20 @@ def make_html_telegraph(title, html=""):
 
 async def Carbon(
     code,
-    base_url="https://rayso-api-desvhu-33.koyeb.app/generate",
+    base_url="https://carbonara-42.herokuapp.com/api/cook",
     file_name="ultroid",
     download=False,
     rayso=False,
     **kwargs,
 ):
-    # if rayso:
-    kwargs["text"] = code
-    kwargs["theme"] = kwargs.get("theme", "meadow")
-    kwargs["darkMode"] = kwargs.get("darkMode", True)
-    kwargs["title"] = kwargs.get("title", "Ultroid")
-    # else:
-    #    kwargs["code"] = code
+    if rayso:
+        base_url = "https://raysoapi.herokuapp.com/generate"
+        kwargs["text"] = code
+        kwargs["theme"] = kwargs.get("theme", "meadow")
+        kwargs["darkMode"] = kwargs.get("darkMode", True)
+        kwargs["title"] = kwargs.get("title", "Ultroid")
+    else:
+        kwargs["code"] = code
     con = await async_searcher(base_url, post=True, json=kwargs, re_content=True)
     if not download:
         file = BytesIO(con)
@@ -616,7 +621,8 @@ def _package_rpc(text, lang_src="auto", lang_tgt="auto"):
     escaped_parameter = json.dumps(parameter, separators=(",", ":"))
     rpc = [[[random.choice(GOOGLE_TTS_RPC), escaped_parameter, None, "generic"]]]
     espaced_rpc = json.dumps(rpc, separators=(",", ":"))
-    freq = "f.req={}&".format(quote(espaced_rpc))
+    freq_initial = "f.req={}&".format(quote(espaced_rpc))
+    freq = freq_initial
     return freq
 
 
