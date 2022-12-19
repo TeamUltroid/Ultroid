@@ -139,7 +139,7 @@ class u:
     ...
 
 
-def _parse_eval(value=None):
+def _parse_eval(value=None, i=0):
     if not value:
         return value
     if hasattr(value, "stringify"):
@@ -155,7 +155,8 @@ def _parse_eval(value=None):
     elif isinstance(value, list):
         newlist = "["
         for index, child in enumerate(value):
-            newlist += "\n  " + str(_parse_eval(child))
+            i+= 1
+            newlist += "\n" + ("  "*i) + str(_parse_eval(child, i))
             if index < len(value) - 1:
                 newlist += ","
         newlist += "\n]"
