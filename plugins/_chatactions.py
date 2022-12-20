@@ -17,6 +17,7 @@ from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.nsfw_db import is_profan
+from pyUltroid.dB.echo_db import check_echo
 from pyUltroid.fns.helper import inline_mention
 from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply
 
@@ -44,6 +45,13 @@ async def DummyHandler(ult):
             await ult.delete()
         except BaseException:
             pass
+
+    
+    if check_echo(ult.chat_id, ult.sender_id):
+        try:
+            await ult.respond(ult)
+        except Exception as er:
+            LOGS.exception(er)
 
     # thank members
     if must_thank(ult.chat_id):

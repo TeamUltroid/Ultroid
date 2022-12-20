@@ -63,16 +63,6 @@ async def rm(e):
     await e.eor("Echo not activated for this user")
 
 
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def okk(e):
-    if check_echo(e.chat_id, e.sender_id):
-        try:
-            ok = await e.client.get_messages(e.chat_id, ids=e.id)
-            return await e.client.send_message(e.chat_id, ok)
-        except Exception as er:
-            LOGS.info(er)
-
-
 @ultroid_cmd(pattern="listecho$")
 async def lstecho(e):
     if k := list_echo(e.chat_id):

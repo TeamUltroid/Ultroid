@@ -12,10 +12,8 @@ __doc__ = get_help("help_autoban")
 from telethon import events
 from telethon.tl.types import Channel
 
-from pyUltroid.dB import autoban_db, dnd_db
-from pyUltroid.fns.admins import get_update_linked_chat
-
-from . import LOGS, asst, get_string, inline_mention, ultroid_bot, ultroid_cmd
+from pyUltroid.dB import dnd_db
+from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 
 async def dnd_func(event):
@@ -29,24 +27,6 @@ async def dnd_func(event):
                 LOGS.error("Error in DND:")
                 LOGS.exception(ex)
         await event.delete()
-
-
-async def channel_del(event):
-    if not autoban_db.is_autoban_enabled(event.chat_id):
-        return
-    if autoban_db.is_whitelisted(event.chat_id, event.sender_id):
-        return
-    linked = await get_update_linked_chat(event)
-    if linked == event.sender.id:
-        return
-    if event.chat.creator or event.chat.admin_rights.ban_users:
-        try:
-            await event.client.edit_permissions(
-                event.chat_id, event.sender_id, view_messages=False
-            )
-        except Exception as er:
-            LOGS.exception(er)
-    await event.try_delete()
 
 
 @ultroid_cmd(
@@ -72,71 +52,6 @@ async def _(event):
         dnd_db.del_dnd(event.chat_id)
         await event.eor("`Do not disturb mode deactivated for this chat.`", time=3)
 
-
-@ultroid_cmd(pattern="cban$", admins_only=True)
-async def ban_cha(ult):
-    if autoban_db.is_autoban_enabled(ult.chat_id):
-        autoban_db.del_channel(ult.chat_id)
-        return await ult.eor("`Disabled Auto ChannelBan...`")
-    if not (
-        ult.chat.creator
-        or (ult.chat.admin_rights.delete_messages or ult.chat.admin_rights.ban_users)
-    ):
-        return await ult.eor(
-            "You are missing required admin rights!\nYou can't use ChannelBan without Ban/del privilege..`"
-        )
-    autoban_db.add_channel(ult.chat_id)
-    await ult.eor("`Enabled Auto ChannelBan Successfully!`")
-    ult.client.add_handler(
-        channel_del,
-        events.NewMessage(
-            func=lambda x: not x.is_private and isinstance(x.sender, Channel)
-        ),
-    )
-
-
-@ultroid_cmd(pattern="(list|add|rem)wl( (.*)|$)")
-async def do_magic(event):
-    match = event.pattern_match.group(1)
-    msg = await event.eor(get_string("com_1"))
-    if match == "list":
-        cha = autoban_db.get_whitelisted_channels(event.chat_id)
-        if not cha:
-            return await msg.edit("`No Whitelisted channels for current chat.`")
-        Msg = "**Whitelist Channels in Current Chat**\n\n"
-        for ch in cha:
-            Msg += f"(`{ch}`) "
-            try:
-                Msg += inline_mention(await event.client.get_entity(ch))
-            except Exception:
-                Msg += "\n"
-        return await msg.edit(Msg)
-    usea = event.pattern_match.group(2).strip()
-    if not usea:
-        return await Msg.edit(
-            "`Please provide a channel username/id to add/remove to/from whitelist..`"
-        )
-    try:
-        u_id = await event.client.parse_id(usea)
-        cha = await event.client.get_entity(u_id)
-    except Exception as er:
-        LOGS.exception(er)
-        return await msg.edit(f"Error Broke Out!\n`{er}`")
-    if match == "add":
-        autoban_db.add_to_whitelist(event.chat_id, u_id)
-        return await msg.edit(f"`Added` {inline_mention(cha)} `to WhiteList..`")
-    autoban_db.del_from_whitelist(event.chat_id, u_id)
-    await msg.edit(f"`Removed` {inline_mention(cha)} `from WhiteList.`")
-
-
 if dnd_db.get_dnd_chats():
     ultroid_bot.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
     asst.add_handler(dnd_func, events.ChatAction(func=lambda x: x.user_joined))
-
-if autoban_db.get_all_channels():
-    ultroid_bot.add_handler(
-        channel_del,
-        events.NewMessage(
-            func=lambda x: not x.is_private and isinstance(x.sender, Channel)
-        ),
-    )

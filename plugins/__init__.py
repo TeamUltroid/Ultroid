@@ -19,6 +19,7 @@ from pyUltroid._misc._assistant import asst_cmd, callback, in_pattern
 from pyUltroid._misc._decorators import ultroid_cmd
 from pyUltroid._misc._wrappers import eod, eor
 from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
+from pyUltroid.startup._database import _BaseDatabase as Database
 from pyUltroid.fns.helper import *
 from pyUltroid.fns.info import *
 from pyUltroid.fns.misc import *
@@ -26,11 +27,17 @@ from pyUltroid.fns.tools import *
 from pyUltroid.version import __version__, ultroid_version
 from strings import get_help, get_string
 
+
+udB: Database
+
 Redis = udB.get_key
 con = TgConverter
 quotly = Quotly()
 OWNER_NAME = ultroid_bot.full_name
 OWNER_ID = ultroid_bot.uid
+
+ultroid_bot: UltroidClient
+asst: UltroidClient
 
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 

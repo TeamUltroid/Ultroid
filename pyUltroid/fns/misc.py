@@ -40,13 +40,6 @@ except ImportError:
     aiohttp = None
 
 try:
-    from instagrapi import Client
-    from instagrapi.exceptions import LoginRequired, ManualInputRequired
-except ImportError:
-    Client = None
-    ManualInputRequired = None
-
-try:
     from PIL import Image
 except ImportError:
     Image = None
@@ -273,96 +266,6 @@ async def get_synonyms_or_antonyms(word, type_of_words):
         for y in x
     ]
     return [y["term"] for y in li_1]
-
-
-# --------------------- Instagram Plugin ------------------------- #
-# @New-dev0
-
-INSTA_CLIENT = []
-
-
-async def _insta_login():
-    if "insta_creds" in ultroid_bot._cache:
-        return ultroid_bot._cache["insta_creds"]
-    username = udB.get_key("INSTA_USERNAME")
-    password = udB.get_key("INSTA_PASSWORD")
-    if username and password:
-        settings = eval(udB["INSTA_SET"]) if udB.get_key("INSTA_SET") else {}
-        cl = Client(settings)
-        try:
-            cl.login(username, password)
-            ultroid_bot._cache.update({"insta_creds": cl})
-        except ManualInputRequired:
-            LOGS.exception(format_exc())
-            # await get_insta_code(cl, username, password)
-            return False
-        except LoginRequired:
-            udB.del_key("INSTA_SET")
-            return await _insta_login()
-        except Exception:
-            udB.del_key(iter(["INSTA_USERNAME", "INSTA_PASSWORD"]))
-            LOGS.exception(format_exc())
-            return False
-        udB.set_key("INSTA_SET", str(cl.get_settings()))
-        cl.logger.setLevel(WARNING)
-        return ultroid_bot._cache["insta_creds"]
-    return False
-
-
-async def get_insta_code(username, choice):
-    from .. import asst, ultroid_bot
-
-    async with asst.conversation(ultroid_bot.uid, timeout=60 * 2) as conv:
-        await conv.send_message(
-            "Enter The **Instagram Verification Code** Sent to Your Email.."
-        )
-        ct = await conv.get_response()
-        while not ct.text.isdigit():
-            if ct.message == "/cancel":
-                await conv.send_message("Cancelled Verification!")
-                return
-            await conv.send_message(
-                "CODE SHOULD BE INTEGER\nSend The Code Back or\nUse /cancel to Cancel Process..."
-            )
-            ct = await conv.get_response()
-        return ct.text
-
-
-async def create_instagram_client(event):
-    if not Client:
-        await event.eor("`Instagrapi not Found\nInstall it to use Instagram plugin...`")
-        return
-    try:
-        return INSTA_CLIENT[0]
-    except IndexError:
-        pass
-    from .. import udB
-
-    username = udB.get_key("INSTA_USERNAME")
-    password = udB.get_key("INSTA_PASSWORD")
-    if not (username and password):
-        await event.eor("`Please Fill Instagram Credentials to Use This...`")
-        return
-    settings = udB.get_key("INSTA_SET") or {}
-    cl = Client(settings)
-    cl.challenge_code_handler = get_insta_code
-    try:
-        cl.login(username, password)
-    except ManualInputRequired:
-        await eor(event, f"Check Pm From @{asst.me.username}")
-        await get_insta_code(cl, username, password)
-    except LoginRequired:
-        # "login required" refers to relogin...
-        udB.del_key("INSTA_SET")
-        return await create_instagram_client(event)
-    except Exception as er:
-        LOGS.exception(er)
-        await eor(event, str(er))
-        return False
-    udB.set_key("INSTA_SET", str(cl.get_settings()))
-    cl.logger.setLevel(WARNING)
-    INSTA_CLIENT.append(cl)
-    return cl
 
 
 # Quotly
