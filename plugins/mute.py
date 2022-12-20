@@ -109,16 +109,16 @@ async def _(e):
     except IndexError:
         return await xx.eor("`Time till mute?`", time=5)
     try:
-        input = huh[2]
+        input_ = huh[2]
     except IndexError:
-        pass
+        input_ = ""
     chat = await e.get_chat()
     if e.reply_to_msg_id:
         reply = await e.get_reply_message()
         userid = reply.sender_id
         name = (await reply.get_sender()).first_name
-    elif input:
-        userid = await e.client.parse_id(input)
+    elif input_:
+        userid = await e.client.parse_id(input_)
         name = (await e.client.get_entity(userid)).first_name
     else:
         return await xx.eor(get_string("tban_1"), time=3)

@@ -143,8 +143,7 @@ async def forw(event):
         return await x.edit(f"Please add channels by using `{HNDLR}add` in them.")
     error_count = 0
     sent_count = 0
-    if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
+    previous_message = await event.get_reply_message()
     error_count = 0
     for channel in channels:
         try:

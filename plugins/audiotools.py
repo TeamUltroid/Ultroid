@@ -151,12 +151,10 @@ async def ex_aud(e):
 
     except FileNotFoundError:
         return await eor(msg, get_string("audiotools_9"))
-    await e.client.send_file(
-        e.chat_id,
-        fo,
-        caption=get_string("audiotools_10"),
+    await e.reply(
+        get_string("audiotools_10"),
+        file=fo,
         thumb=ULTConfig.thumb,
-        attributes=attributes,
-        reply_to=e.reply_to_msg_id,
+        attributes=attributes
     )
     await msg.delete()
