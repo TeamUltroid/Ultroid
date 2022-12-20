@@ -155,6 +155,6 @@ async def ex_aud(e):
         get_string("audiotools_10"),
         file=fo,
         thumb=ULTConfig.thumb,
-        attributes=attributes
+        attributes=attributes,
     )
     await msg.delete()

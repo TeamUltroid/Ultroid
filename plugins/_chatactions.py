@@ -13,11 +13,11 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
 from pyUltroid.dB import stickers
+from pyUltroid.dB.echo_db import check_echo
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.nsfw_db import is_profan
-from pyUltroid.dB.echo_db import check_echo
 from pyUltroid.fns.helper import inline_mention
 from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply
 
@@ -46,7 +46,6 @@ async def DummyHandler(ult):
         except BaseException:
             pass
 
-    
     if check_echo(ult.chat_id, ult.sender_id):
         try:
             await ult.respond(ult)

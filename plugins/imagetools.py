@@ -194,8 +194,7 @@ async def sampl(ult):
         try:
             try:
                 await ult.delete()
-                await ult.respond(f"Colour Sample for `{color}` !", file="csample.png"
-                )
+                await ult.respond(f"Colour Sample for `{color}` !", file="csample.png")
             except MessageDeleteForbiddenError:
                 await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
         except ChatSendMediaForbiddenError:

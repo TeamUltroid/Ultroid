@@ -91,7 +91,7 @@ async def gen_shots(e):
         if not pic:
             text = "`Failed to Take Screenshots..`"
             pic = None
-        await e.respond( text, file=pic)
+        await e.respond(text, file=pic)
         await bash("rm -rf ss")
         await xxx.delete()
 
