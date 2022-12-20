@@ -107,7 +107,7 @@ async def is_url_ok(url: str):
 async def metadata(file):
     out, _ = await bash(f'mediainfo "{_unquote_text(file)}" --Output=JSON')
     if _ and _.endswith("NOT_FOUND"):
-        raise Exception(_)
+        raise DependencyMissingError(f"'{_}' is not installed!\nInstall it to use this command.")
     data = {}
     _info = json.loads(out)["media"]["track"]
     info = _info[0]

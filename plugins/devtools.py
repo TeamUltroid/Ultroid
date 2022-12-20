@@ -136,10 +136,10 @@ bot = ultroid = ultroid_bot
 
 
 class u:
-    ...
+    _ = ""
 
 
-def _parse_eval(value=None, i=0):
+def _parse_eval(value=None):
     if not value:
         return value
     if hasattr(value, "stringify"):
@@ -153,13 +153,12 @@ def _parse_eval(value=None, i=0):
         except BaseException:
             pass
     elif isinstance(value, list):
-        newlist = ("  " * i) + "["
+        newlist ="["
         for index, child in enumerate(value):
-            i += 1
-            newlist += "\n" + ("  " * i) + str(_parse_eval(child, i))
+            newlist += "\n" + str(_parse_eval(child, i))
             if index < len(value) - 1:
                 newlist += ","
-        newlist += (" " * (i - 1)) + "\n]"
+        newlist += "\n]"
         return newlist
     return str(value)
 

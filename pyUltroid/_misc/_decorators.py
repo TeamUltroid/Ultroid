@@ -32,6 +32,7 @@ from telethon.errors.rpcerrorlist import (
     MessageNotModifiedError,
     UserIsBotError,
 )
+from pyUltroid.exceptions import DependencyMissingError
 from telethon.events import MessageEdited, NewMessage
 from telethon.utils import get_display_name
 
@@ -135,7 +136,7 @@ def ultroid_cmd(
                     ult,
                     get_string("py_d7"),
                 )
-            except (BotInlineDisabledError) as er:
+            except (BotInlineDisabledError, DependencyMissingError) as er:
                 return await eod(ult, f"`{er}`")
             except (
                 MessageIdInvalidError,
