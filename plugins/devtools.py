@@ -92,7 +92,9 @@ async def _(event):
                 backgroundColor=choice(ATRA_COL),
             )
             if isinstance(li, dict):
-                await xx.edit(f"Unknown Response from Carbon: `{li}`\n\nstdout`:{stdout}`\nstderr: `{stderr}`")
+                await xx.edit(
+                    f"Unknown Response from Carbon: `{li}`\n\nstdout`:{stdout}`\nstderr: `{stderr}`"
+                )
                 return
             url = f"https://graph.org{uf(li)[-1]}"
             OUT = f"[\xad]({url}){OUT}"
