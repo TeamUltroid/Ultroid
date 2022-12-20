@@ -73,7 +73,8 @@ async def mi(e):
         else:
             naam = await r.download_media()
     elif match and (
-        os.path.isfile(match) or (match.startswith("https://") and (await is_url_ok(match)))
+        os.path.isfile(match)
+        or (match.startswith("https://") and (await is_url_ok(match)))
     ):
         naam, xx = match, "file"
     else:

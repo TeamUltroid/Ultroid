@@ -73,14 +73,12 @@ from . import (
     bash,
     check_filename,
     con,
-    json_parser,
-    eor,
     download_file,
-    fast_download,
+    eor,
     get_string,
 )
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
+from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
@@ -421,10 +419,10 @@ async def webss(event):
             LOGS.exception(er)
     if not pic:
         pic, msg = await download_file(
-                f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-                path,
-                validate=True
-            )
+            f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
+            path,
+            validate=True,
+        )
         if msg:
             await xx.edit(json_parser(msg, indent=1))
             return
