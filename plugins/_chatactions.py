@@ -98,8 +98,7 @@ async def DummyHandler(ult):
                         user.id,
                         view_messages=False,
                     )
-                    await ult.client.send_message(
-                        chat.id,
+                    await ult.respond(
                         f'**@UltroidBans:** Banned user detected and banned!\n`{str(is_banned)}`.\nBan reason: {is_banned["reason"]}',
                     )
 

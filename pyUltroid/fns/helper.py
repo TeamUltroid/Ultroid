@@ -215,8 +215,7 @@ if run_as_module:
         await xx.delete()
 
     async def def_logs(ult, file):
-        await ult.client.send_file(
-            ult.chat_id,
+        await ult.respond(
             file=file,
             thumb=ULTConfig.thumb,
             caption="**Ultroid Logs.**",

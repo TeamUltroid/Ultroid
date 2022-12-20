@@ -146,13 +146,11 @@ async def list_all(event):
         MSG = msg.replace("*", "").replace("`", "")
         with io.BytesIO(str.encode(MSG)) as out_file:
             out_file.name = "channels.txt"
-            await event.client.send_file(
-                event.chat_id,
-                out_file,
+            await event.reply(
+                "Channels in database",
+                file=out_file,
                 force_document=True,
                 allow_cache=False,
-                caption="Channels in database",
-                reply_to=event,
             )
             await x.delete()
     else:
