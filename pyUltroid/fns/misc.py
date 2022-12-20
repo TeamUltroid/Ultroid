@@ -32,7 +32,8 @@ if run_as_module:
     from ..dB._core import LIST
 
 from . import some_random_headers
-from .tools import async_searcher, check_filename, json_parser
+from .helper import async_searcher
+from .tools import check_filename, json_parser
 
 try:
     import aiohttp

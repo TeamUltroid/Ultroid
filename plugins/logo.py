@@ -59,7 +59,7 @@ async def logo_gen(event):
                 "3d render",
             ]
             res = await unsplashsearch(random.choice(SRCH), limit=1)
-            bg_ = await download_file(res[0], "resources/downloads/logo.png")
+            bg_, _ = await download_file(res[0], "resources/downloads/logo.png")
             newimg = "resources/downloads/unsplash-temp.jpg"
             img_ = Image.open(bg_)
             img_.resize((5000, 5000)).save(newimg)

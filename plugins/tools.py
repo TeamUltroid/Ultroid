@@ -73,7 +73,9 @@ from . import (
     bash,
     check_filename,
     con,
+    json_parser,
     eor,
+    download_file,
     fast_download,
     get_string,
 )
@@ -395,7 +397,7 @@ async def webss(event):
     xurl = event.pattern_match.group(1).strip()
     if not xurl:
         return await xx.eor(get_string("wbs_1"), time=5)
-    if not is_url_ok(xurl):
+    if not (await is_url_ok(xurl)):
         return await xx.eor(get_string("wbs_2"), time=5)
     path, pic = check_filename("shot.png"), None
     if async_playwright:
@@ -418,12 +420,14 @@ async def webss(event):
         except Exception as er:
             LOGS.exception(er)
     if not pic:
-        pic = (
-            await fast_download(
+        pic, msg = await download_file(
                 f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-                filename=path,
+                path,
+                validate=True
             )
-        )[0]
+        if msg:
+            await xx.edit(json_parser(msg, indent=1))
+            return
     if pic:
         await xx.reply(
             get_string("wbs_3").format(xurl),
