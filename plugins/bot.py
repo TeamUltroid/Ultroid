@@ -243,6 +243,9 @@ async def _(event):
             code=code,
             backgroundColor=choice(ATRA_COL),
         )
+        if isinstance(file, dict):
+            await event.eor(f"`{file}`")
+            return
         await event.reply("**Ultroid Logs.**", file=file)
     elif opt == "open":
         with open("ultroid.log", "r") as f:

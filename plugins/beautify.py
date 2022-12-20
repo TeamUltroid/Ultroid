@@ -47,6 +47,9 @@ async def crbn(event):
         except IndexError:
             return await eor(xxxx, get_string("carbon_2"))
     xx = await Carbon(code=code, file_name="ultroid_carbon", backgroundColor=col)
+    if isinstance(xx, dict):
+        await xxxx.edit(f"`{xx}`")
+        return
     await xxxx.delete()
     await event.reply(
         f"Carbonised by {inline_mention(event.sender)}",

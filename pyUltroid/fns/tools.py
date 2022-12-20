@@ -514,7 +514,7 @@ async def Carbon(
     #if rayso:
     #    base_url = "https://rayso-api-desvhu-33.koyeb.app/generate"
     kwargs["text"] = code
-    kwargs["theme"] = kwargs.get("theme", "meadow")
+    kwargs["theme"] = kwargs.get("theme", "breeze")
     kwargs["darkMode"] = kwargs.get("darkMode", True)
     kwargs["title"] = kwargs.get("title", "Ultroid")
     #else:
@@ -524,6 +524,10 @@ async def Carbon(
         file = BytesIO(con)
         file.name = file_name + ".jpg"
     else:
+        try:
+            return json_parser(con.decode())
+        except Exception:
+            pass
         file = file_name + ".jpg"
         with open(file, "wb") as f:
             f.write(con)

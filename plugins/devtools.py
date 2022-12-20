@@ -53,8 +53,11 @@ async def _(e):
     with open("neo.txt", "r", encoding="utf-8") as neo:
         p = (neo.read()).replace("\n\n", "")
     haa = await Carbon(code=p, file_name="neofetch", backgroundColor=choice(ATRA_COL))
-    await e.reply(file=haa)
-    await xx.delete()
+    if isinstance(haa, dict):
+        await xx.edit(f"`{haa}`")
+    else:
+        await e.reply(file=haa)
+        await xx.delete()
     remove("neo.txt")
 
 
@@ -88,6 +91,9 @@ async def _(event):
                 download=True,
                 backgroundColor=choice(ATRA_COL),
             )
+            if isinstance(li, dict):
+                await xx.edit(f"Unknown Response from Carbon: `{li}`\n\nstdout`:{stdout}`\nstderr: `{stderr}`")
+                return
             url = f"https://graph.org{uf(li)[-1]}"
             OUT = f"[\xad]({url}){OUT}"
             out = "**• OUTPUT:**"
