@@ -8,6 +8,7 @@ test*
 *.webp
 *.mp4
 *.tgs
+*.txt
 /*.jpg
 /*.png
 /*.mp4
