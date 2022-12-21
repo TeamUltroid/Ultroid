@@ -128,7 +128,7 @@ async def pass_on(ult):
         theme = random.choice(RaySoTheme)
     if ult.is_reply:
         msg = await ult.get_reply_message()
-        text = msg.text
+        text = msg.message
         title = get_display_name(msg.sender)
     await ult.reply(
         file=await Carbon(text, rayso=True, title=title, theme=theme, darkMode=dark)
