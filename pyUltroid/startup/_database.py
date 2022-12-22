@@ -129,12 +129,11 @@ class MongoDB(_BaseDatabase):
     def keys(self):
         return self.db.list_collection_names()
 
-    def set_key(self, key, value):
+    def set(self, key, value):
         if key in self.keys():
             self.db[key].replace_one({"_id": key}, {"value": str(value)})
         else:
             self.db[key].insert_one({"_id": key, "value": str(value)})
-        self._cache.update({key: value})
         return True
 
     def delete(self, key):
