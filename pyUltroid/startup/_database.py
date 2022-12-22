@@ -22,28 +22,28 @@ if (Var.REDIS_URI or Var.REDISHOST):
         from redis import Redis
     except ImportError:
         LOGS.info("Installing 'redis' for database.")
-        os.system("pip3 install -q redis hiredis")
+        os.system(f"{sys.executable} -m pip install -q redis hiredis")
         from redis import Redis
 elif Var.MONGO_URI:
     try:
         from pymongo import MongoClient
     except ImportError:
         LOGS.info("Installing 'pymongo' for database.")
-        os.system("pip3 install -q pymongo[srv]")
+        os.system(f"{sys.executable} -m pip install -q pymongo[srv]")
         from pymongo import MongoClient
 elif Var.DATABASE_URL:
     try:
         import psycopg2
     except ImportError:
         LOGS.info("Installing 'pyscopg2' for database.")
-        os.system("pip3 install -q psycopg2-binary")
+        os.system(f"{sys.executable} -m pip install -q psycopg2-binary")
         import psycopg2
 else:
     try:
         from localdb import Database
     except ImportError:
         LOGS.info("Using local file as database.")
-        os.system("pip3 install -q localdb.json")
+        os.system(f"{sys.executable} -m pip install -q localdb.json")
         from localdb import Database
 
 # --------------------------------------------------------------------------------------------- #
