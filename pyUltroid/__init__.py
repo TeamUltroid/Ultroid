@@ -52,7 +52,10 @@ if sys.argv[0] == "-m":
         LOGS.info(f"Connected to {udB.name} Successfully!")
 
     BOT_MODE = udB.get_key("BOTMODE")
+    USER_MODE = udB.get_key("USER_MODE")
     DUAL_MODE = udB.get_key("DUAL_MODE")
+    if USER_MODE:
+        DUAL_MODE = False
 
     if BOT_MODE:
         if DUAL_MODE:
@@ -74,8 +77,11 @@ if sys.argv[0] == "-m":
             device_model="Ultroid",
         )
         ultroid_bot.run_in_loop(autobot())
-
-    asst = UltroidClient(None, bot_token=udB.get_key("BOT_TOKEN"), udB=udB)
+    
+    if USER_MODE:
+        asst = ultroid_bot
+    else:
+        asst = UltroidClient(None, bot_token=udB.get_key("BOT_TOKEN"), udB=udB)
 
     if BOT_MODE:
         ultroid_bot = asst
@@ -86,7 +92,7 @@ if sys.argv[0] == "-m":
                 )
             except Exception as er:
                 LOGS.exception(er)
-    elif not asst.me.bot_inline_placeholder:
+    elif not asst.me.bot_inline_placeholder and asst._bot:
         ultroid_bot.run_in_loop(enable_inline(ultroid_bot, asst.me.username))
 
     vcClient = vc_connection(udB, ultroid_bot)

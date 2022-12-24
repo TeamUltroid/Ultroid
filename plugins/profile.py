@@ -54,8 +54,7 @@ async def _(ult):
 @ultroid_cmd(pattern="setname ?((.|//)*)", fullsudo=True)
 async def _(ult):
     ok = await ult.eor("...")
-    names = ult.pattern_match.group(1).strip()
-    first_name = names
+    names = first_name = ult.pattern_match.group(1).strip()
     last_name = ""
     if "//" in names:
         first_name, last_name = names.split("//", 1)

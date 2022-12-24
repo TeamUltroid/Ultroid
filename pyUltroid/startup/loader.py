@@ -54,7 +54,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
     Loader().load(include=_in_only, exclude=_exclude, after_load=_after_load)
 
     # for assistant
-    if not udB.get_key("DISABLE_AST_PLUGINS"):
+    if USER_MODE and not udB.get_key("DISABLE_AST_PLUGINS"):
         _ast_exc = ["pmbot"]
         if _in_only and "games" not in _in_only:
             _ast_exc.append("games")
@@ -101,13 +101,14 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             load_all=True,
         )
 
-    # group manager
-    if manager:
-        Loader(path="assistant/manager", key="Group Manager").load()
+    if not USER_MODE:
+        # group manager
+        if manager:
+            Loader(path="assistant/manager", key="Group Manager").load()
 
-    # chat via assistant
-    if pmbot:
-        Loader(path="assistant/pmbot.py").load(log=False)
+        # chat via assistant
+        if pmbot:
+            Loader(path="assistant/pmbot.py").load(log=False)
 
     # vc bot
     if vcbot and not vcClient._bot:
