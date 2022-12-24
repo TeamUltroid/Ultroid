@@ -110,31 +110,41 @@ async def remove_profilepic(delpfp):
 
 @ultroid_cmd(pattern="poto( (.*)|$)")
 async def gpoto(e):
-    match = e.pattern_match
-    ult = match.group(1).strip()
-    limit = ult.split()[-1] if len(ult.split()) > 1 else None
-    if limit and limit != "all":
-        try:
-            limit = int(limit)
-        except ValueError:
-            limit = None
+    ult = e.pattern_match.group(1).strip()
+
+    if e.is_reply:
+        gs = await e.get_reply_message()
+        user_id = gs.sender_id
+    elif ult:
+        split = ult.split()
+        user_id = split[0]
+        if len(ult) > 1:
+            ult = ult[-1]
+        else:
+            ult = None
+    else:
+        user_id = e.chat_id
+
     a = await e.eor(get_string("com_1"))
+    limit = None
+
     just_dl = ult in ["-dl", "--dl"]
     if just_dl:
         ult = None
-    if not ult:
-        if e.is_reply:
-            gs = await e.get_reply_message()
-            ult = gs.sender_id
-        else:
-            ult = e.chat_id
+
+    if ult and ult != "all":
+        try:
+            limit = int(ult)
+        except ValueError:
+            pass
+
     if not limit:
-        okla = await e.client.download_profile_photo(ult)
+        okla = await e.client.download_profile_photo(user_id)
     else:
         okla = []
         if limit == "all":
             limit = None
-        async for photo in e.client.iter_profile_photos(ult, limit=limit):
+        async for photo in e.client.iter_profile_photos(user_id, limit=limit):
             okla.append(await e.client.download_media(photo))
     if not okla:
         return await eor(a, "`Pfp Not Found...`")

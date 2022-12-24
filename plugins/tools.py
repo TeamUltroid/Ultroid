@@ -343,16 +343,16 @@ async def _(e):
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1).strip()
-    if not steal.is_reply and not mat:
-        return await steal.eor("`Use this command with reply or give Username/id...`")
+    message = await steal.get_reply_message()
     if mat:
         try:
             user_id = await steal.client.parse_id(mat)
         except ValueError:
             user_id = mat
-    message = await steal.get_reply_message()
-    if message:
-        user_id = message.sender.id
+    elif message:
+        user_id = message.sender_id
+    else:
+        return await steal.eor("`Use this command with reply or give Username/id...`")
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
     lol = await steal.eor(get_string("com_1"))
@@ -443,10 +443,7 @@ async def magic(event):
         match = event.text.split(maxsplit=1)[1].strip()
     except IndexError:
         return await event.eor("`Provide url to turn into tiny...`")
-    match, id_ = match.split(), None
-    data = {"id": match[1] if len(match) > 1 else secrets.token_urlsafe(6)}
-    url = match[0]
-    data["link"] = url
+    data = {"url": match.split()[0], "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6)}
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
         data=data,
