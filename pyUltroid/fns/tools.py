@@ -7,6 +7,7 @@
 
 import json
 import math
+import requests
 import os
 import random
 import re
@@ -571,8 +572,7 @@ def _package_rpc(text, lang_src="auto", lang_tgt="auto"):
     escaped_parameter = json.dumps(parameter, separators=(",", ":"))
     rpc = [[[random.choice(GOOGLE_TTS_RPC), escaped_parameter, None, "generic"]]]
     espaced_rpc = json.dumps(rpc, separators=(",", ":"))
-    freq = "f.req={}&".format(quote(espaced_rpc))
-    return freq
+    return "f.req={}&".format(quote(espaced_rpc))
 
 
 def translate(*args, **kwargs):
@@ -583,11 +583,12 @@ def translate(*args, **kwargs):
         "Chrome/47.0.2526.106 Safari/537.36",
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
     }
-    x = requests.post(
+    x = requests.post(async_searcher(
         "https://translate.google.co.in/_/TranslateWebserverUi/data/batchexecute",
         headers=headers,
+        post=True,
         data=_package_rpc(*args, **kwargs),
-    ).text
+    ))
     response = ""
     data = json.loads(json.loads(x[4:])[0][2])[1][0][0]
     subind = data[-2]
