@@ -108,11 +108,11 @@ async def remove_profilepic(delpfp):
     await eod(ok, f"`Successfully deleted {len(pfplist)} profile picture(s).`")
 
 
-@ultroid_cmd(pattern="poto( (.*) (.*)|$)")
+@ultroid_cmd(pattern="poto( (.*)|$)")
 async def gpoto(e):
     match = e.pattern_match
     ult = match.group(1).strip()
-    limit = match.group(2).strip()
+    limit = ult.split()[-1] if len(ult.split()) > 1 else None
     if limit and limit != "all":
         try:
             limit = int(limit)
