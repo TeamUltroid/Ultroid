@@ -110,7 +110,14 @@ async def remove_profilepic(delpfp):
 
 @ultroid_cmd(pattern="poto( (.*)|$)")
 async def gpoto(e):
-    ult = e.pattern_match.group(1).strip()
+    match = e.pattern_match
+    ult = match.group(1).strip()
+    limit = ult.split()[-1] if len(ult.split()) > 1 else None
+    if limit and limit != "all":
+        try:
+            limit = int(limit)
+        except ValueError:
+            limit = None
     a = await e.eor(get_string("com_1"))
     just_dl = ult in ["-dl", "--dl"]
     if just_dl:
@@ -121,11 +128,24 @@ async def gpoto(e):
             ult = gs.sender_id
         else:
             ult = e.chat_id
-    okla = await e.client.download_profile_photo(ult)
+    if not limit:
+        okla = await e.client.download_profile_photo(ult)
+    else:
+        okla = []
+        if limit == "all":
+            limit = None
+        async for photo in e.client.iter_profile_photos(ult, limit=limit):
+            okla.append(await e.client.download_media(photo))
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
     if not just_dl:
         await a.delete()
         await e.reply(file=okla)
-        return os.remove(okla)
+        if not isinstance(okla, list):
+            okla = [okla]
+        for file in okla:
+            os.remove(file)
+        return
+    if isinstance(okla, list):
+        okla = "\n".join(okla)
     await a.edit(f"Downloaded pfp to [ `{okla}` ].")
