@@ -9,6 +9,7 @@ import os
 import platform
 import sys
 from logging import INFO, WARNING, FileHandler, StreamHandler, basicConfig, getLogger
+from ._extra import _ask_input
 
 from .. import run_as_module
 
@@ -60,10 +61,7 @@ if run_as_module:
 
         _fix_logging(FileHandler)
 
-    if HOSTED_ON == "local":
-        from ._extra import _ask_input
-
-        _ask_input()
+    _ask_input()
 
     _LOG_FORMAT = "%(asctime)s | %(name)s [%(levelname)s] : %(message)s"
     basicConfig(

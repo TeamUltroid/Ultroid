@@ -74,7 +74,3 @@ class Terminal:
                         self._processes.pop(proc)
                     except KeyError:
                         pass
-
-
-class Executor:
-    pass
