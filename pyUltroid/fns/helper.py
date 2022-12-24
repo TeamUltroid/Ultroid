@@ -219,9 +219,9 @@ if run_as_module:
 
     async def def_logs(ult, file):
         await ult.respond(
+            "**Ultroid Logs.**",
             file=file,
             thumb=ULTConfig.thumb,
-            caption="**Ultroid Logs.**",
         )
 
     async def updateme_requirements():
