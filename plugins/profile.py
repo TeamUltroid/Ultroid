@@ -19,7 +19,10 @@
 • `{i}delpfp <n>(optional)`
     Delete one profile pic, if no value given, else delete n number of pics.
 
-• `{i}poto <username>`
+• `{i}poto <username>/reply`
+  `{i}poto <reply/upload-limit>/all`
+
+  Ex: `{i}poto 10` - uploads starting 10 pfps of user.
     Upload the photo of Chat/User if Available.
 """
 import os
@@ -138,7 +141,7 @@ async def gpoto(e):
         except ValueError:
             pass
 
-    if not limit:
+    if not limit or e.client._bot:
         okla = await e.client.download_profile_photo(user_id)
     else:
         okla = []
