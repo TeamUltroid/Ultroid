@@ -426,9 +426,8 @@ async def convo_handler(event: events.CallbackQuery):
     back = get_["back"]
     async with event.client.conversation(event.sender_id) as conv:
         await conv.send_message(get_["text"])
-        response = conv.wait_event(events.NewMessage(chats=event.sender_id))
-        response = await response
-        themssg = response.message.message
+        response = await conv.get_response()
+        themssg = response.message
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",

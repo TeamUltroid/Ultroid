@@ -37,7 +37,7 @@ def main():
     ):
         ultroid_bot.run_in_loop(bash("bash installer.sh"))
 
-        os.execl(sys.executable, "python3", "-m", "pyUltroid")
+        os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
     ultroid_bot.run_in_loop(startup_stuff())
 

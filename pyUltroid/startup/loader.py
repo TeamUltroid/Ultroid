@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import os, subprocess
+import os, subprocess, sys
 from shutil import rmtree
 
 from decouple import config
@@ -86,7 +86,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             # subprocess.run(
             #        "rm -rf /usr/local/lib/python3.*/site-packages/pip/_vendor/.wh*"
             #    )
-            subprocess.run("pip3 install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
+            subprocess.run(f"{sys.executable} -m pip install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
