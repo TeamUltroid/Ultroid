@@ -1181,7 +1181,7 @@ async def name(event):
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
-    Loader(path="assistant/pmbot.py", key="PM Bot").load_single()
+    Loader(path="assistant/pmbot.py", key="PM Bot").load()
     if AST_PLUGINS.get("pmbot"):
         for i, e in AST_PLUGINS["pmbot"]:
             event.client.remove_event_handler(i)

@@ -107,7 +107,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
 
     # chat via assistant
     if pmbot:
-        Loader(path="assistant/pmbot.py").load_single(log=False)
+        Loader(path="assistant/pmbot.py").load(log=False)
 
     # vc bot
     if vcbot and not vcClient._bot:
