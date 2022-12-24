@@ -277,9 +277,9 @@ class RedisDB(_BaseDatabase):
             if var:
                 hash_ = var.split("_", maxsplit=2)[1].split("_")[0]
             if hash:
-                kwargs["host"] = os.environ(f"QOVERY_REDIS_{hash_}_HOST")
-                kwargs["port"] = os.environ(f"QOVERY_REDIS_{hash_}_PORT")
-                kwargs["password"] = os.environ(f"QOVERY_REDIS_{hash_}_PASSWORD")
+                kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
+                kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
+                kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")
         self.db = Redis(**kwargs)
         self.set = self.db.set
         self.get = self.db.get

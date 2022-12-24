@@ -3,8 +3,8 @@
 
 akinator
 apscheduler
-aiohttp
 bs4
+aiohttp
 enhancer>=0.3.4
 git+https://github.com/New-dev0/instagrapi.git@39df1b1#egg=instagrapi
 git+https://github.com/buddhhu/img2html.git@c44170d#egg=img2html
@@ -22,7 +22,6 @@ psutil
 pypdf2>=1.26.0
 pytz
 qrcode
-requests
 tabulate
 git+https://github.com/xditya/telegraph.git@41fd800#egg=telegraph
 tgcrypto
