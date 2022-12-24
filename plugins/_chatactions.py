@@ -46,12 +46,6 @@ async def DummyHandler(ult):
         except BaseException:
             pass
 
-    if check_echo(ult.chat_id, ult.sender_id):
-        try:
-            await ult.respond(ult)
-        except Exception as er:
-            LOGS.exception(er)
-
     # thank members
     if must_thank(ult.chat_id):
         chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
@@ -204,6 +198,11 @@ async def chatBot_replies(e):
     sender = await e.get_sender()
     if not isinstance(sender, types.User) or sender.bot:
         return
+    if check_echo(e.chat_id, e.sender_id):
+        try:
+            await e.respond(e)
+        except Exception as er:
+            LOGS.exception(er)
     key = udB.get_key("CHATBOT_USERS") or {}
     if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
