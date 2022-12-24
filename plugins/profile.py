@@ -145,7 +145,12 @@ async def gpoto(e):
         if limit == "all":
             limit = None
         async for photo in e.client.iter_profile_photos(user_id, limit=limit):
-            okla.append(await e.client.download_media(photo))
+            photo_path = await e.client.download_media(photo)
+            if photo.video_sizes:
+                await e.respond(file=photo_path)
+                os.remove(photo_path)
+            else:
+                okla.append(photo_path)
     if not okla:
         return await eor(a, "`Pfp Not Found...`")
     if not just_dl:
