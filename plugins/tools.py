@@ -443,7 +443,10 @@ async def magic(event):
         match = event.text.split(maxsplit=1)[1].strip()
     except IndexError:
         return await event.eor("`Provide url to turn into tiny...`")
-    data = {"url": match.split()[0], "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6)}
+    data = {
+        "url": match.split()[0],
+        "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6),
+    }
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
         data=data,
