@@ -10,13 +10,16 @@ from sys import modules
 
 # for addons
 
+configPaths = ["ub", "var", "support", "userbot", "telebot", "fridaybot",
+"uniborg.util", "telebot.utils", "userbot.utils", "userbot.events", "userbot.config",
+"fridaybot.utils", "fridaybot.Config", "userbot.uniborgConfig"] 
 
 def load_addons(plugin_name):
     base_name = plugin_name.split("/")[-1].split("\\")[-1].replace(".py", "")
     if base_name.startswith("__"):
         return
     from .. import HNDLR, LOGS, asst, udB, ultroid_bot
-    from .._misc import _supporter as xxx
+    from .._misc import _supporter as config
     from pyUltroid import fns
     from .._misc._assistant import asst_cmd, callback, in_pattern
     from .._misc._decorators import ultroid_cmd
@@ -28,6 +31,9 @@ def load_addons(plugin_name):
     name = plugin_name.replace("/", ".").replace("\\", ".").replace(".py","")
     spec = util.spec_from_file_location(name, plugin_name)
     mod = util.module_from_spec(spec)
+    for path in configPaths:
+        modules[path] = config
+    modules["pyUltroid.functions"] = fns
     mod.LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
     mod.udB = udB
     mod.asst = asst
@@ -61,21 +67,7 @@ def load_addons(plugin_name):
     mod.sudo_cmd = sudo_cmd
     mod.HELP = HELP.get("Addons", {})
     mod.CMD_HELP = HELP.get("Addons", {})
-    modules["ub"] = xxx
-    modules["var"] = xxx
-    modules["support"] = xxx
-    modules["userbot"] = xxx
-    modules["telebot"] = xxx
-    modules["fridaybot"] = xxx
-    modules["uniborg.util"] = xxx
-    modules["telebot.utils"] = xxx
-    modules["userbot.utils"] = xxx
-    modules["userbot.events"] = xxx
-    modules["userbot.config"] = xxx
-    modules["fridaybot.utils"] = xxx
-    modules["fridaybot.Config"] = xxx
-    modules["userbot.uniborgConfig"] = xxx
-    modules["pyUltroid.functions"] = fns
+   
     spec.loader.exec_module(mod)
     modules[name] = mod
     doc = modules[name].__doc__.format(i=HNDLR) if modules[name].__doc__ else ""
