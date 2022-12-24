@@ -147,5 +147,5 @@ async def gpoto(e):
             os.remove(file)
         return
     if isinstance(okla, list):
-        okla = "\n".join(okla) 
+        okla = "\n".join(okla)
     await a.edit(f"Downloaded pfp to [ `{okla}` ].")
