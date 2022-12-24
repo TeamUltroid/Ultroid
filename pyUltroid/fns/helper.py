@@ -506,6 +506,7 @@ def humanbytes(size):
 def numerize(number):
     if not number:
         return None
+    unit = ""
     for unit in ["", "K", "M", "B", "T"]:
         if number < 1000:
             break
