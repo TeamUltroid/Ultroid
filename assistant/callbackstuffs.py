@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-
+import ast
 import asyncio
 import re
 import sys
@@ -428,6 +428,10 @@ async def convo_handler(event: events.CallbackQuery):
         await conv.send_message(get_["text"])
         response = await conv.get_response()
         themssg = response.message
+        try:
+            themssg = ast.literal_eval(themssg)
+        except Exception:
+            pass
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",

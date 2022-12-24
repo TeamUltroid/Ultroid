@@ -25,7 +25,8 @@ AST_PLUGINS = {}
 async def setit(event, name, value):
     try:
         udB.set_key(name, value)
-    except BaseException:
+    except BaseException as er:
+        LOGS.exception(er)
         return await event.edit("`Something Went Wrong`")
 
 

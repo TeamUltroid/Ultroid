@@ -29,6 +29,8 @@ def where_hosted():
     if os.getenv("KUBERNETES_PORT"):
         return "qovery | kubernetes"
     if os.getenv("RUNNER_USER") or os.getenv("HOSTNAME"):
+        if os.getenv("USER") == "codespace":
+            return "codespace"
         return "github actions"
     if os.getenv("ANDROID_ROOT"):
         return "termux"
