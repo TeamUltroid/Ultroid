@@ -54,7 +54,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
     Loader().load(include=_in_only, exclude=_exclude, after_load=_after_load)
 
     # for assistant
-    if USER_MODE and not udB.get_key("DISABLE_AST_PLUGINS"):
+    if not USER_MODE and not udB.get_key("DISABLE_AST_PLUGINS"):
         _ast_exc = ["pmbot"]
         if _in_only and "games" not in _in_only:
             _ast_exc.append("games")
