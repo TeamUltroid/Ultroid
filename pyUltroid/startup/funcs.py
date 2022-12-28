@@ -390,12 +390,13 @@ async def plug(plugin_channels):
     if ultroid_bot._bot:
         LOGS.info("Plugin Channels can't be used in 'BOTMODE'")
         return
-    if os.path.exists("addons") and not os.path.exists("addons/.git"):
-        shutil.rmtree("addons")
-    if not os.path.exists("addons"):
-        os.mkdir("addons")
-    if not os.path.exists("addons/__init__.py"):
-        with open("addons/__init__.py", "w") as f:
+    addon_file = f"addons{sys.argv[6]}" if len(sys.argv) > 6 else "addons"
+    if os.path.exists(addon_file) and not os.path.exists(f"{addon_file}/.git"):
+        shutil.rmtree(addon_file)
+    if not os.path.exists(addon_file):
+        os.mkdir(addon_file)
+    if not os.path.exists(f"{addon_file}/__init__.py"):
+        with open(f"{addon_file}/__init__.py", "w") as f:
             f.write("from plugins import *\n\nbot = ultroid_bot")
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
@@ -404,7 +405,7 @@ async def plug(plugin_channels):
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=10
             ):
-                plugin = "addons/" + x.file.name.replace("_", "-").replace("|", "-")
+                plugin = f"{addon_file}/" + x.file.name.replace("_", "-").replace("|", "-")
                 if not os.path.exists(plugin):
                     await asyncio.sleep(0.6)
                     if x.text == "#IGNORE":
