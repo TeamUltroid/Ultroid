@@ -92,6 +92,7 @@ from telethon.tl.types import (
     User,
 )
 from telethon.utils import get_peer_id
+from pyUltroid.fns.info import get_chat_info
 
 from . import (
     HNDLR,
@@ -105,7 +106,6 @@ from . import (
     check_filename,
     eod,
     eor,
-    get_chat_info,
     get_paste,
     get_string,
     inline_mention,

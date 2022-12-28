@@ -11,9 +11,9 @@ from pytz import timezone as tz
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.utils import get_display_name
+from pyUltroid.dB.base import KeyManager
 
 from pyUltroid._misc import SUDO_M, owner_and_sudos
-from pyUltroid.dB.asst_fns import *
 from pyUltroid.fns.helper import inline_mention
 from strings import get_string
 
@@ -87,8 +87,9 @@ async def closet(lol):
 @asst_cmd(pattern="start( (.*)|$)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
     args = event.pattern_match.group(1).strip()
-    if not is_added(event.sender_id) and event.sender_id not in owner_and_sudos():
-        add_user(event.sender_id)
+    keym = KeyManager("BOT_USERS", cast=list)
+    if not keym.contains(event.sender_id) and event.sender_id not in owner_and_sudos():
+        keym.add(event.sender_id)
         kak_uiw = udB.get_key("OFF_START_LOG")
         if not kak_uiw or kak_uiw != True:
             msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
@@ -158,7 +159,7 @@ async def ultroid(event):
 
 @callback("stat", owner=True)
 async def botstat(event):
-    ok = len(get_all_users("BOT_USERS"))
+    ok = len(udB.get_key("BOT_USERS") or [])
     msg = """Ultroid Assistant - Stats
 Total Users - {}""".format(
         ok,
@@ -168,8 +169,9 @@ Total Users - {}""".format(
 
 @callback("bcast", owner=True)
 async def bdcast(event):
-    ok = get_all_users("BOT_USERS")
-    await event.edit(f"• Broadcast to {len(ok)} users.")
+    keym = KeyManager("BOT_USERS", cast=list)
+    total = keym.count()
+    await event.edit(f"• Broadcast to {total} users.")
     async with event.client.conversation(OWNER_ID) as conv:
         await conv.send_message(
             "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
@@ -179,9 +181,9 @@ async def bdcast(event):
             return await conv.send_message("Cancelled!!")
         success = 0
         fail = 0
-        await conv.send_message(f"Starting a broadcast to {len(ok)} users...")
+        await conv.send_message(f"Starting a broadcast to {total} users...")
         start = datetime.now()
-        for i in ok:
+        for i in keym.get():
             try:
                 await asst.send_message(int(i), response)
                 success += 1
@@ -192,7 +194,7 @@ async def bdcast(event):
         await conv.send_message(
             f"""
 **Broadcast completed in {time_taken} seconds.**
-Total Users in Bot - {len(ok)}
+Total Users in Bot - {total}
 **Sent to** : `{success} users.`
 **Failed for** : `{fail} user(s).`""",
         )

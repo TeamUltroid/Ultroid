@@ -299,7 +299,7 @@ async def inline_alive(ult):
                 ]
             return await ult.answer(results)
         except BaseException as er:
-            LOGS.info(er)
+            LOGS.exception(er)
     result = [
         await builder.article(
             "Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons

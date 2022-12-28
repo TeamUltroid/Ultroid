@@ -1,5 +1,6 @@
 from .. import udB
 
+
 class KeyManager():
 
     def __init__(self, key, cast=None) -> None:
@@ -22,7 +23,7 @@ class KeyManager():
         content = self.get()
         if isinstance(item, dict):
             content.update(item)
-        elif isinstance(item, list):
+        elif isinstance(item, list) and item not in content:
             content.append(item)
         else:
             return
