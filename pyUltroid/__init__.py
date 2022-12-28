@@ -52,8 +52,9 @@ if sys.argv[0] == "-m":
         LOGS.info(f"Connected to {udB.name} Successfully!")
 
     BOT_MODE = udB.get_key("BOTMODE")
-    USER_MODE = udB.get_key("USER_MODE")
     DUAL_MODE = udB.get_key("DUAL_MODE")
+
+    USER_MODE = udB.get_key("USER_MODE")
     if USER_MODE:
         DUAL_MODE = False
 
