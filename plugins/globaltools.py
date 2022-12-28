@@ -91,6 +91,7 @@ _gdemote_rights = ChatAdminRights(
 
 keym = KeyManager("GBLACKLISTS", cast=list)
 
+
 @ultroid_cmd(pattern="gpromote( (.*)|$)", fullsudo=True)
 async def _(e):
     x = e.pattern_match.group(1).strip()
