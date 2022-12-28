@@ -64,36 +64,37 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
 
     # for addons
     if addons:
+        addon_path = f"addons{sys.argv[6]}" if len(sys.argv) > 6 else "addons"
         if url := udB.get_key("ADDONS_URL"):
-            subprocess.run(f"git clone -q {url} addons", shell=True)
-        if os.path.exists("addons") and not os.path.exists("addons/.git"):
-            rmtree("addons")
-        if not os.path.exists("addons"):
+            subprocess.run(f"git clone -q {url} {addon_path}", shell=True)
+        if os.path.exists(addon_path) and not os.path.exists(f"{addon_path}/.git"):
+            rmtree(addon_path)
+        if not os.path.exists(addon_path):
             subprocess.run(
-                f"git clone -q -b {Repo().active_branch} https://github.com/TeamUltroid/UltroidAddons.git addons",
+                f"git clone -q -b {Repo().active_branch} https://github.com/TeamUltroid/UltroidAddons.git {addon_path}",
                 shell=True,
             )
         else:
-            subprocess.run("cd addons && git pull -q && cd ..", shell=True)
+            subprocess.run(f"cd {addon_path} && git pull -q && cd ..", shell=True)
 
-        if not os.path.exists("addons"):
+        if not os.path.exists(addon_path):
             subprocess.run(
-                "git clone -q https://github.com/TeamUltroid/UltroidAddons.git addons",
+                f"git clone -q https://github.com/TeamUltroid/UltroidAddons.git {addon_path}",
                 shell=True,
             )
-        if os.path.exists("addons/addons.txt"):
+        if os.path.exists(f"{addon_path}/addons.txt"):
             # generally addons req already there so it won't take much time
             # subprocess.run(
             #        "rm -rf /usr/local/lib/python3.*/site-packages/pip/_vendor/.wh*"
             #    )
-            subprocess.run(f"{sys.executable} -m pip install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
+            subprocess.run(f"{sys.executable} -m pip install --no-cache-dir -q -r ./{addon_path}/addons.txt", shell=True)
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
         _in_only = udB.get_key("INCLUDE_ADDONS")
         _in_only = _in_only.split() if _in_only else []
 
-        Loader(path="addons", key="Addons").load(
+        Loader(path=addon_path, key="Addons").load(
             func=load_addons,
             include=_in_only,
             exclude=_exclude,
