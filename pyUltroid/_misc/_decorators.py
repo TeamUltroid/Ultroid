@@ -97,19 +97,16 @@ def ultroid_cmd(
                     and not (ult.sender_id in DEVLIST)
                 ):
                     return
-            if admins_only:
-                if ult.is_private:
-                    return await eod(ult, get_string("py_d3"))
-                if not (chat.admin_rights or chat.creator):
-                    return await eod(ult, get_string("py_d5"))
+            if ult.is_private and (groups_only or admins_only):
+                   return await eod(ult, get_string("py_d3"))
+            elif admins_only and not (chat.admin_rights or chat.creator):
+                return await eod(ult, get_string("py_d5"))
             if only_devs and not udB.get_key("I_DEV"):
                 return await eod(
                     ult,
                     get_string("py_d4").format(HNDLR),
                     time=10,
                 )
-            if groups_only and ult.is_private:
-                return await eod(ult, get_string("py_d5"))
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:

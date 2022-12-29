@@ -13,17 +13,19 @@ ULTConfig.lang = udB.get_key("language") or os.getenv("LANGUAGE", "en")
 
 languages = {}
 
-for file in glob("strings/strings/*yml"):
-    if file.endswith(".yml"):
-        code = file.split("/")[-1].split("\\")[-1][:-4]
-        try:
-            languages[code] = safe_load(
-                open(file, encoding="UTF-8"),
-            )
-        except Exception as er:
-            LOGS.info(f"Error in {file[:-4]} language file")
-            LOGS.exception(er)
+def load(file):
+    if not file.endswith(".yml"):
+        return
+    code = file.split("/")[-1].split("\\")[-1][:-4]
+    try:
+        languages[code] = safe_load(
+            open(file, encoding="UTF-8"),
+        )
+    except Exception as er:
+        LOGS.info(f"Error in {file[:-4]} language file")
+        LOGS.exception(er)
 
+load(ULTConfig.lang)
 
 def get_string(key: str, _res: bool = True) -> Any:
     lang = ULTConfig.lang or "en"
@@ -58,6 +60,8 @@ def get_help(key):
         return get_string("cmda") + doc
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:
+    for file in glob("strings/strings/*yml"):
+        load(file)
     return {
         code: {
             "name": languages[code]["name"],
