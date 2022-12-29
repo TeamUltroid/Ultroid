@@ -199,6 +199,18 @@ main() {
 }
 
 if [ -t 0 ]; then
+    unameOut="$(uname -s)"
+    case "${unameOut}" in
+        Linux*)     machine=Linux;;
+        Darwin*)    machine=Mac;;
+        CYGWIN*)    machine=Cygwin;;
+        MINGW*)     machine=MinGw;;
+        *)          machine="UNKNOWN:${unameOut}"
+    esac
+    if machine != "Linux"; then
+        echo -e "This script is only for Linux. Please use the Windows installer."
+        exit 1
+    fi
     # check if sudo is installed
     if ! command -v sudo &>/dev/null; then
         echo -e "Sudo isn't installed. Please install sudo to run this bot."
