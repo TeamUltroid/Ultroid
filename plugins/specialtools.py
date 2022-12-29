@@ -282,9 +282,9 @@ async def wall(event):
         return await event.eor("`Give me something to search..`")
     nn = await event.eor(get_string("com_1"))
     query = f"hd {inp}"
-    images = await get_google_images(query, 10)
-    to_send = [img["original"] for img in images]
-    await event.client.send_file(event.chat_id, file=to_send, album=True)
+    images = await get_google_images(query)
+    for z in range(5):
+        await event.client.send_file(event.chat_id, file=images[z]["original"])
     await nn.delete()
 
 

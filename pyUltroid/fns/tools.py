@@ -366,7 +366,7 @@ async def get_paste(data: str, extension: str = "txt"):
 # https://stackoverflow.com/a/74563494
 
 
-async def get_google_images(query, limit=5):
+async def get_google_images(query):
     soup = BeautifulSoup(
         await async_searcher(
             "https://google.com/search",
@@ -430,7 +430,7 @@ async def get_google_images(query, limit=5):
             }
         )
     random.shuffle(google_images)
-    return random.sample(google_images, limit)
+    return google_images
 
 
 # Thanks https://t.me/KukiUpdates/23 for ChatBotApi
