@@ -88,10 +88,6 @@ def update_envs():
     """Update Var. attributes to udB"""
     from .. import udB
 
-    for key in dir(Var):
-        if not key.startswith("_"):
-            udB.set_key(key, getattr(Var, key), cache_only=True)
-
     for envs in list(os.environ):
         if envs in ["LOG_CHANNEL", "BOT_TOKEN", "BOTMODE", "DUAL_MODE", "language"] or envs in udB.keys():
             udB.set_key(envs, os.environ[envs])
@@ -217,8 +213,6 @@ async def autopilot():
     from .. import asst, udB, ultroid_bot
 
     channel = udB.get_key("LOG_CHANNEL")
-    print(channel)
-    return
     new_channel = None
     if channel:
         try:
