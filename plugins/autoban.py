@@ -10,23 +10,25 @@ from . import get_help
 __doc__ = get_help("help_autoban")
 
 from telethon import events
+
 from pyUltroid.dB.base import KeyManager
 
 from . import LOGS, asst, ultroid_bot, ultroid_cmd
 
 Keym = KeyManager("DND_CHATS", cast=list)
 
-join_func = lambda e: e.user_joined and Keym.contains(e.chat_id)
+
+def join_func(e):
+    return e.user_joined and Keym.contains(e.chat_id)
+
 
 async def dnd_func(event):
     for user in event.users:
-            try:
-                await (
-                    await event.client.kick_participant(event.chat_id, user)
-                ).delete()
-            except Exception as ex:
-                LOGS.error("Error in DND:")
-                LOGS.exception(ex)
+        try:
+            await (await event.client.kick_participant(event.chat_id, user)).delete()
+        except Exception as ex:
+            LOGS.error("Error in DND:")
+            LOGS.exception(ex)
     await event.delete()
 
 
@@ -43,9 +45,7 @@ async def _(event):
         if Keym.contains(event.chat_id):
             return await event.eor("`Chat already in do not disturb mode.`", time=3)
         Keym.add(event.chat_id)
-        event.client.add_handler(
-            dnd_func, events.ChatAction(func=join_func)
-        )
+        event.client.add_handler(dnd_func, events.ChatAction(func=join_func))
         await event.eor("`Do not disturb mode activated for this chat.`", time=3)
     elif match == "off":
         if not Keym.contains(event.chat_id):
