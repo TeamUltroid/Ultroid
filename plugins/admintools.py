@@ -28,7 +28,6 @@ from . import (
     eod,
     eor,
     get_string,
-    get_uinfo,
     inline_mention,
     types,
     ultroid_cmd,
