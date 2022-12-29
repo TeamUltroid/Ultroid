@@ -6,10 +6,12 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 import asyncio
-import os, shutil
+import os
 import random
+import shutil
 import time
 from random import randint
+
 from ..configs import Var
 
 try:
@@ -47,7 +49,7 @@ db_url = 0
 
 
 async def autoupdate_local_database():
-    from .. import asst, udB, ultroid_bot, Var
+    from .. import Var, asst, udB, ultroid_bot
 
     global db_url
     db_url = (
@@ -89,7 +91,10 @@ def update_envs():
     from .. import udB
 
     for envs in list(os.environ):
-        if envs in ["LOG_CHANNEL", "BOT_TOKEN", "BOTMODE", "DUAL_MODE", "language"] or envs in udB.keys():
+        if (
+            envs in ["LOG_CHANNEL", "BOT_TOKEN", "BOTMODE", "DUAL_MODE", "language"]
+            or envs in udB.keys()
+        ):
             udB.set_key(envs, os.environ[envs])
 
 
@@ -423,6 +428,7 @@ async def plug(plugin_channels):
 
 # some stuffs
 
+
 async def fetch_ann():
     from .. import asst, udB
     from ..fns.tools import async_searcher
@@ -439,7 +445,7 @@ async def fetch_ann():
             if key not in get_:
                 cont = upt[key]
                 if isinstance(cont, dict) and cont.get("lang"):
-                    if cont["lang"] != (udB.get_key("language") or"en"):
+                    if cont["lang"] != (udB.get_key("language") or "en"):
                         continue
                     cont = cont["msg"]
                 if isinstance(cont, str):
@@ -497,7 +503,7 @@ async def ready():
     if spam_sent and not spam_sent.media:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)
     await fetch_ann()
-    
+
 
 async def WasItRestart(udb):
     key = udb.get_key("_RESTART")

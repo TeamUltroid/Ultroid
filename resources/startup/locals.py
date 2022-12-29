@@ -76,10 +76,14 @@ def start():
     print("\nCongrats. All done!\nTime to start the bot!")
     print("\nInstalling requirements... This might take a while...")
     os.system("pip3 install --no-cache-dir -r requirements.txt")
-    ask = input("Enter 'yes/y' to Install other requirements, required for local deployment.")
-    if ask.lower().startswith("y") :
+    ask = input(
+        "Enter 'yes/y' to Install other requirements, required for local deployment."
+    )
+    if ask.lower().startswith("y"):
         print("Started Installing...")
-        os.system("pip3 install --no-cache-dir -r resources/startup/optional-requirements.txt")
+        os.system(
+            "pip3 install --no-cache-dir -r resources/startup/optional-requirements.txt"
+        )
     else:
         print("Skipped!")
     clear_screen()

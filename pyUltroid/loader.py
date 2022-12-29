@@ -10,6 +10,7 @@ import glob
 import os
 from importlib import import_module
 from logging import Logger
+
 from . import LOGS
 from .fns.tools import get_all_files
 
@@ -69,9 +70,8 @@ class Loader:
                 self._logger.exception(exc)
                 continue
             if _single and log:
-                    self._logger.info(f"Successfully Loaded {plugin}!")
+                self._logger.info(f"Successfully Loaded {plugin}!")
             if callable(after_load):
                 if func == import_module:
                     plugin = plugin.split(".")[-1]
                 after_load(self, modl, plugin_name=plugin)
-

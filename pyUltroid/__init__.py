@@ -12,14 +12,18 @@ from .version import __version__
 
 run_as_module = __package__ in sys.argv or sys.argv[0] == "-m"
 
+
 class ULTConfig:
     lang = "en"
     thumb = "resources/extras/ultroid.jpg"
 
+
 if run_as_module:
     import time
+
     try:
         from telethonpatch import apply
+
         apply()
     except ModuleNotFoundError:
         pass
@@ -76,7 +80,7 @@ if run_as_module:
             device_model="Ultroid",
         )
         ultroid_bot.run_in_loop(autobot())
-    
+
     if USER_MODE:
         asst = ultroid_bot
     else:

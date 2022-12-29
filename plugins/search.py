@@ -24,7 +24,6 @@
     Reply an Image or sticker to find its sauce.
 """
 import os
-from shutil import rmtree
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -39,9 +38,8 @@ except ImportError:
     cv2 = None
 from telethon.tl.types import DocumentAttributeAudio
 
-from pyUltroid.fns.google_image import googleimagesdownload
 from pyUltroid.fns.misc import google_search
-from pyUltroid.fns.tools import saavn_search
+from pyUltroid.fns.tools import get_google_images, saavn_search
 
 from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
@@ -122,20 +120,9 @@ async def goimg(event):
             query = query.split(";")[0]
         except BaseException:
             pass
-    try:
-        gi = googleimagesdownload()
-        args = {
-            "keywords": query,
-            "limit": lmt,
-            "format": "jpg",
-            "output_directory": "./resources/downloads/",
-        }
-        pth = await gi.download(args)
-        ok = pth[0][query]
-    except BaseException:
-        return await nn.edit(get_string("autopic_2").format(query))
-    await event.reply(file=ok, message=query)
-    rmtree(f"./resources/downloads/{query}/")
+    images = await get_google_images(query)
+    for z in range(lmt):
+        await event.client.send_file(event.chat_id, file=images[z]["original"])
     await nn.delete()
 
 
@@ -168,22 +155,13 @@ async def reverse(event):
     link = alls["href"]
     text = alls.text
     await ult.edit(f"`Dimension ~ {x} : {y}`\nSauce ~ [{text}](google.com{link})")
-    gi = googleimagesdownload()
-    args = {
-        "keywords": text,
-        "limit": 2,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    pth = await gi.download(args)
-    ok = pth[0][text]
-    await event.client.send_file(
-        event.chat_id,
-        ok,
-        album=True,
-        caption="Similar Images Realted to Search",
-    )
-    rmtree(f"./resources/downloads/{text}/")
+    images = await get_google_images(text)
+    for z in range(2):
+        await event.client.send_file(
+            event.chat_id,
+            file=images[z]["original"],
+            caption="Similar Images Realted to Search",
+        )
     os.remove(file)
 
 
