@@ -41,8 +41,7 @@ import pytz
 from bs4 import BeautifulSoup as bs
 from telethon.tl.types import DocumentAttributeVideo
 
-from pyUltroid.fns.google_image import googleimagesdownload
-from pyUltroid.fns.tools import metadata
+from pyUltroid.fns.tools import get_google_images, metadata
 
 from . import (
     HNDLR,
@@ -284,17 +283,9 @@ async def wall(event):
         return await event.eor("`Give me something to search..`")
     nn = await event.eor(get_string("com_1"))
     query = f"hd {inp}"
-    gi = googleimagesdownload()
-    args = {
-        "keywords": query,
-        "limit": 10,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    await gi.download(args)
-    xx = choice(os.listdir(os.path.abspath(f"./resources/downloads/{query}/")))
-    await event.client.send_file(event.chat_id, f"./resources/downloads/{query}/{xx}")
-    rmtree(f"./resources/downloads/{query}/")
+    images = await get_google_images(query, 10)
+    to_send = [img["original"] for img in images]
+    await event.client.send_file(event.chat_id, file=to_send, album=True)
     await nn.delete()
 
 

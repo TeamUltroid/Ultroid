@@ -39,9 +39,8 @@ except ImportError:
     cv2 = None
 from telethon.tl.types import DocumentAttributeAudio
 
-from pyUltroid.fns.google_image import googleimagesdownload
 from pyUltroid.fns.misc import google_search
-from pyUltroid.fns.tools import saavn_search
+from pyUltroid.fns.tools import get_google_images, saavn_search
 
 from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
@@ -122,20 +121,9 @@ async def goimg(event):
             query = query.split(";")[0]
         except BaseException:
             pass
-    try:
-        gi = googleimagesdownload()
-        args = {
-            "keywords": query,
-            "limit": lmt,
-            "format": "jpg",
-            "output_directory": "./resources/downloads/",
-        }
-        pth = await gi.download(args)
-        ok = pth[0][query]
-    except BaseException:
-        return await nn.edit(get_string("autopic_2").format(query))
-    await event.reply(file=ok, message=query)
-    rmtree(f"./resources/downloads/{query}/")
+    images = await get_google_images(query, lmt)
+    to_send = [img["original"] for img in images]
+    await event.client.send_file(event.chat_id, file=to_send, album=True)
     await nn.delete()
 
 
@@ -168,22 +156,14 @@ async def reverse(event):
     link = alls["href"]
     text = alls.text
     await ult.edit(f"`Dimension ~ {x} : {y}`\nSauce ~ [{text}](google.com{link})")
-    gi = googleimagesdownload()
-    args = {
-        "keywords": text,
-        "limit": 2,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    pth = await gi.download(args)
-    ok = pth[0][text]
+    images = await get_google_images(text, 2)
+    to_send = [img["original"] for img in images]
     await event.client.send_file(
         event.chat_id,
-        ok,
+        to_send,
         album=True,
         caption="Similar Images Realted to Search",
     )
-    rmtree(f"./resources/downloads/{text}/")
     os.remove(file)
 
 

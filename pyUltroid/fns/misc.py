@@ -108,9 +108,9 @@ async def YtDataScraper(url: str):
         common_data["videoActions"]["menuRenderer"]["topLevelButtons"][0][
             "toggleButtonRenderer"
         ]["defaultText"]["simpleText"]
-        or like_dislike[0]["toggleButtonRenderer"]["defaultText"]["accessibility"][
-            "accessibilityData"
-        ]["label"]
+        # or like_dislike[0]["toggleButtonRenderer"]["defaultText"]["accessibility"][
+        #     "accessibilityData"
+        # ]["label"]
     )
     to_return["description"] = description
     return to_return
@@ -431,7 +431,7 @@ class Quotly:
             return file_name
         raise Exception(str(request))
 
-        
+
 def split_list(List, index):
     new_ = []
     while List:
