@@ -24,7 +24,6 @@
     Reply an Image or sticker to find its sauce.
 """
 import os
-from shutil import rmtree
 
 import requests
 from bs4 import BeautifulSoup as bs

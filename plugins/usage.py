@@ -174,7 +174,7 @@ def db_usage():
         total = 30
     elif udB.name == "SQL":
         total = 20
-    total = total * (2 ** 20)
+    total = total * (2**20)
     used = udB.usage
     a = f"{humanbytes(used)}/{humanbytes(total)}"
     b = f"{str(round((used / total) * 100, 2))}%"
