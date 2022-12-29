@@ -91,9 +91,11 @@ class _BaseDatabase:
                 pass
         return data
 
-    def set_key(self, key, value):
+    def set_key(self, key, value, cache_only=False):
         value = self._get_data(data=value)
         self._cache[key] = value
+        if cache_only:
+            return
         return self.set(str(key), str(value))
 
     def rename(self, key1, key2):
@@ -302,11 +304,17 @@ class RedisDB(_BaseDatabase):
 class LocalDB(_BaseDatabase):
     def __init__(self):
         self.db = Database("ultroid")
+        self.get = self.db.get
+        self.set = self.db.set
+        self.delete = self.db.delete
         super().__init__()
+
+    @property
+    def name(self): return "LocalDB"
 
     def keys(self):
         return self._cache.keys()
-
+    
     def __repr__(self):
         return f"<Ultroid.LocalDB\n -total_keys: {len(self.keys())}\n>"
 
@@ -336,7 +344,7 @@ def UltroidDB():
         LOGS.critical(
             "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
         )
-    if HOSTED_ON == "termux":
+    if HOSTED_ON == "local":
         return LocalDB()
     exit()
 

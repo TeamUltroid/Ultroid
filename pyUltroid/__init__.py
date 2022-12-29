@@ -10,15 +10,13 @@ import sys
 
 from .version import __version__
 
-run_as_module = False
+run_as_module = __package__ in sys.argv or sys.argv[0] == "-m"
 
 class ULTConfig:
     lang = "en"
     thumb = "resources/extras/ultroid.jpg"
 
-if sys.argv[0] == "-m":
-    run_as_module = True
-
+if run_as_module:
     import time
     try:
         from telethonpatch import apply

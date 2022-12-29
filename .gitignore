@@ -15,6 +15,7 @@ test*
 *.log
 target/npmlist.json
 package-lock.json
+ultroid.json
 resources/extras/thumbnail.jpg
 
 # Directories
