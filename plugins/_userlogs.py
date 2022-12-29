@@ -112,7 +112,6 @@ async def all_messages_catcher(e):
 
 
 if udB.get_key("TAG_LOG"):
-
     @ultroid_bot.on(events.MessageEdited(func=lambda x: not x.out))
     async def upd_edits(event):
         x = event.sender

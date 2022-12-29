@@ -123,9 +123,9 @@ async def open_grp():
 
 
 async def close_grp():
-    h1, m1, h2, m2 = 0, 0, 7, 0
+    __, _, h2, m2 = 0, 0, 7, 0
     if udB.get_key("NIGHT_TIME"):
-        h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
+        _, __, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
     for chat in keym.get():
         try:
             await ultroid_bot(

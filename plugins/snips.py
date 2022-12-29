@@ -88,9 +88,8 @@ async def rs(e):
 async def lsnote(e):
     if x := list_snip():
         sd = "SNIPS Found :\n\n"
-        await e.eor(sd + x)
-    else:
-        await e.eor("No Snips Found Here")
+        return await e.eor(sd + x)
+    await e.eor("No Snips Found Here")
 
 
 async def add_snips(e):

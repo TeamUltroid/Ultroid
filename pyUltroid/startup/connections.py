@@ -39,6 +39,7 @@ def validate_session(session, logger=LOGS, _exit=True):
                 logger.exception(get_string("py_c1"))
                 sys.exit()
             return StringSession(session)
+
         # Pyrogram Session
         elif len(session) in _PYRO_FORM.keys():
             data_ = struct.unpack(
