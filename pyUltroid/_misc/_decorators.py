@@ -14,7 +14,6 @@ from pathlib import Path
 from time import gmtime, strftime
 from traceback import format_exc
 
-from strings import get_string
 from telethon import Button
 from telethon import __version__ as telever
 from telethon import events
@@ -32,9 +31,11 @@ from telethon.errors.rpcerrorlist import (
     MessageNotModifiedError,
     UserIsBotError,
 )
-from pyUltroid.exceptions import DependencyMissingError
 from telethon.events import MessageEdited, NewMessage
 from telethon.utils import get_display_name
+
+from pyUltroid.exceptions import DependencyMissingError
+from strings import get_string
 
 from .. import *
 from .. import _ignore_eval
@@ -98,7 +99,7 @@ def ultroid_cmd(
                 ):
                     return
             if ult.is_private and (groups_only or admins_only):
-                   return await eod(ult, get_string("py_d3"))
+                return await eod(ult, get_string("py_d3"))
             elif admins_only and not (chat.admin_rights or chat.creator):
                 return await eod(ult, get_string("py_d5"))
             if only_devs and not udB.get_key("I_DEV"):

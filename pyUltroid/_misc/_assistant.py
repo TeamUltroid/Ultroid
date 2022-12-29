@@ -58,6 +58,7 @@ def asst_cmd(pattern=None, load=None, owner=False, **kwargs):
                 await func(event)
             except Exception as er:
                 LOGS.exception(er)
+
         asst.add_event_handler(handler, NewMessage(**kwargs))
         if load is not None:
             append_or_update(load, func, name, kwargs)

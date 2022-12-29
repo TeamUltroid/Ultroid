@@ -5,11 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import os, subprocess, sys
+import os
+import subprocess
+import sys
 from shutil import rmtree
 
 from decouple import config
 from git import Repo
+
 from .. import *
 from ..dB._core import HELP
 from ..loader import Loader
@@ -86,7 +89,10 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             # subprocess.run(
             #        "rm -rf /usr/local/lib/python3.*/site-packages/pip/_vendor/.wh*"
             #    )
-            subprocess.run(f"{sys.executable} -m pip install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
+            subprocess.run(
+                f"{sys.executable} -m pip install --no-cache-dir -q -r ./addons/addons.txt",
+                shell=True,
+            )
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
@@ -121,7 +127,9 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
                 else:
                     rmtree("vcbot")
             if not os.path.exists("vcbot"):
-                subprocess.run("git clone https://github.com/TeamUltroid/VcBot vcbot", shell=True)
+                subprocess.run(
+                    "git clone https://github.com/TeamUltroid/VcBot vcbot", shell=True
+                )
             try:
                 if not os.path.exists("vcbot/downloads"):
                     os.mkdir("vcbot/downloads")

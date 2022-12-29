@@ -1,18 +1,17 @@
 from .. import udB
 
 
-class KeyManager():
-
+class KeyManager:
     def __init__(self, key, cast=None) -> None:
         self._key = key
         if callable(cast):
             self.cast = cast()
         else:
             self.cast = cast
-    
+
     def get(self):
         return udB.get_key(self._key) or self.cast
-    
+
     def get_child(self, key):
         return self.get()[key]
 
@@ -28,7 +27,7 @@ class KeyManager():
         else:
             return
         udB.set_key(self._key, content)
-    
+
     def remove(self, item):
         content = self.get()
         if isinstance(content, list):
@@ -39,4 +38,3 @@ class KeyManager():
 
     def contains(self, item):
         return item in self.get()
-

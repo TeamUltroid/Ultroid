@@ -114,7 +114,7 @@ class UltroidClient(TelegramClient):
         by_bot = self._bot
         size = os.path.getsize(file)
         # Don't show progress bar when file size is less than 5MB.
-        if size < 5 * 2**20:
+        if size < 5 * 2 ** 20:
             show_progress = False
         if use_cache and self._cache and self._cache.get("upload_cache"):
             for files in self._cache["upload_cache"]:
@@ -174,7 +174,7 @@ class UltroidClient(TelegramClient):
         if show_progress:
             event = kwargs["event"]
         # Don't show progress bar when file size is less than 10MB.
-        if file.size < 10 * 2**20:
+        if file.size < 10 * 2 ** 20:
             show_progress = False
         import mimetypes
 

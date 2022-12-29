@@ -9,9 +9,9 @@ import os
 import platform
 import sys
 from logging import INFO, WARNING, FileHandler, StreamHandler, basicConfig, getLogger
-from ._extra import _ask_input
 
 from .. import run_as_module
+from ._extra import _ask_input
 
 if run_as_module:
     from ..configs import Var

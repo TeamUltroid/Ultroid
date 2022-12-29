@@ -10,17 +10,32 @@ from sys import modules
 
 # for addons
 
-configPaths = ["ub", "var", "support", "userbot", "telebot", "fridaybot",
-"uniborg.util", "telebot.utils", "userbot.utils", "userbot.events", "userbot.config",
-"fridaybot.utils", "fridaybot.Config", "userbot.uniborgConfig"] 
+configPaths = [
+    "ub",
+    "var",
+    "support",
+    "userbot",
+    "telebot",
+    "fridaybot",
+    "uniborg.util",
+    "telebot.utils",
+    "userbot.utils",
+    "userbot.events",
+    "userbot.config",
+    "fridaybot.utils",
+    "fridaybot.Config",
+    "userbot.uniborgConfig",
+]
+
 
 def load_addons(plugin_name):
     base_name = plugin_name.split("/")[-1].split("\\")[-1].replace(".py", "")
     if base_name.startswith("__"):
         return
+    from pyUltroid import fns
+
     from .. import HNDLR, LOGS, asst, udB, ultroid_bot
     from .._misc import _supporter as config
-    from pyUltroid import fns
     from .._misc._assistant import asst_cmd, callback, in_pattern
     from .._misc._decorators import ultroid_cmd
     from .._misc._supporter import Config, admin_cmd, sudo_cmd
@@ -28,7 +43,7 @@ def load_addons(plugin_name):
     from ..configs import Var
     from ..dB._core import HELP
 
-    name = plugin_name.replace("/", ".").replace("\\", ".").replace(".py","")
+    name = plugin_name.replace("/", ".").replace("\\", ".").replace(".py", "")
     spec = util.spec_from_file_location(name, plugin_name)
     mod = util.module_from_spec(spec)
     for path in configPaths:
@@ -67,7 +82,7 @@ def load_addons(plugin_name):
     mod.sudo_cmd = sudo_cmd
     mod.HELP = HELP.get("Addons", {})
     mod.CMD_HELP = HELP.get("Addons", {})
-   
+
     spec.loader.exec_module(mod)
     modules[name] = mod
     doc = modules[name].__doc__.format(i=HNDLR) if modules[name].__doc__ else ""

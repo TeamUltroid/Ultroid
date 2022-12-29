@@ -6,10 +6,12 @@
 # Please read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from os import system, path
-from time import sleep
 from datetime import datetime
-from colorama import Style, Fore, Back
+from os import path, system
+from time import sleep
+
+from colorama import Back, Fore, Style
+
 
 # clear screen
 def clear():
@@ -34,7 +36,7 @@ OPT_PACKAGES = {
     "psutil": "Used for .usage command.",
     "lottie": "Used for animated sticker related conversion.",
     "apscheduler": "Used in autopic/nightmode (scheduling tasks.)",
-    #"git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes.",
+    # "git+https://github.com/1danish-00/google_trans_new.git": "Used for translation purposes.",
 }
 
 APT_PACKAGES = ["ffmpeg", "neofetch", "mediainfo"]

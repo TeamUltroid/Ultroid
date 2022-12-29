@@ -51,10 +51,9 @@ from telethon.helpers import _maybe_await
 from telethon.tl import types
 from telethon.utils import get_display_name
 
-from ..exceptions import DependencyMissingError
-
 from .._misc import CMD_HELP
 from .._misc._wrappers import eod, eor
+from ..exceptions import DependencyMissingError
 from . import *
 
 if run_as_module:
@@ -351,13 +350,14 @@ async def downloader(filename, file, event, taime, msg):
 # ~~~~~~~~~~~~~~~Async Searcher~~~~~~~~~~~~~~~
 # @buddhhu
 
+
 async def async_searcher(
     url: str,
     post: bool = False,
     head: bool = False,
     headers: dict = None,
-    evaluate =None,
-    object: bool =False,
+    evaluate=None,
+    object: bool = False,
     re_json: bool = False,
     re_content: bool = False,
     *args,
@@ -389,6 +389,7 @@ async def async_searcher(
     else:
         raise DependencyMissingError("install 'aiohttp' to use this.")
 
+
 # ~~~~~~~~~~~~~~~~~~~~DDL Downloader~~~~~~~~~~~~~~~~~~~~
 # @buddhhu @new-dev0
 
@@ -402,7 +403,7 @@ async def download_file(link, name, validate=False):
         with open(name, "wb") as file:
             file.write(await content.read())
         return name, ""
-    
+
     return await async_searcher(link, evaluate=_download)
 
 

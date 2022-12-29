@@ -1,9 +1,11 @@
-import sys
 import os
-from typing import Any, Dict, List, Union
+import sys
 from glob import glob
+from typing import Any, Dict, List, Union
+
 from pyUltroid import *
 from pyUltroid.fns.tools import translate
+
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
@@ -13,6 +15,7 @@ ULTConfig.lang = udB.get_key("language") or os.getenv("LANGUAGE", "en")
 
 languages = {}
 PATH = "strings/strings/{}.yml"
+
 
 def load(file):
     if not file.endswith(".yml"):
@@ -28,7 +31,9 @@ def load(file):
         LOGS.info(f"Error in {file[:-4]} language file")
         LOGS.exception(er)
 
+
 load(PATH.format(ULTConfig.lang))
+
 
 def get_string(key: str, _res: bool = True) -> Any:
     lang = ULTConfig.lang or "en"
@@ -57,10 +62,12 @@ def get_string(key: str, _res: bool = True) -> Any:
             return None
         return languages["en"].get(key) or f"Failed to load language string '{key}'"
 
+
 def get_help(key):
     doc = get_string(f"help_{key}", _res=False)
     if doc:
         return get_string("cmda") + doc
+
 
 def get_languages() -> Dict[str, Union[str, List[str]]]:
     for file in glob("strings/strings/*yml"):

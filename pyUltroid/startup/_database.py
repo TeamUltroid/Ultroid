@@ -17,7 +17,7 @@ if run_as_module:
 
 
 Redis = MongoClient = psycopg2 = Database = None
-if (Var.REDIS_URI or Var.REDISHOST):
+if Var.REDIS_URI or Var.REDISHOST:
     try:
         from redis import Redis
     except ImportError:
@@ -310,11 +310,12 @@ class LocalDB(_BaseDatabase):
         super().__init__()
 
     @property
-    def name(self): return "LocalDB"
+    def name(self):
+        return "LocalDB"
 
     def keys(self):
         return self._cache.keys()
-    
+
     def __repr__(self):
         return f"<Ultroid.LocalDB\n -total_keys: {len(self.keys())}\n>"
 
@@ -322,6 +323,7 @@ class LocalDB(_BaseDatabase):
 def UltroidDB():
     _er = False
     from .. import HOSTED_ON
+
     try:
         if Redis:
             return RedisDB(
@@ -347,5 +349,6 @@ def UltroidDB():
     if HOSTED_ON == "local":
         return LocalDB()
     exit()
+
 
 # --------------------------------------------------------------------------------------------- #
