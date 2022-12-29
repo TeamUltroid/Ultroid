@@ -14,7 +14,7 @@ from telethon.utils import get_display_name
 
 from pyUltroid.dB.echo_db import add_echo, check_echo, list_echo, rem_echo
 
-from . import ultroid_cmd, inline_mention
+from . import inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addecho( (.*)|$)")
