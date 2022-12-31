@@ -63,12 +63,15 @@ async def _(e):
 
 @ultroid_cmd(pattern="bash", fullsudo=True, only_devs=True)
 async def _(event):
-    carb, yamlf = None, False
+    carb, rayso, yamlf = None, None, False
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
         if cmd.split()[0] in ["-c", "--carbon"]:
             cmd = cmd.split(maxsplit=1)[1]
             carb = True
+        if cmd.split()[0] in ["-r", "--rayso"]:
+            cmd = cmd.split(maxsplit=1)[1]
+            rayso = True
     except IndexError:
         return await event.eor(get_string("devs_1"), time=10)
     xx = await event.eor(get_string("com_1"))
@@ -90,6 +93,28 @@ async def _(event):
                 file_name="bash",
                 download=True,
                 backgroundColor=choice(ATRA_COL),
+            )
+            if isinstance(li, dict):
+                await xx.edit(
+                    f"Unknown Response from Carbon: `{li}`\n\nstdout`:{stdout}`\nstderr: `{stderr}`"
+                )
+                return
+            url = f"https://graph.org{uf(li)[-1]}"
+            OUT = f"[\xad]({url}){OUT}"
+            out = "**• OUTPUT:**"
+            remove(li)
+        elif (rayso or udB.get_key("RAYSO_ON_BASH")) and (
+            event.is_private
+            or event.chat.admin_rights
+            or event.chat.creator
+            or event.chat.default_banned_rights.embed_links
+        ):
+            li = await Carbon(
+                code=stdout,
+                file_name="bash",
+                download=True,
+                backgroundColor=choice(ATRA_COL),
+                rayso=True
             )
             if isinstance(li, dict):
                 await xx.edit(
