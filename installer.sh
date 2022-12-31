@@ -11,6 +11,9 @@ while [ $# -gt 0 ]; do
     --branch=*)
         BRANCH="${1#*=}" || BRANCH="main"
         ;;
+    --env-file=*)
+        ENV_FILE_PATH="${1#*=}" || ENV_FILE_PATH=".env"
+        ;;
     *)
         echo "Unknown parameter passed: $1"
         exit 1
@@ -182,11 +185,12 @@ main() {
     if [ -d "pyUltroid" ] && [ -d "resources" ] && [ -d "plugins" ]; then
         DIR=$CURRENT_DIR
     fi
-    if [ -f ".env" ]
+    if [ -f $ENV_FILE_PATH ]
     then
         set -a
-        source <(cat .env | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
+        source <(cat $ENV_FILE_PATH | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
         set +a
+        cp $ENV_FILE_PATH .env
     fi
     (check_dependencies)
     (check_python)
