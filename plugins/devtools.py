@@ -114,7 +114,7 @@ async def _(event):
                 file_name="bash",
                 download=True,
                 backgroundColor=choice(ATRA_COL),
-                rayso=True
+                rayso=True,
             )
             if isinstance(li, dict):
                 await xx.edit(
