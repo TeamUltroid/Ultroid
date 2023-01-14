@@ -137,5 +137,4 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             except FileNotFoundError as e:
                 LOGS.error(f"{e} Skipping VCBot Installation.")
         except ModuleNotFoundError:
-            LOGS.error("'pytgcalls' not installed!\nInstalling pytgcalls==3.0.0.dev21 .")
-            subprocess.run("python3 -m pip install pytgcalls==3.0.0.dev21 --quiet", shell=True)
+            LOGS.error("'pytgcalls' not installed!\nSkipping loading of VCBOT.")
