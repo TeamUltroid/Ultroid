@@ -21,13 +21,6 @@ class ULTConfig:
 if run_as_module:
     import time
 
-    try:
-        from telethonpatch import apply
-
-        apply()
-    except ModuleNotFoundError:
-        pass
-
     from .configs import Var
     from .startup import *
     from .startup._database import UltroidDB
