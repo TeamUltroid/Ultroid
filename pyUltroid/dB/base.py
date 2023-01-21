@@ -20,7 +20,9 @@ class KeyManager:
 
     def add(self, item):
         content = self.get()
-        if isinstance(content, dict):
+        if content == None and callable(type(item)):
+            content = type(item)()
+        if isinstance(content, dict) and isinstance(item, dict):
             content.update(item)
         elif isinstance(content, list) and item not in content:
             content.append(item)
@@ -30,12 +32,12 @@ class KeyManager:
 
     def remove(self, item):
         content = self.get()
-        if isinstance(content, list):
+        if isinstance(content, list) and item in content:
             content.remove(item)
-        elif isinstance(content, dict):
-            content.pop(item)
-        else:
+        elif isinstance(content, dict) and content.get(item):
             del content[item]
+        else:
+            return
         udB.set_key(self._key, item)
 
     def contains(self, item):
