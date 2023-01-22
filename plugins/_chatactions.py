@@ -40,7 +40,7 @@ async def Function(event):
 async def DummyHandler(ult):
     # clean chat actions
     key = udB.get_key("CLEANCHAT") or []
-    if ult.chat_id in key and (ult.out or (ult.chat.admin_rights or ult.chat.creator)):
+    if ult.chat_id in key:
         try:
             await ult.delete()
         except BaseException:
