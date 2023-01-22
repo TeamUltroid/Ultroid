@@ -14,7 +14,8 @@ import random
 
 from telethon.utils import get_display_name
 
-from . import Carbon, eor, get_string, inline_mention, os, ultroid_cmd
+from . import Carbon, ultroid_cmd
+
 """
 _colorspath = "resources/colorlist.txt"
 
