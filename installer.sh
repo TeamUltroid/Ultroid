@@ -16,6 +16,9 @@ while [ $# -gt 0 ]; do
     --env-file=*)
         ENV_FILE_PATH="${1#*=}" || ENV_FILE_PATH=".env"
         ;;
+    --no-root)
+        NO_ROOT=true
+        ;;
     *)
         echo "Unknown parameter passed: $1"
         exit 1
@@ -204,7 +207,11 @@ main() {
     echo -e "\n\nSetup Completed."
 }
 
-if [ -t 0 ]; then
+if [ $NO_ROOT ]; then
+    echo -e "Running with non root"
+    main
+    return 0
+elif [ -t 0 ]; then
     unameOut="$(uname -s)"
     case "${unameOut}" in
         Linux*)     machine=Linux;;
