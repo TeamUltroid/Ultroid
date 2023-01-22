@@ -190,11 +190,10 @@ async def unsplashsearch(query, limit=None, shuf=True):
     link = "https://unsplash.com/s/photos/" + query
     extra = await async_searcher(link, re_content=True)
     res = BeautifulSoup(extra, "html.parser", from_encoding="utf-8")
-    all_ = res.find_all("img", "YVj9w")
+    all_ = res.find_all("img", srcset=re.compile("images.unsplash.com/photo"))
     if shuf:
         shuffle(all_)
-    all_ = all_[:limit]
-    return [image["src"] for image in all_]
+    return list(map(lambda e: e['src'], all_[:limit]))
 
 
 # ---------------- Random User Gen ----------------
