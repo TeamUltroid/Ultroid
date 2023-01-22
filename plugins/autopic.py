@@ -9,12 +9,12 @@
 import asyncio
 import os
 import random
-from glob import glob
 from random import shuffle
 
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
-from pyUltroid.fns.tools import get_google_images
+
 from pyUltroid.fns.helper import download_file
+from pyUltroid.fns.tools import get_google_images
 
 from . import LOGS, get_help, get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -65,7 +65,7 @@ if search := udB.get_key("AUTOPIC"):
 
     async def autopic_func():
         search = udB.get_key("AUTOPIC")
-        if images.get(search) == None:
+        if images.get(search) is None:
             images[search] = await get_google_images(search)
         if not images.get(search):
             return

@@ -41,7 +41,7 @@ from telethon.tl.types import DocumentAttributeAudio
 from pyUltroid.fns.misc import google_search
 from pyUltroid.fns.tools import get_google_images, saavn_search
 
-from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd, LOGS
+from . import LOGS, async_searcher, con, eod, fast_download, get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -162,9 +162,9 @@ async def reverse(event):
     for z in images[:2]:
         try:
             await event.client.send_file(
-            event.chat_id,
-            file=z["original"],
-            caption="Similar Images Realted to Search",
+                event.chat_id,
+                file=z["original"],
+                caption="Similar Images Realted to Search",
             )
         except Exception as er:
             LOGS.exception(er)
