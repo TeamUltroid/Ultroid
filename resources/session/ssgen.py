@@ -129,14 +129,18 @@ def pyro_session():
     # generate a session
     API_ID, API_HASH = get_api_id_and_hash()
     print("Enter phone number when asked.\n\n")
-    with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
-        ss = pyro.export_session_string()
-        pyro.send_message(
-            "me",
-            f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid. **DO NOT SHARE it.**",
-        )
-        print("Session has been sent to your saved messages!")
-        exit(0)
+    try:
+        with Client(":memory:", api_id=API_ID, api_hash=API_HASH) as pyro:
+            ss = pyro.export_session_string()
+            pyro.send_message(
+                "me",
+                f"`{ss}`\n\nAbove is your Pyrogram Session String for @TheUltroid. **DO NOT SHARE it.**",
+            )
+            print("Session has been sent to your saved messages!")
+            exit(0)
+    except Exception as er:
+      print("Unexpected error occurred while creating session, make sure to validate your inputs.")
+      print(er)
 
 
 def main():
