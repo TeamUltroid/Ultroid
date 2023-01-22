@@ -41,7 +41,7 @@ from telethon.tl.types import DocumentAttributeAudio
 from pyUltroid.fns.misc import google_search
 from pyUltroid.fns.tools import get_google_images, saavn_search
 
-from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd
+from . import async_searcher, con, eod, fast_download, get_string, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(
@@ -121,8 +121,11 @@ async def goimg(event):
         except BaseException:
             pass
     images = await get_google_images(query)
-    for z in range(lmt):
-        await event.client.send_file(event.chat_id, file=images[z]["original"])
+    for img in images[:lmt]:
+        try:
+            await event.client.send_file(event.chat_id, file=img["original"])
+        except Exception as er:
+            LOGS.exception(er)
     await nn.delete()
 
 
@@ -156,12 +159,15 @@ async def reverse(event):
     text = alls.text
     await ult.edit(f"`Dimension ~ {x} : {y}`\nSauce ~ [{text}](google.com{link})")
     images = await get_google_images(text)
-    for z in range(2):
-        await event.client.send_file(
+    for z in images[:2]:
+        try:
+            await event.client.send_file(
             event.chat_id,
-            file=images[z]["original"],
+            file=z["original"],
             caption="Similar Images Realted to Search",
-        )
+            )
+        except Exception as er:
+            LOGS.exception(er)
     os.remove(file)
 
 

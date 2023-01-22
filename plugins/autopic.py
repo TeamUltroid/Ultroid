@@ -13,8 +13,8 @@ from glob import glob
 from random import shuffle
 
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
-
-from pyUltroid.fns.google_image import googleimagesdownload
+from pyUltroid.fns.tools import get_google_images
+from pyUltroid.fns.helper import download_file
 
 from . import LOGS, get_help, get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -59,35 +59,21 @@ async def autopic(e):
 
 
 if search := udB.get_key("AUTOPIC"):
-    gi = googleimagesdownload()
-    args = {
-        "keywords": search,
-        "limit": 50,
-        "format": "jpg",
-        "output_directory": "./resources/downloads/",
-    }
-    images = []
-    if os.path.exists(f"./resources/downloads/{search}"):
-        images = glob(f"resources/downloads/{search}/*")
+
+    images = {}
     sleep = udB.get_key("SLEEP_TIME") or 1221
 
     async def autopic_func():
-        if udB.get_key("AUTOPIC") != search:
+        search = udB.get_key("AUTOPIC")
+        if images.get(search) == None:
+            images[search] = await get_google_images(search)
+        if not images.get(search):
             return
-        if not images:
-            try:
-                pth = await gi.download(args)
-                ok = pth[0][search]
-                images.extend(ok)
-            except Exception as er:
-                LOGS.exception(er)
-                return
-        else:
-            ok = images
-        img = random.choice(ok)
-        file = await ultroid_bot.upload_file(img)
+        img = random.choice(images[search])
+        filee = await download_file(img["original"], "resources/downloads/autopic.jpg")
+        file = await ultroid_bot.upload_file(filee)
         await ultroid_bot(UploadProfilePhotoRequest(file))
-        shuffle(ok)
+        os.remove(filee)
 
     try:
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
