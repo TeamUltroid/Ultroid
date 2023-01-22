@@ -410,7 +410,7 @@ async def download_file(link, name, validate=False):
 async def fast_download(download_url, filename=None, progress_callback=None):
     if not aiohttp_client:
         return await download_file(download_url, filename)[0], None
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp_client() as session:
         async with session.get(download_url, timeout=None) as response:
             if not filename:
                 filename = unquote(download_url.rpartition("/")[-1])
