@@ -1,5 +1,6 @@
 import os, sys
 from core.setup import LOGS
+from core.config import HOSTED_ON
 from .base_db import BaseDatabase
 
 from redis import Redis
@@ -10,7 +11,6 @@ class RedisDB(BaseDatabase):
         host,
         port,
         password,
-        platform="",
         logger=LOGS,
         *args,
         **kwargs,
@@ -31,7 +31,7 @@ class RedisDB(BaseDatabase):
         kwargs["password"] = password
         kwargs["port"] = port
 
-        if not host and platform.lower() == "qovery":
+        if not host and HOSTED_ON.lower() == "qovery":
             var, hash_, host, password = "", "", "", ""
             for vars_ in os.environ:
                 if vars_.startswith("QOVERY_REDIS_") and vars.endswith("_HOST"):
