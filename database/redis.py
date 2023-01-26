@@ -1,16 +1,10 @@
 import os, sys
-import subprocess
+from core.setup import LOGS
+from .base_db import BaseDatabase
 
-try:
-    from redis import Redis
-except ImportError:
-    subprocess.run("pip3 install redis[hiredis]")
-    from redis import Redis
+from redis import Redis
 
-from . import LOGS
-from ._db import BaseDatabase
-
-class RedisDB(BaseDatabase, Redis):
+class RedisDB(BaseDatabase):
     def __init__(
         self,
         host,
@@ -37,7 +31,7 @@ class RedisDB(BaseDatabase, Redis):
         kwargs["password"] = password
         kwargs["port"] = port
 
-        if platform.lower() == "qovery" and not host:
+        if not host and platform.lower() == "qovery":
             var, hash_, host, password = "", "", "", ""
             for vars_ in os.environ:
                 if vars_.startswith("QOVERY_REDIS_") and vars.endswith("_HOST"):
@@ -48,6 +42,11 @@ class RedisDB(BaseDatabase, Redis):
                 kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
                 kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
                 kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")
+        self.db = Redis(**kwargs)
+        self.delete = self.db.delete
+        self.set = self.db.set 
+        self.keys = self.db.keys
+        self.get = self.db.get
         super().__init__(**kwargs)
 
     @property

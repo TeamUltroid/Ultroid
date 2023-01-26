@@ -1,11 +1,6 @@
 import subprocess
-try:
-    from pymongo import MongoClient
-except ImportError:
-    subprocess.run("pip3 install pymongo")
-    from pymongo import MongoClient
-
-from ._db import BaseDatabase
+from pymongo import MongoClient
+from .base_db import BaseDatabase
 
 class Database(BaseDatabase):
     def __init__(self, key, dbname="UltroidDB"):
