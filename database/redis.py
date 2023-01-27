@@ -1,9 +1,10 @@
-import os, sys
+import os, sys, re
 from core.setup import LOGS
 from core.config import HOSTED_ON
 from .base_db import BaseDatabase
 
 from redis import Redis
+
 
 class RedisDB(BaseDatabase):
     def __init__(
@@ -32,19 +33,10 @@ class RedisDB(BaseDatabase):
         kwargs["port"] = port
 
         if not host and HOSTED_ON.lower() == "qovery":
-            var, hash_, host, password = "", "", "", ""
-            for vars_ in os.environ:
-                if vars_.startswith("QOVERY_REDIS_") and vars.endswith("_HOST"):
-                    var = vars_
-            if var:
-                hash_ = var.split("_", maxsplit=2)[1].split("_")[0]
-            if hash:
-                kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
-                kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
-                kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")
+            self._fill_qovery(kwargs)
         self.db = Redis(**kwargs)
         self.delete = self.db.delete
-        self.set = self.db.set 
+        self.set = self.db.set
         self.keys = self.db.keys
         self.get = self.db.get
         super().__init__(**kwargs)
@@ -56,5 +48,18 @@ class RedisDB(BaseDatabase):
     @property
     def usage(self):
         return sum(self.db.memory_usage(x) for x in self.keys())
+
+    def _fill_qovery(self, kwargs):
+        _get_match = lambda e: re.match("QOVERY_REDIS_(.*)_HOST", e)
+        sort = list(filter(lambda e: re.match("QOVERY_REDIS_(.*)_HOST", e), os.environ))
+        if not sort:
+            return
+        hash_ = _get_match(sort[-1]).group(1)
+        if not hash_:
+            return
+        kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
+        kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
+        kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")
+
 
 Database = RedisDB

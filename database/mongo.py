@@ -2,6 +2,7 @@ import subprocess
 from pymongo import MongoClient
 from .base_db import BaseDatabase
 
+
 class Database(BaseDatabase):
     def __init__(self, key, dbname="UltroidDB"):
         self.dB = MongoClient(key, serverSelectionTimeoutMS=5000)
