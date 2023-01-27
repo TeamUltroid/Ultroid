@@ -20,6 +20,18 @@ def update():
     pass
 
 
+async def shutdown(event):
+    if not app:
+        return await event.edit("`Cant detect as Heroku App!\nValidate your` `HEROKU_API` `and` `HEROKU_API_KEY`, `check for logs`")
+    dynotype = Var.DYNO.split(".")[-1]
+    await event.edit("Shutting down.")
+    try:
+        app.process_formation()[dynotype].scale(0)
+    except Exception as er:
+        LOGS.exception(er)
+        await event.edit(f"Something went wrong!\n{er}")
+
+
 async def heroku_logs(event):
     """
     post heroku logs
@@ -39,8 +51,6 @@ async def heroku_logs(event):
     await event.client.send_file(
         event.chat_id,
         file="ultroid-heroku.log",
-        # TODO:
-        thumb=ULTConfig.thumb,
         caption="**Ultroid Heroku Logs.**",
     )
 
