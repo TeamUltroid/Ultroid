@@ -5,7 +5,7 @@ from utilities.helper import inline_mention, updater
 async def notify(init=False):
     chat_id = udB.get_key("LOG_CHANNEL")
     spam_sent, BTTS = None, None
-    if not init:  # Detailed Message at Initial Deploy
+    if init:  # Detailed Message at Initial Deploy
         MSG = """🎇 **Thanks for Deploying Ultroid Userbot!**
 • Here, are the Some Basic stuff from, where you can Know, about its Usage."""
         PHOTO = "https://graph.org/file/54a917cc9dbb94733ea5f.jpg"
@@ -29,5 +29,5 @@ async def notify(init=False):
             spam_sent = await ultroid_bot.send_message(chat_id, MSG)
         except Exception as ef:
             LOGS.exception(ef)
-    if spam_sent and not spam_sent.media:
+    if spam_sent:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)

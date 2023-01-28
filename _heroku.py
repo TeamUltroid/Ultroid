@@ -1,6 +1,10 @@
-import os
+import os, math, shutil, psutil
+from random import choice
+from utilities import some_random_headers
+from utilities.helper import async_searcher, humanbytes
 import heroku3
 from core import Var, LOGS
+from localization import get_string
 
 client = heroku3.from_api(Var.HEROKU_API)
 try:
@@ -56,3 +60,63 @@ async def heroku_logs(event):
 
     os.remove("ultroid-heroku.log")
     await xx.delete()
+
+
+async def heroku_usage():
+
+    user_id = Heroku.account().id
+    headers = {
+        "User-Agent": choice(some_random_headers),
+        "Authorization": f"Bearer {}",
+        "Accept": "application/vnd.heroku+json; version=3.account-quotas",
+    }
+    her_url = f"https://api.heroku.com/accounts/{user_id}/actions/get-quota"
+    try:
+        result = await async_searcher(her_url, headers=headers, re_json=True)
+    except Exception as er:
+        return False, str(er)
+    quota = result["account_quota"]
+    quota_used = result["quota_used"]
+    remaining_quota = quota - quota_used
+    percentage = math.floor(remaining_quota / quota * 100)
+    minutes_remaining = remaining_quota / 60
+    hours = math.floor(minutes_remaining / 60)
+    minutes = math.floor(minutes_remaining % 60)
+    App = result["apps"]
+    try:
+        App[0]["quota_used"]
+    except IndexError:
+        AppQuotaUsed = 0
+        AppPercentage = 0
+    else:
+        AppQuotaUsed = App[0]["quota_used"] / 60
+        AppPercentage = math.floor(App[0]["quota_used"] * 100 / quota)
+    AppHours = math.floor(AppQuotaUsed / 60)
+    AppMinutes = math.floor(AppQuotaUsed % 60)
+    total, used, free = shutil.disk_usage(".")
+    _ = shutil.disk_usage("/")
+    disk = _.used / _.total * 100
+    cpuUsage = psutil.cpu_percent()
+    memory = psutil.virtual_memory().percent
+    upload = humanbytes(psutil.net_io_counters().bytes_sent)
+    down = humanbytes(psutil.net_io_counters().bytes_recv)
+    TOTAL = humanbytes(total)
+    USED = humanbytes(used)
+    FREE = humanbytes(free)
+    return True, get_string("usage").format(
+        Var.HEROKU_APP_NAME,
+        AppHours,
+        AppMinutes,
+        AppPercentage,
+        hours,
+        minutes,
+        percentage,
+        TOTAL,
+        USED,
+        FREE,
+        upload,
+        down,
+        cpuUsage,
+        memory,
+        disk,
+    )
