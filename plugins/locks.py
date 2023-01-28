@@ -13,9 +13,10 @@
 • `{i}unlock <msgs/media/sticker/gif/games/inline/polls/invites/pin/changeinfo>`
     UNLOCK the Used Setting in Used Group.
 """
+
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
-from . import ultroid_cmd
+from .. import ultroid_cmd
 
 
 @ultroid_cmd(

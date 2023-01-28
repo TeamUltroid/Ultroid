@@ -25,12 +25,14 @@
   Ex: `{i}poto 10` - uploads starting 10 pfps of user.
     Upload the photo of Chat/User if Available.
 """
+
+import contextlib
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from . import eod, eor, get_string, mediainfo, ultroid_cmd
+from .. import eod, eor, get_string, mediainfo, ultroid_cmd
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
@@ -120,10 +122,7 @@ async def gpoto(e):
     elif ult:
         split = ult.split()
         user_id = split[0]
-        if len(ult) > 1:
-            ult = ult[-1]
-        else:
-            ult = None
+        ult = ult[-1] if len(ult) > 1 else None
     else:
         user_id = e.chat_id
 
@@ -135,11 +134,8 @@ async def gpoto(e):
         ult = None
 
     if ult and ult != "all":
-        try:
+        with contextlib.suppress(ValueError):
             limit = int(ult)
-        except ValueError:
-            pass
-
     if not limit or e.client._bot:
         okla = await e.client.download_profile_photo(user_id)
     else:

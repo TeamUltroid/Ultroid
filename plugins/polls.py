@@ -20,7 +20,7 @@
 """
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 
-from . import get_string, ultroid_cmd
+from .. import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
