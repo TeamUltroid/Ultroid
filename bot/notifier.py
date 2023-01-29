@@ -2,6 +2,7 @@ from core import asst, udB, ultroid_bot, LOGS
 from telethon import Button
 from utilities.helper import inline_mention, updater
 
+
 async def notify(init=False):
     chat_id = udB.get_key("LOG_CHANNEL")
     spam_sent, BTTS = None, None

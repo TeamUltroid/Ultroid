@@ -10,6 +10,7 @@ async def send_and_wait(message, time=1):
     await ultroid_bot.send_message("botfather", message)
     await asyncio.sleep(time)
 
+
 async def autobot():
     await ultroid_bot.start()
     LOGS.info("MAKING A TELEGRAM BOT FOR YOU AT @BotFather, Kindly Wait")
@@ -66,8 +67,6 @@ async def autobot():
         sys.exit(1)
 
 
-
-
 # customize assistant
 
 
@@ -84,7 +83,7 @@ async def customize():
         file = choice(
             [
                 "https://graph.org/file/92cd6dbd34b0d1d73a0da.jpg",
-                "https://graph.org/file/a97973ee0425b523cdc28.jpg"
+                "https://graph.org/file/a97973ee0425b523cdc28.jpg",
             ]
         )
         file, _ = await download_file(file, "profile.jpg")
@@ -97,15 +96,19 @@ async def customize():
         if isdone.startswith("Invalid bot"):
             LOGS.info("Error while trying to customise assistant, skipping...")
             return
-        for cmd in [UL, file, "/setabouttext", UL,
-                    f"✨ Hello ✨!! I'm Assistant Bot of {sir}",
-                    "/setdescription",
-                    UL,
-                    f"✨ Powerful Ultroid Assistant Bot ✨\n✨ Master ~ {sir} ✨\n\n✨ Powered By ~ @TeamUltroid ✨"
-                    ]:
+        for cmd in [
+            UL,
+            file,
+            "/setabouttext",
+            UL,
+            f"✨ Hello ✨!! I'm Assistant Bot of {sir}",
+            "/setdescription",
+            UL,
+            f"✨ Powerful Ultroid Assistant Bot ✨\n✨ Master ~ {sir} ✨\n\n✨ Powered By ~ @TeamUltroid ✨",
+        ]:
             await send_and_wait(cmd)
         await ultroid_bot.send_message(
-            "botfather", 
+            "botfather",
         )
         await msg.edit("Completed **Auto Customisation** at @BotFather.")
         os.remove(file)

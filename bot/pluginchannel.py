@@ -4,6 +4,7 @@ from telethon.tl.types import InputMessagesFilterDocument
 from core import ultroid_bot
 from core.config import LOGS
 
+
 async def get_from_channels(plugin_channels):
     if not os.path.exists("addons"):
         os.mkdir("addons")
