@@ -12,7 +12,8 @@
 """
 import os
 
-from ..dump.plugins import bash, get_string, mediainfo, ultroid_cmd
+from utilities.helper import bash
+from .. import get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="glitch$")

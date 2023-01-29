@@ -17,7 +17,7 @@
 import os
 from PIL import Image
 
-from .. import HNDLR, eor, get_string, ultroid_cmd
+from .. import HNDLR, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="size$")
@@ -43,7 +43,7 @@ async def resize(e):
         return await e.eor(get_string("ascii_1"))
     sz = e.pattern_match.group(1).strip()
     if not sz:
-        return await eor(
+        return await e.eor(
             f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ", time=5
         )
     k = await e.eor(get_string("com_1"))
@@ -53,8 +53,8 @@ async def resize(e):
         img = await r.download_media()
     sz = sz.split()
     if len(sz) != 2:
-        return await eor(
-            k, f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ", time=5
+        return await k.eor(
+            f"Give Some Size To Resize, Like `{HNDLR}resize 720 1080` ", time=5
         )
     x, y = int(sz[0]), int(sz[1])
     im = Image.open(img)

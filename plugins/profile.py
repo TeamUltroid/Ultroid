@@ -32,7 +32,7 @@ import os
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from .. import eod, eor, get_string, mediainfo, ultroid_cmd
+from .. import eor, get_string, mediainfo, ultroid_cmd
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
 
@@ -45,9 +45,9 @@ async def _(ult):
     set = ult.pattern_match.group(1).strip()
     try:
         await ult.client(UpdateProfileRequest(about=set))
-        await eod(ok, f"Profile bio changed to\n`{set}`")
+        await ok.eor(f"Profile bio changed to\n`{set}`")
     except Exception as ex:
-        await eod(ok, f"Error occured.\n`{str(ex)}`")
+        await ok.eor(f"Error occured.\n`{str(ex)}`")
 
 
 # name changer
@@ -67,9 +67,9 @@ async def _(ult):
                 last_name=last_name,
             ),
         )
-        await eod(ok, f"Name changed to `{names}`")
+        await ok.eor(f"Name changed to `{names}`")
     except Exception as ex:
-        await eod(ok, f"Error occured.\n`{str(ex)}`")
+        await ok.eor(f"Error occured.\n`{str(ex)}`")
 
 
 # profile pic
@@ -88,9 +88,9 @@ async def _(ult):
             await ult.client(UploadProfilePhotoRequest(file))
         else:
             await ult.client(UploadProfilePhotoRequest(video=file))
-        await eod(ok, "`My Profile Photo has Successfully Changed !`")
+        await ok.eor("`My Profile Photo has Successfully Changed !`")
     except Exception as ex:
-        await eod(ok, f"Error occured.\n`{str(ex)}`")
+        await ok.eor(f"Error occured.\n`{str(ex)}`")
     os.remove(replfile)
 
 
@@ -99,7 +99,7 @@ async def _(ult):
 
 @ultroid_cmd(pattern="delpfp( (.*)|$)", fullsudo=True)
 async def remove_profilepic(delpfp):
-    ok = await eor(delpfp, "`...`")
+    ok = await delpfp.eor("`...`")
     group = delpfp.text[8:]
     if group == "all":
         lim = 0
@@ -109,7 +109,7 @@ async def remove_profilepic(delpfp):
         lim = 1
     pfplist = await delpfp.client.get_profile_photos("me", limit=lim)
     await delpfp.client(DeletePhotosRequest(pfplist))
-    await eod(ok, f"`Successfully deleted {len(pfplist)} profile picture(s).`")
+    await ok.eor(f"`Successfully deleted {len(pfplist)} profile picture(s).`")
 
 
 @ultroid_cmd(pattern="poto( (.*)|$)")
@@ -150,7 +150,7 @@ async def gpoto(e):
             else:
                 okla.append(photo_path)
     if not okla:
-        return await eor(a, "`Pfp Not Found...`")
+        return await a.eor("`Pfp Not Found...`")
     if not just_dl:
         await a.delete()
         await e.reply(file=okla)
