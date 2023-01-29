@@ -1,6 +1,7 @@
 from .. import get_string, ultroid_cmd
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+
 @ultroid_cmd(
     pattern="sg( (.*)|$)",
 )
