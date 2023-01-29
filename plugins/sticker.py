@@ -1,4 +1,4 @@
-from . import ultroid_cmd, get_string, async_searcher, 
+from . import ultroid_cmd, get_string, async_searcher
 from bs4 import BeautifulSoup as bs
 
 
