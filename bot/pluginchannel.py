@@ -2,7 +2,7 @@ import os, shutil, asyncio
 from database import udB
 from telethon.tl.types import InputMessagesFilterDocument
 from core import ultroid_bot
-from core.config import LOGS
+from core.setup import LOGS
 
 
 async def get_from_channels(plugin_channels):
