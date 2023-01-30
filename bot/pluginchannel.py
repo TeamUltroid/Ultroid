@@ -2,6 +2,7 @@ import os, shutil, asyncio
 from database import udB
 from telethon.tl.types import InputMessagesFilterDocument
 from core import ultroid_bot
+from core.utils.addons import load_addons
 from core.setup import LOGS
 
 
