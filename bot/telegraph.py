@@ -1,5 +1,6 @@
 from contextlib import suppress
 from database import udB
+from utilities.helper import run_async
 from core import ultroid_bot, LOGS
 from telegraph import Telegraph
 
@@ -23,12 +24,10 @@ def get_client():
                 client.create_account(
                     short_name="ultroiduser", author_name=gd_name, author_url=profile_url
                 )
-            else:
-                LOGS.exception(er)
-                return
-        udB.set_key("_TELEGRAPH_TOKEN", client.get_access_token())
+            LOGS.exception(er)
+        if _token := client.get_access_token():
+            udB.set_key("_TELEGRAPH_TOKEN", _token)
     return client
-
 
 def upload_file(path):
     if path.endswith("webp"):
@@ -36,3 +35,14 @@ def upload_file(path):
             from PIL import Image
             Image.open(path).save(path, "PNG")
     return f"https://graph.org{get_client().upload_file(path)[-1]}"
+
+
+
+@run_async
+def make_html_telegraph(title, html=""):
+    telegraph = get_client()
+    page = telegraph.create_page(
+        title=title,
+        html_content=html,
+    )
+    return page["url"]
