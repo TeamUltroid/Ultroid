@@ -1,10 +1,34 @@
 from contextlib import suppress
 from database import udB
+from core import ultroid_bot, LOGS
 from telegraph import Telegraph
 
 def get_client():
     _api = udB.get_key("_TELEGRAPH_TOKEN")
-    return Telegraph(_api, domain="graph.org")
+    client = Telegraph(_api, domain="graph.org")
+    if not _api:
+        gd_name = ultroid_bot.full_name
+        short_name = gd_name[:30]
+        profile_url = (
+            f"https://t.me/{ultroid_bot.me.username}"
+            if ultroid_bot.me.username
+            else "https://t.me/TeamUltroid"
+        )
+        try:
+            client.create_account(
+                short_name=short_name, author_name=gd_name, author_url=profile_url
+            )
+        except Exception as er:
+            if "SHORT_NAME_TOO_LONG" in str(er):
+                client.create_account(
+                    short_name="ultroiduser", author_name=gd_name, author_url=profile_url
+                )
+            else:
+                LOGS.exception(er)
+                return
+        udB.set_key("_TELEGRAPH_TOKEN", client.get_access_token())
+    return client
+
 
 def upload_file(path):
     if path.endswith("webp"):
