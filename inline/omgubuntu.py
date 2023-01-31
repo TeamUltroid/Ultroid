@@ -26,7 +26,7 @@ async def omgubuntu(ult):
             _OMG[match], switch_pm="OMG Ubuntu Search :]", switch_pm_param="start"
         )
     get_web = "https://www.omgubuntu.co.uk/?s=" + match.replace(" ", "+")
-    get_ = await async_searcher(get_web, re_content=True)
+    get_ = await async_searcher(get_web)
     BSC = bs(get_, "html.parser", from_encoding="utf-8")
     res = []
     for cont in BSC.find_all("div", "sbs-layout__item"):

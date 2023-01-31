@@ -12,7 +12,7 @@ async def diela(e):
     da = dt.now()
     month = da.strftime("%b")
     li += f"/days/{month}/" + da.strftime("%F").split("-")[2]
-    ct = await async_searcher(li, re_content=True)
+    ct = await async_searcher(li)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
     ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:
