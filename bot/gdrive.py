@@ -18,7 +18,7 @@ from oauth2client.client import logger as _logger
 from oauth2client.file import Storage
 from googleapiclient.errors import ResumableUploadError
 
-from core import udB
+from database import udB
 from .helper import humanbytes, time_formatter
 
 for log in [LOGGER, logger, _logger]:
