@@ -8,12 +8,12 @@
 
 from telethon.tl.types import InputWebDocument as wb
 from telethon.tl.custom import Button
-from . import in_pattern, InlinePlugin, async_searcher
+from . import in_pattern, async_searcher
 
 _koo_ = {}
 
 
-@in_pattern("koo", owner=True)
+@in_pattern("koo", owner=True, button={"Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit"})
 async def koo_search(ult):
     """Search Users on koo with API"""
     try:
@@ -101,5 +101,3 @@ async def koo_search(ult):
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
 
-
-InlinePlugin.update({"Kᴏᴏ Sᴇᴀʀᴄʜ": "koo @__kumar__amit"})

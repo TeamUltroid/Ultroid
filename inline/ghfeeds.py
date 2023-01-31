@@ -7,11 +7,11 @@
 
 
 from telethon.tl.custom import Button
-from . import in_pattern, InlinePlugin, async_searcher
+from . import in_pattern, async_searcher
 from telethon.tl.types import InputWebDocument
 
 
-@in_pattern("gh", owner=True)
+@in_pattern("gh", owner=True, button={"GɪᴛHᴜʙ ғᴇᴇᴅs": "gh"})
 async def gh_feeds(ult):
     try:
         username = ult.text.split(maxsplit=1)[1]
@@ -100,5 +100,3 @@ async def gh_feeds(ult):
             res.append(article)
     msg = f"Showing {len(res)} feeds!" if res else "Nothing Found"
     await ult.answer(res, cache_time=5000, switch_pm=msg, switch_pm_param="start")
-
-InlinePlugin.update({"GɪᴛHᴜʙ ғᴇᴇᴅs": "gh"})

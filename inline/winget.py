@@ -7,10 +7,10 @@
 
 import re
 from telethon.tl.types import InputWebDocument as wb
-from . import get_string, async_searcher, in_pattern, InlinePlugin, async_searcher
+from . import get_string, async_searcher, in_pattern, async_searcher
 from telethon.tl.custom import Button
 
-@in_pattern("winget", owner=True)
+@in_pattern("winget", owner=True, button={"Search Winget": "winget telegram"})
 async def search_winget(event):
     QUERY = event.text.split(maxsplit=1)
     try:
@@ -39,4 +39,3 @@ async def search_winget(event):
     await event.answer(out, switch_pm=uppar, switch_pm_param="start", cache_time=3000)
 
 
-InlinePlugin.update({"Search Winget": "winget telegram"})

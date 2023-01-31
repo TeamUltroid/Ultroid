@@ -7,10 +7,10 @@
 
 from telethon.tl.types import InputWebDocument as wb
 from telethon.tl.custom import Button
-from . import in_pattern, InlinePlugin, async_searcher
+from . import in_pattern, async_searcher
 
 
-@in_pattern("npm")
+@in_pattern("npm", owner=True, button={"Npm Search": "npm"})
 async def search_npm(event):
     try:
         query = event.text.split(maxsplit=1)[1]
@@ -38,5 +38,3 @@ async def search_npm(event):
             ],
         ))
     await event.answer(res, switch_pm="NPM Search", switch_pm_param="start")
-
-InlinePlugin.update({"Npm Search": "npm"})

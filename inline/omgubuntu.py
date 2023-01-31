@@ -8,12 +8,12 @@
 
 from telethon.tl.custom import Button
 from telethon.tl.types import InputWebDocument as wb
-from .. import async_searcher, in_pattern, InlinePlugin
+from .. import async_searcher, in_pattern
 from bs4 import BeautifulSoup as bs
 
 _OMG = {}
 
-@in_pattern("omgu", owner=True)
+@in_pattern("omgu", owner=True, button={"OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish"})
 async def omgubuntu(ult):
     try:
         match = ult.text.split(maxsplit=1)[1].lower()
@@ -61,5 +61,3 @@ async def omgubuntu(ult):
     )
     _OMG[match] = res
 
-
-InlinePlugin.update({"OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish"})
