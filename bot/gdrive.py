@@ -21,6 +21,10 @@ from googleapiclient.errors import ResumableUploadError
 from database import udB
 from .helper import humanbytes, time_formatter
 
+from requests import Session
+from urllib.parse import urlencode
+
+
 for log in [LOGGER, logger, _logger]:
     log.setLevel(WARNING)
 
@@ -300,3 +304,23 @@ class GDriveManager:
             files["name"] : self._create_download_link(files["id"])
             for files in _items["files"]
         }
+
+# Assuming it works without any error
+class GDrive:
+    def __init__(self, client_id, client_secret, folder_id: str = ""):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.folder_id = self.folder_id
+        self._session = Session()
+
+    @run_async # Idk where it is
+    def authorize(self, code: str = None):
+        if not code:
+            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({"client_id": self.client_id, "response_type": "code", "scope" : "https://www.googleapis.com/auth/drive", "redirect_uri": "http://localhost", "access_type": "offline"}
+        r = self._session.post("https://oauth2.googleapis.com/token", params={"client_id": self.client_id, "client_secret": self.client_secret, "code": code, "redirect_uri": "http://localhost", "grant_type" : "authorization_code"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+        return r.json()
+
+    @run_async # Idk where it is
+    def _refresh(self, refresh_token):
+        r = self._session.post("https://oauth2.googleapis.com/token", params={"client_id": self.client_id, "client_secret": self.client_secret, "refresh_token": refresh_token, "grant_type" : "refresh_token"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+        return r.json() # return only access_token?
