@@ -9,7 +9,7 @@ import time
 from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
-from urllib.parse import urlencode
+from urllib.parse import urlencode, parse_qs
 
 from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
 from googleapiclient.discovery import build, logger
@@ -322,50 +322,162 @@ class GDriveManager:
 
 
 # Assuming it works without any error
-
-
 class GDrive:
-    def __init__(self, client_id, client_secret, folder_id: str = ""):
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.folder_id = self.folder_id
-        self._session = Session()
+    def __init__(self):
+        self._session = ClientSession()
+        self.client_id = udB.get("GDRIVE_CLIENT_ID")
+        self.client_secret = udB.get("GDRIVE_CLIENT_SECRET")
+        self.folder_id = udB.get("GDRIVE_FOLDER_ID") or None
+        self.scope = "https://www.googleapis.com/auth/drive"
+        self.creds = None
+        if udB.get("GDRIVE_AUTH_TOKEN"):
+            self.creds = udB.get("GDRIVE_AUTH_TOKEN")
 
-    @run_async  # Idk where it is
-    def authorize(self, code: str = None):
+    async def get_oauth2_url(self):
+        url = "https://accounts.google.com/o/oauth2/v2/auth"
+        params = {
+            "client_id": self.client_id,
+            "redirect_uri": "http://localhost",
+            "response_type": "code",
+            "scope": self.scope,
+            "access_type": "offline",
+        }
+        return f"{url}?{urlencode(params)}"
+
+    async def get_access_token(self, code):
         if not code:
-            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode(
-                {
-                    "client_id": self.client_id,
-                    "response_type": "code",
-                    "scope": "https://www.googleapis.com/auth/drive",
-                    "redirect_uri": "http://localhost",
-                    "access_type": "offline",
-                }
-            )
-        r = self._session.post(
-            "https://oauth2.googleapis.com/token",
-            params={
-                "client_id": self.client_id,
-                "client_secret": self.client_secret,
-                "code": code,
-                "redirect_uri": "http://localhost",
-                "grant_type": "authorization_code",
-            },
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-        )
-        return r.json()
+            return {"error": "No code provided", "status": 400}
+        if code.startswith("http://localhost"):
+            # get all url arguments
+            code = parse_qs(code.split("?")[1]).get("code")[0]
+        url = "https://oauth2.googleapis.com/token"
+        params = {
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+            "redirect_uri": self.redirect_uri,
+            "grant_type": "authorization_code",
+            "code": code,
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        resp = await self._session.post(url, data=params, headers=headers)
+        self.creds = await resp.json()
+        udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
+        return self.creds
 
-    @run_async  # Idk where it is
-    def _refresh(self, refresh_token):
-        r = self._session.post(
-            "https://oauth2.googleapis.com/token",
-            params={
-                "client_id": self.client_id,
-                "client_secret": self.client_secret,
-                "refresh_token": refresh_token,
-                "grant_type": "refresh_token",
-            },
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
+    async def get_refresh_token(self, refresh_token: str = None):
+        if not refresh_token:
+            refresh_token = self.creds.get("refresh_token")
+        url = "https://oauth2.googleapis.com/token"
+        params = {
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        async with self._session.post(url, data=params, headers=headers) as resp:
+            self.creds["access_token"] = (await resp.json())["access_token"]
+            udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
+            return await resp.json()
+
+    async def _copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
+        update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
+        headers = {
+            "Authorization": "Bearer " + self.creds.get("access_token"),
+            "Content-Type": "application/json",
+        }
+        params = {
+            "name": filename,
+            "mimeType": "application/octet-stream",
+            "fields": "id, name, webContentLink",
+            "supportsAllDrives": "true",
+        }
+        file_metadata = {
+            "name": filename,
+            "fileId": fileId,
+        }
+        if folder_id:
+            file_metadata["parents"] = [folder_id]
+        elif self.folder_id:
+            file_metadata["parents"] = [self.folder_id]
+        if move:
+            del file_metadata["parents"]
+            params["addParents"] = folder_id if folder_id else self.folder_id
+            params["removeParents"] = "root"
+        else:
+            del file_metadata["parents"]
+            params["addParents"] = folder_id if folder_id else self.folder_id
+        r = await self._session.patch(
+            update_url,
+            headers=headers,
+            data=json.dumps(file_metadata),
+            params=params,
         )
-        return r.json()  # return only access_token?
+        r = await r.json()
+        if r.get("error") and r["error"]["code"] == 401:
+            await self.get_refresh_token()
+            return await self._copy_file(fileId, filename, folder_id, move)
+        return r
+
+    async def _upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+        # upload with progress bar
+        filesize = os.path.getsize(path)
+        # 1. Retrieve session for resumable upload.
+        headers = {"Authorization": "Bearer " +
+                   self.creds.get("access_token"), "Content-Type": "application/json"}
+        params = {
+            "name": filename or os.path.basename(path),
+            "mimeType": "application/octet-stream",
+            "fields": "id, name, webContentLink",
+            "supportsAllDrives": True,
+            "parents": [folder_id] if folder_id else None,
+        }
+        r = await self._session.post(
+            "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable",
+            headers=headers,
+            data=json.dumps(params),
+            params={"fields": "id, name, webContentLink"},
+        )
+        if r.status == 401:
+            await self.get_refresh_token()
+            return await self._upload_file(path, filename, folder_id)
+        elif r.status == 403:
+            # upload to root and move
+            r = await self._upload_file(path, filename, "root")
+            return await self._copy_file(r["id"], filename, folder_id, move=True)
+        upload_url = r.headers.get("Location")
+        # upload in 50 MB chunks
+        chunks = os.path.getsize(path) // 1024 // 1024 // 50
+        async with aiofiles.open(path, "rb") as f:
+            if chunks == 0:
+                diff = time.time() - start
+                speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                percentage = round((chunk * 1024 * 1024 * 50) / filesize * 100, 2)
+                txt = f"Uploaded {round((chunk * 1024 * 1024 * 50) / 1024 / 1024, 2)} MB of {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s ({percentage}%)"
+                resp = await self._session.put(upload_url, data=await f.read(), headers=headers, params=json.dumps({"fields": "id, name, webContentLink"}))
+                return await resp.json()
+            start = time.time()
+            for chunk in range(chunks + 1):
+                if chunk == chunks - 1:
+                    # upload last chunk
+                    headers = {
+                        "Content-Length": str(os.path.getsize(path) - chunk * 1024 * 1024 * 50),
+                        "Content-Range": f"bytes {chunk * 1024 * 1024 * 50}-{os.path.getsize(path) - 1}/{os.path.getsize(path)}"}
+                    resp = await self._session.put(upload_url, data=await f.read(), headers=headers, params=json.dumps({"fields": "id, name, webContentLink"}))
+                    diff = time.time() - start
+                    speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                    txt = f"Uploaded {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s in {round(diff, 2)} seconds"
+                    return await resp.json()
+                chunk_data = await f.read(1024 * 1024 * 50)
+                headers = {"Content-Length": str(len(
+                    chunk_data)), "Content-Range": f"bytes {chunk * 1024 * 1024 * 50}-{(chunk + 1) * 1024 * 1024 * 50 - 1}/{os.path.getsize(path)}"}
+                # progress bar with speed
+                diff = time.time() - start
+                speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                percentage = round((chunk * 1024 * 1024 * 50) / filesize * 100, 2)
+                txt = f"Uploading... {percentage}% ({speed} MB/s)"
+                resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
+                try:
+                    return await resp.json()
+                except:
+                    pass
