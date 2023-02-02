@@ -1,5 +1,6 @@
 import io
-from . import ultroid_cmd, get_string, async_searcher
+
+from . import async_searcher, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="meaning( (.*)|$)", manager=True)
@@ -71,7 +72,6 @@ async def mean(event):
         await event.eor(
             get_string("wrd_7" if task == "synonyms" else "wrd_8").format(e)
         )
-
 
 
 async def get_synonyms_or_antonyms(word, type_of_words):

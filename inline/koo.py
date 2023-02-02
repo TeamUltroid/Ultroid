@@ -1,4 +1,3 @@
-
 # Ultroid - UserBot
 # Copyright (C) 2021-2022 TeamUltroid
 #
@@ -6,9 +5,10 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon.tl.types import InputWebDocument as wb
 from telethon.tl.custom import Button
-from . import in_pattern, async_searcher
+from telethon.tl.types import InputWebDocument as wb
+
+from . import async_searcher, in_pattern
 
 _koo_ = {}
 
@@ -100,4 +100,3 @@ async def koo_search(ult):
         _koo_.update({match_: res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
-

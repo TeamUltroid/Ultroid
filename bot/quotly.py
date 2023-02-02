@@ -1,10 +1,15 @@
+import base64
+import contextlib
+import os
+
 from PIL import Image
-import base64, os, contextlib
 from telethon.tl import types
-from database import udB
-from . import async_searcher
-from database._core import DEVLIST
 from telethon.utils import get_display_name, get_peer_id
+
+from database import udB
+from database._core import DEVLIST
+
+from . import async_searcher
 
 _API = "https://bot.lyo.su/quote/generate"
 _entities = {
@@ -44,7 +49,6 @@ async def telegraph(file_):
 
 
 async def _format_quote(event: types.Message, reply=None, sender=None, type_="private"):
-
     if reply and reply.raw_text:
         reply = {
             "name": get_display_name(reply.sender) or "Deleted Account",

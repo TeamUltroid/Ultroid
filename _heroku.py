@@ -1,12 +1,16 @@
-import os, math, shutil, psutil
+import math
+import os
+import shutil
 from random import choice
-from utilities import some_random_headers
-from utilities.helper import async_searcher, humanbytes
+
 import heroku3
+import psutil
+from core import LOGS, Var
 from git.exc import GitCommandError
 from git.repo import Repo
-from core import Var, LOGS
 from localization import get_string
+from utilities import some_random_headers
+from utilities.helper import async_searcher, humanbytes
 
 heroku_api = Var.HEROKU_API
 Heroku = client = heroku3.from_api(heroku_api)
@@ -27,37 +31,37 @@ def restart():
 
 
 async def update(eve):
-        repo = Repo(".")
-        ac_br = repo.active_branch
-        ups_rem = repo.remote("upstream")
-        if not app:
-            await eve.edit("`Wrong HEROKU_APP_NAME.`")
-            repo.__del__()
-            return
-        await eve.edit(get_string("clst_1"))
-        ups_rem.fetch(ac_br)
-        repo.git.reset("--hard", "FETCH_HEAD")
-        heroku_git_url = app.git_url.replace(
-            "https://", f"https://api:{heroku_api}@"
-        )
+    repo = Repo(".")
+    ac_br = repo.active_branch
+    ups_rem = repo.remote("upstream")
+    if not app:
+        await eve.edit("`Wrong HEROKU_APP_NAME.`")
+        repo.__del__()
+        return
+    await eve.edit(get_string("clst_1"))
+    ups_rem.fetch(ac_br)
+    repo.git.reset("--hard", "FETCH_HEAD")
+    heroku_git_url = app.git_url.replace("https://", f"https://api:{heroku_api}@")
 
-        if "heroku" in repo.remotes:
-            remote = repo.remote("heroku")
-            remote.set_url(heroku_git_url)
-        else:
-            remote = repo.create_remote("heroku", heroku_git_url)
-        try:
-            remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
-        except GitCommandError as error:
-            await eve.edit(f"`Here is the error log:\n{error}`")
-            repo.__del__()
-            return
-        await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
+    if "heroku" in repo.remotes:
+        remote = repo.remote("heroku")
+        remote.set_url(heroku_git_url)
+    else:
+        remote = repo.create_remote("heroku", heroku_git_url)
+    try:
+        remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
+    except GitCommandError as error:
+        await eve.edit(f"`Here is the error log:\n{error}`")
+        repo.__del__()
+        return
+    await eve.edit("`Successfully Updated!\nRestarting, please wait...`")
 
 
 async def shutdown(event):
     if not app:
-        return await event.edit("`Cant detect as Heroku App!\nValidate your` `HEROKU_API` `and` `HEROKU_API_KEY`, `check for logs`")
+        return await event.edit(
+            "`Cant detect as Heroku App!\nValidate your` `HEROKU_API` `and` `HEROKU_API_KEY`, `check for logs`"
+        )
     dynotype = Var.DYNO.split(".")[-1]
     await event.edit("Shutting down.")
     try:
@@ -94,7 +98,6 @@ async def heroku_logs(event):
 
 
 async def heroku_usage():
-
     user_id = Heroku.account().id
     headers = {
         "User-Agent": choice(some_random_headers),

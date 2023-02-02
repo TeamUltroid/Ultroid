@@ -1,14 +1,13 @@
-
 import glob
 import os
 import random
 
-from telethon.tl.types import InputMessagesFilterPhotos
-
 from core import rm
 from PIL import Image, ImageDraw, ImageFont
+from telethon.tl.types import InputMessagesFilterPhotos
 from utilities.helper import download_file, mediainfo
-from . import  get_string,  ultroid_cmd, inline_mention, check_filename
+
+from . import check_filename, get_string, inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(pattern="logo( (.*)|$)")
@@ -130,4 +129,3 @@ class LogoHelper:
         file_name = check_filename("logo.png")
         img.save(file_name, "PNG")
         return file_name
-

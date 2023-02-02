@@ -1,9 +1,10 @@
-import os, shutil, asyncio
-from database import udB
-from telethon.tl.types import InputMessagesFilterDocument
+import asyncio
+import os
+
 from core import ultroid_bot
-from core.utils.addons import load_addons
 from core.setup import LOGS
+from core.utils.addons import load_addons
+from telethon.tl.types import InputMessagesFilterDocument
 
 
 async def get_from_channels(plugin_channels):

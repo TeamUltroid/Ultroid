@@ -1,5 +1,6 @@
-from . import ultroid_cmd, get_string, ultroid_bot, async_searcher
 from datetime import datetime as dt
+
+from . import async_searcher, get_string, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -45,7 +46,7 @@ async def hbd(event):
     cm = dt(abhi.year, brth.month, brth.day)
     ish = (cm - abhi.today()).days + 1
     dan = ish
-    hp = ''
+    hp = ""
     if dan == 0:
         hp = "`Happy BirthDay To U🎉🎊`"
     elif dan < 0:
@@ -78,7 +79,7 @@ async def hbd(event):
     elif month == "12":
         sign = "Sagittarius" if (day < 22) else "Capricorn"
     else:
-        sign = ''
+        sign = ""
     json = await async_searcher(
         f"https://aztro.sameerkumar.website/?sign={sign}&day=today",
         post=True,

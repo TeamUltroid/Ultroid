@@ -6,12 +6,14 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
+from bs4 import BeautifulSoup as bs
 from telethon.tl.custom import Button
 from telethon.tl.types import InputWebDocument as wb
+
 from .. import async_searcher, in_pattern
-from bs4 import BeautifulSoup as bs
 
 _OMG = {}
+
 
 @in_pattern("omgu", owner=True, button={"OᴍɢUʙᴜɴᴛᴜ": "omgu cutefish"})
 async def omgubuntu(ult):
@@ -60,4 +62,3 @@ async def omgubuntu(ult):
         switch_pm_param="start",
     )
     _OMG[match] = res
-

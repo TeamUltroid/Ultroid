@@ -40,7 +40,6 @@ except ImportError:
     LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
-
 from utilities.tools import four_point_transform
 
 from .. import (

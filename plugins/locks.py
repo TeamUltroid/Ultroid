@@ -16,6 +16,7 @@
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
+
 from .. import ultroid_cmd
 
 
@@ -36,7 +37,6 @@ async def un_lock(e):
     except Exception as er:
         return await e.eor(str(er))
     await e.eor(f"**{msg}** - `{mat}` ! ")
-
 
 
 def lock_unlock(query, lock=True):

@@ -1,7 +1,9 @@
 import re
 from datetime import datetime as dt
+
 from bs4 import BeautifulSoup as bs
-from . import async_searcher, ultroid_cmd, get_string
+
+from . import async_searcher, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="eod$")

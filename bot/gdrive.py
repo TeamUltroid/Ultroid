@@ -9,21 +9,20 @@ import time
 from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
+from urllib.parse import urlencode
 
 from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
 from googleapiclient.discovery import build, logger
+from googleapiclient.errors import ResumableUploadError
 from httplib2 import Http
 from oauth2client.client import OOB_CALLBACK_URN, OAuth2WebServerFlow
 from oauth2client.client import logger as _logger
 from oauth2client.file import Storage
-from googleapiclient.errors import ResumableUploadError
+from requests import Session
 
 from database import udB
+
 from .helper import humanbytes, time_formatter
-
-from requests import Session
-from urllib.parse import urlencode
-
 
 for log in [LOGGER, logger, _logger]:
     log.setLevel(WARNING)
@@ -116,7 +115,10 @@ class GDriveManager:
             body["parents"] = [self.folder_id]
         try:
             upload = self._build.files().create(
-                body=body, media_body=media_body, fields="name, id, webContentLink", supportsAllDrives=True
+                body=body,
+                media_body=media_body,
+                fields="name, id, webContentLink",
+                supportsAllDrives=True,
             )
             start = time.time()
             _status = None
@@ -142,7 +144,10 @@ class GDriveManager:
             if err.resp.status == 403:
                 body["parents"] = ["root"]
                 upload = self._build.files().create(
-                    body=body, media_body=media_body, fields="name, id, webContentLink", supportsAllDrives=True
+                    body=body,
+                    media_body=media_body,
+                    fields="name, id, webContentLink",
+                    supportsAllDrives=True,
                 )
                 start = time.time()
                 _status = None
@@ -166,7 +171,9 @@ class GDriveManager:
                             last_txt = crnt_txt
                 if not folder_id:
                     folder_id = self.folder_id
-                _status = await self._copy_file(upload["id"], file_metadata["name"] , folder_id, True)
+                _status = await self._copy_file(
+                    upload["id"], file_metadata["name"], folder_id, True
+                )
 
         try:
             self._set_permissions(fileId=_status.get("id"))
@@ -217,15 +224,17 @@ class GDriveManager:
                         last_txt = crnt_txt
         return True, filename
 
-    async def _copy_file(self, fileId: str, filename: str, folder_id: str = None, move: bool = False):
+    async def _copy_file(
+        self, fileId: str, filename: str, folder_id: str = None, move: bool = False
+    ):
         file_metadata = {
             "name": filename,
             "description": "Copied via Ultroid",
         }
         if folder_id:
-            file_metadata["parents"] = [ folder_id ]
+            file_metadata["parents"] = [folder_id]
         elif self.folder_id:
-            file_metadata["parents"] = [ folder_id ]
+            file_metadata["parents"] = [folder_id]
         if move:
             del file_metadata["parents"]
             _status = (
@@ -237,7 +246,8 @@ class GDriveManager:
                     fields="name, id, webContentLink",
                     addParents=folder_id,
                     removeParents="root",
-                ).execute()
+                )
+                .execute()
             )
         else:
             _status = (
@@ -247,7 +257,8 @@ class GDriveManager:
                     body=file_metadata,
                     supportsAllDrives=True,
                     fields="name, id, webContentLink",
-                ).execute()
+                )
+                .execute()
             )
         return _status
 
@@ -279,7 +290,11 @@ class GDriveManager:
         }
         if self.folder_id:
             body["parents"] = [self.folder_id]
-        file = self._build.files().create(body=body, supportsAllDrives=True, fields="name, id").execute()
+        file = (
+            self._build.files()
+            .create(body=body, supportsAllDrives=True, fields="name, id")
+            .execute()
+        )
         fileId = file.get("id")
         self._set_permissions(fileId=fileId)
         return fileId
@@ -301,11 +316,14 @@ class GDriveManager:
             .execute()
         )
         return {
-            files["name"] : self._create_download_link(files["id"])
+            files["name"]: self._create_download_link(files["id"])
             for files in _items["files"]
         }
 
+
 # Assuming it works without any error
+
+
 class GDrive:
     def __init__(self, client_id, client_secret, folder_id: str = ""):
         self.client_id = client_id
@@ -313,14 +331,41 @@ class GDrive:
         self.folder_id = self.folder_id
         self._session = Session()
 
-    @run_async # Idk where it is
+    @run_async  # Idk where it is
     def authorize(self, code: str = None):
         if not code:
-            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({"client_id": self.client_id, "response_type": "code", "scope" : "https://www.googleapis.com/auth/drive", "redirect_uri": "http://localhost", "access_type": "offline"})
-        r = self._session.post("https://oauth2.googleapis.com/token", params={"client_id": self.client_id, "client_secret": self.client_secret, "code": code, "redirect_uri": "http://localhost", "grant_type" : "authorization_code"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode(
+                {
+                    "client_id": self.client_id,
+                    "response_type": "code",
+                    "scope": "https://www.googleapis.com/auth/drive",
+                    "redirect_uri": "http://localhost",
+                    "access_type": "offline",
+                }
+            )
+        r = self._session.post(
+            "https://oauth2.googleapis.com/token",
+            params={
+                "client_id": self.client_id,
+                "client_secret": self.client_secret,
+                "code": code,
+                "redirect_uri": "http://localhost",
+                "grant_type": "authorization_code",
+            },
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
         return r.json()
 
-    @run_async # Idk where it is
+    @run_async  # Idk where it is
     def _refresh(self, refresh_token):
-        r = self._session.post("https://oauth2.googleapis.com/token", params={"client_id": self.client_id, "client_secret": self.client_secret, "refresh_token": refresh_token, "grant_type" : "refresh_token"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
-        return r.json() # return only access_token?
+        r = self._session.post(
+            "https://oauth2.googleapis.com/token",
+            params={
+                "client_id": self.client_id,
+                "client_secret": self.client_secret,
+                "refresh_token": refresh_token,
+                "grant_type": "refresh_token",
+            },
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        return r.json()  # return only access_token?

@@ -1,23 +1,32 @@
 import os
-from PIL import Image
-from core import HNDLR
-from . import ultroid_cmd, udB, eod, get_string, check_filename, fetch
 
+from core import HNDLR
+from PIL import Image
+
+from . import check_filename, eod, fetch, get_string, udB, ultroid_cmd
 
 
 async def ReTrieveFile(input_file_name, RMBG_API):
     headers = {"X-API-Key": RMBG_API}
     files = {"image_file": open(input_file_name, "rb").read()}
+
     def _eval(obj):
         contentType = obj.headers.get("content-type")
         if "image" not in contentType:
-                return False, (obj.json())
+            return False, (obj.json())
         name = check_filename("ult-rmbg.png")
         with open(name, "wb") as file:
             file.write(obj.content)
         return True, name
-    return await fetch("https://api.remove.bg/v1.0/removebg", method="POST", headers=headers, data=files, evaluate=_eval) 
-            
+
+    return await fetch(
+        "https://api.remove.bg/v1.0/removebg",
+        method="POST",
+        headers=headers,
+        data=files,
+        evaluate=_eval,
+    )
+
 
 @ultroid_cmd(
     pattern="rmbg($| (.*))",
@@ -33,7 +42,9 @@ async def abs_rmbg(event):
     if match and os.path.exists(match):
         dl = match
     elif reply and reply.media:
-        dl = await reply.download_media(thumb= -1 if (reply.document and reply.documents.thumbs) else None)
+        dl = await reply.download_media(
+            thumb=-1 if (reply.document and reply.documents.thumbs) else None
+        )
     else:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
@@ -70,4 +81,3 @@ async def abs_rmbg(event):
     os.remove(out)
     os.remove(wbn)
     await xx.delete()
-

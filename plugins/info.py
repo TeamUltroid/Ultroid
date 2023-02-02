@@ -1,9 +1,13 @@
-import html, math
-from .. import get_string, ultroid_cmd, LOGS
-from telethon.utils import get_peer_id
-from telethon.tl.types import User
+import html
+import math
+
 from telethon.tl import functions, types
 from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl.types import User
+from telethon.utils import get_peer_id
+
+from .. import LOGS, get_string, ultroid_cmd
+
 
 @ultroid_cmd(
     pattern="info( (.*)|$)",

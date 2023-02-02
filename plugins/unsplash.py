@@ -1,6 +1,9 @@
-import re, asyncio, os
+import asyncio
+import os
+
 from core import rm
 from utilities.helper import download_file
+
 from . import get_string, ultroid_cmd
 
 
@@ -23,5 +26,3 @@ async def searchunsl(ult):
     await ult.respond(f"Uploaded {len(imgs)} Images!", file=imgs)
     await tep.delete()
     [os.remove(img) for img in imgs]
-
-
