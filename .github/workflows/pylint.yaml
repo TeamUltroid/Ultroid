@@ -3,6 +3,7 @@ on:
   push:
     paths:
     - "**.py"
+  workflow_dispatch:
 jobs:
   PEP8:
     runs-on: ubuntu-latest
