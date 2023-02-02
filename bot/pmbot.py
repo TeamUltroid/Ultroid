@@ -65,7 +65,8 @@ async def on_new_mssg(event):
                             uri = CACHE[chat]
                     BTTS.append(Button.url(get_display_name(TAHC_), uri))
                 except Exception as er:
-                    LOGS.exception(f"Error On PmBot Force Sub!\n - {chat} \n{er}")
+                    LOGS.exception(
+                        f"Error On PmBot Force Sub!\n - {chat} \n{er}")
         if MSG and BTTS:
             return await event.reply(MSG, buttons=BTTS)
     xx = await event.forward_to(OWNER_ID)

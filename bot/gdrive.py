@@ -9,7 +9,7 @@ import time
 from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import parse_qs, urlencode
 
 from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
 from googleapiclient.discovery import build, logger
@@ -18,7 +18,6 @@ from httplib2 import Http
 from oauth2client.client import OOB_CALLBACK_URN, OAuth2WebServerFlow
 from oauth2client.client import logger as _logger
 from oauth2client.file import Storage
-from requests import Session
 
 from database import udB
 
@@ -57,7 +56,8 @@ class GDriveManager:
             _auth_flow = self._flow["_"]
             credentials = _auth_flow.step2_exchange(code)
             Storage(self.token_file).put(credentials)
-            return udB.set_key("GDRIVE_AUTH_TOKEN", str(open(self.token_file).read()))
+            return udB.set_key("GDRIVE_AUTH_TOKEN", str(
+                open(self.token_file).read()))
         try:
             _auth_flow = OAuth2WebServerFlow(
                 udB.get_key("GDRIVE_CLIENT_ID")
@@ -451,9 +451,11 @@ class GDrive:
         async with aiofiles.open(path, "rb") as f:
             if chunks == 0:
                 diff = time.time() - start
-                speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
-                percentage = round((chunk * 1024 * 1024 * 50) / filesize * 100, 2)
-                txt = f"Uploaded {round((chunk * 1024 * 1024 * 50) / 1024 / 1024, 2)} MB of {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s ({percentage}%)"
+                speed = round(
+                    (chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                percentage = round(
+                    (chunk * 1024 * 1024 * 50) / filesize * 100, 2)
+                f"Uploaded {round((chunk * 1024 * 1024 * 50) / 1024 / 1024, 2)} MB of {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s ({percentage}%)"
                 resp = await self._session.put(upload_url, data=await f.read(), headers=headers, params=json.dumps({"fields": "id, name, webContentLink"}))
                 return await resp.json()
             start = time.time()
@@ -465,19 +467,22 @@ class GDrive:
                         "Content-Range": f"bytes {chunk * 1024 * 1024 * 50}-{os.path.getsize(path) - 1}/{os.path.getsize(path)}"}
                     resp = await self._session.put(upload_url, data=await f.read(), headers=headers, params=json.dumps({"fields": "id, name, webContentLink"}))
                     diff = time.time() - start
-                    speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
-                    txt = f"Uploaded {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s in {round(diff, 2)} seconds"
+                    speed = round(
+                        (chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                    f"Uploaded {round(filesize / 1024 / 1024, 2)} MB at {speed} MB/s in {round(diff, 2)} seconds"
                     return await resp.json()
                 chunk_data = await f.read(1024 * 1024 * 50)
                 headers = {"Content-Length": str(len(
                     chunk_data)), "Content-Range": f"bytes {chunk * 1024 * 1024 * 50}-{(chunk + 1) * 1024 * 1024 * 50 - 1}/{os.path.getsize(path)}"}
                 # progress bar with speed
                 diff = time.time() - start
-                speed = round((chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
-                percentage = round((chunk * 1024 * 1024 * 50) / filesize * 100, 2)
-                txt = f"Uploading... {percentage}% ({speed} MB/s)"
+                speed = round(
+                    (chunk * 1024 * 1024 * 50) / diff / 1024 / 1024, 2)
+                percentage = round(
+                    (chunk * 1024 * 1024 * 50) / filesize * 100, 2)
+                f"Uploading... {percentage}% ({speed} MB/s)"
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
                 try:
                     return await resp.json()
-                except:
+                except BaseException:
                     pass

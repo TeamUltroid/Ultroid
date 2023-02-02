@@ -30,7 +30,8 @@ import contextlib
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
+from telethon.tl.functions.photos import (DeletePhotosRequest,
+                                          UploadProfilePhotoRequest)
 
 from .. import get_string, mediainfo, ultroid_cmd
 

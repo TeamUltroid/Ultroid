@@ -83,7 +83,8 @@ async def gh_feeds(ult):
         text += f" <b><a href='{repo_url}'>{repo}</a></b>"
         if extra:
             text += extra
-        thumb = InputWebDocument(cont["actor"]["avatar_url"], 0, "image/jpeg", [])
+        thumb = InputWebDocument(
+            cont["actor"]["avatar_url"], 0, "image/jpeg", [])
         article = await ult.builder.article(
             title=title,
             text=text,
@@ -93,7 +94,8 @@ async def gh_feeds(ult):
             thumb=thumb,
             buttons=[
                 Button.url("View", url),
-                Button.switch_inline("Search again", query=ult.text, same_peer=True),
+                Button.switch_inline(
+                    "Search again", query=ult.text, same_peer=True),
             ],
         )
         if article.id not in res_ids:

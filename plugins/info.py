@@ -59,7 +59,8 @@ async def _(event):
         first_name = first_name.replace("\u2060", "")
     last_name = user.last_name
     last_name = (
-        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
+        last_name.replace("\u2060", "") if last_name else (
+            "Last Name not found")
     )
     user_bio = full_user.about
     if user_bio is not None:
@@ -175,7 +176,8 @@ async def get_chat_info(chat, event):
     messages_sent_alt = getattr(full, "read_outbox_max_id", None)
     exp_count = getattr(full, "pts", None)
     supergroup = "<b>Yes</b>" if getattr(chat, "megagroup", None) else "No"
-    creator_username = "@{}".format(creator_username) if creator_username else None
+    creator_username = "@{}".format(
+        creator_username) if creator_username else None
 
     if admins is None:
         try:

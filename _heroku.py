@@ -41,7 +41,8 @@ async def update(eve):
     await eve.edit(get_string("clst_1"))
     ups_rem.fetch(ac_br)
     repo.git.reset("--hard", "FETCH_HEAD")
-    heroku_git_url = app.git_url.replace("https://", f"https://api:{heroku_api}@")
+    heroku_git_url = app.git_url.replace(
+        "https://", f"https://api:{heroku_api}@")
 
     if "heroku" in repo.remotes:
         remote = repo.remote("heroku")

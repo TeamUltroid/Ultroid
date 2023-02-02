@@ -16,7 +16,10 @@ async def diela(e):
     li += f"/days/{month}/" + da.strftime("%F").split("-")[2]
     ct = await async_searcher(li)
     bt = bs(ct, "html.parser", from_encoding="utf-8")
-    ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
+    ml = bt.find_all(
+        "a",
+        "js-link-target",
+        href=re.compile("daysoftheyear.com/days"))
     for eve in ml[:5]:
         te += f'• [{eve.text}]({eve["href"]})\n'
     await m.edit(te, link_preview=False)

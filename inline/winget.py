@@ -39,7 +39,8 @@ async def search_winget(event):
                 description=data["Description"],
                 url=homep,
                 text=text,
-                buttons=Button.switch_inline("Search Again", "winget", same_peer=True),
+                buttons=Button.switch_inline(
+                    "Search Again", "winget", same_peer=True),
             )
         )
     uppar = "|> Winget Results" if out else "No Results Found :("

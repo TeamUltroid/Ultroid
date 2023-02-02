@@ -57,10 +57,17 @@ async def uri_poll(e):
     if len(option) <= 1:
         return await e.eor("`Options Should be More than 1..`", time=5)
     m = await e.eor(get_string("com_1"))
-    OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
+    OUT = [PollAnswer(option[on], str(on).encode())
+           for on in range(len(option))]
     await e.respond(
         file=InputMediaPoll(
-            Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
+            Poll(
+                20,
+                ques,
+                OUT,
+                multiple_choice=mpp,
+                public_voters=publ,
+                quiz=quizo),
             correct_answers=karzo,
         ),
     )

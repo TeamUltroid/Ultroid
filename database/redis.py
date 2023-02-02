@@ -56,7 +56,12 @@ class RedisDB(BaseDatabase):
         def _get_match(e):
             return re.match("QOVERY_REDIS_(.*)_HOST", e)
 
-        sort = list(filter(lambda e: re.match("QOVERY_REDIS_(.*)_HOST", e), os.environ))
+        sort = list(
+            filter(
+                lambda e: re.match(
+                    "QOVERY_REDIS_(.*)_HOST",
+                    e),
+                os.environ))
         if not sort:
             return
         hash_ = _get_match(sort[-1]).group(1)

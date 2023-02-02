@@ -101,7 +101,8 @@ class LogoHelper:
             text, image, tested_font
         )
         estimated_font_size = (
-            tested_font_size / (observed_width / image.width) * target_width_ratio
+            tested_font_size / (observed_width /
+                                image.width) * target_width_ratio
         )
         return round(estimated_font_size)
 
