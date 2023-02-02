@@ -316,7 +316,7 @@ class GDrive:
     @run_async # Idk where it is
     def authorize(self, code: str = None):
         if not code:
-            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({"client_id": self.client_id, "response_type": "code", "scope" : "https://www.googleapis.com/auth/drive", "redirect_uri": "http://localhost", "access_type": "offline"}
+            return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({"client_id": self.client_id, "response_type": "code", "scope" : "https://www.googleapis.com/auth/drive", "redirect_uri": "http://localhost", "access_type": "offline"})
         r = self._session.post("https://oauth2.googleapis.com/token", params={"client_id": self.client_id, "client_secret": self.client_secret, "code": code, "redirect_uri": "http://localhost", "grant_type" : "authorization_code"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         return r.json()
 
