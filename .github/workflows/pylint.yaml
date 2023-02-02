@@ -1,39 +1,33 @@
 name: PyLint
 on:
   push:
-    branches: [ dev ]
     paths:
     - "**.py"
 jobs:
   PEP8:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-          cache: "pip"
+          python-version: 3.10
       - name: Install Python lint libraries
         run: pip install autopep8 autoflake isort black
       - name: Check for showstoppers
         run: |
-          autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/*.py
-          autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/manager/*.py
-          autopep8 --verbose --in-place --recursive --aggressive --aggressive plugins/*.py
+          autopep8 --verbose --in-place --recursive --aggressive *.py
+          autopep8 --verbose --in-place --recursive --aggressive database/*.py
+          autopep8 --verbose --in-place --recursive --aggressive plugins/*.py
+          autopep8 --verbose --in-place --recursive --aggressive bot/*.py
+          autopep8 --verbose --in-place --recursive --aggressive inline/*.py
       - name: Remove unused imports and variables
         run: |
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/manager/*.py
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
       - name: lint with isort and black
         run: |
-          isort assistant/*.py
-          isort assistant/manager/*.py
-          black --fast assistant/*.py
-          black assistant/manager/*.py
-          isort plugins/*.py
-          black --fast plugins/*.py
+          isort .
+          black .
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
