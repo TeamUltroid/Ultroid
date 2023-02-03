@@ -455,7 +455,7 @@ class GDrive:
                 headers = {"Content-Length": str(len(chunk_data)),
                            "Content-Range": f"bytes {uploaded}/{filesize}"}
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
-                log.info(await resp.text())
+                await event.reply((await resp.text()) or "No text")
                 diff = time.time() - start
                 percentage = round((uploaded / filesize) * 100, 2)
                 speed = round(uploaded / diff, 2)
