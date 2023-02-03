@@ -15,7 +15,6 @@ from urllib.parse import parse_qs, urlencode
 
 import aiofiles
 from aiohttp import ClientSession
-from core import LOGS
 
 from database import udB
 
