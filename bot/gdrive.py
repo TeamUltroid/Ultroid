@@ -412,7 +412,7 @@ class GDrive:
         mime_type = guess_type(path)[0] or "application/octet-stream"
         # upload with progress bar
         filesize = os.path.getsize(path)
-        chunksize = 100 * (2**20)  # 100MB
+        chunksize = 104857600  # 100MB
         # 1. Retrieve session for resumable upload.
         headers = {"Authorization": "Bearer " +
                    self.creds.get("access_token"), "Content-Type": "application/json"}
@@ -440,7 +440,6 @@ class GDrive:
 
         async with aiofiles.open(path, "rb") as f:
             uploaded = 0
-            time.time()
             while filesize != uploaded:
                 chunk_data = await f.read(chunksize)
                 uploaded += len(chunk_data)
