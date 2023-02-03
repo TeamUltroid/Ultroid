@@ -452,7 +452,7 @@ class GDrive:
             resp = None
             while filesize != uploaded:
                 chunk_data = await f.read(chunksize)
-                
+
                 headers = {"Content-Length": str(len(chunk_data)),
                            "Content-Range": f"bytes {uploaded}-{uploaded+len(chunk_data)}/{filesize}"}
                 uploaded += len(chunk_data)
