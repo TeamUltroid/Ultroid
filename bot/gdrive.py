@@ -15,9 +15,10 @@ from urllib.parse import parse_qs, urlencode
 
 import aiofiles
 from aiohttp import ClientSession
+from core import LOGS
 
 from database import udB
-from core import LOGS
+
 from .helper import humanbytes, time_formatter
 
 # from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
@@ -459,7 +460,8 @@ class GDrive:
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
                 LOGS.info(str(headers))
                 LOGS.info(str(await resp.text()))
-                #await event.reply((await resp.text() + str(headers)) or "No text")
+                # await event.reply((await resp.text() + str(headers)) or "No
+                # text")
                 diff = time.time() - start
                 percentage = round((uploaded / filesize) * 100, 2)
                 speed = round(uploaded / diff, 2)
