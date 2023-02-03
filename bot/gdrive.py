@@ -407,7 +407,7 @@ class GDrive:
         )
         r = await r.json()
         if r.get("error") and r["error"]["code"] == 401:
-            await self.get_refresh_token()
+            await self.get_access_token()
             return await self._copy_file(fileId, filename, folder_id, move)
         return r
 
