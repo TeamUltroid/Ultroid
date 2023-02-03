@@ -467,4 +467,4 @@ class GDrive:
                 if round((diff % 10.00) == 0) or last_txt != crnt_txt:
                     await event.edit(crnt_txt)
                     last_txt = crnt_txt
-            return await resp.text()
+            return resp
