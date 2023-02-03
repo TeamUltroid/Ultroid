@@ -452,9 +452,10 @@ class GDrive:
             resp = None
             while filesize != uploaded:
                 chunk_data = await f.read(chunksize)
-                uploaded += len(chunk_data)
+                
                 headers = {"Content-Length": str(len(chunk_data)),
-                           "Content-Range": f"bytes {uploaded}/{filesize}"}
+                           "Content-Range": f"bytes {uploaded}-{uploaded+len(chunk_data)}/{filesize}"}
+                uploaded += len(chunk_data)
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
                 await event.reply(str(headers))
                 await event.reply((await resp.text()) or "No text")
