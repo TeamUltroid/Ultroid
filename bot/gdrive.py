@@ -8,30 +8,30 @@
 import json
 import os
 import time
-from io import FileIO
+#from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
 import aiofiles
 from aiohttp import ClientSession
-from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
-from googleapiclient.discovery import build, logger
-from googleapiclient.errors import ResumableUploadError
-from httplib2 import Http
-from oauth2client.client import OOB_CALLBACK_URN, OAuth2WebServerFlow
-from oauth2client.client import logger as _logger
-from oauth2client.file import Storage
+# from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
+# from googleapiclient.discovery import build, logger
+# from googleapiclient.errors import ResumableUploadError
+# from httplib2 import Http
+# from oauth2client.client import OOB_CALLBACK_URN, OAuth2WebServerFlow
+# from oauth2client.client import logger as _logger
+# from oauth2client.file import Storage
 
 from database import udB
 
 from .helper import humanbytes, time_formatter
 
-for log in [LOGGER, logger, _logger]:
-    log.setLevel(WARNING)
+# for log in [LOGGER, logger, _logger]:
+#     log.setLevel(WARNING)
 
 
-class GDriveManager:
+"""class GDriveManager:
     def __init__(self):
         self._flow = {}
         self.gdrive_creds = {
@@ -322,7 +322,7 @@ class GDriveManager:
         return {
             files["name"]: self._create_download_link(files["id"])
             for files in _items["files"]
-        }
+        }"""
 
 
 # Assuming it works without any error
