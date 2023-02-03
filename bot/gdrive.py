@@ -8,13 +8,17 @@
 import json
 import os
 import time
-#from io import FileIO
-from logging import WARNING
+# from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
 import aiofiles
 from aiohttp import ClientSession
+
+from database import udB
+
+from .helper import humanbytes, time_formatter
+
 # from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
 # from googleapiclient.discovery import build, logger
 # from googleapiclient.errors import ResumableUploadError
@@ -23,9 +27,7 @@ from aiohttp import ClientSession
 # from oauth2client.client import logger as _logger
 # from oauth2client.file import Storage
 
-from database import udB
 
-from .helper import humanbytes, time_formatter
 
 # for log in [LOGGER, logger, _logger]:
 #     log.setLevel(WARNING)
