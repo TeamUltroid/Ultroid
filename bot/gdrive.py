@@ -11,6 +11,7 @@ import time
 # from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
+from logging import Logger
 
 import aiofiles
 from aiohttp import ClientSession
@@ -31,6 +32,7 @@ from .helper import humanbytes, time_formatter
 # for log in [LOGGER, logger, _logger]:
 #     log.setLevel(WARNING)
 
+log = logging.getLogger("GDrive")
 
 """class GDriveManager:
     def __init__(self):
@@ -408,7 +410,7 @@ class GDrive:
         )
         r = await r.json()
         if r.get("error") and r["error"]["code"] == 401:
-            await self.get_access_token()
+            await self.refresh_access_token()
             return await self._copy_file(fileId, filename, folder_id, move)
         return r
 
@@ -436,7 +438,7 @@ class GDrive:
             params={"fields": "id, name, webContentLink"},
         )
         if r.status == 401:
-            await self.get_access_token()
+            await self.refresh_access_token()
             return await self._upload_file(path, filename, folder_id)
         elif r.status == 403:
             # upload to root and move
@@ -454,6 +456,7 @@ class GDrive:
                 headers = {"Content-Length": str(len(chunk_data)),
                            "Content-Range": f"bytes {uploaded}/{filesize}"}
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
+                log.info(resp)
                 diff = time.time() - start
                 percentage = round((uploaded / filesize) * 100, 2)
                 speed = round(uploaded / diff, 2)
