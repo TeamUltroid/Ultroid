@@ -408,12 +408,11 @@ class GDrive:
         return r
 
     async def _upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
-        last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
         # upload with progress bar
         filesize = os.path.getsize(path)
-        chunksize = 100*(2**20) # 100MB
+        chunksize = 100 * (2**20)  # 100MB
         # 1. Retrieve session for resumable upload.
         headers = {"Authorization": "Bearer " +
                    self.creds.get("access_token"), "Content-Type": "application/json"}
@@ -438,14 +437,15 @@ class GDrive:
             r = await self._upload_file(path, filename, "root")
             return await self._copy_file(r["id"], filename, folder_id, move=True)
         upload_url = r.headers.get("Location")
-        
+
         async with aiofiles.open(path, "rb") as f:
             uploaded = 0
-            start = time.time()
+            time.time()
             while filesize != uploaded:
                 chunk_data = await f.read(chunksize)
                 uploaded += len(chunk_data)
-                headers = {"Content-Length": str(len(chunk_data)), "Content-Range": f"bytes {uploaded}/{filesize}"}
+                headers = {"Content-Length": str(len(chunk_data)),
+                           "Content-Range": f"bytes {uploaded}/{filesize}"}
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
                 try:
                     return await resp.json()
