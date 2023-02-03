@@ -5,12 +5,16 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import time, os, json, aiofiles
+import json
+import os
+import time
 from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
+import aiofiles
+from aiohttp import ClientSession
 from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
 from googleapiclient.discovery import build, logger
 from googleapiclient.errors import ResumableUploadError
@@ -20,7 +24,7 @@ from oauth2client.client import logger as _logger
 from oauth2client.file import Storage
 
 from database import udB
-from aiohttp import ClientSession
+
 from .helper import humanbytes, time_formatter
 
 for log in [LOGGER, logger, _logger]:
