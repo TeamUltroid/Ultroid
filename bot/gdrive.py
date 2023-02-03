@@ -11,7 +11,6 @@ import time
 # from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
-from logging import Logger
 
 import aiofiles
 from aiohttp import ClientSession
