@@ -457,13 +457,13 @@ class GDrive:
                 uploaded += len(chunk_data)
                 await event.reply(str(headers) + str(uploaded))
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
-                
+
                 await event.reply(await resp.text() or "No text")
-                diff=time.time() - start
-                percentage=round((uploaded / filesize) * 100, 2)
-                speed=round(uploaded / diff, 2)
-                eta=round((filesize - uploaded) / speed, 2) * 1000
-                crnt_txt=(
+                diff = time.time() - start
+                percentage = round((uploaded / filesize) * 100, 2)
+                speed = round(uploaded / diff, 2)
+                eta = round((filesize - uploaded) / speed, 2) * 1000
+                crnt_txt = (
                     f"`Uploading {filename} to GDrive...\n\n"
                     + f"Status: {humanbytes(uploaded)}/{humanbytes(filesize)} »» {percentage}%\n"
                     + f"Speed: {humanbytes(speed)}/s\n"
@@ -471,5 +471,5 @@ class GDrive:
                 )
                 if round((diff % 10.00) == 0) or last_txt != crnt_txt:
                     await event.edit(crnt_txt)
-                    last_txt=crnt_txt
+                    last_txt = crnt_txt
             return await resp.json()
