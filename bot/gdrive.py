@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import time
+import time, os, json, aiofiles
 from io import FileIO
 from logging import WARNING
 from mimetypes import guess_type
@@ -20,7 +20,7 @@ from oauth2client.client import logger as _logger
 from oauth2client.file import Storage
 
 from database import udB
-
+from aiohttp import ClientSession
 from .helper import humanbytes, time_formatter
 
 for log in [LOGGER, logger, _logger]:
@@ -408,6 +408,7 @@ class GDrive:
         return r
 
     async def _upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+        last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
         # upload with progress bar
@@ -440,13 +441,25 @@ class GDrive:
 
         async with aiofiles.open(path, "rb") as f:
             uploaded = 0
+            start = time.time()
+            resp = None
             while filesize != uploaded:
                 chunk_data = await f.read(chunksize)
                 uploaded += len(chunk_data)
                 headers = {"Content-Length": str(len(chunk_data)),
                            "Content-Range": f"bytes {uploaded}/{filesize}"}
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
-                try:
-                    return await resp.json()
-                except BaseException:
-                    pass
+                diff = time.time() - start
+                percentage = round((uploaded / filesize) * 100, 2)
+                speed = round(uploaded / diff, 2)
+                eta = round((filesize - uploaded) / speed, 2) * 1000
+                crnt_txt = (
+                    f"`Uploading {filename} to GDrive...\n\n"
+                    + f"Status: {humanbytes(uploaded)}/{humanbytes(filesize)} »» {percentage}%\n"
+                    + f"Speed: {humanbytes(speed)}/s\n"
+                    + f"ETA: {time_formatter(eta)}`"
+                )
+                if round((diff % 10.00) == 0) or last_txt != crnt_txt:
+                    await event.edit(crnt_txt)
+                    last_txt = crnt_txt
+            return await resp.json()
