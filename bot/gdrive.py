@@ -330,6 +330,7 @@ log = logging.getLogger("GDrive")
 # Assuming it works without any error
 class GDrive:
     def __init__(self):
+        self.base_url = "https://www.googleapis.com/drive/v3"
         self._session = ClientSession()
         self.client_id = udB.get_key("GDRIVE_CLIENT_ID")
         self.client_secret = udB.get_key("GDRIVE_CLIENT_SECRET")
@@ -363,7 +364,7 @@ class GDrive:
 
     async def get_size_status(self) -> dict:
         return await (await self._session.get(
-            "https://www.googleapis.com/drive/v3/about",
+            self.base_url+"/about",
             headers={
                 "Authorization": "Bearer " + self.creds.get("access_token"),
                 "Content-Type": "application/json",
@@ -373,7 +374,16 @@ class GDrive:
 
     async def list_files(self) -> dict:
         return await (await self._session.get(
-            "https://www.googleapis.com/drive/v3/files",
+            self.base_url+"/files",
+            headers={
+                "Authorization": "Bearer " + self.creds.get("access_token"),
+                "Content-Type": "application/json",
+            },
+        )).json()
+
+    async def delete(self, fileId:str) -> dict:
+        return await (await self._session.delete(
+            self.base_url+f"/files/{fileId}",
             headers={
                 "Authorization": "Bearer " + self.creds.get("access_token"),
                 "Content-Type": "application/json",
@@ -381,7 +391,7 @@ class GDrive:
         )).json()
 
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
-        update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
+        update_url = self.base_url+f"/files/{fileId}"
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
             "Content-Type": "application/json",
