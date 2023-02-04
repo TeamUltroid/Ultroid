@@ -6,13 +6,13 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 import json
+import logging
 import os
 import time
 # from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
-import aiofiles
 from aiohttp import ClientSession
 
 from database import udB
@@ -31,6 +31,7 @@ from .helper import humanbytes, time_formatter
 # for log in [LOGGER, logger, _logger]:
 #     log.setLevel(WARNING)
 
+log = logging.getLogger("GDrive")
 
 """class GDriveManager:
     def __init__(self):
@@ -345,7 +346,7 @@ class GDrive:
             "access_type": "offline",
         })
 
-    async def get_access_token(self, code):
+    async def get_access_token(self, code) -> dict:
         if code.startswith("http://localhost"):
             # get all url arguments
             code = parse_qs(code.split("?")[1]).get("code")[0]
@@ -362,7 +363,7 @@ class GDrive:
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         return self.creds
 
-    async def refresh_access_token(self):
+    async def refresh_access_token(self) -> None:
         params = {
             "client_id": self.client_id,
             "client_secret": self.client_secret,
@@ -373,7 +374,17 @@ class GDrive:
         self.creds["access_token"] = (await resp.json())["access_token"]
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
-    async def _copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
+    async def get_about(self) -> dict:
+        return await (await u.drive._session.get(
+            "https://www.googleapis.com/drive/v3/about",
+            headers={
+                "Authorization": "Bearer " + self.creds.get("access_token"),
+                "Content-Type": "application/json",
+            },
+            params={"fields": "storageQuota"},
+        )).json()
+
+    async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
@@ -383,7 +394,7 @@ class GDrive:
             "name": filename,
             "mimeType": "application/octet-stream",
             "fields": "id, name, webContentLink",
-            "supportsAllDrives": "true",
+            "supportsAllDrives": True,
         }
         file_metadata = {
             "name": filename,
@@ -408,11 +419,11 @@ class GDrive:
         )
         r = await r.json()
         if r.get("error") and r["error"]["code"] == 401:
-            await self.get_access_token()
-            return await self._copy_file(fileId, filename, folder_id, move)
+            await self.refresh_access_token()
+            return await self.copy_file(fileId, filename, folder_id, move)
         return r
 
-    async def _upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+    async def upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
         last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
@@ -436,23 +447,23 @@ class GDrive:
             params={"fields": "id, name, webContentLink"},
         )
         if r.status == 401:
-            await self.get_access_token()
-            return await self._upload_file(path, filename, folder_id)
+            await self.refresh_access_token()
+            return await self.upload_file(path, filename, folder_id)
         elif r.status == 403:
             # upload to root and move
-            r = await self._upload_file(path, filename, "root")
-            return await self._copy_file(r["id"], filename, folder_id, move=True)
+            r = await self.upload_file(path, filename, "root")
+            return await self.copy_file(r["id"], filename, folder_id, move=True)
         upload_url = r.headers.get("Location")
 
-        async with aiofiles.open(path, "rb") as f:
+        with open(path, "rb") as f:
             uploaded = 0
             start = time.time()
             resp = None
             while filesize != uploaded:
-                chunk_data = await f.read(chunksize)
-                uploaded += len(chunk_data)
+                chunk_data = f.read(chunksize)
                 headers = {"Content-Length": str(len(chunk_data)),
-                           "Content-Range": f"bytes {uploaded}/{filesize}"}
+                           "Content-Range": "bytes " + str(uploaded) + "-" + str(uploaded + len(chunk_data) - 1) + "/" + str(filesize)}
+                uploaded += len(chunk_data)
                 resp = await self._session.put(upload_url, data=chunk_data, headers=headers)
                 diff = time.time() - start
                 percentage = round((uploaded / filesize) * 100, 2)
@@ -467,4 +478,4 @@ class GDrive:
                 if round((diff % 10.00) == 0) or last_txt != crnt_txt:
                     await event.edit(crnt_txt)
                     last_txt = crnt_txt
-            return await resp.text()
+            return await resp.json()
