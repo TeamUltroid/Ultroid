@@ -384,7 +384,7 @@ class GDrive:
             params={"fields": "storageQuota",
         )).json()
 
-    async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
+    async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool=False):
         update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
@@ -423,7 +423,7 @@ class GDrive:
             return await self.copy_file(fileId, filename, folder_id, move)
         return r
 
-    async def upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+    async def upload_file(self, event, path: str, filename: str=None, folder_id: str=None):
         last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
