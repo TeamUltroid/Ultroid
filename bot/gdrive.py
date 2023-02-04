@@ -13,7 +13,6 @@ import time
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
-import aiofiles
 from aiohttp import ClientSession
 
 from database import udB
@@ -446,12 +445,12 @@ class GDrive:
             return await self._copy_file(r["id"], filename, folder_id, move=True)
         upload_url = r.headers.get("Location")
 
-        async with aiofiles.open(path, "rb") as f:
+        with open(path, "rb") as f:
             uploaded = 0
             start = time.time()
             resp = None
             while filesize != uploaded:
-                chunk_data = await f.read(chunksize)
+                chunk_data = f.read(chunksize)
                 headers = {"Content-Length": str(len(chunk_data)),
                            "Content-Range": "bytes " + str(uploaded) + "-" + str(uploaded + len(chunk_data) - 1) + "/" + str(filesize)}
                 uploaded += len(chunk_data)
