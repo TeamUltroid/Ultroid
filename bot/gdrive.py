@@ -346,7 +346,7 @@ class GDrive:
             "access_type": "offline",
         })
 
-    async def get_access_token(self, code):
+    async def get_access_token(self, code) -> dict:
         if code.startswith("http://localhost"):
             # get all url arguments
             code = parse_qs(code.split("?")[1]).get("code")[0]
@@ -363,7 +363,7 @@ class GDrive:
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         return self.creds
 
-    async def refresh_access_token(self):
+    async def refresh_access_token(self) -> None:
         params = {
             "client_id": self.client_id,
             "client_secret": self.client_secret,
@@ -374,7 +374,16 @@ class GDrive:
         self.creds["access_token"] = (await resp.json())["access_token"]
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
-    async def _copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
+    async def get_about(self) -> dict:
+        return await (await u.drive._session.get(
+            "https://www.googleapis.com/drive/v2/about",
+            headers={
+                "Authorization": "Bearer " + u.drive.creds.get("access_token"),
+               "Content-Type": "application/json",
+            },
+        )).json()
+
+    async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
@@ -384,7 +393,7 @@ class GDrive:
             "name": filename,
             "mimeType": "application/octet-stream",
             "fields": "id, name, webContentLink",
-            "supportsAllDrives": "true",
+            "supportsAllDrives": True,
         }
         file_metadata = {
             "name": filename,
@@ -410,10 +419,10 @@ class GDrive:
         r = await r.json()
         if r.get("error") and r["error"]["code"] == 401:
             await self.refresh_access_token()
-            return await self._copy_file(fileId, filename, folder_id, move)
+            return await self.copy_file(fileId, filename, folder_id, move)
         return r
 
-    async def _upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+    async def upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
         last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
@@ -438,11 +447,11 @@ class GDrive:
         )
         if r.status == 401:
             await self.refresh_access_token()
-            return await self._upload_file(path, filename, folder_id)
+            return await self.upload_file(path, filename, folder_id)
         elif r.status == 403:
             # upload to root and move
-            r = await self._upload_file(path, filename, "root")
-            return await self._copy_file(r["id"], filename, folder_id, move=True)
+            r = await self.upload_file(path, filename, "root")
+            return await self.copy_file(r["id"], filename, folder_id, move=True)
         upload_url = r.headers.get("Location")
 
         with open(path, "rb") as f:
