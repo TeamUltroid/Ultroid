@@ -371,6 +371,15 @@ class GDrive:
             params={"fields": "storageQuota"},
         )).json()
 
+    async def list_files(self) -> dict:
+        return await (await self._session.get(
+            "https://www.googleapis.com/drive/v3/files",
+            headers={
+                "Authorization": "Bearer " + self.creds.get("access_token"),
+                "Content-Type": "application/json",
+            },
+        )).json()
+
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         update_url = f"https://www.googleapis.com/drive/v3/files/{fileId}"
         headers = {
