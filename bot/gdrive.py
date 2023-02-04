@@ -379,7 +379,7 @@ class GDrive:
             "https://www.googleapis.com/drive/v2/about",
             headers={
                 "Authorization": "Bearer " + u.drive.creds.get("access_token"),
-               "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
         )).json()
 
