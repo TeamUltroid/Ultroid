@@ -2,6 +2,7 @@ from localdb import Database as _Database
 
 from .base_db import BaseDatabase
 
+
 class Database(BaseDatabase):
     def __init__(self, dbname="UltroidDB"):
         self.dB = _Database(database_name=dbname)
