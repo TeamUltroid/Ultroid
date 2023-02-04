@@ -436,10 +436,10 @@ class GDrive:
         )
         if r.status == 401:
             await self.refresh_access_token()
-            return await self.upload_file(path, filename, folder_id)
+            return await self.upload_file(event, path, filename, folder_id)
         elif r.status == 403:
             # upload to root and move
-            r = await self.upload_file(path, filename, "root")
+            r = await self.upload_file(event, path, filename, "root")
             return await self.copy_file(r["id"], filename, folder_id, move=True)
         upload_url = r.headers.get("Location")
 
