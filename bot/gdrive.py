@@ -378,10 +378,10 @@ class GDrive:
         return await (await u.drive._session.get(
             "https://www.googleapis.com/drive/v3/about",
             headers={
-                "Authorization": "Bearer " + u.drive.creds.get("access_token"),
+                "Authorization": "Bearer " + self.creds.get("access_token"),
                 "Content-Type": "application/json",
             },
-            params={"fields": "storageQuota",
+            params={"fields": "storageQuota"},
         )).json()
 
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool=False):
