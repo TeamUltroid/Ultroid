@@ -1,4 +1,4 @@
-from core import udB, ultroid_bot
+from core import udB, ultroid_bot, HNDLR
 from telethon.errors import MessageNotModifiedError
 from telethon.events import NewMessage
 from telethon.tl.types import MessageEntityUrl
