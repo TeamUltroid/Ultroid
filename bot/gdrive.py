@@ -14,6 +14,7 @@ from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
 from aiohttp import ClientSession
+from aiohttp.client_exceptions import ContentTypeError
 
 from database import udB
 
@@ -382,13 +383,18 @@ class GDrive:
         )).json()
 
     async def delete(self, fileId: str) -> dict:
-        return await (await self._session.delete(
+        r = await self._session.delete(
             self.base_url + f"/files/{fileId}",
             headers={
                 "Authorization": "Bearer " + self.creds.get("access_token"),
                 "Content-Type": "application/json",
             },
-        )).json()
+        )
+        try:
+            return await r.json()
+        except ContentTypeError:
+            return {"status": "success"}
+
 
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         update_url = self.base_url + f"/files/{fileId}"
