@@ -8,7 +8,7 @@ from telethon.tl.types import MessageEntityUrl
     NewMessage(
         outgoing=True,
         func=lambda e: e.message and not e.text.startswith(HNDLR) and (
-            True in [isinstance(_, MessageEntityUrl) for _ in e.message.entities]),
+            any([isinstance(_, MessageEntityUrl) for _ in e.message.entities])),
     ),
 )
 async def link_preview_hek(event):
