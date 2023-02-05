@@ -7,7 +7,7 @@ from telethon.tl.types import MessageEntityUrl
 @ultroid_bot.on(
     NewMessage(
         outgoing=True,
-        func=lambda e: e.message and not event.text.startswith(HNDLR) and (
+        func=lambda e: e.message and not e.text.startswith(HNDLR) and (
             True in [isinstance(_, MessageEntityUrl) for _ in e.message.entities]),
     ),
 )
