@@ -395,7 +395,6 @@ class GDrive:
         except ContentTypeError:
             return {"status": "success"}
 
-
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         update_url = self.base_url + f"/files/{fileId}"
         headers = {
