@@ -432,7 +432,6 @@ class GDrive:
             "name": filename,
             "fileId": fileId,
         }
-        del file_metadata["parents"]
         params["addParents"] = folder_id if folder_id else self.folder_id
         params["removeParents"] = "root" if move else None
         r = await self._session.patch(
