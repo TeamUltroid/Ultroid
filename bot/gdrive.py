@@ -449,11 +449,10 @@ class GDrive:
             "name": filename,
             "mimeType": mime_type,
             "fields": "id, name, webContentLink",
-            "supportsAllDrives": True,
             "parents": [folder_id] if folder_id else None,
         }
         r = await self._session.post(
-            "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable",
+            "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true",
             headers=headers,
             data=json.dumps(params),
             params={"fields": "id, name, webContentLink"},
