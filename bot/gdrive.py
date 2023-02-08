@@ -335,7 +335,7 @@ class GDrive:
         self._session = ClientSession()
         self.client_id = udB.get_key("GDRIVE_CLIENT_ID")
         self.client_secret = udB.get_key("GDRIVE_CLIENT_SECRET")
-        self.folder_id = udB.get_key("GDRIVE_FOLDER_ID")
+        self.folder_id = udB.get_key("GDRIVE_FOLDER_ID") or None
         self.scope = "https://www.googleapis.com/auth/drive"
         self.creds = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
 
@@ -432,17 +432,9 @@ class GDrive:
             "name": filename,
             "fileId": fileId,
         }
-        if folder_id:
-            file_metadata["parents"] = [folder_id]
-        elif self.folder_id:
-            file_metadata["parents"] = [self.folder_id]
-        if move:
-            del file_metadata["parents"]
-            params["addParents"] = folder_id if folder_id else self.folder_id
-            params["removeParents"] = "root"
-        else:
-            del file_metadata["parents"]
-            params["addParents"] = folder_id if folder_id else self.folder_id
+        del file_metadata["parents"]
+        params["addParents"] = folder_id if folder_id else self.folder_id
+        params["removeParents"] = "root" if move else None
         r = await self._session.patch(
             update_url,
             headers=headers,
@@ -471,7 +463,7 @@ class GDrive:
             "name": filename,
             "mimeType": mime_type,
             "fields": "id, name, webContentLink",
-            "parents": [folder_id] if folder_id else None,
+            "parents": [folder_id] if folder_id else [self.folder_id],
         }
         r = await self._session.post(
             "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true",
