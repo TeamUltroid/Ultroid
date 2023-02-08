@@ -339,7 +339,7 @@ class GDrive:
         self.scope = "https://www.googleapis.com/auth/drive"
         self.creds = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
 
-    def get_oauth2_url(self):
+    def get_oauth2_url(self) -> str:
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
             "client_id": self.client_id,
             "redirect_uri": "http://localhost",
