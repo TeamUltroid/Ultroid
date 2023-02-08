@@ -375,8 +375,8 @@ class GDrive:
             },
             params={"fields": "storageQuota"},
         )).json()
-    
-    async def set_permissions(self, fileid: str, role: str="reader", type: str="anyone"):
+
+    async def set_permissions(self, fileid: str, role: str = "reader", type: str = "anyone"):
         # set permissions to anyone with link can view
         await self.refresh_access_token() if time() > self.creds.get("expires_in") else None
         return await (await self._session.post(
