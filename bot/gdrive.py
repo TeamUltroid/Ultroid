@@ -355,15 +355,18 @@ class GDrive:
         url = "https://oauth2.googleapis.com/token"
         resp = await self._session.post(url, data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "http://localhost", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds = await resp.json()
+        self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         return self.creds
 
     async def refresh_access_token(self) -> None:
         resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "grant_type": "refresh_token", "refresh_token": self.creds.get("refresh_token")}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds["access_token"] = (await resp.json())["access_token"]
+        self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
     async def get_size_status(self) -> dict:
+        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
             self.base_url + "/about",
             headers={
@@ -374,6 +377,7 @@ class GDrive:
         )).json()
 
     async def list_files(self) -> dict:
+        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
             self.base_url + "/files",
             headers={
@@ -383,6 +387,7 @@ class GDrive:
         )).json()
 
     async def delete(self, fileId: str) -> dict:
+        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         r = await self._session.delete(
             self.base_url + f"/files/{fileId}",
             headers={
@@ -396,6 +401,7 @@ class GDrive:
             return {"status": "success"}
 
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
+        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         update_url = self.base_url + f"/files/{fileId}"
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
@@ -435,6 +441,7 @@ class GDrive:
         return r
 
     async def upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
+        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
