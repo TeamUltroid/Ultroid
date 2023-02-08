@@ -338,6 +338,10 @@ class GDrive:
         self.folder_id = udB.get_key("GDRIVE_FOLDER_ID") or None
         self.scope = "https://www.googleapis.com/auth/drive"
         self.creds = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
+        self.headers = {
+            "Authorization": "Bearer " + self.creds.get("access_token"),
+            "Content-Type": "application/json",
+        }
 
     def get_oauth2_url(self) -> str:
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
@@ -363,28 +367,33 @@ class GDrive:
         resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "grant_type": "refresh_token", "refresh_token": self.creds.get("refresh_token")}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds["access_token"] = (await resp.json())["access_token"]
         self.creds["expires_in"] = time.time() + 3590
+        self.headers = {
+            "Authorization": "Bearer " + self.creds.get("access_token"),
+            "Content-Type": "application/json",
+        }
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
     async def get_size_status(self) -> dict:
+        """returns
+        {
+            "limit": "16106127360",
+            "usage": "18896",
+            "usageInDrive": "18896",
+            "usageInDriveTrash": "0",
+        }"""
         await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
             self.base_url + "/about",
-            headers={
-                "Authorization": "Bearer " + self.creds.get("access_token"),
-                "Content-Type": "application/json",
-            },
+            headers=self.headers,
             params={"fields": "storageQuota"},
-        )).json()
+        )).json()["storageQuota"]
 
     async def set_permissions(self, fileid: str, role: str = "reader", type: str = "anyone"):
         # set permissions to anyone with link can view
         await self.refresh_access_token() if time() > self.creds.get("expires_in") else None
         return await (await self._session.post(
             self.base_url + f"/files/{fileid}/permissions",
-            headers={
-                "Authorization": "Bearer " + self.creds.get("access_token"),
-                "Content-Type": "application/json",
-            },
+            headers=self.headers,
             json={
                 "role": role,
                 "type": type,
@@ -395,20 +404,14 @@ class GDrive:
         await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
             self.base_url + "/files",
-            headers={
-                "Authorization": "Bearer " + self.creds.get("access_token"),
-                "Content-Type": "application/json",
-            },
+            headers=self.headers,
         )).json()
 
     async def delete(self, fileId: str) -> dict:
         await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         r = await self._session.delete(
             self.base_url + f"/files/{fileId}",
-            headers={
-                "Authorization": "Bearer " + self.creds.get("access_token"),
-                "Content-Type": "application/json",
-            },
+            headers=self.headers,
         )
         try:
             return await r.json()
@@ -418,10 +421,6 @@ class GDrive:
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
         await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         update_url = self.base_url + f"/files/{fileId}"
-        headers = {
-            "Authorization": "Bearer " + self.creds.get("access_token"),
-            "Content-Type": "application/json",
-        }
         params = {
             "name": filename,
             "mimeType": "application/octet-stream",
@@ -436,7 +435,7 @@ class GDrive:
         params["removeParents"] = "root" if move else None
         r = await self._session.patch(
             update_url,
-            headers=headers,
+            headers=self.headers,
             data=json.dumps(file_metadata),
             params=params,
         )
@@ -453,11 +452,10 @@ class GDrive:
         mime_type = guess_type(path)[0] or "application/octet-stream"
         # upload with progress bar
         filesize = os.path.getsize(path)
-        await self.get_size_status()
+        usage = await self.get_size_status()
+        if filesize > (int(usage["limit"]) - int(usage["usage"])):
+            return # hurrr
         chunksize = 104857600  # 100MB
-        # 1. Retrieve session for resumable upload.
-        headers = {"Authorization": "Bearer " +
-                   self.creds.get("access_token"), "Content-Type": "application/json"}
         params = {
             "name": filename,
             "mimeType": mime_type,
@@ -466,7 +464,7 @@ class GDrive:
         }
         r = await self._session.post(
             "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true",
-            headers=headers,
+            headers=self.headers,
             data=json.dumps(params),
             params={"fields": "id, name, webContentLink"},
         )
