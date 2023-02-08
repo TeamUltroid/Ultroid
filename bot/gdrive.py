@@ -454,7 +454,7 @@ class GDrive:
         filesize = os.path.getsize(path)
         usage = await self.get_size_status()
         if filesize > (int(usage["limit"]) - int(usage["usage"])):
-            return # hurrr
+            return  # hurrr
         chunksize = 104857600  # 100MB
         params = {
             "name": filename,
