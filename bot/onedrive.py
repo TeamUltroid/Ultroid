@@ -1,9 +1,9 @@
-from aiohttp import ClientSession
-import asyncio
-import json
 import os
 import time
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import urlencode
+
+from aiohttp import ClientSession
+
 
 class OneDrive:
     def __init__(self, session):
@@ -78,7 +78,7 @@ class OneDrive:
                 if item["name"] == folder_name:
                     return item["id"]
             return None
-    
+
     async def getshareablelink(self, file_id: str):
         url = f"{self.base_url}/me/drive/items/{file_id}/createLink"
         async with self.session.post(
@@ -101,7 +101,7 @@ class OneDrive:
             await resp.release()
         chunksize = 50 * 1024 * 1024
         filesize = os.path.getsize(file_path)
-        chunks = filesize // 1024 // 1024 // 50
+        filesize // 1024 // 1024 // 50
         start = time.time()
         path = file_path
         filename = os.path.basename(path)
