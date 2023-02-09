@@ -4,13 +4,16 @@ from urllib.parse import urlencode
 
 from aiohttp import ClientSession
 
+from database import udB
+
+from .helper import humanbytes, time_formatter
 
 class OneDrive:
     def __init__(self, session):
         self.base_url = "https://graph.microsoft.com/v1.0"
         self.client_id = udB.get("OD_CLIENT_ID")
         self.client_secret = udB.get("OD_CLIENT_SECRET")
-        self.creds = udB.get("OD_AUTH_TOKEN")
+        self.creds = udB.get("OD_AUTH_TOKEN") or {}
         self.session = ClientSession()
 
     def get_oauth2_url(self):
@@ -40,6 +43,7 @@ class OneDrive:
             self.creds = await resp.json()
             self.creds["expires_at"] = time.time() + self.creds["expires_in"]
             await resp.release()
+            udB.set_key("OD_AUTH_TOKEN", self.creds)
             return self.creds
 
     async def refresh_access_token(self):
@@ -58,13 +62,14 @@ class OneDrive:
             self.creds = await resp.json()
             self.creds["expires_at"] = time.time() + self.creds["expires_in"]
             await resp.release()
-            return self.creds
+            udB.set_key("OD_AUTH_TOKEN", self.creds)
+            return
 
     async def get_headers(self):
         if self.creds.get("expires_at", 0) < time.time():
             await self.refresh_access_token()
         return {
-            "Authorization": f"{self.creds['token_type']} {self.creds['access_token']}",
+            "Authorization": f"Bearer {self.creds['access_token']}",
             "Content-Type": "application/json",
         }
 
@@ -85,6 +90,7 @@ class OneDrive:
             url, headers=await self.get_headers(), json={"type": "view"}
         ) as resp:
             data = await resp.json()
+            await resp.release()
             return data["link"]["webUrl"]
 
     async def upload_file(self, file_path: str, folder_id: str = "root"):
@@ -100,14 +106,12 @@ class OneDrive:
             upload_url = (await resp.json())["uploadUrl"]
             await resp.release()
         chunksize = 50 * 1024 * 1024
+        filename = os.path.basename(file_path)
         filesize = os.path.getsize(file_path)
-        filesize // 1024 // 1024 // 50
         start = time.time()
-        path = file_path
-        filename = os.path.basename(path)
         last_txt = ""
 
-        with open(path, "rb") as f:
+        with open(file_path, "rb") as f:
             uploaded = 0
             start = time.time()
             resp = None
