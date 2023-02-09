@@ -1,12 +1,13 @@
 import os
 import time
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import parse_qs, urlencode
 
 from aiohttp import ClientSession
 
 from database import udB
 
 from .helper import humanbytes, time_formatter
+
 
 class OneDrive:
     def __init__(self, session):
