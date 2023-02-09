@@ -1,11 +1,12 @@
 import os
 import time
-from urllib.parse import urlencode
+from urllib.parse import urlencode, parse_qs
 
 from aiohttp import ClientSession
 
 from database import udB
 
+from .helper import humanbytes, time_formatter
 
 class OneDrive:
     def __init__(self, session):
@@ -27,6 +28,8 @@ class OneDrive:
     async def get_access_token(self, code: str = None):
         if not code:
             return {"error": "No code provided"}
+        if code.startswith("http://localhost"):
+            code = parse_qs(code.split("?")[1]).get("code")[0]
         data = {
             "client_id": self.client_id,
             "client_secret": self.client_secret,
@@ -41,8 +44,8 @@ class OneDrive:
         ) as resp:
             self.creds = await resp.json()
             self.creds["expires_at"] = time.time() + self.creds["expires_in"]
-            await resp.release()
             udB.set_key("OD_AUTH_TOKEN", self.creds)
+            await resp.release()
             return self.creds
 
     async def refresh_access_token(self):
@@ -135,9 +138,9 @@ class OneDrive:
                 eta = round((filesize - uploaded) / speed, 2) * 1000
                 crnt_txt = (
                     f"`Uploading {filename} to GDrive...\n\n"
-                    + f"Status: {uploaded}/{filesize} »» {percentage}%\n"
-                    + f"Speed: {speed}/s\n"
-                    + f"ETA: {eta}`"
+                    + f"Status: {humanbytes(uploaded)}/{humanbytes(filesize)} »» {percentage}%\n"
+                    + f"Speed: {humanbytes(speed)}/s\n"
+                    + f"ETA: {time_formatter(eta)}`"
                 )
                 if round((diff % 10.00) == 0) or last_txt != crnt_txt:
                     await event.edit(crnt_txt)
