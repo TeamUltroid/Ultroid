@@ -10,7 +10,7 @@ from . import get_help
 __doc__ = get_help("help_beautify")
 
 
-import random
+import random, os
 
 from telethon.utils import get_display_name
 
