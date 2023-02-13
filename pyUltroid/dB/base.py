@@ -4,13 +4,13 @@ from .. import udB
 class KeyManager:
     def __init__(self, key, cast=None) -> None:
         self._key = key
-        if callable(cast):
-            self.cast = cast()
-        else:
-            self.cast = cast
+        self._cast = cast
 
     def get(self):
-        return udB.get_key(self._key) or self.cast
+        _data = udB.get_key(self._key)
+        if self._cast and not isinstance(_data, self._cast):
+            return self._cast(_data)
+        return _data or (self._cast() if callable(self._cast) else self._cast)
 
     def get_child(self, key):
         return self.get()[key]
