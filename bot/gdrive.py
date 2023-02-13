@@ -9,7 +9,6 @@ import json
 import logging
 import os
 import time
-from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
@@ -20,17 +19,11 @@ from database import udB
 
 from .helper import humanbytes, time_formatter
 
-from apiclient.http import LOGGER, MediaFileUpload, MediaIoBaseDownload
-from googleapiclient.discovery import build, logger
-from googleapiclient.errors import ResumableUploadError
-from httplib2 import Http
-from oauth2client.client import OOB_CALLBACK_URN, OAuth2WebServerFlow
-from oauth2client.client import logger as _logger
-from oauth2client.file import Storage
-
 log = logging.getLogger("GDrive")
 
 # Can't assume now
+
+
 class GDrive:
     def __init__(self):
         self.base_url = "https://www.googleapis.com/drive/v3"
