@@ -59,7 +59,6 @@ async def autopic(e):
 
 
 if search := udB.get_key("AUTOPIC"):
-
     images = {}
     sleep = udB.get_key("SLEEP_TIME") or 1221
 
