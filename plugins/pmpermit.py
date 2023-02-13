@@ -413,7 +413,7 @@ if udB.get_key("PMSETTING"):
             )
         if not keym.contains(user.id):
             mmk = udB.get_key("PMPERMIT") or ""
-            mmk += f"{user.id} " 
+            mmk += f"{user.id} "
             udB.set_key("PMPERMIT", mmk)
             try:
                 await delete_pm_warn_msgs(user.id)
@@ -649,7 +649,7 @@ async def apr_in(event):
         await event.edit("It's a dev! Approved!")
     if not keym.contains(uid):
         mmk = udB.get_key("PMPERMIT") or ""
-        mmk += f"{uid} " 
+        mmk += f"{uid} "
         udB.set_key("PMPERMIT", mmk)
         try:
             await ultroid_bot.edit_folder(uid, folder=0)
