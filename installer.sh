@@ -167,7 +167,7 @@ misc_install() {
             echo -e "Cloning VCBOT.."
             git clone https://github.com/TeamUltroid/VcBot $DIR/vcbot
         fi
-        pip3 install pytgcalls==3.0.0.dev22 && pip3 install av -q --no-binary av
+        pip3 install pytgcalls==3.0.0.dev23 && pip3 install av -q --no-binary av
     fi
 }
 
