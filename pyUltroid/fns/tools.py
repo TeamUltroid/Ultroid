@@ -446,7 +446,6 @@ async def get_chatbot_reply(message):
     except Exception:
         LOGS.info(f"**ERROR:**`{format_exc()}`")
 
-
 def check_filename(filroid):
     if os.path.exists(filroid):
         no = 1
@@ -586,20 +585,20 @@ def make_html_telegraph(title, html=""):
 
 async def Carbon(
     code,
-    base_url="https://rayso-api-desvhu-33.koyeb.app/generate",
+    base_url="https://carbonara.vercel.app/api/cook",
     file_name="ultroid",
     download=False,
     rayso=False,
     **kwargs,
 ):
-    # if rayso:
-    #    base_url = "https://rayso-api-desvhu-33.koyeb.app/generate"
-    kwargs["text"] = code
-    kwargs["theme"] = kwargs.get("theme", "breeze")
-    kwargs["darkMode"] = kwargs.get("darkMode", True)
-    kwargs["title"] = kwargs.get("title", "Ultroid")
-    # else:
-    #    kwargs["code"] = code
+    if rayso:
+        base_url = "https://rayso-api-desvhu-33.koyeb.app/generate"
+        kwargs["text"] = code
+        kwargs["theme"] = kwargs.get("theme", "breeze")
+        kwargs["darkMode"] = kwargs.get("darkMode", True)
+        kwargs["title"] = kwargs.get("title", "Ultroid")
+    else:
+        kwargs["code"] = code
     con = await async_searcher(base_url, post=True, json=kwargs, re_content=True)
     if not download:
         file = BytesIO(con)

@@ -250,4 +250,4 @@ async def uname_stuff(id, uname, name):
             )
 
         old_[id] = uname
-        udB.set_key("USERNAME_DB", str(old_))
+        udB.set_key("USERNAME_DB", old_)
