@@ -68,7 +68,7 @@ COUNT_PM = {}
 LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
-keym = KeyManager("PMPERMIT", cast=list)
+keym = KeyManager("PMPERMIT")
 Logm = KeyManager("LOGUSERS", cast=list)
 PMPIC = udB.get_key("PMPIC")
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
@@ -175,7 +175,9 @@ if udB.get_key("PMSETTING"):
                 return
             if keym.contains(miss.id):
                 return
-            keym.add(miss.id)
+            mmk = keym.get() or ""
+            mmk += f"{miss.id} "
+            udB.set_key("PMPERMIT", mmk)
             await delete_pm_warn_msgs(miss.id)
             try:
                 await ultroid_bot.edit_folder(miss.id, folder=0)
@@ -410,7 +412,9 @@ if udB.get_key("PMSETTING"):
                 "Lol, He is my Developer\nHe is auto Approved",
             )
         if not keym.contains(user.id):
-            keym.add(user.id)
+            mmk = udB.get_key("PMPERMIT") or ""
+            mmk += f"{user.id} " 
+            udB.set_key("PMPERMIT", mmk)
             try:
                 await delete_pm_warn_msgs(user.id)
                 await apprvpm.client.edit_folder(user.id, folder=0)
@@ -644,7 +648,9 @@ async def apr_in(event):
     if uid in DEVLIST:
         await event.edit("It's a dev! Approved!")
     if not keym.contains(uid):
-        keym.add(uid)
+        mmk = udB.get_key("PMPERMIT") or ""
+        mmk += f"{uid} " 
+        udB.set_key("PMPERMIT", mmk)
         try:
             await ultroid_bot.edit_folder(uid, folder=0)
         except BaseException:
