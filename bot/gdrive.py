@@ -127,7 +127,7 @@ class GDrive:
             "name": filename,
             "mimeType": "application/octet-stream",
             "fields": "id, name, webContentLink",
-            "supportsAllDrives": True,
+            "supportsAllDrives": "true",
         }
         file_metadata = {
             "name": filename,
