@@ -33,10 +33,11 @@ class GDrive:
         self.folder_id = udB.get_key("GDRIVE_FOLDER_ID") or None
         self.scope = "https://www.googleapis.com/auth/drive"
         self.creds = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
-        self.headers = {
-            "Authorization": "Bearer " + self.creds.get("access_token"),
-            "Content-Type": "application/json",
-        }
+        if self.creds:
+            self.headers = {
+                "Authorization": "Bearer " + self.creds.get("access_token"),
+                "Content-Type": "application/json",
+            }
 
     def get_oauth2_url(self) -> str:
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
@@ -155,6 +156,8 @@ class GDrive:
         # upload with progress bar
         filesize = os.path.getsize(path)
         usage = await self.get_size_status()
+        if "error" in usage:
+            return usage
         if filesize > (int(usage["limit"]) - int(usage["usage"])):
             return  # hurrr
         chunksize = 104857600  # 100MB
