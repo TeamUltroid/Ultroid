@@ -159,7 +159,7 @@ class GDrive:
         if "error" in usage:
             return usage
         if filesize > (int(usage["limit"]) - int(usage["usage"])):
-            return  # hurrr
+            return {"error": "Not enough storage space"}
         chunksize = 104857600  # 100MB
         params = {
             "name": filename,
