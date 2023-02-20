@@ -69,8 +69,8 @@ LASTMSG = {}
 WARN_MSGS = {}
 U_WARNS = {}
 if isinstance(udB.get_key("PMPERMIT"), (int, str)):
-     value = [udB.get_key("PMPERMIT")]
-     udB.set_key("PMPERMIT", value)
+    value = [udB.get_key("PMPERMIT")]
+    udB.set_key("PMPERMIT", value)
 keym = KeyManager("PMPERMIT", cast=list)
 Logm = KeyManager("LOGUSERS", cast=list)
 PMPIC = udB.get_key("PMPIC")
