@@ -1,4 +1,4 @@
-from core import asst, udB, ultroid_bot, LOGS
+from core import LOGS, asst, udB, ultroid_bot
 from telethon import Button
 from utilities.helper import inline_mention, updater
 
@@ -18,7 +18,8 @@ async def notify(init=False):
             try:
                 await asst.delete_messages(chat_id, int(prev_spam))
             except Exception as E:
-                LOGS.info(f"Error while Deleting Previous Update Message :{str(E)}")
+                LOGS.info(
+                    f"Error while Deleting Previous Update Message :{str(E)}")
         if await updater():
             BTTS = Button.inline("Update Available", "updtavail")
 

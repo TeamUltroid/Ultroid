@@ -15,6 +15,7 @@
    eg. `{i}resize 690 960`
 """
 import os
+
 from PIL import Image
 
 from .. import HNDLR, get_string, ultroid_cmd

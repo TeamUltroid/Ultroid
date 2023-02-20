@@ -1,5 +1,6 @@
-from . import ultroid_cmd, get_string, async_searcher
 from bs4 import BeautifulSoup as bs
+
+from . import async_searcher, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="sticker( (.*)|$)")

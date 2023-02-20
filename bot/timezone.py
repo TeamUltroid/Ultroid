@@ -1,6 +1,8 @@
-import os, time
-from pytz import timezone
+import os
+import time
+
 from core import LOGS
+from pytz import timezone
 
 
 def set_timezone(TZ):

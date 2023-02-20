@@ -40,19 +40,10 @@ except ImportError:
     LOGS.info(f"{__file__}: PIL  not Installed.")
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
-
 from utilities.tools import four_point_transform
 
-from .. import (
-    HNDLR,
-    LOGS,
-    bash,
-    check_filename,
-    downloader,
-    eor,
-    get_string,
-    ultroid_cmd,
-)
+from .. import (HNDLR, LOGS, bash, check_filename, downloader, eor, get_string,
+                ultroid_cmd)
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")
@@ -157,7 +148,8 @@ async def pdfsetxt(event):
     if "-" in msg:
         u, d = msg.split("-")
         a = PdfFileReader(dl)
-        str = "".join(a.getPage(i).extractText() for i in range(int(u) - 1, int(d)))
+        str = "".join(a.getPage(i).extractText()
+                      for i in range(int(u) - 1, int(d)))
         text = f"{dl.split('.')[0]} {msg}.txt"
     else:
         u = int(msg) - 1
@@ -212,7 +204,14 @@ async def imgscan(event):
     polygons = []
     for cnt in contours:
         hull = cv2.convexHull(cnt)
-        polygons.append(cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False))
+        polygons.append(
+            cv2.approxPolyDP(
+                hull,
+                0.01 *
+                cv2.arcLength(
+                    hull,
+                    True),
+                False))
         sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
         cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)
         simplified_cnt = sortedPoly[0]
@@ -265,7 +264,8 @@ async def savepdf(event):
         ratio = image.shape[0] / 500.0
         h_, _v = image.shape[:2]
         m_ = 500 / float(h_)
-        image = cv2.resize(image, (int(_v * m_), 500), interpolation=cv2.INTER_AREA)
+        image = cv2.resize(image, (int(_v * m_), 500),
+                           interpolation=cv2.INTER_AREA)
         image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
         image_y = np.zeros(image_yuv.shape[:2], np.uint8)
         image_y[:, :] = image_yuv[:, :, 0]
@@ -280,7 +280,13 @@ async def savepdf(event):
         for cnt in contours:
             hull = cv2.convexHull(cnt)
             polygons.append(
-                cv2.approxPolyDP(hull, 0.01 * cv2.arcLength(hull, True), False),
+                cv2.approxPolyDP(
+                    hull,
+                    0.01 *
+                    cv2.arcLength(
+                        hull,
+                        True),
+                    False),
             )
             sortedPoly = sorted(polygons, key=cv2.contourArea, reverse=True)
             cv2.drawContours(image, sortedPoly[0], -1, (0, 0, 255), 5)

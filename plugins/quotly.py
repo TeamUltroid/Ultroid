@@ -1,9 +1,12 @@
-import os, contextlib
+import contextlib
+import os
 from random import choice
-from .. import ultroid_cmd, get_string
+
+from .. import get_string, ultroid_cmd
+
 
 @ultroid_cmd(pattern="q( (.*)|$)", manager=True, allow_pm=True)
-async def quott_(event): 
+async def quott_(event):
     match = event.pattern_match.group(1).strip()
     if not event.is_reply:
         return await event.eor("`Reply to Message..`")

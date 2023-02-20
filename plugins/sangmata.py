@@ -1,5 +1,6 @@
-from .. import get_string, ultroid_cmd
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from .. import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -49,5 +50,5 @@ async def lastname(steal):
                 conv.chat_id,
                 [msg.id, responds.id, respond.id, response.id],
             )
-    except Exception as er:
+    except Exception:
         await lol.edit("Error: @SangMataInfo_bot is not responding!.")

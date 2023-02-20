@@ -1,14 +1,16 @@
 import os
+
 from core.config import LOGS
 from core.loader import load
 from utilities.helper import bash
 
 VCBOT_REPO = "https://github.com/TeamUltroid/VCbot"
 
+
 async def setup():
     try:
-        import pytgcalls
-    except ModuleNotFoundError  as er:
+        pass
+    except ModuleNotFoundError as er:
         LOGS.error(f"'{er.name}' is not Installed! Skipping loading of VCBOT.")
         return
     if not os.path.exists("resources/downloads"):

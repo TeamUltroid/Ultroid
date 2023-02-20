@@ -1,6 +1,9 @@
 import os
-from . import ultroid_cmd, fast_download
+
 from telethon.tl.types import DocumentAttributeAudio
+
+from . import fast_download, ultroid_cmd
+
 
 @ultroid_cmd(
     pattern="saavn( (.*)|$)",

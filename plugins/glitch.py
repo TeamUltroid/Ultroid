@@ -13,6 +13,7 @@
 import os
 
 from utilities.helper import bash
+
 from .. import get_string, mediainfo, ultroid_cmd
 
 

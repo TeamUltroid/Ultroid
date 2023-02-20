@@ -1,4 +1,3 @@
-
 # Ultroid - UserBot
 # Copyright (C) 2021-2022 TeamUltroid
 #
@@ -6,9 +5,10 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from telethon.tl.types import InputWebDocument as wb
 from telethon.tl.custom import Button
-from . import in_pattern, async_searcher
+from telethon.tl.types import InputWebDocument as wb
+
+from . import async_searcher, in_pattern
 
 _koo_ = {}
 
@@ -59,7 +59,8 @@ async def koo_search(ult):
                 else "https://telegra.ph/file/dc28e69bd7ea2c0f25329.jpg"
             )
             extra = await async_searcher(
-                "https://www.kooapp.com/apiV1/users/handle/" + item["userHandle"],
+                "https://www.kooapp.com/apiV1/users/handle/" +
+                item["userHandle"],
                 re_json=True,
             )
             img = wb(profileImage, 0, "image/jpeg", [])
@@ -70,7 +71,8 @@ async def koo_search(ult):
             if extra.get("description"):
                 text += f"\n‣ **Description :** `{extra['description']}`"
             text += f"\n‣ **Followers :** `{extra['followerCount']}`    ‣ **Following :** {extra['followingCount']}"
-            if extra.get("socialProfile") and extra["socialProfile"].get("website"):
+            if extra.get("socialProfile") and extra["socialProfile"].get(
+                    "website"):
                 text += f"\n‣ **Website :** {extra['socialProfile']['website']}"
             res.append(
                 await ult.builder.article(
@@ -100,4 +102,3 @@ async def koo_search(ult):
         _koo_.update({match_: res})
         switch = f"Showing {len(res)} Results!"
     await ult.answer(res, switch_pm=switch, switch_pm_param="start")
-

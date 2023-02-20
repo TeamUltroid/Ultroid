@@ -17,14 +17,12 @@
    Get database storage usage.
 """
 
-import math
-import shutil, psutil
-from random import choice
+import shutil
 
-from utilities import some_random_headers
-from utilities.helper import humanbytes, async_searcher
-from core.config import HOSTED_ON,  Var
-from .. import ultroid_cmd, udB, LOGS, get_string
+import psutil
+from utilities.helper import humanbytes
+
+from .. import get_string, udB, ultroid_cmd
 
 HEROKU_API = None
 HEROKU_APP_NAME = None
@@ -69,7 +67,6 @@ def simple_usage():
     )
 
 
-
 def db_usage():
     if udB.name == "Mongo":
         total = 512
@@ -78,8 +75,8 @@ def db_usage():
     elif udB.name == "SQL":
         total = 20
     else:
-        return ''
-    total *= (2**20)
+        return ""
+    total *= 2**20
     used = udB.usage
     a = f"{humanbytes(used)}/{humanbytes(total)}"
     b = f"{str(round((used / total) * 100, 2))}%"

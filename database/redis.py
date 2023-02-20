@@ -1,9 +1,12 @@
-import os, sys, re
-from core.setup import LOGS
-from core.config import HOSTED_ON
-from .base_db import BaseDatabase
+import os
+import re
+import sys
 
+from core.config import HOSTED_ON
+from core.setup import LOGS
 from redis import Redis
+
+from .base_db import BaseDatabase
 
 
 class RedisDB(BaseDatabase):
@@ -50,8 +53,15 @@ class RedisDB(BaseDatabase):
         return sum(self.db.memory_usage(x) for x in self.keys())
 
     def _fill_qovery(self, kwargs):
-        _get_match = lambda e: re.match("QOVERY_REDIS_(.*)_HOST", e)
-        sort = list(filter(lambda e: re.match("QOVERY_REDIS_(.*)_HOST", e), os.environ))
+        def _get_match(e):
+            return re.match("QOVERY_REDIS_(.*)_HOST", e)
+
+        sort = list(
+            filter(
+                lambda e: re.match(
+                    "QOVERY_REDIS_(.*)_HOST",
+                    e),
+                os.environ))
         if not sort:
             return
         hash_ = _get_match(sort[-1]).group(1)

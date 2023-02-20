@@ -16,6 +16,7 @@
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
+
 from .. import ultroid_cmd
 
 
@@ -38,7 +39,6 @@ async def un_lock(e):
     await e.eor(f"**{msg}** - `{mat}` ! ")
 
 
-
 def lock_unlock(query, lock=True):
     """
     `Used in locks plugin`
@@ -47,7 +47,8 @@ def lock_unlock(query, lock=True):
     rights = ChatBannedRights(None)
     _do = lock
     if query == "msgs":
-        for i in ["send_messages", "invite_users", "pin_messages" "change_info"]:
+        for i in ["send_messages", "invite_users",
+                  "pin_messages" "change_info"]:
             setattr(rights, i, _do)
     elif query == "media":
         setattr(rights, "send_media", _do)

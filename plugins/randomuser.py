@@ -1,5 +1,7 @@
 from utilities.helper import fetch
-from . import ultroid_cmd, get_string
+
+from . import get_string, ultroid_cmd
+
 
 async def get_random_user_data():
     base_url = "https://randomuser.me/api/"

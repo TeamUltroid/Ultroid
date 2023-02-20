@@ -1,8 +1,11 @@
 from contextlib import suppress
-from database import udB
-from utilities.helper import run_async
-from core import ultroid_bot, LOGS
+
+from core import LOGS, ultroid_bot
 from telegraph import Telegraph
+from utilities.helper import run_async
+
+from database import udB
+
 
 def get_client():
     _api = udB.get_key("_TELEGRAPH_TOKEN")
@@ -22,20 +25,23 @@ def get_client():
         except Exception as er:
             if "SHORT_NAME_TOO_LONG" in str(er):
                 client.create_account(
-                    short_name="ultroiduser", author_name=gd_name, author_url=profile_url
+                    short_name="ultroiduser",
+                    author_name=gd_name,
+                    author_url=profile_url,
                 )
             LOGS.exception(er)
         if _token := client.get_access_token():
             udB.set_key("_TELEGRAPH_TOKEN", _token)
     return client
 
+
 def upload_file(path):
     if path.endswith("webp"):
         with suppress(ImportError):
             from PIL import Image
+
             Image.open(path).save(path, "PNG")
     return f"https://graph.org{get_client().upload_file(path)[-1]}"
-
 
 
 @run_async

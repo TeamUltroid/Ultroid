@@ -1,7 +1,9 @@
 import re
 from random import shuffle
+
 from bs4 import BeautifulSoup
 from utilities.helper import async_searcher
+
 
 async def unsplash(query, limit=None, shuf=True):
     query = query.replace(" ", "-")
