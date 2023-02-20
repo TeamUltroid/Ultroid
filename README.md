@@ -84,20 +84,6 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
    `bash startup`
   - Windows Users:
     `python(3) -m pyUltroid`
-<details>
-<summary><h3>[OUTDATED] Ultroid CLI</h3></summary>
-
-[Ultroid CLI](https://github.com/BLUE-DEVIL1134/UltroidCli) is a command-line interface for deploying Ultroid.   
-
-- **Installing** -    
-Run the following code on a terminal, with curl installed.   
-`ver=$(curl https://raw.githubusercontent.com/BLUE-DEVIL1134/UltroidCli/main/version.txt) && curl -L -o ultroid https://github.com/BLUE-DEVIL1134/UltroidCli/releases/download/$ver/ultroid.exe`
-OR
-Go to [UltroidCli](https://github.com/BLUE-DEVIL1134/UltroidCli) and install the version release from the Github Releases. Add the executable to your system path as specified in the [Readme](https://github.com/BLUE-DEVIL1134/UltroidCli#how-to-use-ultroidcli-).   
-
-- **Documentation** -
-Take a look at the [`docs`](https://blue-devil1134.github.io/UltroidCli/) for more detailed information.
-</details>
 
 ---
 ## Necessary Variables
