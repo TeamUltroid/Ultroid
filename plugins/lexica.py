@@ -1,5 +1,4 @@
-from secrets import token_hex
-from .. import ultroid_cmd, fetch, fast_download
+from .. import fast_download, fetch, ultroid_cmd
 
 # TODO: Complete
 
