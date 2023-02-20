@@ -13,6 +13,8 @@ test*
 /*.png
 /*.mp4
 *.log
+dump/
+script*
 target/npmlist.json
 package-lock.json
 ultroid.json
