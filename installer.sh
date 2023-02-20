@@ -100,15 +100,15 @@ check_python() {
 clone_repo() {
     # check if pyultroid, startup, plugins folders exist
     cd $DIR
-    if [ ! $BRANCH ]; then
-        export BRANCH="main"
-    fi
     if [ -d $DIR ]; then
         if [ -d $DIR/.git ]; then
             echo -e "Updating Ultroid ${BRANCH}... "
             cd $DIR
             git pull
             currentbranch="$(git rev-parse --abbrev-ref HEAD)"
+            if [ ! $BRANCH ]; then
+                export BRANCH=$currentbranch
+            fi
             case $currentbranch in
             $BRANCH)
                 # do nothing
@@ -129,6 +129,9 @@ clone_repo() {
         fi
         return
     else
+        if [ ! $BRANCH ]; then
+            export BRANCH="main"
+        fi
         mkdir -p $DIR
         echo -e "Cloning Ultroid ${BRANCH}... "
         git clone -b $BRANCH $REPO $DIR
