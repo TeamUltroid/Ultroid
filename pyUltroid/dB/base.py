@@ -38,7 +38,7 @@ class KeyManager:
             del content[item]
         else:
             return
-        udB.set_key(self._key, item)
+        udB.set_key(self._key, content)
 
     def contains(self, item):
         return item in self.get()
