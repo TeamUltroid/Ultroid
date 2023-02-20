@@ -43,7 +43,6 @@ import re
 from os import remove
 
 from pyUltroid.dB import DEVLIST
-
 try:
     from tabulate import tabulate
 except ImportError:
@@ -55,10 +54,9 @@ from telethon.tl.functions.contacts import (
     GetBlockedRequest,
     UnblockRequest,
 )
+from pyUltroid.dB.base import KeyManager
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
-
-from pyUltroid.dB.base import KeyManager
 
 from . import *
 
@@ -178,9 +176,7 @@ if udB.get_key("PMSETTING"):
                 return
             if keym.contains(miss.id):
                 return
-            mmk = keym.get() or ""
-            mmk += f"{miss.id} "
-            udB.set_key("PMPERMIT", mmk)
+            keym.add(miss.id)
             await delete_pm_warn_msgs(miss.id)
             try:
                 await ultroid_bot.edit_folder(miss.id, folder=0)
@@ -415,9 +411,7 @@ if udB.get_key("PMSETTING"):
                 "Lol, He is my Developer\nHe is auto Approved",
             )
         if not keym.contains(user.id):
-            mmk = udB.get_key("PMPERMIT") or ""
-            mmk += f"{user.id} "
-            udB.set_key("PMPERMIT", mmk)
+            keym.add(user.id)
             try:
                 await delete_pm_warn_msgs(user.id)
                 await apprvpm.client.edit_folder(user.id, folder=0)
@@ -651,9 +645,7 @@ async def apr_in(event):
     if uid in DEVLIST:
         await event.edit("It's a dev! Approved!")
     if not keym.contains(uid):
-        mmk = udB.get_key("PMPERMIT") or ""
-        mmk += f"{uid} "
-        udB.set_key("PMPERMIT", mmk)
+        keym.add(uid)
         try:
             await ultroid_bot.edit_folder(uid, folder=0)
         except BaseException:
