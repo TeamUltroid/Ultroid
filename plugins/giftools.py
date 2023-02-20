@@ -60,7 +60,7 @@ async def igif(e):
 async def reverse_gif(event):
     a = await event.get_reply_message()
     if not (a and a.media) and "video" not in mediainfo(a.media):
-        return await e.eor("`Reply To Video only`", time=5)
+        return await event.eor("`Reply To Video only`", time=5)
     msg = await event.eor(get_string("com_1"))
     file = await a.download_media()
     await bash(f'ffmpeg -i "{file}" -vf reverse -af areverse reversed.mp4 -y')

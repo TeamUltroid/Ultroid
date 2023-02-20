@@ -12,7 +12,7 @@ __doc__ = get_help("help_chatbot")
 
 from pyUltroid.fns.tools import get_chatbot_reply
 
-from . import eod, get_string, inline_mention, udB, ultroid_cmd, LOGS
+from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="repai")
@@ -67,8 +67,8 @@ async def chat_bot_fn(event, type_):
             user_ = event.chat if event.is_private else None
     if not user_:
         return await eod(
-                event,
-                get_string("chab_1"),
+            event,
+            get_string("chab_1"),
         )
     key = udB.get_key("CHATBOT_USERS") or {}
     chat = event.chat_id

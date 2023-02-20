@@ -44,6 +44,5 @@ async def _(e):
             except BaseException:
                 title = get_string("clan_3")
             o += f"{x} {title}\n"
-        await e.eor(o)
-    else:
-        await e.eor(get_string("clan_4"), time=5)
+        return await e.eor(o)
+    await e.eor(get_string("clan_4"), time=5)

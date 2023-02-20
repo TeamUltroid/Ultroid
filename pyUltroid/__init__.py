@@ -10,15 +10,15 @@ import sys
 
 from .version import __version__
 
-run_as_module = False
+run_as_module = __package__ in sys.argv or sys.argv[0] == "-m"
+
 
 class ULTConfig:
     lang = "en"
     thumb = "resources/extras/ultroid.jpg"
 
-if sys.argv[0] == "-m":
-    run_as_module = True
 
+if run_as_module:
     import time
 
     from .configs import Var
@@ -49,6 +49,10 @@ if sys.argv[0] == "-m":
     BOT_MODE = udB.get_key("BOTMODE")
     DUAL_MODE = udB.get_key("DUAL_MODE")
 
+    USER_MODE = udB.get_key("USER_MODE")
+    if USER_MODE:
+        DUAL_MODE = False
+
     if BOT_MODE:
         if DUAL_MODE:
             udB.del_key("DUAL_MODE")
@@ -70,7 +74,10 @@ if sys.argv[0] == "-m":
         )
         ultroid_bot.run_in_loop(autobot())
 
-    asst = UltroidClient(None, bot_token=udB.get_key("BOT_TOKEN"), udB=udB)
+    if USER_MODE:
+        asst = ultroid_bot
+    else:
+        asst = UltroidClient(None, bot_token=udB.get_key("BOT_TOKEN"), udB=udB)
 
     if BOT_MODE:
         ultroid_bot = asst
@@ -81,7 +88,7 @@ if sys.argv[0] == "-m":
                 )
             except Exception as er:
                 LOGS.exception(er)
-    elif not asst.me.bot_inline_placeholder:
+    elif not asst.me.bot_inline_placeholder and asst._bot:
         ultroid_bot.run_in_loop(enable_inline(ultroid_bot, asst.me.username))
 
     vcClient = vc_connection(udB, ultroid_bot)

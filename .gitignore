@@ -8,12 +8,14 @@ test*
 *.webp
 *.mp4
 *.tgs
+*.txt
 /*.jpg
 /*.png
 /*.mp4
 *.log
 target/npmlist.json
 package-lock.json
+ultroid.json
 resources/extras/thumbnail.jpg
 
 # Directories

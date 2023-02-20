@@ -14,7 +14,6 @@ from pathlib import Path
 from time import gmtime, strftime
 from traceback import format_exc
 
-from strings import get_string
 from telethon import Button
 from telethon import __version__ as telever
 from telethon import events
@@ -34,6 +33,9 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.events import MessageEdited, NewMessage
 from telethon.utils import get_display_name
+
+from pyUltroid.exceptions import DependencyMissingError
+from strings import get_string
 
 from .. import *
 from .. import _ignore_eval
@@ -96,19 +98,16 @@ def ultroid_cmd(
                     and not (ult.sender_id in DEVLIST)
                 ):
                     return
-            if admins_only:
-                if ult.is_private:
-                    return await eod(ult, get_string("py_d3"))
-                if not (chat.admin_rights or chat.creator):
-                    return await eod(ult, get_string("py_d5"))
+            if ult.is_private and (groups_only or admins_only):
+                return await eod(ult, get_string("py_d3"))
+            elif admins_only and not (chat.admin_rights or chat.creator):
+                return await eod(ult, get_string("py_d5"))
             if only_devs and not udB.get_key("I_DEV"):
                 return await eod(
                     ult,
                     get_string("py_d4").format(HNDLR),
                     time=10,
                 )
-            if groups_only and ult.is_private:
-                return await eod(ult, get_string("py_d5"))
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
@@ -135,7 +134,7 @@ def ultroid_cmd(
                     ult,
                     get_string("py_d7"),
                 )
-            except (BotInlineDisabledError) as er:
+            except (BotInlineDisabledError, DependencyMissingError) as er:
                 return await eod(ult, f"`{er}`")
             except (
                 MessageIdInvalidError,

@@ -40,9 +40,11 @@ except ImportError:
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from pyUltroid.dB.night_db import *
+from pyUltroid.dB.base import KeyManager
 
 from . import get_string, udB, ultroid_bot, ultroid_cmd
+
+keym = KeyManager("NIGHT_CHATS", cast=list)
 
 
 @ultroid_cmd(pattern="nmtime( (.*)|$)")
@@ -64,29 +66,29 @@ async def set_time(e):
 async def add_grp(e):
     if pat := e.pattern_match.group(1).strip():
         try:
-            add_night((await ultroid_bot.get_entity(pat)).id)
+            keym.add((await ultroid_bot.get_entity(pat)).id)
             return await e.eor(f"Done, Added {pat} To Night Mode.")
         except BaseException:
             return await e.eor(get_string("nightm_5"), time=5)
-    add_night(e.chat_id)
+    keym.add(e.chat_id)
     await e.eor(get_string("nightm_3"))
 
 
 @ultroid_cmd(pattern="remnm( (.*)|$)")
-async def rem_grp(e):
+async def r_em_grp(e):
     if pat := e.pattern_match.group(1).strip():
         try:
-            rem_night((await ultroid_bot.get_entity(pat)).id)
+            keym.remove((await ultroid_bot.get_entity(pat)).id)
             return await e.eor(f"Done, Removed {pat} To Night Mode.")
         except BaseException:
             return await e.eor(get_string("nightm_5"), time=5)
-    rem_night(e.chat_id)
+    keym.remove(e.chat_id)
     await e.eor(get_string("nightm_4"))
 
 
 @ultroid_cmd(pattern="listnm$")
 async def rem_grp(e):
-    chats = night_grps()
+    chats = keym.get()
     name = "NightMode Groups Are-:\n\n"
     for x in chats:
         try:
@@ -98,8 +100,7 @@ async def rem_grp(e):
 
 
 async def open_grp():
-    chats = night_grps()
-    for chat in chats:
+    for chat in keym.get():
         try:
             await ultroid_bot(
                 EditChatDefaultBannedRightsRequest(
@@ -122,11 +123,10 @@ async def open_grp():
 
 
 async def close_grp():
-    chats = night_grps()
-    h1, m1, h2, m2 = 0, 0, 7, 0
+    __, _, h2, m2 = 0, 0, 7, 0
     if udB.get_key("NIGHT_TIME"):
-        h1, m1, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
-    for chat in chats:
+        _, __, h2, m2 = eval(udB.get_key("NIGHT_TIME"))
+    for chat in keym.get():
         try:
             await ultroid_bot(
                 EditChatDefaultBannedRightsRequest(
@@ -144,7 +144,7 @@ async def close_grp():
             LOGS.info(er)
 
 
-if AsyncIOScheduler and night_grps():
+if AsyncIOScheduler and keym.get():
     try:
         h1, m1, h2, m2 = 0, 0, 7, 0
         if udB.get_key("NIGHT_TIME"):

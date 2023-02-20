@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-
+import ast
 import asyncio
 import re
 import sys
@@ -426,9 +426,12 @@ async def convo_handler(event: events.CallbackQuery):
     back = get_["back"]
     async with event.client.conversation(event.sender_id) as conv:
         await conv.send_message(get_["text"])
-        response = conv.wait_event(events.NewMessage(chats=event.sender_id))
-        response = await response
-        themssg = response.message.message
+        response = await conv.get_response()
+        themssg = response.message
+        try:
+            themssg = ast.literal_eval(themssg)
+        except Exception:
+            pass
         if themssg == "/cancel":
             return await conv.send_message(
                 "Cancelled!!",
@@ -1182,7 +1185,7 @@ async def name(event):
 async def chon(event):
     var = "PMBOT"
     await setit(event, var, "True")
-    Loader(path="assistant/pmbot.py", key="PM Bot").load_single()
+    Loader(path="assistant/pmbot.py", key="PM Bot").load()
     if AST_PLUGINS.get("pmbot"):
         for i, e in AST_PLUGINS["pmbot"]:
             event.client.remove_event_handler(i)

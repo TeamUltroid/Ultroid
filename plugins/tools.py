@@ -39,6 +39,7 @@
 import glob
 import io
 import os
+import secrets
 from asyncio.exceptions import TimeoutError as AsyncTimeout
 
 try:
@@ -47,9 +48,14 @@ except ImportError:
     cv2 = None
 
 try:
+    from playwright.async_api import async_playwright
+except ImportError:
+    async_playwright = None
+try:
     from htmlwebshot import WebShot
 except ImportError:
     WebShot = None
+
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -67,12 +73,12 @@ from . import (
     bash,
     check_filename,
     con,
+    download_file,
     eor,
-    fast_download,
     get_string,
 )
 from . import humanbytes as hb
-from . import inline_mention, is_url_ok, mediainfo, ultroid_cmd
+from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
@@ -337,16 +343,16 @@ async def _(e):
 )
 async def lastname(steal):
     mat = steal.pattern_match.group(1).strip()
-    if not steal.is_reply and not mat:
-        return await steal.eor("`Use this command with reply or give Username/id...`")
+    message = await steal.get_reply_message()
     if mat:
         try:
             user_id = await steal.client.parse_id(mat)
         except ValueError:
             user_id = mat
-    message = await steal.get_reply_message()
-    if message:
-        user_id = message.sender.id
+    elif message:
+        user_id = message.sender_id
+    else:
+        return await steal.eor("`Use this command with reply or give Username/id...`")
     chat = "@SangMataInfo_bot"
     id = f"/search_id {user_id}"
     lol = await steal.eor(get_string("com_1"))
@@ -389,20 +395,37 @@ async def webss(event):
     xurl = event.pattern_match.group(1).strip()
     if not xurl:
         return await xx.eor(get_string("wbs_1"), time=5)
-    if not is_url_ok(xurl):
+    if not (await is_url_ok(xurl)):
         return await xx.eor(get_string("wbs_2"), time=5)
-    try:
-        shot = WebShot(
-            quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
-        )
-        pic = await shot.create_pic_async(url=xurl)
-    except FileNotFoundError:
-        pic = (
-            await fast_download(
-                f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-                filename=check_filename("shot.png"),
+    path, pic = check_filename("shot.png"), None
+    if async_playwright:
+        try:
+            async with async_playwright() as playwright:
+                chrome = await playwright.chromium.launch()
+                page = await chrome.new_page()
+                await page.goto(xurl)
+                await page.screenshot(path=path, full_page=True)
+                pic = path
+        except Exception as er:
+            LOGS.exception(er)
+            await xx.respond(f"Error with playwright:\n`{er}`")
+    if WebShot and not pic:
+        try:
+            shot = WebShot(
+                quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
             )
-        )[0]
+            pic = await shot.create_pic_async(url=xurl)
+        except Exception as er:
+            LOGS.exception(er)
+    if not pic:
+        pic, msg = await download_file(
+            f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
+            path,
+            validate=True,
+        )
+        if msg:
+            await xx.edit(json_parser(msg, indent=1))
+            return
     if pic:
         await xx.reply(
             get_string("wbs_3").format(xurl),
@@ -420,12 +443,10 @@ async def magic(event):
         match = event.text.split(maxsplit=1)[1].strip()
     except IndexError:
         return await event.eor("`Provide url to turn into tiny...`")
-    match, id_ = match.split(), None
-    data = {}
-    if len(match) > 1:
-        data["id"] = match[1]
-    url = match[0]
-    data["link"] = url
+    data = {
+        "url": match.split()[0],
+        "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6),
+    }
     data = await async_searcher(
         "https://tiny.ultroid.tech/api/new",
         data=data,

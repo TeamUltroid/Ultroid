@@ -51,10 +51,7 @@ async def all_messages_catcher(e):
         return
     if not udB.get_key("TAG_LOG"):
         return
-    try:
-        NEEDTOLOG = int(udB.get_key("TAG_LOG"))
-    except Exception:
-        return LOGS.info(get_string("userlogs_1"))
+    NEEDTOLOG = udB.get_key("TAG_LOG")
     buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)
@@ -63,7 +60,8 @@ async def all_messages_catcher(e):
         else:
             TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
         tag_add(sent.id, e.chat_id, e.id)
-    except MediaEmptyError:
+    except MediaEmptyError as er:
+        LOGS.debug(f"handling {er}.")
         try:
             msg = await asst.get_messages(e.chat_id, ids=e.id)
             sent = await asst.send_message(NEEDTOLOG, msg, buttons=buttons)
@@ -89,7 +87,8 @@ async def all_messages_catcher(e):
                 except Exception as er:
                     LOGS.exception(er)
             await asst.send_message(NEEDTOLOG, get_string("com_4"), buttons=buttons)
-    except (PeerIdInvalidError, ValueError):
+    except (PeerIdInvalidError, ValueError) as er:
+        LOGS.exception(er)
         try:
             CACHE_SPAM[NEEDTOLOG]
         except KeyError:
@@ -225,7 +224,7 @@ async def when_added_or_joined(event):
         text = f"#APPROVAL_LOG\n\n{inline_mention(user)} just got Chat Join Approval to {chat}."
     else:
         text = f"#JOIN_LOG\n\n{inline_mention(user)} just joined {chat}."
-    await asst.send_message(int(udB.get_key("LOG_CHANNEL")), text, buttons=buttons)
+    await asst.send_message(udB.get_key("LOG_CHANNEL"), text, buttons=buttons)
 
 
 asst.add_event_handler(

@@ -28,7 +28,6 @@ except ImportError:
 import qrcode
 from PIL import Image
 from telethon.tl.types import MessageMediaDocument as doc
-from telethon.tl.types import MessageMediaPhoto as photu
 
 from . import check_filename, get_string, ultroid_bot, ultroid_cmd
 
@@ -70,11 +69,10 @@ async def cd(e):
 async def qrwater(e):
     msg = e.pattern_match.group(1).strip()
     r = await e.get_reply_message()
-    if isinstance(r.media, photu):
-        dl = await e.client.download_media(r.media)
-    elif isinstance(r.media, doc):
-        dl = await e.client.download_media(r, thumb=-1)
-    else:
+    dl = await e.client.download_media(
+        r, thumb=-1 if isinstance(r.media, doc) else None
+    )
+    if not dl:
         return await e.eor("`Reply Any Media and Give Text`", time=5)
     kk = await e.eor(get_string("com_1"))
     img_bg = Image.open(dl)
@@ -96,11 +94,10 @@ async def decod(e):
     if not (r and r.media):
         return await e.eor("`Reply to Qrcode Media`", time=5)
     kk = await e.eor(get_string("com_1"))
-    if isinstance(r.media, photu):
-        dl = await r.download_media()
-    elif isinstance(r.media, doc):
-        dl = await r.download_media(thumb=-1)
-    else:
+    dl = await e.client.download_media(
+        r, thumb=-1 if isinstance(r.media, doc) else None
+    )
+    if not dl:
         return
     im = cv2.imread(dl)
     try:

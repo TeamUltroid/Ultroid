@@ -12,14 +12,14 @@
 | fa | Persian [Farsi] | 491 | 3 |
 | fr | French [Français] | 490 | 4 |
 | gu | Gujarati [ગુજરાતી] | 490 | 4 |
-| hi | Hindi [हिंदी] | 490 | 4 |
+| hi | Hindi [हिंदी] | 489 | 5 |
 | id | Indonesia [Indonesia] | 490 | 4 |
 | it | Italian [italiano] | 490 | 4 |
 | jp | Japanese [日本] | 490 | 4 |
 | ka | Kannada [ಕನ್ನಡ] | 490 | 4 |
 | ml | Malayalam [മലയാളം] | 490 | 4 |
 | mr | Marathi [मराठी] | 491 | 3 |
-| my | Malay [Bahasa Melayu] | 490 | 4 |
+| ms | Malay [Bahasa Melayu] | 494 | NULL |
 | or | Odia [ଓଡିଆ] | 490 | 4 |
 | pt-br | Português [Português] | 490 | 4 |
 | ru | Russian [Русский] | 490 | 4 |

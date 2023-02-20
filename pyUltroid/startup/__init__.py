@@ -11,6 +11,7 @@ import sys
 from logging import INFO, WARNING, FileHandler, StreamHandler, basicConfig, getLogger
 
 from .. import run_as_module
+from ._extra import _ask_input
 
 if run_as_module:
     from ..configs import Var
@@ -28,6 +29,8 @@ def where_hosted():
     if os.getenv("KUBERNETES_PORT"):
         return "qovery | kubernetes"
     if os.getenv("RUNNER_USER") or os.getenv("HOSTNAME"):
+        if os.getenv("USER") == "codespace":
+            return "codespace"
         return "github actions"
     if os.getenv("ANDROID_ROOT"):
         return "termux"
@@ -60,10 +63,7 @@ if run_as_module:
 
         _fix_logging(FileHandler)
 
-    if HOSTED_ON == "local":
-        from ._extra import _ask_input
-
-        _ask_input()
+    _ask_input()
 
     _LOG_FORMAT = "%(asctime)s | %(name)s [%(levelname)s] : %(message)s"
     basicConfig(

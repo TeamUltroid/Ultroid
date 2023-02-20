@@ -45,6 +45,7 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights, User
 
 from pyUltroid.dB import DEVLIST
+from pyUltroid.dB.base import KeyManager
 from pyUltroid.dB.gban_mute_db import (
     gban,
     gmute,
@@ -53,11 +54,6 @@ from pyUltroid.dB.gban_mute_db import (
     list_gbanned,
     ungban,
     ungmute,
-)
-from pyUltroid.dB.gcast_blacklist_db import (
-    add_gblacklist,
-    is_gblacklisted,
-    rem_gblacklist,
 )
 from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
@@ -92,6 +88,8 @@ _gdemote_rights = ChatAdminRights(
     delete_messages=False,
     pin_messages=False,
 )
+
+keym = KeyManager("GBLACKLISTS", cast=list)
 
 
 @ultroid_cmd(pattern="gpromote( (.*)|$)", fullsudo=True)
@@ -462,7 +460,7 @@ async def gcast(event):
         if x.is_group:
             chat = x.entity.id
             if (
-                not is_gblacklisted(chat)
+                not keym.contains(chat)
                 and int(f"-100{str(chat)}") not in NOSPAM_CHAT
                 and (
                     (
@@ -545,7 +543,7 @@ async def gucast(event):
     for x in dialog:
         if x.is_user and not x.entity.bot:
             chat = x.id
-            if not is_gblacklisted(chat):
+            if not keym.contains(chat):
                 try:
                     if btn:
                         bt = create_tl_btn(btn)
@@ -749,7 +747,7 @@ async def gblacker(event, type_):
     except IndexError:
         chat_id = event.chat_id
     if type_ == "add":
-        add_gblacklist(chat_id)
+        keym.add(chat_id)
     elif type_ == "remove":
-        rem_gblacklist(chat_id)
+        keym.remove(chat_id)
     await event.eor(f"Global Broadcasts: \n{type_}ed {chat_id}")

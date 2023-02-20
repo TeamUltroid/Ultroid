@@ -84,7 +84,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
-in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b> [ {} ]\n\n• <b>Join @TeamUltroid</b>"
+in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b>[ {} ]\n\n• <b>Join @TeamUltroid</b>"
 
 
 @callback("alive")
@@ -243,6 +243,9 @@ async def _(event):
             code=code,
             backgroundColor=choice(ATRA_COL),
         )
+        if isinstance(file, dict):
+            await event.eor(f"`{file}`")
+            return
         await event.reply("**Ultroid Logs.**", file=file)
     elif opt == "open":
         with open("ultroid.log", "r") as f:
@@ -296,7 +299,7 @@ async def inline_alive(ult):
                 ]
             return await ult.answer(results)
         except BaseException as er:
-            LOGS.info(er)
+            LOGS.exception(er)
     result = [
         await builder.article(
             "Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons

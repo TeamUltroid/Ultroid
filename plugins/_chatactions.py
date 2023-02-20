@@ -13,6 +13,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 
 from pyUltroid.dB import stickers
+from pyUltroid.dB.echo_db import check_echo
 from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
@@ -90,8 +91,7 @@ async def DummyHandler(ult):
                         user.id,
                         view_messages=False,
                     )
-                    await ult.client.send_message(
-                        chat.id,
+                    await ult.respond(
                         f'**@UltroidBans:** Banned user detected and banned!\n`{str(is_banned)}`.\nBan reason: {is_banned["reason"]}',
                     )
 
@@ -196,8 +196,13 @@ async def DummyHandler(ult):
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
     sender = await e.get_sender()
-    if not isinstance(sender, types.User):
+    if not isinstance(sender, types.User) or sender.bot:
         return
+    if check_echo(e.chat_id, e.sender_id):
+        try:
+            await e.respond(e)
+        except Exception as er:
+            LOGS.exception(er)
     key = udB.get_key("CHATBOT_USERS") or {}
     if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
         msg = await get_chatbot_reply(e.message.message)
@@ -206,12 +211,10 @@ async def chatBot_replies(e):
             await asyncio.sleep(sleep)
             await e.reply(msg)
     chat = await e.get_chat()
-    if e.is_group and not sender.bot:
-        if sender.username:
-            await uname_stuff(e.sender_id, sender.username, sender.first_name)
-    elif e.is_private and not sender.bot:
-        if chat.username:
-            await uname_stuff(e.sender_id, chat.username, chat.first_name)
+    if e.is_group and sender.username:
+        await uname_stuff(e.sender_id, sender.username, sender.first_name)
+    elif e.is_private and chat.username:
+        await uname_stuff(e.sender_id, chat.username, chat.first_name)
     if detector and is_profan(e.chat_id) and e.text:
         x, y = detector(e.text)
         if y:
@@ -220,7 +223,7 @@ async def chatBot_replies(e):
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
 async def uname_change(e):
-    await uname_stuff(e.user_id, e.username, e.first_name)
+    await uname_stuff(e.user_id, e.usernames[0] if e.usernames else None, e.first_name)
 
 
 async def uname_stuff(id, uname, name):

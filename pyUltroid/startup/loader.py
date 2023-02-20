@@ -5,11 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import os, subprocess
+import os
+import subprocess
+import sys
 from shutil import rmtree
 
 from decouple import config
 from git import Repo
+
 from .. import *
 from ..dB._core import HELP
 from ..loader import Loader
@@ -54,7 +57,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
     Loader().load(include=_in_only, exclude=_exclude, after_load=_after_load)
 
     # for assistant
-    if not udB.get_key("DISABLE_AST_PLUGINS"):
+    if not USER_MODE and not udB.get_key("DISABLE_AST_PLUGINS"):
         _ast_exc = ["pmbot"]
         if _in_only and "games" not in _in_only:
             _ast_exc.append("games")
@@ -86,7 +89,10 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             # subprocess.run(
             #        "rm -rf /usr/local/lib/python3.*/site-packages/pip/_vendor/.wh*"
             #    )
-            subprocess.run("pip3 install --no-cache-dir -q -r ./addons/addons.txt", shell=True)
+            subprocess.run(
+                f"{sys.executable} -m pip install --no-cache-dir -q -r ./addons/addons.txt",
+                shell=True,
+            )
 
         _exclude = udB.get_key("EXCLUDE_ADDONS")
         _exclude = _exclude.split() if _exclude else []
@@ -101,13 +107,14 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             load_all=True,
         )
 
-    # group manager
-    if manager:
-        Loader(path="assistant/manager", key="Group Manager").load()
+    if not USER_MODE:
+        # group manager
+        if manager:
+            Loader(path="assistant/manager", key="Group Manager").load()
 
-    # chat via assistant
-    if pmbot:
-        Loader(path="assistant/pmbot.py").load_single(log=False)
+        # chat via assistant
+        if pmbot:
+            Loader(path="assistant/pmbot.py").load(log=False)
 
     # vc bot
     if vcbot and not vcClient._bot:
@@ -120,7 +127,9 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
                 else:
                     rmtree("vcbot")
             if not os.path.exists("vcbot"):
-                subprocess.run("git clone https://github.com/TeamUltroid/VcBot vcbot", shell=True)
+                subprocess.run(
+                    "git clone https://github.com/TeamUltroid/VcBot vcbot", shell=True
+                )
             try:
                 if not os.path.exists("vcbot/downloads"):
                     os.mkdir("vcbot/downloads")
@@ -128,4 +137,4 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             except FileNotFoundError as e:
                 LOGS.error(f"{e} Skipping VCBot Installation.")
         except ModuleNotFoundError:
-            LOGS.error("'pytgcalls' not installed!\nSkipping load of VcBot.")
+            LOGS.error("'pytgcalls' not installed!\nSkipping loading of VCBOT.")

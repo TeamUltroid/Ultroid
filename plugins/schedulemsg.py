@@ -34,20 +34,18 @@ async def _(e):
         else:
             try:
                 z = ban_time(y)
-                await e.client.send_message(e.chat_id, k, schedule=z)
+                await e.respond(k, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:
                 await e.eor(get_string("schdl_2"), time=5)
     elif xx and x:
         if x.isdigit():
-            await e.client.send_message(
-                e.chat_id, xx, schedule=timedelta(seconds=int(x))
-            )
+            await e.respond(xx, schedule=timedelta(seconds=int(x)))
             await e.eor(get_string("schdl_1"), time=5)
         else:
             try:
                 z = ban_time(x)
-                await e.client.send_message(e.chat_id, xx, schedule=z)
+                await e.respond(xx, schedule=z)
                 await e.eor(get_string("schdl_1"), time=5)
             except BaseException:
                 await e.eor(get_string("schdl_2"), time=5)

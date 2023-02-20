@@ -36,7 +36,7 @@ async def size(e):
 
 
 @ultroid_cmd(pattern="resize( (.*)|$)")
-async def size(e):
+async def resize(e):
     r = await e.get_reply_message()
     if not (r and r.media):
         return await e.eor(get_string("ascii_1"))

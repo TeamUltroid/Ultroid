@@ -16,9 +16,12 @@ from io import BytesIO
 from json.decoder import JSONDecodeError
 from traceback import format_exc
 
+import requests
+
 from .. import *
 from ..exceptions import DependencyMissingError
-from .helper import bash, run_async
+from . import some_random_headers
+from .helper import async_searcher, bash, run_async
 
 try:
     import certifi
@@ -33,11 +36,6 @@ except ImportError:
 
 from urllib.parse import quote, unquote
 
-try:
-    import requests
-    from requests.exceptions import MissingSchema
-except ImportError:
-    requests = None
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
@@ -54,6 +52,11 @@ try:
 except ImportError:
     Telegraph = None
 
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    BeautifulSoup = None
+
 # ~~~~~~~~~~~~~~~~~~~~OFOX API~~~~~~~~~~~~~~~~~~~~
 # @buddhhu
 
@@ -67,46 +70,6 @@ async def get_ofox(codename):
         ofox_baseurl + "devices/get?codename=" + codename, re_json=True
     )
     return device, releases
-
-
-# ~~~~~~~~~~~~~~~Async Searcher~~~~~~~~~~~~~~~
-# @buddhhu
-
-
-async def async_searcher(
-    url: str,
-    post: bool = None,
-    headers: dict = None,
-    params: dict = None,
-    json: dict = None,
-    data: dict = None,
-    ssl=None,
-    re_json: bool = False,
-    re_content: bool = False,
-    real: bool = False,
-    *args,
-    **kwargs,
-):
-    try:
-        import aiohttp
-    except ImportError:
-        raise DependencyMissingError(
-            "'aiohttp' is not installed!\nthis function requires aiohttp to be installed."
-        )
-    async with aiohttp.ClientSession(headers=headers) as client:
-        if post:
-            data = await client.post(
-                url, json=json, data=data, ssl=ssl, *args, **kwargs
-            )
-        else:
-            data = await client.get(url, params=params, ssl=ssl, *args, **kwargs)
-        if re_json:
-            return await data.json()
-        if re_content:
-            return await data.read()
-        if real:
-            return data
-        return await data.text()
 
 
 # ~~~~~~~~~~~~~~~JSON Parser~~~~~~~~~~~~~~~
@@ -138,18 +101,12 @@ def json_parser(data, indent=None, ascii=False):
 # ~~~~~~~~~~~~~~~~Link Checker~~~~~~~~~~~~~~~~~
 
 
-def is_url_ok(url: str):
+async def is_url_ok(url: str):
     try:
-        import requests
-    except ImportError:
-        raise DependencyMissingError("This function needs 'requests' to be installed.")
-    try:
-        r = requests.head(url)
-    except MissingSchema:
-        return None
-    except BaseException:
+        return await async_searcher(url, head=True)
+    except BaseException as er:
+        LOGS.debug(er)
         return False
-    return r.ok
 
 
 # ~~~~~~~~~~~~~~~~ Metadata ~~~~~~~~~~~~~~~~~~~~
@@ -158,7 +115,9 @@ def is_url_ok(url: str):
 async def metadata(file):
     out, _ = await bash(f'mediainfo "{_unquote_text(file)}" --Output=JSON')
     if _ and _.endswith("NOT_FOUND"):
-        raise Exception(_)
+        raise DependencyMissingError(
+            f"'{_}' is not installed!\nInstall it to use this command."
+        )
     data = {}
     _info = json.loads(out)["media"]["track"]
     info = _info[0]
@@ -403,6 +362,77 @@ async def get_paste(data: str, extension: str = "txt"):
         return None, str(e)
 
 
+# --------------------------------------
+# https://stackoverflow.com/a/74563494
+
+
+async def get_google_images(query):
+    soup = BeautifulSoup(
+        await async_searcher(
+            "https://google.com/search",
+            params={"q": query, "tbm": "isch"},
+            headers={"User-Agent": random.choice(some_random_headers)},
+        ),
+        "lxml",
+    )
+    google_images = []
+    all_script_tags = soup.select("script")
+    matched_images_data = "".join(
+        re.findall(r"AF_initDataCallback\(([^<]+)\);", str(all_script_tags))
+    )
+    matched_images_data_fix = json.dumps(matched_images_data)
+    matched_images_data_json = json.loads(matched_images_data_fix)
+    matched_google_image_data = re.findall(
+        r"\"b-GRID_STATE0\"(.*)sideChannel:\s?{}}", matched_images_data_json
+    )
+    matched_google_images_thumbnails = ", ".join(
+        re.findall(
+            r"\[\"(https\:\/\/encrypted-tbn0\.gstatic\.com\/images\?.*?)\",\d+,\d+\]",
+            str(matched_google_image_data),
+        )
+    ).split(", ")
+    thumbnails = [
+        bytes(bytes(thumbnail, "ascii").decode("unicode-escape"), "ascii").decode(
+            "unicode-escape"
+        )
+        for thumbnail in matched_google_images_thumbnails
+    ]
+    removed_matched_google_images_thumbnails = re.sub(
+        r"\[\"(https\:\/\/encrypted-tbn0\.gstatic\.com\/images\?.*?)\",\d+,\d+\]",
+        "",
+        str(matched_google_image_data),
+    )
+    matched_google_full_resolution_images = re.findall(
+        r"(?:'|,),\[\"(https:|http.*?)\",\d+,\d+\]",
+        removed_matched_google_images_thumbnails,
+    )
+    full_res_images = [
+        bytes(bytes(img, "ascii").decode("unicode-escape"), "ascii").decode(
+            "unicode-escape"
+        )
+        for img in matched_google_full_resolution_images
+    ]
+    for index, (metadata, thumbnail, original) in enumerate(
+        zip(soup.select(".isv-r.PNCib.MSM1fd.BUooTd"), thumbnails, full_res_images),
+        start=1,
+    ):
+        google_images.append(
+            {
+                "title": metadata.select_one(".VFACy.kGQAp.sMi44c.lNHeqe.WGvvNb")[
+                    "title"
+                ],
+                "link": metadata.select_one(".VFACy.kGQAp.sMi44c.lNHeqe.WGvvNb")[
+                    "href"
+                ],
+                "source": metadata.select_one(".fxgdke").text,
+                "thumbnail": thumbnail,
+                "original": original,
+            }
+        )
+    random.shuffle(google_images)
+    return google_images
+
+
 # Thanks https://t.me/KukiUpdates/23 for ChatBotApi
 
 
@@ -555,24 +585,29 @@ def make_html_telegraph(title, html=""):
 
 async def Carbon(
     code,
-    base_url="https://rayso-api-desvhu-33.koyeb.app/generate",
+    base_url="https://carbonara.vercel.app/api/cook",
     file_name="ultroid",
     download=False,
     rayso=False,
     **kwargs,
 ):
-    # if rayso:
-    kwargs["text"] = code
-    kwargs["theme"] = kwargs.get("theme", "meadow")
-    kwargs["darkMode"] = kwargs.get("darkMode", True)
-    kwargs["title"] = kwargs.get("title", "Ultroid")
-    # else:
-    #    kwargs["code"] = code
+    if rayso:
+        base_url = "https://rayso-api-desvhu-33.koyeb.app/generate"
+        kwargs["text"] = code
+        kwargs["theme"] = kwargs.get("theme", "breeze")
+        kwargs["darkMode"] = kwargs.get("darkMode", True)
+        kwargs["title"] = kwargs.get("title", "Ultroid")
+    else:
+        kwargs["code"] = code
     con = await async_searcher(base_url, post=True, json=kwargs, re_content=True)
     if not download:
         file = BytesIO(con)
         file.name = file_name + ".jpg"
     else:
+        try:
+            return json_parser(con.decode())
+        except Exception:
+            pass
         file = file_name + ".jpg"
         with open(file, "wb") as f:
             f.write(con)

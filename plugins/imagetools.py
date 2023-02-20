@@ -177,11 +177,9 @@ async def ult_tools(event):
         ish = centers[labels.flatten()]
         ultroid = ish.reshape(ult.shape)
     cv2.imwrite("ult.jpg", ultroid)
-    await event.client.send_file(
-        event.chat_id,
-        "ult.jpg",
+    await ureply.reply(
+        file="ult.jpg",
         force_document=False,
-        reply_to=event.reply_to_msg_id,
     )
     await xx.delete()
     os.remove("ult.jpg")
@@ -196,9 +194,7 @@ async def sampl(ult):
         try:
             try:
                 await ult.delete()
-                await ult.client.send_message(
-                    ult.chat_id, f"Colour Sample for `{color}` !", file="csample.png"
-                )
+                await ult.respond(f"Colour Sample for `{color}` !", file="csample.png")
             except MessageDeleteForbiddenError:
                 await ult.reply(f"Colour Sample for `{color}` !", file="csample.png")
         except ChatSendMediaForbiddenError:
@@ -275,7 +271,7 @@ async def ok(event):
 @ultroid_cmd(pattern="pixelator( (.*)|$)")
 async def pixelator(event):
     reply_message = await event.get_reply_message()
-    if not (reply_message and reply_message.photo):
+    if not (reply_message and (reply_message.photo or reply_message.sticker)):
         return await event.eor("`Reply to a photo`")
     hw = 50
     try:

@@ -14,7 +14,7 @@ from telethon.utils import get_display_name
 
 from pyUltroid.dB.echo_db import add_echo, check_echo, list_echo, rem_echo
 
-from . import LOGS, events, ultroid_bot, ultroid_cmd
+from . import inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addecho( (.*)|$)")
@@ -36,7 +36,7 @@ async def echo(e):
         return await e.eor("Echo already activated for this user.", time=5)
     add_echo(e.chat_id, user)
     ok = await e.client.get_entity(user)
-    user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
+    user = inline_mention(ok)
     await e.eor(f"Activated Echo For {user}.")
 
 
@@ -61,16 +61,6 @@ async def rm(e):
         user = f"[{get_display_name(ok)}](tg://user?id={ok.id})"
         return await e.eor(f"Deactivated Echo For {user}.")
     await e.eor("Echo not activated for this user")
-
-
-@ultroid_bot.on(events.NewMessage(incoming=True))
-async def okk(e):
-    if check_echo(e.chat_id, e.sender_id):
-        try:
-            ok = await e.client.get_messages(e.chat_id, ids=e.id)
-            return await e.client.send_message(e.chat_id, ok)
-        except Exception as er:
-            LOGS.info(er)
 
 
 @ultroid_cmd(pattern="listecho$")

@@ -30,6 +30,7 @@ class Loader:
         after_load=None,
         load_all=False,
     ):
+        _single = os.path.isfile(self.path)
         if include:
             if log:
                 self._logger.info("Including: {}".format("• ".join(include)))
@@ -38,6 +39,8 @@ class Loader:
                 path = f"{self.path}/{file}.py"
                 if os.path.exists(path):
                     files.append(path)
+        elif _single:
+            files = [self.path]
         else:
             if load_all:
                 files = get_all_files(self.path, ".py")
@@ -48,7 +51,7 @@ class Loader:
                     if not path.startswith("_"):
                         with contextlib.suppress(ValueError):
                             files.remove(f"{self.path}/{path}.py")
-        if log:
+        if log and not _single:
             self._logger.info(
                 f"• Installing {self.key} Plugins || Count : {len(files)} •"
             )
@@ -60,22 +63,15 @@ class Loader:
             except ModuleNotFoundError as er:
                 modl = None
                 self._logger.error(f"{plugin}: '{er.name}' not installed!")
+                continue
             except Exception as exc:
                 modl = None
                 self._logger.error(f"pyUltroid - {self.key} - ERROR - {plugin}")
                 self._logger.exception(exc)
+                continue
+            if _single and log:
+                self._logger.info(f"Successfully Loaded {plugin}!")
             if callable(after_load):
                 if func == import_module:
                     plugin = plugin.split(".")[-1]
                 after_load(self, modl, plugin_name=plugin)
-
-    def load_single(self, log=False):
-        """To Load Single File"""
-        plugin = self.path.replace(".py", "").replace("/", ".")
-        try:
-            import_module(plugin)
-        except Exception as er:
-            self._logger.info(f"Error while Loading {plugin}")
-            return self._logger.exception(er)
-        if log and self._logger:
-            self._logger.info(f"Successfully Loaded {plugin}!")

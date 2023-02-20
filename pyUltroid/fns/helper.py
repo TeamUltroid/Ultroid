@@ -20,10 +20,11 @@ from .. import run_as_module
 if run_as_module:
     from ..configs import Var
 
+
 try:
-    import aiohttp
+    from aiohttp import ClientSession as aiohttp_client
 except ImportError:
-    aiohttp = None
+    aiohttp_client = None
     try:
         import requests
     except ImportError:
@@ -52,6 +53,7 @@ from telethon.utils import get_display_name
 
 from .._misc import CMD_HELP
 from .._misc._wrappers import eod, eor
+from ..exceptions import DependencyMissingError
 from . import *
 
 if run_as_module:
@@ -215,11 +217,10 @@ if run_as_module:
         await xx.delete()
 
     async def def_logs(ult, file):
-        await ult.client.send_file(
-            ult.chat_id,
+        await ult.respond(
+            "**Ultroid Logs.**",
             file=file,
             thumb=ULTConfig.thumb,
-            caption="**Ultroid Logs.**",
         )
 
     async def updateme_requirements():
@@ -262,9 +263,8 @@ async def bash(cmd, run_code=0):
     err = stderr.decode().strip() or None
     out = stdout.decode().strip()
     if not run_code and err:
-        split = cmd.split()[0]
-        if f"{split}: not found" in err:
-            return out, f"{split.upper()}_NOT_FOUND"
+        if match := re.match("\/bin\/sh: (.*): ?(\w+): not found", err):
+            return out, f"{match.group(2).upper()}_NOT_FOUND"
     return out, err
 
 
@@ -347,30 +347,70 @@ async def downloader(filename, file, event, taime, msg):
     return result
 
 
+# ~~~~~~~~~~~~~~~Async Searcher~~~~~~~~~~~~~~~
+# @buddhhu
+
+
+async def async_searcher(
+    url: str,
+    post: bool = False,
+    head: bool = False,
+    headers: dict = None,
+    evaluate=None,
+    object: bool = False,
+    re_json: bool = False,
+    re_content: bool = False,
+    *args,
+    **kwargs,
+):
+    if aiohttp_client:
+        async with aiohttp_client(headers=headers) as client:
+            method = client.head if head else (client.post if post else client.get)
+            data = await method(url, *args, **kwargs)
+            if evaluate:
+                return await evaluate(data)
+            if re_json:
+                return await data.json()
+            if re_content:
+                return await data.read()
+            if head or object:
+                return data
+            return await data.text()
+    # elif requests:
+    #     method = requests.head if head else (requests.post if post else requests.get)
+    #     data = method(url, headers=headers, *args, **kwargs)
+    #     if re_json:
+    #         return data.json()
+    #     if re_content:
+    #         return data.content
+    #     if head or object:
+    #         return data
+    #     return data.text
+    else:
+        raise DependencyMissingError("install 'aiohttp' to use this.")
+
+
 # ~~~~~~~~~~~~~~~~~~~~DDL Downloader~~~~~~~~~~~~~~~~~~~~
 # @buddhhu @new-dev0
 
 
-async def download_file(link, name):
+async def download_file(link, name, validate=False):
     """for files, without progress callback with aiohttp"""
-    if aiohttp:
-        async with aiohttp.ClientSession() as ses:
-            async with ses.get(link) as re_ses:
-                with open(name, "wb") as file:
-                    file.write(await re_ses.read())
-    elif requests:
-        content = requests.get(link).content
+
+    async def _download(content):
+        if validate and "application/json" in content.headers.get("Content-Type"):
+            return None, await content.json()
         with open(name, "wb") as file:
-            file.write(content)
-    else:
-        raise Exception("Aiohttp or requests is not installed.")
-    return name
+            file.write(await content.read())
+        return name, ""
+
+    return await async_searcher(link, evaluate=_download)
 
 
 async def fast_download(download_url, filename=None, progress_callback=None):
-    if not aiohttp:
-        return await download_file(download_url, filename)
-    async with aiohttp.ClientSession() as session:
+    if not aiohttp_client:
+        return await download_file(download_url, filename)[0], None
+    async with aiohttp_client() as session:
         async with session.get(download_url, timeout=None) as response:
             if not filename:
                 filename = unquote(download_url.rpartition("/")[-1])
@@ -467,6 +507,7 @@ def humanbytes(size):
 def numerize(number):
     if not number:
         return None
+    unit = ""
     for unit in ["", "K", "M", "B", "T"]:
         if number < 1000:
             break

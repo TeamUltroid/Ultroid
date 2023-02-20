@@ -17,33 +17,33 @@ if run_as_module:
 
 
 Redis = MongoClient = psycopg2 = Database = None
-if (Var.REDIS_URI or Var.REDISHOST):
+if Var.REDIS_URI or Var.REDISHOST:
     try:
         from redis import Redis
     except ImportError:
         LOGS.info("Installing 'redis' for database.")
-        os.system("pip3 install -q redis hiredis")
+        os.system(f"{sys.executable} -m pip install -q redis hiredis")
         from redis import Redis
 elif Var.MONGO_URI:
     try:
         from pymongo import MongoClient
     except ImportError:
         LOGS.info("Installing 'pymongo' for database.")
-        os.system("pip3 install -q pymongo[srv]")
+        os.system(f"{sys.executable} -m pip install -q pymongo[srv]")
         from pymongo import MongoClient
 elif Var.DATABASE_URL:
     try:
         import psycopg2
     except ImportError:
         LOGS.info("Installing 'pyscopg2' for database.")
-        os.system("pip3 install -q psycopg2-binary")
+        os.system(f"{sys.executable} -m pip install -q psycopg2-binary")
         import psycopg2
 else:
     try:
         from localdb import Database
     except ImportError:
         LOGS.info("Using local file as database.")
-        os.system("pip3 install -q localdb.json")
+        os.system(f"{sys.executable} -m pip install -q localdb.json")
         from localdb import Database
 
 # --------------------------------------------------------------------------------------------- #
@@ -84,16 +84,18 @@ class _BaseDatabase:
     def _get_data(self, key=None, data=None):
         if key:
             data = self.get(str(key))
-        if data:
+        if data and isinstance(data, str):
             try:
                 data = ast.literal_eval(data)
             except BaseException:
                 pass
         return data
 
-    def set_key(self, key, value):
+    def set_key(self, key, value, cache_only=False):
         value = self._get_data(data=value)
         self._cache[key] = value
+        if cache_only:
+            return
         return self.set(str(key), str(value))
 
     def rename(self, key1, key2):
@@ -129,12 +131,11 @@ class MongoDB(_BaseDatabase):
     def keys(self):
         return self.db.list_collection_names()
 
-    def set_key(self, key, value):
+    def set(self, key, value):
         if key in self.keys():
             self.db[key].replace_one({"_id": key}, {"value": str(value)})
         else:
             self.db[key].insert_one({"_id": key, "value": str(value)})
-        self._cache.update({key: value})
         return True
 
     def delete(self, key):
@@ -278,9 +279,9 @@ class RedisDB(_BaseDatabase):
             if var:
                 hash_ = var.split("_", maxsplit=2)[1].split("_")[0]
             if hash:
-                kwargs["host"] = os.environ(f"QOVERY_REDIS_{hash_}_HOST")
-                kwargs["port"] = os.environ(f"QOVERY_REDIS_{hash_}_PORT")
-                kwargs["password"] = os.environ(f"QOVERY_REDIS_{hash_}_PASSWORD")
+                kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
+                kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
+                kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")
         self.db = Redis(**kwargs)
         self.set = self.db.set
         self.get = self.db.get
@@ -303,7 +304,14 @@ class RedisDB(_BaseDatabase):
 class LocalDB(_BaseDatabase):
     def __init__(self):
         self.db = Database("ultroid")
+        self.get = self.db.get
+        self.set = self.db.set
+        self.delete = self.db.delete
         super().__init__()
+
+    @property
+    def name(self):
+        return "LocalDB"
 
     def keys(self):
         return self._cache.keys()
@@ -315,6 +323,7 @@ class LocalDB(_BaseDatabase):
 def UltroidDB():
     _er = False
     from .. import HOSTED_ON
+
     try:
         if Redis:
             return RedisDB(
@@ -337,8 +346,9 @@ def UltroidDB():
         LOGS.critical(
             "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
         )
-    if HOSTED_ON == "termux":
+    if HOSTED_ON == "local":
         return LocalDB()
     exit()
+
 
 # --------------------------------------------------------------------------------------------- #

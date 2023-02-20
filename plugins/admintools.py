@@ -20,18 +20,9 @@ from telethon.utils import get_display_name
 
 from pyUltroid.dB import DEVLIST
 from pyUltroid.fns.admins import ban_time
+from pyUltroid.fns.info import get_uinfo
 
-from . import (
-    HNDLR,
-    LOGS,
-    eod,
-    eor,
-    get_string,
-    get_uinfo,
-    inline_mention,
-    types,
-    ultroid_cmd,
-)
+from . import HNDLR, LOGS, eod, eor, get_string, inline_mention, types, ultroid_cmd
 
 
 @ultroid_cmd(

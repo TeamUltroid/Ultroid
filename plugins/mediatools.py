@@ -73,7 +73,8 @@ async def mi(e):
         else:
             naam = await r.download_media()
     elif match and (
-        os.path.isfile(match) or (match.startswith("https://") and is_url_ok(match))
+        os.path.isfile(match)
+        or (match.startswith("https://") and (await is_url_ok(match)))
     ):
         naam, xx = match, "file"
     else:
@@ -123,18 +124,18 @@ async def rotate_(ult):
     reply = await ult.get_reply_message()
     msg = await ult.eor(get_string("com_1"))
     photo = reply.game.photo if reply.game else None
-    if photo or reply.photo or reply.sticker:
-        media = await ult.client.download_media(photo or reply)
-        img = cv2.imread(media)
-        new_ = rotate_image(img, match)
-        file = "ult.png"
-        cv2.imwrite(file, new_)
-    elif reply.video:
+    if reply.video:
         media = await reply.download_media()
         file = f"{media}.mp4"
         await bash(
             f'ffmpeg -i "{media}" -c copy -metadata:s:v:0 rotate={match} "{file}" -y'
         )
+    elif photo or reply.photo or reply.sticker:
+        media = await ult.client.download_media(photo or reply)
+        img = cv2.imread(media)
+        new_ = rotate_image(img, match)
+        file = "ult.png"
+        cv2.imwrite(file, new_)
     else:
         return await msg.edit("`Unsupported Media..\nReply to Photo/Video`")
     if os.path.exists(file):
