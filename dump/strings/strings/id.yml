@@ -1,0 +1,637 @@
+name: Indonesia
+natively: Indonesia
+
+authors:
+  - itsmenandos
+  - mrismanaziz
+
+# commons
+com_1: "`Sedang Memproses...`"
+com_2: "`Sedang Mencari...`"
+com_3: "`Yang anda Masukan Tidak Valid`"
+com_4: "`Media Tidak Didukung..`"
+com_5: "`Mengunduh...`"
+com_6: "`Mengunggah...`"
+com_7: "`Maaf Telah Terjadi ERROR`"
+
+# chatactions
+can_1: "**#GBanned_User** Bergabung.\n\n**User** : {}\n**Karena**: {}\n\n`Pengguna dibanned.`"
+can_2: "∆ **#UsernameUpdate**\n\n@{} mengubah username menjadi @{}"
+can_3: "∆ **#UsernameUpdate**\n\n{} menghapus username. (@{})"
+can_4: "∆ **#UsernameUpdate**\n\n{}'s username baru --> @{}"
+
+# help
+help_1: "`{}` bukan plugin yang valid!"
+help_2: "Bot tidak menanggapi inline kueri.\nLebih baik untuk menggunakan `{}restart`"
+help_3: "`Tolong aktifkan inline mode bot Anda dari` @Botfather."
+help_4: "• Plugins"
+help_5: "• Addons"
+help_6: "••Voice Chat"
+help_7: "Inline Plugins••"
+help_8: "⚙️ Owner Tools"
+help_9: "Settings ⚙️"
+help_10: "••ᴛᴜᴛᴜᴘ••"
+help_11: "Nama Plugin - {}\n\n✘ Perintah Tersedia -\n\n"
+help_12: "Obrolan Suara tidak Aktif!"
+help_13: "Ketik `{}setdb ADDONS True` untuk Menginstall Plugin tambahan Resmi"
+
+# userlogs
+userlogs_1: "Id Obrolan yang Anda Masukan Di Tag Logger Salah, Harap Perbaiki"
+userlogs_2: "Tambahkan saya ke Grup Tag Log Anda untuk Menyimpan Tag"
+userlogs_3: "Tinggalkan Obrolan"
+userlogs_4: "Bot Assistant Anda Tidak Dapat Mengirim Pesan di Grup Tag Log.\nTambahkan untuk Mendapatkan Tag Log Anda.."
+userlogs_5: "Keluar `{}`"
+
+# admintools
+adm_1: "`Saya tidak tahu siapa dia!`"
+adm_2: "`Hmm.. Sepertinya saya tidak punya hak di sini!`"
+adm_3: "`Sediakan Waktu juga..`"
+pro_1: "`Balas pengguna untuk mempromosikannya!`"
+pro_2: "{} **sekarang menjadi admin di** {} **dengan judul** {}"
+de_1: "`Balas ke pengguna untuk menurunkannya!`"
+de_2: "{} `bukan lagi admin di {}`"
+ban_1: "`Balas ke pengguna atau berikan nama pengguna untuk mencekalnya!`"
+ban_2: " `LoL, saya tidak bisa Mencekal Developer saya 😂`"
+ban_3: "`Saya tidak berhak membanned pengguna.`"
+ban_4: "{} **Telah dibanned oleh** {} **di** `{}`"
+ban_5: "\n**Alasan**: `{}`"
+tban_1: "`Membalas pesan seseorang atau memberikan id-nya...`"
+tban_2: "**Berhasil dibanned** `{}` **dalam** `{}` **untuk** `{}`"
+unban_1: "`Balas ke pengguna atau berikan nama pengguna untuk membatalkan banned!`"
+unban_2: "`Saya tidak berhak membatalkan pemblokiran pengguna.`"
+unban_3: "{} **Telah diunbanned oleh** {} **di** `{}`"
+kick_1: "`Saya tidak berhak menendang pengguna.`"
+kick_2: " `Lol, saya tidak bisa Mengkick Developer saya`😂"
+kick_3: "`Saya tidak bisa menendangnya...`"
+kick_4: "{} **dikick oleh** {} **di** `{}`"
+pin_1: "`Balas pesan untuk menyematkannya!`"
+pinned_1: "Pesan yang Disematkan Tidak Ditemukan!"
+pinned_2: "Pesan yang Disematkan di Obrolan saat ini adalah [Lihat Disini]({})."
+unpin_1: "Balas pesan, atau, gunakan `{}unpin all`"
+listpin_1: "Tidak ada pesan yang disematkan di grup ini!"
+purge_1: "`Balas pesan yang akan dibersihkan.`"
+purgeall_1: "`Balas pesan seseorang untuk dihapus.`"
+purgeall_2: "Berhasil Membersihkan Semua Pesan dari {}"
+
+# akinator
+aki_1: "Game telah Dihentikan...."
+aki_2: "Memulai permainan"
+aki_3: "Waktu habis !"
+
+# antiflood
+antiflood_1: "`Pengaturan Antiflood Dinonaktifkan`"
+antiflood_2: "`Tidak ada flood limit dalam obrolan ini.`"
+antiflood_3: "`Anda telah dibisukan.`"
+antiflood_4: "`Berhasil Memperbarui Setelan Antiflood ke {} dalam grup ini.`"
+antiflood_5: "`Batas Flood limit untuk grup ini adalah {}.`"
+
+# ascii
+ascii_1: "`Mohon Balas ke gambar.`"
+ascii_2: "`Mengconvert ke html...`"
+
+# audiotools
+audiotools_1: "Balas Audio atau video.."
+audiotools_2: "Berhasil Diunduh, Sekarang Mengonversi ke suara"
+audiotools_3: "`Berikan waktu dalam format untuk memangkas`"
+audiotools_4: "`Data Salah`"
+audiotools_5: "`Mencoba Mengunduh...`"
+audiotools_6: "`Durasi pemangkasan salah`"
+audiotools_7: "Audio yang Dipangkas Dari `{}` Ke `{}`"
+audiotools_8: "Balas ke File Video..`"
+audiotools_9: "`Tidak Ada Audio Ditemukan...`"
+audiotools_10: "`Audio yang Diekstrak dari Video...`"
+
+# asstcmd
+asstcmd_1: "`Gunakan Perintah ini dengan Balasan dan kata untuk menggunakan perintah.`"
+asstcmd_2: "`Beri saya perintah yang ingin Anda hapus.`"
+asstcmd_3: "Perintah: `/{}` Berhasil Dihapus."
+asstcmd_4: "Perintah: `/{}` Berhasil Disimpan."
+asstcmd_5: "Tidak ada perintah yang ditemukan"
+asstcmd_6: "**DAFTAR CMD ASSISTANT**\n\n"
+
+# autocorrect
+act_1: "Fitur AUTOCORRECT Berhasil Diaktifkan"
+act_2: "Fitur AUTOCORRECT Berhasil Dinonaktifkan"
+
+# autopic
+autopic_1: "`Berikan keyword untuk dicari...`"
+autopic_2: "Tidak ada Hasil yang ditemukan untuk `{}`"
+autopic_3: "Mendapatkan Koleksi `{}` yang terkait dengan keyword Anda !\nMemulai Autopic !"
+autopic_4: "AUTOPIC tidak digunakan !!"
+autopic_5: "AUTOPIC Berhenti!"
+
+# inline
+inline_1: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nPʟᴜɢɪɴs ~ {}**"
+inline_2: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}**"
+inline_3: "[Uʟᴛʀᴏɪᴅ Sᴜᴘᴘᴏʀᴛ](t.me/UltroidSupportChat)\n\n**Hᴇʟᴘ Mᴇɴᴜ Oғ {}.\n\nAᴅᴅᴏɴs ~ {}\n\nᴋᴇᴛɪᴋ `.setdb ADDONS True` ᴅᴀɴ ʀᴇsᴛᴀʀᴛ ᴜɴᴛᴜᴋ ᴍᴇɴᴅᴀᴘᴀᴛᴋᴀɴ ᴀᴅᴅᴏɴs.**"
+inline_4: "** Bᴏᴛ Oғ {}\n\nMᴀɪɴ Mᴇɴᴜ\n\nPʟᴜɢɪɴs ~ {}\nAᴅᴅᴏɴs ~ {}\nTᴏᴛᴀʟ Cᴏᴍᴍᴀɴᴅs ~ {}**"
+inline_5: "**Mᴇɴᴜ Tᴇʟᴀʜ Dɪᴛᴜᴛᴜᴘ**"
+inline_6: "**Menu Bantuan untuk Voice Chat {}**\n**Perintah yang tersedia:** `{}`\n\n@TeamUltroid"
+inline_7: "Ketik `.help {}` untuk mendapatkan daftar perintah."
+inline_8: "Klik tombol di bawah ini untuk memperbarui!"
+inline_9: "Anda Sudah Menggunakan Versi Terbaru"
+
+# tagnotif
+tagnot_1: "{} menandai anda dalam {}\n\n```{}```\n\n[📨 Pesan 📨]({})"
+tagnot_2: "{} menandai anda dalam {}\n\n [📨 Pesan 📨]({})"
+
+# whisper
+wspr_1: "@{} pesan rahasia buatmu.\nHapus pesanmu setelah membaca.\nAtau pesan selanjutnya tidak bisa diterima."
+wspr_2: "Pesan dihapus!"
+wspr_3: "Tambahkan beberapa id atau username juga"
+wspr_4: "Pengguna {} Tidak Ditemukan\nMohon Cari Lagi"
+wspr_5: "Anda tidak dapat melakukan ini"
+
+# afk
+afk_1: "**Tidak Lagi AFK**\n**Karena ~** `{}`"
+afk_2: "**#AFK**\n**Menyetel AFK ke mode** `False`\n**AFK untuk** `{}`"
+afk_3: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**\n**Karena:** `{}`"
+afk_4: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**"
+afk_5: "`AFK dulu.`\n\n**Karena:** `{}`"
+afk_6: "Dadah Gua AFK dulu."
+
+# bot
+bot_1: "Hey, I am alive."
+bot_2: "Stats"
+bot_3: "Repo"
+bot_4: "Support"
+bot_5: "`Sedang Merestart...`"
+alive_1: "**The Ultroid Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **Owner** - `{}`\n┣ **Version** - `{}`\n┣ **Py-Ultroid** - `{}`\n┣ **UpTime** - `{}`\n┣ **Python** - `{}`\n┣ **Telethon** - `{}`\n┣ **Branch** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+log: "**Heroku** Ultroid Logs.\nPasted [here]({}) too!"
+ping: "**Pong !!** `{}ms`\n**Uptime** - `{}`"
+usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+usage_simple: "**Total Ruang Disk:** `{}`\n**Terpakai:** `{}`\n**Kosong:** `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
+shutdown: "GoodBye {}.\n`Sedang Mematikan bot...`"
+
+# blacklist
+blk_1: "`Berikan kata blacklist untuk ditambahkan..`"
+blk_2: "Berhasil: `{}` Memasukan Daftar Kata Terlarang di sini."
+blk_3: "`Berikan kata untuk dihapus dari Kata Terlarang..`"
+blk_4: "Berhasil Menghapus `{}` dari Kata Terlarang."
+blk_5: "Daftar Kata Terlarang Yang Ditemukan Dalam Obrolan Ini Adalah :\n\n"
+blk_6: "Tidak Ada Daftar Kata Terlarang Yang Ditemukan Di Sini"
+
+# broadcast
+bd_1: "`Menambahkan ke database...`"
+bd_2: "`Mencoba menambahkan semua channel admin ke database...`"
+bd_3: "**Berhasil.**\nChats sudah ada dalam Database: {}\nBaru ditambahkan: {}"
+bd_4: "Channels ditambahkan!"
+bd_5: "`Menambahkan ke database!`"
+bd_6: "`Channel sudah ada dalam database!`"
+bd_7: "Dihapus dari database"
+bd_8: "`Menghapus...`"
+bd_9: "Channel sudah dihapus dari database."
+
+# calculator
+calc_1: "• Ultroid Inline Calculator •"
+calc_2: "Buka Kalkulator Lagi"
+
+# channel hacks
+cha_1: "Channel yang diberikan tidak valid"
+cha_2: "Sumber Channel berhasil ditambahkan"
+cha_3: "Sumber Channel sudah ditambahkan"
+cha_4: "Database sumber Channel dihapus."
+cha_5: "Sumber Channel dihapus dari database"
+cha_6: "Sumber Channel sudah dihapus dari database."
+cha_7: "Channel tujuan di database:"
+cha_8: "Sumber Channel dalam database:"
+
+# carbon
+carbon_1: "Carbon dibuat oleh [{}](tg://user?id={})"
+carbon_2: "`Balas Pesan atau file yang dapat dibaca..`"
+carbon_3: "`Berikan Warna Kustom untuk Membuat Carbon...`"
+
+# chat_bot
+chab_1: "Balas ke pesan pengguna atau beri saya id/username untuk menambahkan ChatBot AI!"
+chab_2: "`Tidak ada pengguna yang menambahkan AI.`"
+chab_3: "**Total Daftar Pengguna yang Diaktifkan AI Dalam Grup Ini :**\n\n"
+
+# chats
+chats_1: "`Tidak dapat menghapus obrolan ini`"
+chats_2: "`Saya bukan admin`"
+chats_3: "**#Dihapus**\nMenghapus {}"
+chats_4: "Berhasil Membuat [{}]({}) Grup Anda!"
+chats_5: "Join @TeamUltroid"
+chats_6: "Grup/Channel {} Anda Telah Menjadi Bos!"
+
+# clean action
+clan_1: "Menambahkan Pengaturan Tindakan Bersih Untuk Obrolan ini"
+clan_2: "Pengaturan Tindakan Bersih yang Dihapus Untuk Obrolan ini"
+clan_3: "`ID Tidak Valid`"
+clan_4: "`Tidak Ada Obrolan Yang Ditambah`"
+clan_5: "Tindakan Bersih sudah diaktifkan di Obrolan ini."
+
+# converter
+cvt_1: "`Balas ke media/Dokumen apa pun.`"
+cvt_2: "Berikan Nama dan Ekstensi File"
+cvt_3: "`Balas ke media..`"
+cvt_4: "`Balas ke img atau file dengan thumbnail.`"
+cvt_5: "File yang dibalas tidak memiliki thumbnail.`"
+cvt_6: "Menambahkan [Ini]({}) Sebagai Gambar Kecil Khusus Anda"
+cvt_7: "`Membalas ke file yang dapat dibaca`"
+cvt_8: "`Bukan File yang Dapat Dibaca.`"
+
+# eventsofday
+eod_1: "🎊 *Acara Hari Ini**\n\n"
+eod_2: "• **Acara untuk {}/2022**\n\n"
+
+# core
+core_1: "`Modul ditemukan`"
+core_2: "{}.py gunakan `.paste` untuk menempel di neko dan raw.."
+core_3: "`Cari lagi..?`"
+core_4: "Modul {} ditemukan"
+core_5: "{}.py gunakan `.paste` untuk menempel di neko dan raw.."
+core_6: "Tidak dapat Menemukan Modul {}.py"
+core_7: "Tidak Ada Modul Seperti Itu"
+core_8: "Ga ada modul yang namanya {}.py"
+core_9: "`Beri tau nama plugin yang ingin Anda unload`"
+core_10: "**Uɴʟᴏᴀᴅᴇᴅ** `{}` **Bᴇʀʜᴀsɪʟ.**"
+core_11: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bɪsᴀ Uɴʟᴏᴀᴅ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_12: "**Tɪᴅᴀᴋ Aᴅᴀ Pʟᴜɢɪɴ Yᴀɴɢ Bᴇʀɴᴀᴍᴀ** `{}`"
+core_13: "`Beri tau nama plugin yang ingin Anda uninstall`"
+core_14: "**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{}` **Bᴇʀʜᴀsɪʟ.**"
+core_15: "**Aɴᴅᴀ Tɪᴅᴀᴋ Bɪsᴀ Uɴɪɴsᴛᴀʟʟ Oғғɪᴄɪᴀʟ Pʟᴜɢɪɴs**"
+core_16: "`Beri tau nama plugin yang ingin Anda load`"
+core_17: "**Bᴇʀʜᴀsɪʟ Dɪ Lᴏᴀᴅ** `{}`"
+core_18: "**Tidak dapat diload** `{}` **karena kesalahan berikut.**\n`{}`"
+
+# devtools
+devs_1: "`Tidak ada cmd yang diberikan`"
+devs_2: "`Berikan beberapa python cmd`"
+devs_3: "`Berikan Beberapa Kode C++..`"
+
+# dm
+dm_1: "`Berikan username atau id Obrolan ke mana harus mengirim.`"
+dm_2: "`Berikan teks untuk mengirim atau membalas pesan`"
+dm_3: "**⚜️Berhasil Mengirim Pesan!⚜️**"
+dm_4: "ERROR: {}\nBaca Cara Menggunakan Ketik `{}help dm`"
+dm_5: "`Silahkan Check di Private.`"
+dm_6: "`Tidak ditemukan pesan untuk dikirim :(`"
+
+# echo
+echo_1: "**Echo Diaktifkan Untuk Pengguna:**\n\n"
+
+# fake action
+fka_1: "Memulai Fake Action Untuk {} detik."
+
+# fedutils
+sf_1: "Memulai Mass-FedBan..."
+sf_2: "`Tidak ada pengguna yang dipilih!`"
+sf_3: "Lu gabisa banned Developer gua!! dasar Noob"
+sf_4: "`Sepertinya Rose tidak merespons atau plugin bermasalah`"
+sf_5: "Anda hanya dapat menggunakan perintah fed satu kali setiap 5 menit"
+sf_6: "Coba lagi dalam 5 menit."
+sf_7: "Tidak dapat mengumpulkan FedAdminList. Sedang Mencoba lagi ({}/3)..."
+sf_8: "Kesalahan"
+sf_9: "Tidak dapat mengumpulkan FedAdminList."
+sf_10: "FBaning dalam {} feds."
+sf_11: "ID Grup FBan yang ditentukan salah."
+sf_12: "{} Pengecualian."
+sf_13: "Kesalahan dalam menghapus file FedAdmin.\n{}"
+sf_14: "SuperFBan Selesai.\nTotal Feds - {}.\nPengecualian - {}.\n Pengaruh {} feds.\n#TB"
+sf_15: "Memulai Mass-UnFedBan..."
+sf_16: "SuperUnFBan Selesai.\nTotal Feds - {}.\nPengecualian - {}.\n Pengaruh {} feds.\n#TB"
+sf_17: "`Beri saya id seseorang, atau balas pesan seseorang untuk memeriksa fedstatnya.`"
+sf_18: "Daftar feds {} telah dibanned.\n\nDikumpulkan menggunakan Ultroid."
+sf_19: "**Kesalahan**\n `Unblock` @MissRose_Bot `dan coba lagi!"
+sf_20: "`Mengekstrak informasi...`"
+sf_21: "\n\nFedInfo diekstrak oleh Ultroid"
+sf_22: "Tidak ada pengguna yang ditunjuk."
+sf_23: "**Error**\n**Buka Blokir** @MissRose_Bot **dan coba lagi!**"
+
+# filter
+flr_1: "`Masukan keyword perintah ini untuk ditetapkan sebagai filter dan balas...`"
+flr_2: "Daftar Filter Yang Aktif Disini adalah\n\n"
+flr_3: "`Berikan filter untuk dihapus..`"
+flr_4: "**Berhasil Menyimpan Filter** `{}`"
+flr_5: "**Berhasil Menghapus Filter** `{}`"
+flr_6: "Tidak Ada Filter Apapun Disini"
+
+# fontgen
+fgn_1: "**Font yang tersedia**\n\n"
+
+# force subscribe
+fsub_1: "Berikan Channel tempat Anda ingin Pengguna Bergabung!"
+fsub_2: "Berikan Username atau ID Channel yang Benar"
+fsub_3: "ForceSub tidak Aktif dalam Obrolan ini !"
+fsub_4: "Bergabung dengan Channel"
+fsub_5: "Bunyikan Saya"
+fsub_6: "Silakan Gabung Channel!\nKemudian Klik Tombol Ini!"
+fsub_7: "Pesan Ini Bukan untuk Anda"
+fsub_8: "Terima Kasih Telah Bergabung!"
+
+# extra
+ex_1: "`Balas pesan...`"
+
+# gdrive
+gdrive_1: "`Anda telah memberi otorisasi dengan Google Drive`"
+gdrive_2: "Pergi [kesini](https://console.developers.google.com/flows/enableapi?apiid=drive) dan dapatkan `GDRIVE_CLIENT_ID` dan `GDRIVE_CLIENT_SECRET` kamu\n\nKirim GDRIVE_CLIENT_ID dan GDRIVE_CLIENT_SECRET kamu seperti ini.\n`GDRIVE_CLIENT_ID GDRIVE_CLIENT_SECRET` dipisahkan dengan spasi."
+gdrive_3: "`Client Id salah anjim`"
+gdrive_4: "`Terjadi kesalahan! Kirim `/auth` lagi.\nJika masih sama, harap hubungi `@TeamUltroid"
+gdrive_5: "`Berhasil!\nAnda siap untuk menggunakan Google Drive dengan Ultroid Userbot.`"
+gdrive_6: "`Pergi ke `{}` dan kirim ``/auth.`"
+gdrive_7: "**File Berhasil Diupload kedalam G-Drive :**\n\n[{}]({})"
+
+# get addons
+gas_1: "Harap berikan link raw!"
+
+# greetings
+grt_1: "`Berhasil Menyimpan Catatan selamat datang`"
+grt_2: "Silakan gunakan ini dalam grup dan bukan PM!"
+grt_3: "`Balas pesan yang ingin Anda atur sebagai selamat datang`"
+grt_4: "`Tidak ada sambutan yang ditetapkan!`"
+grt_5: "`Berhasil Menghapus Catatan Selamat Datang`"
+grt_6: "`Tidak ada perpisahan yang ditetapkan!`"
+grt_7: "`Balas pesan yang ingin Anda atur sebagai selamat tinggal`"
+
+# glitch
+glitch_1: "`Glitching...`"
+
+# mediainfo
+mdi_1: "Info Lebih Jelas"
+
+# nightmode
+nightm_1: "Berikan Waktu dalam format yang benar"
+nightm_2: "Waktu berhasil disetel"
+nightm_3: "Berhasil Menambahkan Obrolan Saat Ini Ke Mode Malam"
+nightm_4: "Berhasil Menghapus Obrolan Saat Ini dari Mode Malam"
+nightm_5: "Ada yang Salah"
+
+# pmpermit
+pmperm_1: "Harap tunggu saya merespons atau Anda akan diblokir dan dilaporkan sebagai spam!!"
+pmperm_2: "Anda telah melakukan spamming pada pesan Boss saya."
+pmperm_3: "Balas pesan seseorang atau coba perintah ini secara pribadi."
+
+# schedule_msg
+schdl_1: "`Berhasil Membuat Pesan terjadwal `"
+schdl_2: "`Format Salah`"
+
+# searches
+srch_1: "`Kamu Mencari apa? Berikan saya username!!`"
+srch_2: "`Tidak ada pengguna yang ditemukan...`"
+srch_3: "`Lagu tidak ditemukan...`"
+
+# snip
+snip_1: "Berikan kata untuk ditetapkan sebagai snip dan balas pesan."
+snip_2: "Berikan kata untuk dihapus..."
+snip_3: "Tidak Ada Snips Yang disimpan Di Sini."
+
+# specialtools
+spcltool_1: "Balas Audio atau video"
+spcltool_2: "`Selesai.. Sekarang balas video yang ingin Anda tambahkan Audio ini`"
+spcltool_3: "Balas ke video"
+spcltool_4: "`Pertama balas audio dengan .raw`"
+spcltool_5: "Berhasil Diunduh, Sekarang Menambahkan Audio Anda ke Video"
+spcltool_6: "`Masukkan input dalam format dd/mm/yyyy`"
+spcltool_7: "`Selamat Ulang Tahun Untuk Kamu 🎉🎊`"
+spcltool_8: "Berikan sesuatu untuk dicari.."
+spcltool_9: "Tidak Menemukan Apa-apa"
+
+# sudo
+sudo_1: "`Balas pesan atau tambahkan id/username.`"
+sudo_2: "Anda tidak dapat menambahkan diri sendiri sebagai Pengguna Sudo..."
+sudo_3: "`Tidak ada Pengguna SUDO yang ditetapkan...`"
+sudo_4: "`Bot tidak dapat ditambahkan sebagai Pengguna Sudo.`"
+
+# unsplash
+unspl_1: "Tidak ada hasil yang ditemukan!"
+
+# updater
+upd_1: "`Memeriksa pembaruan, harap tunggu....`"
+upd_2: "`Oops.. Updater tidak dapat melanjutkan karena beberapa masalah.`\n\n**LOGTRACE:**\n"
+upd_3: "**Tersedia PEMBARUAN Ultroid untuk Branch [[{}]]({}/tree/{}):\n\nPERUBAHAN:**\n\n{}"
+upd_4: "`Perubahan log terlalu besar, lihat file untuk melihatnya.`"
+upd_5: "Klik tombol di bawah ini untuk memperbarui."
+upd_6: "\n**BOT Anda sudah paling-terbaru dengan [[{}]]({}/tree/{})**\n"
+upd_7: "`Pembaruan Lembut Tapi Cepat...`"
+
+# upload download
+udl_1: "`Balas ke file/media yang ingin Anda download...`"
+udl_2: "Download Berhasil..\nTo\n`{}`\nin `{}`"
+udl_3: "`Berikan tempat penyimpanan khusus ke file`"
+udl_4: "`Mencoba mengunduh...`"
+udl_5: "`Anda lupa memberikan link :(`"
+udl_6: "`Direktori Ini Kosong.`"
+udl_7: "`Anda tidak bisa melakukan itu!`"
+
+# vctools
+vct_1: "`Memulai Obrolan Suara...`"
+vct_2: "**Berhasil Mengubah Judul VCG menjadi** `{}`"
+vct_3: "`Mengundang Anggota ke Obrolan Suara...`"
+vct_4: "`Memberhentikan Obrolan Suara...`"
+vct_5: "`Berhasil Mengundang {} orang`"
+vct_6: "Silahkan Masukan Title untuk VCG!"
+
+# words
+wrd_1: "• **Kata :** `{}`\n• **Arti :** __{}__\n\n• **Contoh :** __{}__"
+wrd_2: "• **Kata** - `{}`\n\n• **Sinonim** - \n"
+wrd_3: "• **Kata** - `{}`\n\n• **Antonim** - \n"
+wrd_4: "`Berikan Kata untuk Menemukan Maknanya..`"
+wrd_5: "Sinonim"
+wrd_6: "Antonim"
+wrd_7: "Tidak ada sinonim yang ditemukan!!\n\n`{}`"
+wrd_8: "Tidak ada Antonim yang ditemukan!!\n\n`{}`"
+
+# profanitY
+prof_1: "`Menambahkan Obrolan Ini untuk Penyaringan Kata-kata Tidak Senonoh!`"
+prof_2: "`Menghapus Obrolan Ini dari Pemfilteran Kata-Kata Tidak Senonoh!`"
+
+# notes
+notes_1: "`Gunakan Perintah ini dengan Balasan dan kata untuk menggunakan catatan.`"
+notes_2: "Berhasil Menyimpan Catatan `#{}`"
+notes_3: "`Beri saya handler catatan yang ingin Anda hapus.`"
+notes_4: "Catatan Yang Ditemukan Dalam Obrolan Ini\n\n"
+notes_5: "Tidak Ada Catatan Yang Ditemukan Di Sini"
+
+# stickertools
+sts_1: "`Anda belum menulis artikel apa pun, Waifu akan pergi.`"
+sts_2: "`Balas ke Stiker Animasi...`"
+sts_3: "**Silakan pilih dari {} **"
+sts_4: "`Balas ke Stiker Non Animasi.`"
+sts_5: "**Paket Sticker Berhasil Dicuri**.\n**Sticker Pack:** [Lihat Disini]({})"
+sts_6: "`Membalas pesan/media...`"
+sts_7: "**Stiker ditambahkan dalam Paket Berbeda !\nPaket Ini Baru dibuat!\nPaket Anda dapat ditemukan** [disini](t.me/addstickers/{})"
+sts_8: "`Gagal menambahkan stiker, gunakan bot` @Stickers `untuk menambahkan stiker secara manual.`"
+sts_9: "`Ooo Animated Sticker 👀...`"
+sts_10: "`Balas ke media apa pun...`"
+sts_11: "Colong Sticker dulu yee kan..."
+sts_12: "**Kanged!**\n**Emoji :** {}\n**Sticker Pack** [Lihat Disini](t.me/addstickers/{})"
+sts_13: "`Beralih ke Sticker Pack {} karena ruang yang tidak mencukupi`"
+
+# whichsong
+whs_1: "<• Balas ke File Audio •>"
+whs_2: "`Mencoba mengidentifikasi lagu....`"
+whs_3: "Gagal Mengidentifikasi lagu :("
+whs_4: "**Lagu Ditemukan!**\nNama: __{}__"
+
+# webupload
+wbl_1: "`Berikan Nama File..`"
+
+# writer
+writer_1: "`Berikan Beberapa Teks Juga`"
+
+# webshot
+wbs_1: "`Tolong berikan URL!`"
+wbs_2: "Invalid URL!"
+wbs_3: "**Berhasil Mengambil WebShot**\n**URL**: {}"
+
+# youtube
+youtube_1: "Beri saya URL (youtube) untuk mengunduh audio!"
+youtube_2: "`Berikan Link Audio Langsung Untuk Mengunduh`"
+youtube_3: "Beri saya URL (youtube) untuk mengunduh video!"
+youtube_4: "`Berikan Tautan Video Langsung Untuk Mengunduh`"
+youtube_5: "Beri saya keyword penelusuran (youtube) untuk mengunduh audio!"
+youtube_6: "`Mengunduh lagu audio...`"
+youtube_7: "Beri saya keyword penelusuran (youtube) untuk mengunduh video!"
+youtube_8: "`Mengunduh video...`"
+
+# ziptools
+zip_1: "Balas ke media/Dokumen apa pun."
+zip_2: "Pertama tambahkan All Files Via `{}addzip` lalu doZip untuk zip semua file sekaligus."
+zip_3: "`Hanya Balas ke file zip saja`"
+
+# file share
+fsh_1: "**Daftar file yang disimpan.:**"
+fsh_2: "**File telah disimpan!**\n\n**Bagikan Link:** {}"
+fsh_3: "`Balas pesan untuk membuat link yang dapat dibagikan!`"
+fsh_4: "**Tidak ada file yang disimpan!**"
+# ---------------------------------------------------#
+
+# assisant
+ast_1: "Pilih API yang ingin Anda setel."
+ast_2: "**remove.bg API**\nMasukkan API key Anda dari remove.bg.\n\nGunakan /cancel untuk membatalkan."
+ast_3: "Haloo {}. Silakan telusuri opsi"
+
+# inlinestuff
+instu_1: "Pencarian aplikasi. Masukkan nama aplikasi!"
+instu_2: "History Pencarian terkini"
+instu_3: "Masukkan Keyword untuk dicari"
+instu_4: "Berhasil"
+
+# games
+games_1: "Pilih Permainan 🎮"
+games_2: "Pilih Kategori!"
+games_3: "Pilih Tingkat Kesulitan"
+games_4: "Pilih Jumlah Soal..."
+games_5: "Pilih Interval Waktu..."
+games_6: "**• Memulai Kuis dalam 5 detik.** \n**• Level :** {}\n**• Qs :** {}"
+
+# callbackstuffs
+clst_1: "`Build dyno userbot sedang berlangsung, silahkan tunggu sampai selesai.`"
+clst_2: "`Berhasil Diperbarui!\nSedang Merestart, harap tunggu...`"
+clst_3: "■ Mengambil Changelogs..."
+clst_4: "Maaf Telah Terjadi ERROR..."
+clst_5: "Selesai!"
+
+# pmbot
+pmbot_1: "**Anda harus bergabung dengan obrolan di bawah ini untuk mengobrol dengan tuan saya!\n\n**"
+pmbot_2: "Tolong balas seseorang untuk dibanned."
+pmbot_3: "Pengguna sudah dibanned!"
+pmbot_4: "`Selamat tinggal! Kamu di blokir.`\n**Pesan yang Anda kirim tidak akan diteruskan.**"
+pmbot_5: "Tolong balas seseorang untuk Unban dia."
+pmbot_6: "Pengguna ini tidak pernah dibanned!"
+pmbot_7: "`Selamat! Anda telah dibatalkan pemblokirannya.`"
+
+# -------------------------- VcBot ------------------------------- #
+
+vcbot_1: "`Meninggalkan obrolan suara.`"
+vcbot_2: "**ERROR:**\n{}"
+vcbot_3: "• Mengubah Volume menjadi `{}%` •"
+vcbot_4: "`Harap tentukan volume dari 1 hingga 200!`"
+vcbot_5: "`Bergabung kembali dengan obrolan suara ini.`"
+vcbot_6: "Anda belum terhubung ke obrolan suara!"
+vcbot_7: "`Harap Tunggu... Ini akan memakan waktu.`"
+vcbot_8: "Berikan daftar putar youtube"
+vcbot_9: "Apakah Anda Bercanda?\nApa yang Harus Dimainkan?"
+vcbot_10: "Obrolan Dihapus dari Grup Vc AUTH!"
+vcbot_11: "`Mendapatkan Daftar Pengguna Bot Obrolan Suara...`"
+vcbot_12: "`Pemutaran tanpa suara dalam obrolan ini.`"
+vcbot_13: "`Melanjutkan Pemutaran dalam obrolan ini.`"
+vcbot_14: "`Pemutaran dijeda dalam obrolan ini.`"
+vcbot_15: "Silakan tentukan nama lagu atau balas file video!"
+vcbot_16: "Obrolan Tidak ada dalam daftar Vc Auth..."
+vcbot_17: "`Balas pesan pengguna atau tambahkan id/username...`"
+vcbot_18: "• Daftar Otentikasi Vc Kosong.."
+vcbot_19: "Sudah Mengotentikasi Obrolan Ini!"
+vcbot_20: "`Mengunduh dan mengonversi...`"
+vcbot_21: "• Tidak ada dalam antrian!"
+vcbot_22: "`Grup ini telah dihapus dari antrian!`"
+
+help_echo: "• `{i} addecho <Reply to one>`\n   Mulai pesan gema otomatis dari pengguna yang menjawab.\n\n• `{i} remecho <balas ke siapa pun>`\n   Matikan\n\n• `{i} listecho <balas ke siapa pun>`\n   Untuk mendapatkan daftar."
+help_mediatools: "-\n\n• `{i} mediainfo <balas ke media>`\n   Untuk mendapatkan info tentang itu.\n\n• `{i} putar <Degeles/Angle> <Reply to Media>`\n   Putar video/foto/media apa pun ..\n   Catatan: Untuk video itu harus sudut 90 -an"
+help_mute: "-\n\n• `{i} mute <balasan ke msg/ id pengguna>`\n    Pengguna bisu dalam obrolan saat ini.\n\n• `{i} unmute <balas ke msg/ id us>`\n    Unmute User dalam obrolan saat ini.\n\n• `{i} dmute <balasan ke msg/ id use>`\n    Pengguna bisu dalam obrolan saat ini dengan menghapus MSG.\n\n• `{i} undermute <balas ke msg/ gunakan id>`\n    Unmute DMuted User dalam obrolan saat ini.\n\n• `{i} tmute <lime> <balas ke msg/ gunakan id>`\n    S- detik\n    M- menit\n    jam\n    d- hari\n    Pengguna bisu dalam obrolan saat ini dengan waktu."
+help_pmpermit: "-\n\n• `{i} a` atau` {i} menyetujui`\n    Menyetujui seseorang untuk PM.\n\n• `{i} da` atau` {i} tidak setuju`\n    Tidak menyetujui seseorang ke PM.\n\n• `{i} block`\n    Memblokir seseorang.\n\n• `{i} unblock` |`{i} unblock all`\n    Buka blokir seseorang.\n\n• `{i} nologpm`\n    Berhenti mencatat pesan dari pengguna.\n\n• `{i} logpm`\n    Mulai mencatat pesan dari pengguna.\n\n• `{i} startarchive`\n    Arsip PM baru.\n\n• `{i} stoparchive`\n    Jangan arsipkan PM baru.\n\n• `{i} cleararchive`\n    Tidak berarsing semua obrolan.\n\n• `{i} Daftar yang Disampaikan`\n   Sebutkan semua PM yang disetujui."
+help_snips: "-\n\n• `{i} AddSnip <Word> <Balas ke pesan>`\n    Tambahkan kata yang digunakan sebagai snip terkait dengan menjawab pesan.\n\n• `{i} remsnip <word>`\n    Hapus kata snip ..\n\n• `{i} listSnip`\n    Buat daftar semua snip.\n\n• Menggunakan :\n    ketik `$ (snip word Anda)` dapatkan balasan yang diselesaikan."
+help_fileshare: "-\n\n• `{i} Store <Reply_to_Message>`\n   Simpan pesan/media yang menjawab dan hasilkan tautan yang dapat dibagikan ke file itu, untuk diakses melalui asisten bot Anda!\n\n• `{i} Delstored <tautan file yang disimpan>`\n    Hapus file yang disimpan.\n\n• `{i} liststored`\n   Dapatkan semua pesan tersimpan.\n\n• Gunakan bot asisten Anda dengan `filestore` untuk melihat file yang disimpan secara inline."
+help_fedutils: "-\n\n• `{i} superfban <Balas ke pengguna/userid/username>`\n    FBAN orang di semua FBI di mana Anda adalah admin.\n\n• `{i} superunfban <Balas ke pengguna/userid/username>`\n    Un-fban orang di semua FBI di mana Anda adalah admin.\n\nTentukan FBAN Group dan FBI untuk mengecualikan di Asisten.\n\n• `{i} fstat <username/id/balas ke pengguna>`\n    Kumpulkan stat fed orang di Rose.\n\n• `{i} fedInfo <(fedId)>`\n    Kumpulkan info federasi dari ID Fed yang diberikan, atau The Fed yang Anda miliki, dari Rose."
+help_other: "-\n\n• `{i} kirim <username/id> <balasan/type>`\n    Kirim pesan ke pengguna/obrolan.\n\n• `{i} fwdreply <balas ke msg>`\n    Balas pesan seseorang dengan meneruskannya secara pribadi.\n\n• `{i} simpan <pesan balasan>`\n    Simpan itu membalas MSG ke kotak pesan yang disimpan Anda.\n\n• `{i} fsave <pesan balasan>`\n    Maju yang membalas MSG ke pesan yang disimpan Anda."
+help_warn: "• `{i} peringatkan <balasan ke pengguna> <alasan>`\n    Memberi peringatan.\n\n• `{i} resetwarn <balasan ke pengguna>`\n    Untuk mengatur ulang semua peringatan.\n\n• `{i} memperingatkan <balasan ke pengguna>`\n   Untuk mendapatkan daftar peringatan pengguna.\n\n• `{i} setWarn <Warn Count> |<Ban/Mute/Kick> `\n   Tetapkan nomor dalam hitungan peringatan untuk peringatan\n   Setelah menempatkan '|'Markus aksi seperti larangan/bisu/tendangan\n   Tendangan 3 defaultnya\n   Contoh: `SetWarn 5 |Mute`"
+help_blacklist: "-\n\n• `{i} Blacklist <Word/All Words With a Space>`\n    daftar hitam kata yang dipilih dalam obrolan itu.\n\n• `{i} RemBlackList <Word>`\n    Hapus kata dari daftar hitam ..\n\n• `{i} listBlackList`\n    Sebutkan semua kata yang masuk daftar hitam.\n\n  'Jika seseorang menggunakan kata -kata daftar hitam, pesannya akan dihapus'\n  'Dan kamu harus admin dalam obrolan itu'"
+help_utilities: "-\n\n• `{i} kickme`: Meninggalkan grup.\n\n• `{i} tanggal`: tunjukkan kalender.\n\n• `{i} listreserved`\n    Sebutkan semua nama pengguna (saluran/grup) yang Anda miliki.\n\n• `{i} statistik`: Lihat statistik profil Anda.\n\n• `{i} pasta` -` Sertakan teks panjang / balas file teks.`\n\n• `{i} info <username/userid/chatid>`\n    Balas pesan seseorang.\n\n• `{i} Undang <username/userid>`\n    Tambahkan pengguna ke obrolan.\n\n• `{i} rmbg <balas pic>`\n    Hapus latar belakang dari gambar itu.\n\n• `{i} telegraf <balasan ke media/teks>`\n    Unggah media/teks ke telegraf.\n\n• `{i} json <balasan ke msg>`\n    Dapatkan pengkodean JSON dari pesan tersebut.\n\n• `{i} Sarankan <balasan ke pesan> atau <judul polling>`\n    Buat jajak pendapat YA/TIDAK untuk saran yang dibalas.\n\n• `{i} ipinfo <Paddress>`: Dapatkan info tentang alamat IP itu.\n\n• `{i} cpy <balasan ke pesan>`\n   Salin pesan yang menjawab, dengan pemformatan. Kedaluwarsa dalam 24 jam.\n• `{i} pst`\n   Tempel pesan yang disalin, dengan pemformatan.\n\n• `{i} thumb <file balasan>`: Unduh thumbnail file balas.\n\n• `{i} getMsg <tautan pesan>`\n  Dapatkan pesan dari obrolan dengan pembatasan maju/salin."
+help_bot: "• `{i} hidup` |`{i} hidup inline`\n    Periksa apakah bot Anda berfungsi.\n\n• `{i} ping`\n    Periksa waktu respons Ultroid.\n\n• `{i} update`\n    Lihat Changelogs Jika ada pembaruan yang tersedia.\n\n• `{i} cmds`\n    Lihat semua nama plugin.\n\n• `{i} restart`\n    Untuk memulai kembali bot Anda.\n\n• `{i} log (sys)`\n    Dapatkan log terminal penuh.\n• `{i} log karbon`\n    Dapatkan log karbonisasi sys.\n• `{i} log heroku`\n   Dapatkan 100 baris log Heroku terbaru.\n\n• `{i} shutdown`\n    Matikan bot Anda."
+help_sudo: "-\n\n• `{i} addsudo`\n    Tambahkan pengguna sudo dengan membalas pengguna atau menggunakan <spare> UserId yang terpisah\n\n• `{i} delsudo`\n    Hapus pengguna sudo dengan membalas pengguna atau menggunakan <spare> UserId yang terpisah\n\n• `{i} listsudo`\n    Buat daftar semua pengguna sudo."
+help_fontgen: "• `{i} font <font name>: <text>`\n    Hasilkan font yang berbeda untuk teks.\n\n• `{i} font`\n    Untuk mendapatkan daftar font"
+help_usage: "• `{i} penggunaan`\n    Dapatkan penggunaan keseluruhan.\n\n• `{i} penggunaan heroku`\n   Dapatkan statistik Heroku.\n\n• `{i} penggunaan db`\n   Dapatkan penggunaan penyimpanan basis data."
+help_schedulemsg: "-\n\n• `{i} jadwalkan <teks/balas ke msg> <tasi>`\n    Dalam waktu Anda dapat menggunakan angka kedua sebagai angka, atau seperti 1 jam atau 1m\n    misalnya.`{i} jadwalkan halo 100` memberikan msg setelah 100 detik.\n    misalnya.`{i} jadwalkan halo 1h` memberikan msg setelah satu jam."
+help_downloadupload: "-\n\n• `{i} ul <path/to/file>`\n    Unggah file di telegram.\n    Gunakan argumen berikut sebelum atau sesudah nama file sesuai persyaratan:\n      `-stream` untuk mengunggah sebagai aliran.\n      `--delete` untuk menghapus file setelah mengunggah.\n      `--no-menjabat 'untuk mengunggah tanpa thumbnail.\n\n• `{i} dl <filename (opsional)>`\n    Balas file untuk diunduh.\n\n• `{i} unduh <ddl> (| filename)`\n    Unduh menggunakan DDL.Akan nama file autogenerate jika tidak diberikan."
+help_variables: "-\n\n• `{i} dapatkan var <variable name>`\n   Dapatkan nilai nama variabel yang diberikan.\n\n• `{i} Dapatkan ketik <variable name>`\n   Dapatkan tipe variabel.\n\n• `{i} dapatkan db <y key>`\n   Dapatkan nilai DB dari kunci yang diberikan.\n\n• `{i} Dapatkan kunci`\n   Dapatkan semua kunci Redis."
+help_antiflood: "-\n\n• `{i} setFlood <Integer>`\n    Tetapkan batas banjir dalam obrolan.\n\n• `{i} remflood`\n    Hapus batas banjir dari obrolan.\n\n• `{i} getFlood`\n    Dapatkan batas banjir dari obrolan."
+help_tools: "-\n\n• `{i} lingkaran`\n    Balas lagu audio atau gif untuk mendapatkan catatan video.\n\n• `{i} ls`\n    Dapatkan semua file di dalam direktori.\n\n• `{i} bot`\n    Menunjukkan jumlah bot dalam obrolan saat ini dengan Perma-Link mereka.\n\n• `{i} hl <a link> <Text-Optional>`\n    Menanamkan tautan dengan spasi putih sebagai pesan.\n\n• `{i} id`\n    Balas stiker untuk mendapatkan ID -nya\n    Balas pengguna untuk mendapatkan ID -nya\n    Tanpa membalas Anda akan mendapatkan ID obrolan\n\n• `{i} sg <balas ke pengguna> <username/id>`\n    Dapatkan namanya riwayat pengguna yang menjawab.\n\n• `{i} tr <dest lang code> <(balas ke) pesan>`\n    Dapatkan pesan yang diterjemahkan.\n\n• `{i} Webshot <Rerl>`\n    Dapatkan tangkapan layar halaman web.\n\n• `{i} shorturl <rerl> <den-optional>`\n    mempersingkat url apa pun ..."
+help_webupload: "-\n\n• `{i} webupload`\n    Unggah file di server lain."
+help_profanityfilter: "-\n\n• `{i} addProfanity`\n   Jika seseorang mengirim kata buruk dalam obrolan, maka bot akan menghapus pesan itu.\n\n• `{i} remProfanity`\n   Dari obrolan dari daftar kata -kata kotor."
+cmda: "✘ Perintah tersedia"
+help_imagetools: "-\n\n• `{i} Border <Reply to Photo/Sticker>`\n    Untuk membuat perbatasan di sekitar media itu ..\n    Ex - `{i} Border 12,22,23`\n       - `{i} Border 12,22,23; lebar (dalam angka) `\n\n• `{i} abu -abu <balasan ke media apa pun>`\n    Untuk membuatnya hitam dan putih.\n\n• `{i} warna <balas ke media putih hitam>`\n    Untuk membuatnya berwarna.\n\n• `{i} toon <Balas ke media apa pun>`\n    Untuk membuatnya toon.\n\n• `{i} bahaya <Balas ke media apa pun>`\n    Untuk membuatnya terlihat bahaya.\n\n• `{i} negatif <balasan ke media apa pun>`\n    Untuk membuat gambar negatif.\n\n• `{i} blur <balas ke media apa pun>`\n    Untuk membuatnya buram.\n\n• `{i} quad <balas ke media apa pun>`\n    Buat pusaran.\n\n• `{i} mirror <Balas ke media apa pun>`\n    Untuk membuat mirror pic.\n\n• `{i} flip <balas ke media apa pun>`\n    Untuk membuatnya terbalik.\n\n• `{i} sketsa <balasan ke media apa pun>`\n    Untuk menggambar sketsa.\n\n• `{i} biru <Balas ke media apa pun>`\n    Hanya keren.\n\n• `{i} csample <nama warna /kode warna>`\n   Contoh: `{i} csample red`\n             `{i} csample #ffffff`\n\n• `{i} pixelator <gambar balasan>`\n    Buat gambar pixelated .."
+help_instagram: "-\n\n• `{i} Instadl <Instagram url>`\n  `Unduh Instagram Media ...`\n\n• `{i} Instadata <Senername>`\n  `Dapatkan data Instagram seseorang atau diri sendiri`\n\n• `{i} Instaul <balasan video/foto> <Caption>`\n  `Unggah media ke Instagram ...`\n\n• `{i} igtv <balasan video> <Caption>`\n  `Unggah media ke igtv ...`\n\n• `{i} gulungan <balasan video> <compttion>`\n  `Unggah media ke gulungan Instagram ...`\n\n• Jalankan sejalan dengan asisten Anda dengan kueri `instatm`\n   Untuk mendapatkan posting halaman rumah ...\n\n• Isi `insta_username` dan` insta_password`\n  sebelum menggunakannya .."
+help_fakeaction: "-\n\n• `{i} ftyping <time/in secs>`\n    `Tunjukkan pengetikan palsu di obrolan saat ini.`\n\n• `{i} faudio <time/in secs>`\n    `Tampilkan tindakan rekaman palsu dalam obrolan saat ini.`\n\n• `{i} fvideo <time/in secs>`\n    `Tampilkan aksi video palsu dalam obrolan saat ini.`\n\n• `{i} fgame <time/in secs>`\n    `Tampilkan aksi bermain game palsu dalam obrolan saat ini.`\n\n• `{i} fsticker <time/in secs>`\n    `Tampilkan stiker palsu memilih tindakan dalam obrolan saat ini.`\n\n• `{i} Flocation <Time/In Secs>`\n    `Tampilkan tindakan lokasi palsu dalam obrolan saat ini.`\n\n• `{i} fcontact <time/in secs>`\n    `Tampilkan kontak palsu memilih tindakan dalam obrolan saat ini.`\n\n• `{i} fround <time/in secs>`\n    `Tampilkan tindakan pesan video palsu di obrolan saat ini.`\n\n• `{i} fphoto <time/in secs>`\n    `Tampilkan foto pengiriman palsu dalam obrolan saat ini.`\n\n• `{i} fdocument <time/in secs>`\n    `Tampilkan dokumen pengiriman palsu di obrolan saat ini.`"
+help_converter: "-\n\n• `{i} konversi <gif/img/stiker/webm>`\n    Balas ke media untuk mengubahnya menjadi gif / gambar / webm / stiker normal.\n\n• `{i} doc <filename.ext>`\n    Balas pesan teks untuk menyimpannya dalam file.\n\n• `{i} buka`\n    Balas file untuk mengungkapkan teksnya.\n\n• `{i} ganti nama <nama file dengan ekstensi>`\n    Ubah nama file\n\n• `{i} Thumbnail <Balas ke file gambar/thumbnail>`\n    Unggah file Anda dengan thumbnail khusus Anda."
+help_autoban: "• `{i} Autokick <on/off>`\n    pada - untuk mengaktifkan.\n    OFF - untuk menonaktifkan.\n    Secara otomatis menendang pengguna baru yang bergabung dari grup.\n\n• `{i} CBAN`\n    Aktifkan/Nonaktifkan Autobanning Send sebagai saluran dalam obrolan bekas.\n\n• `{i} addwl <username>`\n   Tambahkan saluran ke daftar putih ChannelBan.\n\n• `{i} Remwl <Senername>`\n   Hapus saluran dari daftar putih ChannelBan.\n\n• `{i} listWl`: Daftar semua saluran whitelist."
+help_button: "-\n\n• `{i} tombol <teks dengan format tombol`\n   Buat tombol Anda juga dapat membalas foto\n\nFormat:- `{i} tombol hei di sana!@Useultroid 😎.\n[Ultroid |t.me/theultroidide Aöport |t.me/ultroidsupportchat |sama]\n[Teamultroid |t.me/teamultroid] `"
+help_videotools: "-\n\n• `{i} sampel <durasi dalam detik>`\n   Membuat sampel video singkat ..\n\n• `{i} vshots <jumlah tembakan>`\n   Membuat tangkapan layar video ..\n\n• `{i} vtrim <start time> - <end time> di detik`\n    Pangkas video yang panjang .."
+help_words: "-\n\n• `{i} artinya <word>`\n    Dapatkan arti kata.\n\n• `{i} sinonim <word>`\n    Dapatkan semua sinonim.\n\n• `{i} antonim <word>`\n    Dapatkan semua antonim.\n\n• `{i} ud <word>`\n    Fetch Word Defenition dari Urbandictionary."
+help_core: "-\n\n• `{i} instal <balas ke plugin>`\n    Untuk menginstal plugin,\n  `{i} instal f`\n    Untuk memaksa pemasangan.\n\n• `{i} uninstall <plugin name>`\n    Untuk membongkar dan menghapus plugin.\n\n• `{i} muat <plugin name>`\n    Untuk memuat plugin tidak resmi yang diturunkan.\n\n• `{i} Bongkar <plugin name>`\n    Untuk membongkar plugin tidak resmi.\n\n• `{i} membantu <nama plugin>`\n    Menampilkan menu bantuan (seperti ini) untuk setiap plugin.\n\n• `{i} getAddons <tautan mentah ke kode>`\n    Muat plugin dari tautan mentah yang diberikan."
+help_globaltools: "-\n\n• `{i} gban <pengguna balasan/ nama pengguna>`\n• `{i} Ungban`\n    Ban/Unban secara global.\n\n• `{i} gStat <Balas ke pengguna/userid/username>`\n   Periksa apakah pengguna Gbbed.\n\n• `{i} listGban`: Daftar semua pengguna yang direncanakan.\n\n• `{i} gmute` | `{i} ungmute` <Balas pengguna/ nama pengguna>\n    Bisu/buka secara global.\n\n• `{i} gkick <balasan/nama pengguna>` `tendangan secara global User`\n• `{i} gcast <text/reply>` `Kirim msg secara global di semua grps`\n\n• `{i} gadmincast <teks/balasan>` `disiarkan secara global di obrolan admin Anda`\n• `{i} gucast <Text/Reply>` `Kirim MSG secara global di semua pengguna PM`\n\n• `{i} gblacklist <chat id/username/nothing (untuk obrolan saat ini)`\n   Tambahkan obrolan ke daftar hitam dan mengabaikan siaran global.\n• `{i} ungblacklist`` Hapus obrolan dari blacklist.`\n\n• `{i} gPromote <Reply to user> <channel/group/all> <Rank>`\n    Promosikan pengguna secara global di mana Anda berada\n    - Tetapkan apakah akan mempromosikan hanya di grup/saluran/semua.\n    EG- `Boss Group GPromote ~ mempromosikan pengguna di semua GRP.\n        `gPromote @username semua sar` ~ mempromosikan pengguna di semua grup & saluran\n• `{i} gdemote` -` pengguna demote secara global`"
+help_filter: "-\n\n• `{i} addFilter <Word> <balas ke pesan>`\n    Tambahkan kata yang digunakan sebagai filter yang berkaitan dengan menjawab pesan.\n\n• `{i} remfilter <word>`\n    Hapus pengguna yang difilter ..\n\n• `{i} listFilter`\n    Buat daftar semua filter."
+help_afk: "-\n\n• `{i} afk <Reason Opsional>`\n    AFK berarti jauh dari keyboard,\n    Setelah ini diaktifkan, jika seseorang memberi tag atau pesan kepada Anda, ia akan mendapatkan balasan otomatis dari bot.\n\n    (Catatan: Tetapkan file media dalam pesan AFK dengan membalas media apa pun dengan `{i} AFK <alal Reason>`)."
+help_broadcast: "• `{i} addch <id/balas ke daftar/tidak ada>`\n    Tambahkan obrolan ke database.Menambahkan obrolan saat ini jika tidak ada ID yang ditentukan.\n\n• `{i} remch <all/id/none>`\n    Menghapus obrolan yang ditentukan (obrolan saat ini jika tidak ada yang ditentukan), atau semua obrolan.\n\n• `{i} disiarkan <balasan ke msg>`\n    Kirim pesan yang dibalas ke semua obrolan di database.\n\n• `{i} maju <balasan ke msg>`\n     Teruskan pesan ke semua obrolan di database.\n\n• `{i} listChannels`\n    Untuk mendapatkan daftar semua obrolan tambahan."
+help_resize: "-\n\n• `{i} size <Reply to Media>`\n   Untuk mendapatkan ukurannya.\n\n• `{i} mengubah ukuran <number> <number>`\n   Untuk mengubah ukuran gambar pada sumbu x, y.\n   misalnya.`{i} mengubah ukuran 690 960`"
+help_giftools: "• `{i} Invertgif`\n  Buat gif terbalik (negatif).\n\n• `{i} bwgif`\n  Buat gif hitam dan putih\n\n• `{i} rvgif`\n  Membalikkan gif\n\n• `{i} vtog`\n  Balas video, itu akan membuat gif\n  Video ke gif\n\n• `{i} gif <duery>`\n   Kirim video tentang permintaan."
+help_vctools: "-\n\n• `{i} startvc`\n    Mulai panggilan grup dalam grup.\n\n• `{i} stopvc`\n    Hentikan panggilan grup dalam grup.\n\n• `{i} vctitle <title>`\n    Ubah panggilan grup judul.\n\n• `{i} vcinvite`\n    Undang semua anggota grup dalam panggilan grup.\n    (Anda harus bergabung)"
+help_extra: "-\n\n• `{i} del <balasan ke pesan>`\n    Hapus pesan yang dibalas.\n\n• `{i} Edit <Pesan Baru>`\n    Edit pesan terakhir Anda atau balas MSG.\n\n• `{i} salin <balas ke pesan>`\n    Salin menjawab pesan / media.\n\n• `{i} balasan`\n    Balas pesan terkirim terakhir untuk membalas pengguna."
+help_audiotools: "✘ Perintah tersedia -\n`.makevoice <balasan ke audio>`\n   Membuat catatan suara dari audio.\n\n`.atrim <from time> - <to time>`\n   Potong audio sesuai waktu tertentu.\n   Waktu harus dalam hitungan detik.`.atrim 50-70`\n\n`.ExtracTaudio <Balas ke media>`\n   Untuk mengekstrak audio darinya."
+help_chatbot: "-\n\n• `{i} addai <balas ke pengguna/berikan nama pengguna/userid>`\n   Tambahkan AI Chatbot untuk membalas pengguna itu.\n\n• `{i} Remai <Balas ke pengguna/berikan nama pengguna/userid>`\n   Hapus chatbot AI.\n\n• `{i} repai <balasan ke pengguna/berikan pesan>`\n   Balas kepada pengguna dengan pesan oleh AI.\n\n• `{i} listai`\n   Buat daftar pengguna yang saat ini ditambahkan AI."
+help_ziptools: "• `{i} zip <balasan ke file>`\n    zip file balas\n    Untuk mengatur kata sandi di zip: `{i} zip <sword>` balas ke file\n\n• `{i} unzip <Balas ke file zip>`\n    Buka zip file yang menjawab.\n\n• `{i} azip <balasan ke file>`\n   Tambahkan file ke batch untuk zip unggahan batch\n\n• `{i} dozip`\n   Unggah zip batch file yang Anda tambahkan dari `{i} azip`\n   Untuk mengatur kata sandi: `{i} dozip <sword>`"
+help_devtools: "-\n\n• `{i} bash <cmds>`\n• `{i} bash -c <cmds>` gambar karbon sebagai output perintah.\n    Jalankan perintah Linux di telegram.\n\n• `{i} eval <code>`\n    Evaluasi perintah python di telegram.\n    Pintasan:\n        klien = bot = event.client\n        E = acara\n        p = cetak\n        Balas = Await event.get_reply_message ()\n        chat = event.chat_id\n\n• `{i} cpp <code>`\n    Jalankan kode C ++ dari Telegram.\n\n• `{i} sysinfo`\n    Menampilkan info sistem."
+help_beautify: "-\n\n• `{i} karbon <teks/balasan ke msg/balas ke dokumen>`\n    Carbonise teks dengan pengaturan default.\n\n• `{i} rcarbon <teks/balas ke msg/balas ke dokumen>`\n    Carbonise teks, dengan warna BG acak.\n\n• `{i} ccarbon <nolor> <teks/balas ke msg/balas ke dokumen>`\n    Carbonise teks, dengan warna BG kustom.\n\n• `{i} rayso <Pt opt-heme> <Text>/<balas ke pesan>`\n  `{i} rayso list` -` dapatkan daftar tema.`"
+help_chats: "-\n\n• `{i} delchat <opsional- nama pengguna/id>`\n    Hapus grup CMD ini digunakan.\n\n• `{i} getLink`\n• `{i} getLink r` -` Buat tautan dengan persetujuan admin`\n• `{i} getLink r title_here` -` Persetujuan Admin dengan judul tautan`\n• `{i} getLink 10` -` batas penggunaan di tautan baru`\n    Dapatkan tautan grup CMD ini digunakan.\n\n• `{i} create (g | B | C) <Group_name>;<Propsional-UserName> `\n    Buat grup dengan nama tertentu.\n    G - Megagroup/Supergroup\n    B - Kelompok Kecil\n    C - saluran\n\n• `{i} setgpic <balasan ke foto> <chat username>`\n    Atur foto profil grup.\n\n• `{i} delgpic <chat username -optional>`\n    Hapus foto profil grup.\n\n• `{i} unbanall`\n    Unban semua anggota kelompok.\n\n• `{i} rMusers`\n    Hapus pengguna secara khusus."
+help_channelhacks: "🔹 `{i} shift <from channel> |<ke saluran> `\n     Ini akan mentransfer semua pos lama dari saluran A ke saluran B.\n      (Anda dapat menggunakan nama pengguna atau ID saluran juga)\n      Contoh: `{i} shift @abc |@xyz`\n      [Catatan - Tanda ini ('|') adalah Nessesary]\n\n🔹 Untuk memposting otomatis/meneruskan semua pesan baru dari saluran sumber apa pun ke saluran tujuan apa pun.\n\n   `{i} asource <Saluran nama pengguna atau id>`\n      Ini menambahkan saluran sumber ke database\n   `{i} dsource <Saluran nama pengguna atau id>`\n      Ini menghapus saluran sumber dari database\n   `{i} ListSource <Saluran UserName atau ID>`\n      Tampilkan daftar saluran sumber\n\n\n   `{i} adest <Saluran username atau id>`\n      Ini menambahkan saluran Anda ke database\n   `{i} ddest <Saluran username atau id>`\n      Ini menghapus saluran Anda dari database\n   `{i} listDest <Saluran username atau id>`\n      Tampilkan daftar saluran Anda\n\n   'Anda dapat mengatur banyak saluran dalam database'\n   'Untuk mengaktifkan postingan otomatis, gunakan `{i} setDB Autopost True`'"
+help_asstcmd: "-\n\n• `{i} addCmd <baru cmd> <balas>`\n   Ini akan mengatur CMD baru untuk asisten bot Anda dengan pesan balasan itu.\n\n• `{i} remcmd <cmd name>`\n   Ini akan menghapus CMD Anda.\n\n• `{i} listCmd`\n   Untuk mendapatkan daftar semua CMD khusus Anda."
+help_search: "-\n\n• `{i} saavn <query pencarian>`\n    Unduh lagu dari Saavn.\n\n• `{i} google <duery>`\n    Untuk melakukan pencarian google.\n\n• `{i} github <username>`\n    Dapatkan informasi lengkap dari profil github pengguna.\n\n• `{i} img <muery>`\n  `{i} img <duery>;<Tidak ada hasil> `\n    Untuk melakukan pencarian gambar.\n\n• `{i} terbalik`\n    Balas gambar atau stiker untuk menemukan sausnya."
+help_calculator: "-\n\n• `{i} Calc` - Inline Calculator"
+help_notes: "-\n\n• `{i} addNote <Word> <balas ke pesan>`\n    Tambahkan Catatan di obrolan yang digunakan dengan menjawab pesan dan kata yang dipilih.\n\n• `{i} Remnote <Word>`\n    Hapus catatan dari obrolan yang digunakan.\n\n• `{i} ListNote`\n    Daftar semua catatan.\n\n• Menggunakan :\n   Setel catatan dalam grup sehingga semua dapat menggunakannya.\n   ketik `#(kata kunci catatan)` untuk mendapatkannya"
+help_qrcode: "-\n\n• `{i} qrcode <teks/balas ke teks>`\n   `Membuat qrcode teks`\n\n• `{i} addQr <gambar balasan> <Text>`\n   `Membuat QR teks dan menambahkannya ke gambar.`\n\n• `{i} qrdecode <balas ke qrcode>`\n   `Ini memecahkan kode qrcode.`"
+help_tag: "-\n\n• `{i} tagall`\n    Tag top 100 anggota obrolan.\n\n• `{i} tagadmins`\n    Tag admin obrolan itu.\n\n• `{i} tagowner`\n    Tag pemilik obrolan itu\n\n• `{i} tagbots`\n    Tag bot obrolan itu.\n\n• `{i} tagrec`\n    Tag baru -baru ini anggota aktif.\n\n• `{i} tagon`\n    Tag anggota online (bekerja hanya jika privasi mati).\n\n• `{i} tagoff`\n    Tag anggota offline (bekerja hanya jika privasi mati)."
+help_greetings: "-\n\n---- menyambut ----\n• `{i} setWelcome <pesan/balas ke pesan>`\n    Setel pesan selamat datang di obrolan saat ini.\n\n• `{i} clearwelcome`\n    Hapus sambutan dalam obrolan saat ini.\n\n• `{i} getWelcome`\n    Dapatkan pesan selamat datang dalam obrolan saat ini.\n\n---- Selamat tinggal ----\n• `{i} setgoodbye <pesan/balas ke pesan>`\n    Tetapkan pesan selamat tinggal di obrolan saat ini.\n\n• `{i} cleargoodbye`\n    Hapus selamat tinggal di obrolan saat ini.\n\n• `{i} getgoodbye`\n    Dapatkan pesan selamat tinggal di obrolan saat ini.\n\n• `{i} terima kasih On/Off`\n    Kirim stiker terima kasih untuk mencapai jumlah anggota 100*X di grup Anda."
+help_stickertools: "-\n\n• `{i} hancurkan <balas ke animasi stiker>`\n    Untuk menghancurkan stiker.\n\n• `{i} Tiny <Reply to Media>`\n    Untuk membuat stiker kecil.\n\n• `{i} kang <balasan ke gambar/stiker>`\n    Kang stiker (tambahkan ke paket Anda).\n\n• `{i} packkang <pack name>`\n    Kang set stiker lengkap (dengan nama khusus).\n\n• `{i} round <Balas ke media apa pun>`\n    Untuk mengekstrak stiker bundar."
+help_locks: "-\n\n• `{i} lock <msgs/media/stiker/gif/game/inline/polls/undangan/pin/changeInfo>`\n    Kunci pengaturan yang digunakan dalam grup bekas.\n\n• `{i} buka kunci <msgs/media/stiker/gif/game/inline/polls/undangan/pin/changeInfo>`\n    Buka kunci pengaturan yang digunakan dalam grup bekas."
+help_polls: "-\n\n• `{i} polling <puest>;<pection>;<pect> `\n    Dapatkan jajak pendapat anonim dengan opsi yang diberikan\n\n• `{i} polling <puest>;<pection>;<pect> |<ype> `\n    Dapatkan jajak pendapat yang ditentukan dengan jenis yang diinginkan!\n    Jenis harus salah satu dari `publik`,` multipel atau `kuis`\n\n• `{i} polling <puest>;<pection>;<pect> |QUIZ_ <Acciphero> `\n    Dapatkan jajak pendapat kuis di mana jawaban adalah jumlah opsi yang benar"
+help_cleanaction: "-\n\n• `{i} addclean`\n    Bersihkan semua MSG Action yang akan datang dalam menambahkan obrolan seperti seseorang bergabung/kiri/pin dll.\n\n• `{i} remclean`\n    Hapus obrolan dari database.\n\n• `{i} listclean`\n   Untuk mendapatkan daftar semua obrolan di mana itu diaktifkan."
+help_unsplash: "-\n\n• {i} Unsplash <pencarian kueri>;<Tidak ada foto>\n    Pencarian gambar Unsplash."
+help_misc: "-\n\n• `{i} eod`\n    `Dapatkan acara hari ini`\n\n• `{i} pntrst <link/id>`\n    Unduh dan Kirim Pin Pinterest\n\n• `{i} gadget <query pencarian>`\n    Pencarian gadget dari telegram.\n\n• `{i} randomUser`\n   Hasilkan detail tentang pengguna acak.\n\n• `{i} ascii <Reply Image>`\n    Konversi membalas gambar menjadi html."
+help_profile: "-\n\n• `{i} setName <nama depan // nama belakang>`\n    Ubah nama profil Anda.\n\n• `{i} setBio <Io>`\n    Ubah Bio Profil Anda.\n\n• `{i} setpic <balasan ke pic>`\n    Ubah foto profil Anda.\n\n• `{i} delpfp <n> (opsional)`\n    Hapus satu gambar profil, jika tidak ada nilai yang diberikan, selain itu hapus n jumlah foto.\n\n• `{i} POTO <Senername>`\n    Unggah foto obrolan/pengguna jika tersedia."
+help_database: "-\n\n• ** Perintah basis data, jangan gunakan jika Anda tidak tahu apa itu. **\n\n• `{i} setDB Key |nilai`\n    Tetapkan nilai dalam database.\n    mis.\n    `{i} setDb hai\n    `{i} setDb hai |Ultroid di sini`\n    `{i} setDB --Extend variable value` atau` {i} setDb -e variabel value` untuk menambahkan nilai ke nilai yang keluar di db.\n\n• `{i} deldy key`\n    Hapus kunci dari db.\n\n• `{i} RendB Keyname Lama |Keyname baru`\n    Perbarui nama kunci"
+help_admintools: "-\n\n• `.promote <balas ke pengguna/userid/username>`\n• `.demote`\n    Promosikan/Demote Pengguna dalam Obrolan.\n\n• `.BAN <Balas ke pengguna/userid/username> <alasan>`\n• `.unban`\n    Ban/unban Pengguna dari obrolan.\n\n• `.kick <balas ke pengguna/userid/username> <alasan>`\n    Tendang pengguna dari obrolan.\n\n• `.pin <balasan ke pesan>`\n    Pin pesan di obrolan\n• `.tpin <lime> <Temp Pin Message>`\n• `.unpin (semua) <Balas ke pesan>`\n    Buka pesan dalam obrolan.\n\n• `.pinned`\n   Dapatkan pesan yang disematkan dalam obrolan saat ini.\n• `.listpinned`\n   Dapatkan semua pesan yang disematkan dalam obrolan saat ini\n\n• `.autodelete <24h/7d/1m/off>`\n   Aktifkan pesan menghapus otomatis dalam obrolan.\n\n• `.purge <balasan ke pesan>`\n    Bersihkan semua pesan dari pesan yang dibalas.\n\n• `.purgeme <balasan ke pesan>`\n    Bersihkan hanya pesan Anda dari pesan yang dibalas.\n\n• `.purgeall`\n    Hapus semua MSG pengguna yang dibalas."
+help_logo: "-\n\n• `{i} logo <Text>`\n   Menghasilkan logo teks yang diberikan\n   Atau membalas gambar, untuk menulis teks Anda di atasnya.\n   Atau balas file font, untuk menulis dengan font itu."
+help_specialtools: "-\n\n• `{i} WSPR <Senername>`\n    Kirim pesan rahasia ..\n\n• `{i} q <nolor-Optional>`\n• `{i} Q @username`\n• `{i} q r <color-optional>`\n• `{i} q count`:` ganda kutipan`\n    Buat kutipan ..\n\n• `{i} stiker <Query>`\n    Pencarian stiker sesuai keinginan Anda ..\n\n• `{i} getudio <balas audio>`\n    Unduh audio untuk dimasukkan ke dalam video/gif yang diinginkan.\n\n• `{i} addaudio <balasan ke video/gif>`\n    Ini akan menempatkan audio di atas ke video/gif yang dibalas.\n\n• `{i} dob <tanggal lahir>`\n    Masukkan format dd/mm/yy saja (mis. .Dob 01/01/1999).\n\n• `{i} wall <muery>`\n    Cari wallpaper HD sesuai keinginan Anda .."
+
+py_d2: "`Pengguna sudo penuh diperlukan ...`"
+ast_4: "Daftar bahasa yang tersedia."
+py_d8: "`Mengirim media atau stiker tidak diizinkan dalam obrolan ini .`"
+py_d3: "`Gunakan ini di grup/saluran.`"
+py_d5: "`Saya bukan admin.`"
+py_d6: "Perintah ini tidak dapat digunakan oleh bot!"
+py_c1: "Sesi string yang salah.Salin pasta dengan benar!"
+py_d4: "** ⚠️ Pengembang dibatasi! **\nJika Anda tahu apa yang dilakukannya, dan ingin melanjutkan, gunakan\n`{} setDB i_dev true`.\n\nIni mungkin berbahaya."
+py_d1: "`Anda tidak dapat menggunakan perintah ini sekarang.Hubungi pemilik bot ini! `"
+py_c2: "Tidak ada sesi string yang ditemukan.Berhenti ..."
+py_c3: "VC_SESSI Anda kedaluwarsa.Menghapus vc_session dari redis ...\nPerbarui/ubah untuk menggunakan obrolan suara/video dari akun VC ..."
+py_d7: "Percakapan sudah menyala, tunggu kapan -kapan lalu coba lagi."
