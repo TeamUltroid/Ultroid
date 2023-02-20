@@ -50,7 +50,7 @@ async def on_new_mssg(event):
                 if not MSG:
                     MSG += get_string("pmbot_1")
                 try:
-                    uri = ''
+                    uri = ""
                     TAHC_ = await event.client.get_entity(chat)
                     if hasattr(TAHC_, "username") and TAHC_.username:
                         uri = f"t.me/{TAHC_.username}"
