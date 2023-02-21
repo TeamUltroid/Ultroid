@@ -68,7 +68,7 @@ class GDrive:
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         self.headers = {
-            "Authorization": "Bearer " + resp["access_token"],
+            "Authorization": "Bearer " + self.creds["access_token"],
             "Content-Type": "application/json",
         }
 
