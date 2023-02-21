@@ -17,8 +17,7 @@
 """
 
 
-from . import ultroid_cmd, async_searcher
-
+from . import async_searcher, ultroid_cmd
 
 API = {"g": "lmgtfy.com/?q={}%26iie=1", "d": "lmddgtfy.net/?q={}"}
 
@@ -29,7 +28,8 @@ async def _(e):
     text = e.pattern_match.group(2)
     if not text:
         return await e.eor("`Give some text`", time=5)
-    url = "https://da.gd/s?url=https://" + API[key].format(text.replace(" ", "+"))
+    url = "https://da.gd/s?url=https://" + \
+        API[key].format(text.replace(" ", "+"))
     response = await async_searcher(url)
     if response:
         return await e.eor(

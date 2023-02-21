@@ -69,7 +69,9 @@ async def _(event):
             required_file_name + ".opus",
         ]
         try:
-            subprocess.check_output(command_to_execute, stderr=subprocess.STDOUT)
+            subprocess.check_output(
+                command_to_execute,
+                stderr=subprocess.STDOUT)
         except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
             await event.eor(str(exc))
         else:

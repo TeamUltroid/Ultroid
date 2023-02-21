@@ -22,8 +22,9 @@ import urllib
 import emoji
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from telethon.tl import functions, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
+from telethon.tl import functions, types
+
 from . import *
 
 # Oringinal Source from Nicegrill: https://github.com/erenmetesar/NiceGrill/
@@ -56,7 +57,8 @@ async def process(msg, user, client, reply, replied=None):
     italic = ImageFont.truetype(
         "resources/fonts/Roboto-Italic.ttf", 33, encoding="utf-16"
     )
-    fallback = ImageFont.truetype("resources/fonts/Quivira.otf", 43, encoding="utf-16")
+    fallback = ImageFont.truetype(
+        "resources/fonts/Quivira.otf", 43, encoding="utf-16")
 
     # Splitting text
     maxlength = 0
@@ -105,7 +107,8 @@ async def process(msg, user, client, reply, replied=None):
 
     if namewidth > width:
         width = namewidth
-    width += titlewidth + 30 if titlewidth > width - namewidth else -(titlewidth - 30)
+    width += titlewidth + 30 if titlewidth > width - \
+        namewidth else -(titlewidth - 30)
     height = len(text) * 40
 
     # Profile Photo BG
@@ -152,11 +155,14 @@ async def process(msg, user, client, reply, replied=None):
         if reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
-            canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
-            top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
+            canvas = canvas.resize(
+                (stimg.width + pfpbg.width, stimg.height + 160))
+            top = Image.new(
+                "RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
             draw = ImageDraw.Draw(top)
             await replied_user(
-                draw, reptot, replied.message.replace("\n", " "), 20, len(title)
+                draw, reptot, replied.message.replace(
+                    "\n", " "), 20, len(title)
             )
             top = top.crop((135, 70, top.width, 300))
             canvas.paste(pfpbg, (0, 0))
@@ -192,14 +198,17 @@ async def process(msg, user, client, reply, replied=None):
     elif reply.sticker:
         sticker = await reply.download_media()
         stimg = Image.open(sticker)
-        canvas = canvas.resize((stimg.width + pfpbg.width + 30, stimg.height + 10))
+        canvas = canvas.resize(
+            (stimg.width + pfpbg.width + 30, stimg.height + 10))
         canvas.paste(pfpbg, (0, 0))
         canvas.paste(stimg, (pfpbg.width + 10, 10))
         os.remove(sticker)
         return True, canvas
     elif reply.document and not reply.audio and not reply.audio:
-        docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
-        doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
+        docname = ".".join(
+            reply.document.attributes[-1].file_name.split(".")[:-1])
+        doctype = reply.document.attributes[-1].file_name.split(
+            ".")[-1].upper()
         if reply.document.size < 1024:
             docsize = str(reply.document.size) + " Bytes"
         elif reply.document.size < 1048576:
@@ -263,7 +272,8 @@ async def process(msg, user, client, reply, replied=None):
     for line in text:
         for letter in line:
             index = (
-                msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
+                msg.find(letter) if emojicount == 0 else msg.find(
+                    letter) + emojicount
             )
             for offset, length in bold.items():
                 if index in range(offset, length):
@@ -296,7 +306,8 @@ async def process(msg, user, client, reply, replied=None):
                 emojicount += 1
             else:
                 if not await fontTest(letter):
-                    draw.text((x, y), letter, font=textfallback, fill=textcolor)
+                    draw.text(
+                        (x, y), letter, font=textfallback, fill=textcolor)
                     x += textfallback.getsize(letter)[0]
                 else:
                     draw.text((x, y), letter, font=font2, fill=textcolor)
@@ -313,7 +324,8 @@ async def drawer(width, height):
     draw = ImageDraw.Draw(top)
     draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
     draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
-    draw.pieslice((top.width - 75, 0, top.width, 50), 270, 360, fill=(29, 29, 29, 255))
+    draw.pieslice((top.width - 75, 0, top.width, 50),
+                  270, 360, fill=(29, 29, 29, 255))
 
     # Middle part
     middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
@@ -419,7 +431,8 @@ async def replied_user(draw, tot, text, maxlength, title):
     space = 0
     for letter in tot:
         if not await fontTest(letter):
-            draw.text((180 + space, 86), letter, font=namefallback, fill="#888888")
+            draw.text((180 + space, 86), letter,
+                      font=namefallback, fill="#888888")
             space += namefallback.getsize(letter)[0]
         else:
             draw.text((180 + space, 86), letter, font=namefont, fill="#888888")
@@ -427,7 +440,8 @@ async def replied_user(draw, tot, text, maxlength, title):
     space = 0
     for letter in text:
         if not await fontTest(letter):
-            draw.text((180 + space, 132), letter, font=textfallback, fill="#888888")
+            draw.text((180 + space, 132), letter,
+                      font=textfallback, fill="#888888")
             space += textfallback.getsize(letter)[0]
         else:
             draw.text((180 + space, 132), letter, font=textfont, fill="white")

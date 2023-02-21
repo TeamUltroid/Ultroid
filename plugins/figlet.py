@@ -7,7 +7,7 @@
 
 import pyfiglet
 
-from . import ultroid_cmd, split_list
+from . import split_list, ultroid_cmd
 
 CMD_SET = {
     "slant": "slant",

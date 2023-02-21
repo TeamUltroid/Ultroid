@@ -52,7 +52,8 @@ async def random_magic(event):
     if "randomuser" in event.text:
         return
     match = event.pattern_match.group(1)
-    if not (match and match in [*list(API_LIST.keys()), *list(SCRAP_LIST.keys())]):
+    if not (match and match in [
+            *list(API_LIST.keys()), *list(SCRAP_LIST.keys())]):
         return await event.eor(f"`Input Missing/Wrong..`\n`{HNDLR}help random`")
     text, bsC, file = None, None, None
     ret = match in SCRAP_LIST
@@ -86,7 +87,8 @@ async def random_magic(event):
         for word in req:
             text += f"--`{word}`\n"
     elif match == "celebrity" and bsC:
-        file = SCRAP_LIST[match] + bsC.find("img", "featured-celebrity-image")["src"]
+        file = SCRAP_LIST[match] + \
+            bsC.find("img", "featured-celebrity-image")["src"]
         name = bsC.find("div", "info").find("h1").text
         text = f"• **Name :** `{name}`\n"
         desc = bsC.find("p", "fame").text.replace("\n", "")

@@ -13,14 +13,11 @@
 """
 
 import io
-import os
 import random
 import textwrap
 from glob import glob
 
 from PIL import Image, ImageDraw, ImageFont
-from telethon.errors.rpcerrorlist import BotMethodInvalidError
-from telethon.tl.types import InputMessagesFilterDocument
 
 from . import *
 

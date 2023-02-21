@@ -18,7 +18,7 @@
 
 from pokedex import pokedex as badhiya
 
-from . import ultroid_cmd, async_searcher
+from . import async_searcher, ultroid_cmd
 
 
 @ultroid_cmd(pattern="pokemon ?(.*)")

@@ -105,7 +105,7 @@ class BrainfuckInterpreter:
         self._opening_bracket_indexes = []
 
     def _look_forward(self):
-        remaining_commands = self._commands[self.instruction_pointer :]
+        remaining_commands = self._commands[self.instruction_pointer:]
         loop_counter = 0
         index = self.instruction_pointer
 

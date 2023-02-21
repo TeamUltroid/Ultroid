@@ -18,7 +18,8 @@
 import html
 
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
+from telethon.tl.functions.photos import (DeletePhotosRequest,
+                                          UploadProfilePhotoRequest)
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 
@@ -32,7 +33,8 @@ async def _(event):
     whoiam = await event.client(GetFullUserRequest(ultroid_bot.uid))
     if whoiam.full_user.about:
         mybio = str(ultroid_bot.me.id) + "01"
-        udB.set_key(f"{mybio}", whoiam.full_user.about)  # saving bio for revert
+        # saving bio for revert
+        udB.set_key(f"{mybio}", whoiam.full_user.about)
     udB.set_key(f"{ultroid_bot.uid}02", whoiam.users[0].first_name)
     if whoiam.users[0].last_name:
         udB.set_key(f"{ultroid_bot.uid}03", whoiam.users[0].last_name)
@@ -117,7 +119,8 @@ async def get_full_user(event):
         if event.message.entities is not None:
             mention_entity = event.message.entities
             probable_user_mention_entity = mention_entity[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+            if isinstance(probable_user_mention_entity,
+                          MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 replied_user = await event.client(GetFullUserRequest(user_id))
                 return replied_user, None
