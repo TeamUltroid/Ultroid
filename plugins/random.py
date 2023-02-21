@@ -60,8 +60,7 @@ async def random_magic(event):
     try:
         req = await async_searcher(
             API_LIST.get(match) or SCRAP_LIST.get(match),
-            re_json=not ret,
-            re_content=ret,
+            re_json=not ret
         )
     except Exception as er:
         return await event.eor(str(er))

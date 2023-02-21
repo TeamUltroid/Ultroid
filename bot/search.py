@@ -8,7 +8,7 @@ from utilities.helper import async_searcher
 async def unsplash(query, limit=None, shuf=True):
     query = query.replace(" ", "-")
     link = f"https://unsplash.com/s/photos/{query}"
-    extra = await async_searcher(link, re_content=True)
+    extra = await async_searcher(link)
     res = BeautifulSoup(extra, "html.parser", from_encoding="utf-8")
     all_ = res.find_all("img", srcset=re.compile("images.unsplash.com/photo"))
     if shuf:

@@ -14,7 +14,7 @@
    Decode the given text from Morse Code.
 """
 
-from . import async_searcher, ultroid_cmd
+from . import async_searcher, ultroid_cmd, get_string
 
 
 @ultroid_cmd(pattern="mencode ?(.*)")
@@ -24,7 +24,7 @@ async def mencode(event):
     if not text:
         return msg.edit("Please give a text!")
     base_url = "https://apis.xditya.me/morse/encode?text=" + text
-    encoded = await async_searcher(base_url, re_content=False)
+    encoded = await async_searcher(base_url)
     await msg.edit("**Encoded.**\n\n**Morse Code:** `{}`".format(encoded))
 
 
@@ -35,5 +35,5 @@ async def mencode(event):
     if not text:
         return await msg.edit("Please give a text!")
     base_url = "https://apis.xditya.me/morse/decode?text=" + text
-    encoded = await async_searcher(base_url, re_content=False)
+    encoded = await async_searcher(base_url)
     await msg.edit("**Decoded.**\n\n**Message:** `{}`".format(encoded))

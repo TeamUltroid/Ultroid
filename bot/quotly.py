@@ -39,7 +39,7 @@ async def telegraph(file_):
         "https://graph.org"
         + (
             await async_searcher(
-                "https://graph.org/upload", post=True, data=files, re_json=True
+                "https://graph.org/upload", method="POST", data=files, re_json=True
             )
         )[0]["src"]
     )
@@ -149,7 +149,7 @@ async def create_quotly(
         ],
     }
     try:
-        request = await async_searcher(url, post=True, json=content, re_json=True)
+        request = await async_searcher(url, method="POST", json=content, re_json=True)
     except Exception as er:
         if url != _API:
             return await create_quotly(

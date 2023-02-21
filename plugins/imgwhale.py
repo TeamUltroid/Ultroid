@@ -36,7 +36,7 @@ async def imgwhale(event):
     extra = f"?key={api_key}" if api_key else ""
     post = await async_searcher(
         f"https://imgwhale.xyz/new{extra}",
-        post=True,
+        method="POST",
         data={"image": open(file, "rb")},
         re_json=True,
     )

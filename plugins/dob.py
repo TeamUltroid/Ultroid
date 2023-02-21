@@ -82,7 +82,7 @@ async def hbd(event):
         sign = ""
     json = await async_searcher(
         f"https://aztro.sameerkumar.website/?sign={sign}&day=today",
-        post=True,
+        method="POST",
         re_json=True,
     )
     dd = json.get("current_date")
