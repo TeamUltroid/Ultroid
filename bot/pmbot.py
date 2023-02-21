@@ -12,10 +12,7 @@
 # TODO: fix imports
 
 import os
-
-from pyUltroid.dB.asst_fns import *
-from pyUltroid.dB.botchat_db import *
-from pyUltroid.fns.helper import inline_mention
+from utilities.helper import inline_mention
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetFullChannelRequest
