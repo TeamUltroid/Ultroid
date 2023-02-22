@@ -38,7 +38,7 @@
     turns text to яц$їfч font
 """
 
-from . import ultroid_cmd, LOGS
+from . import ultroid_cmd
 
 normiefont = [
     "a",
