@@ -14,7 +14,7 @@
    Decode the given text from Morse Code.
 """
 
-from . import async_searcher, ultroid_cmd, get_string
+from . import async_searcher, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="mencode ?(.*)")
