@@ -18,6 +18,7 @@ The bot will try to auto reply first to the messages by @FastlyWriteBot
 """
 
 from os import remove
+
 from core.remote import rm
 from telethon import events
 

@@ -8,9 +8,11 @@
 
 import string
 
+from utilities.helper import atranslate
+
 from . import (HNDLR, LOGS, get_string, udB, ultroid_bot,  # ignore: pylint
                ultroid_cmd)
-from utilities.helper import atranslate
+
 try:
     from gingerit.gingerit import GingerIt
 except ImportError:

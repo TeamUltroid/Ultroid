@@ -18,6 +18,7 @@
 
 from . import ultroid_cmd
 
+
 @ultroid_cmd(pattern="search( -r|) ?(.*)")
 async def searcher(e):
     eris = await e.eor("`Working..`")
