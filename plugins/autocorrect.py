@@ -5,22 +5,18 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-from . import get_help
-
-__doc__ = get_help("help_autocorrect")
 
 import string
 
 from . import (HNDLR, LOGS, get_string, udB, ultroid_bot,  # ignore: pylint
                ultroid_cmd)
-
+from utilities.helper import atranslate
 try:
     from gingerit.gingerit import GingerIt
 except ImportError:
     LOGS.info("GingerIt not found")
     GingerIt = None
 
-from google_trans_new import google_translator
 from telethon import events
 
 
@@ -43,8 +39,8 @@ async def gramme(event):
     if t[0] == HNDLR or t[0].lower(
     ) not in string.ascii_lowercase or t.endswith(".."):
         return
-    tt = google_translator().detect(t)
-    if tt[0] != "en":
+    tt = await atranslate(t, "en", detect=True)
+    if tt and tt[1] != "en":
         return
     xx = GingerIt()
     x = xx.parse(t)

@@ -18,8 +18,7 @@ The bot will try to auto reply first to the messages by @FastlyWriteBot
 """
 
 from os import remove
-
-from telegraph import upload_file
+from core.remote import rm
 from telethon import events
 
 from . import LOGS, async_searcher, udB, ultroid_bot, ultroid_cmd
@@ -43,8 +42,8 @@ async def fastly_bot(event):
     if not (api and event.photo):
         return
     med = await event.download_media()
-    upload = upload_file(med)
-    link = "https://telegra.ph" + upload[0]
+    with rm.get("telegraph", helper=True, dispose=True) as mod:
+        link = mod.upload_file(med)
     out = await async_searcher(base_url.format(api=api, tgraph=link), re_json=True)
     try:
         txt = out["ParsedResults"][0]["ParsedText"]

@@ -16,6 +16,7 @@
    •  `{i}search -r Heroku : 10`
 """
 
+from . import ultroid_cmd
 
 @ultroid_cmd(pattern="search( -r|) ?(.*)")
 async def searcher(e):
@@ -23,7 +24,7 @@ async def searcher(e):
     args = e.pattern_match.group(2)
     limit = 5
     if not args or len(args) < 2:
-        await eod(eris, "Invalid argument!, Try again")
+        await eris.eor("Invalid argument!, Try again")
         return
 
     if ":" in args:

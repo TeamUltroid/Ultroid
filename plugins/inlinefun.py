@@ -32,13 +32,11 @@
 
 from random import choice
 
-from addons.waifu import deEmojify
-
 from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tweet ?(.*)")
-async def tweet(e):
+async def tweet_(e):
     wai = await e.eor(get_string("com_1"))
     text = e.pattern_match.group(1)
     if not text:
@@ -85,7 +83,6 @@ async def honkasays(e):
     text = e.pattern_match.group(1)
     if not text:
         return await wai.edit("`Give Me Some Text !`")
-    text = deEmojify(text)
     if not text.endswith("."):
         text += "."
     if len(text) <= 9:
@@ -115,7 +112,7 @@ async def nope(doit):
         return await doit.eor(
             "`Sir please give some query to search and download it for you..!`",
         )
-    sticcers = await doit.client.inline_query("Lybot", f"{(deEmojify(ok))}")
+    sticcers = await doit.client.inline_query("Lybot", ok)
     await doit.reply(file=sticcers[0].document)
     await a.delete()
 

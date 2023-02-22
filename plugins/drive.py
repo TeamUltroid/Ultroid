@@ -1,7 +1,4 @@
-from core.decorators._decorators import ultroid_cmd
-from somewhere import GDrive
-
-drive = GDrive()
+from . import ultroid_cmd
 
 
 @ultroid_cmd("gdul( (.*)|$)", fullsudo=True)
