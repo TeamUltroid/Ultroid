@@ -7,7 +7,7 @@
 
 import pyfiglet
 
-from . import split_list, ultroid_cmd
+from . import ultroid_cmd
 
 CMD_SET = {
     "slant": "slant",
@@ -459,8 +459,8 @@ CMD_SET = {
     "zone7": "zone7___",
 }
 
-DataList = sorted(list(CMD_SET.keys()))
-Split = split_list(DataList, 42)
+Split = DataList = sorted(list(CMD_SET.keys()))
+ # Split = split_list(DataList, 42)
 offset = 0
 
 

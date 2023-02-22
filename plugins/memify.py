@@ -21,7 +21,9 @@
 
 """
 
+
 import asyncio
+import contextlib
 import os
 import textwrap
 
@@ -224,11 +226,9 @@ async def mms(event):
         event.chat_id, pic, force_document=False, reply_to=event.reply_to_msg_id
     )
     await xx.delete()
-    try:
+    with contextlib.suppress(BaseException):
         os.remove(ultt)
         os.remove(file)
-    except BaseException:
-        pass
     os.remove(pic)
 
 
