@@ -41,7 +41,7 @@ def upload_file(path):
             from PIL import Image
 
             Image.open(path).save(path, "PNG")
-    return f"https://graph.org{get_client().upload_file(path)[-1]}"
+    return f"https://graph.org{get_client().upload_file(path)[-1]['src']}"
 
 
 @run_async
