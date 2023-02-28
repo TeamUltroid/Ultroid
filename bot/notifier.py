@@ -1,6 +1,6 @@
 from core import LOGS, asst, udB, ultroid_bot
 from telethon import Button
-from utilities.helper import inline_mention, check_update
+from utilities.helper import check_update, inline_mention
 
 
 async def notify(init=False):
