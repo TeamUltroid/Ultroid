@@ -196,11 +196,11 @@ async def DummyHandler(ult):
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
     sender = await e.get_sender()
-    if not isinstance(sender, types.User) or sender.bot:
+    if not isinstance(sender, types.User) or sender.bot or (e.text and e.text.startswith(HNDLR):
         return
     if check_echo(e.chat_id, e.sender_id):
         try:
-            await e.respond(e)
+            await e.reply(e.message, file=e.media)
         except Exception as er:
             LOGS.exception(er)
     key = udB.get_key("CHATBOT_USERS") or {}
