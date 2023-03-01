@@ -1,7 +1,9 @@
 import os
-from .. import ultroid_cmd, get_string, LOGS
-from utilities.tools import is_url_ok, check_filename
+
 from playwright.async_api import async_playwright
+from utilities.tools import check_filename, is_url_ok
+
+from .. import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="webshot( (.*)|$)")
@@ -15,21 +17,21 @@ async def webss(event):
         return await xx.eor(get_string("wbs_2"), time=5)
     path = check_filename("shot.png")
     async with async_playwright() as playwright:
-                chrome = await playwright.chromium.launch()
-                page = await chrome.new_page()
-                await page.goto(xurl)
-                if "--wait" in args:
-                    try:
-                        tim = int(args[args.index("--wait") + 1])
-                        await page.wait_for_timeout(tim)
-                    except (KeyError, ValueError):
-                        pass
-                await page.screenshot(path=path, full_page=not "--short" in args)
+        chrome = await playwright.chromium.launch()
+        page = await chrome.new_page()
+        await page.goto(xurl)
+        if "--wait" in args:
+            try:
+                tim = int(args[args.index("--wait") + 1])
+                await page.wait_for_timeout(tim)
+            except (KeyError, ValueError):
+                pass
+        await page.screenshot(path=path, full_page=not "--short" in args)
     await xx.reply(
-            get_string("wbs_3").format(xurl),
-            file=path,
-            link_preview=False,
-            force_document=True,
+        get_string("wbs_3").format(xurl),
+        file=path,
+        link_preview=False,
+        force_document=True,
     )
     os.remove(path)
     await xx.delete()
