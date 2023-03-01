@@ -14,16 +14,13 @@ from .. import LOGS, get_string, ultroid_cmd
     manager=True,
 )
 async def _(event):
-    if match := event.pattern_match.group(1).strip():
-        try:
-            user = await event.client.parse_id(match)
-        except Exception as er:
-            return await event.eor(str(er))
-    elif event.is_reply:
-        rpl = await event.get_reply_message()
-        user = rpl.sender_id
-    else:
-        user = event.chat_id
+    user = event.pattern_match.group(1).strip()
+    if not user:
+        if event.is_reply:
+            rpl = await event.get_reply_message()
+            user = rpl.sender_id
+        else:
+            user = event.chat_id
     xx = await event.eor(get_string("com_1"))
     try:
         _ = await event.client.get_entity(user)
@@ -33,9 +30,6 @@ async def _(event):
         try:
             peer = get_peer_id(_)
             photo, capt = await get_chat_info(_, event)
-            # TODO:define
-            if is_gbanned(peer):
-                capt += "\n•<b> Is Gbanned:</b> <code>True</code>"
             if not photo:
                 return await xx.eor(capt, parse_mode="html")
             await event.client.send_message(
