@@ -7,7 +7,7 @@ from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
 
 from database import udB
-from database._core import DEVLIST
+from database.helpers import DEVLIST
 
 from . import async_searcher
 
