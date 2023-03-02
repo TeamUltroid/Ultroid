@@ -28,7 +28,7 @@ async def _(event):
         return await xx.edit(f"**ERROR :** {er}")
     if not isinstance(_, User):
         try:
-            peer = get_peer_id(_)
+            get_peer_id(_)
             photo, capt = await get_chat_info(_, event)
             if not photo:
                 return await xx.eor(capt, parse_mode="html")
