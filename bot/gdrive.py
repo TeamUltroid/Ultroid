@@ -57,6 +57,10 @@ class GDrive:
         self.creds = await resp.json()
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
+        self.headers = {
+            "Authorization": "Bearer " + self.creds["access_token"],
+            "Content-Type": "application/json",
+        }
         return self.creds
 
     async def refresh_access_token(self) -> None:
