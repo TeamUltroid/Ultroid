@@ -92,7 +92,7 @@ async def DummyHandler(ult):
                         view_messages=False,
                     )
                     await ult.respond(
-                        f'**@UltroidBans:** Banned user detected and banned!\n`{str(is_banned)}`.\nBan reason: {is_banned["reason"]}',
+                        f'**@globalbannedrainger:** Banned user detected and banned!\n`{str(is_banned)}`.\nBan reason: {is_banned["reason"]}',
                     )
 
             except BaseException:
