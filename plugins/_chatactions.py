@@ -25,7 +25,7 @@ try:
     from ProfanityDetector import detector
 except ImportError:
     detector = None
-from . import HNDLR,LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
+from . import HNDLR, LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
 from ._inline import something
 
 
