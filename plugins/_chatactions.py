@@ -196,7 +196,11 @@ async def DummyHandler(ult):
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
     sender = await e.get_sender()
-    if not isinstance(sender, types.User) or sender.bot or (e.text and e.text.startswith(HNDLR)):
+    if (
+        not isinstance(sender, types.User)
+        or sender.bot
+        or (e.text and e.text.startswith(HNDLR))
+    ):
         return
     if check_echo(e.chat_id, e.sender_id):
         try:
