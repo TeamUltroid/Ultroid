@@ -30,8 +30,6 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
             headers, partfile = arg
             async with aiohttp.request('GET', url, headers=headers) as response:
 
-                chunk_size = 1024 * 1024 * 5
-
                 size = 0
                 with open(partfile, 'wb') as f:
                     # write to file
@@ -178,8 +176,8 @@ class OneDrive:
         # download file with parallel downloading
         await parallel_download(
             download_url,
-            file_path + "/" + file_name,
             file_name,
+            1024*1024*5,
             file_size,
             event
         )
