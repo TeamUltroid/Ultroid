@@ -17,7 +17,7 @@ from aiohttp.client_exceptions import ContentTypeError
 
 from database import udB
 
-from .helper import humanbytes, time_formatter
+from utilities.helper import humanbytes, time_formatter
 
 log = logging.getLogger("GDrive")
 
