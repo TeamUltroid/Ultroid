@@ -23,7 +23,7 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
         chunks)]
 
     def run_async(func, *args):
-        return asyncio.get_event_loop().run_until_complete(func(*args))
+        return asyncio.get_event_loop_policy().new_event_loop().run_until_complete(func(*args))
 
     async def download_part(arg):
         while not pquit:
