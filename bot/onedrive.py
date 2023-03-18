@@ -76,7 +76,7 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
 
 
 class OneDrive:
-    def __init__(self, session):
+    def __init__(self):
         self.base_url = "https://graph.microsoft.com/v1.0"
         self.client_id = udB.get("OD_CLIENT_ID")
         self.client_secret = udB.get("OD_CLIENT_SECRET")
