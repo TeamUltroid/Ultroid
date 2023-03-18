@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import concurrent.futures
+import math
 import os
 import time
 from urllib.parse import parse_qs, urlencode
@@ -47,7 +48,6 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
         tasks = [executor.submit(run_async, download_part, i)
                  for i in the_iter]
         for future in concurrent.futures.as_completed(tasks):
-            # todo
             if not event:
                 return
             completed += future.result()
