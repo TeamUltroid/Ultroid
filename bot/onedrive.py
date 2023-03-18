@@ -177,7 +177,7 @@ class OneDrive:
         await parallel_download(
             download_url,
             file_name,
-            1024*1024*5,
+            1024 * 1024 * 5,
             file_size,
             event
         )
