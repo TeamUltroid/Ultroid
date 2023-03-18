@@ -80,7 +80,7 @@ class OneDrive:
         self.base_url = "https://graph.microsoft.com/v1.0"
         self.client_id = udB.get("OD_CLIENT_ID")
         self.client_secret = udB.get("OD_CLIENT_SECRET")
-        self.creds = udB.get("OD_AUTH_TOKEN") or {}
+        self.creds = udB.get_key("OD_AUTH_TOKEN") or {}
         self.session = ClientSession()
 
     def get_oauth2_url(self):
@@ -236,4 +236,4 @@ class OneDrive:
                     last_txt = crnt_txt
             data = await resp.json()
             data["shareUrl"] = await self.getshareablelink(data.get("id"))
-            return await resp.json()
+            return data
