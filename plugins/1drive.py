@@ -1,8 +1,8 @@
-from . import ultroid_cmd
+import os
 
 from bot.onedrive import OneDrive
 
-import os
+from . import ultroid_cmd
 
 onedrv = OneDrive()
 

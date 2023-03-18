@@ -1,18 +1,15 @@
 import asyncio
 import base64
-import os
 import concurrent.futures
+import os
 import time
 from urllib.parse import parse_qs, urlencode
 
 import aiohttp
-from .. import fetch
-
 from aiohttp import ClientSession
+from utilities.helper import humanbytes, time_formatter
 
 from database import udB
-
-from utilities.helper import humanbytes, time_formatter
 
 pquit = False
 
@@ -33,7 +30,7 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
             headers, partfile = arg
             async with aiohttp.request('GET', url, headers=headers) as response:
 
-                chunk_size = 1024*1024*5
+                chunk_size = 1024 * 1024 * 5
 
                 size = 0
                 with open(partfile, 'wb') as f:
@@ -53,7 +50,8 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
                  for i in the_iter]
         for future in concurrent.futures.as_completed(tasks):
             # todo
-            if not event: return
+            if not event:
+                return
             completed += future.result()
             speed = completed / (time.time() - starttime)
             percentage = completed * 100 / filesize
@@ -165,7 +163,8 @@ class OneDrive:
             return data["link"]["webUrl"]
 
     async def download_file(self, event, file_path: str, file_url):
-        # file_url = https://techierror-my.sharepoint.com/:u:/g/personal/techierror_techierror_onmicrosoft_com/EX8lAMP8pApLgzABaHCQTpgB39DUNTCrtkUftcTOGVPI7A
+        # file_url =
+        # https://techierror-my.sharepoint.com/:u:/g/personal/techierror_techierror_onmicrosoft_com/EX8lAMP8pApLgzABaHCQTpgB39DUNTCrtkUftcTOGVPI7A
         file_url = "u!" + base64.urlsafe_b64encode(file_url.encode()).decode()
         async with self.session.get(
             f"{self.base_url}/shares/{file_url}/driveItem",
