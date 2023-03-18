@@ -59,7 +59,7 @@ class GDrive:
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         self.headers = {
             "Authorization": "Bearer " + self.creds["access_token"],
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", 
         }
         return self.creds
 
