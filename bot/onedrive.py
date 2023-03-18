@@ -12,7 +12,7 @@ from aiohttp import ClientSession
 
 from database import udB
 
-from .helper import humanbytes, time_formatter
+from utilities.helper import humanbytes, time_formatter
 
 pquit = False
 
@@ -73,6 +73,8 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None):
             with open(chunk_path, 'rb') as s:
                 mergedfile.write(s.read())
             os.remove(chunk_path)
+
+    return filename
 
 
 class OneDrive:
@@ -177,11 +179,12 @@ class OneDrive:
         # download file with parallel downloading
         await parallel_download(
             download_url,
-            file_path,
+            file_path + "/" + file_name,
             file_name,
             file_size,
             event
         )
+        return file_name
 
     async def upload_file(self, event, file_path: str, folder_id: str = "root"):
         url = f"{self.base_url}/me/drive/items/{folder_id}:/{os.path.basename(file_path)}:/createUploadSession"
