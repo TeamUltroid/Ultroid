@@ -156,7 +156,7 @@ class OneDrive:
     async def getshareablelink(self, file_id: str):
         url = f"{self.base_url}/me/drive/items/{file_id}/createLink"
         async with self.session.post(
-            url, headers=await self.get_headers(), json={"type": "view"}
+            url, headers=await self.get_headers(), json={"type": "view", "scope": "anonymous"}
         ) as resp:
             data = await resp.json()
             await resp.release()
@@ -234,4 +234,6 @@ class OneDrive:
                 if round((diff % 10.00) == 0) or last_txt != crnt_txt:
                     await event.edit(crnt_txt)
                     last_txt = crnt_txt
+            data = await resp.json()
+            data["shareUrl"] = await self.getshareablelink(data.get("id"))
             return await resp.json()
