@@ -1,6 +1,6 @@
 import os
 
-from bot.onedrive import OneDrive
+from utilities.onedrive import OneDrive
 
 from . import ultroid_cmd
 
