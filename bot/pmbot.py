@@ -10,10 +10,9 @@
 # --------------------------------------- Imports -------------------------------------------- #
 
 """
-# TODO: fix imports
-
 import os
-
+from core import asst, ultroid_bot
+from localization import get_string
 from core.decorators._assistant import asst_cmd
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
@@ -25,6 +24,7 @@ from utilities.helper import inline_mention
 
 from database import udB
 
+OWNER_ID = ultroid_bot.me.id
 FSUB = udB.get_key("PMBOT_FSUB")
 CACHE = {}
 # --------------------------------------- Incoming -------------------------------------------- #
@@ -113,7 +113,7 @@ async def on_out_mssg(event):
 
 @asst_cmd(
     pattern="ban",
-    load=AST_PLUGINS,
+#    load=AST_PLUGINS,
     from_users=[OWNER_ID],
     func=lambda x: x.is_private,
 )
@@ -144,7 +144,7 @@ async def unbanhammer(event):
 
     rem_blacklist(target)
     await event.reply(f"#UNBAN\nUser : {target}")
-    await asst.send_message(target, get_string("pmbot_7"))
+    await event.client.send_message(target, get_string("pmbot_7"))
 
 
 # --------------------------------------- END -------------------------------------------- #
