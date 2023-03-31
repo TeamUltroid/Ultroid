@@ -1,7 +1,10 @@
 import contextlib
 import os
+
 from core.remote import rm
+
 from database.helpers import get_random_color
+
 from .. import get_string, ultroid_cmd
 
 
@@ -57,8 +60,8 @@ async def q_cmd(event):
     try:
         with rm.get("quotly", helper=True, dispose=True) as quotly:
             file = await quotly.create_quotly(
-            reply_, bg=match, reply=replied_to, sender=user
-        )
+                reply_, bg=match, reply=replied_to, sender=user
+            )
     except Exception as er:
         return await msg.edit(str(er))
     message = await reply.reply("Quotly by Ultroid", file=file)
