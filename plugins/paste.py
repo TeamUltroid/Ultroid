@@ -1,6 +1,10 @@
 import os
-import certifi, ssl
-from . import ultroid_cmd, fetch, LOGS, asst
+import ssl
+
+import certifi
+
+from . import LOGS, asst, fetch, ultroid_cmd
+
 
 async def get_paste(data: str, extension: str = "txt"):
     ssl_context = ssl.create_default_context(cafile=certifi.where())
