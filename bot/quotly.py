@@ -5,11 +5,10 @@ import os
 from PIL import Image
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
+from utilities.helper import async_searcher
 
 from database import udB
 from database.helpers import DEVLIST
-from utilities.helper import async_searcher
-
 
 _API = "https://bot.lyo.su/quote/generate"
 _entities = {
@@ -119,8 +118,10 @@ async def _format_quote(event: types.Message, reply=None, sender=None, type_="pr
 
     return message
 
+
 class UnknownException(Exception):
     ...
+
 
 async def create_quotly(
     event,
