@@ -23,7 +23,7 @@ async def mencode_cmd(event):
     text = event.pattern_match.group(1)
     if not text:
         return msg.edit("Please give a text!")
-    base_url = f"https://apis.xditya.me/morse/encode?text={text}" 
+    base_url = f"https://apis.xditya.me/morse/encode?text={text}"
     encoded = await async_searcher(base_url)
     await msg.edit("**Encoded.**\n\n**Morse Code:** `{}`".format(encoded))
 
