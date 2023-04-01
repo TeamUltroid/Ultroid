@@ -39,7 +39,7 @@ async def piston_run(event):
         return await event.answer([result])
     output = await async_searcher(
         f"{PISTON_URI}execute",
-        post=True,
+        method="POST",
         json={
             "language": lang,
             "version": version,
