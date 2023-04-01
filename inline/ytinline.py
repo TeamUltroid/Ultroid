@@ -9,6 +9,7 @@
 import os
 import re
 
+from core.decorators._assistant import callback
 from PIL import Image
 from telethon import Button
 from telethon.errors.rpcerrorlist import (FilePartLengthInvalidError,
@@ -18,10 +19,8 @@ from telethon.tl.types import InputWebDocument as wb
 from utilities.helper import (bash, fast_download, humanbytes, numerize,
                               time_formatter)
 from utilities.ytdl import dler, get_buttons, get_formats
-from core.decorators._assistant import callback
 
 from .. import LOGS, asst, in_pattern, udB
-
 
 ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
