@@ -11,6 +11,8 @@ from telethon.tl.types import InputMessagesFilterDocument
 async def get_from_channels(plugin_channels):
     if not os.path.exists("modules/channels"):
         os.mkdir("modules/channels")
+        with open("modules/channels/__init__.py", "w") as f:
+            f.write("from .. import *")
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
         LOGS.info(f"{'•'*4} {chat}")
@@ -20,7 +22,7 @@ async def get_from_channels(plugin_channels):
             shutil.rmtree(_path)
         os.mkdir(_path)
         with open(f"{_path}/__init__.py", "w") as file:
-            file.write("from .... import *")
+            file.write("from .. import *")
         try:
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=7
@@ -28,7 +30,6 @@ async def get_from_channels(plugin_channels):
                 plugin = _path + \
                     x.file.name.replace("_", "-").replace("|", "-")
                 if not os.path.exists(plugin):
-                    await asyncio.sleep(0.6)
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
