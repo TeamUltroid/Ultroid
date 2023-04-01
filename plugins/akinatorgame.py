@@ -1,9 +1,11 @@
 import re
+
 import akinator
-from . import ultroid_cmd, asst, Button, get_string
-from telethon.tl import types
+from core.decorators._assistant import asst_cmd, callback, in_pattern
 from telethon.errors import BotMethodInvalidError
-from core.decorators._assistant import in_pattern, callback, asst_cmd
+from telethon.tl import types
+
+from . import Button, asst, get_string, ultroid_cmd
 
 games = {}
 aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
@@ -20,7 +22,9 @@ async def akina(e):
         await asst.send_file(
             e.chat_id,
             aki_photo,
-            buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
+            buttons=Button.inline(
+                get_string("aki_2"),
+                data=f"aki_{e.chat_id}_{e.id}"),
         )
     except Exception as er:
         return await e.eor(f"**ERROR :** `{er}`")
@@ -46,7 +50,8 @@ async def doai(e):
     except KeyError:
         return await e.answer(get_string("aki_1"), alert=True)
     bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
-    cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
+    cts = [Button.inline(o, f"aka_{adt}_{o}")
+           for o in ["Probably", "Probably Not"]]
 
     bts = [bts, cts]
     # ignored Back Button since it makes the Pagination looks Bad
@@ -70,7 +75,8 @@ async def okah(e):
         gs = gm.first_guess
         text = "It's " + gs["name"] + "\n " + gs["description"]
         return await e.edit(text, file=gs["absolute_picture_path"])
-    bts = [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]]
+    bts = [Button.inline(o, f"aka_{ch}_{mid}_{o}")
+           for o in ["Yes", "No", "Idk"]]
     cts = [
         Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]
     ]
@@ -95,4 +101,3 @@ async def eiagx(e):
         )
     ]
     await e.answer(ans)
-

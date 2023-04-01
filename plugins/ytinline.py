@@ -11,17 +11,12 @@ import re
 
 from PIL import Image
 from telethon import Button
-from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
+from telethon.errors.rpcerrorlist import (FilePartLengthInvalidError,
+                                          MediaEmptyError)
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-
-from utilities.helper import (
-    bash,
-    fast_download,
-    humanbytes,
-    numerize,
-    time_formatter,
-)
+from utilities.helper import (bash, fast_download, humanbytes, numerize,
+                              time_formatter)
 from utilities.ytdl import dler, get_buttons, get_formats
 
 from .. import LOGS, asst, callback, in_pattern, udB
