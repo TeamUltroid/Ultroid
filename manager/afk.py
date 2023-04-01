@@ -8,14 +8,9 @@
 from datetime import datetime as dt
 
 from telethon.events import NewMessage
-from telethon.tl.types import (
-    Message,
-    MessageEntityMention,
-    MessageEntityMentionName,
-    User,
-)
+from telethon.tl.types import (Message, MessageEntityMention,
+                               MessageEntityMentionName, User)
 from telethon.utils import get_display_name
-
 from utilities.helper import inline_mention, time_formatter
 
 from . import asst, asst_cmd
