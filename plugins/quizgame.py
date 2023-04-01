@@ -1,14 +1,17 @@
+import asyncio
+import operator
 import re
-import asyncio, operator
 import uuid
-from .. import asst, get_string, Button, async_searcher, inline_mention
-from core.decorators._assistant import callback, asst_cmd
-from telethon.errors import ChatSendStickersForbiddenError
-from random import choice, shuffle
-from telethon.events import Raw
 from html import unescape
-from telethon.tl.types import PollAnswer, InputMediaPoll, UpdateMessagePollVote, Poll
+from random import choice, shuffle
 
+from core.decorators._assistant import asst_cmd, callback
+from telethon.errors import ChatSendStickersForbiddenError
+from telethon.events import Raw
+from telethon.tl.types import (InputMediaPoll, Poll, PollAnswer,
+                               UpdateMessagePollVote)
+
+from .. import Button, asst, async_searcher, get_string, inline_mention
 
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
@@ -67,12 +70,14 @@ async def choose_cata(event):
         text = get_string("games_3")
     elif match[0] == "c":
         m = match[1:]
-        buttons = [[Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
+        buttons = [
+            [Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
         text = get_string("games_4")
     elif match[0] == "t":
         m_ = match[1:]
         buttons = [
-            [Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]
+            [Button.inline(str(i), f"trzias{m_}_{i}")
+             for i in [10, 30, 60, 120]]
         ]
         text = get_string("games_5")
     elif match[0] == "s":
@@ -102,7 +107,9 @@ async def choose_cata(event):
             opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
             [
                 opts.append(
-                    PollAnswer(unescape(a), str(uuid.uuid1()).split("-")[0].encode())
+                    PollAnswer(
+                        unescape(a), str(
+                            uuid.uuid1()).split("-")[0].encode())
                 )
                 for a in q["incorrect_answers"]
             ]
@@ -121,7 +128,8 @@ async def choose_cata(event):
                 solution_entities=[],
             )
             m_ = await event.client.send_message(chat, file=poll)
-            POLLS.update({m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
+            POLLS.update(
+                {m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(int(in_))
         if not TRIVIA_CHATS[chat]:
             await event.respond(
