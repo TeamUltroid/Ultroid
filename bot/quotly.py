@@ -11,6 +11,7 @@ from database import udB
 from database.helpers import DEVLIST
 
 _API = "https://bot.lyo.su/quote/generate"
+
 _entities = {
     types.MessageEntityPhone: "phone_number",
     types.MessageEntityMention: "mention",

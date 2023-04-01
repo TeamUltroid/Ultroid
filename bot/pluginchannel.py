@@ -13,7 +13,7 @@ async def get_from_channels(plugin_channels):
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
         LOGS.info(f"{'•'*4} {chat}")
-        _path = f"modules/channels/c{chat}"
+        _path = f"modules/channels/c{chat}/"
         if not os.path.exists(_path):
             os.mkdir(_path)
             with open(f"{_path}/__init__.py", "w") as file:
