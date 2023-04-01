@@ -1,10 +1,10 @@
 import os
 
-from utilities.onedrive import OneDrive
-
+from core.remote import rm
 from . import ultroid_cmd
 
-onedrv = OneDrive()
+with rm.get("onedrive", helper=True) as mod:
+    onedrv = mod.OneDrive()
 
 
 @ultroid_cmd(pattern="1dul ((.*)|$)")
