@@ -13,8 +13,9 @@ from telethon.errors.rpcerrorlist import (BotInlineDisabledError,
                                           MessageNotModifiedError)
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest as gu
+from core.decorators._assistant import callback
 
-from . import (HNDLR, LOGS, asst, callback, get_string, in_pattern,
+from . import (HNDLR, LOGS, asst, get_string, in_pattern,
                inline_mention, ultroid_bot, ultroid_cmd)
 
 buddhhu = {}

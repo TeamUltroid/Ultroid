@@ -18,14 +18,9 @@ from telethon.tl.types import InputWebDocument as wb
 from utilities.helper import (bash, fast_download, humanbytes, numerize,
                               time_formatter)
 from utilities.ytdl import dler, get_buttons, get_formats
+from core.decorators._assistant import callback
 
-from .. import LOGS, asst, callback, in_pattern, udB
-
-try:
-    from youtubesearchpython import VideosSearch
-except ImportError:
-    LOGS.info("'youtubesearchpython' not installed!")
-    VideosSearch = None
+from .. import LOGS, asst, in_pattern, udB
 
 
 ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
@@ -33,7 +28,7 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 BACK_BUTTON = {}
 
 
-@in_pattern("yt", owner=True)
+@in_pattern("yt", owner=True, button={"Yt Search": "yt"})
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
