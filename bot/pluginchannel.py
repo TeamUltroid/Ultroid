@@ -19,7 +19,7 @@ async def get_from_channels(plugin_channels):
             shutil.rmtree(_path)
         os.mkdir(_path)
         with open(f"{_path}/__init__.py", "w") as file:
-            file.write("from core import *")
+            file.write("from modules import *")
         try:
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=7
