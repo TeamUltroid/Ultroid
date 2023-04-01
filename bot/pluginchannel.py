@@ -1,5 +1,5 @@
 import asyncio
-import os
+import os, shutil
 
 from core import ultroid_bot
 from core.setup import LOGS
@@ -14,13 +14,15 @@ async def get_from_channels(plugin_channels):
     for chat in plugin_channels:
         LOGS.info(f"{'•'*4} {chat}")
         _path = f"modules/channels/c{chat}/"
-        if not os.path.exists(_path):
-            os.mkdir(_path)
-            with open(f"{_path}/__init__.py", "w") as file:
-                file.write("from .. import *")
+        # Clear, to remove deleted plugins
+        if os.path.exists(_path):
+            shutil.rmtree(_path)
+        os.mkdir(_path)
+        with open(f"{_path}/__init__.py", "w") as file:
+            file.write("from core import *")
         try:
             async for x in ultroid_bot.iter_messages(
-                chat, search=".py", filter=InputMessagesFilterDocument, wait_time=10
+                chat, search=".py", filter=InputMessagesFilterDocument, wait_time=7
             ):
                 plugin = _path + \
                     x.file.name.replace("_", "-").replace("|", "-")
