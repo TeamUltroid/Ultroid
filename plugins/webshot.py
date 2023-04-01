@@ -26,7 +26,7 @@ async def webss(event):
                 await page.wait_for_timeout(tim)
             except (KeyError, ValueError):
                 pass
-        await page.screenshot(path=path, full_page=not "--short" in args)
+        await page.screenshot(path=path, full_page="--short" not in args)
     await xx.reply(
         get_string("wbs_3").format(xurl),
         file=path,
