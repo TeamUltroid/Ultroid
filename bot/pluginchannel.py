@@ -8,16 +8,21 @@ from telethon.tl.types import InputMessagesFilterDocument
 
 
 async def get_from_channels(plugin_channels):
-    if not os.path.exists("addons"):
-        os.mkdir("addons")
+    if not os.path.exists("modules/channels"):
+        os.mkdir("modules/channels")
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
         LOGS.info(f"{'•'*4} {chat}")
+        _path = f"modules/channels/c{chat}"
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+            with open(f"{_path}/__init__.py", "w") as file:
+                file.write("from .. import *")
         try:
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=10
             ):
-                plugin = "addons/" + \
+                plugin = _path + \
                     x.file.name.replace("_", "-").replace("|", "-")
                 if not os.path.exists(plugin):
                     await asyncio.sleep(0.6)
