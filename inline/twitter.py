@@ -1,6 +1,8 @@
 from random import choice
-from telethon.tl.types import InputWebDocument  as wb
-from . import in_pattern, async_searcher
+
+from telethon.tl.types import InputWebDocument as wb
+
+from . import async_searcher, in_pattern
 
 # Thanks to OpenSource
 _bearer_collected = [
@@ -11,7 +13,9 @@ _bearer_collected = [
 
 _cache = {}
 
-@in_pattern("twitter", owner=True, button={"Twitter User": "twitter theultroid"})
+
+@in_pattern("twitter", owner=True,
+            button={"Twitter User": "twitter theultroid"})
 async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
@@ -58,4 +62,3 @@ async def twitter_search(event):
     swi_ = f"🐦 Showing {len(reso)} Results!" if reso else "No User Found :("
     await event.answer(reso, switch_pm=swi_, switch_pm_param="start")
     _cache[match] = reso
-

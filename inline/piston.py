@@ -1,11 +1,13 @@
-from . import in_pattern, get_string, async_searcher, asst, Button
 from telethon.tl.types import InputWebDocument as wb
+
+from . import Button, asst, async_searcher, get_string, in_pattern
 
 PISTON_URI = "https://emkc.org/api/v2/piston/"
 PISTON_LANGS = {}
 
 
-@in_pattern("run", owner=True, button={"Piston Eval": "run javascript console.log('Hello Ultroid');"})
+@in_pattern("run", owner=True,
+            button={"Piston Eval": "run javascript console.log('Hello Ultroid');"})
 async def piston_run(event):
     try:
         lang = event.text.split()[1]
