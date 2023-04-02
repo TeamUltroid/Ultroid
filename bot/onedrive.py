@@ -170,6 +170,8 @@ class OneDrive:
         ) as resp:
             data = await resp.json()
             await resp.release()
+            if data.get("error"):
+                return await event.edit(data["error"]["message"])
         file_name = data["name"]
         file_size = data["size"]
         download_url = data["@microsoft.graph.downloadUrl"]
