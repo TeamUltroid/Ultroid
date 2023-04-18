@@ -9,7 +9,10 @@ from database import udB
 
 def get_client():
     _api = udB.get_key("_TELEGRAPH_TOKEN")
-    client = Telegraph(_api, domain="graph.org")
+    try:
+        client = Telegraph(_api, domain="graph.org")
+    except TypeError:
+        client = Telegraph(_api)
     if not _api:
         gd_name = ultroid_bot.full_name
         short_name = gd_name[:30]

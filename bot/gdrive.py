@@ -14,10 +14,9 @@ from urllib.parse import parse_qs, urlencode
 
 from aiohttp import ClientSession
 from aiohttp.client_exceptions import ContentTypeError
+from utilities.helper import humanbytes, time_formatter
 
 from database import udB
-
-from .helper import humanbytes, time_formatter
 
 log = logging.getLogger("GDrive")
 
@@ -57,6 +56,10 @@ class GDrive:
         self.creds = await resp.json()
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
+        self.headers = {
+            "Authorization": "Bearer " + self.creds["access_token"],
+            "Content-Type": "application/json",
+        }
         return self.creds
 
     async def refresh_access_token(self) -> None:

@@ -1,12 +1,15 @@
 import contextlib
 import os
-from random import choice
+
+from core.remote import rm
+
+from database.helpers import get_random_color
 
 from .. import get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="q( (.*)|$)", manager=True, allow_pm=True)
-async def quott_(event):
+async def q_cmd(event):
     match = event.pattern_match.group(1).strip()
     if not event.is_reply:
         return await event.eor("`Reply to Message..`")
@@ -53,11 +56,12 @@ async def quott_(event):
         else:
             match = match[0]
     if match == "random":
-        match = choice(all_col)
+        match = get_random_color()
     try:
-        file = await quotly.create_quotly(
-            reply_, bg=match, reply=replied_to, sender=user
-        )
+        with rm.get("quotly", helper=True, dispose=True) as quotly:
+            file = await quotly.create_quotly(
+                reply_, bg=match, reply=replied_to, sender=user
+            )
     except Exception as er:
         return await msg.edit(str(er))
     message = await reply.reply("Quotly by Ultroid", file=file)

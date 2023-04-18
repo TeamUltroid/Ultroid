@@ -9,10 +9,12 @@
 
 # --------------------------------------- Imports -------------------------------------------- #
 
-# TODO: fix imports
 
 import os
 
+from core import LOGS, asst, ultroid_bot
+from core.decorators._assistant import asst_cmd
+from localization import get_string
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -21,17 +23,26 @@ from telethon.tl.types import Channel, Chat
 from telethon.utils import get_display_name
 from utilities.helper import inline_mention
 
+from database import udB
+from database.helpers.base import KeyManager
+
+OWNER_ID = ultroid_bot.me.id
 FSUB = udB.get_key("PMBOT_FSUB")
 CACHE = {}
+blm = KeyManager("BLACKLIST_CHATS", cast=list)
 # --------------------------------------- Incoming -------------------------------------------- #
 
 
+def get_who(msg_id):
+    val = udB.get_key("BOTCHAT") or {}
+    return val.get(msg_id)
+
+
 @asst_cmd(
-    load=AST_PLUGINS,
     incoming=True,
-    func=lambda e: e.is_private and not is_blacklisted(e.sender_id),
+    func=lambda e: e.is_private and not blm.contains(e.sender_id),
 )
-async def on_new_mssg(event):
+async def on_new_msg(event):
     who = event.sender_id
     # doesn't reply to that user anymore
     if event.text.startswith("/") or who == OWNER_ID:
@@ -70,14 +81,15 @@ async def on_new_mssg(event):
     xx = await event.forward_to(OWNER_ID)
     if event.fwd_from:
         await xx.reply(f"From {inline_mention(event.sender)} [`{event.sender_id}`]")
-    add_stuff(xx.id, who)
+    val = udB.get_key("BOTCHAT") or {}
+    val[xx.id] = who
+    udB.set_key("BOTCHAT", val)
 
 
 # --------------------------------------- Outgoing -------------------------------------------- #
 
 
 @asst_cmd(
-    load=AST_PLUGINS,
     from_users=[OWNER_ID],
     incoming=True,
     func=lambda e: e.is_private and e.is_reply,
@@ -109,7 +121,6 @@ async def on_out_mssg(event):
 
 @asst_cmd(
     pattern="ban",
-    load=AST_PLUGINS,
     from_users=[OWNER_ID],
     func=lambda x: x.is_private,
 )
@@ -117,17 +128,16 @@ async def banhammer(event):
     if not event.is_reply:
         return await event.reply(get_string("pmbot_2"))
     target = get_who(event.reply_to_msg_id)
-    if is_blacklisted(target):
+    if blm.contains(target):
         return await event.reply(get_string("pmbot_3"))
 
-    blacklist_user(target)
+    blm.add(target)
     await event.reply(f"#BAN\nUser : {target}")
     await asst.send_message(target, get_string("pmbot_4"))
 
 
 @asst_cmd(
     pattern="unban",
-    load=AST_PLUGINS,
     from_users=[OWNER_ID],
     func=lambda x: x.is_private,
 )
@@ -135,12 +145,12 @@ async def unbanhammer(event):
     if not event.is_reply:
         return await event.reply(get_string("pmbot_5"))
     target = get_who(event.reply_to_msg_id)
-    if not is_blacklisted(target):
+    if not blm.contains(target):
         return await event.reply(get_string("pmbot_6"))
 
-    rem_blacklist(target)
+    blm.remove(target)
     await event.reply(f"#UNBAN\nUser : {target}")
-    await asst.send_message(target, get_string("pmbot_7"))
+    await event.client.send_message(target, get_string("pmbot_7"))
 
 
 # --------------------------------------- END -------------------------------------------- #

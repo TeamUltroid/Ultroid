@@ -5,13 +5,13 @@ import os
 from PIL import Image
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
+from utilities.helper import async_searcher
 
 from database import udB
 from database.helpers import DEVLIST
 
-from . import async_searcher
-
 _API = "https://bot.lyo.su/quote/generate"
+
 _entities = {
     types.MessageEntityPhone: "phone_number",
     types.MessageEntityMention: "mention",
@@ -120,6 +120,10 @@ async def _format_quote(event: types.Message, reply=None, sender=None, type_="pr
     return message
 
 
+class UnknownException(Exception):
+    ...
+
+
 async def create_quotly(
     event,
     url="https://bot.lyo.su/quote/generate",
@@ -167,4 +171,4 @@ async def create_quotly(
                 request["result"]["image"].encode("utf-8"))
             file.write(image)
         return file_name
-    raise Exception(str(request))
+    raise UnknownException(str(request))
