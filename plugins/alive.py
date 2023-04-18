@@ -2,7 +2,9 @@ from .. import *
 
 buttons = [
     [
-        Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
+        Button.url(
+            get_string("bot_3"),
+            "https://github.com/TeamUltroid/Ultroid"),
         Button.url(get_string("bot_4"), "t.me/UltroidSupportChat"),
     ]
 ]
@@ -17,7 +19,6 @@ The Ultroid Userbot
 """
 
 in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b>[ {} ]\n\n• <b>Join @TeamUltroid</b>"
-
 
 
 @callback("alive")

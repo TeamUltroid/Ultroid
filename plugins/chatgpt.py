@@ -1,7 +1,9 @@
 import openai
+
 from .. import udB, ultroid_cmd
 
 openai.api_key = udB.get("OPENAI_API_KEY")
+
 
 @ultroid_cmd(pattern="chatgpt(?(.*)|$)")
 async def chatgpt(event):
@@ -26,6 +28,3 @@ async def chatgpt(event):
         stop=["\n", " User:", " AI:"],
     )
     await message.edit(f"__{query}__: \n__{output['choices'][0]['text']}__")
-
-
-    
