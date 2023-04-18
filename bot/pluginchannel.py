@@ -4,6 +4,7 @@ import os
 from core import ultroid_bot
 from core.setup import LOGS
 from core.utils.addons import load_addons
+from database._core import PluginChannel
 from telethon.tl.types import InputMessagesFilterDocument
 
 
@@ -12,6 +13,8 @@ async def get_from_channels(plugin_channels):
         os.mkdir("addons")
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
+        if PluginChannel.get(chat) is None:
+            PluginChannel[chat] = {}
         LOGS.info(f"{'•'*4} {chat}")
         try:
             async for x in ultroid_bot.iter_messages(
@@ -24,6 +27,7 @@ async def get_from_channels(plugin_channels):
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
+                PluginChannel[chat][x.id] = plugin
                 try:
                     load_addons(plugin)
                 except Exception as e:
