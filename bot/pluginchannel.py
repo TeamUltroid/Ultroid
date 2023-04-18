@@ -4,8 +4,9 @@ import shutil
 from core import ultroid_bot
 from core.setup import LOGS
 from core.utils.addons import load_addons
-from database._core import PluginChannel
 from telethon.tl.types import InputMessagesFilterDocument
+
+from database._core import PluginChannel
 
 
 async def get_from_channels(plugin_channels):
