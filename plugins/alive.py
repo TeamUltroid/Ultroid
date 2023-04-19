@@ -1,9 +1,11 @@
-from .. import *
-from core.version import version
 from random import choice
-from telethon.version import __version__
+
 from core.git import repo
+from core.version import version
 from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
+from telethon.version import __version__
+
+from .. import *
 
 buttons = [
     [
