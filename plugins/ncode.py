@@ -12,7 +12,7 @@
    Use - Paste the contents of file and send as pic.
 """
 
-import pygments
+import pygments, os
 from pygments.formatters import ImageFormatter
 from pygments.lexers import Python3Lexer
 

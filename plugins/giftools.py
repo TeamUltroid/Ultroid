@@ -29,7 +29,7 @@ import random
 import time
 from datetime import datetime as dt
 
-from . import HNDLR, LOGS, bash, downloader, get_string, mediainfo, ultroid_cmd
+from . import HNDLR, LOGS, bash, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="(bw|invert)gif$")
@@ -117,7 +117,7 @@ async def vtogif(e):
         filename = a.file.name
         if not filename:
             filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
-        vid = await downloader(filename, a.media.document, xx, tt, get_string("com_5"))
+        vid = await e.client.fast_download(filename, a.media.document, xx, tt, get_string("com_5"))
         z = vid.name
         await bash(
             f'ffmpeg -ss 3 -t 100 -i {z} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ult.gif'

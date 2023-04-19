@@ -27,7 +27,7 @@ async def _(e):
     match = e.pattern_match.group(1)
     x = await e.get_reply_message()
     if not (x and x.media and hasattr(x.media, "document")):
-        return await eod(e, "`Reply To Sticker Only`")
+        return await e.eod("`Reply To Sticker Only`")
     set = x.document.attributes[1]
     sset = await e.client(
         GetStickerSetRequest(

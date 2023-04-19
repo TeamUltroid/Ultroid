@@ -7,7 +7,7 @@
 
 import re
 
-from . import *
+from .. import *
 
 START = """
 🪅 **Help Menu** 🪅

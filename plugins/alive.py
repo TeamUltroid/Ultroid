@@ -1,4 +1,9 @@
 from .. import *
+from core.version import version
+from random import choice
+from telethon.version import __version__
+from core.git import repo
+from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
 
 buttons = [
     [
@@ -14,7 +19,6 @@ alive_txt = """
 The Ultroid Userbot
 
   ◍ Version - {}
-  ◍ Py-Ultroid - {}
   ◍ Telethon - {}
 """
 
@@ -23,14 +27,14 @@ in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltro
 
 @callback("alive")
 async def alive(event):
-    text = alive_txt.format(ultroid_version, UltVer, __version__)
+    text = alive_txt.format(version, __version__)
     await event.answer(text, alert=True)
 
 
 @ultroid_cmd(
     pattern="alive( (.*)|$)",
 )
-async def lol(ult):
+async def alive_func(ult):
     match = ult.pattern_match.group(1).strip()
     inline = None
     if match in ["inline", "i"]:
@@ -47,8 +51,8 @@ async def lol(ult):
         pic = choice(pic)
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
-    y = Repo().active_branch
-    xx = Repo().remotes[0].config_reader.get("url")
+    y = repo.active_branch()
+    xx = repo.get_remote_url()
     rep = xx.replace(".git", f"/tree/{y}")
     kk = f" `[{y}]({rep})` "
     if inline:
@@ -56,9 +60,7 @@ async def lol(ult):
         parse = "html"
         als = in_alive.format(
             header,
-            f"{ultroid_version} [{HOSTED_ON}]",
-            UltVer,
-            pyver(),
+            f"{version} [{HOSTED_ON}]",
             uptime,
             kk,
         )
@@ -70,10 +72,8 @@ async def lol(ult):
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
-            f"{ultroid_version} [{HOSTED_ON}]",
-            UltVer,
+            f"{version} [{HOSTED_ON}]",
             uptime,
-            pyver(),
             __version__,
             kk,
         )

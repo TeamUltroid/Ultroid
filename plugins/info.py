@@ -91,9 +91,9 @@ async def _(event):
         user.bot,
         common_chats,
     )
-    if chk := is_gbanned(user_id):
-        caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
-<b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
+#     if chk := is_gbanned(user_id):
+#         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
+# <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
     await event.client.send_message(
         event.chat_id,
         caption,

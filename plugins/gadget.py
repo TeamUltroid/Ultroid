@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup as bs
 from utilities.helper import fetch
 
-from .. import get_string, ultroid_cmd
+from .. import get_string, ultroid_cmd, fetch
 
 
 @ultroid_cmd(pattern="gadget( (.*)|$)")
@@ -22,7 +22,7 @@ async def mobs(e):
     out = "**📱 Mobile / Gadgets Search**\n\n"
     li = co[0].find("a")
     imu, title = None, li.find("img")["title"]
-    cont = await async_searcher(li["href"])
+    cont = await fetch(li["href"])
     nu = bs(cont, "html.parser", from_encoding="utf-8")
     req = nu.find_all("div", "_pdsd")
     imu = nu.find_all(
