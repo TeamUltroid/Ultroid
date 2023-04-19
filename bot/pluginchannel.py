@@ -6,6 +6,8 @@ from core.setup import LOGS
 from core.utils.addons import load_addons
 from telethon.tl.types import InputMessagesFilterDocument
 
+from database._core import PluginChannel
+
 
 async def get_from_channels(plugin_channels):
     if not os.path.exists("modules/channels"):
@@ -14,6 +16,8 @@ async def get_from_channels(plugin_channels):
             f.write("from .. import *")
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
+        if PluginChannel.get(chat) is None:
+            PluginChannel[chat] = {}
         LOGS.info(f"{'•'*4} {chat}")
         _path = f"modules/channels/c{chat}/"
         # Clear, to remove deleted plugins
@@ -32,6 +36,7 @@ async def get_from_channels(plugin_channels):
                     if x.text == "#IGNORE":
                         continue
                     plugin = await x.download_media(plugin)
+                PluginChannel[chat][x.id] = plugin
                 try:
                     load_addons(plugin)
                 except Exception as e:
