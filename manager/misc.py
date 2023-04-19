@@ -8,7 +8,6 @@
 
 import random
 
-import aiohttp
 from utilities._core import DEVLIST
 from utilities.admins import admin_check
 
@@ -56,8 +55,5 @@ async def doit(e):
 @asst_cmd(pattern="joke$")
 async def do_joke(e):
     e = await e.get_reply_message() if e.is_reply else e
-    link = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single"
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(link) as out:
-            out = await out.json()
+    out = await fetch("https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single", re_json=True)
     await e.reply(out["joke"])

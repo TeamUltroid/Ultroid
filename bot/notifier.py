@@ -4,7 +4,7 @@ from utilities.helper import check_update, inline_mention
 
 
 async def notify(init=False):
-    chat_id = udB.get_key("LOG_CHANNEL")
+    chat_id = udB.get_config("LOG_CHANNEL")
     spam_sent, BTTS = None, None
     if init:  # Detailed Message at Initial Deploy
         MSG = """🎇 **Thanks for Deploying Ultroid Userbot!**
