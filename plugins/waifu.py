@@ -8,9 +8,9 @@
 """
 
 import re
+from random import choice
 
 from . import *
-from random import choice
 
 EMOJI_PATTERN = re.compile(
     "["

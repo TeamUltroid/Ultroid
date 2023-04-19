@@ -29,4 +29,4 @@ async def spellchk(event):
     check = TextBlob(to_check)
     correct = check.correct()
     await event.eor(f"**Given Phrase:** `{to_check}`\n**Corrected Phrase:** `{correct}`"
-    )
+                    )

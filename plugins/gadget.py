@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup as bs
 from utilities.helper import fetch
 
-from .. import get_string, ultroid_cmd, fetch
+from .. import fetch, get_string, ultroid_cmd
 
 
 @ultroid_cmd(pattern="gadget( (.*)|$)")
