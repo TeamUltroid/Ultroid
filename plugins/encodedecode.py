@@ -21,7 +21,7 @@ from . import ultroid_cmd
 
 
 @ultroid_cmd(pattern="encode ?(.*)")
-async def encod(e):
+async def encode_cmd(e):
     match = e.pattern_match.group(1)
     if not match and e.is_reply:
         gt = await e.get_reply_message()
@@ -36,7 +36,7 @@ async def encod(e):
 
 
 @ultroid_cmd(pattern="decode ?(.*)")
-async def encod(e):
+async def decode_cmd(e):
     match = e.pattern_match.group(1)
     if not match and e.is_reply:
         gt = await e.get_reply_message()

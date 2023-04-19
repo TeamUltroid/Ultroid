@@ -11,8 +11,7 @@ Search animes and manga from anilist.co using @animedb_bot
 """
 
 
-from . import *
-
+from . import ultroid_cmd
 
 @ultroid_cmd(
     pattern="manga ?(.*)",

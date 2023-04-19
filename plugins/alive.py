@@ -46,6 +46,8 @@ async def alive_func(ult):
         except BaseException as er:
             LOGS.exception(er)
         inline = True
+    OWNER_NAME = ultroid_bot.me.first_name
+
     pic = udB.get_key("ALIVE_PIC")
     if isinstance(pic, list):
         pic = choice(pic)

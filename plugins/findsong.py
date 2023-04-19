@@ -10,7 +10,7 @@
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import *
+from . import ultroid_cmd
 
 
 @ultroid_cmd(pattern="findsong$")

@@ -2,7 +2,7 @@ from html import unescape
 
 from telethon.tl.types import InputWebDocument as wb
 
-from . import Button, async_searcher, get_string, in_pattern
+from .. import Button, async_searcher, get_string, in_pattern
 
 APP_CACHE = {}
 RECENTS = {}
