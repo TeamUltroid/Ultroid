@@ -8,7 +8,7 @@
 
 import random
 
-from utilities._core import DEVLIST
+from utilities.helpers import DEVLIST
 from utilities.admins import admin_check
 
 from . import *
