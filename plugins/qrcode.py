@@ -38,7 +38,7 @@ async def cd(e):
         msg = reply.text
     elif not msg:
         return await e.eor("`Give Some Text or Reply", time=5)
-    cimg =  None
+    cimg = None
     if reply and (reply.sticker or reply.photo):
         cimg = await reply.download_media()
     elif ultroid_bot.me.photo and not ultroid_bot.me.photo.has_video:
@@ -52,7 +52,8 @@ async def cd(e):
     cod.add_data(msg)
     cod.make()
     imgg = cod.make_image().convert("RGB")
-    pstn = ((imgg.size[0] - logo.size[0]) // 2, (imgg.size[1] - logo.size[1]) // 2)
+    pstn = ((imgg.size[0] - logo.size[0]) // 2,
+            (imgg.size[1] - logo.size[1]) // 2)
     imgg.paste(logo, pstn)
     newname = check_filename("qr.jpg")
     imgg.save(newname)

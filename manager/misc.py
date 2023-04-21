@@ -8,8 +8,8 @@
 
 import random
 
-from utilities.helpers import DEVLIST
 from utilities.admins import admin_check
+from utilities.helpers import DEVLIST
 
 from . import *
 
