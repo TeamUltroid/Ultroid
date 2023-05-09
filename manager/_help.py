@@ -89,14 +89,14 @@ STRINGS = {"Admintools": ADMINTOOLS, "locks": LOCKS, "Utils": UTILITIES, "Misc":
 MNGE = udB.get_key("MNGR_EMOJI") or "•"
 
 
-def get_buttons():
+def get_buttons(back=False):
     BTTS = []
     keys = STRINGS.copy()
     while keys:
         BT = []
         for i in list(keys)[:2]:
             text = f"{MNGE} {i} {MNGE}"
-            BT.append(Button.inline(text, f"hlp_{i}"))
+            BT.append(Button.inline(text, f"hlp_{i}{'_b' if back else ''}"))
             del keys[i]
         BTTS.append(BT)
     url = f"https://t.me/{asst.me.username}?startgroup=true"
@@ -107,7 +107,7 @@ def get_buttons():
 @asst_cmd(pattern="help")
 async def helpish(event):
     if not event.is_private:
-        url = f"https://t.me/{asst.me.username}?start=start"
+        url = f"https://t.me/{asst.me.username}?start=_manager"
         return await event.reply(
             "Contact me in PM for help!", buttons=Button.url("Click me for Help", url)
         )
@@ -120,7 +120,7 @@ async def helpish(event):
 
 @callback("mngbtn", owner=True)
 async def ehwhshd(e):
-    buttons = get_buttons()
+    buttons = get_buttons(back=True)
     buttons.append([Button.inline("<< Back", "open")])
     await e.edit(buttons=buttons)
 
@@ -132,5 +132,5 @@ async def home_aja(e):
 
 @callback(re.compile("hlp_(.*)"))
 async def do_something(event):
-    match = event.pattern_match.group(1).strip().decode("utf-8")
-    await event.edit(STRINGS[match], buttons=Button.inline("<< Back", "mnghome"))
+    matc = event.pattern_match.group(1).strip().decode("utf-8").split("_")
+    await event.edit(STRINGS[matc[0]], buttons=Button.inline("<< Back", "mnghome" if len(matc) == 1 else "mngbtn") )
