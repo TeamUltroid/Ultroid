@@ -335,19 +335,17 @@ def UltroidDB():
                 socket_timeout=5,
                 retry_on_timeout=True,
             )
-        if MongoClient:
+        elif MongoClient:
             return MongoDB(Var.MONGO_URI)
-        if psycopg2:
+        elif psycopg2:
             return SqlDB(Var.DATABASE_URL)
+        else:
+            LOGS.critical(
+                "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
+            )
+            return LocalDB()
     except BaseException as err:
         LOGS.exception(err)
-        _er = True
-    if not _er:
-        LOGS.critical(
-            "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
-        )
-    if HOSTED_ON == "local":
-        return LocalDB()
     exit()
 
 
