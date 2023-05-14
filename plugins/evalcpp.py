@@ -1,5 +1,7 @@
-import io, os
-from . import ultroid_cmd, bash, get_string
+import io
+import os
+
+from . import bash, get_string, ultroid_cmd
 
 DUMMY_CPP = """#include <iostream>
 using namespace std;
