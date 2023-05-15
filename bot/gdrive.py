@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import base64
 import json
 import logging
 import os
@@ -12,19 +13,19 @@ import time
 # from io import FileIO
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
-import base64, time
 
 from aiohttp import ClientSession
 from aiohttp.client_exceptions import ContentTypeError
+
 from database import udB
 
 from .helper import humanbytes, time_formatter
 
 try:
-    from Crypto.Signature import pkcs1_15
     from Crypto.Hash import SHA256
     from Crypto.PublicKey import RSA
-except:
+    from Crypto.Signature import pkcs1_15
+except BaseException:
     pass
 
 # for log in [LOGGER, logger, _logger]:
@@ -33,6 +34,8 @@ except:
 log = logging.getLogger("GDrive")
 
 # Assuming it works without any error
+
+
 class GDrive:
     def __init__(self):
         self._session = ClientSession()
@@ -53,7 +56,7 @@ class GDrive:
             "access_type": "offline",
         })
 
-    async def get_access_token(self, code = None) -> dict:
+    async def get_access_token(self, code=None) -> dict:
         if self.service_account:
             header = {
                 "alg": "RS256",
@@ -66,10 +69,20 @@ class GDrive:
                 "exp": int(time.time()) + 3600,
                 "iat": int(time.time())
             }
-            total_params = str(base64.urlsafe_b64encode(json.dumps(header).encode('ascii')).decode('utf-8').replace('=','')) + "." + str(base64.urlsafe_b64encode(json.dumps(payload).encode('ascii')).decode('utf-8').replace('=',''))
-            private_key = RSA.import_key(bytes(self.service_account["private_key"], "utf-8"))
-            signature = pkcs1_15.new(private_key).sign(SHA256.new(total_params.encode('utf-8')))
-            token = total_params + "." + str(base64.urlsafe_b64encode(signature).decode('utf-8').replace('=',''))
+            total_params = str(
+                base64.urlsafe_b64encode(
+                    json.dumps(header).encode('ascii')).decode('utf-8').replace(
+                    '=', '')) + "." + str(
+                base64.urlsafe_b64encode(
+                    json.dumps(payload).encode('ascii')).decode('utf-8').replace(
+                        '=', ''))
+            private_key = RSA.import_key(
+                bytes(self.service_account["private_key"], "utf-8"))
+            signature = pkcs1_15.new(private_key).sign(
+                SHA256.new(total_params.encode('utf-8')))
+            token = total_params + "." + \
+                str(base64.urlsafe_b64encode(signature).decode(
+                    'utf-8').replace('=', ''))
             resp = await self._session.post("https://oauth2.googleapis.com/token", data={"grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer", "assertion": token})
             self.creds = await resp.json()
             self.creds["expires_in"] = time() + 3590
@@ -98,10 +111,20 @@ class GDrive:
                 "exp": int(time.time()) + 3600,
                 "iat": int(time.time())
             }
-            total_params = str(base64.urlsafe_b64encode(json.dumps(header).encode('ascii')).decode('utf-8').replace('=','')) + "." + str(base64.urlsafe_b64encode(json.dumps(payload).encode('ascii')).decode('utf-8').replace('=',''))
-            private_key = RSA.import_key(bytes(self.service_account["private_key"], "utf-8"))
-            signature = pkcs1_15.new(private_key).sign(SHA256.new(total_params.encode('utf-8')))
-            token = total_params + "." + str(base64.urlsafe_b64encode(signature).decode('utf-8').replace('=',''))
+            total_params = str(
+                base64.urlsafe_b64encode(
+                    json.dumps(header).encode('ascii')).decode('utf-8').replace(
+                    '=', '')) + "." + str(
+                base64.urlsafe_b64encode(
+                    json.dumps(payload).encode('ascii')).decode('utf-8').replace(
+                        '=', ''))
+            private_key = RSA.import_key(
+                bytes(self.service_account["private_key"], "utf-8"))
+            signature = pkcs1_15.new(private_key).sign(
+                SHA256.new(total_params.encode('utf-8')))
+            token = total_params + "." + \
+                str(base64.urlsafe_b64encode(signature).decode(
+                    'utf-8').replace('=', ''))
             resp = await self._session.post("https://oauth2.googleapis.com/token", data={"grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer", "assertion": token})
             self.creds = await resp.json()
             self.creds["expires_in"] = time() + 3590
@@ -123,7 +146,7 @@ class GDrive:
             params={"fields": "storageQuota"},
         )).json()
 
-    async def set_permissions(self, fileid: str, role: str="reader", type: str="anyone"):
+    async def set_permissions(self, fileid: str, role: str = "reader", type: str = "anyone"):
         # set permissions to anyone with link can view
         await self.refresh_access_token() if time() > self.creds.get("expires_in") else None
         return await (await self._session.post(
@@ -203,7 +226,7 @@ class GDrive:
         mime_type = guess_type(path)[0] or "application/octet-stream"
         # upload with progress bar
         filesize = os.path.getsize(path)
-        #await self.get_size_status()
+        # await self.get_size_status()
         chunksize = 104857600  # 100MB
         # 1. Retrieve session for resumable upload.
         headers = {"Authorization": "Bearer " +
