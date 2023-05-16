@@ -22,30 +22,16 @@
 
 import re
 
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserNotParticipantError
+from telethon.errors.rpcerrorlist import (ChatAdminRequiredError,
+                                          UserNotParticipantError)
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import (
-    Channel,
-    ChannelParticipantBanned,
-    ChannelParticipantLeft,
-    User,
-)
+from telethon.tl.types import (Channel, ChannelParticipantBanned,
+                               ChannelParticipantLeft, User)
 
-
-from . import (
-    LOGS,
-    asst,
-    callback,
-    events,
-    get_string,
-    in_pattern,
-    inline_mention,
-    udB,
-    ultroid_bot,
-    ultroid_cmd,
-)
+from . import (LOGS, asst, callback, events, get_string, in_pattern,
+               inline_mention, udB, ultroid_bot, ultroid_cmd)
 
 CACHE = {}
 
@@ -117,7 +103,9 @@ async def diesoon(e):
     try:
         values = await ultroid_bot(GetParticipantRequest(int(spli[1]), int(spli[0])))
         if isinstance(values.participant, ChannelParticipantLeft) or (
-            isinstance(values.participant, ChannelParticipantBanned) and values.left
+            isinstance(
+                values.participant,
+                ChannelParticipantBanned) and values.left
         ):
             raise UserNotParticipantError("")
     except UserNotParticipantError:
@@ -139,7 +127,8 @@ async def force_sub(ult):
         return
     if CACHE.get(ult.chat_id):
         if CACHE[ult.chat_id].get(user.id):
-            CACHE[ult.chat_id].update({user.id: CACHE[ult.chat_id][user.id] + 1})
+            CACHE[ult.chat_id].update(
+                {user.id: CACHE[ult.chat_id][user.id] + 1})
         else:
             CACHE[ult.chat_id].update({user.id: 1})
     else:

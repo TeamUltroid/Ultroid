@@ -7,10 +7,11 @@
 
 import re
 
-from database._core import ult_cache
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 
-from . import ultroid_cmd, callback
+from database._core import ult_cache
+
+from . import callback, ultroid_cmd
 
 
 @ultroid_cmd(pattern="d(kick|ban)", manager=True, require="ban_users")
