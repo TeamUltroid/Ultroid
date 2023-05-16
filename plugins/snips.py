@@ -21,14 +21,13 @@
 """
 import os
 
+from core.decorators import get_sudos as sudoers
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
-
-from core.decorators import get_sudos as sudoers
 from utilities.tools import create_tl_btn, format_btn, get_msg_button
 
-from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ..basic._inline import something
+from . import events, get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addsnip( (.*)|$)")
@@ -94,7 +93,8 @@ async def lsnote(e):
 async def add_snips(e):
     if not e.out and e.sender_id not in sudoers():
         return
-    xx = [z.replace("$", "") for z in e.text.lower().split() if z.startswith("$")]
+    xx = [z.replace("$", "")
+          for z in e.text.lower().split() if z.startswith("$")]
     for z in xx:
         if k := get_snips(z):
             msg = k["msg"]

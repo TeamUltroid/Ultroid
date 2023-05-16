@@ -1,25 +1,13 @@
-from . import udB
-from datetime import datetime as dt
-
-
 import asyncio
+from datetime import datetime as dt
 
 from telegraph import upload_file as uf
 from telethon import events
 
 from database.helpers.base import KeyManager
 
-from . import (
-    LOG_CHANNEL,
-    NOSPAM_CHAT,
-    Redis,
-    asst,
-    get_string,
-    mediainfo,
-    udB,
-    ultroid_bot,
-    ultroid_cmd,
-)
+from . import (LOG_CHANNEL, NOSPAM_CHAT, Redis, asst, get_string, mediainfo,
+               udB, ultroid_bot, ultroid_cmd)
 
 old_afk_msg = []
 
@@ -85,14 +73,15 @@ async def set_afk(event):
 
 
 async def remove_afk(event):
-    if event.is_private and udB.get_key("PMSETTING") and not is_approved(event.chat_id):
+    if event.is_private and udB.get_key(
+            "PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
         return
     elif event.chat_id in NOSPAM_CHAT:
         return
     if is_afk():
-        _, _, _, afk_time = is_afk() # type: ignore
+        _, _, _, afk_time = is_afk()  # type: ignore
         del_afk()
         off = await event.reply(get_string("afk_1").format(afk_time))
         await asst.send_message(LOG_CHANNEL, get_string("afk_2").format(afk_time))
@@ -106,7 +95,8 @@ async def remove_afk(event):
 
 
 async def on_afk(event):
-    if event.is_private and Redis("PMSETTING") and not is_approved(event.chat_id):
+    if event.is_private and Redis(
+            "PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
         return
@@ -157,6 +147,7 @@ if udB.get_key("AFK_DB"):
     )
 
 # DATABASE FUNCTIONS #
+
 
 def get_stuff():
     return udB.get_key("AFK_DB") or []

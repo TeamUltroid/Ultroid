@@ -11,7 +11,8 @@ __doc__ = get_help("help_echo")
 
 
 from telethon.utils import get_display_name
-from . import inline_mention, ultroid_cmd, udB
+
+from . import inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addecho( (.*)|$)")
