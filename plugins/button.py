@@ -17,7 +17,7 @@ from utilities.tools import create_tl_btn, get_msg_button
 
 from . import HNDLR, get_string, mediainfo, ultroid_cmd
 
-# from ._inline import something
+# from ..basic._inline import something
 
 
 @ultroid_cmd(pattern="button")
