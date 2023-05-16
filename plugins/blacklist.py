@@ -10,6 +10,7 @@ from . import get_help
 __doc__ = get_help("help_blacklist")
 
 from telethon import events
+
 from . import get_string, udB, ultroid_bot, ultroid_cmd
 
 
@@ -58,7 +59,6 @@ async def blacklist(e):
                 pass
 
 
-
 def get_stuff():
     return udB.get_key("BLACKLIST_DB") or {}
 
@@ -93,6 +93,7 @@ def get_blacklist(chat):
     ok = get_stuff()
     if ok.get(chat):
         return ok[chat]
+
 
 if udB.get_key("BLACKLIST_DB"):
     ultroid_bot.add_handler(blacklist, events.NewMessage(incoming=True))

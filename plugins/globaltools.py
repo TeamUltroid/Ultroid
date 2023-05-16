@@ -43,26 +43,14 @@ from telethon.errors.rpcerrorlist import ChatAdminRequiredError, FloodWaitError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import ChatAdminRights, User
+from utilities.tools import create_tl_btn, format_btn, get_msg_button
 
 from database.helpers import DEVLIST
 from database.helpers.base import KeyManager
 
-from utilities.tools import create_tl_btn, format_btn, get_msg_button
-
-from . import (
-    HNDLR,
-    LOGS,
-    NOSPAM_CHAT,
-    OWNER_NAME,
-    eod,
-    eor,
-    get_string,
-    inline_mention,
-    ultroid_bot,
-    ultroid_cmd,
-    udB
-)
 from ..basic._inline import something
+from . import (HNDLR, LOGS, NOSPAM_CHAT, OWNER_NAME, eod, eor, get_string,
+               inline_mention, udB, ultroid_bot, ultroid_cmd)
 
 _gpromote_rights = ChatAdminRights(
     add_admins=False,

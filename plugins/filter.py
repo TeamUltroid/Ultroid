@@ -13,14 +13,13 @@ import os
 import re
 
 from telegraph import upload_file as uf
+from telethon import events
 from telethon.tl.types import User
 from telethon.utils import pack_bot_file_id
-
 from utilities.tools import create_tl_btn, format_btn, get_msg_button
-from telethon import events
 
-from . import get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 from ..basic._inline import something
+from . import get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addfilter( (.*)|$)")
@@ -96,7 +95,6 @@ async def filter_func(e):
                         btn = create_tl_btn(k["button"])
                         return await something(e, msg, media, btn)
                     await e.reply(msg, file=media)
-
 
 
 def get_stuff():

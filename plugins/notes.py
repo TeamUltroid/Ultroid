@@ -1,4 +1,15 @@
 
+import os
+
+from telegraph import upload_file as uf
+from telethon import events
+from telethon.utils import pack_bot_file_id
+from utilities.tools import create_tl_btn, format_btn, get_msg_button
+
+from ..basic._inline import something
+from . import get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
+
+
 def get_stuff():
     return udB.get_key("NOTE") or {}
 
@@ -6,9 +17,11 @@ def get_stuff():
 def add_note(chat, word, msg, media, button):
     ok = get_stuff()
     if ok.get(int(chat)):
-        ok[int(chat)].update({word: {"msg": msg, "media": media, "button": button}})
+        ok[int(chat)].update(
+            {word: {"msg": msg, "media": media, "button": button}})
     else:
-        ok.update({int(chat): {word: {"msg": msg, "media": media, "button": button}}})
+        ok.update(
+            {int(chat): {word: {"msg": msg, "media": media, "button": button}}})
     udB.set_key("NOTE", ok)
 
 
@@ -37,6 +50,7 @@ def list_note(chat):
     if ok.get(int(chat)):
         return "".join(f"👉 #{z}\n" for z in ok[chat])
 
+
 # Ultroid - UserBot
 # Copyright (C) 2021-2022 TeamUltroid
 #
@@ -59,16 +73,6 @@ def list_note(chat):
    set notes in group so all can use it.
    type `#(Keyword of note)` to get it
 """
-import os
-
-from telegraph import upload_file as uf
-from telethon.utils import pack_bot_file_id
-from telethon import events
-
-from utilities.tools import create_tl_btn, format_btn, get_msg_button
-
-from . import get_string, mediainfo, udB, ultroid_bot, ultroid_cmd
-from ..basic._inline import something
 
 
 @ultroid_cmd(pattern="addnote( (.*)|$)", admins_only=True)
@@ -134,7 +138,8 @@ async def lsnote(e):
 
 
 async def notes(e):
-    xx = [z.replace("#", "") for z in e.text.lower().split() if z.startswith("#")]
+    xx = [z.replace("#", "")
+          for z in e.text.lower().split() if z.startswith("#")]
     for word in xx:
         if k := get_notes(e.chat_id, word):
             msg = k["msg"]
@@ -150,6 +155,7 @@ async def notes(e):
 if udB.get_key("NOTE"):
     ultroid_bot.add_handler(notes, events.NewMessage())
 
+
 def get_stuff():
     return udB.get_key("NOTE") or {}
 
@@ -157,9 +163,11 @@ def get_stuff():
 def add_note(chat, word, msg, media, button):
     ok = get_stuff()
     if ok.get(int(chat)):
-        ok[int(chat)].update({word: {"msg": msg, "media": media, "button": button}})
+        ok[int(chat)].update(
+            {word: {"msg": msg, "media": media, "button": button}})
     else:
-        ok.update({int(chat): {word: {"msg": msg, "media": media, "button": button}}})
+        ok.update(
+            {int(chat): {word: {"msg": msg, "media": media, "button": button}}})
     udB.set_key("NOTE", ok)
 
 

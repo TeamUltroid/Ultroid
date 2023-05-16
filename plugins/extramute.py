@@ -28,10 +28,10 @@
 """
 from telethon import events
 from telethon.utils import get_display_name
-
 from utilities.admins import ban_time
 
-from . import asst, eod, get_string, inline_mention, ultroid_bot, ultroid_cmd, udB
+from . import (asst, eod, get_string, inline_mention, udB, ultroid_bot,
+               ultroid_cmd)
 
 
 @ultroid_bot.on(events.NewMessage(incoming=True))

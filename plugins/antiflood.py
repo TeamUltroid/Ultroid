@@ -13,11 +13,12 @@ __doc__ = get_help("help_antiflood")
 import re
 
 from telethon.events import NewMessage as NewMsg
-
-from database.helpers import DEVLIST
 from utilities.admins import admin_check
 
-from . import Button, Redis, asst, callback, eod, get_string, ultroid_bot, ultroid_cmd, udB
+from database.helpers import DEVLIST
+
+from . import (Button, Redis, asst, callback, eod, get_string, udB,
+               ultroid_bot, ultroid_cmd)
 
 _check_flood = {}
 
