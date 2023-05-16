@@ -13,20 +13,14 @@ try:
     from PIL import Image
 except ImportError:
     Image = None
+from core.remote import rm
 from telethon import Button
-from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
+from telethon.errors.rpcerrorlist import (FilePartLengthInvalidError,
+                                          MediaEmptyError)
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from core.remote import rm
-
-from utilities.helper import (
-    bash,
-    fast_download,
-    humanbytes,
-    numerize,
-    time_formatter,
-)
-
+from utilities.helper import (bash, fast_download, humanbytes, numerize,
+                              time_formatter)
 
 from . import LOGS, asst, callback, in_pattern, udB
 
