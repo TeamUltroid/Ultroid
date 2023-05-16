@@ -6,8 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
-from . import get_help
-
+from localization import get_help
 __doc__ = get_help("help_broadcast")
 
 import asyncio

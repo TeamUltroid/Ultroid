@@ -13,7 +13,7 @@ from telethon.tl.types import (Message, MessageEntityMention,
 from telethon.utils import get_display_name
 from utilities.helper import inline_mention, time_formatter
 
-from . import asst, asst_cmd
+from .. import asst, asst_cmd
 
 AFK = {}
 

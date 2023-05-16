@@ -7,10 +7,10 @@
 
 import re
 
-from core import _ult_cache
+from database._core import ult_cache
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 
-from . import *
+from . import ultroid_cmd, callback
 
 
 @ultroid_cmd(pattern="d(kick|ban)", manager=True, require="ban_users")
@@ -33,10 +33,10 @@ async def dowj(e):
         await e.eor(str(E))
 
 
-@callback(re.compile("cc_(.*)"), func=_ult_cache.get("admin_callback"))
+@callback(re.compile("cc_(.*)"), func=ult_cache.get("admin_callback"))
 async def callback_(event):
     data = event.data_match.group(1).decode("utf-8")
-    if data not in _ult_cache.get("admin_callback", {}):
+    if data not in ult_cache.get("admin_callback", {}):
         return
     try:
         perm = await event.client.get_permissions(event.chat_id, event.sender_id)
@@ -44,6 +44,6 @@ async def callback_(event):
         return await event.answer("Join the Group First!", alert=True)
     if not perm.is_admin:
         return await event.answer("You are not an Admin!", alert=True)
-    _ult_cache["admin_callback"].update({data: (event.sender, perm)})
+    ult_cache["admin_callback"].update({data: (event.sender, perm)})
     await event.answer("Verification Done!")
     await event.delete()

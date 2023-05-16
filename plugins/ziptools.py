@@ -25,7 +25,7 @@
 import os
 import time
 
-from . import (HNDLR, asyncio, bash, downloader, get_all_files, get_string,
+from . import (HNDLR, asyncio, bash,  get_all_files, get_string,
                ultroid_cmd, uploader)
 
 
@@ -60,7 +60,6 @@ async def zipp(event):
         event.chat_id,
         xxx,
         force_document=True,
-        thumb=ULTConfig.thumb,
         caption=f"`{xxx.name}`",
         reply_to=reply,
     )
@@ -84,7 +83,7 @@ async def unzipp(event):
         file = reply.media.document
         if not reply.file.name.endswith(("zip", "rar", "exe")):
             return await xx.edit(get_string("zip_3"))
-        image = await downloader(
+        image = await event.client.fast_download(
             reply.file.name, reply.media.document, xx, t, get_string("com_5")
         )
         file = image.name
@@ -101,7 +100,6 @@ async def unzipp(event):
             event.chat_id,
             xxx,
             force_document=True,
-            thumb=ULTConfig.thumb,
             caption=f"`{xxx.name}`",
         )
     await xx.delete()
@@ -120,7 +118,7 @@ async def azipp(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
+            image = await event.client.fast_download(
                 f"zip/{reply.file.name}",
                 reply.media.document,
                 xx,
