@@ -20,7 +20,7 @@
    Search and download video from youtube.
 """
 from core.remote import rm
-from utilties.tools import is_url_ok
+from utilities.tools import is_url_ok
 
 from . import get_string, ultroid_cmd
 
