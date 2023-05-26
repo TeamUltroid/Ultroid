@@ -1,0 +1,45 @@
+.env
+*.session-journal
+*.session
+test*
+*.mp3
+*.webm
+*.mp4
+*.tgs
+*.txt
+!runtime.txt
+!requirements.txt
+/*.jpg
+/*.png
+/*.mp4
+*.log
+temp*
+resources/downloads/
+push.bat
+modules/channels/
+modules/manager/
+
+ultroid*.json
+
+# Directories
+addons/
+vcbot/
+__pycache__/
+venv/
+glitch_me/
+src/glitch-me
+.idea/
+.vscode/
+temp/
+[Bb]in/
+.settings/
+*.swf
+*.air
+*.apk
+.vs
+env
+# temporary files
+*.raw
+
+# fly.io configs
+fly.toml
