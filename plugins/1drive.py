@@ -1,7 +1,8 @@
 import os
 
-from . import ultroid_cmd
 from core.remote import rm
+
+from . import ultroid_cmd
 
 with rm.get("onedrive", helper=True, dispose=True) as mod:
     onedrv = mod.OneDrive()

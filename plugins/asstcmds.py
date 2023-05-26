@@ -12,9 +12,10 @@ __doc__ = get_help("help_asstcmd")
 
 import os
 
-from utilities.tools import create_tl_btn, format_btn, get_msg_button
-from telethon import events, utils
 from core.remote import rm
+from telethon import events, utils
+from utilities.tools import create_tl_btn, format_btn, get_msg_button
+
 from . import asst, get_string, mediainfo, udB, ultroid_cmd
 
 
@@ -62,7 +63,8 @@ async def ac(e):
     asst.add_handler(
         astcmds,
         events.NewMessage(
-            func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())
+            func=lambda x: x.text.startswith(
+                "/") and x.text[1:] in list(list_cmds())
         ),
     )
     await e.eor(get_string("asstcmd_4").format(wrd))
@@ -90,7 +92,7 @@ async def lscmd(e):
 
 async def astcmds(e):
     xx = (e.text.replace("/", "")).lower().split()[0]
-    if x:= cmd_reply(xx):
+    if x := cmd_reply(xx):
         msg, media, bt = x
         if bt:
             bt = create_tl_btn(bt)
@@ -101,10 +103,10 @@ if udB.get_key("ASST_CMDS"):
     asst.add_handler(
         astcmds,
         events.NewMessage(
-            func=lambda x: x.text.startswith("/") and x.text[1:] in list(list_cmds())
+            func=lambda x: x.text.startswith(
+                "/") and x.text[1:] in list(list_cmds())
         ),
     )
-
 
 
 def get_stuff():
@@ -128,7 +130,8 @@ def cmd_reply(cmd):
     ok = get_stuff()
     if ok.get(cmd):
         okk = ok[cmd]
-        return okk["msg"], okk["media"], okk["button"] if ok.get("button") else None
+        return okk["msg"], okk["media"], okk["button"] if ok.get(
+            "button") else None
     return
 
 
