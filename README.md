@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./resources/extras/logo_readme.jpg" alt="TeamUltroid Logo">
+  <img src="./resources/ultroid.webp" alt="TeamUltroid Logo">
 </p>
 <h1 align="center">
   <b>Ultroid - UserBot</b>
@@ -7,7 +7,7 @@
 
 <b>A stable pluggable Telegram userbot + Voice & Video Call music bot, based on Telethon.</b>
 
-[![](https://img.shields.io/badge/Ultroid-v0.8-crimson)](#)
+[![](https://img.shields.io/badge/Ultroid-v1-blueviolet)](#)
 [![Stars](https://img.shields.io/github/stars/TeamUltroid/Ultroid?style=flat-square&color=yellow)](https://github.com/TeamUltroid/Ultroid/stargazers)
 [![Forks](https://img.shields.io/github/forks/TeamUltroid/Ultroid?style=flat-square&color=orange)](https://github.com/TeamUltroid/Ultroid/fork)
 [![Size](https://img.shields.io/github/repo-size/TeamUltroid/Ultroid?style=flat-square&color=green)](https://github.com/TeamUltroid/Ultroid/)   
@@ -33,7 +33,7 @@
 # Tutorial 
 - Full Tutorial - [![Full Tutorial](https://img.shields.io/badge/Watch%20Now-blue)](https://www.youtube.com/watch?v=0wAV7pUzhDQ)
 
-- Tutorial to get Redis URL and password - [here.](./resources/extras/redistut.md)
+- Tutorial to get Redis URL and password - [here.](./resources/images/redistut.md)
 ---
 
 ## Deploy to Heroku
@@ -70,7 +70,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 `pip(3) install -U -r requirements.txt`
 - Generate your `SESSION`:
   - For Linux users:
-    `bash sessiongen`
+    `bash ./ultroid session`
      or
     `wget -O session.py https://git.io/JY9JI && python3 session.py`
   - For Termux users:
@@ -81,16 +81,15 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 (You can either edit and rename the file or make a new file named `.env`.)
 - Run the bot:
   - Linux Users:
-   `bash startup`
+   `./ultroid start`
   - Windows Users:
     `python(3) -m pyUltroid`
-
 ---
 ## Necessary Variables
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
 
 One of the following database:
-- For **Redis** (tutorial [here](./resources/extras/redistut.md))
+- For **Redis** (tutorial [here](./resources/images/redistut.md))
   - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/).
   - `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/).
 - For **MONGODB**
@@ -118,5 +117,5 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
 * [MarshalX](https://github.com/MarshalX) for [PyTgCalls.](https://github.com/MarshalX/tgcalls)
-
+* [Dan](https://github.com/delivrance) for [TgCrypto.](https://github.com/pyrogram/tgcrypto)
 > Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid).    

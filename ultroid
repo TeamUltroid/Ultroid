@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+# Ultroid - UserBot
+
+echo "Welcome to Ultroid!"
+
+INSTALLER_FETCH_URL=https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/installer.sh
+STARTUP_FETCH_URL=https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/startup
+TERMUX_INSTALLER_URL=https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/install-termux
+SESSION_GEN_FETCH_URL=https://raw.githubusercontent.com/TeamUltroid/Ultroid/dev/sessiongen
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided."
+    echo "Run with --help to view all available options."
+    exit 1
+fi
+
+if [ $1 == "--help" ]; then
+    echo "Usage: ./ultroid [options]"
+    echo "Options:"
+    echo "  --help: Show this help message"
+    echo "  install: Install the bot"
+    echo "  session: Generate a new session"
+    echo "  start: Start the bot"
+    echo "  termux: Install the bot in Termux"
+    exit 0
+elif [ $1 == "install" ]; then
+    if [ $2 == "--help" ]; then
+        echo "Usage: ./ultroid install [options]"
+        echo "Options:"
+        echo "  --help: Show this help message"
+        echo "  --dir: Install the bot in a custom directory"
+        echo "  --branch: Install the bot from a custom repo branch"
+        echo "  --env-file: Use custom .env file"
+        echo "  --no-root: Run install script without root"
+        exit 0
+    else
+        # check if scripts/unix/installer exists or fetch from curl
+        if [ ! -f scripts/unix/installer ]; then
+            echo "Fetching installer from GitHub..."
+            if [ ! -d scripts ]; then
+                mkdir scripts
+            fi
+            curl -s $INSTALLER_FETCH_URL -o scripts/unix/installer
+        fi
+        # give args after "install" but not positional args
+        bash scripts/unix/installer "${@:3}"
+    fi
+    exit 0
+elif [ $1 == "session" ]; then
+    if [ ! -f scripts/unix/session ]; then
+        #fetch via curl
+        echo "Fetching session generator from GitHub..."
+        if [ ! -d scripts ]; then
+            mkdir scripts
+        fi
+        curl -s $SESSION_GEN_FETCH_URL -o scripts/unix/session
+    fi
+    bash scripts/unix/sessiongen
+    exit 0
+elif [ $1 == "start" ]; then
+    if [ ! -f scripts/unix/startup ]; then
+        #fetch via curl
+        echo "Fetching startup from GitHub..."
+        if [ ! -d scripts ]; then
+            mkdir scripts
+        fi
+        curl -s $STARTUP_FETCH_URL -o scripts/unix/startup
+    fi
+    if [ $# -eq 2 ]; then
+        if [ $2 == "--http-server" ]; then
+            # start the bot with the http server
+            bash scripts/unix/startup --http-server
+            exit 0
+        elif [ $2 == "--help" ]; then
+            echo "Usage: ./ultroid start [options]"
+            echo "Options:"
+            echo "  --help: Show this help message"
+            echo "  --http-server: Start the HTTP server"
+            exit 0
+        else
+            echo "Invalid argument"
+            exit 1
+        fi
+    elif [ $# -eq 1 ]; then
+        # start the bot without the http server
+        bash scripts/unix/startup
+        exit 0
+    else
+        echo "Invalid argument"
+        exit 1
+    fi
+elif [ $1 == "termux" ]; then
+    echo "Starting Termux installer"
+    if [ ! -f scripts/unix/install-termux ]; then
+        echo "Fetching termux installer from GitHub..."
+        if [ ! -d scripts ]; then
+            mkdir scripts
+        fi
+        curl -s $TERMUX_INSTALLER -o scripts/unix/install-termux
+    fi
+    bash scripts/unix/install-termux
+    echo "Termux installer finished."
+    exit 0
+else
+    echo "Invalid argument"
+    exit 1
+fi

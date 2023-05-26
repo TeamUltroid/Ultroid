@@ -1,0 +1,295 @@
+#!/usr/bin/env bash
+
+REPO="https://github.com/TeamUltroid/Ultroid.git"
+CURRENT_DIR="$(pwd)"
+ENV_FILE_PATH=".env"
+DIR="$CURRENT_DIR/Ultroid"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+    --dir=*)
+        CUSTOM_DIR="${1#*=}"
+        ;;
+    --branch=*)
+        BRANCH="${1#*=}" || BRANCH="main"
+        ;;
+    --env-file=*)
+        ENV_FILE_PATH="${1#*=}" || ENV_FILE_PATH=".env"
+        ;;
+    --no-root)
+        NO_ROOT="true"
+        ;;
+    *)
+        echo "Unknown parameter passed: $1"
+        exit 1
+        ;;
+    esac
+    shift
+done
+
+check_dependencies() {
+    # check if debian
+    echo -e "\nChecking dependencies..."
+    # read file with root access
+    # check NO_ROOT
+    if [[ $NO_ROOT == "true" ]]; then
+        echo -e "\nRoot access not found. Checking if dependencies are installed." >&2
+        if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then
+            echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot." >&2
+            exit 1
+        fi
+        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
+            echo -e "Python 3.8 or higher is required to run this bot." >&2
+            exit 1
+        fi
+        # check if any of ffmpeg, mediainfo, neofetch, git is not installed
+        if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v neofetch &>/dev/null || ! command -v git &>/dev/null; then
+            echo -e "Some dependencies aren't installed. Please install ffmpeg, mediainfo, neofetch and git to run this bot." >&2
+            exit 1
+        fi
+    elif ! [[ $(ls -l "/etc/sudoers" | cut -d " " -f1) =~ "r" ]]; then
+        # check dependencies if installed
+        echo -e "Root access not found. Checking if dependencies are installed." >&2
+        if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then
+            echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot." >&2
+            exit 1
+        fi
+        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
+            echo -e "Python 3.8 or higher is required to run this bot." >&2
+            exit 1
+        fi
+        # check if any of ffmpeg, mediainfo, neofetch, git is not installed
+        if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v neofetch &>/dev/null || ! command -v git &>/dev/null; then
+            echo -e "Some dependencies aren't installed. Please install ffmpeg, mediainfo, neofetch and git to run this bot." >&2
+            exit 1
+        fi
+    fi
+    if [[ $machine == "Linux" ]]; then
+        if [ -x "$(command -v apt-get)" ]; then
+            echo -e "\nInstalling dependencies..."
+            # check if any of ffmpeg, mediainfo, neofetch, git is not installed via dpkg
+            if dpkg -l | grep -q ffmpeg || dpkg -l | grep -q mediainfo || dpkg -l | grep -q neofetch || dpkg -l | grep -q git; then
+                sudo apt-get -qq -o=Dpkg::Use-Pty=0 update
+                sudo apt-get install -qq -o=Dpkg::Use-Pty=0 python3 python3-pip ffmpeg mediainfo neofetch git -y
+            fi
+        elif [ -x "$(command -v pacman)" ]; then
+            echo -e "\nInstalling dependencies..."
+            if pacman -Q | grep -q ffmpeg || pacman -Q | grep -q mediainfo || pacman -Q | grep -q neofetch || pacman -Q | grep -q git; then
+                sudo pacman -Sy python python-pip git ffmpeg mediainfo neofetch --noconfirm
+            fi
+        elif [ -x "$(command -v dnf)" ]; then
+            echo -e "\nInstalling dependencies..."
+            if dnf list installed | grep -q ffmpeg || dnf list installed | grep -q mediainfo || dnf list installed | grep -q neofetch || dnf list installed | grep -q git; then
+                sudo dnf install python3 python3-pip ffmpeg mediainfo neofetch git -y
+            fi
+        elif [ -x "$(command -v yum)" ]; then
+            echo -e "\nInstalling dependencies..."
+            if yum list installed | grep -q ffmpeg || yum list installed | grep -q mediainfo || yum list installed | grep -q neofetch || yum list installed | grep -q git; then
+                sudo yum install python3 python3-pip ffmpeg mediainfo neofetch git -y
+            fi
+        elif [ -x "$(command -v zypper)" ]; then
+            echo -e "\nInstalling dependencies..."
+            if zypper search -i | grep -q ffmpeg || zypper search -i | grep -q mediainfo || zypper search -i | grep -q neofetch || zypper search -i | grep -q git; then
+                sudo zypper install python3 python3-pip ffmpeg mediainfo neofetch git -y
+            fi
+        elif [ -x "$(command -v apk)" ]; then
+            echo -e "\nInstalling dependencies..."
+            if apk info | grep -q ffmpeg || apk info | grep -q mediainfo || apk info | grep -q neofetch || apk info | grep -q git; then
+                sudo apk add python3 python3-pip ffmpeg mediainfo neofetch git
+            fi
+        fi
+    elif [[ $machine == "Darwin" ]]; then
+        if ! [ -x "$(command -v brew)" ]; then
+            echo -e "Homebrew isn't installed. Please install homebrew to run this bot." >&2
+            exit 1
+        fi
+        echo -e "\nInstalling dependencies..."
+        if brew list | grep -q ffmpeg || brew list | grep -q mediainfo || brew list | grep -q neofetch || brew list | grep -q git; then
+            brew install python ffmpeg mediainfo neofetch git
+        fi
+    elif [[ $machine == "MinGw" ]]; then
+        echo -e "\nInstalling dependencies..."
+        if pacman -Q | grep -q ffmpeg || pacman -Q | grep -q mediainfo || pacman -Q | grep -q neofetch || pacman -Q | grep -q git; then
+            pacman -Sy python python-pip git ffmpeg mediainfo neofetch --noconfirm
+        fi
+    elif [[ $machine == "Cygwin" ]]; then
+        echo -e "\nInstalling dependencies..."
+        if pacman -Q | grep -q ffmpeg || pacman -Q | grep -q mediainfo || pacman -Q | grep -q neofetch || pacman -Q | grep -q git; then
+            pacman -Sy python python-pip git ffmpeg mediainfo neofetch --noconfirm
+        fi
+    else
+        echo -e "$machine isn't supported. Please install ffmpeg, mediainfo, neofetch and git to run this bot." >&2
+        if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then
+            echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot." >&2
+            exit 1
+        fi
+        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
+            echo -e "Python 3.8 or higher is required to run this bot." >&2
+            exit 1
+        fi
+        if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v neofetch &>/dev/null || ! command -v git &>/dev/null; then
+            echo -e "Some dependencies aren't installed. Please install ffmpeg, mediainfo, neofetch and git to run this bot." >&2
+            exit 1
+        fi
+    fi
+}
+
+check_python() {
+    # check if python is installed
+    if ! command -v python3 &>/dev/null; then
+        echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot."
+        exit 1
+    elif ! command -v python &>/dev/null; then
+        echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot."
+        exit 1
+    fi
+    if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
+        echo -e "Python 3.8 or higher is required to run this bot."
+        exit 1
+    elif [ $(python -c "import sys; print(sys.version_info[1])") -lt 3 ]; then
+        if [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
+            echo -e "Python 3.8 or higher is required to run this bot."
+            exit 1
+        fi
+    fi
+}
+
+clone_repo() {
+    # check if pyultroid, startup, plugins folders exist
+    if [ -d $DIR ]; then
+        if [ -d $DIR/.git ]; then
+            echo -e "Updating Ultroid ${BRANCH}... "
+            cd $DIR
+            git pull
+            currentbranch="$(git rev-parse --abbrev-ref HEAD)"
+            if [ ! $BRANCH ]; then
+                export BRANCH=$currentbranch
+            fi
+            case $currentbranch in
+            $BRANCH)
+                # do nothing
+                ;;
+            *)
+                echo -e "Switching to branch ${BRANCH}... "
+                echo -e $currentbranch
+                git checkout $BRANCH
+                ;;
+            esac
+        else
+            rm -rf $DIR
+            exit 1
+        fi
+        if [ -d "addons" ]; then
+            cd addons
+            git pull
+        fi
+        return
+    else
+        if [ ! $BRANCH ]; then
+            export BRANCH="main"
+        fi
+        mkdir -p $DIR
+        echo -e "Cloning Ultroid ${BRANCH}... "
+        git clone -b $BRANCH $REPO $DIR
+    fi
+}
+
+install_requirements() {
+    pip3 install -q --upgrade pip
+    echo -e "\nInstalling requirements... "
+    pip3 install -q --no-cache-dir -r $DIR/requirements.txt
+    pip3 install -q -r $DIR/resources/startup/optional-requirements.txt
+}
+
+misc_install() {
+    if [ $SETUP_PLAYWRIGHT ]; then
+        echo -e "Installing playwright."
+        pip3 install playwright
+        playwright install
+    fi
+    if [ $OKTETO_TOKEN ]; then
+        echo -e "Installing Okteto-CLI... "
+        curl https://get.okteto.com -sSfL | sh
+    elif [ $VCBOT ]; then
+        if [ -d $DIR/vcbot ]; then
+            cd $DIR/vcbot
+            git pull
+        else
+            echo -e "Cloning VCBOT.."
+            git clone https://github.com/TeamUltroid/VcBot $DIR/vcbot
+        fi
+        pip3 install pytgcalls >=3.0.0.dev21 && pip3 install av -q --no-binary av
+    fi
+}
+
+dep_install() {
+    echo -e "\nInstalling DB Requirement..."
+    if [ $MONGO_URI ]; then
+        echo -e "   Installing MongoDB Requirements..."
+        pip3 install -q pymongo[srv]
+    elif [ $DATABASE_URL ]; then
+        echo -e "   Installing PostgreSQL Requirements..."
+        pip3 install -q psycopg2-binary
+    elif [ $REDIS_URI ]; then
+        echo -e "   Installing Redis Requirements..."
+        pip3 install -q redis hiredis
+    fi
+}
+
+main() {
+    if [[ $machine == UNKNOWN* ]]; then
+        echo -e "Please run this script on Linux or Mac or MinGW(or Git Bash for windows) or Cygwin."
+        exit 1
+    fi
+    if [ $CUSTOM_DIR ]; then
+        DIR=$CUSTOM_DIR
+        echo -e "Using custom directory: $DIR"
+    elif ! [ $CUSTOM_DIR ]; then
+        if [ -d "core" ] && [ -d "database" ] && [ -d "utilities" ]; then
+            DIR=$CURRENT_DIR
+            echo $DIR
+        fi
+    fi
+    if [ -f $ENV_FILE_PATH ]; then
+        set -a
+        source <(cat $ENV_FILE_PATH | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
+        set +a
+        cp $ENV_FILE_PATH .env
+    fi
+    (check_dependencies)
+    (check_python)
+    #(clone_repo)
+    (install_requirements)
+    (dep_install)
+    (misc_install)
+    echo -e "\nInstallation Completed."
+}
+
+echo -e "\nStarting Ultroid Setup..."
+unameOut="$(uname -s)"
+case "${unameOut}" in
+Linux*) machine=Linux ;;
+Darwin*) machine=Mac ;;
+CYGWIN*) machine=Cygwin ;;
+MINGW*) machine=MinGw ;;
+*) machine="UNKNOWN:${unameOut}" ;;
+esac
+echo -e "\nDetected OS: $machine"
+
+if [ $NO_ROOT ]; then
+    echo -e "\nInstalling without root."
+    main
+    exit 0
+elif [ -t 0 ]; then
+    # check if sudo is installed
+    if ! command -v sudo &>/dev/null; then
+        echo -e "\nSudo isn't installed. Please install sudo or run with --no-root to install Ultroid."
+        exit 1
+    fi
+    sudo echo "\nSudo permission granted."
+    main
+else
+    echo "\nSkipping root."
+    # run main function
+    main
+fi

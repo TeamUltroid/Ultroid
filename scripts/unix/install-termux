@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Ultroid - UserBot
+# Copyright (C) 2020-2023 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+if [ -d "resources" ]
+then
+    echo "Current directory Identified.."
+else
+    apt install git -y
+    git clone https://github.com/TeamUltroid/Ultroid
+    cd Ultroid
+fi
+
+printf "Updating System..\n\n"
+pkg update -y
+apt update
+apt upgrade -y
+
+python_not_installed="$(python -c 'exit()')"
+
+# Install Python if n0t installed..
+if [ python_not_installed ]
+then
+    printf "Installing Python..\nThis may take some long...\n"
+    pkg install python3 -y
+fi
+
+printf "*Putting some magical effect...*"
+pip install -q colorama
+
+printf "Running up Installation tool.\n"
+python resources/extras/_termux.py

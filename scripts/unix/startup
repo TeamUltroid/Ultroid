@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Ultroid - UserBot
+# Copyright (C) 2021-2022 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+
+echo "
+            ┏┳┓╋┏┓╋╋╋╋┏┓┏┓
+            ┃┃┣┓┃┗┳┳┳━╋╋┛┃
+            ┃┃┃┗┫┏┫┏┫╋┃┃╋┃
+            ┗━┻━┻━┻┛┗━┻┻━┛
+
+      Visit @TheUltroid for updates!!
+
+"
+# check if --no-http-server is passed
+if [ "$1" == "--http-server" ]; then
+    # start the http server
+    wget https://gist.githubusercontent.com/mauler/593caee043f5fe4623732b4db5145a82/raw/972eb768159f0324d12d5d52b67b8e2841f4da73/http_server_auth.py -O /opt/server.py && python3 /opt/server.py -u admin -p pass -d . -b 0.0.0.0 &
+fi
+if [ -f .env ] ; then  set -o allexport; source .env; set +o allexport ; fi
+if [ $SESSION1 ] ; then wget https://gist.github.com/1Danish-00/6554f034549197e5824972b01f631e0c/raw/main.py && python3 main.py ; else python3 -m core ; fi
