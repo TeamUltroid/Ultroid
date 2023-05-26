@@ -5,7 +5,7 @@ from .. import udB, ultroid_cmd
 openai.api_key = udB.get("OPENAI_KEY")
 
 
-@ultroid_cmd(pattern="chatgpt( (.*)|$)")
+@ultroid_cmd("chatgpt( (.?)|$)")
 async def chatgpt(event):
     """Chat with GPT-3"""
     if not udB.get("OPENAI_KEY"):
