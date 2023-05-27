@@ -27,7 +27,8 @@ async def onPluginDel(ult):
     chat = ult.chat_id
     for msg in ult.deleted_ids:
         if plugin := PluginChannel[chat].get(msg):
-            unload_plugin(plugin)
+            if unload_plugin(plugin):
+                LOGS.info(f"Successfully Unloaded {plugin}!")
 
 
 async def WasItRestart(key):
@@ -141,12 +142,12 @@ async def load_plugins():
         with rm.get("pmbot", helper=True, dispose=True):
             LOGS.info("Loaded PMBOT.")
 
-    # if udB.get_config("VCBOT"):
-    #     try:
-    #         with rm.get("setup_vcbot", "core/setup_vcbot.py", dispose=True) as mod:
-    #             await mod.setup()
-    #     except Exception as er:
-    #         LOGS.exception(er)
+    if udB.get_config("VCBOT"):
+        try:
+            with rm.get("setup_vcbot", "core/setup_vcbot.py", dispose=True) as mod:
+                await mod.setup()
+        except Exception as er:
+            LOGS.exception(er)
 
     if not udB.get_key("INIT_DEPLOY"):
         udB.set_key("INIT_DEPLOY", True)

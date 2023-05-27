@@ -456,7 +456,7 @@ def four_point_transform(image, pts):
 
 async def Carbon(
     code,
-    base_url="https://carbonara.vercel.app/api/cook",
+    base_url="https://carbonara.solopov.dev/api/cook",
     file_name="ultroid",
     download=False,
     rayso=False,
@@ -476,7 +476,7 @@ async def Carbon(
         kwargs["code"] = code
 
     def eval_(req):
-        if req.headers["content-type"] != "image/jpeg":
+        if req.headers["content-type"] != "image/png":
             try:
                 return req.json()
             except Exception:
@@ -496,17 +496,18 @@ async def Carbon(
     return file
 
 
-async def get_file_link(msg):
-    from core import udB
+# async def get_file_link(msg):
+#     TODO: move to filestore plugin
+#     from core import udB
 
-    msg_id = await msg.forward_to(udB.get_config("LOG_CHANNEL"))
-    await msg_id.reply(
-        "**Message has been stored to generate a shareable link. Do not delete it.**"
-    )
-    msg_id = msg_id.id
-    msg_hash = secrets.token_hex(nbytes=8)
-    store_msg(msg_hash, msg_id)
-    return msg_hash
+#     msg_id = await msg.forward_to(udB.get_config("LOG_CHANNEL"))
+#     await msg_id.reply(
+#         "**Message has been stored to generate a shareable link. Do not delete it.**"
+#     )
+#     msg_id = msg_id.id
+#     msg_hash = secrets.token_hex(nbytes=8)
+#     store_msg(msg_hash, msg_id)
+#     return msg_hash
 
 
 def translate(text, target="en", detect=False):

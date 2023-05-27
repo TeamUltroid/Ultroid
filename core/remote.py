@@ -60,7 +60,9 @@ class Remote:
         if remote_file:
             with open(save_as, "wb") as file:
                 file.write(remote_file)  # type: ignore
-            del details["repo"]
+
+            with suppress(KeyError):
+                del details['repo']
             del details["path"]
 
             self.RemoteConfig[_pat][path] = details

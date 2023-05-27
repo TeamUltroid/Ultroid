@@ -13,12 +13,14 @@ import re
 import sys
 import time
 from traceback import format_exc
+from inspect import getmembers, isfunction
+from contextlib import suppress
 from urllib.parse import unquote
 import asyncio
 import multiprocessing
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
-
+from database._core import LIST
 from telethon.helpers import _maybe_await
 from telethon.tl import types
 from telethon.tl.types import (
@@ -102,91 +104,90 @@ def inline_mention(user, custom=None, html=False):
 
 # ----------------- Load \\ Unloader ---------------- #
 
+
 def unload_plugin(shortname):
+    from core import ultroid_bot, asst
+
     if shortname.endswith(".py"):
         shortname = shortname[:-3]
     shortname = shortname.replace("/", ".").replace("\\", ".")
-    
-
-# def un_plug(shortname):
-#     from core import asst, bot
-
-#     try:
-#         all_func = LOADED[shortname]
-#         for client in [bot, asst]:
-#             for x, _ in client.list_event_handlers():
-#                 if x in all_func:
-#                     client.remove_event_handler(x)
-#         del LOADED[shortname]
-#         del LIST[shortname]
-#         ADDONS.remove(shortname)
-#     except (ValueError, KeyError):
-#         name = f"addons.{shortname}"
-#         for client in [bot, asst]:
-#             for i in reversed(range(len(client._event_builders))):
-#                 ev, cb = client._event_builders[i]
-#                 if cb.__module__ == name:
-#                     del client._event_builders[i]
-#                     try:
-#                         del LOADED[shortname]
-#                         del LIST[shortname]
-#                         ADDONS.remove(shortname)
-#                     except KeyError:
-#                         pass
-
-
-async def safeinstall(event):
-    from core import HNDLR
-    from core.utils.addons import load_addons
-
-    if not event.reply_to:
-        return await event.eor(f"Please use `{HNDLR}install` as reply to a .py file.")
-    ok = await event.eor("`Installing...`")
-    reply = await event.get_reply_message()
-    if not (
-        reply.media
-        and hasattr(reply.media, "document")
-        and reply.file.name
-        and reply.file.name.endswith(".py")
-    ):
-        return await ok.eor("`Please reply to any python plugin`")
-    plug = reply.file.name.replace(".py", "")
-    if plug in list(LOADED):
-        return await ok.eor(f"Plugin `{plug}` is already installed.")
-    sm = reply.file.name.replace("_", "-").replace("|", "-")
-    dl = await reply.download_media(f"addons/{sm}")
-    if event.text[9:] != "f":
-        read = open(dl).read()
-        for dan in KEEP_SAFE().All:
-            if re.search(dan, read):
-                os.remove(dl)
-                return await ok.edit(
-                    f"**Installation Aborted.**\n**Reason:** Occurance of `{dan}` in `{reply.file.name}`.\n\nIf you trust the provider and/or know what you're doing, use `{HNDLR}install f` to force install.",
-                )
     try:
-        load_addons(dl)  # dl.split("/")[-1].replace(".py", ""))
-    except BaseException:
-        os.remove(dl)
-        return await ok.eor(f"**ERROR**\n\n`{format_exc()}`", time=30)
-    plug = sm.replace(".py", "")
-    if plug in HELP:
-        output = "**Plugin** - `{}`\n".format(plug)
-        for i in HELP[plug]:
-            output += i
-        output += "\n© @TeamUltroid"
-        await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
-    elif plug in CMD_HELP:
-        output = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
-        output += str(CMD_HELP[plug])
-        await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
-    else:
+        mod = sys.modules[shortname]
+    except KeyError:
         try:
-            x = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
-            for d in LIST[plug]:
-                x += HNDLR + d + "\n"
-            await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n`{x}`")
-        except BaseException:
-            await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓")
+            mod = sys.modules[f"modules.addons.{shortname}"]
+        except KeyError:
+            return
+    with suppress(KeyError):
+        del LIST[shortname]
+    funcs = list(
+        filter(
+            lambda func: not func[0].startswith("__") and isfunction(func[1]),
+            getmembers(mod),
+        )
+    )
+    _removed = []
+    for client in [ultroid_bot, asst]:
+        for i, e in client.list_event_handlers():
+            if i in funcs:
+                client.remove_event_handler(i, e)
+                _removed.append(i)
+    return _removed
+
+
+# async def safeinstall(event):
+#     TODO: fix
+#     from core import HNDLR
+#     from core.utils.addons import load_addons
+
+#     if not event.reply_to:
+#         return await event.eor(f"Please use `{HNDLR}install` as reply to a .py file.")
+#     ok = await event.eor("`Installing...`")
+#     reply = await event.get_reply_message()
+#     if not (
+#         reply.media
+#         and hasattr(reply.media, "document")
+#         and reply.file.name
+#         and reply.file.name.endswith(".py")
+#     ):
+#         return await ok.eor("`Please reply to any python plugin`")
+#     plug = reply.file.name.replace(".py", "")
+#     if plug in list(LOADED):
+#         return await ok.eor(f"Plugin `{plug}` is already installed.")
+#     sm = reply.file.name.replace("_", "-").replace("|", "-")
+#     dl = await reply.download_media(f"addons/{sm}")
+#     if event.text[9:] != "f":
+#         read = open(dl).read()
+#         for dan in KEEP_SAFE().All:
+#             if re.search(dan, read):
+#                 os.remove(dl)
+#                 return await ok.edit(
+#                     f"**Installation Aborted.**\n**Reason:** Occurance of `{dan}` in `{reply.file.name}`.\n\nIf you trust the provider and/or know what you're doing, use `{HNDLR}install f` to force install.",
+#                 )
+#     try:
+#         load_addons(dl)  # dl.split("/")[-1].replace(".py", ""))
+#     except BaseException:
+#         os.remove(dl)
+#         return await ok.eor(f"**ERROR**\n\n`{format_exc()}`", time=30)
+#     plug = sm.replace(".py", "")
+#     if plug in HELP:
+#         output = "**Plugin** - `{}`\n".format(plug)
+#         for i in HELP[plug]:
+#             output += i
+#         output += "\n© @TeamUltroid"
+#         await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
+#     elif plug in CMD_HELP:
+#         output = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
+#         output += str(CMD_HELP[plug])
+#         await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
+#     else:
+#         try:
+#             x = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
+#             for d in LIST[plug]:
+#                 x += HNDLR + d + "\n"
+#             await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n`{x}`")
+#         except BaseException:
+#             await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓")
 
 
 async def updateme_requirements():
@@ -210,7 +211,7 @@ async def bash(cmd, run_code=0):
     out = stdout.decode().strip()
     if not run_code and err:
         if match := re.match("\/bin\/sh: (.*): ?(\w+): not found", err):
-            return out, f"{match.group(2).upper()}_NOT_FOUND"
+            return out, f"{match[2].upper()}_NOT_FOUND"
     return out, err
 
 

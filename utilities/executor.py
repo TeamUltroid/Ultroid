@@ -51,10 +51,10 @@ class Terminal:
         output = []
         attr = getattr(self._processes[pid], "stdout" if stdout else "stderr")
         while True:
-            out = self._to_str(attr.readline())
-            if not out:
-                break
-            output.append(out)
+            if out := self._to_str(attr.readline()):
+                output.append(out)
+                continue
+            break
         return "\n".join(output)
     
     def error(self, pid: int) -> str:
