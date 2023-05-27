@@ -40,7 +40,7 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None, fil
         chunks = range(0, filesize, chunk_size)
 
         headers_list = [
-            [{"Range": f"bytes={start}-{start+chunk_size-1}"}] for start in chunks]
+            [{"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"}] for start in chunks]
 
         async def download_part(arg):
             headers = arg
