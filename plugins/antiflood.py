@@ -17,12 +17,12 @@ from utilities.admins import admin_check
 
 from database.helpers import DEVLIST
 
-from . import (Button, Redis, asst, callback, eod, get_string, udB,
+from . import (Button, asst, callback, eod, get_string, udB,
                ultroid_bot, ultroid_cmd)
 
 _check_flood = {}
 
-if Redis("ANTIFLOOD"):
+if udB.get_key("ANTIFLOOD"):
 
     @ultroid_bot.on(
         NewMsg(
@@ -55,7 +55,7 @@ if Redis("ANTIFLOOD"):
                 del _check_flood[event.chat_id]
                 await event.reply(f"#AntiFlood\n\n{get_string('antiflood_3')}")
                 await asst.send_message(
-                    int(Redis("LOG_CHANNEL")),
+                    udB.get_config("LOG_CHANNEL"),
                     f"#Antiflood\n\n`Muted `[{name}](tg://user?id={event.sender_id})` in {chat}`",
                     buttons=Button.inline(
                         "Unmute", data=f"anti_{event.sender_id}_{event.chat_id}"

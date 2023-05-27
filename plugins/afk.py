@@ -6,7 +6,7 @@ from telethon import events
 
 from database.helpers.base import KeyManager
 
-from . import (LOG_CHANNEL, NOSPAM_CHAT, Redis, asst, get_string, mediainfo,
+from . import (LOG_CHANNEL, NOSPAM_CHAT, asst, get_string, mediainfo,
                udB, ultroid_bot, ultroid_cmd)
 
 old_afk_msg = []
@@ -95,7 +95,7 @@ async def remove_afk(event):
 
 
 async def on_afk(event):
-    if event.is_private and Redis(
+    if event.is_private and udB.get_key(
             "PMSETTING") and not is_approved(event.chat_id):
         return
     elif "afk" in event.text.lower():
