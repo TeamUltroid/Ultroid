@@ -6,8 +6,8 @@ from telethon import events
 
 from database.helpers.base import KeyManager
 
-from . import (LOG_CHANNEL, NOSPAM_CHAT, asst, get_string, mediainfo,
-               udB, ultroid_bot, ultroid_cmd)
+from . import (LOG_CHANNEL, NOSPAM_CHAT, asst, get_string, mediainfo, udB,
+               ultroid_bot, ultroid_cmd)
 
 old_afk_msg = []
 
