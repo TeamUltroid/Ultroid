@@ -41,7 +41,7 @@ async def download_from_url(event):
         return await eor(msg, get_string("udl_5"), time=5)
     try:
         link, filename = queryed.split(" | ")[:2]
-    except IndexError:
+    except ValueError:
         filename = None
     s_time = time.time()
     try:

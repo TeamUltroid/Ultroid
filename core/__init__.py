@@ -18,7 +18,6 @@ from database import udB
 from .version import version
 from .remote import rm
 
-
 start_time = time.time()
 
 LOGS.info("Connected to %s...", udB.name)

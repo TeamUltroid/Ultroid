@@ -40,6 +40,7 @@ from telethon.tl.functions.messages import SetTypingRequest
 from . import *
 
 from core.git import repo
+from core.config import HOSTED_ON
 
 # TODO: Mess with this later
 # from database._core import ADDONS, HELP, LIST, LOADED
@@ -134,60 +135,6 @@ def unload_plugin(shortname):
                 _removed.append(i)
     return _removed
 
-
-# async def safeinstall(event):
-#     TODO: fix
-#     from core import HNDLR
-#     from core.utils.addons import load_addons
-
-#     if not event.reply_to:
-#         return await event.eor(f"Please use `{HNDLR}install` as reply to a .py file.")
-#     ok = await event.eor("`Installing...`")
-#     reply = await event.get_reply_message()
-#     if not (
-#         reply.media
-#         and hasattr(reply.media, "document")
-#         and reply.file.name
-#         and reply.file.name.endswith(".py")
-#     ):
-#         return await ok.eor("`Please reply to any python plugin`")
-#     plug = reply.file.name.replace(".py", "")
-#     if plug in list(LOADED):
-#         return await ok.eor(f"Plugin `{plug}` is already installed.")
-#     sm = reply.file.name.replace("_", "-").replace("|", "-")
-#     dl = await reply.download_media(f"addons/{sm}")
-#     if event.text[9:] != "f":
-#         read = open(dl).read()
-#         for dan in KEEP_SAFE().All:
-#             if re.search(dan, read):
-#                 os.remove(dl)
-#                 return await ok.edit(
-#                     f"**Installation Aborted.**\n**Reason:** Occurance of `{dan}` in `{reply.file.name}`.\n\nIf you trust the provider and/or know what you're doing, use `{HNDLR}install f` to force install.",
-#                 )
-#     try:
-#         load_addons(dl)  # dl.split("/")[-1].replace(".py", ""))
-#     except BaseException:
-#         os.remove(dl)
-#         return await ok.eor(f"**ERROR**\n\n`{format_exc()}`", time=30)
-#     plug = sm.replace(".py", "")
-#     if plug in HELP:
-#         output = "**Plugin** - `{}`\n".format(plug)
-#         for i in HELP[plug]:
-#             output += i
-#         output += "\n© @TeamUltroid"
-#         await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
-#     elif plug in CMD_HELP:
-#         output = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
-#         output += str(CMD_HELP[plug])
-#         await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
-#     else:
-#         try:
-#             x = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
-#             for d in LIST[plug]:
-#                 x += HNDLR + d + "\n"
-#             await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n`{x}`")
-#         except BaseException:
-#             await ok.eor(f"✓ `Ultroid - Installed`: `{plug}` ✓")
 
 
 async def updateme_requirements():
@@ -392,12 +339,11 @@ No_Flood = {}
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     now = time.time()
-    if No_Flood.get(event.chat_id):
-        if No_Flood[event.chat_id].get(event.id):
-            if (now - No_Flood[event.chat_id][event.id]) < 1.1:
-                return
-        else:
-            No_Flood[event.chat_id].update({event.id: now})
+    if (
+        No_Flood.get(event.chat_id, {}).get(event.id)
+        and (now - No_Flood[event.chat_id][event.id]) < 1.1
+    ):
+        return
     else:
         No_Flood.update({event.chat_id: {event.id: now}})
     diff = time.time() - start
