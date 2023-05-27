@@ -42,7 +42,7 @@ async def parallel_download(url, filename, chunk_size, filesize: int, event=None
             chunks = range(0, filesize, chunk_size)
 
             headers_list = [
-                [{"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"}] for start in chunks]
+                {"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"} for start in chunks]
 
             async def download_part(arg):
                 headers = arg
@@ -64,7 +64,7 @@ async def parallel_download(url, filename, chunk_size, filesize: int, event=None
                 os.makedirs(file_path)
             with open(f"{file_path}/{filename}", "wb") as f:
                 f.write(b"".join(content))
-        except Exception:
+        except Exception as e:
             print(traceback.format_exc())
 
 
