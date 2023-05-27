@@ -1,6 +1,5 @@
 import asyncio
 import base64
-import concurrent.futures
 import math
 import os
 import time
@@ -15,62 +14,51 @@ from database import udB
 pquit = False
 
 
-async def parallel_download(url, filename, chunk_size, filesize, event=None):
-    chunks = range(0, filesize, chunk_size)
+class Progress:
+    def __init__(self, total, filename):
+        self.filename = filename
+        self.total = total
+        self.completed = 0
+        self.last_update = time.time()
+        self.last_update_human = time_formatter(self.last_update)
 
-    the_iter = [[{
-        "Range": "bytes=" + str(start) + "-" + str(start + chunk_size - 1)
-    }, f"{filename}.part{i}"] for i, start in enumerate(
-        chunks)]
+    async def update(self, chunk_size, event):
+        self.completed += chunk_size
+        self.percent = math.floor(self.completed / self.total * 100)
+        self.current_human = humanbytes(self.completed)
+        await event.edit(
+            f"Downloading... [{self.current_human}/{self.total}]({self.percent}%)"
+            if self.completed < self.total
+            else f"Downloaded {self.filename} in {time_formatter(time.time() - self.last_update)}."
+        )
+        self.last_update = time.time()
 
-    def run_async(func, *args):
-        return asyncio.get_event_loop_policy().new_event_loop().run_until_complete(func(*args))
 
-    async def download_part(arg):
-        while not pquit:
-            headers, partfile = arg
-            async with aiohttp.request('GET', url, headers=headers) as response:
+async def parallel_download(url, filename, chunk_size, filesize, event=None, file_path="resources/downloads"):
+    while not pquit:
+        progress = Progress(filesize, filename)
+        chunks = range(0, filesize, chunk_size)
 
-                size = 0
-                with open(partfile, 'wb') as f:
-                    # write to file
-                    async for chunk in response.content.iter_chunked(chunk_size):
-                        if not chunk:
-                            break
-                        f.write(chunk)
-                        size += len(chunk)
-                return size
+        headers_list = [
+            [{"Range": f"bytes={start}-{start+chunk_size-1}"}] for start in chunks]
 
-    starttime = time.time()
-    completed = 0
+        async def download_part(arg):
+            headers = arg
+            async with aiohttp.ClientSession(
+                headers=headers,
+                connector=aiohttp.TCPConnector(verify_ssl=False),
+            ) as session:
+                async with session.get(url) as response:
+                    chunk = await response.content.read()
+                    await progress.update(len(chunk), event)
+                    return chunk
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-        tasks = [executor.submit(run_async, download_part, i)
-                 for i in the_iter]
-        for future in concurrent.futures.as_completed(tasks):
-            if not event:
-                return
-            completed += future.result()
-            speed = completed / (time.time() - starttime)
-            percentage = completed * 100 / filesize
-            eta = (filesize - completed) / speed
-            progress = "[{0}{1}] \nP: {2}%\n".format(
-                ''.join(["■" for i in range(math.floor(percentage / 5))]),
-                ''.join(["▨" for i in range(20 - math.floor(percentage / 5))]),
-                round(percentage, 2))
-            tmp = progress + "S: {0}/s\nETA: {1}".format(
-                humanbytes(speed),
-                time_formatter(eta))
-            await event.edit(f"`{tmp}`")
+        tasks = [asyncio.create_task(download_part(arg))
+                 for arg in headers_list]
+        content = await asyncio.gather(*tasks)
 
-    with open(f"resources/downloads/{filename}", 'wb') as mergedfile:
-        for i in len(chunks):
-            chunk_path = f"resources/tmp/{filename}.part{i}"
-            with open(chunk_path, 'rb') as s:
-                mergedfile.write(s.read())
-            os.remove(chunk_path)
-
-    return filename
+        with open(f"{file_path}/{filename}", "wb") as f:
+            f.write(b"".join(content))
 
 
 class OneDrive:
@@ -161,8 +149,6 @@ class OneDrive:
             return data["link"]["webUrl"]
 
     async def download_file(self, event, file_path: str, file_url):
-        # file_url =
-        # https://techierror-my.sharepoint.com/:u:/g/personal/techierror_techierror_onmicrosoft_com/EX8lAMP8pApLgzABaHCQTpgB39DUNTCrtkUftcTOGVPI7A
         file_url = "u!" + base64.urlsafe_b64encode(file_url.encode()).decode()
         async with self.session.get(
             f"{self.base_url}/shares/{file_url}/driveItem",
