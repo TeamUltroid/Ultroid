@@ -64,7 +64,7 @@ async def parallel_download(url, filename, chunk_size, filesize: int, event=None
                 os.makedirs(file_path)
             with open(f"{file_path}/{filename}", "wb") as f:
                 f.write(b"".join(content))
-        except Exception as e:
+        except Exception:
             print(traceback.format_exc())
 
 
