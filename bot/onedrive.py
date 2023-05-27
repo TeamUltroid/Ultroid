@@ -3,6 +3,7 @@ import base64
 import math
 import os
 import time
+import traceback
 from urllib.parse import parse_qs, urlencode
 
 import aiohttp
@@ -34,35 +35,37 @@ class Progress:
         self.last_update = time.time()
 
 
-async def parallel_download(url, filename, chunk_size, filesize, event=None, file_path="resources/downloads"):
+async def parallel_download(url, filename, chunk_size, filesize: int, event=None, file_path="resources/downloads"):
     while not pquit:
-        progress = Progress(filesize, filename)
-        chunks = range(0, filesize, chunk_size)
+        try:
+            progress = Progress(filesize, filename)
+            chunks = range(0, filesize, chunk_size)
 
-        headers_list = [
-            [{"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"}] for start in chunks]
+            headers_list = [
+                [{"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"}] for start in chunks]
 
-        async def download_part(arg):
-            headers = arg
-            async with aiohttp.ClientSession(
-                headers=headers,
-                connector=aiohttp.TCPConnector(verify_ssl=False),
-            ) as session:
-                async with session.get(url) as response:
-                    chunk = await response.content.read()
-                    await progress.update(len(chunk), event)
-                    return chunk
+            async def download_part(arg):
+                headers = arg
+                async with aiohttp.ClientSession(
+                    headers=headers,
+                    connector=aiohttp.TCPConnector(verify_ssl=False),
+                ) as session:
+                    async with session.get(url) as response:
+                        chunk = await response.content.read()
+                        await progress.update(len(chunk), event)
+                        return chunk
 
-        tasks = [asyncio.create_task(download_part(arg))
-                 for arg in headers_list]
-        content = await asyncio.gather(*tasks)
+            tasks = [asyncio.create_task(download_part(arg))
+                    for arg in headers_list]
+            content = await asyncio.gather(*tasks)
 
-        # create new folder if not exists
-        if not os.path.exists(file_path):
-            os.makedirs(file_path)
-        with open(f"{file_path}/{filename}", "wb") as f:
-            f.write(b"".join(content))
-
+            # create new folder if not exists
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            with open(f"{file_path}/{filename}", "wb") as f:
+                f.write(b"".join(content))
+        except Exception as e:
+            print(traceback.format_exc())
 
 class OneDrive:
     def __init__(self):
