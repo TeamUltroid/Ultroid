@@ -57,6 +57,9 @@ async def parallel_download(url, filename, chunk_size, filesize, event=None, fil
                  for arg in headers_list]
         content = await asyncio.gather(*tasks)
 
+        # create new folder if not exists
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
         with open(f"{file_path}/{filename}", "wb") as f:
             f.write(b"".join(content))
 
@@ -159,7 +162,7 @@ class OneDrive:
             if data.get("error"):
                 return await event.edit(data["error"]["message"])
         file_name = data["name"]
-        file_size = data["size"]
+        file_size = int(data["size"])
         download_url = data["@microsoft.graph.downloadUrl"]
         # download file with parallel downloading
         await parallel_download(
