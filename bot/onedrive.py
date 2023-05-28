@@ -1,4 +1,3 @@
-import asyncio
 import base64
 import math
 import os
@@ -12,60 +11,54 @@ from utilities.helper import humanbytes, time_formatter
 
 from database import udB
 
-pquit = False
-
 
 class Progress:
-    def __init__(self, total, filename):
+    def __init__(self, total, filename, filepath="resources/downloads"):
+        self.filepath = filepath
         self.filename = filename
         self.total = total
         self.completed = 0
+        self.start_time = time.time()
         self.last_update = time.time()
-        self.last_update_human = time_formatter(self.last_update)
 
     async def update(self, chunk_size, event):
         self.completed += chunk_size
+        self.remaining_bytes = self.total - self.completed
         self.percent = math.floor(self.completed / self.total * 100)
-        self.current_human = humanbytes(self.completed)
-        await event.edit(
-            f"Downloading... [{self.current_human}/{self.total}]({self.percent}%)"
-            if self.completed < self.total
-            else f"Downloaded {self.filename} in {time_formatter(time.time() - self.last_update)}."
-        )
-        self.last_update = time.time()
+        self.speed = self.completed / (time.time() - self.start_time)
+        self.eta = time_formatter(
+            self.remaining_bytes / self.speed * 1000) if (self.speed > 0) else 0
+        current_time = time.time()
+        if (current_time - self.last_update) > 5:
+            await event.edit(
+                f"`Downloading ``{self.filename}`` from OneDrive\nStatus: {humanbytes(self.completed)}/{humanbytes(self.total)}[{self.percent}%]\nSpeed:{humanbytes(self.speed)}/s\nTime Elapsed: {time_formatter((current_time - self.start_time) * 1000)}s ETA: {self.eta}`"
+            ) if self.completed < self.total else None
+            self.last_update = time.time()
+        elif self.completed == self.total:
+            await event.edit(
+                f"Successfully downloaded {self.filename} to `{self.filepath}\\{self.filename}` in {time_formatter(current_time - self.start_time * 1000)}s\nSpeed:{humanbytes(self.total / (current_time - self.start_time))}/s"
+            )
 
 
 async def parallel_download(url, filename, chunk_size, filesize: int, event=None, file_path="resources/downloads"):
-    while not pquit:
-        try:
-            progress = Progress(filesize, filename)
-            chunks = range(0, filesize, chunk_size)
+    try:
+        progress = Progress(filesize, filename)
 
-            headers_list = [
-                {"Range": f"bytes={str(start)}-{str(start+chunk_size-1)}"} for start in chunks]
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                response.raise_for_status()
 
-            async def download_part(arg):
-                headers = arg
-                async with aiohttp.ClientSession(
-                    headers=headers,
-                    connector=aiohttp.TCPConnector(verify_ssl=False),
-                ) as session:
-                    async with session.get(url) as response:
-                        chunk = await response.content.read()
+                # create new folder if not exists
+                if not os.path.exists(file_path):
+                    os.makedirs(file_path)
+
+                with open(f"{file_path}/{filename}", "wb") as f:
+                    async for chunk in response.content.iter_chunked(chunk_size):
                         await progress.update(len(chunk), event)
-                        return chunk
+                        f.write(chunk)
 
-            tasks = [asyncio.create_task(download_part(arg))
-                     for arg in headers_list]
-            content = await asyncio.gather(*tasks)
-
-            # create new folder if not exists
-            if not os.path.exists(file_path):
-                os.makedirs(file_path)
-            with open(f"{file_path}/{filename}", "wb") as f:
-                f.write(b"".join(content))
-        except Exception:
-            print(traceback.format_exc())
+    except Exception as e:
+        print(traceback.format_exc())
 
 
 class OneDrive:
@@ -168,11 +161,13 @@ class OneDrive:
         file_name = data["name"]
         file_size = int(data["size"])
         download_url = data["@microsoft.graph.downloadUrl"]
+        chunk_size = 50 * 1024 * 1024 if file_size > 50 * \
+            1024 * 1024 else 100 * 1024 * 1024
         # download file with parallel downloading
         await parallel_download(
             download_url,
             file_name,
-            1024 * 1024 * 5,
+            chunk_size,
             file_size,
             event
         )
