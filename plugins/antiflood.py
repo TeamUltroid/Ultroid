@@ -17,8 +17,8 @@ from utilities.admins import admin_check
 
 from database.helpers import DEVLIST
 
-from . import (Button, asst, callback, eod, get_string, udB,
-               ultroid_bot, ultroid_cmd)
+from . import (Button, asst, callback, eod, get_string, udB, ultroid_bot,
+               ultroid_cmd)
 
 _check_flood = {}
 

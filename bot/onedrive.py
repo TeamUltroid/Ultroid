@@ -1,9 +1,8 @@
-import asyncio
 import base64
-import concurrent.futures
 import math
 import os
 import time
+import traceback
 from urllib.parse import parse_qs, urlencode
 
 import aiohttp
@@ -12,65 +11,54 @@ from utilities.helper import humanbytes, time_formatter
 
 from database import udB
 
-pquit = False
+
+class Progress:
+    def __init__(self, total, filename, filepath="resources/downloads"):
+        self.filepath = filepath
+        self.filename = filename
+        self.total = total
+        self.completed = 0
+        self.start_time = time.time()
+        self.last_update = time.time()
+
+    async def update(self, chunk_size, event):
+        self.completed += chunk_size
+        self.remaining_bytes = self.total - self.completed
+        self.percent = math.floor(self.completed / self.total * 100)
+        self.speed = self.completed / (time.time() - self.start_time)
+        self.eta = time_formatter(
+            self.remaining_bytes / self.speed * 1000) if (self.speed > 0) else 0
+        current_time = time.time()
+        if (current_time - self.last_update) > 5:
+            await event.edit(
+                f"`Downloading ``{self.filename}`` from OneDrive\n\nStatus: {humanbytes(self.completed)}/{humanbytes(self.total)} [{self.percent}%]\nSpeed: {humanbytes(self.speed)}\nTime Elapsed: {time_formatter((current_time - self.start_time) * 1000)} [ETA: {self.eta}]`"
+            ) if self.completed < self.total else None
+            self.last_update = time.time()
+        elif self.completed == self.total:
+            await event.edit(
+                f"Successfully downloaded {self.filename} to `{os.path.join(self.filepath, self.filename)}` in {time_formatter((current_time - self.start_time) * 1000)}\nSpeed: {humanbytes(self.total / (current_time - self.start_time))}/s"
+            )
 
 
-async def parallel_download(url, filename, chunk_size, filesize, event=None):
-    chunks = range(0, filesize, chunk_size)
+async def parallel_download(url, filename, chunk_size, filesize: int, event=None, file_path="resources/downloads"):
+    try:
+        progress = Progress(filesize, filename)
 
-    the_iter = [[{
-        "Range": "bytes=" + str(start) + "-" + str(start + chunk_size - 1)
-    }, f"{filename}.part{i}"] for i, start in enumerate(
-        chunks)]
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                response.raise_for_status()
 
-    def run_async(func, *args):
-        return asyncio.get_event_loop_policy().new_event_loop().run_until_complete(func(*args))
+                # create new folder if not exists
+                if not os.path.exists(file_path):
+                    os.makedirs(file_path)
 
-    async def download_part(arg):
-        while not pquit:
-            headers, partfile = arg
-            async with aiohttp.request('GET', url, headers=headers) as response:
-
-                size = 0
-                with open(partfile, 'wb') as f:
-                    # write to file
+                with open(f"{file_path}/{filename}", "wb") as f:
                     async for chunk in response.content.iter_chunked(chunk_size):
-                        if not chunk:
-                            break
+                        await progress.update(len(chunk), event)
                         f.write(chunk)
-                        size += len(chunk)
-                return size
 
-    starttime = time.time()
-    completed = 0
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-        tasks = [executor.submit(run_async, download_part, i)
-                 for i in the_iter]
-        for future in concurrent.futures.as_completed(tasks):
-            if not event:
-                return
-            completed += future.result()
-            speed = completed / (time.time() - starttime)
-            percentage = completed * 100 / filesize
-            eta = (filesize - completed) / speed
-            progress = "[{0}{1}] \nP: {2}%\n".format(
-                ''.join(["■" for i in range(math.floor(percentage / 5))]),
-                ''.join(["▨" for i in range(20 - math.floor(percentage / 5))]),
-                round(percentage, 2))
-            tmp = progress + "S: {0}/s\nETA: {1}".format(
-                humanbytes(speed),
-                time_formatter(eta))
-            await event.edit(f"`{tmp}`")
-
-    with open(f"resources/downloads/{filename}", 'wb') as mergedfile:
-        for i in len(chunks):
-            chunk_path = f"resources/tmp/{filename}.part{i}"
-            with open(chunk_path, 'rb') as s:
-                mergedfile.write(s.read())
-            os.remove(chunk_path)
-
-    return filename
+    except Exception:
+        print(traceback.format_exc())
 
 
 class OneDrive:
@@ -161,8 +149,6 @@ class OneDrive:
             return data["link"]["webUrl"]
 
     async def download_file(self, event, file_path: str, file_url):
-        # file_url =
-        # https://techierror-my.sharepoint.com/:u:/g/personal/techierror_techierror_onmicrosoft_com/EX8lAMP8pApLgzABaHCQTpgB39DUNTCrtkUftcTOGVPI7A
         file_url = "u!" + base64.urlsafe_b64encode(file_url.encode()).decode()
         async with self.session.get(
             f"{self.base_url}/shares/{file_url}/driveItem",
@@ -173,13 +159,15 @@ class OneDrive:
             if data.get("error"):
                 return await event.edit(data["error"]["message"])
         file_name = data["name"]
-        file_size = data["size"]
+        file_size = int(data["size"])
         download_url = data["@microsoft.graph.downloadUrl"]
+        chunk_size = 50 * 1024 * 1024 if file_size > 50 * \
+            1024 * 1024 else 100 * 1024 * 1024
         # download file with parallel downloading
         await parallel_download(
             download_url,
             file_name,
-            1024 * 1024 * 5,
+            chunk_size,
             file_size,
             event
         )
