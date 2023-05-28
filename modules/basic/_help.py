@@ -57,7 +57,7 @@ def get_help_buttons():
             [Button.inline(get_string("help_10"), data="close")],
         ]
     )
-    if row_2:
+    if row_2 and row_2 not in Markup:
         Markup.insert(1, row_2)
     return Markup
 
