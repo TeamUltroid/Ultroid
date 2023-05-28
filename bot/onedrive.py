@@ -57,7 +57,7 @@ async def parallel_download(url, filename, chunk_size, filesize: int, event=None
                         await progress.update(len(chunk), event)
                         f.write(chunk)
 
-    except Exception as e:
+    except Exception:
         print(traceback.format_exc())
 
 
