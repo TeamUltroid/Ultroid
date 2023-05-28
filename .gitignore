@@ -19,7 +19,7 @@ resources/downloads/
 push.bat
 modules/channels/
 modules/manager/
-
+localization/strings/
 ultroid*.json
 
 # Directories

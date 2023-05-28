@@ -36,8 +36,7 @@ class Remote:
         elif manager:
             _pat = mid = "manager"
         else:
-            mid = ""
-            _pat = "plugins"
+            _pat, mid = "plugins", ""
         in_local = self.RemoteConfig[_pat].get(path)
         _exists = os.path.exists(save_as)
 
@@ -62,7 +61,7 @@ class Remote:
                 file.write(remote_file)  # type: ignore
 
             with suppress(KeyError):
-                del details['repo']
+                del details["repo"]
             del details["path"]
 
             self.RemoteConfig[_pat][path] = details
@@ -149,6 +148,32 @@ class Remote:
             return
         self.RemoteConfig["last_fetched"] = time.time()
         self.save()
+
+    def fetch_lang(
+        self, langCode, strings_path="localization/strings", defaultLang="en"
+    ):
+        filePath = f"{strings_path}/{langCode}.yml"
+        if self.get_status() and os.path.exists(filePath):
+            return
+
+        def evaluate(req):
+            if req.headers["content-type"] == "application/json":
+                Logger.error(f"Invalid Response recieved, {req.json()}")
+
+                if langCode != defaultLang and not os.path.exists(
+                   filePath
+                ):
+                    return self.fetch_lang(defaultLang)
+                return
+
+            with open(filePath, "wb") as file:
+                file.write(req.content)
+
+            return filePath
+
+        return fetch_sync(
+            f"{self.REMOTE_URL}/getlanguage/{langCode}", evaluate=evaluate
+        )
 
     def save(self):
         with open(LOCK_PATH, "w") as file:

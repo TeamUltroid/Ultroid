@@ -144,7 +144,7 @@ async def load_plugins():
 
     if udB.get_config("VCBOT"):
         try:
-            with rm.get("setup_vcbot", "core/setup_vcbot.py", dispose=True) as mod:
+            with rm.get("setup_vcbot", helper=True, dispose=True) as mod:
                 await mod.setup()
         except Exception as er:
             LOGS.exception(er)

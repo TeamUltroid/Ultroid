@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Union
 from contextlib import suppress
 from database import udB
 from core import LOGS
+from core.remote import rm
 from utilities.tools import translate
 from utilities.tools import safe_load
 
@@ -18,8 +19,8 @@ def get_lang():
 def load(lang):
     if not os.path.exists("localization/strings"):
         os.mkdir("localization/strings")
-
-    # TODO: fetch language file
+    
+    rm.fetch_lang(lang)
 
     file = PATH.format(lang)
     if not os.path.exists(file):
