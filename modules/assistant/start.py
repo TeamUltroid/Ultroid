@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import contextlib
 from datetime import datetime
 
 from telethon import Button, events
@@ -152,10 +153,16 @@ async def ultroid_handler(event):
                 "Choose from the below options -",
                 buttons=_settings,
             )
+            return
+        elif args == "_manager":
+            with contextlib.suppress(ImportError):
+                from modules.manager._help import START, get_buttons
+                await event.reply(START, buttons=get_buttons())
         elif args:
             await get_stored_file(event, args)
-        else:
-            await event.reply(
+            return
+
+        await event.reply(
                 get_string("ast_3").format(name),
                 buttons=_start,
             )
