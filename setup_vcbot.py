@@ -1,6 +1,6 @@
 import os
 
-from core.config import LOGS
+from core import LOGS
 from core.loader import load
 from utilities.helper import bash
 
