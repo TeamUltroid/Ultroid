@@ -36,7 +36,7 @@ class Progress:
             self.last_update = time.time()
         elif self.completed == self.total:
             await event.edit(
-                f"Successfully downloaded {self.filename} to `{os.path.join(self.filepath, self.filename)}` in {time_formatter((current_time - self.start_time) * 1000)}\nSpeed:{humanbytes(self.total / (current_time - self.start_time))}/s"
+                f"Successfully downloaded {self.filename} to `{os.path.join(self.filepath, self.filename)}` in {time_formatter((current_time - self.start_time) * 1000)}\nSpeed: {humanbytes(self.total / (current_time - self.start_time))}/s"
             )
 
 
