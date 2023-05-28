@@ -31,12 +31,12 @@ class Progress:
         current_time = time.time()
         if (current_time - self.last_update) > 5:
             await event.edit(
-                f"`Downloading ``{self.filename}`` from OneDrive\nStatus: {humanbytes(self.completed)}/{humanbytes(self.total)}[{self.percent}%]\nSpeed:{humanbytes(self.speed)}/s\nTime Elapsed: {time_formatter((current_time - self.start_time) * 1000)}s ETA: {self.eta}`"
+                f"`Downloading ``{self.filename}`` from OneDrive\nStatus: {humanbytes(self.completed)}/{humanbytes(self.total)}[{self.percent}%]\nSpeed: {humanbytes(self.speed)}\nTime Elapsed: {time_formatter((current_time - self.start_time) * 1000)} [ETA: {self.eta}]`"
             ) if self.completed < self.total else None
             self.last_update = time.time()
         elif self.completed == self.total:
             await event.edit(
-                f"Successfully downloaded {self.filename} to `{self.filepath}\\{self.filename}` in {time_formatter(current_time - self.start_time * 1000)}s\nSpeed:{humanbytes(self.total / (current_time - self.start_time))}/s"
+                f"Successfully downloaded {self.filename} to `{self.filepath}\\{self.filename}` in {time_formatter((current_time - self.start_time) * 1000)}\nSpeed:{humanbytes(self.total / (current_time - self.start_time))}/s"
             )
 
 
@@ -57,7 +57,7 @@ async def parallel_download(url, filename, chunk_size, filesize: int, event=None
                         await progress.update(len(chunk), event)
                         f.write(chunk)
 
-    except Exception:
+    except Exception as e:
         print(traceback.format_exc())
 
 
