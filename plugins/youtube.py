@@ -42,7 +42,8 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        url = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_1"))
         try:
@@ -53,7 +54,8 @@ async def download_from_youtube_(event):
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
         ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        url = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_3"))
         try:
@@ -63,7 +65,8 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        query = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query)
@@ -74,7 +77,8 @@ async def download_from_youtube_(event):
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
         ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        query = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query)
