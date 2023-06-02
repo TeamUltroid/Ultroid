@@ -26,7 +26,7 @@ from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
-    pattern="yt(a|v|sa|sv) ?(.*)",
+    pattern="yt(a|v|sa|sv)( (.*)|$)",
 )
 async def download_from_youtube_(event):
     with rm.get("ytdl", helper=True, dispose=True) as mod:
@@ -42,7 +42,7 @@ async def download_from_youtube_(event):
     if opt == "a":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        url = event.pattern_match.group(2)
+        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_1"))
         try:
@@ -53,7 +53,7 @@ async def download_from_youtube_(event):
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
         ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        url = event.pattern_match.group(2)
+        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_3"))
         try:
@@ -63,9 +63,8 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        try:
-            query = event.text.split(" ", 1)[1]
-        except IndexError:
+        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        if not query:
             return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query)
         if not url:
@@ -75,9 +74,8 @@ async def download_from_youtube_(event):
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
         ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        try:
-            query = event.text.split(" ", 1)[1]
-        except IndexError:
+        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        if not query:
             return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query)
         if not url:
