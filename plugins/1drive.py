@@ -8,10 +8,10 @@ with rm.get("onedrive", helper=True, dispose=True) as mod:
     onedrv = mod.OneDrive()
 
 
-@ultroid_cmd(pattern="1dul ((.*)|$)")
+@ultroid_cmd(pattern="1dul( (.*)|$)")
 async def onedrive_upload(event):
     """`{}1dul <path to file/reply to document>` - Upload file from local/telegram to OneDrive`"""
-    file = event.pattern_match.group(1)
+    file = event.pattern_match.group(2) if event.pattern_match.group(1) else None
     if not file:
         return await event.eor("Give me a file to upload")
     # check if file exists
@@ -24,10 +24,10 @@ async def onedrive_upload(event):
     await event.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
 
 
-@ultroid_cmd(pattern="1ddl ((.*)|$)")
+@ultroid_cmd(pattern="1ddl( (.*)|$)")
 async def onedrive_download(event):
     """`{}1ddl <link>` - Download file from OneDrive using link.`"""
-    link = event.pattern_match.group(1)
+    link = event.pattern_match.group(2) if event.pattern_match.group(1) else None
     if not link:
         return await event.eor("Give me a link to download")
     await event.eor("Downloading...")
