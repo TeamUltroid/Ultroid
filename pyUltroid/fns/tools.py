@@ -585,7 +585,7 @@ def make_html_telegraph(title, html=""):
 
 async def Carbon(
     code,
-    base_url="https://carbonara.vercel.app/api/cook",
+    base_url="https://carbonara.solopov.dev/api/cook",
     file_name="ultroid",
     download=False,
     rayso=False,
