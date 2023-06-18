@@ -210,12 +210,15 @@ if udB.get_key("PMSETTING"):
             func=lambda e: e.is_private
             and e.sender_id not in DEVLIST
             and not e.out
-            and not e.sender.bot
-            and not e.sender.is_self
-            and not e.sender.verified,
+     #       and not e.sender.bot
+      #      and not e.sender.is_self
+     #       and not e.sender.verified,
         )
     )
     async def permitpm(event):
+        sender = await event.get_sender()
+        if (sender.bot or sender.verified):
+            return
         inline_pm = udB.get_key("INLINE_PM") or False
         user = event.sender
         if not keym.contains(user.id) and event.text != UND:
