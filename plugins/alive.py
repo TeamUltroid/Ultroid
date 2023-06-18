@@ -2,6 +2,7 @@ from random import choice
 
 from core.git import repo
 from core.version import version
+from platform import python_version
 from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
 from telethon.version import __version__
 
@@ -24,7 +25,7 @@ The Ultroid Userbot
   ◍ Telethon - {}
 """
 
-in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b>[ {} ]\n\n• <b>Join @TeamUltroid</b>"
+in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b>[ {} ]\n\n• <b>Join @TeamUltroid</b>"
 
 
 @callback("alive")
@@ -65,6 +66,7 @@ async def alive_func(ult):
         als = in_alive.format(
             header,
             f"{version} [{HOSTED_ON}]",
+            python_version(),
             uptime,
             kk,
         )
@@ -78,6 +80,7 @@ async def alive_func(ult):
             OWNER_NAME,
             f"{version} [{HOSTED_ON}]",
             uptime,
+            python_version(),
             __version__,
             kk,
         )
