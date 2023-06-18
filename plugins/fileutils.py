@@ -14,7 +14,7 @@ import time
 
 from core.remote import rm
 
-from . import bash, downloader, get_paste, get_string, udB, ultroid_cmd
+from . import bash, get_string, udB, ultroid_cmd
 
 opn = []
 
