@@ -1,8 +1,8 @@
 # Important Requirements here.
 
 requests
-# https://github.com/TeamUltroid/Telethon/archive/ultroid.zip
-telethon
+https://github.com/TeamUltroid/Telethon/archive/ultroid.zip
+# telethon
 python-decouple
 telethon-patch
 tgcrypto
