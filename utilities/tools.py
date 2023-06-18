@@ -9,7 +9,7 @@ import contextlib
 import json
 import math
 import os
-import random
+import random, html
 import re
 import secrets
 import ssl
@@ -519,7 +519,7 @@ def translate(text, target="en", detect=False):
     if not x:
         return None
     res = x[0]
-    text = res["translatedText"].replace("\ N", "\n").replace("\\n", "\n").replace("<br>", "\n")
+    text = html.unescape(res["translatedText"].replace("\ N", "\n").replace("\\n", "\n").replace("<br>", "\n"))
     return (text, res["detectedSourceLanguage"]) if detect else text
 
 atranslate = run_async(translate)
