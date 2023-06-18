@@ -25,8 +25,7 @@
 import os
 import time
 
-from . import (HNDLR, asyncio, bash, get_all_files, get_string, ultroid_cmd,
-               uploader)
+from . import (HNDLR, asyncio, bash, get_all_files, get_string, ultroid_cmd)
 
 
 @ultroid_cmd(pattern="zip( (.*)|$)")
@@ -40,7 +39,7 @@ async def zipp(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
+            image = await event.client.fast_downloader(
                 reply.file.name, reply.media.document, xx, t, get_string(
                     "com_5")
             )
@@ -55,7 +54,7 @@ async def zipp(event):
     else:
         await bash(f"zip -r {inp} {file}")
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
+    xxx = await event.client.fast_uploader(inp, inp, k, xx, get_string("com_6"))
     await event.client.send_file(
         event.chat_id,
         xxx,

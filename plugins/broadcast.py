@@ -15,7 +15,7 @@ import io
 
 from telethon.utils import get_display_name
 
-from database.helpers._base import KeyManager
+from database.helpers.base import KeyManager
 
 from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 

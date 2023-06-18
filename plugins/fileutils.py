@@ -12,10 +12,9 @@ __doc__ = get_help("help_converter")
 import os
 import time
 
-from telegraph import upload_file as uf
-
-from . import (ULTConfig, bash, con, downloader, get_paste, get_string, udB,
-               ultroid_cmd, uploader)
+from . import (ULTConfig, bash, downloader, get_paste, get_string, udB,
+               ultroid_cmd)
+from core.remote import rm
 
 opn = []
 
@@ -31,7 +30,9 @@ async def _(e):
         dl = await r.download_media(thumb=-1)
     else:
         return await e.eor("`Reply to Photo or media with thumb...`")
-    variable = uf(dl)
+    with rm.get("telegraph", helper=True, dispose=True) as mod:
+        cl = mod.get_client()
+        variable = cl.upload_file(dl)
     os.remove(dl)
     nn = f"https://graph.org{variable[0]}"
     udB.set_key("CUSTOM_THUMBNAIL", str(nn))
@@ -67,12 +68,13 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     if os.path.exists(inp):
         os.remove(inp)
+    #TODO: UNBOUND
     await bash(f'mv """{file}""" """{inp}"""')
     if not os.path.exists(inp) or os.path.exists(
             inp) and not os.path.getsize(inp):
         os.rename(file, inp)
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
+    xxx = await event.client.fast_uploader(inp, inp, k, xx, get_string("com_6"))
     await event.reply(
         f"`{xxx.name}`",
         file=xxx,
@@ -113,6 +115,7 @@ async def uconverter(event):
         convert = conv_keys[input_]
     except KeyError:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker/webm"))
+    #TODO: FIX
     file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
         await event.client.send_file(
