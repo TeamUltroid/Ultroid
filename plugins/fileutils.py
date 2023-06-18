@@ -12,9 +12,10 @@ __doc__ = get_help("help_converter")
 import os
 import time
 
+from core.remote import rm
+
 from . import (ULTConfig, bash, downloader, get_paste, get_string, udB,
                ultroid_cmd)
-from core.remote import rm
 
 opn = []
 
@@ -68,7 +69,7 @@ async def imak(event):
             file = await event.client.download_media(reply.media)
     if os.path.exists(inp):
         os.remove(inp)
-    #TODO: UNBOUND
+    # TODO: UNBOUND
     await bash(f'mv """{file}""" """{inp}"""')
     if not os.path.exists(inp) or os.path.exists(
             inp) and not os.path.getsize(inp):
@@ -115,7 +116,7 @@ async def uconverter(event):
         convert = conv_keys[input_]
     except KeyError:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker/webm"))
-    #TODO: FIX
+    # TODO: FIX
     file = await con.convert(b, outname="ultroid", convert_to=convert)
     if file:
         await event.client.send_file(
