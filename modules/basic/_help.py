@@ -24,7 +24,7 @@ def split_list(List, index):
 
 def get_help_buttons():
     row_1 = [Button.inline(get_string("help_4"), data="uh_basic_")]
-    if udB.get_config("ADDONS") or udB.get_key("LOAD_ALL"):
+    if filter_modules("addons"): # (udB.get_config("ADDONS") or udB.get_key("LOAD_ALL"))
         row_1.append(Button.inline(get_string("help_5"), data="uh_addons_"))
     row_2 = []
     if udB.get_config("VCBOT"):
@@ -259,9 +259,7 @@ def page_num(index, key):
     if index == 0 and len(fl_) == 1:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
-        more = len(fl_) > 3
-
-        nrow = [
+        new_.append([
                 Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
                     data=f"uh_{key}_{index-1}",
@@ -271,13 +269,8 @@ def page_num(index, key):
                     "Nᴇxᴛ »",
                     data=f"uh_{key}_{index+1}",
                 ),
-            ]
+            ])
         
-        if more:
-
-            nrow.insert(0, Button.inline("«", f"uh_{key}_{index-2}"))
-            nrow.append(Button.inline("»", f"uh_{key}_{index+2}"))
-        new_.append(nrow)
     return new_
 
 

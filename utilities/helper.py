@@ -63,7 +63,7 @@ def run_async(function):
 
 def fetch_sync(url, re_json=False, evaluate=None, method="GET", *args, **kwargs):
     methods = {"POST": requests.post, "HEAD": requests.head, "GET": requests.get}
-    print("fetching", url)
+#    print("fetching", url)
     output = methods.get(method, requests.get)(url, *args, **kwargs)
 
     if callable(evaluate):

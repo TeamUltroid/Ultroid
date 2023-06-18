@@ -1,5 +1,5 @@
 import asyncio
-import os
+import os, sys
 import time
 
 from core import LOGS, asst, udB, ultroid_bot
@@ -99,6 +99,11 @@ def setup_addons():
 
 
 async def load_plugins():
+    # TODO: REMOVE
+    if "no-addons" in sys.argv:
+        load(path=["modules/basic"])
+        return
+
     # GET: Addons plugins
 
     plugins = None
@@ -142,12 +147,12 @@ async def load_plugins():
         with rm.get("pmbot", helper=True, dispose=True):
             LOGS.info("Loaded PMBOT.")
 
-    if udB.get_config("VCBOT"):
-        try:
-            with rm.get("setup_vcbot", helper=True, dispose=True) as mod:
-                await mod.setup()
-        except Exception as er:
-            LOGS.exception(er)
+    # if udB.get_config("VCBOT"):
+    #     try:
+    #         with rm.get("setup_vcbot", helper=True, dispose=True) as mod:
+    #             await mod.setup()
+    #     except Exception as er:
+    #         LOGS.exception(er)
 
     if not udB.get_key("INIT_DEPLOY"):
         udB.set_key("INIT_DEPLOY", True)

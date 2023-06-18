@@ -30,6 +30,7 @@ def inline_pic(get=False):
         return INLINE_PIC
     # is False, return None
 
+udB.on("LOAD_ALL", "delete", lambda: os.rmdir("modules/addons"))
 
 List = []
 Dict = {}
