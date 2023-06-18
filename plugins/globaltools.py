@@ -49,8 +49,8 @@ from database.helpers import DEVLIST
 from database.helpers.base import KeyManager
 
 from ..basic._inline import something
-from . import (HNDLR, LOGS, NOSPAM_CHAT, eod, eor, get_string,
-               inline_mention, udB, ultroid_bot, ultroid_cmd)
+from . import (HNDLR, LOGS, NOSPAM_CHAT, eod, eor, get_string, inline_mention,
+               udB, ultroid_bot, ultroid_cmd)
 
 OWNER_NAME = ultroid_bot.full_name
 
