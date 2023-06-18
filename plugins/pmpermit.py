@@ -48,23 +48,20 @@ try:
     from tabulate import tabulate
 except ImportError:
     tabulate = None
+from core import HNDLR
 from telethon import events
 from telethon.errors import MessageNotModifiedError
-from telethon.tl.functions.contacts import (
-    BlockRequest,
-    GetBlockedRequest,
-    UnblockRequest,
-)
+from telethon.tl import types
+from telethon.tl.custom import Button
+from telethon.tl.functions.contacts import (BlockRequest, GetBlockedRequest,
+                                            UnblockRequest)
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.utils import get_display_name, resolve_bot_file_id
 
 from database.helpers.base import KeyManager
-from core import HNDLR
 
-from telethon.tl import types
-from . import udB, ultroid_cmd, callback, get_string, ultroid_bot, asst, inline_mention, LOGS, in_pattern
-
-from telethon.tl.custom import Button
+from . import (LOGS, asst, callback, get_string, in_pattern, inline_mention,
+               udB, ultroid_bot, ultroid_cmd)
 
 # ========================= CONSTANTS =============================
 OWNER_NAME = ultroid_bot.full_name
@@ -175,7 +172,8 @@ if udB.get_key("PMSETTING"):
         @ultroid_bot.on(
             events.NewMessage(
                 outgoing=True,
-                func=lambda e: e.is_private and e.out and not e.text.startswith(HNDLR),
+                func=lambda e: e.is_private and e.out and not e.text.startswith(
+                    HNDLR),
             ),
         )
         async def autoappr(e):
@@ -434,7 +432,8 @@ if udB.get_key("PMSETTING"):
                     _not_approved[user.id],
                     f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
-                        Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
+                        Button.inline(
+                            "Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                     parse_mode="html",
@@ -444,7 +443,8 @@ if udB.get_key("PMSETTING"):
                     udB.get_key("LOG_CHANNEL"),
                     f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
-                        Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
+                        Button.inline(
+                            "Disapprove PM", data=f"disapprove_{user.id}"),
                         Button.inline("Block", data=f"block_{user.id}"),
                     ],
                     parse_mode="html",
@@ -557,20 +557,20 @@ async def unblockpm(event):
             u_s = await event.client(GetBlockedRequest(0, 0))
             count = len(u_s.users)
             if not count:
-                return await msg.eor( "__You have not blocked Anyone...__")
+                return await msg.eor("__You have not blocked Anyone...__")
             for user in u_s.users:
                 await asyncio.sleep(1)
                 await event.client(UnblockRequest(user.id))
             # GetBlockedRequest return 20 users at most.
             if count < 20:
-                return await msg.eor( f"__Unblocked {count} Users!__")
+                return await msg.eor(f"__Unblocked {count} Users!__")
             while u_s.users:
                 u_s = await event.client(GetBlockedRequest(0, 0))
                 for user in u_s.users:
                     await asyncio.sleep(3)
                     await event.client(UnblockRequest(user.id))
                 count += len(u_s.users)
-            return await msg.eor( f"__Unblocked {count} users.__")
+            return await msg.eor(f"__Unblocked {count} users.__")
 
         try:
             user = await event.client.parse_id(match)
@@ -623,7 +623,12 @@ async def list_approved(event):
     with open("approved_pms.txt", "w") as list_appr:
         if tabulate:
             list_appr.write(
-                tabulate(users, headers=["UserName", "UserID"], showindex="always")
+                tabulate(
+                    users,
+                    headers=[
+                        "UserName",
+                        "UserID"],
+                    showindex="always")
             )
         else:
             text = "".join(f"[{user[-1]}] - {user[0]}" for user in users)
