@@ -14,7 +14,7 @@ import time
 
 from core.remote import rm
 
-from . import (ULTConfig, bash, downloader, get_paste, get_string, udB,
+from . import (bash, downloader, get_paste, get_string, udB,
                ultroid_cmd)
 
 opn = []
@@ -79,8 +79,7 @@ async def imak(event):
     await event.reply(
         f"`{xxx.name}`",
         file=xxx,
-        force_document=True,
-        thumb=ULTConfig.thumb,
+        force_document=True
     )
     os.remove(inp)
     await xx.delete()
@@ -140,7 +139,7 @@ async def _(event):
     with open(input_str, "w") as b:
         b.write(str(a.message))
     await xx.edit(f"**Packing into** `{input_str}`")
-    await event.reply(file=input_str, thumb=ULTConfig.thumb)
+    await event.reply(file=input_str)
     await xx.delete()
     os.remove(input_str)
 
