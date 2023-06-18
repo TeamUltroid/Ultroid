@@ -1,8 +1,8 @@
+from platform import python_version
 from random import choice
 
 from core.git import repo
 from core.version import version
-from platform import python_version
 from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
 from telethon.version import __version__
 
