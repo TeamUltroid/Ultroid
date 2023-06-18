@@ -9,17 +9,27 @@ import re
 
 from core.decorators._assistant import callback
 from telethon import Button
-from telethon.errors.rpcerrorlist import (BotInlineDisabledError,
-                                          BotResponseTimeoutError,
-                                          MessageNotModifiedError)
+from telethon.errors.rpcerrorlist import (
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    MessageNotModifiedError,
+)
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest as gu
 
-from . import (HNDLR, LOGS, asst, get_string, in_pattern, inline_mention,
-               ultroid_bot, ultroid_cmd)
+from . import (
+    HNDLR,
+    LOGS,
+    asst,
+    get_string,
+    in_pattern,
+    inline_mention,
+    ultroid_bot,
+    ultroid_cmd,
+)
 
 buddhhu = {}
-
+# TODO: Move strings to localizations
 
 @ultroid_cmd(
     pattern="wspr( (.*)|$)",
@@ -60,6 +70,7 @@ async def _(e):
             title="Give Username",
             description="You Didn't Type Username or id.",
             text="You Didn't Type Username or id.",
+            buttons=Button.switch_inline("Wspr", "wspr"),
         )
         return await e.answer([sur])
     except ValueError as er:
@@ -68,13 +79,16 @@ async def _(e):
             title="User Not Found",
             description="Make sure username or id is correct.",
             text="Make sure username or id is correct.",
+            buttons=Button.switch_inline("Wspr", "wspr"),
         )
         return await e.answer([sur])
     try:
         desc = zzz[2]
     except IndexError:
         sur = await e.builder.article(
-            title="Type ur msg", text="You Didn't Type Your Msg"
+            title="Type ur msg",
+            text="You Didn't Type Your Msg",
+            buttons=Button.switch_inline("Wspr", "wspr"),
         )
         return await e.answer([sur])
     button = [
