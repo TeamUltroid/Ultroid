@@ -9,27 +9,18 @@ import re
 
 from core.decorators._assistant import callback
 from telethon import Button
-from telethon.errors.rpcerrorlist import (
-    BotInlineDisabledError,
-    BotResponseTimeoutError,
-    MessageNotModifiedError,
-)
+from telethon.errors.rpcerrorlist import (BotInlineDisabledError,
+                                          BotResponseTimeoutError,
+                                          MessageNotModifiedError)
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest as gu
 
-from . import (
-    HNDLR,
-    LOGS,
-    asst,
-    get_string,
-    in_pattern,
-    inline_mention,
-    ultroid_bot,
-    ultroid_cmd,
-)
+from . import (HNDLR, LOGS, asst, get_string, in_pattern, inline_mention,
+               ultroid_bot, ultroid_cmd)
 
 buddhhu = {}
 # TODO: Move strings to localizations
+
 
 @ultroid_cmd(
     pattern="wspr( (.*)|$)",
