@@ -11,11 +11,7 @@ import re
 import time
 
 from telethon import Button
-
-try:
-    from youtubesearchpython import Playlist, VideosSearch
-except ImportError:
-    Playlist, VideosSearch = None, None
+from youtubesearchpython import Playlist, VideosSearch
 
 try:
     from yt_dlp import YoutubeDL

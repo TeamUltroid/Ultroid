@@ -9,26 +9,17 @@
 import os
 import re
 
-try:
-    from PIL import Image
-except ImportError:
-    Image = None
+from PIL import Image
 from core.remote import rm
 from telethon import Button
-from telethon.errors.rpcerrorlist import (FilePartLengthInvalidError,
-                                          MediaEmptyError)
+from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from utilities.helper import (bash, fast_download, humanbytes, numerize,
-                              time_formatter)
+from utilities.helper import bash, fast_download, humanbytes, numerize, time_formatter
 
 from . import LOGS, asst, callback, in_pattern, udB
 
-try:
-    from youtubesearchpython import VideosSearch
-except ImportError:
-    LOGS.info("'youtubesearchpython' not installed!")
-    VideosSearch = None
+from youtubesearchpython import VideosSearch
 
 
 ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
@@ -36,7 +27,7 @@ _yt_base_url = "https://www.youtube.com/watch?v="
 BACK_BUTTON = {}
 
 
-@in_pattern("yt", owner=True)
+@in_pattern("yt", owner=True, button={"Youtube": "yt"})
 async def _(event):
     try:
         string = event.text.split(" ", maxsplit=1)[1]
@@ -149,6 +140,7 @@ async def _(event):
     url = event.pattern_match.group(1).strip().decode("UTF-8")
     lets_split = url.split(":")
     vid_id = lets_split[2]
+    artist = description = views = likes = duration = size =title = None
     link = _yt_base_url + vid_id
     format = lets_split[1]
     try:
@@ -268,7 +260,8 @@ async def _(event):
                 supports_streaming=True,
             ),
         ]
-    description = description if description != "" else "None"
+    if not description:
+        description = "None"
     text = f"**Title: [{title}]({_yt_base_url}{vid_id})**\n\n"
     text += f"`📝 Description: {description}\n\n"
     text += f"「 Duration: {time_formatter(int(duration)*1000)} 」\n"
