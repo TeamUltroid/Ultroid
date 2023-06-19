@@ -187,11 +187,11 @@ def check_update() -> bool:
 async def download_file(link, name, validate=False):
     """for files, without progress callback with aiohttp"""
 
-    async def _download(content):
-        if validate and "application/json" in content.headers.get("Content-Type"):
-            return None, await content.json()
+    def _download(response):
+        if validate and "application/json" in response.headers.get("Content-Type"):
+            return None, response.json()
         with open(name, "wb") as file:
-            file.write(await content.read())
+            file.write(response.content)
         return name, ""
 
     return await async_searcher(link, evaluate=_download)
