@@ -24,7 +24,7 @@ async def mediainfo_cmd(event):
             dl = await event.client.fast_downloader(
                 r.document,
                 show_progress=True,
-                event=e,
+                event=event,
                 message=f"{extra}`Loading More...`",
             )
 
@@ -67,7 +67,7 @@ async def mediainfo_cmd(event):
     except Exception:
         LOGS.exception(er)
         return
-    await e.edit(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
+    await event.eor(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
     if not match:
         os.remove(naam)
     if thumb and thumb != naam:
