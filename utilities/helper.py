@@ -236,7 +236,7 @@ def mediainfo(message: Message) -> str:
         "voice",
         "document",
     ]:
-        if getattr(message, _):
+        if getattr(message, _, None):
             if _ == "document":
                 attributes = {
                     DocumentAttributeSticker: "sticker",
