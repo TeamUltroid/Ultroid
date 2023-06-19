@@ -72,7 +72,7 @@ async def restart_func(event):
     """Restart the bot."""
     event = await event.eor("Restarting...")
     self_ = "bot" if event.client.me.bot else "user"
-    udB.set_key("_RESTART", [event.chat.username or event.chat_id, event.id, self_])
+    udB.set_key("_RESTART", [event.chat_id, event.id, self_])
     if HOSTED_ON == "heroku":
         from core.heroku import restart
 
