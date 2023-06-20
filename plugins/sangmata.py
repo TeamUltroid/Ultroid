@@ -18,7 +18,7 @@ async def lastname(steal):
         user_id = message.sender_id
     else:
         return await steal.eor("`Use this command with reply or give Username/id...`")
-    chat = "@SangMataInfo_bot"
+    chat = "@SangMata_beta_bot"
     id = f"/search_id {user_id}"
     lol = await steal.eor(get_string("com_1"))
     try:

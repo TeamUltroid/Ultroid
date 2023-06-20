@@ -8,7 +8,7 @@ Fetch Random anime quotes
 Command : `{i}aniquote`
 """
 
-from . import async_searcher, ultroid_cmd
+from . import async_searcher, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(pattern="aniquote")
@@ -21,5 +21,6 @@ async def _(ult):
         results = f"**{resp['quote']}**\n"
         results += f" — __{resp['character']} ({resp['anime']})__"
         return await u.edit(results)
-    except Exception:
+    except Exception as er:
+        LOGS.exception(er)
         await u.edit("`Something went wrong LOL ...`")
