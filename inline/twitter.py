@@ -2,7 +2,7 @@ from random import choice
 
 from telethon.tl.types import InputWebDocument as wb
 
-from . import async_searcher, in_pattern
+from . import async_searcher, in_pattern, LOGS
 
 # Thanks to OpenSource
 _bearer_collected = [
@@ -36,6 +36,9 @@ async def twitter_search(event):
         headers=headers,
         re_json=True,
     )
+    if isinstance(res, str):
+        LOGS.error(res)
+        raise Exception(res)
     reso = []
     for user in res:
         if url := user.get("profile_image_url_https"):
