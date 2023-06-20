@@ -8,7 +8,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_broadcast")
+__doc__ = get_help("broadcast")
 
 import asyncio
 import io

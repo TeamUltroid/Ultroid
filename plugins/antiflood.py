@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_antiflood")
+__doc__ = get_help("antiflood")
 
 
 import re

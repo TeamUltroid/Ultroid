@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_button")
+__doc__ = get_help("button")
 
 import os
 

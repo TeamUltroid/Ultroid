@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_echo")
+__doc__ = get_help("echo")
 
 
 from telethon.utils import get_display_name

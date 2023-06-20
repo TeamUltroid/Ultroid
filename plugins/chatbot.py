@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_chatbot")
+__doc__ = get_help("chatbot")
 
 
 from utilities.tools import get_chatbot_reply

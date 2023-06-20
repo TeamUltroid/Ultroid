@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("help_blacklist")
+__doc__ = get_help("blacklist")
 
 from telethon import events
 
