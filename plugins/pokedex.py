@@ -28,9 +28,9 @@ async def pokedex(event):
         await event.eor("`Give a Pokemon Name`")
         return
     xx = await event.eor("`Booting up the pokedex.......`")
-    move = await async_searcher(
+    move = (await async_searcher(
         f"https://pokeapi.co/api/v2/pokemon/{pokemon}", re_json=True
-    )["moves"]
+    ))["moves"]
     rw = f"https://some-random-api.ml/pokedex?pokemon={pokemon}"
     lol = await async_searcher(
         f"https://api.pokemontcg.io/v1/cards?name={pokemon}", re_json=True
@@ -135,7 +135,6 @@ async def pokecard(event):
         await event.client.send_file(
             await event.client.get_input_entity(event.chat_id), o
         )
-        await event.delete()
+        await event.try_delete()
     except BaseException:
         await event.eor("`Be sure To give correct Name`")
-        return
