@@ -37,11 +37,10 @@ async def twitter_search(event):
         headers=headers,
         re_json=True,
     )
-    if isinstance(res, str):
-        LOGS.error(res)
-        raise Exception(res)
     reso = []
     for user in res:
+        if isinstance(user, str):
+            LOGS.error(user)
         if url := user.get("profile_image_url_https"):
             thumb = wb(url, 0, "image/jpeg", [])
         else:
