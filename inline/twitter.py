@@ -2,7 +2,7 @@ from random import choice
 
 from telethon.tl.types import InputWebDocument as wb
 
-from . import async_searcher, in_pattern, LOGS
+from . import LOGS, async_searcher, in_pattern
 
 # Thanks to OpenSource
 _bearer_collected = [
