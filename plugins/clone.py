@@ -54,9 +54,7 @@ async def _(event):
     if last_name is None:
         last_name = "⁪⁬⁮⁮⁮"
     user_bio = replied_user.full_user.about
-    await event.client(UpdateProfileRequest(first_name=first_name))
-    await event.client(UpdateProfileRequest(last_name=last_name))
-    await event.client(UpdateProfileRequest(about=user_bio))
+    await event.client(UpdateProfileRequest(first_name=first_name, last_name=last_name, about=user_bio))
     if profile_pic:
         pfile = await event.client.upload_file(profile_pic)
         await event.client(UploadProfilePhotoRequest(pfile))

@@ -14,8 +14,7 @@ _bearer_collected = [
 _cache = {}
 
 
-@in_pattern("twitter", owner=True,
-            button={"Twitter User": "twitter theultroid"})
+@in_pattern("twitter", owner=True, button={"Twitter User": "twitter theultroid"})
 async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
@@ -39,7 +38,10 @@ async def twitter_search(event):
     )
     reso = []
     for user in res:
-        thumb = wb(user["profile_image_url_https"], 0, "image/jpeg", [])
+        if url := user.get("profile_image_url_https"):
+            thumb = wb(url, 0, "image/jpeg", [])
+        else:
+            thumb = None
         if user.get("profile_banner_url"):
             url = user["profile_banner_url"]
             text = f"[\xad]({url})• **Name :** `{user['name']}`\n"

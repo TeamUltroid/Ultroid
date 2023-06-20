@@ -13,6 +13,26 @@ from telethon.tl.types import (InputMediaPoll, Poll, PollAnswer,
 
 from .. import Button, asst, async_searcher, get_string, inline_mention
 
+
+GIMAGES = [
+    "https://graph.org/file/1c51015bae5205a65fd69.jpg",
+    "https://imgwhale.xyz/3xyr322l64j9590",
+]
+
+
+@asst_cmd(pattern="startgame", owner=True)
+async def magic(event):
+    buttons = [
+        [Button.inline("Trivia Quiz", "trzia")],
+        [Button.inline("Cancel ❌", "delit")],
+    ]
+    await event.reply(
+        get_string("games_1"),
+        file=choice(GIMAGES),
+        buttons=buttons,
+    )
+
+
 TR_BTS = {}
 DIFI_KEYS = ["Easy", "Medium", "Hard"]
 TRIVIA_CHATS = {}
