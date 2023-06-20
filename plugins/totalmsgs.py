@@ -11,12 +11,12 @@
 
 from telethon.utils import get_display_name
 
-from . import *
+from . import ultroid_cmd
 
 
-@ultroid_cmd(pattern="totalmsgs ?(.*)")
+@ultroid_cmd(pattern="totalmsgs( (.*)|$)")
 async def _(e):
-    match = e.pattern_match.group(1)
+    match = e.pattern_match.group(2)
     if match:
         user = match
     elif e.is_reply:
@@ -26,6 +26,6 @@ async def _(e):
     try:
         a = await e.client.get_messages(e.chat_id, limit=0, from_user=user)
     except Exception as er:
-        return await e.eor(str(er))
+        return await e.eor(str(er), time=6)
     user = await e.client.get_entity(user)
     await e.eor(f"Total msgs of `{get_display_name(user)}` here = {a.total}")

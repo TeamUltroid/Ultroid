@@ -7,7 +7,7 @@
 """
 ✘ Commands Available -
 
-• `{i}apod``
+• `{i}apod`
     Get Astronomy Picture of Day by NASA
 """
 

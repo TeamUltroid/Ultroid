@@ -24,25 +24,23 @@
 """
 
 import random
+import time
 
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from . import *
+from . import ultroid_cmd, udB
 
 
 @ultroid_cmd(pattern="(auto|stop)name$")
 async def autoname_(event):
     match = event.pattern_match.group(1)
-    if match == "stop":
+    if match == "stop" or udB.get_key("AUTONAME"):
         udB.del_key("AUTONAME")
         await event.eor("`AUTONAME has been Stopped !`")
         return
     udB.set_key("AUTONAME", "True")
-    await eod(event, "`Started AUTONAME`")
-    while True:
-        getn = udB.get_key("AUTONAME")
-        if not getn:
-            return
+    await event.eor("`Started AUTONAME`", time=6)
+    while udB.get_key("AUTONAME"):
         DM = time.strftime("%d-%m-%y")
         HM = time.strftime("%H:%M")
         name = f"🕒{HM} ⚡{OWNER_NAME}⚡ {DM} 🗓️"
@@ -53,12 +51,12 @@ async def autoname_(event):
 @ultroid_cmd(pattern="(auto|stop)bio$")
 async def autoname_(event):
     match = event.pattern_match.group(1)
-    if match == "stop":
+    if match == "stop" or udB.get_key("AUTOBIO"):
         udB.del_key("AUTOBIO")
         await event.eor("`AUTOBIO has been Stopped !`")
         return
     udB.set_key("AUTOBIO", "True")
-    await eod(event, "`Started AUTOBIO`")
+    await event.eor("`Started AUTOBIO`", time=6)
     BIOS = [
         "Busy Today !",
         "ULTROID USER",
@@ -66,10 +64,7 @@ async def autoname_(event):
         "Unique as Always!" "Sprinkling a bit of magic",
         "Intelligent !",
     ]
-    while True:
-        getn = udB.get_key("AUTOBIO")
-        if not getn:
-            return
+    while udB.get_key("AUTOBIO"):
         BIOMSG = random.choice(BIOS)
         DM = time.strftime("%d-%m-%y")
         HM = time.strftime("%H:%M")

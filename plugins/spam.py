@@ -24,7 +24,7 @@
 
 import asyncio
 
-from . import *
+from . import eod, ultroid_cmd, HNDLR
 
 
 @ultroid_cmd(pattern="tspam")
@@ -33,7 +33,7 @@ async def tmeme(e):
     message = tspam.replace(" ", "")
     for letter in message:
         await e.respond(letter)
-    await e.delete()
+    await e.try_delete()
 
 
 @ultroid_cmd(pattern="spam")
@@ -54,8 +54,8 @@ async def spammer(e):
             return await eod(e, "`Use bigspam cmd`")
     except BaseException:
         return await eod(e, "`Use in Proper Format`")
-    await asyncio.wait([e.respond(spam_message) for i in range(counter)])
-    await e.delete()
+    await e.try_delete()
+    await asyncio.wait([asyncio.create_task(e.respond(spam_message)) for i in range(counter)])
 
 
 @ultroid_cmd(pattern="bigspam", fullsudo=True)
@@ -70,15 +70,17 @@ async def bigspam(e):
             return await eod(e, "`Reply to a Message or Give some Text..`")
         spam_message = message.split(maxsplit=2)[2]
     counter = message.split()[1]
+    await e.try_delete()
     try:
         counter = int(counter)
     except BaseException:
         return await eod(e, "`Use in Proper Format`")
-    await asyncio.wait([e.respond(spam_message) for i in range(counter)])
-    await e.delete()
+    await asyncio.wait(
+        [asyncio.create_task(e.respond(spam_message)) for i in range(counter)]
+    )
 
 
-@ultroid_cmd(pattern="delayspam ?(.*)")
+@ultroid_cmd(pattern="delayspam")
 async def delayspammer(e):
     try:
         args = e.text.split(" ", 3)
@@ -87,7 +89,7 @@ async def delayspammer(e):
         msg = str(args[3])
     except BaseException:
         return await e.edit(f"**Usage :** {HNDLR}delayspam <delay time> <count> <msg>")
-    await e.delete()
+    await e.try_delete()
     try:
         for i in range(count):
             await e.respond(msg)
