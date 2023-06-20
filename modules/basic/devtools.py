@@ -5,6 +5,10 @@
 # Please read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+from localization import get_help
+
+__doc__ = get_help(__name__)
+
 import contextlib
 import inspect
 import sys

@@ -5,6 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+from localization import get_help
+
+__doc__ = get_help(__name__)
 
 import contextlib
 from telethon.errors import ChatAdminRequiredError as no_admin
@@ -201,12 +204,12 @@ async def _(ult):
     else:
         return await ult.eor("Reply to a Photo or Video..")
     mediain = mediainfo(reply.media)
-    if "animated" in mediain:
-        replfile = await con.convert(replfile, convert_to="mp4")
-    else:
-        replfile = await con.convert(
-            replfile, outname="chatphoto", allowed_formats=["jpg", "png", "mp4"]
-        )
+#    if "animated" in mediain:
+ #       replfile = await con.convert(replfile, convert_to="mp4")
+ #   else:
+  #      replfile = await con.convert(
+  #          replfile, outname="chatphoto", allowed_formats=["jpg", "png", "mp4"]
+  #      )
     file = await ult.client.upload_file(replfile)
     try:
         if "pic" not in mediain:

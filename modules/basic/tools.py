@@ -1,3 +1,14 @@
+# Ultroid - UserBot
+# Copyright (C) 2021-2022 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+from localization import get_help
+
+__doc__ = get_help(__name__)
+
 import contextlib
 import os
 from glob import glob
@@ -15,7 +26,7 @@ from .. import LOGS, get_string, humanbytes, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
-async def _(event):
+async def tr_func(event):
     input_ = event.pattern_match.group(1).strip().split(maxsplit=1)
     txt = input_[1] if len(input_) > 1 else None
     if input_:
@@ -43,7 +54,7 @@ async def _(event):
     pattern="id( (.*)|$)",
     manager=True,
 )
-async def _(event):
+async def id_func(event):
     if match := event.pattern_match.group(1).strip():
         try:
             ids = await event.client.parse_id(match)
@@ -110,7 +121,7 @@ async def _(event):
 @ultroid_cmd(
     pattern="ls($| ?(.*))",
 )
-async def ls_cmd(e):
+async def ls_func(e):
     """list files in a directory"""
     files = e.pattern_match.group(1).strip()
     if not files:
@@ -230,7 +241,7 @@ async def ls_cmd(e):
 @ultroid_cmd(
     pattern="graph( ?(.*)|$)",
 )
-async def graph_cmd(event):
+async def graph_func(event):
     """
     `graph`
     `graph list`"""
@@ -279,7 +290,7 @@ async def graph_cmd(event):
 
 
 @ultroid_cmd(pattern="q( (.*)|$)", manager=True, allow_pm=True)
-async def q_cmd(event):
+async def q_func(event):
     match = event.pattern_match.group(1).strip()
     if not event.is_reply:
         return await event.eor("`Reply to Message..`")

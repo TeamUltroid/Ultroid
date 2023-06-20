@@ -1,3 +1,10 @@
+# Ultroid - UserBot
+# Copyright (C) 2021-2022 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 import contextlib
 import os, json
 
@@ -8,7 +15,8 @@ from .. import LOGS, bash, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="mediainfo( (.*)|$)")
-async def mediainfo_cmd(event):
+async def mediainfo_func(event):
+    """mediainfo url/file_path/reply media- generate media info"""
     r = await event.get_reply_message()
     match = event.pattern_match.group(1).strip()
     extra = ""
