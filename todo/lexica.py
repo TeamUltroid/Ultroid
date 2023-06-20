@@ -14,8 +14,9 @@
 """
 
 import os
-from .. import fast_download, fetch, ultroid_cmd
 from secrets import token_hex
+
+from .. import fast_download, fetch, ultroid_cmd
 
 # TODO: Complete
 
@@ -29,8 +30,8 @@ async def search_lexica(event):
     cont = await fetch(
         f"https://lexica.art/api/v1/search?q={query.replace(' ', '+')}", re_json=True
     )
-    files =   [ (await fast_download(a, token_hex(6) + ".png"))[0]
-            for a in list(map(lambda d: d["src"], cont["images"][:limit]))]
+    files = [(await fast_download(a, token_hex(6) + ".png"))[0]
+             for a in list(map(lambda d: d["src"], cont["images"][:limit]))]
     await event.reply(
         file=files
     )
