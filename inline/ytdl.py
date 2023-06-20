@@ -9,18 +9,18 @@
 import os
 import re
 
-from PIL import Image
 from core.remote import rm
+from PIL import Image
 from telethon import Button
-from telethon.errors.rpcerrorlist import FilePartLengthInvalidError, MediaEmptyError
+from telethon.errors.rpcerrorlist import (FilePartLengthInvalidError,
+                                          MediaEmptyError)
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from telethon.tl.types import InputWebDocument as wb
-from utilities.helper import bash, fast_download, humanbytes, numerize, time_formatter
-
-from . import LOGS, asst, callback, in_pattern, udB
-
+from utilities.helper import (bash, fast_download, humanbytes, numerize,
+                              time_formatter)
 from youtubesearchpython import VideosSearch
 
+from . import LOGS, asst, callback, in_pattern, udB
 
 ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
 _yt_base_url = "https://www.youtube.com/watch?v="
@@ -140,7 +140,7 @@ async def _(event):
     url = event.pattern_match.group(1).strip().decode("UTF-8")
     lets_split = url.split(":")
     vid_id = lets_split[2]
-    artist = description = views = likes = duration = size =title = None
+    artist = description = views = likes = duration = size = title = None
     link = _yt_base_url + vid_id
     format = lets_split[1]
     try:
