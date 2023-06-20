@@ -235,16 +235,22 @@ def _get_buttons(key, index):
     cols = udB.get_key("HELP_COLUMNS") or 2
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     loaded = filter_modules(key)
-    List = [
-        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}|{index}")
-        for x in loaded
-    ]
-    all_ = split_list(List, cols)
-    fl_ = split_list(all_, rows)
+    cindex = 0
+    NList = []
+    tl = rows * cols
+    while loaded:
+        plugs = loaded[:tl]
+        loaded = loaded[tl:]
+        MList = []
+        for ps in split_list(plugs, rows):    
+            for p in ps:
+                MList.append(Button.inline(f"{emoji} {p} {emoji}", data=f"uplugin_{key}_{p}|{cindex}"))
+        NList.append(split_list(MList, cols))
+        cindex += 1
     if _cache.get("help") is None:
         _cache["help"] = {}
-    _cache["help"][key] = fl_
-    return fl_
+    _cache["help"][key] = NList
+    return NList
 
 
 def page_num(index, key):
