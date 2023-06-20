@@ -8,7 +8,7 @@ Fetch Random anime quotes
 Command : `{i}aniquote`
 """
 
-from . import async_searcher, ultroid_cmd, LOGS
+from . import LOGS, async_searcher, ultroid_cmd
 
 
 @ultroid_cmd(pattern="aniquote")

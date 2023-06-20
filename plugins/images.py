@@ -13,7 +13,8 @@
     search images on freepik.
 """
 
-import os, re
+import os
+import re
 from random import shuffle
 from urllib.request import urlopen
 
