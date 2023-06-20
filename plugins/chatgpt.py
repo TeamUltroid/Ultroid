@@ -9,7 +9,7 @@ openai.api_key = udB.get("OPENAI_KEY")
 async def chatgpt(event):
     """Chat with GPT-3"""
     if not udB.get("OPENAI_KEY"):
-        return await event.eor("Set `OPENAI_API_KEY` in Heroku Config Vars")
+        return await event.eor("Set `OPENAI_KEY` in Heroku Config Vars")
     query = event.pattern_match.group(1).strip()
     reply_message = await event.get_reply_message()
     if not query and (reply_message and reply_message.text):
