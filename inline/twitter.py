@@ -14,8 +14,7 @@ _bearer_collected = [
 _cache = {}
 
 
-@in_pattern("twitter", owner=True,
-            button={"Twitter User": "twitter theultroid"})
+@in_pattern("twitter", owner=True, button={"Twitter User": "twitter theultroid"})
 async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
@@ -40,7 +39,8 @@ async def twitter_search(event):
     reso = []
     for user in res:
         if isinstance(user, str):
-            LOGS.error(user)
+            # "errors" as str
+            continue
         if url := user.get("profile_image_url_https"):
             thumb = wb(url, 0, "image/jpeg", [])
         else:
