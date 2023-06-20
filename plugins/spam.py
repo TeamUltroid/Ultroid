@@ -24,7 +24,7 @@
 
 import asyncio
 
-from . import eod, ultroid_cmd, HNDLR
+from . import HNDLR, eod, ultroid_cmd
 
 
 @ultroid_cmd(pattern="tspam")

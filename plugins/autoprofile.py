@@ -28,7 +28,7 @@ import time
 
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from . import ultroid_cmd, udB
+from . import udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="(auto|stop)name$")
