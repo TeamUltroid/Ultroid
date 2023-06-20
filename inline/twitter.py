@@ -14,7 +14,8 @@ _bearer_collected = [
 _cache = {}
 
 
-@in_pattern("twitter", owner=True, button={"Twitter User": "twitter theultroid"})
+@in_pattern("twitter", owner=True,
+            button={"Twitter User": "twitter theultroid"})
 async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
