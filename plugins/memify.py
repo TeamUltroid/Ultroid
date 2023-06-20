@@ -30,6 +30,7 @@ import textwrap
 import cv2
 from PIL import Image, ImageDraw, ImageFont
 from utilities.helper import fast_download
+
 from . import ultroid_cmd
 
 MEMIFY_FONT = (
@@ -106,25 +107,29 @@ async def draw_meme_text(image_path, msg):
         for u_text in textwrap.wrap(upper_text, width=15):
             u_width, u_height = draw.textsize(u_text, font=m_font)
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2,
+                    int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2),
+                    int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
@@ -260,31 +265,37 @@ async def draw_meme(image_path, msg):
         upper_text = text
         lower_text = ""
     draw = ImageDraw.Draw(img)
-    m_font = ImageFont.truetype(font_path.format(font), int((70 / 640) * i_width))
+    m_font = ImageFont.truetype(
+        font_path.format(font), int(
+            (70 / 640) * i_width))
     current_h, pad = 10, 5
     if upper_text:
         for u_text in textwrap.wrap(upper_text, width=15):
             u_width, u_height = draw.textsize(u_text, font=m_font)
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1,
+                    int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2,
+                    int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2),
+                    int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
