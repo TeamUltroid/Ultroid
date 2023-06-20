@@ -2,7 +2,7 @@ from random import choice
 
 from telethon.tl.types import InputWebDocument as wb
 
-from . import LOGS, async_searcher, in_pattern
+from . import async_searcher, in_pattern
 
 # Thanks to OpenSource
 _bearer_collected = [
@@ -14,7 +14,8 @@ _bearer_collected = [
 _cache = {}
 
 
-@in_pattern("twitter", owner=True, button={"Twitter User": "twitter theultroid"})
+@in_pattern("twitter", owner=True,
+            button={"Twitter User": "twitter theultroid"})
 async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
