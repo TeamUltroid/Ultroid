@@ -353,6 +353,7 @@ rusifont = [
     "з",
 ]
 
+
 def make_string(args, font):
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -360,6 +361,7 @@ def make_string(args, font):
             weebycharacter = font[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
     return string
+
 
 @ultroid_cmd(pattern="weeb ?(.*)")
 async def weebify(ult):
@@ -408,7 +410,6 @@ async def boxtxt(ult):
     await ult.eor(make_string(args, boxtextfont))
 
 
-
 @ultroid_cmd(pattern="bubbletext ?(.*)")
 async def bubbletxt(ult):
     args = ult.pattern_match.group(1)
@@ -454,7 +455,6 @@ async def greektext(ult):
     await ult.eor(make_string(args, greekfont))
 
 
-
 @ultroid_cmd(pattern="sorcify ?(.*)")
 async def sorcerertext(ult):
 
@@ -466,7 +466,6 @@ async def sorcerertext(ult):
         await ult.edit("What I am Supposed to sorcify? Please Give Text Sir")
         return
     await ult.eor(make_string(args, sorcererfont))
-
 
 
 @ultroid_cmd(pattern="fraktify ?(.*)")
@@ -490,4 +489,3 @@ async def rusitext(ult):
     if not args:
         return await ult.edit("What I am Supposed to rusify? Please Give Text Sir")
     await ult.eor(make_string(args, rusifont))
-
