@@ -20,6 +20,7 @@ py_d5: "`I am not an admin.`"
 py_d6: "This Command Can't be used by Bot!"
 py_d7: "Conversation Is Already On, Kindly Wait Sometime Then Try Again."
 py_d8: "`Sending media or sticker is not allowed in this chat.`"
+py_d9: "`Error occured, pasting log...`"
 
 # commons
 com_1: "`Processing...`"

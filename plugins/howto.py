@@ -33,6 +33,6 @@ async def _(e):
     response = await async_searcher(url)
     if response:
         return await e.eor(
-            "[{}]({})\n`Thank me Later 🙃` ".format(text, response.content.rstrip()), time=8
+            "[{}]({})\n`Thank me Later 🙃` ".format(text, response.rstrip()), time=8
         )
     await e.eor("`something is wrong. please try again later.`")

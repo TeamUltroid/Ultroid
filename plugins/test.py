@@ -17,8 +17,8 @@
 from datetime import datetime
 
 import speedtest
-
-from . import *
+from utilities.helper import humanbytes
+from . import ultroid_cmd
 
 
 @ultroid_cmd(pattern="test ?(.*)")

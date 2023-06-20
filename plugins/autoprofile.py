@@ -24,15 +24,16 @@
 """
 
 import random
-import time
+import time, asyncio
 
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from . import udB, ultroid_cmd
+from . import udB, ultroid_cmd, ultroid_bot
 
+OWNER_NAME = ultroid_bot.full_name
 
 @ultroid_cmd(pattern="(auto|stop)name$")
-async def autoname_(event):
+async def autoname(event):
     match = event.pattern_match.group(1)
     if match == "stop" or udB.get_key("AUTONAME"):
         udB.del_key("AUTONAME")

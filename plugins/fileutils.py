@@ -55,7 +55,7 @@ async def imak(event):
     if reply.media:
         if hasattr(reply.media, "document"):
             file = reply.media.document
-            image = await downloader(
+            image = await event.client.fast_downloader(
                 reply.file.name or str(time.time()),
                 reply.media.document,
                 xx,

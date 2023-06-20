@@ -29,8 +29,12 @@ import textwrap
 
 import cv2
 from PIL import Image, ImageDraw, ImageFont
+from utilities.helper import fast_download
+from . import ultroid_cmd
 
-from . import *
+MEMIFY_FONT = (
+    "https://raw.githubusercontent.com/TeamUltroid/Ultroid/@stale/fonts/memify.ttf"
+)
 
 
 @ultroid_cmd(pattern="mmf ?(.*)")
@@ -85,8 +89,9 @@ async def draw_meme_text(image_path, msg):
     if "_" in msg:
         text, font = msg.split("_")
     else:
+        await fetch_def()
         text = msg
-        font = "default"
+        font = "memify"
     if ";" in text:
         upper_text, lower_text = text.split(";")
     else:
@@ -101,29 +106,25 @@ async def draw_meme_text(image_path, msg):
         for u_text in textwrap.wrap(upper_text, width=15):
             u_width, u_height = draw.textsize(u_text, font=m_font)
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2,
-                    int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2),
-                    int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
@@ -232,52 +233,58 @@ async def mms(event):
     os.remove(pic)
 
 
+async def fetch_def():
+    font_path = "resources/fonts/{}.ttf"
+
+    if not os.path.isdir("resources/fonts"):
+        os.mkdir("resources/fonts")
+    path = font_path.format("memify")
+    if not os.path.exists(path):
+        await fast_download(MEMIFY_FONT, path)
+
+
 async def draw_meme(image_path, msg):
     img = Image.open(image_path)
     os.remove(image_path)
     i_width, i_height = img.size
+    font_path = "resources/fonts/{}.ttf"
     if "_" in msg:
         text, font = msg.split("_")
     else:
+        await fetch_def()
         text = msg
-        font = "default"
+        font = "memify"
     if ";" in text:
         upper_text, lower_text = text.split(";")
     else:
         upper_text = text
         lower_text = ""
     draw = ImageDraw.Draw(img)
-    m_font = ImageFont.truetype(
-        f"resources/fonts/{font}.ttf", int((70 / 640) * i_width)
-    )
+    m_font = ImageFont.truetype(font_path.format(font), int((70 / 640) * i_width))
     current_h, pad = 10, 5
     if upper_text:
         for u_text in textwrap.wrap(upper_text, width=15):
             u_width, u_height = draw.textsize(u_text, font=m_font)
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2,
-                    int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2),
-                    int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
