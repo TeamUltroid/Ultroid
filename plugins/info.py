@@ -53,47 +53,34 @@ async def _(event):
         first_name = first_name.replace("\u2060", "")
     last_name = user.last_name
     last_name = (
-        last_name.replace("\u2060", "") if last_name else (
-            "Last Name not found")
+        last_name.replace("\u2060", "") if last_name else ("Last Name not found")
     )
-    user_bio = full_user.about
-    if user_bio is not None:
-        user_bio = html.escape(full_user.about)
+    user_bio = html.escape(full_user.about or "")
     common_chats = full_user.common_chats_count
     if user.photo:
         dc_id = user.photo.dc_id
     else:
         dc_id = "Need a Profile Picture to check this"
-    caption = """<b>Exᴛʀᴀᴄᴛᴇᴅ Dᴀᴛᴀ Fʀᴏᴍ Tᴇʟᴇɢʀᴀᴍ's Dᴀᴛᴀʙᴀsᴇ<b>
-<b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{}</code>
-<b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={}'>Click Here</a>
-<b>••Fɪʀsᴛ Nᴀᴍᴇ</b>: <code>{}</code>
-<b>••Sᴇᴄᴏɴᴅ Nᴀᴍᴇ</b>: <code>{}</code>
-<b>••Bɪᴏ</b>: <code>{}</code>
-<b>••Dᴄ ID</b>: <code>{}</code>
-<b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
-<b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
-<b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
-<b>••Is Pʀᴇᴍɪᴜᴍ</b>: <code>{}</code>
-<b>••Is A Bᴏᴛ</b>: <code>{}</code>
-<b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
-""".format(
-        user_id,
-        user_id,
-        first_name,
-        last_name,
-        user_bio,
-        dc_id,
-        user_photos,
-        user.restricted,
-        user.verified,
-        user.premium,
-        user.bot,
-        common_chats,
-    )
-#     if chk := is_gbanned(user_id):
-#         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
-# <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
+    caption = f"""<b>Exᴛʀᴀᴄᴛᴇᴅ Dᴀᴛᴀ Fʀᴏᴍ Tᴇʟᴇɢʀᴀᴍ's Dᴀᴛᴀʙᴀsᴇ<b>
+<b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{user_id}</code>
+<b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={user_id}'>Click Here</a>
+<b>••Fɪʀsᴛ Nᴀᴍᴇ</b>: <code>{first_name}</code>"""
+    if not user.bot:
+        caption += f"\n<b>••Sᴇᴄᴏɴᴅ Nᴀᴍᴇ</b>: <code>{last_name}</code>"
+    caption += f"""\n<b>••Bɪᴏ</b>: <code>{user_bio}</code>
+<b>••Dᴄ ID</b>: <code>{dc_id}</code>"""
+    if user_photos:
+        caption += f"\n<b>••Nᴏ. Oғ PғPs</b> : <code>{user_photos}</code>"
+    if not user.bot:
+        caption += f"\n<b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{user.restricted}</code>"
+        caption += f"\n<b>••Is Pʀᴇᴍɪᴜᴍ</b>: <code>{user.premium}</code>"
+    caption += f"""\n<b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{user.verified}</code>
+<b>••Is A Bᴏᴛ</b>: <code>{user.bot}</code>
+<b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{common_chats}</code>
+"""
+    #     if chk := is_gbanned(user_id):
+    #         caption += f"""<b>••Gʟᴏʙᴀʟʟʏ Bᴀɴɴᴇᴅ</b>: <code>True</code>
+    # <b>••Rᴇᴀsᴏɴ</b>: <code>{chk}</code>"""
     await event.client.send_message(
         event.chat_id,
         caption,
@@ -170,8 +157,7 @@ async def get_chat_info(chat, event):
     messages_sent_alt = getattr(full, "read_outbox_max_id", None)
     exp_count = getattr(full, "pts", None)
     supergroup = "<b>Yes</b>" if getattr(chat, "megagroup", None) else "No"
-    creator_username = "@{}".format(
-        creator_username) if creator_username else None
+    creator_username = "@{}".format(creator_username) if creator_username else None
 
     if admins is None:
         try:
