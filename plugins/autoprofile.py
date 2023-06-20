@@ -23,14 +23,16 @@
    `Stops AUTOBIO.`
 """
 
+import asyncio
 import random
-import time, asyncio
+import time
 
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from . import udB, ultroid_cmd, ultroid_bot
+from . import udB, ultroid_bot, ultroid_cmd
 
 OWNER_NAME = ultroid_bot.full_name
+
 
 @ultroid_cmd(pattern="(auto|stop)name$")
 async def autoname(event):
