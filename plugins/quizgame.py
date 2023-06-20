@@ -13,7 +13,6 @@ from telethon.tl.types import (InputMediaPoll, Poll, PollAnswer,
 
 from .. import Button, asst, async_searcher, get_string, inline_mention
 
-
 GIMAGES = [
     "https://graph.org/file/1c51015bae5205a65fd69.jpg",
     "https://imgwhale.xyz/3xyr322l64j9590",
