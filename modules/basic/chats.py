@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help(__name__)
+__doc__ = get_help("chats")
 
 import contextlib
 from telethon.errors import ChatAdminRequiredError as no_admin

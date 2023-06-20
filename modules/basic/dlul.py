@@ -155,7 +155,7 @@ async def _upload_file(
 @ultroid_cmd(
     pattern="ul( (.*)|$)",
 )
-async def _(event):
+async def ul_func(event):
     msg = await event.eor(get_string("com_1"))
     query = event.pattern_match.group(1).strip()
     if not query:

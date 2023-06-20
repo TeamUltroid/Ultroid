@@ -73,6 +73,8 @@ async def AddToNewPack(packType, file, emoji, sender_id, title: str):
 
 @ultroid_cmd(pattern="kang", manager=True)
 async def kang_func(ult):
+    """(reply message)
+    Create sticker and add to pack"""
     sender = await ult.get_sender()
     if not isinstance(sender, User):
         return
@@ -161,6 +163,7 @@ async def kang_func(ult):
 
 @ultroid_cmd(pattern="listpack", manager=True)
 async def do_magic(ult):
+    """Get list of sticker packs."""
     ko = udB.get_key("STICKERS") or {}
     if not ko.get(ult.sender_id):
         return await ult.reply("No Sticker Pack Found!")

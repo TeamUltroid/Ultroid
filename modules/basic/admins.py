@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help(__name__)
+__doc__ = get_help("admins")
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError
