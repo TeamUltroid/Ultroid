@@ -22,7 +22,8 @@ async def searchunsl(ult):
     if not res:
         return await ult.eor(get_string("unspl_1"), time=5)
     CL = [download_file(rp, f"{match}-{e}.png") for e, rp in enumerate(res)]
-    imgs = [z[0] for z in (await asyncio.gather(*CL)) if z]
+    imgs = await asyncio.gather(*CL)
+    imgs = [z[0] for z in imgs if z]
     await ult.respond(f"Uploaded {len(imgs)} Images!", file=imgs)
-    await tep.delete()
     [os.remove(img) for img in imgs]
+    await tep.delete()
