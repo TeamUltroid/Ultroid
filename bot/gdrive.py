@@ -66,7 +66,7 @@ class GDrive:
                 "iss": self.service_account["client_email"],
                 "scope": self.scope,
                 "aud": "https://oauth2.googleapis.com/token",
-                "exp": int(time.time()) + 3600,
+                "exp": int(time.time()) + 3590,
                 "iat": int(time.time())
             }
             total_params = str(
@@ -91,8 +91,7 @@ class GDrive:
         if code.startswith("http://localhost"):
             # get all url arguments
             code = parse_qs(code.split("?")[1]).get("code")[0]
-        url = "https://oauth2.googleapis.com/token"
-        resp = await self._session.post(url, data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "http://localhost", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+        resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "http://localhost", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds = await resp.json()
         self.creds["expires_in"] = time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
