@@ -7,16 +7,17 @@
 
 **• Examples: **
 > `{i}gpt How to fetch a url in javascript`
-> `{i}gpt -i Cute Panda eating bamboo` 
+> `{i}gpt -i Cute Panda eating bamboo`
 
 ☠️ It needs OpenAI api key to function! ☠️
 """
 
 import asyncio
 import os
+
 import openai
 
-from .. import ultroid_cmd, check_filename, udB, LOGS, fast_download
+from .. import LOGS, check_filename, fast_download, udB, ultroid_cmd
 
 
 def get_gpt_answer(gen_image, question, api_key):
