@@ -9,7 +9,7 @@
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
 
-First setup OpenAI Api key by using `.setdb OPENAI_API your_key` to use this plugin 
+First setup OpenAI Api key by using `.setdb OPENAI_API your_key` to use this plugin
 """
 
 import asyncio
