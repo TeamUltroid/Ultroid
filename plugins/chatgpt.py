@@ -18,7 +18,7 @@ async def chatgpt(event):
         return await event.eor("Reply to a message to chat with GPT-3")
     message = await event.eor("Chatting with GPT-3...")
     output = openai.Completion.create(
-        engine=udB.get_key("GPT_MODEL") or "davinci",
+        model=udB.get_key("GPT_MODEL") or "davinci",
         prompt=query,
         temperature=0.9,
         max_tokens=150,
