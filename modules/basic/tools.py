@@ -7,7 +7,7 @@
 
 from localization import get_help
 
-__doc__ = get_help("devtools")
+__doc__ = get_help("tools")
 
 import contextlib
 import os
