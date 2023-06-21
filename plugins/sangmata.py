@@ -19,36 +19,25 @@ async def lastname(steal):
     else:
         return await steal.eor("`Use this command with reply or give Username/id...`")
     chat = "@SangMata_beta_bot"
-    id = f"/search_id {user_id}"
+    id = f"{chat} allhistory {user_id}"
     lol = await steal.eor(get_string("com_1"))
     try:
         async with steal.client.conversation(chat) as conv:
             try:
                 msg = await conv.send_message(id)
                 response = await conv.get_response()
-                respond = await conv.get_response()
-                responds = await conv.get_response()
             except YouBlockedUserError:
-                return await lol.edit("Please unblock @sangmatainfo_bot and try again")
-            if (
-                (response and response.text == "No records found")
-                or (respond and respond.text == "No records found")
-                or (responds and responds.text == "No records found")
-            ):
+                return await lol.edit(f"Please unblock {chat} and try again")
+            if response.text.startswith("No data available"):
                 await lol.edit("No records found for this user")
                 await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
-            elif response.text.startswith("🔗"):
-                await lol.edit(respond.message)
-                await lol.reply(responds.message)
-            elif respond.text.startswith("🔗"):
+            elif user_id in response.text:
                 await lol.edit(response.message)
-                await lol.reply(responds.message)
             else:
-                await lol.edit(respond.message)
-                await lol.reply(response.message)
+                await lol.edit(response.message)
             await steal.client.delete_messages(
                 conv.chat_id,
-                [msg.id, responds.id, respond.id, response.id],
+                [msg.id, response.id],
             )
     except Exception:
-        await lol.edit("Error: @SangMataInfo_bot is not responding!.")
+        await lol.edit(f"Error: {chat} is not responding!.")
