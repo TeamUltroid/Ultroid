@@ -24,7 +24,9 @@ def split_list(List, index):
 
 def get_help_buttons():
     row_1 = [Button.inline(get_string("help_4"), data="uh_basic_")]
-    if filter_modules("addons"): # (udB.get_config("ADDONS") or udB.get_key("LOAD_ALL"))
+    if filter_modules(
+        "addons"
+    ):  # (udB.get_config("ADDONS") or udB.get_key("LOAD_ALL"))
         row_1.append(Button.inline(get_string("help_5"), data="uh_addons_"))
     row_2 = []
     if udB.get_config("VCBOT"):
@@ -45,17 +47,16 @@ def get_help_buttons():
             row_2.insert(0, button)
         else:
             Markup.append([button])
-    Markup.extend(
-        [
-            [
-                Button.inline(get_string("help_8"), data="ownr"),
-                Button.url(
-                    get_string("help_9"),
-                    url=f"https://t.me/{asst.me.username}?start=set",
-                ),
-            ],
-            [Button.inline(get_string("help_10"), data="close")],
-        ]
+    settingButton = Button.url(
+        get_string("help_9"),
+        url=f"https://t.me/{asst.me.username}?start=set",
+    )
+    if len(row_2) == 1:
+        row_2.append(settingButton)
+    else:
+        Markup.append([settingButton])
+    Markup.append(
+        [Button.inline(get_string("help_10"), data="close")],
     )
     if row_2 and row_2 not in Markup:
         Markup.insert(1, row_2)
@@ -238,13 +239,15 @@ def _get_buttons(key, index):
     cindex = 0
     NList = []
     tl = rows * cols
-    while loaded:
-        plugs = loaded[:tl]
-        loaded = loaded[tl:]
+    for plugs in split_list(loaded, tl):
         MList = []
-        for ps in split_list(plugs, rows):    
+        for ps in split_list(plugs, rows):
             for p in ps:
-                MList.append(Button.inline(f"{emoji} {p} {emoji}", data=f"uplugin_{key}_{p}|{cindex}"))
+                MList.append(
+                    Button.inline(
+                        f"{emoji} {p} {emoji}", data=f"uplugin_{key}_{p}|{cindex}"
+                    )
+                )
         NList.append(split_list(MList, cols))
         cindex += 1
     if _cache.get("help") is None:
@@ -265,7 +268,8 @@ def page_num(index, key):
     if index == 0 and len(fl_) == 1:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
-        new_.append([
+        new_.append(
+            [
                 Button.inline(
                     "« Pʀᴇᴠɪᴏᴜs",
                     data=f"uh_{key}_{index-1}",
@@ -275,8 +279,9 @@ def page_num(index, key):
                     "Nᴇxᴛ »",
                     data=f"uh_{key}_{index+1}",
                 ),
-            ])
-        
+            ]
+        )
+
     return new_
 
 
