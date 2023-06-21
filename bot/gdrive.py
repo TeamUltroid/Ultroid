@@ -252,7 +252,7 @@ class GDrive:
             # upload to root and move
             r = await self.upload_file(event, path, filename, "root")
             return await self.copy_file(r["id"], filename, folder_id, move=True)
-        upload_url = r.headers.get("Location")
+        upload_url = "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&upload_id=" + r.headers.get("X-GUploader-UploadID")
 
         with open(path, "rb") as f:
             uploaded = 0
