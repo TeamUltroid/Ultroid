@@ -255,6 +255,7 @@ def mediainfo(message: Message) -> str:
                             for k in message.document.attributes
                         ):
                             _i = "sticker"
+                        
                         return _i + " as document"
             return _
     return ""
@@ -321,7 +322,7 @@ def humanbytes(size):
 
 def numerize(number):
     if not number:
-        return None
+        return
     unit = ""
     for unit in ["", "K", "M", "B", "T"]:
         if number < 1000:
