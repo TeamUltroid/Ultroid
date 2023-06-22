@@ -42,9 +42,6 @@ from . import *
 from core.git import repo
 from core.config import HOSTED_ON
 
-# TODO: Mess with this later
-# from database._core import ADDONS, HELP, LIST, LOADED
-
 from core.version import version
 from .FastTelethon import download_file as downloadable
 from .FastTelethon import upload_file as uploadable
@@ -237,7 +234,12 @@ def mediainfo(message: Message) -> str:
         "document",
     ]:
         if getattr(message, _, None):
-            if _ == "document":
+            if _ == "sticker":
+                stickerType = {"video/webm": "video_sticker", 
+                               "image/webp": "static_sticker",
+                               "application/x-tgsticker": "animated_sticker"}
+                return stickerType[message.document.mime_type]
+            elif _ == "document":
                 attributes = {
                     DocumentAttributeSticker: "sticker",
                     DocumentAttributeAnimated: "gif",
@@ -245,8 +247,7 @@ def mediainfo(message: Message) -> str:
                     types.DocumentAttributeCustomEmoji: "custom emoji",
                     DocumentAttributeVideo: "video",
                     DocumentAttributeImageSize: "photo",
-                    DocumentAttributeFilename: "file",
-                }
+                    }
                 for __ in message.document.attributes:
                     if type(__) in attributes:
                         _i = attributes[type(__)]

@@ -52,7 +52,7 @@ except ImportError:
 async def get_ofox(codename):
     ofox_baseurl = "https://api.orangefox.download/v3/"
     releases = await async_searcher(
-        ofox_baseurl + "releases?codename=" + codename, re_json=True
+        f"{ofox_baseurl}releases?codename={codename}", re_json=True
     )
     device = await async_searcher(
         ofox_baseurl + "devices/get?codename=" + codename, re_json=True

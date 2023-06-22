@@ -1,7 +1,8 @@
 import math, os
 from PIL import Image
 from .tools import metadata, bash
-
+from .tools import _unquote_text
+from telethon.utils import get_extension
 
 def resize_photo_sticker(photo):
     """Resize the given photo to 512x512 (for creating telegram sticker)."""
@@ -43,3 +44,16 @@ async def create_webm(file, name="video", remove=False):
     if remove:
         os.remove(file)
     return name
+
+
+async def convert_ffmpeg(input_, output):
+    if output.endswith(".gif"):
+        await bash(f"ffmpeg -i '{input_}' -an -sn -c:v copy '{output}.mp4' -y")
+    else:
+        await bash(f"ffmpeg -i '{input_}' '{output}' -y")
+    return output
+
+
+async def lottie_to_gif(file, output):
+    await bash(f"lottie_convert.py '{_unquote_text(file)}' '{_unquote_text(output)}'")
+    return output

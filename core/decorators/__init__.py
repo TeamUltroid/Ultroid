@@ -46,15 +46,4 @@ def fullsudos():
         fullsudos.append(owner)
     return list(map(_parse, filter(lambda id: id, fullsudos)))
 
-
 # ------------------------------------------------ #
-
-
-# TODO: What does this do?:
-def append_or_update(load, func, name, arggs):
-    if isinstance(load, list):
-        return load.append(func)
-    if isinstance(load, dict):
-        if load.get(name):
-            return load[name].append((func, arggs))
-        return load.update({name: [(func, arggs)]})
