@@ -212,11 +212,12 @@ async def _(ult):
   #      )
     file = await ult.client.upload_file(replfile)
     try:
-        if "pic" not in mediain:
+        if "photo" not in mediain:
             file = types.InputChatUploadedPhoto(video=file)
         await ult.client(EditPhotoRequest(chat, file))
         await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
+        LOGS.exception(ex)
         await ult.eor(f"Error occured.\n`{str(ex)}`", time=5)
     os.remove(replfile)
 

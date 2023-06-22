@@ -22,8 +22,6 @@ def __load(func, plugin, key, single):
     try:
         modl = func(plugin)
     except ModuleNotFoundError as er:
-        import traceback
-        LOGS.info(traceback.format_exc())
         LOGS.error(f"{plugin}: '{er.name}' not installed!")
         return
     except Exception as exc:
