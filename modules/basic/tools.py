@@ -18,6 +18,10 @@ from database.helpers import get_random_color
 from telethon.errors import MessageTooLongError
 from telethon.tl import TLObject
 
+from telethon.tl.functions.channels import InviteToChannelRequest
+from telethon.tl.functions.messages import AddChatUserRequest
+from telethon.errors import UserBotError
+
 from core import HNDLR
 from core.remote import rm
 from utilities.tools import atranslate, json_parser
@@ -259,23 +263,20 @@ async def graph_func(event):
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error - {e}"
-            await xx.edit(amsg)
+            return await xx.edit(amsg)
         elif getmsg.document:
             getit = await getmsg.download_media()
             with open(getit, "r") as ab:
                 cd = ab.read()
-            tcom = input_str or "Ultroid"
-            makeit = client.create_page(title=tcom, content=[f"{cd}"])
-            war = makeit["url"]
             os.remove(getit)
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
         elif getmsg.text:
-            tcom = input_str or "Ultroid"
-            makeit = client.create_page(title=tcom, content=[getmsg.text])
-            war = makeit["url"]
-            await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
+            cd = getmsg.text
         else:
-            await xx.edit("Reply to a Media or Text !")
+            return await xx.edit("Reply to a Media or Text !")
+        tcom = input_str or "Ultroid"
+        makeit = client.create_page(title=tcom, content=[cd])
+        war = makeit["url"]
+        await xx.edit(f"Pasted to Telegraph : [Telegraph]({war})")
         return
     elif input_str == "list":
         res = client.get_page_list()
@@ -351,3 +352,44 @@ async def q_func(event):
     os.remove(file)
     await msg.delete()
     return message
+
+
+@ultroid_cmd(
+    pattern="invite( (.*)|$)",
+    groups_only=True,
+)
+async def _(ult):
+    xx = await ult.eor(get_string("com_1"))
+    to_add_users = ult.pattern_match.group(1).strip()
+    add_chat_user = not ult.is_channel and ult.is_group
+    request = AddChatUserRequest if add_chat_user else InviteToChannelRequest
+    users = to_add_users.split()
+    single = len(users) == 1
+
+    for user_id in users:
+        try:
+            if add_chat_user:
+                kwargs = {
+                    "chat_id": ult.chat_id,
+                    "user_id": await ult.client.parse_id(user_id),
+                    "fwd_limit": 1000000,
+                }
+            else:
+                kwargs = {
+                    "channel": ult.chat_id,
+                    "users": [await ult.client.parse_id(user_id)],
+                }
+            await ult.client(request(**kwargs))
+            await xx.edit(f"Successfully invited `{user_id}` to `{ult.chat_id}`")
+        except UserBotError as er:
+            if single:
+                await xx.edit(
+                    f"Bots can only be added as Admins in Channel.\nBetter Use `{HNDLR}promote {user_id}`"
+                )
+                continue
+            LOGS.exception(er)
+        except Exception as er:
+            if single:
+                await xx.edit(str(er))
+                continue
+            LOGS.exception(er)

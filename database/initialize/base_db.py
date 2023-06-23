@@ -67,12 +67,14 @@ class BaseDatabase:
             self._handlers[key] = {}
         self._handlers[key][method] = (handler, args, kwargs)
 
-    def set_key(self, key, value):
+    def set_key(self, key, value, only_cache=False):
         value = self._get_data(data=value)
         self._cache[key] = value
         with suppress(KeyError):
             handler, arg, kwargs = self._handlers[key]["change"]
             handler(key, value, self.get_key(key), *arg, **kwargs)
+        if only_cache:
+            return
         return self.set(str(key), str(value))
 
     def rename(self, key1, key2):
