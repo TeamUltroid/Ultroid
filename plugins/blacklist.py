@@ -66,9 +66,8 @@ def get_stuff():
 def add_blacklist(chat, word):
     ok = get_stuff()
     if ok.get(chat):
-        for z in word.split():
-            if z not in ok[chat]:
-                ok[chat].append(z)
+        for z in filter(lambda z: z not in ok[chat], word.split()):
+            ok[chat].append(z)
     else:
         ok.update({chat: [word]})
     return udB.set_key("BLACKLIST_DB", ok)
