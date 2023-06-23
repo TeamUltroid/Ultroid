@@ -10,13 +10,17 @@
 """
 
 import os
-from .. import ultroid_bot, udB, LOGS, asst, get_string
-from telethon import events
-from telethon.tl.types import User, MessageEntityMention, MessageEntityMentionName
-from telethon.tl.custom import Button
-from telethon.utils import get_display_name
-from telethon.errors import PeerIdInvalidError, ChatWriteForbiddenError, MediaEmptyError, MessageTooLongError, MediaCaptionTooLongError, UserNotParticipantError
 
+from telethon import events
+from telethon.errors import (ChatWriteForbiddenError, MediaCaptionTooLongError,
+                             MediaEmptyError, MessageTooLongError,
+                             PeerIdInvalidError, UserNotParticipantError)
+from telethon.tl.custom import Button
+from telethon.tl.types import (MessageEntityMention, MessageEntityMentionName,
+                               User)
+from telethon.utils import get_display_name
+
+from .. import LOGS, asst, get_string, udB, ultroid_bot
 
 CACHE_SPAM = {}
 TAG_EDITS = {}
@@ -50,7 +54,8 @@ async def all_messages_catcher(e):
             if TAG_EDITS.get(e.chat_id):
                 TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg": e}})
             else:
-                TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
+                TAG_EDITS.update(
+                    {e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
 #            tag_add(sent.id, e.chat_id, e.id)
         except Exception as me:
             if not isinstance(me, (PeerIdInvalidError, ValueError)):
@@ -62,9 +67,11 @@ async def all_messages_catcher(e):
                         NEEDTOLOG, e.message.text, file=media, buttons=buttons
                     )
                     if TAG_EDITS.get(e.chat_id):
-                        TAG_EDITS[e.chat_id].update({e.id: {"id": sent.id, "msg": e}})
+                        TAG_EDITS[e.chat_id].update(
+                            {e.id: {"id": sent.id, "msg": e}})
                     else:
-                        TAG_EDITS.update({e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
+                        TAG_EDITS.update(
+                            {e.chat_id: {e.id: {"id": sent.id, "msg": e}}})
                     return os.remove(media)
                 except Exception as er:
                     LOGS.exception(er)
@@ -126,9 +133,11 @@ if udB.get_key("TAG_LOG"):
                     except Exception as er:
                         return LOGS.exception(er)
                     if TAG_EDITS.get(event.chat_id):
-                        TAG_EDITS[event.chat_id].update({event.id: {"id": sent.id}})
+                        TAG_EDITS[event.chat_id].update(
+                            {event.id: {"id": sent.id}})
                     else:
-                        TAG_EDITS.update({event.chat_id: {event.id: {"id": sent.id}}})
+                        TAG_EDITS.update(
+                            {event.chat_id: {event.id: {"id": sent.id}}})
             return
         d_ = TAG_EDITS[event.chat_id]
         if not d_.get(event.id):
@@ -165,7 +174,7 @@ if udB.get_key("TAG_LOG"):
             del TAG_EDITS[event.chat_id][event.id]
         except Exception as er:
             LOGS.exception(er)
-    
+
     # TODO: decide whether to keep
 
     # @ultroid_bot.on(
