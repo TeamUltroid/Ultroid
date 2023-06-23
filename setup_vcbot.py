@@ -9,7 +9,7 @@ VCBOT_REPO = "https://github.com/TeamUltroid/VCbot"
 
 async def setup():
     try:
-        import pytgcalls
+        pass
     except ModuleNotFoundError as er:
         LOGS.error(f"'{er.name}' is not Installed! Skipping loading of VCBOT.")
         return
