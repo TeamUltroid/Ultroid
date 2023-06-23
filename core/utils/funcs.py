@@ -22,6 +22,10 @@ async def onNewPlugin(ult):
     PluginChannel[ult.chat_id][ult.id] = file
     LOGS.debug(f"Loaded new plugin {file} from {ult.chat_id}")
 
+    from modules.basic._help import _cache
+    if _cache.get("addons"):
+        del _cache["addons"]
+
 
 async def onPluginDel(ult):
     chat = ult.chat_id

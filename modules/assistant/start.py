@@ -56,26 +56,10 @@ def get_start_message():
     return Owner_info_msg, _custom
 
 
-_settings = [
-    [
-        Button.inline("API Kᴇʏs", data="cbs_apiset"),
-        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
-    ],
-    [
-        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
-        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
-    ],
-    [
-        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
-        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
-    ],
-    [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-]
-
 _start = [
     [
         Button.inline("Lᴀɴɢᴜᴀɢᴇ 🌐", data="lang"),
-        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+#        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
     ],
     [
         Button.inline("Sᴛᴀᴛs ✨", data="stat"),
@@ -149,10 +133,12 @@ async def ultroid_handler(event):
     else:
         name = get_display_name(event.sender)
         if args == "set":
+            """
             await event.reply(
                 "Choose from the below options -",
                 buttons=_settings,
             )
+            """
             return
         elif args == "_manager":
             with contextlib.suppress(ImportError):
@@ -225,13 +211,32 @@ Total Users in Bot - {total}
         )
 
 
+"""
+
+_settings = [
+    [
+        Button.inline("API Kᴇʏs", data="cbs_apiset"),
+        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
+    ],
+    [
+        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
+    ],
+    [
+        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
+        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
+    ],
+    [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+]
+
+
 @callback("setter", owner=True)
 async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=_settings,
     )
-
+"""
 
 @callback("tz", owner=True)
 async def timezone_(event):

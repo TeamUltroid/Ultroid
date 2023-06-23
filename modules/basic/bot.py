@@ -8,7 +8,6 @@
 import os
 import sys
 import time
-
 from core import start_time
 from core.remote import rm
 from core.git import repo
@@ -65,11 +64,7 @@ async def logs_func(event):
             client = mod.get_client()
             with open(file_path, "r") as file:
                 title = "Ultroid Logs"
-                if pat := udB.get_key("_TG_LOG"):
-                    page = client.edit_page(pat, title, content=[file.read()])
-                else:
-                    page = client.create_page(title=title, content=[file.read()])
-                    udB.set_key("_TG_LOG", page["path"])
+                page = client.create_page(title=title, content=[file.read()])
         return await event.eor(f'[Ultroid Logs]({page["url"]})', link_preview=True)
     await event.eor(file=file_path)
 
