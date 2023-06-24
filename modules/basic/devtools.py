@@ -257,13 +257,13 @@ async def eval_func(event):
     if value:
         try:
             if mode == "gsource":
-                exc = inspect.getsource(value)
+                stdout = inspect.getsource(value)
             elif mode == "g-args":
                 args = inspect.signature(value).parameters.values()
                 name = ""
                 if hasattr(value, "__name__"):
                     name = value.__name__
-                exc = f"**{name}**\n\n" + "\n ".join([str(arg) for arg in args])
+                stdout = f"**{name}**\n\n" + "\n ".join([str(arg) for arg in args])
         except Exception:
             exc = traceback.format_exc()
     err = exc or stderr
@@ -299,8 +299,8 @@ async def eval_func(event):
         evaluation = get_string("instu_4")
     if evaluation:
         final_output += f"\n\n __►__ **OUTPUT**: \n{evaluation}"
+    final_output = str(evaluation)
     if len(final_output) > 4096:
-        final_output = str(evaluation)
         with BytesIO(final_output.encode()) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
