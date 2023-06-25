@@ -5,14 +5,13 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-
 import random
 
 from utilities.admins import admin_check
 
 from database.helpers import DEVLIST
 
-from . import *
+from .. import asst_cmd, fetch
 
 
 @asst_cmd(pattern="decide")
@@ -35,17 +34,14 @@ async def oqha(e):
         reply_to = e.reply_to_msg_id
     else:
         return await e.eor("What to Echo?", time=5)
-    try:
-        await e.delete()
-    except BaseException as ex:
-        LOGS.error(ex)
+    await e.try_delete()
     await e.client.send_message(e.chat_id, text, reply_to=reply_to)
 
 
 @asst_cmd(pattern="kickme$")
 async def doit(e):
     if e.sender_id in DEVLIST:
-        return await eod(e, "`I will Not Kick You, my Developer..`")
+        return await e.eor("`I will Not Kick You, my Developer..`", time=5)
     try:
         await e.client.kick_participant(e.chat_id, e.sender_id)
     except Exception as Fe:
