@@ -13,7 +13,7 @@ from .. import LOGS, get_string, ultroid_cmd
     pattern="info( (.*)|$)",
     manager=True,
 )
-async def _(event):
+async def get_info(event):
     user = event.pattern_match.group(1).strip()
     if not user:
         if event.is_reply:
@@ -48,8 +48,9 @@ async def _(event):
         await event.client.get_profile_photos(user.id, limit=0)
     ).total or "NaN"
     user_id = user.id
-    first_name = html.escape(user.first_name)
+    first_name = user.first_name
     if first_name is not None:
+        first_name = html.escape(first_name)
         first_name = first_name.replace("\u2060", "")
     last_name = user.last_name
     last_name = (
@@ -103,6 +104,8 @@ async def get_chat_info(chat, event):
         return await event.eor("`Use this for Group/Channel.`")
     full = chat_info.full_chat
     chat_photo = full.chat_photo
+    if isinstance(chat_photo, types.PhotoEmpty):
+        chat_photo = None
     broadcast = getattr(chat, "broadcast", False)
     chat_type = "Channel" if broadcast else "Group"
     chat_title = chat.title
