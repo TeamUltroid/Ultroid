@@ -299,8 +299,8 @@ async def eval_func(event):
         evaluation = get_string("instu_4")
     if evaluation:
         final_output += f"\n\n __►__ **OUTPUT**: \n{evaluation}"
-    final_output = str(evaluation)
     if len(final_output) > 4096:
+        final_output = str(evaluation)
         with BytesIO(final_output.encode()) as out_file:
             out_file.name = "eval.txt"
             await event.client.send_file(
