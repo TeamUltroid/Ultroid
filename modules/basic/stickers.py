@@ -20,7 +20,7 @@ from telethon.tl.types import (
     InputPeerSelf,
     InputStickerSetEmpty,
 )
-from telethon.errors import StickersetInvalidError
+from telethon.errors import StickersetInvalidError, PackShortNameInvalidError
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName, User
 from telethon.utils import get_display_name, get_extension, get_input_document
@@ -57,18 +57,23 @@ def getName(sender, packType: str):
 
 
 async def AddToNewPack(packType, file, emoji, sender_id, title: str):
-    sn = await GetUniquePackName()
-    return await asst(
-        CreateStickerSetRequest(
-            user_id=sender_id,
-            title=title,
-            short_name=sn,
-            stickers=[SetItem(file, emoji=emoji)],
-            videos=packType == "video",
-            animated=packType == "animated",
-            software="@TeamUltroid",
-        )
-    )
+    for _ in range(5):
+        sn = await GetUniquePackName()
+        try:
+            return await asst(
+                CreateStickerSetRequest(
+                    user_id=sender_id,
+                    title=title,
+                    short_name=sn,
+                    stickers=[SetItem(file, emoji=emoji)],
+                    videos=packType == "video",
+                    animated=packType == "animated",
+                    software="@TeamUltroid",
+                )
+            )
+        except PackShortNameInvalidError as er:
+            LOGS.error(er)
+            LOGS.info(f"retrying, {_}")
 
 
 @ultroid_cmd(pattern="kang", manager=True)
