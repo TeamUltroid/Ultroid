@@ -7,7 +7,7 @@
 
 import contextlib
 import random
-from secrets import token_urlsafe
+from secrets import token_hex
 
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
@@ -42,7 +42,7 @@ async def packExists(packId):
 
 
 async def GetUniquePackName():
-    packName = f"{token_urlsafe(random.randint(4, 6))}_by_{asst.me.username}"
+    packName = f"{token_hex(random.randint(4, 8))}_by_{asst.me.username}"
     return await GetUniquePackName() if await packExists(packName) else packName
 
 
