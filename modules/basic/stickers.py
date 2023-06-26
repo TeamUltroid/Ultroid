@@ -6,7 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import contextlib
-import random
+import random, string
 from secrets import token_hex
 
 from telethon import errors
@@ -42,7 +42,7 @@ async def packExists(packId):
 
 
 async def GetUniquePackName():
-    packName = f"{token_hex(random.randint(4, 8))}_by_{asst.me.username}"
+    packName = f"{random.choice(string.ascii_lowercase)}{token_hex(random.randint(4, 8))}_by_{asst.me.username}"
     return await GetUniquePackName() if await packExists(packName) else packName
 
 
@@ -57,23 +57,18 @@ def getName(sender, packType: str):
 
 
 async def AddToNewPack(packType, file, emoji, sender_id, title: str):
-    for _ in range(5):
-        sn = await GetUniquePackName()
-        try:
-            return await asst(
-                CreateStickerSetRequest(
-                    user_id=sender_id,
-                    title=title,
-                    short_name=sn,
-                    stickers=[SetItem(file, emoji=emoji)],
-                    videos=packType == "video",
-                    animated=packType == "animated",
-                    software="@TeamUltroid",
-                )
-            )
-        except PackShortNameInvalidError as er:
-            LOGS.error(er)
-            LOGS.info(f"retrying, {_}")
+    sn = await GetUniquePackName()
+    return await asst(
+        CreateStickerSetRequest(
+            user_id=sender_id,
+            title=title,
+            short_name=sn,
+            stickers=[SetItem(file, emoji=emoji)],
+            videos=packType == "video",
+            animated=packType == "animated",
+            software="@TeamUltroid",
+        )
+    )
 
 
 @ultroid_cmd(pattern="kang", manager=True)
