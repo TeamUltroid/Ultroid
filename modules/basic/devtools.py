@@ -35,7 +35,7 @@ from core.remote import rm
 from database.helpers import get_random_color
 from utilities.misc import json_parser
 from utilities.tools import Carbon, safe_load
-
+from telethon.errors import RPCError
 from .. import *
 
 Tasks = {}
@@ -246,6 +246,9 @@ async def eval_func(event):
         # task_id = str(task_id)
         # Tasks[task_id] = task
         # task.add_done_callback(lambda _: Tasks.pop(task_id))
+    except RPCError as er:
+        value = None
+        exc = str(er)
     except Exception:
         value = None
         exc = traceback.format_exc()
