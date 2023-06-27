@@ -240,7 +240,8 @@ async def eval_func(event):
     try:
         # value = await aexec(cmd, event)
         # TODO: Eval can be cancelled
-        task = asyncio.create_task(aexec(cmd, event))
+       # task = asyncio.create_task(aexec(cmd, event))
+        task = asyncio.current_task()
         try:
             task_id = int(list(Tasks.keys())[0])
         except IndexError:
@@ -249,8 +250,9 @@ async def eval_func(event):
         task_id = str(task_id)
         Tasks[task_id] = task
         task.add_done_callback(lambda _: Tasks.pop(task_id))
-        await asyncio.wait([task])
-        value = task.result()
+      #  await asyncio.wait([task])
+    #    value = task.result()
+        value = await aexec(cmd, event)
     except RPCError as er:
         value = None
         exc = f"{er.__class__.__name__}: {er}"
