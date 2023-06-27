@@ -248,7 +248,7 @@ async def eval_func(event):
         # task.add_done_callback(lambda _: Tasks.pop(task_id))
     except RPCError as er:
         value = None
-        exc = str(er)
+        exc = f"{er.__class__.__name__}: {er}"
     except Exception:
         value = None
         exc = traceback.format_exc()
