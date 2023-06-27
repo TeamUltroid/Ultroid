@@ -238,14 +238,16 @@ async def eval_func(event):
     stdout, stderr, exc = None, None, None
     tima = time.time()
     try:
-        value = await aexec(cmd, event)
+        # value = await aexec(cmd, event)
         # TODO: Eval can be cancelled
-        # task = asyncio.create_task(aexec(cmd, event))
-        # task_id = int(list(Tasks.keys())[0])
-        # task_id += 1
-        # task_id = str(task_id)
-        # Tasks[task_id] = task
-        # task.add_done_callback(lambda _: Tasks.pop(task_id))
+        task = asyncio.create_task(aexec(cmd, event))
+        task_id = int(list(Tasks.keys())[0])
+        task_id += 1
+        task_id = str(task_id)
+        Tasks[task_id] = task
+        task.add_done_callback(lambda _: Tasks.pop(task_id))
+        await asyncio.wait([task])
+        value = task.result()
     except RPCError as er:
         value = None
         exc = f"{er.__class__.__name__}: {er}"
