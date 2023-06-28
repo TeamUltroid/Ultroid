@@ -55,7 +55,7 @@ async def convert_ffmpeg(input_, output):
 
 
 async def lottie_to_gif(file, output):
-    await bash(f"{} -m lottie_convert.py '{_unquote_text(file)}' '{_unquote_text(output)}'")
+    await bash(f"lottie_convert.py '{_unquote_text(file)}' '{_unquote_text(output)}'")
     return output
 
 
