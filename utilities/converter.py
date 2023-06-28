@@ -1,7 +1,7 @@
-import math, os
+import math, os, io
 from PIL import Image
 from .tools import metadata, bash
-from .tools import _unquote_text
+from .tools import _unquote_text, check_filename
 from telethon.utils import get_extension
 
 def resize_photo_sticker(photo):
@@ -55,5 +55,25 @@ async def convert_ffmpeg(input_, output):
 
 
 async def lottie_to_gif(file, output):
-    await bash(f"lottie_convert.py '{_unquote_text(file)}' '{_unquote_text(output)}'")
+    await bash(f"{} -m lottie_convert.py '{_unquote_text(file)}' '{_unquote_text(output)}'")
     return output
+
+
+async def create_chat_photo(file):
+    extension = file.split(".")[-1]
+    if extension == "webp":
+        with Image.open(file) as img:
+            filename = check_filename("tmp.png")
+            img.save(check_filename("tmp.png"), "PNG")
+            return filename
+    elif extension == "tgs":
+        return await lottie_to_gif(file, check_filename("tmp.mp4"))
+    elif extension == "webm":
+        extension = "mp4"
+        file = await convert_ffmpeg(file, check_filename("tmp.mp4"))
+    if extension in ("mp4", "gif"):
+        filename = check_filename('out.mp4')
+        await bash(f'ffmpeg -i "{_unquote_text(file)}" -vf scale=500:500 "{filename}" -y')
+        
+        return filename
+    return file

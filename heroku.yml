@@ -1,3 +1,0 @@
-build:
-  docker:
-      ultroid: Dockerfile

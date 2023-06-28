@@ -141,6 +141,8 @@ async def updateme_requirements():
 
 # --------------------------------------------------------------------- #
 
+class BashError(Exception):
+    ...
 
 async def bash(cmd, run_code=0):
     """

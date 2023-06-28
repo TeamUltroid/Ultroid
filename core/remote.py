@@ -27,7 +27,7 @@ class Remote:
                 try:
                     self.RemoteConfig: dict = json.load(file)
                 except json.decoder.JSONDecodeError:
-                    Logger.error(f"Failed to decode ultroid lock file, creating new...")
+                    Logger.error("Failed to decode ultroid lock file, creating new...")
                     self.RemoteConfig = self.DEF_CONFIG
         else:
             self.RemoteConfig = self.DEF_CONFIG

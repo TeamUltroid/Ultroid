@@ -261,7 +261,7 @@ async def settt(event):
     languages = await rm.getLanguages()
     udB.del_key("language") if lang == "en" else udB.set_key("language", lang)
     await event.edit(
-        f"Your language has been set to {languages[lang]['natively']} [{lang}].",
+        f"Your language has been set to {languages[lang]['name']} [{lang}].",
         buttons=get_back_button("lang"),
     )
 
@@ -270,6 +270,7 @@ async def settt(event):
 async def timezone_(event):
      from pytz import timezone
      await event.delete()
+
      pru = event.sender_id
      var = "TIMEZONE"
      name = "Timezone"
