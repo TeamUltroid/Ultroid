@@ -179,6 +179,9 @@ class Remote:
         return fetch_sync(
             f"{self.REMOTE_URL}/getlanguage/{langCode}", evaluate=evaluate
         )
+    
+    async def getLanguages(self):
+        return await fetch(f"{self.REMOTE_URL}/getlanguage", re_json=True)
 
     def save(self):
         with open(LOCK_PATH, "w") as file:
