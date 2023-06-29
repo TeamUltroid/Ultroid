@@ -37,6 +37,7 @@ async def mediainfo_func(event):
         if hasattr(r.media, "document"):
             dl = await event.client.fast_downloader(
                 r.document,
+                filename=r.file.name,
                 show_progress=True,
                 event=event,
                 message=f"{extra}`Loading More...`",
