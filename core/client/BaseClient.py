@@ -188,7 +188,8 @@ class UltroidClient(TelegramClient):
             try:
                 if isinstance(file.attributes[-1], DocumentAttributeFilename):
                     filename = file.attributes[-1].file_name
-            except IndexError:
+                assert filename != None
+            except (IndexError, AssertionError):
                 mimetype = file.mime_type
                 filename = (
                     mimetype.split("/")[0]
