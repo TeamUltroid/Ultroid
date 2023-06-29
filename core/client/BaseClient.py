@@ -168,7 +168,7 @@ class UltroidClient(TelegramClient):
     async def fast_downloader(self, file, **kwargs):
         """Download files in a faster way"""
         # Set to True and pass event to show progress bar.
-        filename = kwargs.get("filename", file.file.name)
+        filename = kwargs.get("filename", file.name)
         show_progress = kwargs.get("show_progress", False)
         if show_progress:
             event = kwargs["event"]
