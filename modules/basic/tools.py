@@ -88,8 +88,11 @@ async def _(event):
     else:
         msg = event
         reply_to_id = event.message.id
-    if match and hasattr(msg, match.split()[0]):
-        msg = getattr(msg, match.split()[0])
+    if match and hasattr(msg, match.split()[0].split(".")[0]):
+        for attr in match.split()[0].split("."):
+            msg = getattr(msg, attr, None)
+            if not msg:
+                break
         with contextlib.suppress(Exception):
             if hasattr(msg, "to_json"):
                 msg = msg.to_json(ensure_ascii=False, indent=1)
