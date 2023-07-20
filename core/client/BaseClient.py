@@ -199,7 +199,7 @@ class UltroidClient(TelegramClient):
                 )
         message = kwargs.get("message", f"Downloading {filename}...")
         dirname = os.path.dirname(filename)
-        if not os.path.exists(dirname):
+        if dirname and not os.path.exists(dirname):
             os.mkdir(dirname)
         raw_file = None
         while not raw_file:
