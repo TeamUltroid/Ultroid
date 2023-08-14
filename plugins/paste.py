@@ -1,18 +1,20 @@
 import os
-#import ssl
-
-#import certifi
 
 from . import LOGS, asst, fetch, ultroid_cmd
 
+# import ssl
+
+# import certifi
+
+
 
 async def get_paste(data: str, extension: str = "txt"):
-    #ssl_context = ssl.create_default_context(cafile=certifi.where())
+    # ssl_context = ssl.create_default_context(cafile=certifi.where())
     json = {"content": data, "extension": extension}
     key = await fetch(
         url="https://spaceb.in/api/v1/documents/",
         json=json,
-        #ssl=ssl_context,
+        # ssl=ssl_context,
         method="POST",
         re_json=True,
     )
