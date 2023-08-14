@@ -41,7 +41,7 @@ async def _(event):
         message = input_str
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        if previous_message.media:
+        if previous_message.document and "text" in previous_message.document.mime_type:
             downloaded_file_name = await event.client.download_media(
                 previous_message,
                 "./resources/downloads",
