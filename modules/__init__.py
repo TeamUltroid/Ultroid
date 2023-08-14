@@ -35,6 +35,8 @@ udB.on("LOAD_ALL", "delete", lambda: shutil.rmtree("modules/addons"))
 
 List = []
 Dict = {}
+# Credentials variable for saving login credentials(Like Gdrive,OneDrive,etc. login credentials) in local
+creds = {}
 
 # Chats, which needs to be ignore for some cases
 # Considerably, there can be many
