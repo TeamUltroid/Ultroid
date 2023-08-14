@@ -1,23 +1,54 @@
 import os
+import time
 
 from core.remote import rm
+from telethon.tl.types import Message
 
 from . import ultroid_cmd
 
 with rm.get("onedrive", helper=True, dispose=True) as mod:
-    onedrv = mod.OneDrive()
+    onedrv = mod.OneDrive
 
 
 @ultroid_cmd(pattern="1dul( (.*)|$)")
 async def onedrive_upload(event):
     """`{}1dul <path to file/reply to document>` - Upload file from local/telegram to OneDrive`"""
-    file = event.pattern_match.group(
-        2) if event.pattern_match.group(1) else None
+    file = event.pattern_match.group(1).strip() or await event.get_reply_message()
     if not file:
         return await event.eor("Give me a file to upload")
-    # check if file exists
-    if not os.path.exists(file):
-        return await event.eor("File not found")
+    mone = await event.eor(get_string("com_1"))
+    if isinstance(file, Message):
+        location = "resources/downloads"
+        if file.photo:
+            filename = await file.download_media(location)
+        else:
+            filename = file.file.name
+            if not filename:
+                filename = str(round(time.time()))
+            filename = f"{location}/{filename}"
+            try:
+                filename, downloaded_in = await event.client.fast_downloader(
+                    file=file.media.document,
+                    filename=filename,
+                    show_progress=True,
+                    event=mone,
+                    message=get_string("com_5"),
+                )
+                filename = filename.name
+            except:
+                return await eor(mone, str(e), time=10)
+        await mone.edit(
+            f"`Downloaded to ``{filename}`.`",
+        )
+    else:
+        filename = file.strip()
+        if not os.path.exists(filename):
+            return await eod(
+                mone,
+                "File Not found in local server. Give me a file path :((",
+                time=5,
+            )
+
     await event.eor("Uploading...")
     status = await onedrv.upload_file(file)
     if status.get("error"):
