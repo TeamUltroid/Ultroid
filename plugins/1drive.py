@@ -35,7 +35,7 @@ async def onedrive_upload(event):
                     message=get_string("com_5"),
                 )
                 filename = filename.name
-            except:
+            except BaseException:
                 return await eor(mone, str(e), time=10)
         await mone.edit(
             f"`Downloaded to ``{filename}`.`",
