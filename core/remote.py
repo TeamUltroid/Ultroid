@@ -15,6 +15,7 @@ Logger = getLogger("Remote")
 class Remote:
     REMOTE_URL = Var.REMOTE_URI or "https://plugins.xditya.me"
     MAX_HR = 1
+    DEF_CONFIG = {"plugins": {}, "helpers": {}, "manager": {}}
 
     def __init__(self) -> None:
         self._modules = {}
@@ -23,9 +24,13 @@ class Remote:
 
         if os.path.exists(LOCK_PATH):
             with open(LOCK_PATH, "r") as file:
-                self.RemoteConfig: dict = json.load(file)
+                try:
+                    self.RemoteConfig: dict = json.load(file)
+                except json.decoder.JSONDecodeError:
+                    Logger.error("Failed to decode ultroid lock file, creating new...")
+                    self.RemoteConfig = self.DEF_CONFIG
         else:
-            self.RemoteConfig = {"plugins": {}, "helpers": {}, "manager": {}}
+            self.RemoteConfig = self.DEF_CONFIG
 
     def _http_import(self, path: str, save_as=None, helper=False, manager=False):
         if not save_as:
@@ -126,8 +131,8 @@ class Remote:
             self._deps.append(dep)
         for prc in proc:
             prc.wait(timeout=10000)
-            if prc.stderr:
-                Logger.error(prc.stderr)
+            if err:= prc.stderr.read():
+                Logger.error(err)
 
     async def get_all_plugins(self, end):
         return await fetch(f"{self.REMOTE_URL}/{end}", re_json=True)
@@ -174,6 +179,9 @@ class Remote:
         return fetch_sync(
             f"{self.REMOTE_URL}/getlanguage/{langCode}", evaluate=evaluate
         )
+    
+    async def getLanguages(self):
+        return await fetch(f"{self.REMOTE_URL}/getlanguage", re_json=True)
 
     def save(self):
         with open(LOCK_PATH, "w") as file:

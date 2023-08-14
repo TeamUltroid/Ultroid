@@ -5,14 +5,14 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-import contextlib
+import contextlib, re
 from datetime import datetime
 
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.utils import get_display_name
 
-from core import LOGS, ultroid_bot, HNDLR
+from core import LOGS, ultroid_bot, HNDLR, rm
 from core.decorators import fullsudos, owner_and_sudos
 from core.version import version
 from database import udB
@@ -56,26 +56,10 @@ def get_start_message():
     return Owner_info_msg, _custom
 
 
-_settings = [
-    [
-        Button.inline("API Kᴇʏs", data="cbs_apiset"),
-        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
-    ],
-    [
-        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
-        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
-    ],
-    [
-        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
-        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
-    ],
-    [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
-]
-
 _start = [
     [
         Button.inline("Lᴀɴɢᴜᴀɢᴇ 🌐", data="lang"),
-        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+#        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
     ],
     [
         Button.inline("Sᴛᴀᴛs ✨", data="stat"),
@@ -149,10 +133,12 @@ async def ultroid_handler(event):
     else:
         name = get_display_name(event.sender)
         if args == "set":
+            """
             await event.reply(
                 "Choose from the below options -",
                 buttons=_settings,
             )
+            """
             return
         elif args == "_manager":
             with contextlib.suppress(ImportError):
@@ -225,11 +211,58 @@ Total Users in Bot - {total}
         )
 
 
+"""
+
+_settings = [
+    [
+        Button.inline("API Kᴇʏs", data="cbs_apiset"),
+        Button.inline("Pᴍ Bᴏᴛ", data="cbs_chatbot"),
+    ],
+    [
+        Button.inline("Aʟɪᴠᴇ", data="cbs_alvcstm"),
+        Button.inline("PᴍPᴇʀᴍɪᴛ", data="cbs_ppmset"),
+    ],
+    [
+        Button.inline("Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
+        Button.inline("VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
+    ],
+    [Button.inline("« Bᴀᴄᴋ", data="mainmenu")],
+]
+
+
 @callback("setter", owner=True)
 async def setting(event):
     await event.edit(
         "Choose from the below options -",
         buttons=_settings,
+    )
+"""
+
+@callback("lang", owner=True)
+async def setlang(event):
+    languages = await rm.getLanguages()
+    tultd = [
+        Button.inline(
+            f"{languages[ult]['name']} [{ult.lower()}]",
+            data=f"set_{ult}",
+        )
+        for ult in languages
+    ]
+    buttons = list(zip(tultd[::2], tultd[1::2]))
+    if len(tultd) % 2 == 1:
+        buttons.append((tultd[-1],))
+    buttons.append([Button.inline("« Back", data="mainmenu")])
+    await event.edit(get_string("ast_4"), buttons=buttons)
+
+
+@callback(re.compile(b"set_(.*)"), owner=True)
+async def settt(event):
+    lang = event.data_match.group(1).decode("UTF-8")
+    languages = await rm.getLanguages()
+    udB.del_key("language") if lang == "en" else udB.set_key("language", lang)
+    await event.edit(
+        f"Your language has been set to {languages[lang]['name']} [{lang}].",
+        buttons=get_back_button("lang"),
     )
 
 
@@ -237,6 +270,7 @@ async def setting(event):
 async def timezone_(event):
      from pytz import timezone
      await event.delete()
+
      pru = event.sender_id
      var = "TIMEZONE"
      name = "Timezone"

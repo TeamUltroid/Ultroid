@@ -28,7 +28,7 @@ BOTLOG_CHATID = BOTLOG = udB.get_config("LOG_CHANNEL")
 
 
 bot = borg = catub = friday = ultroid_bot
-catub.cat_cmd = ultroid_cmd
+catub.cat_cmd = ultroid_cmd # type: ignore
 
 black_list_chats = udB.get_key("BLACKLIST_CHATS")
 
@@ -49,9 +49,7 @@ def admin_cmd(pattern=None, func=None, **args):
 
 
 friday_on_cmd = admin_cmd
-command = ultroid_cmd
-register = ultroid_cmd
-
+register = command = ultroid_cmd
 
 def sudo_cmd(allow_sudo=True, pattern=None, func=None, **args):
     args["func"] = lambda e: not e.via_bot_id and e.sender_id in get_sudos() and func

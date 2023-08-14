@@ -6,9 +6,7 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 import sys
-import telethonpatch # pylint: disable=unused-import
 
- 
 import time
 from .config import Var
 from .setup import *

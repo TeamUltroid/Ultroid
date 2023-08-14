@@ -1,7 +1,13 @@
+# Ultroid - UserBot
+# Copyright (C) 2021-2022 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
 import os
 import sys
 import time
-
 from core import start_time
 from core.remote import rm
 from core.git import repo
@@ -58,11 +64,7 @@ async def logs_func(event):
             client = mod.get_client()
             with open(file_path, "r") as file:
                 title = "Ultroid Logs"
-                if pat := udB.get_key("_TG_LOG"):
-                    page = client.edit_page(pat, title, content=[file.read()])
-                else:
-                    page = client.create_page(title=title, content=[file.read()])
-                    udB.set_key("_TG_LOG", page["path"])
+                page = client.create_page(title=title, content=[file.read()])
         return await event.eor(f'[Ultroid Logs]({page["url"]})', link_preview=True)
     await event.eor(file=file_path)
 
@@ -72,7 +74,7 @@ async def restart_func(event):
     """Restart the bot."""
     event = await event.eor("Restarting...")
     self_ = "bot" if event.client.me.bot else "user"
-    udB.set_key("_RESTART", [event.chat.username or event.chat_id, event.id, self_])
+    udB.set_key("_RESTART", [event.chat_id, event.id, self_])
     if HOSTED_ON == "heroku":
         from core.heroku import restart
 

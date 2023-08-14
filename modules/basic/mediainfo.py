@@ -1,3 +1,17 @@
+# Ultroid - UserBot
+# Copyright (C) 2021-2022 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+"""
+✘ Commands Available -
+
+• `{i}mediainfo reply-media/file-path/url`
+    Get mediainfo of file
+"""
+
 import contextlib
 import os, json
 
@@ -8,7 +22,7 @@ from .. import LOGS, bash, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="mediainfo( (.*)|$)")
-async def mediainfo_cmd(event):
+async def mediainfo_func(event):
     r = await event.get_reply_message()
     match = event.pattern_match.group(1).strip()
     extra = ""
@@ -23,8 +37,9 @@ async def mediainfo_cmd(event):
         if hasattr(r.media, "document"):
             dl = await event.client.fast_downloader(
                 r.document,
+                filename=r.file.name,
                 show_progress=True,
-                event=e,
+                event=event,
                 message=f"{extra}`Loading More...`",
             )
 
@@ -67,7 +82,7 @@ async def mediainfo_cmd(event):
     except Exception:
         LOGS.exception(er)
         return
-    await e.edit(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
+    await event.eor(f"{extra}[{get_string('mdi_1')}]({urll})", link_preview=False)
     if not match:
         os.remove(naam)
     if thumb and thumb != naam:

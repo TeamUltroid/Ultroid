@@ -89,17 +89,9 @@ async def dl_cmd(event):
     k = time.time()
     if hasattr(ok.media, "document"):
         file = ok.media.document
-        filename = ok.file.name or query
-        if not filename:
-            mime_type = file.mime_type
-            if "audio" in mime_type:
-                filename = "audio_" + dt.now().isoformat("_", "seconds") + ".ogg"
-            elif "video" in mime_type:
-                filename = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
         try:
             result = await event.client.fast_downloader(
                 file,
-                filename=f"resources/downloads/{filename}",
                 show_progress=not silent,
                 event=xx,
             )
@@ -155,7 +147,7 @@ async def _upload_file(
 @ultroid_cmd(
     pattern="ul( (.*)|$)",
 )
-async def _(event):
+async def ul_func(event):
     msg = await event.eor(get_string("com_1"))
     query = event.pattern_match.group(1).strip()
     if not query:

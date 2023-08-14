@@ -13,7 +13,8 @@ from telethon import Button
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl import functions, types
 
-from core.decorators import get_sudos,owner_and_sudos
+from core.decorators import get_sudos, owner_and_sudos
+
 try:
     from core import _ult_cache
 except ImportError:
@@ -28,16 +29,15 @@ def ban_time(time_str):
     time_int = time_str[:-1]
     if not time_int.isdigit():
         raise Exception("Invalid time amount specified.")
-    to_return = 0
     if unit == "s":
-        to_return = int(time.time() + int(time_int))
+        return int(time.time() + int(time_int))
     elif unit == "m":
-        to_return = int(time.time() + int(time_int) * 60)
+        return int(time.time() + int(time_int) * 60)
     elif unit == "h":
-        to_return = int(time.time() + int(time_int) * 60 * 60)
+        return int(time.time() + int(time_int) * 60 * 60)
     elif unit == "d":
-        to_return = int(time.time() + int(time_int) * 24 * 60 * 60)
-    return to_return
+        return int(time.time() + int(time_int) * 24 * 60 * 60)
+    return 0
 
 
 # ------------------Admin Check--------------- #
@@ -124,4 +124,3 @@ async def admin_check(event, require=None, silent: bool = False):
             await event.eor(f"You are missing the right of `{require}`", time=8)
         return False
     return True
-

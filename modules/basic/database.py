@@ -31,10 +31,10 @@ from .. import eor, get_string, udB, ultroid_cmd, LOGS
 
 
 async def _get_cmd(x, varname):
-    val = udB.get(varname)
+    val = udB.get_key(varname)
     if val is not None:
-        return await x.edit(f"**Key** - `{varname}`\n**Value**: `{val}`")
-    await eor(x, "No such key!", time=5)
+        return await x.eor(f"**Key** - `{varname}`\n**Value**: `{val}`")
+    await x.eor( "No such key!", time=5)
 
 
 @ultroid_cmd(pattern="setdb( (.*)|$)", fullsudo=True)
