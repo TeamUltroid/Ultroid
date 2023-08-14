@@ -50,7 +50,7 @@ async def onedrive_upload(event):
             )
 
     await event.eor("Uploading...")
-    status = await onedrv.upload_file(file)
+    status = await onedrv().upload_file(file)
     if status.get("error"):
         return await event.eor(status.get("error"))
     await event.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
@@ -64,5 +64,5 @@ async def onedrive_download(event):
     if not link:
         return await event.eor("Give me a link to download")
     await event.eor("Downloading...")
-    filename = await onedrv.download_file(event, "resources/downloads", link)
+    filename = await onedrv().download_file(event, "resources/downloads", link)
     await event.eor(f"Downloaded to `resources/downloads/{filename}`")
