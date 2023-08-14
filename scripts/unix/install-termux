@@ -19,11 +19,14 @@ pkg update -y
 apt update
 apt upgrade -y
 
-python_not_installed="$(python -c 'exit()')"
+python_installed="$(python -c 'exit()')"
 
 # Install Python if n0t installed..
-if [ python_not_installed ]
+if [ python_installed ]
 then
+    echo "Python already Installed"
+    sleep 2s
+else
     printf "Installing Python..\nThis may take some long...\n"
     pkg install python3 -y
 fi
