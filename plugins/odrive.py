@@ -4,7 +4,7 @@ import time
 from core.remote import rm
 from telethon.tl.types import Message
 
-from . import ultroid_cmd
+from . import ultroid_cmd, get_string, eod
 
 with rm.get("onedrive", helper=True, dispose=True) as mod:
     onedrv = mod.OneDrive
@@ -36,7 +36,7 @@ async def onedrive_upload(event):
                 )
                 filename = filename.name
             except BaseException:
-                return await eor(mone, str(e), time=10)
+                return await event.eor(mone, str(e), time=10)
         await mone.edit(
             f"`Downloaded to ``{filename}`.`",
         )
@@ -59,10 +59,10 @@ async def onedrive_upload(event):
 @ultroid_cmd(pattern="1ddl( (.*)|$)")
 async def onedrive_download(event):
     """`{}1ddl <link>` - Download file from OneDrive using link.`"""
-    link = event.pattern_match.group(
-        2) if event.pattern_match.group(1) else None
+    link = event.pattern_match.group(1).strip()
     if not link:
         return await event.eor("Give me a link to download")
-    await event.eor("Downloading...")
+    filename = match.split(" | ")[1].strip() if " | " in match else None
+    eve = await event.eor(get_string("com_1"))
     filename = await onedrv().download_file(event, "resources/downloads", link)
     await event.eor(f"Downloaded to `resources/downloads/{filename}`")
