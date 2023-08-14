@@ -7,7 +7,6 @@ from . import LOGS, asst, fetch, ultroid_cmd
 # import certifi
 
 
-
 async def get_paste(data: str, extension: str = "txt"):
     # ssl_context = ssl.create_default_context(cafile=certifi.where())
     json = {"content": data, "extension": extension}
