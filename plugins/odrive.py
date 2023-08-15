@@ -62,6 +62,7 @@ async def onedrive_download(event):
     match = event.pattern_match.group(1).strip()
     if not match:
         return await event.eor("Give me a link to download")
+    link = match.split(" | ")[0].strip()
     filename = match.split(" | ")[1].strip() if " | " in match else None
     await event.eor(get_string("com_1"))
     filename = await onedrv().download_file(event, "resources/downloads", link)
