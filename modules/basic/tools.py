@@ -59,27 +59,26 @@ async def tr_func(event):
     manager=True,
 )
 async def id_func(event):
+    text = f"`Sender ID`: `{event.sender_id}`\n"
     if match := event.pattern_match.group(1).strip():
         try:
             ids = await event.client.parse_id(match)
         except Exception as er:
             return await event.eor(str(er))
-        return await event.eor(
-            f"**Chat ID:**  `{event.chat_id}`\n**User ID:**  `{ids}`"
-        )
-    ult = event
-    data = f"**Current Chat ID:**  `{event.chat_id}`"
-    if event.reply_to_msg_id:
-        event = await event.get_reply_message()
-        data += f"\n**From User ID:**  `{event.sender_id}`"
-    if event.media:
-        data += f"\n**Bot API File ID:**  `{event.file.id}`"
-    data += f"\n**Msg ID:**  `{event.id}`"
-    await ult.eor(data)
+        if str(ids).startswith("-"):
+            text += f"`Requested Chat ID`: "
+        else:
+            text += f"`Requested User ID`: "
+        text += f"`{ids}`\n"
+    if reply := (await event.get_reply_message()):
+        text += f"`Replied to message ID`: `{reply.id}`\n"
+        text += f"`Replied to User ID`: `{reply.sender_id}`\n"
+    text += f"`Current Chat ID`: `{event.chat_id}`"
+    await event.eor(text)
 
 
 @ultroid_cmd(pattern="json( (.*)|$)")
-async def _(event):
+async def json_func(event):
     reply_to_id = None
     match = event.pattern_match.group(1).strip()
     if event.reply_to_msg_id:
@@ -361,7 +360,7 @@ async def q_func(event):
     pattern="invite( (.*)|$)",
     groups_only=True,
 )
-async def _(ult):
+async def invite_func(ult):
     xx = await ult.eor(get_string("com_1"))
     to_add_users = ult.pattern_match.group(1).strip()
     add_chat_user = not ult.is_channel and ult.is_group
