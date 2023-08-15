@@ -49,11 +49,10 @@ async def onedrive_upload(event):
                 time=5,
             )
 
-    event = await event.eor("Uploading...")
-    status = await onedrv().upload_file(event, filename)
+    status = await onedrv().upload_file(mone, filename)
     if status.get("error"):
-        return await event.eor(status.get("error"))
-    await event.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
+        return await mone.eor(status.get("error"))
+    await mone.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
 
 
 @ultroid_cmd(pattern="1ddl( (.*)|$)")
@@ -64,6 +63,6 @@ async def onedrive_download(event):
         return await event.eor("Give me a link to download")
     link = match.split(" | ")[0].strip()
     filename = match.split(" | ")[1].strip() if " | " in match else None
-    await event.eor(get_string("com_1"))
+    event = await event.eor(get_string("com_1"))
     filename = await onedrv().download_file(event, "resources/downloads", link)
     await event.eor(f"Downloaded to `resources/downloads/{filename}`")
