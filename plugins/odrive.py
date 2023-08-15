@@ -49,8 +49,8 @@ async def onedrive_upload(event):
                 time=5,
             )
 
-    await event.eor("Uploading...")
-    status = await onedrv().upload_file(filename)
+    event = await event.eor("Uploading...")
+    status = await onedrv().upload_file(event, filename)
     if status.get("error"):
         return await event.eor(status.get("error"))
     await event.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
