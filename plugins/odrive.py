@@ -52,7 +52,7 @@ async def onedrive_upload(event):
     status = await onedrv().upload_file(mone, filename)
     if status.get("error"):
         return await mone.eor(status.get("error"))
-    await mone.eor(f"Uploaded to OneDrive: [{status.get('name')}]({status.get('shareUrl')})\nTemp Download url [1 hour]: [{status.get('name')}]({status.get('@content.downloadUrl')}).")
+    await mone.eor(f"Uploaded to OneDrive: <a href='{status.get('shareUrl')}'>{status.get('name')}</a>\nTemp Download url [1 hour]: <a href='{status.get('@content.downloadUrl')}'>{status.get('name')}</a>.", parse_mode="html")
 
 
 @ultroid_cmd(pattern="1ddl( (.*)|$)")
