@@ -11,7 +11,7 @@ from . import check_filename, get_string, inline_mention, ultroid_cmd
 
 
 @ultroid_cmd(pattern="logo( (.*)|$)")
-async def logo_gen(event):
+async def logo_func(event):
     xx = await event.eor(get_string("com_1"))
     name = event.pattern_match.group(1).strip()
     if not name:
@@ -91,7 +91,7 @@ class LogoHelper:
     def get_text_size(text, image, font):
         im = Image.new("RGB", (image.width, image.height))
         draw = ImageDraw.Draw(im)
-        return draw.textsize(text, font)
+        return draw.textlength(text, font)
 
     @staticmethod
     def find_font_size(text, font, image, target_width_ratio):
@@ -118,7 +118,7 @@ class LogoHelper:
         draw = ImageDraw.Draw(img)
         font_size = LogoHelper.find_font_size(text, funt, img, width_ratio)
         font = ImageFont.truetype(funt, font_size)
-        w, h = draw.textsize(text, font=font)
+        w, h = draw.textlength(text, font=font)
         draw.text(
             ((width - w) / 2, (height - h) / 2),
             text,
