@@ -13,9 +13,9 @@ import os
 import time
 
 from core.remote import rm
+from utilities.tools import TgConverter as con
 
 from . import bash, get_string, udB, ultroid_cmd
-from utilities.tools import TgConverter as con
 
 opn = []
 
