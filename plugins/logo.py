@@ -59,7 +59,7 @@ async def logo_func(event):
     if not font_:
         fpath_ = glob.glob("resources/fonts/*")
         if not bool(fpath_):
-            return await xx.eod("Add fonts in `resourses/fonts/` directory before using this command.")
+            return await xx.edit("Add fonts in `resourses/fonts/` directory before using this command.")
         font_ = random.choice(fpath_)
     if len(name) <= 8:
         strke = 10
