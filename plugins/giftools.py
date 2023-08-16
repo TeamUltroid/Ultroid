@@ -33,14 +33,11 @@ from . import HNDLR, LOGS, bash, get_string, mediainfo, ultroid_cmd
 
 
 @ultroid_cmd(pattern="(bw|invert)gif$")
-async def igif(e):
+async def bwinvertgif_func(e):
     match = e.pattern_match.group(1).strip()
     a = await e.get_reply_message()
-    if not (a and a.media):
+    if not (a and a.media) and "gif" not in mediainfo(a):
         return await e.eor("`Reply To gif only`", time=5)
-    wut = mediainfo(a.media)
-    if "gif" not in wut:
-        return await e.eor("`Reply To Gif Only`", time=5)
     xx = await e.eor(get_string("com_1"))
     z = await a.download_media()
     if match == "bw":
@@ -58,9 +55,9 @@ async def igif(e):
 
 
 @ultroid_cmd(pattern="rvgif$")
-async def reverse_gif(event):
+async def rvgif_func(event):
     a = await event.get_reply_message()
-    if not (a and a.media) and "video" not in mediainfo(a.media):
+    if not (a and a.media) and "video" not in mediainfo(a):
         return await event.eor("`Reply To Video only`", time=5)
     msg = await event.eor(get_string("com_1"))
     file = await a.download_media()
@@ -72,7 +69,7 @@ async def reverse_gif(event):
 
 
 @ultroid_cmd(pattern="gif( (.*)|$)")
-async def gifs(ult):
+async def gif_func(ult):
     get = ult.pattern_match.group(1).strip()
     xx = random.randint(0, 5)
     n = 0
@@ -98,13 +95,10 @@ async def gifs(ult):
 
 
 @ultroid_cmd(pattern="vtog$")
-async def vtogif(e):
+async def vtog_func(e):
     a = await e.get_reply_message()
-    if not (a and a.media):
+    if not (a and a.media) and "video" not in mediainfo(a):
         return await e.eor("`Reply To video only`", time=5)
-    wut = mediainfo(a.media)
-    if "video" not in wut:
-        return await e.eor("`Reply To Video Only`", time=5)
     xx = await e.eor(get_string("com_1"))
     dur = a.media.document.attributes[0].duration
     tt = time.time()
