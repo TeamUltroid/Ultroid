@@ -88,18 +88,10 @@ async def logo_func(event):
 
 class LogoHelper:
     @staticmethod
-    def get_text_size(text, image, font):
-        im = Image.new("RGB", (image.width, image.height))
-        draw = ImageDraw.Draw(im)
-        return draw.textlength(text, font)
-
-    @staticmethod
     def find_font_size(text, font, image, target_width_ratio):
         tested_font_size = 100
         tested_font = ImageFont.truetype(font, tested_font_size)
-        observed_width, observed_height = LogoHelper.get_text_size(
-            text, image, tested_font
-        )
+        observed_width, observed_height = tested_font.getsize(text)
         estimated_font_size = (
             tested_font_size / (observed_width /
                                 image.width) * target_width_ratio
@@ -118,7 +110,7 @@ class LogoHelper:
         draw = ImageDraw.Draw(img)
         font_size = LogoHelper.find_font_size(text, funt, img, width_ratio)
         font = ImageFont.truetype(funt, font_size)
-        w, h = draw.textlength(text, font=font)
+        w, h = font.getsize(text)
         draw.text(
             ((width - w) / 2, (height - h) / 2),
             text,
