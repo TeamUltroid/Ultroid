@@ -105,7 +105,7 @@ async def draw_meme_text(image_path, msg):
     current_h, pad = 10, 5
     if upper_text:
         for u_text in textwrap.wrap(upper_text, width=15):
-            u_width, u_height = draw.textlength(u_text, font=m_font)
+            u_width, u_height = m_font.getsize(u_text)
             draw.text(
                 xy=(((i_width - u_width) / 2) - 1,
                     int((current_h / 640) * i_width)),
@@ -143,7 +143,7 @@ async def draw_meme_text(image_path, msg):
             current_h += u_height + pad
     if lower_text:
         for l_text in textwrap.wrap(lower_text, width=15):
-            u_width, u_height = draw.textlength(l_text, font=m_font)
+            u_width, u_height = m_font.getsize(l_text)
             draw.text(
                 xy=(
                     ((i_width - u_width) / 2) - 1,
@@ -271,7 +271,7 @@ async def draw_meme(image_path, msg):
     current_h, pad = 10, 5
     if upper_text:
         for u_text in textwrap.wrap(upper_text, width=15):
-            u_width, u_height = draw.textlength(u_text, font=m_font)
+            u_width, u_height = m_font.getsize(u_text)
             draw.text(
                 xy=(((i_width - u_width) / 2) - 1,
                     int((current_h / 640) * i_width)),
@@ -309,7 +309,7 @@ async def draw_meme(image_path, msg):
             current_h += u_height + pad
     if lower_text:
         for l_text in textwrap.wrap(lower_text, width=15):
-            u_width, u_height = draw.textlength(l_text, font=m_font)
+            u_width, u_height = m_font.getsize(l_text)
             draw.text(
                 xy=(
                     ((i_width - u_width) / 2) - 1,
