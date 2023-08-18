@@ -88,7 +88,7 @@ class GDrive:
             self.creds["expires_in"] = time.time() + 3590
             udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
             return self.creds
-        resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "http://localhost", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+        resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "https://plugins.xditya.me/auth", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds = await resp.json()
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
