@@ -241,15 +241,15 @@ async def eval_func(event):
         # value = await aexec(cmd, event)
         # TODO: Eval can be cancelled
        # task = asyncio.create_task(aexec(cmd, event))
-        task = asyncio.current_task()
-        try:
-            task_id = int(list(Tasks.keys())[0])
-        except IndexError:
-            task_id = 0
-        task_id += 1
-        task_id = str(task_id)
-        Tasks[task_id] = task
-        task.add_done_callback(lambda _: Tasks.pop(task_id))
+     #   task = asyncio.current_task()
+    #    try:
+#            task_id = int(list(Tasks.keys())[0])
+   #     except IndexError:
+       #     task_id = 0
+        #task_id += 1
+ #       task_id = str(task_id)
+    #    Tasks[task_id] = task
+     #   task.add_done_callback(lambda _: Tasks.pop(task_id))
       #  await asyncio.wait([task])
     #    value = task.result()
         value = await aexec(cmd, event)
