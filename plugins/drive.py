@@ -1,7 +1,10 @@
-from . import ultroid_cmd
 from utilities.gdrive import GDrive
 from utilities.helper import humanbytes
+
+from . import ultroid_cmd
+
 drive = GDrive()
+
 
 @ultroid_cmd("gdul( (.*)|$)", fullsudo=True)
 async def drive_upload_func(event):
