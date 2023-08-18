@@ -37,7 +37,7 @@ Args:
     `code` - Code which you get after visiting the link provided by `{}gdauth`"""
     drive = GDrive()
     match = event.pattern_match.group(1)
-    if not (drive.client_id and drive.client_secret) or not drive.service_account:
+    if not drive.client_id or not drive.client_secret:
         return await event.eor("Fille GDrive credentials before authorisation.")
     if not match:
         return await event.eor(f"Visit [this]({get_oauth2_url()}) to get authorisation code.")
