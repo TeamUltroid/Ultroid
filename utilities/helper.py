@@ -308,7 +308,8 @@ def time_formatter(milliseconds, fixed_format=False):
     return tmp[:1] if tmp.endswith(":") else tmp
 
 
-def humanbytes(size):
+def humanbytes(size: int) -> str:
+    size = int(size)
     if not size:
         return "0B"
     unit = ""
@@ -323,9 +324,10 @@ def humanbytes(size):
     return size
 
 
-def numerize(number):
+def numerize(number: int) -> str:
+    number = int(number)
     if not number:
-        return
+        return ""
     unit = ""
     for unit in ["", "K", "M", "B", "T"]:
         if number < 1000:
