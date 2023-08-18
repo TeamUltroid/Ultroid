@@ -50,7 +50,7 @@ class GDrive:
     def get_oauth2_url(self):
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
             "client_id": self.client_id,
-            "redirect_uri": "http://plugins.xditya.me/auth",
+            "redirect_uri": "https://plugins.xditya.me/auth",
             "response_type": "code",
             "scope": self.scope,
             "access_type": "offline",
@@ -88,9 +88,6 @@ class GDrive:
             self.creds["expires_in"] = time.time() + 3590
             udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
             return self.creds
-        if code.startswith("http://localhost"):
-            # get all url arguments
-            code = parse_qs(code.split("?")[1]).get("code")[0]
         resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "http://localhost", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
         self.creds = await resp.json()
         self.creds["expires_in"] = time.time() + 3590
