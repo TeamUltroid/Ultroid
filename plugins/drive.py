@@ -27,7 +27,7 @@ async def drive_usage_func(event):
         f"`「 Limit: {humanbytes(size['limit'])} 」\n"
         + f"「 Used: {humanbytes(size['usage'])} 」\n"
         + f"「 Usage in drive: {humanbytes(size['usageInDrive'])} 」\n"
-        + f"「 Usage in trash: {humanbytes(size['usageInTrash'])} 」`"
+        + f"「 Usage in trash: {humanbytes(size['usageInDriveTrash'])} 」`"
     )
 
 
