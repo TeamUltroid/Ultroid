@@ -137,7 +137,7 @@ class GDrive:
     async def get_size_status(self) -> dict:
         await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
-            self.base_url + "about",
+            self.base_url + "/about",
             headers={
                 "Authorization": "Bearer " + self.creds.get("access_token"),
                 "Content-Type": "application/json",
