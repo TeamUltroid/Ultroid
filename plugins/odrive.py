@@ -9,6 +9,22 @@ from . import eod, get_string, ultroid_cmd
 with rm.get("onedrive", helper=True, dispose=True) as mod:
     onedrv = mod.OneDrive
 
+@ultroid_cmd(pattern="1dauth( (.*)|$)")
+async def onedrive_auth(event):
+    """`{}1dauth <code>` - To authorise with OneDrive graphql api.
+Args:
+    `code` - Code which you get after visiting the oauth2 link provided by `{}1dauth`"""
+    match = event.pattern_match.group(1)
+    odrive = onedrv()
+    if not (odrive.client_id and odrive.client_secret):
+        return await event.eor("Please set OneDrive credentials before requesting authorisation.")
+    if not match:
+        return await event.eor(f"Please visit [this]({get_oauth2_url()}) to login and get authorisation code from onedrive.")
+    creds = await odrive.get_access_token(code=match)
+    msg = "Successfully authorised with onedrive API."
+    if "error" in creds:
+        msg = f"`{creds}`"
+    await event.eor(msg)
 
 @ultroid_cmd(pattern="1dul( (.*)|$)")
 async def onedrive_upload(event):
