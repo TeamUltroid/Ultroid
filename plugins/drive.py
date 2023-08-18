@@ -35,7 +35,7 @@ async def drive_auth_func(event):
     """`{}gdauth <code>` - To authorise with Google Drive API.
 Args:
     `code` - Code which you get after visiting the link provided by `{}gdauth`"""
-    match = event.pattern_match.group(1)
+    match = event.pattern_match.group(2)
     if not match:
         if not (drive.client_id or drive.client_secret):
             return await event.eor("Fill GDrive credentials before authorisation.")
