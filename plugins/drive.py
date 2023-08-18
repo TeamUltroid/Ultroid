@@ -1,5 +1,7 @@
 from . import ultroid_cmd
-
+from utilities.gdrive import GDrive
+from utilities.helper import humanbytes
+drive = GDrive()
 
 @ultroid_cmd("gdul( (.*)|$)", fullsudo=True)
 async def drive_upload_func(event):
@@ -13,10 +15,16 @@ async def drive_download_func(event):
     ...
 
 
-@ultroid_cmd("gdusage$")
+@ultroid_cmd("gdusg$")
 async def drive_usage_func(event):
-    """`{}gdusage` - Show total limit and usage of Google Drive storage."""
-    ...
+    """`{}gdusg` - Show total limit and usage of Google Drive storage."""
+    size = await drive.get_size_status()
+    await event.eor(
+        f"`「 Limit: {humanbytes(size['limit'])} 」\n"
+        + f"「 Used: {humanbytes(size['usage'])} 」\n"
+        + f"「 Usage in drive: {humanbytes(size['usageInDrive'])} 」\n"
+        + f"「 Usage in trash: {humanbytes(size['usageInTrash'])} 」`"
+    )
 
 
 @ultroid_cmd("gdauth( (.*)|$)", fullsudo=True)
@@ -24,7 +32,17 @@ async def drive_auth_func(event):
     """`{}gdauth <code>` - To authorise with Google Drive API.
 Args:
     `code` - Code which you get after visiting the link provided by `{}gdauth`"""
-    ...
+    drive = GDrive()
+    match = event.pattern_match.group(1)
+    if not (drive.client_id and drive.client_secret) or not drive.service_account):
+        return await event.eor("Fille GDrive credentials before authorisation.")
+    if not match:
+        return await event.eor(f"Visit [this]({get_oauth2_url()}) to get authorisation code.")
+    creds = await drive.get_access_token(code=match)
+    msg = "Authorisation successful."
+    if "error" in creds:
+        msg = f"`{creds}`"
+    await event.eor(msg)
 
 
 @ultroid_cmd("gdls( (.*)|$)", fullsudo=True)
@@ -53,9 +71,9 @@ Args:
     ...
 
 
-@ultroid_cmd("gdsearch( (.*)|$)", fullsudo=True)
+@ultroid_cmd("gdfd( (.*)|$)", fullsudo=True)
 async def drive_search_func(event):
-    """`{}gdmv <filename/file_id>` - Search for specific file in Google Drive.
+    """`{}gdfd <filename/file_id>` - Search for specific file in Google Drive.
 Args:
     `filename` - Name of file (case-sensitive).
     `file_id` - File ID or File Link which you want to search."""
