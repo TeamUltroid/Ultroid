@@ -115,8 +115,6 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
                     get_string("py_d4").format(HNDLR),
                     time=10,
                 )
-            if ult and ult.text and ult.media:
-                return
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
