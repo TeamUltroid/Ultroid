@@ -50,7 +50,7 @@ class GDrive:
     def get_oauth2_url(self):
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
             "client_id": self.client_id,
-            "redirect_uri": "http://localhost",
+            "redirect_uri": "http://plugins.xditya.me/auth",
             "response_type": "code",
             "scope": self.scope,
             "access_type": "offline",
