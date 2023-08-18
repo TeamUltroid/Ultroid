@@ -88,7 +88,7 @@ class OneDrive:
             "client_secret": self.client_secret,
             "code": code,
             "grant_type": "authorization_code",
-            "redirect_uri": "http://localhost",
+            "redirect_uri": "https://plugins.xditya.me/auth",
         }
         async with self.session.post(
             "https://login.microsoftonline.com/common/oauth2/v2.0/token",
@@ -107,7 +107,7 @@ class OneDrive:
             "client_secret": self.client_secret,
             "refresh_token": self.creds.get("refresh_token"),
             "grant_type": "refresh_token",
-            "redirect_uri": "http://localhost",
+            "redirect_uri": "https://plugins.xditya.me/auth",
         }
         async with self.session.post(
             "https://login.microsoftonline.com/common/oauth2/v2.0/token",
