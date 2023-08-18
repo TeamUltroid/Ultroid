@@ -22,6 +22,7 @@ async def drive_download_func(event):
 async def drive_usage_func(event):
     """`{}gdusg` - Show total limit and usage of Google Drive storage."""
     size = await drive.get_size_status()
+    size = size["storageQuota"]
     await event.eor(
         f"`「 Limit: {humanbytes(size['limit'])} 」\n"
         + f"「 Used: {humanbytes(size['usage'])} 」\n"
