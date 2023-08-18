@@ -9,6 +9,7 @@ from . import eod, get_string, ultroid_cmd
 with rm.get("onedrive", helper=True, dispose=True) as mod:
     onedrv = mod.OneDrive
 
+
 @ultroid_cmd(pattern="1dauth( (.*)|$)")
 async def onedrive_auth(event):
     """`{}1dauth <code>` - To authorise with OneDrive graphql api.
@@ -25,6 +26,7 @@ Args:
     if "error" in creds:
         msg = f"`{creds}`"
     await event.eor(msg)
+
 
 @ultroid_cmd(pattern="1dul( (.*)|$)")
 async def onedrive_upload(event):
