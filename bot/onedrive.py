@@ -74,7 +74,7 @@ class OneDrive:
             "client_id": self.client_id,
             "scope": "offline_access Files.ReadWrite.All",
             "response_type": "code",
-            "redirect_uri": "http://localhost",
+            "redirect_uri": "https://plugins.xditya.me/auth",
         }
         return f"https://login.microsoftonline.com/common/oauth2/v2.0/authorize?{urlencode(params)}"
 
