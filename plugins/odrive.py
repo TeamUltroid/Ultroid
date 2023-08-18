@@ -20,7 +20,7 @@ Args:
     if not (odrive.client_id and odrive.client_secret):
         return await event.eor("Please set OneDrive credentials before requesting authorisation.")
     if not match:
-        return await event.eor(f"Please visit [this]({get_oauth2_url()}) to login and get authorisation code from onedrive.")
+        return await event.eor(f"Please visit [this]({odrive.get_oauth2_url()}) to login and get authorisation code from onedrive.")
     creds = await odrive.get_access_token(code=match)
     msg = "Successfully authorised with onedrive API."
     if "error" in creds:
