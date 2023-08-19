@@ -32,6 +32,8 @@ Args:
 async def onedrive_usage(event):
     """`{}1dusage` - Show total limit and usage of OneDrive."""
     odrive = onedrv()
+    if not odrive.creds.get("access_token"):
+        return await event.eor("Please authorise with OneDrive before using.")
     usage = await odrive.get_usage()
     size = usage.get("quota")
     await event.eor(
@@ -94,7 +96,7 @@ async def onedrive_upload(event):
 async def onedrive_download(event):
     """`{}1ddl <link>` - Download file from OneDrive using link.`"""
     if not odrive.creds.get("access_token"):
-        return await event.eor("Please authorise with OneDrive before uploading.")
+        return await event.eor("Please authorise with OneDrive before downloading.")
     match = event.pattern_match.group(1).strip()
     if not match:
         return await event.eor("Give me a link to download")
