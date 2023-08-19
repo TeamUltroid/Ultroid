@@ -27,7 +27,7 @@ async def drive_upload_func(event):
     if not os.path.exists(file):
         return await xx.edit(f"`{file}` not found in local storage. Check your path again.")
     res = await drive.upload_file(xx, file)
-    await xx.edit(f"`{res['name']}` uploaded to GDrive successfully: res['webContentLink']", link_preview=False)
+    await xx.edit(f"`{res['name']}` uploaded to GDrive successfully: {res['webContentLink']}", link_preview=False)
 
 
 @ultroid_cmd("gddl( (.*)|$)", fullsudo=True)
