@@ -8,8 +8,23 @@ drive = GDrive()
 
 @ultroid_cmd("gdul( (.*)|$)", fullsudo=True)
 async def drive_upload_func(event):
-    """`{}gdul <path to file/reply to document>` - Upload file from local/telegram to Google Drive."""
-    ...
+    """`{}gdul <path to file/reply to file>` - Upload file from local/telegram to Google Drive."""
+    match = event.pattern_match.group(2)
+    reply = await event.get_reply_message()
+    xx = await event.eor("`Processing...`")
+    if reply:
+        if reply.photo:
+            file = await event.client.download_media("resources/downloads/")
+        else:
+            file, _ = await event.client.fast_downloader(reply.document, event=xx, show_progress=True)
+    elif match:
+        file = match
+    else:
+        return await xx.edit("`Give path to file or reply to a file.`")
+    if not os.path.exists(file):
+        return await xx.edit(f"`{file}` not found in local storage. Check your path again.")
+    res = await drive.upload_file(xx, file)
+    await xx.edit(f"`{res['name']}` uploaded to GDrive successfully: res['webContentLink']", link_preview=False)
 
 
 @ultroid_cmd("gddl( (.*)|$)", fullsudo=True)
