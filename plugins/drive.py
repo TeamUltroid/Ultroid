@@ -19,6 +19,7 @@ async def drive_upload_func(event):
             file = await event.client.download_media("resources/downloads/")
         else:
             file, _ = await event.client.fast_downloader(reply.document, event=xx, show_progress=True)
+            file = file.name
     elif match:
         file = match
     else:
