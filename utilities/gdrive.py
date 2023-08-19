@@ -44,7 +44,7 @@ class GDrive:
         self.client_secret = udB.get_key("GDRIVE_CLIENT_SECRET")
         self.folder_id = udB.get_key("GDRIVE_FOLDER_ID") or "root"
         self.scope = "https://www.googleapis.com/auth/drive"
-        self.creds = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
+        self.creds = json.loads(udB.get_key("GDRIVE_AUTH_TOKEN")) or {}
         self.service_account = udB.get_key("GDRIVE_SERVICE_KEY")
 
     def get_oauth2_url(self):
