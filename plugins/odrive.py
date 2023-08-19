@@ -28,6 +28,21 @@ Args:
     await event.eor(msg)
 
 
+@ultroid_cmd("1dusage$")
+async def onedrive_usage(event):
+    """`{}1dusage` - Show total limit and usage of OneDrive."""
+    odrive = onedrv()
+    usage = await odrive.get_usage()
+    size = usage.get("quota")
+    await event.eor(
+        f"`「 Limit: {humanbytes(size['total'])} 」\n"
+        + f"「 Used: {humanbytes(size['used'])} 」\n"
+        + f"「 Remaining: {humanbytes(size['remaining'])} 」\n"
+        + f"「 Usage in drive: {humanbytes(size['used'] - size['deleted'])} 」\n"
+        + f"「 Usage in recycle bin: {humanbytes(size['deleted'])} 」`"
+    )
+
+
 @ultroid_cmd(pattern="1dul( (.*)|$)")
 async def onedrive_upload(event):
     """`{}1dul <path to file/reply to document>` - Upload file from local/telegram to OneDrive`"""
