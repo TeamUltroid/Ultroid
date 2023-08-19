@@ -138,6 +138,7 @@ class OneDrive:
                 if item["name"] == folder_name:
                     return item["id"]
             return None
+
     async def get_usage(self):
         url = f"{self.base_url}/me/drives"
         async with self.session.get(
@@ -146,7 +147,6 @@ class OneDrive:
             data = await resp.json()
             await resp.release()
             return data.get("value")[0]
-            
 
     async def getshareablelink(self, file_id: str):
         url = f"{self.base_url}/me/drive/items/{file_id}/createLink"
