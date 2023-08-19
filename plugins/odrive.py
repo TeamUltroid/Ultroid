@@ -50,6 +50,7 @@ async def onedrive_usage(event):
 async def onedrive_upload(event):
     """`{}1dul <path to file/reply to document>` - Upload file from local/telegram to OneDrive`"""
     file = event.pattern_match.group(1).strip() or await event.get_reply_message()
+    odrive = onedrv()
     if not odrive.creds.get("access_token"):
         return await event.eor("Please authorise with OneDrive before uploading.")
     if not file:
@@ -87,7 +88,7 @@ async def onedrive_upload(event):
                 time=5,
             )
 
-    status = await onedrv().upload_file(mone, filename)
+    status = await odrive.upload_file(mone, filename)
     if status.get("error"):
         return await mone.eor(status.get("error"))
     await mone.eor(f"Uploaded to OneDrive: <a href='{status.get('shareUrl')}'>{status.get('name')}</a>\nTemp Download url [1 hour]: <a href='{status.get('@content.downloadUrl')}'>{status.get('name')}</a>.", parse_mode="html")
@@ -96,6 +97,7 @@ async def onedrive_upload(event):
 @ultroid_cmd(pattern="1ddl( (.*)|$)")
 async def onedrive_download(event):
     """`{}1ddl <link>` - Download file from OneDrive using link.`"""
+    odrive = onedrv()
     if not odrive.creds.get("access_token"):
         return await event.eor("Please authorise with OneDrive before downloading.")
     match = event.pattern_match.group(1).strip()
@@ -104,5 +106,5 @@ async def onedrive_download(event):
     link = match.split(" | ")[0].strip()
     filename = match.split(" | ")[1].strip() if " | " in match else None
     event = await event.eor(get_string("com_1"))
-    filename = await onedrv().download_file(event, "resources/downloads", link)
+    filename = await odrive.download_file(event, "resources/downloads", link)
     await event.eor(f"Downloaded to `resources/downloads/{filename}`")
