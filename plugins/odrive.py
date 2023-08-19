@@ -32,6 +32,8 @@ Args:
 async def onedrive_upload(event):
     """`{}1dul <path to file/reply to document>` - Upload file from local/telegram to OneDrive`"""
     file = event.pattern_match.group(1).strip() or await event.get_reply_message()
+    if not odrive.creds.get("access_token"):
+        return await event.eor("Please authorise with OneDrive before uploading.")
     if not file:
         return await event.eor("Give me a file to upload")
     mone = await event.eor(get_string("com_1"))
@@ -76,6 +78,8 @@ async def onedrive_upload(event):
 @ultroid_cmd(pattern="1ddl( (.*)|$)")
 async def onedrive_download(event):
     """`{}1ddl <link>` - Download file from OneDrive using link.`"""
+    if not odrive.creds.get("access_token"):
+        return await event.eor("Please authorise with OneDrive before uploading.")
     match = event.pattern_match.group(1).strip()
     if not match:
         return await event.eor("Give me a link to download")
