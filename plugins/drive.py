@@ -12,6 +12,8 @@ drive = GDrive()
 async def drive_upload_func(event):
     """`{}gdul <path to file/reply to file>` - Upload file from local/telegram to Google Drive."""
     match = event.pattern_match.group(2)
+    if not drive.creds.get("access_token"):
+        return await event.eor("Please authorise with Gdrive before uploading.")
     reply = await event.get_reply_message()
     xx = await event.eor("`Processing...`")
     if reply:
@@ -39,6 +41,8 @@ async def drive_download_func(event):
 @ultroid_cmd("gdusg$")
 async def drive_usage_func(event):
     """`{}gdusg` - Show total limit and usage of Google Drive storage."""
+    if not drive.creds.get("access_token"):
+        return await event.eor("Please authorise with Gdrive before using gdrive.")
     size = await drive.get_size_status()
     size = size["storageQuota"]
     await event.eor(
