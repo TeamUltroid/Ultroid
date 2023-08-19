@@ -46,8 +46,9 @@ async def drive_usage_func(event):
     size = await drive.get_size_status()
     size = size["storageQuota"]
     await event.eor(
-        f"`「 Limit: {humanbytes(size['limit'])} 」\n"
-        + f"「 Used: {humanbytes(size['usage'])} 」\n"
+        f"`GDrive Usage\n"
+        + f"「 Limit: {humanbytes(size['limit'])} 」\n"
+        + f"「 Usage: {humanbytes(size['usage'])} 」\n"
         + f"「 Usage in drive: {humanbytes(size['usageInDrive'])} 」\n"
         + f"「 Usage in trash: {humanbytes(size['usageInDriveTrash'])} 」`"
     )
@@ -110,4 +111,8 @@ async def drive_delete_func(event):
     """`{}gddel <file_id>` - Delete file from Google Drive.
 Args:
     `file_id` - File ID or File Link which you want to move."""
-    ...
+    match = event.pattern_match.group(2)
+    if not match:
+        return await event.eor("Give FileId which you want to delete from gdrive.")
+    res = await drive.delete(match)
+    await event.eor(f"`{res}`")
