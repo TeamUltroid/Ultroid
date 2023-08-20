@@ -87,7 +87,7 @@ def get_doc_from_module(name, type=""):
     if mod := _get_module(name, type):
         if not mod.__doc__:
             return get_from_funcs(mod, name)
-        msg = f"Commands available in `{name}`-\n"
+        msg = f"Commands available in `{name}`-\n\n"
         msg += mod.__doc__.format(i=HNDLR)
         msg += "\n ©️ @TeamUltroid"
         return msg
@@ -105,9 +105,9 @@ def get_from_funcs(mod, name):
     )
     if not funcs:
         return False
-    msg = f"Command available in `{name}`-\n"
+    msg = f"Command available in `{name}` -"
     for cmd in funcs:
-        msg += f"• {cmd[1].__doc__.format(*list(HNDLR*len(funcs)))}\n"
+        msg += f"\n\n• {cmd[1].__doc__.format(*list(HNDLR*len(funcs)))}"
     msg += "\n ©️ @TeamUltroid"
     return msg
 
