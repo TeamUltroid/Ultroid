@@ -55,7 +55,6 @@ class GDrive:
     def _create_folder_link(folder_id: str) -> str:
         return f"https://drive.google.com/folderview?id={folder_id}"
 
-    @property
     def get_oauth2_url(self) -> str:
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
             "client_id": self.client_id,
@@ -106,7 +105,6 @@ class GDrive:
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         return self.creds
 
-    @property
     async def _refresh_access_token(self) -> None:
         if self.service_account:
             header = {
@@ -147,7 +145,6 @@ class GDrive:
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
-    @property
     async def get_size_status(self) -> dict:
         await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
