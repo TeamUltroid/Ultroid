@@ -171,15 +171,11 @@ class GDrive:
             },
         )).json()
 
-    async def list_files(self, title: str = None) -> list:
+    async def list_files(self) -> list:
         await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
-        params = {"includeItemsFromAllDrives": "true", "fields": "nextPageToken, items(id, title, mimeType, webContentLink)",}
-        if title:
-            params["q"] = f"title contains '{title}'"
-            if self.folder_id:
-                params["q"] = f"'{self.folder_id}' in parents and (title contains '{title}')"
         files = []
         page_token = None
+        params = {"supportAllDrives": "true"}
         while True:
             resp = await (await self._session.get(
                 self.base_url + "/files",
@@ -196,10 +192,10 @@ class GDrive:
                     file["url"] = self._create_download_link(file["id"])
                 files.append(file)
             page_token = resp.get("nextPageToken", None)
-            if page_token:
-                params["nextPageToken"] = page_token
             if page_token is None:
                 break
+            else:
+                params["pageToken"] = page_token
         return files
 
     async def delete(self, fileId: str) -> dict:
