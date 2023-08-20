@@ -122,8 +122,7 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
                     udB.get_config("LOG_CHANNEL"),
                     f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
                 )
-                await ultroid_bot.disconnect()
-                await asyncio.sleep(fwerr.seconds + 10)
+                time.sleep(fwerr.seconds + 10)
                 await ultroid_bot.connect()
                 await asst.send_message(
                     udB.get_config("LOG_CHANNEL"),
