@@ -107,7 +107,7 @@ def get_from_funcs(mod, name):
         return False
     msg = f"Command available in `{name}`-\n"
     for cmd in funcs:
-        msg += f"\n• `{HNDLR}{cmd[0][:-5]}`\n  - {cmd[1].__doc__}\n"
+        msg += f"\n• {cmd[1].__doc__.format(HNDLR)}\n"
     msg += "\n ©️ @TeamUltroid"
     return msg
 
