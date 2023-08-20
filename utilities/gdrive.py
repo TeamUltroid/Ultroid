@@ -200,7 +200,7 @@ class GDrive:
             params["nextPageToken"] = resp.get("nextPageToken")
             if params["nextPageToken"]:
                 break
-        retutn files
+        return files
 
     async def delete(self, fileId: str) -> dict:
         await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
