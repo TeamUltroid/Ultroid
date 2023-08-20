@@ -49,11 +49,11 @@ class GDrive:
 
     @staticmethod
     def _create_download_link(file_id: str) -> str:
-        return f"https://drive.google.com/uc?id={fileId}&export=download"
+        return f"https://drive.google.com/uc?id={file_id}&export=download"
 
     @staticmethod
     def _create_folder_link(folder_id: str) -> str:
-        return f"https://drive.google.com/folderview?id={folderId"
+        return f"https://drive.google.com/folderview?id={folder_id}"
 
     @property
     def get_oauth2_url(self) -> str:
