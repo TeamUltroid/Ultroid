@@ -173,12 +173,13 @@ class GDrive:
 
     async def list_files(self, title: str = None) -> list:
         await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
-        params = {"includeItemsFromAllDrives": "true", "fields": "nextPageToken, items(id, title, mimeType, webContentLink)", "nextPageToken": None}
+        params = {"includeItemsFromAllDrives": "true", "fields": "nextPageToken, items(id, title, mimeType, webContentLink)",}
         if title:
             params["q"] = f"title contains '{title}'"
             if self.folder_id:
                 params["q"] = f"'{self.folder_id}' in parents and (title contains '{title}')"
         files = []
+        page_token = None
         while True:
             resp = await (await self._session.get(
                 self.base_url + "/files",
@@ -194,8 +195,10 @@ class GDrive:
                 else:
                     file["url"] = self._create_download_link(file["id"])
                 files.append(file)
-            params["nextPageToken"] = resp.get("nextPageToken")
-            if params["nextPageToken"]:
+            page_token = resp.get("nextPageToken", None)
+            if page_token:
+                params["nextPageToken"] = page_token
+            if page_token is None:
                 break
         return files
 
