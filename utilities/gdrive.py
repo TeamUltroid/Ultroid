@@ -10,7 +10,7 @@ import json
 import logging
 import os
 import time
-# from io import FileIO
+
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
 
@@ -28,8 +28,6 @@ try:
 except BaseException:
     pass
 
-# for log in [LOGGER, logger, _logger]:
-#     log.setLevel(WARNING)
 
 log = logging.getLogger("GDrive")
 
@@ -39,24 +37,35 @@ log = logging.getLogger("GDrive")
 class GDrive:
     def __init__(self):
         self._session = ClientSession()
-        self.base_url = "https://www.googleapis.com/drive/v3"
-        self.client_id = udB.get_key("GDRIVE_CLIENT_ID")
-        self.client_secret = udB.get_key("GDRIVE_CLIENT_SECRET")
-        self.folder_id = udB.get_key("GDRIVE_FOLDER_ID") or "root"
-        self.scope = "https://www.googleapis.com/auth/drive"
-        self.creds = json.loads(udB.get_key("GDRIVE_AUTH_TOKEN")) or {}
-        self.service_account = udB.get_key("GDRIVE_SERVICE_KEY")
+        self.base_url: str = "https://www.googleapis.com/drive/v3"
+        self.client_id: str = udB.get_key("GDRIVE_CLIENT_ID")
+        self.client_secret: str = udB.get_key("GDRIVE_CLIENT_SECRET")
+        self.folder_id: str = udB.get_key("GDRIVE_FOLDER_ID") or "root"
+        self.redirect_uri: str = udB.get_key("GDRIVE_REDIRECT_URI") or "http://localhost"
+        self.scope: str = "https://www.googleapis.com/auth/drive"
+        self.creds: dict = udB.get_key("GDRIVE_AUTH_TOKEN") or {}
+        self.service_account: dict = udB.get_key("GDRIVE_SERVICE_KEY")
+        self.folder_mime: str = "application/vnd.google-apps.folder"
 
-    def get_oauth2_url(self):
+    @staticmethod
+    def _create_download_link(file_id: str) -> str:
+        return f"https://drive.google.com/uc?id={fileId}&export=download"
+
+    @staticmethod
+    def _create_folder_link(folder_id: str) -> str:
+        return f"https://drive.google.com/folderview?id={folderId"
+
+    @property
+    def get_oauth2_url(self) -> str:
         return "https://accounts.google.com/o/oauth2/v2/auth?" + urlencode({
             "client_id": self.client_id,
-            "redirect_uri": "https://plugins.xditya.me/auth",
+            "redirect_uri": self.redirect_uri,
             "response_type": "code",
             "scope": self.scope,
             "access_type": "offline",
         })
 
-    async def get_access_token(self, code=None) -> dict:
+    async def get_access_token(self, code: str = None) -> dict:
         if self.service_account:
             header = {
                 "alg": "RS256",
@@ -88,13 +97,17 @@ class GDrive:
             self.creds["expires_in"] = time.time() + 3590
             udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
             return self.creds
-        resp = await self._session.post("https://oauth2.googleapis.com/token", data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": "https://plugins.xditya.me/auth", "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+        resp = await self._session.post(
+            "https://oauth2.googleapis.com/token",
+            data={"client_id": self.client_id, "client_secret": self.client_secret, "redirect_uri": self.redirect_uri, "grant_type": "authorization_code", "code": code}, headers={"Content-Type": "application/x-www-form-urlencoded"}
+        )
         self.creds = await resp.json()
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
         return self.creds
 
-    async def refresh_access_token(self) -> None:
+    @property
+    async def _refresh_access_token(self) -> None:
         if self.service_account:
             header = {
                 "alg": "RS256",
@@ -134,8 +147,9 @@ class GDrive:
         self.creds["expires_in"] = time.time() + 3590
         udB.set_key("GDRIVE_AUTH_TOKEN", self.creds)
 
+    @property
     async def get_size_status(self) -> dict:
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.get(
             self.base_url + "/about",
             headers={
@@ -147,7 +161,7 @@ class GDrive:
 
     async def set_permissions(self, fileid: str, role: str = "reader", type: str = "anyone"):
         # set permissions to anyone with link can view
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         return await (await self._session.post(
             self.base_url + f"/files/{fileid}/permissions",
             headers={
@@ -160,18 +174,36 @@ class GDrive:
             },
         )).json()
 
-    async def list_files(self) -> dict:
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
-        return await (await self._session.get(
-            self.base_url + "/files",
-            headers={
-                "Authorization": "Bearer " + self.creds.get("access_token"),
-                "Content-Type": "application/json",
-            },
-        )).json()
+    async def list_files(self, title: str = None) -> list:
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        params = {"includeItemsFromAllDrives": "true", "fields": "nextPageToken, items(id, title, mimeType, webContentLink)", "nextPageToken": None}
+        if title:
+            params["q"] = f"title contains '{title}'"
+            if self.folder_id:
+                params["q"] = f"'{self.folder_id}' in parents and (title contains '{title}')"
+        files = []
+        while True:
+            resp = await (await self._session.get(
+                self.base_url + "/files",
+                headers={
+                   "Authorization": "Bearer " + self.creds.get("access_token"),
+                   "Content-Type": "application/json",
+                },
+                params=params,
+            )).json()
+            for file in resp.get("files", []):
+                if file["mimeType"] == self.folder_mime:
+                    file["url"] = self._create_folder_link(file["id"])
+                else:
+                    file["url"] = self._create_download_link(file["id"])
+                files.append(file)
+            params["nextPageToken"] = resp.get("nextPageToken")
+            if params["nextPageToken"]:
+                break
+        retutn files
 
     async def delete(self, fileId: str) -> dict:
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         r = await self._session.delete(
             self.base_url + f"/files/{fileId}",
             headers={
@@ -185,7 +217,7 @@ class GDrive:
             return {"status": "success"}
 
     async def copy_file(self, fileId: str, filename: str, folder_id: str, move: bool = False):
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         headers = {
             "Authorization": "Bearer " + self.creds.get("access_token"),
             "Content-Type": "application/json",
@@ -219,7 +251,7 @@ class GDrive:
         return r
 
     async def upload_file(self, event, path: str, filename: str = None, folder_id: str = None):
-        await self.refresh_access_token() if time.time() > self.creds.get("expires_in") else None
+        await self._refresh_access_token() if time.time() > self.creds.get("expires_in") else None
         last_txt = ""
         filename = filename if filename else path.split("/")[-1]
         mime_type = guess_type(path)[0] or "application/octet-stream"
