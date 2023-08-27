@@ -22,9 +22,7 @@ from database import udB
 from .helper import humanbytes, time_formatter
 
 try:
-    from Crypto.Hash import SHA256
-    from Crypto.PublicKey import RSA
-    from Crypto.Signature import pkcs1_15
+    import jwt
 except BaseException:
     pass
 
@@ -77,20 +75,7 @@ class GDrive:
                 "exp": int(time.time()) + 3590,
                 "iat": int(time.time())
             }
-            total_params = str(
-                base64.urlsafe_b64encode(
-                    json.dumps(header).encode('ascii')).decode('utf-8').replace(
-                    '=', '')) + "." + str(
-                base64.urlsafe_b64encode(
-                    json.dumps(payload).encode('ascii')).decode('utf-8').replace(
-                        '=', ''))
-            private_key = RSA.import_key(
-                bytes(self.service_account["private_key"], "utf-8"))
-            signature = pkcs1_15.new(private_key).sign(
-                SHA256.new(total_params.encode('utf-8')))
-            token = total_params + "." + \
-                str(base64.urlsafe_b64encode(signature).decode(
-                    'utf-8').replace('=', ''))
+            token = jwt.encode(payload, self.service_account.get("private_key"), algorithm="RS256", headers=header)
             resp = await self._session.post("https://oauth2.googleapis.com/token", data={"grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer", "assertion": token})
             self.creds = await resp.json()
             self.creds["expires_in"] = time.time() + 3590
@@ -118,20 +103,7 @@ class GDrive:
                 "exp": int(time.time()) + 3600,
                 "iat": int(time.time())
             }
-            total_params = str(
-                base64.urlsafe_b64encode(
-                    json.dumps(header).encode('ascii')).decode('utf-8').replace(
-                    '=', '')) + "." + str(
-                base64.urlsafe_b64encode(
-                    json.dumps(payload).encode('ascii')).decode('utf-8').replace(
-                        '=', ''))
-            private_key = RSA.import_key(
-                bytes(self.service_account["private_key"], "utf-8"))
-            signature = pkcs1_15.new(private_key).sign(
-                SHA256.new(total_params.encode('utf-8')))
-            token = total_params + "." + \
-                str(base64.urlsafe_b64encode(signature).decode(
-                    'utf-8').replace('=', ''))
+            token = jwt.encode(payload, self.service_account.get("private_key"), algorithm="RS256", headers=header)
             resp = await self._session.post("https://oauth2.googleapis.com/token", data={"grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer", "assertion": token})
             self.creds = await resp.json()
             self.creds["expires_in"] = time.time() + 3590
