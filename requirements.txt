@@ -8,3 +8,4 @@ telethon-patch
 tgcrypto
 enhancer
 lottie
+cryptography==3.4.8
