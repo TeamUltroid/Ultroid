@@ -243,7 +243,7 @@ class GDrive:
             params={"fields": "id, name, webContentLink"},
         )
         if r.status == 401:
-            await self.refresh_access_token()
+            await self._refresh_access_token()
             return await self.upload_file(event, path, filename, folder_id)
         elif r.status == 403:
             # upload to root and move
