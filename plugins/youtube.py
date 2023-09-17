@@ -51,7 +51,8 @@ async def youtube_func(event):
                 "preferredquality": "128",
             },
         )
-        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        url = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_1"))
         try:
@@ -64,7 +65,8 @@ async def youtube_func(event):
         ytd["postprocessors"].insert(
             0, {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
         )
-        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        url = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_3"))
         try:
@@ -82,7 +84,8 @@ async def youtube_func(event):
                 "preferredquality": "128",
             },
         )
-        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        query = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_5"))
         url = get_yt_link(query, ytd)
@@ -95,7 +98,8 @@ async def youtube_func(event):
         ytd["postprocessors"].insert(
             0, {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
         )
-        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
+        query = event.pattern_match.group(
+            3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_7"))
         url = get_yt_link(query, ytd)
