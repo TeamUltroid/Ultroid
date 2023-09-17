@@ -28,7 +28,7 @@ from . import get_string, ultroid_cmd
 @ultroid_cmd(
     pattern="yt(a|v|sa|sv)( (.*)|$)",
 )
-async def download_from_youtube_(event):
+async def youtube_func(event):
     with rm.get("ytdl", helper=True, dispose=True) as mod:
         download_yt, get_yt_link = mod.download_yt, mod.get_yt_link
     ytd = {
@@ -36,14 +36,16 @@ async def download_from_youtube_(event):
         "addmetadata": True,
         "geo-bypass": True,
         "nocheckcertificate": True,
+        "postprocessors": [{"key": "FFmpegMetadata"}],
     }
-    opt = event.pattern_match.group(1).strip()
+    opt = event.pattern_match.group(1)
     xx = await event.eor(get_string("com_1"))
     if opt == "a":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        url = event.pattern_match.group(
-            3) if event.pattern_match.group(2) else None
+        ytd["postprocessors"][0]["preferredcodec"] = "mp4a"
+        ytd["postprocessors"][0]["preferredquality"] = "128"
+        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_1"))
         try:
@@ -53,9 +55,8 @@ async def download_from_youtube_(event):
     elif opt == "v":
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
-        ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        url = event.pattern_match.group(
-            3) if event.pattern_match.group(2) else None
+        ytd["postprocessors"][0]["preferredcodec"] = "avc1"
+        url = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not url:
             return await xx.eor(get_string("youtube_3"))
         try:
@@ -65,23 +66,23 @@ async def download_from_youtube_(event):
     elif opt == "sa":
         ytd["format"] = "bestaudio"
         ytd["outtmpl"] = "%(id)s.m4a"
-        query = event.pattern_match.group(
-            3) if event.pattern_match.group(2) else None
+        ytd["postprocessors"][0]["preferredcodec"] = "mp4a"
+        ytd["postprocessors"][0]["preferredquality"] = "128"
+        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_5"))
-        url = get_yt_link(query)
+        url = get_yt_link(query, ytd)
         if not url:
             return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_6"))
     elif opt == "sv":
         ytd["format"] = "best"
         ytd["outtmpl"] = "%(id)s.mp4"
-        ytd["postprocessors"] = [{"key": "FFmpegMetadata"}]
-        query = event.pattern_match.group(
-            3) if event.pattern_match.group(2) else None
+        ytd["postprocessors"][0]["preferredcodec"] = "avc1"
+        query = event.pattern_match.group(3) if event.pattern_match.group(2) else None
         if not query:
             return await xx.eor(get_string("youtube_7"))
-        url = get_yt_link(query)
+        url = get_yt_link(query, ytd)
         if not url:
             return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_8"))

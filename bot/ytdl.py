@@ -41,8 +41,8 @@ from utilities.tools import set_attributes
 #                 LOGS.error(f"ytdl_progress: {ex}")
 
 
-def get_yt_link(query):
-    search = YoutubeDL().extract_info(f"ytsearch:{query}", download=False)
+def get_yt_link(query, ytd):
+    search = YoutubeDL(ytd).extract_info(f"ytsearch:{query}", download=False)
     try:
         return search["entries"][0]["webpage_url"]
     except (IndexError, KeyError):
