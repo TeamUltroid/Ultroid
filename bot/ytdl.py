@@ -19,27 +19,26 @@ except ImportError:
     from ytdl import YoutubeDL
 
 from core import LOGS, udB
-from utilities.helper import (download_file, humanbytes, run_async,
-                              time_formatter)
+from utilities.helper import download_file, humanbytes, run_async, time_formatter
 from utilities.tools import set_attributes
 
 
-async def ytdl_progress(k, start_time, event):
-    if k["status"] == "error":
-        return await event.edit("error")
-    while k["status"] == "downloading":
-        text = (
-            f"`Downloading: {k['filename']}\n"
-            + f"Total Size: {humanbytes(k['total_bytes'])}\n"
-            + f"Downloaded: {humanbytes(k['downloaded_bytes'])}\n"
-            + f"Speed: {humanbytes(k['speed'])}/s\n"
-            + f"ETA: {time_formatter(k['eta']*1000)}`"
-        )
-        if round((time.time() - start_time) % 10.0) == 0:
-            try:
-                await event.edit(text)
-            except Exception as ex:
-                LOGS.error(f"ytdl_progress: {ex}")
+# async def ytdl_progress(k, start_time, event):
+#     if k["status"] == "error":
+#         return await event.edit("error")
+#     while k["status"] == "downloading":
+#         text = (
+#             f"`Downloading: {k['filename']}\n"
+#             + f"Total Size: {humanbytes(k['total_bytes'])}\n"
+#             + f"Downloaded: {humanbytes(k['downloaded_bytes'])}\n"
+#             + f"Speed: {humanbytes(k['speed'])}/s\n"
+#             + f"ETA: {time_formatter(k['eta']*1000)}`"
+#         )
+#         if round((time.time() - start_time) % 10.0) == 0:
+#             try:
+#                 await event.edit(text)
+#             except Exception as ex:
+#                 LOGS.error(f"ytdl_progress: {ex}")
 
 
 def get_yt_link(query):
@@ -63,8 +62,7 @@ async def download_yt(event, link, ytd):
             thumb = id_ + ".jpg"
             title = file["title"]
             await download_file(
-                file.get(
-                    "thumbnail", None) or file["thumbnails"][-1]["url"], thumb
+                file.get("thumbnail", None) or file["thumbnails"][-1]["url"], thumb
             )
             ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
             if ext == ".m4a":
@@ -122,9 +120,7 @@ async def download_yt(event, link, ytd):
     id_ = info["id"]
     thumb = id_ + ".jpg"
     await download_file(
-        info.get(
-            "thumbnail",
-            None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
+        info.get("thumbnail", None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
         thumb,
     )
     ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
