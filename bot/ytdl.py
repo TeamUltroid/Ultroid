@@ -8,7 +8,6 @@
 import glob
 import os
 import re
-import time
 
 from telethon import Button
 from youtubesearchpython import Playlist
@@ -19,9 +18,8 @@ except ImportError:
     from ytdl import YoutubeDL
 
 from core import LOGS, udB
-from utilities.helper import download_file, humanbytes, run_async, time_formatter
+from utilities.helper import download_file, humanbytes, run_async
 from utilities.tools import set_attributes
-
 
 # async def ytdl_progress(k, start_time, event):
 #     if k["status"] == "error":
@@ -62,7 +60,8 @@ async def download_yt(event, link, ytd):
             thumb = id_ + ".jpg"
             title = file["title"]
             await download_file(
-                file.get("thumbnail", None) or file["thumbnails"][-1]["url"], thumb
+                file.get(
+                    "thumbnail", None) or file["thumbnails"][-1]["url"], thumb
             )
             ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
             if ext == ".m4a":
@@ -120,7 +119,9 @@ async def download_yt(event, link, ytd):
     id_ = info["id"]
     thumb = id_ + ".jpg"
     await download_file(
-        info.get("thumbnail", None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
+        info.get(
+            "thumbnail",
+            None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
         thumb,
     )
     ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
