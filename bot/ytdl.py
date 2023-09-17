@@ -60,12 +60,9 @@ async def download_yt(event, link, ytd):
             thumb = id_ + ".jpg"
             title = file["title"]
             await download_file(
-                file.get(
-                    "thumbnail", None) or file["thumbnails"][-1]["url"], thumb
+                file.get("thumbnail", None) or file["thumbnails"][-1]["url"], thumb
             )
             ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
-            if ext == ".m4a":
-                ext = ".mp3"
             id = None
             for x in glob.glob(f"{id_}*"):
                 if not x.endswith("jpg"):
@@ -114,14 +111,10 @@ async def download_yt(event, link, ytd):
             pass
         return
     title = info["title"]
-    if len(title) > 20:
-        title = title[:17] + "..."
     id_ = info["id"]
     thumb = id_ + ".jpg"
     await download_file(
-        info.get(
-            "thumbnail",
-            None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
+        info.get("thumbnail", None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
         thumb,
     )
     ext = "." + ytd["outtmpl"]["default"].split(".")[-1]
