@@ -86,7 +86,7 @@ async def drive_auth_func(event):
 async def drive_list_func(event):
     """`{}gdls` - List all files of Google Drive."""
     x = await event.eor("`Processing...`")
-    resp = await drive.list()
+    resp = await drive.list_files()
     if "error" in resp:
         return await x.edit(f"`{resp}`")
     text = f"Files found: {len(resp['files'])}\n\n"
@@ -131,7 +131,7 @@ async def drive_search_func(event):
     if not query:
         return await event.eor("`Give filename to search.`")
     x = await event.eor("`Processing...`")
-    resp = await drive.list(query)
+    resp = await drive.list_files(query)
     if "error" in resp:
         return await x.edit(f"`{resp}`")
     text = f"Files found: {len(resp['files'])}\n\n"
