@@ -92,7 +92,11 @@ async def drive_list_func(event):
     text = f"Files found: {len(resp)}\n\n"
     for file in resp:
         text += f"Name: {file['name']}\n"
-        text += f"Link: {file['webContentLink']}\n"
+        text += (
+            f"Link: {file['webContentLink']}\n"
+            if file.get("webContentLink")
+            else f"Link: {file['webViewLink']}"
+        )
         text += f"Size: {file['size']}\n\n"
     if len(text) > 4096:
         with open("drivefiles.txt", "w") as dfiles:
@@ -137,7 +141,11 @@ async def drive_search_func(event):
     text = f"Files found: {len(resp)}\n\n"
     for file in resp:
         text += f"Name: {file['name']}\n"
-        text += f"Link: {file['webContentLink']}\n"
+        text += (
+            f"Link: {file['webContentLink']}\n"
+            if file.get("webContentLink")
+            else f"Link: {file['webViewLink']}"
+        )
         text += f"Size: {file['size']}\n\n"
     if len(text) > 4096:
         with open("drivesearchedfiles.txt", "w") as dfiles:
