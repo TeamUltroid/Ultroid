@@ -89,15 +89,15 @@ async def drive_list_func(event):
     resp = await drive.list_files()
     if "error" in resp:
         return await x.edit(f"`{resp}`")
-    text = f"Files found: {len(resp['files'])}\n\n"
-    for file in resp["files"]:
+    text = f"Files found: {len(resp)}\n\n"
+    for file in resp:
         text += f"Name: {file['name']}\n"
         text += f"Link: {file['webContentLink']}\n"
         text += f"Size: {file['size']}\n\n"
     if len(text) > 4096:
         with open("drivefiles.txt", "w") as dfiles:
             dfiles.write(text)
-        await event.reply(f"Files found: {len(resp['files'])}", file="drivefiles.txt")
+        await event.reply(f"Files found: {len(resp)}", file="drivefiles.txt")
         os.remove("drivefiles.txt")
         await x.delete()
     else:
@@ -134,17 +134,15 @@ async def drive_search_func(event):
     resp = await drive.list_files(query)
     if "error" in resp:
         return await x.edit(f"`{resp}`")
-    text = f"Files found: {len(resp['files'])}\n\n"
-    for file in resp["files"]:
+    text = f"Files found: {len(resp)}\n\n"
+    for file in resp:
         text += f"Name: {file['name']}\n"
         text += f"Link: {file['webContentLink']}\n"
         text += f"Size: {file['size']}\n\n"
     if len(text) > 4096:
         with open("drivesearchedfiles.txt", "w") as dfiles:
             dfiles.write(text)
-        await event.reply(
-            f"Files found: {len(resp['files'])}", file="drivesearchedfiles.txt"
-        )
+        await event.reply(f"Files found: {len(resp)}", file="drivesearchedfiles.txt")
         os.remove("drivesearchedfiles.txt")
         await x.delete()
     else:
