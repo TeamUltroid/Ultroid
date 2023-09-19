@@ -216,7 +216,9 @@ class GDrive:
                     params=params,
                 )
             ).json()
-            for file in resp.get("files", []):
+            if "error" in resp:
+                return resp
+            for file in resp.get("files"):
                 if file["mimeType"] == self.folder_mime:
                     file["url"] = self._create_folder_link(file["id"])
                 else:
@@ -314,10 +316,7 @@ class GDrive:
             data=json.dumps(params),
             params={"fields": "id, name, webContentLink"},
         )
-        if r.status == 401:
-            await self._refresh_access_token()
-            return await self.upload_file(event, path, filename, folder_id)
-        elif r.status == 403:
+        if r.status == 403:
             # upload to root and move
             r = await self.upload_file(event, path, filename, "root")
             return await self.copy_file(r["id"], filename, folder_id, move=True)
