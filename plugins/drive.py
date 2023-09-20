@@ -95,9 +95,9 @@ async def drive_list_func(event):
         text += (
             f"Link: {file['webContentLink']}\n"
             if file.get("webContentLink")
-            else f"Link: {file['webViewLink']}"
+            else f"Link: {file['webViewLink']}\n"
         )
-        text += f"Size: {file['size']}\n\n"
+        text += f"Size: {file['size']}\n\n" if file.get("size") else "\n"
     if len(text) > 4096:
         with open("drivefiles.txt", "w") as dfiles:
             dfiles.write(text)
@@ -144,9 +144,9 @@ async def drive_search_func(event):
         text += (
             f"Link: {file['webContentLink']}\n"
             if file.get("webContentLink")
-            else f"Link: {file['webViewLink']}"
+            else f"Link: {file['webViewLink']}\n"
         )
-        text += f"Size: {file['size']}\n\n"
+        text += f"Size: {file['size']}\n\n" if file.get("size") else "\n"
     if len(text) > 4096:
         with open("drivesearchedfiles.txt", "w") as dfiles:
             dfiles.write(text)
