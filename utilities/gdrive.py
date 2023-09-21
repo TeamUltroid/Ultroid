@@ -196,7 +196,7 @@ class GDrive:
         files = []
         page_token = None
         params = {
-            "fields": "files(id, name, mimeType, parents, webContentLink, webViewLink, size)",
+            "fields": "nextPageToken, files(id, name, mimeType, parents, webContentLink, webViewLink, size)",
             "supportsAllDrives": "true",
             "includeItemsFromAllDrives": "true",
         }
