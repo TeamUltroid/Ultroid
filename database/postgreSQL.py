@@ -2,17 +2,21 @@ from psycopg2 import pool
 
 from .base_db import BaseDatabase
 
+
 class Database(BaseDatabase):
     '''
     (dbUrl: str) will be something like this - postgres://user:password@host.domain/user
     This is free to get on internet form websites like elephantSQL or cockroachlabs #notSponsored
     '''
+
     def __init__(self, dbUrl: str, dBname='Ultroid'):
-        self.pool = pool.SimpleConnectionPool(1, 3, dsn=dbUrl, sslmode='require')
+        self.pool = pool.SimpleConnectionPool(
+            1, 3, dsn=dbUrl, sslmode='require')
         self.pool_conn = self.pool.getconn()
         self.pool_cursor = self.pool_conn.cursor()
         self.pool_conn.autocommit = True
-        self.pool_cursor.execute("CREATE TABLE IF NOT EXISTS Ultroid (ultroidCli varchar(70))")
+        self.pool_cursor.execute(
+            "CREATE TABLE IF NOT EXISTS Ultroid (ultroidCli varchar(70))")
         super().__init__()
 
     def __repr__(self):
@@ -24,25 +28,29 @@ class Database(BaseDatabase):
 
     @property
     def usage(self):
-        self.pool_cursor.execute("SELECT pg_size_pretty(pg_relation_size('Ultroid')) AS size")
+        self.pool_cursor.execute(
+            "SELECT pg_size_pretty(pg_relation_size('Ultroid')) AS size")
         data = self.pool_cursor.fetchall()
         return int(data[0][0].split()[0])
 
     def keys(self):
-        self.pool_cursor.execute("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name  = 'ultroid'")  # case sensitive
+        self.pool_cursor.execute(
+            "SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name  = 'ultroid'")  # case sensitive
         data = self.pool_cursor.fetchall()
         return [_[0] for _ in data]
 
     def set(self, key, value):
         try:
-            self.pool_cursor.execute(f"ALTER TABLE Ultroid DROP COLUMN IF EXISTS {key}")
+            self.pool_cursor.execute(
+                f"ALTER TABLE Ultroid DROP COLUMN IF EXISTS {key}")
         except (psycopg2.errors.UndefinedColumn, psycopg2.errors.SyntaxError):
             pass
         except BaseException as er:
             LOGS.exception(er)
         self._cache.update({key: value})
         self.pool_cursor.execute(f"ALTER TABLE Ultroid ADD {key} TEXT")
-        self.pool_cursor.execute(f"INSERT INTO Ultroid ({key}) values (%s)", (str(value),))
+        self.pool_cursor.execute(
+            f"INSERT INTO Ultroid ({key}) values (%s)", (str(value),))
         return True
 
     def delete(self, key):
@@ -68,5 +76,6 @@ class Database(BaseDatabase):
     def flushall(self):
         self._cache.clear()
         self.pool_cursor.execute("DROP TABLE Ultroid")
-        self.pool_cursor.execute("CREATE TABLE IF NOT EXISTS Ultroid (ultroidCli varchar(70))")
+        self.pool_cursor.execute(
+            "CREATE TABLE IF NOT EXISTS Ultroid (ultroidCli varchar(70))")
         return True
