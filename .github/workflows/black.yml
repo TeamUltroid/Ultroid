@@ -1,0 +1,40 @@
+name: Python Code Formatting with Black
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  format:
+    name: Black Formatter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Define your preferred Python version
+
+      - name: Install Black and Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black
+
+      - name: Check Python Files with Black
+        run: black --check .  # Check if the code needs formatting
+        continue-on-error: true
+
+      - name: Format Python Files
+        if: ${{ failure() }}
+        run: black .  # Format code if check fails
+
+      - name: Commit changes
+        if: ${{ failure() }}
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "Your Name"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Auto-format with Black" || true
