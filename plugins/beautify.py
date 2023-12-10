@@ -14,8 +14,9 @@ import os
 import random
 
 from telethon.utils import get_display_name
-
+from urllib.parse import urlencode
 from . import Carbon, ultroid_cmd, get_string, inline_mention
+from secrets import token_hex
 
 _colorspath = "resources/colorlist.txt"
 
@@ -104,6 +105,12 @@ RaySoTheme = [
 
 @ultroid_cmd(pattern="rayso")
 async def pass_on(ult):
+    try:
+        from playwright.async_api import async_playwright
+    except ImportError:
+        await ult.eor("`playwright` is not installed!\nPlease install it to use this command..")
+        return
+    proc = await ult.eor(get_string("com_1"))
     spli = ult.text.split()
     theme, dark, title, text = None, True, get_display_name(ult.chat), None
     if len(spli) > 2:
@@ -118,19 +125,40 @@ async def pass_on(ult):
                 [f"- `{th_}`" for th_ in RaySoTheme]
             )
 
-            await ult.eor(text)
+            await proc.eor(text)
             return
         else:
             try:
                 text = ult.text.split(maxsplit=1)[1]
             except IndexError:
                 pass
-    if not theme:
+    if not theme or theme not in RaySoTheme:
         theme = random.choice(RaySoTheme)
     if ult.is_reply:
         msg = await ult.get_reply_message()
         text = msg.message
         title = get_display_name(msg.sender)
-    await ult.reply(
-        file=await Carbon(text, rayso=True, title=title, theme=theme, darkMode=dark)
+    name = token_hex(8) + ".png"
+    data = {
+        "darkMode": dark,
+        "theme": theme,
+        "title": title
+    }
+    url = f"https://ray.so/#{urlencode(data)}"
+    async with async_playwright() as play:
+        chrome = await play.chromium.launch()
+        page = await chrome.new_page()
+        await page.goto(url)
+        await page.wait_for_load_state("networkidle")
+        elem = await page.query_selector("textarea[class='Editor_textarea__sAyL_']")
+        await elem.type(text)
+        button = await page.query_selector("button[class='ExportButton_button__d___t']")
+        await button.click()
+        async with page.expect_download() as dl:
+            dled = await dl.value
+            await dled.save_as(name)
+    await proc.reply(
+        file=name
     )
+    await proc.try_delete()
+    os.remove(name)
