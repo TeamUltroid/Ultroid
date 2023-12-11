@@ -188,7 +188,8 @@ class UltroidClient(TelegramClient):
             try:
                 if isinstance(file.attributes[-1], DocumentAttributeFilename):
                     filename = file.attributes[-1].file_name
-            except IndexError:
+                assert filename != None
+            except (IndexError, AssertionError):
                 mimetype = file.mime_type
                 filename = (
                     mimetype.split("/")[0]
@@ -198,7 +199,7 @@ class UltroidClient(TelegramClient):
                 )
         message = kwargs.get("message", f"Downloading {filename}...")
         dirname = os.path.dirname(filename)
-        if not os.path.exists(dirname):
+        if dirname and not os.path.exists(dirname):
             os.mkdir(dirname)
         raw_file = None
         while not raw_file:

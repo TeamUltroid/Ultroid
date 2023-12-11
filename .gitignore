@@ -37,6 +37,9 @@ temp/
 *.swf
 *.air
 *.apk
+*.webp
+*.cpp
+
 .vs
 env
 # temporary files

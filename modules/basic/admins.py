@@ -1,41 +1,13 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2022 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available -
+from localization import get_help
 
-• `.promote <reply to user/userid/username>`
-
-• `.demote`
-   Promote/Demote the user in the chat.
-
-• `.ban <reply to user/userid/username> <reason>`
-• `.unban`\n    Ban/Unban the user from the chat.
-
-• `.kick <reply to user/userid/username> <reason>`
-    Kick the user from the chat.
-    
-• `.pin <reply to message>`
-    Pin the message in the chat
-• `.tpin <time> <temp pin message>`
-• `.unpin (all) <reply to message>`
-    Unpin the messages in the chat.
-
-• `.pinned`\n   Get pinned message in the current chat.
-• `.listpinned`\n   Get all pinned messages in current chat
-• `.autodelete <24h/7d/1m/off>`
-   Enable Auto Delete Messages in Chat.
-
-• `.purge <reply to message>`
-    Purge all messages from the replied message.
-• `.purgeme <reply to message>`
-    Purge Only your messages from the replied message.
-• `.purgeall`\n    Delete all msgs of replied user.
-"""
+__doc__ = get_help("admins")
 
 from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserIdInvalidError

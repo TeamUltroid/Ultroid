@@ -1,10 +1,13 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2022 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+from localization import get_help
+
+__doc__ = get_help("chats")
 
 import contextlib
 from telethon.errors import ChatAdminRequiredError as no_admin
@@ -15,6 +18,7 @@ from telethon.tl.functions.channels import (
     GetFullChannelRequest,
     UpdateUsernameRequest,
 )
+from utilities.converter import create_chat_photo
 from telethon.tl.functions.messages import (
     CreateChatRequest,
     ExportChatInviteRequest,
@@ -201,21 +205,20 @@ async def _(ult):
     else:
         return await ult.eor("Reply to a Photo or Video..")
     mediain = mediainfo(reply.media)
-    if "animated" in mediain:
-        replfile = await con.convert(replfile, convert_to="mp4")
-    else:
-        replfile = await con.convert(
-            replfile, outname="chatphoto", allowed_formats=["jpg", "png", "mp4"]
-        )
-    file = await ult.client.upload_file(replfile)
+    cnfile = await create_chat_photo(replfile)
+
+    file = await ult.client.upload_file(cnfile)
     try:
-        if "pic" not in mediain:
-            file = types.InputChatUploadedPhoto(video=file)
+        isPhoto = cnfile.endswith(("jpg", "png"))
+        file = types.InputChatUploadedPhoto(file=file if isPhoto else None, video=None if isPhoto else file)
         await ult.client(EditPhotoRequest(chat, file))
         await ult.eor("`Group Photo has Successfully Changed !`", time=5)
     except Exception as ex:
+        LOGS.exception(ex)
         await ult.eor(f"Error occured.\n`{str(ex)}`", time=5)
     os.remove(replfile)
+    with contextlib.suppress(FileNotFoundError):
+        os.remove(cnfile)
 
 
 @ultroid_cmd(
@@ -259,71 +262,74 @@ async def _(event):
     fullsudo=True,
 )
 async def rmusers_cmd(event):
+    # TODO: Simplify and UPDATE
     xx = await event.eor(get_string("com_1"))
     input_str = event.pattern_match.group(1).strip()
     p, b, c, d, m, n, y, w, o, q, r = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     async for i in event.client.iter_participants(event.chat_id):
+        kick_req = event.client.kick_participant(event.chat_id, i)
+
         p += 1  # Total Count
         if isinstance(i.status, UserStatusEmpty):
             if "empty" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 y += 1
         elif isinstance(i.status, UserStatusLastMonth):
             if "month" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 m += 1
         elif isinstance(i.status, UserStatusLastWeek):
             if "week" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 w += 1
         elif isinstance(i.status, UserStatusOffline):
             if "offline" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 o += 1
         elif isinstance(i.status, UserStatusOnline):
             if "online" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 q += 1
         elif isinstance(i.status, UserStatusRecently):
             if "recently" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 r += 1
         if i.bot:
             if "bot" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 b += 1
         elif i.deleted:
             if "deleted" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 d += 1
         elif i.status is None:
             if "none" in input_str:
                 with contextlib.suppress(BaseException):
-                    await event.client.kick_participant(event.chat_id, i)
+                    await kick_req
                     c += 1
             else:
                 n += 1

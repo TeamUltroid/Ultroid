@@ -5,12 +5,14 @@ def isMultiClient():
     if getArg := list(filter(re.compile("--run=(.*)").match, sys.argv)):
         runCode = getArg[0].split("=")[-1]
     else:
-        return
+        return startMultiClient()
     _session = getattr(Config, f"SESSION{runCode}")
     _db = _get_db(runCode)
+    _botToken = getattr(Config, f"BOT_TOKEN{runCode}")
+
     if not (_db and _session):
         return
-    return runCode, _session
+    return runCode, _session, _botToken
     
 
 def _get_db(count):

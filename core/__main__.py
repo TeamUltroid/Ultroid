@@ -14,7 +14,7 @@ import time
 
 from utilities.helper import bash, time_formatter, check_update
 from .utils.funcs import process_main, load_plugins
-
+from telethon.errors import SessionRevokedError
 
 # Option to Auto Update On Restarts..
 # TODO: UPDATE_ON_RESTART
@@ -50,5 +50,10 @@ LOGS.info(
             ----------------------------------------------------------------------
 """
 )
+try:
+    asst.run()
+except SessionRevokedError:
+    LOGS.info(f"Assistant [@{asst.me.username}]'s session was revoked!")
 
-asst.run()
+    # shift loop to bot
+    ultroid_bot.run()

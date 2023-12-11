@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import shutil
 from random import choice
 
 from telethon import Button, events
@@ -30,9 +31,12 @@ def inline_pic(get=False):
         return INLINE_PIC
     # is False, return None
 
+udB.on("LOAD_ALL", "delete", lambda: shutil.rmtree("modules/addons"))
 
 List = []
 Dict = {}
+# Credentials variable for saving login credentials(Like Gdrive,OneDrive,etc. login credentials) in local
+creds = {}
 
 # Chats, which needs to be ignore for some cases
 # Considerably, there can be many

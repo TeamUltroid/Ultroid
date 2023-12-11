@@ -1,9 +1,13 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2022 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # Please read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+
+from localization import get_help
+
+__doc__ = get_help("devtools")
 
 import contextlib
 import inspect
@@ -31,7 +35,7 @@ from core.remote import rm
 from database.helpers import get_random_color
 from utilities.misc import json_parser
 from utilities.tools import Carbon, safe_load
-
+from telethon.errors import RPCError
 from .. import *
 
 Tasks = {}
@@ -234,14 +238,24 @@ async def eval_func(event):
     stdout, stderr, exc = None, None, None
     tima = time.time()
     try:
-        value = await aexec(cmd, event)
+        # value = await aexec(cmd, event)
         # TODO: Eval can be cancelled
-        # task = asyncio.create_task(aexec(cmd, event))
-        # task_id = int(list(Tasks.keys())[0])
-        # task_id += 1
-        # task_id = str(task_id)
-        # Tasks[task_id] = task
-        # task.add_done_callback(lambda _: Tasks.pop(task_id))
+       # task = asyncio.create_task(aexec(cmd, event))
+     #   task = asyncio.current_task()
+    #    try:
+#            task_id = int(list(Tasks.keys())[0])
+   #     except IndexError:
+       #     task_id = 0
+        #task_id += 1
+ #       task_id = str(task_id)
+    #    Tasks[task_id] = task
+     #   task.add_done_callback(lambda _: Tasks.pop(task_id))
+      #  await asyncio.wait([task])
+    #    value = task.result()
+        value = await aexec(cmd, event)
+    except RPCError as er:
+        value = None
+        exc = f"{er.__class__.__name__}: {er}"
     except Exception:
         value = None
         exc = traceback.format_exc()
@@ -253,13 +267,13 @@ async def eval_func(event):
     if value:
         try:
             if mode == "gsource":
-                exc = inspect.getsource(value)
+                stdout = inspect.getsource(value)
             elif mode == "g-args":
                 args = inspect.signature(value).parameters.values()
                 name = ""
                 if hasattr(value, "__name__"):
                     name = value.__name__
-                exc = f"**{name}**\n\n" + "\n ".join([str(arg) for arg in args])
+                stdout = f"**{name}**\n\n" + "\n ".join([str(arg) for arg in args])
         except Exception:
             exc = traceback.format_exc()
     err = exc or stderr

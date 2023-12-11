@@ -1,13 +1,13 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2022 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import contextlib
-import random
-from secrets import token_urlsafe
+import random, string
+from secrets import token_hex
 
 from telethon import errors
 from telethon.errors.rpcerrorlist import StickersetInvalidError
@@ -20,7 +20,7 @@ from telethon.tl.types import (
     InputPeerSelf,
     InputStickerSetEmpty,
 )
-from telethon.errors import StickersetInvalidError
+from telethon.errors import StickersetInvalidError, PackShortNameInvalidError
 from telethon.tl.types import InputStickerSetItem as SetItem
 from telethon.tl.types import InputStickerSetShortName, User
 from telethon.utils import get_display_name, get_extension, get_input_document
@@ -42,7 +42,7 @@ async def packExists(packId):
 
 
 async def GetUniquePackName():
-    packName = f"{token_urlsafe(random.randint(4, 6))}_by_{asst.me.username}"
+    packName = f"{random.choice(string.ascii_lowercase)}{token_hex(random.randint(4, 8))}_by_{asst.me.username}"
     return await GetUniquePackName() if await packExists(packName) else packName
 
 
@@ -73,6 +73,8 @@ async def AddToNewPack(packType, file, emoji, sender_id, title: str):
 
 @ultroid_cmd(pattern="kang", manager=True)
 async def kang_func(ult):
+    """(reply message)
+    Create sticker and add to pack"""
     sender = await ult.get_sender()
     if not isinstance(sender, User):
         return
@@ -161,6 +163,7 @@ async def kang_func(ult):
 
 @ultroid_cmd(pattern="listpack", manager=True)
 async def do_magic(ult):
+    """Get list of sticker packs."""
     ko = udB.get_key("STICKERS") or {}
     if not ko.get(ult.sender_id):
         return await ult.reply("No Sticker Pack Found!")

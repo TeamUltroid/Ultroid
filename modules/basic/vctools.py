@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2022 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -24,20 +24,21 @@
 
 
 import contextlib
-from telethon.tl.functions.channels import GetFullChannelRequest as getchat
-from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
-from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
-from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
-from telethon.tl.functions.phone import GetGroupCallRequest as getvc
-from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.phone import CreateGroupCallRequest
+from telethon.tl.functions.phone import DiscardGroupCallRequest
+from telethon.tl.functions.phone import EditGroupCallTitleRequest
+from telethon.tl.functions.phone import GetGroupCallRequest
+from telethon.tl.functions.phone import InviteToGroupCallRequest
 
-from .. import get_string, ultroid_cmd
+from .. import get_string, ultroid_cmd, LOGS
 
 
 async def get_call(event):
-    mm = await event.client(getchat(event.chat_id))
-    xx = await event.client(getvc(mm.full_chat.call, limit=1))
-    return xx.call
+    mm = await event.client(GetFullChannelRequest(event.chat_id))
+    if mm.full_chat.call:
+        xx = await event.client(GetGroupCallRequest(mm.full_chat.call, limit=1))
+        return xx.call
 
 
 def user_list(l, n):
@@ -52,9 +53,12 @@ def user_list(l, n):
 )
 async def _(e):
     try:
-        await e.client(stopvc(await get_call(e)))
-        await e.eor(get_string("vct_4"))
+        if call := await get_call(e):
+            await e.client(DiscardGroupCallRequest(call))
+            return await e.eor(get_string("vct_4"))
+        await e.eor("`Voice call is not active.`")
     except Exception as ex:
+        LOGS.exception(ex)
         await e.eor(f"`{ex}`")
 
 
@@ -70,9 +74,12 @@ async def _(e):
         if not x.bot:
             users.append(x.id)
     hmm = list(user_list(users, 6))
+    call = await get_call(e)
+    if not call:
+        return await e.eor("`Voice Call is not active.`")
     for p in hmm:
         with contextlib.suppress(BaseException):
-            await e.client(invitetovc(call=await get_call(e), users=p))
+            await e.client(InviteToGroupCallRequest(call=call, users=p))
             z += len(p)
     await ok.edit(get_string("vct_5").format(z))
 
@@ -84,9 +91,10 @@ async def _(e):
 )
 async def _(e):
     try:
-        await e.client(startvc(e.chat_id))
+        await e.client(CreateGroupCallRequest(e.chat_id))
         await e.eor(get_string("vct_1"))
     except Exception as ex:
+        LOGS.exception(ex)
         await e.eor(f"`{ex}`")
 
 
@@ -99,8 +107,11 @@ async def _(e):
     title = e.pattern_match.group(1).strip()
     if not title:
         return await e.eor(get_string("vct_6"), time=5)
+    call = await get_call(e)
+    if not call:
+        return await e.eor("`Voice Call is not active.`")
     try:
-        await e.client(settitle(call=await get_call(e), title=title.strip()))
+        await e.client(EditGroupCallTitleRequest(call=call, title=title.strip()))
         await e.eor(get_string("vct_2").format(title))
     except Exception as ex:
         await e.eor(f"`{ex}`")

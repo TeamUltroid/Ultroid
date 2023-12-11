@@ -76,7 +76,7 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
     admins_only = kwargs.get("admins_only", False)
     fullsudo = kwargs.get("fullsudo", False)
     only_devs = kwargs.get("only_devs", False)
-#    cmd_key = kwargs.get("cmds_key")
+    #    cmd_key = kwargs.get("cmds_key")
     func = kwargs.get("func", lambda e: not e.via_bot_id)
 
     def decor(dec):
@@ -122,8 +122,7 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
                     udB.get_config("LOG_CHANNEL"),
                     f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
                 )
-                await ultroid_bot.disconnect()
-                await asyncio.sleep(fwerr.seconds + 10)
+                time.sleep(fwerr.seconds + 10)
                 await ultroid_bot.connect()
                 await asst.send_message(
                     udB.get_config("LOG_CHANNEL"),
@@ -216,7 +215,8 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
                         parse_mode="html",
                     )
                     await ultr.edit(
-                        f"<b><a href={Msg.message_link}>[An error occurred]</a></b>", parse_mode="html"
+                        f"<b><a href={Msg.message_link}>[An error occurred]</a></b>",
+                        parse_mode="html",
                     )
                 except Exception as er:
                     LOGS.error(f"Error while pasting exception on graph: {er}")
@@ -259,7 +259,11 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
         if TAKE_EDITS:
 
             def func_(x):
-                return (x.out or x.sender_id == ultroid_bot.me.id) and not x.via_bot_id and not (x.is_channel and x.chat.broadcast)
+                return (
+                    (x.out or x.sender_id == ultroid_bot.me.id)
+                    and not x.via_bot_id
+                    and not (x.is_channel and x.chat.broadcast)
+                )
 
             ultroid_bot.add_handler(
                 wrapp,

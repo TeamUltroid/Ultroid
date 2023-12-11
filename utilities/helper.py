@@ -42,9 +42,6 @@ from . import *
 from core.git import repo
 from core.config import HOSTED_ON
 
-# TODO: Mess with this later
-# from database._core import ADDONS, HELP, LIST, LOADED
-
 from core.version import version
 from .FastTelethon import download_file as downloadable
 from .FastTelethon import upload_file as uploadable
@@ -63,7 +60,7 @@ def run_async(function):
 
 def fetch_sync(url, re_json=False, evaluate=None, method="GET", *args, **kwargs):
     methods = {"POST": requests.post, "HEAD": requests.head, "GET": requests.get}
-    print("fetching", url)
+#    print("fetching", url)
     output = methods.get(method, requests.get)(url, *args, **kwargs)
 
     if callable(evaluate):
@@ -144,6 +141,8 @@ async def updateme_requirements():
 
 # --------------------------------------------------------------------- #
 
+class BashError(Exception):
+    ...
 
 async def bash(cmd, run_code=0):
     """
@@ -187,11 +186,11 @@ def check_update() -> bool:
 async def download_file(link, name, validate=False):
     """for files, without progress callback with aiohttp"""
 
-    async def _download(content):
-        if validate and "application/json" in content.headers.get("Content-Type"):
-            return None, await content.json()
+    def _download(response):
+        if validate and "application/json" in response.headers.get("Content-Type"):
+            return None, response.json()
         with open(name, "wb") as file:
-            file.write(await content.read())
+            file.write(response.content)
         return name, ""
 
     return await async_searcher(link, evaluate=_download)
@@ -236,8 +235,13 @@ def mediainfo(message: Message) -> str:
         "voice",
         "document",
     ]:
-        if getattr(message, _):
-            if _ == "document":
+        if getattr(message, _, None):
+            if _ == "sticker":
+                stickerType = {"video/webm": "video_sticker", 
+                               "image/webp": "static_sticker",
+                               "application/x-tgsticker": "animated_sticker"}
+                return stickerType[message.document.mime_type]
+            elif _ == "document":
                 attributes = {
                     DocumentAttributeSticker: "sticker",
                     DocumentAttributeAnimated: "gif",
@@ -245,8 +249,7 @@ def mediainfo(message: Message) -> str:
                     types.DocumentAttributeCustomEmoji: "custom emoji",
                     DocumentAttributeVideo: "video",
                     DocumentAttributeImageSize: "photo",
-                    DocumentAttributeFilename: "file",
-                }
+                    }
                 for __ in message.document.attributes:
                     if type(__) in attributes:
                         _i = attributes[type(__)]
@@ -301,10 +304,11 @@ def time_formatter(milliseconds, fixed_format=False):
     )
     if not tmp:
         return "0s"
-    return tmp[:1] if tmp.endswith(":") else tmp
+    return tmp[:-1] if tmp.endswith(":") else tmp
 
 
-def humanbytes(size):
+def humanbytes(size: int) -> str:
+    size = int(size)
     if not size:
         return "0B"
     unit = ""
@@ -319,9 +323,10 @@ def humanbytes(size):
     return size
 
 
-def numerize(number):
+def numerize(number: int) -> str:
+    number = int(number)
     if not number:
-        return None
+        return ""
     unit = ""
     for unit in ["", "K", "M", "B", "T"]:
         if number < 1000:
