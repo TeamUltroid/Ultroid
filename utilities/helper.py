@@ -255,7 +255,7 @@ def mediainfo(message: Message) -> str:
                             for k in message.document.attributes
                         ):
                             _i = "sticker"
-                        return _i + " as document"
+                        return f"{_i} as document"
             return _
     return ""
 
@@ -273,9 +273,9 @@ def time_with_fixed_format(years, months, weeks, days, hours, minutes, seconds):
         + ((f"{minutes}:") if minutes else "00:")
         + ((f"{seconds}") if seconds else "00")
     )
-    _ = re.search("(\d+:\d+:\d+)", tmp).group(0)
+    _ = re.search("(\d+:\d+:\d+)", tmp)[0]
     _tmp = ":".join(
-        str(k).zfill(2) for k in re.search("(\d+:\d+:\d+)", tmp).group(0).split(":")
+        str(k).zfill(2) for k in re.search("(\d+:\d+:\d+)", tmp)[0].split(":")
     )
     return re.sub(_, _tmp, tmp)
 

@@ -8,6 +8,8 @@ class GitError(Exception):
     ...
 
 class Repo:
+    """A wrapper class around git commandline"""
+
     def __init__(self, path: str = ".") -> None:
         self._path = path
     
