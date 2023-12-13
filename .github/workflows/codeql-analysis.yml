@@ -19,13 +19,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Cache CodeQL database
+        uses: actions/cache@v2
+        with:
+          path: ~/.codeql
+          key: ${{ runner.os }}-codeql-${{ hashFiles('**/qlpack.yml') }}
+          restore-keys: ${{ runner.os }}-codeql-
+
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: 'python'
-          tools: github/codeql-cli-binaries@v2.15.3
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-        with:
-          tools: github/codeql-cli-binaries@v2.15.3
+        uses: github/codeql-action/analyze@v2
