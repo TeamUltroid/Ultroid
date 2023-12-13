@@ -200,7 +200,7 @@ async def chatBot_replies(e):
         return
     if check_echo(e.chat_id, e.sender_id):
         try:
-            await e.respond(e)
+            await e.respond(e.message)
         except Exception as er:
             LOGS.exception(er)
     key = udB.get_key("CHATBOT_USERS") or {}

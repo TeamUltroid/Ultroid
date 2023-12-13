@@ -440,7 +440,6 @@ async def fetch_ann():
 
     get_ = udB.get_key("OLDANN") or []
     chat_id = udB.get_key("LOG_CHANNEL")
-
     try:
         updts = await async_searcher(
             "https://ultroid-api.vercel.app/announcements", post=True, re_json=True
@@ -507,7 +506,7 @@ async def ready():
             LOGS.exception(ef)
     if spam_sent and not spam_sent.media:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)
-    await fetch_ann()
+# TODO:    await fetch_ann()
 
 
 async def WasItRestart(udb):

@@ -83,7 +83,7 @@ async def _(ult):
     file = await ult.client.upload_file(replfile)
     try:
         if "pic" in mediainfo(reply_message.media):
-            await ult.client(UploadProfilePhotoRequest(file))
+            await ult.client(UploadProfilePhotoRequest(file=file))
         else:
             await ult.client(UploadProfilePhotoRequest(video=file))
         await eod(ok, "`My Profile Photo has Successfully Changed !`")

@@ -85,10 +85,12 @@ def main():
     # Send/Ignore Deploy Message..
     if not udB.get_key("LOG_OFF"):
         ultroid_bot.run_in_loop(ready())
-    if AsyncIOScheduler:
-        scheduler = AsyncIOScheduler()
-        scheduler.add_job(fetch_ann, "interval", minutes=12 * 60)
-        scheduler.start()
+
+    # TODO: Announcement API IS DOWN
+    # if AsyncIOScheduler:
+    #     scheduler = AsyncIOScheduler()
+    #     scheduler.add_job(fetch_ann, "interval", minutes=12 * 60)
+    #     scheduler.start()
 
     # Edit Restarting Message (if It's restarting)
     ultroid_bot.run_in_loop(WasItRestart(udB))
