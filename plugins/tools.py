@@ -24,8 +24,8 @@
     Reply a User to Get His Id
     Without Replying You Will Get the Chat's Id
 
-• `{i}sg <reply to a user><username/id>`
-    Get His Name History of the replied user.
+• `{i}sg <username>` or `{i}sgu <username>`
+    Get Name History of the user.
 
 • `{i}tr <dest lang code> <(reply to) a message>`
     Get translated message.
@@ -41,6 +41,8 @@ import io
 import os
 import secrets
 from asyncio.exceptions import TimeoutError as AsyncTimeout
+import re
+import asyncio
 
 try:
     import cv2
@@ -57,6 +59,7 @@ except ImportError:
     WebShot = None
 
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantsBots,
@@ -79,6 +82,18 @@ from . import (
 )
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
+from . import *
+
+
+def sanga_seperator(sanga_list):
+    string = "".join(info[info.find("\n") + 1 :] for info in sanga_list)
+    string = re.sub(r"^$\n", "", string, flags=re.MULTILINE)
+    name, username = string.split("Usernames**")
+    name = name.split("Names")[1]
+    return name, username
+
+def mentionuser(name, userid):
+    return f"[{name}](tg://user?id={userid})"
 
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
@@ -339,54 +354,62 @@ async def _(e):
 
 
 @ultroid_cmd(
-    pattern="sg( (.*)|$)",
+    pattern="sg(|u)(?:\s|$)([\s\S]*)",
 )
-async def lastname(steal):
-    mat = steal.pattern_match.group(1).strip()
-    message = await steal.get_reply_message()
-    if mat:
+async def sangmata(event):
+    "To get name/username history."
+    cmd = event.pattern_match.group(1)
+    user = event.pattern_match.group(2)
+    reply = await event.get_reply_message()
+    if not user and reply:
+        user = reply.from_id
+    if not user:
+        await event.edit(
+            "`Reply to  user's text message to get name/username history or give userid/username`",
+        )
+        await asyncio.sleep(10)
+        return await event.delete()
+
+    userinfo = await ultroid_bot.get_entity(user)
+    if not isinstance(userinfo, types.User):
+        await event.edit("`Can't fetch the user...`")
+        await asyncio.sleep(10)
+        return await event.delete()
+
+    ultevent = await event.edit("`Processing...`")
+    async with event.client.conversation("@SangMata_beta_bot") as conv:
         try:
-            user_id = await steal.client.parse_id(mat)
-        except ValueError:
-            user_id = mat
-    elif message:
-        user_id = message.sender_id
-    else:
-        return await steal.eor("`Use this command with reply or give Username/id...`")
-    chat = "@SangMataInfo_bot"
-    id = f"/search_id {user_id}"
-    lol = await steal.eor(get_string("com_1"))
-    try:
-        async with steal.client.conversation(chat) as conv:
+            await conv.send_message(userinfo.id)
+        except YouBlockedUserError:
+            await catub(unblock("SangMata_beta_bot"))
+            await conv.send_message(userinfo.id)
+        responses = []
+        while True:
             try:
-                msg = await conv.send_message(id)
-                response = await conv.get_response()
-                respond = await conv.get_response()
-                responds = await conv.get_response()
-            except YouBlockedUserError:
-                return await lol.edit("Please unblock @sangmatainfo_bot and try again")
-            if (
-                (response and response.text == "No records found")
-                or (respond and respond.text == "No records found")
-                or (responds and responds.text == "No records found")
-            ):
-                await lol.edit("No records found for this user")
-                await steal.client.delete_messages(conv.chat_id, [msg.id, response.id])
-            elif response.text.startswith("🔗"):
-                await lol.edit(respond.message)
-                await lol.reply(responds.message)
-            elif respond.text.startswith("🔗"):
-                await lol.edit(response.message)
-                await lol.reply(responds.message)
-            else:
-                await lol.edit(respond.message)
-                await lol.reply(response.message)
-            await steal.client.delete_messages(
-                conv.chat_id,
-                [msg.id, responds.id, respond.id, response.id],
-            )
-    except AsyncTimeout:
-        await lol.edit("Error: @SangMataInfo_bot is not responding!.")
+                response = await conv.get_response(timeout=2)
+            except asyncio.TimeoutError:
+                break
+            responses.append(response.text)
+        await event.client.send_read_acknowledge(conv.chat_id)
+
+    if not responses:
+        await event.edit("`Bot can't fetch results`")
+        await asyncio.sleep(10)
+        await event.delete()
+    if "No records found" in responses:
+        await event.edit("`The user doesn't have any record`")
+        await asyncio.sleep(10)
+        await event.delete()
+
+    names, usernames = sanga_seperator(responses)
+    check = (usernames, "Username") if cmd == "u" else (names, "Name")
+    user_name = (
+        f"{userinfo.first_name} {userinfo.last_name}"
+        if userinfo.last_name
+        else userinfo.first_name
+    )
+    output = f"**➜ User Info :**  {mentionuser(user_name, userinfo.id)}\n**➜ {check[1]} History :**\n{check[0]}"
+    await event.edit(output)
 
 
 @ultroid_cmd(pattern="webshot( (.*)|$)")
@@ -458,4 +481,4 @@ async def magic(event):
         return await event.eor(f'**ERROR :** `{response["message"]}`')
     await event.eor(
         f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : {data['response']['tinyUrl']}"
-    )
+)
