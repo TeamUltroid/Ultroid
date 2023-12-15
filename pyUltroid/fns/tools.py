@@ -119,8 +119,12 @@ async def metadata(file):
             f"'{_}' is not installed!\nInstall it to use this command."
         )
     data = {}
-    _info = json.loads(out)["media"]["track"]
-    info = _info[0]
+
+    try:
+        _info = json.loads(out)["media"]["track"]
+        info = _info[0]
+    except (json.decoder.JSONDecodeError, KeyError, IndexError):
+        return None
     if info.get("Format") in ["GIF", "PNG"]:
         return {
             "height": _info[1]["Height"],
