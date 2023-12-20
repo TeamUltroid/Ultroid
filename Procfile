@@ -1,1 +1,1 @@
-bash startup script
+worker: bash startup
