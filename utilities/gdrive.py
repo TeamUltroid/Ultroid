@@ -5,23 +5,20 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import base64
 import json
 import logging
 import os
+import random
 import time
-
 from mimetypes import guess_type
 from urllib.parse import parse_qs, urlencode
-
+import aiofiles
 from aiohttp import ClientSession
 from aiohttp.client_exceptions import ContentTypeError
 
 from database import udB
 
 from .helper import humanbytes, time_formatter
-import random
-
 
 try:
     import jwt
@@ -327,12 +324,12 @@ class GDrive:
             + r.headers.get("X-GUploader-UploadID")
         )
 
-        with open(path, "rb") as f:
+        async with aiofiles.open(path, "rb") as f:
             uploaded = 0
             start = time.time()
             resp = None
             while filesize != uploaded:
-                chunk_data = f.read(chunksize)
+                chunk_data = await f.read(chunksize)
                 headers = {
                     "Content-Length": str(len(chunk_data)),
                     "Content-Range": "bytes "
@@ -406,12 +403,13 @@ class GDrive:
             self.base_url + f"/files/{fileId}",
             headers=headers,
             params={"alt": "media", **params},
+            timeout=None,
         ) as resp1:
-            with open(filename, "wb") as f:
+            async with aiofiles.open(filename, "wb") as f:
                 downloaded = 0
                 start = time.time()
                 async for chunk in resp1.content.iter_chunked(chunksize):
-                    downloaded += f.write(chunk)
+                    downloaded += await f.write(chunk)
                     diff = time.time() - start
                     percentage = round((downloaded / filesize) * 100, 2)
                     speed = round(downloaded / diff, 2)
