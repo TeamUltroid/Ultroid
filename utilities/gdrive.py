@@ -381,7 +381,7 @@ class GDrive:
             "parents": [folder_id] if folder_id else [self.folder_id],
         }
         r = await self._session.get(
-            self.base_url + f"files/{fileId}",
+            self.base_url + f"/files/{fileId}",
             headers=headers,
             params=params,
         )
@@ -403,7 +403,7 @@ class GDrive:
         filesize = int(resp.get("size", 1))
 
         async with self._session.get(
-            self.base_url + f"files/{fileId}",
+            self.base_url + f"/files/{fileId}",
             headers=headers,
             params={"alt": "media", **params},
         ) as resp1:
