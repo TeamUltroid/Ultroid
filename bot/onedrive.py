@@ -95,8 +95,9 @@ class OneDrive:
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data=data,
         ) as resp:
+            expiry_time = self.creds["expires_in"]
             self.creds = await resp.json()
-            self.creds["expires_at"] = time.time() + self.creds["expires_in"]
+            self.creds["expires_at"] = time.time() + expiry_time
             udB.set_key("OD_AUTH_TOKEN", self.creds)
             await resp.release()
             return self.creds
@@ -114,8 +115,9 @@ class OneDrive:
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data=data,
         ) as resp:
+            expiry_time = self.creds["expires_in"]
             self.creds = await resp.json()
-            self.creds["expires_at"] = time.time() + self.creds["expires_in"]
+            self.creds["expires_at"] = time.time() + expiry_time
             await resp.release()
             udB.set_key("OD_AUTH_TOKEN", self.creds)
             return
