@@ -95,9 +95,10 @@ class OneDrive:
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data=data,
         ) as resp:
-            expiry_time = self.creds.get("expires_in")
             self.creds = await resp.json()
-            self.creds["expires_at"] = time.time() + expiry_time
+            if self.creds.get("error"):
+                return self.creds
+            self.creds["expires_at"] = time.time() + self.creds.get("expires_in")
             udB.set_key("OD_AUTH_TOKEN", self.creds)
             await resp.release()
             return self.creds
