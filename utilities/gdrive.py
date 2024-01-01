@@ -20,6 +20,8 @@ from aiohttp.client_exceptions import ContentTypeError
 from database import udB
 
 from .helper import humanbytes, time_formatter
+import random
+
 
 try:
     import jwt
@@ -358,3 +360,70 @@ class GDrive:
                     await event.edit(crnt_txt)
                     last_txt = crnt_txt
             return await resp.json()
+
+    async def download_file(
+        self, event, fileId: str, filename: str = None, folder_id: str = None
+    ):
+        await self._refresh_access_token() if time.time() > self.creds.get(
+            "expires_in"
+        ) else None
+        fileId = fileId.split("id=")[1].split("&")[0] if "https" in fileId else fileId
+        last_txt = ""
+        chunksize = 104857600  # 100MB
+        headers = {
+            "Authorization": "Bearer " + self.creds.get("access_token"),
+            "Content-Type": "application/json",
+        }
+        params = {
+            "supportsAllDrives": "true",
+            "includeItemsFromAllDrives": "true",
+            "fields": "id, name, mimeType, size",
+            "parents": [folder_id] if folder_id else [self.folder_id],
+        }
+        r = await self._session.get(
+            self.base_url + f"files/{fileId}",
+            headers=headers,
+            params=params,
+        )
+        if r.status != 200:
+            return await r.json()
+        resp = await r.json()
+
+        def generate_random_characters():
+            return "".join(
+                random.choice(
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                )
+                for _ in range(16)
+            )
+
+        filename = (
+            filename if filename else resp.get("name", generate_random_characters())
+        )
+        filesize = int(resp.get("size", 1))
+
+        async with self._session.get(
+            self.base_url + f"files/{fileId}",
+            headers=headers,
+            params={"alt": "media", **params},
+        ) as resp1:
+            with open(filename, "wb") as f:
+                downloaded = 0
+                start = time.time()
+                async for chunk in resp1.content.iter_chunked(chunksize):
+                    chunk_data = f.write(chunk)
+                    downloaded += len(chunk_data)
+                    diff = time.time() - start
+                    percentage = round((downloaded / filesize) * 100, 2)
+                    speed = round(downloaded / diff, 2)
+                    eta = round((filesize - downloaded) / speed, 2) * 1000
+                    crnt_txt = (
+                        f"`Downloading {filename} to GDrive...\n\n"
+                        + f"Status: {humanbytes(downloaded)}/{humanbytes(filesize)} »» {percentage}%\n"
+                        + f"Speed: {humanbytes(speed)}/s\n"
+                        + f"ETA: {time_formatter(eta)}`"
+                    )
+                    if round((diff % 10.00) == 0) or last_txt != crnt_txt:
+                        await event.edit(crnt_txt)
+                        last_txt = crnt_txt
+        return resp
