@@ -98,7 +98,8 @@ class OneDrive:
             self.creds = await resp.json()
             if self.creds.get("error"):
                 return self.creds
-            self.creds["expires_at"] = time.time() + self.creds.get("expires_in")
+            self.creds["expires_at"] = time.time() + \
+                self.creds.get("expires_in")
             udB.set_key("OD_AUTH_TOKEN", self.creds)
             await resp.release()
             return self.creds
