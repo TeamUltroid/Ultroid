@@ -411,8 +411,7 @@ class GDrive:
                 downloaded = 0
                 start = time.time()
                 async for chunk in resp1.content.iter_chunked(chunksize):
-                    chunk_data = f.write(chunk)
-                    downloaded += len(chunk_data)
+                    downloaded += f.write(chunk)
                     diff = time.time() - start
                     percentage = round((downloaded / filesize) * 100, 2)
                     speed = round(downloaded / diff, 2)
