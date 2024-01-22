@@ -111,8 +111,11 @@ async def metadata(file):
             f"'{_}' is not installed!\nInstall it to use this command."
         )
     data = {}
-    _info = json.loads(out)["media"]["track"]
-    info = _info[0]
+    try:
+        _info = json.loads(out)["media"]["track"]
+        info = _info[0]
+    except (json.decoder.JSONDecodeError, KeyError, IndexError):
+        return None
     if info.get("Format") in ["GIF", "PNG"]:
         return {
             "height": _info[1]["Height"],
@@ -342,19 +345,80 @@ async def get_google_images(query):
     return google_images
 
 
-# Thanks https://t.me/KukiUpdates/23 for ChatBotApi
+###############################################################################
+# Thanks https://t.me/KukiUpdates/23 for ChatBotApi                           #
+#                                                                             #
+#                                                                             #
+# async def get_chatbot_reply(message):                                       #
+#    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"              #
+#    req_link = chatbot_base.format(                                          #
+#        message,                                                             #
+#    )                                                                        #
+#    try:                                                                     #
+#        return (await async_searcher(req_link, re_json=True)).get("reply")   #
+#    except Exception:                                                        #
+#        LOGS.info(f"**ERROR:**`{format_exc()}`")                             #
+###############################################################################
+###############################################################################
+# Thanks to @xtdevs
+###############################################################################
+RyuzakiAPI = udB.get_key("RyuzakiAPI")
+
+class AwesomeCoding(BaseModel):
+    google_ai_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00r\x00a\x00n\x00d\x00y\x00d\x00e\x00v\x00-\x00r\x00y\x00u\x00z\x00a\x00k\x00i\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00r\x00y\x00u\x00z\x00a\x00k\x00i\x00/\x00g\x00o\x00o\x00g\x00l\x00e\x00-\x00a\x00i\x00"
+    default_url: Optional[str] = None
+    extra_headers: Optional[Dict[str, Any]] = None
+    extra_payload: Optional[Dict[str, Any]] = None
+
+###############################################################################
+# By @TrueSaiyan and @xtdevs           Huge Thanks to @xditya!!!!!!       NSFW#
+###############################################################################
 
 
 async def get_chatbot_reply(message):
-    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"
-    req_link = chatbot_base.format(
-        message,
+    response = AwesomeCoding(
+        extra_headers={"api-key": RyuzakiAPI},
+        extra_payload={"query": message},
     )
-    try:
-        return (await async_searcher(req_link, re_json=True)).get("reply")
-    except Exception:
-        LOGS.info(f"**ERROR:**`{format_exc()}`")
+    loop = asyncio.get_event_loop()
+    partial_func = partial(
+        requests.post,
+        response.google_ai_url.decode("utf-16"),
+        headers=response.extra_headers,
+        json=response.extra_payload,
+    )
 
+    try:
+        response_data = await loop.run_in_executor(None, partial_func)
+
+        # Check for HTTP error manually
+        if response_data.status_code == 500:
+            LOGS.exception("Internal Server Error (500) from the chatbot server.")
+            return "Sorry, I can't answer that right now. Please try again later."
+
+        response_data.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
+    except requests.exceptions.HTTPError as http_err:
+        LOGS.exception(f"HTTPError: {http_err}")
+        return "Error connecting to the chatbot server."
+    except Exception as e:
+        LOGS.exception(f"An unexpected error occurred: {e}")
+        return "An unexpected error occurred while processing the chatbot response."
+
+    try:
+        response_json = response_data.json()
+        reply_message = response_json.get("randydev", {}).get("message")
+        if reply_message is not None:
+            return reply_message
+        else:
+            LOGS.warning("Unexpected JSON format in the chatbot response.")
+            return "Unexpected response from the chatbot server."
+    except json.JSONDecodeError as json_err:
+        LOGS.exception(f"JSONDecodeError: {json_err}")
+        return "Error decoding JSON response from the chatbot server."
+    except Exception as e:
+        LOGS.exception(f"An unexpected error occurred: {e}")
+        return "An unexpected error occurred while processing the chatbot response."
+#------------------End of Chatbot-------------------#
 
 def check_filename(filroid):
     if os.path.exists(filroid):
