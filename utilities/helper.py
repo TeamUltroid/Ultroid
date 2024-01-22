@@ -100,6 +100,27 @@ def inline_mention(user, custom=None, html=False):
     return mention_text
 
 
+async def check_reply_to(event):
+    if (event.is_private and event.is_reply) or (
+        event.is_reply and event.reply_to_msg_id
+    ):
+        try:
+            replied_message = await event.client.get_messages(
+                event.chat_id, ids=event.reply_to_msg_id
+            )
+            if replied_message.from_id:
+                entity = replied_message.from_id.user_id
+            if replied_message.peer_id and not replied_message.from_id:
+                entity = replied_message.peer_id.channel_id
+            else:
+                return False
+            return entity in truai
+        except:
+            # For private messages, no need to check the entity, as it's
+            # already a reply
+            return True
+    return False
+
 # ----------------- Load \\ Unloader ---------------- #
 
 
