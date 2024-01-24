@@ -6,11 +6,14 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 import asyncio
+import requests
 
 from telethon import events
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
+from typing import List, Optional, Union
+
 
 from pyUltroid.dB import stickers
 from pyUltroid.dB.echo_db import check_echo
@@ -28,6 +31,32 @@ except ImportError:
 from . import LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
 from ._inline import something
 
+#------------------------- UFoP Bans -------------------------#
+class UFoPBan:
+    def __init__(self, api_key: str = None):
+        self.api_key = api_key
+
+    def _make_request(self, method: str, url: str, params: dict = None, json_data: dict = None):
+        headers = {
+            "accept": "application/json",
+            "api-key": self.api_key
+        }
+        try:
+            response = requests.request(
+                method, url, headers=headers, params=params, json=json_data
+            )
+            return response.json()
+        except requests.RequestException:
+            pass
+
+    def get_ufop_ban(self, user_id: int=None, banlist: bool = False) -> Union[dict, str]:
+        if banlist:
+            url = "https://ufoptg-ufop-api.hf.space/UFoP/bans"
+            payload = {"user_id": user_id}
+            return self._make_request("GET", url, params=payload)
+        else:
+            raise ValueError("Error: banlist must be True
+#------------------------- Huge Thanks to @xtdevs -------------------------#
 
 @ultroid_bot.on(events.ChatAction())
 async def Function(event):
@@ -97,6 +126,28 @@ async def DummyHandler(ult):
 
             except BaseException:
                 pass
+
+        if udB.get_key("UFoP_BANS"):
+            ufop_api_key = udB.get_key("UFOPAPI")
+            clients = UFoPBan(ufop_api_key)
+            try:
+                UFoP_banned = clients.get_ufop_ban(user_id=user.id, banlist=True)
+                
+                if UFoP_banned and UFoP_banned.get("sukuna", {}).get("is_banned", False):
+                    await ult.client.edit_permissions(
+                        chat.id,
+                        user.id,
+                        view_messages=False,
+                    )
+                    await ult.respond(
+                        f'**🌀ʊʄ⊕ք🌀:** Banned user detected and banned!\n'
+                        f'Sibyl User ID: {UFoP_banned["sukuna"]["sibyl_user_id"]}\n'
+                        f'Ban Reason: {UFoP_banned["sukuna"]["reason"]}',
+                    )
+
+            except Exception as e:
+                LOGS.exception(f"Error checking UFoP: {e}")
+
         reason = is_gbanned(user.id)
         if reason and chat.admin_rights:
             try:
