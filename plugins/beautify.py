@@ -12,11 +12,12 @@ __doc__ = get_help("help_beautify")
 
 import os
 import random
+from secrets import token_hex
+from urllib.parse import urlencode
 
 from telethon.utils import get_display_name
-from urllib.parse import urlencode
-from . import Carbon, ultroid_cmd, get_string, inline_mention
-from secrets import token_hex
+
+from . import Carbon, get_string, inline_mention, ultroid_cmd
 
 _colorspath = "resources/colorlist.txt"
 
@@ -108,7 +109,9 @@ async def pass_on(ult):
     try:
         from playwright.async_api import async_playwright
     except ImportError:
-        await ult.eor("`playwright` is not installed!\nPlease install it to use this command..")
+        await ult.eor(
+            "`playwright` is not installed!\nPlease install it to use this command.."
+        )
         return
     proc = await ult.eor(get_string("com_1"))
     spli = ult.text.split()
@@ -139,11 +142,7 @@ async def pass_on(ult):
         text = msg.message
         title = get_display_name(msg.sender)
     name = token_hex(8) + ".png"
-    data = {
-        "darkMode": dark,
-        "theme": theme,
-        "title": title
-    }
+    data = {"darkMode": dark, "theme": theme, "title": title}
     url = f"https://ray.so/#{urlencode(data)}"
     async with async_playwright() as play:
         chrome = await play.chromium.launch()
@@ -157,8 +156,6 @@ async def pass_on(ult):
         async with page.expect_download() as dl:
             dled = await dl.value
             await dled.save_as(name)
-    await proc.reply(
-        file=name
-    )
+    await proc.reply(file=name)
     await proc.try_delete()
     os.remove(name)

@@ -82,7 +82,9 @@ from . import (
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
 
-#-------------- Sangmata stuff --------------#
+# -------------- Sangmata stuff --------------#
+
+
 def sanga_seperator(sanga_list):
     string = "".join(info[info.find("\n") + 1 :] for info in sanga_list)
     string = re.sub(r"^$\n", "", string, flags=re.MULTILINE)
@@ -93,7 +95,10 @@ def sanga_seperator(sanga_list):
 
 def mentionuser(name, userid):
     return f"[{name}](tg://user?id={userid})"
-#-------------- Sangmata stuff --------------#
+
+
+# -------------- Sangmata stuff --------------#
+
 
 @ultroid_cmd(pattern="tr( (.*)|$)", manager=True)
 async def _(event):
