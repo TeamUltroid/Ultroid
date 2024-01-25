@@ -39,7 +39,7 @@ jobs:
           commit_message: 'pylint: auto fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: buddhhu
-          commit_user_email: 48654350+buddhhu@users.noreply.github.com
-          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>
+          commit_user_name: ufoptg
+          commit_user_email: perthgroups@protonmail.com
+          commit_author: True Saiyan <perthgroups@protonmail.com>
           
