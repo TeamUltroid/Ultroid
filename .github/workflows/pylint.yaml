@@ -1,7 +1,7 @@
 name: PyLint
 on:
   push:
-    branches: [ dev ]
+    branches: [ patch-1 ]
     paths:
     - "**.py"
 jobs:
