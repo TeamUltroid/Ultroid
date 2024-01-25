@@ -55,7 +55,7 @@ class UFoPBan:
             payload = {"user_id": user_id}
             return self._make_request("GET", url, params=payload)
         else:
-            raise ValueError("Error: banlist must be True
+            raise ValueError("Error: banlist must be True")
 #------------------------- Huge Thanks to @xtdevs -------------------------#
 
 @ultroid_bot.on(events.ChatAction())
