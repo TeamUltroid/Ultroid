@@ -52,7 +52,7 @@ async def eod(event, text=None, **kwargs):
 async def _try_delete(event):
     try:
         return await event.delete()
-    except (MessageDeleteForbiddenError):
+    except MessageDeleteForbiddenError:
         pass
     except BaseException as er:
         from . import LOGS
