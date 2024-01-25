@@ -1,4 +1,4 @@
-name: PyLint
+name: PyLint Ultroid
 on:
   push:
     branches: [ patch-1 ]
@@ -37,9 +37,8 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
-          commit_options: '--no-verify'
+          commit_options: '--verify'
           repository: .
           commit_user_name: ufoptg
-          commit_user_email: perthgroups@protonmail.com
-          commit_author: True Saiyan <perthgroups@protonmail.com>
-          
+          commit_user_email: ufperth@protonmail.com
+          commit_author: ufoptg <ufperth@protonmail.com>
