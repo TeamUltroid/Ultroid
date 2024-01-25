@@ -21,6 +21,7 @@ from addons.inlinegames import edit_delete, edit_or_reply, reply_id
 from . import BASE, SESSION
 
 openai.api_key = udB.get_key("OPENAI_API")  # OPENAI KEY
+
 conversations = {}
 
 
