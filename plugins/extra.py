@@ -10,15 +10,11 @@ from . import get_help
 __doc__ = get_help("extra")
 
 import asyncio
-import logging
-import os
 
-from telethon import errors, events, functions
 from telethon.errors import FloodWaitError
-from telethon.tl.types import PeerChannel, PeerUser
 
-from . import get_string, ultroid_cmd
 from . import *
+from . import get_string, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -112,11 +108,13 @@ async def delete_messages(event):
                 # before retrying
                 wait_time = e.seconds + 5
                 logger.warning(
-                    f"FloodWaitError occurred. Waiting for {wait_time} seconds.")
+                    f"FloodWaitError occurred. Waiting for {wait_time} seconds."
+                )
                 await asyncio.sleep(wait_time)
                 continue
 
     # Reply to the command with a confirmation message
     await event.reply(f"Messages containing the phrase '{search_phrase}' deleted.")
     logger.info(
-        f"Deleted messages containing the phrase '{search_phrase}' in chat {chat_id}")
+        f"Deleted messages containing the phrase '{search_phrase}' in chat {chat_id}"
+    )
