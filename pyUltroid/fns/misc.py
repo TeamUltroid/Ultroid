@@ -357,7 +357,6 @@ class Quotly:
                     text += f" in {rep.game.title}"
             elif isinstance(event.action, types.MessageActionPinMessage):
                 text = "pinned a message."
-            # TODO: Are there any more events with sender?
 
         message = {
             "entities": entities,
