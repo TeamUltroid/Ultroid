@@ -511,7 +511,7 @@ async def get_chatbot_reply(message):
         return "An unexpected error occurred while processing the chatbot response."
 
 
-async def get_orcale_reply(query, user_id, mongo_url):
+async def get_oracle_reply(query, user_id, mongo_url):
     response = RendyDevChat(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
