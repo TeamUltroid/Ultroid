@@ -3,3 +3,6 @@
 https://github.com/New-dev0/Telethon/archive/platy.zip
 python-decouple
 python-dotenv
+
+# Required for chatbot
+git+https://github.com/ufoptg/RyuzakiLib.git
