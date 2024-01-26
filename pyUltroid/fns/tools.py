@@ -43,6 +43,7 @@ from urllib.parse import quote, unquote
 
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from RyuzakiLib.hackertools.chatgpt import RandyDevChat
 
 if run_as_module:
     from ..dB.filestore_db import get_stored_msg, store_msg
@@ -508,6 +509,24 @@ async def get_chatbot_reply(message):
     except Exception as e:
         LOGS.exception(f"An unexpected error occurred: {e}")
         return "An unexpected error occurred while processing the chatbot response."
+
+
+async def get_orcale_reply(query, user_id, mongo_url):
+    response = RendyDevChat(query).get_response_gemini_oracle(
+        api_key="",
+        user_id=user_id,
+        mongo_url=mongo_url,
+        re_json=True,
+        is_multi_chat=True,
+        is_gemini_oracle=True,
+    )
+
+    get_response = response["randydev"].get("message") if response else None
+
+    if get_response is not None:
+        return get_response
+    else:
+        return "Unexpected response from the chatbot server."
 
 #-----------------------------------------------------------------------------------#
 
