@@ -18,7 +18,7 @@ from pyUltroid.dB.forcesub_db import get_forcesetting
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.nsfw_db import is_profan
-from pyUltroid.fns.helper import inline_mention
+from pyUltroid.fns.helper import inline_mention, check_reply_to
 from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply
 
 try:
@@ -192,33 +192,60 @@ async def DummyHandler(ult):
         else:
             await ult.reply(file=med)
 
+#Thanks to @TrueSaiyan
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
-    sender = await e.get_sender()
-    if not isinstance(sender, types.User) or sender.bot:
-        return
-    if check_echo(e.chat_id, e.sender_id):
-        try:
-            await e.respond(e.message)
-        except Exception as er:
-            LOGS.exception(er)
-    key = udB.get_key("CHATBOT_USERS") or {}
-    if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
-        msg = await get_chatbot_reply(e.message.message)
-        if msg:
-            sleep = udB.get_key("CHATBOT_SLEEP") or 1.5
-            await asyncio.sleep(sleep)
-            await e.reply(msg)
-    chat = await e.get_chat()
-    if e.is_group and sender.username:
-        await uname_stuff(e.sender_id, sender.username, sender.first_name)
-    elif e.is_private and chat.username:
-        await uname_stuff(e.sender_id, chat.username, chat.first_name)
-    if detector and is_profan(e.chat_id) and e.text:
-        x, y = detector(e.text)
-        if y:
-            await e.delete()
+    xxrep = await check_reply_to(e)
+
+    if xxrep:
+        sender = await e.get_sender()
+        if not isinstance(sender, types.User) or sender.bot:
+            return
+        if check_echo(e.chat_id, e.sender_id):
+            try:
+                await e.respond(e.message)
+            except Exception as er:
+                LOGS.exception(er)
+        key = udB.get_key("CHATBOT_USERS") or {}
+        if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
+            # Simulate typing indicator
+            async with e.client.action(e.chat_id, "typing"):
+                msg = await get_chatbot_reply(e.message.message)
+                if msg:
+                    sleep = udB.get_key("CHATBOT_SLEEP") or 1.5
+                    await asyncio.sleep(sleep)
+
+                    # Check if the message length exceeds a certain threshold
+                    if len(msg) > 4096:
+                        # Create a temporary text file
+                        with tempfile.NamedTemporaryFile(
+                            mode="w+", delete=False
+                        ) as temp_file:
+                            temp_file.write(msg)
+
+                        # Send the text file with a caption
+                        await e.client.send_file(
+                            e.chat_id,
+                            temp_file.name,
+                            caption="Here is the response in a text file.",
+                        )
+
+                        # Delete the temporary text file
+                        os.remove(temp_file.name)
+                    else:
+                        # Send the message directly
+                        await e.reply(msg)
+
+        chat = await e.get_chat()
+        if e.is_group and sender.username:
+            await uname_stuff(e.sender_id, sender.username, sender.first_name)
+        elif e.is_private and chat.username:
+            await uname_stuff(e.sender_id, chat.username, chat.first_name)
+        if detector and is_profan(e.chat_id) and e.text:
+            x, y = detector(e.text)
+            if y:
+                await e.delete()
 
 
 @ultroid_bot.on(events.Raw(types.UpdateUserName))
