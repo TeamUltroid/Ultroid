@@ -21,7 +21,7 @@ from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.nsfw_db import is_profan
 from pyUltroid.fns.helper import check_reply_to, inline_mention
-from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply, get_oracle_reply
+from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply
 
 try:
     from ProfanityDetector import detector
