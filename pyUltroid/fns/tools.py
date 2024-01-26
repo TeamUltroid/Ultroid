@@ -22,6 +22,7 @@ from .. import *
 from ..exceptions import DependencyMissingError
 from . import some_random_headers
 from .helper import async_searcher, bash, run_async
+from RyuzakiLib.hackertools.chatgpt import RandyDevChat
 
 try:
     import certifi
@@ -433,18 +434,25 @@ async def get_google_images(query):
     return google_images
 
 
-# Thanks https://t.me/KukiUpdates/23 for ChatBotApi
+# Thanks https://t.me/TrueSaiyan and @xtdevs for chatbot
 
 
-async def get_chatbot_reply(message):
-    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"
-    req_link = chatbot_base.format(
-        message,
+async def get_chatbot_reply(query, user_id, mongo_url):
+    response = RendyDevChat(query).get_response_gemini_oracle(
+        api_key="",
+        user_id=user_id,
+        mongo_url=mongo_url,
+        re_json=True,
+        is_multi_chat=True,
+        is_gemini_oracle=True,
     )
-    try:
-        return (await async_searcher(req_link, re_json=True)).get("reply")
-    except Exception:
-        LOGS.info(f"**ERROR:**`{format_exc()}`")
+
+    get_response = response["randydev"].get("message") if response else None
+
+    if get_response is not None:
+        return get_response
+    else:
+        return "Unexpected response from the chatbot server."
 
 def check_filename(filroid):
     if os.path.exists(filroid):
