@@ -117,7 +117,9 @@ async def open_grp():
                     ),
                 )
             )
-            await ultroid_bot.send_message(chat, "**NightMode Off**\n\nGroup Opened 🥳.")
+            await ultroid_bot.send_message(
+                chat, "**NightMode Off**\n\nGroup Opened 🥳."
+            )
         except Exception as er:
             LOGS.info(er)
 

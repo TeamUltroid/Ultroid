@@ -570,7 +570,9 @@ async def emoji(event):
     var = "EMOJI_IN_HELP"
     name = f"Emoji in `{HNDLR}help` menu"
     async with event.client.conversation(pru) as conv:
-        await conv.send_message("Send emoji u want to set 🙃.\n\nUse /cancel to cancel.")
+        await conv.send_message(
+            "Send emoji u want to set 🙃.\n\nUse /cancel to cancel."
+        )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
