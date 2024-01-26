@@ -10,7 +10,7 @@ from . import get_help
 __doc__ = get_help("help_chatbot")
 
 
-from pyUltroid.fns.tools import get_chatbot_reply, get_oracle_reply
+from pyUltroid.fns.tools import get_chatbot_reply
 
 from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd
 
