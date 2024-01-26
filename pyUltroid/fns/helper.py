@@ -97,6 +97,31 @@ def inline_mention(user, custom=None, html=False):
     return mention_text
 
 
+async def check_reply_to(event):
+    truai = [client.me.id]
+    if (event.is_private and event.is_reply) or (
+        event.is_reply and event.reply_to_msg_id
+    ):
+        try:
+            replied_message = await event.client.get_messages(
+                event.chat_id, ids=event.reply_to_msg_id
+            )
+            if replied_message.from_id:
+                user_id = replied_message.from_id.user_id
+                if user_id in truai:
+                    return True
+            elif replied_message.peer_id and not replied_message.from_id:
+                channel_id = replied_message.peer_id.channel_id
+                if channel_id in truai:
+                    return True
+            # If neither user_id nor channel_id is in truai, return False
+            return False
+        except Exception as e:
+            # Log the exception for debugging
+            print(f"Exception: {e}")
+            return False
+    return False
+
 # ----------------- Load \\ Unloader ---------------- #
 
 
