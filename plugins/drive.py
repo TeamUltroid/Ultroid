@@ -165,5 +165,9 @@ async def drive_delete_func(event):
     match = event.pattern_match.group(2)
     if not match:
         return await event.eor("Give FileId which you want to delete from gdrive.")
-    res = await drive.delete(match)
-    await event.eor(f"`{res}`")
+    fileId = match.split("id=")[1].split("&")[0] if "https" in match else match
+    res = await drive.delete(fileId)
+    if "status" in res.keys():
+        await event.eor("File deleted successfully.")
+    else:
+        await event.eor("File not found.")
