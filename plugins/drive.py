@@ -39,11 +39,28 @@ async def drive_upload_func(event):
     )
 
 
-@ultroid_cmd("gddl( (.*)|$)", fullsudo=True)
+@ultroid_cmd("gddl\s+(\S+)(?:\s+-o\s+(\S+))?(?:\s+-f\s+(\S+))?", fullsudo=True)
 async def drive_download_func(event):
-    """`{}gddl <link>` - Download file from Google Drive using link."""
-    ...
-
+    """`{}gddl <link> -o <filename> -f <Folder ID>` - Download file from Google Drive using link.
+    Args:
+        `-o <filename>` (OPTIONAL)- Filename of output.
+        `-f <Folder ID>` (OPTIONAL)- Folder's ID from where the file should be fetched."""
+    if not drive.creds.get("access_token"):
+        return await event.eor("Please authorise with Gdrive before using gdrive.")
+    match = event.pattern_match
+    if not match:
+        return await event.eor("Give link to download.")
+    file_id = match.group(1)
+    filename, folder_id = None, None
+    if "-o" in event.text:
+        filename = match.group(2)
+    if "-f" in event.text:
+        folder_id = match.group(3)
+    xxx = await event.eor("Trying to download file from drive...")
+    _ = await drive.download_file(xxx, file_id, filename, folder_id)
+    filename = _.get("name") or filename
+    await xxx.edit(f"{filename} downloaded from drive.")
+    
 
 @ultroid_cmd("gdusg$")
 async def drive_usage_func(event):
@@ -97,7 +114,7 @@ async def drive_list_func(event):
             if file.get("webContentLink")
             else f"Link: {file['webViewLink']}\n"
         )
-        text += f"Size: {file['size']}\n\n" if file.get("size") else "\n"
+        text += f"Size: {humanbytes(file['size'])}\n\n" if file.get("size") else "\n"
     if len(text) > 4096:
         with open("drivefiles.txt", "w") as dfiles:
             dfiles.write(text)
