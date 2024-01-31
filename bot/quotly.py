@@ -10,7 +10,7 @@ from utilities.helper import async_searcher
 from database import udB
 from database.helpers import DEVLIST
 
-_API = "https://bot.lyo.su/quote/generate"
+_API = "https://quoteampi.onrender.com/generate"
 
 _entities = {
     types.MessageEntityPhone: "phone_number",
