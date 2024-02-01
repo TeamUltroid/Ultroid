@@ -24,14 +24,12 @@ jobs:
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/manager/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive plugins/*.py
-          autopep8 --verbose --in-place --recursive --aggressive --aggressive addons/*.py
       - name: Remove unused imports and variables
         run: |
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports pyUltroid/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/manager/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*.py
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports addons/*.py
       - name: lint with isort and black
         run: |
           isort --profile black pyUltroid/*.py
@@ -42,8 +40,6 @@ jobs:
           black assistant/manager/*.py
           isort plugins/*.py
           black --fast plugins/*.py
-          isort --profile black addons/*.py
-          black --fast addons/*.py
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
