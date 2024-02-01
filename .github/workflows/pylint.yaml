@@ -18,16 +18,20 @@ jobs:
         run: pip install autopep8 autoflake isort black
       - name: Check for showstoppers
         run: |
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive pyUltroid/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/manager/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive plugins/*.py
       - name: Remove unused imports and variables
         run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports pyUltroid/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/manager/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*.py
       - name: lint with isort and black
         run: |
+          isort --profile black pyUltroid/*.py
+          black --fast pyUltroid/*.py
           isort assistant/*.py
           isort assistant/manager/*.py
           black --fast assistant/*.py
