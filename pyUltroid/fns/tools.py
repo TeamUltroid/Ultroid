@@ -5,6 +5,8 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import aiohttp
+import asyncio
 import json
 import math
 import os
@@ -22,7 +24,6 @@ from .. import *
 from ..exceptions import DependencyMissingError
 from . import some_random_headers
 from .helper import async_searcher, bash, run_async
-from RyuzakiLib.hackertools.chatgpt import RandyDevChat
 
 try:
     import certifi
@@ -436,9 +437,51 @@ async def get_google_images(query):
 
 # Thanks https://t.me/TrueSaiyan and @xtdevs for chatbot
 
+class ChatBot:
+    def __init__(
+        self,
+        query: str = None,
+    ):
+        self.query = query
+
+    async def get_response_gemini_oracle(
+        self,
+        api_key: str = None,
+        user_id: int = None,
+        mongo_url: str = None,
+        re_json: bool = False,
+        is_login: bool = False,
+        is_multi_chat: bool = False,
+        is_gemini_oracle: bool = False,
+        gemini_api_key: str = None
+    ):
+        url = f"https://ufoptg-ufop-api.hf.space/UFoP/gemini-the-oracle"
+        headers = {"accept": "application/json", "api-key": api_key}
+        params = {
+            "query": self.query,
+            "mongo_url": mongo_url,
+            "user_id": user_id,  # Updated parameter name
+            "is_logon": is_login,
+            "is_multi_chat": is_multi_chat,
+            "gemini_api_key": gemini_api_key,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=params) as response:
+                if response.status != 200:
+                    return f"Error status: {response.status}"
+
+                if is_gemini_oracle:
+                    if re_json:
+                        check_response = await response.json()
+                    else:
+                        check_response = await response.text()
+                    return check_response
+                else:
+                    return f"WTF THIS {self.query}"
+
 
 async def get_chatbot_reply(query, user_id, mongo_url):
-    response = RendyDevChat(query).get_response_gemini_oracle(
+    response = await ChatBot(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
         mongo_url=mongo_url,
