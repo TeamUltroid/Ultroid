@@ -21,7 +21,7 @@ from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.dB.greetings_db import get_goodbye, get_welcome, must_thank
 from pyUltroid.dB.nsfw_db import is_profan
 from pyUltroid.fns.helper import check_reply_to, inline_mention
-from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply
+from pyUltroid.fns.tools import async_searcher, create_tl_btn, get_chatbot_reply, get_oracle_reply
 
 try:
     from ProfanityDetector import detector
@@ -322,7 +322,7 @@ async def oracleBot_replies(e):
         if e.text and key.get(e.chat_id) and sender.id in key[e.chat_id]:
             # Simulate typing indicator
             async with e.client.action(e.chat_id, "typing"):
-                msg = await get_gem_reply(
+                msg = await get_oracle_reply(
                     e.message.message, user_id=sender.id, mongo_url=MONGO_URI
                 )
                 if msg:
