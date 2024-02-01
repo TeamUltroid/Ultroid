@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import aiohttp
 import asyncio
 import json
 import math
@@ -43,7 +44,6 @@ from urllib.parse import quote, unquote
 
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from RyuzakiLib.hackertools.chatgpt import RandyDevChat
 
 if run_as_module:
     from ..dB.filestore_db import get_stored_msg, store_msg
@@ -462,7 +462,52 @@ class AwesomeCoding(BaseModel):
     extra_headers: Optional[Dict[str, Any]] = None
     extra_payload: Optional[Dict[str, Any]] = None
 
-UFoP_API = udB.get_key("UFOPAPI") #This can be changed to allow for no API-Key.
+
+class ChatBot:
+    def __init__(
+        self,
+        query: str = None,
+    ):
+        self.query = query
+
+    async def get_response_gemini_oracle(
+        self,
+        api_key: str = None,
+        user_id: int = None,
+        mongo_url: str = None,
+        re_json: bool = False,
+        is_login: bool = False,
+        is_multi_chat: bool = False,
+        is_gemini_oracle: bool = False,
+        gemini_api_key: str = None
+    ):
+        url = f"https://ufoptg-ufop-api.hf.space/UFoP/gemini-the-oracle"
+        headers = {"accept": "application/json", "api-key": api_key}
+        params = {
+            "query": self.query,
+            "mongo_url": mongo_url,
+            "user_id": user_id,  # Updated parameter name
+            "is_logon": is_login,
+            "is_multi_chat": is_multi_chat,
+            "gemini_api_key": gemini_api_key,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=params) as response:
+                if response.status != 200:
+                    return f"Error status: {response.status}"
+
+                if is_gemini_oracle:
+                    if re_json:
+                        check_response = await response.json()
+                    else:
+                        check_response = await response.text()
+                    return check_response
+                else:
+                    return f"WTF THIS {self.query}"
+
+
+
+UFoP_API = udB.get_key("UFOPAPI") 
 ###############################################################################
 # By @TrueSaiyan           Huge Thanks to @xditya!!!!!!                       #
 ###############################################################################
@@ -512,7 +557,7 @@ async def get_chatbot_reply(message):
 
 
 async def get_oracle_reply(query, user_id, mongo_url):
-    response = RendyDevChat(query).get_response_gemini_oracle(
+    response = ChatBot(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
         mongo_url=mongo_url,
