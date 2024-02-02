@@ -35,7 +35,7 @@ def tag_add(msg, chat, user):
 
 
 def who_tag(msg):
-    ok = get_tag_stuff()
+    ok = get_stuff()
     if ok.get("TAG") and ok["TAG"].get(msg):
         return ok["TAG"][msg]
     return False, False
