@@ -17,9 +17,9 @@
 > `{i}igen Cute Panda eating bamboo`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
-• `{i}gpt3t` OpenAI GPT35-Turbo Powered by Alpha
-• `{i}gpt4` Bing AI w History Powered by Alpha
-• `{i}igen` Dall-E-3-XL Powered by UFoP
+• `{i}gpt3t` OpenAI GPT35-Turbo
+• `{i}bing` Bing/Sydney/CoPilot AI w History
+• `{i}igen` Dall-E-3-XL
 """
 import asyncio
 from os import remove, system
@@ -36,7 +36,7 @@ from . import *
 try:
     import openai
 except ImportError:
-    system("pip3 install -q openai")
+    system("pip3 install -q openai==0.28.0")
     import openai
 
 from . import (
