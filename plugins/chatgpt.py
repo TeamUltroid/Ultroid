@@ -5,7 +5,8 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-**Get Answers from Chat GPT including OpenAI, Bing or Sydney**
+**Get Answers from Chat GPT including OpenAI, Bing and Sydney**
+**Or generate images with Dall-E-3XL**
 
 > `{i}gpt` (-i = for image) (query)
 
@@ -13,7 +14,7 @@
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
 > `{i}gpt3t write me an essay`
-> `{i}gpt4 Tell me a joke` `can you tell me another`
+> `{i}bing Tell me a joke` `can you tell me another`
 > `{i}igen Cute Panda eating bamboo`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
