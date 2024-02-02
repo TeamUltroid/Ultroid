@@ -118,6 +118,8 @@ class Config((object)):
         PM_DATA = os.environ.get("PM_DATA", "ENABLE")
         DEEP_AI = os.environ.get("DEEP_AI", None)
         TAG_LOG = os.environ.get("TAG_LOG", None)
+        UFOPAPI = os.environ.get("UFOPAPI", "h32dfKsl8pQUxsNftkogIuDF32pYTwKluIY8emI1Hs")
+        GPTbase = os.environ.get("GPTbase", "https://gpt-api.mycloud.im/v1")
 
     else:
         DB_URI = None
