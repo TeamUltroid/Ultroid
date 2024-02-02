@@ -14,9 +14,13 @@ import random
 import re
 import secrets
 import ssl
+import sys
+from functools import partial
 from io import BytesIO
 from json.decoder import JSONDecodeError
+from pydantic import BaseModel
 from traceback import format_exc
+from typing import Any, Dict, Optional
 
 import requests
 
@@ -434,8 +438,31 @@ async def get_google_images(query):
     random.shuffle(google_images)
     return google_images
 
+###############################################################################
+# Thanks https://t.me/KukiUpdates/23 for ChatBotApi                           #
+#                                                                             #
+#                                                                             #
+# async def get_chatbot_reply(message):                                       #
+#    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"              #
+#    req_link = chatbot_base.format(                                          #
+#        message,                                                             #
+#    )                                                                        #
+#    try:                                                                     #
+#        return (await async_searcher(req_link, re_json=True)).get("reply")   #
+#    except Exception:                                                        #
+#        LOGS.info(f"**ERROR:**`{format_exc()}`")                             #
+###############################################################################
 
-# Thanks https://t.me/TrueSaiyan and @xtdevs for chatbot
+# --------------------------------------
+# @xtdevs
+
+class AwesomeCoding(BaseModel):
+    nimbusai_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00G\x00-\x00A\x00I\x00"
+    dalle3xl_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    default_url: Optional[str] = None
+    extra_headers: Optional[Dict[str, Any]] = None
+    extra_payload: Optional[Dict[str, Any]] = None
+
 
 class ChatBot:
     def __init__(
@@ -480,8 +507,60 @@ class ChatBot:
                     return f"WTF THIS {self.query}"
 
 
-async def get_chatbot_reply(query, user_id, mongo_url):
-    response = await ChatBot(query).get_response_gemini_oracle(
+
+
+# --------------------------------------
+# @TrueSaiyan
+
+UFoP_API = udB.get_key("UFOPAPI") 
+
+async def get_chatbot_reply(message):
+    response = AwesomeCoding(
+        extra_headers={"api-key": UFoP_API},
+        extra_payload={"query": message},
+    )
+    loop = asyncio.get_event_loop()
+    partial_func = partial(
+        requests.post,
+        response.nimbusai_url.decode("utf-16"),
+        headers=response.extra_headers,
+        json=response.extra_payload,
+    )
+
+    try:
+        response_data = await loop.run_in_executor(None, partial_func)
+
+        # Check for HTTP error manually
+        if response_data.status_code == 500:
+            LOGS.exception("Internal Server Error (500) from the chatbot server.")
+            return "Sorry, I can't answer that right now. Please try again later."
+
+        response_data.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
+    except requests.exceptions.HTTPError as http_err:
+        LOGS.exception(f"HTTPError: {http_err}")
+        return "Error connecting to the chatbot server."
+    except Exception as e:
+        LOGS.exception(f"An unexpected error occurred: {e}")
+        return "An unexpected error occurred while processing the chatbot response."
+
+    try:
+        response_json = response_data.json()
+        reply_message = response_json.get("randydev", {}).get("message")
+        if reply_message is not None:
+            return reply_message
+        else:
+            LOGS.warning("Unexpected JSON format in the chatbot response.")
+            return "Unexpected response from the chatbot server."
+    except json.JSONDecodeError as json_err:
+        LOGS.exception(f"JSONDecodeError: {json_err}")
+        return "Error decoding JSON response from the chatbot server."
+    except Exception as e:
+        LOGS.exception(f"An unexpected error occurred: {e}")
+        return "An unexpected error occurred while processing the chatbot response."
+
+
+async def get_oracle_reply(query, user_id, mongo_url):
+    response = ChatBot(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
         mongo_url=mongo_url,
@@ -496,6 +575,8 @@ async def get_chatbot_reply(query, user_id, mongo_url):
         return get_response
     else:
         return "Unexpected response from the chatbot server."
+
+#-----------------------------------------------------------------------------------#
 
 def check_filename(filroid):
     if os.path.exists(filroid):
