@@ -99,10 +99,10 @@ async def delete_messages(event):
     chat_id = event.chat_id
 
     # Get the messages in the chat
-    async for message in nimbus_bot.iter_messages(chat_id):
+    async for message in ultroid_bot.iter_messages(chat_id):
         if message.text and search_phrase.lower() in message.text.lower():
             try:
-                await nimbus_bot.delete_messages(chat_id, message)
+                await ultroid_bot.delete_messages(chat_id, message)
             except FloodWaitError as e:
                 # If a FloodWaitError occurs, wait for the specified time
                 # before retrying
