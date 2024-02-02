@@ -221,7 +221,7 @@ async def handle_gpt4(message):
 
     reply = (
         f"<b>Query:</b>\n~ <i>{query}</i>\n\n"
-        f"<b>GPT:</b> <i>(Bing/Sydney Chat)</i>\n~ <i>{answer}</i>"
+        f"<b>GPT:</b> <i>(Bing/Sydney/Copilot)</i>\n~ <i>{answer}</i>"
     )
     await message.edit(reply, parse_mode="html")
 
