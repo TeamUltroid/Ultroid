@@ -13,11 +13,14 @@
 **• Examples: **
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
+> `{i}bard Hello world`
 > `{i}igen Cute Panda eating bamboo`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
 • `{i}igen` Dall-E-3-XL
+• `{i}bard` Need to save bard cookie to use bard. (Its still learning)
 """
+import aiohttp
 import asyncio
 from os import remove, system
 from telethon import TelegramClient, events
@@ -32,9 +35,12 @@ from . import *
 
 try:
     import openai
+    from bardapi import Bard
 except ImportError:
     system("pip3 install -q openai")
+    system("pip3 install -q bardapi")
     import openai
+    from bardapi import Bard
 
 from . import (
     LOGS,
@@ -50,6 +56,10 @@ if udB.get_key("UFOPAPI"):
 else:
     UFoPAPI = ""
 
+if udB.get_key("BARDAPI"):
+    BARD_TOKEN = udB.get_key("BARDAPI")
+else:
+    BARD_TOKEN = None
     
 
 #------------------------------ GPT v1 ------------------------------#
@@ -192,6 +202,49 @@ async def handle_dalle3xl(message):
         await reply.edit(error_message)
         await asyncio.sleep(3)
         await reply.delete()
+
+    except Exception as e:
+        LOGS.exception(f"Error: {str(e)}")
+        error_message = f"An unexpected error occurred: {str(e)}"
+        await reply.edit(error_message)
+
+
+#--------------------------Bard w Base ----------------------------#
+# Bard Cookie Token.                                               |
+#------------------------------------------------------------------#
+
+@ultroid_cmd(
+    pattern="(chat)?bard( ([\\s\\S]*)|$)",
+)
+async def handle_bard(message):
+    owner_base = "You are an AI Assistant chatbot called Ultroid AI designed for many different helpful purposes"
+    query = message.raw_text.split('.bard', 1)[-1].strip()
+    reply = await message.edit(f"Generating answer...")
+
+    if BARD_TOKEN:
+        token = BARD_TOKEN
+    else:
+        error_message = f"ERROR NO BARD COOKIE TOKEN"
+        await reply.edit(error_message)
+        return
+
+    try:
+        headers = {
+            "Host": "bard.google.com",
+            "X-Same-Domain": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "Origin": "https://bard.google.com",
+            "Referer": "https://bard.google.com/",
+        }
+
+        cookies = {"__Secure-1PSID": token}
+
+        async with aiohttp.ClientSession(headers=headers, cookies=cookies) as session:
+            bard = Bard(token=token, session=session, timeout=30)
+            bard.get_answer(owner_base)["content"]
+            message_content = bard.get_answer(query)["content"]
+            await reply.edit(message_content)
 
     except Exception as e:
         LOGS.exception(f"Error: {str(e)}")
