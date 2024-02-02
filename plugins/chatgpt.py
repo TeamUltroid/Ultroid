@@ -13,13 +13,9 @@
 **• Examples: **
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
-> `{i}gpt3t write me an essay`
-> `{i}bing Tell me a joke` `can you tell me another`
 > `{i}igen Cute Panda eating bamboo`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
-• `{i}gpt3t` OpenAI GPT35-Turbo
-• `{i}bing` Bing/Sydney/CoPilot AI w History
 • `{i}igen` Dall-E-3-XL
 """
 import asyncio
@@ -37,7 +33,7 @@ from . import *
 try:
     import openai
 except ImportError:
-    system("pip3 install -q openai==0.28.0")
+    system("pip3 install -q openai")
     import openai
 
 from . import (
@@ -53,9 +49,7 @@ if udB.get_key("UFOPAPI"):
     UFoPAPI = udB.get_key("UFOPAPI")
 else:
     UFoPAPI = ""
- 
-if not udB.get_key("GPTbase"):
-    udB.set_key("GPTbase", "https://gpt-api.mycloud.im/v1")
+
     
 
 #------------------------------ GPT v1 ------------------------------#
@@ -142,99 +136,15 @@ async def openai_chat_gpt(e):
         await eris.edit(f"GPT (v1) ran into an Error:\n\n> {exc}")
 
 
-#----------------------------- GPT v3.5 -----------------------------#
-# No API-Key Required      .setdb GPTbase        openai==0.28.0      |
-#--------------------------------------------------------------------#
-
-gpt35_conversation_history = []
-
-@ultroid_cmd(
-    pattern="(chat)?gpt3t( ([\\s\\S]*)|$)",
-)
-async def handle_gpt35(message):
-    openai.api_key = "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"
-    openai.api_base = udB.get_key("GPTbase")
-    global gpt35_conversation_history
-
-    query = message.raw_text.split(',gpt3t', 1)[-1].strip()
-    reply = await message.edit(f"`Generating answer...`")
-
-    gpt35_conversation_history.append({"role": "user", "content": query})
-
-    chat_completion = openai.ChatCompletion.create(
-        model="gpt-3.5-long",
-        messages=gpt35_conversation_history,
-        stream=True,
-    )
-
-    if isinstance(chat_completion, dict):
-        answer = chat_completion.choices[0].message.content
-    else:
-        answer = ""
-        for token in chat_completion:
-            content = token["choices"][0]["delta"].get("content")
-            if content is not None:
-                answer += content
-
-    gpt35_conversation_history.append({"role": "assistant", "content": answer})
-
-    reply = (
-        f"<b>Query:</b>\n~ <i>{query}</i>\n\n"
-        f"<b>GPT:</b> <i>(OpenAI GPT-3.5)</i>\n~ <i>{answer}</i>"
-    )
-    await message.edit(reply, parse_mode="html")
-
-#----------------------------- GPT v4 -----------------------------#
-# No API-Key Required      .setdb GPTbase        openai==0.28.0    |
-#------------------------------------------------------------------#
-
-bing_conversation_history = []
-
-@ultroid_cmd(
-    pattern="(chat)?bing( ([\\s\\S]*)|$)",
-)
-async def handle_gpt4(message):
-    openai.api_key = "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"
-    openai.api_base = udB.get_key("GPTbase")
-    global bing_conversation_history
-
-    query = message.raw_text.split('.bing', 1)[-1].strip()
-    reply = await message.edit(f"Generating answer...")
-
-    bing_conversation_history.append({"role": "user", "content": query})
-
-    chat_completion = openai.ChatCompletion.create(
-        model="gpt-4-turbo",
-        messages=bing_conversation_history,
-        stream=True,
-    )
-
-    if isinstance(chat_completion, dict):
-        answer = chat_completion.choices[0].message.content
-    else:
-        answer = ""
-        for token in chat_completion:
-            content = token["choices"][0]["delta"].get("content")
-            if content is not None:
-                answer += content
-
-    bing_conversation_history.append({"role": "assistant", "content": answer})
-
-    reply = (
-        f"<b>Query:</b>\n~ <i>{query}</i>\n\n"
-        f"<b>GPT:</b> <i>(Bing/Sydney/Copilot)</i>\n~ <i>{answer}</i>"
-    )
-    await message.edit(reply, parse_mode="html")
-
-#----------------------------- Dall-E -----------------------------#
-# No API-Key Required                                              |
+#--------------------------Open Dall-E ----------------------------#
+# UFoP API                                                         |
 #------------------------------------------------------------------#
 
 @ultroid_cmd(
     pattern="(chat)?igen( ([\\s\\S]*)|$)",
 )
 async def handle_dalle3xl(message):
-    query = message.raw_text.split(',igen', 1)[-1].strip()
+    query = message.raw_text.split('.igen', 1)[-1].strip()
     reply = await message.edit(f"Generating image...")
 
     try:
