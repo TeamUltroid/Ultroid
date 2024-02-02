@@ -453,9 +453,8 @@ async def get_google_images(query):
 #        LOGS.info(f"**ERROR:**`{format_exc()}`")                             #
 ###############################################################################
 
-#####################
-# Thanks to  @xtdevs 
-#####################
+# --------------------------------------
+# @xtdevs
 
 class AwesomeCoding(BaseModel):
     nimbusai_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00G\x00-\x00A\x00I\x00"
@@ -510,9 +509,9 @@ class ChatBot:
 
 
 
-##################
-# By @TrueSaiyan #
-##################
+# --------------------------------------
+# @TrueSaiyan
+
 UFoP_API = udB.get_key("UFOPAPI") 
 
 async def get_chatbot_reply(message):
