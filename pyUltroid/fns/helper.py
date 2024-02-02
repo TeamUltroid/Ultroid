@@ -97,7 +97,7 @@ def inline_mention(user, custom=None, html=False):
     return mention_text
 
 async def check_reply_to(event):
-    replytoIDS = [client.me.id]
+    replytoIDS = [event.client.me.id]
     if (event.is_private and event.is_reply) or (
         event.is_reply and event.reply_to_msg_id
     ):
