@@ -119,7 +119,7 @@ class Config((object)):
         DEEP_AI = os.environ.get("DEEP_AI", None)
         TAG_LOG = os.environ.get("TAG_LOG", None)
         UFOPAPI = os.environ.get("UFOPAPI", "h32dfKsl8pQUxsNftkogIuDF32pYTwKluIY8emI1Hs")
-        GPTbase = os.environ.get("GPTbase", "https://gpt-api.mycloud.im/v1")
+        GOOGLEAPI = os.environ.get("GOOGLEAPI", None)
 
     else:
         DB_URI = None
