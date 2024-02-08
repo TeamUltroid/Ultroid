@@ -451,25 +451,22 @@ async def get_chatbot_reply(message):
     try:
         headers = {"Content-Type": "application/json"}
         data = {"prompt": {"text": message}}
-        response = requests.post(api_url, headers=headers, json=data)
-        response.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
-    except requests.exceptions.HTTPError as http_err:
-        LOGS.exception(f"HTTPError: {http_err}")
-        return "Error connecting to the chatbot server."
-    except Exception as e:
-        LOGS.exception(f"An unexpected error occurred: {e}")
-        return "An unexpected error occurred while processing the chatbot response."
+        async with aiohttp.ClientSession() as session:
+            async with session.post(api_url, headers=headers, json=data) as response:
+                response.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
+                response_str = await response.json()
 
-    try:
-        response_str = response.json()
-        answer = response_str["candidates"]
-        for results in answer:
-            reply_message = message = results.get("output")
-        if reply_message is not None:
-            return reply_message
-        else:
-            LOGS.warning("Unexpected JSON format in the chatbot response.")
-            return "Unexpected response from the chatbot server."
+                answer = response_str["candidates"]
+                for results in answer:
+                    reply_message = message = results.get("output")
+                if reply_message is not None:
+                    return reply_message
+                else:
+                    LOGS.warning("Unexpected JSON format in the chatbot response.")
+                    return "Unexpected response from the chatbot server."
+    except aiohttp.ClientError as client_err:
+        LOGS.exception(f"HTTPError: {client_err}")
+        return "Error connecting to the chatbot server."
     except json.JSONDecodeError as json_err:
         LOGS.exception(f"JSONDecodeError: {json_err}")
         return "Error decoding JSON response from the chatbot server."
