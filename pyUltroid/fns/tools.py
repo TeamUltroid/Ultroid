@@ -14,12 +14,9 @@ import random
 import re
 import secrets
 import ssl
-import sys
 from io import BytesIO
 from json.decoder import JSONDecodeError
-from pydantic import BaseModel
 from traceback import format_exc
-from typing import Any, Dict, Optional
 
 import requests
 
