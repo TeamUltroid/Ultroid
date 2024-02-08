@@ -18,17 +18,12 @@
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
 • `{i}bard` Need to save bard cookie to use bard. (Its still learning)
 """
-import aiohttp
-import asyncio
-from os import remove, system
-from telethon import TelegramClient, events
 from io import BytesIO
-from PIL import Image
-import base64
-import requests
-import json
-from . import *
+from os import remove, system
 
+import aiohttp
+
+from . import *
 
 try:
     import openai
@@ -39,14 +34,7 @@ except ImportError:
     import openai
     from bardapi import Bard
 
-from . import (
-    LOGS,
-    async_searcher,
-    check_filename,
-    fast_download,
-    udB,
-    ultroid_cmd,
-)
+from . import LOGS, check_filename, fast_download, udB, ultroid_cmd
 
 if udB.get_key("UFOPAPI"):
     UFoPAPI = udB.get_key("UFOPAPI")
@@ -57,11 +45,11 @@ if udB.get_key("BARDAPI"):
     BARD_TOKEN = udB.get_key("BARDAPI")
 else:
     BARD_TOKEN = None
-    
 
-#------------------------------ GPT v1 ------------------------------#
+
+# ------------------------------ GPT v1 ------------------------------#
 # OpenAI API-Key Required                                            |
-#--------------------------------------------------------------------#
+# --------------------------------------------------------------------#
 @ultroid_cmd(
     pattern="(chat)?gpt( ([\\s\\S]*)|$)",
 )
@@ -98,7 +86,9 @@ async def openai_chat_gpt(e):
                 user=str(eris.client.uid),
             )
             img_url = response.data[0].url
-            path, _ = await fast_download(img_url, filename=check_filename("dall-e.png"))
+            path, _ = await fast_download(
+                img_url, filename=check_filename("dall-e.png")
+            )
             await e.respond(
                 f"<i>{args[:636]}</i>",
                 file=path,
@@ -116,17 +106,16 @@ async def openai_chat_gpt(e):
     try:
         response = await OPENAI_CLIENT.chat.completions.create(
             model="gpt-3.5-turbo-1106",
-            messages=[{"role": "system", "content": "You are a helpful assistant."},
-                      {"role": "user", "content": args}],
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": args},
+            ],
         )
         # LOGS.debug(f'Token Used on ({question}) > {response["usage"]["total_tokens"]}')
         answer = response.choices[0].message.content.replace("GPT:\n~ ", "")
 
         if len(response.choices[0].message.content) + len(args) < 4080:
-            answer = (
-                f"Query:\n~ {args}\n\n"
-                f"GPT:\n~ {answer}"
-            )
+            answer = f"Query:\n~ {args}\n\n" f"GPT:\n~ {answer}"
             return await eris.edit(answer)
 
         with BytesIO(response.encode()) as file:
@@ -143,16 +132,17 @@ async def openai_chat_gpt(e):
         await eris.edit(f"GPT (v1) ran into an Error:\n\n> {exc}")
 
 
-#--------------------------Bard w Base ----------------------------#
+# --------------------------Bard w Base ----------------------------#
 # Bard Cookie Token.                                               |
-#------------------------------------------------------------------#
+# ------------------------------------------------------------------#
+
 
 @ultroid_cmd(
     pattern="(chat)?bard( ([\\s\\S]*)|$)",
 )
 async def handle_bard(message):
     owner_base = "You are an AI Assistant chatbot called Ultroid AI designed for many different helpful purposes"
-    query = message.raw_text.split('.bard', 1)[-1].strip()
+    query = message.raw_text.split(".bard", 1)[-1].strip()
     reply = await message.edit(f"Generating answer...")
 
     if BARD_TOKEN:

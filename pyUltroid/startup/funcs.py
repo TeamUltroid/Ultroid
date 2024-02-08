@@ -12,13 +12,12 @@ import shutil
 import time
 from random import randint
 
-from ..configs import Var
-
 try:
     from pytz import timezone
 except ImportError:
     timezone = None
 
+from decouple import RepositoryEnv, config
 from telethon.errors import (
     ChannelsTooMuchError,
     ChatAdminRequiredError,
@@ -41,7 +40,7 @@ from telethon.tl.types import (
     InputMessagesFilterDocument,
 )
 from telethon.utils import get_peer_id
-from decouple import config, RepositoryEnv
+
 from .. import LOGS, ULTConfig
 from ..fns.helper import download_file, inline_mention, updater
 
@@ -89,6 +88,7 @@ async def autoupdate_local_database():
 def update_envs():
     """Update Var. attributes to udB"""
     from .. import udB
+
     _envs = [*list(os.environ)]
     if ".env" in os.listdir("."):
         [_envs.append(_) for _ in list(RepositoryEnv(config._find_file(".")).data)]
@@ -506,6 +506,8 @@ async def ready():
             LOGS.exception(ef)
     if spam_sent and not spam_sent.media:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)
+
+
 # TODO:    await fetch_ann()
 
 

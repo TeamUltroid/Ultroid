@@ -10,9 +10,7 @@ import os
 import random
 import re
 import string
-from logging import WARNING
 from random import choice, randrange, shuffle
-from traceback import format_exc
 
 from pyUltroid.exceptions import DependencyMissingError
 
@@ -193,7 +191,7 @@ async def unsplashsearch(query, limit=None, shuf=True):
     all_ = res.find_all("img", srcset=re.compile("images.unsplash.com/photo"))
     if shuf:
         shuffle(all_)
-    return list(map(lambda e: e['src'], all_[:limit]))
+    return list(map(lambda e: e["src"], all_[:limit]))
 
 
 # ---------------- Random User Gen ----------------
@@ -434,6 +432,7 @@ class Quotly:
                 file.write(image)
             return file_name
         raise Exception(str(request))
+
 
 def split_list(List, index):
     new_ = []

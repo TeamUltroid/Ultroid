@@ -13,7 +13,6 @@ import sys
 import time
 from traceback import format_exc
 from urllib.parse import unquote
-from urllib.request import urlretrieve
 
 from .. import run_as_module
 
@@ -96,6 +95,7 @@ def inline_mention(user, custom=None, html=False):
         return f"[{mention_text}](https://t.me/{user.username})"
     return mention_text
 
+
 async def check_reply_to(event):
     replytoIDS = [event.client.me.id]
     if (event.is_private and event.is_reply) or (
@@ -121,8 +121,10 @@ async def check_reply_to(event):
             return False
     return False
 
+
 async def check_reply_to(event):
-    truai = [event.client.me.id] #Adding to this list will allow for anon or masked usermode
+    # Adding to this list will allow for anon or masked usermode
+    truai = [event.client.me.id]
     if (event.is_private and event.is_reply) or (
         event.is_reply and event.reply_to_msg_id
     ):
@@ -145,6 +147,7 @@ async def check_reply_to(event):
             print(f"Exception: {e}")
             return False
     return False
+
 
 # ----------------- Load \\ Unloader ---------------- #
 
@@ -312,7 +315,7 @@ async def bash(cmd, run_code=0):
     err = stderr.decode().strip() or None
     out = stdout.decode().strip()
     if not run_code and err:
-        if match := re.match("\/bin\/sh: (.*): ?(\w+): not found", err):
+        if match := re.match("\\/bin\\/sh: (.*): ?(\\w+): not found", err):
             return out, f"{match.group(2).upper()}_NOT_FOUND"
     return out, err
 

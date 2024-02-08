@@ -8,8 +8,6 @@
 from telethon import types
 from telethon.extensions import markdown
 
-from . import *
-
 
 class CustomMarkdown:
     @staticmethod
