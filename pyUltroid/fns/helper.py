@@ -97,7 +97,7 @@ def inline_mention(user, custom=None, html=False):
     return mention_text
 
 async def check_reply_to(event):
-    replytoIDS = [event.client.me.id]
+    truai = [event.client.me.id] #Adding to this list will allow for anon or masked usermode
     if (event.is_private and event.is_reply) or (
         event.is_reply and event.reply_to_msg_id
     ):
@@ -107,11 +107,11 @@ async def check_reply_to(event):
             )
             if replied_message.from_id:
                 user_id = replied_message.from_id.user_id
-                if user_id in replytoIDS:
+                if user_id in truai:
                     return True
             elif replied_message.peer_id and not replied_message.from_id:
                 channel_id = replied_message.peer_id.channel_id
-                if channel_id in replytoIDS:
+                if channel_id in truai:
                     return True
             # If neither user_id nor channel_id is in truai, return False
             return False
