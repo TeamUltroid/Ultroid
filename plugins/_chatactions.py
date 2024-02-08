@@ -195,7 +195,6 @@ async def DummyHandler(ult):
         else:
             await ult.reply(file=med)
 
-#Thanks to @TrueSaiyan
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
