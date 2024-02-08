@@ -177,6 +177,8 @@ _buttons = {
             [Button.inline("Remove.bg API", data="abs_rmbg")],
             [Button.inline("DEEP API", data="abs_dapi")],
             [Button.inline("OCR API", data="abs_oapi")],
+            [Button.inline("BARD API", data="abs_bapi")],
+            [Button.inline("GOOGLE API", data="abs_gapi")],
             [Button.inline("« Back", data="setter")],
         ],
     },
@@ -199,6 +201,18 @@ _convo = {
         "var": "OCR_API",
         "name": "Ocr Api Key",
         "text": "Get Your OCR api from ocr.space and send that Here.",
+        "back": "cbs_apiset",
+    },
+    "bapi": {
+        "var": "BARDAPI",
+        "name": "Bard AI Api Key",
+        "text": "Get Your Bard cookie/api using a browsers developer mode",
+        "back": "cbs_apiset",
+    },
+    "gapi": {
+        "var": "GOOGLEAPI",
+        "name": "Google Api Key",
+        "text": "Get Your GOOGLE API from google cloud",
         "back": "cbs_apiset",
     },
     "pmlgg": {
