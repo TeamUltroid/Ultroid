@@ -179,6 +179,10 @@ _buttons = {
             [Button.inline("OpenAI API", data="abs_openapi")],
             [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
             [Button.inline("OCR API", data="abs_oapi")],
+            [Button.inline("OpenAI API", data="abs_openapi")],
+            [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
+            [Button.inline("BARD API", data="abs_bapi")],
+            [Button.inline("GOOGLE API", data="abs_gapi")],
             [Button.inline("« Back", data="setter")],
         ],
     },
@@ -194,7 +198,7 @@ _convo = {
     "dapi": {
         "var": "DEEP_AI",
         "name": "Deep AI Api Key",
-        "text": "Get Your Deep Api from deepai.org and send here.",
+        "text": "Get Your Deep Api from deepai.org and send here.\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
     "uapi": {
@@ -212,7 +216,31 @@ _convo = {
     "oapi": {
         "var": "OCR_API",
         "name": "Ocr Api Key",
-        "text": "Get Your OCR api from ocr.space and send that Here.",
+        "text": "Get Your OCR api from ocr.space and send that Here.\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
+    "uapi": {
+        "var": "UFOPAPI",
+        "name": "UFoP API Key",
+        "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot Support Group\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
+    "openapi": {
+        "var": "OPENAI_API",
+        "name": "OPENAI API Key",
+        "text": "Visit openai.com for an OPENAI Api key!\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
+    "bapi": {
+        "var": "BARDAPI",
+        "name": "Bard AI Api Key",
+        "text": "Get Your Bard cookie/api using a browsers developer mode\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
+    "gapi": {
+        "var": "GOOGLEAPI",
+        "name": "Google Api Key",
+        "text": "Get Your GOOGLE API from https://makersuite.google.com/app/apikey \n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
     "pmlgg": {
