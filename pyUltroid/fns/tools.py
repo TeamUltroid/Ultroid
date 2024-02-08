@@ -15,7 +15,6 @@ import re
 import secrets
 import ssl
 import sys
-from functools import partial
 from io import BytesIO
 from json.decoder import JSONDecodeError
 from pydantic import BaseModel
@@ -440,53 +439,8 @@ async def get_google_images(query):
 
 
 # --------------------------------------
-# @xtdevs
-
-class ChatBot:
-    def __init__(
-        self,
-        query: str = None,
-    ):
-        self.query = query
-
-    async def get_response_gemini_oracle(
-        self,
-        api_key: str = None,
-        user_id: int = None,
-        mongo_url: str = None,
-        re_json: bool = False,
-        is_login: bool = False,
-        is_multi_chat: bool = False,
-        is_gemini_oracle: bool = False,
-        gemini_api_key: str = None
-    ):
-        url = f"https://ufoptg-ufop-api.hf.space/UFoP/gemini-the-oracle"
-        headers = {"accept": "application/json", "api-key": api_key}
-        params = {
-            "query": self.query,
-            "mongo_url": mongo_url,
-            "user_id": user_id,  # Updated parameter name
-            "is_logon": is_login,
-            "is_multi_chat": is_multi_chat,
-            "gemini_api_key": gemini_api_key,
-        }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, json=params) as response:
-                if response.status != 200:
-                    return f"Error status: {response.status}"
-
-                if is_gemini_oracle:
-                    if re_json:
-                        check_response = await response.json()
-                    else:
-                        check_response = await response.text()
-                    return check_response
-                else:
-                    return f"WTF THIS {self.query}"
-
-
-# --------------------------------------
 # @TrueSaiyan
+
 if udB.get_key("GOOGLEAPI"):
     GOOGLEAPI = udB.get_key("GOOGLEAPI")
 else:
@@ -525,24 +479,6 @@ async def get_chatbot_reply(message):
     except Exception as e:
         LOGS.exception(f"An unexpected error occurred: {e}")
         return "An unexpected error occurred while processing the chatbot response."
-
-
-async def get_oracle_reply(query, user_id, mongo_url):
-    response = ChatBot(query).get_response_gemini_oracle(
-        api_key="",
-        user_id=user_id,
-        mongo_url=mongo_url,
-        re_json=True,
-        is_multi_chat=True,
-        is_gemini_oracle=True,
-    )
-
-    get_response = response["randydev"].get("message") if response else None
-
-    if get_response is not None:
-        return get_response
-    else:
-        return "Unexpected response from the chatbot server."
 
 #-----------------------------------------------------------------------------------#
 
