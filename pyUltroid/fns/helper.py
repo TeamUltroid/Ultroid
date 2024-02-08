@@ -96,6 +96,30 @@ def inline_mention(user, custom=None, html=False):
         return f"[{mention_text}](https://t.me/{user.username})"
     return mention_text
 
+async def check_reply_to(event):
+    replytoIDS = [event.client.me.id]
+    if (event.is_private and event.is_reply) or (
+        event.is_reply and event.reply_to_msg_id
+    ):
+        try:
+            replied_message = await event.client.get_messages(
+                event.chat_id, ids=event.reply_to_msg_id
+            )
+            if replied_message.from_id:
+                user_id = replied_message.from_id.user_id
+                if user_id in replytoIDS:
+                    return True
+            elif replied_message.peer_id and not replied_message.from_id:
+                channel_id = replied_message.peer_id.channel_id
+                if channel_id in replytoIDS:
+                    return True
+            # If neither user_id nor channel_id is in truai, return False
+            return False
+        except Exception as e:
+            # Log the exception for debugging
+            print(f"Exception: {e}")
+            return False
+    return False
 
 async def check_reply_to(event):
     truai = [event.client.me.id] #Adding to this list will allow for anon or masked usermode
@@ -642,3 +666,77 @@ async def shutdown(ult):
             )
     else:
         sys.exit()
+
+
+# ------------------User Extraction----------------#
+
+
+async def extract_user(message: Message, args: List[str]) -> Optional[int]:
+    prev_message = await message.get_reply_message()
+    return prev_message.sender_id if prev_message else None
+
+
+def extract_user_and_text(
+    message: Message, args: List[str]
+) -> (Optional[int], Optional[str]):
+    prev_message = message.reply_to_message
+    split_text = message.text.split(None, 1)
+
+    if len(split_text) < 2:
+        return id_from_reply(message)  # only option possible
+
+    text_to_parse = split_text[1]
+
+    text = ""
+
+    entities = list(message.parse_entities([MessageEntity.TEXT_MENTION]))
+    ent = entities[0] if entities else None
+    # if entity offset matches (command end/text start) then all good
+    if entities and ent and ent.offset == len(message.text) - len(text_to_parse):
+        ent = entities[0]
+        user_id = ent.user.id
+        text = message.text[ent.offset + ent.length :]
+
+    elif len(args) >= 1 and args[0][0] == "@":
+        user = args[0]
+        user_id = get_user_id(user)
+        if not user_id:
+            message.reply_text(
+                "I don't have that user in my db. You'll be able to interact with them if "
+                "you reply to that person's message instead, or forward one of that user's messages."
+            )
+            return None, None
+
+        else:
+            user_id = user_id
+            res = message.text.split(None, 2)
+            if len(res) >= 3:
+                text = res[2]
+
+    elif len(args) >= 1 and args[0].isdigit():
+        user_id = int(args[0])
+        res = message.text.split(None, 2)
+        if len(res) >= 3:
+            text = res[2]
+
+    elif prev_message:
+        user_id, text = id_from_reply(message)
+
+    else:
+        return None, None
+
+    try:
+        message.bot.get_chat(user_id)
+    except BadRequest as excp:
+        if excp.message in ("User_id_invalid", "Chat not found"):
+            message.reply_text(
+                "I don't seem to have interacted with this user before - please forward a message from "
+                "them to give me control! (like a voodoo doll, I need a piece of them to be able "
+                "to execute certain commands...)"
+            )
+        else:
+            LOGGER.exception("Exception %s on user %s", excp.message, user_id)
+
+        return None, None
+
+    return user_id, text

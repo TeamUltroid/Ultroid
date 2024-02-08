@@ -122,6 +122,7 @@ class Config((object)):
         GOOGLEAPI = os.environ.get("GOOGLEAPI", None)
         BARDAPI = os.environ.get("BARDAPI", None)
 
+
     else:
         DB_URI = None
 

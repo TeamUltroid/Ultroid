@@ -11,6 +11,9 @@ __doc__ = get_help("extra")
 
 import asyncio
 
+from telethon.errors import FloodWaitError
+
+from . import *
 from . import get_string, ultroid_cmd
 
 
@@ -83,3 +86,35 @@ async def _(e):
         )
     else:
         await e.try_delete()
+
+
+@ultroid_cmd(
+    pattern="delmsgs",
+)
+async def delete_messages(event):
+    # Get the search phrase from the command
+    search_phrase = event.raw_text.split(" ", 1)[1]
+
+    # Get the chat ID of the group
+    chat_id = event.chat_id
+
+    # Get the messages in the chat
+    async for message in ultroid_bot.iter_messages(chat_id):
+        if message.text and search_phrase.lower() in message.text.lower():
+            try:
+                await ultroid_bot.delete_messages(chat_id, message)
+            except FloodWaitError as e:
+                # If a FloodWaitError occurs, wait for the specified time
+                # before retrying
+                wait_time = e.seconds + 5
+                logger.warning(
+                    f"FloodWaitError occurred. Waiting for {wait_time} seconds."
+                )
+                await asyncio.sleep(wait_time)
+                continue
+
+    # Reply to the command with a confirmation message
+    await event.reply(f"Messages containing the phrase '{search_phrase}' deleted.")
+    logger.info(
+        f"Deleted messages containing the phrase '{search_phrase}' in chat {chat_id}"
+    )

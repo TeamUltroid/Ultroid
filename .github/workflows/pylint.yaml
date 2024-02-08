@@ -1,7 +1,9 @@
-name: PyLint
+name: PyLint Ultroid
 on:
   push:
-    branches: [ dev ]
+    branches:
+        - patch-1
+        - patch-2
     paths:
     - "**.py"
 jobs:
@@ -12,22 +14,26 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.9
           cache: "pip"
       - name: Install Python lint libraries
         run: pip install autopep8 autoflake isort black
       - name: Check for showstoppers
         run: |
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive pyUltroid/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive assistant/manager/*.py
           autopep8 --verbose --in-place --recursive --aggressive --aggressive plugins/*.py
       - name: Remove unused imports and variables
         run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports pyUltroid/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports assistant/manager/*.py
           autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports plugins/*.py
       - name: lint with isort and black
         run: |
+          isort --profile black pyUltroid/*.py
+          black --fast pyUltroid/*.py
           isort assistant/*.py
           isort assistant/manager/*.py
           black --fast assistant/*.py
@@ -37,9 +43,8 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'pylint: auto fixes'
-          commit_options: '--no-verify'
+          commit_options: '--verify'
           repository: .
-          commit_user_name: buddhhu
-          commit_user_email: 48654350+buddhhu@users.noreply.github.com
-          commit_author: Amit Sharma <48654350+buddhhu@users.noreply.github.com>
-          
+          commit_user_name: ufoptg
+          commit_user_email: ufperth@protonmail.com
+          commit_author: ufoptg <ufperth@protonmail.com>

@@ -42,6 +42,10 @@ if run_as_module:
     udB = UltroidDB()
     update_envs()
 
+    from .dB.base import Keys as Keyz
+
+    Keys = Keyz(udB)
+
     LOGS.info(f"Connecting to {udB.name}...")
     if udB.ping():
         LOGS.info(f"Connected to {udB.name} Successfully!")

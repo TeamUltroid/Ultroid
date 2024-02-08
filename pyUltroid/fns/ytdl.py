@@ -60,7 +60,7 @@ async def download_yt(event, link, ytd):
         for num, file in enumerate(info["entries"]):
             num += 1
             id_ = file["id"]
-            thumb = id_ + ".jpg"
+            thumb = f"{id_}.jpg"
             title = file["title"]
             await download_file(
                 file.get("thumbnail", None) or file["thumbnails"][-1]["url"], thumb
@@ -117,9 +117,9 @@ async def download_yt(event, link, ytd):
         return
     title = info["title"]
     if len(title) > 20:
-        title = title[:17] + "..."
+        title = f"{title[:17]}..."
     id_ = info["id"]
-    thumb = id_ + ".jpg"
+    thumb = f"{id_}.jpg"
     await download_file(
         info.get("thumbnail", None) or f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
         thumb,
@@ -176,7 +176,7 @@ def get_formats(type, id, data):
                     "ytid": id,
                     "type": "audio",
                     "id": _quality,
-                    "quality": _quality + "KBPS",
+                    "quality": f"{_quality}KBPS",
                 }
             )
             audio.append(_audio)
@@ -198,7 +198,7 @@ def get_formats(type, id, data):
                         {
                             "ytid": id,
                             "type": "video",
-                            "id": str(_id) + "+251",
+                            "id": f"{_id}+251",
                             "quality": _quality,
                             "size": _size,
                             "ext": _ext,
