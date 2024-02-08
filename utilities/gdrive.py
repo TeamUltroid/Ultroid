@@ -62,6 +62,7 @@ class GDrive:
                 "response_type": "code",
                 "scope": self.scope,
                 "access_type": "offline",
+                "prompt": "consent",
             }
         )
 
