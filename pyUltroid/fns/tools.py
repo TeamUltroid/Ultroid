@@ -438,20 +438,6 @@ async def get_google_images(query):
     random.shuffle(google_images)
     return google_images
 
-###############################################################################
-# Thanks https://t.me/KukiUpdates/23 for ChatBotApi                           #
-#                                                                             #
-#                                                                             #
-# async def get_chatbot_reply(message):                                       #
-#    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"              #
-#    req_link = chatbot_base.format(                                          #
-#        message,                                                             #
-#    )                                                                        #
-#    try:                                                                     #
-#        return (await async_searcher(req_link, re_json=True)).get("reply")   #
-#    except Exception:                                                        #
-#        LOGS.info(f"**ERROR:**`{format_exc()}`")                             #
-###############################################################################
 
 # --------------------------------------
 # @xtdevs
@@ -507,50 +493,38 @@ class ChatBot:
                     return f"WTF THIS {self.query}"
 
 
-
-
 # --------------------------------------
 # @TrueSaiyan
 
-UFoP_API = udB.get_key("UFOPAPI") 
+if udB.get_key("GOOGLEAPI"):
+    GOOGLEAPI = udB.get_key("GOOGLEAPI")
+else:
+    GOOGLEAPI = None
 
 async def get_chatbot_reply(message):
-    response = AwesomeCoding(
-        extra_headers={"api-key": UFoP_API},
-        extra_payload={"query": message},
-    )
-    loop = asyncio.get_event_loop()
-    partial_func = partial(
-        requests.post,
-        response.nimbusai_url.decode("utf-16"),
-        headers=response.extra_headers,
-        json=response.extra_payload,
-    )
-
+    if GOOGLEAPI is not None:
+        api_url = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={GOOGLEAPI}"
+    else:
+        return "Sorry you need to set a GOOGLEAPI key to use this chatbot"
     try:
-        response_data = await loop.run_in_executor(None, partial_func)
+        headers = {"Content-Type": "application/json"}
+        data = {"prompt": {"text": message}}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(api_url, headers=headers, json=data) as response:
+                response.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
+                response_str = await response.json()
 
-        # Check for HTTP error manually
-        if response_data.status_code == 500:
-            LOGS.exception("Internal Server Error (500) from the chatbot server.")
-            return "Sorry, I can't answer that right now. Please try again later."
-
-        response_data.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
-    except requests.exceptions.HTTPError as http_err:
-        LOGS.exception(f"HTTPError: {http_err}")
+                answer = response_str["candidates"]
+                for results in answer:
+                    reply_message = message = results.get("output")
+                if reply_message is not None:
+                    return reply_message
+                else:
+                    LOGS.warning("Unexpected JSON format in the chatbot response.")
+                    return "Unexpected response from the chatbot server."
+    except aiohttp.ClientError as client_err:
+        LOGS.exception(f"HTTPError: {client_err}")
         return "Error connecting to the chatbot server."
-    except Exception as e:
-        LOGS.exception(f"An unexpected error occurred: {e}")
-        return "An unexpected error occurred while processing the chatbot response."
-
-    try:
-        response_json = response_data.json()
-        reply_message = response_json.get("randydev", {}).get("message")
-        if reply_message is not None:
-            return reply_message
-        else:
-            LOGS.warning("Unexpected JSON format in the chatbot response.")
-            return "Unexpected response from the chatbot server."
     except json.JSONDecodeError as json_err:
         LOGS.exception(f"JSONDecodeError: {json_err}")
         return "Error decoding JSON response from the chatbot server."
