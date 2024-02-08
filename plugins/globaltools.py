@@ -344,9 +344,11 @@ async def _(e):
     ungban(userid)
     if isinstance(peer, User):
         await e.client(UnblockRequest(userid))
-    await xx.edit(
-        f"`Ungbaned` {name} in {chats} `chats.\nRemoved from gbanwatch.`",
+    ungb_msg = (
+        f"#UNGBAN\n`Ungbanned` {name} in {chats} `chats.\nRemoved from gbanwatch.`"
     )
+    await xx.edit(ungb_msg)
+    await asst.send_message(LOG_CHANNEL, ungb_msg)
 
 
 @ultroid_cmd(pattern="gban( (.*)|$)", fullsudo=True)
@@ -424,10 +426,11 @@ async def _(e):
     gban(userid, reason)
     if isinstance(user, User):
         await e.client(BlockRequest(userid))
-    gb_msg = f"**#Gbanned** {name} `in {chats} chats and added to gbanwatch!`"
+    gb_msg = f"#GBAN\n**Gbanned** {name} `in {chats} chats and added to gbanwatch!`"
     if reason:
         gb_msg += f"\n**Reason** : {reason}"
     await xx.edit(gb_msg)
+    await asst.send_message(LOG_CHANNEL, gb_msg)
 
 
 @ultroid_cmd(pattern="g(admin|)cast( (.*)|$)", fullsudo=True)
