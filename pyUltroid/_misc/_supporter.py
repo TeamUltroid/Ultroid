@@ -120,6 +120,7 @@ class Config((object)):
         TAG_LOG = os.environ.get("TAG_LOG", None)
         UFOPAPI = os.environ.get("UFOPAPI", "h32dfKsl8pQUxsNftkogIuDF32pYTwKluIY8emI1Hs")
         GOOGLEAPI = os.environ.get("GOOGLEAPI", None)
+        BARDAPI = os.environ.get("BARDAPI", None)
 
     else:
         DB_URI = None
