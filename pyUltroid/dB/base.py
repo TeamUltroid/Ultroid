@@ -42,3 +42,24 @@ class KeyManager:
 
     def contains(self, item):
         return item in self.get()
+
+
+class Keys:
+    def __init__(self, udB):
+        self.udB = udB
+        self.load_keys()
+
+    def load_keys(self):
+        # Fetch keys dynamically from the database
+        all_keys = sorted(self.udB.keys())
+        valid_keys = [
+            key
+            for key in all_keys
+            if not key.isdigit()
+            and not key.startswith("-")
+            and not key.startswith("_")
+            and not key.startswith("GBAN_REASON_")
+        ]
+
+        for key in valid_keys:
+            setattr(self, key, self.udB.get_key(key))

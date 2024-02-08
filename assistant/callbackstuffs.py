@@ -176,6 +176,8 @@ _buttons = {
         "buttons": [
             [Button.inline("Remove.bg API", data="abs_rmbg")],
             [Button.inline("DEEP API", data="abs_dapi")],
+            [Button.inline("OpenAI API", data="abs_openapi")],
+            [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
             [Button.inline("OCR API", data="abs_oapi")],
             [Button.inline("« Back", data="setter")],
         ],
@@ -193,6 +195,18 @@ _convo = {
         "var": "DEEP_AI",
         "name": "Deep AI Api Key",
         "text": "Get Your Deep Api from deepai.org and send here.",
+        "back": "cbs_apiset",
+    },
+    "uapi": {
+        "var": "UFOPAPI",
+        "name": "UFoP API Key",
+        "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot Support Group\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
+    "openapi": {
+        "var": "OPENAI_API",
+        "name": "OPENAI API Key",
+        "text": "Visit openai.com for an OPENAI Api key!\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
     "oapi": {
@@ -556,7 +570,9 @@ async def emoji(event):
     var = "EMOJI_IN_HELP"
     name = f"Emoji in `{HNDLR}help` menu"
     async with event.client.conversation(pru) as conv:
-        await conv.send_message("Send emoji u want to set 🙃.\n\nUse /cancel to cancel.")
+        await conv.send_message(
+            "Send emoji u want to set 🙃.\n\nUse /cancel to cancel."
+        )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message

@@ -293,7 +293,7 @@ class Quotly:
 
     async def _format_quote(self, event, reply=None, sender=None, type_="private"):
         async def telegraph(file_):
-            file = file_ + ".png"
+            file = f"{file_}.png"
             Image.open(file_).save(file, "PNG")
             files = {"file": open(file, "rb").read()}
             uri = (
@@ -335,6 +335,9 @@ class Quotly:
                     pass
         if sender:
             name = get_display_name(sender)
+            if hasattr(sender, "photo"):
+                file_ = await event.client.download_profile_photo(sender)
+                uri = await telegraph(file_)
             if hasattr(sender, "last_name"):
                 last_name = sender.last_name
         entities = []
@@ -354,7 +357,7 @@ class Quotly:
                     text += f" in {rep.game.title}"
             elif isinstance(event.action, types.MessageActionPinMessage):
                 text = "pinned a message."
-            # TODO: Are there any more events with sender?
+
         message = {
             "entities": entities,
             "chatId": id_,
@@ -369,12 +372,14 @@ class Quotly:
                 "title": name,
                 "name": name or "Deleted Account",
                 "type": type_,
+                "photo": {"url": uri},
             },
             "text": text,
             "replyMessage": reply,
         }
         if event.document and event.document.thumbs:
             file_ = await event.download_media(thumb=-1)
+            # file_ = await event.client.download_profile_photo(sender)
             uri = await telegraph(file_)
             message["media"] = {"url": uri}
 
@@ -429,7 +434,6 @@ class Quotly:
                 file.write(image)
             return file_name
         raise Exception(str(request))
-
 
 def split_list(List, index):
     new_ = []
