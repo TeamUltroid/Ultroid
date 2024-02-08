@@ -443,7 +443,6 @@ async def get_google_images(query):
 # @xtdevs
 
 class AwesomeCoding(BaseModel):
-    nimbusai_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00G\x00-\x00A\x00I\x00"
     dalle3xl_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
     default_url: Optional[str] = None
     extra_headers: Optional[Dict[str, Any]] = None
@@ -493,35 +492,23 @@ class ChatBot:
                     return f"WTF THIS {self.query}"
 
 
-
-
 # --------------------------------------
 # @TrueSaiyan
-
-UFoP_API = udB.get_key("UFOPAPI") 
+if udB.get_key("GOOGLEAPI"):
+    GOOGLEAPI = udB.get_key("GOOGLEAPI")
+else:
+    GOOGLEAPI = None
 
 async def get_chatbot_reply(message):
-    response = AwesomeCoding(
-        extra_headers={"api-key": UFoP_API},
-        extra_payload={"query": message},
-    )
-    loop = asyncio.get_event_loop()
-    partial_func = partial(
-        requests.post,
-        response.nimbusai_url.decode("utf-16"),
-        headers=response.extra_headers,
-        json=response.extra_payload,
-    )
-
+    if GOOGLEAPI is not None:
+        api_url = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={GOOGLEAPI}"
+    else:
+        return "Sorry you need to set a GOOGLEAPI key to use this chatbot"
     try:
-        response_data = await loop.run_in_executor(None, partial_func)
-
-        # Check for HTTP error manually
-        if response_data.status_code == 500:
-            LOGS.exception("Internal Server Error (500) from the chatbot server.")
-            return "Sorry, I can't answer that right now. Please try again later."
-
-        response_data.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
+        headers = {"Content-Type": "application/json"}
+        data = {"prompt": {"text": message}}
+        response = requests.post(api_url, headers=headers, json=data)
+        response.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
     except requests.exceptions.HTTPError as http_err:
         LOGS.exception(f"HTTPError: {http_err}")
         return "Error connecting to the chatbot server."
@@ -530,8 +517,10 @@ async def get_chatbot_reply(message):
         return "An unexpected error occurred while processing the chatbot response."
 
     try:
-        response_json = response_data.json()
-        reply_message = response_json.get("randydev", {}).get("message")
+        response_str = response.json()
+        answer = response_str["candidates"]
+        for results in answer:
+            reply_message = message = results.get("output")
         if reply_message is not None:
             return reply_message
         else:
