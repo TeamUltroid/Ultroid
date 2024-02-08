@@ -177,9 +177,7 @@ _buttons = {
             [Button.inline("Remove.bg API", data="abs_rmbg")],
             [Button.inline("DEEP API", data="abs_dapi")],
             [Button.inline("OpenAI API", data="abs_openapi")],
-            [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
             [Button.inline("OCR API", data="abs_oapi")],
-            [Button.inline("OpenAI API", data="abs_openapi")],
             [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
             [Button.inline("BARD API", data="abs_bapi")],
             [Button.inline("GOOGLE API", data="abs_gapi")],
@@ -201,12 +199,6 @@ _convo = {
         "text": "Get Your Deep Api from deepai.org and send here.\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
-    "uapi": {
-        "var": "UFOPAPI",
-        "name": "UFoP API Key",
-        "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot Support Group\n\n /cancel to cancel",
-        "back": "cbs_apiset",
-    },
     "openapi": {
         "var": "OPENAI_API",
         "name": "OPENAI API Key",
@@ -223,12 +215,6 @@ _convo = {
         "var": "UFOPAPI",
         "name": "UFoP API Key",
         "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot Support Group\n\n /cancel to cancel",
-        "back": "cbs_apiset",
-    },
-    "openapi": {
-        "var": "OPENAI_API",
-        "name": "OPENAI API Key",
-        "text": "Visit openai.com for an OPENAI Api key!\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
     "bapi": {
