@@ -3,4 +3,3 @@
 https://github.com/New-dev0/Telethon/archive/platy.zip
 python-decouple
 python-dotenv
-openai==0.28.0
