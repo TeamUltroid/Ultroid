@@ -15,7 +15,6 @@ import re
 import secrets
 import ssl
 import sys
-from functools import partial
 from io import BytesIO
 from json.decoder import JSONDecodeError
 from pydantic import BaseModel
