@@ -96,7 +96,8 @@ def inline_mention(user, custom=None, html=False):
 
 
 async def check_reply_to(event):
-    truai = [event.client.me.id] #Adding to this list will allow for anon or masked usermode
+    # Adding to this list will allow for anon or masked usermode
+    truai = [event.client.me.id]
     if (event.is_private and event.is_reply) or (
         event.is_reply and event.reply_to_msg_id
     ):
