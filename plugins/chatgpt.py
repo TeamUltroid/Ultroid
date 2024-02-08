@@ -14,10 +14,8 @@
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
 > `{i}bard Hello world`
-> `{i}igen Cute Panda eating bamboo`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
-• `{i}igen` Dall-E-3-XL
 • `{i}bard` Need to save bard cookie to use bard. (Its still learning)
 """
 import aiohttp
@@ -29,7 +27,6 @@ from PIL import Image
 import base64
 import requests
 import json
-from pyUltroid.fns.tools import AwesomeCoding
 from . import *
 
 
@@ -144,69 +141,6 @@ async def openai_chat_gpt(e):
     except Exception as exc:
         LOGS.warning(exc, exc_info=True)
         await eris.edit(f"GPT (v1) ran into an Error:\n\n> {exc}")
-
-
-#--------------------------Open Dall-E ----------------------------#
-# UFoP API                                                         |
-#------------------------------------------------------------------#
-
-@ultroid_cmd(
-    pattern="(chat)?igen( ([\\s\\S]*)|$)",
-)
-async def handle_dalle3xl(message):
-    query = message.raw_text.split('.igen', 1)[-1].strip()
-    reply = await message.edit(f"Generating image...")
-
-    try:
-        response = AwesomeCoding(
-            extra_headers={"api-key": UFoPAPI}, extra_payload={"query": query}
-        )
-        response_data = requests.post(
-            response.dalle3xl_url.decode("utf-16"),
-            headers=response.extra_headers,
-            json=response.extra_payload).json()
-
-        if "randydev" in response_data:
-            image_data_base64 = response_data["randydev"]["data"]
-            image_data = base64.b64decode(image_data_base64)
-
-            image_filename = "output.jpg"
-
-            with open(image_filename, "wb") as image_file:
-                image_file.write(image_data)
-
-            caption = f"{query}"
-            await reply.delete()
-            await message.client.send_file(
-                message.chat_id,
-                image_filename,
-                caption=caption,
-                reply_to=message.reply_to_msg_id if message.is_reply and message.reply_to_msg_id else None,
-            )
-
-            os.remove(image_filename)
-        else:
-            LOGS.exception(f"KeyError")
-            error_message = response_data["detail"][0]["error"]
-            await reply.edit(error_message)
-            return
-
-    except requests.exceptions.RequestException as e:
-        LOGS.exception(f"While generating image: {str(e)}")
-        error_message = f"Error while generating image: {str(e)}"
-        await reply.edit(error_message)
-
-    except KeyError as e:
-        LOGS.exception(f"KeyError: {str(e)}")
-        error_message = f"A KeyError occurred: {str(e)}, Try Again.."
-        await reply.edit(error_message)
-        await asyncio.sleep(3)
-        await reply.delete()
-
-    except Exception as e:
-        LOGS.exception(f"Error: {str(e)}")
-        error_message = f"An unexpected error occurred: {str(e)}"
-        await reply.edit(error_message)
 
 
 #--------------------------Bard w Base ----------------------------#
