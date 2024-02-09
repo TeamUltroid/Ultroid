@@ -42,7 +42,6 @@ except ImportError:
     Repo = None
 
 
-import asyncio
 import multiprocessing
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
