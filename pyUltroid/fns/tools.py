@@ -448,7 +448,6 @@ class AwesomeCoding(BaseModel):
     extra_headers: Optional[Dict[str, Any]] = None
     extra_payload: Optional[Dict[str, Any]] = None
 
-
 class ChatBot:
     def __init__(
         self,
@@ -472,25 +471,36 @@ class ChatBot:
         params = {
             "query": self.query,
             "mongo_url": mongo_url,
-            "user_id": user_id,  # Updated parameter name
+            "user_id": user_id,
             "is_logon": is_login,
             "is_multi_chat": is_multi_chat,
             "gemini_api_key": gemini_api_key,
         }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, json=params) as response:
-                if response.status != 200:
-                    return f"Error status: {response.status}"
 
-                if is_gemini_oracle:
-                    if re_json:
-                        check_response = await response.json()
-                    else:
-                        check_response = await response.text()
-                    return check_response
+        async def evaluate_response(response):
+            if response.status != 200:
+                return f"Error status: {response.status}"
+
+            if is_gemini_oracle:
+                if re_json:
+                    check_response = await response.json()
                 else:
-                    return f"WTF THIS {self.query}"
+                    check_response = await response.text()
+                return check_response
+            else:
+                return f"WTF THIS {self.query}"
 
+        try:
+            response_data = await async_searcher(
+                url,
+                post=True,
+                headers=headers,
+                json=params,
+                evaluate=evaluate_response
+            )
+            return response_data
+        except aiohttp.ClientError as client_err:
+            return f"Error connecting to the server: {client_err}"
 
 # --------------------------------------
 # @TrueSaiyan
@@ -505,22 +515,31 @@ async def get_chatbot_reply(message):
         api_url = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={GOOGLEAPI}"
     else:
         return "Sorry you need to set a GOOGLEAPI key to use this chatbot"
-    try:
-        headers = {"Content-Type": "application/json"}
-        data = {"prompt": {"text": message}}
-        async with aiohttp.ClientSession() as session:
-            async with session.post(api_url, headers=headers, json=data) as response:
-                response.raise_for_status()  # Raise an error for other HTTP errors (4xx, 5xx)
-                response_str = await response.json()
+    
+    headers = {"Content-Type": "application/json"}
+    data = {"prompt": {"text": message}}
+    
+    async def evaluate_response(response):
+        response_str = await response.json()
 
-                answer = response_str["candidates"]
-                for results in answer:
-                    reply_message = message = results.get("output")
-                if reply_message is not None:
-                    return reply_message
-                else:
-                    LOGS.warning("Unexpected JSON format in the chatbot response.")
-                    return "Unexpected response from the chatbot server."
+        answer = response_str["candidates"]
+        for results in answer:
+            reply_message = message = results.get("output")
+        if reply_message is not None:
+            return reply_message
+        else:
+            LOGS.warning("Unexpected JSON format in the chatbot response.")
+            return "Unexpected response from the chatbot server."
+    
+    try:
+        reply_message = await async_searcher(
+            api_url,
+            post=True,
+            headers=headers,
+            json=data,
+            evaluate=evaluate_response
+        )
+        return reply_message
     except aiohttp.ClientError as client_err:
         LOGS.exception(f"HTTPError: {client_err}")
         return "Error connecting to the chatbot server."
@@ -530,6 +549,7 @@ async def get_chatbot_reply(message):
     except Exception as e:
         LOGS.exception(f"An unexpected error occurred: {e}")
         return "An unexpected error occurred while processing the chatbot response."
+
 
 
 async def get_oracle_reply(query, user_id, mongo_url):
