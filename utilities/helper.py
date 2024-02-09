@@ -342,7 +342,7 @@ def numerize(number: int) -> str:
 No_Flood = {}
 
 
-async def progress(current, total, event, start, type_of_ps, file_name=None):
+async def progress(current, total, event, start, type_of_ps, file_name=None, to_chat=None):
     now = time.time()
     if (
         No_Flood.get(event.chat_id, {}).get(event.id)
@@ -374,7 +374,7 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         if type_of_ps.startswith("Upload"):
             await event.client(
                 SetTypingRequest(
-                    event.chat_id, SendMessageUploadDocumentAction(round(percentage))
+                    to_chat or event.chat_id, SendMessageUploadDocumentAction(round(percentage))
                 )
             )
         if file_name:
