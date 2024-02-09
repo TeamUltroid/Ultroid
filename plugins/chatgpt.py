@@ -206,24 +206,33 @@ async def handle_bard(message):
         return
 
     try:
-        headers = {
-            "Host": "bard.google.com",
-            "X-Same-Domain": "1",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-            "Origin": "https://bard.google.com",
-            "Referer": "https://bard.google.com/",
-        }
+        async def evaluate_response(response):
+            response_data = await response.json()
 
-        cookies = {"__Secure-1PSID": token}
+            if "content" in response_data:
+                return response_data["content"]
+            else:
+                return f"No content found in response: {response_data}"
 
-        async with aiohttp.ClientSession(headers=headers, cookies=cookies) as session:
-            bard = Bard(token=token, session=session, timeout=30)
-            bard.get_answer(owner_base)["content"]
-            message_content = bard.get_answer(query)["content"]
-            await reply.edit(message_content)
+        response_data = await async_searcher(
+            "https://bard.google.com/",
+            headers={
+                "Host": "bard.google.com",
+                "X-Same-Domain": "1",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "Origin": "https://bard.google.com",
+                "Referer": "https://bard.google.com/",
+            },
+            cookies={"__Secure-1PSID": token},
+            evaluate=evaluate_response
+        )
+
+        message_content = response_data["content"]
+        await reply.edit(message_content)
 
     except Exception as e:
         LOGS.exception(f"Error: {str(e)}")
         error_message = f"An unexpected error occurred: {str(e)}"
         await reply.edit(error_message)
+
