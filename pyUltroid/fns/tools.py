@@ -5,8 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-import aiohttp
-import asyncio
 import json
 import math
 import os
@@ -14,14 +12,13 @@ import random
 import re
 import secrets
 import ssl
-import sys
 from io import BytesIO
 from json.decoder import JSONDecodeError
-from pydantic import BaseModel
-from traceback import format_exc
 from typing import Any, Dict, Optional
 
+import aiohttp
 import requests
+from pydantic import BaseModel
 
 from .. import *
 from ..exceptions import DependencyMissingError
@@ -441,9 +438,14 @@ async def get_google_images(query):
 # --------------------------------------
 # @xtdevs
 
+
 class AwesomeCoding(BaseModel):
-    nimbusai_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00G\x00-\x00A\x00I\x00"
-    dalle3xl_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    nimbusai_url: str = (
+        b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00G\x00-\x00A\x00I\x00"
+    )
+    dalle3xl_url: str = (
+        b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    )
     default_url: Optional[str] = None
     extra_headers: Optional[Dict[str, Any]] = None
     extra_payload: Optional[Dict[str, Any]] = None
@@ -464,7 +466,7 @@ class ChatBot:
         is_login: bool = False,
         is_multi_chat: bool = False,
         is_gemini_oracle: bool = False,
-        gemini_api_key: str = None
+        gemini_api_key: str = None,
     ):
         url = f"https://ufoptg-ufop-api.hf.space/UFoP/gemini-the-oracle"
         headers = {"accept": "application/json", "api-key": api_key}
@@ -509,6 +511,7 @@ if udB.get_key("GOOGLEAPI"):
     GOOGLEAPI = udB.get_key("GOOGLEAPI")
 else:
     GOOGLEAPI = None
+
 
 async def get_chatbot_reply(message):
     if GOOGLEAPI is not None:
@@ -569,7 +572,9 @@ async def get_oracle_reply(query, user_id, mongo_url):
     else:
         return "Unexpected response from the chatbot server."
 
-#-----------------------------------------------------------------------------------#
+
+# -----------------------------------------------------------------------------------#
+
 
 def check_filename(filroid):
     if os.path.exists(filroid):
@@ -823,8 +828,7 @@ def cmd_regex_replace(cmd):
 # ------------------------#
 
 
-class LottieException(Exception):
-    ...
+class LottieException(Exception): ...
 
 
 class TgConverter:

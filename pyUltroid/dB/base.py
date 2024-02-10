@@ -20,7 +20,7 @@ class KeyManager:
 
     def add(self, item):
         content = self.get()
-        if content == None and callable(type(item)):
+        if content is None and callable(type(item)):
             content = type(item)()
         if isinstance(content, dict) and isinstance(item, dict):
             content.update(item)

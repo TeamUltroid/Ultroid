@@ -166,7 +166,12 @@ def ask_make_env():
     if strm in ["yes", "y"]:
         print(f"{Fore.YELLOW}* Creating .env file..")
         with open(".env", "a") as file:
-            for var in ["API_ID", "API_HASH", "SESSION", "REDIS_URI", "REDIS_PASSWORD"]:
+            for var in [
+                "API_ID",
+                "API_HASH",
+                "SESSION",
+                "REDIS_URI",
+                    "REDIS_PASSWORD"]:
                 inp = input(f"Enter {var}\n- ")
                 file.write(f"{var}={inp}\n")
         print("* Created '.env' file successfully! 😃")
@@ -181,14 +186,14 @@ clear()
 
 print(
     f"""
-{Fore.BLACK}{Back.WHITE} _____________ 
- ▄▄   ▄▄ ▄▄▄     ▄▄▄▄▄▄▄ ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ ▄▄▄ ▄▄▄▄▄▄  
-█  █ █  █   █   █       █   ▄  █ █       █   █      █ 
+{Fore.BLACK}{Back.WHITE} _____________
+ ▄▄   ▄▄ ▄▄▄     ▄▄▄▄▄▄▄ ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ ▄▄▄ ▄▄▄▄▄▄
+█  █ █  █   █   █       █   ▄  █ █       █   █      █
 █  █ █  █   █   █▄     ▄█  █ █ █ █   ▄   █   █  ▄    █
 █  █▄█  █   █     █   █ █   █▄▄█▄█  █ █  █   █ █ █   █
 █       █   █▄▄▄  █   █ █    ▄▄  █  █▄█  █   █ █▄█   █
 █       █       █ █   █ █   █  █ █       █   █       █
-█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█ █▄▄▄█ █▄▄▄█  █▄█▄▄▄▄▄▄▄█▄▄▄█▄▄▄▄▄▄█ 
+█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█ █▄▄▄█ █▄▄▄█  █▄█▄▄▄▄▄▄▄█▄▄▄█▄▄▄▄▄▄█
 {Style.RESET_ALL}
 {Fore.GREEN}- ULTROID Termux Installation -
   The Main Aim of this script is to deploy Ultroid with basic requirements and save your phone resources.
@@ -248,7 +253,8 @@ else:
 
 clear()
 if not path.exists(".env"):
-    print(with_header("# Do you want to move toward creating .env file ? [y/N] "))
+    print(with_header(
+        "# Do you want to move toward creating .env file ? [y/N] "))
     ask_make_env()
 
 print(with_header(f"\n{Fore.GREEN}You are all Done! 🥳"))

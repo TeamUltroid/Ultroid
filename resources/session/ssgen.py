@@ -55,7 +55,6 @@ def get_api_id_and_hash():
 def telethon_session():
     try:
         spinner("tele")
-        import telethon
         x = "\bFound an existing installation of Telethon...\nSuccessfully Imported.\n\n"
     except ImportError:
         print("Installing Telethon...")
@@ -123,7 +122,7 @@ def pyro_session():
         os.system("pip install pyrogram tgcrypto")
         x = "\bDone. Installed and imported Pyrogram."
         from pyrogram import Client
-        
+
     clear_screen()
     print(ULTROID)
     print(x)
@@ -141,8 +140,8 @@ def pyro_session():
             print("Session has been sent to your saved messages!")
             exit(0)
     except Exception as er:
-      print("Unexpected error occurred while creating session, make sure to validate your inputs.")
-      print(er)
+        print("Unexpected error occurred while creating session, make sure to validate your inputs.")
+        print(er)
 
 
 def main():

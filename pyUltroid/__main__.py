@@ -25,9 +25,9 @@ def main():
     from .startup.loader import load_other_plugins
 
     try:
-        from apscheduler.schedulers.asyncio import AsyncIOScheduler
+        pass
     except ImportError:
-        AsyncIOScheduler = None
+        pass
 
     # Option to Auto Update On Restarts..
     if (
