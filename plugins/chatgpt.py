@@ -13,9 +13,11 @@
 **• Examples: **
 > `{i}gpt How to fetch a url in javascript`
 > `{i}gpt -i Cute Panda eating bamboo`
+> `{i}gpt2 How to get a url in Python`
 > `{i}bard Hello world`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
+• `{i}gpt2` Safone API
 • `{i}bard` Need to save bard cookie to use bard. (Its still learning)
 """
 from io import BytesIO
@@ -174,3 +176,53 @@ async def handle_bard(message):
         LOGS.exception(f"Error: {str(e)}")
         error_message = f"An unexpected error occurred: {str(e)}"
         await reply.edit(error_message)
+
+
+@ultroid_cmd(
+    pattern="(chat)?gpt2( ([\\s\\S]*)|$)",
+)
+async def chatgpt_v2(e):
+    query = e.pattern_match.group(2)
+    reply = await e.get_reply_message()
+    if not query:
+        if reply and reply.text:
+            query = reply.message
+    if not query:
+        return await e.eor("`Gimme a Question to ask from ChatGPT`")
+
+    eris = await e.eor("__Generating answer...__")
+    payloads = {
+        "message": query,
+        "chat_mode": "assistant",
+        "dialog_messages": "[{'bot': '', 'user': ''}]",
+    }
+    try:
+        response = await async_searcher(
+            "https://api.safone.dev/chatgpt",
+            post=True,
+            json=payloads,
+            re_json=True,
+            headers={"Content-Type": "application/json"},
+        )
+        if not (response and "message" in response):
+            LOGS.error(response)
+            raise ValueError("Invalid Response from Server")
+
+        response = response.get("message")
+        if len(response + query) < 4080:
+            to_edit = f"<b>Query:</b> <i>(v2)</i>\n\n~ <i>{query}</i>\n\n<b>GPT:</b>\n~ <i>{response}</i>"
+            await eris.edit(to_edit, parse_mode="html")
+            return
+        with BytesIO(response.encode()) as file:
+            file.name = "gpt_response.txt"
+            await e.respond(
+                f"<i>{args[:1000]} ...</i>",
+                file=file,
+                reply_to=e.reply_to_msg_id or e.id,
+                parse_mode="html",
+            )
+        await eris.delete()
+    except Exception as exc:
+        LOGS.exception(exc)
+        await eris.edit(f"**GPT (v2) ran into an Error:** \n\n`{exc}`")
+
