@@ -157,7 +157,7 @@ async def on_out_mssg(event):
             replied_message
             and replied_message.fwd_from
             and replied_message.fwd_from.from_id
-            and replied_message.fwd_from.from_id.user_id != 6176247391
+            and replied_message.fwd_from.from_id.user_id != asst.me.id
         ):
             return
     if event.text.startswith("/who"):
