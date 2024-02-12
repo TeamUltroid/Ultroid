@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2023 TeamUltroid
+# Copyright (C) 2021-2024 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -55,6 +55,7 @@ from pyUltroid.dB.gban_mute_db import (
     ungban,
     ungmute,
 )
+from pyUltroid.fns.custom_markdown import CustomMarkdown
 from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
 
 from . import (
@@ -484,7 +485,8 @@ async def gcast(event):
                             reply=False,
                         )
                     else:
-                        await event.client.send_message(
+                        ultroid_bot.parse_mode = CustomMarkdown()
+                        await ultroid_bot.send_message(
                             chat, msg, file=reply.media if reply else None
                         )
                     done += 1
@@ -502,7 +504,8 @@ async def gcast(event):
                                 reply=False,
                             )
                         else:
-                            await event.client.send_message(
+                            ultroid_bot.parse_mode = CustomMarkdown()
+                            await ultroid_bot.send_message(
                                 chat, msg, file=reply.media if reply else None
                             )
                         done += 1
@@ -559,7 +562,8 @@ async def gucast(event):
                             reply=False,
                         )
                     else:
-                        await event.client.send_message(
+                        ultroid_bot.parse_mode = CustomMarkdown()
+                        await ultroid_bot.send_message(
                             chat, msg, file=reply.media if reply else None
                         )
                     done += 1
