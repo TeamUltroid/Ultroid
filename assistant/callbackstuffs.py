@@ -174,18 +174,21 @@ _buttons = {
     "apiset": {
         "text": get_string("ast_1"),
         "buttons": [
-            [Button.inline("Remove.bg API", data="abs_rmbg")],
-            [Button.inline("DEEP API", data="abs_dapi")],
-            [Button.inline("OpenAI API", data="abs_openapi")],
-            [Button.inline("OCR API", data="abs_oapi")],
-            [Button.inline("🌀ʊʄ⊕ք🌀 API", data="abs_uapi")],
-            [Button.inline("BARD API", data="abs_bapi")],
-            [Button.inline("GOOGLE API", data="abs_gapi")],
+            [
+                Button.inline("RMBG API", data="abs_rmbg"),
+                Button.inline("DEEP API", data="abs_dapi"),
+                Button.inline("OCR API", data="abs_oapi"),
+            ],
+            [
+                Button.inline("OᴘᴇɴAI API", data="abs_openapi"),
+                Button.inline("🌀ʊʄ⊕ք🌀", data="abs_uapi"),
+                Button.inline("Google API", data="abs_gapi"),
+            ],
+            [Button.inline("OpenWeather API", data="abs_openwapi")],
             [Button.inline("« Back", data="setter")],
         ],
     },
 }
-
 _convo = {
     "rmbg": {
         "var": "RMBG_API",
@@ -199,28 +202,22 @@ _convo = {
         "text": "Get Your Deep Api from deepai.org and send here.\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
-    "openapi": {
-        "var": "OPENAI_API",
-        "name": "OPENAI API Key",
-        "text": "Visit openai.com for an OPENAI Api key!\n\n /cancel to cancel",
-        "back": "cbs_apiset",
-    },
     "oapi": {
         "var": "OCR_API",
         "name": "Ocr Api Key",
         "text": "Get Your OCR api from ocr.space and send that Here.\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
+    "openapi": {
+        "var": "OPENAI_API",
+        "name": "OPENAI API Key",
+        "text": "Visit openai.com for an OPENAI Api key!\n\n /cancel to cancel",
+        "back": "cbs_apiset",
+    },
     "uapi": {
         "var": "UFOPAPI",
         "name": "UFoP API Key",
-        "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot Support Group\n\n /cancel to cancel",
-        "back": "cbs_apiset",
-    },
-    "bapi": {
-        "var": "BARDAPI",
-        "name": "Bard AI Api Key",
-        "text": "Get Your Bard cookie/api using a browsers developer mode\n\n /cancel to cancel",
+        "text": "Contact 🌀ʊʄ⊕ք🌀 or Visit @PerthUnity_Bot/@UFoPInfo Support Group\n\n /cancel to cancel",
         "back": "cbs_apiset",
     },
     "gapi": {
