@@ -24,18 +24,14 @@
 from io import BytesIO
 from os import remove, system
 
-import aiohttp
-
 from . import *
 
 try:
     import openai
-    from bardapi import Bard
 except ImportError:
     system("pip3 install -q openai")
     system("pip3 install -q bardapi")
     import openai
-    from bardapi import Bard
 
 from . import LOGS, check_filename, fast_download, udB, ultroid_cmd
 
@@ -178,4 +174,3 @@ async def chatgpt_v2(e):
     except Exception as exc:
         LOGS.exception(exc)
         await eris.edit(f"**GPT (v2) ran into an Error:** \n\n`{exc}`")
-
