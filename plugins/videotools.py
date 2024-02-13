@@ -4,18 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}sample <duration in seconds>`
-   Creates Short sample of video..
+from . import get_help
 
-• `{i}vshots <number of shots>`
-   Creates screenshot of video..
-
-• `{i}vtrim <start time> - <end time> in seconds`
-    Crop a Lengthy video..
-"""
+__doc__ = get_help("help_videotools")
 
 import glob
 import os
