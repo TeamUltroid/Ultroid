@@ -5,12 +5,9 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-"""
-✘ Commands Available -
+from . import get_help
 
-• `{i}webupload`
-    Upload files on another server.
-"""
+__doc__ = get_help("help_webupload")
 
 import os
 
