@@ -475,28 +475,25 @@ async def webss(event):
 
 @ultroid_cmd(pattern="shorturl")
 async def short_url(event):
-    input_url = event.pattern_match.group(1)
-
-    if not input_url:
+    input_url = None
+    
+    if event.pattern_match.group(1):
+        input_url = event.pattern_match.group(1)
+    else:
         reply_msg = await event.get_reply_message()
-        if reply_msg:
+        if reply_msg and reply_msg.text:
             input_url = reply_msg.text
         else:
             return await eor(event, "`Please provide a URL to shorten.`")
 
     try:
         s = pyshorteners.Shortener()
-        if "http://tinyurl.com" in input_url.lower():
-            shortened_url = s.tinyurl.expand(input_url)
-            action = "Expanded"
-        else:
-            shortened_url = s.tinyurl.short(input_url)
-            action = "Shortened"
-
+        shortened_url = s.tinyurl.short(input_url)
+        
         output_message = (
-            f"**URL {action}**\n"
+            f"**URL Shortened**\n"
             f"**Given Link** ➠ **{input_url}**\n"
-            f"**{action} Link** ➠ **[LINK]({shortened_url})**"
+            f"**Shortened Link** ➠ **[LINK]({shortened_url})**"
         )
 
         if event.reply_to_msg_id:
