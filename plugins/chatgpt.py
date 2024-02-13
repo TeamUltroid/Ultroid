@@ -5,32 +5,60 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-**Get Answers from Chat GPT including OpenAI, Bing and Sydney**
+**Get Answers from Chat GPT including OpenAI**
 **Or generate images with Dall-E-3XL**
 
-> `{i}gpt` (-i = for image) (query)
-
 **• Examples: **
-> `{i}gpt How to fetch a url in javascript`
+> `{i}gpt How to get a url in Python`
+> `{i}gpt -i Cute panda eating bamboo`
 > `{i}gpt2 How to get a url in Python`
-> `{i}gpt -i Cute Panda eating bamboo`
-> `{i}gpt2 How to get a url in Python`
+> `{i}igen2 a monkey with a banana`
 
-• `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
+• `{i}gpt` OpenAI 
+• `{i}gpt -i` OpenAI DALL-E
+
 • `{i}gpt2` Safone API
+• `{i}igen2` Dall-E-3XL ImageGen
 """
-from io import BytesIO
+import aiohttp
+import base64
+import asyncio
 from os import remove, system
-
+from telethon import TelegramClient, events
+from io import BytesIO
+from PIL import Image
+import requests
+import json
 from . import *
+
+
+import os
+import sys
+from typing import Any, Dict, Optional
+from pydantic import BaseModel
 
 try:
     import openai
 except ImportError:
-    system("pip3 install -q openai")
+    system("pip3 install -q openai==0.28.0")
     import openai
 
-from . import LOGS, check_filename, fast_download, udB, ultroid_cmd
+from . import (
+    LOGS,
+    async_searcher,
+    check_filename,
+    fast_download,
+    udB,
+    ultroid_cmd,
+    ultroid_bot,
+)
+
+class AwesomeCoding(BaseModel):
+    dalle3xl_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    default_url: Optional[str] = None
+    extra_headers: Optional[Dict[str, Any]] = None
+    extra_payload: Optional[Dict[str, Any]] = None
+
 
 if udB.get_key("UFOPAPI"):
     UFoPAPI = Keys.UFOPAPI
@@ -166,3 +194,67 @@ async def chatgpt_v2(e):
     except Exception as exc:
         LOGS.exception(exc)
         await eris.edit(f"**GPT (v2) ran into an Error:** \n\n`{exc}`")
+
+
+@ultroid_cmd(
+    pattern="(chat)?igen2( ([\\s\\S]*)|$)",
+)
+async def handle_dalle3xl(message):
+    query = message.raw_text.split(f"{HNDLR}igen2", 1)[-1].strip()
+    reply = await message.edit(f"Generating image...")
+
+    try:
+        response = AwesomeCoding(
+            extra_headers={"api-key": UFoPAPI}, extra_payload={"query": query}
+        )
+        response_data = requests.post(
+            response.dalle3xl_url.decode("utf-16"),
+            headers=response.extra_headers,
+            json=response.extra_payload,
+        ).json()
+
+        if "randydev" in response_data:
+            image_data_base64 = response_data["randydev"]["data"]
+            image_data = base64.b64decode(image_data_base64)
+
+            image_filename = "output.jpg"
+
+            with open(image_filename, "wb") as image_file:
+                image_file.write(image_data)
+
+            caption = f"{query}"
+            await reply.delete()
+            await message.client.send_file(
+                message.chat_id,
+                image_filename,
+                caption=caption,
+                reply_to=(
+                    message.reply_to_msg_id
+                    if message.is_reply and message.reply_to_msg_id
+                    else None
+                ),
+            )
+
+            os.remove(image_filename)
+        else:
+            LOGS.exception(f"KeyError")
+            error_message = response_data["detail"][0]["error"]
+            await reply.edit(error_message)
+            return
+
+    except requests.exceptions.RequestException as e:
+        LOGS.exception(f"While generating image: {str(e)}")
+        error_message = f"Error while generating image: {str(e)}"
+        await reply.edit(error_message)
+
+    except KeyError as e:
+        LOGS.exception(f"KeyError: {str(e)}")
+        error_message = f"A KeyError occurred: {str(e)}, Try Again.."
+        await reply.edit(error_message)
+        await asyncio.sleep(3)
+        await reply.delete()
+
+    except Exception as e:
+        LOGS.exception(f"Error: {str(e)}")
+        error_message = f"An unexpected error occurred: {str(e)}"
+        await reply.edit(error_message)
