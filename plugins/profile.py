@@ -4,27 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}setname <first name // last name>`
-    Change your profile name.
+from . import get_help
 
-• `{i}setbio <bio>`
-    Change your profile bio.
+__doc__ = get_help("help_profile")
 
-• `{i}setpic <reply to pic>`
-    Change your profile pic.
-
-• `{i}delpfp <n>(optional)`
-    Delete one profile pic, if no value given, else delete n number of pics.
-
-• `{i}poto <username>/reply`
-  `{i}poto <reply/upload-limit>/all`
-
-  Ex: `{i}poto 10` - uploads starting 10 pfps of user.
-    Upload the photo of Chat/User if Available.
-"""
 import os
 
 from telethon.tl.functions.account import UpdateProfileRequest
