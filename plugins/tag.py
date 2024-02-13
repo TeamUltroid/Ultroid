@@ -4,30 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}tagall`
-    Tag Top 100 Members of chat.
+from . import get_help
 
-• `{i}tagadmins`
-    Tag Admins of that chat.
-
-• `{i}tagowner`
-    Tag Owner of that chat
-
-• `{i}tagbots`
-    Tag Bots of that chat.
-
-• `{i}tagrec`
-    Tag recently Active Members.
-
-• `{i}tagon`
-    Tag online Members(work only if privacy off).
-
-• `{i}tagoff`
-    Tag Offline Members(work only if privacy off).
-"""
+__doc__ = get_help("help_tag")
 
 from telethon.tl.types import ChannelParticipantAdmin as admin
 from telethon.tl.types import ChannelParticipantCreator as owner
