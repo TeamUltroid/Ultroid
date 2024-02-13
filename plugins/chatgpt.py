@@ -278,7 +278,7 @@ async def geminiUlt(message):
             if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
                 api_key = Keys.GOOGLEAPI
                 mongo_url = Keys.MONGO_URI
-                gb =  GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
+                gb = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
                 banswer, _ = await gb._GeminiUltroid__get_resp_gu(query="Hello, Ultroid")
         except Exception as e:
             LOGS.exception(f"Error occurred: {e}")
