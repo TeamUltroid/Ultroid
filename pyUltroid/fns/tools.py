@@ -518,10 +518,10 @@ async def get_chatbot_reply(message):
         api_url = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={GOOGLEAPI}"
     else:
         return "Sorry you need to set a GOOGLEAPI key to use this chatbot"
-    
+
     headers = {"Content-Type": "application/json"}
     data = {"prompt": {"text": message}}
-    
+
     async def evaluate_response(response):
         response_str = await response.json()
 
@@ -533,7 +533,7 @@ async def get_chatbot_reply(message):
         else:
             LOGS.warning("Unexpected JSON format in the chatbot response.")
             return "Unexpected response from the chatbot server."
-    
+
     try:
         reply_message = await async_searcher(
             api_url,
@@ -559,7 +559,7 @@ async def get_oracle_reply(query, user_id, mongo_url):
     if not Keys.MONGO_URI:
         return "You cannot use this without setting a MONGO_URI first"
 
-    response = ChatBot(query).get_response_gemini_oracle(
+    response = await ChatBot(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
         mongo_url=mongo_url,
@@ -574,6 +574,7 @@ async def get_oracle_reply(query, user_id, mongo_url):
         return get_response
     else:
         return "Unexpected response from the chatbot server."
+
 
 
 # -----------------------------------------------------------------------------------#

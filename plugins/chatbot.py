@@ -12,8 +12,9 @@ __doc__ = get_help("help_chatbot")
 
 from pyUltroid.fns.tools import get_chatbot_reply, get_oracle_reply
 
-from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd
+from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd, ultroid_bot, Keys
 
+mongouri = Keys.MONGO_URI
 
 @ultroid_cmd(pattern="repoai")
 async def im_oracle(event):
@@ -24,8 +25,8 @@ async def im_oracle(event):
             message = event.text.split(" ", 1)[1]
         except IndexError:
             return await eod(event, get_string("tban_1"), time=10)
-    reply_ = await get_orcale_reply(
-        query=message, user_id=ultroid_bot.me.id, mongo_url=MONGO_URI
+    reply_ = await get_oracle_reply(
+        query=message, user_id=ultroid_bot.me.id, mongo_url=mongouri
     )
     await event.eor(reply_)
 
