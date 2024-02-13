@@ -321,6 +321,7 @@ class LocalDB(_BaseDatabase):
 
 
 def UltroidDB():
+    _er = False
     from .. import HOSTED_ON
 
     try:
