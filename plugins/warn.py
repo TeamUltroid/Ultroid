@@ -4,25 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-•`{i}warn <reply to user> <reason>`
-    Gives Warn.
+from . import get_help
 
-•`{i}resetwarn <reply to user>`
-    To reset All Warns.
-
-•`{i}warns <reply to user>`
-   To Get List of Warnings of a user.
-
-•`{i}setwarn <warn count> | <ban/mute/kick>`
-   Set Number in warn count for warnings
-   After putting " | " mark put action like ban/mute/kick
-   Its Default 3 kick
-   Example : `setwarn 5 | mute`
-
-"""
+__doc__ = get_help("help_warn")
 
 from pyUltroid.dB.warn_db import add_warn, reset_warn, warns
 
