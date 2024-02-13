@@ -43,6 +43,8 @@ import os
 import re
 import secrets
 
+import pyshorteners
+
 try:
     import cv2
 except ImportError:
@@ -472,24 +474,36 @@ async def webss(event):
 
 
 @ultroid_cmd(pattern="shorturl")
-async def magic(event):
+async def short_url(event):
+    input_url = event.pattern_match.group(1)
+
+    if not input_url:
+        reply_msg = await event.get_reply_message()
+        if reply_msg:
+            input_url = reply_msg.text
+        else:
+            return await eor(event, "`Please provide a URL to shorten.`")
+
     try:
-        match = event.text.split(maxsplit=1)[1].strip()
-    except IndexError:
-        return await event.eor("`Provide url to turn into tiny...`")
-    data = {
-        "url": match.split()[0],
-        "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6),
-    }
-    data = await async_searcher(
-        "https://tiny.ultroid.tech/api/new",
-        data=data,
-        post=True,
-        re_json=True,
-    )
-    response = data.get("response", {})
-    if not response.get("status"):
-        return await event.eor(f'**ERROR :** `{response["message"]}`')
-    await event.eor(
-        f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : {data['response']['tinyUrl']}"
-    )
+        s = pyshorteners.Shortener()
+        if "http://tinyurl.com" in input_url.lower():
+            shortened_url = s.tinyurl.expand(input_url)
+            action = "Expanded"
+        else:
+            shortened_url = s.tinyurl.short(input_url)
+            action = "Shortened"
+
+        output_message = (
+            f"**URL {action}**\n"
+            f"**Given Link** ➠ **{input_url}**\n"
+            f"**{action} Link** ➠ **[LINK]({shortened_url})**"
+        )
+
+        if event.reply_to_msg_id:
+            await event.delete()
+            await event.reply(output_message)
+        else:
+            await eor(event, output_message)
+
+    except Exception as e:
+        await eor(event, f"An error occurred: {e}")
