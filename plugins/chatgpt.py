@@ -19,6 +19,7 @@
 • `{i}gpt -i` OpenAI DALL-E
 
 • `{i}gemi` Ultroid Gemini
+    * `{i}gemi -cleardb` < Use to clear your gemini db
 
 • `{i}gpt2` Safone API
 • `{i}igen2` Dall-E-3XL ImageGen
@@ -272,13 +273,42 @@ async def handle_dalle3xl(message):
         await reply.edit(error_message)
 
 
-@nimbus_cmd(
+@ultroid_cmd(
     pattern="(chat)?gemi( ([\\s\\S]*)|$)",
 )
 async def geminiUlt(message):
     query = message.raw_text.split(f"{HNDLR}gemi", 1)[-1].strip()
     user_id = bot.me.id
     reply = await message.edit(f"`Generating answer...`")
+    
+    if query == "-cleardb":
+        try:
+            if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+                api_key = Keys.GOOGLEAPI
+                mongo_url = Keys.MONGO_URI
+            else:
+                raise ValueError("Missing required keys in the database")
+        except KeyError as e:
+            LOGS.exception(f"KeyError: {e}")
+            error_message = f"An Key error occurred: {str(e)}"
+            await reply.edit(error_message)
+            return
+        except ValueError as e:
+            LOGS.exception(e)
+            error_message = f"An value error occurred: {str(e)}"
+            await reply.edit(error_message)
+            return
+        except Exception as e:
+            LOGS.exception(f"Error: {str(e)}")
+            error_message = f"An unexpected error occurred: {str(e)}"
+            await reply.edit(error_message)
+            return
+        
+        gu = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
+        await gu._clear_history_in_db()
+        await reply.edit("`GeminiUltroid database cleared successfully!`")
+        return
+    
     try:
         if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
             api_key = Keys.GOOGLEAPI
