@@ -803,14 +803,10 @@ async def translate(text, lang_tgt):
     response = await async_searcher(url, post=True, headers=headers, json=data)
     
     # Check if the response was successful
-    if response.status_code == 200:
-        result = response.json()
-        if result.get("status") == "True":
-            return result["randydev"]["translation"]
-        else:
-            return "Translation failed"
+    if "status" in response and response["status"] == "True":
+        return response["randydev"]["translation"]
     else:
-        return f"Translation failed with status code {response.status_code}"
+        return "Translation failed"
 
 
 def cmd_regex_replace(cmd):
