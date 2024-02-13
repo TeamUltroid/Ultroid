@@ -4,21 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}addsnip <word><reply to a message>`
-    add the used word as snip relating to replied message.
+from . import get_help
 
-• `{i}remsnip <word>`
-    Remove the snip word..
+__doc__ = get_help("help_snips")
 
-• `{i}listsnip`
-    list all snips.
-
-• Use :
-    type `$(ur snip word)` get setted reply.
-"""
 import os
 
 from telegraph import upload_file as uf
