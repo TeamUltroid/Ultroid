@@ -41,9 +41,11 @@ except ImportError:
     Repo = None
 
 
+import asyncio
 import multiprocessing
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
+from typing import List, Optional
 
 from telethon.helpers import _maybe_await
 from telethon.tl import types
