@@ -18,6 +18,9 @@
 
 • `{i}ytsv <(youtube) search query>`
    Search and download video from youtube.
+
+• `{i}ytsc <soundcloud link>`
+   Download audio from SoundCloud.
 """
 from pyUltroid.fns.ytdl import download_yt, get_yt_link
 
@@ -80,6 +83,16 @@ async def download_from_youtube_(event):
         if not url:
             return await xx.edit(get_string("unspl_1"))
         await xx.eor(get_string("youtube_8"))
+    elif opt == "sc":
+        ytd["format"] = "bestaudio"
+        ytd["outtmpl"] = "%(id)s.mp3"
+        url = event.pattern_match.group(2)
+        if not url:
+            return await xx.eor("Please provide a SoundCloud link.")
+        try:
+            requests.get(url)
+        except BaseException:
+            return await xx.eor("Invalid SoundCloud link.")
     else:
         return
     await download_yt(xx, url, ytd)
