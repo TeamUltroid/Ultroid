@@ -4,38 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}circle`
-    Reply to a audio song or gif to get video note.
+from . import get_help
 
-• `{i}ls`
-    Get all the Files inside a Directory.
+__doc__ = get_help("help_tools")
 
-• `{i}bots`
-    Shows the number of bots in the current chat with their perma-link.
-
-• `{i}hl <a link> <text-optional>`
-    Embeds the link with a whitespace as message.
-
-• `{i}id`
-    Reply a Sticker to Get Its Id
-    Reply a User to Get His Id
-    Without Replying You Will Get the Chat's Id
-
-• `{i}sg <username>` or `{i}sgu <username>`
-    Get Name History of the user.
-
-• `{i}tr <dest lang code> <(reply to) a message>`
-    Get translated message.
-
-• `{i}webshot <url>`
-    Get a screenshot of the webpage.
-
-• `{i}shorturl <url> <id-optional>`
-    shorten any url...
-"""
 import asyncio
 import glob
 import io
