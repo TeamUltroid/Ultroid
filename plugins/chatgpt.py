@@ -70,14 +70,16 @@ if udB.get_key("UFOPAPI"):
 else:
     UFoPAPI = ""
 
-try:
-    if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
-        message = "Hello, Ultroid"
-        gUlt = await geminiUlt(message)
-except Exception as e:
-    LOGS.exception(f"Unable to set GeminiUltroid: {e}")
-    LOGS.info(f"Unable to set GeminiUltroid: {e}")
- 
+async def GeminiBase():
+    try:
+        if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+            api_key = Keys.GOOGLEAPI
+            mongo_url = Keys.MONGO_URI
+            user_id = bot.me.id
+            await geminiUlt(message, api_key, mongo_url, user_id)
+    except Exception as e:
+        LOGS.exception(f"Error occurred: {e}")
+        LOGS.info(f"Error occurred: {e}")
 
 @ultroid_cmd(
     pattern="(chat)?gpt( ([\\s\\S]*)|$)",
@@ -339,3 +341,5 @@ async def geminiUlt(message):
         f"<b>AI:</b> <i>(UltGemi)</i>\n~ <i>{answer}</i>"
     )
     await message.edit(reply, parse_mode="html")
+
+asyncio.run(GeminiBase())
