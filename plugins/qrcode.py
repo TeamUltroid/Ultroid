@@ -4,18 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}qrcode <text/reply to text>`
-   `Makes qrcode of text`
+from . import get_help
 
-• `{i}addqr <reply image> <text>`
-   `Makes qr of text and add it to image.`
+__doc__ = get_help("help_qrcode")
 
-• `{i}qrdecode <reply to qrcode>`
-   `It decodes the qrcode.`
-"""
 import os
 
 from pyUltroid import ULTConfig
