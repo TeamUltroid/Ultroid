@@ -7,7 +7,7 @@
 
 from . import get_help
 
-__doc__ = get_help("help_fontgen")
+__doc__ = get_help("help_writer")
 
 import os
 
