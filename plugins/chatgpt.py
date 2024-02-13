@@ -4,26 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid >
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-**Get Answers from Chat GPT including OpenAI and Gemini**
-**Or generate images with Dall-E-3XL**
 
-**• Examples: **
-> `{i}gpt How to get a url in Python`
-> `{i}gpt -i Cute panda eating bamboo`
-> `{i}gpt2 How to get a url in Python`
-> `{i}igen2 a monkey with a banana`
-> `{i}gemi how do hack an apple mac with a banana`
+from . import get_help
 
-• `{i}gpt` OpenAI 
-• `{i}gpt -i` OpenAI DALL-E
+__doc__ = get_help("help_chatgpt")
 
-• `{i}gemi` Ultroid Gemini
-    * `{i}gemi -cleardb` < Use to clear your gemini db
-
-• `{i}gpt2` Safone API
-• `{i}igen2` Dall-E-3XL ImageGen
-"""
 import aiohttp
 import base64
 import asyncio
