@@ -4,22 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}startvc`
-    Start Group Call in a group.
+from . import get_help
 
-• `{i}stopvc`
-    Stop Group Call in a group.
-
-• `{i}vctitle <title>`
-    Change the title Group call.
-
-• `{i}vcinvite`
-    Invite all members of group in Group Call.
-    (You must be joined)
-"""
+__doc__ = get_help("help_vctools")
 
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
