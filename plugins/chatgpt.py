@@ -15,11 +15,9 @@
 > `{i}gpt2 How to get a url in Python`
 > `{i}gpt -i Cute Panda eating bamboo`
 > `{i}gpt2 How to get a url in Python`
-> `{i}bard Hello world`
 
 • `{i}gpt` or `{i}gpt -i` Needs OpenAI API key to function!!
 • `{i}gpt2` Safone API
-• `{i}bard` Need to save bard cookie to use bard. (Its still learning)
 """
 from io import BytesIO
 from os import remove, system
@@ -30,20 +28,14 @@ try:
     import openai
 except ImportError:
     system("pip3 install -q openai")
-    system("pip3 install -q bardapi")
     import openai
 
 from . import LOGS, check_filename, fast_download, udB, ultroid_cmd
 
 if udB.get_key("UFOPAPI"):
-    UFoPAPI = udB.get_key("UFOPAPI")
+    UFoPAPI = Keys.UFOPAPI
 else:
     UFoPAPI = ""
-
-if udB.get_key("BARDAPI"):
-    BARD_TOKEN = udB.get_key("BARDAPI")
-else:
-    BARD_TOKEN = None
 
 
 @ultroid_cmd(
