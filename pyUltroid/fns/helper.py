@@ -47,6 +47,7 @@ from functools import partial, wraps
 
 from telethon.helpers import _maybe_await
 from telethon.tl import types
+from telethon.tl.custom import Message
 from telethon.utils import get_display_name
 
 from .._misc import CMD_HELP
