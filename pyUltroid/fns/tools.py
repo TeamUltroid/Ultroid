@@ -800,13 +800,18 @@ async def translate(text, lang_tgt):
         "setlang": lang_tgt
     }
     
-    response = await async_searcher(url, post=True, headers=headers, json=data)
-    
-    # Check if the response was successful
-    if "status" in response and response["status"] == "True":
-        return response["randydev"]["translation"]
-    else:
-        return "Translation failed"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=data) as response:
+                response.raise_for_status()  # Raise an exception for 4XX or 5XX status codes
+                result = await response.json()
+                
+                if result.get("status") == "True":
+                    return result["randydev"]["translation"]
+                else:
+                    return "Translation failed"
+    except aiohttp.ClientError as e:
+        return f"Error: {e}"
 
 
 def cmd_regex_replace(cmd):
