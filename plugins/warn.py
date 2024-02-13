@@ -166,15 +166,17 @@ async def twarns(e):
 async def warnset(e):
     ok = e.pattern_match.group(1).strip()
     if not ok:
-        return await e.eor("stuff")
+        return await e.eor("Invalid format. Correct usage: .setwarns <number>|<action>")
     if "|" in ok:
         try:
-            number, action = int(ok.split()[0]), ok.split()[1]
-        except BaseException:
-            return await e.eor(get_string("schdl_2"), time=5)
-        if ("ban" or "kick" or "mute") not in action:
-            return await e.eor("`Only mute / ban / kick option suported`", time=5)
+            number, action = ok.split("|")
+            number = int(number.strip())
+            action = action.strip()
+        except ValueError:
+            return await e.eor("Invalid format. Correct usage: .setwarns <number>|<action>", time=5)
+        if action not in ["ban", "mute", "kick"]:
+            return await e.eor("Only mute / ban / kick options are supported", time=5)
         udB.set_key("SETWARN", f"{number} {action}")
-        await e.eor(f"Done Your Warn Count is now {number} and Action is {action}")
+        await e.eor(f"Done. Your Warn Count is now {number} and Action is {action}")
     else:
-        await e.eor(get_string("schdl_2"), time=5)
+        await e.eor("Invalid format. Correct usage: .setwarns <number>|<action>", time=5)
