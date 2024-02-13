@@ -789,27 +789,28 @@ def _package_rpc(text, lang_src="auto", lang_tgt="auto"):
     return freq
 
 
-def translate(*args, **kwargs):
+async def translate(text, lang_tgt):
+    url = "https://ufoptg-ufop-api.hf.space/ufop/translate"
     headers = {
-        "Referer": "https://translate.google.co.in",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/47.0.2526.106 Safari/537.36",
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "accept": "application/json",
+        "Content-Type": "application/json",
     }
-    x = requests.post(
-        "https://translate.google.co.in/_/TranslateWebserverUi/data/batchexecute",
-        headers=headers,
-        data=_package_rpc(*args, **kwargs),
-    ).text
-    response = ""
-    data = json.loads(json.loads(x[4:])[0][2])[1][0][0]
-    subind = data[-2]
-    if not subind:
-        subind = data[-1]
-    for i in subind:
-        response += i[0]
-    return response
+    data = {
+        "text": text,
+        "setlang": lang_tgt
+    }
+    
+    response = await async_searcher(url, post=True, headers=headers, json=data)
+    
+    # Check if the response was successful
+    if response.status_code == 200:
+        result = response.json()
+        if result.get("status") == "True":
+            return result["randydev"]["translation"]
+        else:
+            return "Translation failed"
+    else:
+        return f"Translation failed with status code {response.status_code}"
 
 
 def cmd_regex_replace(cmd):
