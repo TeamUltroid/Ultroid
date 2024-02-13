@@ -4,33 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}wspr <username>`
-    Send secret message..
+from . import get_help
 
-• `{i}q <color-optional>`
-• `{i}q @username`
-• `{i}q r <color-optional>`
-• `{i}q count` : `multiple quotes`
-    Create quotes..
+__doc__ = get_help("help_specialtools")
 
-• `{i}sticker <query>`
-    Search Stickers as Per ur Wish..
-
-• `{i}getaudio <reply to an audio>`
-    Download Audio To put in ur Desired Video/Gif.
-
-• `{i}addaudio <reply to Video/gif>`
-    It will put the above audio to the replied video/gif.
-
-• `{i}dob <date of birth>`
-    Put in dd/mm/yy Format only(eg .dob 01/01/1999).
-
-• `{i}wall <query>`
-    Search Hd Wallpaper as Per ur Wish..
-"""
 import os
 import time
 from datetime import datetime as dt
