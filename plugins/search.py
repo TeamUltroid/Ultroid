@@ -4,25 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}saavn <search query>`
-    Download songs from Saavn.
+from . import get_help
 
-• `{i}google <query>`
-    For doing google search.
+__doc__ = get_help("help_search")
 
-• `{i}github <username>`
-    Get full information of the users github profile.
-
-• `{i}img <query>`
-  `{i}img <query> ; <no of results>`
-    For doing Images search.
-
-• `{i}reverse`
-    Reply an Image or sticker to find its sauce.
-"""
 import os
 
 import requests
