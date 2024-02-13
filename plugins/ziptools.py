@@ -4,24 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}zip <reply to file>`
-    zip the replied file
-    To set password on zip: `{i}zip <password>` reply to file
+from . import get_help
 
-• `{i}unzip <reply to zip file>`
-    unzip the replied file.
+__doc__ = get_help("help_ziptools")
 
-• `{i}azip <reply to file>`
-   add file to batch for batch upload zip
-
-• `{i}dozip`
-   upload batch zip the files u added from `{i}azip`
-   To set Password: `{i}dozip <password>`
-
-"""
 import os
 import time
 
