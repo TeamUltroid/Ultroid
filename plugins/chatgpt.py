@@ -70,16 +70,6 @@ if udB.get_key("UFOPAPI"):
 else:
     UFoPAPI = ""
 
-async def GeminiBase():
-    try:
-        if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
-            api_key = Keys.GOOGLEAPI
-            mongo_url = Keys.MONGO_URI
-            user_id = bot.me.id
-            await geminiUlt(message, api_key, mongo_url, user_id)
-    except Exception as e:
-        LOGS.exception(f"Error occurred: {e}")
-        LOGS.info(f"Error occurred: {e}")
 
 @ultroid_cmd(
     pattern="(chat)?gpt( ([\\s\\S]*)|$)",
@@ -282,7 +272,20 @@ async def geminiUlt(message):
     query = message.raw_text.split(f"{HNDLR}gemi", 1)[-1].strip()
     user_id = bot.me.id
     reply = await message.edit(f"`Generating answer...`")
-    
+    if not udB.get_key("GemBase"):
+        udB.set_key("GemBase", "True")
+        try:
+            if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+                api_key = Keys.GOOGLEAPI
+                mongo_url = Keys.MONGO_URI
+                gb =  GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
+                banswer, _ = await gb._GeminiUltroid__get_resp_gu(query="Hello, Ultroid")
+        except Exception as e:
+            LOGS.exception(f"Error occurred: {e}")
+            LOGS.info(f"Error occurred: {e}")
+    else:
+        pass
+
     if query == "-cleardb":
         try:
             if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
@@ -309,6 +312,7 @@ async def geminiUlt(message):
         gu = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
         await gu._clear_history_in_db()
         await reply.edit("`GeminiUltroid database cleared successfully!`")
+        udB.del_key("GemBase")
         return
     
     try:
@@ -341,5 +345,3 @@ async def geminiUlt(message):
         f"<b>AI:</b> <i>(UltGemi)</i>\n~ <i>{answer}</i>"
     )
     await message.edit(reply, parse_mode="html")
-
-asyncio.run(GeminiBase())
