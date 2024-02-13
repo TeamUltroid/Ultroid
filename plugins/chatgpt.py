@@ -5,7 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-**Get Answers from Chat GPT including OpenAI**
+**Get Answers from Chat GPT including OpenAI and Gemini**
 **Or generate images with Dall-E-3XL**
 
 **• Examples: **
@@ -13,9 +13,12 @@
 > `{i}gpt -i Cute panda eating bamboo`
 > `{i}gpt2 How to get a url in Python`
 > `{i}igen2 a monkey with a banana`
+> `{i}gemi how do hack an apple mac with a banana`
 
 • `{i}gpt` OpenAI 
 • `{i}gpt -i` OpenAI DALL-E
+
+• `{i}gemi` Ultroid Gemini
 
 • `{i}gpt2` Safone API
 • `{i}igen2` Dall-E-3XL ImageGen
@@ -31,6 +34,7 @@ import requests
 import json
 from . import *
 
+from pyUltroid.fns.gemini_helper import GeminiUltroid
 
 import os
 import sys
@@ -40,7 +44,7 @@ from pydantic import BaseModel
 try:
     import openai
 except ImportError:
-    system("pip3 install -q openai==0.28.0")
+    system("pip3 install -q openai")
     import openai
 
 from . import (
@@ -65,6 +69,14 @@ if udB.get_key("UFOPAPI"):
 else:
     UFoPAPI = ""
 
+try:
+    if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+        message = "Hello, Ultroid"
+        gUlt = await geminiUlt(message)
+except Exception as e:
+    LOGS.exception(f"Unable to set GeminiUltroid: {e}")
+    LOGS.info(f"Unable to set GeminiUltroid: {e}")
+ 
 
 @ultroid_cmd(
     pattern="(chat)?gpt( ([\\s\\S]*)|$)",
@@ -258,3 +270,42 @@ async def handle_dalle3xl(message):
         LOGS.exception(f"Error: {str(e)}")
         error_message = f"An unexpected error occurred: {str(e)}"
         await reply.edit(error_message)
+
+
+@nimbus_cmd(
+    pattern="(chat)?gemi( ([\\s\\S]*)|$)",
+)
+async def geminiUlt(message):
+    query = message.raw_text.split(f"{HNDLR}gemi", 1)[-1].strip()
+    user_id = bot.me.id
+    reply = await message.edit(f"`Generating answer...`")
+    try:
+        if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+            api_key = Keys.GOOGLEAPI
+            mongo_url = Keys.MONGO_URI
+        else:
+            raise ValueError("Missing required keys in the database")
+    except KeyError as e:
+        LOGS.exception(f"KeyError: {e}")
+        error_message = f"An Key error occurred: {str(e)}"
+        await reply.edit(error_message)
+        return
+    except ValueError as e:
+        LOGS.exception(e)
+        error_message = f"An value error occurred: {str(e)}"
+        await reply.edit(error_message)
+        return
+    except Exception as e:
+        LOGS.exception(f"Error: {str(e)}")
+        error_message = f"An unexpected error occurred: {str(e)}"
+        await reply.edit(error_message)
+        return
+
+    gu = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
+
+    answer, _ = await gu._GeminiUltroid__get_resp_gu(query=query)
+    reply = (
+        f"<b>Query:</b>\n~ <i>{query}</i>\n\n"
+        f"<b>AI:</b> <i>(UltGemi)</i>\n~ <i>{answer}</i>"
+    )
+    await message.edit(reply, parse_mode="html")
