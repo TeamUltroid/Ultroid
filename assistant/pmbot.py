@@ -27,10 +27,10 @@ from pyUltroid.fns.helper import inline_mention
 from . import *
 
 botb = KeyManager("BOTBLS", cast=list)
-FSUB = Keys.PMBOT_FSUB
+FSUB = udB.get_key("PMBOT_FSUB")
 PMBOTGROUP = Keys.LOG_CHANNEL
 CACHE = {}
-SUDOS = Keys.SUDOS
+SUDOS = udB.get_key("SUDOS")
 PMUSERS = [OWNER_ID, SUDOS]
 logging.basicConfig(
     format="%(asctime)s | %(name)s [%(levelname)s] : %(message)s",
