@@ -4,50 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}kickme` : Leaves the group.
+from . import get_help
 
-• `{i}date` : Show Calender.
-
-• `{i}listreserved`
-    List all usernames (channels/groups) you own.
-
-• `{i}stats` : See your profile stats.
-
-• `{i}paste` - `Include long text / Reply to text file.`
-
-• `{i}info <username/userid/chatid>`
-    Reply to someone's msg.
-
-• `{i}invite <username/userid>`
-    Add user to the chat.
-
-• `{i}rmbg <reply to pic>`
-    Remove background from that picture.
-
-• `{i}telegraph <reply to media/text>`
-    Upload media/text to telegraph.
-
-• `{i}json <reply to msg>`
-    Get the json encoding of the message.
-
-• `{i}suggest <reply to message> or <poll title>`
-    Create a Yes/No poll for the replied suggestion.
-
-• `{i}ipinfo <ipAddress>` : Get info about that IP address.
-
-• `{i}cpy <reply to message>`
-   Copy the replied message, with formatting. Expires in 24hrs.
-• `{i}pst`
-   Paste the copied message, with formatting.
-
-• `{i}thumb <reply file>` : Download the thumbnail of the replied file.
-
-• `{i}getmsg <message link>`
-  Get messages from chats with forward/copy restrictions.
-"""
+__doc__ = get_help("help_utilities")
 
 import calendar
 import html
