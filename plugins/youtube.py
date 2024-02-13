@@ -4,24 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}yta <(youtube/any) link>`
-   Download audio from the link.
+from . import get_help
 
-• `{i}ytv <(youtube/any) link>`
-   Download video  from the link.
+__doc__ = get_help("help_youtube")
 
-• `{i}ytsa <(youtube) search query>`
-   Search and download audio from youtube.
-
-• `{i}ytsv <(youtube) search query>`
-   Search and download video from youtube.
-
-• `{i}ytsc <soundcloud link>`
-   Download audio from SoundCloud.
-"""
 from pyUltroid.fns.ytdl import download_yt, get_yt_link
 
 from . import get_string, requests, ultroid_cmd
