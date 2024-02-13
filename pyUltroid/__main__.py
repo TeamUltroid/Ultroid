@@ -18,6 +18,7 @@ def main():
         WasItRestart,
         autopilot,
         customize,
+        fetch_ann,
         plug,
         ready,
         startup_stuff,
@@ -25,9 +26,9 @@ def main():
     from .startup.loader import load_other_plugins
 
     try:
-        pass
+        from apscheduler.schedulers.asyncio import AsyncIOScheduler
     except ImportError:
-        pass
+        AsyncIOScheduler = None
 
     # Option to Auto Update On Restarts..
     if (
@@ -93,6 +94,7 @@ def main():
 
     # Edit Restarting Message (if It's restarting)
     ultroid_bot.run_in_loop(WasItRestart(udB))
+
     try:
         cleanup_cache()
     except BaseException:
