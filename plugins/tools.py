@@ -359,7 +359,7 @@ async def _(e):
         await e.delete()
 
 
-@ultroid(
+@ultroid_cmd(
     pattern="sg(|u)(?:\\s|$)([\\s\\S]*)",
     fullsudo=True,
 )
