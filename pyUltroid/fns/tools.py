@@ -59,6 +59,19 @@ try:
 except ImportError:
     BeautifulSoup = None
 
+try:
+    if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
+        GOOGLEAPI = Keys.GOOGLEAPI
+        chatbot_mongo = Keys.MONGO_URI
+    else:
+        raise ValueError("Missing required keys in the database")
+except KeyError:
+    GOOGLEAPI = None
+    chatbot_mongo = None
+except ValueError:
+    GOOGLEAPI = None
+    chatbot_mongo = None
+
 # ~~~~~~~~~~~~~~~~~~~~OFOX API~~~~~~~~~~~~~~~~~~~~
 # @buddhhu
 
@@ -450,6 +463,7 @@ class AwesomeCoding(BaseModel):
     extra_headers: Optional[Dict[str, Any]] = None
     extra_payload: Optional[Dict[str, Any]] = None
 
+
 class ChatBot:
     def __init__(
         self,
@@ -461,7 +475,7 @@ class ChatBot:
         self,
         api_key: str = None,
         user_id: int = None,
-        mongo_url: str = None,
+        mongo_url: str = str(chatbot_mongo),
         re_json: bool = False,
         is_login: bool = False,
         is_multi_chat: bool = False,
@@ -556,6 +570,9 @@ async def get_chatbot_reply(message):
 
 
 async def get_oracle_reply(query, user_id, mongo_url):
+    if not Keys.MONGO_URI:
+        return "You cannot use this without setting a MONGO_URI first"
+
     response = ChatBot(query).get_response_gemini_oracle(
         api_key="",
         user_id=user_id,
