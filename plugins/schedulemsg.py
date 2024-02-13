@@ -4,14 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}schedule <text/reply to msg> <time>`
-    In time u can use second as number, or like 1h or 1m
-    eg. `{i}schedule Hello 100` It deliver msg after 100 sec.
-    eg. `{i}schedule Hello 1h` It deliver msg after an hour.
-"""
+from . import get_help
+
+__doc__ = get_help("help_schedulemsg")
+
 from datetime import timedelta
 
 from pyUltroid.fns.admins import ban_time
