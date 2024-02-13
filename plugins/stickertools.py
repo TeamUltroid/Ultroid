@@ -4,24 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}destroy <reply to animated sticker>`
-    To destroy the sticker.
+from . import get_help
 
-• `{i}tiny <reply to media>`
-    To create Tiny stickers.
+__doc__ = get_help("help_stickertools")
 
-• `{i}kang <reply to image/sticker>`
-    Kang the sticker (add to your pack).
-
-• `{i}packkang <pack name>`
-    Kang the Complete sticker set (with custom name).
-
-• `{i}round <reply to any media>`
-    To extract round sticker.
-"""
 import glob
 import io
 import os
