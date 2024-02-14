@@ -21,3 +21,22 @@ some_random_headers = [
     "Chrome/19.0.1084.46 Safari/536.5",
     "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
 ]
+
+def override(func):
+    """
+    Decorator to override a function from an older version of Telethon with the same function from a newer version.
+
+    Args:
+        func: The function to override.
+
+    Returns:
+        The overridden function.
+    """
+
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        # Use the function from the newer version of Telethon
+        result = await func(*args, **kwargs)
+        return result
+
+    return wrapper
