@@ -5,8 +5,6 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-from functools import wraps
-
 from .. import *  # ignore: pylint
 
 # https://github.com/bisoncorps/search-engine-parser/blob/ede1355a1f63398d9217b8e502fbd6c52b53bf09/search_engine_parser/core/utils.py#L11
@@ -23,22 +21,3 @@ some_random_headers = [
     "Chrome/19.0.1084.46 Safari/536.5",
     "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
 ]
-
-def override(func):
-    """
-    Decorator to override a function from an older version of Telethon with the same function from a newer version.
-
-    Args:
-        func: The function to override.
-
-    Returns:
-        The overridden function.
-    """
-
-    @functools.wraps(func)
-    async def wrapper(*args, **kwargs):
-        # Use the function from the newer version of Telethon
-        result = await func(*args, **kwargs)
-        return result
-
-    return wrapper
