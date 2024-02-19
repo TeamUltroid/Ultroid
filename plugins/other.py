@@ -4,21 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}send <username/id> <reply/type>`
-    send message to User/Chat.
+from . import get_help
 
-• `{i}fwdreply <reply to msg>`
-    Reply to someone's msg by forwarding it in private.
-
-• `{i}save <reply message>`
-    Save that replied msg to ur saved messages box.
-
-• `{i}fsave <reply message>`
-    Forward that replied msg to ur saved messages.
-"""
+__doc__ = get_help("help_other")
 
 from . import HNDLR, eod, get_string, ultroid_cmd
 
