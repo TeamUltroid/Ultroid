@@ -4,15 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-•`{i}addnsfw <ban/mute/kick>`
-   If someone sends 18+ content it will be deleted and action will be taken.
+from . import get_help
 
-•`{i}remnsfw`
-   Remove Chat from nsfw filtering.
-"""
+__doc__ = get_help("help_nsfwfilter")
 
 import os
 
