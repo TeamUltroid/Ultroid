@@ -4,28 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}mute <reply to msg/ user id>`
-    Mute user in current chat.
+from . import get_help
 
-• `{i}unmute <reply to msg/ user id>`
-    Unmute user in current chat.
+__doc__ = get_help("help_mute")
 
-• `{i}dmute <reply to msg/ user id>`
-    Mute user in current chat by deleting msgs.
-
-• `{i}undmute <reply to msg/ use id>`
-    Unmute dmuted user in current chat.
-
-• `{i}tmute <time> <reply to msg/ use id>`
-    s- seconds
-    m- minutes
-    h- hours
-    d- days
-    Mute user in current chat with time.
-"""
 from telethon import events
 from telethon.utils import get_display_name
 
