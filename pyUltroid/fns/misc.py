@@ -125,7 +125,7 @@ async def google_search(query):
         "Connection": "keep-alive",
         "User-Agent": choice(some_random_headers),
     }
-    con = await async_searcher(_base + "/search?q=" + query, headers=headers)
+    con = await async_searcher(f"{_base}/search?q={query}", headers=headers)
     soup = BeautifulSoup(con, "html.parser")
     result = []
     pdata = soup.find_all("a", href=re.compile("url="))
@@ -133,14 +133,21 @@ async def google_search(query):
         if not data.find("div"):
             continue
         try:
-            result.append(
-                {
-                    "title": data.find("div").text,
-                    "link": data["href"].split("&url=")[1].split("&ved=")[0],
-                    "description": data.find_all("div")[-1].text,
-                }
-            )
-        except BaseException as er:
+            href = data["href"]
+            url_start_index = href.find("&url=")
+            if url_start_index != -1:
+                url_start_index += len("&url=")
+                url_end_index = href.find("&ved=", url_start_index)
+                if url_end_index != -1:
+                    link = href[url_start_index:url_end_index]
+                    result.append(
+                        {
+                            "title": data.find("div").text,
+                            "link": link,
+                            "description": data.find_all("div")[-1].text,
+                        }
+                    )
+        except Exception as er:
             LOGS.exception(er)
     return result
 
