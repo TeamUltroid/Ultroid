@@ -4,54 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}border <reply to photo/sticker>`
-    To create border around that media..
-    Ex - `{i}border 12,22,23`
-       - `{i}border 12,22,23 ; width (in number)`
+from . import get_help
 
-• `{i}grey <reply to any media>`
-    To make it black nd white.
+__doc__ = get_help("help_imagetools")
 
-• `{i}color <reply to any Black nd White media>`
-    To make it Colorfull.
-
-• `{i}toon <reply to any media>`
-    To make it toon.
-
-• `{i}danger <reply to any media>`
-    To make it look Danger.
-
-• `{i}negative <reply to any media>`
-    To make negative image.
-
-• `{i}blur <reply to any media>`
-    To make it blurry.
-
-• `{i}quad <reply to any media>`
-    create a Vortex.
-
-• `{i}mirror <reply to any media>`
-    To create mirror pic.
-
-• `{i}flip <reply to any media>`
-    To make it flip.
-
-• `{i}sketch <reply to any media>`
-    To draw its sketch.
-
-• `{i}blue <reply to any media>`
-    just cool.
-
-• `{i}csample <color name /color code>`
-   example : `{i}csample red`
-             `{i}csample #ffffff`
-
-• `{i}pixelator <reply image>`
-    Create a Pixelated Image..
-"""
 import os
 
 from . import LOGS, con
