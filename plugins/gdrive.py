@@ -4,26 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available
 
-• `{i}gdul <reply/file name>`
-    Reply to file to upload on Google Drive.
-    Add file name to upload on Google Drive.
+from . import get_help
 
-• `{i}gdown <file id/link> | <filename>`
-    Download from Gdrive link or file id.
-
-• `{i}gdsearch <file name>`
-    Search file name on Google Drive and get link.
-
-• `{i}gdlist`
-    List all GDrive files.
-
-• `{i}gdfolder`
-    Link to your Google Drive Folder.
-    If added then all files will be uploaded in this folder.
-"""
+__doc__ = get_help("help_gdrive")
 
 import os
 import time
