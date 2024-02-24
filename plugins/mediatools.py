@@ -4,16 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}mediainfo <reply to media>/<file path>/<url>`
-   To get info about it.
+from . import get_help
 
-• `{i}rotate <degree/angle> <reply to media>`
-   Rotate any video/photo/media..
-   Note : for video it should be angle of 90's
-"""
+__doc__ = get_help("help_mediatools")
+
 import os
 import time
 from datetime import datetime as dt

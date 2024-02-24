@@ -4,22 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}addnote <word><reply to a message>`
-    add note in the used chat with replied message and choosen word.
+from . import get_help
 
-• `{i}remnote <word>`
-    Remove the note from used chat.
+__doc__ = get_help("help_notes")
 
-• `{i}listnote`
-    list all notes.
-
-• Use :
-   set notes in group so all can use it.
-   type `#(Keyword of note)` to get it
-"""
 import os
 
 from telegraph import upload_file as uf

@@ -4,32 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
----- Welcomes ----
-• `{i}setwelcome <message/reply to message>`
-    Set welcome message in the current chat.
+from . import get_help
 
-• `{i}clearwelcome`
-    Delete the welcome in the current chat.
+__doc__ = get_help("help_greetings")
 
-• `{i}getwelcome`
-    Get the welcome message in the current chat.
-
----- GoodByes ----
-• `{i}setgoodbye <message/reply to message>`
-    Set goodbye message in the current chat.
-
-• `{i}cleargoodbye`
-    Delete the goodbye in the current chat.
-
-• `{i}getgoodbye`
-    Get the goodbye message in the current chat.
-
-• `{i}thankmembers on/off`
-    Send a thank you sticker on hitting a members count of 100*x in your groups.
-"""
 import os
 
 from telegraph import upload_file as uf

@@ -4,15 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}logo <text>`
-   Generate a logo of the given Text
-   Or Reply To image , to write ur text on it.
-   Or Reply To Font File, To write with that font.
+from . import get_help
 
-"""
+__doc__ = get_help("help_logo")
+
 import glob
 import os
 import random

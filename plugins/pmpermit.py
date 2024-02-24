@@ -4,39 +4,10 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}a` or `{i}approve`
-    Approve someone to PM.
+from . import get_help
 
-• `{i}da` or `{i}disapprove`
-    Disapprove someone to PM.
-
-• `{i}block`
-    Block someone.
-
-• `{i}unblock` | `{i}unblock all`
-    Unblock someone.
-
-• `{i}nologpm`
-    Stop logging messages from the user.
-
-• `{i}logpm`
-    Start logging messages from the user.
-
-• `{i}startarchive`
-    Archive new PMs.
-
-• `{i}stoparchive`
-    Don't archive new PMs.
-
-• `{i}cleararchive`
-    Unarchive all chats.
-
-• `{i}listapproved`
-   List all approved PMs.
-"""
+__doc__ = get_help("help_pmpermit")
 
 import asyncio
 import re

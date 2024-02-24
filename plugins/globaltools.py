@@ -4,38 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}gban <reply user/ username>`
-• `{i}ungban`
-    Ban/Unban Globally.
+from . import get_help
 
-• `{i}gstat <reply to user/userid/username>`
-   Check if user is GBanned.
+__doc__ = get_help("help_globaltools")
 
-• `{i}listgban` : List all GBanned users.
-
-• `{i}gmute` | `{i}ungmute` <reply user/ username>
-    Mute/UnMute Globally.
-
-• `{i}gkick <reply/username>` `Globally Kick User`
-• `{i}gcast <text/reply>` `Globally Send msg in all grps`
-
-• `{i}gadmincast <text/reply>` `Globally broadcast in your admin chats`
-• `{i}gucast <text/reply>` `Globally send msg in all pm users`
-
-• `{i}gblacklist <chat id/username/nothing (for current chat)`
-   Add chat to blacklist and ignores global broadcast.
-• `{i}ungblacklist` `Remove the chat from blacklist.`
-
-• `{i}gpromote <reply to user> <channel/group/all> <rank>`
-    globally promote user where you are admin
-    - Set whether To promote only in groups/channels/all.
-    Eg- `gpromote group boss` ~ promotes user in all grps.
-        `gpromote @username all sar` ~ promote the user in all group & channel
-• `{i}gdemote` - `demote user globally`
-"""
 import asyncio
 import os
 

@@ -4,27 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}pdf <page num> <reply to pdf file>`
-    Extract & send page as an Image.(note-: For extracting all pages, just use .pdf)
-    to upload selected range `{i}pdf 1-7`
+from . import get_help
 
-• `{i}pdtext <page num> <reply to pdf file>`
-    Extract Text From the Pdf.(note-: For Extraction all text just use .pdtext)
-    to extract selected pages `{i}pdf 1-7`
+__doc__ = get_help("help_pdftools")
 
-• `{i}pdscan <reply to image>`
-    It scan, crop & send image(s) as pdf.
-
-• `{i}pdsave <reply to image/pdf>`
-    It scan, crop & save file to merge.
-    you can merge many pages in a single pdf.
-
-• `{i}pdsend `
-    Merge & send the pdf, collected from .pdsave.
-"""
 import glob
 import os
 import shutil

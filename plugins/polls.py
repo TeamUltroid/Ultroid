@@ -4,20 +4,11 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-"""
-✘ Commands Available -
 
-• `{i}poll <question> ; <option> ; <option>`
-    Get the Anonymous Poll with Given Options
+from . import get_help
 
-• `{i}poll <question> ; <option> ; <option> | <type>`
-    Get the poll specified with desired type!
-    type should be any of  `public`,  `multiple` or `quiz`
+__doc__ = get_help("help_polls")
 
-• `{i}poll <question> ; <option> ; <option> | quiz_<answerno>`
-    Get the quiz poll where answerno is the number of option which is correct
-
-"""
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
 
 from . import get_string, ultroid_cmd
