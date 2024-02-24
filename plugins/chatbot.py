@@ -14,7 +14,14 @@ from pyUltroid.fns.tools import get_chatbot_reply, get_oracle_reply
 
 from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd, ultroid_bot, Keys
 
-mongouri = Keys.MONGO_URI
+try:
+    mongouri = Keys.MONGO_URI
+except AttributeError:
+    if udB.get_key("MONGO_URI"):
+        mongouri = udB.get_key("MONGO_URI")
+    else:
+        udB.set_key("MONGO_URI", "")
+        LOGS.error("PLeasde set a MONGO_URI")
 
 @ultroid_cmd(pattern="repoai")
 async def im_oracle(event):
