@@ -255,8 +255,8 @@ async def handle_dalle3xl(message):
 )
 async def geminiUlt(message):
     query = message.raw_text.split(f"{HNDLR}gemi", 1)[-1].strip()
-    user_id = bot.me.id
-    reply = await message.edit(f"`Generating answer...`")
+    user_id = ultroid_bot.me.id
+    reply = await message.eor(f"`Generating answer...`")
     if not udB.get_key("GemBase"):
         udB.set_key("GemBase", "True")
         try:
