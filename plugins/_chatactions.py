@@ -260,7 +260,10 @@ async def DummyHandler(ult):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def chatBot_replies(e):
-    xxrep = await check_reply_to(e)
+    if e.sender_id in udB.get_key("CHATBOT_USERS"):
+        xxrep = await check_reply_to(e)
+    else:
+        return
 
     if xxrep:
         sender = await e.get_sender()
@@ -314,7 +317,10 @@ async def chatBot_replies(e):
 
 @ultroid_bot.on(events.NewMessage(incoming=True))
 async def oracleBot_replies(e):
-    xxxrep = await check_reply_to(e)
+    if e.sender_id in udB.get_key("ORACLE_USERS"):
+        xxxrep = await check_reply_to(e)
+    else:
+        return
 
     if xxxrep:
         sender = await e.get_sender()
