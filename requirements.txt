@@ -1,6 +1,6 @@
 # Important Requirements here.
 
-#https://github.com/New-dev0/Telethon/archive/platy.zip
+https://github.com/New-dev0/Telethon/archive/platy.zip
 python-decouple
 python-dotenv
 pymongo
