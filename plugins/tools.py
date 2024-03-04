@@ -39,8 +39,10 @@ from telethon.tl.types import (
     DocumentAttributeVideo,
 )
 
+from pyUltroid.fns.custom_markdown import CustomMarkdown
 from pyUltroid.fns.tools import metadata, translate
 
+from . import *
 from . import (
     HNDLR,
     LOGS,
@@ -405,49 +407,31 @@ async def sangmata(event):
 
 @ultroid_cmd(pattern="webshot( (.*)|$)")
 async def webss(event):
+    ultroid_bot.parse_mode = CustomMarkdown()
     xx = await event.eor(get_string("com_1"))
     xurl = event.pattern_match.group(1).strip()
-    if not xurl:
-        return await xx.eor(get_string("wbs_1"), time=5)
-    if not (await is_url_ok(xurl)):
-        return await xx.eor(get_string("wbs_2"), time=5)
-    path, pic = check_filename("shot.png"), None
-    if async_playwright:
-        try:
-            async with async_playwright() as playwright:
-                chrome = await playwright.chromium.launch()
-                page = await chrome.new_page()
-                await page.goto(xurl)
-                await page.screenshot(path=path, full_page=True)
-                pic = path
-        except Exception as er:
-            LOGS.exception(er)
-            await xx.respond(f"Error with playwright:\n`{er}`")
-    if WebShot and not pic:
-        try:
-            shot = WebShot(
-                quality=88, flags=["--enable-javascript", "--no-stop-slow-scripts"]
+    if xurl:
+        x = get(f"https://mini.s-shot.ru/1920x1080/JpE6/1024/7100/?{xurl}")
+        y = "shot.jpg"
+        with open(y, "wb") as f:
+            f.write(x.content)
+        if (await ultroid_bot.get_me()).premium:
+            await ultroid_bot.send_file(
+                event.chat_id,
+                y,
+                caption=f"[📷](emoji/5258205968025525531)**WebShot Generated**\n[🔗](emoji/5983262173474853675)**URL** : {xurl}",
+                force_document=False,
             )
-            pic = await shot.create_pic_async(url=xurl)
-        except Exception as er:
-            LOGS.exception(er)
-    if not pic:
-        pic, msg = await download_file(
-            f"https://shot.screenshotapi.net/screenshot?&url={xurl}&output=image&file_type=png&wait_for_event=load",
-            path,
-            validate=True,
-        )
-        if msg:
-            await xx.edit(json_parser(msg, indent=1))
-            return
-    if pic:
-        await xx.reply(
-            get_string("wbs_3").format(xurl),
-            file=pic,
-            link_preview=False,
-            force_document=True,
-        )
-        os.remove(pic)
+        else:
+            await ultroid_bot.send_file(
+                event.chat_id,
+                y,
+                caption=f"📷**WebShot Generated**\n🔗**URL** : {xurl}",
+                force_document=False,
+            )
+        os.remove(y)
+    else:
+        await eod(xx, f"Please provide me a URL...", time=5)
     await xx.delete()
 
 
