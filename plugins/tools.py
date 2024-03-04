@@ -31,6 +31,7 @@ try:
 except ImportError:
     WebShot = None
 
+from requests import get
 from telethon.errors.rpcerrorlist import MessageTooLongError, YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.types import (
@@ -39,6 +40,7 @@ from telethon.tl.types import (
     DocumentAttributeVideo,
 )
 
+from bs4 import BeautifulSoup
 from pyUltroid.fns.custom_markdown import CustomMarkdown
 from pyUltroid.fns.tools import metadata, translate
 
@@ -435,7 +437,7 @@ async def webss(event):
     await xx.delete()
 
 
-@ultroid_cmd(pattern="shorturl")
+@ultroid_cmd(pattern="shorturl ?(.*)")
 async def short_url(event):
     input_url = event.pattern_match.group(1)
 
@@ -448,18 +450,22 @@ async def short_url(event):
 
     try:
         s = pyshorteners.Shortener()
-        if "https://tinyurl.com" in input_url.lower():
-            shortened_url = s.tinyurl.expand(input_url)
-            action = "Expanded"
+        if input_url.lower().startswith("https://tinyurl.com/"):
+            response = get(input_url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            original_url = soup.find('a', {'target': '_blank'}).get('href')
+            output_message = (
+                f"**Expanded URL**\n"
+                f"**Given Link** ➠ **{input_url}**\n"
+                f"**Expanded Link** ➠ **{original_url}**"
+            )
         else:
             shortened_url = s.tinyurl.short(input_url)
-            action = "Shortened"
-
-        output_message = (
-            f"**URL {action}**\n"
-            f"**Given Link** ➠ **{input_url}**\n"
-            f"**{action} Link** ➠ **[LINK]({shortened_url})**"
-        )
+            output_message = (
+                f"**Shortened URL**\n"
+                f"**Given Link** ➠ **{input_url}**\n"
+                f"**Shortened Link** ➠ **{shortened_url}**"
+            )
 
         if event.reply_to_msg_id:
             await event.delete()
