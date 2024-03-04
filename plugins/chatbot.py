@@ -23,6 +23,7 @@ except AttributeError:
         udB.set_key("MONGO_URI", "")
         LOGS.error("PLeasde set a MONGO_URI")
 
+
 @ultroid_cmd(pattern="repoai")
 async def im_oracle(event):
     if event.reply_to:
