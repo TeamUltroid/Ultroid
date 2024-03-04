@@ -1,4 +1,4 @@
-# Important Requirements here.
+# Important Requirements here
 
 https://github.com/New-dev0/Telethon/archive/platy.zip
 python-decouple
