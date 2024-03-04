@@ -37,6 +37,11 @@ except ImportError:
 from . import LOG_CHANNEL, LOGS, asst, get_string, types, udB, ultroid_bot
 from ._inline import something
 
+if udB.get_key("ORACLE_USERS") is None:
+    udB.set_key("ORACLE_USERS", {})
+if udB.get_key("CHATBOT_USERS") is None:
+    udB.set_key("CHATBOT_USERS", {})
+
 # ------------------------- UFoP Bans -------------------------#
 
 
