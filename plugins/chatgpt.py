@@ -191,7 +191,7 @@ async def chatgpt_v2(e):
 )
 async def handle_dalle3xl(message):
     query = message.raw_text.split(f"{HNDLR}igen2", 1)[-1].strip()
-    reply = await message.edit(f"Generating image...")
+    reply = await message.eor(f"Generating image...")
 
     try:
         response = AwesomeCoding(
@@ -277,7 +277,7 @@ async def geminiUlt(message):
                 api_key = Keys.GOOGLEAPI
                 mongo_url = Keys.MONGO_URI
             else:
-                raise ValueError("Missing required keys in the database")
+                raise ValueError("Missing required keys in the database, or you need to restart")
         except KeyError as e:
             LOGS.exception(f"KeyError: {e}")
             error_message = f"An Key error occurred: {str(e)}"
@@ -325,8 +325,8 @@ async def geminiUlt(message):
     gu = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
 
     answer, _ = await gu._GeminiUltroid__get_resp_gu(query=query)
-    reply = (
+    reply_text = (
         f"<b>Query:</b>\n~ <i>{query}</i>\n\n"
         f"<b>AI:</b> <i>(UltGemi)</i>\n~ <i>{answer}</i>"
     )
-    await message.edit(reply, parse_mode="html")
+    await reply.edit(reply_text, parse_mode="html")
