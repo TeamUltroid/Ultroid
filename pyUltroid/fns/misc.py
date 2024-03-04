@@ -10,7 +10,9 @@ import os
 import random
 import re
 import string
+from logging import WARNING
 from random import choice, randrange, shuffle
+from traceback import format_exc
 
 from pyUltroid.exceptions import DependencyMissingError
 
