@@ -18,6 +18,7 @@ def main():
         WasItRestart,
         autopilot,
         customize,
+        fetch_ann,
         plug,
         ready,
         startup_stuff,
@@ -25,9 +26,9 @@ def main():
     from .startup.loader import load_other_plugins
 
     try:
-        pass
+        from apscheduler.schedulers.asyncio import AsyncIOSchedule
     except ImportError:
-        pass
+        AsyncIOScheduler = None
 
     # Option to Auto Update On Restarts..
     if (
