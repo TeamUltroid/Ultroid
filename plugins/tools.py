@@ -448,7 +448,7 @@ async def short_url(event):
 
     try:
         s = pyshorteners.Shortener()
-        if "http://tinyurl.com" in input_url.lower():
+        if "https://tinyurl.com" in input_url.lower():
             shortened_url = s.tinyurl.expand(input_url)
             action = "Expanded"
         else:
