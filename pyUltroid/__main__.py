@@ -26,7 +26,7 @@ def main():
     from .startup.loader import load_other_plugins
 
     try:
-        from apscheduler.schedulers.asyncio import AsyncIOSchedule
+        from apscheduler.schedulers.asyncio import AsyncIOScheduler
     except ImportError:
         AsyncIOScheduler = None
 
