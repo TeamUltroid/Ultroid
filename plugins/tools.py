@@ -14,7 +14,6 @@ import glob
 import io
 import os
 import re
-import secrets
 
 import pyshorteners
 
@@ -46,18 +45,22 @@ from . import (
     HNDLR,
     LOGS,
     ULTConfig,
-    async_searcher,
     bash,
     check_filename,
     con,
     download_file,
     eor,
     get_string,
+)
+from . import humanbytes as hb
+from . import (
+    inline_mention,
+    is_url_ok,
+    json_parser,
+    mediainfo,
     ultroid_bot,
     ultroid_cmd,
 )
-from . import humanbytes as hb
-from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
 
 # -------------- Sangmata stuff --------------#
 

@@ -11,7 +11,7 @@ __doc__ = get_help("help_warn")
 
 from pyUltroid.dB.warn_db import add_warn, reset_warn, warns
 
-from . import eor, get_string, inline_mention, udB, ultroid_cmd
+from . import eor, inline_mention, udB, ultroid_cmd
 
 
 @ultroid_cmd(
@@ -158,10 +158,14 @@ async def warnset(e):
             number = int(number.strip())
             action = action.strip()
         except ValueError:
-            return await e.eor("Invalid format. Correct usage: .setwarns <number>|<action>", time=5)
+            return await e.eor(
+                "Invalid format. Correct usage: .setwarns <number>|<action>", time=5
+            )
         if action not in ["ban", "mute", "kick"]:
             return await e.eor("Only mute / ban / kick options are supported", time=5)
         udB.set_key("SETWARN", f"{number} {action}")
         await e.eor(f"Done. Your Warn Count is now {number} and Action is {action}")
     else:
-        await e.eor("Invalid format. Correct usage: .setwarns <number>|<action>", time=5)
+        await e.eor(
+            "Invalid format. Correct usage: .setwarns <number>|<action>", time=5
+        )

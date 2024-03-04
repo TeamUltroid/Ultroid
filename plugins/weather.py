@@ -12,7 +12,6 @@ from . import get_help
 __doc__ = get_help("help_weather")
 
 import asyncio
-import io
 import time
 
 from . import *

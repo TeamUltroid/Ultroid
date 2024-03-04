@@ -12,7 +12,7 @@ __doc__ = get_help("help_chatbot")
 
 from pyUltroid.fns.tools import get_chatbot_reply, get_oracle_reply
 
-from . import LOGS, eod, get_string, inline_mention, udB, ultroid_cmd, ultroid_bot, Keys
+from . import LOGS, Keys, eod, get_string, inline_mention, udB, ultroid_bot, ultroid_cmd
 
 try:
     mongouri = Keys.MONGO_URI

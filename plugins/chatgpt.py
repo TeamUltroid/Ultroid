@@ -9,23 +9,19 @@ from . import get_help
 
 __doc__ = get_help("help_chatgpt")
 
-import aiohttp
-import base64
 import asyncio
-from os import remove, system
-from telethon import TelegramClient, events
+import base64
+import os
 from io import BytesIO
-from PIL import Image
+from os import remove, system
+from typing import Any, Dict, Optional
+
 import requests
-import json
-from . import *
+from pydantic import BaseModel
 
 from pyUltroid.fns.gemini_helper import GeminiUltroid
 
-import os
-import sys
-from typing import Any, Dict, Optional
-from pydantic import BaseModel
+from . import *
 
 try:
     import openai
@@ -39,12 +35,15 @@ from . import (
     check_filename,
     fast_download,
     udB,
-    ultroid_cmd,
     ultroid_bot,
+    ultroid_cmd,
 )
 
+
 class AwesomeCoding(BaseModel):
-    dalle3xl_url: str = b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    dalle3xl_url: str = (
+        b"\xff\xfeh\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00u\x00f\x00o\x00p\x00t\x00g\x00-\x00u\x00f\x00o\x00p\x00-\x00a\x00p\x00i\x00.\x00h\x00f\x00.\x00s\x00p\x00a\x00c\x00e\x00/\x00U\x00F\x00o\x00P\x00/\x00d\x00a\x00l\x00l\x00e\x003\x00x\x00l\x00"
+    )
     default_url: Optional[str] = None
     extra_headers: Optional[Dict[str, Any]] = None
     extra_payload: Optional[Dict[str, Any]] = None
@@ -263,8 +262,12 @@ async def geminiUlt(message):
             if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
                 api_key = Keys.GOOGLEAPI
                 mongo_url = Keys.MONGO_URI
-                gb = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
-                banswer, _ = await gb._GeminiUltroid__get_resp_gu(query="Hello, Ultroid")
+                gb = GeminiUltroid(
+                    api_key=api_key, mongo_url=mongo_url, user_id=user_id
+                )
+                banswer, _ = await gb._GeminiUltroid__get_resp_gu(
+                    query="Hello, Ultroid"
+                )
         except Exception as e:
             LOGS.exception(f"Error occurred: {e}")
             LOGS.info(f"Error occurred: {e}")
@@ -277,7 +280,9 @@ async def geminiUlt(message):
                 api_key = Keys.GOOGLEAPI
                 mongo_url = Keys.MONGO_URI
             else:
-                raise ValueError("Missing required keys in the database, or you need to restart")
+                raise ValueError(
+                    "Missing required keys in the database, or you need to restart"
+                )
         except KeyError as e:
             LOGS.exception(f"KeyError: {e}")
             error_message = f"An Key error occurred: {str(e)}"
@@ -293,13 +298,13 @@ async def geminiUlt(message):
             error_message = f"An unexpected error occurred: {str(e)}"
             await reply.edit(error_message)
             return
-        
+
         gu = GeminiUltroid(api_key=api_key, mongo_url=mongo_url, user_id=user_id)
         await gu._clear_history_in_db()
         await reply.edit("`GeminiUltroid database cleared successfully!`")
         udB.del_key("GemBase")
         return
-    
+
     try:
         if udB.get_key("GOOGLEAPI") and udB.get_key("MONGO_URI"):
             api_key = Keys.GOOGLEAPI
