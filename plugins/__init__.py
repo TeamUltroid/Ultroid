@@ -39,6 +39,7 @@ asst: UltroidClient
 
 LOG_CHANNEL = udB.get_key("LOG_CHANNEL")
 
+ultroid_bot.parse_mode = CustomMarkdown()
 
 def inline_pic():
     INLINE_PIC = udB.get_key("INLINE_PIC")
