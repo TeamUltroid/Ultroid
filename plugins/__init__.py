@@ -22,6 +22,7 @@ from pyUltroid.dB import DEVLIST, ULTROID_IMAGES
 from pyUltroid.fns.helper import *
 from pyUltroid.fns.misc import *
 from pyUltroid.fns.tools import *
+from pyUltroid.fns.custom_markdown import *
 from pyUltroid.startup._database import _BaseDatabase as Database
 from pyUltroid.version import __version__, ultroid_version
 from strings import get_help, get_string
