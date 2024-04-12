@@ -199,9 +199,16 @@ class GDrive:
             "fields": "nextPageToken, files(id, name, mimeType, parents, webContentLink, webViewLink, size)",
             "supportsAllDrives": "true",
             "includeItemsFromAllDrives": "true",
+            "orderBy": "folder, name, modifiedTime desc",
+
         }
         if query:
-            params["q"] = f"name contains '{query}'"
+            params["q"] = f"name = '{query}' and trashed = false and mimeType != 'application/vnd.google-apps.shortcut'"
+            params["q"] += (
+                f" and '{self.folder_id}' in parents" if self.folder_id else ""
+            )
+        else:
+            params["q"] = "trashed = false AND name !='.password' and mimeType != 'application/vnd.google-apps.shortcut' and mimeType != 'application/vnd.google-apps.document' and mimeType != 'application/vnd.google-apps.spreadsheet' and mimeType != 'application/vnd.google-apps.form' and mimeType != 'application/vnd.google-apps.site'"
             params["q"] += (
                 f" and '{self.folder_id}' in parents" if self.folder_id else ""
             )
