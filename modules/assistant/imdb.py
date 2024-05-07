@@ -29,7 +29,7 @@ except ImportError:
     from utilities.helper import async_searcher
 
 # Define your OMDB API key
-OMDB_API_KEY = udB.get_key("OMDb_API")
+OMDB_API_KEY = udB.get_key("OMDb_API") #OpenMovies Database get free key from http://www.omdbapi.com/ with 1000 dailiy uses
 imdbp = "https://graph.org/file/3b45a9ed4868167954300.jpg"
 
 LIST = {}
