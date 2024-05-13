@@ -48,7 +48,8 @@ async def telegraph(file_):
     return uri
 
 
-async def _format_quote(event: types.Message, reply=None, sender=None, type_="private"):
+async def _format_quote(event: types.Message, reply=None,
+                        sender=None, type_="private"):
     if reply and reply.raw_text:
         reply = {
             "name": get_display_name(reply.sender) or "Deleted Account",
@@ -124,7 +125,8 @@ class UnknownException(Exception):
     ...
 
 
-async def create_quotly(event, url="https://bot.lyo.su/quote/generate", reply=None, bg=None, sender=None, file_name="quote.webp"):
+async def create_quotly(event, url="https://bot.lyo.su/quote/generate",
+                        reply=None, bg=None, sender=None, file_name="quote.webp"):
     """Create quotely's quote."""
     if reply is None:
         reply = {}

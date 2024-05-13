@@ -40,7 +40,8 @@ class Progress:
             )
 
 
-async def parallel_download(url, filename, chunk_size, filesize: int, event=None, file_path="resources/downloads"):
+async def parallel_download(url, filename, chunk_size,
+                            filesize: int, event=None, file_path="resources/downloads"):
     try:
         progress = Progress(filesize, filename)
 
@@ -190,7 +191,8 @@ class OneDrive:
         )
         return file_name
 
-    async def upload_file(self, event, file_path: str, folder_id: str = "root"):
+    async def upload_file(self, event, file_path: str,
+                          folder_id: str = "root"):
         url = f"{self.base_url}/me/drive/items/{folder_id}:/{os.path.basename(file_path)}:/createUploadSession"
         async with self.session.post(
             url,
