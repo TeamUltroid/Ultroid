@@ -112,7 +112,7 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
             if only_devs and not udB.get_key("I_DEV"):
                 return await eod(
                     ult,
-                    get_string("py_d4").format(HNDLR),
+                    get_string("py_d4", HNDLR),
                     time=10,
                 )
             try:

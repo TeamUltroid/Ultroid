@@ -3,7 +3,7 @@ from contextlib import suppress
 from inspect import getmembers
 
 from telethon import Button
-
+from telethon.events import NewMessage
 from core.decorators._assistant import callback, in_pattern
 from core.loader import PLUGINS
 from core.remote import rm
@@ -134,7 +134,7 @@ def get_doc(module, type=""):
 
 
 @ultroid_cmd("help($| (.*))")
-async def help_cmd(event):
+async def help_cmd(event: NewMessage.Event):
     module = event.pattern_match.group(1).strip()
     if not module:
         if event.client._bot:
@@ -144,9 +144,9 @@ async def help_cmd(event):
                 buttons=get_help_buttons(),
                 link_preview=False,
             )
-        await event.delete()
         result = await event.client.inline_query(asst.me.username, "ultd")
-        await result[0].click(event.chat_id)
+        await result[0].click(event.chat_id, reply_to=event.id)
+        await event.delete()
         return
     if msg := get_doc(module):
         return await event.eor(msg)
@@ -188,14 +188,14 @@ async def help_func(ult):
         "addons": "inline_3" if udB.get_key("ADDONS") else "inline_2",
         "basic": "inline_1",
     }
-    text = get_string(_strings.get(key, "")).format(ultroid_bot.full_name, len(plugs))
+    text = get_string(_strings.get(key, ""), ultroid_bot.full_name, len(plugs))
     await ult.edit(text, buttons=page_num(count, key), link_preview=False)
 
 
 @callback(data="open", owner=True)
 async def opner(event):
     await event.edit(
-        get_string("inline_4").format(
+        get_string("inline_4", 
             ultroid_bot.full_name,
             len(PLUGINS),
         ),
@@ -242,12 +242,12 @@ def _get_buttons(key, index):
     for plugs in split_list(loaded, tl):
         MList = []
         for ps in split_list(plugs, rows):
-            for p in ps:
-                MList.append(
-                    Button.inline(
-                        f"{emoji} {p} {emoji}", data=f"uplugin_{key}_{p}|{cindex}"
-                    )
+            MList.extend(
+                Button.inline(
+                    f"{emoji} {p} {emoji}", data=f"uplugin_{key}_{p}|{cindex}"
                 )
+                for p in ps
+            )
         NList.append(split_list(MList, cols))
         cindex += 1
     if _cache.get("help") is None:

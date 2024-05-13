@@ -191,11 +191,14 @@ async def kck(ult):
     except Exception as e:
         LOGS.exception(e)
         return
-    text = get_string("kick_4").format(
-        inline_mention(user), inline_mention(await ult.get_sender()), ult.chat.title
+    text = get_string(
+        "kick_4",
+        inline_mention(user),
+        inline_mention(await ult.get_sender()),
+        ult.chat.title,
     )
     if reason:
-        text += get_string("ban_5").format(reason)
+        text += get_string("ban_5", reason)
     await xx.edit(text)
 
 

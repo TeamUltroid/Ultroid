@@ -163,7 +163,7 @@ async def ekekdhdb(e):
 @callback("mainmenu", owner=True, func=lambda x: not x.is_group)
 async def ultroid(event):
     await event.edit(
-        get_string("ast_3").format(get_display_name(event.sender)),
+        get_string("ast_3", get_display_name(event.sender)),
         buttons=_start,
     )
 

@@ -7,7 +7,7 @@
 
 import sys
 
-import time
+import time, telethonpatch
 from .config import Var
 from .setup import *
 from .client.BaseClient import UltroidClient

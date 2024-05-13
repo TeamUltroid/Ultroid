@@ -27,7 +27,7 @@ def getDatabase():
         LOGS.critical(
             "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
         )
-        exit()
+        args, key = (), "local"
     with rm.get(key, f"database/initialize/{key}.py", helper=True) as db:
         if db:
             return db.Database(*args, **kwargs)

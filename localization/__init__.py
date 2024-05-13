@@ -38,8 +38,9 @@ def load(lang):
 load(get_lang())
 
 
-def get_string(key: str, _res: bool = True) -> Any:
-    lang = get_lang()
+def __get_string(key: str, lang=None) -> Any:
+    if not lang:
+        lang = get_lang()
     with suppress(KeyError):
         return languages[lang][key]
     if not languages.get("en"):
@@ -54,6 +55,16 @@ def get_string(key: str, _res: bool = True) -> Any:
     except Exception as er:
             LOGS.exception(er)
     return eng_
+
+def get_string(key: str, *args, **kwargs):
+    stringResponse = __get_string(key)
+    if stringResponse and (args or kwargs):
+        try:
+            stringResponse = stringResponse.format(*args, **kwargs)
+        except (IndexError, KeyError) as er:
+            LOGS.exception(er)
+            stringResponse = __get_string(key, "en").format(*args, **kwargs)
+    return stringResponse
 
 
 def translate_and_update(eng_, lang, key):
@@ -86,5 +97,5 @@ def save_dict_to_yaml(lang: str):
 
 
 def get_help(key):
-    if doc := get_string(f"help_{key}", _res=False):
+    if doc := get_string(f"help_{key}"):
         return get_string("cmda") + doc
