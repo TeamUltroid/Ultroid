@@ -13,11 +13,6 @@ from telethon.tl.types import (InputMediaPoll, Poll, PollAnswer,
 
 from .. import Button, asst, async_searcher, get_string, inline_mention
 
-GIMAGES = [
-    "https://graph.org/file/1c51015bae5205a65fd69.jpg",
-    "https://imgwhale.xyz/3xyr322l64j9590",
-]
-
 
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
@@ -27,7 +22,7 @@ async def magic(event):
     ]
     await event.reply(
         get_string("games_1"),
-        file=choice(GIMAGES),
+        file="https://graph.org/file/1c51015bae5205a65fd69.jpg",
         buttons=buttons,
     )
 
@@ -85,7 +80,7 @@ async def choose_cata(event):
     elif match[0] == "d":
         cat = match[1:]
         buttons = [[Button.inline(i, f"trziac{cat}_{i}") for i in DIFI_KEYS]]
-        buttons.append(Button.inline("Back", "trzia"))
+        buttons.append([Button.inline("Back", "trzia")])
         text = get_string("games_3")
     elif match[0] == "c":
         m = match[1:]
@@ -146,7 +141,7 @@ async def choose_cata(event):
                 solution="Join @TeamUltroid",
                 solution_entities=[],
             )
-            m_ = await event.client.send_message(chat, file=poll)
+            m_ = await event.client.send_file(chat, file=poll)
             POLLS.update(
                 {m_.poll.poll.id: {"chat": m_.chat_id, "answer": ansi}})
             await asyncio.sleep(int(in_))
