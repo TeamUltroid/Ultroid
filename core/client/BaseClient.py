@@ -13,7 +13,8 @@ import time
 from datetime import datetime
 from logging import Logger
 
-from telethon import TelegramClient, hints, utils
+from telethonpatch import TelegramClient
+from telethon import hints, utils
 from telethon.errors import (
     AccessTokenExpiredError,
     AccessTokenInvalidError,

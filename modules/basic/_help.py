@@ -236,10 +236,9 @@ def _get_buttons(key, index):
     cols = udB.get_key("HELP_COLUMNS") or 2
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
     loaded = filter_modules(key)
-    cindex = 0
     NList = []
     tl = rows * cols
-    for plugs in split_list(loaded, tl):
+    for cindex, plugs in enumerate(split_list(loaded, tl)):
         MList = []
         for ps in split_list(plugs, rows):
             MList.extend(
@@ -249,7 +248,6 @@ def _get_buttons(key, index):
                 for p in ps
             )
         NList.append(split_list(MList, cols))
-        cindex += 1
     if _cache.get("help") is None:
         _cache["help"] = {}
     _cache["help"][key] = NList
@@ -257,9 +255,7 @@ def _get_buttons(key, index):
 
 
 def page_num(index, key):
-    fl_ = _cache.get("help", {}).get(key)
-    if not fl_:
-        fl_ = _get_buttons(key, index)
+    fl_ = _cache.get("help", {}).get(key) or _get_buttons(key, index)
     try:
         new_ = fl_[index].copy()
     except IndexError:

@@ -155,23 +155,23 @@ async def ls_func(e):
     book = []
     for file in sorted(files):
         if os.path.isdir(file):
-            folders.append("📂 " + str(file))
+            folders.append(f"📂 {str(file)}")
         elif str(file).endswith(".py"):
-            pyfiles.append("🐍 " + str(file))
+            pyfiles.append(f"🐍 {str(file)}")
         elif str(file).endswith(".json"):
-            jsons.append("🔮 " + str(file))
+            jsons.append(f"🔮 {str(file)}")
         elif str(file).endswith((".mkv", ".mp4", ".avi", ".gif", "webm")):
-            vdos.append("🎥 " + str(file))
+            vdos.append(f"🎥 {str(file)}")
         elif str(file).endswith((".mp3", ".ogg", ".m4a", ".opus")):
-            audios.append("🔊 " + str(file))
+            audios.append(f"🔊 {str(file)}")
         elif str(file).endswith((".jpg", ".jpeg", ".png", ".webp", ".ico")):
-            pics.append("🖼 " + str(file))
+            pics.append(f"🖼 {str(file)}")
         elif str(file).endswith((".txt", ".text", ".log")):
-            text.append("📄 " + str(file))
+            text.append(f"📄 {str(file)}")
         elif str(file).endswith((".apk", ".xapk")):
-            apk.append("📲 " + str(file))
+            apk.append(f"📲 {str(file)}")
         elif str(file).endswith((".exe", ".iso")):
-            exe.append("⚙ " + str(file))
+            exe.append(f"⚙ {str(file)}")
         elif str(file).endswith((".zip", ".rar")):
             zip_.append("🗜 " + str(file))
         elif str(file).endswith((".pdf", ".epub")):
@@ -199,7 +199,7 @@ async def ls_func(e):
     fls, fos = 0, 0
     flc, foc = 0, 0
     for i in omk:
-        try:
+        with contextlib.suppress(BaseException):
             emoji = i.split()[0]
             name = i.split(maxsplit=1)[1]
             nam = name.split("/")[-1]
@@ -228,8 +228,6 @@ async def ls_func(e):
                 else:
                     text += emoji + f" `{nam}`" + "\n"
                 flc += 1
-        except BaseException:
-            pass
     tfos, tfls, ttol = humanbytes(fos), humanbytes(fls), humanbytes(fos + fls)
     text += f"\n\n`Folders` :  `{foc}` :   `{tfos}`\n`Files` :       `{flc}` :   `{tfls}`\n`Total` :       `{flc+foc}` :   `{ttol}`"
     try:
