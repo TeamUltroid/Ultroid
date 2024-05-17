@@ -5,7 +5,8 @@ from core.git import repo
 from core.version import version
 from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
 from telethon.version import __version__
-
+from telethon.utils import resolve_bot_file_id
+from telethon.extensions import markdown, html
 from .. import *
 
 buttons = [
@@ -62,7 +63,7 @@ async def alive_func(ult):
     kk = f" `[{y}]({rep})` "
     if inline:
         kk = f"<a href={rep}>{y}</a>"
-        parse = "html"
+        parse = html
         als = in_alive.format(
             header,
             f"{version} [{HOSTED_ON}]",
@@ -74,8 +75,8 @@ async def alive_func(ult):
         if _e := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("🌀", _e)
     else:
-        parse = "md"
-        als = (get_string("alive_1")).format(
+        parse = markdown
+        als = get_string("alive_1",
             header,
             OWNER_NAME,
             f"{version} [{HOSTED_ON}]",
@@ -118,3 +119,57 @@ async def alive_func(ult):
         link_preview=False,
         buttons=buttons if inline else None,
     )
+
+
+
+
+@in_pattern("alive", owner=True)
+async def inline_alive(ult):
+    pic = udB.get_key("ALIVE_PIC")
+    if isinstance(pic, list):
+        pic = choice(pic)
+    uptime = time_formatter((time.time() - start_time) * 1000)
+    header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
+    y = repo.active_branch()
+    xx = repo.get_remote_url()
+    rep = xx.replace(".git", f"/tree/{y}")
+    kk = f"<a href={rep}>{y}</a>"
+    als = in_alive.format(
+        header, f"{version} [{HOSTED_ON}]", python_version(), uptime, kk
+    )
+
+    if _e := udB.get_key("ALIVE_EMOJI"):
+        als = als.replace("🌀", _e)
+    builder = ult.builder
+    if pic:
+        try:
+            if ".jpg" in pic:
+                results = [
+                    await builder.photo(
+                        pic, text=als, parse_mode="html", buttons=buttons
+                    )
+                ]
+            else:
+                if _pic := resolve_bot_file_id(pic):
+                    pic = _pic
+                    buttons.insert(
+                        0, [Button.inline(get_string("bot_2"), data="alive")]
+                    )
+                results = [
+                    await builder.document(
+                        pic,
+                        title="Inline Alive",
+                        description="@TeamUltroid",
+                        parse_mode="html",
+                        buttons=buttons,
+                    )
+                ]
+            return await ult.answer(results)
+        except BaseException as er:
+            LOGS.exception(er)
+    result = [
+        await builder.article(
+            "Alive", text=als, parse_mode="html", link_preview=False, buttons=buttons
+        )
+    ]
+    await ult.answer(result)
