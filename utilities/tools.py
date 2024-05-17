@@ -221,40 +221,6 @@ async def saavn_search(query: str):
 # --- webupload ------#
 # @buddhhu
 
-_webupload_cache = {}
-
-
-async def webuploader(chat_id: int, msg_id: int, uploader: str):
-    file = _webupload_cache[int(chat_id)][int(msg_id)]
-    sites = {
-        "anonfiles": {"url": "https://api.anonfiles.com/upload", "json": True},
-        "siasky": {"url": "https://siasky.net/skynet/skyfile", "json": True},
-        "file.io": {"url": "https://file.io", "json": True},
-        "bayfiles": {"url": "https://api.bayfiles.com/upload", "json": True},
-        "x0.at": {"url": "https://x0.at/", "json": False},
-        "transfer": {"url": "https://transfer.sh", "json": False},
-    }
-    if uploader and uploader in sites:
-        url = sites[uploader]["url"]
-        json = sites[uploader]["json"]
-    with open(file, "rb") as data:
-        # todo: add progress bar
-        status = await async_searcher(
-            url, data={"file": data.read()}, post=True, re_json=json
-        )
-    if isinstance(status, dict):
-        if "skylink" in status:
-            return f"https://siasky.net/{status['skylink']}"
-        if status["status"] == 200 or status["status"] is True:
-            try:
-                link = status["link"]
-            except KeyError:
-                link = status["data"]["file"]["url"]["short"]
-            return link
-    del _webupload_cache[int(chat_id)][int(msg_id)]
-    return status
-
-
 def text_set(text):
     lines = []
     if len(text) <= 55:

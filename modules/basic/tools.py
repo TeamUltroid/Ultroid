@@ -21,7 +21,7 @@ from telethon.tl import TLObject
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.errors import UserBotError
-
+from core.decorators import owner_and_sudos
 from core import HNDLR
 from core.remote import rm
 from utilities.tools import atranslate, json_parser
@@ -87,7 +87,11 @@ async def json_func(event):
     else:
         msg = event
         reply_to_id = event.message.id
-    if match and hasattr(msg, match.split()[0].split(".")[0]):
+    if (
+        match
+        and (event.sender_id in owner_and_sudos(only_full=True))
+        and hasattr(msg, match.split()[0].split(".")[0])
+    ):
         for attr in match.split()[0].split("."):
             msg = getattr(msg, attr, None)
             if not msg:

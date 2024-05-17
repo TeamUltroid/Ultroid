@@ -46,7 +46,7 @@ from utilities.admins import admin_check
 from utilities.helper import bash, check_update
 from utilities.helper import time_formatter as tf
 
-from . import fullsudos, owner_and_sudos
+from . import fullsudos, owner_and_sudos, StatsHolder
 from . import should_allow_sudos as allow_sudo
 from ._wrappers import eod
 
@@ -82,6 +82,10 @@ def ultroid_cmd(pattern=None, manager=False, asst=asst, **kwargs):
     def decor(dec):
         @wraps(dec)
         async def wrapp(ult: Message):
+            if not udB.get_key("DISABLE_STATS"):
+                n_pattern = "".join(str(i) for i in pattern if 97 <= ord(i) <= 122)
+                count = StatsHolder.get(n_pattern, 0)
+                StatsHolder[n_pattern] = count + 1
             if not ult.out:
                 if owner_only:
                     return

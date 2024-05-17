@@ -127,10 +127,8 @@ async def on_afk(event):
     else:
         msg1 = await event.reply(get_string("afk_4").format(afk_time))
     for x in old_afk_msg:
-        try:
+        with contextlib.suppress(BaseException):
             await x.delete()
-        except BaseException:
-            pass
     old_afk_msg.append(msg1)
     if msg2:
         old_afk_msg.append(msg2)

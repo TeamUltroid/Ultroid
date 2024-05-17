@@ -13,7 +13,7 @@ from database import udB
 from ._wrappers import eod, eor
 
 # ----------------------------------------------#
-
+StatsHolder = {}
 
 def should_allow_sudos():
     return udB.get_key("SUDO")
@@ -27,7 +27,9 @@ def is_sudo(userid):
     return userid in get_sudos()
 
 
-def owner_and_sudos():
+def owner_and_sudos(only_full=False):
+    if only_full:
+        return [udB.get_config("OWNER_ID"), *fullsudos()]
     return [udB.get_config("OWNER_ID"), *get_sudos()]
 
 

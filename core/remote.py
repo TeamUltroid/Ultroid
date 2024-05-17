@@ -49,6 +49,9 @@ class Remote:
         if in_local and self.get_status() and _exists:
             return save_as
         details: dict = fetch_sync(f"{self.REMOTE_URL}/search{mid}/{path}", True)  # type: ignore
+        if not isinstance(details, dict):
+            Logger.error(details)
+            return
         if details.get("status") == 404:
             Logger.debug(f"got 404 response, {details}")
             return

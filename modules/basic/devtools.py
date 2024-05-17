@@ -30,7 +30,7 @@ except ImportError:
 from os import remove
 
 from telethon.tl import functions
-
+from telethon.tl.types import MessageEntityPre
 from core.remote import rm
 from database.helpers import get_random_color
 from utilities.misc import json_parser
@@ -210,6 +210,14 @@ async def eval_func(event):
         mode = "g-args"
     if mode:
         cmd = await get_()
+    if (
+        event.entities
+        and len(event.entities) == 1
+        and isinstance(event.entities[0], MessageEntityPre)
+    ):
+        entity = event.entities[0]
+        offset = entity.offset + 3
+        cmd = event.text[offset : offset + entity.length]
     if not cmd:
         return
     if mode != "silent" and not xx:
@@ -240,18 +248,18 @@ async def eval_func(event):
     try:
         # value = await aexec(cmd, event)
         # TODO: Eval can be cancelled
-       # task = asyncio.create_task(aexec(cmd, event))
-     #   task = asyncio.current_task()
-    #    try:
-#            task_id = int(list(Tasks.keys())[0])
-   #     except IndexError:
-       #     task_id = 0
-        #task_id += 1
- #       task_id = str(task_id)
-    #    Tasks[task_id] = task
-     #   task.add_done_callback(lambda _: Tasks.pop(task_id))
-      #  await asyncio.wait([task])
-    #    value = task.result()
+        # task = asyncio.create_task(aexec(cmd, event))
+        #   task = asyncio.current_task()
+        #    try:
+        #            task_id = int(list(Tasks.keys())[0])
+        #     except IndexError:
+        #     task_id = 0
+        # task_id += 1
+        #       task_id = str(task_id)
+        #    Tasks[task_id] = task
+        #   task.add_done_callback(lambda _: Tasks.pop(task_id))
+        #  await asyncio.wait([task])
+        #    value = task.result()
         value = await aexec(cmd, event)
     except RPCError as er:
         value = None
@@ -296,12 +304,9 @@ async def eval_func(event):
     timeform = timef if timef != "0s" else f"{tmt:.3f}ms"
     if isinstance(evaluation, str) and not (await is_url_ok(evaluation, True)):
         evaluation = f"```{evaluation}```"
-    final_output = (
-        "__►__ **EVAL** (__in {}__)\n```{}``` ".format(
-            timeform,
-            cmd,
-           
-        )
+    final_output = "__►__ **EVAL** (__in {}__)\n```{}``` ".format(
+        timeform,
+        cmd,
     )
     if err:
         final_output += f"\n\n __►__ **ERROR**: \n`{err}`"
