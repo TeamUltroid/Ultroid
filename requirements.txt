@@ -1,5 +1,6 @@
 # Important Requirements here.
 
-https://github.com/New-dev0/Telethon/archive/platy.zip
+telethon
+https://github.com/New-dev0/Telethon-Patch/archive/main.zip
 python-decouple
 python-dotenv
