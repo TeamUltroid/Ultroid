@@ -42,7 +42,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 <summary>Deploy To Heroku</summary>
 <p>
 <br>
-<a href="https://heroku.com/deploy?template=https://github.com/TeamUltroid/Ultroid?tab=readme-ov-file">
+<a href="https://heroku.com/deploy">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 </p>
