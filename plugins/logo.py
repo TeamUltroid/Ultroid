@@ -4,7 +4,6 @@ import random
 
 from core import rm
 from PIL import Image, ImageDraw, ImageFont
-from telethon.tl.types import InputMessagesFilterPhotos
 from utilities.helper import download_file, mediainfo
 
 from . import check_filename, get_string, inline_mention, ultroid_cmd
@@ -86,9 +85,6 @@ async def logo_func(event):
         os.remove(bg_)
 
 
-
-
-
 class LogoHelper:
     @staticmethod
     def get_text_size(text, image, font):
@@ -102,7 +98,8 @@ class LogoHelper:
         tested_font = ImageFont.truetype(font, tested_font_size)
         observed_width = LogoHelper.get_text_size(text, image, tested_font)
         estimated_font_size = (
-            tested_font_size / (observed_width / image.width) * target_width_ratio
+            tested_font_size / (observed_width /
+                                image.width) * target_width_ratio
         )
         return round(estimated_font_size)
 
