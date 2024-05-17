@@ -139,7 +139,7 @@ async def help_cmd(event: NewMessage.Event):
     if not module:
         if event.client._bot:
             return await event.reply(
-                get_string("inline_4").format(ultroid_bot.full_name, len(PLUGINS)),
+                get_string("inline_4", ultroid_bot.full_name, len(PLUGINS)),
                 file=inline_pic(),
                 buttons=get_help_buttons(),
                 link_preview=False,
@@ -157,7 +157,7 @@ async def help_cmd(event: NewMessage.Event):
 
 @in_pattern("ultd", owner=True)
 async def inline_handler(event):
-    text = get_string("inline_4").format(ultroid_bot.full_name, len(PLUGINS))
+    text = get_string("inline_4", ultroid_bot.full_name, len(PLUGINS))
     if inline_pic():
         result = await event.builder.photo(
             file=inline_pic(),

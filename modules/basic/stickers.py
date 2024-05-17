@@ -28,7 +28,7 @@ from telethon.utils import get_display_name, get_extension, get_input_document
 from core.remote import rm
 from utilities.converter import resize_photo_sticker
 
-from .. import LOGS, asst, fetch, udB, ultroid_cmd
+from .. import LOGS, asst, fetch, udB, ultroid_cmd, get_string
 
 
 async def packExists(packId):
@@ -64,8 +64,6 @@ async def AddToNewPack(packType, file, emoji, sender_id, title: str):
             title=title,
             short_name=sn,
             stickers=[SetItem(file, emoji=emoji)],
-            videos=packType == "video",
-            animated=packType == "animated",
             software="@TeamUltroid",
         )
     )
@@ -80,6 +78,7 @@ async def kang_func(ult):
         return
     if not ult.is_reply:
         return await ult.eor("`Reply to a message..`", time=5)
+    ult = await ult.eor(get_string("com_1"))
     reply = await ult.get_reply_message()
     type_, dl = "static", None
     try:
@@ -132,7 +131,8 @@ async def kang_func(ult):
             get_[ult.sender_id].update({type_: [sn]})
         udB.set_key("STICKERS", get_)
         return await ult.reply(
-            f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
+            f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})",
+            link_preview=False
         )
     name = get_[ult.sender_id][type_][-1]
     try:
@@ -151,13 +151,15 @@ async def kang_func(ult):
         get_[ult.sender_id][type_].append(pack.set.short_name)
         udB.set_key("STICKERS", get_)
         return await ult.reply(
-            f"**Created New Kang Pack!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})"
+            f"**Created New Kang Pack!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})",
+            link_preview=False
         )
     except Exception as er:
         LOGS.exception(er)
         return await ult.reply(str(er))
     await ult.reply(
-        f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{name})"
+        f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{name})",
+        link_preview=False
     )
 
 
