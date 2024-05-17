@@ -4,9 +4,10 @@ from random import choice
 from core.git import repo
 from core.version import version
 from telethon.errors import BotMethodInvalidError, ChatSendMediaForbiddenError
-from telethon.version import __version__
+from telethon.extensions import html, markdown
 from telethon.utils import resolve_bot_file_id
-from telethon.extensions import markdown, html
+from telethon.version import __version__
+
 from .. import *
 
 buttons = [
@@ -77,14 +78,14 @@ async def alive_func(ult):
     else:
         parse = markdown
         als = get_string("alive_1",
-            header,
-            OWNER_NAME,
-            f"{version} [{HOSTED_ON}]",
-            uptime,
-            python_version(),
-            __version__,
-            kk,
-        )
+                         header,
+                         OWNER_NAME,
+                         f"{version} [{HOSTED_ON}]",
+                         uptime,
+                         python_version(),
+                         __version__,
+                         kk,
+                         )
 
         if a := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("✵", a)
@@ -119,8 +120,6 @@ async def alive_func(ult):
         link_preview=False,
         buttons=buttons if inline else None,
     )
-
-
 
 
 @in_pattern("alive", owner=True)
