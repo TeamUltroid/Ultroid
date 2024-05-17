@@ -59,7 +59,8 @@ async def _(e):
             text="**OFᴏx🦊Rᴇᴄᴏᴠᴇʀʏ**\n\nYou didn't search anything",
             buttons=Button.switch_inline("Sᴇᴀʀᴄʜ Aɢᴀɪɴ", query="ofox ", same_peer=True),
         )
-        return await e.answer([kkkk])
+        await e.answer([kkkk])
+        return
     device, releases = await get_ofox(match)
     if device.get("detail") is None:
         fox = []
@@ -184,9 +185,10 @@ async def gsearch(q_event):
     try:
         match = q_event.text.split(maxsplit=1)[1]
     except IndexError:
-        return await q_event.answer(
+        await q_event.answer(
             [], switch_pm="Google Search. Enter a query!", switch_pm_param="start"
         )
+        return
     searcher = []
     gresults = await google_search(match)
     for i in gresults:
@@ -228,9 +230,10 @@ async def _(e):
     try:
         quer = e.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await e.answer(
+        await e.answer(
             [], switch_pm="Mod Apps Search. Enter app name!", switch_pm_param="start"
         )
+        return
     start = 0 * 3 + 1
     da = base64.b64decode(choice(apis)).decode("ascii")
     url = f"https://www.googleapis.com/customsearch/v1?key={da}&cx=25b3b50edb928435b&q={quer}&start={start}"
@@ -285,9 +288,10 @@ async def _(e):
             res.extend(
                 APP_CACHE[a][0] for a in RECENTS[e.sender_id] if APP_CACHE.get(a)
             )
-        return await e.answer(
+        await e.answer(
             res, switch_pm=get_string("instu_2"), switch_pm_param="start"
         )
+        return
     try:
         return await e.answer(
             APP_CACHE[f], switch_pm="Application Searcher.", switch_pm_param="start"
@@ -355,7 +359,8 @@ async def piston_run(event):
             ),
             text=f'**Inline Usage**\n\n`@{asst.me.username} run python print("hello world")`\n\n[Language List](https://graph.org/Ultroid-09-01-6)',
         )
-        return await event.answer([result])
+        await event.answer([result])
+        return
     if not PISTON_LANGS:
         se = await async_searcher(f"{PISTON_URI}runtimes", re_json=True)
         PISTON_LANGS.update({lang.pop("language"): lang for lang in se})
@@ -405,9 +410,10 @@ async def do_magic(event):
     try:
         match = event.text.split(" ", maxsplit=1)[1].lower()
     except IndexError:
-        return await event.answer(
+        await event.answer(
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
+        return
     if FDROID_.get(match):
         return await event.answer(
             FDROID_[match], switch_pm=f"• Results for {match}", switch_pm_param="start"
@@ -461,9 +467,10 @@ async def twitter_search(event):
     try:
         match = event.text.split(maxsplit=1)[1].lower()
     except IndexError:
-        return await event.answer(
+        await event.answer(
             [], switch_pm="Enter Query to Search", switch_pm_param="start"
         )
+        return
     try:
         return await event.answer(
             _ult_cache["twitter"][match],
@@ -516,9 +523,10 @@ async def savn_s(event):
     try:
         query = event.text.split(maxsplit=1)[1].lower()
     except IndexError:
-        return await event.answer(
+        await event.answer(
             [], switch_pm="Enter Query to search 🔍", switch_pm_param="start"
         )
+        return
     if query in _savn_cache:
         return await event.answer(
             _savn_cache[query],
