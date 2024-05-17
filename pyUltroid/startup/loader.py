@@ -117,7 +117,7 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
             Loader(path="assistant/pmbot.py").load(log=False)
 
     # vc bot
-    if vcbot and not vcClient._bot:
+    if vcbot and (vcClient and not vcClient.me.bot):
         try:
             import pytgcalls  # ignore: pylint
 
