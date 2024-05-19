@@ -25,7 +25,7 @@ except ImportError:
     LOGS.error("nsfwfilter: 'Profanitydetector' not installed!")
 
 
-from .. import HNDLR, fetch, eor, events, udB, ultroid_bot, ultroid_cmd
+from .. import HNDLR, eor, events, fetch, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addnsfw( (.*)|$)", admins_only=True)
