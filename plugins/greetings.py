@@ -31,17 +31,27 @@
 • `{i}thankmembers on/off`
     Send a thank you sticker on hitting a members count of 100*x in your groups.
 """
-import asyncio
-import os
+import os, asyncio
 
 from telegraph import upload_file as uf
-from telethon.events import ChatAction
-from telethon.utils import get_display_name, pack_bot_file_id
+from telethon.utils import pack_bot_file_id
 from utilities.tools import create_tl_btn, format_btn, get_msg_button
 
+from telethon import events
 from ..basic._inline import something
-from . import (HNDLR, asst, eor, get_string, inline_mention, mediainfo, udB,
-               ultroid_bot, ultroid_cmd)
+from telethon.events import ChatAction
+from . import (
+    HNDLR,
+    asst,
+    eor,
+    get_string,
+    mediainfo,
+    udB,
+    ultroid_cmd,
+    inline_mention,
+    ultroid_bot,
+)
+from telethon.utils import get_display_name
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
@@ -226,7 +236,7 @@ def delete_welcome(chat):
 
 
 def add_goodbye(chat, msg, media, button, client="user"):
-    ok = udB.get_key("GOODBYE")
+    ok = udB.get_key("GOODBYE") or {}
     ok.update(
         {chat: {"goodbye": msg, "media": media, "button": button, "client": client}}
     )
@@ -241,63 +251,62 @@ def delete_goodbye(chat):
 
 
 def add_thanks(chat, client="user"):
-    x = udB.get_key("THANK_MEMBERS")
+    x = udB.get_key("THANK_MEMBERS") or {}
     x.update({chat: client or "user"})
     return udB.set_key("THANK_MEMBERS", x)
 
 
 def remove_thanks(chat):
-    x = udB.get_key("THANK_MEMBERS")
+    x = udB.get_key("THANK_MEMBERS") or {}
     if chat in x:
         x.pop(chat)
         return udB.set_key("THANK_MEMBERS", x)
 
 
 def must_thank(chat):
-    x = udB.get_key("THANK_MEMBERS")
+    x = udB.get_key("THANK_MEMBERS") or {}
     return x.get(chat)
 
 
 async def handle_thank_member(ult):
-    chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
-    if chat_count % 100 == 0:
-        stickers = [
-            "CAADAQADeAIAAm_BZBQh8owdViocCAI",
-            "CAADAQADegIAAm_BZBQ6j8GpKtnrSgI",
-            "CAADAQADfAIAAm_BZBQpqC84n9JNXgI",
-            "CAADAQADfgIAAm_BZBSxLmTyuHvlzgI",
-            "CAADAQADgAIAAm_BZBQ3TZaueMkS-gI",
-            "CAADAQADggIAAm_BZBTPcbJMorVVsQI",
-            "CAADAQADhAIAAm_BZBR3lnMZRdsYxAI",
-            "CAADAQADhgIAAm_BZBQGQRx4iaM4pQI",
-            "CAADAQADiAIAAm_BZBRRF-cjJi_QywI",
-            "CAADAQADigIAAm_BZBQQJwfzkqLM0wI",
-            "CAADAQADjAIAAm_BZBQSl5GSAT0viwI",
-            "CAADAQADjgIAAm_BZBQ2xU688gfHhQI",
-            "CAADAQADkAIAAm_BZBRGuPNgVvkoHQI",
-            "CAADAQADpgIAAm_BZBQAAZr0SJ5EKtQC",
-            "CAADAQADkgIAAm_BZBTvuxuayqvjhgI",
-            "CAADAQADlAIAAm_BZBSMZdWN2Yew1AI",
-            "CAADAQADlQIAAm_BZBRXyadiwWGNkwI",
-            "CAADAQADmAIAAm_BZBQDoB15A1jS1AI",
-            "CAADAQADmgIAAm_BZBTnOLQ8_d72vgI",
-            "CAADAQADmwIAAm_BZBTve1kgdG0Y5gI",
-            "CAADAQADnAIAAm_BZBQUMyFiylJSqQI",
-            "CAADAQADnQIAAm_BZBSMAe2V4pwhNgI",
-            "CAADAQADngIAAm_BZBQ06D92QL_vywI",
-            "CAADAQADnwIAAm_BZBRw7UAbr6vtEgI",
-            "CAADAQADoAIAAm_BZBRkv9DnGPXh_wI",
-            "CAADAQADoQIAAm_BZBQwI2NgQdyKlwI",
-            "CAADAQADogIAAm_BZBRPHJF3XChVLgI",
-            "CAADAQADowIAAm_BZBThpas7rZD6DAI",
-            "CAADAQADpAIAAm_BZBQcC2DpZcCw1wI",
-            "CAADAQADpQIAAm_BZBQKruTcEU4ntwI",
-        ]
+        chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
+        if chat_count % 100 == 0:
+            stickers = [
+                "CAADAQADeAIAAm_BZBQh8owdViocCAI",
+                "CAADAQADegIAAm_BZBQ6j8GpKtnrSgI",
+                "CAADAQADfAIAAm_BZBQpqC84n9JNXgI",
+                "CAADAQADfgIAAm_BZBSxLmTyuHvlzgI",
+                "CAADAQADgAIAAm_BZBQ3TZaueMkS-gI",
+                "CAADAQADggIAAm_BZBTPcbJMorVVsQI",
+                "CAADAQADhAIAAm_BZBR3lnMZRdsYxAI",
+                "CAADAQADhgIAAm_BZBQGQRx4iaM4pQI",
+                "CAADAQADiAIAAm_BZBRRF-cjJi_QywI",
+                "CAADAQADigIAAm_BZBQQJwfzkqLM0wI",
+                "CAADAQADjAIAAm_BZBQSl5GSAT0viwI",
+                "CAADAQADjgIAAm_BZBQ2xU688gfHhQI",
+                "CAADAQADkAIAAm_BZBRGuPNgVvkoHQI",
+                "CAADAQADpgIAAm_BZBQAAZr0SJ5EKtQC",
+                "CAADAQADkgIAAm_BZBTvuxuayqvjhgI",
+                "CAADAQADlAIAAm_BZBSMZdWN2Yew1AI",
+                "CAADAQADlQIAAm_BZBRXyadiwWGNkwI",
+                "CAADAQADmAIAAm_BZBQDoB15A1jS1AI",
+                "CAADAQADmgIAAm_BZBTnOLQ8_d72vgI",
+                "CAADAQADmwIAAm_BZBTve1kgdG0Y5gI",
+                "CAADAQADnAIAAm_BZBQUMyFiylJSqQI",
+                "CAADAQADnQIAAm_BZBSMAe2V4pwhNgI",
+                "CAADAQADngIAAm_BZBQ06D92QL_vywI",
+                "CAADAQADnwIAAm_BZBRw7UAbr6vtEgI",
+                "CAADAQADoAIAAm_BZBRkv9DnGPXh_wI",
+                "CAADAQADoQIAAm_BZBQwI2NgQdyKlwI",
+                "CAADAQADogIAAm_BZBRPHJF3XChVLgI",
+                "CAADAQADowIAAm_BZBThpas7rZD6DAI",
+                "CAADAQADpAIAAm_BZBQcC2DpZcCw1wI",
+                "CAADAQADpQIAAm_BZBQKruTcEU4ntwI",
+            ]
 
-        stik_id = chat_count / 100 - 1
-        sticker = stickers[stik_id]
-        await ult.respond(file=sticker)
-
+            stik_id = chat_count / 100 - 1
+            sticker = stickers[stik_id]
+            await ult.respond(file=sticker)
 
 async def handleChatAction(ult):
     currentClient = "asst" if ult.client.me.bot else "user"
@@ -311,8 +320,7 @@ async def handleChatAction(ult):
         chat = await ult.get_chat()
 
         # greetings
-        if (wel := get_welcome(ult.chat_id)) and (
-                wel["client"] == currentClient):
+        if (wel := get_welcome(ult.chat_id)) and (wel["client"] == currentClient):
             title = chat.title or "this chat"
             count = (
                 chat.participants_count
