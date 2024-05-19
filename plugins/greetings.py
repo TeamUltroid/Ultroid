@@ -31,14 +31,27 @@
 • `{i}thankmembers on/off`
     Send a thank you sticker on hitting a members count of 100*x in your groups.
 """
-import os
+import os, asyncio
 
 from telegraph import upload_file as uf
 from telethon.utils import pack_bot_file_id
 from utilities.tools import create_tl_btn, format_btn, get_msg_button
 
+from telethon import events
 from ..basic._inline import something
-from . import HNDLR, eor, get_string, mediainfo, udB, ultroid_cmd
+from telethon.events import ChatAction
+from . import (
+    HNDLR,
+    asst,
+    eor,
+    get_string,
+    mediainfo,
+    udB,
+    ultroid_cmd,
+    inline_mention,
+    ultroid_bot,
+)
+from telethon.utils import get_display_name
 
 Note = "\n\nNote: `{mention}`, `{group}`, `{count}`, `{name}`, `{fullname}`, `{username}`, `{userid}` can be used as formatting parameters.\n\n"
 
@@ -52,6 +65,7 @@ async def setwel(event):
         text = event.text.split(maxsplit=1)[1]
     except IndexError:
         text = r.text if r else None
+    client = "asst" if event.client.me.bot else "user"
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -70,19 +84,16 @@ async def setwel(event):
             m = None
         else:
             m = pack_bot_file_id(r.media)
-        if r.text:
-            txt = r.text
-            if not btn:
-                txt, btn = get_msg_button(r.text)
-            add_welcome(event.chat_id, txt, m, btn)
-        else:
-            add_welcome(event.chat_id, None, m, btn)
+        txt = r.text
+        if txt and not btn:
+            txt, btn = get_msg_button(r.text)
+        add_welcome(event.chat_id, txt, m, btn, client)
         await eor(x, get_string("grt_1"))
     elif text:
         if not btn:
             txt, btn = get_msg_button(text)
-        add_welcome(event.chat_id, txt, None, btn)
-        await eor(x, get_string("grt_1"))
+        add_welcome(event.chat_id, txt, None, btn, client)
+        return await eor(x, get_string("grt_1"))
     else:
         await eor(x, get_string("grt_3"), time=5)
 
@@ -117,6 +128,7 @@ async def setgb(event):
         text = event.text.split(maxsplit=1)[1]
     except IndexError:
         text = r.text if r else None
+    client = "asst" if event.client.me.bot else "user"
     if r and r.media:
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
@@ -135,18 +147,15 @@ async def setgb(event):
             m = None
         else:
             m = pack_bot_file_id(r.media)
-        if r.text:
-            txt = r.text
-            if not btn:
-                txt, btn = get_msg_button(r.text)
-            add_goodbye(event.chat_id, txt, m, btn)
-        else:
-            add_goodbye(event.chat_id, None, m, btn)
+        txt = r.text
+        if txt and not btn:
+            txt, btn = get_msg_button(txt)
+        add_goodbye(event.chat_id, txt, m, btn, client)
         await eor(x, "`Goodbye note saved`")
     elif text:
         if not btn:
             txt, btn = get_msg_button(text)
-        add_goodbye(event.chat_id, txt, None, btn)
+        add_goodbye(event.chat_id, txt, None, btn, client)
         await eor(x, "`Goodbye note saved`")
     else:
         await eor(x, get_string("grt_7"), time=5)
@@ -185,7 +194,7 @@ async def thank_set(event):
         return
     chat = event.chat_id
     if type_.lower() == "on":
-        add_thanks(chat)
+        add_thanks(chat, "asst" if event.client.me.bot else "user")
     elif type_.lower() == "off":
         remove_thanks(chat)
     await eor(
@@ -194,59 +203,201 @@ async def thank_set(event):
     )
 
 
-def get_stuff(key=None):
-    return udB.get_key(key) or {}
-
-
-def add_welcome(chat, msg, media, button):
-    ok = get_stuff("WELCOME")
-    ok.update({chat: {"welcome": msg, "media": media, "button": button}})
+def add_welcome(chat, msg, media, button, client="user"):
+    ok = udB.get_key("WELCOME") or {}
+    ok.update(
+        {
+            chat: {
+                "welcome": msg,
+                "media": media,
+                "button": button,
+                "client": client or "user",
+            }
+        }
+    )
     return udB.set_key("WELCOME", ok)
 
 
 def get_welcome(chat):
-    ok = get_stuff("WELCOME")
+    ok = udB.get_key("WELCOME") or {}
+    return ok.get(chat)
+
+
+def get_goodbye(chat):
+    ok = udB.get_key("WELCOME") or {}
     return ok.get(chat)
 
 
 def delete_welcome(chat):
-    ok = get_stuff("WELCOME")
-    if ok.get(chat):
+    ok = udB.get_key("WELCOME") or {}
+    if chat in ok:
         ok.pop(chat)
         return udB.set_key("WELCOME", ok)
 
 
-def add_goodbye(chat, msg, media, button):
-    ok = get_stuff("GOODBYE")
-    ok.update({chat: {"goodbye": msg, "media": media, "button": button}})
+def add_goodbye(chat, msg, media, button, client="user"):
+    ok = udB.get_key("GOODBYE")
+    ok.update(
+        {chat: {"goodbye": msg, "media": media, "button": button, "client": client}}
+    )
     return udB.set_key("GOODBYE", ok)
 
 
-def get_goodbye(chat):
-    ok = get_stuff("GOODBYE")
-    return ok.get(chat)
-
-
 def delete_goodbye(chat):
-    ok = get_stuff("GOODBYE")
+    ok = udB.get_key("GOODBYE") or {}
     if ok.get(chat):
         ok.pop(chat)
         return udB.set_key("GOODBYE", ok)
 
 
-def add_thanks(chat):
-    x = get_stuff("THANK_MEMBERS")
-    x.update({chat: True})
+def add_thanks(chat, client="user"):
+    x = udB.get_key("THANK_MEMBERS")
+    x.update({chat: client or "user"})
     return udB.set_key("THANK_MEMBERS", x)
 
 
 def remove_thanks(chat):
-    x = get_stuff("THANK_MEMBERS")
-    if x.get(chat):
+    x = udB.get_key("THANK_MEMBERS")
+    if chat in x:
         x.pop(chat)
         return udB.set_key("THANK_MEMBERS", x)
 
 
 def must_thank(chat):
-    x = get_stuff("THANK_MEMBERS")
+    x = udB.get_key("THANK_MEMBERS")
     return x.get(chat)
+
+
+async def handle_thank_member(ult):
+        chat_count = (await ult.client.get_participants(ult.chat_id, limit=0)).total
+        if chat_count % 100 == 0:
+            stickers = [
+                "CAADAQADeAIAAm_BZBQh8owdViocCAI",
+                "CAADAQADegIAAm_BZBQ6j8GpKtnrSgI",
+                "CAADAQADfAIAAm_BZBQpqC84n9JNXgI",
+                "CAADAQADfgIAAm_BZBSxLmTyuHvlzgI",
+                "CAADAQADgAIAAm_BZBQ3TZaueMkS-gI",
+                "CAADAQADggIAAm_BZBTPcbJMorVVsQI",
+                "CAADAQADhAIAAm_BZBR3lnMZRdsYxAI",
+                "CAADAQADhgIAAm_BZBQGQRx4iaM4pQI",
+                "CAADAQADiAIAAm_BZBRRF-cjJi_QywI",
+                "CAADAQADigIAAm_BZBQQJwfzkqLM0wI",
+                "CAADAQADjAIAAm_BZBQSl5GSAT0viwI",
+                "CAADAQADjgIAAm_BZBQ2xU688gfHhQI",
+                "CAADAQADkAIAAm_BZBRGuPNgVvkoHQI",
+                "CAADAQADpgIAAm_BZBQAAZr0SJ5EKtQC",
+                "CAADAQADkgIAAm_BZBTvuxuayqvjhgI",
+                "CAADAQADlAIAAm_BZBSMZdWN2Yew1AI",
+                "CAADAQADlQIAAm_BZBRXyadiwWGNkwI",
+                "CAADAQADmAIAAm_BZBQDoB15A1jS1AI",
+                "CAADAQADmgIAAm_BZBTnOLQ8_d72vgI",
+                "CAADAQADmwIAAm_BZBTve1kgdG0Y5gI",
+                "CAADAQADnAIAAm_BZBQUMyFiylJSqQI",
+                "CAADAQADnQIAAm_BZBSMAe2V4pwhNgI",
+                "CAADAQADngIAAm_BZBQ06D92QL_vywI",
+                "CAADAQADnwIAAm_BZBRw7UAbr6vtEgI",
+                "CAADAQADoAIAAm_BZBRkv9DnGPXh_wI",
+                "CAADAQADoQIAAm_BZBQwI2NgQdyKlwI",
+                "CAADAQADogIAAm_BZBRPHJF3XChVLgI",
+                "CAADAQADowIAAm_BZBThpas7rZD6DAI",
+                "CAADAQADpAIAAm_BZBQcC2DpZcCw1wI",
+                "CAADAQADpQIAAm_BZBQKruTcEU4ntwI",
+            ]
+
+            stik_id = chat_count / 100 - 1
+            sticker = stickers[stik_id]
+            await ult.respond(file=sticker)
+
+async def handleChatAction(ult):
+    currentClient = "asst" if ult.client.me.bot else "user"
+
+    # thank members
+    if must_thank(ult.chat_id) == currentClient:
+        await handle_thank_member(ult)
+
+    if ult.user_joined or ult.added_by:
+        user = await ult.get_user()
+        chat = await ult.get_chat()
+
+        # greetings
+        if (wel := get_welcome(ult.chat_id)) and (wel["client"] == currentClient):
+            title = chat.title or "this chat"
+            count = (
+                chat.participants_count
+                or (await ult.client.get_participants(chat, limit=0)).total
+            )
+            mention = inline_mention(user)
+            name = user.first_name
+            fullname = get_display_name(user)
+            uu = user.username
+            username = f"@{uu}" if uu else mention
+            msgg = wel["welcome"]
+            med = wel["media"] or None
+            userid = user.id
+            msg = None
+            if msgg:
+                msg = msgg.format(
+                    mention=mention,
+                    group=title,
+                    count=count,
+                    name=name,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                )
+            if wel.get("button"):
+                btn = create_tl_btn(wel["button"])
+                await something(ult, msg, med, btn)
+            elif msg:
+                send = await ult.reply(
+                    msg,
+                    file=med,
+                )
+                await asyncio.sleep(150)
+                await send.delete()
+            else:
+                await ult.reply(file=med)
+    elif (ult.user_left or ult.user_kicked) and (wel := get_goodbye(ult.chat_id)) and (
+        wel['client'] == currentClient
+    ):
+        user = await ult.get_user()
+        chat = await ult.get_chat()
+        title = chat.title or "this chat"
+        count = (
+            chat.participants_count
+            or (await ult.client.get_participants(chat, limit=0)).total
+        )
+        mention = inline_mention(user)
+        name = user.first_name
+        fullname = get_display_name(user)
+        uu = user.username
+        username = f"@{uu}" if uu else mention
+        msgg = wel["goodbye"]
+        med = wel["media"]
+        userid = user.id
+        msg = None
+        if msgg:
+            msg = msgg.format(
+                mention=mention,
+                group=title,
+                count=count,
+                name=name,
+                fullname=fullname,
+                username=username,
+                userid=userid,
+            )
+        if wel.get("button"):
+            btn = create_tl_btn(wel["button"])
+            await something(ult, msg, med, btn)
+        elif msg:
+            send = await ult.reply(
+                msg,
+                file=med,
+            )
+            await asyncio.sleep(150)
+            await send.delete()
+        else:
+            await ult.reply(file=med)
+
+ultroid_bot.add_handler(handleChatAction, ChatAction())
+asst.add_handler(handleChatAction, ChatAction())
