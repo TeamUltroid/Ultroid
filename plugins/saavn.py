@@ -1,9 +1,13 @@
 import os
 
-from telethon.tl.types import DocumentAttributeAudio, InputWebDocument as wb
+from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import InputWebDocument as wb
 
 from database._core import InlinePlugin
-from .. import fetch, fast_download, ultroid_cmd, in_pattern, Button, DocumentAttributeAudio as Audio
+
+from .. import Button
+from .. import DocumentAttributeAudio as Audio
+from .. import fast_download, fetch, in_pattern, ultroid_cmd
 
 
 @ultroid_cmd(
