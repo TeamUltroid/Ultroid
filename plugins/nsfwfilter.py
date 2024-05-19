@@ -16,7 +16,7 @@
 
 import os
 
-from . import LOGS
+from .. import LOGS
 
 try:
     from ProfanityDetector import detector
@@ -25,7 +25,7 @@ except ImportError:
     LOGS.error("nsfwfilter: 'Profanitydetector' not installed!")
 
 
-from . import HNDLR, async_searcher, eor, events, udB, ultroid_bot, ultroid_cmd
+from .. import HNDLR, fetch, eor, events, udB, ultroid_bot, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addnsfw( (.*)|$)", admins_only=True)
@@ -67,7 +67,7 @@ async def nsfw_check(e):
             if y:
                 nsfw += 1
         if pic and not nsfw:
-            r = await async_searcher(
+            r = await fetch(
                 "https://api.deepai.org/api/nsfw-detector",
                 data={
                     "image": open(pic, "rb"),
