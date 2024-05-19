@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 
-from . import async_searcher, get_string, ultroid_bot, ultroid_cmd
+from . import async_searcher, get_string, ultroid_bot, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(
@@ -80,39 +80,38 @@ async def hbd(event):
         sign = "Sagittarius" if (day < 22) else "Capricorn"
     else:
         sign = ""
-    json = await async_searcher(
-        f"https://aztro.sameerkumar.website/?sign={sign}&day=today",
-        method="POST",
-        re_json=True,
-    )
-    dd = json.get("current_date")
-    ds = json.get("description")
-    lt = json.get("lucky_time")
-    md = json.get("mood")
-    cl = json.get("color")
-    ln = json.get("lucky_number")
+    message = f"""
+**Name** -: {name}
+**D.O.B** -:  {match}
+**Lived** -:  {saal}yr, {mahina}m, {din}d, {ghanta}hr, {mi}min, {slive}sec
+
+**Birthday** -: {hp}
+**Zodiac** -: {sign}"""
+    try:
+        json = await async_searcher(
+            f"https://aztro.sameerkumar.website/?sign={sign}&day=today",
+            method="POST",
+            re_json=True,
+        )
+        dd = json.get("current_date")
+        ds = json.get("description")
+        lt = json.get("lucky_time")
+        md = json.get("mood")
+        cl = json.get("color")
+        ln = json.get("lucky_number")
+        message += f"""\n**Horoscope On {dd} -**
+
+`{ds}`
+**Lucky Time** :-      {lt}
+**Lucky Number** :-    {ln}
+**Lucky Color** :-     {cl}
+**Mood** :-            {md}
+    """
+    except Exception as er:
+        LOGS.exception(er)
     await event.delete()
     await event.client.send_message(
         event.chat_id,
-        f"""
-    Name -: {name}
-
-D.O.B -:  {match}
-
-Lived -:  {saal}yr, {mahina}m, {din}d, {ghanta}hr, {mi}min, {slive}sec
-
-Birthday -: {hp}
-
-Zodiac -: {sign}
-
-**Horoscope On {dd} -**
-
-`{ds}`
-
-    Lucky Time :-        {lt}
-    Lucky Number :-   {ln}
-    Lucky Color :-        {cl}
-    Mood :-                   {md}
-    """,
+        message,
         reply_to=event.reply_to_msg_id,
     )
