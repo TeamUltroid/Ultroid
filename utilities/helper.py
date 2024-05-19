@@ -29,7 +29,6 @@ from telethon.tl.types import (
     SendMessageUploadDocumentAction,
     DocumentAttributeAnimated,
     DocumentAttributeAudio,
-    DocumentAttributeFilename,
     DocumentAttributeImageSize,
     DocumentAttributeSticker,
     DocumentAttributeVideo,
@@ -41,11 +40,6 @@ from . import *
 
 from core.git import repo
 from core.config import HOSTED_ON
-
-from core.version import version
-from .FastTelethon import download_file as downloadable
-from .FastTelethon import upload_file as uploadable
-
 
 def run_async(function):
     @wraps(function)

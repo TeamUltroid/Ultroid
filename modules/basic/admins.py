@@ -21,7 +21,7 @@ from core.decorators._wrappers import eod, eor
 from database.helpers import DEVLIST
 from utilities.admins import ban_time
 from utilities.helper import inline_mention
-from utilities.info import get_uinfo
+from utilities.admins import get_uinfo
 
 from .. import LOGS, get_string, types, ultroid_cmd
 

@@ -81,7 +81,10 @@ def update_handlers(handlerType, newValue, oldValue):
         clients = [ultroid_bot if handlerType == "HNDLR" else asst]
 
     def update(handler):
-        pattern = handler._pattern
+        try:
+            pattern = handler._pattern
+        except AttributeError:
+            return
         if not pattern:
             return
         pattern = pattern.pattern

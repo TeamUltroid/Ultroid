@@ -26,7 +26,7 @@ def inline_pic(get=False):
     INLINE_PIC = udB.get_key("INLINE_PIC")
     if (INLINE_PIC is None) or get:
         # get default if required
-        return "https://graph.org/file/6e081d339a01cc6190393.jpg"
+        return "https://graph.org/file/8cd1817eb8a9be2436b3b.jpg"
     elif INLINE_PIC:
         return INLINE_PIC
     # is False, return None
