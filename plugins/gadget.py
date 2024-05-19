@@ -11,6 +11,7 @@ async def mobs(e):
     mat = e.pattern_match.group(1).strip()
     if not mat:
         await e.eor("Please Give a Mobile Name to look for.")
+        return
     query = mat.replace(" ", "%20")
     jwala = f"https://gadgets.ndtv.com/search?searchtext={query}"
     c = await fetch(jwala)
