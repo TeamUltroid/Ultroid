@@ -9,7 +9,7 @@
     `Convert Text to Gif...`
 """
 
-import os, emoji
+import os
 import random
 
 import emoji
