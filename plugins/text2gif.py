@@ -9,7 +9,7 @@
     `Convert Text to Gif...`
 """
 
-import os
+import os, emoji
 import random
 
 import emoji
@@ -51,7 +51,7 @@ async def t2g(e):
 
 async def cleargif(gif_):
     try:
-        await ultroid(
+        await ultroid_bot(
             functions.messages.SaveGifRequest(
                 id=get_input_document(gif_),
                 unsave=True,
