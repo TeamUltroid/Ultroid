@@ -1,16 +1,17 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2024 TeamUltroid
+# Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import contextlib
 import inspect
 import sys
 import time
 from logging import Logger
 
-from telethon import TelegramClient
+from telethonpatch import TelegramClient
 from telethon import utils as telethon_utils
 from telethon.errors import (
     AccessTokenExpiredError,
@@ -51,9 +52,7 @@ class UltroidClient(TelegramClient):
         self.dc_id = self.session.dc_id
 
     def __repr__(self):
-        return "<Ultroid.Client :\n self: {}\n bot: {}\n>".format(
-            self.full_name, self._bot
-        )
+        return f"<Ultroid.Client :\n self: {self.full_name}\n bot: {self._bot}\n>"
 
     @property
     def __dict__(self):
@@ -115,7 +114,7 @@ class UltroidClient(TelegramClient):
         by_bot = self._bot
         size = os.path.getsize(file)
         # Don't show progress bar when file size is less than 5MB.
-        if size < 5 * 2**20:
+        if size < 5 * 2 ** 20:
             show_progress = False
         if use_cache and self._cache and self._cache.get("upload_cache"):
             for files in self._cache["upload_cache"]:
@@ -126,10 +125,8 @@ class UltroidClient(TelegramClient):
                     and files["by_bot"] == by_bot
                 ):
                     if to_delete:
-                        try:
+                        with contextlib.suppress(FileNotFoundError):
                             os.remove(file)
-                        except FileNotFoundError:
-                            pass
                     return files["raw_file"], time.time() - start_time
         from pyUltroid.fns.FastTelethon import upload_file
         from pyUltroid.fns.helper import progress
@@ -142,14 +139,12 @@ class UltroidClient(TelegramClient):
                     file=f,
                     filename=filename,
                     progress_callback=(
-                        (
-                            lambda completed, total: self.loop.create_task(
-                                progress(completed, total, event, start_time, message)
-                            )
+                        lambda completed, total: self.loop.create_task(
+                            progress(completed, total, event, start_time, message)
                         )
-                        if show_progress
-                        else None
-                    ),
+                    )
+                    if show_progress
+                    else None,
                 )
         cache = {
             "by_bot": by_bot,
@@ -163,10 +158,8 @@ class UltroidClient(TelegramClient):
         else:
             self._cache.update({"upload_cache": [cache]})
         if to_delete:
-            try:
+            with contextlib.suppress(FileNotFoundError):
                 os.remove(file)
-            except FileNotFoundError:
-                pass
         return raw_file, time.time() - start_time
 
     async def fast_downloader(self, file, **kwargs):
@@ -177,7 +170,7 @@ class UltroidClient(TelegramClient):
         if show_progress:
             event = kwargs["event"]
         # Don't show progress bar when file size is less than 10MB.
-        if file.size < 10 * 2**20:
+        if file.size < 10 * 2 ** 20:
             show_progress = False
         import mimetypes
 
@@ -210,14 +203,12 @@ class UltroidClient(TelegramClient):
                     location=file,
                     out=f,
                     progress_callback=(
-                        (
-                            lambda completed, total: self.loop.create_task(
-                                progress(completed, total, event, start_time, message)
-                            )
+                        lambda completed, total: self.loop.create_task(
+                            progress(completed, total, event, start_time, message)
                         )
-                        if show_progress
-                        else None
-                    ),
+                    )
+                    if show_progress
+                    else None,
                 )
         return raw_file, time.time() - start_time
 
@@ -253,8 +244,6 @@ class UltroidClient(TelegramClient):
         return dict(inspect.getmembers(self))
 
     async def parse_id(self, text):
-        try:
+        with contextlib.suppress(ValueError):
             text = int(text)
-        except ValueError:
-            pass
         return await self.get_peer_id(text)
