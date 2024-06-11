@@ -55,7 +55,7 @@ elif [ $1 == "session" ]; then
         fi
         curl -s $SESSION_GEN_FETCH_URL -o scripts/unix/session
     fi
-    bash scripts/unix/sessiongen
+    bash scripts/unix/session
     exit 0
 elif [ $1 == "start" ]; then
     if [ ! -f scripts/unix/startup ]; then
