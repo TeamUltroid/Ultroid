@@ -71,20 +71,20 @@ async def AddToNewPack(packType, file, emoji, sender_id, title: str):
 
 @ultroid_cmd(pattern="kang", manager=True)
 async def kang_func(ult):
-    """(reply message)
+    """kang (reply message)
     Create sticker and add to pack"""
     sender = await ult.get_sender()
     if not isinstance(sender, User):
         return
     if not ult.is_reply:
         return await ult.eor("`Reply to a message..`", time=5)
-    ult = await ult.eor(get_string("com_1"))
-    reply = await ult.get_reply_message()
-    type_, dl = "static", None
     try:
         emoji = ult.text.split(maxsplit=1)[1]
     except IndexError:
         emoji = None
+    reply = await ult.get_reply_message()
+    ult = await ult.eor(get_string("com_1"))
+    type_, dl = "static", None
     if reply.sticker:
         file = get_input_document(reply.sticker)
         if not emoji:
@@ -130,7 +130,7 @@ async def kang_func(ult):
         else:
             get_[ult.sender_id].update({type_: [sn]})
         udB.set_key("STICKERS", get_)
-        return await ult.reply(
+        return await ult.edit(
             f"**Kanged Successfully!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})",
             link_preview=False
         )
@@ -150,14 +150,14 @@ async def kang_func(ult):
             return await ult.eor(str(er))
         get_[ult.sender_id][type_].append(pack.set.short_name)
         udB.set_key("STICKERS", get_)
-        return await ult.reply(
+        return await ult.edit(
             f"**Created New Kang Pack!\nEmoji :** {emoji}\n**Link :** [Click Here](https://t.me/addstickers/{sn})",
             link_preview=False
         )
     except Exception as er:
         LOGS.exception(er)
-        return await ult.reply(str(er))
-    await ult.reply(
+        return await ult.edit(str(er))
+    await ult.edit(
         f"Sticker Added to Pack Successfully\n**Link :** [Click Here](https://t.me/addstickers/{name})",
         link_preview=False
     )
