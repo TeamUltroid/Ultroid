@@ -5,6 +5,8 @@ from core.decorators._assistant import asst_cmd, callback, in_pattern
 
 from .. import Button, inline_pic
 
+AST_PLUGINS = {}
+
 def get_back_button(name):
     return [Button.inline("« Bᴀᴄᴋ", data=f"{name}")]
 

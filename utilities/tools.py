@@ -107,9 +107,7 @@ async def is_url_ok(url: str, shallow: bool = False):
 async def metadata(file):
     out, _ = await bash(f'mediainfo "{_unquote_text(file)}" --Output=JSON')
     if _ and _.endswith("NOT_FOUND"):
-        raise Exception(
-            f"'{_}' is not installed!\nInstall it to use this command."
-        )
+        raise Exception(f"'{_}' is not installed!\nInstall it to use this command.")
     data = {}
     _info = json.loads(out)["media"]["track"]
     info = _info[0]
@@ -207,11 +205,9 @@ def format_btn(buttons: list):
 # @techierror
 
 
-
-
-
 # --- webupload ------#
 # @buddhhu
+
 
 def text_set(text):
     lines = []
@@ -257,9 +253,10 @@ def check_filename(filroid):
 
 # ------ Audio \\ Video tools funcn --------#
 
+
 async def generate_screenshot(file):
     duration = (await metadata(file)).get("duration", 0) // 4
-    _time = time_formatter(duration*1000)
+    _time = time_formatter(duration * 1000)
     filename = file.split(".")
     filename.pop(-1)
     filename = ".".join(filename)
@@ -268,7 +265,6 @@ async def generate_screenshot(file):
 
 
 # https://github.com/1Danish-00/CompressorBot/blob/main/helper/funcn.py#L104
-
 
 
 async def genss(file):
@@ -325,6 +321,7 @@ def four_point_transform(image, pts):
     except ImportError:
         raise Exception("This function needs 'cv2' to be installed.")
     import numpy as np
+
     rect = order_points(pts)
     (tl, tr, br, bl) = rect
     widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
@@ -397,20 +394,24 @@ async def Carbon(
 #     return msg_hash
 
 
-def translate(text, target="en", detect=False):
-    x = fetch_sync(
-        f"{Remote.REMOTE_URL}/translate",
-        json={"text": text, "target": target},
-        re_json=True, method="POST"
+def translate(text, target="en", source="auto", timeout=60, detect=False):
+    pattern = r'(?s)class="(?:t0|result-container)">(.*?)<'
+    escaped_text = quote(text.encode("utf8"))
+    url = "https://translate.google.com/m?tl=%s&sl=%s&q=%s" % (
+        target,
+        source,
+        escaped_text,
     )
-    if not x:
-        return None
-    res = x[0]
-    text = html.unescape(res["translatedText"].replace("\ N", "\n").replace("\\n", "\n").replace("<br>", "\n"))
-    return (text, res["detectedSourceLanguage"]) if detect else text
+    response = fetch_sync(url, timeout=timeout)
+    result = response.decode("utf8")
+    result = re.findall(pattern, result)
+    if not result:
+        return ""
+    text = html.unescape(result[0])
+    return (text, None) if detect else text
+
 
 atranslate = run_async(translate)
-
 
 
 # ------------------------#

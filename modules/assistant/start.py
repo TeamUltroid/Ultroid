@@ -59,7 +59,7 @@ def get_start_message():
 _start = [
     [
         Button.inline("Lᴀɴɢᴜᴀɢᴇ 🌐", data="lang"),
-#        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
+        Button.inline("Sᴇᴛᴛɪɴɢs ⚙️", data="setter"),
     ],
     [
         Button.inline("Sᴛᴀᴛs ✨", data="stat"),
@@ -73,7 +73,7 @@ _start = [
 async def own(event):
     message, custom = get_start_message()
     msg = message.format(
-        mention=event.sender.mention, me=inline_mention(ultroid_bot.me)
+        mention=inline_mention(event.sender), me=inline_mention(ultroid_bot.me)
     )
     if custom:
         msg += "\n\n• Powered by **@TeamUltroid**"
@@ -126,32 +126,34 @@ async def ultroid_handler(event):
         await event.reply(
             msg.format(me=me, mention=mention),
             file=udB.get_key("STARTMEDIA"),
-            buttons=Button.inline("Info.", data="ownerinfo")
-            if (get_start_message()[0])
-            else None,
+            buttons=(
+                Button.inline("Info.", data="ownerinfo")
+                if (get_start_message()[0])
+                else None
+            ),
         )
     else:
         name = get_display_name(event.sender)
         if args == "set":
-            """
             await event.reply(
                 "Choose from the below options -",
-                buttons=_settings,
+                buttons=_settings
             )
-            """
             return
         elif args == "_manager":
+
             with contextlib.suppress(ImportError):
                 from modules.manager._help import START, get_buttons
+
                 await event.reply(START, buttons=get_buttons())
         elif args:
             await get_stored_file(event, args)
             return
 
         await event.reply(
-                get_string("ast_3").format(name),
-                buttons=_start,
-            )
+            get_string("ast_3").format(name),
+            buttons=_start,
+        )
 
 
 @callback("itkkstyo", owner=True)
@@ -194,7 +196,7 @@ async def bdcast(event):
         fail = 0
         await conv.send_message(f"Starting a broadcast to {total} users...")
         start = datetime.now()
-        for i in keym.get(): # type: ignore
+        for i in keym.get():  # type: ignore
             try:
                 await asst.send_message(int(i), response)
                 success += 1
@@ -211,7 +213,6 @@ Total Users in Bot - {total}
         )
 
 
-"""
 
 _settings = [
     [
@@ -236,7 +237,7 @@ async def setting(event):
         "Choose from the below options -",
         buttons=_settings,
     )
-"""
+
 
 @callback("lang", owner=True)
 async def setlang(event):
@@ -268,33 +269,34 @@ async def settt(event):
 
 @callback("tz", owner=True)
 async def timezone_(event):
-     from pytz import timezone
-     await event.delete()
+    from pytz import timezone
 
-     pru = event.sender_id
-     var = "TIMEZONE"
-     name = "Timezone"
-     async with event.client.conversation(pru) as conv:
-         await conv.send_message(
-             "Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)"
-         )
-         response = conv.wait_event(events.NewMessage(chats=pru))
-         response = await response
-         themssg = response.message.message
-         if themssg == "/cancel":
-             return await conv.send_message(
-                 "Cancelled!!",
-                 buttons=get_back_button("mainmenu"),
-             )
-         try:
-             timezone(themssg)
-             udB.set_key(var, themssg)
-             await conv.send_message(
+    await event.delete()
+
+    pru = event.sender_id
+    var = "TIMEZONE"
+    name = "Timezone"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            "Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)"
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Cancelled!!",
+                buttons=get_back_button("mainmenu"),
+            )
+        try:
+            timezone(themssg)
+            udB.set_key(var, themssg)
+            await conv.send_message(
                 f"{name} changed to {themssg}\n",
-                 buttons=get_back_button("mainmenu"),
-             )
-         except BaseException:
-             await conv.send_message(
-                 "Wrong TimeZone, Try again",
-                 buttons=get_back_button("mainmenu"),
-             )
+                buttons=get_back_button("mainmenu"),
+            )
+        except BaseException:
+            await conv.send_message(
+                "Wrong TimeZone, Try again",
+                buttons=get_back_button("mainmenu"),
+            )
