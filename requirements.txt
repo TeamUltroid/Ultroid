@@ -1,6 +1,6 @@
 # Important Requirements here.
 
 telethon
-telethon-patch
+telethonpatch
 python-decouple
 python-dotenv
