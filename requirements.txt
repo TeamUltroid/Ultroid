@@ -1,6 +1,6 @@
 # Important Requirements here.
 
-https://github.com/TeamUltroid/Telethon/archive/ultroid.zip
-https://github.com/New-dev0/Telethon-Patch/archive/main.zip
+telethon
+telethon-patch
 python-decouple
 python-dotenv
