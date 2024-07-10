@@ -29,7 +29,7 @@ def start():
     print("Welcome to Ultroid, lets start setting up!\n\n")
     print("Cloning the repository...\n\n")
     os.system("rm -rf Ultroid")
-    os.system("git clone https://github.com/TeamUltroid/Ultroid")
+    os.system("git clone https://github.com/ErRickow/Ultroid")
     print("\n\nDone")
     os.chdir("Ultroid")
     clear_screen()
