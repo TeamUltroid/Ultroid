@@ -156,7 +156,7 @@ bot_2: "Stats"
 bot_3: "Repo"
 bot_4: "Support"
 bot_5: "`Sedang Merestart...`"
-alive_1: "**The Er Userbot 🗿 Userbot...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ 🎗️🎗️Owner🎗️🎗️ - `{}`\n┣ ♦️Version♦️ - `{}`\n┣ 🗿Py-ErUbot🗿 - `{}`\n┣ ✨UpTime✨ - `{}`\n┣ 🐍Python🐍 - `{}`\n┣ 🀄Telethon🀄 - `{}`\n┣ ♟️Branch♟️ - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+alive_1: "**🎊The Er Userbot 🗿...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **🎗️Owner🎗️** - `{}`\n┣ **♦️Version♦️** - `{}`\n┣ **🗿Py-ErUbot🗿** - `{}`\n┣ **✨UpTime✨** - `{}`\n┣ **🐍Python🐍** - `{}`\n┣ **🀄Telethon🀄** - `{}`\n┣ **♟️Branch♟️** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPaste [disini]({}) juga!"
 ping: "**Lah..🥍** `{}ms`\n**Tegang** - `{}`"
 usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
@@ -208,10 +208,10 @@ chab_3: "**Total Daftar Pengguna yang Diaktifkan AI Dalam Grup Ini :**\n\n"
 
 # chats
 chats_1: "`Tidak dapat menghapus obrolan ini`"
-chats_2: "`Saya bukan admin`"
+chats_2: "`Lo bukan admin tolol`"
 chats_3: "**#Dihapus**\nMenghapus {}"
 chats_4: "Berhasil Membuat [{}]({}) Grup Anda!"
-chats_5: "Join @TeamUltroid"
+chats_5: "Join @Pamerdong"
 chats_6: "Grup/Channel {} Anda Telah Menjadi Bos!"
 
 # clean action
@@ -358,8 +358,8 @@ nightm_4: "Berhasil Menghapus Obrolan Saat Ini dari Mode Malam"
 nightm_5: "Ada yang Salah"
 
 # pmpermit
-pmperm_1: "Harap tunggu saya merespons atau Anda akan diblokir dan dilaporkan sebagai spam!!"
-pmperm_2: "Anda telah melakukan spamming pada pesan Boss saya."
+pmperm_1: "Harap tunggu gw merespons atau elu akan diblokir dan dilaporkan sebagai spam!! MAU LO?HA"
+pmperm_2: "SUSAH BANGET DI BILANGIN DAH !! Anda telah melakukan spamming pada pesan Boss saya."
 pmperm_3: "Balas pesan seseorang atau coba perintah ini secara pribadi."
 
 # schedule_msg
@@ -399,7 +399,7 @@ unspl_1: "Tidak ada hasil yang ditemukan!"
 # updater
 upd_1: "`Memeriksa pembaruan, harap tunggu....`"
 upd_2: "`Oops.. Updater tidak dapat melanjutkan karena beberapa masalah.`\n\n**LOGTRACE:**\n"
-upd_3: "**Tersedia PEMBARUAN Ultroid untuk Branch [[{}]]({}/tree/{}):\n\nPERUBAHAN:**\n\n{}"
+upd_3: "**Tersedia PEMBARUAN ErUbot untuk Branch [[{}]]({}/tree/{}):\n\nPERUBAHAN:**\n\n{}"
 upd_4: "`Perubahan log terlalu besar, lihat file untuk melihatnya.`"
 upd_5: "Klik tombol di bawah ini untuk memperbarui."
 upd_6: "\n**BOT Anda sudah paling-terbaru dengan [[{}]]({}/tree/{})**\n"
@@ -585,7 +585,7 @@ help_instagram: "-\n\n• `{i} Instadl <Instagram url>`\n  `Unduh Instagram Medi
 help_fakeaction: "-\n\n• `{i} ftyping <time/in secs>`\n    `Tunjukkan pengetikan palsu di obrolan saat ini.`\n\n• `{i} faudio <time/in secs>`\n    `Tampilkan tindakan rekaman palsu dalam obrolan saat ini.`\n\n• `{i} fvideo <time/in secs>`\n    `Tampilkan aksi video palsu dalam obrolan saat ini.`\n\n• `{i} fgame <time/in secs>`\n    `Tampilkan aksi bermain game palsu dalam obrolan saat ini.`\n\n• `{i} fsticker <time/in secs>`\n    `Tampilkan stiker palsu memilih tindakan dalam obrolan saat ini.`\n\n• `{i} Flocation <Time/In Secs>`\n    `Tampilkan tindakan lokasi palsu dalam obrolan saat ini.`\n\n• `{i} fcontact <time/in secs>`\n    `Tampilkan kontak palsu memilih tindakan dalam obrolan saat ini.`\n\n• `{i} fround <time/in secs>`\n    `Tampilkan tindakan pesan video palsu di obrolan saat ini.`\n\n• `{i} fphoto <time/in secs>`\n    `Tampilkan foto pengiriman palsu dalam obrolan saat ini.`\n\n• `{i} fdocument <time/in secs>`\n    `Tampilkan dokumen pengiriman palsu di obrolan saat ini.`"
 help_converter: "-\n\n• `{i} konversi <gif/img/stiker/webm>`\n    Balas ke media untuk mengubahnya menjadi gif / gambar / webm / stiker normal.\n\n• `{i} doc <filename.ext>`\n    Balas pesan teks untuk menyimpannya dalam file.\n\n• `{i} buka`\n    Balas file untuk mengungkapkan teksnya.\n\n• `{i} ganti nama <nama file dengan ekstensi>`\n    Ubah nama file\n\n• `{i} Thumbnail <Balas ke file gambar/thumbnail>`\n    Unggah file Anda dengan thumbnail khusus Anda."
 help_autoban: "• `{i} Autokick <on/off>`\n    pada - untuk mengaktifkan.\n    OFF - untuk menonaktifkan.\n    Secara otomatis menendang pengguna baru yang bergabung dari grup.\n\n• `{i} CBAN`\n    Aktifkan/Nonaktifkan Autobanning Send sebagai saluran dalam obrolan bekas.\n\n• `{i} addwl <username>`\n   Tambahkan saluran ke daftar putih ChannelBan.\n\n• `{i} Remwl <Senername>`\n   Hapus saluran dari daftar putih ChannelBan.\n\n• `{i} listWl`: Daftar semua saluran whitelist."
-help_button: "-\n\n• `{i} tombol <teks dengan format tombol`\n   Buat tombol Anda juga dapat membalas foto\n\nFormat:- `{i} tombol hei di sana!@Useultroid 😎.\n[Ultroid |t.me/theultroidide Aöport |t.me/ultroidsupportchat |sama]\n[Teamultroid |t.me/teamultroid] `"
+help_button: "-\n\n• `{i} tombol <teks dengan format tombol`\n   Buat tombol Anda juga dapat membalas foto\n\nFormat:- `{i} tombol hei di sana!@gunakanErUbot 😎.\n[ErUbot |t.me/pamerdong Aöport |t.me/pamerdong |sama]\n[ErRiswnd |t.me/Asist3R] `"
 help_videotools: "-\n\n• `{i} sampel <durasi dalam detik>`\n   Membuat sampel video singkat ..\n\n• `{i} vshots <jumlah tembakan>`\n   Membuat tangkapan layar video ..\n\n• `{i} vtrim <start time> - <end time> di detik`\n    Pangkas video yang panjang .."
 help_words: "-\n\n• `{i} artinya <word>`\n    Dapatkan arti kata.\n\n• `{i} sinonim <word>`\n    Dapatkan semua sinonim.\n\n• `{i} antonim <word>`\n    Dapatkan semua antonim.\n\n• `{i} ud <word>`\n    Fetch Word Defenition dari Urbandictionary."
 help_core: "-\n\n• `{i} instal <balas ke plugin>`\n    Untuk menginstal plugin,\n  `{i} instal f`\n    Untuk memaksa pemasangan.\n\n• `{i} uninstall <plugin name>`\n    Untuk membongkar dan menghapus plugin.\n\n• `{i} muat <plugin name>`\n    Untuk memuat plugin tidak resmi yang diturunkan.\n\n• `{i} Bongkar <plugin name>`\n    Untuk membongkar plugin tidak resmi.\n\n• `{i} membantu <nama plugin>`\n    Menampilkan menu bantuan (seperti ini) untuk setiap plugin.\n\n• `{i} getAddons <tautan mentah ke kode>`\n    Muat plugin dari tautan mentah yang diberikan."
