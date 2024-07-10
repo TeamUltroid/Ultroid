@@ -20,6 +20,7 @@
     Invite all members of group in Group Call.
     (You must be joined)
 """
+import asyncio
 
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
@@ -29,6 +30,7 @@ from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from . import get_string, ultroid_cmd
+from .music import Player
 
 
 async def get_call(event):
@@ -103,3 +105,51 @@ async def _(e):
         await e.eor(get_string("vct_2").format(title))
     except Exception as ex:
         await e.eor(f"`{ex}`")
+
+@ultroid_cmd(
+    pattern="joinvc(?: |$)(.*)",
+    admin_only=True,
+    groups_only=True,
+)
+async def join_(event):
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        try:
+            chat = await event.client.parse_id(chat)
+        except Exception as e:
+            return await event.eor(get_string("vcbot_2").format(str(e)))
+    else:
+        chat = event.chat_id
+    Nan = Player(chat)
+    if not Nan.group_call.is_connected:
+        await Nan.group_call.join(chat)
+        await asyncio.sleep(1)
+        await event.eor(f"• **Berhasil Bergabung Voice Chat**\n- **Chat ID:** `{chat}`")
+        await asyncio.sleep(1)
+        await Nan.group_call.set_is_mute(False)
+        await asyncio.sleep(1)
+        await Nan.group_call.set_is_mute(True)
+
+
+@ultroid_cmd(
+    pattern="leavevc(?: |$)(.*)",
+    admins_only=True,
+    groups_only=True,
+)
+async def leaver(event):
+    if len(event.text.split()) > 1:
+        chat = event.text.split()[1]
+        try:
+            chat = await event.client.parse_id(chat)
+        except Exception as e:
+            return await event.eor(get_string("vcbot_2").format(str(e)))
+    else:
+        chat = event.chat_id
+    jing = Player(chat)
+    await jing.group_call.leave()
+    await asyncio.sleep(1)
+    await event.eor(f"• **Berhasil Turun Voice Chat**\n- **Chat ID:** `{chat}`")
+    if CLIENTS.get(chat):
+        del CLIENTS[chat]
+    if VIDEO_ON.get(chat):
+        del VIDEO_ON[chat]
