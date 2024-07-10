@@ -10,14 +10,14 @@ import re
 from . import *
 
 STRINGS = {
-    1: """🎇 **Thanks for Deploying Ultroid Userbot!**
+    1: """🗿 **Selamat ErUbot Telah Terdeploy!**
 
-• Here, are the Some Basic stuff from, where you can Know, about its Usage.""",
-    2: """🎉** About Ultroid**
+• Nih, command basic dari, bagaimana cara menggunakan Userbotnya.""",
+    2: """🎉** Tentang Er Userbot**
 
-🧿 Ultroid is Pluggable and powerful Telethon Userbot, made in Python from Scratch. It is Aimed to Increase Security along with Addition of Other Useful Features.
+🔖 Er Userbot adalah Userbot yang di rewrite .Yang produk aslinya adalah dari Ultroid Userbot😀.
 
-❣ Made by **@TeamUltroid**""",
+❣ Made by **@Chakszzz**""",
     3: """**💡• FAQs •**
 
 -> [Username Tracker](https://t.me/UltroidUpdates/24)
@@ -31,7 +31,7 @@ STRINGS = {
 -> [Setting Up PmBot](https://t.me/UltroidUpdates/2)
 -> [Also Check](https://t.me/UltroidUpdates/14)
 
-**• To Know About Updates**
+**• Untuk tau tentang Update**
   - Join @TeamUltroid.""",
     4: f"""• `To Know All Available Commands`
 
