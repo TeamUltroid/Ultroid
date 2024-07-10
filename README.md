@@ -107,6 +107,8 @@ Different ways to get your `SESSION`:
 * TelegramBot : [@SessionGeneratorBot](https://t.me/SessionGeneratorBot)
 
 ---
+# Notes
+if u get database lock issue, u can close ur terminal firts and then open the terminal again . enjoy 🗿
 
 # License
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)   
