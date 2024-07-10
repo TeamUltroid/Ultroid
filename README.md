@@ -118,6 +118,6 @@ Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.or
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
 * [MarshalX](https://github.com/MarshalX) for [PyTgCalls.](https://github.com/MarshalX/tgcalls)
-* [![Rewrite by]( @chakszzz )]
+* [![Rewrite by](https://t.me/chakszzz)]
 
 > Made with 💕 by [@TeamUltroid](https://t.me/TeamUltroid).    
