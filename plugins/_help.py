@@ -46,19 +46,19 @@ async def _help(ult):
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["Official"][plug]:
                     output += i
-                output += "\n© @TeamUltroid"
+                output += "\n© @Pamerdong"
                 await ult.eor(output)
             elif HELP.get("Addons") and plug in HELP["Addons"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["Addons"][plug]:
                     output += i
-                output += "\n© @TeamUltroid"
+                output += "\n© @Pamerdong"
                 await ult.eor(output)
             elif HELP.get("VCBot") and plug in HELP["VCBot"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["VCBot"][plug]:
                     output += i
-                output += "\n© @TeamUltroid"
+                output += "\n© @Pamerdong"
                 await ult.eor(output)
             else:
                 try:
@@ -66,7 +66,7 @@ async def _help(ult):
                     for d in LIST[plug]:
                         x += HNDLR + d
                         x += "\n"
-                    x += "\n© @TeamUltroid"
+                    x += "\n© @Pamerdong"
                     await ult.eor(x)
                 except BaseException:
                     file = None
@@ -82,16 +82,16 @@ async def _help(ult):
                                 break
                     if not file:
                         # the enter command/plugin name is not found
-                        text = f"`{plug}` is not a valid plugin!"
+                        text = f"`{plug}` bukan plugin yang valid!"
                         best_match = None
                         for _ in compare_strings:
                             if plug in _ and not _.startswith("_"):
                                 best_match = _
                                 break
                         if best_match:
-                            text += f"\nDid you mean `{best_match}`?"
+                            text += f"\nMaksud lo `{best_match}`?"
                         return await ult.eor(text)
-                    output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
+                    output = f"**Command** `{plug}` **Ada di plugin** - `{file}`\n"
                     if file in HELP["Official"]:
                         for i in HELP["Official"][file]:
                             output += i
@@ -101,7 +101,7 @@ async def _help(ult):
                     elif HELP.get("VCBot") and file in HELP["VCBot"]:
                         for i in HELP["VCBot"][file]:
                             output += i
-                    output += "\n© @TeamUltroid"
+                    output += "\n© @Pamerdong"
                     await ult.eor(output)
         except BaseException as er:
             LOGS.exception(er)
