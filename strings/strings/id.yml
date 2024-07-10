@@ -4,6 +4,7 @@ natively: Indonesia
 authors:
   - itsmenandos
   - mrismanaziz
+  - ErRickow
 
 # commons
 com_1: "`Sedang Memproses...`"
@@ -158,7 +159,7 @@ bot_4: "Support"
 bot_5: "`Sedang Merestart...`"
 alive_1: "**🎊The Er Userbot 🗿...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **🎗️Owner🎗️** - `{}`\n┣ **♦️Version♦️** - `{}`\n┣ **🗿Py-ErUbot🗿** - `{}`\n┣ **✨UpTime✨** - `{}`\n┣ **🐍Python🐍** - `{}`\n┣ **🀄Telethon🀄** - `{}`\n┣ **♟️Branch♟️** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPaste [disini]({}) juga!"
-ping: "**Lah..🥍** `{}ms`\n**Tegang** - `{}`"
+ping: "**Pong🏓 -** `{}ms`\n**Aktif** - `{}`"
 usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 usage_simple: "**Total Ruang Disk:** `{}`\n**Terpakai:** `{}`\n**Kosong:** `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
 Matideh: "SelamatTinggal {}.\n`Sedang Mematikan bot...`"
