@@ -15,6 +15,8 @@ com_5: "`Mengunduh...`"
 com_6: "`Mengunggah...`"
 com_7: "`Maaf Telah Terjadi ERROR`"
 
+adzan1: "**Tidak Dapat Menemukan Kota** `{}`"
+
 # chatactions
 can_1: "**#GBanned_User** Bergabung.\n\n**User** : {}\n**Karena**: {}\n\n`Pengguna dibanned.`"
 can_2: "∆ **#UsernameUpdate**\n\n@{} mengubah username menjadi @{}"
@@ -144,20 +146,20 @@ wspr_4: "Pengguna {} Tidak Ditemukan\nMohon Cari Lagi"
 wspr_5: "Anda tidak dapat melakukan ini"
 
 # afk
-afk_1: "**Tidak Lagi AFK**\n**Karena ~** `{}`"
-afk_2: "**#AFK**\n**Menyetel AFK ke mode** `False`\n**AFK untuk** `{}`"
-afk_3: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**\n**Karena:** `{}`"
-afk_4: "**Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**"
-afk_5: "`AFK dulu.`\n\n**Karena:** `{}`"
-afk_6: "Dadah Gua AFK dulu."
+afk_1: "❏ **Tidak Lagi AFK**\n**Karena ~** `{}`"
+afk_2: "❏ **#AFK**\n**Menyetel AFK ke mode** `False`\n**AFK untuk** `{}`"
+afk_3: "❏ **Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**\n**Karena:** `{}`"
+afk_4: "❏ **Gua lagi AFK.**\n**Terakhir dilihat** `{}` **yang lalu.**"
+afk_5: "❏ **#AFK**.\n\n**Karena:** `{}`"
+afk_6: "❏ Dadah Gua AFK dulu."
 
 # bot
-bot_1: "Hey, Aku Idup."
+bot_1: "Er Userbot 🗿."
 bot_2: "Stats"
 bot_3: "Repo"
 bot_4: "Support"
 bot_5: "`Sedang Merestart...`"
-alive_1: "**🎊The Er Userbot 🗿...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **🎗️Owner🎗️** - `{}`\n┣ **♦️Version♦️** - `{}`\n┣ **🗿Py-ErUbot🗿** - `{}`\n┣ **✨UpTime✨** - `{}`\n┣ **🐍Python🐍** - `{}`\n┣ **🀄Telethon🀄** - `{}`\n┣ **♟️Branch♟️** - `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
+alive_1: "**Er Userbot 🗿...**\n\n**{}**\n\n┏━━━━━━━━━━━━━━━━━━━━━\n┣ **🎗️Owner🎗️** - `{}`\n┣ **♦️Version♦️** - `{}`\n┣ **🗿Py-ErUbot🗿** - `{}`\n┣ **✨UpTime✨** - `{}`\n┣ **🐍Python🐍** - `{}`\n┣ **🀄Telethon🀄** - `{}`\n┣ **♟️Branch♟️** - rewrite `{}`\n┗━━━━━━━━━━━━━━━━━━━━━"
 log: "**Heroku** Ultroid Logs.\nPaste [disini]({}) juga!"
 ping: "**Pong🏓 -** `{}ms`\n**Aktif** - `{}`"
 usage: "**⚙️ Informasi Dyno ⚙️**:\n\n➠ **Penggunaan Dyno** `{}`:\n  •  **{}h**  **{}m |** `[{}%]`\n➠ **Sisa kuota dyno bulan ini :**\n  •  **{}h**  **{}m |** `[{}%]`\n\n**Total Ruang Disk:**: `{}`\n**Terpakai**: `{}`\n**Kosong**: `{}`\n\n**📊 Penggunaan Data 📊**\n**Upload**: `{}`\n**Down**: `{}`\n\n**CPU**: `{}%`\n**RAM**: `{}%`\n**DISK**: `{}%`"
