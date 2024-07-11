@@ -20,7 +20,7 @@ from . import *
 
 @ultroid_cmd(pattern="adzan")
 async def cek(event):
-    LOKASI = event.pattern_match.group(1)
+    LOKASI = event.pattern_match.group(1).strip()
     if not LOKASI:
         await event.eor("<i>Silahkan Masukkan Nama Kota Anda</i>")
         return True
