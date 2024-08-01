@@ -15,18 +15,21 @@
 
 import asyncio
 import re
+
+from akipy.async_akipy import Akinator, akipyLOGS
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.events import Raw
-from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote, InputMessageID
-from telethon.tl.functions.messages import GetMessagesRequest
+from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
+
 from pyUltroid._misc._decorators import ultroid_cmd
 from pyUltroid.fns.helper import inline_mention
 from pyUltroid.fns.tools import async_searcher
+
 from . import *  # Ensure this import matches your project structure
-from akipy.async_akipy import Akinator
 
 games = {}
 aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
+
 
 @ultroid_cmd(pattern="akinator")
 async def akina(e):
@@ -36,22 +39,25 @@ async def akina(e):
     try:
         m = await e.client.inline_query(asst.me.username, f"aki_{e.chat_id}_{e.id}")
         await m[0].click(e.chat_id)
+        akipyLOGS.info(f"Clicked inline result for chat {e.chat_id}")
     except BotMethodInvalidError as err:
-        LOGS.error(f"BotMethodInvalidError: {err}")
+        akipyLOGS.error(f"BotMethodInvalidError: {err}")
         await asst.send_file(
             e.chat_id,
             aki_photo,
             buttons=Button.inline(get_string("aki_2"), data=f"aki_{e.chat_id}_{e.id}"),
         )
     except Exception as er:
-        LOGS.error(f"Unexpected error: {er}")
+        akipyLOGS.error(f"Unexpected error: {er}")
         return await e.eor(f"ERROR : {er}")
     if e.out:
         await e.delete()
 
+
 @asst_cmd(pattern="akinator", owner=True)
 async def _akokk(e):
     await akina(e)
+
 
 @callback(re.compile("aki_(.*)"), owner=True)
 async def doai(e):
@@ -61,7 +67,7 @@ async def doai(e):
     mid = int(dt[1])
     await e.edit(get_string("com_1"))
     try:
-        await games[ch][mid].start_game(child_mode=True)
+        await games[ch][mid].start_game(child_mode=False)
         bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
         cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
         bts = [bts, cts]
@@ -69,14 +75,15 @@ async def doai(e):
     except KeyError:
         return await e.answer(get_string("aki_1"), alert=True)
 
+
 @callback(re.compile("aka_(.*)"), owner=True)
 async def okah(e):
     try:
         mk = e.pattern_match.group(1).decode("utf-8").split("_")
-        LOGS.info(f"Parsed values: {mk}")
+        #akipyLOGS.info(f"Parsed values: {mk}")
 
         if len(mk) < 3:
-            LOGS.error("Pattern match did not return enough parts.")
+            akipyLOGS.error("Pattern match did not return enough parts.")
             return await e.answer("Invalid data received.", alert=True)
 
         ch = int(mk[0])
@@ -86,27 +93,23 @@ async def okah(e):
         gm = games[ch][mid]
         await gm.answer(ans)
 
-        if gm.progression is None:
-            gm.progression = 0
-
-        if int(float(gm.progression)) >= 80:
+        # Check for the final guess in the API response
+        if gm.name_proposition and gm.description_proposition:
             gm.win = True
-            if int(gm.step) > 3:
-                text = f"It's {gm.name_proposition}\n{gm.description_proposition}"
-            else:
-                text = f"Ha, You cant fool me!"
+            text = f"It's {gm.name_proposition}\n{gm.description_proposition}"
             await e.edit(text, file=gm.photo)
         else:
+            # Game is not won yet, continue asking questions
             buttons = [
                 [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]],
-                [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]]
+                [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]],
             ]
             await e.edit(gm.question, buttons=buttons)
 
     except KeyError:
         await e.answer(get_string("aki_3"))
     except Exception as ex:
-        LOGS.error(f"An unexpected error occurred: {ex}")
+        akipyLOGS.error(f"An unexpected error occurred: {ex}")
 
 
 @in_pattern(re.compile("aki_?(.*)"), owner=True)
