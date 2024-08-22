@@ -119,7 +119,7 @@ async def pass_on(ult):
         )
         return
 
-    proc = await ult.eor(get_pstring("com_1", "load"))
+    proc = await ult.eor(get_string("com_1"))
     spli = ult.text.split()
     theme, dark, title, text = None, True, get_display_name(ult.chat), None
     if len(spli) > 1:
