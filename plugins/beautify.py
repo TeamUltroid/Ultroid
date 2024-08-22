@@ -99,7 +99,13 @@ RaySoTheme = [
     "crimson",
     "falcon",
     "sunset",
+    "noir",
     "midnight",
+    "bitmap",
+    "ice",
+    "sand",
+    "forest",
+    "mono",
 ]
 
 
@@ -108,57 +114,84 @@ async def pass_on(ult):
     try:
         from playwright.async_api import async_playwright
     except ImportError:
-        await ult.eor("`playwright` is not installed!\nPlease install it to use this command..")
+        await ult.eor(
+            "`playwright` is not installed!\nPlease install it to use this command.."
+        )
         return
-    proc = await ult.eor(get_string("com_1"))
+
+    proc = await ult.eor(get_pstring("com_1", "load"))
     spli = ult.text.split()
     theme, dark, title, text = None, True, get_display_name(ult.chat), None
-    if len(spli) > 2:
+    if len(spli) > 1:
         if spli[1] in RaySoTheme:
             theme = spli[1]
-        dark = spli[2].lower().strip() in ["true", "t"]
-    elif len(spli) > 1:
-        if spli[1] in RaySoTheme:
-            theme = spli[1]
-        elif spli[1] == "list":
-            text = "**List of Rayso Themes:**\n" + "\n".join(
-                [f"- `{th_}`" for th_ in RaySoTheme]
-            )
-
-            await proc.eor(text)
-            return
+            if len(spli) > 2:
+                text = " ".join(spli[2:])
         else:
-            try:
-                text = ult.text.split(maxsplit=1)[1]
-            except IndexError:
-                pass
-    if not theme or theme not in RaySoTheme:
-        theme = random.choice(RaySoTheme)
+            text = " ".join(spli[1:])
     if ult.is_reply:
-        msg = await ult.get_reply_message()
-        text = msg.message
-        title = get_display_name(msg.sender)
+        try:
+            msg = await ult.get_reply_message()
+            text = msg.message if not text else text
+            title = get_display_name(msg.sender)
+            if not theme and spli[1] in RaySoTheme:
+                theme = spli[1]
+        except Exception as sam:
+            LOGS.exception(sam)    
+    if not text:
+        await proc.eor("No text to beautify!")
+        return
+    if not theme:
+        theme = random.choice(RaySoTheme)
+    cleaned_text = "\n".join([line.strip() for line in text.splitlines()])
     name = token_hex(8) + ".png"
-    data = {
-        "darkMode": dark,
-        "theme": theme,
-        "title": title
-    }
+    data = {"darkMode": dark, "theme": theme, "title": title}
     url = f"https://ray.so/#{urlencode(data)}"
     async with async_playwright() as play:
-        chrome = await play.chromium.launch()
-        page = await chrome.new_page()
-        await page.goto(url)
-        await page.wait_for_load_state("networkidle")
-        elem = await page.query_selector("textarea[class='Editor_textarea__sAyL_']")
-        await elem.type(text)
-        button = await page.query_selector("button[class='ExportButton_button__d___t']")
-        await button.click()
-        async with page.expect_download() as dl:
-            dled = await dl.value
-            await dled.save_as(name)
-    await proc.reply(
-        file=name
-    )
-    await proc.try_delete()
-    os.remove(name)
+        try:
+            browser = await play.chromium.launch()
+            page = await browser.new_page()
+            await page.goto(url)
+            await page.wait_for_load_state("networkidle")
+            try:
+                await page.wait_for_selector(
+                    "div[class*='Editor_editor__']", timeout=60000
+                )
+                editor = await page.query_selector("div[class*='Editor_editor__']")
+                await editor.focus()
+                await editor.click()
+
+                for line in cleaned_text.split("\n"):
+                    await page.keyboard.type(line)
+                    await page.keyboard.press("Enter")
+
+                await page.evaluate(
+                    """() => {
+                    const button = document.querySelector('button[aria-label="Export as PNG"]');
+                    button.click();
+                }"""
+                )
+
+                async with page.expect_download() as download_info:
+                    download = await download_info.value
+                    await download.save_as(name)
+            except playwright._impl._errors.TimeoutError:
+                LOGS.error("Timeout error: Selector not found within 60 seconds.")
+                await proc.eor("Failed to find the editor within 60 seconds.")
+                return
+        except Exception as e:
+            LOGS.error(f"Error occurred during playwright operation: {e}")
+            await proc.eor("An error occurred during the operation.")
+            return
+        finally:
+            if os.path.exists(name):
+                try:
+                    await ult.reply(file=name)
+                    await proc.try_delete()
+                    os.remove(name)
+                except Exception as e:
+                    LOGS.error(f"Error occurred while replying with the file: {e}")
+                    await proc.eor("Failed to send the file.")
+            else:
+                LOGS.error(f"Error: File {name} not found or inaccessible.")
+                await proc.eor("Failed to save the file.")
