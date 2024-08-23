@@ -372,7 +372,11 @@ class GDrive:
         await self._refresh_access_token() if time.time() > self.creds.get(
             "expires_in"
         ) else None
-        fileId = fileId.split("id=")[1].split("&")[0] if "https" in fileId else fileId
+        if "https" in fileId:
+            if "id=" in fileId:
+                fileId = fileId.split("id=")[1].split("&")[0]
+            else:
+                fileId = fileId.split("/d/")[1].split("/")[0]
         last_txt = ""
         chunksize = 104857600  # 100MB
         headers = {
