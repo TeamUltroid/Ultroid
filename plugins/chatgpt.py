@@ -3,11 +3,11 @@
 """
 **Get Answers from Chat GPT (Open AI)**
 
-> `{i}gpt` (-i = for image) (query)
+> `{i}chatgpt` (-i = for image) (query)
 
 **• Examples: **
-> `{i}gpt How to fetch a url in javascript`
-> `{i}gpt -i Cute Panda eating bamboo`
+> `{i}chatgpt How to fetch a url in javascript`
+> `{i}chatgpt -i Cute Panda eating bamboo`
 
 • First setup OpenAI Api key by using `.setdb OPENAI_API your_key` to use this plugin
 """
@@ -41,7 +41,7 @@ def get_gpt_answer(gen_image, question, api_key):
     return x.choices[0].message.content.lstrip("\n")
 
 
-@ultroid_cmd(pattern="(chat)?gpt( (.*)|$)")
+@ultroid_cmd(pattern="(chat)?chatgpt( (.*)|$)")
 async def openai_chat_gpt(e):
     api_key = udB.get_key("OPENAI_API")
     gen_image = False
