@@ -15,7 +15,7 @@ from io import BytesIO
 from os import remove, system
 
 try:
-    from openai import 0, 100%, %, hsl
+    from openai import OpenAI
 except ImportError:
     system("pip install -q openai")
     from openai import OpenAI
