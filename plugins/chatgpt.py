@@ -1,5 +1,5 @@
-# credits - dot arc
-
+# Written by dot arc for Ultroid!
+# rewritten by avish
 """
 **Get Answers from Chat GPT (Open AI)**
 
@@ -7,50 +7,48 @@
 
 **• Examples: **
 > `{i}gpt How to fetch a url in javascript`
-> `{i}gpt -i Cute Panda eating bamboo`
+> `{i}gpt -i Cute Panda eating bamboo` 
 
-First setup OpenAI Api key by using `.setdb OPENAI_API your_key` to use this plugin
+• First setup OpenAI Api key by using `.setdb OPENAI_API your_key` to use this plugin
 """
+from os import system, remove
+from io import BytesIO
 
-import asyncio
-import os
+try:
+    from openai import hsl(0,0%,100%)
+except ImportError:
+    system("pip install -q openai")
+    from openai import OpenAI
 
-import openai
-
-from .. import LOGS, check_filename, fast_download, udB, ultroid_cmd
+from .. import ultroid_cmd, check_filename, udB, LOGS, fast_download, run_async
 
 
+@run_async
 def get_gpt_answer(gen_image, question, api_key):
-    openai.api_key = api_key
+    client = OpenAI(api_key=api_key)
     if gen_image:
-        x = openai.Image.create(
-            prompt=question,
-            n=1,
-            size="1024x1024",
-            user="arc",
-        )
-        return x["data"][0]["url"]
-    x = openai.Completion.create(
-        model=udB.get_key("GPT_MODEL") or "text-davinci-003",
-        prompt=question,
-        temperature=0.5,
-        stop=None,
+        x = client.images.generate(prompt=question,
+        model="dall-e-3",
         n=1,
-        user="arc",
-        max_tokens=768,
-    )
-    LOGS.debug(f'Token Used on ({question}) > {x["usage"]["total_tokens"]}')
-    return x["choices"][0].text.strip()
+        size="1792x1024",
+        quality="hd",
+        style="natural",
+        user="arc")
+        return x.data[0].url
+    x = client.chat.completions.create(model=udB.get_key("OPENAI_MODEL") or "gpt-4o-mini",
+    messages=[{"role": "user", "content": question}])
+    LOGS.debug(f'Token Used on ({question}) > {x.usage.total_tokens}')
+    return x.choices[0].message.content.lstrip("\n")
 
 
-@ultroid_cmd(pattern="gpt ?(.*)")
+@ultroid_cmd(pattern="(chat)?gpt( (.*)|$)")
 async def openai_chat_gpt(e):
     api_key = udB.get_key("OPENAI_API")
     gen_image = False
     if not api_key:
         return await e.eor("`OPENAI_API` key missing..")
 
-    args = e.pattern_match.group(1)
+    args = e.pattern_match.group(3)
     reply = await e.get_reply_message()
     if not args:
         if reply and reply.text:
@@ -58,22 +56,35 @@ async def openai_chat_gpt(e):
     if not args:
         return await e.eor("`Gimme a Question to ask from ChatGPT`")
 
+    moi = await e.eor(f"`getting response...`")
     if args.startswith("-i"):
         gen_image = True
         args = args[2:].strip()
-        edit_text = "image"
+    try:
+        response = await get_gpt_answer(gen_image, args, api_key)
+    except Exception as exc:
+        LOGS.warning(exc, exc_info=True)
+        return await moi.edit(f"**Error:** \n> `{exc}`")
     else:
-        edit_text = "answer"
-
-    m = await e.eor(f"`getting {edit_text} from chatgpt..`")
-    response = await asyncio.to_thread(get_gpt_answer, gen_image, args, api_key)
-    if response:
-        if not gen_image:
-            await m.edit(
-                f"**Query :** \n~ __{args}__ \n\n**ChatGPT :** \n~ __{response}__"
+        if gen_image:
+            path, _ = await fast_download(
+                response, filename=check_filename("dall-e.png")
             )
-            return
-        path, _ = await fast_download(response, filename=check_filename("dall-e.png"))
-        await e.eor(f"<b>{args[:1023]}</b>", file=path, parse_mode="html")
-        os.remove(path)
-        await m.delete()
+            await e.client.send_file(
+                e.chat_id,
+                path,
+                caption=f"**{args[:1020]}**",
+                reply_to=e.reply_to_msg_id,
+            )
+            await moi.delete()
+            return remove(path)
+        if len(response) < 4095:
+            answer = f"<b>Query:</b>\n~ <i>{args}</i>\n\n<b>ChatGPT:</b>\n~ <i>{response}</i>"
+            return await moi.edit(answer, parse_mode="html")
+        with BytesIO(response.encode()) as file:
+            file.name = "gpt_response.txt"
+            await e.client.send_file(
+                e.chat_id, file, caption=f"`{args[:1020]}`", reply_to=e.reply_to_msg_id
+            )
+        await moi.delete()
+        
