@@ -1,6 +1,8 @@
 import os
+
 import requests
-from . import LOGS, asst, fetch, ultroid_cmd
+
+from . import LOGS, asst, ultroid_cmd
 
 # import ssl
 
