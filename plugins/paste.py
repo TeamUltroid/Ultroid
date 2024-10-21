@@ -1,5 +1,5 @@
 import os
-
+import requests
 from . import LOGS, asst, fetch, ultroid_cmd
 
 # import ssl
@@ -10,21 +10,18 @@ from . import LOGS, asst, fetch, ultroid_cmd
 async def get_paste(data: str, extension: str = "txt"):
     # ssl_context = ssl.create_default_context(cafile=certifi.where())
     json = {"content": data, "extension": extension}
-    key = await fetch(
-        url="https://spaceb.in/api/v1/documents/",
+    key = requests.post(
+        url="https://spaceb.in/",
         json=json,
-        # ssl=ssl_context,
-        method="POST",
-        re_json=True,
     )
     try:
-        return True, key["payload"]["id"]
+        return True, key.url
     except KeyError:
-        if "the length must be between 2 and 400000." in key["error"]:
+        if "the length must be between 2 and 400000." in key.text:
             return await get_paste(data[-400000:], extension=extension)
-        return False, key["error"]
+        return False, key.text
     except Exception as e:
-        LOGS.info(e)
+        LOGS.exception(e)
         return None, str(e)
 
 
@@ -60,7 +57,7 @@ async def _(event):
     if not done:
         return await xx.eor(key)
     link = f"https://spaceb.in/{key}"
-    raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
+    raw = f"https://spaceb.in/{key}/raw"
     reply_text = (
         f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
     )
