@@ -26,7 +26,7 @@ def ban_time(time_str):
     if not any(time_str.endswith(unit) for unit in ("s", "m", "h", "d")):
         time_str += "s"
     unit = time_str[-1]
-    time_int = time_str[:-1]
+    time_int = time_str[:-1].strip()
     if not time_int.isdigit():
         raise Exception("Invalid time amount specified.")
     to_return = ""
