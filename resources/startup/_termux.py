@@ -1,6 +1,6 @@
 # /usr/bin/python3
 # Ultroid - UserBot
-# Copyright (C) 2021-2023 TeamUltroid
+# Copyright (C) 2021-2025 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # Please read the GNU Affero General Public License in

@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2024 TeamUltroid
+# Copyright (C) 2021-2025 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -15,6 +15,7 @@
 
 import asyncio
 import re
+from random import choice, shuffle
 
 from akipy.async_akipy import Akinator, akipyLOGS
 from telethon.errors.rpcerrorlist import BotMethodInvalidError

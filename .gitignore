@@ -17,6 +17,7 @@ target/npmlist.json
 package-lock.json
 ultroid.json
 resources/extras/thumbnail.jpg
+resources/auth/
 
 # Directories
 addons/

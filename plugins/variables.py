@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2023 TeamUltroid
+# Copyright (C) 2021-2025 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -22,7 +22,7 @@
 
 import os
 
-from . import eor, get_string, udB, ultroid_cmd
+from . import eor, get_string, udB, ultroid_cmd, HNDLR
 
 
 @ultroid_cmd(pattern="get($| (.*))", fullsudo=True)

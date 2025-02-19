@@ -1,5 +1,5 @@
 # Ultroid - UserBot
-# Copyright (C) 2021-2023 TeamUltroid
+# Copyright (C) 2021-2025 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
@@ -32,9 +32,6 @@
 
 • `{i}webshot <url>`
     Get a screenshot of the webpage.
-
-• `{i}shorturl <url> <id-optional>`
-    shorten any url...
 """
 import glob
 import io
@@ -436,26 +433,3 @@ async def webss(event):
         os.remove(pic)
     await xx.delete()
 
-
-@ultroid_cmd(pattern="shorturl")
-async def magic(event):
-    try:
-        match = event.text.split(maxsplit=1)[1].strip()
-    except IndexError:
-        return await event.eor("`Provide url to turn into tiny...`")
-    data = {
-        "url": match.split()[0],
-        "id": match[1] if len(match) > 1 else secrets.token_urlsafe(6),
-    }
-    data = await async_searcher(
-        "https://tiny.ultroid.tech/api/new",
-        data=data,
-        post=True,
-        re_json=True,
-    )
-    response = data.get("response", {})
-    if not response.get("status"):
-        return await event.eor(f'**ERROR :** `{response["message"]}`')
-    await event.eor(
-        f"• **Ultroid Tiny**\n• Given Url : {url}\n• Shorten Url : {data['response']['tinyUrl']}"
-    )
