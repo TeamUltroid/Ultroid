@@ -1,11 +1,11 @@
-# Ultroid - UserBot
-# Copyright (C) 2021-2023 TeamUltroid
+# Ultroid ~ UserBot
+# Copyright (C) 2024 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 """
-✘ Commands Available -
+❍ Commands Available -
 
 • `{i}destroy <reply to animated sticker>`
     To destroy the sticker.
@@ -61,10 +61,10 @@ from . import (
     get_string,
     inline_mention,
     mediainfo,
+    ultroid_cmd,
     quotly,
     types,
     udB,
-    ultroid_cmd,
 )
 
 
@@ -94,7 +94,7 @@ async def pack_kangish(_):
         docs = _get_stiks.documents
     else:
         docs = []
-        files = glob.glob(cmdtext + "/*")
+        files = glob.glob(f"{cmdtext}/*")
         exte = files[-1]
         if exte.endswith(".tgs"):
             typee = "anim"
@@ -115,9 +115,11 @@ async def pack_kangish(_):
         stiks.append(
             types.InputStickerSetItem(
                 document=x,
-                emoji=random.choice(["😐", "👍", "😂"])
-                if local
-                else (i.attributes[1]).alt,
+                emoji=(
+                    random.choice(["😐", "👍", "😂"])
+                    if local
+                    else (i.attributes[1]).alt
+                ),
             )
         )
     try:
@@ -364,6 +366,14 @@ async def hehe(args):
         )
         try:
             os.remove(photo)
+        except BaseException:
+            pass
+        try:
+            os.remove("AnimatedSticker.tgs")
+        except BaseException:
+            pass
+        try:
+            os.remove("ult.webp")
         except BaseException:
             pass
 

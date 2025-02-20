@@ -398,7 +398,6 @@ async def _(e):
     except Exception as er:
         return await e.eor(str(er), time=5)
 
-
 @ultroid_cmd(pattern="pinned", manager=True, groups_only=True)
 async def djshsh(event):
     chat = await event.get_chat()

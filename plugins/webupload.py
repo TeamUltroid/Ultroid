@@ -19,9 +19,7 @@ from pyUltroid.fns.tools import _webupload_cache
 from . import Button, asst, get_string, ultroid_cmd
 
 
-@ultroid_cmd(
-    pattern="webupload( (.*)|$)",
-)
+@ultroid_cmd(pattern="webupload( (.*)|$)")
 async def _(event):
     xx = await event.eor(get_string("com_1"))
     match = event.pattern_match.group(1).strip()
@@ -29,7 +27,7 @@ async def _(event):
         _webupload_cache.update({int(event.chat_id): {}})
     if match:
         if not os.path.exists(match):
-            return await xx.eor("`File doesn't exist.`")
+            return await xx.eor("File doesn't exist.")
         _webupload_cache[event.chat_id][event.id] = match
     elif event.reply_to_msg_id:
         reply = await event.get_reply_message()
@@ -42,7 +40,7 @@ async def _(event):
             )
             _webupload_cache[int(event.chat_id)][int(event.id)] = file.name
     else:
-        return await xx.eor("`Reply to file or give file path...`")
+        return await xx.eor("Reply to file or give file path...")
     if not event.client._bot:
         results = await event.client.inline_query(
             asst.me.username, f"fl2lnk {event.chat_id}:{event.id}"
@@ -54,16 +52,16 @@ async def _(event):
         __cache = f"{event.chat_id}:{event.id}"
         buttons = [
             [
-                Button.inline("anonfiles", data=f"flanonfiles//{__cache}"),
+                Button.inline("catbox", data=f"flcatbox//{__cache}"),
                 Button.inline("transfer", data=f"fltransfer//{__cache}"),
             ],
             [
-                Button.inline("bayfiles", data=f"flbayfiles//{__cache}"),
-                Button.inline("x0.at", data=f"flx0.at//{__cache}"),
+                Button.inline("filebin", data=f"flfilebin//{__cache}"),
+                Button.inline("0x0.st", data=f"fl0x0.st//{__cache}"),
             ],
             [
                 Button.inline("file.io", data=f"flfile.io//{__cache}"),
                 Button.inline("siasky", data=f"flsiasky//{__cache}"),
             ],
         ]
-        await xx.edit("**Choose Server to Upload File...**", buttons=buttons)
+        await xx.edit("Choose Server to Upload File...", buttons=buttons)
