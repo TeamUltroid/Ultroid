@@ -49,6 +49,7 @@
   Get messages from chats with forward/copy restrictions.
 """
 
+import asyncio
 import calendar
 import html
 import io
@@ -72,6 +73,7 @@ except ImportError:
     uf = None
 
 from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
+from telethon.errors import MessageTooLongError
 from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.channels import (
@@ -90,6 +92,11 @@ from telethon.tl.types import (
     PollAnswer,
     TLObject,
     User,
+    UserStatusOffline,
+    UserStatusOnline,
+    MessageMediaPhoto,
+    MessageMediaDocument,
+    DocumentAttributeVideo,
 )
 from telethon.utils import get_peer_id
 
@@ -119,6 +126,8 @@ from . import (
 # =================================================================#
 
 TMP_DOWNLOAD_DIRECTORY = "resources/downloads/"
+
+CAPTION_LIMIT = 1024  # Telegram's caption character limit for non-premium
 
 _copied_msg = {}
 
@@ -692,51 +701,126 @@ async def thumb_dl(event):
     os.remove(m)
 
 
+async def get_video_duration(file_path):
+    cmd = [
+        "ffprobe",
+        "-v",
+        "error",
+        "-show_entries",
+        "format=duration",
+        "-of",
+        "default=noprint_wrappers=1:nokey=1",
+        file_path,
+    ]
+    try:
+        result = await asyncio.create_subprocess_exec(
+            *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await result.communicate()
+        duration = float(stdout.decode().strip())
+        return duration
+    except Exception as e:
+        print("Error running ffprobe:", e)
+        return None
+
+async def get_thumbnail(file_path, thumbnail_path):
+    try:
+        await asyncio.create_subprocess_exec(
+            "ffmpeg",
+            "-i", file_path,
+            "-ss", "00:00:04",
+            "-vframes", "1",  # Extract a single frame as the thumbnail
+            thumbnail_path,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+    except Exception as e:
+        print(f"Error extracting thumbnail: {e}")
+
 @ultroid_cmd(pattern="getmsg( ?(.*)|$)")
-async def get_restriced_msg(event):
+async def get_restricted_msg(event):
     match = event.pattern_match.group(1).strip()
     if not match:
         await event.eor("`Please provide a link!`", time=5)
         return
-    xx = await event.eor(get_string("com_1"))
+    
+    xx = await event.eor("`Loading...`")
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
         return await event.eor(
-            f"{get_string('gms_1')}!\nEg: `https://t.me/TeamUltroid/3 or `https://t.me/c/1313492028/3`"
+            "Invalid link!\nEg: `https://t.me/TeamUltroid/3` or `https://t.me/c/1313492028/3`"
         )
+    
     try:
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
+    
     try:
         await event.client.send_message(event.chat_id, message)
         await xx.try_delete()
         return
     except ChatForwardsRestrictedError:
         pass
+    
     if message.media:
-        thumb = None
-        if message.document.thumbs:
-            thumb = await message.download_media(thumb=-1)
-        media, _ = await event.client.fast_downloader(
-            message.document,
-            show_progress=True,
-            event=xx,
-            message=f"Downloading {message.file.name}...",
-        )
-        await xx.edit("`Uploading...`")
-        uploaded, _ = await event.client.fast_uploader(
-            media.name, event=xx, show_progress=True, to_delete=True
-        )
-        typ = not bool(message.video)
-        await event.reply(
-            message.text,
-            file=uploaded,
-            supports_streaming=typ,
-            force_document=typ,
-            thumb=thumb,
-            attributes=message.document.attributes,
-        )
-        await xx.delete()
-        if thumb:
-            os.remove(thumb)
+        if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
+            media_path, _ = await event.client.fast_downloader(message.document, show_progress=True, event=xx, message=get_string("com_5"))
+
+            caption = message.text or ""
+
+            attributes = []
+            if message.video:
+                duration = await get_video_duration(media_path.name)
+                
+                width, height = 0, 0
+                for attribute in message.document.attributes:
+                    if isinstance(attribute, DocumentAttributeVideo):
+                        width = attribute.w
+                        height = attribute.h
+                        break
+                
+                thumb_path = media_path.name + "_thumb.jpg"
+                await get_thumbnail(media_path.name, thumb_path)
+
+                attributes.append(
+                    DocumentAttributeVideo(
+                        duration=int(duration) if duration else 0,
+                        w=width,
+                        h=height,
+                        supports_streaming=True,
+                    )
+                )
+            await xx.edit(get_string("com_6"))
+            media_path, _ = await event.client.fast_uploader(media_path.name, event=xx, show_progress=True, to_delete=True)
+
+            try:
+                await event.client.send_file(
+                    event.chat_id,
+                    media_path,
+                    caption=caption,
+                    force_document=False,
+                    supports_streaming=True if message.video else False,
+                    thumb=thumb_path if message.video else None,
+                    attributes=attributes if message.video else None,
+                )
+            except MessageTooLongError:
+                if len(caption) > CAPTION_LIMIT:
+                    caption = caption[:CAPTION_LIMIT] + "..."
+                await event.client.send_file(
+                    event.chat_id,
+                    media_path,
+                    caption=caption,
+                    force_document=False,  # Set to True if you want to send as a document
+                    supports_streaming=True if message.video else False,
+                    thumb=thumb_path if message.video else None,
+                    attributes=attributes if message.video else None,
+                )
+
+            if message.video and os.path.exists(thumb_path):
+                os.remove(thumb_path)
+            await xx.try_delete()
+        else:
+            await event.eor("`Cannot process this type of media.`")
+    else:
+        await event.eor("`No media found in the message.`")

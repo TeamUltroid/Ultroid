@@ -335,15 +335,13 @@ class LogoHelper:
     def get_text_size(text, image, font):
         im = Image.new("RGB", (image.width, image.height))
         draw = ImageDraw.Draw(im)
-        return draw.textsize(text, font)
+        return draw.textlength(text, font)
 
     @staticmethod
     def find_font_size(text, font, image, target_width_ratio):
         tested_font_size = 100
         tested_font = ImageFont.truetype(font, tested_font_size)
-        observed_width, observed_height = LogoHelper.get_text_size(
-            text, image, tested_font
-        )
+        observed_width = LogoHelper.get_text_size(text, image, tested_font)
         estimated_font_size = (
             tested_font_size / (observed_width / image.width) * target_width_ratio
         )
@@ -358,12 +356,19 @@ class LogoHelper:
 
         img = Image.open(imgpath)
         width, height = img.size
+        fct = min(height, width)
+        if height != width:
+            img = img.crop((0, 0, fct, fct))
+        if img.height < 1000:
+            img = img.resize((1020, 1020))
+        width, height = img.size
         draw = ImageDraw.Draw(img)
         font_size = LogoHelper.find_font_size(text, funt, img, width_ratio)
         font = ImageFont.truetype(funt, font_size)
-        w, h = draw.textsize(text, font=font)
+        l, t, r, b = font.getbbox(text)
+        w, h = r - l, (b - t) * 1.5
         draw.text(
-            ((width - w) / 2, (height - h) / 2),
+            ((width - w) / 2, ((height - h) / 2)),
             text,
             font=font,
             fill=fill,
@@ -471,16 +476,16 @@ async def get_google_images(query):
     return google_images
 
 
-# Thanks https://t.me/KukiUpdates/23 for ChatBotApi
+# Thanks https://t.me/ImSafone for ChatBotApi
 
 
 async def get_chatbot_reply(message):
-    chatbot_base = "https://kuki-api-lac.vercel.app/message={}"
+    chatbot_base = "https://api.safone.dev/chatbot?query={}"
     req_link = chatbot_base.format(
         message,
     )
     try:
-        return (await async_searcher(req_link, re_json=True)).get("reply")
+        return (await async_searcher(req_link, re_json=True)).get("response")
     except Exception:
         LOGS.info(f"**ERROR:**`{format_exc()}`")
 

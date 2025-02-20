@@ -52,6 +52,8 @@ async def all_messages_catcher(e):
     if not udB.get_key("TAG_LOG"):
         return
     NEEDTOLOG = udB.get_key("TAG_LOG")
+    if e.chat_id == NEEDTOLOG:
+        return
     buttons = await parse_buttons(e)
     try:
         sent = await asst.send_message(NEEDTOLOG, e.message, buttons=buttons)

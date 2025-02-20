@@ -48,31 +48,28 @@ async def logo_gen(event):
             elif "pic" in mediainfo(temp.media):
                 bg_ = await temp.download_media()
     if not bg_:
-        if event.client._bot:
-            SRCH = [
-                "blur background",
+        SRCH = [
                 "background",
-                "neon lights",
+                "neon",
+                "anime",
+                "art",
+                "bridges",
+                "streets",
+                "computer",
+                "cyberpunk",
                 "nature",
                 "abstract",
-                "space",
+                "exoplanet",
+                "magic",
                 "3d render",
             ]
-            res = await unsplashsearch(random.choice(SRCH), limit=1)
-            bg_, _ = await download_file(res[0], "resources/downloads/logo.png")
-            newimg = "resources/downloads/unsplash-temp.jpg"
-            img_ = Image.open(bg_)
-            img_.resize((5000, 5000)).save(newimg)
-            os.remove(bg_)
-            bg_ = newimg
-        else:
-            pics = []
-            async for i in event.client.iter_messages(
-                "@UltroidLogos", filter=InputMessagesFilterPhotos
-            ):
-                pics.append(i)
-            id_ = random.choice(pics)
-            bg_ = await id_.download_media()
+        res = await unsplashsearch(random.choice(SRCH), limit=1)
+        bg_, _ = await download_file(res[0], "resources/downloads/logo.png")
+        newimg = "resources/downloads/unsplash-temp.jpg"
+        img_ = Image.open(bg_)
+        img_.save(newimg)
+        os.remove(bg_)
+        bg_ = newimg
 
     if not font_:
         fpath_ = glob.glob("resources/fonts/*")

@@ -5,12 +5,13 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import contextlib
 import inspect
 import sys
 import time
 from logging import Logger
 
-from telethon import TelegramClient
+from telethonpatch import TelegramClient
 from telethon import utils as telethon_utils
 from telethon.errors import (
     AccessTokenExpiredError,
@@ -51,9 +52,7 @@ class UltroidClient(TelegramClient):
         self.dc_id = self.session.dc_id
 
     def __repr__(self):
-        return "<Ultroid.Client :\n self: {}\n bot: {}\n>".format(
-            self.full_name, self._bot
-        )
+        return f"<Ultroid.Client :\n self: {self.full_name}\n bot: {self._bot}\n>"
 
     @property
     def __dict__(self):
@@ -126,10 +125,8 @@ class UltroidClient(TelegramClient):
                     and files["by_bot"] == by_bot
                 ):
                     if to_delete:
-                        try:
+                        with contextlib.suppress(FileNotFoundError):
                             os.remove(file)
-                        except FileNotFoundError:
-                            pass
                     return files["raw_file"], time.time() - start_time
         from pyUltroid.fns.FastTelethon import upload_file
         from pyUltroid.fns.helper import progress
@@ -161,10 +158,8 @@ class UltroidClient(TelegramClient):
         else:
             self._cache.update({"upload_cache": [cache]})
         if to_delete:
-            try:
+            with contextlib.suppress(FileNotFoundError):
                 os.remove(file)
-            except FileNotFoundError:
-                pass
         return raw_file, time.time() - start_time
 
     async def fast_downloader(self, file, **kwargs):
@@ -249,8 +244,6 @@ class UltroidClient(TelegramClient):
         return dict(inspect.getmembers(self))
 
     async def parse_id(self, text):
-        try:
+        with contextlib.suppress(ValueError):
             text = int(text)
-        except ValueError:
-            pass
         return await self.get_peer_id(text)

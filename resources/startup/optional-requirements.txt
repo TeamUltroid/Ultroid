@@ -1,7 +1,7 @@
 # Required only for Local Deploys
 # ------------------------------------------------------ #
 
-akinator
+git+https://github.com/ufoptg/akipy.git
 apscheduler
 aiohttp
 bs4
@@ -17,7 +17,7 @@ lxml
 numpy>=1.21.2
 oauth2client
 opencv-python-headless
-pillow>=7.0.0
+pillow>=9.0.0
 profanitydetector
 psutil
 pypdf2>=1.26.0
