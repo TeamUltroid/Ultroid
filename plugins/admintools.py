@@ -392,13 +392,11 @@ async def _(e):
 
     msg = await e.get_reply_message()
     name = msg.sender
-    async for message in e.client.iter_messages(e.chat_id, from_user=msg.sender.id):
-        try:
-            await e.client.delete_messages(e.chat_id, [message.id])
-        except Exception as er:
-            await e.eor(str(er), time=5)
-            return
-    await e.eor(get_string("purgeall_2").format(name.first_name), time=5)
+    try:
+        await e.client.delete_messages(e.chat_id, from_user=msg.sender_id)
+        await e.eor(get_string("purgeall_2").format(name.first_name), time=5)
+    except Exception as er:
+        return await e.eor(str(er), time=5)
 
 @ultroid_cmd(pattern="pinned", manager=True, groups_only=True)
 async def djshsh(event):
