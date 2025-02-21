@@ -24,6 +24,7 @@ pypdf2>=1.26.0
 pytz
 qrcode
 requests
+twikit
 tabulate
 telegraph
 tgcrypto
