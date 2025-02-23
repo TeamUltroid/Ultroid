@@ -13,14 +13,9 @@ import os
 
 from pyUltroid.dB.asstcmd_db import add_cmd, cmd_reply, list_cmds, rem_cmd
 from pyUltroid.fns.tools import create_tl_btn, format_btn, get_msg_button
-
-try:
-    from telegraph import upload_file as uf
-except ImportError:
-    uf = None
 from telethon import events, utils
 
-from . import asst, get_string, mediainfo, udB, ultroid_cmd
+from . import asst, get_string, mediainfo, udB, ultroid_cmd, upload_file
 
 
 @ultroid_cmd(pattern="addcmd( (.*)|$)")
@@ -36,16 +31,14 @@ async def ac(e):
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
             dl = await e.client.download_media(wt.media)
-            variable = uf(dl)
+            m = upload_file(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await e.eor(get_string("com_4"), time=5)
             dl = await e.client.download_media(wt.media)
-            variable = uf(dl)
+            m = upload_file(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         else:
             m = utils.pack_bot_file_id(wt.media)
         if wt.text:

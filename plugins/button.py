@@ -11,7 +11,7 @@ __doc__ = get_help("help_button")
 
 import os
 
-from telegraph import upload_file as uf
+from . import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
 from pyUltroid.fns.tools import create_tl_btn, get_msg_button
@@ -31,15 +31,13 @@ async def butt(event):
             wut = mediainfo(wt.media)
         if wut and wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
-            variable = uf(dl)
-            media = f"https://graph.org{variable[0]}"
+            media = uf(dl)
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await event.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
-            variable = uf(dl)
+            media = uf(dl)
             os.remove(dl)
-            media = f"https://graph.org{variable[0]}"
         else:
             media = pack_bot_file_id(wt.media)
     try:

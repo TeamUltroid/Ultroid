@@ -115,8 +115,12 @@ async def inline_handler(event):
 @in_pattern("pasta", owner=True)
 async def _(event):
     ok = event.text.split("-")[1]
-    link = f"https://spaceb.in/{ok}"
-    raw = f"https://spaceb.in/api/v1/documents/{ok}/raw"
+    if not ok.startswith("http"):
+        link = f"https://spaceb.in/{ok}"
+        raw = f"https://spaceb.in/api/v1/documents/{ok}/raw"
+    else:
+        link = ok
+        raw = f"{ok}/raw"
     result = await event.builder.article(
         title="Paste",
         text="Pasted to Spacebin 🌌",

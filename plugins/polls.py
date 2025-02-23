@@ -18,7 +18,7 @@
     Get the quiz poll where answerno is the number of option which is correct
 
 """
-from telethon.tl.types import InputMediaPoll, Poll, PollAnswer
+from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, TextWithEntities
 
 from . import get_string, ultroid_cmd
 
@@ -57,10 +57,10 @@ async def uri_poll(e):
     if len(option) <= 1:
         return await e.eor("`Options Should be More than 1..`", time=5)
     m = await e.eor(get_string("com_1"))
-    OUT = [PollAnswer(option[on], str(on).encode()) for on in range(len(option))]
+    OUT = [PollAnswer(TextWithEntities(option[on], entities=[]), str(on).encode()) for on in range(len(option))]
     await e.respond(
         file=InputMediaPoll(
-            Poll(20, ques, OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
+            Poll(20, TextWithEntities(ques, entities=[]), OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
             correct_answers=karzo,
         ),
     )

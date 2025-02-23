@@ -74,7 +74,8 @@ async def writer(e):
     font = ImageFont.truetype("resources/fonts/assfont.ttf", 30)
     x, y = 150, 140
     lines = text_set(text)
-    line_height = font.getsize("hg")[1]
+    bbox = font.getbbox("hg")
+    line_height = bbox[3] - bbox[1]
     for line in lines:
         draw.text((x, y), line, fill=(1, 22, 55), font=font)
         y = y + line_height - 5

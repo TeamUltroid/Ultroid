@@ -26,8 +26,7 @@ from . import (
     mediainfo,
     stdr,
     time_formatter,
-    ultroid_cmd,
-    uploader,
+    ultroid_cmd
 )
 
 __doc__ = get_help("help_audiotools")
@@ -104,13 +103,15 @@ async def trim_aud(e):
         await bash(cmd)
         os.remove(file.name)
         f_time = time.time()
-        mmmm = await uploader(out, out, f_time, xxx, f"Uploading {out}...")
+        n_file, _ = await e.client.fast_uploader(
+            out, show_progress=True, event=e, message="Uploading...", to_delete=True
+        )
         attributes = await set_attributes(out)
 
         caption = get_string("audiotools_7").format(ss, dd)
         await e.client.send_file(
             e.chat_id,
-            mmmm,
+            n_file,
             thumb=ULTConfig.thumb,
             caption=caption,
             attributes=attributes,
@@ -147,13 +148,15 @@ async def ex_aud(e):
 
     f_time = time.time()
     try:
-        fo = await uploader(out_file, out_file, f_time, msg, f"Uploading {out_file}...")
+        n_file, _ = await e.client.fast_uploader(
+            out_file, show_progress=True, event=e, message="Uploading...", to_delete=True
+        )
 
     except FileNotFoundError:
         return await eor(msg, get_string("audiotools_9"))
     await e.reply(
         get_string("audiotools_10"),
-        file=fo,
+        file=n_file,
         thumb=ULTConfig.thumb,
         attributes=attributes,
     )

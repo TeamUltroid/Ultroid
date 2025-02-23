@@ -14,23 +14,28 @@
 """
 
 import asyncio
-import re
+import re, uuid, operator
 from random import choice, shuffle
 
-from akipy.async_akipy import Akinator, akipyLOGS
+from akipy.async_akipy import Akinator
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
 
 from pyUltroid._misc._decorators import ultroid_cmd
+from logging import getLogger
+from html import unescape
+from telethon.tl.types import TextWithEntities
 from pyUltroid.fns.helper import inline_mention
 from pyUltroid.fns.tools import async_searcher
+from telethon.errors import ChatSendStickersForbiddenError
 
 from . import *  # Ensure this import matches your project structure
 
 games = {}
 aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
 
+akipyLOGS = getLogger("akipy")
 
 @ultroid_cmd(pattern="akinator")
 async def akina(e):
@@ -133,11 +138,7 @@ async def eiagx(e):
 
 # ----------------------- Main Command ------------------- #
 
-GIMAGES = [
-    "https://graph.org/file/1c51015bae5205a65fd69.jpg",
-    "https://imgwhale.xyz/3xyr322l64j9590",
-]
-
+GIMAGE = "https://graph.org/file/1c51015bae5205a65fd69.jpg"
 
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
@@ -147,7 +148,7 @@ async def magic(event):
     ]
     await event.reply(
         get_string("games_1"),
-        file=choice(GIMAGES),
+        file=GIMAGE,
         buttons=buttons,
     )
 
@@ -243,10 +244,10 @@ async def choose_cata(event):
             if TRIVIA_CHATS[chat].get("cancel") is not None:
                 break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
-            opts = [PollAnswer(unescape(q["correct_answer"]), ansi)]
+            opts = [PollAnswer(TextWithEntities(unescape(q["correct_answer"]), entities=[]), ansi)]
             [
                 opts.append(
-                    PollAnswer(unescape(a), str(uuid.uuid1()).split("-")[0].encode())
+                    PollAnswer(TextWithEntities(unescape(a), entities=[]), str(uuid.uuid1()).split("-")[0].encode())
                 )
                 for a in q["incorrect_answers"]
             ]
@@ -254,7 +255,10 @@ async def choose_cata(event):
             poll = InputMediaPoll(
                 Poll(
                     0,
-                    f"[{copper+1}].  " + unescape(q["question"]),
+                    TextWithEntities(
+                        f"[{copper+1}].  " + unescape(q["question"]),
+                        entities=[]
+                    ),
                     answers=opts,
                     public_voters=True,
                     quiz=True,
@@ -298,13 +302,22 @@ async def choose_cata(event):
 @asst.on(
     Raw(UpdateMessagePollVote, func=lambda x: TRIVIA_CHATS and POLLS.get(x.poll_id))
 )
-async def pollish(eve):
+async def pollish(eve: UpdateMessagePollVote):
     if POLLS.get(eve.poll_id)["chat"] not in TRIVIA_CHATS.keys():
+        return
+    if not eve.options:
+        # Consider as correct answer if no options selected
+        chat = POLLS.get(eve.poll_id)["chat"]
+        user = eve.peer.user_id
+        if not TRIVIA_CHATS.get(chat, {}).get(user):
+            TRIVIA_CHATS[chat][user] = 1
+        else:
+            TRIVIA_CHATS[chat][user] += 1
         return
     if POLLS[eve.poll_id]["answer"] != eve.options[0]:
         return
     chat = POLLS.get(eve.poll_id)["chat"]
-    user = eve.user_id
+    user = eve.peer.user_id
     if not TRIVIA_CHATS.get(chat, {}).get(user):
         TRIVIA_CHATS[chat][user] = 1
     else:

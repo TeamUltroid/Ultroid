@@ -32,7 +32,7 @@
 """
 import os
 
-from telegraph import upload_file as uf
+from . import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
 from pyUltroid.dB.greetings_db import (
@@ -67,16 +67,14 @@ async def setwel(event):
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
             dl = await r.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
                 return await eor(x, get_string("com_4"), time=5)
             dl = await r.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "web":
             m = None
         else:
@@ -132,16 +130,14 @@ async def setgb(event):
         wut = mediainfo(r.media)
         if wut.startswith(("pic", "gif")):
             dl = await r.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if r.media.document.size > 8 * 1000 * 1000:
                 return await eor(x, get_string("com_4"), time=5)
             dl = await r.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "web":
             m = None
         else:

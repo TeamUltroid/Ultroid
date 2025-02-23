@@ -12,7 +12,6 @@ __doc__ = get_help("help_afk")
 
 import asyncio
 
-from telegraph import upload_file as uf
 from telethon import events
 
 from pyUltroid.dB.afk_db import add_afk, del_afk, is_afk
@@ -28,6 +27,7 @@ from . import (
     udB,
     ultroid_bot,
     ultroid_cmd,
+    upload_file
 )
 
 old_afk_msg = []
@@ -50,8 +50,7 @@ async def set_afk(event):
             media_type = mediainfo(reply.media)
             if media_type.startswith(("pic", "gif")):
                 file = await event.client.download_media(reply.media)
-                iurl = uf(file)
-                media = f"https://graph.org{iurl[0]}"
+                media = upload_file(file)
             else:
                 media = reply.file.id
     await event.eor("`Done`", time=2)
