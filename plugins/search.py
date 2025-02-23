@@ -152,8 +152,10 @@ async def reverse(event):
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0",
         },
     )
+    with open("response.html", "w") as f:
+        f.write(response)
     xx = bs(response, "html.parser")
-    div = xx.find_all("div", {"class": "r5a77d"})[0]
+    div = xx.find_all("div", {"class": "kb0PBd"})[0]
     alls = div.find("a")
     link = alls["href"]
     text = alls.text

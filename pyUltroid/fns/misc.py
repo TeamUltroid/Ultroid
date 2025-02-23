@@ -13,6 +13,7 @@ import string
 from logging import WARNING
 from random import choice, randrange, shuffle
 from traceback import format_exc
+from catbox import CatboxUploader
 
 from pyUltroid.exceptions import DependencyMissingError
 
@@ -59,6 +60,7 @@ try:
 except ImportError:
     BeautifulSoup = None
 
+uploader = CatboxUploader()
 
 async def randomchannel(
     tochat, channel, range1, range2, caption=None, client=ultroid_bot
@@ -295,15 +297,7 @@ class Quotly:
         async def telegraph(file_):
             file = file_ + ".png"
             Image.open(file_).save(file, "PNG")
-            files = {"file": open(file, "rb").read()}
-            uri = (
-                "https://graph.org"
-                + (
-                    await async_searcher(
-                        "https://graph.org/upload", post=True, data=files, re_json=True
-                    )
-                )[0]["src"]
-            )
+            uri = uploader.upload_file(file)
             os.remove(file)
             os.remove(file_)
             return uri

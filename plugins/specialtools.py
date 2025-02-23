@@ -36,10 +36,11 @@ import time
 from datetime import datetime as dt
 from random import choice
 
-import pytz
+import pytz, asyncio
 from bs4 import BeautifulSoup as bs
 from telethon.tl.types import DocumentAttributeVideo
-
+from requests import Session
+from cloudscraper import create_scraper
 from pyUltroid.fns.tools import get_google_images, metadata
 
 from . import (
@@ -59,7 +60,7 @@ from . import (
 from .beautify import all_col
 
 File = []
-
+scraper = create_scraper()
 
 @ultroid_cmd(
     pattern="getaudio$",
@@ -250,6 +251,7 @@ Zodiac -: {sign}
         reply_to=event.reply_to_msg_id,
     )
 
+session = Session()
 
 @ultroid_cmd(pattern="sticker( (.*)|$)")
 async def _(event):
@@ -257,23 +259,61 @@ async def _(event):
     if not x:
         return await event.eor("`Give something to search`")
     uu = await event.eor(get_string("com_1"))
-    z = bs(
-        await async_searcher(f"https://combot.org/telegram/stickers?q={x}"),
-        "html.parser",
-    )
-
-    packs = z.find_all("div", "sticker-pack__header")
-    sticks = {
-        c.a["href"]: c.find("div", {"class": "sticker-pack__title"}).text for c in packs
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
+    
+    max_retries = 3
+    retry_count = 0
+    
+    while retry_count < max_retries:
+        try:
+            response = scraper.get(
+                f"https://combot.org/telegram/stickers?q={x}",
+                headers=headers
+            ).content
+            
+            # Check if response contains Cloudflare challenge
+            if "Just a moment..." in response.decode():
+                retry_count += 1
+                await asyncio.sleep(2) # Wait before retry
+                continue
+                
+            z = bs(response, "html.parser")
+            packs = z.find_all("a", {"class": "stickerset__title"})
+            
+            if not packs:
+                return await uu.edit(get_string("spcltool_9"))
+                
+            break # Success - exit loop
+            
+        except Exception as er:
+            retry_count += 1
+            await asyncio.sleep(2)
+            continue
+    
+    if retry_count >= max_retries:
+        return await uu.edit("`Failed to fetch stickers after multiple retries`")
+    try:
+        sticks = {}
+        for pack in packs:
+            href = pack.get("href")
+            title = pack.text.strip()
+            if href:
+                href = f"https://t.me/addstickers/{href.split('/')[-1]}"
+                sticks[href] = title
 
-    if not sticks:
-        return await uu.edit(get_string("spcltool_9"))
-    a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
-    for _, value in sticks.items():
-        a += f"<a href={_}>{value}</a>\n"
-    await uu.edit(a, parse_mode="html")
+        if not sticks:
+            return await uu.edit(get_string("spcltool_9"))
 
+        a = "SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ ~\n\n"
+        for href, title in sticks.items():
+            a += f"<a href={href}>{title}</a>\n"
+        await uu.edit(a, parse_mode="html")
+        
+    except Exception as e:
+        await uu.edit(f"`Error: {str(e)}`\nTry again later.")
 
 @ultroid_cmd(pattern="wall( (.*)|$)")
 async def wall(event):

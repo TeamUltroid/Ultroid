@@ -21,7 +21,7 @@
 """
 import os
 
-from telegraph import upload_file as uf
+from . import upload_file as uf
 from telethon.utils import pack_bot_file_id
 
 from pyUltroid._misc import sudoers
@@ -45,16 +45,14 @@ async def an(e):
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await e.eor(get_string("com_4"), time=5)
             dl = await wt.download_media()
-            variable = uf(dl)
+            m = uf(dl)
             os.remove(dl)
-            m = f"https://graph.org{variable[0]}"
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:

@@ -128,6 +128,7 @@ class UltroidClient(TelegramClient):
                         with contextlib.suppress(FileNotFoundError):
                             os.remove(file)
                     return files["raw_file"], time.time() - start_time
+
         from pyUltroid.fns.FastTelethon import upload_file
         from pyUltroid.fns.helper import progress
 

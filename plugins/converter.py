@@ -25,7 +25,7 @@ except ImportError:
     LOGS.info(f"{__file__}: PIL  not Installed.")
     Image = None
 
-from telegraph import upload_file as uf
+from . import upload_file as uf
 
 from . import (
     ULTConfig,
@@ -53,9 +53,8 @@ async def _(e):
         dl = await r.download_media(thumb=-1)
     else:
         return await e.eor("`Reply to Photo or media with thumb...`")
-    variable = uf(dl)
+    nn = uf(dl)
     os.remove(dl)
-    nn = f"https://graph.org{variable[0]}"
     udB.set_key("CUSTOM_THUMBNAIL", str(nn))
     await bash(f"wget {nn} -O resources/extras/ultroid.jpg")
     await e.eor(get_string("cvt_6").format(nn), link_preview=False)
@@ -93,10 +92,12 @@ async def imak(event):
     if not os.path.exists(inp) or os.path.exists(inp) and not os.path.getsize(inp):
         os.rename(file, inp)
     k = time.time()
-    xxx = await uploader(inp, inp, k, xx, get_string("com_6"))
+    n_file, _ = await event.client.fast_uploader(
+        inp, show_progress=True, event=event, message="Uploading...", to_delete=True
+    )
     await event.reply(
-        f"`{xxx.name}`",
-        file=xxx,
+        f"`{n_file.name}`",
+        file=n_file,
         force_document=True,
         thumb=ULTConfig.thumb,
     )
@@ -135,13 +136,17 @@ async def uconverter(event):
     except KeyError:
         return await xx.edit(get_string("sts_3").format("gif/img/sticker/webm"))
     file = await con.convert(b, outname="ultroid", convert_to=convert)
+    print(file)
+
     if file:
         await event.client.send_file(
             event.chat_id, file, reply_to=event.reply_to_msg_id or event.id
         )
         os.remove(file)
+    else:
+        await xx.edit("`Failed to convert`")
+        return
     await xx.delete()
-
 
 @ultroid_cmd(
     pattern="doc( (.*)|$)",
@@ -183,9 +188,9 @@ async def _(event):
     try:
         await xx.edit(f"```{d}```")
     except BaseException:
-        what, key = await get_paste(d)
+        what, data = await get_paste(d)
         await xx.edit(
-            f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN](https://spaceb.in/{key})"
+            f"**MESSAGE EXCEEDS TELEGRAM LIMITS**\n\nSo Pasted It On [SPACEBIN]({data['link']})"
         )
     if rem:
         os.remove(b)

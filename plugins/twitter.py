@@ -81,8 +81,10 @@ async def twitter_details(event):
     msg = await event.eor("🔍 `Getting tweet details...`")
     try:
         client = await get_client()
-        if "twitter.com" in match or "x.com" in match:
-            tweet_id = match.split("/")[-1].split("?")[0]
+        from urllib.parse import urlparse
+        parsed_url = urlparse(match)
+        if parsed_url.hostname in ["twitter.com", "x.com"]:
+            tweet_id = parsed_url.path.split("/")[-1].split("?")[0]
         else:
             tweet_id = match
 

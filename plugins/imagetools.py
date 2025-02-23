@@ -68,7 +68,8 @@ try:
 except ImportError:
     Image = None
     LOGS.info(f"{__file__}: PIL  not Installed.")
-from telegraph import upload_file as upf
+
+from . import upload_file as upf
 from telethon.errors.rpcerrorlist import (
     ChatSendMediaForbiddenError,
     MessageDeleteForbiddenError,
@@ -217,8 +218,7 @@ async def ultd(event):
     if ultt.endswith(".tgs"):
         await xx.edit(get_string("sts_9"))
     file = await con.convert(ultt, convert_to="png", outname="ult")
-    got = upf(file)
-    lnk = f"https://graph.org{got[0]}"
+    lnk = upf(file)
     r = await async_searcher(
         f"https://nekobot.xyz/api/imagegen?type=blurpify&image={lnk}", re_json=True
     )

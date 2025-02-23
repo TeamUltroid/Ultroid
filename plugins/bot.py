@@ -211,6 +211,7 @@ async def restartbt(ult):
     if heroku_api:
         return await restart(ok)
     await bash("git pull && pip3 install -r requirements.txt")
+    await bash("pip3 install -r requirements.txt --break-system-packages")
     if len(sys.argv) > 1:
         os.execl(sys.executable, sys.executable, "main.py")
     else:
@@ -324,6 +325,7 @@ async def _(e):
         or "soft" in e.pattern_match.group(1).strip()
     ):
         await bash("git pull -f && pip3 install -r requirements.txt")
+        await bash("pip3 install -r requirements.txt --break-system-packages")
         call_back()
         await xx.edit(get_string("upd_7"))
         os.execl(sys.executable, "python3", "-m", "pyUltroid")

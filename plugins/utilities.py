@@ -67,10 +67,7 @@ from pyUltroid._misc._assistant import asst_cmd
 from pyUltroid.dB.gban_mute_db import is_gbanned
 from pyUltroid.fns.tools import get_chat_and_msgid
 
-try:
-    from telegraph import upload_file as uf
-except ImportError:
-    uf = None
+from . import upload_file as uf
 
 from telethon.errors.rpcerrorlist import ChatForwardsRestrictedError, UserBotError
 from telethon.errors import MessageTooLongError
@@ -266,18 +263,16 @@ async def _(event):
         return await xx.eor(
             "`Reply to a Message/Document or Give me Some Text !`", time=5
         )
-    done, key = await get_paste(message)
-    if not done:
-        return await xx.eor(key)
-    link = f"https://spaceb.in/{key}"
-    raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
+    done, data = await get_paste(message)
+    if not done and data.get("error"):
+        return await xx.eor(data["error"])
     reply_text = (
-        f"• **Pasted to SpaceBin :** [Space]({link})\n• **Raw Url :** : [Raw]({raw})"
+        f"• **Pasted to SpaceBin :** [Space]({data['link']})\n• **Raw Url :** : [Raw]({data['raw']})"
     )
     try:
         if event.client._bot:
             return await xx.eor(reply_text)
-        ok = await event.client.inline_query(asst.me.username, f"pasta-{key}")
+        ok = await event.client.inline_query(asst.me.username, f"pasta-{data['link']}")
         await ok[0].click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
         await xx.delete()
     except BaseException as e:
@@ -506,7 +501,7 @@ async def telegraphcmd(event):
             getit = file
         if "document" not in dar:
             try:
-                nn = f"https://graph.org{uf(getit)[0]}"
+                nn = uf(getit)
                 amsg = f"Uploaded to [Telegraph]({nn}) !"
             except Exception as e:
                 amsg = f"Error : {e}"

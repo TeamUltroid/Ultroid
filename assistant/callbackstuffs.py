@@ -20,8 +20,8 @@ try:
     from pyUltroid.fns.gDrive import GDriveManager
 except ImportError:
     GDriveManager = None
-from telegraph import upload_file as upl
 from telethon import Button, events
+from catbox import CatboxUploader
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_peer_id
 
@@ -34,8 +34,8 @@ from . import *
 # --------------------------------------------------------------------#
 telegraph = telegraph_client()
 GDrive = GDriveManager() if GDriveManager else None
+uploader = CatboxUploader()
 # --------------------------------------------------------------------#
-
 
 def text_to_url(event):
     """function to get media url (with|without) Webpage"""
@@ -322,8 +322,8 @@ async def update(eve):
         await eve.edit(get_string("clst_1"))
         call_back()
         await bash("git pull && pip3 install -r requirements.txt")
+        await bash("pip3 install -r requirements.txt --break-system-packages")
         execl(sys.executable, sys.executable, "-m", "pyUltroid")
-
 
 @callback(re.compile("changes(.*)"), owner=True)
 async def changes(okk):
@@ -384,11 +384,14 @@ async def _(e):
     if "|" in ok:
         ok, index = ok.split("|")
     with open(ok, "r") as hmm:
-        _, key = await get_paste(hmm.read())
-    link = f"https://spaceb.in/{key}"
-    raw = f"https://spaceb.in/api/v1/documents/{key}/raw"
-    if not _:
+        _, data = await get_paste(hmm.read())
+    if not data.get("link"):
         return await e.answer(key[:30], alert=True)
+    if not key.startswith("http"):
+        link, raw = data["link"], data["raw"]
+    else:
+        link = key
+        raw = f"{key}/raw"
     if ok.startswith("addons"):
         key = "Addons"
     elif ok.startswith("vcbot"):
@@ -830,8 +833,7 @@ async def media(event):
         else:
             media = await event.client.download_media(response, "alvpc")
             try:
-                x = upl(media)
-                url = f"https://graph.org/{x[0]}"
+                url = uploader.upload_file(media)
                 remove(media)
             except BaseException as er:
                 LOGS.exception(er)
@@ -969,8 +971,7 @@ async def media(event):
             url = response.file.id
         else:
             try:
-                x = upl(media)
-                url = f"https://graph.org/{x[0]}"
+                url = uploader.upload_file(media)
                 remove(media)
             except BaseException as er:
                 LOGS.exception(er)
@@ -1239,8 +1240,7 @@ async def media(event):
             url = text_to_url(response)
         else:
             try:
-                x = upl(media)
-                url = f"https://graph.org/{x[0]}"
+                url = uploader.upload_file(media)
                 remove(media)
             except BaseException as er:
                 LOGS.exception(er)
