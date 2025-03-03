@@ -53,3 +53,5 @@ class Var:
     DATABASE_URL = config("DATABASE_URL", default=None)
     # for MONGODB users
     MONGO_URI = config("MONGO_URI", default=None)
+
+    START_WEB = config("START_WEB", default=False, cast=bool)

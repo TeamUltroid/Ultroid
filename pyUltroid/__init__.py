@@ -8,6 +8,7 @@
 import os
 import sys
 import telethonpatch
+from datetime import datetime
 from .version import __version__
 
 run_as_module = __package__ in sys.argv or sys.argv[0] == "-m"
@@ -99,7 +100,7 @@ if run_as_module:
     DUAL_HNDLR = udB.get_key("DUAL_HNDLR") or "/"
     SUDO_HNDLR = udB.get_key("SUDO_HNDLR") or HNDLR
 else:
-    print("pyUltroid 2022 © TeamUltroid")
+    print(f"pyUltroid {datetime.now().year} © TeamUltroid")
 
     from logging import getLogger
 
